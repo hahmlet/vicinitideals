@@ -261,7 +261,27 @@ pytestmark = pytest.mark.unit
 #:
 #: Worth saying because the direction is counter-intuitive: closing a zone gap
 #: RAISES this count. A district nobody encoded refuses nothing.
-EXPECTED = {"notes": 107, "comments": 128, "tests": 17}
+EXPECTED = {"notes": 111, "comments": 130, "tests": 17}
+#
+# 252 -> 258 on 2026-09-08, and the note above about direction is exactly
+# why: unincorporated Clackamas gained five districts, and six refusals it
+# could not have carried while those districts were absent.
+#
+# Four are notes. PMD, MR-1, MR-2 and VA each decline the district land
+# area Table 315-4 prints for them -- 3,630, 3,630, 2,420 and 1,500 square
+# feet per dwelling unit, which ZDO 1012.04(A) waives in nine named
+# districts and not in these. The county states a lot area per dwelling
+# unit; this model holds one density field and it is in units per acre.
+# 43,560 / 3,630 = 12 is arithmetic we would be doing, and the column
+# ledger refused it in those words before this suite ever saw it.
+#
+# Two are comments, and they are one block header counted twice, because
+# the refusal has two independent reasons and each is stated as its own
+# refusal: the missing field above, and OAR 660-046-0220(2)(b), which
+# forbids applying a density maximum to a quadplex at all. Either alone
+# would hold the number out; both are recorded because the state one could
+# be repealed and the model one could be fixed, and the day either happens
+# the other still has to be answered.
 
 #: STILL 115 on 2026-09-03, and the flat number hides a swap worth more than
 #: most movements on this list. Clackamas County's drive aisle closed -- a

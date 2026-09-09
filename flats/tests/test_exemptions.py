@@ -119,7 +119,17 @@ pytestmark = pytest.mark.unit
 # exemptions on it change no lot's verdict. They are counted because the day
 # that field is wired to a verdict is the day the reading has to already be
 # right, and because an exemption is the one value form a person has to sign.
-EXPECTED = {"stated": 189, "numeric": 43, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 196, "numeric": 43, "marker": 0, "dash": 2, "silent": 0}
+# 189 -> 196 on 2026-09-08, all seven from unincorporated Clackamas Table
+# 315-4, and they are the safe shape of this value rather than the
+# dangerous one: every cell is printed and every one of them prints a word
+# meaning no standard. Three are "Maximum Building Height: None" in PMD,
+# MR-1 and MR-2 -- three districts with no height ceiling at all, in a
+# table whose VA column prints 45. Two are "Minimum Building Separation:
+# None" in MR-1 and MR-2. Two are VA's "Minimum Rear Setback: None" and
+# "Minimum Side Setback: None". None of the seven is a standard we could
+# not read; each is a standard the county declines to state, which is the
+# only thing exempt: true may ever mean.
 # 174 -> 175 on 2026-09-01: the Village zone's combined side yard. Its base
 # had been a 10 derived from two printed 5 ft yards, and no line of 4.125 says
 # ten, so the base became exempt and note 15's 15 ft kept its band. An

@@ -156,17 +156,38 @@ defaults:
   # stored (oar.660-046-0010.txt#L30-L31, L33-L34) so the limit is quotable;
   # nothing enforces it.
   #
-  # Measured on 2026-08-26 rather than guessed at. The exemption cancels a
-  # density maximum in 88 zones. In 62 the city stated no number of its own,
-  # so it cancels nothing. Of the 26 where a real ceiling is struck out, seven
-  # sit in zones this rule arguably never reached -- Gresham CC, MC and RTC,
-  # Fairview VA, VC and VMU, Portland RMP -- and all seven prohibit the
-  # quadplex outright, so the use gate answers RED before any density row is
-  # read. The other nineteen permit the quadplex outright, which is what being
-  # zoned for residential use looks like from inside a use table. So the gap
-  # moves no verdict as the corpus stands. That is a fact about the corpus,
-  # not about the rule, and it is written here so the next commercial zone
-  # somebody encodes does not quietly inherit a preemption.
+  # Measured rather than guessed at, and RE-MEASURED on 2026-09-08 because a
+  # measured claim about the corpus goes out of date every time somebody
+  # encodes a zone. The exemption now reaches 201 zones against 88 in August.
+  # In 174 the jurisdiction stated no number of its own, so it cancels
+  # nothing. Of the 27 where a real ceiling is struck out, seven sit in zones
+  # this rule arguably never reached -- Gresham CC, MC and RTC, Fairview VA,
+  # VC and VMU, Portland RMP -- and all seven prohibit the quadplex outright,
+  # so the use gate answers RED before any density row is read. It is the same
+  # seven it was in August: every zone added since is plainly zoned for
+  # residential use. So the gap still moves no verdict. That is a fact about
+  # the corpus, not about the rule, and it is written here so the next
+  # commercial zone somebody encodes does not quietly inherit a preemption.
+  #
+  # WHERE THIS RULE REACHES, settled 2026-09-08 and worth writing down because
+  # the obvious reading is wrong. -0010(1) states the division's scope in one
+  # sentence -- "A local government that is a Medium City or Large City must
+  # comply with this division" -- and an unincorporated county is neither, so
+  # the applicability rule appears to put half of this corpus outside the
+  # preemption. The definition rule says otherwise: "A Large City includes
+  # unincorporated areas of counties within a metropolitan service district
+  # that are provided with sufficient urban services." Urban unincorporated
+  # Clackamas and Multnomah are inside Metro, so this file governs them.
+  #
+  # It came up encoding Clackamas County's Table 315-4 districts, where the
+  # county prints a district land area that ZDO 1012.04(A) declines to waive
+  # for a quadplex -- 3,630 square feet per unit in MR-1 and PMD, 2,420 in
+  # MR-2, 1,500 in VA. This rule forbids applying it. Those four do not appear
+  # in the 27 above, because the county states a lot area per dwelling unit
+  # and this model has only a units-per-acre field; converting one to the
+  # other would put a number in the corpus that no Clackamas document prints,
+  # so the standard is refused in writing in each zone's notes instead. If a
+  # per-unit lot area field is ever added, those four zones join this count.
   #
   # Closing it needs something this model does not have: a per-zone answer to
   # "is this zone residential", which is a judgement about a column of a use

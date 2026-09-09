@@ -2791,3 +2791,204 @@ like a zone somebody read and found nothing in. The test added with the fix
 asserts the opposite for Gresham — that `corner_lot` appears in every
 residential zone's levers — which is the shape of assertion the rest of the
 corpus needs.
+## 28. The first districts encoded off the back of a ledger that could see them
+
+Written 2026-09-08, hours after the coverage ledger was rebuilt over two
+counties. The rebuild's whole claim was that it turns a blind queue into a
+ranked one. This section is the first work taken off the top of that queue, and
+it is here because of what came back with it rather than because five zones were
+encoded.
+
+**What was encoded.** Unincorporated Clackamas held nine zones — the eight urban
+low-density districts of Table 315-2 and the two village districts of Table
+315-3 — while the parcel corpus assigns thirty-one. Five more are written now:
+
+| zone | lots | what it is |
+|---|---:|---|
+| MR-1 | 839 | Medium Density Residential. The largest single unencoded zone in either county. |
+| MR-2 | 120 | Medium High Density Residential. |
+| R-2.5 | 77 | **Refused.** Table 315-1 reads `X` in the Quadplexes row. |
+| PMD | 9 | Planned Medium Density Residential. |
+| VA | 1 | Village Apartment. |
+
+1,046 lots, of which 969 can hold the building. Three more districts are
+deliberately left alone and the reasons are the interesting part.
+
+### The table said the opposite of what binds
+
+Table 315-4 reads, at a glance, like the loosest table in the county: PMD, MR-1
+and MR-2 print **no maximum building height at all**, where every R zone in the
+layer is capped at 35 feet. Section 845, which governs how a quadplex is
+designed here, states no height either. So `max_height_ft` is `exempt: true` in
+three districts, and it is the correct use of that value rather than the
+dangerous one — the cell is printed and it is empty of any ceiling, in a table
+whose VA column prints 45.
+
+And it reads, at a second glance, like the tightest: these four districts each
+carry a **district land area**, and ZDO 1012.04(A) — the sentence that exempts a
+quadplex from DLA — names the nine districts it reaches and none of them is one.
+So by the county's own text a quadplex in MR-1 wants 3,630 square feet of net
+site area per unit, which is 14,520 for four, against the 7,000 Section 845.01
+asks. Twice the lot size standard, on 839 lots.
+
+**Neither glance is what happens, and the density figure is not encoded — for
+two reasons, the first of which is ours.**
+
+The county does not print a density. It prints a *lot area per dwelling unit*,
+and this model has one density field, in units per acre. 43,560 ÷ 3,630 = 12 is
+arithmetic we would be doing. The column ledger — the check written after Gresham
+printed `16 ft.` in seven columns and we took it for six — refused it in exactly
+those words: *"encoded 12.0, its own column reads '3,630 square feet'."* It was
+right to. The number was in the corpus for about twenty minutes and the guard
+caught it before the suite did, which is the second time in two days a check
+built for one misreading has caught a different one.
+
+So the standard is refused in writing, per zone, with the cell quoted. **The
+missing thing is a field for a minimum lot area per dwelling unit**, and MR-1 is
+the first zone that would need it.
+
+The second reason it could not have bound anyway: OAR 660-046-0220(2)(b) forbids
+applying a density maximum to a quadplex, and it reaches this layer — which was
+nearly called wrong in the other direction. The applicability rule states the
+division's reach in one sentence: *"A local government that is a Medium City or
+Large City must comply with this division."* An unincorporated county is neither.
+That is the wrong answer, and the right one is in the definitions rule:
+
+> "A Large City includes unincorporated areas of counties within a metropolitan
+> service district that are provided with sufficient urban services."
+
+Urban unincorporated Clackamas is inside Metro. **Reading the applicability
+sentence and stopping there would have produced a REVIEW on 969 lots for a
+standard no jurisdiction may apply.** This corpus has a standing lesson about
+definitions hiding the answer to a question the main text appears to settle; this
+is that lesson arriving from the other direction, where the definition *widens*
+what a rule reaches.
+
+What actually binds in MR-1, then, is a lot-size floor, three setbacks and
+parking — looser than any R zone in the county, which is the opposite of what
+Table 315-4 reads like.
+
+The state file's own measured claim was re-measured rather than trusted, because
+a measured claim about the corpus expires whenever somebody encodes a zone. The
+density exemption now reaches **201 zones against 88** in August and strikes out
+a real ceiling in **27 against 26**; the seven of those that sit in zones the
+rule arguably never entered are the same seven, every zone added since being
+plainly zoned for residential use, so the applicability gap still moves no
+verdict.
+
+### The state parking cap bites for the first time
+
+Table 1015-2's Quadplex row sends all four districts to the Multifamily Dwelling
+rows, which price parking **per bedroom**: 1 for a studio or one-bedroom, 1.25
+for a two-bedroom, 1.5 for a three-bedroom. The design catalog holds units,
+storeys, footprint and parking geometry and no room schedule, so the
+discriminator is unmeasured and the largest printed figure is the one encoded.
+
+In every R zone in this county the county's own figure is 1 per unit, which is
+exactly what OAR 660-046-0220(2)(e)(B) allows, so the cap and the requirement
+have always landed on the same number and the cap has never been observed doing
+anything. Here the county asks six spaces for four units and the state allows
+four. The resolved 1.0 is the state's number overriding the county's — the first
+place in the corpus where that is true. Six stalls against four is roughly 200
+square feet of court, which on a small lot is the difference between a pod that
+fits and one that does not.
+
+### Sixteen dismissals decayed exactly as predicted, and one week early
+
+The dismissal re-read of 2026-09-07 read all 784 waved-away footnotes and found
+that 49 of them argue about *our corpus* rather than about the code — a reason
+of the form "this layer does not hold that district", which stops being true the
+moment somebody encodes the district, and stops being true silently, because a
+dismissal is never re-derived. `stale.py` was written as the standing check.
+
+Sixteen of those 49 were the Table 315-4 notes in this layer, dismissed as a
+block on 2026-08-21 with: *"This layer holds none of them."* This layer holds
+four of them from today. All sixteen are re-read and re-ruled against the
+building rather than against our file list, and two of them are not dismissals
+at all:
+
+- **Note 14 TIGHTENS the number this commit encoded.** MR-1 and MR-2 print a
+  storey ladder for the side setback — five feet at one storey, seven at two,
+  fifteen at three — and the pod is two storeys, which the design catalog knows,
+  so seven is the figure. Note 14 then says: *"If the side lot line abuts an
+  Urban Low Density Residential, VR-5/7, or VR-4/5 District, the minimum side
+  setback for a two-story building is 10 feet."* No adjacency layer is held for
+  Clackamas County. So the note is ruled `unmeasured` on
+  `abuts_lower_density_zone` and narrowed to those two zones, which caps the
+  value: **959 lots carry a side setback we can state and cannot confirm.** The
+  same treatment Oregon City's nearly identical note 1 already gets.
+- **Note 6 TIGHTENS in VA.** A front or rear lot line abutting Sunnyside Road
+  takes a 65-foot minimum and 75-foot maximum setback *measured from the road
+  centerline*, which is a geometry no field in this model holds, against VA's
+  own 10 feet and none. Ruled `unmeasured` on `site_specific_limitation` and
+  narrowed to VA.
+
+Narrowing matters here in a way worth recording. A footnote governs its whole
+notes block by default — deliberately, because an over-scoped note costs a
+review and an under-scoped one costs a false GREEN — so before `zones:` was
+written, note 6 capped every value in all four districts and PMD could never
+certify on a road it does not touch. Two `zones:` keys took the cap from 397
+values to 390 and freed PMD entirely.
+
+### What is not encoded, and the second cost of the empty-box bug
+
+**HDR (253 lots), RCHDR (32) and SHD (1)** print `See Subsection 1005.02(L)`
+where their rear and side setbacks belong. ZDO 1005 is not in the store. A zone
+whose setbacks are a cross-reference nobody has read is not a zone this project
+guesses at, so the three stay `zone_missing` — which is now a queue entry with a
+lot count on it rather than an absence. **Fetching ZDO 1005 is the single
+cheapest 286 lots left in this layer.**
+
+**VTH (115 lots)** is refused for a worse reason, and it is HUMAN_TODO item 15
+appearing in a second document with a name attached. Table 315-3 heads three
+columns — VR-5/7, VR-4/5, VTH — and its Minimum Rear Setback row prints **two
+cells**. So does its lot size row, its coverage row, its maximum lot size row.
+Its height, front, maximum-front and side rows print three. Either VTH has no
+rear setback or VTH's cell was eaten by the extractor's habit of dropping empty
+table cells, **and the stored text cannot tell which** — every cell after a
+dropped blank slides left, so a short row is unreadable by position and a
+position read is all a flow-path table offers.
+
+Item 15 said this exactly: *"A table of measurements with a blank in it would be
+damaged the same way and would not show up."* It does not show up — `ragged.py`
+scores this document at zero, because it only inspects tables full of one-letter
+answers. This is the first measurement table in the corpus known to be affected,
+it costs 115 lots today, and unlike Lake Oswego we cannot even confirm it is
+damaged without re-fetching the page. Re-fetching is the decision item 15 exists
+to ask for, so nothing here was fetched.
+
+### Where the layer stands
+
+**Nine tests went red, and all nine for the same reason.** Every one pins a
+measured claim about the corpus, and encoding a district changes the corpus.
+The list is worth keeping because the directions are not all obvious:
+
+| census | was | is | why it moved |
+|---|---:|---:|---|
+| encoded zones | 196 | 201 | five districts |
+| exemptions | 189 | 196 | seven printed cells that state no standard |
+| declared refusals | 252 | 258 | **+6, and up is correct** |
+| districts owed | 14 | 10 | the queue was worked |
+| governed values, this layer | 74 | 107 | Table 315-4's sixteen notes reach everything in it |
+
+The refusal count is the one that reads backwards, and `test_refusals` already
+warned about it in its own header: *"closing a zone gap RAISES this count. A
+district nobody encoded refuses nothing."* Four of the six are the four
+districts each declining the district land area; the other two are one block
+header counted twice, because the refusal has two independent reasons and each
+is stated as its own refusal — the missing field, and the state preemption. Both
+are recorded on purpose. The state one could be repealed and the model one could
+be fixed, and on the day either happens the other still has to be answered.
+
+Three of the nine were the same `len(rows) == 74` in three different files, and
+all three are now a floor. What that line guards is a governed value quietly
+becoming an ungoverned one; it cannot guard against somebody encoding a zone,
+because that is the work. The note census beside it stays an equality, because
+that one is a claim about how much of a chapter has been read, and reading is
+not something that should happen by accident.
+
+Fourteen zones held against nine this morning. The districts audit for this
+layer now returns four real districts owed — HDR, RCHDR, SHD, VTH, all four
+named above with their reasons — and eleven acronyms it cannot tell from zone
+codes (DLA, HRA, MRA, NR, BD and the habitat-district abbreviations), which is
+the known false-positive shape and not work.

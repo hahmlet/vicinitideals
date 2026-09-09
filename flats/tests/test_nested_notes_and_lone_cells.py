@@ -254,7 +254,13 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     assert len(ruled) == 96
     assert not [n for n in ruled if n.state == "unread"]
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
-    assert len(rows) == 74
+    # 74 until 2026-09-08, when Table 315-4's four districts were encoded and
+    # every value in them fell under that table's sixteen notes. Asserted as a
+    # floor rather than an equality from here: what this line is for is a
+    # governed value quietly becoming an ungoverned one, and the count rises
+    # whenever anybody encodes anything. The note census above stays exact,
+    # because that one is a claim about how much of the chapter has been read.
+    assert len(rows) >= 107
     assert not any(r.blocking for r in rows)
 
 

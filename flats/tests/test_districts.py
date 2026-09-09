@@ -84,33 +84,13 @@ RULINGS: dict[str, dict[str, str]] = {
         # (Child Care Facilities, Adult Daycare, Civic and Cultural) print an
         # "L" in positions 8, 10 and 11, and 315.03.1.2 names exactly HDR, SHD
         # and RCHDR as the districts with listed limited uses.
-        "R-2.5": (
-            "prohibited: the only X in the Quadplexes row of Table 315-1 "
-            "(zdo.315 L298 under the R-2.5 head at L46); every other urban "
-            "residential district in the row reads P."
-        ),
-        "PMD": (
-            "encode: Planned Medium Density -- quadplexes P in Table 315-1 "
-            "and Table 315-4 gives a complete row: no minimum lot size, front "
-            "15 ft (20 ft to a garage entry), rear 30 ft, side 30 ft, no "
-            "height maximum."
-        ),
-        "MR-1": (
-            "encode: Medium Density Residential -- quadplexes P in Table "
-            "315-1 and Table 315-4 gives no minimum lot size, front 15 ft, "
-            "rear 20 ft, side by storey (one 5 ft, two 7 ft, three 15 ft) and "
-            "no height maximum."
-        ),
-        "MR-2": (
-            "encode: Medium High Density Residential -- quadplexes P in Table "
-            "315-1 and the same complete Table 315-4 row as MR-1, differing "
-            "only in which footnotes hang off it."
-        ),
-        "VA": (
-            "encode: Village Apartment -- quadplexes P in Table 315-1 and "
-            "Table 315-4 gives front 10 ft, maximum front 18 ft, no rear or "
-            "side minimum, 45 ft height, 20 ft between multifamily dwellings."
-        ),
+        # Five rulings stood here until 2026-09-08 -- R-2.5 prohibited, and
+        # PMD, MR-1, MR-2 and VA to encode -- and all five are gone because
+        # the work was done. That is the deletion this file's own staleness
+        # test demands: a ruling is a decision about a question the ledger is
+        # still asking, so when the zone is encoded the ledger stops reporting
+        # it and the ruling is a record of a question, not an answer to a live
+        # one. Four are left below, all of them fetches.
         "VTH": (
             "fetch: Village Townhouse -- quadplexes P in Table 315-1, but its "
             "standards are in Table 315-3, which prints two cells in several "
@@ -505,10 +485,17 @@ def test_every_ruling_argues_from_the_page() -> None:
 def test_the_districts_still_owed_are_the_ones_we_think() -> None:
     """The queue this audit produced, pinned so it cannot quietly change.
 
-    Fourteen districts to encode, five to fetch and one unreadable table
-    (ten of its columns), as of 2026-09-08. Encoding
-    one is what makes this number fall; discovering one is what makes it rise,
-    and either is worth a look at why.
+    Ten districts to encode, five to fetch and one unreadable table (ten of
+    its columns), as of 2026-09-08. Encoding one is what makes this number
+    fall; discovering one is what makes it rise, and either is worth a look at
+    why.
+
+    Fourteen earlier the same day. The four that went are PMD, MR-1, MR-2 and
+    VA in unincorporated Clackamas, encoded off the top of the rebuilt
+    two-county coverage ledger along with R-2.5, which was a prohibition
+    rather than an encode and so was never in this count. That is the first
+    time this number has fallen because the queue was worked rather than
+    because the reader changed.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -518,6 +505,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 14, sorted(owed["encode"])
+    assert len(owed["encode"]) == 10, sorted(owed["encode"])
     assert len(owed["fetch"]) == 5, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])

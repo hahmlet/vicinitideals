@@ -1306,3 +1306,448 @@ zones:
       NOT ENCODED: minimum lot size, for the same reason as VR57 — the row prints "4,000/2,000" under
       a two-part label, so the stated minimum is 2,000 and the 4,000 is the density figure, and
       Section 845 waives it for a middle housing land division besides.'
+  # === Table 315-4 and the R-2.5 refusal, encoded 2026-09-08 ================
+  #
+  # This layer held nine zones and the parcel corpus assigns thirty-one. The
+  # nine were the ones Table 315-2 and Table 315-3 answer; the county's medium
+  # and high density districts sat unencoded and unranked, because the ledger
+  # that ranks encoding work was built from a Multnomah-only parcel file and
+  # counted no lot in this county at all. It counts them now, and MR-1 is the
+  # largest single unencoded zone in either county: 839 lots.
+  #
+  # Five zones are added here and three are deliberately not.
+  #
+  # HDR (253 lots), RCHDR (32) and SHD (1) print "See Subsection 1005.02(L)"
+  # where their rear and side setbacks belong. ZDO 1005 is not in the store, so
+  # those three cannot be encoded without a fetch, and a zone whose setbacks
+  # are a cross-reference we have not read is exactly the shape this project
+  # refuses to guess at. They stay `zone_missing`, which is a queue entry with
+  # a lot count on it.
+  #
+  # VTH (115) is refused for a different and more uncomfortable reason: its
+  # column in Table 315-3 cannot be read by position. The extractor drops empty
+  # table cells, so a row with a blank in it arrives shorter than its header
+  # and every cell after the blank shifts left. Table 315-3's rear setback row
+  # prints two cells under three district headings. Either VTH has no rear
+  # setback or VTH's cell was eaten, and the stored text cannot tell which.
+  # That is HUMAN_TODO item 15 in one row, and it is why the item exists.
+  R2.5:
+    cite_default:
+      cite: Clackamas ZDO Section 315 Table 315-1, Quadplexes row, R-2.5 column
+      url: https://www.clackamas.us/planning/zdo315
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # The one district in this chapter that refuses the building, and it
+      # refuses it in the same table that permits it in nine others. Table
+      # 315-1 prints eleven columns; R-2.5 is the third, and the Quadplexes
+      # row reads X in it against P everywhere else except its own duplex and
+      # triplex lines. The quote takes the table title, all eleven column
+      # heads and all eleven cells, because position is the only thing that
+      # names the column and a reader has to be able to count to three.
+      #
+      # No footnote marker on the cell. The P cells in the low density and
+      # village columns carry 7 and 8; the X carries nothing, so there is no
+      # note to read and nothing to relieve it.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    notes: >-
+      Encoded 2026-09-08. Nothing else is encoded here and nothing else needs
+      to be: the use is refused, so no dimension can change the answer. 77
+      lots.
+
+      Worth saying why the refusal is credible rather than an artefact of a
+      short row. Table 315-1's Quadplexes row prints eleven cells under eleven
+      headings, so nothing was dropped, and the neighbouring rows corroborate
+      the shape: Townhouses reads P in the R-2.5 column and X in PMD, VA, SHD
+      and RCHDR, and Triplexes reads X in R-2.5. A district that takes
+      townhouses and refuses triplexes and quadplexes is a coherent policy,
+      not a parsing accident.
+  # --- Table 315-4: PMD, MR-1, MR-2 and VA ---------------------------------
+  #
+  # One table, seven districts, seven cells in every row. The county writes
+  # this one as an HTML flow table -- each cell on its own line -- and it is
+  # the shape that loses blanks, so every row was counted before any of it was
+  # read: eight rows, seven cells each, no ragged row anywhere in it. Position
+  # is therefore load-bearing and safe, and each value below quotes its whole
+  # row so a reviewer can count to the column rather than trust that I did.
+  #
+  # THREE THINGS THIS TABLE DOES THAT TABLE 315-2 DOES NOT.
+  #
+  # It states no height. PMD, MR-1 and MR-2 print "None" in the Maximum
+  # Building Height row, and Section 845 -- which governs how a quadplex is
+  # designed here -- states no height either. So the ceiling that binds a pod
+  # in every R zone in this county simply does not exist in these three, and
+  # `exempt: true` is the honest encoding rather than a number withheld.
+  #
+  # DENSITY: the county states one here and it is NOT ENCODED, for two
+  # independent reasons, and the first is a gap in this model rather than a
+  # judgement about the code.
+  #
+  # ZDO 1012.04(A) is the county exempting a quadplex from district land area,
+  # and it lists the districts it reaches: "in the R-5, R-7, R-8.5, R-10,
+  # R-15, R-20, R-30, VR-4/5, or VR-5/7 District". None of these four is on
+  # that list. So by the county's own text the DLA row of Table 315-4 governs
+  # this building: 3,630 square feet per dwelling unit in PMD and MR-1, 2,420
+  # in MR-2, 1,500 in VA, and 1012.05 divides net site area by it to get a
+  # maximum unit count. In MR-1 four units would want 14,520 square feet of
+  # net site area against the 7,000 Section 845.01 asks -- twice the lot size
+  # standard, and the number that would decide.
+  #
+  # THE FIRST REASON IT IS NOT ENCODED. This model has one density field,
+  # `max_density_du_per_acre`, and the county does not print a density. It
+  # prints a lot area per dwelling unit. 43,560 / 3,630 = 12 is arithmetic we
+  # would be doing, not a figure on the page, and the column ledger refuses it
+  # in those words -- "encoded 12.0, its own column reads '3,630 square feet'"
+  # -- which is the ledger working. A field for a minimum lot area per
+  # dwelling unit is the thing missing, and inventing the conversion instead
+  # would put a number in the corpus that no Clackamas document contains.
+  #
+  # THE SECOND. It could not bind even if it were held: OAR 660-046-0220(2)(b)
+  # forbids applying a density maximum to a quadplex, `preempts: always`, and
+  # this layer is inside that rule. That was nearly called wrong here.
+  # -0010(1) states the division's reach in one sentence -- "A local
+  # government that is a Medium City or Large City must comply with this
+  # division" -- and an unincorporated county is neither, which is the answer
+  # the applicability rule gives and it is the wrong one. The definition is in
+  # -0020: "A Large City includes unincorporated areas of counties within a
+  # metropolitan service district that are provided with sufficient urban
+  # services." Urban unincorporated Clackamas is inside Metro.
+  #
+  # So the refusal costs nothing today and would cost everything if Oregon
+  # changed its mind. It is written into each zone's notes with the cell
+  # quoted, which is where this corpus keeps a standard it read and cannot
+  # hold.
+  #
+  # Parking is per bedroom, not per unit. Table 1015-2's Quadplex row sends
+  # every one of these districts to the Multifamily Dwelling rows, which price
+  # a studio or one-bedroom at 1, a two-bedroom at 1.25 and a three-bedroom at
+  # 1.5. The design catalog holds no bedroom count -- a Design has units,
+  # storeys, footprint and parking geometry and no room schedule -- so the
+  # discriminator is unmeasured and the largest of the three printed figures
+  # is the one encoded.
+  #
+  # This is the first place in the corpus where the state parking cap actually
+  # bites. OAR 660-046-0220(2)(e)(B) caps a quadplex at four spaces in total
+  # with `preempts: cap`, and in every R zone in this county the county's own
+  # figure is 1 per unit, which is the cap -- the two land on the same number
+  # and nothing is being held back. Here the county asks six spaces for four
+  # units and the state allows four, so the resolved 1.0 is the state's number
+  # overriding the county's, not the county's own. Six stalls against four is
+  # roughly 200 square feet of court, which is the difference between a pod
+  # that fits and one that does not on a small lot.
+  PMD:
+    cite_default:
+      cite: Clackamas ZDO Section 315 Table 315-4 (Planned Medium Density Residential)
+      url: https://www.clackamas.us/planning/zdo315
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, fifth column. A bare P: no note 7, no
+      # note 8. The absence of note 8 does not take Section 845 away -- 845
+      # states its own scope and states no district limitation, which is
+      # checked below at `min_lot_sqft` -- it just means this cell does not
+      # signpost it.
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    min_lot_sqft:
+      # Table 315-4 prints "None" and Section 845.01 prints 7,000, and 7,000
+      # is the one that binds. 845.01 states "the subject lot shall be a
+      # minimum of ... 7,000 square feet for a quadplex or a cottage cluster"
+      # with no district qualifier anywhere in the section: the whole document
+      # names a district exactly twice, once for the VR triplex exception and
+      # once to prohibit middle housing in the Floodplain Management District.
+      # Same reading, same quote and same number as the eight R zones above.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_height_ft:
+      # "None". Not a number we failed to find -- the cell is printed and it
+      # is empty of any ceiling, in a table whose other rows print numbers
+      # freely and whose VA column prints 45. Section 904 offers height
+      # EXCEPTIONS, which presuppose a standard to except from and cannot
+      # create one, and Section 845 states no height for a quadplex.
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Maximum Building Height row, PMD column ("None"); Section 845 states no height for a quadplex
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1518-L1525"
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    setback_garage_entrance_ft:
+      # The same cell, second clause: "15 feet, except 20 feet to garage and
+      # carport motor vehicle entries". Encoded although the 2026-09-08 ruling
+      # is that this pod has no garage, for the same reason the R zones carry
+      # it: the standard is real and the field is what declares that we read
+      # it and decided it does not reach us.
+      value: 20
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    setback_rear_ft:
+      # Thirty feet, and PMD is the only district in this table that asks it.
+      value: 30
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1502-L1509"
+    setback_side_ft:
+      # Thirty feet on each side as well, which is the whole reason PMD is
+      # nine lots of interest rather than nine lots of opportunity: sixty feet
+      # of side yard on a district whose name is "medium density".
+      value: 30
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510-L1517"
+    min_building_separation_ft:
+      value: 10
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1526-L1533"
+    parking_min_per_unit:
+      # Table 1015-2, Quadplex row, ninth column ("All Other Zoning
+      # Districts"): "Same as multifamily dwelling". The multifamily rows are
+      # per bedroom and the ninth column reads 1, 1.25 and 1.5 down them. The
+      # quote takes the table title, all nine column heads, the three
+      # multifamily bedroom rows and the Quadplex row, because the value is
+      # reached by two hops and both have to be countable.
+      value: 1.5
+      cite: Clackamas ZDO Table 1015-2, Quadplex row, All Other Zoning Districts column, by way of the Multifamily Dwelling rows
+      url: https://www.clackamas.us/planning/zdo1015
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.1015.txt#L218,L220-L229,L303,L324-L333,L334,L343,L356"
+    notes: >-
+      Encoded 2026-09-08 from Table 315-4, the first reading of this table in
+      this layer. Nine lots.
+
+      NOT ENCODED, with reasons. DENSITY: Table 315-4 gives PMD a district
+      land area of 3,630 square feet per dwelling unit
+      (zdo.315.txt#L1462-L1469), which ZDO 1012.04(A) does not waive for a
+      quadplex in this district, so four units want 14,520 square feet of net
+      site area. Held out because this model has no field for a lot area per
+      dwelling unit and converting it to 12 units per acre would put a number
+      in the corpus that the county never printed -- and because OAR
+      660-046-0220(2)(b) forbids applying it in any case. Written out at the
+      head of this block. Maximum front setback reads "See Subsections
+      1005.02(E) and (H)" and ZDO 1005 is not held; a maximum front setback
+      can only refuse a lot the screen would otherwise pass, so its absence is
+      a withheld refusal rather than a false GREEN, and it is named here so
+      the fetch is orderable. Minimum density is "See Section 1012" and is not
+      a standard this screen reads.
+
+      Note 10 (a planned unit development has no interior rear or side
+      setback) is the only footnote on any PMD cell and is ruled in the
+      footnote file as another application path, the same treatment the R
+      zones give the identical sentence in Table 315-2.
+  MR1:
+    cite_default:
+      cite: Clackamas ZDO Section 315 Table 315-4 (Medium Density Residential)
+      url: https://www.clackamas.us/planning/zdo315
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, sixth column. A bare P.
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    min_lot_sqft:
+      # 845.01, as in every district in this county. Table 315-4 prints
+      # "None[1]" here and note 1 is about a nonconforming detached
+      # single-family lot, so it moves nothing for this building.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_height_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Maximum Building Height row, MR-1 column ("None"); Section 845 states no height for a quadplex
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1518-L1525"
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1502-L1509"
+    setback_side_ft:
+      # SEVEN, and the seven is a storey count, not a district figure. The
+      # cell reads "One story: five feet; two stories: seven feet; three
+      # stories: 15 feet. For each story higher than three, an additional five
+      # feet of yard depth shall be required." The pod is two storeys, which
+      # is a fact the design catalog holds rather than one the parcel data
+      # owes, so the ladder resolves here and not at screen time.
+      #
+      # Note 14 is the one that can move it, and it is held rather than
+      # encoded: "If the side lot line abuts an Urban Low Density Residential,
+      # VR-5/7, or VR-4/5 District, the minimum side setback for a two-story
+      # building is 10 feet." Whether this lot's side line abuts low-density
+      # land is `abuts_lower_density_zone`, which nothing measures. The note
+      # is ruled `unmeasured` on that fact in the footnote file, which caps
+      # this value: MR-1 cannot be called GREEN on a side setback until the
+      # adjacency is known. That is the same treatment Oregon City's nearly
+      # identical note 1 gets, and it is the honest one -- encoding 7 without
+      # the cap would pass lots that owe 10.
+      value: 7
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510-L1517"
+    min_building_separation_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-1 column ("None")
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1526-L1533"
+    parking_min_per_unit:
+      # Table 1015-2, Quadplex row, fourth column ("MR-1 & MR-2"): "Same as
+      # multifamily dwelling", and the multifamily rows read 1, 1.25 and 1.5
+      # per bedroom count in that column.
+      value: 1.5
+      cite: Clackamas ZDO Table 1015-2, Quadplex row, MR-1 & MR-2 column, by way of the Multifamily Dwelling rows
+      url: https://www.clackamas.us/planning/zdo1015
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.1015.txt#L218,L220-L229,L303,L324-L333,L334,L338,L356"
+    notes: >-
+      Encoded 2026-09-08 from Table 315-4. 839 lots, the largest unencoded
+      zone in either county before this commit.
+
+      THE SHAPE OF THIS DISTRICT IS THE OPPOSITE OF THE R ZONES ON PAPER AND
+      LOOSER THAN THEM ONCE THE STATE IS READ. There is no height ceiling
+      where every R zone has 35 feet, and there is a district land area the R
+      zones are excused from -- but OAR 660-046-0220(2)(b) forbids applying a
+      density maximum to a quadplex, so what actually binds is a lot size
+      floor, three setbacks and parking. That is looser than any R zone in the
+      county, which is the honest summary and not the one the table reads
+      like.
+
+      NOT ENCODED, with reasons. DENSITY: 3,630 square feet of district land
+      area per dwelling unit (zdo.315.txt#L1462-L1469), not waived here by ZDO
+      1012.04(A), so four units want 14,520 square feet of net site area
+      against the 7,000 Section 845 asks. Twice the lot size standard on 839
+      lots, and held out of the corpus for the two reasons written at the head
+      of this block: no field can hold a lot area per dwelling unit, and the
+      state forbids the standard anyway. If a field is ever added this is the
+      first zone that needs it. Maximum front setback is "See Subsections
+      1005.02(E) and (H)", unheld, and can only refuse. Minimum density is
+      "See Section 1012". Notes 3 (a swimming pool's front setback), 4 (a
+      corner lot developed with a townhouse), 5 (nonconforming detached
+      dwellings), 11 (a swimming pool's side and rear), 12 (accessory
+      buildings by area and height) and 15 (a townhouse with no common wall)
+      are ruled in the footnote file against other buildings. Note 10 is the
+      planned unit development path. Note 14 is `unmeasured` and caps the side
+      setback, which is written out at that field.
+  MR2:
+    cite_default:
+      cite: Clackamas ZDO Section 315 Table 315-4 (Medium High Density Residential)
+      url: https://www.clackamas.us/planning/zdo315
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, seventh column. A bare P.
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    min_lot_sqft:
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_height_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Maximum Building Height row, MR-2 column ("None"); Section 845 states no height for a quadplex
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1518-L1525"
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1502-L1509"
+    setback_side_ft:
+      # The same storey ladder as MR-1 and the same note 14, which caps this
+      # value the same way.
+      value: 7
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510-L1517"
+    min_building_separation_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-2 column ("None")
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1526-L1533"
+    parking_min_per_unit:
+      value: 1.5
+      cite: Clackamas ZDO Table 1015-2, Quadplex row, MR-1 & MR-2 column, by way of the Multifamily Dwelling rows
+      url: https://www.clackamas.us/planning/zdo1015
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.1015.txt#L218,L220-L229,L303,L324-L333,L334,L338,L356"
+    notes: >-
+      Encoded 2026-09-08 from Table 315-4. 120 lots. Reads as MR-1 throughout
+      except for the DLA, and carries one fewer footnote on its rear setback:
+      MR-1's cell is marked 5, 10, 11 and 12 and MR-2's is marked 5 and 10.
+
+      NOT ENCODED, with reasons: density (2,420 square feet of district land
+      area per dwelling unit, zdo.315.txt#L1462-L1469, so 9,680 square feet of
+      net site area for four units -- held out for the two reasons at the head
+      of this block), maximum front setback ("See Subsections 1005.02(E) and
+      (H)", unheld, refusal-only) and minimum density ("See Section 1012").
+  VA:
+    cite_default:
+      cite: Clackamas ZDO Section 315 Table 315-4 (Village Apartment)
+      url: https://www.clackamas.us/planning/zdo315
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, ninth column. A bare P. The Townhouses
+      # row reads X in the same column, which is the corroboration worth
+      # noting: this district takes the building we place and refuses the
+      # split-plat form of it.
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    min_lot_sqft:
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_height_ft:
+      # The one district in this table that states a height, and it states a
+      # generous one.
+      value: 45
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1518-L1525"
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    setback_front_max_ft:
+      # A MAXIMUM front setback, which is the standard shape that catches a
+      # pod pushed back off the street to make room for parking, and the only
+      # one in this table stated as a number rather than a cross-reference.
+      value: 18
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1494-L1501"
+    setback_rear_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Minimum Rear Setback row, VA column ("None")
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1502-L1509"
+    setback_side_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Minimum Side Setback row, VA column ("None")
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510-L1517"
+    min_building_separation_ft:
+      # Twenty feet between multifamily dwellings, which is a standard about
+      # two buildings and not about this one. Encoded anyway, at the number
+      # printed, because a second pod on the same lot is a form this screen
+      # will eventually be asked about and the figure should not have to be
+      # found twice.
+      value: 20
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1526-L1533"
+    parking_min_per_unit:
+      value: 1.5
+      cite: Clackamas ZDO Table 1015-2, Quadplex row, All Other Zoning Districts column, by way of the Multifamily Dwelling rows
+      url: https://www.clackamas.us/planning/zdo1015
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.1015.txt#L218,L220-L229,L303,L324-L333,L334,L343,L356"
+    notes: >-
+      Encoded 2026-09-08 from Table 315-4. One lot, and encoded at the same
+      care as the 839 because a district read carelessly is wrong at whatever
+      size it turns out to be.
+
+      Zero side and rear setbacks with a 45 foot ceiling and a maximum front
+      setback of 18 feet: this is a street-wall district, and the standard
+      most likely to bind here is the one we could not encode. Notes 6 and 7
+      sit on the front and rear cells. Note 6 is a site-specific rule for
+      frontage on Sunnyside Road -- 65 feet minimum and 75 feet maximum, both
+      measured from the CENTERLINE rather than the lot line, which is a
+      geometry no field in this model holds -- and it is ruled `unmeasured` in
+      the footnote file rather than dismissed, because whether this lot fronts
+      that road is a fact nobody has looked up. Note 7 lets awnings, porches
+      and bays project six feet into a minimum setback and is a relaxation, so
+      it is left unclaimed.
+
+      NOT ENCODED: density (1,500 square feet of district land area per
+      dwelling unit, zdo.315.txt#L1462-L1469, so 6,000 square feet of net site
+      area for four units -- which is below the 7,000 Section 845 asks, so
+      this is the one district of the four where the county's density standard
+      would not have bound anyway) and minimum density ("See Section 1012").

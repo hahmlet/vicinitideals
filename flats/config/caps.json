@@ -1,5 +1,65 @@
 {
   "or/clackamas/_unincorporated": {
+    "MR1": {
+      "max_height_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "min_building_separation_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_front_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_garage_entrance_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_rear_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_side_ft": [
+        "abuts_lower_density_zone"
+      ]
+    },
+    "MR2": {
+      "max_height_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "min_building_separation_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_front_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_garage_entrance_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_rear_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_side_ft": [
+        "abuts_lower_density_zone"
+      ]
+    },
+    "VA": {
+      "max_height_ft": [
+        "site_specific_limitation"
+      ],
+      "min_building_separation_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_front_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_front_max_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_rear_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_side_ft": [
+        "site_specific_limitation"
+      ]
+    },
     "VR45": {
       "max_coverage_pct": [
         "abuts_accessway"

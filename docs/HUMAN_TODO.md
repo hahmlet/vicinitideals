@@ -1501,18 +1501,29 @@ And the corpus is already carrying this debt — 173 of the 178 were read by a
 version of the reader we have since replaced twice, so *something* will move the
 next time anything is re-fetched regardless.
 
-**What it costs to leave it — and this changed while the item was being
-written.** The damaged table is Lake Oswego's, and the first draft of this item
-said it costs 93 lots today. Rebuilding the lot ledger the same afternoon
-showed that Lake Oswego is not being screened at all: **the whole city, 16,300
-lots, is switched off**, for reasons that are now item 16 below. So the honest
-cost is *nothing today and the commercial half of a 16,300-lot city the day
-that switch is flipped* — which makes this item cheaper to leave alone than it
-looked an hour ago, and makes item 16 the one that decides when it matters.
+**What it costs to leave it — and this moved twice in one day, the second time
+against us.** The damaged table is Lake Oswego's, and the first draft of this
+item said it costs 93 lots today. Rebuilding the lot ledger the same afternoon
+showed Lake Oswego is not being screened at all — **the whole city, 16,300
+lots, is switched off**, for reasons that are now item 16 below — so the cost
+looked like *nothing today* and the item looked cheap to leave alone.
 
-Indirectly the cost does not change: the same trap is waiting in the next city
-with a wide table, and it fails silently — the reader reports a clean page
-either way.
+Then encoding Clackamas County's medium-density districts the same evening
+found the second one, and it is the kind the check above **cannot see**. This
+item says in the paragraph above that a table of measurements with a blank in
+it would be damaged the same way and would not show up. One has. Clackamas
+County's Table 315-3 sets out standards for three zones side by side, and
+several of its rows — including the one giving the required distance from the
+back of the building to the rear property line — print **two** figures under
+**three** headings. Either the third zone has no such requirement, or its
+figure was thrown away and the other two slid over into the wrong columns. The
+text we stored cannot tell us which.
+
+**So the cost is no longer nothing.** It is **115 lots we cannot screen at
+all**, in a zone that permits our building, blocked today, and we cannot even
+confirm the reader is at fault without re-fetching the page — which is the
+thing this item is asking you to decide. Everything else about that district
+was readable and is now written down; this one row stopped it.
 
 **The choice.**
 
@@ -1524,15 +1535,18 @@ either way.
   makes the city's commercial half readable before anybody needs it. Leaves the
   rest of the corpus exactly as it is — including any measurement table that
   lost a blank without our being able to see it.
-- **Leave it until item 16 is answered.** Costs nothing now. If Lake Oswego
-  stays switched off this item never has to be paid at all; if it comes back on,
-  do it then, and do it as part of turning the city on rather than as its own
-  errand.
+- **Fix it and re-read only the two documents we know are affected** — Lake
+  Oswego's and Clackamas County's zoning ordinance. Cheap, moves little, and
+  unblocks the 115 lots as well as making Lake Oswego's commercial half
+  readable before anybody needs it.
+- **Leave it.** Costs 115 lots that stay unscreenable, plus whatever the next
+  wide table costs us silently.
 
-The last one is now what I would do, and only because item 16 exists. Without
-it I would have said do Lake Oswego first. The middle option stays reversible
-and stays the cheap way to learn what a re-fetch actually disturbs, so take it
-if you want that answer before committing to the other 128.
+**The middle option is now what I would do.** Yesterday I would have said wait
+for item 16, because the only known damage was in a city we are not screening.
+That is no longer true: there is damage in a county we *are* screening, it is
+blocking real lots, and two documents is a small enough re-read to learn what a
+re-fetch actually disturbs before committing to the other 127.
 
 ---
 
@@ -1734,6 +1748,24 @@ the list of places worth hoping about.
   districts; Tualatin's medium-high-density chapter turns out to be missing from
   our files entirely, ending at its own heading on the last line of the document
   that should have carried it.
+
+  **Five of the fourteen are done, the same evening — 1,046 lots including the
+  839.** Clackamas County's `MR-1`, `MR-2`, `PMD` and `VA` are encoded, and
+  `R-2.5` turned out to refuse our building outright, which is an answer rather
+  than work. Three things came back with them that were not the point of the
+  errand: the county states a density limit on all four that no Oregon
+  jurisdiction is allowed to apply — nearly missed, because the state rule's
+  own scope sentence says it does not cover counties and its definitions
+  section says it does; sixteen footnote decisions decayed exactly as the
+  2026-09-07 re-read predicted they would, one week early, because encoding a
+  district is what makes "we do not have that district" stop being true; and
+  the empty-box bug of item 15 turned up in a second document, where it now
+  blocks 115 lots. That last one changed my recommendation on item 15 and is
+  written up there.
+
+  **Nine districts left, and the cheapest is a fetch.** Three more Clackamas
+  districts — 286 lots — are blocked on one un-fetched chapter of the county
+  ordinance and nothing else.
 
 - **The 784 footnote dismissals were read back, blind, on 2026-09-07** — the
   run behind item 13, and the third of the three checks that stand over the

@@ -226,7 +226,12 @@ def test_the_gate_governs_this_layer_and_holds_nothing_back() -> None:
     # the layer's nine maximum densities under a note for the first time.
     # Seventy-four since ZDO 1015 was read for parking, which brought a
     # quadplex parking minimum and the five notes of Table 1015-2 with it.
-    assert len(rows) == 74
+    # A hundred and seven since 2026-09-08, when PMD, MR-1, MR-2 and VA were
+    # encoded and Table 315-4's sixteen notes reached all of them at once. A
+    # floor from here: the two assertions under it are what this test is for,
+    # and an equality that has to be edited on every commit is one nobody
+    # reads.
+    assert len(rows) >= 107
     assert not any(r.blocking for r in rows)
     assert not any(n.state == "unread" for r in rows for n in r.governing)
 

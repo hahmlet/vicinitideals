@@ -123,8 +123,16 @@ def test_the_eight_districts_print_the_same_sentence_so_position_names_the_colum
     assert ours[0] == "All other buildings, including accessory dwelling units: 35 feet"
     # Eight columns in the header, in the order the cells follow.
     assert lines[1142:1150] == ["R-2.5", "R-5", "R-7", "R-8.5", "R-10", "R-15", "R-20", "R-30"]
-    # And FLATS holds no R-2.5, so the first pair is skipped rather than lost.
-    assert "R2.5" not in load_rules()[CLACKAMAS].zones
+    # And the first pair is still skipped, for a better reason than when this
+    # was written. It used to be skipped because FLATS held no R-2.5 at all,
+    # which made the skip a gap rather than a decision. R-2.5 was encoded on
+    # 2026-09-08 and Table 315-1 refuses the quadplex in it outright, so the
+    # district has a height cell and no building to measure against it. A
+    # height on a zone that refuses the use would be a number nothing reads.
+    zones = load_rules()[CLACKAMAS].zones
+    assert "R2.5" in zones
+    assert zones["R2.5"].values["quadplex_allowed"].value is False
+    assert "max_height_ft" not in zones["R2.5"].values
 
 
 def test_the_low_density_height_row_carries_no_footnote_marker(lines: list[str]) -> None:
@@ -200,7 +208,7 @@ def test_and_the_gate_that_governed_nothing_here_now_governs_all_of_it(
 ) -> None:
     """The fault this pins is not a wrong number, it is a check that could not
     run. Every other layer's values are held back when a note above them is
-    unread; this layer's would have certified under all 305. Seventy-three are
+    unread; this layer's would have certified under all 305. All of them are
     governed now, and none of them blocked -- every note was read and ruled.
 
     Nine of them arrived later than the rest. ZDO 1012 prints the notes under
@@ -209,12 +217,21 @@ def test_and_the_gate_that_governed_nothing_here_now_governs_all_of_it(
     welded run allowed to open one, its region reaches back over the general
     density paragraph that every maximum density quotes.
 
-    The seventy-fourth is the quadplex parking minimum, read out of ZDO 1015 on
+    Another was the quadplex parking minimum, read out of ZDO 1015 on
     2026-08-27, and it is governed by all five notes of Table 1015-2 -- only
     two of which are about a quadplex at all. That is the region rule being
-    conservative, and it is the same rule that made this test worth writing."""
+    conservative, and it is the same rule that made this test worth writing.
+
+    The count was 74 until 2026-09-08 and is 107 now, because Table 315-4's
+    four districts were encoded and every value in them falls under that
+    table's sixteen notes. The number is asserted as a floor from here rather
+    than as an equality: what this test is for is a governed value becoming an
+    ungoverned one, and the count rises whenever anybody encodes anything. It
+    went red once already for the right reason -- adding a zone is supposed to
+    move it -- and an equality that has to be edited on every commit is an
+    assertion nobody reads."""
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
-    assert len(rows) == 74
+    assert len(rows) >= 107
     assert not any(r.blocking for r in rows)
 
 

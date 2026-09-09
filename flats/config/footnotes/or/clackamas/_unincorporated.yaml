@@ -655,122 +655,178 @@ notes:
       feet into the minimum rear setback over an alley. A different building,
       and a projection allowance
 
-  # --- Table 315-4, the districts this layer does not hold ---
+  # --- Table 315-4, RE-RULED 2026-09-08 ------------------------------------
+  #
+  # These sixteen notes were dismissed as a block on 2026-08-21 with a reason
+  # that was true when it was written and is not true now: "Table 315-4 governs
+  # PMD, MR-1, MR-2, HDR, VA, SHD and RCHDR. This layer holds none of them."
+  # This layer holds four of them from 2026-09-08.
+  #
+  # That is the exact failure the dismissal re-read of 2026-09-07 went looking
+  # for and the reason `stale.py` exists: a reason that argues about OUR corpus
+  # rather than about the code decays the moment somebody encodes the district,
+  # and it decays silently, because a dismissal is not re-derived. Forty-nine
+  # dismissals in this corpus argue that way. Sixteen of them were here, and
+  # encoding four districts is what came for them.
+  #
+  # Every one is re-read against the building. Fourteen are dismissed again on
+  # a reason about the note rather than about us, and two are not dismissals at
+  # all: note 6 and note 14 both tighten a value we now carry.
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1535"
     digest: "79986fec9889"
     state: dismissed
     reason: >-
-      Table 315-4 governs PMD, MR-1, MR-2, HDR, VA, SHD and RCHDR -- the
-      medium and high density districts. This layer holds none of them:
-      its nine zones are the eight urban low density districts of Table
-      315-2 and the two village districts of Table 315-3. Read in full and
-      dismissed as a block, because a note cannot reach a value in a
-      district the note's own table does not cover. This one:
-      nonconforming detached single-family lot size, 3,630 square feet
+      note 1 sets the minimum lot size for a lot developed with a detached
+      single-family dwelling classified as a nonconforming use at 3,630 square
+      feet in MR-1. A nonconforming detached dwelling is not four attached new
+      ones, and the number it states is smaller than the 7,000 Section 845.01
+      asks of a quadplex, so it could only ever relax
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1537"
     digest: "f241cefcdb55"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: the same at 2,420 square feet
+      note 2 is note 1 for MR-2 at 2,420 square feet, and is dismissed for the
+      same two reasons: a different building, and a looser number
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1539"
     digest: "809fce9a70b9"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: a swimming pool accessory to
-      a dwelling, front setback 10 feet
+      note 3 gives a swimming pool accessory to a dwelling a 10 foot front
+      setback instead of 15. An accessory structure we are not placing, and a
+      relaxation of a standard we hold at the stricter figure
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1541"
     digest: "da23e47852bb"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: a corner lot developed with a
-      townhouse
+      note 4 halves the front setback on one front lot line of a corner lot
+      "developed with a townhouse". The pod is a quadplex on one lot, not a
+      townhouse, and Table 315-1 refuses townhouses in PMD and VA outright,
+      so this reaches MR-1 and MR-2 only in a form we do not build
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1543"
     digest: "ef7be25e802e"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: sends detached dwellings back
-      to Table 315-2
+      note 5 sends detached single-family dwellings that are nonconforming
+      uses, and structures accessory to them, back to Table 315-2's setbacks.
+      Neither describes this building
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1545"
     digest: "75dd43e1bdcd"
-    state: dismissed
+    state: unmeasured
+    fact: site_specific_limitation
+    zones: [VA]
     reason: >-
-      Table 315-4, another district's table: frontage on Sunnyside Road,
-      measured from the centerline
+      note 6 TIGHTENS, and it is the one live footnote on the VA column. "If
+      the front or rear lot line abuts Sunnyside Road, the minimum setback
+      shall be 65 feet from the centerline of Sunnyside Road, and the maximum
+      setback shall be 75 feet." VA's own front setback is 10 feet and its rear
+      is none, so a lot on that road is governed by a different standard
+      entirely -- and one measured from a road centerline, which is a geometry
+      no field in this model holds. Whether a given VA parcel fronts Sunnyside
+      Road is a per-parcel fact nobody has looked up. Held rather than
+      dismissed: this can only withhold a GREEN, which is the right direction
+      for a standard we can neither apply nor rule out
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1547"
     digest: "d6d21825d34e"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: awnings, porches and bays
-      projecting six feet
+      note 7 lets awnings, porches and bays extend six feet into a minimum
+      setback in VA. A projection allowance, which relaxes, and is left
+      unclaimed the way every projection allowance in this layer is
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1549"
     digest: "0733dad8df78"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: dwellings and their accessory
-      structures, front setback 15 feet
+      note 8 gives dwellings and their accessory structures a 15 foot front
+      setback and no maximum, in place of RCHDR's 5 foot minimum and 20 foot
+      maximum. RCHDR is not encoded -- its rear and side setbacks are a
+      cross-reference to ZDO 1005, which is not in the store -- so this note
+      governs no value here. Recorded as scope, not as relevance: if RCHDR is
+      ever encoded this note has to be read again, and it TIGHTENS the minimum
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1551"
     digest: "692e7300cf2c"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: plazas on the Clackamas
-      Regional Center design plan map
+      note 9 lets RCHDR's maximum front setback be exceeded to accommodate
+      plazas on a Comprehensive Plan map. RCHDR is not encoded, and the note
+      relaxes a maximum
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1553"
     digest: "2194504c3358"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: a planned unit development's
-      interior setbacks
+      note 10 removes the rear and side minimums inside a planned unit
+      development, except on the perimeter of the final plat. A different
+      application path, and a relaxation available only through it -- the same
+      ruling this layer already gives the identical sentence at Table 315-2
+      note 8 and Table 315-3 note 21
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1555"
     digest: "14a01da44c72"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: a swimming pool's side and
-      rear setbacks
+      note 11 gives a swimming pool accessory to a dwelling five foot side and
+      rear setbacks, or fifteen where the lot line abuts a low density or
+      village district. An accessory structure we are not placing
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1557"
     digest: "592c5fe4c648"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: an accessory building's
-      setbacks by area and height
+      note 12 is the accessory building setback table, keyed on building area
+      and height, and its largest cell sends a building over 200 square feet
+      back to the primary dwelling's own setbacks. Accessory buildings, and
+      the pod is the primary one
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1564"
     digest: "e787a80395b8"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: a rear lot line abutting a
-      residential district
+      note 13 sets a 20 foot rear setback where an RCHDR lot's rear line abuts
+      a residential district other than HDR, SHD or RCHDR. RCHDR is not
+      encoded. Recorded as scope: this TIGHTENS, and has to be read again
+      before RCHDR is written
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1566"
     digest: "9e115ceea8df"
-    state: dismissed
+    state: unmeasured
+    fact: abuts_lower_density_zone
+    zones: [MR1, MR2]
     reason: >-
-      Table 315-4, another district's table: a side lot line abutting a
-      low density or village district
+      note 14 TIGHTENS the number this commit encoded. "If the side lot line
+      abuts an Urban Low Density Residential, VR-5/7, or VR-4/5 District, the
+      minimum side setback for a two-story building is 10 feet." The pod is
+      two storeys, so MR-1 and MR-2 carry seven feet from the storey ladder in
+      the cell and owe ten wherever the neighbour is low-density land. Which
+      of the two applies is `abuts_lower_density_zone`, and no adjacency layer
+      is held for Clackamas County. So the value stands at seven and cannot
+      certify: 959 lots sit under a side setback we can state and cannot
+      confirm. Narrowed to MR-1 and MR-2 because the marker sits on those two
+      cells alone -- PMD's side cell is a bare 30 and VA's is a bare None
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1568"
     digest: "8de4641ed247"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: a townhouse's side setback
-      where no common wall is shared
+      note 15 gives a townhouse five feet from any side lot line where two
+      townhouses do not share a common wall. A different building, and the
+      plat form Table 315-1 refuses in two of the four districts encoded here
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1570"
     digest: "8a5fef80c712"
     state: dismissed
     reason: >-
-      Table 315-4, another district's table: a side lot line abutting a
-      residential district
+      note 16 sets a 15 foot side setback where an RCHDR lot's side line abuts
+      a residential district other than HDR, SHD or RCHDR. RCHDR is not
+      encoded. Recorded as scope: this TIGHTENS, and has to be read again
+      before RCHDR is written
 
   # --- Table 315-1, notes 24 to 30 -------------------------------------
   #
