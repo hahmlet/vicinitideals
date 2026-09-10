@@ -178,15 +178,36 @@ readings:
     fingerprint: 3fff08ddf77729c4
   "19.500.supplementary.txt#19.501.1":
     queue: condition
-    outcome: never
+    outcome: cant_tell
     note: >-
-      The applicability sentence of Milwaukie's supplementary development standards, and the
-      condition on it is a date: the standards of this section apply to a single detached dwelling
-      on a lot created after June 3, 2022. Two separate reasons it cannot reach this pod. The
-      building is four attached units, not a single detached dwelling, so the subject of the
-      sentence is a different housing type. And the qualifier is a lot-creation date, which is
-      exactly the kind of parcel history this pipeline holds nothing about -- but it does not need
-      to, because the housing-type gate closes first and closes on its own.
+      CORRECTED 2026-09-10 -- this card previously read `never`, on the reason that 19.501.1
+      "applies to a single detached dwelling on a lot created after June 3, 2022" and so could not
+      reach a four-unit building. That is limitation B of the section, not the section. The
+      section's own sentence is general: "Any legal lot or lot of record that does not meet the
+      area or dimensional requirements specified in Chapter 19.300 may be put to a use permitted
+      by the requirements of the Zoning Ordinance", and 19.501 heads its list "by right
+      exceptions" that "require no special review or approval by the City to implement". A
+      quadplex is P in Table 19.301.2 (L35), so it is a use permitted; limitation B puts a 5,000
+      sq ft floor under SINGLE DETACHED dwellings only, which is a narrowing of one case and not
+      the subject of the sentence. Limitation A keeps every other Title 19 standard in force, so
+      setbacks, height, coverage, parking and design are untouched -- what is excepted is the LOT,
+      and Table 19.301.4 heads exactly those rows "B. Lot Standards": minimum lot width, minimum
+      lot depth, minimum street frontage. The table itself prints "Subsection 19.501.1 Lot Size
+      Exceptions" against that block. So on an existing lot of record in R-MD or R-HD the four
+      figures this corpus holds -- 3,000 sq ft, 60 ft wide, 80 ft deep, 35 ft of street frontage
+      -- are excepted by right, and the pod is held only by the building standards. Milwaukie's
+      version is BROADER than the same provision elsewhere: Gresham Table 4.0130 note 2 and
+      Clackamas ZDO 315/316 note 1 except the minimum lot SIZE alone, where "area or dimensional
+      requirements" here reaches width, depth and frontage too. Ruled cant_tell rather than
+      applies, and NOT encoded, because the qualifier is "legal lot or lot of record" -- whether a
+      given tax lot was lawfully created is parcel history this pipeline holds nothing about.
+      Almost every parcel we screen is one; almost is not a measurement, and this is the
+      fourth-footnote-state shape (read, waiting on data) that transit, corner, alley and sewer
+      already sit in. Leaving it unencoded is the conservative direction and matches Gresham's
+      recorded reason there -- "a relief nobody can select is better left out than assumed" -- so
+      the exposure is possible false REDs in Milwaukie, never a false GREEN. What changes is the
+      record: the old reason was checkable and wrong, and a wrong reason on a closed card is the
+      failure this queue exists to prevent.
     fingerprint: 3c1e314eff97b8c6
   "19.500.supplementary.txt#19.502.3":
     queue: condition
