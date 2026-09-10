@@ -11,6 +11,58 @@ notes: >-
   ORS 197.307(4), operative 2025-07-01) requires local governments to apply only
   clear and objective standards to housing development, which is what makes this
   screen tractable at all.
+readings:
+  "oar.660-046-0220.txt#660-046-0220":
+    queue: condition
+    outcome: applies
+    note: >-
+      The state siting rule for Large Cities, and every jurisdiction in this corpus is one --
+      inside Metro and over a thousand people, which is the second limb of the -0020 definition.
+      So it reaches, and the answer is not that it does not. Of the five statements on this card,
+      three are other building types and two are answered by arithmetic rather than by reading.
+      Line 76 is the TRIPLEX parking tier, three spaces at 5,000 square feet; the quadplex tier is
+      four lines further down and is already encoded here in full, one space under 3,000, two to
+      5,000, three to 7,000 and four above, with preempts: cap so a city asking more is clipped
+      and a city asking none keeps none. That also settles a question left open on 2026-09-08:
+      Troutdale's four spaces for a quadplex on a lot of 7,000 square feet or more is not a
+      conflict with the state ceiling, it IS the state ceiling. Lines 118, 166 and 169 are the
+      townhouse and cottage-cluster halves of the rule -- a 20-foot cap on a minimum street
+      frontage standard, cottage cluster perimeter setbacks, a 900 square foot footprint per
+      cottage -- and all three are caps on what a city MAY require, so each can only widen the set
+      of lots that pass. Line 61 is the one that governs this building: a Large City may not apply
+      a lower maximum height to a quadplex than to a detached house in the same zone, and in no
+      case a maximum below 25 feet or two stories. Checked rather than assumed: of the 144 zones
+      in this corpus carrying a height, the lowest is exactly 25 and it is Lake Oswego's R-W, in
+      the one city switched off. The pod stands 26 feet. So the floor cannot lift any lot to where
+      the pod fits, and the parity limb is the same arithmetic from the other side. It is recorded
+      as NOT ENCODED in the state layer with that count in it, and the card is ruled applies
+      rather than closed for a reason that is about the model and not about the reading: preempts:
+      cap states the strictest a local layer may be, and on a maximum strictest means lowest, so
+      writing 25 as a cap would clip every ceiling in Oregon down to 25 instead of lifting the
+      short ones up to it. There is no third preemption shape for a floor under a maximum. Adding
+      one to express a rule that moves nothing today is a change with no evidence behind it; the
+      day a zone is encoded below 26 feet, this sentence is what rescues it and the shape is owed
+      then. The card stays open holding that.
+    fingerprint: 14ec08a20c07666e
+
+  "oar.660-046-0020.txt#660-046-0020":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      One line of the state's middle housing definitions, and it is the wrong building: "Cottage
+      Cluster means a grouping of no fewer than four detached dwelling units per acre with a
+      footprint of less than 900 square feet each that includes a common courtyard." Detached
+      units around a courtyard, capped at 900 square feet of footprint apiece. This project places
+      one attached four-unit structure, which OAR 660-046-0010 defines separately as a quadplex,
+      and the state layer already carries the quadplex limbs of this rule -- the parking cap at
+      660-046-0220(2)(e)(B) is encoded here as a preempts:cap. A definition of a housing type we
+      do not build states nothing about the one we do. Worth one further sentence, because
+      660-046-0020 is the APPLICABILITY rule and this project has been caught by its scope before:
+      subsection (8) reaches unincorporated county land only where it is "provided with sufficient
+      urban services" inside an urban service district boundary, a line no parcel record carries,
+      and that limitation is already written into the unincorporated Multnomah parking note.
+      Nothing on this card changes it.
+    fingerprint: c0ba9aa075b8d890
 code:
 # oregon.public.law serves each OAR rule as one page. 660-046-0220 is the
 # Large City siting standard: its (2)(e)(B) parking tier caps what any Large
@@ -272,3 +324,36 @@ defaults:
   # MAY let a space at the kerb count against the requirement, which can only
   # ever help a lot and never hurt it, so leaving it out is the conservative
   # direction. Quote: or/oar.660-046-0220.txt#L93-L94.
+  #
+  # NOT ENCODED: OAR 660-046-0220(2)(d), Height. Two limbs, and both were
+  # checked against the corpus on 2026-09-09 rather than argued about. "A Large
+  # City may not apply lower maximum height standards than those applicable to
+  # detached single-family dwellings in the same zone" is a parity rule that can
+  # only ever RAISE a ceiling we hold, and "except a maximum height may not be
+  # less than 25 feet or two stories" is a floor under every ceiling in the
+  # state. Neither can move a verdict here: of the 144 zones in this corpus that
+  # carry a height, the lowest is exactly 25 -- Lake Oswego's R-W, in the one
+  # city switched off -- and the pod stands 26 feet, so there is no lot in
+  # either county whose height is low enough for a 25-foot floor to lift it far
+  # enough. The parity limb is the same arithmetic from the other side: it can
+  # only help a zone that prints a lower row for plexes than for houses, and no
+  # such row in this corpus is under 26.
+  #
+  # It is also not expressible. `preempts: cap` states the STRICTEST a local
+  # layer may be, and the direction is read off the field -- on a maximum,
+  # "stricter" is lower, so writing 25 with `cap` would clip every ceiling in
+  # Oregon down to 25 rather than lifting the short ones up to it. Saying "a
+  # maximum may not be less than X" needs a third preemption shape the model
+  # does not have, and adding one to express a rule that changes nothing today
+  # is a change with no evidence behind it. If a zone is ever encoded below 26
+  # feet, this is the sentence that rescues it and the shape is owed then.
+  # Quote: or/oar.660-046-0220.txt#L60-L61.
+  #
+  # NOT ENCODED: OAR 660-046-0220(3)(b), the 20-foot cap on a minimum street
+  # frontage standard for Townhouses, and (3)(a), the average minimum lot size.
+  # Both reach only the split-plat path, where the four units sit on four lots,
+  # and both are relaxations on it. The frontage cap is the one worth a second
+  # look -- 20 feet per townhouse lot against Milwaukie's 45-foot plex figure is
+  # a different rule for the same four units -- but a cap on what a city MAY ask
+  # can only widen the set of lots that pass. Quote:
+  # or/oar.660-046-0220.txt#L114-L118.

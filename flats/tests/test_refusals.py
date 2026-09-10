@@ -261,7 +261,31 @@ pytestmark = pytest.mark.unit
 #:
 #: Worth saying because the direction is counter-intuitive: closing a zone gap
 #: RAISES this count. A district nobody encoded refuses nothing.
-EXPECTED = {"notes": 120, "comments": 130, "tests": 17}
+#:
+#: comments 130 -> 133 on 2026-09-09, and the net of three is four added and
+#: one RETIRED, which is the first time a row has left this ledger for the
+#: right reason. The four:
+#:
+#:   or/_state, two. OAR 660-046-0220(2)(d)'s height parity rule -- a Large
+#:   City may not hold middle housing to a lower ceiling than a detached house
+#:   in the same zone -- can only ever raise a limit, so the conservative
+#:   default declines it; and (3)(b)'s 20-foot cap on a townhouse minimum
+#:   street frontage, with (3)(a)'s average minimum lot size beside it, are
+#:   both standards about a townhouse subdivision rather than a pod on a lot.
+#:
+#:   Wilsonville, two, and both are the same refusal to guess. One is the
+#:   split-path question underneath the 15 percent landscaping default; the
+#:   other is TC, where a four-column table would have to be picked from to
+#:   move a zone whose quadplex_allowed is false and which therefore no screen
+#:   ever reaches. Inventing a number to fill a cell nobody reads is how the
+#:   invented numbers of the provenance audit got there.
+#:
+#: The retirement is Portland's: 33.120.240.B.2's required COMMON area used to
+#: be refused because the model had nowhere to put a per-site area that turns
+#: off above 20,000 square feet, and on 2026-09-09 it was encoded instead. A
+#: refusal that leaves because the model grew is the only kind worth
+#: celebrating, and it is why this count is asserted rather than floored.
+EXPECTED = {"notes": 120, "comments": 133, "tests": 17}
 #
 # 258 -> 267 on 2026-09-08, later still, and every one of the nine is Oregon
 # City's non-residential side. Nine notes, no comments, which is itself the

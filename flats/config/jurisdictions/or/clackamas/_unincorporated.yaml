@@ -168,6 +168,324 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+readings:
+  "zdo.1015.txt#1015.03":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Two blocks, neither ours. The first is bicycle parking design -- seventy-five percent of
+      spaces within fifty feet of a public entrance, half of them covered when more than seven are
+      required, half of the covered ones enclosed when more than fifteen are required, all of them
+      illuminated. Quadplexes are named there, in the sentence requiring all their bicycle spaces
+      to be covered, and that is still a rule about a rack rather than about the lot. The second
+      is the non-residential half of Table 1015-3: one space per 2,500 square feet of retail up to
+      fifty thousand, one per additional five thousand, one per forty theatre seats, one per ten
+      thousand square feet of warehouse. The residential rows of the same table are already quoted
+      by this file's parking encoding. The footnote that minimums outside the UGB are twenty
+      percent of the listed requirement is a relaxation, and this county's screened land is inside
+      the boundary in any case.
+    fingerprint: 6cac6559d4cb7925
+
+  "zdo.1012.txt#1012.07":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The section heading answers it: 1012.07 is "Maximum Density For Duplexes In The RA-1
+      District", and the 43,560 square feet per dwelling unit on the line is the acre that a
+      duplex approved as a conditional use in RA-1 is measured against. Wrong building, wrong
+      district and wrong approval path all at once. It reached a minimum-lot-size field only
+      because the sentence spells out a square footage per dwelling unit.
+    fingerprint: 462b55b7fa3566c1
+  "zdo.1012.txt#1012.05":
+    queue: condition
+    outcome: never
+    note: >-
+      The net-developable-area subtractions -- how much of a site is deducted for steep slopes,
+      floodplain, wetland and right of way before density is computed. It is a real and careful
+      piece of code and it cannot change a number this screen holds, for a reason worth writing
+      down: a net-area rule is arithmetic in service of a density standard, and no density
+      standard survives in the quadplex zones of this county. Every zone here that permits a
+      quadplex either states no maximum density or has it struck out by OAR 660-046-0220(2)(b),
+      which the state layer encodes as exempt and preempting always; and no zone in this layer
+      states a minimum density at all. Verified against the loaded corpus rather than assumed:
+      thirteen quadplex-permitting zones, none with a density number of either kind left standing.
+      Subtracting acreage from a denominator that feeds no numerator changes nothing.
+    fingerprint: 06d414ac372fd07f
+  "zdo.1012.txt#1012.08":
+    queue: condition
+    outcome: never
+    note: >-
+      Density bonuses -- the increases a proposal may earn for stated site or design commitments.
+      Two independent reasons this cannot move a verdict. A bonus raises a ceiling, and reading a
+      ceiling raise can only let more building through, never less, so leaving it unread fails
+      lots in rather than out. And the ceiling it would raise is not there: no zone in this county
+      layer that permits a quadplex has a maximum density left standing, because the state
+      preemption strikes it, and none states a minimum. A bonus on a standard that does not apply
+      is a number with nothing to modify.
+    fingerprint: 86bd9c953e2c10f7
+  "zdo.845.txt#845.04":
+    queue: condition
+    outcome: never
+    note: >-
+      Every statement on this card sits inside 845.04, Cottage Clusters, and the section's own
+      text says so from several directions: a maximum ground floor area of 900 square feet per
+      dwelling, a maximum average of 1,400, a six-foot minimum separation between dwellings,
+      courtyard orientation for at least half of them, and a parking rule written for developments
+      of "16 or more cottages". The 10-foot front and rear and five-foot side minimums at line 137
+      are the cottage cluster's yard set, not the quadplex's. The one line worth flagging in
+      passing is the parking placement rule -- no off-street space within 10 feet of a rear or
+      side lot line, and none within 10 feet of a front lot line or in front of the nearest
+      dwelling's facade -- because a rule of that shape would take real area out of a small lot.
+      It governs cottage clusters. The quadplex's own standards are in 845.02, a different
+      subsection with a different card.
+    fingerprint: 6b0bc42a6d70b10c
+  "zdo.510.txt#510.05":
+    queue: condition
+    outcome: applies
+    note: >-
+      Kept open deliberately: this is ordered work, not a question. Section 510 governs eleven
+      urban commercial and mixed-use districts -- NC, C-2, RCC, RTL, CC, C-3, PMU, SCMU, OA, OC
+      and RCO -- and notes 12 and 14 to Table 510-1 put freestanding quadplexes in them on the
+      dimensional standards of the RCHDR and HDR districts respectively. Of those eleven, only NC,
+      C-2 and OA exist in this layer at all and none of the three carries a dimension from this
+      table, so the whole of 510 is unencoded land. The conditions on this card are the shape that
+      has produced two real fixes this week: notes 10 through 20 to Table 510-2 are neighbour-zone
+      step-ups, and they are steep. Note 12 makes a zero rear setback 15 feet plus one foot for
+      every foot of height over 35 where the rear lot line abuts a residential district; note 14
+      makes it 35 feet plus the same ratio; note 13 asks 10 feet up to 25 feet of height and 20
+      above it where the neighbour is Urban Low Density Residential, VR-4/5 or VR-5/7; notes 15 to
+      18 do the same on the side, from 15 feet to 35; note 19 caps building height at 35 feet
+      where the property abuts a residential district. A zero setback that becomes 35 feet on the
+      neighbour's zoning is not a footnote, it is the standard, and `abuts_residential_zone`
+      already exists to carry it. Two things have to happen before any of it can be encoded.
+      First, the districts themselves: SCMU's dimensions are stated by reference to Subsection
+      1005.09 and PMU's by Table 510-3, both of which are separate reading jobs already on the
+      queue. Second, and found on this card: Table 510-2's stored header prints ten district names
+      for eleven columns of cells, having dropped SCMU from between PMU and OA. Counting into that
+      header read SCMU's "100 feet" minimum street frontage as OA's -- a number for a district
+      whose own cell is blank, with a citation pointing at exactly the right line. The table
+      reader now refuses a row wider than its header rather than shifting it, so nothing can be
+      encoded off this table by counting until the header is repaired at the source. Encoding
+      these eleven districts by hand, against the applicability clause in 510.02 rather than
+      against the header, is the job this card is holding open.
+    fingerprint: 859334521615ea1b
+  "zdo.316.txt#316.04":
+    queue: condition
+    outcome: never
+    note: >-
+      Table 316-2's dimensional standards -- 30-foot front and rear setbacks, 10-foot sides, a 40
+      percent coverage cap in one column -- belong to the five rural residential districts of ZDO
+      316, and all five were read on 2026-09-08 and all five REFUSE this use. The refusals are
+      encoded rather than omitted, which is what makes this card answerable: a dimension for a
+      district that prohibits the building cannot change a verdict the use table has already
+      decided. Worth recording why the whole chapter was read rather than skipped on the instinct
+      that it is rural land: OAR 660-046 does not reach unincorporated county territory, so
+      "inside the Metro UGB" is the test that comes to mind first and it is the wrong one. The
+      3,676 lots behind those five districts were the largest unread block in either county and
+      they are closed on the use, not on the geography.
+    fingerprint: 56cf49d8f7a390cd
+  "zdo.1015.txt#1015.02":
+    queue: condition
+    outcome: never
+    note: >-
+      Nothing here changes a number this file holds, because the chain it belongs to was followed
+      to the end on 2026-08-27 and read off the drawing on 2026-09-03. ZDO 1015.02(A)(2) sets a
+      floor of 8.5 feet by 16 for an automobile parking space and 8.5 by 22 for a parallel one;
+      (A)(3) requires at least 25 percent of required spaces to be no larger than 8.5 by 16;
+      (A)(4) sends curb length, stall depth and aisle width to the Clackamas County Roadway
+      Standards, which at 320.3(a) send them on to Standard Drawings P100 and P200. Both sheets
+      are stored, both yield only their title blocks, and those title blocks are where the two
+      stall sizes are written rather than drawn: P100 is 9 by 18 and P200 is 8.5 by 16. This layer
+      already encodes 9 by 18 and a 24-foot aisle, with the reasoning stated in the file -- four
+      spaces, at least one of them compact, and no rule anywhere choosing the size of the other
+      three, so the larger is taken and the error runs toward a lot called too tight rather than a
+      lot called buildable that is not. The remaining statements on the card are operational
+      rather than dimensional: the carpool space, the four-inch tire stop, the ban on parking
+      directly onto a circulation aisle in a lot over an acre, the ground-cover planting in front
+      of a tire stop. None of them sizes a stall or a court.
+    fingerprint: 8e2d95a3ac62fd3b
+  "zdo.315.txt#315.04":
+    queue: condition
+    outcome: cant_tell
+    note: >-
+      Forty-two statements and exactly one of them is a tightening that reaches this building.
+      Table 315-4 is seven districts wide -- PMD, MR-1, MR-2, HDR, VA, SHD, RCHDR -- and four of
+      them are held. Sorted by column and row rather than by keyword, because the notes on this
+      page are attached to cells and reading them off the page order would put a swimming pool's
+      setback on a quadplex. The Minimum Side Setback cells for MR-1 and MR-2 both read "One
+      story: five feet; two stories: seven feet; three stories: 15 feet" and carry markers 5, 10,
+      11, 12, 14, 15 and 5, 10, 14, 15. The pod is two storeys, so the encoded 7 is the right
+      cell, and Note 14 is the one that moves it: "If the side lot line abuts an Urban Low Density
+      Residential, VR-5/7, or VR-4/5 District, the minimum side setback for a two-story building
+      is 10 feet." Three feet on each side, six feet of lot width, on the two zones in this layer
+      a pod can actually be built in. It is already carried the safe way -- caps.json holds
+      setback_side_ft for both MR1 and MR2 against abuts_lower_density_zone, so no lot can go
+      green on the seven-foot figure while the neighbour's zoning is unanswered. That is why this
+      is filed as depending on the site rather than closed: the condition is real, it tightens,
+      and it is answerable by data rather than by more reading. Neighbour-zone adjacency was moved
+      onto the computable list on 2026-09-08 and this is another 959 lots' worth of reason to
+      compute it. Everything else on the card is one of four other things. Other building types:
+      the swimming pool setbacks at notes 3, 7 and 11; the accessory-building setback tables at
+      lines 1275-1276, 1386-1393 and note 12, and note 24's height for accessory buildings over
+      100 square feet -- this project has no accessory structure, settled on 2026-09-08; note 1's
+      ten-foot rear setback, which names detached single-family dwellings, duplexes, manufactured
+      homes, prefabricated structures and single room occupancy and stops there; and note 5, which
+      sends detached single-family dwellings to Table 315-2 and no one else. Other districts: the
+      lot-size ladders at lines 1152-1159 and 1292-1295 and the district land area figures at
+      1463-1468 belong to the Urban Low Density Residential tables. The split-plat path: notes 4
+      and 15 and the 3,630 and 2,420 square foot townhouse lot sizes at line 1086, and note 15 in
+      particular is looser than what we hold -- five feet on a townhouse's unshared side against
+      the seven this layer charges. And relaxations, which the conservative default declines: note
+      10 removes rear and side setbacks inside a planned unit development except on the plat
+      perimeter, note 19 exempts a dwelling on a lot with less than 35 feet of street frontage
+      from the maximum front setback, and note 8's "there shall be no maximum setback" sits on
+      RCHDR, which this layer does not hold. Note 13 and note 16 are the same neighbour-zone shape
+      as note 14 and would matter a great deal, but both sit on RCHDR's cells -- rear and side
+      respectively -- and RCHDR is one of the two districts still blocked on Subsection
+      1005.02(L)'s solar angle, which needs the bearing of every lot line.
+    fingerprint: b2b56838b7f350ae
+  "zdo.1005.txt#1005.04":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Clackamas County's outdoor lighting standards. Two measuring lines and both are about the
+      light fixture rather than the building: pole-mounted fixtures are capped in height and must
+      be "compatible with the scale and intensity of uses they are serving", and entrance lighting
+      "may not exceed a height of 12 feet and must be directed downward". A pole is not a
+      structure this screen places and its height competes with nothing -- it does not take
+      footprint, it does not take setback, and no verdict in this project turns on it. The
+      subsection's own exemption list at 1005.04(A)(2) was read for the same reason the rest was
+      and adds nothing either way.
+    fingerprint: 38fedbacbbcbe927
+  "zdo.1005.txt#1005.05":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      ZDO 1005.05, Additional Requirements, and its first sentence is the whole ruling:
+      "Development shall comply with a minimum of one of the following techniques per 20,000
+      square feet of site area. Regardless of site size, a minimum of one and a maximum of five
+      techniques are required." Twenty-four techniques follow and the applicant picks. That is the
+      design-menu shape this corpus already catalogues as a false positive, and it is the
+      strongest instance of it yet -- a lot under 20,000 square feet owes exactly one technique
+      out of twenty-four, and the list includes items that cost a pod nothing at all: deciduous
+      vines on a fence or trellis, deciduous trees for summer shade, high-albedo roof material,
+      skylights or clerestory windows. THE ITEMS THAT WOULD HAVE BOUND ARE THE REASON THIS NEEDED
+      READING RATHER THAN SCOPING. Technique 22 asks that "a minimum of 75 percent of the street
+      frontage of the development site shall have buildings located at the minimum front setback
+      line" inside the UGB -- the frontage-occupancy shape that is a live model gap elsewhere in
+      this project and that forces a building's long axis parallel to the street. Technique 24
+      asks buildings to sit at the minimum side setback line or within ten feet of the side lot
+      line. Technique 6 asks that 75 percent of parking spaces be porous pavement. Every one of
+      them would tighten this building; none of them binds, because each is one option on a menu
+      and cheaper options sit beside it. The three that could not be chosen away are worth naming
+      for the same reason -- there are none. Do not read this card as saying 75 percent frontage
+      occupancy never applies in this county: 1005.02(E) states a 50 percent version of it as a
+      requirement rather than an option, and that card is ruled separately today as work to do.
+    fingerprint: b150e4d993d1ebf9
+  "zdo.1005.txt#1005.02":
+    queue: chapter
+    outcome: read_it
+    note: >-
+      ZDO 1005.02, General Site Design Standards, and this one is work rather than a dismissal. It
+      states two things this project would take and cannot currently hold, on 31,451 lots. THE
+      FIRST IS FRONTAGE OCCUPANCY AS A REQUIREMENT. 1005.02(E): "Inside the UGB, except for
+      industrial developments, a minimum of 50 percent of the street frontage of the development
+      site shall have buildings located at the minimum front setback line." Unlike the
+      twenty-four-item menu in 1005.05, this is a shall with one exception and it is not
+      industrial. It is the same shape Gresham states at 7.0420(J)(1) and that this project
+      carries there as orientation_constraint axis_required, so there is a form for it -- what is
+      missing is the reading that decides whether it reaches a quadplex here. Two sentences bear
+      on that and pull in opposite directions: 1005.03(I)(6) exempts "middle housing developed
+      pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters" from the
+      additional BUILDING DESIGN requirements, which is an exemption written in exactly our name
+      and pointedly attached to 1005.03 rather than to 1005.02; and 1005.02 itself opens with "the
+      following site design standards apply" and names no use at all. Section 845 has to be read
+      before either reading is safe, and that is the errand this card orders. THE SECOND IS THE
+      SOLAR SEPARATION FORMULA at 1005.02(L), which this project already knows about from the
+      other direction -- it is the standard that blocks encoding HDR and RCHDR, 1,182 lots,
+      because it sets a north-south separation as a function of building height and the bearing of
+      the northern lot line, and the corpus's note on it says as much. Its formula line is on this
+      card: "Separation = b x .267 (tan 15 degrees)". 1005.02(L)(3) adds that a neighbour to the
+      north may grant a separation easement that counts toward the distance, and (L) is explicitly
+      outside the reach of Section 904's height exceptions. Also on the card and NOT the reason
+      this is open: 1005.02(E)(1) lets a front setback under 20 feet be increased to 20 where
+      pedestrian amenities are provided, which relaxes; and the walkway standards at (D), which
+      dimension a path rather than a lot.
+    fingerprint: 021b5b8280fa8b4b
+  "zdo.1005.txt#1005.09":
+    queue: chapter
+    outcome: read_it
+    note: >-
+      ZDO 1005.09, the design standards for the county's mixed-use districts, and it is queued for
+      encoding rather than closed because SCMU is one of the districts this project has never
+      encoded and this section is where its dimensions live. What is in it is unusual enough to be
+      worth naming now, because it is the reason the district cannot simply be ported from a
+      table. THREE OF THE STANDARDS ARE MINIMUMS ON THE BUILDING ITSELF, which is the direction
+      this registry is weakest in. "Minimum Building Height: 20 feet, measured to top of parapet
+      or roof." "Minimum Ground Floor Height: The ground floor of the building shall measure a
+      minimum of 15 feet from floor to ceiling." "Minimum Building Depth: Buildings shall be a
+      minimum of 40 feet deep." A two-storey pod at 26 feet clears the first and would fail the
+      second outright -- a fifteen-foot ground floor inside a twenty-six-foot building leaves
+      eleven feet for the storey above it and the roof -- so this is not a formality. The
+      minimum-building-height gap is already on the standing list of things the model cannot hold
+      across seven jurisdictions; a minimum ground-floor height and a minimum building depth are
+      two more of the same family and are recorded here as such. THE SETBACKS ARE BUILD-TO BANDS,
+      not minimums: "the street-facing facade of the building shall be set back a minimum of 10
+      feet and a maximum of 15 feet" in one sub-district and "a minimum of five feet and a maximum
+      of 15 feet" in another, which the model does hold, as a minimum plus a maximum. And the
+      entrance standard asks primary building entrances to face the street and be at least ten
+      percent transparent. None of this is encoded today and none of it should be guessed from the
+      sections around it: the errand is to read 1005.09 against the SCMU use table first, because
+      a district that does not permit the building makes every number above moot, and that
+      question has not been asked yet.
+    fingerprint: f1808b38ccb55c16
+  "zdo.1005.txt#1005.12":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      ZDO 1005.12, and the single line the reader caught -- a 10-foot-wide sidewalk fronting
+      Government Camp Loop, with covered walkways at a minimum of 8 feet -- is the whole of what
+      it holds. This is the Government Camp design section: mountain architecture in the
+      Cascadian, Oregon Rustic and National Park styles, no composition shingles, no exposed
+      T1-11, stone or stucco cladding, in the MRR and RTC districts on Mount Hood. Two independent
+      reasons and either closes it. THE DISTRICTS: 1005.12(A)(1) opens "In the MRR District, the
+      following standards shall apply to COMMERCIAL DEVELOPMENTS", and neither MRR nor RTC is a
+      district this layer holds a quadplex in. THE THING MEASURED: a sidewalk width and a
+      covered-walkway width are dimensions of a pedestrian way in a public frontage, not of a
+      building or of the land it sits on -- the same answer this corpus gives Fairview's 20-foot
+      lighting poles and every other frontage improvement. Recorded rather than skipped because
+      ZDO 1005 as a whole is NOT closed: 1005.02 and 1005.09 are both open work items in this
+      queue, and a reader who sees three 1005 cards should be able to tell at a glance which one
+      this is.
+    fingerprint: f6f680b0157274e2
+  "zdo.1015.txt#1015.04":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      THE LOADING BERTH TABLE, AND THE MULTIFAMILY ROW ANSWERS ITSELF. "Multifamily Dwellings --
+      Number of Dwelling Units -- 25 feet x 12 feet x 14 feet high", then the ladder beneath it:
+      "Below 50 None", 50 to 100 one berth, 101 to 200 two, 201 or more three. A four-unit pod is
+      on the first rung, which requires nothing, and a 25-by-12-foot berth would be a serious
+      charge against a small lot if it did. The remaining rows -- hotels and motels, hospitals,
+      commercial uses, all keyed to square feet of floor area with a 35-by-12 berth -- are other
+      people's buildings. The unit of measurement column is the thing to read on a table like
+      this: the multifamily row is counted in DWELLING UNITS and every other row in floor area, so
+      a residential threshold cannot be reached by a building's size.
+    fingerprint: 36abe0a323d225db
+  "zdo.845.txt#845.02":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Open onto a porch that is a minimum of 25 square feet in area and either has at least one
+      entrance facing the street or has a roof" -- one of the ways a main entrance may satisfy ZDO
+      845's orientation standard, illustrated by Figure 845-5. Twenty-five square feet is five
+      feet by five: a stoop. It is a door's setting, chosen from a menu, and a porch of that size
+      sits inside the front yard the setbacks already reserve -- Clackamas allows porch
+      projections into the front setback in the same chapter family. Recorded rather than skipped
+      because ZDO 845 is the chapter this project still owes a full read for a different reason,
+      the ZDO 1005.02(E) question over 31,451 lots, and a card that closes here should not be
+      mistaken for that chapter being finished.
+    fingerprint: e4252d8b3c451084
 crossrefs:
   # --- eight references standing beside a standard, ruled 2026-08-27 -------
   # They were the last eight at the time. Section 316 added four more on

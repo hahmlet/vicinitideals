@@ -3147,3 +3147,138 @@ the list of places worth hoping about.
 - **"Reaches with no field" refusals**: e.g. Wood Village's forward-access
   rule applies to the pod and the data model has no field to hold it — model
   extension, batched with the next such find.
+- **A table header that lost a column, and the district whose answer was filed
+  under its neighbour's** — found and fixed 2026-09-09, no action needed.
+  Clackamas ZDO Table 510-2 lists eleven commercial and mixed-use districts in
+  its own applicability sentence and prints only ten across the top of the
+  table: Station Community Mixed Use is missing from between PMU and OA. Every
+  row of the table has eleven cells. Our reader counts cells against column
+  headings, so from the eighth column on it was filing each district's answer
+  under the name of the one before it — and doing so with the right units and a
+  page reference pointing at exactly the line it read. The check that was
+  supposed to stop this only fired when the extra cell was a *number*, and ten
+  of the eleven cells in the row that showed it say "None". Widened to catch a
+  row that is one blank too long as well as one number too long, which is the
+  same mistake. A second table in the same chapter was short for a different
+  reason — one of its districts is spelled with five letters and our pattern for
+  a district code allowed four. Corpus-wide, across every table our reader
+  handles, the entire change is the loss of that one wrong answer.
+- **One sentence in the corpus lost its number on the way in** — found 2026-09-09,
+  costs nothing, now guarded. Happy Valley's accessory-structure setback reads
+  "does not exceed a height of feet". The word `eight` is gone, and because the
+  sentence still reads as English nothing else noticed: no figure is wrong,
+  because no figure is there. It cannot affect us — the building has no
+  accessory structure — but the shape can, so the check is now permanent and
+  the corpus has exactly one hit. Four other sentences that look the same are
+  Gresham's two-column pages, where a standard's number ends one line and its
+  unit starts the next.
+- **No decision about state law could be recorded at all** — found and fixed
+  2026-09-09. Oregon's own rules live in a file inside a folder rather than a
+  file of its own, and the code that finds the file to write a decision into
+  never looked inside the folder. Every attempt to record a reading of OAR
+  660-046 — the state rule that caps required parking for a fourplex in every
+  city we screen — failed on a filename that does not exist. It failed loudly,
+  so nothing was ever written to the wrong place; it just meant fourteen
+  cities' rulings could be saved and the state's could not.
+- **Three things the model has nowhere to put**, batched with the Wood Village
+  item above rather than asked about separately: a standard stated as an offset
+  from another standard (Milwaukie's build-to band is "20 feet, and 30" where
+  the 30 appears nowhere on the page); the share of a lot's street frontage a
+  building must occupy; and a floor under a maximum (state law says a city's
+  height limit may not be *below* 25 feet, and our only preemption shapes say
+  "this is the answer" or "this is the strictest you may be"). The last one is
+  provably inert today — the lowest ceiling in the corpus is exactly 25 feet
+  and it is in the one city switched off — and is written down so that the day
+  a lower zone is encoded, the sentence that rescues it is already found.
+- **Happy Valley Chapter 16.44 is not in the store**, and one open reading needs
+  it. The shared-outdoor-recreation row of the residential table asks 400 sq ft
+  per unit — 1,600 for this building, a third of a small lot — and points at a
+  section that applies only to subdivisions of thirty units or more, whose
+  exemption for multifamily housing points in turn at 16.44.010(C)(9). Nothing
+  can be concluded in either direction until that chapter is fetched. Agent
+  work, queued.
+- **Portland's flag lots owe a setback on every side, and nothing measures a
+  flag lot** — found 2026-09-09, agent work, no decision needed. A flag lot is
+  the back half of a divided property reached by a long driveway, and Portland
+  gives it *one* setback that applies to all four sides: 15 feet in RF, R20 and
+  R10, 10 feet in R7, R5 and R2.5. The zones themselves charge five feet at the
+  side and rear. So on a flag lot in R5 the building owes ten feet on both sides
+  and at the back instead of five — ten feet of width and five of depth — plus a
+  five-foot planted strip round the edge of any flag lot under 10,000 square
+  feet. We hold none of that, and the screen currently measures such a lot
+  against the looser figure. It is not a reading problem: it is a shape a
+  computer can see from the parcel outline, in the same family as the two other
+  geometry facts moved onto the computable list on 2026-09-08. Recorded against
+  both Portland (196,039 lots) and unincorporated Multnomah County (2,855),
+  which adopts the same code. Until it is computed, the honest treatment is the
+  one used for every other unmeasured tightening: cap the value rather than
+  writing a looser default that would let a flag lot pass on a setback it does
+  not have.
+- **A whole city requires fifteen percent of every lot to be planted, and we
+  had recorded nothing at all** — found *and fixed* 2026-09-09, no decision
+  needed. **Wilsonville, 7,333 lots.** The sentence is one line long and it is
+  not hidden: "Not less than 15 percent of the total lot area shall be
+  landscaped with vegetative plant materials." Until today this project held no
+  landscaping figure for Wilsonville, which meant the screen was handing the
+  building and its parking court the whole lot minus the yards. Fifteen percent
+  of it is spoken for.
+
+  Two earlier decisions had to be reversed to get there, and they are worth
+  reading together because they are the same failure twice. The first closed
+  the landscaping chapter with the words "none of them measures the building or
+  the lot" — true of every line it looked at, all of which were about how tall a
+  shrub must be when it is planted, and one subsection short of the line that
+  measures the lot. The second dismissed the fifteen percent outright on a
+  sentence that had the two numbers the wrong way round: it said the fifteen
+  percent was a share of the parking area, and the code says ten percent is the
+  parking area's share and fifteen is the whole site's. A wrong reason closes
+  the same number every time it is met, so both reasons were rewritten rather
+  than the decisions simply flipped.
+
+  It was not an obvious call and the argument on the other side is on the
+  record: two sentences elsewhere in the code read as though the landscaping
+  chapter were meant for shops rather than houses. Four others say plainly that
+  it is not — including the city's own plain-English summary of its rules, "For
+  all projects, at least 15 percent of the net site area must be landscaped."
+  One piece is still not held: the code also says the planting must sit in at
+  least three separate places on the lot, one of them at the frontage. That is
+  a question about *where*, not *how much*, and nothing here has a shape for it.
+- **Portland asks four hundred percent more private outdoor space than we had
+  recorded, on the larger multi-dwelling sites** — found *and fixed*
+  2026-09-09, no decision needed. The four RM zones hold **24,602 lots**; this
+  reaches the ones over 20,000 square feet. Portland gives an applicant two
+  ways to satisfy it. Route one: set aside a tenth of the whole site as shared
+  common area. Route two: skip that, on three conditions at once — every unit's
+  front door within twenty feet of the street, a hard path to each, and **two
+  hundred square feet of private outdoor space per unit**. Our file waved the
+  whole thing away on the *first* of those three conditions and never read the
+  third, so it was charging forty-eight square feet a unit where the cheaper of
+  the city's two routes asks two hundred. Above the trigger the cheaper route
+  is always the second one, so two hundred is now what we charge. Two things
+  it still does not hold: that the space has to be at least ten feet by ten
+  (a shape, not an area), and that the exemption depends on the building facing
+  the street — a layout tucked behind its parking loses it and owes the full
+  tenth of the site instead.
+- **Wilsonville charges a setback as a share of the lot's own width, and we
+  have no way to write that down** — found 2026-09-09, agent work, and the one
+  place this week where our number is knowingly looser than the code. On a
+  corner lot over 10,000 square feet and under a hundred feet wide, the street
+  side must be kept clear for "20 percent of the width of the lot, but not less
+  than ten feet". Every condition in that sentence is something we can already
+  measure. The *answer* is not: our files can hold "ten feet", they cannot hold
+  "a fifth of however wide this lot happens to be". So we charge ten where an
+  eighty-foot lot owes sixteen and a ninety-nine-foot lot owes nearly twenty.
+  That is the direction that lets a lot pass when it should not, which is why
+  it is written here rather than left in a comment.
+- **A claim that a section said nothing turned out to be false** — found *and
+  fixed* 2026-09-09, no decision needed. Wilsonville's file stated in as many
+  words that the chapter applying to residential development in every zone sets
+  no open-space requirement. It sets one: a quarter of the development area.
+  The conclusion survives — that quarter is measured against a master plan or a
+  subdivision plat, and a building on an existing lot files neither — but the
+  reason is now the true one. This is the third time a claim of *silence* has
+  turned out to be the least reliable kind of statement in the corpus, because
+  it is the one nobody goes back and re-reads. One live question is left open
+  on purpose rather than guessed: if this building is ever split onto four
+  separate lots, a plat does exist, and it is not settled whether the quarter
+  then applies.

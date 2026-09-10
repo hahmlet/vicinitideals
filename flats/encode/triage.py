@@ -1086,14 +1086,29 @@ def layer_path(layer_id: str) -> Path:
     The containment check behind it is not redundant. It is what holds if the
     keyset is ever loosened, or fed from a directory walk instead of a parse,
     and it costs one resolve.
+
+    A layer with children names its directory and keeps its own rules in a file
+    inside it -- Oregon is ``or/_state.yaml``, not ``or.yaml`` -- so the direct
+    name is tried first and the two reserved stems after it. Without that the
+    state layer could not be ruled on at all: every reading and crossref
+    decision about OAR 660-046 failed on a path that does not exist, which is
+    how it was found on 2026-09-09, ruling the Large City siting rule. It
+    failed loudly, so nothing was ever written to the wrong file.
     """
     if layer_id not in load_rules():
         raise ValueError(f"not a layer we hold: {layer_id!r}")
     root = CONFIG.resolve()
-    path = (root / f"{layer_id}.yaml").resolve()
-    if not path.is_relative_to(root):
+    direct = (root / f"{layer_id}.yaml").resolve()
+    found = direct
+    if not direct.exists():
+        for stem in ("_state", "_county"):
+            candidate = (root / layer_id / f"{stem}.yaml").resolve()
+            if candidate.exists():
+                found = candidate
+                break
+    if not found.is_relative_to(root):
         raise ValueError(f"outside the rule tree: {layer_id!r}")
-    return path
+    return found
 
 
 def _entry(ref: str, outcome: str, note: str) -> list[str]:

@@ -104,6 +104,232 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   5.9 and a college at 0.3, and states a second tighter column within a quarter mile of 20-minute
   transit. Against Household Living it prints "no maximum" in both columns. Built, and pointed away
   from this building in words.'
+readings:
+  "350.065.all-other-uses.txt#350.065":
+    queue: missed
+    outcome: duplicate
+    note: >-
+      Every statement here is either already held or already refused on the record, which is what
+      makes this a bookkeeping card rather than an alarm. Table 350-3's ninety-degree standard row
+      is the one this file encodes -- nine feet wide, nineteen deep, twelve-foot one-way and
+      twenty-four-foot two-way aisles -- and the uncited rows are the compact, disabled and angled
+      alternatives, deliberately not taken: 350.065(D)(2)(b) requires only half the required
+      spaces to meet the standard dimensions, so a court drawn to the standard stall everywhere is
+      the strict branch and fits wherever the mixed court fits. Table 350-2's third row, the
+      parking-area setback against an LR or MR lot line, already carries a NOT ENCODED comment in
+      this file with its own reasoning and its own citation to these exact lines. The interior
+      landscaping options are for surface parking areas of more than ten spaces and the pod has
+      four, which is also already recorded.
+    fingerprint: 9288dffabfa60dc1
+
+  "230.310.txt#230.310":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Table 230-2, "Development Standards in Commercial Zones", column NC, and this file holds
+      Wood Village's NC district at quadplex_allowed false. The matched line is the street
+      frontage landscape buffer of three to ten feet, which is a planting strip rather than a lot
+      frontage and reached a frontage field on the word alone. Worth one note on the way past: the
+      same column states a minimum height of eighteen feet, which is the second minimum building
+      height this queue has surfaced and the reason the Troutdale card is being kept open as
+      ordered work. Wood Village's town centre zone does permit a quadplex, and its own column of
+      this table is not in the extracted text.
+    fingerprint: 15e9a636a4b90ce7
+  "230.335.txt#230.335":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Wood Village's commercial-zone height section, and it is one of the few places in this
+      corpus that states a MINIMUM building height -- eighteen feet or one and a half storeys for
+      all new buildings on Halsey Street -- which is the field gap already standing against seven
+      jurisdictions. It does not bite here: the pod is 26 feet and two storeys, comfortably over
+      both limbs. Nor do the step-downs: 35 feet within 25 feet of a site zoned LR7.5, 45 feet
+      within 25 feet of MR2, and 45 within 15 feet of a lot line across a local street or alley
+      from either, all of them ceilings well above 26. The projections allowance for skylights and
+      steeples relaxes. So this section is inert twice over, and the minimum height is recorded
+      rather than encoded because the number that matters about it is the pod's, not the lot's.
+    fingerprint: a7d962e80be71cac
+  "230.390.txt#230.390":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Neighborhood Commercial zone design standards, and the sixteen measuring lines on this card
+      are almost all inside Table 230-6, which names itself: "Menu of Options for Additional
+      Requirements", with a point value printed against each option. That is the design-menu shape
+      -- the applicant buys points however is cheapest -- and the options this card surfaced are
+      exactly the ones that would have looked binding out of context: an 800 square foot plaza at
+      3 points, an 800 square foot outdoor recreation area with a minimum dimension of 20 by 20 at
+      1 point, a 15-foot ground floor at 2 points, a mural of at least 60 square feet, a water
+      feature of at least 25. None of them is required of anybody. The ground-floor window
+      standards above the table are facade treatments, and the five-foot setback and 25 percent
+      glazing they ask of ground-floor dwelling units apply to a residential ground floor in a
+      commercial building. Worth noting the zone as well: NC holds quadplex_allowed false at base
+      in this layer, with a conditional-use relief carrying the true, so even a binding standard
+      here would be reaching a lot the screen does not grade green on its own.
+    fingerprint: 38a1a0a6710419a8
+  "350.055.one-and-two-unit.txt#350.055":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Wood Village's parking standards for one and two unit dwellings, and the applicability
+      sentence is the whole ruling: "the regulations of this section apply to HOUSES, ATTACHED
+      HOUSES, DUPLEXES, AND MANUFACTURED HOMES." No triplex, no fourplex. THIS IS WORTH MORE THAN
+      A CLOSE, because the section is visibly Portland's 33.266.120 copied into a small city's
+      code -- same 10-foot exclusion from the front lot line, same 40 percent cap on the land
+      between the front lot line and the front building line, same 9-foot private driveway -- and
+      Portland's version names fourplexes in its applicability list while Wood Village's stops at
+      duplexes. Two codes with the same words and different reach, which is exactly the trap a
+      reader falls into by recognising a paragraph instead of reading its first line. The stall it
+      states, 9 by 19, is also not ours; this layer's defaults carry Wood Village's stall width,
+      stall depth and both aisle widths from the general parking regulations that a quadplex
+      actually goes to.
+    fingerprint: e76a39c67f1cdf08
+  "720.030.definitions.txt#720.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Two definitions. COTTAGE HOUSING -- "a grouping of no fewer than four detached dwelling
+      units per acre, each with a footprint of less than nine hundred square feet" -- is the
+      state's cottage cluster wording again, the third city in this corpus to carry it and the
+      third time it has been ruled the same way: detached units around a common courtyard is not
+      one attached four-unit structure, and the 900-square-foot footprint is a ceiling on a
+      building we are not proposing. The other is a floor-area exclusion: roofed porches, exterior
+      balconies and similar areas do not count "unless they are enclosed by walls that are more
+      than 42 inches in height for 50 percent or more" of their perimeter. That one points the
+      loosening way -- it takes area OUT of the count -- and it matters only where a standard is
+      written in floor area, which none of Wood Village's residential dimensions are.
+    fingerprint: 0db96fda36a08701
+  "210.375.txt#210.375":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Design Review for all residential development in the LR7.5 and LR12 zones, and it does reach
+      this building -- "all residential development", Type I, no housing-type exception. It closes
+      on WHAT it asks rather than WHO it asks. Two required elements: the main entry of every
+      street-facing unit must face the street or sit within 45 degrees of it, and at least 20
+      percent of the street-facing wall area must be windows or entrance doors. Both are facade
+      treatments that change no dimension of the rectangle or its place on the lot. Everything
+      else is a menu -- "all street-facing facades must include at least FOUR OF THE FOLLOWING" --
+      and the items the reader surfaced are the menu's entries: a roof dormer at least four feet
+      wide, a bay window projecting at least three, a recessed entryway at least three deep, a
+      covered entryway at least four deep, an open porch of at least 36 square feet. Four of a
+      list, chosen by the applicant, and several of the options are surface treatments that
+      project nothing. That is the design-menu shape this project catalogues as a false positive,
+      and the one thing worth watching is that the projecting options would sit in the front yard
+      as encroachments if chosen -- which is the applicant's decision to avoid, not the lot's
+      problem.
+    fingerprint: 6d9ea93d1d615021
+  "220.355.txt#220.355":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The MR2 and MR4 twin of 210.375, word for word: the same entry orientation within 45 degrees
+      of the street, the same 20 percent of street-facing wall area in windows or doors, and the
+      same "at least four of the following" menu of dormers, bay windows, recessed and covered
+      entryways and 36-square-foot porches. Ruled identically and on the same day, and the
+      identity is the useful fact -- Wood Village applies one design vocabulary across its low and
+      medium density zones, so a reader who has settled 210.375 has settled this. It reaches our
+      building (MR2 and MR4 both permit a quadplex in this layer) and it still states no dimension
+      of the lot or of the building's footprint.
+    fingerprint: 6d9ea93d1d615021
+  "235.330.txt#235.330":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      235.330, Height, and the substance of it is a pointer: "the maximum height for all
+      structures is stated in Table 235-2", which is where this layer's heights come from. What is
+      left on the card is subsection B, the EXEMPTIONS -- skylights, steeples, flagpoles, chimneys
+      and aerials may rise up to five feet above the limit, and utility power poles are exempt
+      outright. Relaxations, and ones for objects this screen does not place. Recorded rather than
+      skipped because a card headed "Height" in a corpus whose whole business is fit deserves an
+      explicit answer, and the answer is that the number is already held and this section only
+      gives some of it back to a chimney.
+    fingerprint: 56212f45de77ade1
+  "350.030.general-regulations.txt#350.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "Proximity of Parking to Use. Required parking spaces for residential uses must be located
+      on the site of the use" -- and off-site allowances follow for nonresidential ones. For this
+      building it is the strictest possible reading and it is also what this screen already
+      assumes: the pod's stalls are drawn in its own court, on its own lot, and no verdict here
+      has ever been earned by parking somewhere else. A rule that forbids what we were not going
+      to do changes nothing, which is worth writing down rather than leaving as an open card,
+      because the opposite version -- a city that lets residential parking sit within 500 feet, as
+      Portland's 33.266.100(C) does -- is a real relaxation this project declines, and the two
+      should be findable side by side.
+    fingerprint: 5207747f38503b3d
+  "235.300.txt#235.300":
+    queue: nofield
+    outcome: need_a_field
+    note: >-
+      TWO REAL TIGHTENINGS IN THE TOWN CENTER, BOTH TURNING ON THE NEIGHBOUR'S ZONING, AND BOTH IN
+      THE DANGEROUS DIRECTION. Table 235-2's notes say: "(2) For sites abutting a light
+      residential zone or abutting right-of-way adjacent to a light residential zone, the maximum
+      height is twenty-five (25) feet within the first twenty-five (25) feet from the lot line
+      abutting the light residential zone" and "(3) Sites abutting a residential zone shall have a
+      side or rear building setback of fifteen (15) feet from the residential zone." This file
+      encodes TC at 35 feet of height, a 5-foot side and a 15-foot rear, from the same table. So
+      note (3) triples the side setback on an LR-abutting line, from 5 feet to 15; and note (2)
+      puts a 25-foot ceiling on a 26-FOOT POD inside a 25-foot band off that line, which this
+      design fails by a foot. TC is a zone where the answer can come out GREEN -- quadplex_allowed
+      is true here on Table 235-1's Household Living row -- so a lot reported green on the
+      strength of five feet and thirty-five could be neither. WHY IT IS NOT ENCODED TODAY RATHER
+      THAN WAVED AWAY. The condition itself is available: `abuts_residential_zone` is registered
+      in conditions.py and Oregon City already carries eight `when:` variants on it, and
+      neighbour-zone adjacency moved onto this project's COMPUTABLE list on 2026-09-08 because it
+      can be derived from geometry the inventory already holds. What is missing is narrower. Note
+      (3) needs a variant on setback_side_ft, which is straightforward. Note (2) is a height
+      limited inside a horizontal band measured from one lot line -- a step back from a property
+      line rather than from a street, and the `step_back` form in this model steps up from a
+      street frontage. Encoding either re-runs the fit stage, so this is recorded as its own
+      change rather than folded into a ruling batch, in the same way as Portland's Eastern Pattern
+      Area rear setback and Gresham's 9.0822(A)(6) earlier in this pass. Wood Village is 772 lots
+      and only a slice of them are TC, so this is small by land and large by kind: it is the third
+      case this week of a real standard hiding in a table NOTE rather than a table cell.
+    fingerprint: b29314d813aa614d
+  "220.320.txt#220.320":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      TABLE 220-4 BEGINS AT FIVE UNITS. Its header is "Development Standards for Multi-Dwelling
+      Structures in the MR2 Zone" and its first row is 5 units at 16,500 square feet, then 6 at
+      19,000, 7 to 10 at 21,500 plus 2,250 a unit, 11 and more at 30,500 plus 2,000 a unit -- with
+      60 feet of width, 100 feet of depth, 35 feet of height, a 20-foot front, 15-foot rear and 45
+      percent coverage throughout. A four-unit pod is on the table ABOVE it, Table 220-3, whose
+      "Duplex Triplex Quadplex" column asks 7,500 square feet, 60 feet of width, 80 feet of depth,
+      a 10-foot front, a 5-foot side and a 15-foot rear. Less than half the lot area and half the
+      front setback, which is why reading the row heading mattered. One note is worth carrying
+      forward even though it closes here: footnote (1) makes the side setback ten feet where a
+      multi-unit structure abuts an LR zone and five where it abuts MR, C or M -- the
+      neighbour-zone shape again, and scoped to Table 220-4 only, so it does not reach the pod
+      through this door. It DOES reach it through the Town Center's Table 235-2, which is open as
+      its own work item on the 235.300 card.
+    fingerprint: 0e4b7d5e81e1a5ed
+  "240.200.txt#240.200":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Marijuana facility separation: not at the same address as a registered grow site, not within
+      1,000 feet of a school attended primarily by minors or a public park, not within 1,000 feet
+      of another marijuana facility. A use this building does not contain, and a separation
+      measured between two establishments rather than a dimension of a lot.
+    fingerprint: 19dde53d0ca4df1c
+  "350.045.required-spaces.txt#350.045":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The required-spaces table for every category except the residential one: retail at one per
+      300 square feet, restaurants at 8 per thousand, drive-thrus at 9.9, sports clubs at 4.3,
+      offices at one per 400, vehicle repair at one per 750, manufacturing at one per 625, schools
+      at 0.2 per student, a religious institution at half a space per seat, a medical centre and a
+      daycare at one per 300. What the pod owes is on the residential rows of the same table and
+      is encoded in this layer as parking_min_per_unit. One line does reach a residential site --
+      an on-street space may count if it is at least twenty-two feet long, in a location where
+      on-street parking is allowed and clear of a sight-distance area -- and it LOOSENS, handing a
+      required stall to the street; the conservative default declines that throughout this corpus,
+      for the plain reason that a lot whose parking is in the street has not fitted a pod.
+    fingerprint: 3de28af2170c58aa
 definitions:
   # Captured 2026-08-31, and the reason it was not captured before is that
   # nothing here could see it: WVDC 720.030 was fetched for the parking

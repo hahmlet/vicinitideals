@@ -3938,3 +3938,226 @@ document, that number moves every time a chapter is fetched, and pinning it
 would turn a healthy design into a test failure. What is pinned is that it is
 not zero.
 
+
+---
+
+## A short header is now refused, not counted into — 2026-09-09
+
+The section above recorded the shape: Table 510-2's header prints ten district
+names over eleven columns of cells, and *"the check that would catch a dropped
+cell says nothing about a missing head."* It says something now.
+
+`read_stacked_grids` already had a refusal for a row that ran on past its last
+column — but it only fired when the leftover line parsed as a **measurement**.
+Ten of the eleven cells in Table 510-2's minimum-street-frontage row say
+"None", so nothing about that row looked like a number out of place, and the
+reader took SCMU's *"100 feet"* as OA's: right field, right units, and a
+citation pointing at exactly the line it was read from. A row one `None` too
+long and a row one number too long are the same failure and only the second was
+being caught.
+
+`_another_cell()` in `flats/encode/tables.py` widens the refusal to any line
+that can only be a column's own answer — a measurement, a dash, a "Variable",
+and the words a table uses to say the standard does not apply. Three of the row
+loop's branches are deliberately **not** mirrored in it, and what they have in
+common is that each answers for something other than one more zone:
+
+- the **permissive prose branch**, which exists to keep a row alive where a
+  column names no zone, and asked of the line *after* a row would refuse a
+  table over the notes beneath it;
+- a **scoped cell**, which states a standard on a different basis and is what a
+  table prints *after* its zone columns rather than instead of one — Fairview's
+  front-setback rows run their zone cells and then "Residential commercial
+  buildings 10 feet";
+- a **pointer cell**, which in the trailing position is almost always the
+  commentary column: Fairview prints "19.30.030(B)(1)(b)" under "Additional
+  Standards and Exceptions" beside its maximum-front-setback row.
+
+Counting either of the last two as an overrun refused that row for every zone
+in Fairview, which is how each was found. The declared-but-uncounted commentary
+column is handled separately by `spared`: a header that declares a column this
+reader does not count will print a cell there, and it is never a measurement —
+that is what makes it commentary.
+
+**A second short header from the opposite cause.** Table 315-4 is seven
+districts wide and came up six, because the seventh is `RCHDR` and `_ZONE`
+allowed four capitals. Widened to five; a corpus-wide diff of every zone match
+before and after shows no new false positives. `VA`'s 45-foot height limit read
+correctly only because the column that went missing was the last one.
+
+Corpus-wide, across `read_tables`, `read_stacked_grids`, `read_collapsed_grids`,
+`read_transposed_grids` and `read_pairs`, **the entire behavioural change is the
+loss of one wrong candidate.** Pinned in `flats/tests/test_short_header.py`,
+which fails in both directions: the small fixtures hold the rule, and the corpus
+tests hold the two real instances.
+
+## A standard that vanished without leaving a hole — 2026-09-09
+
+Every blindness on this list so far is a number read wrongly. This one is a
+number that is not there. Happy Valley `16.22.050`, detached accessory
+structures:
+
+> ...that is 100 square feet or less in area and does not exceed a height of
+> feet.
+
+A height of *feet*. The next two subsections say "eight feet in height" and
+"greater than eight feet and up to 20 feet", so the missing word is `eight` —
+and because the sentence still reads as English, nothing in this pipeline
+notices. No figure is misquoted, because no figure is there. A reader looking
+for measurements sees a subsection with one standard in it instead of two.
+
+`flats/encode/orphaned.py` asks the corpus whether any unit word stands where a
+measurement should be. What makes it checkable is that a code never writes a
+bare unit after a word that introduces a magnitude: "of feet", "than percent",
+"exceed inches" are not English a drafter produces. Three exclusions make that
+true, and each is a real sentence here rather than a hypothetical:
+
+1. **A numeral at the end of the line above.** Gresham's downtown and
+   civic-neighborhood chapters set their standards in two columns, so a wrapped
+   line splits "no more than 2" from "feet above or below the sidewalk
+   elevation". Four of the five raw candidates are this, and all four are
+   extracted correctly.
+2. **A counting noun** — "the number of stories", "the amount of buildable
+   acreage" — where `of` introduces a count. The governing noun can sit at the
+   end of the previous line, so the two are tested as one run of text.
+3. **Countable nouns generally.** `units` and `spaces` can never be in the unit
+   vocabulary: admitting them takes the check from one hit to **132**, every one
+   of them a sentence about how many dwellings or stalls something has. Only
+   words that can *only* be a dimension earn a place.
+
+Exactly one hit corpus-wide, which is the same clean separation `ragged.py`
+has and the reason `flats/tests/test_orphaned.py` can be a test rather than a
+report. It costs this project nothing today — the pod has no accessory
+structure, settled with the owner on 2026-09-08 — and it is pinned anyway,
+because a standard that leaves no hole is the failure this corpus keeps
+finding and the next one may not be free.
+
+## No decision about state law could be recorded at all — 2026-09-09
+
+`layer_path()` in `flats/encode/triage.py` builds a jurisdiction file's path by
+appending `.yaml` to a layer id. That is right for all sixteen cities and both
+counties' `_unincorporated` files, and wrong for exactly one layer: Oregon
+itself is `or/_state.yaml`, because a layer with children names its directory.
+
+So every reading and crossref ruling about OAR 660-046 — the state rule that
+caps required off-street parking for a quadplex in every Large City in this
+corpus — failed on a filename that does not exist. It failed loudly, which is
+the only reason nothing was ever written to the wrong file; it simply meant
+fourteen cities' decisions could be saved and the state's could not, and
+nothing said so until somebody tried. `flats/encode/draft.py` had solved this
+in its own copy of the function; the two had drifted.
+
+Fixed by trying the direct name first and the two reserved stems (`_state`,
+`_county`) inside the directory after it, keeping the containment check. The
+test that holds it is not the one case but the guarantee: **every layer the
+loader holds has a file to write to.**
+
+
+## The reading queue at zero, and what it cost to get there — 2026-09-09
+
+Every card in all four reading queues is ruled. **638 decisions** — 136 missed
+standards, 89 conditions, 93 chapters, 320 no-field sections — and the whole of
+it is this one uncommitted set, because the queues did not exist before it. What
+remains open is 25 cards, and every one of them is open *on purpose*: three
+`read_it`s, three `encode`s, nine `applies`, six `cant_tell`s parked in the
+unmeasured-site-facts list, and four `need_a_field`s. Nothing is open because
+nobody got to it.
+
+The outcome distribution is the interesting artefact, because it is a
+measurement of what the ledger was actually made of:
+
+| Outcome | Count | What it means |
+|---|---:|---|
+| `other_building` | 227 | a different use, building, zone or table row |
+| `not_here` | 126 | the condition never reaches this pod |
+| `nothing_here` | 90 | a chapter opened and found empty for us |
+| `design` | 76 | how a thing is drawn, not how much land it takes |
+| `never` | 74 | a condition that cannot be true of this building |
+| `other_stage` | 44 | land division, plat, procedure, submittal |
+| `not_a_statement` | 15 | our extractor, not Oregon's code |
+| `need_a_field` | 4 | a real gap in the model |
+
+**Four of 638.** That is the number worth staring at. The ledger's job was never
+to find four things; it was to make it possible to *say* that only four things
+were there, and to say it with a checkable sentence attached to each of the
+other 634. Before this pass the honest answer to "what is in the 4,693 unread
+lines" was "nobody knows", and an unknown of that size is indistinguishable from
+a corpus full of missed standards.
+
+The 15 `not_a_statement` rulings are the second useful count, because they are
+not rulings about Oregon at all — they are a bug list. Oregon City's chapter 17
+alone produced three, all the same failure: a two-column dimensional table
+flattened into single lines, so `"tached)/8 feet tached) /7 feet"` arrives as a
+measurement with no column. The standing rule held — never rule on a cell whose
+column is unknown — and the zones themselves were encoded from the same tables
+read properly, so nothing was lost. But a reader who did not know that rule
+would have taken those figures, and they would have been right about half the
+time.
+
+### A third standard hiding in a table note
+
+Wood Village's Town Center, Table 235-2, notes (2) and (3). Ruled
+`need_a_field` and deliberately left open:
+
+> (2) For sites abutting a light residential zone or abutting right-of-way
+> adjacent to a light residential zone, the maximum height is twenty-five (25)
+> feet within the first twenty-five (25) feet from the lot line abutting the
+> light residential zone.
+>
+> (3) Sites abutting a residential zone shall have a side or rear building
+> setback of fifteen (15) feet from the residential zone.
+
+The pod is **26 feet**. It fails note (2) by a foot, inside a band 25 feet deep
+measured from the property line. Note (3) triples TC's encoded side setback from
+5 feet to 15. TC is a zone that can come out GREEN, so lots can be reported green
+today on numbers that do not apply to them.
+
+Note (3) is cheap: `abuts_residential_zone` is already registered at
+[flats/rules/conditions.py:549](flats/rules/conditions.py#L549) and Oregon City
+already carries eight `when:` variants on it, and neighbour-zone adjacency is on
+the **computable** half of the unmeasured-site-facts list. It needs one variant
+on `setback_side_ft` and nothing else.
+
+Note (2) is not cheap, and the reason is worth recording. The `step_back` form
+holds a height that increases as you move *away from a street frontage*. This is
+a height that is **capped inside a horizontal band measured from a property
+line** — same grammar, different origin, opposite direction. Reusing `step_back`
+would encode it in the wrong place on the lot.
+
+Neither is folded into this commit, for the same reason Portland's Eastern
+Pattern Area rear setback and Gresham's 9.0822(A)(6) are not: encoding any of
+them re-runs the fit stage, and a fit re-run is its own change with its own
+before-and-after count.
+
+**This is the third real standard found in a table *note* rather than a table
+cell this week**, after Milwaukie's side-yard plane and the Fairview open-space
+percentage. The pattern is now firm enough to name: a note is where a drafter
+puts the case that did not fit the grid, and the case that does not fit the grid
+is disproportionately the case that binds. The footnote-both-ways check reads
+notes attached to *values we took*. Nothing systematically reads the notes
+attached to values we **did not** take — and both Wood Village notes hang off a
+table whose TC row we encoded from.
+
+### Four attribution slips, all the same slip
+
+`17.4` and `17.41.110` in Oregon City are not section numbers. The first is a
+running page header — `17.4 1. 080` — and the second is the *following*
+section's number, collecting the tail of Table 17.41.080.C. Wilsonville's
+`4.156.11` and `4.162` split one livestock table across two headings. All four
+are the nearest-heading-above rule meeting a page whose real heading is above
+the page break, which is the same shape as 2026-09-08's hoisted HTML tables, and
+the same cure applies: **fix the claim, never the lines.** In all four cases the
+ruling closes correctly regardless of which key it lands under, because the
+ruling is about the table's *content* — reductions bought at subdivision — and
+not about where the sectioner filed it.
+
+### Eight identical copies of one section
+
+MCC 39.6900 — the ADU standards, 800 square feet or 75 percent of the
+single-family dwelling, placed 7 to 20 feet from it — is printed **verbatim in
+eight of unincorporated Multnomah's zone articles**, and arrived as eight
+separate cards. They are ruled eight times, identically, and that is the correct
+outcome rather than a waste: a card is a section in a document, and eight
+sections are eight things a future re-fetch can move independently. But it is
+worth knowing that one amendment to MCC 39.6900 moves eight cards, and that a
+reviewer who has genuinely read the first has read all eight.

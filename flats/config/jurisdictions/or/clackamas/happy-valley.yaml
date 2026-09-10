@@ -130,6 +130,315 @@ ingest:
   zoning_layer: zoning_happy_valley
   zone_field: ZONE
   strip_lowercase_suffix: false
+readings:
+  "16.22.residential.txt#16.22.020":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Three kinds of line and none of them a standard for this building. The first three are the
+      purpose paragraphs for R-40, R-20 and R-15, describing what each district is for in the
+      language of conversion from agricultural land and of infill; they state lot sizes only as
+      part of the district's name. The middle group is the cottage cluster setback block -- front,
+      rear, interior side and street side, ten feet each except a seven-foot interior side in the
+      third column -- which is a parallel dimensional regime switched on by a housing type this
+      screen does not place. The last is footnote 7, maximum lot coverage for townhomes being "the
+      greater of the percentage identified in the table or up to 1,000 square feet", which raises
+      a ceiling rather than setting one.
+    fingerprint: 22480da8c4ea6d6c
+
+  "16.22.residential.txt#16.22.030":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The purpose paragraphs for R-8.5 and R-7, which describe what each district is meant to do
+      -- respond to continuing urbanization, allow more urban density through small lots and a
+      variation in dwelling types -- and name a lot size only inside the district's own title. A
+      paragraph arguing for a number is not the number; the dimensional standards for both
+      districts are in the tables further down the same file and are already encoded.
+    fingerprint: 54c79a368022210f
+  "16.22.residential.txt#16.22.040":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The MUR-S purpose paragraph, the cottage cluster setback block again -- ten front, ten rear,
+      five interior side, eight street side -- the garage and carport entrance setbacks at
+      twenty-two feet, and two footnotes. The garage row is the only one that could have reached,
+      and it is headed "Garage and carport entrances": this project has ruled that the pod carries
+      neither, and its parking is a surface court. Footnote 7 is the single-family height
+      allowance of forty-five feet at the front and forty-nine at the side and rear, and footnote
+      9 is the townhome coverage alternative, "the greater of the percentage identified in the
+      table or up to 1,000 square feet", which is a relaxation. The usable open space footnote in
+      the same block, twenty percent of net developable area under Section 16.42.030, is already
+      quoted by this file.
+    fingerprint: 2df4eede4d09cb57
+  "16.43.parking.txt#16.43.030":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Forty-seven statements and the largest card in this queue, and all of it is the
+      non-residential body of Table 16.43.030-1 plus its credits. Offices at three per thousand
+      square feet, medical and dental at four, preschools at two and a half per thousand, high
+      schools and colleges at a fifth of a space per thousand, retail at four and a half, grocery
+      at 2.9, restaurants with a drive-through at 11.4 and without at 11.5, sports clubs at 4.3,
+      service stations, banks with drive-throughs at 4.3, manufacturing at 1.6, warehousing by
+      floor area band, wholesale at 0.8 -- with the maximum and the bicycle column beside each.
+      The three statements that are not ratios are all in the permissive direction: on-street
+      parking within three hundred feet of a frontage may be counted toward the minimum, required
+      parking may sit off site within two thousand feet, and units smaller than 750 square feet or
+      meeting the affordable-housing definitions are exempt from minimum parking altogether. The
+      residential rows of the same table are already encoded.
+    fingerprint: 16f78ebabd498c5a
+  "16.22.residential.txt#16.22.010":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Table 16.22.010-2 is the development standards table for FU-10, Happy Valley's future-urban
+      holding district: one dwelling per ten acres, a ten-acre minimum average lot size, a hundred
+      feet of width, two hundred of depth, twenty percent coverage, thirty-two foot front and rear
+      yards, twelve-foot sides, and forty-five feet of height. This is not a missed standard, it
+      is an unencoded district -- FU-10 is not in this file's zone list and the coverage ledger
+      already carries it as zone_missing at thirteen lots, the smallest residential gap in the
+      city. Land held at one unit per ten acres for future urbanisation is not land a four-unit
+      pod is placed on today, so the thirteen lots are correctly outside the screen rather than
+      wrongly missing from it.
+    fingerprint: ee5c60adfe9ea6f9
+  "16.22.residential.txt#16.22.060":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A footnote about how height is measured for single-family attached dwellings -- forty-five
+      feet at the front elevation and no more than forty-nine at the side and rear, measured
+      pursuant to the definitions chapter. It states an allowance for a building type this screen
+      does not place, and the twenty percent usable open space footnote sitting immediately above
+      it on the same block is already quoted by this file.
+    fingerprint: 3ae187be8eb90d24
+  "16.22.residential.txt#16.22.050":
+    queue: condition
+    outcome: cant_tell
+    note: >-
+      Left open on one row, and the row is a real one. Table 16.22.050-2 governs SFA, MUR-A and
+      VTH -- all three permit a quadplex and all three are encoded here -- and its last row reads
+      "Shared outdoor recreation areas: 400 sq. ft./unit provided in accordance with Section
+      16.42.080", printed identically in all three columns. Four units is 1,600 square feet of the
+      site, which on a 5,000-foot lot is a third of it, so this is a fitment standard and not a
+      landscaping nicety. It cannot be closed either way today. Section 16.42.080's own first
+      sentence says "the standards of this section apply to subdivisions of 30 or more units", and
+      its tract standard asks each recreation area to be 100 feet by 100 -- ten thousand square
+      feet, which nothing sized at 1,600 could ever satisfy. Read alone that would close the row.
+      But 16.42.080.B exempts "multifamily housing subject to the outdoor recreation area
+      requirements of Section 16.44.010(C)(9)", and Chapter 16.44 is not in the store. So the
+      table points at a section written for subdivisions, which in turn points at a chapter nobody
+      here has read, and the number that governs a four-unit building on one lot is in the chapter
+      we do not hold. Fetching 16.44 is the next move; until then the row stays a question rather
+      than a dismissal. The other statements on this card are answered and none of them reaches
+      this building: footnote 8 caps single-family DETACHED floor area at 2,000 square feet in
+      MUR-A inside the Town Center Plan Area; footnote 3 sets 20-foot setbacks for public and
+      institutional uses in SFA and a 10-foot perimeter for cottage clusters; footnote 8 again
+      gives single-family detached and attached 45 feet at the front elevation and 49 at the side
+      and rear, which is a housing type this screen does not place; and 16.22.050's
+      accessory-structure block governs sheds. VTH's 18-foot maximum front setback, which is the
+      one genuinely binding number in the same table, is already encoded from L998,L1001.
+    fingerprint: fccea64078dae66a
+  "16.12.definitions.txt#16.12.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Happy Valley's definitions, ten measuring lines, and they split into vocabulary this layer
+      already relies on and buildings this is not. THE VOCABULARY: a quadplex is "a building
+      containing four dwelling units on a single lot" whose units "must comply with the definition
+      of an attached structure", with triplex and duplex defined the same way one paragraph apart,
+      and a townhouse defined as a dwelling "located on its own lot ... which shares one or more
+      common or abutting walls". Those four sentences are the ground under this layer's
+      quadplex_allowed values and under the split-plat question that keeps recurring -- Happy
+      Valley, unlike Gresham, does not say a divided quadplex stays a quadplex, it distinguishes
+      the two by whether each unit has its own lot. Worth knowing and not a standard. THE OTHER
+      BUILDINGS: a height exemption for "roofs of buildings, provided they are 30 feet or more in
+      height above the street grade" together with church steeples, which is a relaxation attached
+      to a structure the pod does not have; and five lines of wireless facility rules -- support
+      towers under 50 feet, extensions of more than ten percent, antennas protruding more than 20
+      feet from a tower. One line is a definition of open space as "an outdoor or semi-outdoor
+      area designed to provide a more pleasant and healthful environment for the occupants of a
+      dwelling unit", which describes a thing rather than requiring an amount of it. A definitions
+      chapter is worth the reading in this corpus because a definition here has turned out to be a
+      citywide standard before, so it was worked rather than scoped, and this one is clean.
+    fingerprint: b57115defc9a3be2
+  "16.32.steep-slopes.txt#16.32.050":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "The maximum impervious surface coverage from development shall be 3,500 square feet" is the
+      kind of sentence that should stop a reader, because 3,500 square feet is smaller than this
+      pod plus its parking court and it is stated as a flat cap with no percentage in it. It does
+      not reach us, and the reason is where it sits rather than what it says. This is 16.32.050,
+      Permitted Uses, and specifically the list of uses permitted WITHIN UNBUILDABLE SLOPE AREAS
+      -- land the Steep Slopes Development Overlay has already declared undevelopable. Item 5 is
+      the narrow route back in for a house: the applicant must show the lot holds prior planning
+      approval from Happy Valley or from Clackamas County before annexation, that there is
+      INSUFFICIENT BUILDABLE LAND ON THE SAME LOT for the proposed construction, that erosion,
+      water quality and re-vegetation standards are met, and that siting minimises excavation --
+      and then the impervious cap is one of the conditions attached to that relief, alongside a
+      three-foot limit on cuts and fills. So it is a ceiling on a concession, not a standard on a
+      lot. This screen never asks for the concession: it places a pod on buildable land or it does
+      not place one. The overlay itself is the Happy Valley slope mask this project already holds
+      as an unmeasured site fact, and it carves land out rather than shrinking what may be built
+      on what is left.
+    fingerprint: 3b6a5df40afbcaf8
+  "16.32.steep-slopes.txt#16.32.040":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      16.32.040(D), Designation of Isolated Conservation Slope or Transition Slope Areas as
+      Buildable -- a Type II Environmental Review that lets an applicant argue an isolated pocket
+      of protected slope back onto the buildable side, if the pocket is 3,000 square feet or less,
+      there is no other conservation or transition slope area within 50 feet, and a geotechnical
+      study says it can be safely developed. That is relief from the overlay, discretionary, and
+      it points the loosening way: it makes MORE land buildable, never less. The conservative
+      default declines it, which here means the screen keeps treating the mapped slope as
+      unbuildable -- the same treatment the overlay's own prohibition at 16.32.010(B)(1) already
+      gives it. The two numbers are worth naming as what they are, because 3,000 square feet and
+      50 feet read like thresholds a site must clear and are the opposite: they are the size a
+      protected pocket must be UNDER for the argument to be available at all.
+    fingerprint: c178d9697fc2671e
+  "16.34.natural-resources.txt#16.34.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      An exemption threshold inside Happy Valley's natural resources overlay -- an activity
+      qualifies where "it contains less than 500 square feet of new impervious surface". A door
+      out of the overlay for small utility and maintenance work, so it loosens, and the thing it
+      exempts from is geometry the screening layer holds rather than a dimension in this file.
+      Happy Valley's environmental overlays were brought into the screen with the rest of
+      Clackamas on 2026-09-03, after the finding that an absent overlay grades as clear land.
+    fingerprint: 0b031aafdb414c3d
+  "16.34.natural-resources.txt#16.34.060":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The vegetated corridor table -- 25 feet on an intermittent stream draining under 50 acres at
+      any slope, 25 or 50 on one draining 50 to 100 acres depending on whether the adjacent slope
+      reaches 25 percent, 50 feet on a perennial creek, 50 on wetlands, lakes and springs -- plus
+      the mapping instructions that go with it (locate all flood areas within 100 feet of the
+      property; a row that applies only within 300 feet of a river or surface stream). Every width
+      is measured out from a water feature, which makes it corridor geometry the overlay layer
+      carves rather than a setback this file holds. This is the fifth city in this queue to be
+      ruled the same way in the same pass, and the consistency is deliberate: Gladstone's WQ
+      ladder, Milwaukie's WQRs, Fairview's creek corridors, Tualatin's NRPO and now Happy Valley
+      all state the same kind of number and all of them belong to the screening layer.
+    fingerprint: a7f36853150849de
+  "16.34.natural-resources.txt#16.34.070":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The habitat conservation area development allowances -- 50 percent of the lot area up to
+      5,000 square feet on High habitat, 65 percent up to 6,000 on Moderate and Low, and the
+      disturbance shares of 10, 20 and 50 percent of the HCA on site -- with a ten-foot cap on
+      walkway and bike path width at the end. Near-identical to Gladstone's 17.25.100 ladder ruled
+      in the same pass, which is unsurprising since both implement the same Metro Title 13
+      programme, and ruled the same way for the same reason. THE LINE THAT DESERVES THE CARE IS
+      THE FIRST: "50 percent of the lot area, up to maximum of 5,000 sq. ft." reads like a
+      coverage cap on the whole parcel and is not one -- it is the ceiling on how much of a MAPPED
+      HABITAT AREA may be developed, inside a chapter about habitat, and a lot with no mapped
+      habitat has no ceiling from it at all. Read the other way it would be the tightest coverage
+      limit in this corpus, which is exactly why it is written out here rather than waved past.
+    fingerprint: 4f60bc3d6f5f2776
+  "16.63.land-divisions.txt#16.63.030":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Two subdivision-design provisions from the land divisions article. Flexible Lot Size lets
+      the approval body vary lot dimensions to work around topography, existing development and
+      significant trees -- a relaxation, granted while lots are being drawn. And "the minimum
+      paved width of all shared drives and lanes shall be 12 feet within a 20 foot easement, and
+      may serve up to two dwelling units" -- a shared drive is an easement created between newly
+      created lots, its own two-unit ceiling puts it below this building, and twelve feet is a
+      driveway rather than a court, which is the same finding this project has now recorded in
+      Gresham, Wilsonville, Oregon City, Fairview and Milwaukie.
+    fingerprint: 208aab7202218528
+  "16.42.landscaping.txt#16.42.030":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Any use which is required to provide off-street parking for five or more vehicles shall
+      provide buffering of the parking areas on all sides which face directly upon and are within
+      100 feet of any property line." The gate is five vehicles and the pod's court holds four, so
+      on its own terms this does not fire -- and even where it does, what it requires is a buffer
+      planted along the edge of an area the stalls and aisle have already sized. Recorded rather
+      than skipped because "within 100 feet of any property line" reads like a setback and is a
+      trigger for planting.
+    fingerprint: 32bbe7dc06b70afe
+  "16.42.landscaping.txt#16.42.050":
+    queue: nofield
+    outcome: design
+    note: >-
+      The Optimal Tree Protection Zone -- one foot of radius for every inch of trunk diameter
+      measured four and a half feet above the uphill side of the tree. An arborist's circle drawn
+      around an existing tree during construction. It is measured outward from a trunk rather than
+      inward from a lot line, and whether any given lot has such a tree is not a fact this system
+      holds.
+    fingerprint: 90d7de4bc42e88ca
+  "16.42.landscaping.txt#16.42.060":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Where landscaping is used for required screening, it shall be at least six feet in height
+      and at least 80% opaque" within two years. A specification for the hedge, and a choice at
+      that -- landscaping is one way to screen and a fence or wall is another. Six feet of shrub
+      takes no ground the buffer strip has not already been given.
+    fingerprint: 8a6f6760d5d7137d
+  "16.43.parking.txt#16.43.040":
+    queue: nofield
+    outcome: design
+    note: >-
+      Outdoor bicycle spaces must be visible from the building entrance or the right-of-way and
+      within 50 feet of the public entrance. A rack's placement, ruled the same way in Portland,
+      Milwaukie, Wilsonville and Fairview in this pass. No field in this registry measures a
+      bicycle space.
+    fingerprint: 6cbdd8d83d7bf13d
+  "16.63.land-divisions.txt#16.63.020":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "No density is allowed within constrained land except for the reduced rate within the Steep
+      Slopes Development Overlay Zone and the Natural Resources Overlay Zone." Density against
+      constrained land, which is two things this file does not decide: a unit count per acre,
+      measured at land division rather than at building placement, and the extent of two overlays
+      that the natural-resource screening layer holds for this county. Happy Valley's slope
+      overlay is also the one already on this project's unmeasured-site-facts list under its own
+      mask.
+    fingerprint: dcf661a44e375c1c
+  "16.63.land-divisions.txt#16.63.130":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "Minimum area, width, depth, frontage and setback requirements may be less than development
+      district minimums if in accordance with the general development plan" -- the
+      planned-development escape hatch, and it loosens every dimension at once in exchange for an
+      approved plan. The tail of the same sentence carries a garage standard, which the standing
+      no-garage ruling closes. A relaxation granted while lots are drawn is not a standard this
+      screen can hold, and taking it would report land as buildable on the strength of a plan
+      nobody has drawn.
+    fingerprint: 2eabc8e3a4f44302
+  "16.63.land-divisions.txt#16.63.140":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "All lots and parcels conform to the applicable lot standards of the land use district
+      (Article 16.2) including lot area, frontage, dimensions, setbacks, and coverage" -- an
+      expedited land division criterion, and it is a POINTER rather than a standard: it requires
+      compliance with Article 16.2, which is where this layer's dimensions were read from. The
+      trailing clause, that no resulting lot may be more than 75 percent of something, is a rule
+      about the shape of a division. Nothing new to encode and a different stage besides.
+    fingerprint: 53799629555e7a1a
+  "16.42.landscaping.txt#16.42.080":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Recreation area TRACTS: each must be at least 100 feet by 100 feet and have at least 30 feet
+      of street frontage. A tract is a parcel created by a land division and held in common, which
+      is why this section sits in the standards for one; a ten-thousand-square-foot square is
+      larger than most lots this screen looks at, which is itself the tell that the requirement is
+      addressed to a subdivision rather than to a building.
+    fingerprint: 77fd96a9dc2d4a80
 crossrefs:
 
   # --- two accessory-use references out of the district use table ----------

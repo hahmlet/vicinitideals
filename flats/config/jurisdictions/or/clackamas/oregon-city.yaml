@@ -25,6 +25,323 @@ ingest:
   zoning_layer: zoning_oregon_city
   zone_field: ZONE
   strip_lowercase_suffix: false
+readings:
+  "17.zoning.txt#17.54.100":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Fences, hedges, walls and retaining walls. Three and a half feet in front of a building; six
+      feet next to or behind it for a residential property with fewer than five units; eight for
+      all other uses; eight and a half where a retaining wall is in the combination. The section
+      is worth one note beyond its own subject, because 17.54.100.A.2.a is Oregon City drawing a
+      line at five units and putting a four-unit building on the small side of it. The heights
+      themselves are fence, hedge and wall heights, repeated in the illustrated summary at the end
+      of the section, and none of them is a building height or anything this screen places.
+    fingerprint: f779ad4ba754b4e9
+
+  "17.zoning.txt#17.04.1340":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A measurement definition out of Oregon City's definitions chapter, caught by a height field
+      because it states a distance in feet: a tree's diameter is measured at four and a half feet
+      above ground level at its base, and on a slope at the mid-point between the up-slope and
+      down-slope sides. It tells a surveyor where to put the tape round a trunk.
+    fingerprint: 0b6937c46161320a
+  "17.zoning.txt#17.12.050":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A density bonus: up to a twenty percent increase over maximum net density, to 26.2 dwelling
+      units per acre, for projects containing affordable units restricted to households at or
+      below a stated share of area median income. Reading a bonus can only ever let more building
+      through than the base standard does, so leaving it unencoded refuses land the city would
+      allow rather than the reverse, and the pod is four units in any case.
+    fingerprint: 8bad2abdafcd22b4
+  "17.zoning.txt#17.24.050":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The line is a genuine refusal-direction standard and it still does not reach, which is worth
+      writing down rather than waving away. Section 17.24.050 is "Additional standards for Thimble
+      Creek Concept Plan" inside Chapter 17.24, the Neighborhood Commercial district, and
+      subsection E.3 requires ground-floor residential uses to achieve a minimum net density of
+      17.4 units per acre with no maximum. A minimum density refuses a lot for being too big for
+      the building, which is the direction that produces a false GREEN when it is missed. It does
+      not apply here because Oregon City's NC is held at quadplex_allowed false, on a reading
+      already recorded in this file: the district admits residential by reference and then caps
+      ground-floor residential floor space at half the non-residential floor space on site, which
+      no field in this model can hold. The standard is also confined to one concept-plan area,
+      which is a geography nothing here measures.
+    fingerprint: 8427edf10bab41b8
+  "17.zoning.txt#17.16.070":
+    queue: condition
+    outcome: never
+    note: >-
+      Cottage cluster standards, including the garage-entrance setback that routed the card here.
+      A cottage cluster is a defined housing type in Oregon City's code -- detached units of
+      limited footprint arranged round a common courtyard -- and this project places four attached
+      units on a single footprint, which is a different type with its own rows in the same
+      chapter. The garage figure is doubly unreachable: the pod carries no garage, a ruling
+      already standing on this project.
+    fingerprint: 43db3bd844a56034
+  "16.12.streets.txt#16.12.016":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Oregon City's street cross-sections, printed as a table of right-of-way and pavement widths
+      by street designation: an 88-foot right-of-way with 62 feet of pavement on the industrial
+      row, 85 and 59 on the residential one, and a narrower pair at 60/38 and 54/32 for the
+      shared-space designations, with 0.5-foot curbs, 5-foot sidewalks, 7.5-foot landscape strips,
+      6- and 7-foot bike lanes and 11- and 12-foot travel lanes. Also the alley: a 20-foot minimum
+      right-of-way with 16 feet of pavement, and the instruction that where an alley exists,
+      garage access comes from it. Right-of-way geometry, delivered when land is subdivided and a
+      street is built, on the far side of the lot line from anything this screen measures. The
+      alley line is the one worth naming because alley presence is on this project's
+      unmeasured-site-facts list and an alley-fed court is the cheapest version of this building;
+      the note here is that Oregon City would want the garage off the alley, and this pod has no
+      garage.
+    fingerprint: 26525af742250445
+  "16.12.streets.txt#16.12.035":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      TWO TABLES, BOTH ALREADY SETTLED IN THIS FILE. The spacing table asks 175 feet from a street
+      corner on a major or minor arterial, 100 on a collector and 25 on a local street -- and
+      every one of those rows ends with the same qualifier, "for all uses other than duplexes,
+      triplexes, quadplexes and townhouses", which excludes this building by name. It is a
+      recorded refusal here with its reasoning. The approach-size table is read and encoded: the
+      "Triplexes, quadplexes and cottage clusters" row gives 10 feet minimum and 36 feet maximum,
+      and those are the figures this layer holds. What is left on the card is the rows for other
+      buildings -- multi-family at 18 and 30 feet, and commercial, industrial, office,
+      institutional, mixed use and nonresidential at 12 one-way, 20 two-way and 40 feet maximum.
+      The 18-to-36-foot shared-driveway note for middle housing structures needs two structures
+      sharing one drive, which is a fact about a pair of projects rather than about a lot.
+    fingerprint: 9e3576c2264af5f8
+  "17.zoning.txt#17":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "1 inch = 900 feet" -- the scale bar printed under a zoning map image, with the city's
+      mailing address garbled beneath it ("CityalO.ogooCly ii P.O Bc»l:3040", "t!25c.nr.,5t"). Not
+      a standard, not even prose: the caption of a picture, captured because it contains the word
+      feet. Filed to the extractor list, and the surrounding garbage is the corroboration -- a
+      page whose address block came through as line noise was never text to begin with.
+    fingerprint: 2fa5e1a5476bf815
+  "17.zoning.txt#17.04.1115":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The definition of "shade" -- a shadow cast when the sun is at an altitude of 21.3 degrees
+      and an azimuth 22.7 degrees east or west of true south. The winter-solstice geometry that
+      appears in five codes in this corpus, and it exists to serve a solar access standard. Solar
+      access in this corpus has closed the same way everywhere it has been read -- Wilsonville's
+      4.137 applies only to developments creating lots or building sites in a requested overlay,
+      and unincorporated Multnomah's 39.4799 chain does not reach a zone where this pod is allowed
+      -- and a definition of a shadow is not a dimension of a building in any case. The one solar
+      provision this project holds open, MCC 39.4801, is open because its applicability sentence
+      says "all structures"; nothing on this card says that.
+    fingerprint: 1a6f14d7a94e4181
+  "17.zoning.txt#17.04.1195":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The definition of a STORY: a basement counts as one where the finished floor above the
+      underfloor space is more than 6 feet above grade for more than half the perimeter, or more
+      than 12 feet above grade at any point. A counting rule for basements, and this pod has none
+      -- it is a two-storey slab-on-grade factory-built structure. Worth the sentence rather than
+      a shrug because a measurement definition CAN bind: this project's whole word-review queue
+      exists because a city's own glossary changes what its numbers mean. This one does not, for
+      the plain reason that Oregon City states its height maximums in feet rather than in stories,
+      so the story count has nothing here to modify.
+    fingerprint: ded066b903d0f2f6
+  "17.zoning.txt#17.04.808":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      A WORKED EXAMPLE, not a standard: "minimum net density = 7.0 du/acre X 3.87 acres = 27.09 du
+      (round up) 28 units" and "maximum net density = 8.7 du/acre X 3.87 acres = 33 units",
+      printed inside a definition to show a reader how the arithmetic runs on a hypothetical
+      3.87-acre site. The 3.87 is somebody's illustration. It closes for the same reason
+      Milwaukie's 19.202.4 closed on the same day: density is measured against a SITE at
+      entitlement and this screen asks whether one pod fits one existing lot, so it measures lot
+      area, setbacks, coverage and the court and never a unit count against an acre. The rates the
+      example multiplies -- 7.0 and 8.7 dwellings per acre -- are on the zone tables, where they
+      can be read from the row that governs.
+    fingerprint: b19678090b545f22
+  "17.zoning.txt#17.08.040":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      SHREDDED TABLE CELLS FROM THE R-10 DIMENSIONAL STANDARDS, and the damage is visible in the
+      text itself: "tached)/8 feet tached) /7 feet tached)/5 fe et" is "0 feet (attached)/8 feet
+      (side)" with the word broken across a hyphenation and the three zone columns run together on
+      one line; "Mi nimum front yard", "Minimum rea r yard" and "10 feet - - ADU ," carry spaces
+      inside words. Three zones' columns are printed side by side and the extractor has flattened
+      them into single lines, so no cell can be attributed to a column. The standing rule on this
+      project is never to rule on a cell whose column is unknown, and the numbers themselves are
+      not at risk -- R-10, R-8 and R-6 are encoded in this file from these same tables, read
+      properly. This is our OCR, not Oregon's code. Filed to the extractor list with its five
+      siblings in this chapter.
+    fingerprint: 023b89c30b35fbeb
+  "17.zoning.txt#17.10.040":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      The same shredding one chapter along: "All, except 0 feet (attached)/5 / feet (side)" split
+      across two lines with the row label stranded beneath it, and "10 feet -- ADU, cot- / tage
+      cluster" hyphen-broken. Two zone columns flattened together. The lot-size line that came
+      through cleanly -- single-family detached and duplex at 5,000 square feet in one column and
+      3,500 in the other -- is a different housing type's row in any case. Filed to the extractor
+      list.
+    fingerprint: d4c91919e5cd1798
+  "17.zoning.txt#17.10.050":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Townhouse 25 du/acre" on the maximum net density line, against 8.7 and 12.4 for everything
+      else. A ceiling rather than a floor, on a unit count per acre this screen does not test, for
+      a housing type this pod is not -- Oregon City writes townhouses as separate unit-lot rows
+      throughout its tables, and this project has already recorded that the pod is one structure
+      on one lot rather than four unit lots.
+    fingerprint: c82cf30006bf01ca
+  "17.zoning.txt#17.12.040":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "Townhouse 0 feet (attached)/5 feet (side)" with the qualifier orphaned on the next line and
+      the row label above it stranded from its column -- a third instance of the shredded
+      two-column table in this chapter family. It is also a townhouse row, so even undamaged it
+      would not be this building's. Filed to the extractor list.
+    fingerprint: 67767fa462b0c357
+  "17.zoning.txt#17.12.060":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      A sustainability density BONUS: up to twenty percent more units, or no more than 26.2
+      dwellings to the acre, for buildings LEED-certified at any level. Bought with a
+      certification, capped as a maximum, and expressed as density -- three separate reasons this
+      screen cannot use it. The conservative default in this corpus declines earned relaxations
+      throughout, and this is the clearest kind: a number a developer buys.
+    fingerprint: 51165ed426c8e682
+  "17.zoning.txt#17.14.080":
+    queue: nofield
+    outcome: design
+    note: >-
+      Table 17.14.080.A, the residential tree requirement: minimum inches of tree DIAMETER per lot
+      to be preserved, planted or paid into a tree fund, banded by lot size -- 4 inches under
+      5,000 square feet, rising to 12 above 15,000. It does reach this building; the section opens
+      on "all single-family detached residential units and middle housing developments" and says
+      adjustments are prohibited. But inches of trunk diameter is a nursery specification, and the
+      section's own three options make it plainly satisfiable without taking ground: preserve an
+      existing tree, plant one, or pay the fund. A tree fund payment costs a lot nothing in area,
+      which is the tell that this is not a land constraint. The card also carries the bare column
+      header "Lot Size (square feet)", which is a stripped table label of the kind filed to the
+      extractor list elsewhere in this pass.
+    fingerprint: 1d111c37f1b9ae8f
+  "17.zoning.txt#17.20.040":
+    queue: nofield
+    outcome: design
+    note: >-
+      Ground-floor transparency: at least fifty percent of the main front elevation in windows,
+      measured in linear fashion between 3.5 and 6 feet above grade, with the code working the
+      example itself -- a twenty-five-foot elevation needs 12.5 feet of glass. Also a limit on
+      single panes over ten feet wide. This is the facade, drawn rather than dimensioned by land,
+      and it is the same standard 17.62.055 states at sixty percent for a different district. A
+      window takes no ground.
+    fingerprint: 01b555172d36c3ff
+  "17.zoning.txt#17.4":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      ATTRIBUTION SLIP WITH A CLEAN ANSWER UNDERNEATH. The card is keyed "17.4" -- not a section
+      number in this code but a running page header, "17.4 1. 080", that the sectioner took for a
+      heading -- and its four rows are Table 17.41.080.B, "Reduced Dimensional Standards for
+      Detached Single-Family Residential Units": an 8,000-to-9,999-square-foot reduced lot taking
+      a 15-foot front, 20-foot rear, 7/9-foot sides and 40 percent coverage, down a ladder to
+      1,800-to-3,999 square feet at 5, 15, 5/5 and 55 percent. Every figure is a REDUCTION, and
+      17.41.080(F) says exactly what buys it: an applicant who dedicates a tree protection tract
+      may ask the community development director, through a Type II procedure, to reduce the lot
+      size, width, depth and setbacks of the underlying zone in approving a SUBDIVISION OR
+      PARTITION, provided the average lot size across the division still meets the zone minimum.
+      Relief granted while lots are being drawn, in exchange for land given up elsewhere, at a
+      decision-maker's discretion. It loosens, it is not available to a building on an existing
+      lot, and the table's own heading names a different housing type besides.
+    fingerprint: 8417d0befdd60ad5
+  "17.zoning.txt#17.41.110":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Table 17.41.080.C, the townhouse half of the same tree-tract density transfer -- a
+      3,500-to-7,000-square-foot reduced lot at a 10-foot front, 15-foot rear, 5/0-foot sides and
+      40 percent coverage, and 1,800 to 3,499 at 5, 15, 5/0 and 55 percent, with a footnote that
+      the zero-foot setback is only allowed on townhouses. Arriving under the key 17.41.110, which
+      is the next section's number: the sectioner's nearest-heading-above rule again. Same ruling
+      as its sibling table and for the same reason -- these are reductions bought with a dedicated
+      tree tract at subdivision, and townhouse rows besides.
+    fingerprint: 3b40d3a402dd20ba
+  "17.zoning.txt#17.49.110":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The Natural Resource Overlay District's vegetated corridor ladder, printed as Metro Title 3
+      always is: 200 feet from the edge of bankfull flow on an anadromous fish-bearing stream at
+      any slope, 15 feet on an intermittent stream under 25 percent slope draining less than 100
+      acres, 50 feet on all other protected water features under 25 percent, and the steep branch
+      running 200 feet where a 25-percent-or-greater slope continues for 150 feet or more, or to
+      the top of the ravine plus 50 where it runs less. A corridor is measured from a water
+      feature the parcel data locates, never from a lot line, which is why every corridor width in
+      this corpus -- Gladstone's, Fairview's, Milwaukie's, Tualatin's, Wilsonville's, Portland's
+      -- is carved by the natural-resource overlay layer instead of becoming a yard. Clackamas had
+      no such screening at all until it was built on 2026-09-03; the NROD is inside it.
+    fingerprint: 438c0ada1e9322be
+  "17.zoning.txt#17.49.240":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      THE NROD DENSITY TRANSFER, AND THE SENTENCE ABOVE THE TABLES IS THE WHOLE ANSWER: "In order
+      to allow for a transfer of density pursuant to subsection B above, the dimensional standards
+      of the base zone MAY BE MODIFIED in order to minimize disturbance to the NROD. The
+      permissible REDUCTIONS are specified in Tables 17.49.240.A--17.49.240.C." Table A drops the
+      minimum lot size, width and depth by zone -- R-10 to 5,000 square feet, 50 feet and 65 feet;
+      R-8 to 4,000, 45 and 60; R-6 to 3,500, 35 and 55; R-5 to 3,000, 30 and 50; R-3.5 to 1,800,
+      20 and 45 -- and Tables B and C then reduce the yards on the smaller lots that result. Every
+      number is smaller than the standard it replaces, it is available only where density is being
+      moved off overlay land during a land division, and subsection D still requires the
+      underlying zone's average minimum lot size to be met across the division. A relaxation, at a
+      different stage, on overlay land. R-3.5 is also a zone this file does not carry, which is a
+      separate matter and is tracked with the district work rather than here.
+    fingerprint: 55e89cfb9adb3562
+  "17.zoning.txt#17.49.255":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      The last row of Table 17.49.240.C, arriving under the following section's number -- 1,800 to
+      3,499 square feet at a 5-foot front, 15-foot rear, 5/0-foot side, 10-foot corner side and 55
+      percent coverage, for TOWNHOUSES on a reduced lot. Same table, same ruling: reductions
+      bought by transferring density off the Natural Resource Overlay during a land division, and
+      a townhouse row besides. The split of one table across two section keys is the
+      nearest-heading-above slip again, and it is the fourth instance in this chapter alone.
+    fingerprint: c6a4180b62031629
+  "17.zoning.txt#17.58.040":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "Compliance Periods for Option 2": a site under 150,000 square feet gets 2 years, 150,000 to
+      300,000 gets 3, 300,000 to 500,000 gets 4, over 500,000 gets 5. A SCHEDULE -- how long an
+      applicant has to finish something -- keyed to site size, with the smallest band starting at
+      three and a half acres. Time is not a dimension of land, and every band on this ladder is
+      larger than a lot holding one pod.
+    fingerprint: 990dca765c9e318e
+  "17.zoning.txt#17.62.055":
+    queue: nofield
+    outcome: design
+    note: >-
+      The sixty-percent version of the same transparency standard 17.20.040 states at fifty --
+      windows measured in linear feet between 3.5 and 6 feet above the ground, with the code
+      working the example on a hundred-foot elevation. The facade again. Two districts, two
+      percentages, one kind of standard, and neither takes ground from a lot.
+    fingerprint: 9d0cce7cbdf30a67
 crossrefs:
   "16.08.065":
     outcome: narrows_only

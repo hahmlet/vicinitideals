@@ -42,6 +42,367 @@ ingest:
   zoning_layer: zoning_tualatin
   zone_field: PLANDIST.CZONE
   strip_lowercase_suffix: false
+readings:
+  "40-41.residential.txt#41.220":
+    queue: missed
+    outcome: not_here
+    note: >-
+      What is left of Table 41.220 after this commit took the row that mattered. The RML minimum
+      average lot width for a quadplex -- fifty feet, with fourteen on the townhouse row -- was
+      stated here and held nowhere, while RL carried the identical rows from Table 40.220 a page
+      earlier; both are now encoded, and the two relaxations on the row are deliberately not,
+      since "may be reduced to 30 feet if on a cul-de-sac" turns on a street geometry nothing
+      measures and the twenty-six foot figure belongs to Flexible Lot Subdivisions. Everything
+      still uncited on the card is another building's row: 20,000 square feet and seventy-five or
+      a hundred feet of width for multi-family structures of five or more units and for
+      condominium ownership, 10,000 and 20,000 for other permitted and conditional uses, 3,000
+      square feet and twenty-five feet of width for single family detached but only inside a
+      Flexible Lot Subdivision, 4,500 square feet for duplexes and cottage clusters, and a
+      seventy-five foot height for water reservoirs.
+    fingerprint: 7b542b6cf6597957
+
+  "40-41.residential.txt#41.300":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Other people's densities and one relaxation. The uncited density rows are ten units per acre
+      for a use whose name is split across the page break, twelve for manufactured dwelling parks
+      and only for single-wide parks, and fifteen each for retirement housing, congregate care,
+      nursing facilities and group living. The minimum lot size line is single family dwelling at
+      3,000 square feet, available only inside a Flexible Lot Subdivision. The last statement is
+      the conditional-use height increase to fifty feet, which raises a ceiling this pod is
+      nowhere near.
+    fingerprint: f5b4e2df9db1c306
+  "40-41.residential.txt#40.300":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Two rows of RL's density table, neither of them the quadplex line. One is the minimum
+      density of one unit per acre stated on the single family dwelling row, whose maximum of 6.4
+      units per acre sits beside it and whose neighbour row for duplexes reads None; the other is
+      ten units per acre for retirement housing or a congregate care facility. A four-unit pod on
+      a residential lot is far above one unit an acre in any case, so even if the row travelled it
+      would not bind.
+    fingerprint: 17f4b7f07a5d3922
+  "36.400-420.lot-dimensions.txt#36.125":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      THE LINES ON THIS CARD ARE NOT 36.125. They are TDC 36.410, Flexible Lot Subdivisions for RL
+      and RML Zones, pulled onto a card headed 36.125 by the cross-reference in 36.410's own first
+      paragraph, which says the flexible-lot provisions are "subject to the discretionary
+      subdivision standards in TDC 36.120 and not the Housing Clear and Objective Standards in TDC
+      36.125". Nearest-heading-above picked the mention rather than the section -- the same
+      attribution slip as the Wilsonville church lines and the hoisted use table, and worth naming
+      because a reader sent to 36.125 would find a clear-and-objective housing chapter and none of
+      these words in it. WHAT THE LINES ACTUALLY SAY does not reach this building either.
+      36.410(2)(b) lets the RML minimum lot size for detached houses, duplexes, triplexes and
+      quadplexes drop to 3,000 square feet -- a relaxation, and one bought with four conditions
+      that describe a subdivision rather than a lot: the site must be at least one acre, five
+      percent of gross site area must be platted as open space, at least twenty percent of the
+      dwelling units must be townhomes, duplexes, triplexes or quadplexes, and no more than
+      seventy percent of the single-family building permits may issue before the other housing
+      types are finished. That is a phasing plan for a developer building a neighbourhood. This
+      project screens whether one pod fits one existing lot, so the relaxation is unavailable and
+      the conditions are unmeasurable, and both facts point the same way.
+    fingerprint: c64092d96a69c6ab
+  "36.400-420.lot-dimensions.txt#36.420":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      TDC 36.420, Increased Density for Greenway and Natural Area Dedications in the RL zone -- a
+      trade made at subdivision, not a standard on a lot. One small lot is permitted for each
+      6,500 square foot greenway or natural area lot created in the plat, and the small lots so
+      created must be between 5,000 and 5,999.99 square feet, have an average lot width of at
+      least 30 feet, hold a public-street frontage of 50 feet or 30 on a cul-de-sac bulb, and keep
+      building coverage to 45 percent. Every one of those is a rule about lots a subdivider is
+      drawing, conditioned on land this project is not dedicating, in a zone whose subject is
+      "single-family lots". Two of the numbers would be worth having if they ever reached us -- an
+      average lot width, which is a measurement this project has ruled on twice and holds, and a
+      45 percent coverage cap -- and they do not, because the lot they describe does not exist
+      until somebody creates it. Also on the page and equally out of reach: the abutting-lot size
+      test ("no more than 500 square feet smaller than the size of the abutting lot"), which would
+      need the neighbour's lot area, and the 50-foot separation where a tract lies between.
+    fingerprint: bd25fb8c437d3782
+  "31.definitions.txt#31.060":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Tualatin's definition of NET ACRES, and it is this corpus's clearest example of why the
+      denominator ledger exists. The area proposed for development after deducting sensitive land
+      -- 100-year floodplain preserved in a tract, land exceeding 25 percent slope, drainage ways,
+      wetlands and their buffers -- plus land dedicated for parks and for rights-of-way and
+      stormwater. And then the line that makes it a definition unlike any other in this corpus:
+      "when actual information is not available, the following formulas MAY be used: single-family
+      development, allocate 20 percent of gross acres; multi-family including apartments,
+      condominiums and townhouses, allocate 15 percent." A city that lets an applicant substitute
+      a flat percentage for a measurement, at the applicant's option. It closes here for the same
+      reason Gladstone's net acre does: net acres is the base for maximum DENSITY, units per acre,
+      and this screen never asks how many units fit an acre -- it asks whether one pod fits one
+      lot, and measures lot area, setbacks, coverage and the court. Recorded because seven cities
+      in this corpus define net acre seven ways, and this is the one that also defines it two ways
+      within itself.
+    fingerprint: ee6393ef335c1903
+  "71.wetlands-protection.txt#71":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      NOT A STATEMENT ABOUT LAND USE -- fifty lines of metes and bounds. "THENCE South 85 degrees
+      35 minutes 36 seconds West 141.04 feet to a half inch iron rod", repeated fifty times, is
+      the legal description of the Tualatin wetlands protected area boundary: a surveyor's
+      traverse recorded in the code so the map has words. Every number on this card is a bearing
+      or a distance along that traverse and none of them is a standard anybody complies with. This
+      chapter is also where one of this project's reader-blindness findings came from -- the
+      half-inch iron rod whose fraction character was stored as a NUL byte, which no grep could
+      find -- so these lines are worth keeping in view rather than filtering out of the corpus:
+      they are the shape that proves the extractor is reading what is actually on the page. The
+      chapter queue has no button for "this is not a sentence", which the reading-queue design
+      gives to the no-field lane instead; closing it here with the reason written out is the
+      nearest honest thing, and the boundary the traverse describes is held by the overlay layer,
+      not by any value in this file.
+    fingerprint: 299f253aa8178658
+  "71.wetlands-protection.txt#71.900":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The same traverse continued -- fifty-nine more bearings and distances, including the "45
+      FOOT ROAD CORRIDOR THROUGH WETLANDS PROTECTED AREA" description and the five-foot strip
+      dedicated to the City under a Washington County fee number. Legal descriptions of a boundary
+      and of a road corridor through it, not standards. Ruled with the 71 card in the same pass
+      and for the same reasons; the 45 feet in the heading is the width of a road somebody already
+      built through the protected area, not a width anything on our lot must have.
+    fingerprint: f5f45b477de059ea
+  "72.natural-resource-overlay.txt#72":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Two lines of the natural resource protection overlay's general provisions -- a 50-foot band
+      from a stream's top of bank, and a slope measured over a horizontal distance of 100 feet.
+      Corridor geometry, measured from the water and from the ground rather than from a lot line,
+      held by the screening layer. Note the second one for what it is: "measured for a horizontal
+      distance of 100 feet" is a method for deciding what counts as a slope, the same kind of
+      measurement rule Portland's 33.930.150 states for finding a top of bank, and this corpus
+      rules them all the same way.
+    fingerprint: 983ffadb766136bc
+  "72.natural-resource-overlay.txt#72.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The widths of Tualatin's named natural resource protection districts: 300 feet east and west
+      of the I-5 right-of-way on Map 72-1, a line 75 feet inland from the top of bank extending to
+      the middle of the river, the NRPO-GC district at 50 feet out from the top of bank, and 25
+      feet out from the upland edge of wetlands in a stream corridor. Each is a district boundary
+      drawn from a feature -- a freeway, a river bank, a wetland edge -- and every one of them is
+      the overlay layer's business. What makes this card worth a note rather than a shrug is the
+      first entry: a 300-foot band measured from an INTERSTATE right-of-way is not a water
+      corridor at all, it is a view or noise district, and a reader skimming for creeks would file
+      it under the wrong heading. It is still geometry, and it is still carved rather than
+      encoded.
+    fingerprint: 3544297c6d87610c
+  "73A.020-060.residential-design.txt#73A.010":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "Windows that occupy at least 12 percent of the wall plane" -- the front-face transparency
+      standard from Tualatin's clear and objective residential design standards, landing on a card
+      headed 73A.010 because of where the section break falls. THESE STANDARDS DO REACH THIS
+      BUILDING: 73A.020(1)(b) lists "Duplex; Triplex, or Quadplex" by name, which is rarer than it
+      sounds and worth recording plainly rather than closing on a scope argument that is not
+      available here. They close on what they ask. Twelve percent of a wall in glass, three roof
+      design elements, five wall design elements, and reductions to ten or eight percent if extra
+      elements are provided -- all of it is what the facade looks like, none of it is where the
+      building sits or how much ground it takes. A design standard, not modelled, which is this
+      corpus's standing answer to every transparency percentage it meets and the reason the
+      reading queue's fourth lane has a button for exactly this.
+    fingerprint: 25f41c6bab81c5cd
+  "73A.020-060.residential-design.txt#73A.020":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The applicability section for Tualatin's residential design standards, and the three 35
+      percent figures on this card are its ALTERATION trigger, not a standard: an addition or
+      alteration to an existing dwelling is caught where it results in a 35 percent or more
+      expansion of the footprint, a 35 percent or more increase in building height, or a 35
+      percent or more alteration of an existing wall plane. This project builds new, so the
+      trigger it lands on is (1)(b) -- "Duplex; Triplex, or Quadplex" -- which catches the pod
+      outright and needs no threshold. The standards themselves are facade design and are ruled on
+      the 73A.010, .030 and .050 cards. Two exceptions in the same section are worth carrying: the
+      standards do not apply to a side wall plane abutting the side yard of an adjacent dwelling,
+      and facades separated from a street by another dwelling are exempt from the front and rear
+      standards -- both are relief conditioned on what the NEIGHBOUR has built, which is the
+      neighbours'-side shape this corpus holds nothing for and, being relief, declines anyway.
+    fingerprint: a92711b319977ea4
+  "73A.020-060.residential-design.txt#73A.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      73A.030, the Clear and Objective (Type I) design standards proper, and the line here is the
+      rear elevation's twin of the front one: windows occupying at least 12 percent of the wall
+      plane, with two roof design elements and four wall design elements, reducible to ten percent
+      if an extra wall element is provided. Ruled with 73A.010 and for the same reason -- glass as
+      a share of a wall changes no dimension of the building or the lot. Worth naming the
+      mechanism, because it is the design-menu shape wearing a percentage: the percentage itself
+      is negotiable downward by adding elements from a list, so even the one number on the card is
+      a starting point rather than a standard.
+    fingerprint: 1ebe13b4979460a5
+  "73A.020-060.residential-design.txt#73A.050":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "Covered porch at least 36 square feet in area and at least four feet deep" -- item three in
+      the list of Residential Wall Design Elements, of which 73A.030 requires five on the front
+      face and four on the rear. A menu entry, chosen or not chosen by the applicant, alongside
+      options that project nothing at all. The four feet of depth is the only number here that
+      would touch the ground, and it would sit in the front yard as an encroachment if selected --
+      which is a reason for a designer to pick a different element, not a constraint on the lot.
+      Design menu, ruled with the rest of Chapter 73A in the same pass.
+    fingerprint: 4d56845987505c76
+  "73C.parking.txt#73C.030":
+    queue: nofield
+    outcome: design
+    note: >-
+      General parking standards, and every statement on the card is either a surface treatment or
+      a threshold above this building. Sub-compact spaces capped at 35 percent of the total -- an
+      applicant's choice that loosens. EV service capacity to 40 percent of spaces at developments
+      of five or more units. A maximum-coverage rule that opens at 65,000 square feet of floor
+      area. Tree canopy of 30 percent over parking areas under half an acre, with trees at 30 feet
+      on centre. And the one line that would dimension something, "vehicular access at the
+      entrance may be a minimum of 18 feet in width, if gated", is an exception FOR PARKING
+      STRUCTURES AND UNDERGROUND PARKING, which the standing no-garage ruling closes.
+    fingerprint: 746e122b83e3a4c9
+  "73C.parking.txt#73C":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Thirteen statements arriving under a bare chapter key -- another attribution slip, this one
+      gathering fragments from four different sections. A green-energy investment of 1.5 percent
+      of project cost that applies to PUBLIC PROJECTS ONLY; the 40 percent canopy over new parking
+      lots; use ratios for churches by seat and bench-foot, bowling alleys and health clubs per
+      thousand square feet, and park-and-ride lots; the commercial ingress table that starts at 32
+      feet for the first 50 feet from the right-of-way; a 40-foot maximum driveway width for
+      commercial, industrial and institutional uses; the five-foot rule for driveways near a
+      property line -- from which quadplexes and cottage clusters are expressly EXEMPTED, so it
+      loosens here; and a 40-foot separation between adjacent driveways on one property, which
+      needs two. Nothing on the card is addressed to a four-unit dwelling.
+    fingerprint: 07009753b0e6acb7
+  "73C.parking.txt#73C.210":
+    queue: nofield
+    outcome: design
+    note: >-
+      Parking-lot landscaping internals: a five-foot perimeter with deciduous trees at 30 feet on
+      centre, shrubs or ground cover reaching 90 percent coverage in three years, plantings 30
+      inches tall at maturity, and 25 square feet of landscape island per space. Both numbers that
+      could take ground are already recorded refusals in this layer with their reasoning -- the
+      five-foot perimeter and the island area -- and what the section decides is what grows in and
+      around a court whose size the stalls and aisle already fix. Its own exception also closes
+      the interesting case: none of it applies where parking areas on separate lots adjoin and
+      connect.
+    fingerprint: 509b022d44c758af
+  "40-41.residential.txt#40":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      THREE FRAGMENTS OUT OF TABLE 40-3 AND THE ROW LABEL IS EVERYTHING. "No minimum setback must
+      be greater than 50 feet. Parking and vehicular circulation areas must be set back a minimum
+      of ten feet from any public right-of-way or property line" is the LIMITATIONS cell of the
+      table's CONDITIONAL USES row -- setbacks for a conditional use are set through Architectural
+      Review, and these two sentences are the bounds on that discretion. A ten-foot setback around
+      parking would be a serious charge against a rear court, which is exactly why the row it sits
+      on had to be read: the pod is an outright permitted quadplex in RL and takes the front-15,
+      side-5, rear-15 line above it, which this layer encodes. The other two fragments are a
+      50-foot yard along Basalt Creek Parkway, corridor geometry on one named road, and the Type
+      II Architectural Review bonus that raises height to 50 feet where every setback is at least
+      one and a half times the building height -- discretion, and a bonus.
+    fingerprint: 30e18c2a11efb844
+  "40-41.residential.txt#40.220":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Rows from Table 40-3's lot-size and lot-width blocks, and every flagged one belongs to a
+      different housing type: a single-family dwelling at an average of 6,500 square feet and 50
+      feet of width reducible to 30 on a cul-de-sac, a duplex at 6,500, a cottage cluster at
+      6,500, conditional uses at 6,000. The quadplex rows of the same two blocks -- 6,500 square
+      feet and 50 feet -- are read and encoded in this layer, and it is worth saying that they are
+      the same numbers, because a card showing four neighbouring rows and not the fifth invites
+      the conclusion that the fifth is missing.
+    fingerprint: c69b36121b24d6ca
+  "40-41.residential.txt#40.320":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "The manufactured home must be multi-sectional and enclose a space of not less than 1,000
+      square feet" -- a minimum floor area for a manufactured home placed on a lot, in the section
+      of additional standards written for that one housing type. A factory-built four-unit
+      attached townhome is not a manufactured home in this code's vocabulary, and a minimum
+      enclosed area for a single dwelling is not a dimension of land.
+    fingerprint: 97b261db7bcf1224
+  "40-41.residential.txt#41":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      A FRONT SETBACK THAT CLIMBS WITH BUILDING HEIGHT -- under 25 feet takes 10, 25 to under 30
+      takes 15, 30 and over takes 20 -- and at 26 feet this pod would land on the middle rung and
+      owe 15 feet where this layer encodes 10. It does not, and the reason is the block heading
+      three rows above: the ladder belongs to "Multi-family (5 OR MORE UNITS), Conditional Uses,
+      and Other Permitted Uses Not Listed". The block above it is "Single Family Detached, Duplex,
+      Townhouse, Triplex, or Quadplex" and states a flat 10-foot front, 20-foot garage door,
+      5-foot side and 10-foot rear, which is exactly what this file holds for RML. The five-foot
+      side on this card is common to both blocks and agrees. The 50-foot yard along Basalt Creek
+      Parkway is corridor geometry on one named road. This is the check that a height-keyed
+      setback deserves and it comes out clean.
+    fingerprint: 0d8aebc8d82c6c8f
+  "40-41.residential.txt#41.210":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Wireless Communication Facility, provided the facility is located within 300 feet of the
+      centerline of Interstate 5" -- a permitted-use entry for an antenna in a corridor beside a
+      freeway. A mast is not a dwelling, and 300 feet from a centreline is a strip on a map.
+    fingerprint: 388434c9bbc73b25
+  "73C.parking.txt#73C.080":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The loading-berth table: commercial and institutional floor area from 5,000 square feet up
+      takes one 12-by-25-foot berth, industrial takes 12 by 60, and the count rises to three above
+      60,000 square feet with 14 feet of vertical clearance throughout. Every row is keyed to
+      commercial, industrial or institutional floor area and the first threshold is 5,000 square
+      feet, so the operative row for a four-unit dwelling is the one requiring nothing. Ruled the
+      same way as Portland's 33.266.310, Troutdale's 9.120, Milwaukie's 19.608.2 and the county's
+      ZDO 1015 in this pass.
+    fingerprint: 05dd63a842bbc034
+  "73C.parking.txt#73C.090":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      PARKING LOT DRIVEWAY WIDTHS, AND THE PARAGRAPH ABOVE THE TABLES IS THE ANSWER. 73C.090(1)(a)
+      states the rule for this building by name -- "ingress and egress for single-family
+      residential uses and MIDDLE HOUSING TYPES (duplexes, triplexes quadplexes, townhouses, and
+      cottage clusters) must be paved to a minimum width of ten feet", with a 24-foot maximum
+      measured at the right-of-way line -- and this layer already encodes both figures as the
+      driveway approach minimum and maximum. What reached the card is everything AFTER that
+      sentence: 73C.090(1)(b)'s multi-family table, which opens at FIVE dwelling units (24 feet at
+      5 to 19, then 24 or 16 one-way at 20 to 49, 32 or 24 at 50 to 499, and City Manager
+      discretion over 500); 73C.090(2)'s commercial and institutional table, keyed to provided
+      parking spaces at 32 feet for the first 50 feet from the right-of-way and 24 feet
+      thereafter; and 73C.090(3)'s industrial one at 36 feet. Three tables for buildings the pod
+      is not, and the fourth line -- the one that is about it -- is already held.
+    fingerprint: 74dffec21e238f69
+  "73C.parking.txt#73C.220":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      A TEN-FOOT LANDSCAPE SETBACK BETWEEN EVERY PROPERTY LINE AND THE PARKING AREA, PLUS A
+      TEN-FOOT TRANSITION BETWEEN THE PARKING AND THE BUILDING -- which together would set a rear
+      court ten feet off the lot lines and ten feet off the wall it serves, and would be one of
+      the heaviest charges in this corpus if it reached. It does not, and this layer already says
+      so in its own words: 73C.220 opens "MULTI-FAMILY RESIDENTIAL USES (AS DEFINED IN TDC 31.060)
+      must comply with the following", and Tualatin's definition of that term does not take in a
+      quadplex. The section is recorded in this file as read and out of reach, which is why the
+      card closes rather than opening work. The exception clause is the corroboration: the
+      ten-foot transition is expressly waived for duplexes and townhouses, a carve-out that would
+      be pointless if the section reached middle housing generally.
+    fingerprint: 0f626fe8f8106370
 crossrefs:
 
   # --- two use-table rows that are not this building -----------------------
@@ -528,6 +889,26 @@ zones:
         - value: 1400
           when: [unit_lots]
           quote: "or/clackamas/tualatin/40-41.residential.txt#L475"
+    min_lot_width_ft:
+      # Table 41.220, MINIMUM AVERAGE LOT WIDTH, "Duplex, Triplex, Quadplex,
+      # and Cottage Clusters". RL holds the same row from Table 40.220 and this
+      # zone did not: the lot-size rows above it were carried across and the
+      # width rows below were not, so RML has been screened with no width floor.
+      #
+      # The two relaxations on the row are left out. "May be reduced to 30 feet
+      # if on a cul-de-sac" turns on a street geometry nothing here measures,
+      # and the 26 ft Flexible Lot Subdivision figure is a different application
+      # path. Both would let more land through than the row does.
+      value: 50
+      cite: TDC 41.220 Table, Minimum Average Lot Width
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L501-L503"
+      variants:
+        # The Townhouse row, which is the split-plat path. RL prints "None"
+        # here and this zone prints a number, so the two are not the same
+        # standard written twice.
+        - value: 14
+          when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L500"
     max_coverage_pct:
       value: 60
       quote: "or/clackamas/tualatin/40-41.residential.txt#L586"

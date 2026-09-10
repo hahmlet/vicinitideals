@@ -90,6 +90,322 @@ ingest:
   zoning_layer: zoning_west_linn
   zone_field: DESIGNATION
   strip_lowercase_suffix: false
+readings:
+  "10.r-15.txt#10.070":
+    queue: missed
+    outcome: encode
+    note: >-
+      R-15 states lot width twice and this file holds the smaller. "Minimum lot width at front lot
+      line 45 ft" is what min_lot_width_ft carries; three rows below it "Average minimum lot width
+      80 ft" sits unheld, and a lot has to satisfy both. Checked across every West Linn zone file:
+      R-40 150/150, R-20 100/100, R-7, R-5, R-4.5 and R-2.1 all 35/35, R-3 prints no average row
+      at all -- so exactly two zones state a stricter average than their front-line figure, this
+      one by thirty-five feet and R-10 by fifteen. The zone's own notes line has said "45 ft at
+      front line / 80 ft avg" since the quadfit import, which is where the choice was recorded and
+      why no ledger has ever seen it. Left as ordered work rather than silently raised to 80: the
+      field is called min_lot_width_ft with no measurement attached, so writing 80 into it would
+      refuse a lot forty-five feet wide at the street and ninety feet wide behind, which meets
+      both standards the city wrote. The two rows want two measurements. Both rows carry "Does not
+      apply to townhouses or cottage clusters", so the split-plat path escapes them and the
+      single-lot quadplex does not. The other two statements on this card are a cottage-cluster
+      setback and the Type I/II lands carve-out from the floor area ratio; neither reaches this
+      building.
+    fingerprint: bb15276896fa2b3c
+
+  "11.r-10.txt#11.070":
+    queue: missed
+    outcome: encode
+    note: >-
+      The second of the two zones where West Linn's average lot width is stricter than its
+      front-line width: 35 ft at the front lot line, which this file holds, and 50 ft average,
+      which it does not. Same reading as R-15 and the same reason for leaving it open rather than
+      raising the held number -- min_lot_width_ft names no measurement, and a lot thirty-five feet
+      wide at the street and sixty feet wide behind satisfies both rows the city wrote while
+      failing a single field set to fifty. Both rows are switched off for townhouses and cottage
+      clusters, so this binds the single-lot quadplex and not the split plat. The card's other
+      statement is the cottage-cluster setback sentence, which is a different housing type.
+    fingerprint: e1a21653116d16cb
+  "08.r-40.txt#08.070":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Two statements, neither of which can move a number. The first is the cottage-cluster setback
+      sentence -- ten feet all round for a cottage cluster project -- and a cottage cluster is
+      detached cottages around a common courtyard, not four attached units. The second is "Minimum
+      accessway width to a lot which does not abut a street or a flag lot: 20 ft", which is a
+      floor on the access tract and sits beneath a floor this layer already holds: CDC 48.030(E)
+      puts the service drive for multifamily dwellings at twenty-four feet two-way, and a pod that
+      needs twenty-four feet of drive is not helped by an easement allowed to be twenty. R-40's
+      own width rows are 150 and 150, so this zone has none of the front-line-versus-average gap
+      found in R-15 and R-10.
+    fingerprint: bcee1aeb56ccacab
+  "09.r-20.txt#09.070":
+    queue: missed
+    outcome: not_here
+    note: >-
+      One statement, and it is the cottage-cluster setback sentence West Linn prints in every
+      residential zone: front, rear and side setbacks in a cottage cluster project are ten feet,
+      with no additional setbacks between individual structures on individual lots. A cottage
+      cluster is detached cottages around a common courtyard and this screen places four attached
+      units, so the sentence reaches a building we do not build. R-20's two width rows both read
+      100 ft, so the average-width gap found in R-15 and R-10 is not here.
+    fingerprint: 521c5e79f769d4ce
+  "12.r-7.txt#12.070":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The cottage-cluster setback sentence again -- ten feet on every side of a cottage cluster
+      project -- and a cottage cluster is not the four-unit attached pod this screen places. R-7's
+      front-line and average lot widths are both 35 ft, so the two-measurement gap found in R-15
+      and R-10 does not arise in this zone.
+    fingerprint: 17d74b4300a1c768
+  "13.r-5.txt#13.070":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The cottage-cluster setback sentence, printed in this zone as it is in every other West Linn
+      residential zone. It sets ten-foot yards for a cottage cluster project, which is detached
+      cottages round a courtyard rather than four attached units. R-5's front-line and average lot
+      widths are both 35 ft, so nothing here is a second width standard.
+    fingerprint: e20a86feea625361
+  "14.r-4.5.txt#14.070":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The cottage-cluster setback sentence. Ten-foot yards for a cottage cluster project, which is
+      a different housing type from the four attached units this screen places, and no additional
+      setbacks between structures on individual lots within one. R-4.5 states 35 ft for both lot
+      width rows, so this zone has no front-line-versus-average gap.
+    fingerprint: 4163db773ceeee43
+  "15.r-3.txt#15.070":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The cottage-cluster setback sentence, which governs a housing type this screen does not
+      place. R-3 is also the one West Linn residential zone that prints no "Average minimum lot
+      width" row at all -- only the 35 ft at the front lot line -- so the second width standard
+      found in R-15 and R-10 has nothing to hide in here.
+    fingerprint: 72b872c4c0aec2e2
+  "16.r-2.1.txt#16.070":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Three statements. The cottage-cluster setback sentence is a different housing type. The
+      other two are the height rows beneath the 35 ft this file already holds: "3.5 stories or 45
+      feet for a garden apartment medium rise unit" is a taller ceiling for a building type this
+      screen does not place, and ignoring a relaxation is the safe direction as well as the
+      correct one; "Multifamily dwelling units are limited to 3.5 stories in height" is a storey
+      count rather than a length, and a two-storey pod cannot reach it whichever way West Linn
+      classifies four attached units. R-2.1's own width rows are 35 and 35, and its coverage and
+      floor area ratio are already recorded here as switched off for quadplexes.
+    fingerprint: b3b37d2c595ecf86
+  "48.access.txt#48.030":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The driveway standards, and this layer has already read the part of them that binds:
+      48.030(E) gives the twenty-four-foot two-way and fifteen-foot one-way service drive widths
+      this file holds, and the comment above them records why the "two to four single-family
+      residential homes" branch asking fourteen to twenty feet was not taken. What reached this
+      card is the rest. Twenty feet between the garage door and the back of the sidewalk is a
+      garage standard, and this project ruled on 2026-09-08 that the pod has no garage. Thirteen
+      feet six inches of vertical clearance and a forty-five-foot centreline turning radius are
+      fire-access geometry for a home more than a hundred and fifty feet from the right-of-way,
+      waivable by the fire district, and nothing measures either. Worth recording rather than
+      passing over: 48.030(D) makes access to five or more single-family homes a public street
+      built to city standards, and a four-unit pod sits one unit under that line.
+    fingerprint: f9e6ec92bbba34dd
+  "46.parking.txt#46.090":
+    queue: missed
+    outcome: not_here
+    note: >-
+      "For office, industrial, and public uses where there are more than 20 parking spaces for
+      employees on the site, at least 10 percent..." -- a standard selected by use and by employee
+      parking count, and this screen places dwellings. Neither the use nor the threshold reaches a
+      four-unit residential pod with a handful of stalls.
+    fingerprint: 859014f0f0c840ee
+  "25.willamette-historic.txt#25.040":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The Willamette Historic District's list of what does and does not need historic review. The
+      figures are review thresholds, not development standards: a fence whose solid portions do
+      not exceed fifty percent, accessory structures under a hundred and twenty square feet and
+      ten feet in height, freestanding art and statuary over ten feet tall. None of them states
+      the height of a dwelling, and the section decides which permit an application runs on rather
+      than what may be built.
+    fingerprint: c42deaaf2034b757
+  "25.willamette-historic.txt#25.070":
+    queue: condition
+    outcome: applies
+    note: >-
+      The Willamette Historic District's general standards do reach this building, and reading the
+      card found that only two of the nine West Linn zones had been qualified for them. 25.070(C)
+      states four yards and a height for new construction inside the district: the front yard is
+      the average of the adjacent homes on the block face, the side is five feet, the side street
+      ten, the rear a minimum of twenty, and residential structures are limited to 28 feet.
+      Compared zone by zone against what this layer holds, the side and side street are looser
+      everywhere, so they can be read and left. The front is unbounded in both directions -- an
+      average of two buildings the code does not describe -- and R-10 and R-5 were qualified on it
+      when the district was first read; the other seven zones were not, and have been now. The
+      rear is the sharper find: 25.070(C)(4) requires twenty feet and R-3 and R-2.1 both print
+      fifteen, which is the one place in West Linn where the district is stricter than the
+      underlying zone, and those two now carry the qualifier as well. The district is a boundary
+      on the zoning map rather than a list of base zones, so no zone could be ruled out. The
+      28-foot height is deliberately not encoded: the pod is 26 feet, so the limit cannot bind it,
+      and a qualifier on a standard that cannot change an answer would cap the verdict on every
+      West Linn lot for nothing. The 18-inch projection allowance is a relaxation. Left open
+      because the height line is still unquoted and that is a decision worth being able to find
+      again.
+    fingerprint: c7e51383434f0b49
+  "02.definitions.txt#02.030":
+    queue: condition
+    outcome: never
+    note: >-
+      West Linn's definitions chapter, and eight statements that define words rather than state
+      standards. The cottage cluster definition (at least four detached units per acre, each under
+      a stated footprint) describes a housing type this screen does not place. The flag lot
+      definition names a lot that does not meet the minimum street frontage, which is a shape the
+      parcel data can hold but not a rule the pod must meet -- whatever standard applies to a flag
+      lot lives in the development code, not in the glossary entry. The FAR definition explains
+      the arithmetic of a ratio this layer already encodes and does not change its value, and the
+      sentence beside it -- basements exempt from FAR where less than 50 percent is exposed above
+      grade -- subtracts from counted floor area, so it can only lower a ratio and never raise it.
+      A definition that makes a standard looser is still a definition.
+    fingerprint: c74f285bb0e1a663
+  "41.steep-lots.txt#41.020":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      West Linn's height exceptions for sloped lots, and the section says what it is in its own
+      first sentence: "Exceptions to the maximum building height standards provided in the
+      underlying zone shall be permitted on sloped lots under the circumstances specified in
+      subsections B and C." Every number on the card is a condition attached to a permission, not
+      a standard on its own. A building fronting the downslope side of a street may exceed the
+      zone's ceiling provided the site's grade difference is more than ten feet, the total height
+      stays under 45 feet -- 50 in R-15, R-20 and R-40 -- and the building does not project more
+      than 24 feet above the average grade of the street; upslope, the same with the 45 and no
+      street-projection limb. The 24 feet is the one figure that looks like a cap a 26-foot pod
+      would fail, and it is not one: it is the price of an allowance, and a building that does not
+      ask for the allowance never meets it. The conservative default declines earned relaxations,
+      which settles it. Two neighbours were read at the same time and are not on this card: 41.005
+      measures height from the lowest side on a lot with more than ten feet of grade difference,
+      which is a real measurement rule and is already cited in this layer; and 41.010's three-foot
+      front setback for a garage on a site of 25 percent slope or more names a structure this
+      building does not have.
+    fingerprint: a3ebc338f6a4e1fc
+  "41.steep-lots.txt#41.040":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      CDC 41.040, Places of Worship or Government Buildings -- a height allowance for a use this
+      project does not place. One measuring line, and it sits inside the same chapter of height
+      exceptions whose main section was ruled today on the same reasoning: an exception is a
+      permission, and this one is a permission granted to somebody else.
+    fingerprint: af9106016965b53c
+  "46.parking.txt#46.150":
+    queue: nofield
+    outcome: design
+    note: >-
+      West Linn's parking-lot construction standards, six statements and all of them about how the
+      surface is finished rather than how much of it there is. Paving for single-family attached
+      and detached spaces; a full cut-off IESNA light fixture at no more than 90 degrees; a five
+      percent maximum grade with no drainage across a walkway; parking broken into groups of
+      twelve or fewer by defined landscaped areas; a bicycle space no more than 50 feet from the
+      entrance and visible from it; and 40 percent tree canopy over any new surface parking
+      exceeding HALF AN ACRE, which a four-stall court is two orders of magnitude short of. Two
+      lines want naming rather than a shrug. The 50-percent-of-frontage cap on parking lots is
+      written for "commercial, office, industrial, and public" lots and says so in its first
+      clause, so it is not the residential frontage cap this city states elsewhere. And the
+      accessible-space table -- 501 to 999 spaces at two percent, over 1,000 at twenty plus one
+      per hundred -- is the top of a ladder whose bottom this project has already settled: a
+      four-unit two-storey pod with no elevator owes no accessible stall under OSSC 1108.7.2, and
+      all fourteen cities in this corpus defer the count to the building code.
+    fingerprint: 8cf073a87d58ac9f
+  "14.r-4.5.txt#14.050":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Senior citizen and handicapped housing facilities in R-4.5, and it is a conditional use with
+      its own bundle: residents 60 and older, congregate dining, 10 square feet of storage per
+      unit, at least 25 percent of the property in landscaping, no more than 25 percent of units
+      for nursing care, and -- the reason the card looks alarming -- "a maximum number of units 50
+      percent above the allowed density for the property." That is a density BONUS for a use this
+      pod is not, granted in exchange for age restriction and congregate services. The last line
+      of the same subsection also disposes of the setback question outright: "minimum front, rear
+      and side yard setbacks shall be the same as the underlying district", so nothing here
+      tightens what R-4.5 already asks. Identical text runs in R-3 and R-2.1 and is ruled the same
+      way on both cards.
+    fingerprint: 0d53f062062b20c0
+  "15.r-3.txt#15.050":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The R-3 copy of the senior citizen and handicapped housing facility conditional use -- same
+      50 percent density bonus, same 60-year age restriction, same congregate dining, same 10
+      square feet of in-unit storage, same 25 percent landscaping and 25 percent nursing-care cap,
+      and the same sentence holding setbacks to the underlying district. A different building, and
+      a bonus rather than a limit.
+    fingerprint: 8c992e893f108924
+  "16.r-2.1.txt#16.050":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The R-2.1 copy of the same senior and handicapped housing conditional use. Third of three
+      identical sections, ruled identically. The one thing worth carrying away from all three is
+      what they do NOT do: none of them touches the yard dimensions of the base district.
+    fingerprint: 74b81117c105117a
+  "15.r-3.txt#15":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      One cell -- "20 ft" -- and the row label two lines above it is "Garage". A garage setback in
+      R-3's dimensional table, and the standing ruling on this project is that the pod has no
+      garage, which is also why the orphan check found garage setbacks to be the only rows on the
+      neighbours' side of the ledger with nothing behind them. The line below it, "Except for
+      steeply sloped lots where the provisions of CDC 41.010 shall apply", is the slope exception
+      that runs down the whole column and is held by the hillside chapter rather than by a yard
+      field.
+    fingerprint: 14244271cc0bd6c9
+  "46.parking.txt#46.110":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Parking ratios for drive-in uses: three spaces per service terminal at a bank, ten spaces
+      per service window at a restaurant, ten percent of capacity at a theatre, two 25-foot spaces
+      on each side of a fuelling island, three per washing unit at a car wash. Somebody else's
+      queue. The pod's requirement is held in this layer as parking_min_per_unit and comes from
+      the residential row of the same chapter.
+    fingerprint: 387969be8816461f
+  "46.parking.txt#46.130":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Loading-berth thresholds for industrial floor area -- manufacturing at 5,000 and 40,000
+      square feet, warehouse the same, storage at 10,000 and 100,000. A four-unit dwelling is
+      below the first number in every row, and industrial floor area is not a thing it has at all.
+    fingerprint: 36e6bf7afe6a573f
+  "48.access.txt#48.060":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      CURB-CUT SPACING, AND IT IS RECORDED RATHER THAN WAVED AWAY BECAUSE WEST LINN'S VERSION IS
+      NOT EXCLUDED THE WAY OREGON CITY'S IS. 48.060(C) forbids a curb cut closer to an
+      intersecting street right-of-way line than 150 feet on an arterial met by another arterial,
+      100 feet on the other arterial and collector combinations, and 35 feet on a local street
+      meeting any other street; (D) then asks 150 feet between adjacent curb cuts on an arterial,
+      75 on a collector, and 30 feet between two curb cuts on the same lot on a local street.
+      Oregon City's twin table at 16.12.035.A carries an exclusion for duplexes, triplexes,
+      quadplexes and townhouses and is a recorded refusal here for that reason; this one carries
+      no exclusion, so it reaches the pod. It closes anyway, on two grounds. It regulates WHERE a
+      curb cut may be opened rather than what may be built, and a curb cut is granted on its own
+      access permit against the street as built. And the bite is narrow enough to describe
+      exactly: a mid-block lot is untouched, and a corner lot needs 35 feet of local-street
+      frontage clear of the intersection plus the width of one approach -- which almost every lot
+      large enough to hold this pod has. Nothing in this system locates a lot against its nearest
+      intersection, so encoding it would mean charging every lot in the city for a corner lot's
+      problem.
+    fingerprint: aa53ef85f527188a
 definitions:
   # "Corner lot. A lot or parcel abutting on two intersecting streets other
   # than an alley, excluding lots or parcels with boundary line angles greater
@@ -522,6 +838,18 @@ zones:
     setback_front_ft:
       value: 30
       quote: "or/clackamas/west-linn/08.r-40.txt#L150"
+      # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
+      # with "the average of the front setbacks of adjacent homes on the block
+      # face" -- a number the block has and the code does not, so it can sit on
+      # either side of this row. Qualified the way R-10 and R-5 already are:
+      # those two were done when the district was first read and the seven
+      # other zones the overlay can cover were left behind. The district is a
+      # boundary on the zoning map rather than a list of base zones, so nothing
+      # here rules any of them out. Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       value: 10
       quote: "or/clackamas/west-linn/08.r-40.txt#L153"
@@ -619,6 +947,18 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/clackamas/west-linn/09.r-20.txt#L154"
+      # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
+      # with "the average of the front setbacks of adjacent homes on the block
+      # face" -- a number the block has and the code does not, so it can sit on
+      # either side of this row. Qualified the way R-10 and R-5 already are:
+      # those two were done when the district was first read and the seven
+      # other zones the overlay can cover were left behind. The district is a
+      # boundary on the zoning map rather than a list of base zones, so nothing
+      # here rules any of them out. Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       value: 7.5
       quote: "or/clackamas/west-linn/09.r-20.txt#L157"
@@ -715,6 +1055,18 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/clackamas/west-linn/10.r-15.txt#L150"
+      # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
+      # with "the average of the front setbacks of adjacent homes on the block
+      # face" -- a number the block has and the code does not, so it can sit on
+      # either side of this row. Qualified the way R-10 and R-5 already are:
+      # those two were done when the district was first read and the seven
+      # other zones the overlay can cover were left behind. The district is a
+      # boundary on the zoning map rather than a list of base zones, so nothing
+      # here rules any of them out. Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       value: 7.5
       quote: "or/clackamas/west-linn/10.r-15.txt#L153"
@@ -928,6 +1280,18 @@ zones:
     setback_front_ft:
       quote: "or/clackamas/west-linn/12.r-7.txt#L153"
       value: 20
+      # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
+      # with "the average of the front setbacks of adjacent homes on the block
+      # face" -- a number the block has and the code does not, so it can sit on
+      # either side of this row. Qualified the way R-10 and R-5 already are:
+      # those two were done when the district was first read and the seven
+      # other zones the overlay can cover were left behind. The district is a
+      # boundary on the zoning map rather than a list of base zones, so nothing
+      # here rules any of them out. Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       quote: "or/clackamas/west-linn/12.r-7.txt#L156"
       value: 7.5
@@ -1177,6 +1541,18 @@ zones:
     setback_front_ft:
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L188"
       value: 20
+      # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
+      # with "the average of the front setbacks of adjacent homes on the block
+      # face" -- a number the block has and the code does not, so it can sit on
+      # either side of this row. Qualified the way R-10 and R-5 already are:
+      # those two were done when the district was first read and the seven
+      # other zones the overlay can cover were left behind. The district is a
+      # boundary on the zoning map rather than a list of base zones, so nothing
+      # here rules any of them out. Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L191"
       value: 5
@@ -1279,12 +1655,35 @@ zones:
     setback_front_ft:
       quote: "or/clackamas/west-linn/15.r-3.txt#L181"
       value: 15
+      # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
+      # with "the average of the front setbacks of adjacent homes on the block
+      # face" -- a number the block has and the code does not, so it can sit on
+      # either side of this row. Qualified the way R-10 and R-5 already are:
+      # those two were done when the district was first read and the seven
+      # other zones the overlay can cover were left behind. The district is a
+      # boundary on the zoning map rather than a list of base zones, so nothing
+      # here rules any of them out. Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       quote: "or/clackamas/west-linn/15.r-3.txt#L187"
       value: 5
     setback_rear_ft:
       quote: "or/clackamas/west-linn/15.r-3.txt#L192"
       value: 15
+      # 25.070(C)(4) sets a minimum 20 ft rear yard inside the Willamette
+      # Historic District and this zone's row is 15. It is the one place in West
+      # Linn where the district's yards are STRICTER than the underlying zone's:
+      # everywhere else 25.070(C) is looser and can be read and left alone. A
+      # variant cannot carry it, because the district boundary is not held and
+      # an unselected variant would leave the looser 15 screening every lot.
+      # Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(4), Rear yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L410"
     setback_street_side_ft:
       quote: "or/clackamas/west-linn/15.r-3.txt#L190"
       value: 15
@@ -1371,12 +1770,35 @@ zones:
     setback_front_ft:
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L203"
       value: 15
+      # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
+      # with "the average of the front setbacks of adjacent homes on the block
+      # face" -- a number the block has and the code does not, so it can sit on
+      # either side of this row. Qualified the way R-10 and R-5 already are:
+      # those two were done when the district was first read and the seven
+      # other zones the overlay can cover were left behind. The district is a
+      # boundary on the zoning map rather than a list of base zones, so nothing
+      # here rules any of them out. Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L206"
       value: 5
     setback_rear_ft:
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L211"
       value: 15
+      # 25.070(C)(4) sets a minimum 20 ft rear yard inside the Willamette
+      # Historic District and this zone's row is 15. It is the one place in West
+      # Linn where the district's yards are STRICTER than the underlying zone's:
+      # everywhere else 25.070(C) is looser and can be read and left alone. A
+      # variant cannot carry it, because the district boundary is not held and
+      # an unselected variant would leave the looser 15 screening every lot.
+      # Found 2026-09-09 working the reading queue.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(4), Rear yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L410"
     setback_street_side_ft:
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L209"
       value: 15

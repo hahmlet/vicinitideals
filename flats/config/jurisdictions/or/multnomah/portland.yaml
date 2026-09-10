@@ -30,6 +30,1507 @@ ingest:
   zoning_layer: zoning_portland
   zone_field: ZONE
   strip_lowercase_suffix: true
+readings:
+  "33.110.txt#33.110.275":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Fences. Every figure in 33.110.275 is a fence height -- three and a half feet in a front
+      setback, eight feet in a side or rear setback, with variations for pedestrian connections
+      and corner lots. The section reaches into the required building setbacks but it regulates
+      what may stand in them, not how deep they are, so it neither states nor moves
+      setback_front_ft or setback_rear_ft. This screen places a building and its parking and puts
+      up no fence.
+    fingerprint: e77bf77a545567cf
+
+  "33.110.txt#33.110.280":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Street-facing retaining walls: limited to four feet in height and set back three feet from
+      other street-facing retaining walls. A retaining wall is a site structure, its four feet is
+      a wall height rather than a building height, and the three-foot figure is a separation
+      between walls rather than a building setback. This screen grades no site and builds no wall.
+    fingerprint: 4f94943fd6695f07
+  "33.140.txt#33.140.210":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Height exceptions for projections: chimneys, flag poles, dishes, parapets, rooftop railings,
+      elevator and mechanical equipment, all permitted to extend a stated distance above the
+      height limit. Every figure is measured from the height limit rather than being one, and each
+      is a relaxation for an appurtenance the pod does not carry. Reading it would only ever raise
+      a ceiling, so leaving it unread is the conservative direction as well as the correct one.
+    fingerprint: 7dd84ec765742258
+  "33.150.txt#33.150.260":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Screening of rooftop mechanical equipment in the employment and industrial zones, and the
+      three feet of setback per foot of equipment height required where it faces an R zone. The
+      figures measure equipment and its screening, not the building, and the pod carries no
+      rooftop mechanical plant.
+    fingerprint: 9c104c93d4da290d
+  "33.150.txt#33.150.210":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Reduced maximum height in the Campus Institutional zones -- the step-down against a
+      neighbour's zoning. CI1 refuses this use outright, so only the CI2 half can reach us: within
+      60 feet of a lot line abutting or across the street from OS or RF through R2.5 the ceiling
+      is 30 feet, from 60 to 130 feet it is 75; within 40 feet of RM1 through RMP or a commercial
+      or mixed use zone it is 45 feet, from 40 to 110 feet it is 75. This is already on the record
+      and answered from the other side: CI2's own notes in this file say "note [4]: heights are
+      reduced adjacent to certain zones under 33.150.210.C, and every reduction in that subsection
+      lands at 30 ft or above, so none of them reaches a 26 ft pod". Read against the twelve
+      statements on this card that holds -- 30 feet is the floor of every reduction printed here,
+      and the pod stands under it. The card is worth keeping visible in one respect: the
+      reductions turn on the zoning of the lot next door and on distance from that lot line, which
+      is the neighbour-zone adjacency fact this project has already found to be computable from
+      geometry it holds. If a taller product ever came into scope this section is where CI2 stops
+      being the loose land its 150-foot base height suggests.
+    fingerprint: 1eebf001a0f5511b
+  "33.120.txt#33.120.270":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Two different things reached this card and neither is a standard for a four-unit pod on one
+      lot. The first is the land-division half of 33.120.270: building coverage for an individual
+      lot in an attached housing project may run five percentage points over the base zone
+      allowance while the project as a whole stays under it, and detached houses on lots at least
+      25 feet wide may drop their side setbacks to 3 feet on lot lines internal to the division.
+      Both are allowances granted at the land-division stage, one of them to detached houses. The
+      second is the cottage cluster block -- a minimum site of 5,000 square feet, a minimum site
+      width of 36 feet, a maximum site of 40,000, an average floor area of 1,400 square feet a
+      unit, and adjustments of up to ten percent that expire on 2 January 2032. Cottages round a
+      courtyard, again, and a sunset clause on the adjustment rather than on the standard.
+    fingerprint: 21b59c61a4b70ba3
+  "33.110.txt#33.815.040":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Table 110-9, Institutional Development Standards, in Portland's own copy of Chapter 33.110,
+      with the outdoor activity facility setbacks and the rooftop mechanical screening that sit
+      beside it. Ten thousand square feet of site, a floor area ratio of half, fifty feet of
+      height, a setback of one foot back for every two feet of building height with a fifteen-foot
+      floor, and fifty feet from an abutting R-zoned property for a swimming pool or a ball
+      diamond. Every figure governs an institutional use -- a school, a religious institution, a
+      community service -- in the single-dwelling zones, and a four-unit dwelling is not one. The
+      section number on the card comes from a cross-reference in the text rather than from the
+      heading the table sits under; the answer is the same either way.
+    fingerprint: 4b9cca35d70b39a9
+  "33.120.txt#33.120.275":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The same institutional development standards as Table 110-9, printed again for the
+      multi-dwelling zones: a ten thousand square foot minimum site for new uses, and outdoor
+      activity facilities set back fifty feet from abutting R-zoned property, twenty-five for an
+      unlit playground. Institutions in a residential zone, not dwellings in one. The pod places
+      no swimming pool, tennis court or ball diamond, and the minimum site area is a threshold for
+      establishing an institutional use rather than a lot standard.
+    fingerprint: 5d5a8942da403c56
+  "33.100.txt#33.100.200":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The Open Space zone's development standards: a setback from every property line of one foot
+      for each foot of building height, and the fifty- and twenty-five-foot setbacks for outdoor
+      activity facilities against abutting R land. OS refuses this use in Portland, so a
+      proportional setback that would put a two-storey pod twenty to twenty-five feet off all four
+      lines never gets asked. Worth noticing as the form rather than the number: a setback stated
+      as a ratio to height is a shape this project's value model does hold, through the side-yard
+      plane work done for Milwaukie, so if open space land ever came into scope it would not need
+      a new form.
+    fingerprint: 1aa863e00137df18
+  "33.120.txt#33.910":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The garage entrance rule: in the RM2, RM3, RM4 and RX zones a garage entrance must be either
+      five feet or closer to the street lot line or eighteen feet or farther from it, the bimodal
+      standard that keeps a car from part-blocking the sidewalk. This project ruled on 2026-09-08
+      that the pod has no garage, which closes it. The section number is a cross-reference picked
+      up as a heading -- 33.910 is Portland's definitions chapter and these lines are in 33.120 --
+      and the ruling does not turn on which.
+    fingerprint: f059a556d250a63c
+  "33.120.txt#33.120.255":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Pedestrian standards for the multi-dwelling zones: a connection from every primary building
+      within 40 feet of a street lot line to the street, no more than 20 feet longer or 120
+      percent of the straight-line distance, extendable to 200 percent where other standards are
+      met. The numbers measure a path across a site, not the building or the lot, and the standard
+      is about how a walkway is routed once the building is placed. Nothing here can move a
+      dimension the screen tests.
+    fingerprint: 2b96452a1c7fa78c
+  "33.120.txt#33.120.030":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The RMP zone description: allowed density up to 29 units per acre, allowed housing
+      manufactured dwelling parks. RMP is encoded here as refusing this use, and the sentence
+      names the housing type in its own second clause. A density ceiling for a manufactured
+      dwelling park is not a ceiling on anything this screen places.
+    fingerprint: 15166b24c78517f0
+  "33.120.txt#33.120.210":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A floor area ratio exemption: the floor area of structured parking does not count against
+      the FAR when at least fifty percent, or six, of the parking spaces are in the structure. It
+      removes floor area from a calculation rather than adding a requirement, so reading it could
+      only let more building through, and the pod's parking is surface parking in any case.
+    fingerprint: e16af97b987e4801
+  "33.130.txt#33.130.205":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The same structured-parking floor area exemption as 33.120.210, printed for the commercial
+      and mixed use zones. A relaxation of a ratio, conditioned on structured parking the pod does
+      not build.
+    fingerprint: fbb3c1bb8668afd4
+  "33.130.txt#33.130.228":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Three relaxations and one other building. The additional floor area equivalent to fifty
+      percent of the maximum FAR is a bonus. The ten percent of site area required as outdoor area
+      applies to a congregate housing facility, which is a different use. The projections
+      paragraph lets a feature extend five feet into a required front setback and into side and
+      rear setbacks so long as it stays five feet from the line, which loosens a setback rather
+      than setting one. None of them can refuse a lot that would otherwise pass.
+    fingerprint: 952b5f7dfe56b97d
+  "33.140.txt#33.140.270":
+    queue: condition
+    outcome: never
+    note: >-
+      One line of Portland's employment-zone chapter allowing a water cistern six feet or less in
+      height to stand in a side or rear setback, including a setback abutting a residential zone.
+      It is a permission for a piece of equipment rather than a limit on a building: it lowers
+      nothing, it states no ceiling the pod must meet, and it does not change where a dwelling may
+      sit. Reading it could only let more onto a site. The pod carries no cistern, and 33.140 is
+      the employment chapter besides, which is land this project does not build on.
+    fingerprint: f31f842b412b5c45
+  "33.150.txt#33.150.280":
+    queue: condition
+    outcome: never
+    note: >-
+      The same cistern sentence, printed again in Portland's industrial chapter and ruled the same
+      way for the same reasons: an allowance for an accessory object, in a chapter for land this
+      project does not build on. Recorded as its own ruling rather than folded into the 33.140
+      one, because two chapters are two documents and a decision on one must not silently close
+      the other.
+    fingerprint: 6743a2a8daebab24
+  "33.110.txt#33.110.270":
+    queue: condition
+    outcome: never
+    note: >-
+      Portland's height exceptions in the single-dwelling zones, and one line on it looked like a
+      tightening until it was followed. Three of the four are plainly permissions: a chimney, vent
+      or dish under three feet across may stand five feet above the roof; a dormer may project if
+      it is no wider than 75 percent of the roof; a roof-mounted solar panel may rise five feet
+      above the highest point. The fourth is the steep-lot rule, and it splits three ways.
+      Downhill from the street at 20 percent or more, the limit is "the higher of" 23 feet above
+      the street's average grade or the normal limit -- higher of, so a floor under the ordinary
+      standard rather than a cap on it. Uphill at 20 percent or more, "the alternative height and
+      setback standards of Subsection 33.110.220.D apply", which reads like a mandatory swap and
+      is not one: D is headed "Exceptions to the required setbacks" and D.4 lets a steep lot
+      reduce the front building or garage setback to five feet in exchange for one foot of height
+      in the reduced area for every foot of setback given up. A trade the applicant may take. The
+      third case, sloping both ways, says the applicant "may" meet the alternative. Every branch
+      loosens, and a loosening left unread refuses land the city would allow.
+    fingerprint: ffbf1c5a32d072cf
+  "33.120.txt#33.120.282":
+    queue: condition
+    outcome: never
+    note: >-
+      The shared court and common green standards of Portland's multi-dwelling zones, and the
+      condition on every one of them is the same: the lot's front lot line is on a shared court or
+      a common green. That is a feature a development creates for itself when it subdivides -- a
+      private courtyard the new lots front onto instead of a street -- rather than a property of a
+      lot this screen picks up off the assessor's roll. This project places one pod on one
+      existing lot with frontage on a public street, so the trigger is never met. Worth adding
+      that if it ever were, the package is net-loosening: front and side setbacks cut to three
+      feet, building coverage five points higher, minimum landscaped area five points lower, and a
+      garage-entrance rule that offers two permitted positions rather than one.
+    fingerprint: 2b19fd501797aa2d
+  "33.130.txt#33.130.210":
+    queue: condition
+    outcome: never
+    note: >-
+      The bonus table of Portland's commercial and mixed-use zones: maximum floor area ratio and
+      maximum height with bonus, then the increment each bonus adds -- inclusionary housing,
+      affordable commercial space, planned development. Every figure raises a ceiling and none of
+      them lowers one, and the base ceilings the bonuses sit above are what this corpus reads. A
+      bonus is also elective: it is earned by a commitment the applicant makes, so nothing about a
+      lot decides whether it applies. Reading it could only let more building through.
+    fingerprint: 0d188ec5d49befc6
+  "33.130.txt#33.130.212":
+    queue: condition
+    outcome: never
+    note: >-
+      Two things on this card. The rooftop appurtenance allowance -- chimneys, vents, dishes five
+      feet or less across may rise ten feet above the limit or five above the roof, whichever is
+      greater -- is a permission. The step-down height is a real neighbour-zone condition and it
+      cannot bind this building: within 25 feet of a lot line abutting a site zoned RF through
+      R2.5 the limit drops to 35 feet, and the pod is 26. Nine feet of slack against a step-down
+      that is itself the floor of the rule. The commercial and mixed-use zones this section
+      governs are also not where a quadplex is placed.
+    fingerprint: cf6ffdf475c74472
+  "33.110.txt#33.110.250":
+    queue: condition
+    outcome: never
+    note: >-
+      Detached and connected covered accessory structures in Portland's single-dwelling zones: a
+      20-foot height ceiling, a cistern allowance in side and rear setbacks, and a long
+      conditional permission for a structure set 40 feet back from the front line with a footprint
+      no more than 24 by 24, walls under ten feet and dormers five feet off the lot line. All of
+      it measures a shed, a garage or a covered deck, and the combined-coverage cap it ends with
+      is a cap on those structures rather than on the dwelling. The pod is the primary building
+      and this development proposes no accessory structure, so none of these numbers is ever
+      reached. The primary building's own height and coverage are stated elsewhere in the chapter
+      and are what this corpus holds.
+    fingerprint: 17833d0ebe85d295
+  "33.120.txt#33.120.215":
+    queue: condition
+    outcome: never
+    note: >-
+      Height in Portland's multi-dwelling zones, with a base of 75 feet in RM4 rising to 100
+      within a thousand feet of a transit station, and step-downs where a site adjoins a
+      single-dwelling zone: 35 feet within 25 feet of a lot line abutting RF through R2.5, and 45
+      or 35 feet within 15 feet of a lot line across a local service street or alley from one.
+      Every one of those numbers is above the pod, which is 26 feet, and the lowest of them -- the
+      35-foot step-down -- still leaves nine feet of slack. A step-down conditioned on the
+      neighbour's zoning is the shape worth watching in this corpus, and it is recorded here as
+      read rather than skipped, because the reason it does not bite is arithmetic that would
+      change if the design ever grew a storey.
+    fingerprint: b69f0480fd0ec8b4
+  "33.120.txt#33.120.283":
+    queue: condition
+    outcome: never
+    note: >-
+      Detached accessory structures in the multi-dwelling zones, stated for structures "accessory
+      to a house, attached house, duplex, attached duplex or manufactured home on an individual
+      lot" -- a list a quadplex is not on -- with a 20-foot height ceiling, the same cistern
+      allowance as the single-dwelling chapter, and a setback permission for a structure at least
+      ten feet from a street lot line. Two independent closures: the building type the accessory
+      would be accessory to, and the fact that this development proposes no accessory structure at
+      all.
+    fingerprint: f131f055e80fb6c5
+  "33.150.txt#33.150":
+    queue: condition
+    outcome: never
+    note: >-
+      Nineteen statements out of Portland's industrial chapter, and the chapter is the answer.
+      33.150 governs IG1, IG2, IH and IR; this project places dwellings in the residential,
+      multi-dwelling and commercial-mixed-use zones, and the same reasoning already closed
+      33.150.280 in this queue. Every statement on the card is also an allowance rather than a
+      limit even on its own terms: a rooftop element five feet or less in depth, width or diameter
+      may extend ten feet above the height limit; parapets and rooftop railings four feet;
+      elevator mechanical equipment sixteen, provided it is set back at least fifteen feet from
+      every street-facing roof edge. Each of those lets a building be taller than the table says,
+      so reading them could only ever move a lot toward buildable. A ceiling nobody is near, in a
+      chapter for land nobody here builds on.
+    fingerprint: 595360115f238510
+  "33.110.txt#33.110":
+    queue: condition
+    outcome: cant_tell
+    note: >-
+      A hundred and eighteen statements, and one of them tightens. Almost the whole card is the
+      chapter's exceptions machinery, which runs in the direction that costs nothing: bays and bay
+      windows up to 12 feet long projecting into a setback, eaves two feet, stormwater planters
+      and decks under two and a half feet above the ground, cisterns six feet, an attached garage
+      rebuilt at 15 feet, and four separate exemptions for a lot on a street with an average slope
+      of 20 percent or more. A relaxation this screen does not take is a lot measured stricter
+      than the code, which is the safe direction and the one the conservative default asks for.
+      Another block is the garage rules at lines 1174 to 1266 -- the 50 percent of street-facing
+      facade that must be without garage, stated for a fourplex by name at line 1234 -- and this
+      building has no garage, settled on 2026-09-08, so every one of them is satisfied by having
+      nothing to satisfy. The entrance standards at 830 to 842 are a menu, 45 degrees or a 25
+      square foot porch. Table 110-3 at lines 382 to 394 is a land division standard, the size a
+      lot must be to be created, not the size it must be to be built on. THE ONE THAT BINDS IS
+      33.110.240, Flag Lots, and it is not in this layer. "Large flag lots have required building
+      setbacks that are the same along all lot lines" -- 15 feet in RF, R20 and R10; 10 feet in
+      R7, R5 and R2.5 -- where R5 and R2.5 hold 10 front and 5 on the side and rear, and R7 holds
+      15 front and 5 on the side and rear. On a flag lot in R5 the pod owes ten feet on both sides
+      and at the back instead of five: ten feet of lot width and five of depth, on every
+      quadplex-allowed zone in the chapter. A landscaped buffer at least five feet deep runs
+      around the perimeter of any flag lot of 10,000 square feet or less on top of that. This is
+      filed as depending on the site because that is exactly what it is. Whether a parcel is a
+      flag lot is a fact about its shape, `flag_lot` is already a name in the site-conditions
+      registry, and it is answerable by geometry rather than by more reading -- the same class as
+      neighbour-zone adjacency and lot-line bearing, both moved onto the computable list on
+      2026-09-08. It must not be written as a `when:` variant: a variant leaves the loose base
+      binding until the condition is proved, and the loose base is the wrong answer here, so a
+      flag lot would come out green on a five-foot side setback it does not have. It needs the cap
+      shape or the measurement. The small flag lot standards beneath it -- a 20-foot height limit
+      and 0.5 floor area ratio where the flag portion is under 3,000 square feet -- are argued to
+      be unreachable rather than assumed to be: the flag is the buildable part and the pole is the
+      driveway, so a flag under 3,000 square feet cannot hold this building's footprint and its
+      setbacks whatever its height limit says. Area refuses that lot before height gets a turn.
+    fingerprint: e4eb0237be9e6df3
+  "33.130.txt#33.130":
+    queue: condition
+    outcome: never
+    note: >-
+      Ninety-six statements across Portland's Commercial/Mixed Use chapter, and this is the
+      layer's best-encoded corner, so most of the card is a reader meeting standards that are
+      already ours. The chapter's shape is carried on every CM and CX zone: a maximum front
+      setback of 10 feet, side and rear at 10 with a `abuts_nonresidential_zone` variant relaxing
+      to zero, base height 35, a maximum floor area ratio, outdoor area at 48 square feet per
+      dwelling banded on site size, and an entrance rule carried as orientation_constraint:
+      entrance_only. Working the card came down to four things that could have bound and do not.
+      THE STEP-DOWN HEIGHTS are the largest block -- 35 feet within 25 feet of a site zoned RF
+      through R2.5, 45 feet within 25 feet of RM1 or RMP, 45 feet within 15 feet of a lot line
+      across a local service street or alley from either -- and they are inert by arithmetic. The
+      pod is 26 feet, and the lowest step-down on the page is 35. The layer note already says so
+      and this ruling agrees with it rather than re-deciding it. THE FIFTY PERCENT is the one that
+      looks like Gresham and is not, and it is the reason this card was worth reading rather than
+      scoping. 33.130.215.C.1: "at least 50 percent of the length of the ground level
+      street-facing facade of the building must meet the maximum setback standard." Gresham's
+      7.0420(J)(1)(a) asks that 50 percent of the SITE'S FRONTAGE be occupied by buildings, which
+      is what forces the long axis parallel to the street and is carried there as axis_required.
+      Portland asks that 50 percent of the BUILDING'S OWN FACADE sit at the setback line, which a
+      rectangular pod with a flat street wall meets at a hundred percent whichever way it is
+      turned. Same number, same words in three places, opposite consequence -- a keyword reader
+      would have taken the wrong one. THE WINDOW SETBACK at 33.130.215.B.2.c does tighten, and its
+      own exemption spares this building: dwelling-unit windows must sit five feet back from a lot
+      line abutting a C, E, I or CI zone, which is exactly the lot line the zero-setback variant
+      releases -- but "windows of dwelling units that also have other windows facing a street lot
+      line" are exempt, and every unit in a four-unit attached row facing the street has them. THE
+      GROUND-FLOOR RESIDENTIAL STANDARDS are a menu of three: a 12-foot ceiling over an area 25
+      feet deep, or a ground floor set back 5 feet from the street lot line with 25 percent
+      windows, or a finished floor 2 feet above grade with 25 percent windows. An applicant's
+      choice is not a binding standard, and the middle option's 5 feet sits comfortably inside the
+      10-foot maximum front setback the zone already charges. Everything else sorts into three
+      piles. Relaxations, declined: parapets and railings at 4 feet, rooftop screens at 6,
+      elevator machinery at 16, other mechanical at 10, solar panels at 5, high-ceiling bonus
+      height at 5, bonus FAR for affordable commercial space, and projections into setbacks at 20
+      percent of their depth. Other buildings: the 18-foot setback for structured parking that
+      cannot exit forward, the 200-foot maximum building length, the 60,000 square foot retail
+      exemption, the 55,000 square foot parking-area division and the 250-foot accessway spacing,
+      and every garage standard, which this building has settled it does not have. And
+      streetscape: 10-foot sidewalks, trees at 30 feet on centre, pedestrian connections at 200
+      feet. Two items on the card are already declared NOT ENCODED in the zone notes with their
+      reasons -- the 5 and 10 foot street setback across a local service street from a
+      lower-density zone, which needs a street's functional class, and the garage standards stated
+      against the dwelling's own wall -- and this ruling does not reopen either.
+    fingerprint: ab602bb3aee24dea
+  "33.120.txt#33.120":
+    queue: condition
+    outcome: applies
+    note: >-
+      A hundred and twenty-one statements in the Multi-Dwelling chapter, and one of them was being
+      waved away on a reason that named a third of itself. THE FIND. 33.120.240.B.2.a: "on sites
+      that are more than 20,000 square feet in total site area ... at least 10 percent of total
+      site area must be provided as common area", at least half of it outdoors. RM1 carried a note
+      saying this was not encoded because a four-unit pod is "outside the trigger and inside the
+      exemption" -- and the exemption at B.2.b is three conditions joined by AND, of which that
+      note named one. Every unit's own entrance within 20 feet of a street lot line, yes; a 3-foot
+      hard-surfaced path to each, yes; and each unit holding 200 SQUARE FEET of individual outdoor
+      area at a minimum of 10 feet by 10 feet, which nobody had read. Eight hundred square feet
+      for four units, against the 48 apiece this field was charging. So on a site over 20,000
+      square feet the pod was reserving 192 square feet where the cheaper of the code's two routes
+      asks 800, and the dearer asks over 2,000. ENCODED, and the direction was argued rather than
+      assumed. Two routes, applicant's choice, so the cheaper binds -- the same shape this corpus
+      already catalogues as a design menu, and the reason a menu is not a binding standard. Above
+      the 20,000 square foot trigger the exemption is always the cheaper of the two, because ten
+      percent of anything over 20,000 is over 2,000 and the exemption is 800 flat, so 200 per
+      dwelling is the least this code will accept there. It is carried on RM1, RM2, RM3 and RM4 as
+      a lot-size band, sitting beside the 36-square-foot band the second reading found on RM3 and
+      RM4 in September; RX and RMP keep their exemption, because 33.120.240.B's last sentence says
+      the section does not apply in either. The card stays open on two things the band does not
+      hold. The 10-by-10 minimum DIMENSION is a shape test no field here has, which the registry
+      already says about this field in as many words. And the entrance limb is a placement rather
+      than an area: a layout that puts the pod behind its parking court, or turns it, loses the
+      exemption and falls back to ten percent of the site -- so on a large lot the encoded number
+      is the right one only for a layout that faces the street, and the fit stage chooses the
+      layout. That is the honest residue and it is why this is filed as applying rather than
+      closed. THE REST OF THE CARD DOES NOT BIND. The tree-preservation table at 33.120.211 trades
+      1,000 to 16,000 square feet of density credit for a preserved trunk, and the FAR bonuses --
+      affordable housing, three-bedroom units, visitable units, transferred FAR -- are all earned
+      relaxations the conservative default declines, as the RM1 note already says of the three
+      density reliefs. The height exceptions are the same list as the commercial chapter: parapets
+      at 4 feet, rooftop screens at 6, elevator machinery at 16, other mechanical at 10, solar at
+      5. The setback reductions at 33.120.220.B are relaxations too, and the sharpest of them
+      carries its own tightening -- in the Inner Pattern Area on a Civic or Neighborhood Corridor
+      no setback is required, "however, windows in the walls of dwelling units must be setback a
+      minimum of 5 feet from a lot line that abuts another property" -- which is moot the moment
+      the relaxation is declined, because the base setback is already five. The Eastern Pattern
+      Area indoor-common-area encroachment into the rear setback keeps a 5-foot floor and is
+      likewise a relaxation. Cottage cluster standards at 33.120.270 name a building this is not:
+      six feet between dwellings, 900 square feet of coverage per unit, 150 or 200 square feet of
+      common outdoor area per unit. Every garage standard is answered by having no garage. And the
+      main-entrance orientation rule at 33.120.231 exempts flag lots and lots averaging 20 percent
+      slope, which is the third place in this layer the flag lot has surfaced this week without
+      anything measuring one.
+    fingerprint: 78030bbeead2421b
+  "11.50.txt#11.50.050":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Portland's on-site tree density standard, in Title 11 rather than Title 33, and it is the
+      first thing in this queue that reaches this building by name. Table 50-2's top row is "One
+      to Four Family Residential", and a four-unit pod is squarely in it. It still takes no
+      buildable area, for two independent reasons, and the second one alone would be enough.
+      FIRST, THE AREA IS A FORMULA INPUT, NOT A RESERVATION. Option A sets the "required tree
+      area" at 40 percent of the site; Table 50-3 then converts that area into a number of trees
+      -- one large-canopy tree per 1,000 square feet of tree area, one medium per 500, one small
+      per 300 -- and states what each tree actually costs in ground: "min. required planting area
+      per tree", 150 square feet at ten by ten for a large tree, 75 at five by five for a medium,
+      50 at three by three for a small. On a 5,000 square foot lot the 40 percent is 2,000 square
+      feet of tree area, which buys two large trees, which need 300 square feet between them. The
+      forty percent is the multiplier, not the set-aside. SECOND, AND DECISIVELY, IT CAN BE PAID.
+      11.50.050(D)(3)(c): "Payment in lieu of planting. The applicant may pay a fee to the Tree
+      Planting and Preservation Fund per Section 11.15.010 equivalent to the cost of planting and
+      establishing one 1.5-inch caliper tree. The fee per tree will be credited at a rate of one
+      medium canopy size tree." No cap, no eligibility gate, no finding required. This is the
+      fee-in-lieu shape the crossref vocabulary gained on its first day of real use, and it is the
+      same answer: a requirement a cheque satisfies is a cost line, not a constraint on whether a
+      building fits. Two more credits point the same way and are recorded because they are the
+      ones an underwriter would want -- trees planted to meet any required stormwater or
+      landscaping requirement count towards this too, and retained trees count at one medium tree
+      per six diameter inches. Also read and not taken: the exemption list at 11.50.050(B), which
+      is airports, industrial-zone private trees and permit types, none of them us; and the
+      street-tree standard at 11.50.060, whose cost is capped at ten percent of project value and
+      which sits in the right-of-way rather than on the lot.
+    fingerprint: 81336132efa0b546
+  "33.910.definitions.txt#33.910":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Portland's zoning definitions, and the twelve measuring lines in it are measurement
+      conventions rather than standards -- how a thing is counted, not how much of it a site owes.
+      Three of them touch numbers this project holds and all three were read on their own terms.
+      BUILDING COVERAGE EXCLUDES SHALLOW EAVES: "eaves that are 2 feet or less in depth are not
+      included in building coverage", and eaves deeper than that are. That is the one line here
+      that could move a coverage figure, and it moves it in the direction of the design rather
+      than the code: a pod with a two-foot overhang is measured at its walls, one with a
+      three-foot overhang is measured at its eaves. Recorded rather than encoded, because it is a
+      fact about the product and not about the lot. FLOOR AREA AND HEIGHT EXCLUDE LOW SPACE --
+      areas under a 6 foot 8 inch ceiling, basement space under the same, attic space under five
+      feet -- which relaxes a floor area ratio and cannot tighten one. And the definitions of a
+      corner lot ("angles that are 120 degrees or less, measured from the center line of the
+      street") and of a street-facing facade ("an angle of 45 degrees or less from a street lot
+      line") are the vocabulary behind conditions this layer already computes, not new gates. The
+      rest name other buildings: attached dwellings sharing a wall "for at least 25 percent of the
+      length of the side of the dwelling", which a four-unit attached row passes without argument;
+      a Community Service Use over 100,000 square feet; utility trailers longer than 16 feet; a
+      retail food threshold of 70 percent. A definitions chapter earns a reading in this corpus
+      because definitions here have carried real standards before -- Wilsonville's
+      nine-by-eighteen parking space is a definition and nothing else -- so this was worked rather
+      than scoped, and it comes back with none.
+    fingerprint: a6f07cc63cdfd8e9
+  "33.930.txt#33.930":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Portland's measurement chapter, fetched 2026-09-06 when the word queue put it first of
+      seventy-five, and this is the reading it was fetched for. Twenty-seven measuring lines and
+      not one of them is a standard: every figure is either a worked example or a rule about where
+      to put the tape. THE WORKED EXAMPLES account for seven lines. 33.930.030 illustrates
+      rounding on parking maximums -- one space per 2,500 square feet applied to a 13,900 square
+      foot site, one per 5,000 applied to 23,400, and so on -- and the sites and ratios in them
+      are invented for the arithmetic. A reader matching on numbers would take 5,000 and 23,400 as
+      thresholds; they are the same kind of text as a figure caption. THE BASE REFERENCE POINT is
+      the substantive half, 33.930.050, and it is how Portland decides where a building's height
+      starts: identify the lowest and highest grade exactly five feet from the building, and if
+      the difference is more than ten feet the base is the lowest grade plus ten. On a site whose
+      building sits within twenty-five feet of a sidewalk the same test runs against sidewalk
+      grade instead. This can only raise a measured height, never lower it, so it is the shape
+      that would matter -- and it cannot reach this building, because the pod is 26 feet and the
+      lowest residential ceiling anywhere in this layer is 35. Nine feet of headroom absorbs the
+      whole ten-foot correction with room over. Recorded because that clearance is an argument
+      about our product rather than about Portland, and it would have to be made again for a
+      taller one. The remainder is tree measurement (trunk diameter taken at 4-1/2 feet, and what
+      to do when the trunk splits below that), which serves Title 11's tree density standard,
+      ruled separately today, and projections up to twelve feet that are left out of building
+      coverage.
+    fingerprint: 9fc81d6d87b02685
+  "11.50.txt#11.50.040":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Exemptions from Portland's tree code -- private trees on sites less than 5,000 square feet,
+      and private trees on sites with existing or proposed building coverage of 85 percent or
+      more. Both are doors OUT of Title 11, so they can only relieve, and the chapter they relieve
+      has already been read to the ground: 11.50.050's density requirement looked like a 40
+      percent land reservation and is a multiplier that produces a tree count, each tree costing
+      50 to 150 square feet of planting area, with 11.50.050(D)(3)(c) letting the whole obligation
+      be paid in lieu, uncapped and credited as one medium tree. A cheque, not a land take. These
+      two exemptions sit above that finding and change nothing about it. Note the second one reads
+      backwards at a glance: 85 percent building coverage is not a standard this pod could meet or
+      fail, it is a threshold above which the city stops asking for trees because there is nowhere
+      to put them.
+    fingerprint: 6b26937f16413c08
+  "33.910.definitions.txt#33.930.150":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      A SIXTH ATTRIBUTION SLIP, and this one crosses documents. The card is headed 33.930.150 but
+      its file is 33.910.definitions.txt, and its single line -- "This definition includes but is
+      not limited to a tower, pole, or mast over 20 feet tall" -- is the tail of 33.910's
+      definition of TOWER, a structure for elevating a radio frequency transmission facility. It
+      landed under a 33.930 heading because the definition four entries above it, Top of Bank,
+      ends by pointing at "the default location described in Section 33.930.150, Measuring Top of
+      Bank". Nearest-heading-above took a cross-reference in one chapter for a section of another.
+      Six of these in one pass through this queue now, in five different cities, which puts it
+      past coincidence and into the reader's behaviour. On the merits: a radio mast is not this
+      building and 20 feet is its floor, not a ceiling on anything.
+    fingerprint: 6fd940d3bc3d3a4d
+  "33.920.txt#33.920.230":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      33.920 is the use categories chapter -- what Portland means by Household Living, Retail
+      Sales And Service, Major Event Entertainment and the rest -- and this card's line is inside
+      the last of those: "Exhibition and meeting areas with less than 20,000 square feet of total
+      event area are" classified elsewhere. A threshold that sorts a stadium from a meeting hall.
+      This project places four dwelling units, which 33.920.100 puts in Household Living and which
+      no line on this card touches. The chapter matters to this corpus in one way only and it is
+      already handled: the use category is what a zone's use table permits or prohibits, and
+      Portland's zones are all encoded with quadplex_allowed read off those tables.
+    fingerprint: ef65b72fe5632b47
+  "33.930.txt#33.930.020":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      A rounding instruction, quoted with its own worked example: "if a minimum requirement of one
+      tree for every 30 feet is applied to a 50"-foot frontage, how many trees are owed.
+      33.930.020 tells a reader how to round a fraction, not what any number is. It is exactly the
+      shape this queue's fourth outcome exists for -- not a statement about land -- and it closes
+      here rather than there because the whole of 33.930 was fetched deliberately on 2026-09-06,
+      off the word-review queue, after the height measurement rules turned out to live in .050
+      rather than .020. That fetch is why this chapter is in the corpus at all, and it is worth
+      the card saying so: the section that justified the fetch is not this one.
+    fingerprint: 930efbd2924c1ebf
+  "33.930.txt#33.930.050":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      33.930.050, Measuring Height, and it is a method rather than a limit -- which is the reason
+      it closes and also the reason it was worth fetching. The rule already read off this section
+      and recorded is the base reference point: the lowest or highest grade exactly five feet from
+      the building, with the base set at the lowest grade plus ten feet where the two differ by
+      more than ten. The line on this card is the branch above that: in commercial/mixed-use and
+      multi-dwelling zones, when any portion of a building is within 25 feet of an existing or
+      proposed sidewalk, the base is taken from the sidewalk instead. Two things about it and both
+      point the same way. It is a MEASUREMENT, so it moves no ceiling this file holds --
+      Portland's heights are encoded as they are written. And the multi-dwelling limb is optional
+      in the applicant's own words: "the applicant MAY CHOOSE to use the following method", which
+      is the applicant's-choice shape this project catalogues as a false positive. Nothing here
+      changes a number; it changes where a surveyor stands.
+    fingerprint: f3077e424641d5ab
+  "33.930.txt#33.930.100":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      33.930.100, Measuring Lot Widths, and this is the most interesting card in the tranche
+      because lot width is a measurement this project has already been burned by -- frontage is
+      not width, and Oregon City and Tualatin define it two different ways. Portland defines it
+      two ways in one section. In the SINGLE-DWELLING zones (A), width is measured by fitting a
+      rectangle along the minimum front building setback line: the rectangle must be at least the
+      zone's minimum lot width across, at least 40 feet deep or as deep as the lot allows to the
+      rear line, and it must fit ENTIRELY WITHIN THE LOT -- so a pinched or wedge-shaped lot
+      measures narrower than its frontage or its midpoints suggest. In ALL OTHER ZONES (B), width
+      is simply the distance between the midpoints of opposite lot lines. WHY IT CLOSES TODAY: the
+      only Portland zones that hold a min_lot_width_ft in this corpus are RM1, RM2, RM3, RM4 and
+      RMP, every one of them a multi-dwelling zone, so every width Portland enforces on us is
+      measured by (B), which is what a geometry pipeline computes anyway. WHAT WOULD REOPEN IT:
+      encoding a single-dwelling minimum lot width for Portland -- which is a live gap, since the
+      36-foot width that goes with the middle-housing lot standards is not held. The day that
+      number lands, the rectangle test lands with it, and a lot that passes on midpoints can still
+      fail on a rectangle that will not fit.
+    fingerprint: 87696344ef4e13f4
+  "33.930.txt#33.930.150":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      33.930.150, Measuring Top of Bank -- how to find the edge of a stream for the environmental
+      overlays. Sample the grade every 3 feet from the ordinary high water mark out to 50 feet,
+      look for a decrease in slope of 10 percent or more, and where none is found take the
+      default: 50 feet horizontally from the high water mark, or 2 feet vertically, or 15 feet for
+      perennial streams, seeps and wetlands, or 15 for intermittent and ephemeral ones. Every
+      number on the card is part of finding a line on the ground, and the line it finds is the
+      origin of a resource corridor -- geometry the overlay layer carves out of buildable area,
+      not a dimension this file holds. That is the same treatment Fairview's creek corridors,
+      Milwaukie's natural resource overlay and Tualatin's wetlands chapters all get in this
+      corpus, and it is deliberate: a corridor is measured from a feature the parcel data locates,
+      never from a lot line.
+    fingerprint: 6d2b781db0e8d0b9
+  "33.120.txt#33.120.220":
+    queue: nofield
+    outcome: need_a_field
+    note: >-
+      THE ONE FIND IN THIS TRANCHE, AND IT IS NOT RECORDED ANYWHERE IN THIS FILE YET.
+      33.120.220.C.2.a: "In the RM1, RM2, RM3 and RM4 zones in the Eastern Pattern Area the
+      required minimum rear building setback is an amount equal to 25 PERCENT OF THE TOTAL DEPTH
+      OF THE SITE. No more than 50 percent of the Eastern Pattern Area rear setback can be vehicle
+      area. The Eastern Pattern Area is shown on Map 120-3." Every RM zone in this layer carries a
+      rear setback of 5 or 10 feet read off Table 120-4. On a 120-foot-deep site inside that map
+      the real number is 30, and on a 160-foot site it is 40 -- six to eight times what is
+      encoded, in the one direction that turns a green lot red, and against a pod whose rear court
+      this project already charges as depth. A grep of the whole config tree for "Eastern Pattern"
+      finds exactly one hit, and it is a sentence in this layer's RM comment about an
+      indoor-common-area ENCROACHMENT into that setback. The setback itself has never been written
+      down. TWO THINGS ARE MISSING AND THE FIELD IS THE SMALLER ONE. No value form in this model
+      states a setback as a fraction of a site dimension -- the forms are per_height_ft,
+      step_back, qualified_by, spaces_total and same_as, and none of them multiplies a lot
+      measurement. And Map 120-3 is a mapped geography the inventory does not hold, so even with
+      the form there is no way to say which sites are inside it. That second half is an unmeasured
+      site fact and belongs on that list; whoever takes this card takes the map first. THE
+      EXEMPTIONS ARE WORTH READING BEFORE ANYONE PANICS, because two of the three may swallow the
+      rule for this building. C.2.b(1) exempts corner lots and any lot up to 100 feet deep
+      outright. C.2.b(2) exempts "sites where at least 10 percent of the total site area is
+      outdoor common area and the common areas measure at least 30 feet in all directions" -- and
+      the standing ruling on this project is that we WILL accommodate ten percent open space. The
+      catch is the shape: 30 feet in every direction is 900 square feet at minimum, so ten percent
+      only reaches it on a site of 9,000 square feet or more, and below that the exemption costs
+      more open space than the ruling promised. That is arithmetic, not a scope argument, so it
+      moves if the pod or the ruling moves. The rest of the card is relaxations already declined
+      in this layer's comment -- setback matching to an abutting lot, the raised-ground-floor
+      reduction, the courtyard reduction -- and each of the last two expressly does not apply in
+      the Eastern Pattern Area, which is the code telling us where its own generosity stops.
+    fingerprint: e0fb243e2ab48e24
+  "33.120.txt#33.120.206":
+    queue: nofield
+    outcome: need_a_field
+    note: >-
+      Minimum Required Site Frontage for Development, and it is a PROHIBITION rather than a
+      dimension: "If the site is more than 160 feet deep, new dwelling units are prohibited unless
+      the site has at least 90 feet of frontage on a street." Already refused by name in all six
+      RM zone notes in this file -- "applies only to sites on Map 120-2 that are more than 160 ft
+      deep" -- so this card is not a discovery, it is the same refusal arriving from the queue
+      that counts things nothing holds. It stays OPEN rather than closing because the refusal
+      names a gap and a gap that nobody is working is still a gap. WHAT WOULD HAVE TO EXIST.
+      min_frontage_ft is in the registry, so the missing piece is not a field name; it is a
+      frontage minimum that fires only above a site depth and only inside a map. Map 120-2 is
+      Eastern Portland's centers and the inventory holds no such boundary, which makes this the
+      same unmeasured-site-fact shape as the Eastern Pattern Area rear setback on the sibling card
+      -- and the same instruction applies: the map before the field. THE EXCEPTIONS MAY DO MOST OF
+      THE WORK. 33.120.206.C.2.b allows development when EVERY lot sharing a side lot line with
+      the site meets one of three tests, the third of which is simply "the lot is not zoned
+      multi-dwelling". An RM site flanked by R-zoned land is exempt outright, and neighbour-zone
+      adjacency is on this project's computable list as of 2026-09-08 rather than on the
+      unmeasured one. So the honest shape of the work is: get the map, and the neighbour test then
+      decides most of it. Adjustments to shave ten percent off the frontage are available until 2
+      January 2032 and prohibited after, which is relief the conservative default declines twice
+      over -- it is discretionary and it expires.
+    fingerprint: 8dfad7e4cf7ef00b
+  "33.120.txt#33.248":
+    queue: nofield
+    outcome: design
+    note: >-
+      ATTRIBUTION SLIP -- the card is headed 33.248 and the three lines are 33.120.240.C.2.a, the
+      outdoor common area, which cross-references Chapter 33.248 for its landscaping standard two
+      sentences earlier. On the merits: "at least 500 square feet in area and must measure at
+      least 20 feet in all directions... located within 20 feet of a building entrance providing
+      access to residential units." The AMOUNT of required outdoor area is encoded in this layer
+      -- open_space_min_sqft carries the 33.120.240.B band, corrected in September when the
+      common-area exemption was found to be understated. What these three lines add is a shape and
+      a placement, and this file already says in as many words that the sibling shape test on
+      individual unit areas (10 by 10) is something no field here has. A minimum dimension in all
+      directions and a maximum walk from a door describe how the open space is drawn and where it
+      sits, not how much of the lot it eats, so the number that competes with the pod is already
+      held and this is the design around it. Recorded rather than shrugged at because the same
+      20-foot-all-directions test reappears as the exemption trigger on 33.120.220's Eastern
+      Pattern rear setback, where it is not a design standard at all but a door out of a much
+      larger number.
+    fingerprint: 66532b06f47e581f
+  "33.120.txt#33.120.235":
+    queue: nofield
+    outcome: design
+    note: >-
+      Landscaped areas in the multi-dwelling zones, and the required PERCENTAGE is on Table 120-4
+      and encoded; what is on this card is the menu of ways to satisfy it and one qualifier on
+      where it does not apply. The ecoroof alternative trades four square feet of roof for one of
+      ground at up to half the requirement, raised planters count at 30 inches of soil, and up to
+      a third of the required area may be walkways, play areas or garden plots -- all of them ways
+      to spend a number we already hold, none of them a new one. 33.120.235.C.1 then requires the
+      building setbacks themselves to be landscaped to the L1 standard, and exempts sites of
+      10,000 square feet or less entirely; inside the Eastern Pattern Area the exemption narrows
+      to "allowed development can cover no more than 50 percent of the Eastern Pattern Area
+      minimum rear setback area". That last clause is a cap on paving a setback whose depth is the
+      open question on this section's own card, and it is the reason to read the two together:
+      half of a setback we cannot compute is still not computable. Nothing here takes buildable
+      ground the encoded landscaped-area percentage has not already taken.
+    fingerprint: 27ff9cb9c4a8f2f5
+  "33.266.txt#33.266":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Eighty-five lines of Portland's parking chapter, and the great majority of them are
+      use-based ratios for buildings this project does not place: restaurants at one space per 75
+      square feet, health clubs, theatres by the seat and by the foot of bench, general and
+      medical office, quick vehicle servicing, vehicle repair, manufacturing, warehousing,
+      wholesale, community service, medical centres, colleges, religious institutions by the
+      square foot of main assembly, daycare. Tables 266-1 and 266-2 are a catalogue of other
+      people's buildings. The remainder splits three ways and none of it reaches a four-unit pod
+      on one lot. THE VEHICLE-AREA STANDARDS OF 33.266.130 -- the 30-percent paving share, the
+      65,000-square-foot threshold, the half-acre tree-canopy trigger, the perimeter and interior
+      landscaping tables, the pedestrian-through-lot requirements, the 18-foot IR-zone setback --
+      are excluded by that section's own applicability sentence at B: "the standards of this
+      section apply to all vehicle areas, except for residential vehicle areas subject to the
+      standards of 33.266.120." 120 is the fourplex section. THE BICYCLE APPARATUS at 33.266.200
+      and .210 dimensions a rack: five feet behind a space, two feet six inches of wall clearance,
+      six-foot lockers with two-foot doors, covers projecting two feet, and a string of 50-foot
+      walks to a main entrance. A rack fits in the same rear court or on a wall of it and no field
+      in this registry measures one. AND 33.266.310's LOADING standards trigger at 20,000 square
+      feet of floor area in uses other than Household Living, which is two gates away. One line is
+      worth carrying forward because it is the aisle argument in Portland's own words and it sits
+      on the wrong side of the exclusion: 33.266.130.F.1.b requires vehicles to enter and leave
+      the roadway in forward motion, excepting only parking areas of one or two spaces on a local
+      service street.
+    fingerprint: 211c114cce29ff72
+  "33.266.txt#33.266.120":
+    queue: nofield
+    outcome: design
+    note: >-
+      Four lines out of the one section of this chapter written at our building, and all four are
+      about WHERE a stall may sit rather than how big it must be. The dimensions this section does
+      state -- 9 by 18 at D.1, a 9-foot driveway at D.2 -- are encoded in this layer, which is why
+      they are not on this card. What is here is 33.266.120.C.2.a's rule that a parking space is
+      not allowed within the first 10 feet from a front lot line, with its exceptions for a space
+      that is itself outside those 10 feet and for the shared-driveway case, and the 9-foot
+      minimum width of a shared driveway. A rear court puts every stall behind the building, so
+      the 10-foot strip is empty by construction and the standard is satisfied without costing
+      anything. The shared driveway is a different site than the one this screen tests -- it is
+      the arrangement where two lots split one approach -- and 9 feet is below the drive width
+      this project already carries. The full section was read on 2026-09-01 and again on
+      2026-09-08 when the county's mirror of it was ruled; C.1.a's vehicle-area prohibition,
+      C.1.b's 40-percent front-yard cap (which reduces to "drive width not more than 40 percent of
+      lot width" and never binds on a lot wide enough for the pod), C.3's alley mandate and C.4's
+      garage setback are all on that record.
+    fingerprint: b8c53b78c78d4bda
+  "33.266.txt#33.266.110":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Required carpool and electric vehicle parking, switched off by a unit count one short of
+      ours in the useful direction. 33.266.110.C opens "For Commercial Parking uses and for sites
+      with 5 or more dwelling units" and C.2 repeats it as "In buildings with five or more
+      dwelling units". This building has four. The two lines the reader flagged -- 100 percent of
+      spaces conduit-ready between one and six, 50 percent or six above that -- are the ladder
+      inside that gate rather than the gate itself, which is the shape that reads as binding when
+      a card shows rungs without a door. The carpool half at A reaches Commercial Parking at 20
+      percent of total spaces. Even where it applies, conduit adjacent to a stall is a cost and a
+      trade, not a dimension: it takes no land the pod or its court needs.
+    fingerprint: 17e08dd73a66565d
+  "33.266.txt#33.266.115":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Maximum Allowed Parking Spaces -- a CEILING on how many stalls may be built, which is the
+      one direction a fit screen cannot fail on. A maximum can stop somebody paving more than they
+      need; it can never stop a pod fitting. The three lines are the surface-versus-structured
+      split (Tables 266-1 and 266-2 govern where more than a quarter of the parking is on a
+      surface lot; 125 percent of the same tables where three quarters or more is structured) and
+      no limb of it is a floor. The pod needs four stalls under the state cap carried in
+      or/_state.yaml and no maximum in this chapter for Household Living is near four. Recorded
+      rather than skipped so the next reader who meets a section titled "Maximum" does not have to
+      re-derive that a cap cannot bind a screen that asks whether something FITS.
+    fingerprint: e23d278e38cdce99
+  "33.266.txt#33.248":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      ATTRIBUTION SLIP, the same one this project has now catalogued seven times: the single line
+      "landscaping must be placed within 25 feet of the edge of the parking area" is
+      33.266.130.G.2's perimeter landscaping rule, and it landed on a card headed 33.248 because
+      the sentence above it cross-references the L3 standard of Chapter 33.248.
+      Nearest-heading-above took the mention for a heading. Recorded here rather than repaired,
+      because the fix belongs in the sectioner and the ruling belongs on the card. On the merits
+      it closes twice: 33.266.130.B excludes residential vehicle areas subject to 33.266.120 by
+      its own applicability sentence, and a rule about where within a setback the shrubs go does
+      not change how much land the setback takes.
+    fingerprint: a1d41e84dbea6515
+  "33.266.txt#33.266.140":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      ANOTHER SLIP, and the same one ruled on the county's copy of this chapter on 2026-09-08. The
+      card is headed 33.266.140, Stacked Parking Areas, and holds nine lines that are nothing of
+      the kind: the two-foot bumper overhang from 33.266.130.F.4, the perimeter landscaping table,
+      the 45-square-foot interior landscaping allowance, the 20-foot single-driveway interruption,
+      and the 3- and 4-foot tree planting minimums. They sit under this heading because the
+      sentence introducing the table says "For stacked parking areas, see Section 33.266.140
+      below" and the sectioner took the forward reference for the section it names. All of it is
+      33.266.130's, and 33.266.130.B applies its standards to all vehicle areas "except for
+      residential vehicle areas subject to the standards of 33.266.120" -- the fourplex section.
+      Landscaping a commercial lot's perimeter is a different building's problem.
+    fingerprint: db3a6cefc30d4dcf
+  "33.266.txt#33.266.21":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Table 266-7's bicycle parking dimensions -- a standard space 2 feet by 6 with 3 feet 4
+      inches of vertical clearance, the side-by-side, wall, diagonal, vertical and stacked
+      variants, and a 10-foot space for cargo bicycles -- filed under a section number, 33.266.21,
+      that does not exist in the chapter's contents (the sections are .200 and .210). A rack's
+      footprint is not a building's, and none of these competes with the pod, its court or a yard.
+      One sentence beyond that, because it is the honest caveat: 33.266.200 does state a minimum
+      for Household Living per dwelling unit, so a fourplex does owe some bicycle parking. It is
+      still not a screen question -- a bicycle space fits in the same rear court or on a wall of
+      it, and no field in this registry measures one.
+    fingerprint: 8bb9c5376f66922f
+  "33.110.txt#33.110.210":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Floor area ratio in the single-dwelling zones and the bonuses that lift it. The base FAR is
+      encoded; what is here is the machinery around it. The R20 limb applies a maximum FAR only to
+      lots under 10,000 square feet; one alteration or addition of up to 250 square feet is
+      exempt; and the two bonus limbs buy floor area with affordability -- a unit at or below 60
+      percent of area median family income, with no more than 25 percent of the added area going
+      to any one unit. An affordability bonus is a different building in the only sense this
+      screen cares about: it is a deal a developer strikes about who lives in the units, and the
+      conservative default declines earned relaxations because a screen that assumes a bonus
+      reports land as buildable that is only buildable on terms nobody has agreed to. The same
+      reasoning is already written into this layer against the RM chapter's FAR bonuses and its
+      three density reliefs.
+    fingerprint: e38656f9868a1ab0
+  "33.120.txt#33.120.212":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Two things on one card and neither is a dimension for this pod. The first three lines are
+      step-down height rows lifted out of Table 120-5 -- 35 feet within 25 feet of an R-zone lot,
+      35 or 45 within 15 feet, and the transit-street front setback row -- which are a transition
+      standard against a NEIGHBOUR'S zoning at heights this two-storey pod never reaches; the base
+      heights they step down from are 35 to 100 feet and are encoded. The rest is 33.120.212.C,
+      the affordable housing density bonus: half the units at 60 percent of area median family
+      income buys a higher density in RMP, where one unit is defined as 800 square feet of floor
+      area. RMP is the one multi-dwelling zone whose Table 120-2 row says No to a fourplex
+      outright, and an affordability bonus is an earned relaxation the conservative default
+      declines everywhere in this layer. Nothing on the card is a floor.
+    fingerprint: d8d018f73f1f5a62
+  "33.110.txt#33.110.230":
+    queue: nofield
+    outcome: design
+    note: >-
+      Main entrance orientation in the single-dwelling zones: the entrance must be within 8 feet
+      of the longest street-facing wall, or face the street, or sit at up to 45 degrees off it,
+      and a lot on a street with an average slope of 20 percent or more is exempt. A rule about
+      which way a door points. It constrains the elevation the architect draws, not the ground the
+      building stands on -- a pod that fits a lot fits it whichever wall carries the entrance, and
+      no field in this registry names a door. Worth one line on the exemption, because the same
+      sentence has now surfaced three times in Portland's chapters this week and once in the
+      county's: an exemption for flag lots and 20-percent-slope frontages is the code conceding
+      that entrance orientation is about the street picture, and the screen does not draw one.
+    fingerprint: 6a359e700bc2eb9a
+  "33.120.txt#33.120.231":
+    queue: nofield
+    outcome: design
+    note: >-
+      The multi-dwelling twin of 33.110.230, and longer because the RM zones get a courtyard
+      option. Entrances within 8 feet of the longest street-facing wall or at up to 45 degrees; a
+      porch of at least 25 square feet with a roof no more than 12 feet above its floor and at
+      least 30 percent solid; or an entrance facing a courtyard at least 15 feet wide within 60
+      feet of a street. The standard reaches only structures within 40 feet of a street lot line
+      and exempts flag lots and frontages averaging 20 percent slope. Every number describes a
+      door, a roof over it, or the shape of the space it faces. None of them takes ground the
+      encoded setbacks, coverage and landscaped area have not already taken, and the courtyard
+      limb is an ALTERNATIVE the applicant may reach for rather than a requirement -- the
+      design-menu shape this project catalogued as a false positive on 2026-09-07.
+    fingerprint: 11fe16b306e65bf5
+  "33.120.txt#33.120.232":
+    queue: nofield
+    outcome: design
+    note: >-
+      One line, and it is the exemption rather than the standard: "street with an average slope of
+      20 percent or more, is exempt from these standards." The standards it exempts are
+      33.120.232's, the multi-dwelling ground-floor window and facade requirements, which are the
+      same design family as the entrance rule on the sibling card. An exemption from a design
+      standard cannot state a dimension for a building, and the fourth appearance this week of the
+      20-percent-slope frontage let-out is worth noting only as evidence that Portland treats this
+      whole block of rules as being about the street picture.
+    fingerprint: 493a8e95ef43d184
+  "33.120.txt#33.120.230":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Building massing in the RM zones, and every limb of it is gated on a height this pod does
+      not reach. "In the RM2 zone, the standard applies to buildings MORE THAN 35 FEET HIGH that
+      have facade areas of more than 3,500 square feet within 20 feet of a street"; in RM3 and RM4
+      the gate is 45 feet and 4,500 square feet. The pod is 26. The remaining line -- facades up
+      to some width extending at least 30 feet in depth from the street property line -- is the
+      recess or offset that satisfies the standard once it applies. A rule that opens on a
+      building twice our height is a rule for a different building, and this is the shape the
+      queue keeps producing: rungs shown without the door they hang behind.
+    fingerprint: af2859029e737a3f
+  "33.120.txt#33.120.225":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      A single fragment -- "from the calculation of grade, if the access is no more than 20 feet
+      wide" -- which is the tail of a sentence in 33.120.225 excluding a driveway or access from
+      the grade calculation used to measure building coverage or height. It states no requirement
+      of its own: it is a carve-out inside a measurement method, and the method's output
+      (coverage, height) is encoded from Table 120-4. The 20 feet is the width above which the
+      carve-out stops, not a width anything must or may be. Recorded rather than skipped because a
+      stray "20 feet" beside the word "access" is exactly the line a reader hunting for a
+      drive-aisle standard would seize on, and it is not one.
+    fingerprint: 2462c557f010e11e
+  "33.120.txt#33.120.240":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      One line, and it is the affordability qualifier: "than 60 percent of the area median family
+      income. In order to qualify for this" -- the gate on 33.120.240's reduced outdoor-area
+      requirement for affordable housing. The outdoor and common area standard itself is ENCODED
+      in this layer as open_space_min_sqft, corrected in September when the common-area exemption
+      was found understated, and its missed-standard card is filed as applying with its residue
+      named. What this line adds is the discount available to a building that commits half its
+      units at 60 percent of median income, which is an earned relaxation the conservative default
+      declines throughout this file. A screen that took the discount would report land as
+      buildable on terms nobody has agreed to.
+    fingerprint: 9e6fecc3274289f0
+  "33.120.txt#33.120.250":
+    queue: nofield
+    outcome: design
+    note: >-
+      Screening for mechanical equipment: where the equipment is within 50 feet of an R zone it
+      must be enclosed, screened, or set back from the roof edge. The 50 feet measures to a
+      neighbour's zoning rather than to a lot line, and what it triggers is a parapet, a screen
+      wall or a placement on a roof -- none of which competes with the pod's footprint, its court
+      or a yard. Rooftop screens already appear in this layer's height-exception list at 6 feet,
+      so the model knows the object exists and knows it does not take ground.
+    fingerprint: d9cb692c8acc54b5
+  "33.120.txt#33.120.280":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Ten lines and every one of them is about a GARAGE. Rebuilding a nonconforming garage at no
+      more than 15 feet high with 10-foot walls, an addition of 12 by 20 under the same ceiling,
+      garages and structured parking more than 40 feet from a street, structured parking whose
+      floor sits 4 feet or more below grade, the 50-percent limit on garage width along a
+      street-facing facade, and the special case where that facade is less than 22 feet long. The
+      standing ruling on this project, given on 2026-09-08, is that the pod has NO GARAGE. That
+      single answer closes every line here, as it closed 33.266.120.C.4 and the garage-entrance
+      band on all six RM zones. The 20-percent-slope exemption appears again in the middle of the
+      list, which is the fifth time this week; it is not doing any work on a card that is already
+      closed.
+    fingerprint: 147e691fe9f18ebc
+  "33.120.txt#33.120.284":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Flag lot standards in the multi-dwelling zones: a 10-foot landscaped strip in RM1 through
+      RM4 and a 3-foot minimum depth for it, buffering the pole from the abutting lots. Flag-lot
+      geometry is the third thing in this layer that turns on a lot shape nothing in the pipeline
+      measures -- it has already been ruled cant_tell twice, and the county's MCC 39.2000
+      definition of lot area, which excludes "the private driveway area of a flag lot", is the
+      same hole seen from the denominator side. A landscaped buffer along a pole is also a strip
+      on land the pole occupies rather than land the building would use. Both halves point the
+      same way: nothing here dimensions a pod on a normal lot, and the flag lot is a known open
+      question filed elsewhere.
+    fingerprint: a1e0a52c595bc251
+  "33.120.txt#33.120.285":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Detached accessory structures allowed in required setbacks, and an electric vehicle charger.
+      Uncovered vertical structures no larger than 3 feet in width, depth or diameter and no
+      taller than 8; a single arbor up to 6 by 3 by 8; a structure at least 40 feet from a front
+      lot line, 20 from a side street line on a corner, and no more than 10 feet high; and a
+      charger within 5 feet of a vehicle area. These are permissions for objects the pod does not
+      include -- an arbor, a trellis, a shed -- and each one LOOSENS what may stand in a setback
+      rather than tightening what the building must clear. The charger line places a device
+      relative to a stall, which takes no land. Nothing on the card is a floor or a ceiling on the
+      pod.
+    fingerprint: 51e126b4480c4391
+  "33.120.txt#33.120.330":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Pedestrian connections through a SITE at 330-foot intervals, with a 200-foot floor and an
+      exemption where the interval falls on ground of 20 percent slope or greater. This is
+      block-and-connectivity standard, the kind of thing a code applies when land is being laid
+      out rather than when a building is being placed on a lot that already exists: a 330-foot
+      spacing test only has anything to say about a site large enough to have a 330-foot
+      dimension, and the Bureau of Transportation is named as the body that decides where the
+      connection goes. Our screen asks whether one pod fits one existing lot. The same shape
+      appears twice more in this chapter's siblings (33.130.292, 33.140) and is ruled the same way
+      each time.
+    fingerprint: 1df597ca8d12bce2
+  "33.120.txt#33.120.100":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Non-residential uses allowed in the multi-dwelling zones and the square footage each is
+      rationed to: ground-floor location within 100 feet of something, 1,000 square feet of net
+      building area per use with a combined total, 2,000 for another category, and prohibitions
+      above each. Retail and office floorplates inside a residential zone. The pod is four
+      dwelling units and no commercial floor area at all, so every ceiling here is a ceiling on
+      something we are not proposing. Worth naming the direction: these are MAXIMA on other uses,
+      which cannot make a residential lot smaller.
+    fingerprint: 7d42cb56a0f607e3
+  "33.120.txt#33.285":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Basic Utilities in the multi-dwelling zones, limited to 20 percent of the net building area
+      on a site with a conditional use required above that. A pump station or a substation, not a
+      dwelling. The number is a share of a building we are not building, and it is a ceiling
+      rather than a floor. The card is headed 33.285 because the section cross-references Chapter
+      33.285 for the conditional-use criteria and nearest-heading-above took the reference for a
+      heading -- the same sectioner slip recorded on four other cards in this tranche.
+    fingerprint: ee9b158e0fb79bba
+  "33.120.txt#33.120.050":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Neighborhood contact: a proposal adding between 10,000 and 25,000 square feet of net
+      building area to a site, or more than 25,000, must notify or meet the recognised
+      organisation before applying. A PROCEDURE, and one that fires on floorplates five to twelve
+      times the pod's. Two gates away, and even at the near gate what it costs is a letter and a
+      meeting rather than land. The identical section number appears in 33.110, 33.130, 33.140 and
+      33.150 with the same two thresholds, and in the county's copies of 33.110 and 33.140; all of
+      them are ruled the same way, which is the point of reading a family at once.
+    fingerprint: 2e6315e2cee0f831
+  "33.110.txt#33.110.050":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Neighborhood contact in the single-dwelling zones -- the same two thresholds as 33.120.050,
+      33.130.050, 33.140.055 and 33.150.060, and the same answer. A notification duty that opens
+      at 10,000 square feet of net building area is a procedure attached to a project many times
+      the pod's size, and a procedure costs a letter rather than a foot of ground.
+    fingerprint: 317b05d03b44ab56
+  "33.110.txt#33.110.100":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Group Living in the single-dwelling zones: up to 3,500 square feet of the total net building
+      area on a site may be Group Living, and more than that is a conditional use. Group Living is
+      a defined use category in Title 33 covering residential care, dormitories and similar -- a
+      household is not one, and a fourplex of four households is four Household Living units.
+      Portland's own 33.120.213 exempts group living from the minimum density standard for the
+      same reason, which this layer already records. Nothing on the card reaches the pod.
+    fingerprint: e4765d1a18f9f5e9
+  "33.110.txt#33.110.255":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Flag lot standards in the single-dwelling zones -- a 15-foot landscaped buffer in RF, R20
+      and R10, 10 feet in R7, R5 and R2.5, applying to a flag lot of 10,000 square feet or less,
+      with the strip at least 5 feet deep and running the first 10 feet from where the pole meets
+      the flag. The multi-dwelling twin of this is on the 33.120.284 card and gets the same answer
+      for the same two reasons: flag-lot geometry is a lot shape nothing in this pipeline measures
+      and is already filed cant_tell twice, and a buffer along a pole sits on land the pole
+      occupies rather than land the building would use.
+    fingerprint: a837063c306e7b64
+  "33.110.txt#33.110.260":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Lots that predate the standards: "remnants, or lots of record that are less than 32 feet
+      wide in the R20 through R2.5 zones" is part of 33.110.260's treatment of substandard and
+      remnant parcels, which decides what may be built on a lot the code would not create today.
+      That is a question about the lot's history, answered from a deed and a plat, not from
+      geometry -- and the screening inventory holds parcels as they are, not as they were
+      recorded. Where it resolves it LOOSENS, because the section exists to let something be built
+      on a lot that fails the minimums. Nothing here tightens the pod's fit on a conforming lot.
+    fingerprint: 5350a5424c3bb64f
+  "33.110.txt#33.110.265":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "attached house lots. However, no lot can exceed 5 percent more that the base zone" --
+      33.110.265's rule on lot dimensions when a site is divided for attached houses, where
+      individual lots may vary from the base standard within a 5 percent band. A LAND DIVISION
+      standard: it governs the plat that creates the lots, not the building placed on one
+      afterwards. This project screens existing parcels and never draws a lot line, so the whole
+      of 33.110.265 is at a stage upstream of the question. The typo ("more that") is the code's,
+      not the extractor's.
+    fingerprint: 4f17ba0396040026
+  "33.100.txt#33.100.205":
+    queue: nofield
+    outcome: design
+    note: >-
+      Fence heights in the open space zone: over 8 feet generally, and a fence within 30 feet of a
+      street lot line may not be more than 10 percent sight-obscuring. A fence is not a building,
+      takes no setback and carries no roof; Portland states fence standards separately in every
+      base-zone chapter for exactly that reason, and the same rule appears on the 33.130.270 and
+      33.140 cards in this tranche. Nothing in this screen measures a fence, and adding a field
+      for one would answer a question nobody asks about whether a pod fits.
+    fingerprint: 350832d8b8c7ad16
+  "33.130.txt#33.130.030":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "centers in locations where older commercial storefront buildings of 1 to 2 stories are" --
+      a clause out of 33.130.030's PURPOSE paragraph, describing the kind of place the CM1 zone is
+      meant for. A purpose statement explains why a chapter exists; it requires nothing of anybody
+      and cannot be complied with or violated. This is the false-positive shape this project named
+      on 2026-09-07 and it is here because the words "1 to 2 stories" contain a number. Nothing to
+      encode and nothing to refuse.
+    fingerprint: 41351badcaae2329
+  "33.130.txt#33.130.050":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Neighborhood contact in the commercial and mixed-use zones -- the 10,000 and 25,000 square
+      foot notification thresholds, identical to 33.110.050, 33.120.050, 33.140.055 and
+      33.150.060. A procedure at a scale the pod never reaches, and a procedure costs a letter
+      rather than land.
+    fingerprint: 9539439c4ae85672
+  "33.130.txt#33.130.100":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Use-size rationing in the commercial and mixed-use zones: retail limited to 5,000 square
+      feet of net building area, 40,000 on a large CM1 site in the right location, and each
+      individual industrial use in CM1 capped at 5,000. Commercial floorplates. Portland's
+      commercial zones ARE encoded in this layer -- that work finished in August and found the
+      land loosest of all, binding on a maximum front setback and on the neighbour's zoning -- so
+      the zone is screened; what is not screened is how big a shop may be inside it, because the
+      pod contains no shop. Every number here is a ceiling on a use we do not propose.
+    fingerprint: 73ba5b791e8d7918
+  "33.130.txt#33.130.222":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Building massing in the commercial zones, and gated on height exactly as its RM twin at
+      33.120.230 is: "In the CM2 and CE zones, the standard applies to buildings more than 35 feet
+      high that have facade areas of more than 3,500 square feet within 20 feet of a street", and
+      45 feet with 4,500 square feet in CM3. The pod is 26 feet. The 20-foot separation between
+      elements on the same site and the 20-foot facade depth are the recess dimensions that
+      satisfy the standard once it opens. A rule that begins above our roofline is a rule for a
+      different building.
+    fingerprint: be6a4133abea1d70
+  "33.130.txt#33.130.230":
+    queue: nofield
+    outcome: design
+    note: >-
+      Ground-floor windows and blank-wall limits in the commercial zones: 15 percent of each
+      street-facing facade, 40 percent of ground floor wall area on a facade within 20 feet of a
+      street lot line measured between 2 and 10 feet above grade, 25 percent on other ground-level
+      facades, with the usual 20-percent-slope exemption and a carve-out for detached accessory
+      structures more than 20 feet from a street. Glazing percentages. They constrain the
+      elevation an architect draws and are satisfied or missed on the drawing board; they take no
+      land, and a pod that fits a lot fits it whatever fraction of its wall is glass. Fairview and
+      Tualatin state the same family of standards and are ruled the same way.
+    fingerprint: 6b00565d6f538912
+  "33.130.txt#33.130.235":
+    queue: nofield
+    outcome: design
+    note: >-
+      Mechanical equipment screening in the commercial zones -- enclosure, screening, or a
+      roof-edge setback of 3 feet for each foot of equipment height, triggered where the equipment
+      is within 50 feet of an R zone. The commercial twin of 33.120.250 and ruled the same way: a
+      screen wall on a roof competes with nothing on the ground.
+    fingerprint: fbcb84f39a84c7c8
+  "33.130.txt#33.130.240":
+    queue: nofield
+    outcome: design
+    note: >-
+      Pedestrian connections from a building to the street: no more than 20 feet longer or 120
+      percent of the straight-line distance, whichever is less, with a 200-percent allowance where
+      a constraint is met, and the Household Living limb applying where a building sits within 40
+      feet of a street lot line. This is a rule about the ROUTE a walkway takes, expressed as a
+      ratio to a straight line -- it cannot make a lot smaller or a setback deeper, because the
+      straight line it is measured against is whatever the approved layout produces. A path is
+      also the one improvement that fits in ground the building already leaves.
+    fingerprint: df90397549425dd6
+  "33.130.txt#33.130.245":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Exterior storage, fuel dispensing and car washes in the commercial zones: storage limited to
+      20 percent of site area, set back 5 feet from nonstreet lot lines and 10 from street lot
+      lines, screened to the L1 standard, and fuels and car washes prohibited within 25 feet of a
+      lot line abutting a residential zone. A service station's problems. The pod stores nothing
+      outdoors, dispenses no fuel and washes no cars, and each of these is a restriction on an
+      ACCESSORY ACTIVITY rather than on a building envelope.
+    fingerprint: 4b750a0a4764fcea
+  "33.130.txt#33.130.250":
+    queue: nofield
+    outcome: design
+    note: >-
+      Main entrance orientation on a TRANSIT STREET in the commercial zones: within 25 feet of it,
+      or at up to 45 degrees from it, or facing a courtyard at least 15 feet wide that abuts it
+      and lies within 60 feet, with one entrance required for every 200 feet of building length
+      where the building is set back. The commercial sibling of 33.110.230 and 33.120.231, and the
+      same answer -- a rule about which way a door points and how often one appears along a wall.
+      It also carries an unmeasured site fact in its own gate: whether a lot fronts a transit
+      street is on this project's known list of things nothing computes, which is why the maximum
+      front setback in Table 120-4 is a recorded refusal in every RM zone here for the same
+      reason.
+    fingerprint: 5d58b75d50cbdd74
+  "33.130.txt#33.130.270":
+    queue: nofield
+    outcome: design
+    note: >-
+      Fences in the commercial zones: within 10 feet of a street lot line, a fence more than 50
+      percent sight-obscuring may be 3 feet 6 inches and one at 50 percent or less may be 8 feet;
+      along other lot lines 8 feet is allowed in required setbacks. The same family as 33.100.205
+      and the fence limb of the 33.140 card, and ruled the same way. A fence takes no setback,
+      carries no roof and is measured by nothing in this screen.
+    fingerprint: 3ad9b6f579f510cb
+  "33.130.txt#33.130.292":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Pedestrian connections through a site every 330 feet, exempt where the interval falls on
+      ground of 20 percent slope or greater -- the commercial copy of 33.120.330 and ruled the
+      same way. A 330-foot spacing test only speaks to a site large enough to have a 330-foot
+      dimension, and it is a layout standard for land being subdivided or master-planned rather
+      than a standard for one building on one existing lot.
+    fingerprint: 28d0bf8512ce1dff
+  "33.130.txt#33.224":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "within 25 feet of a lot line that abuts a residential zone. The standards for drive-" --
+      the tail of 33.130.245's prohibition on drive-through facilities near residential land, on a
+      card headed 33.224 because the next words are a cross-reference to Chapter 33.224,
+      Drive-Through Facilities. The sectioner slip again. On the merits a drive-through is a use
+      this project does not build, and the standard restricts where one may be placed rather than
+      how much land a dwelling needs.
+    fingerprint: 142ee4b4fa4b743a
+  "33.130.txt#33.237":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "In the CE zone, each indoor Agriculture use is limited to 40,000 square feet of net"
+      building area -- a floorplate cap on indoor farming, carried on a card headed 33.237 because
+      the sentence cross-references Chapter 33.237, Agriculture. A greenhouse is not a fourplex,
+      and a maximum on somebody else's floor area cannot shrink our lot.
+    fingerprint: 36267e9f433cd0b1
+  "33.130.txt#33.248.030":
+    queue: nofield
+    outcome: design
+    note: >-
+      Plant materials: at least 50 percent of the ground area covered, and up to 50 percent of a
+      required landscaped area may be pervious pavement. These are the L-standard's internals --
+      what has to grow in the landscaped area and what may be paved instead. The AMOUNT of
+      landscaped area required is on Table 130-1 and is encoded; this card describes how it is
+      planted. A ground-cover percentage inside an already-encoded area takes no additional land,
+      and the pervious-pavement allowance loosens rather than tightens.
+    fingerprint: bb5e57a04ea7356c
+  "33.130.txt#33.266.130":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "for at least 25 percent of the frontage on a transit street or street in a Pedestrian"
+      District -- 33.266.130's limit on how much of a transit-street frontage may be given over to
+      vehicle area, appearing in the commercial chapter as a cross-reference and taking the
+      parking chapter's number as its heading. It closes for the reason the whole of 33.266.130
+      closes on the county's copy and on the chapter card in this same tranche: 33.266.130.B
+      applies its standards to all vehicle areas "except for residential vehicle areas subject to
+      the standards of 33.266.120". Whether a lot fronts a transit street is also an unmeasured
+      site fact, so the rule could not fire even if it reached us.
+    fingerprint: be37e01153675365
+  "33.130.txt#33.266":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Three lines of street-setback rules for buildings in the commercial zones -- a 10-foot
+      setback on streets shown on Map 130-1, 5 feet for a building with dwelling units on the
+      ground floor, 10 feet for all other buildings facing an R zone -- filed under the parking
+      chapter's number because the surrounding text cross-references 33.266. The numbers
+      themselves belong to 33.130's setback section and Portland's commercial zones are fully
+      encoded in this layer, so what is stated here is either already held or held tighter. The
+      map limb is the familiar unmeasured geography, and the ground-floor-dwelling limb LOOSENS.
+      Nothing on the card is a number the screen is missing.
+    fingerprint: d315a7647da4be19
+  "33.140.txt#33.140":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Sixty-eight lines of Chapter 33.140, the EMPLOYMENT AND INDUSTRIAL ZONES -- EG1, EG2, EX,
+      IG1, IG2 and IH. A fourplex is not a permitted use in any of them, which settles the whole
+      card in one sentence, and the content confirms it line by line: 3,000-square-foot exterior
+      activity areas, 12,000-square-foot ceilings on accessory uses, 100,000-square-foot buildings
+      triggering pedestrian standards, 55,000-square-foot parking areas, loading docks, the
+      setback-and-landscaping table whose rows read "Abutting an R or OS zone 5 ft. / L3", and
+      fence heights by industrial zone. Two families inside it deserve a name because they recur
+      across every base-zone chapter in this title and are ruled identically elsewhere in this
+      tranche: the entrance-orientation and porch standards (25 square feet, 9 by 7 for
+      multi-dwelling, roofs no more than 12 feet above the floor, 30 percent solid) are design;
+      and the pedestrian-connection ratios (20 feet longer or 120 percent of the straight line,
+      200 percent where a condition is met) are a rule about a route rather than about ground.
+      Neither survives the fact that the zone does not allow the building.
+    fingerprint: 146793546c4d913f
+  "33.140.txt#33.140.055":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Neighborhood contact in the employment and industrial zones -- the same 10,000 and 25,000
+      square foot notification thresholds as the four sibling chapters. A procedure, at a scale
+      the pod never reaches, in zones that do not allow the pod.
+    fingerprint: 43e0e1608052bcd6
+  "33.140.txt#33.140.100":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Use rationing in the employment and industrial zones: retail sales and service limited to
+      20,000 square feet or the site's own square footage, twice that on another limb, exterior
+      activity areas up to 3,000 square feet with more a conditional use. Floorplate caps on
+      commercial uses inside industrial land. The pod is not a permitted use in these zones at
+      all, and every number is a ceiling on somebody else's building.
+    fingerprint: 96a5ac3422eb0bc6
+  "33.140.txt#33.140.230":
+    queue: nofield
+    outcome: design
+    note: >-
+      "3. Windows in street-facing facades. At least 15 percent of the area of each facade that"
+      -- the industrial-zone copy of the glazing standard ruled on 33.130.230. A percentage of
+      wall that must be glass constrains an elevation, not a lot, and this one sits in zones where
+      a fourplex is not allowed in the first place.
+    fingerprint: f1d8ede64ef5a457
+  "33.140.txt#33.140.235":
+    queue: nofield
+    outcome: design
+    note: >-
+      Mechanical equipment screening in the employment and industrial zones, within 50 feet of an
+      R zone, with the same 3-feet-per-foot roof-edge setback as 33.120.250 and 33.130.235. A
+      screen on a roof, in a zone that does not allow this building.
+    fingerprint: a15fc7030d40b962
+  "33.140.txt#33.140.240":
+    queue: nofield
+    outcome: design
+    note: >-
+      The pedestrian-connection ratio again -- no more than 20 feet longer or 120 percent of the
+      straight-line distance -- in the employment and industrial zones. A rule about the route a
+      walkway takes, measured against whatever straight line the layout produces, and therefore
+      incapable of shrinking a lot.
+    fingerprint: 28ab26e79fb79c7c
+  "33.140.txt#33.140.245":
+    queue: nofield
+    outcome: design
+    note: >-
+      Projections into required setbacks in the employment and industrial zones: eaves, bays and
+      bay windows up to 20 percent of the setback depth, each bay up to 12 feet long, all bays
+      together no more than 30 percent of the facade area, and at least 30 percent of the bay's
+      own area facing the line to be glazed. Every limb is a PERMISSION to put something into a
+      setback that is otherwise required to be clear, which loosens. The pod does not need it, and
+      the zones do not allow the pod.
+    fingerprint: 983ba5fb1ef0800c
+  "33.140.txt#33.140.265":
+    queue: nofield
+    outcome: design
+    note: >-
+      Transit-street entrance orientation in the employment and industrial zones -- within 25 feet
+      of the transit street, or at up to 45 degrees from it. The same door rule as 33.130.250, in
+      zones where a fourplex is not a permitted use, gated on a transit-street site fact nothing
+      measures.
+    fingerprint: d0fafd60bd6f41b5
+  "33.140.txt#33.285":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Daycare and other Community Service uses up to 3,000 square feet allowed, larger ones
+      conditional, carried on a card headed 33.285 because the sentence cross-references the
+      conditional-use chapter. A daycare is not a fourplex, and the number is a ceiling on its
+      floor area.
+    fingerprint: 98e88c9bebee2cc0
+  "33.150.txt#33.150.060":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Neighborhood contact in the campus institutional zones -- the fifth and last copy of the
+      10,000 / 25,000 square foot notification thresholds in this title. Same procedure, same
+      answer.
+    fingerprint: 7ad24e5b633303a5
+  "33.150.txt#33.150.100":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Manufacturing, industrial service and energy generation allowed on a campus institutional
+      site: 10,000 square feet of each per site with more available as a conditional use in CI2,
+      and not more than 20 percent of the floor area on a site given to energy generation. CI1 and
+      CI2 are the campus zones -- colleges and medical centres. A fourplex is not the building
+      these standards ration, and each number is a ceiling on an accessory use inside somebody
+      else's campus.
+    fingerprint: 715eeef10baa39da
+  "33.150.txt#33.150.215":
+    queue: nofield
+    outcome: design
+    note: >-
+      Projections into setbacks on a campus institutional site: bays and bay windows up to 20
+      percent of the setback depth but never within 3 feet of a line, each bay up to 12 feet long
+      and all of them no more than 30 percent of the facade, uncovered decks and stairways no more
+      than 2 feet 6 inches above the ground, and at least 50 percent of a maximum-setback area
+      improved. The campus copy of 33.140.245 and ruled the same way -- permissions to encroach,
+      which loosen -- with one extra limb worth naming because it points the other way:
+      "improvements within maximum building setbacks" is a requirement to USE the area between a
+      building and the street, and a maximum front setback is the shape that has bound this pod
+      elsewhere in Portland. It cannot bind here, because the zone is a college campus and the pod
+      is not on one.
+    fingerprint: 6aa79cb51f525d44
+  "33.150.txt#33.150.235":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "to this standard must be separated by a minimum of 20 feet when located on the same site"
+      -- the separation between building elements that satisfy the campus institutional massing
+      standard, the same sentence 33.130.222 states for the commercial zones. It is a rule about
+      how far apart two parts of one large building must stand to count as distinct, on a campus.
+      The pod is one 56-foot structure and is not on a campus.
+    fingerprint: 9e49d90edf886df7
+  "33.150.txt#33.150.250":
+    queue: nofield
+    outcome: design
+    note: >-
+      Ground-floor windows on a campus institutional site -- 40 percent of the wall area of
+      street-facing facades measured between 2 and 10 feet above finished grade, 25 percent on
+      other ground-level facades within 20 feet of a street lot line, with a landscaped
+      alternative at the L2 standard, and sill heights no more than 4 feet above grade. The campus
+      copy of the glazing family ruled on 33.130.230 and 33.140.230. Glass percentages constrain
+      an elevation.
+    fingerprint: c40f93e651bc4aae
+  "33.150.txt#33.150.265":
+    queue: nofield
+    outcome: design
+    note: >-
+      Transit-street entrance orientation on a campus institutional site -- within 25 feet, or at
+      up to 45 degrees, or facing a courtyard at least 15 feet wide abutting the transit street.
+      The campus copy of 33.130.250 and 33.140.265, gated on the same unmeasured transit-street
+      site fact, in zones the pod is not built in.
+    fingerprint: c7ad2046707c1664
+  "33.150.txt#33.150.267":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "an exterior space that is at least 150 feet from a public right of way" -- part of
+      33.150.267's standards for outdoor activity or service areas on a campus institutional site,
+      which push noisy uses away from the street. A 150-foot separation is only available on a
+      site with 150 feet to spare, which is a campus rather than a residential lot, and the pod
+      has no outdoor activity area to place.
+    fingerprint: 22f924dd84be6d71
+  "33.150.txt#33.150.270":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Exterior storage on a campus institutional site: limited to 10 percent of site area, set
+      back 10 feet from lot lines, with areas more than 100 feet from the campus perimeter exempt.
+      The campus twin of 33.130.245 and ruled the same way -- a restriction on an accessory
+      activity the pod does not have, on a site type the pod does not occupy.
+    fingerprint: 429e4d79ac56d99d
+  "33.150.txt#33.150.285":
+    queue: nofield
+    outcome: design
+    note: >-
+      Fences on a campus institutional site: 8 feet in required setbacks generally, 3 feet 6
+      inches where more than 50 percent sight-obscuring in the required street setback, 8 feet
+      where less. The fourth fence card in this tranche and the fourth identical answer. A fence
+      takes no setback and nothing in this screen measures one.
+    fingerprint: 687c2260a3ea58fc
+  "33.150.txt#33.274":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Structured parking on a college or medical centre campus: 250 square feet counted per
+      parking structure space, a cap at the lesser of some floor area or 10 percent of campus
+      floor area, and a 30 percent maximum on structured parking as a share of campus floor area
+      with exceptions expressly prohibited. Carried on a card headed 33.274 because the section
+      cross-references Chapter 33.274, Colleges. Every operand is a share of a CAMPUS floor area,
+      a quantity a four-unit pod does not have, and all of them are maxima.
+    fingerprint: 5ef03b8edc375821
 definitions:
   # "Corner Lot. A lot, adjusted lot, lot remnant, or lot of record that has
   # frontage on more than one intersecting street, and where the lot frontages
@@ -910,17 +2411,49 @@ zones:
     # larger screens a small site about a rounding error tighter rather than
     # letting a large one through unmeasured.
     #
-    # NOT ENCODED: the required COMMON area at 33.120.240.B.2 -- 10 percent of
-    # total site area, but only "on sites that are more than 20,000 square
-    # feet in total site area", and exempt anyway where every unit has its own
-    # entrance within 20 feet of a street lot line. A four-unit pod on a
-    # typical lot is outside the trigger and inside the exemption.
+    # THE REQUIRED COMMON AREA at 33.120.240.B.2 is now carried, and the
+    # sentence that used to stand here was thin. It said the pod was "outside
+    # the trigger and inside the exemption", naming one of the exemption's
+    # three limbs. Re-read 2026-09-09 off the condition queue.
+    #
+    # B.2.a asks 10 percent of total site area as common area on sites that
+    # are MORE THAN 20,000 square feet, at least half of it outdoors. A pod is
+    # four dwelling units and no community room, so it has no indoor common
+    # area to trade against the outdoor half and would owe the whole ten
+    # percent as ground.
+    #
+    # B.2.b is the exemption and it is three things at once, not one: every
+    # unit's own entrance within 20 feet of a street lot line, a 3-foot
+    # hard-surfaced path to each, AND 200 square feet of individual outdoor
+    # area per unit at a minimum of 10 feet by 10 feet. Only the first was on
+    # the record. The third is the expensive one: 800 square feet for four
+    # units, against the 48 apiece this field was charging.
+    #
+    # Two routes and the applicant picks, so the cheaper one is what binds --
+    # the same shape as a design menu. Above the trigger the exemption is
+    # always the cheaper: 10 percent of anything over 20,000 square feet is
+    # over 2,000, and the exemption is 800 flat. So 200 per dwelling is the
+    # least this code will accept on a site over 20,000 square feet, and it is
+    # encoded as a band rather than left to the 48.
+    #
+    # Two things it does not carry. The 10-by-10 minimum DIMENSION is a shape
+    # test no field here holds, which is already written against this field in
+    # the registry. And the entrance limb is a placement rather than an area:
+    # a layout that puts the pod behind its parking, or turns it, loses the
+    # exemption and falls back to the ten percent. That is the one way this
+    # number is too low, and it is a layout the fit stage chooses rather than
+    # a fact about the lot.
     open_space_min_sqft:
       per_dwelling: 48
       cite: PCC 33.120.240.B.1.a, required outdoor area per dwelling unit
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
+      variants:
+        - per_dwelling: 200
+          band: {measure: lot_sqft, more_than: 20000}
+          cite: PCC 33.120.240.B.2.b(3), individual outdoor area under the common-area exemption
+          quote: "or/multnomah/portland/33.120.txt#L1509-L1523"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -1005,6 +2538,11 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
+      variants:
+        - per_dwelling: 200
+          band: {measure: lot_sqft, more_than: 20000}
+          cite: PCC 33.120.240.B.2.b(3), individual outdoor area under the common-area exemption
+          quote: "or/multnomah/portland/33.120.txt#L1509-L1523"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -1120,6 +2658,10 @@ zones:
         - per_dwelling: 36
           band: {measure: lot_sqft, at_most: 20000}
           quote: "or/multnomah/portland/33.120.txt#L1504-L1506"
+        - per_dwelling: 200
+          band: {measure: lot_sqft, more_than: 20000}
+          cite: PCC 33.120.240.B.2.b(3), individual outdoor area under the common-area exemption
+          quote: "or/multnomah/portland/33.120.txt#L1509-L1523"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -1242,6 +2784,10 @@ zones:
         - per_dwelling: 36
           band: {measure: lot_sqft, at_most: 20000}
           quote: "or/multnomah/portland/33.120.txt#L1504-L1506"
+        - per_dwelling: 200
+          band: {measure: lot_sqft, more_than: 20000}
+          cite: PCC 33.120.240.B.2.b(3), individual outdoor area under the common-area exemption
+          quote: "or/multnomah/portland/33.120.txt#L1509-L1523"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"

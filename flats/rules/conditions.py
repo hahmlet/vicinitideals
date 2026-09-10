@@ -327,6 +327,27 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "established_residential_area",
+        "site_fact",
+        "The lot sits in an area platted before a stated date, and an existing "
+        "single-unit dwelling stands close enough to set this building's front "
+        "setback from its own. Fairview 19.30.030(D) is the case and it is the "
+        "sharpest one in the corpus: in areas platted before 17 November 2001 "
+        "the front setback must come within five feet of the nearest "
+        "single-unit dwelling's on the same street, floored at 10 feet and "
+        "capped at 40. The zone table's 10 is therefore the loosest end of a "
+        "range four times as deep, and which end applies is decided by a "
+        "neighbour's building. Two facts nothing here holds: the plat date of "
+        "the subdivision, and the front setback of the nearest existing "
+        "dwelling. Assumed unknown, which caps the verdict rather than letting "
+        "the table's minimum certify a depth the street may not allow.",
+        evidence=(
+            "recorded plat dates by subdivision, and building footprints "
+            "measured to the front lot line — neither held"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "inside_mapped_use_area",
         "site_fact",
         "The parcel lies inside a boundary the code draws INSIDE a zone to "

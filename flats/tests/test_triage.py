@@ -508,6 +508,26 @@ class TestRecordingADecision:
         assert path.name == "gresham.yaml"
         assert path.exists()
 
+    def test_a_layer_that_names_a_directory_resolves_to_the_file_inside_it(self) -> None:
+        """Oregon is ``or/_state.yaml``; there is no ``or.yaml`` to write to.
+
+        Until 2026-09-09 this raised, so no reading or crossref decision could
+        be recorded against the state layer at all -- every ruling about OAR
+        660-046, the rule that caps quadplex parking in every Large City in the
+        corpus, failed on a path that does not exist. It failed loudly, which
+        is the only reason nothing landed in the wrong file.
+        """
+        path = layer_path("or")
+
+        assert path.is_relative_to(CONFIG.resolve())
+        assert path.name == "_state.yaml"
+        assert path.exists()
+
+    def test_every_layer_the_loader_holds_has_a_file_to_write_to(self) -> None:
+        """The guarantee, rather than the one case that broke it."""
+        missing = [layer for layer in load_rules() if not layer_path(layer).exists()]
+        assert missing == []
+
     def test_the_write_path_refuses_before_it_touches_disk(self) -> None:
         with pytest.raises(ValueError, match="not a layer we hold"):
             rule("../../../../etc/passwd", "1.1", "procedure", "x" * 60)

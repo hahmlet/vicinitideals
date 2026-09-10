@@ -168,6 +168,1307 @@ ingest:
   zoning_layer: zoning_gresham
   zone_field: ZONE
   strip_lowercase_suffix: false
+readings:
+  "4.0100.residential.txt#4.0140":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Solar energy systems. Every height in this section is the height of the equipment, not of
+      the building it sits on or beside: roof-mounted panels measured above the roof they are
+      installed on, ground-mounted arrays measured from grade. 4.0140(C)(1)(a) says the
+      roof-mounted case shall not exceed the district height limit, so the section defers to
+      max_height_ft rather than setting it. This screen places a four-unit attached pod and no
+      solar array, so nothing here is a number we hold or should hold.
+    fingerprint: 1c1e7e23af7027a9
+
+  "4.1500.springwater.txt#4.1595":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Solar energy systems in the Springwater districts, and the same reading as 4.0140 in the
+      residential chapter: the figures are the height of the panels above the roof they are
+      installed on, or of a ground-mounted array above grade. The roof-mounted case is expressly
+      capped by the district height limit, so the section consumes max_height_ft and does not
+      state it. No array is part of the pod, so no number here reaches this building.
+    fingerprint: 46e2cc9c8cdb7abe
+  "4.0200.commercial.txt#4.0232":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Solar energy systems in the commercial districts. Ten feet above the roof for frame-mounted
+      panels and twenty feet for a ground-mounted array are equipment heights measured from the
+      roof or from grade, not building heights. The pod carries no solar array, and the
+      roof-mounted limit defers to the district height limit rather than setting one.
+    fingerprint: 02dbdc45b25c527a
+  "4.0400.corridor.txt#4.0442":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Solar energy systems in the corridor districts, word for word the standard read in the
+      commercial and residential chapters. The numbers measure panels above a roof and an array
+      above grade. They are not the maximum height of a dwelling, and this screen does not place
+      an array.
+    fingerprint: c431bc054f4d5b1d
+  "4.0300.industrial.txt#4.0332":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Solar energy systems in the industrial districts. A ground-mounted array capped at twenty
+      feet is the height of the array, not of a building, and this screen places no array. The
+      industrial districts are also not land this product is placed on, so the section is twice
+      removed from any number we hold.
+    fingerprint: 02d9fe1673dbde84
+  "4.0300.industrial.txt#4.0333":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Wind energy systems in the industrial districts. Forty-five feet above the roof top and one
+      hundred and ten feet ground-mounted are turbine heights, and a turbine is not part of this
+      pod. Nothing here states or modifies the maximum height of a dwelling.
+    fingerprint: 539a073064fcc748
+  "4.0100.residential.txt#4.0141":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Wind energy systems in the residential districts. The forty-five feet in this section is the
+      height of a turbine, and the sentence that reads as a building standard -- roof height and
+      system height together shall not exceed 45 feet -- is a cap on the pair, reached only by a
+      building that carries a turbine. The pod carries none, so the section cannot bind it.
+    fingerprint: a9c87915930436eb
+  "4.1100.downtown.txt#4.1135":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Solar energy systems in the downtown districts: ten feet above the height of the roof on
+      which the system is installed. An equipment height measured from a roof is not the height
+      limit of the building under it, and this screen places no solar system.
+    fingerprint: aed136e428290a59
+  "4.1200.civic-neighborhood.txt#4.1200":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A ground-mounted solar array capped at twenty feet. The line sits under the chapter heading
+      rather than under 4.1234 because nothing nearer above it is a section number, but its
+      subject is unambiguous from the sentence itself. An array height is not a building height
+      and no array is placed by this screen.
+    fingerprint: 12f62a67497625e2
+  "4.1200.civic-neighborhood.txt#4.1234":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Solar energy systems in the Civic Neighborhood districts. Ten feet above the roof on which
+      the system is installed is an equipment height measured from the roof, not a limit on the
+      building beneath it, and the pod carries no array.
+    fingerprint: 26b0dda948c855c7
+  "4.1200.civic-neighborhood.txt#4.1235":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Wind energy systems in the Civic Neighborhood districts, including the forty-five feet that
+      may be exceeded up to one hundred and ten with a Special Use Review. Every figure measures a
+      turbine, and a discretionary review to raise a turbine is not a building height standard.
+      The pod carries no turbine.
+    fingerprint: 84a071b81b151aae
+  "7.0400.middle-housing-design.txt#7.0431":
+    queue: missed
+    outcome: duplicate
+    note: >-
+      The two statements in this card that are dimensions rather than articulation are both
+      already held, and one of them is the reason this section matters. Line 500 to 501,
+      "off-street parking spaces for residential uses shall be at least 8.5 feet wide by 18 feet
+      deep, or 8 feet wide by 24 feet long for parallel parking spaces", is Gresham's townhouse
+      parking geometry, and this file holds 8.5 by 18.5 -- half a foot deeper than the code asks,
+      so strict in the safe direction. It is also the correct source for that number. The
+      default's citation currently points at Table 9.0825A reached through 9.0802(F), and
+      9.0802(F) says the parking-lot design standards do not apply to quadplexes or townhouses;
+      the re-pointing is already ordered and this card is the evidence for it. The fifteen percent
+      private open space on line 519 is held too, and its citation already names 7.0431(D)(1)
+      explicitly. Everything else here is unit articulation: a roof dormer four feet wide, a
+      two-foot bay window, a three-foot recessed entry, side walls broken every thirty-five feet,
+      upper floors set back four feet over sixty percent of the wall. A factory pod satisfies one
+      of those or it does not, and no lot is refused by the choice.
+    fingerprint: 857fbb365c7b9ac8
+  "4.1500.springwater.txt#4":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Chapter 4.1500's leftovers, and the two statements worth checking are the Table 4.1508
+      setback rows at lines 344 and 345. They are the Cottage Cluster block. The table prints
+      three row groups -- Townhouse at 340-342, Cottage Cluster at 344-346, All Other Uses at
+      348-358 -- and a single-lot quadplex is All Other Uses. Checked column by column against
+      what this file holds: VLDR-SW reads front facade 20, interior side 5, street side wall 20,
+      rear no alley 20, and we hold 20 / 5 / 20 / 20; LDR-SW reads 10 / 5 / 10 / 15, and we hold
+      10 / 5 / 10 / 15. The right row was taken in both zones. Note 5, "permitted only on side
+      frontage more than 70 ft. in length", hangs off THR-SW's rear cell and reaches neither of
+      our two Springwater zones. Everything else on the card is commercial: a 32 square foot wall
+      sign, live-work units within 300 feet of a VC-SW zone, gross floor area caps for eating
+      places, offices, personal services, retail and a grocery store, a 10,000 square foot clinic
+      footprint, a 20-foot parapet for large retail, and daylighting points for occupied floor
+      area.
+    fingerprint: 5f9f1a6579d5671b
+  "4.0100.residential.txt#4.0130":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The three statements on this card are all rows for buildings we do not place: the
+      Manufactured Dwelling Park minimum density row at 248, the Duplex corner-lot width row at
+      281, and the Duplex interior lot depth row at 292. A duplex row is not a quadplex row and
+      the table gives them separate lines. But reading this card is what turned up the real defect
+      two lines below the last of them, so it belongs on this record: Table 4.0130 F.1, the
+      "Triplex, Quadplex, and Cottage Cluster" row at lines 298-300, states a minimum interior lot
+      depth of 70 feet in the LDR-5, LDR-7 and TR columns and 100 feet in OFR. This file held the
+      OFR figure and none of the other three. The line was therefore cited -- by OFR -- so no
+      ledger has ever asked about it, which is the column failure this project has named before in
+      its sharpest form: the miss is not a wrong column, it is six columns of a cited line that
+      were never carried across. LDR-5, LDR-7 and TR are Gresham's three principal low-density
+      residential districts, and a depth floor that is absent is a floor the screen never applies,
+      so a lot shallower than seventy feet in any of them could come back GREEN on a standard the
+      city states plainly. Encoded in this commit for all three, with the corner-lot row at
+      306-308 and the townhouse rows at 301 and 309 read as well; TR is the one column where the
+      townhouse rows differ, reading None interior and zero corner, and both are written as zero
+      so the quadplex figure is not applied to a path the city exempts.
+    fingerprint: 9cfd02f550bbde3a
+  "4.0100.residential.txt#4.0110":
+    queue: missed
+    outcome: duplicate
+    note: >-
+      LDR-5's district description. Three numbers: a maximum net density of 8.71 units per acre
+      for single detached units, 25 for townhouses, and a minimum of 6.22 required for
+      subdivisions and for partitions of parent parcels over 20,000 square feet. The 6.22 is
+      already held as this zone's min_density_du_per_acre. The other two are other housing types,
+      and the reason that matters is worth stating once for all nine of these purpose paragraphs:
+      Table 4.0130 D, the operative table, prints a separate "Duplex, Triplex, Quadplex, Cottage
+      Cluster" row, and in LDR-5, LDR-7, TR, TLDR, MDR-12 and OFR that row reads None. The 25 is
+      on the Townhouse row. So a reader who took the density out of the purpose paragraph would
+      cap a quadplex at 25 units per acre in a district where Gresham caps it at nothing -- on a
+      5,000 square foot lot four units is 34.8 units per acre, and the false refusal would land on
+      the smallest lots in the city. This file holds None, which is right. Same answer checked in
+      the Springwater and Pleasant Valley tables: quadplex maximum density is None in VLDR-SW,
+      LDR-SW, LDR-PV and MDR-PV, 40 in HDR-PV, 24.2 in MDR-24, and every one of those matches what
+      is encoded.
+    fingerprint: ff7d754e5c6410e4
+  "4.0100.residential.txt#4.0111":
+    queue: missed
+    outcome: duplicate
+    note: >-
+      LDR-7's district description, and the same three-number shape as LDR-5: 6.22 units per acre
+      maximum for single detached, 25 for townhouses, 4.35 minimum for subdivisions and larger
+      partitions. The 4.35 is held as this zone's minimum. The maximum for a quadplex is None on
+      the operative row of Table 4.0130 D, and None is what this file holds.
+    fingerprint: 2c2aa5dea0995afd
+  "4.0100.residential.txt#4.0113":
+    queue: missed
+    outcome: not_here
+    note: >-
+      TR's district description: "net density for single detached units is 6.22 to 14.52 or 18.15
+      units per acre, depending on site size, and 25 [for townhouses]". Every figure belongs to a
+      row this screen does not read. Table 4.0130 D gives TR's "All other uses" line the site-size
+      split -- 18.15 under an acre and a half, 14.52 at or above it -- and gives the Duplex,
+      Triplex, Quadplex and Cottage Cluster line None. The quadplex is not "all other uses" here;
+      it has its own row, and its own row is empty.
+    fingerprint: 64819164af8ce3bd
+  "4.0100.residential.txt#4.0114":
+    queue: missed
+    outcome: not_here
+    note: >-
+      MDR-12's district description: 12.1 units per acre maximum for single detached dwellings,
+      8.71 for manufactured dwelling parks, 25 for townhouses. Three housing types, none of them
+      this one. MDR-12's quadplex row in Table 4.0130 D reads None and this file holds None. Its
+      minimum of 8.71 is held separately.
+    fingerprint: aa1ac9c1934f31b4
+  "4.0100.residential.txt#4.0115":
+    queue: missed
+    outcome: duplicate
+    note: >-
+      MDR-24's district description, and the one purpose paragraph in the chapter whose numbers
+      are the operative ones: a maximum net density of 24.2 units per acre and a minimum of 12.1.
+      Both are held on this zone. MDR-24 is also the only district where Table 4.0130 D states a
+      quadplex maximum at all -- 24.2, the same figure it gives townhouses -- so here the
+      description and the table agree and there is nothing to choose between.
+    fingerprint: 86b82f44a6514cc8
+  "4.0100.residential.txt#4.0116":
+    queue: missed
+    outcome: duplicate
+    note: >-
+      OFR's district description: a minimum net density of 8.71 units per acre, which is held, and
+      a maximum of 12.1, which is the "All other uses" line of Table 4.0130 D. OFR's quadplex row
+      reads None and this file holds None, so the maximum in the description is not the maximum
+      for this building.
+    fingerprint: e1a4260c413696e6
+  "4.1500.springwater.txt#4.1504":
+    queue: missed
+    outcome: not_here
+    note: >-
+      VLDR-SW's district description: an average lot size of 12,000 square feet, a maximum net
+      density of 3.6 units per acre for single detached dwellings and 14.4 for townhouses, and no
+      minimum density. Table 4.1508 C is the operative table and its "Duplex, Triplex, Quadplex"
+      row reads None for this district, which is what is held; the 3.6 is the All Other Uses line
+      and the 14.4 is the Townhouses line. The 12,000 square foot average is a plan-level figure
+      and not the minimum buildable lot size, which the table puts at 10,000 and this file holds
+      at 10,000.
+    fingerprint: 582f2e572381bd61
+  "4.1500.springwater.txt#4.1505":
+    queue: missed
+    outcome: not_here
+    note: >-
+      LDR-SW's district description, phrased as ranges -- "an average net density for single
+      detached units of 5.8 to 7.3 dwelling units per acre and 5.8 to 25 units per acre" -- which
+      are the minimum and maximum lines of Table 4.1508 read together across two housing types.
+      The 5.8 minimum is held. The quadplex maximum on that table is None, the 7.3 is All Other
+      Uses and the 25 is Townhouses.
+    fingerprint: 1197efe10fd5e8c3
+  "4.1400.pleasant-valley.txt#4.1415":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Table 4.1415A's "All Other Uses" maximum density line -- 8, 25 and 40 units per acre across
+      LDR-PV, MDR-PV and HDR-PV -- and a stray "than 60 ft." from a wrapped sentence further down.
+      The table prints a separate "Duplex, Triplex, Quadplex" line directly above it reading None,
+      None and 40, and that is what this file holds for the three districts. Pleasant Valley is
+      the third of Gresham's three plan districts to be checked this way and the third to agree.
+    fingerprint: d59c5a2517e97492
+  "4.1400.pleasant-valley.txt#4.1424":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Table 4.1424, the development standards for Pleasant Valley's Town Center, Neighborhood
+      Commercial and Mixed Employment sub-districts: no minimum lot size, no residential density
+      either way, zero minimum building setbacks, maximum building setbacks of 5, 10 and 20 feet,
+      and 45 feet of height. Of the three districts, NC-PV is encoded here as refusing a quadplex;
+      TC-PV and ME-PV are not in this file at all. So no number on this card can reach a zone we
+      screen. Worth carrying to the zone-gap ledger rather than losing here: TC-PV states no
+      maximum residential density and a zero minimum setback, which would make it among the
+      loosest land in Gresham for this product if it turns out to permit the use, and it is
+      already on the list of Gresham districts this project has never encoded.
+    fingerprint: c86550ff37139d79
+  "4.0100.residential.txt#4.0133":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A height bonus: forty feet unless the building has sprinklers, alarms and where required a
+      pressurised exit stairwell, in which case forty-five. A relaxation, reached by equipment a
+      two-storey factory-built pod does not carry, and ignoring a relaxation is the safe
+      direction. What the section points back at is worth recording. Table 4.0130 H prints two
+      height rows, Townhouse at line 332 and All other uses at 333-336, and they read the same 35
+      feet in every column but one: MDR-24, where the townhouse row says 35 and the all-other-uses
+      row says "3 stories or 40 ft. Also see Section 4.0133(A)." A single-lot quadplex is all
+      other uses. This file holds MDR-24 at 35 quoting line 332 alone -- the townhouse row --
+      while OFR two zones away quotes 331 and 333, the all-other-uses row, and LDR-5's own comment
+      says out loud that it took line 332 because both rows read the same there. So the row choice
+      was understood and MDR-24 is the single district where it mattered and the wrong one was
+      taken. Left at 35 rather than raised to 40: the standard is "3 stories or 40 ft", a pair
+      max_height_ft cannot hold, and writing 40 would drop the storey half of it. Thirty-five is
+      stricter than both halves, the pod stands at two storeys and well under either figure, so
+      nothing turns on it -- but it is wrong and it should be an ordered fix when the value model
+      can carry a storey count.
+    fingerprint: b955e3c291913626
+  "4.0400.corridor.txt#4":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Chapter 4.0400's leftovers, and they are commercial size caps almost throughout: fifty
+      percent of a ground-floor street facade in commercial or institutional use, a 100,000 square
+      foot building footprint in Community Commercial, 40,000 and 60,000 in Moderate Commercial,
+      20,000 for a building occupied entirely by commercial uses, a hundred feet between a waste
+      facility and residentially designated land, ten storeys outside the Triangle Area. None of
+      it measures a dwelling. The one statement that touches this product is note 14, which sends
+      single detached dwellings and middle housing in the CMF areas along the NE Glisan Street and
+      NE 162nd Avenue corridors to the TLDR district's tables, with middle housing density set at
+      12 minimum and 24 maximum. That is a sub-area rule keyed to a stretch of two named streets,
+      which nothing in this pipeline can locate, and it is a relaxation in the direction that
+      matters -- TLDR has no minimum lot size where CMF's is 10,000 square feet. Ignoring it
+      refuses land the city would allow rather than the other way round, and its density figures
+      are the 12 and 24 already held on CMF.
+    fingerprint: 2afce25cd56cafa6
+  "4.0400.corridor.txt#4.0434":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Corridor district setbacks, and both halves of the card fall away for different reasons. The
+      five-foot front facade, three-foot front porch and twenty-foot garage at 418-420 are stated
+      as "minimum setbacks for Townhouses", the split-plat path, and the garage figure is moot
+      anyway since this project ruled the pod has no garage. The thirty feet at 433 is a maximum
+      front or street-side setback, applying only where the lot abuts a Major Arterial, Minor
+      Arterial or Boulevard, and it is looser than what is already held: setback_front_max_ft is
+      20 in SC, SC-RJ, CMU and CMF and 5 in CC and MC. A relaxation on a frontage classification
+      nothing measures, over a number we already hold at the stricter value.
+    fingerprint: 8afdbd3daf3520e2
+  "4.0200.commercial.txt#4.0230":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Table 4.0230, and it is a complete dimensional regime -- four acres maximum site, 10,000
+      square foot minimum lot, sixty feet of width, seventy of depth, twenty feet front, zero
+      interior side, zero and fifteen on a corner, zero rear, fifty percent coverage -- for
+      exactly one district, Neighborhood Commercial. The table's own preamble says so: "applicable
+      to all development within the Neighborhood Commercial district". NC is encoded here as
+      refusing a quadplex, so none of it is reached. Table note 3, which lets the street-side
+      setback drop to five feet over half the length of a side yard abutting a street, is a
+      relaxation inside a district we cannot build in.
+    fingerprint: d49a13d984fdea0b
+  "7.0400.middle-housing-design.txt#7.0450":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Housing Variety. Table 7.0450 caps the share of lots in a development area that may carry
+      any one building form -- eighty percent under an acre and a half, sixty percent above it --
+      and the 1,400 square feet at line 840 is the floor area that separates one building form
+      category from another. Both are standards for a subdivision, applied across a development
+      area at the land-division stage, and this screen places one building on one lot. A variety
+      requirement measured in percentages of lots cannot be tested against a site with a single
+      lot on it.
+    fingerprint: 0796abd7669d37b6
+  "3.0100.definitions.txt#3.0103":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A definition, and the fifty percent it states is a share of units rather than a dimension:
+      "at least 50 percent of the multi-family units being affordable to households with incomes
+      at or below 60 percent" of median family income. It defines affordable housing development
+      for the bonus provisions in Section 10.1700. Nothing in it measures land or a building.
+    fingerprint: b8f09c1977e7032e
+  "9.0800.parking.txt#9.0861":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A window sill height. The section requires ground-level openings in a parking structure
+      facade to have a sill no more than four feet above grade, raised to a maximum of six where
+      interior floor levels prevent it. It is a facade transparency standard for a structured
+      parking garage, matched to max_height_ft only because it states a height in feet. This
+      screen places surface parking and no garage structure.
+    fingerprint: 8e579bace32b74ba
+  "pws.6.03-6.04.txt#6.04":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The Clear Vision Area from the public works standards. The three and ten feet are the band
+      within which sight must not be obstructed, not a building height, and Table 6.04's forty and
+      forty-five feet are measured along the two legs of a triangle at an intersection. Recorded
+      rather than merely dismissed, because the section says the restriction applies "in the
+      right-of-way as well as on private property" and that "no driveway or off-street parking
+      area shall be located in the Clear Vision Area" -- which is a real corner-lot constraint on
+      where the pod's access and stalls can go, of the same family as the redirect-ledger findings
+      in Portland, Gresham 9.0802(F) and Clackamas ZDO 845.02. It is not a missed standard because
+      no field in the registry can hold a sight triangle; it is a site geometry this pipeline does
+      not compute, and it belongs with the unmeasured facts rather than in this queue.
+    fingerprint: 307e5e428154c16d
+  "9.0800.parking.txt#9.0827":
+    queue: condition
+    outcome: never
+    note: >-
+      Electric vehicle charging capacity. The section requires a share of spaces in a parking area
+      to be built with conduit and panel capacity for future EV chargers, and the figure that put
+      it in this queue is a count of spaces rather than a number of them. It changes what a stall
+      must be wired for, not how many stalls are required, how big they are, or where they may
+      sit. Nothing in it can move a stall count, an aisle width or a dimension of the pod, so it
+      cannot move a verdict on whether four units and their parking fit on a lot. Recorded rather
+      than ignored because an electrical requirement is a cost item the underwriting side may want
+      later; it is not a fitment standard.
+    fingerprint: 77c3d3f193de8024
+  "4.1200.civic-neighborhood.txt#4.1230":
+    queue: condition
+    outcome: never
+    note: >-
+      The dimensional table of Gresham's Civic Neighborhood residential districts, whose columns
+      are conditioned on housing type and lot position. All three districts the section governs --
+      CNRM, CNTH and CNTM -- are encoded with quadplex_allowed false, read from the district use
+      tables rather than inferred, so the building this screen places may not be built in any of
+      them. A multi-column table with a street-side setback and a lot width row is exactly the
+      kind of card that deserves a real reading if the use gate were open; it is not. Recorded so
+      that if Gresham ever amends those use tables, the reopened card is read rather than assumed
+      closed.
+    fingerprint: 7e0926268f1313a8
+  "4.1400.pleasant-valley.txt#4.1432":
+    queue: condition
+    outcome: never
+    note: >-
+      The Pleasant Valley height steps, which raise the ceiling from 35 feet to 45 as a building
+      sets further back. Both figures sit above the pod, which is 26 feet, by nine feet at the
+      lower step and nineteen at the upper, so neither can bind it. The condition is also a
+      relaxation in shape -- more setback buys more height -- and a relaxation left unread refuses
+      land the city would allow rather than passing land it would not.
+    fingerprint: c03e6ecd24c08a5e
+  "3.0100.definitions.txt#3":
+    queue: condition
+    outcome: never
+    note: >-
+      Gresham's definitions chapter, and the eight statements on this card are worth answering one
+      at a time because two of them look like they could move a height. The one that matters is
+      Grade: the datum is the lowest finished surface within the area between the building and the
+      property line, or, where the property line is more than five feet out, within five feet of
+      the building. That band is at most five feet wide, so for the datum to cost the pod anything
+      the ground would have to fall further inside five horizontal feet than the slack the ceiling
+      leaves -- nine feet in Gresham's quadplex districts, a grade of nearly two to one. A lot
+      like that fails on slope long before it fails on a datum. This is the same shape as
+      Fairview's height definition and it lands the opposite way, because Fairview measures the
+      fall across the whole site and Gresham measures it in a five-foot ring. The floor-area
+      exclusions -- basements, attic space under six feet eight, roof area and rooftop parking,
+      rooftop mechanical, unenclosed roofed porches -- all subtract from counted floor area, so
+      they can only lower a floor area ratio, never raise it, and the pod's roughly 4,000 square
+      feet against a ratio of 3.0 is not near the limit in any case. The rest are not standards
+      for this building: two sign definitions, the basement threshold, and Substantial Improvement
+      at 30 percent of market value, which is a floodplain trigger. One line here is worth keeping
+      rather than dismissing: Gresham counts as a corner lot one that abuts the inside curve of a
+      street with a delta angle of 60 degrees or more, which is a rule a corner detector built
+      from parcel geometry has to implement and would otherwise miss.
+    fingerprint: 66f661cd494009e4
+  "4.0100.residential.txt#4":
+    queue: condition
+    outcome: never
+    note: >-
+      Thirteen statements out of Gresham's residential chapter, and every one of them sits in a
+      row or a path this building is not read against. The three setback lines are Table 4.0131's
+      Cottage Cluster row, its Multi-Family row for MDR-12, MDR-24 and OFR, and its All Other Uses
+      row. Our row is the one above them, "Single Detached Dwelling, Duplex, Triplex, and
+      Quadplex", which states 10 / 8 / 20 / 5 in the low-density districts and 10 / 10 / 20 / 10
+      in MDR-12, MDR-24 and OFR -- and those are the numbers this corpus already holds for those
+      zones, checked cell by cell. Gresham's Multi-Family is a separate use category from a
+      quadplex here, which is what keeps the two rows apart. Section 4.0137, the Large Lot
+      Subdivision Option, is a whole parallel dimensional set -- 50 feet of width, 100 of depth,
+      7.5 side, 25 rear -- and the section says in its own first sentence that it is offered "as
+      an option to property owners/applicants"; an option nobody has elected is not a standard a
+      lot must meet, and it relaxes the minimum density rather than tightening anything. The
+      150-foot maximum driveway length is a fire-access limit on a long private drive and cannot
+      bind a pod parked at the front of a small lot. Table 4.0130 note 5 is a relaxation for lots
+      of record under 11,000 square feet. Nothing here changes a number we hold.
+    fingerprint: c45c19cc229763ec
+  "4.0200.commercial.txt#4.0233":
+    queue: condition
+    outcome: never
+    note: >-
+      Wind energy system heights in the commercial districts: a roof-mounted system may match the
+      building's height up to 35 feet and no more, and a ground-mounted one may reach 45. Both
+      numbers measure a turbine, not a dwelling, and the section's own opening says so -- "the
+      following limitations on maximum height apply to all wind energy systems". The pod carries
+      no turbine. The reason the card exists is that a height in feet matched a height field,
+      which is the shape this project has now ruled on in five cities.
+    fingerprint: 13bcc606136fec76
+  "4.0400.corridor.txt#4.0443":
+    queue: condition
+    outcome: never
+    note: >-
+      The same wind energy provision written for the corridor districts, with the roof-mounted
+      allowance keyed to 45 feet of building height instead of 35 and a special-use path to 110
+      feet for a ground-mounted system. Turbine dimensions, not building dimensions, and this
+      project proposes none. Ruled separately from the commercial chapter because they are
+      separate documents with different numbers.
+    fingerprint: 75ec608fd7efa988
+  "4.1100.downtown.txt#4":
+    queue: condition
+    outcome: never
+    note: >-
+      Five statements from the Downtown chapter, and the first of them deserved a real look
+      because it is the shape that produces a false green: Table 4.1130 note 11 raises the minimum
+      side setback to 10 feet, and the rear to 10, where the yard abuts DRL-1, DRL-2, LDR-5,
+      LDR-7, TR or TLDR. Doubling a five-foot side setback on a neighbour's zoning would flip
+      narrow lots in DRL-1 and DRL-2, which are the two Downtown districts that permit a quadplex
+      outright. It does not reach us, and the reason is which cells carry the marker. Read against
+      the source, note 11's superscript sits on the Side: 0 and Rear: 5 cells of the
+      Commercial/Industrial/Institutional and Multi-Family rows earlier in the table. The row this
+      layer is read against is "Single-detached, duplex, triplex, and quadplex dwellings in any
+      district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2", whose SIDE and REAR
+      headings carry no marker at all and which already states Interior 5 and No Alley 10 -- the
+      very numbers note 11 would raise the commercial rows to. The footnote register reached the
+      same conclusion independently and the two agree. The remaining four statements are elevation
+      standards, not fitment: the canopy specification, which applies to a canopy if one is built;
+      a figure caption describing a walking route; and the street-level transparency percentages,
+      which state how much clear glass a facade must carry by street type. Glass area cannot make
+      a lot too small.
+    fingerprint: f428a7d40a138e11
+  "4.0100.residential.txt#4.0112":
+    queue: condition
+    outcome: never
+    note: >-
+      The purpose paragraph of the Transit Low-Density Residential district. Every number in it is
+      either already held from the table that states it operatively, preempted, or written for a
+      different building. The minimum net density of 10 units per acre is exactly what this corpus
+      holds for TLDR, checked against the loaded value; the 25 units per acre for townhouses is
+      held as the unit_lots variant of the maximum; the 20 units per acre for single detached is a
+      maximum density, which OAR 660-046-0220(2)(b) forbids applying to a quadplex and which the
+      state layer already strikes out; and the 14 and 7 belong to manufactured dwelling parks. The
+      one thing worth noting is a direction: the minimum density is conditioned in the paragraph
+      on being a subdivision or a partition of a parent parcel over 13,000 square feet, and this
+      corpus holds it unconditionally, which is the stricter reading and refuses land the city
+      would allow rather than the reverse. Purpose paragraphs restating table numbers is now a
+      recognised shape in this queue.
+    fingerprint: 745f30ccee41e021
+  "4.1500.springwater.txt#4.1596":
+    queue: condition
+    outcome: never
+    note: >-
+      Wind energy system heights in the Springwater plan district, written out three times for
+      three groups of sub-districts: ten feet above the roof in one set, a roof-mounted system
+      matching building height up to 45 feet in another, 45 feet above the roof and 110 feet
+      ground-mounted in a third. Turbine dimensions. The pod carries no turbine, and the numbers
+      govern the equipment rather than the building it stands on. Third jurisdiction in this queue
+      to have its wind chapter matched to a height field.
+    fingerprint: e78e15d1566e4979
+  "4.1400.pleasant-valley.txt#4.14":
+    queue: condition
+    outcome: never
+    note: >-
+      Nine statements from the Pleasant Valley plan district, and the one worth reading is the
+      height transition: at the minimum building setback from a lot line abutting a lot in the
+      LDR-PV district the maximum height is 35 feet, rising one foot for each additional foot of
+      setback. That is a genuine neighbour-zone condition and it is the shape that has produced
+      real fixes elsewhere, so it was checked rather than waved: it cannot bind here because it
+      floors the allowance at 35 feet and this design is 26. A step-down whose floor is nine feet
+      above the building is not a constraint on the building. The rest are equipment, not the
+      dwelling: ground-mounted solar energy systems capped at 6 feet, roof-mounted frames at 10
+      feet above the roof they sit on, ground-mounted systems at 20 feet in another district. The
+      pod carries no array, and each of those numbers is a ceiling on a device rather than a limit
+      on where a wall may stand. This is the fifth city in which a height in feet has matched a
+      height field because a solar or wind provision states one.
+    fingerprint: b3532bb40e8f1f48
+  "3.0100.definitions.txt#3.0150":
+    queue: condition
+    outcome: never
+    note: >-
+      The tree half of Gresham's definitions chapter, ruled separately from the dimensional half
+      already closed in this queue. Clear cutting is defined as removal leaving fewer than an
+      average of one tree per 1,000 square feet of lot area; diameter breast height is measured
+      4.5 feet up the trunk; a codominant stem is one exceeding 15 percent of the trunk's diameter
+      at breast height. None of these is a standard the building must meet. They are the
+      vocabulary a tree-preservation permit is written in, and what they measure is a tree. The
+      reason the card exists is that a length in feet and a count per square foot both matched
+      fields that hold lengths and areas.
+    fingerprint: 50f1441cd92e5afa
+  "7.0400.middle-housing-design.txt#7":
+    queue: condition
+    outcome: never
+    note: >-
+      This card is the file's leftovers -- the statements whose nearest heading above them is the
+      bare chapter number -- and its 36 lines come from three sections, none of which is about a
+      four-unit attached building on one lot. Lines 131-150 are 7.0410, MANUFACTURED DWELLING PARK
+      DESIGN STANDARDS: a 4-foot sidewalk, a 12 percent interior street grade, a parking area of
+      10 by 40 or 20 by 20 feet, a 120 square foot patio at least 8 feet wide. Lines 686-790 are
+      7.0440, Cottage Cluster: courtyard fences 75 percent transparent and no taller than 4 feet,
+      one tree per 3,000 square feet of courtyard, internal walkways 4 feet wide, driveway
+      approaches capped at 34 percent of frontage or 28 feet. Lines 1030-1194 are 7.0451,
+      NEIGHBORHOOD AMENITIES, whose own applicability sentence at line 935 excludes us twice over:
+      it reaches "Residential subdivisions (not including multi-family/shared housing facility
+      uses or cottage clusters) on development sites of 2.5 gross acres in size or greater", and
+      this pod is one building on one lot of five to seven thousand square feet. The 1,200 square
+      foot common open space tract with a 30 by 30 area in it, the 50 percent impervious cap, the
+      tree groves of six trees 15 feet apart -- all of that is subdivision amenity arithmetic.
+      Worth naming the shapes rather than waving the card away, because two of the three would
+      have matched a field we hold: 7.0440's 34-percent-of-frontage driveway cap sits in the same
+      field as 7.0420's 30-foot cap that we do encode, and 7.0451's common open space would have
+      landed on open_space_min_pct beside the 15 percent we take from 7.0420(D)(1). A cottage
+      cluster's driveway rule wearing a quadplex's citation is exactly the mistake this queue
+      exists to catch.
+    fingerprint: 1d854b17909ca842
+  "7.0400.middle-housing-design.txt#7.0410":
+    queue: condition
+    outcome: never
+    note: >-
+      7.0410 is headed MANUFACTURED DWELLING PARK DESIGN STANDARDS and every one of its sixteen
+      statements is a park's. Dwelling spaces at least 50 feet long and 30 feet wide, dwellings
+      separated by 15 feet, accessory structures 6 feet from anything else, a perimeter screen of
+      at least 6 feet growing a foot for every foot the abutting grade rises to a maximum of 8,
+      that grade measured within 5 feet of the property line at 50-foot intervals, and 15 percent
+      of the park's gross area as interior open space. A manufactured dwelling park is a single
+      parcel holding rented spaces for individually owned dwellings, which is neither this
+      building nor this ownership form, and the separation numbers make the difference concrete: a
+      15-foot gap between dwellings is a rule for a field of detached units and this project's
+      four are attached to each other by design. The 15 percent interior open space figure is the
+      one that could have been mistaken for ours, and it is not: 7.0420(D)(1) states 15 percent of
+      the gross parent lot for the housing type we build, and that is the line already encoded.
+    fingerprint: 523cabbc4354cccf
+  "7.0400.middle-housing-design.txt#7.0420":
+    queue: condition
+    outcome: never
+    note: >-
+      The section reaches this pod -- 7.0420 is the design chapter for single detached, duplexes,
+      triplexes and quadplexes and it names 21 districts including every quadplex-allowed one we
+      hold -- and its binding standards are already encoded off it: the combined driveway approach
+      cap from (B)(2)(b)(ii), the 15 percent private open space from (D)(1), the rear roof height
+      plane from (G)(1) that the site-plan pipeline turns into a 20-foot rear setback, and the
+      front-yard parking allowance at (B)(5)(c). What is left on this card are the conditions, and
+      not one of them changes a number we hold in the binding direction. Lines 213-216 are inside
+      (B)(2)(c), the compacted-gravel-surface branch: a 9-foot minimum driveway width and a
+      50-foot distance from the paved street are the price of an alternative surface allowed only
+      inside the Hillside, Floodplain or Natural Resource overlays, so they are an exception's
+      terms and not a general minimum. Lines 221-225 are (B)(2)(d), shared driveways inside the
+      Hillside overlay, where 15 feet wide and 150 feet long govern a driveway serving up to four
+      separate residences rather than the four attached units of one building. Line 184 is the
+      entry-orientation menu, 45 degrees being one of three ways to face the street. Lines 269-275
+      are (D)(1)(b), which is a list of what may be counted toward the 15 percent -- a covered 64
+      square foot balcony, a 100 square foot yard at least 8 feet in each direction, a preserved
+      natural area, a private garden -- and that list can only ever relieve the requirement, never
+      enlarge it. Charging the full 15 percent as ground, which is what the screen does, is the
+      conservative side of it, so encoding the composition rule at (D)(1)(a) (no more than half in
+      hardscape) would loosen and not tighten. Lines 301-346 are (F), sustainable design: solar
+      orientation within 15 degrees, 17 percent south-facade transparency, sunshade geometry off a
+      67.78-degree solstice angle, canopy trees of a 25-foot mature spread. Lines 373-392 are (H),
+      side wall articulation, and it is the one that looked dangerous on the way in: a two-storey
+      facade within 5 feet of the minimum side setback line is exactly this pod at exactly its
+      tightest placement, and (a) would forbid a side wall running more than 35 feet without a
+      full-height 2-by-6-foot offset, which a factory pod cannot grow. It does not bind, because
+      (H)(1) says "a minimum of one of the following" and (d) is clear glass over 10 percent of
+      the side wall. A glazing percentage is satisfied in the factory and changes no dimension. An
+      applicant's-choice menu that contains one cheap option is not a constraint on the footprint,
+      and that is the fourth time this corpus has offered a menu whose worst branch would have
+      refused a lot.
+    fingerprint: c8488297dd3cdc87
+  "4.1100.downtown.txt#4.1152":
+    queue: condition
+    outcome: never
+    note: >-
+      A hundred and eighty-seven statements, and the chapter's own second page throws all of them
+      out. GDC 4.1102(C) lists what Section 4.1152 does not apply to and the first bullet is
+      "Single detached dwellings, duplexes, triplexes, and quadplexes (for these developments, see
+      Section 7.0420)". This building is a quadplex in Gresham's own words and by Gresham's own
+      definition -- GDC 3.0100 says a quadplex divided onto individual lots through a Middle
+      Housing Land Division is still "considered a quadplex" (3.0100.definitions.txt L962-L964),
+      which is the sentence the Downtown districts were already encoded against -- so the split
+      plat does not carry the pod out of the exception either. The second bullet closes the only
+      remaining door: "Townhouses in the DRL-1 and DRL-2 sub-districts (for these developments,
+      see Section 7.0431)", and DRL-1 and DRL-2 are the only Downtown sub-districts where a
+      quadplex is permitted at base. DMU, DEM and DCL read NP for the use; DCC and DTM read L1
+      with gates nothing measures, so both hold a base false. Read either way -- as a quadplex or
+      as townhouses -- 4.1152 does not reach a lot this screen can grade green. This is an
+      applicability ruling and not an absence claim, so the crossings were checked rather than
+      assumed. Nothing outside this document points into 4.1152 except a glossary line defining
+      "corner" (3.0100.definitions.txt L2195) and a stray table label in the sibling Civic
+      Neighborhood chapter (4.1200 L4495); neither carries a standard. The chapter that DOES reach
+      a plex in the Downtown design district is a different one and is already encoded:
+      7.0420(J)(1) applies its additional design standards to "single detached dwellings and
+      plexes in the Downtown, Rockwood, Civic, and Corridor Design Districts", and its 50-percent
+      frontage-occupation standard is carried on every one of those zones as
+      orientation_constraint: axis_required (7.0400.middle-housing-design.txt L410-L418). So the
+      standard from this family that binds us was taken, from the section that actually names us.
+      Design review does not reopen it: 4.1150(B) offers a Clear and Objective track and a
+      Discretionary track, both of them measured against "the standards in Section 4.1152", and a
+      section that does not apply has no standards to deviate from. What is being declined here is
+      a long list of real standards -- 50 to 90 percent of frontage occupied by building facade, a
+      front setback set within five feet of an abutting single detached dwelling, 15 percent open
+      space for townhouse style, four percent shared open space for multi-family, a
+      driveway-approach cap of 18 feet or 34 percent of frontage, parking no closer than eight
+      feet to the right-of-way -- and every one of them is declined on the same one sentence
+      rather than on six separate arguments. If Gresham ever deletes that bullet, this card is the
+      place the whole list comes back.
+    fingerprint: 2fdfe50400396770
+  "4.1100.downtown.txt#4.1100":
+    queue: condition
+    outcome: never
+    note: >-
+      Seventeen statements spanning the notes under Table 4.1130 and the Downtown Street Type
+      standards at 4.1142, and none of them moves a number this screen holds. The three table
+      notes were taken one at a time. Note 1 sends any part of a site within 110 feet of the N
+      Main Avenue centre line to the DCC - N Main Avenue column, 45 feet and a floor area ratio of
+      1.5 with a 10-foot step-back above 35 feet; that column was already read when DCC was
+      encoded and both figures clear a 26 ft pod, so the strip was ruled in the footnote ledger
+      rather than encoded, and nothing here changes it. Note 2 lets height exceed the maximum by
+      up to 8 feet for parapets and pitched roofs in every Downtown sub-district EXCEPT DRL-1 and
+      DRL-2 -- a relaxation, which the conservative default declines, and excluded from the two
+      districts where the pod is allowed at base anyway. Note 3 is the one with the right shape to
+      hurt: a tightening on an adjacency condition, "for developments abutting a land-use district
+      where the maximum building height is 40 feet or less, the maximum building height within 50
+      feet of that low-height-limit district shall be 45 feet." It is inert by arithmetic rather
+      than by argument. The pod is 26 feet. A ceiling of 45 cannot bind it, and in DRL-1 the
+      district's own maximum is 35 and in DRL-2 it is 50, so the note is not even the strictest
+      number on the page. Solar and wind energy systems account for six more statements --
+      ground-mounted solar 6 feet in DRL-1/DRL-2 and 20 feet elsewhere, rooftop frames 10 feet
+      above the roof, rooftop wind capped at the building height, ground-mounted wind 45 feet --
+      and this project has no solar array and no turbine, the same class of answer as the
+      accessory-structure standards and the garage standards settled on 2026-09-08. The rest is
+      4.1142, and every measurement in it is a right-of-way cross-section rather than a standard
+      on the private lot: a 5-foot clear walking route in an 11-foot zone with a 4-foot amenity
+      zone on Downtown Local, 9 feet of route and a 10-foot walk with a 12-foot meandering amenity
+      zone on Beech, a 6-foot amenity zone elsewhere, 14- and 16-foot lighting poles, bulb-outs at
+      every intersection. Those live past the property line and defer to the Public Works
+      Standards; they do not take buildable area and the 96-foot right-of-way figure on E Powell
+      Boulevard is stated as a ceiling the Manager must not exceed, not as a dedication asked of a
+      development site. Two sentences in 4.1142 are about access rather than streetscape and both
+      were checked rather than skimmed. 4.1142(A)(6) and (C)(9) prohibit direct access to
+      TOWNHOUSES from Urban Boulevard and from Beech; (A)(6) excepts DRL-1 and DRL-2 by name, and
+      the pod is a quadplex, so neither reaches it from either direction. 4.1142(B)(7) is the
+      sharper one -- on the Downtown Local street type, "no curb cuts are permitted without
+      permission of the City and shall be allowed only in instances that permit no other options"
+      -- and it is a discretionary gate over the one thing a curb cut is for. It does not bind
+      this building because there is nothing behind it to serve: Gresham requires no parking at
+      all, GDC 9.0802(A), "vehicle parking minimums are not required for any land use type",
+      carried as a layer default of zero stalls per unit. A pod that owes no stalls asks for no
+      driveway approach, so the permission is satisfied by having nothing to ask for -- the same
+      shape as the garage standards. It is worth writing down that this is the only limb on the
+      card that would reach if that zero ever moved, because the street type is a mapped fact
+      nobody holds and it would be an unmeasured condition on vehicle access rather than on a
+      number, which is the family the redirect ledger exists to catch.
+    fingerprint: cc7fb585ee92e6b7
+  "4.1200.civic-neighborhood.txt#4.1252":
+    queue: condition
+    outcome: never
+    note: >-
+      Two hundred and twenty-seven statements, the largest card in this layer, and two independent
+      things close it. THE USE IS OUT. Table 4.1220(A), Permitted Residential Uses in the Civic
+      Neighborhood Plan District, prints three columns -- CNTH, CNTM, CNRM -- and the Quadplex row
+      reads NP in all three. That is already encoded: all three sub-districts hold
+      `quadplex_allowed: false`, and the table's own preamble removes the usual escape, "other
+      categories not listed also are not permitted". Townhouse reads P in all three, which leaves
+      the genuine townhouse-subdivision path this corpus has declined three times before on the
+      same reasoning, and it is declined here for the same reason: Gresham's own definition says a
+      quadplex divided onto individual lots through a Middle Housing Land Division is still
+      "considered a quadplex" (3.0100.definitions.txt L962-L964), so the split plat does not carry
+      the pod into the Townhouse row, and a plat-first subdivision is a legal reading rather than
+      a sentence in this code. THE SECTION DOES NOT REACH A PLEX EITHER, and the second argument
+      is worth writing down because it is shaped differently from the Downtown one. 4.1102(C)
+      closed 4.1152 with an exception list that names quadplexes. 4.1202 closes 4.1252 the other
+      way round: subsection B is an enumerated list of what the section APPLIES to -- Commercial
+      and Industrial uses, Multi-family/Shared Housing Facility uses, Mixed-use development,
+      Townhouses, and five named institutional uses -- and no plex of any size is on it. The
+      exception list at C is entirely non-residential (park-and-rides, cemeteries, transit
+      equipment storage, parks, public facilities, basic utilities, helicopter pads, wireless
+      facilities, temporary uses). Multi-Family does not catch the pod: GDC 3.0100 defines a
+      Multi-Family Dwelling as five or more units and adds in the same breath that multi-family
+      dwellings are not middle housing. So the pod is absent from an inclusive list, which is a
+      weaker form of exclusion than being named in an exception and is why the use table is stated
+      first here. The section's own span was checked rather than assumed: 4.1252 begins at line
+      917 and runs to the end of the document at 4,505, and every one of the card's statements
+      falls between 993 and 4,214, so nothing on this card belongs to a chapter that does apply.
+      What is being declined is the same long list of design standards the Downtown card declined
+      -- frontage occupancy percentages, transparency shares, open space ratios, walkway widths,
+      parking screening -- and, as there, it is declined on applicability rather than one argument
+      per standard.
+    fingerprint: c4f77ae9ce8ce832
+  "7.0500.rockwood-design.txt#7.0512":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The Rockwood Design District's guidelines and standards -- 225 measuring lines, the largest
+      card in this queue, and 28,873 lots behind it -- and it closes on the same sentence that
+      closed Downtown's 4.1152 this week, printed in the same words two chapters apart. GDC
+      7.0502(B): "Section 7.0501-7.0512 do not apply to: Single detached dwellings, duplexes,
+      triplexes, and quadplexes (for these developments, see Section 7.0420)." The applicability
+      list at (A) is the mirror image -- commercial uses, mixed-use development,
+      Multi-Family/Shared Housing Facility uses, Townhouses, and four institutional categories --
+      and no plex is on it. The townhouse door does not open the way it might: Rockwood's list
+      names Townhouses with no sub-district exception, unlike Downtown's, but GDC 3.0100 says a
+      quadplex divided onto individual lots through a Middle Housing Land Division is still
+      "considered a quadplex" (3.0100.definitions.txt L962-L964), so a split plat does not move
+      the pod into that row. BECAUSE THIS IS AN APPLICABILITY RULING, THE WAYS IN WERE CHECKED
+      RATHER THAN ASSUMED, and unlike the Downtown chapter this one is genuinely reached from
+      elsewhere -- three times, and all three miss. The Corridor chapter's own dimensional table
+      sends two cells here: Table 4.0430 rows G and H, minimum and maximum building setbacks, read
+      "Setbacks at Street: See Section 7.0512.A.2" in RTC, SC and SC-RJ. That redirect does not
+      leave the pod without a setback, because the same cells then state the numbers by use
+      category -- "Residential: 5 feet front and street-side, 0 feet interior side, 15 feet rear"
+      at the minimum, 20 feet front and street-side at the maximum -- and those are exactly what
+      SC and SC-RJ already hold in this layer, 5 and 20. It is worth recording that
+      7.0512(A)(2)(S1) states the same 5-foot minimum and 20-foot maximum for "Multi-Family and
+      Townhouse Style" outside the Triangle, so the two routes agree and nothing turns on which
+      one a reader takes. Inside the Rockwood Triangle they would not agree -- Stark Street and
+      181st Avenue are held to a maximum of 5 feet from the right-of-way, a build-to line rather
+      than a setback -- and that is a mapped street location nothing here measures, on a chapter
+      that does not reach us. The second way in is the Pleasant Valley chapter, twice
+      (4.1426(A)(2) and 4.1429), which borrows "the Rockwood Design District standards for
+      publicly accessible open space as provided in Section 7.0512(A)(5)". Both sentences begin
+      "In the TC-PV sub-district, proposed commercial and institutional development on sites
+      larger than 20,000 square feet", which is neither this use nor a zone this project has
+      encoded. The third is 9.0800.parking.txt L145, where 7.0512.A.4.S1 and S3 appear inside the
+      conditions for a small parking lot serving a commercial use. So what is being declined is
+      the whole Rockwood design apparatus -- building frontage percentages, corner-location rules,
+      publicly accessible open space, primary internal drives with five-foot walking routes,
+      mid-block pedestrian connections, future street plans -- on one sentence rather than on
+      twenty arguments. If Gresham ever deletes that bullet from 7.0502(B), this card and the
+      Downtown one come back together.
+    fingerprint: 4ef2905c0914de17
+  "9.0600.height-transition.txt#9.0610":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Gresham's height transition standards, and they are the shape that usually does bind -- a
+      ceiling that drops because of what the neighbour is zoned. On the portion of a site within
+      35 feet of a lot zoned LDR-5, LDR-7, TR or TLDR the maximum height is 30 feet, and between
+      35 and 50 feet it is 45. Two things close it and they are independent. THE CHAPTER EXCLUDES
+      US BY NAME: the applicability paragraph ends "These standards also do not apply to single
+      detached dwellings and middle housing", and GDC 3.0100 puts the quadplex inside middle
+      housing -- the same definition this layer already leans on everywhere else. AND THE
+      ARITHMETIC WOULD SPARE US ANYWAY: the tightest limb on the page is 30 feet and the pod is
+      26. That second reason is worth writing down beside the first, because the exclusion is a
+      sentence a city can delete and the four feet of clearance is not. Also read: the same
+      paragraph exempts the Springwater and Pleasant Valley Plan Districts, which have their own
+      transition rules, and it lets an affordable-housing height bonus be added on top -- a
+      relaxation the conservative default declines.
+    fingerprint: d3003ccfca2801b3
+  "10.1700.affordable.txt#10.1711":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Gresham's affordable housing bonus table -- 200 percent of base density and 12 extra feet of
+      height at 16 units per acre or fewer, 150 percent and 24 feet from 16.1 to 45, 125 percent
+      and 36 feet above that. Every figure is a bonus earned by committing units at a regulated
+      rent, which is a relaxation and an ownership decision rather than a standard on the lot. The
+      conservative default declines earned relaxations, and this project's rule is that a bonus is
+      never the number a screen grades against: a lot that only fits the pod with the bonus
+      applied is a lot that needs a deal, not a lot that fits. Recorded rather than skipped
+      because this table is also the thing the height transition chapter points at when it lets a
+      bonus be added on top of a transition ceiling, and a reader who met it there should find the
+      same answer here.
+    fingerprint: 6dfba5f00c75d31e
+  "10.1100.shoreline-height.txt#10.1102":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Gresham's shoreline height standards, and this chapter is already fully read and already
+      carried -- on 2026-09-02, and not as a chapter card but as a footnote. Table 4.0130's height
+      cell carries note 12, "Also see Section 10.1100 for shoreline height standards", and
+      following it turned up something the note's own wording hides: 10.1100 is not about water.
+      10.1102 applies "on land lying north of Marine Drive" and caps a NEW structure at "a height
+      equivalent to an elevation of three feet above the elevation of that portion of the Marine
+      Drive roadway which abuts the development site" -- three feet above a road, not thirty-five
+      above grade, which a 26-foot pod clears only where the site sits some twenty-three feet
+      below the roadway. That is registered as the site fact `north_of_marine_drive`, held
+      unmeasured, and the footnote reason records that Gresham has fourteen lots north of latitude
+      45.5555, all LDR-5, all addressed on NE Marine Dr, thirteen red and one in review. THE LINE
+      ON THIS CARD IS THE OTHER LIMB and it is the relieving one: 10.1102(B)'s 45 feet above grade
+      is for "enlargements to existing dwellings and construction of residential accessory
+      structures on the same lot as an existing dwelling", neither of which is a new four-unit
+      building. Also on the page: the standards do not apply to affordable housing under Section
+      10.1700, which is a relaxation and declined.
+    fingerprint: 71e395245d720440
+  "10.1700.affordable.txt#10.1733":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Income thresholds, not dimensions: 60 percent or less of area median income on one limb,
+      above 80 percent on the other. These are the eligibility rungs of the affordable-housing
+      programme whose bonus table is ruled on the 10.1711 card -- 200, 150 and 125 percent of base
+      density with 12, 24 and 36 extra feet of height, all of it earned by committing units at a
+      regulated rent. A rent restriction is an ownership decision and a covenant, and no field in
+      this registry holds one because no verdict in this screen should turn on one. The programme
+      is worth having recorded twice, at the bonus and at the gate, because it is also the thing
+      the shoreline height chapter and the height transition chapter both point at when they let
+      their standards be set aside -- and the conservative default declines all three the same
+      way.
+    fingerprint: 53a531c3f4ea27f0
+  "9.0800.parking.txt#9.0822":
+    queue: nofield
+    outcome: need_a_field
+    note: >-
+      THE CARD IS ONE HARMLESS LINE AND READING ROUND IT FOUND A TIGHTENING THIS LAYER IS MISSING.
+      The line -- "Oregon Fire Code. If the lot depth exceeds 150 feet, the paved width shall
+      comply with" -- is the tail of 9.0822(A)(4)(b), a relaxation letting a driveway be 12 feet
+      instead of 20 for residential developments of six units or fewer in the Downtown Plan
+      District with access onto local streets and NE Beech Street between 3rd and 7th. A four-unit
+      pod is inside the unit count and the scope limb is a PLACE we cannot identify, so the
+      relaxation is declined and the base rule at (A)(4)(a) governs: 20 feet paved for two-way
+      circulation, 12 for one-way. That is looser than the 24-foot two-way aisle this layer
+      already encodes from Table 9.0825A, so nothing on the card moves a number. WHAT IS MISSING
+      IS 9.0822(A)(6), WHICH CARRIES NO NUMBER AND SO REACHED NO LEDGER: "Except in the RTC, SC,
+      CMF and CMU districts, vehicle parking areas, INCLUDING SPACES, AISLES, AND TURNAROUND AND
+      MANEUVERING AREAS, SHALL NOT OCCUPY THE REQUIRED SETBACKS for multi-dwelling structures
+      containing three or more units... Within the RTC, SC, CMF and CMU districts, parking areas
+      may encroach only into required rear and side setbacks." A four-unit pod is a multi-dwelling
+      structure containing three or more units. On the branch this layer has already chosen, that
+      sentence reaches us. THE BRANCH IS THE POINT AND IT IS ALREADY DECIDED IN THIS FILE.
+      9.0802(F) says the parking-lot design standards of 9.0822 through 9.0840 "by definition ...
+      do not apply to single detached dwellings, duplexes, triplexes, quadplexes, cottage
+      clusters, or townhouses on a unit-by-unit basis", but that "shared separate parking areas
+      ... must comply with the applicable standards of Sections 9.0822 to 9.0827". The comment
+      above parking_aisle_one_way_ft takes the shared branch, because the pod is drawn with a
+      shared rear court and because the other branch states no aisle at all. Take that branch and
+      9.0822(A)(6) comes with it -- the court, its aisle and its turnaround may not sit in any
+      required setback outside four named districts, and inside those four they may not sit in the
+      FRONT. THIS FILE CURRENTLY SAYS THE OPPOSITE. parking_front_prohibited is `exempt: true`
+      here, on the strength of 7.0420(B)(5)(c), "two parking spaces per unit may be located in a
+      driveway, in the front or street side yard setback" -- which is the UNIT-BY-UNIT branch's
+      rule. The aisle was taken from the shared branch and the front-parking exemption from the
+      unit-by-unit one, and that is the same error this layer warns about twenty lines earlier:
+      one rectangle assembled from two codes. WHAT IS OWED. Either a field that says parking may
+      not occupy required setbacks at all (the front field exists; side and rear have no partner),
+      or a consistent branch. This is left OPEN rather than closed because it is a tightening we
+      are not applying on 28,873 lots, and the direction is the dangerous one -- a lot reported
+      green whose court has nowhere legal to stand. It is not folded into this ruling batch
+      because flipping it re-runs the fit stage and deserves its own change and its own
+      verification.
+    fingerprint: a2412260992ee9de
+  "9.0800.parking.txt#9.0825":
+    queue: nofield
+    outcome: design
+    note: >-
+      Two lines out of the section this layer's stall and aisle already come from, and neither is
+      a number we are missing. The first is 9.0825(D), parallel parking spaces at a minimum 8 feet
+      by 24, reducible to 20 feet of length where 4 feet of adjacent manoeuvring is available. A
+      parallel stall is a different geometry from the one the pod's court lays out; Table
+      9.0825A's 90-degree standard column -- 8.5 wide by 18.5 deep -- is what is encoded, and this
+      layer's comment explains at length why 90 degrees is both what the site plan draws and the
+      conservative choice across the four angles. The second line is the tail of Table 9.0825A
+      note 1, the emergency-vehicle minimum of 20 feet for one-way traffic, and this file already
+      refuses it by name: "NOT the 20 feet in note 1. That note is about emergency vehicle access
+      ... a different standard reached for a different reason, and three feet narrower than the
+      aisle the table itself requires. Reading it as the parking aisle is what the site plan was
+      doing." So the card is two stall-and-aisle geometries the encoding has already considered
+      and set aside for stated reasons, which is the best outcome a card of this kind can have.
+    fingerprint: cf164548d850a1d0
+  "9.0800.parking.txt#9.0826":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Accessible parking: a minimum 9-foot stall with a 6-foot access aisle between each pair.
+      This project has a settled answer to the accessible-stall question and it is that a
+      four-unit, two-storey pod with no elevator owes none -- OSSC 1108.7.2 is the operative rule
+      and all fourteen cities in this corpus defer the count to it. A city restating the geometry
+      of a stall it does not require of us states nothing about our lot. Two ways the answer could
+      change are already on the record and neither is in play here: a single-storey flats layout,
+      and West Linn's guest-stall requirement, which is the one city whose own code creates the
+      trigger.
+    fingerprint: e994b8e4b531730f
+  "9.0800.parking.txt#9":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Four lines from the chapter shell. Two are accessible-parking shares for MEDICAL uses -- 20
+      percent of spaces at facilities serving people with mobility impairments, 10 percent for
+      outpatient facilities -- which is a clinic's problem and answered anyway by the standing
+      OSSC finding that this pod owes no accessible stall. One is a 10-foot vertical clearance
+      allowance granted by the Manager or Design Commission, which is discretion and a ceiling on
+      air rather than ground. The fourth is a table header, "USE CATEGORY OR SUBCATEGORY
+      AGGREGATED FLOOR AREA (SQUARE FEET) NUMBER OF", which names the columns of the
+      bicycle-parking matrix and states nothing at all.
+    fingerprint: 0d2101ec46e120a1
+  "9.0800.parking.txt#9.0821":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Off-site parking: where spaces are not available on the site, the Manager may authorise them
+      on any lot within 1,000 feet walking distance. A discretionary permission, and ORS 197A.400
+      keeps discretion off housing, so this is not a standard the screen could apply even if it
+      wanted to. It is also the wrong direction twice over -- it RELIEVES a site that cannot hold
+      its own parking, which is the situation this screen exists to detect, and taking it would
+      report a lot as fitting a pod whose stalls are a block away.
+    fingerprint: a5f93481d5a73059
+  "9.0800.parking.txt#9.0823":
+    queue: nofield
+    outcome: design
+    note: >-
+      Parking area landscaping: ground cover in 4-inch pots at 2 feet on centre, high-canopy shade
+      trees at 20 to 30 feet on centre, and islands of at least 180 square feet, curbed, with
+      doors able to open without damage. These are planting specifications inside an area whose
+      SIZE is set elsewhere -- what grows in the island, not how much of the lot the island takes.
+      A pot size and a spacing on centre cannot be checked by a screen that measures rectangles,
+      and the same family of standards is ruled the same way in Tualatin's 73C, Milwaukie's 19.606
+      and Portland's 33.248.030 in this same pass.
+    fingerprint: a099142b688d3a17
+  "9.0800.parking.txt#9.0824":
+    queue: nofield
+    outcome: design
+    note: >-
+      Pedestrian circulation through a parking area: a 3-foot dimension and a 7-foot minimum
+      walkway width where a walkway abuts parking. A walkway is the one improvement that fits in
+      ground the building and its court already leave, and its width is a design choice inside the
+      site plan rather than a claim on the lot. Note the direction of the second number: 7 feet
+      where a walkway abuts parking is wider than a bare path, and it would matter to a layout
+      that ran a walk down the side of the court -- which is a fit-stage arrangement question, not
+      a value the zone holds.
+    fingerprint: 8b91a2a0c4bc2514
+  "9.0800.parking.txt#9.0831":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Within 100 feet of an attendant or security guard" -- one of the locations that satisfies
+      9.0831's requirements for parking-structure or long-term bicycle-parking security. A rule
+      about staffing a garage. The pod has no attendant, no security guard and no parking
+      structure, and this layer's aisle comment already sets aside Table 9.0861, the parking
+      STRUCTURE matrix, for the same reason: a rear court is not a garage.
+    fingerprint: 156b6836c987246b
+  "9.0800.parking.txt#9.0851":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Twenty-six lines of Table 9.0851, Gresham's minimum and bicycle parking ratios by use, and
+      every row is somebody else's building: meeting rooms at 5 spaces per 1,000 square feet,
+      restaurants at 12.4, sports facilities at 5.4, tennis and racquet clubs, funeral homes by
+      the seat, truck and boat sales, open-air markets, equipment rental, mini-storage, commercial
+      clinics, service stations by the bay, car washes, colleges, warehousing and freight at 0.7
+      falling to 0.4 above 150,000 square feet, laboratories. Household Living is not in this
+      extract at all. What the pod owes is already held in this layer as parking_min_per_unit; a
+      catalogue of ratios for uses we do not build cannot change it, and every entry is keyed to a
+      floor area a four-unit residential building does not have.
+    fingerprint: 8742fb13bb4c4a0c
+  "9.0800.parking.txt#9.0852":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Table 9.0852, MAXIMUM parking by use and building size -- retail at 4.5 per 1,000 square
+      feet up to 65,000, falling to 3.61 and then 2.89 as the building grows; office flat at 2.75.
+      Two reasons this cannot bind. It is a ceiling, and a ceiling can stop somebody paving more
+      than they need but never stop a pod fitting. And its rows are retail and office, uses the
+      pod does not contain. Recorded rather than skipped for the same reason Portland's 33.266.115
+      was: a section headed "Maximum" deserves an explicit ruling so the next reader does not
+      re-derive that a cap cannot bind a screen that asks whether something FITS.
+    fingerprint: fbe6d809174b806b
+  "4.0400.corridor.txt#4.0440":
+    queue: nofield
+    outcome: design
+    note: >-
+      The corridor districts' own parking dimensions -- "each parking space shall be at least 8.5
+      feet wide by 18 feet deep" and "driveways shall have minimum width of 10 feet" -- and they
+      are worth a careful sentence because they LOOK like a conflict with what this layer encodes
+      and are not. Table 9.0825A's 90-degree standard column gives 8.5 by 18.5 and a 24-foot
+      two-way aisle; 4.0440 gives 8.5 by 18 and a 10-foot drive. The width agrees, the depth here
+      is half a foot SHALLOWER and the drive is fourteen feet narrower, so on every axis where
+      they differ this section is the looser of the two and the conservative default keeps the
+      encoded numbers. A drive is also not an aisle: 10 feet is a way in, not the lane a car
+      reverses into a stall from, which is the distinction this project had to make in
+      Wilsonville's engineering manual a week ago. Nothing here is a number the screen is missing.
+    fingerprint: 2f2ad73362958ef2
+  "4.0400.corridor.txt#4.0432":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Site area equal to 100 feet times the site width" where "the site width is less than 150
+      feet" -- part of 4.0432's threshold for when a corridor site must provide a public street
+      connection or a block break. It is a test on a SITE big enough to have a 150-foot width, and
+      what it triggers is a street rather than a setback. The corridor districts are Gresham's
+      mixed-use and transit-corridor land; CMF is encoded in this layer with its own dimensional
+      regime read off Table 4.0430, and this section is not part of it.
+    fingerprint: 20f94743b2743689
+  "4.0400.corridor.txt#4.0433":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "0 feet front, side, 0 feet front, side, 0 feet front, side" -- three columns of one table
+      row collapsed into a single line by the extractor, with no row label and no district header
+      attached. This is the corridor chapter's setback table, whose CMF column this layer already
+      reads and quotes as a line RANGE precisely because "seven columns collapse into one run of
+      words per line, so no single line holds a whole cell". The line as captured names no
+      district and no standard; a reader cannot tell which of the three zeroes belongs to which
+      zone. It goes on the extractor list rather than being ruled on its merits, because ruling on
+      a line whose column is unknown is how a number ends up on the wrong zone.
+    fingerprint: cfa3d76b1eef6769
+  "4.0200.commercial.txt#4.0231":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Commercial district height: three storeys or 40 feet, rising to 65 where a built-in fire
+      suppression system is provided. A ceiling twice the pod's 26 feet in its tighter limb, so it
+      cannot bind; and the relief limb buys height with sprinklers, which is an earned relaxation
+      the conservative default declines everywhere in this corpus. The commercial districts are
+      also not where this building goes -- Gresham's residential and corridor zones carry the
+      quadplex, and their heights are encoded from their own tables.
+    fingerprint: 2afdd9f2ea39d7b3
+  "4.0200.commercial.txt#4":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Three floor-area caps out of the commercial chapter's use list -- eating and drinking
+      establishments at 3,500 square feet, a 5,000-square-foot limb, a grocery store at 35,000.
+      Ceilings on retail floorplates in districts that do not carry this building. Every number
+      rations somebody else's use.
+    fingerprint: 1bf31af36e78767b
+  "4.0300.industrial.txt#4.0320":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "50,000 square feet or more of gross floor area" -- a threshold in the industrial chapter's
+      use table, above which a use changes category or needs a different review. Industrial land,
+      an industrial floorplate, and a fourplex is neither.
+    fingerprint: 94d70900cb76ec03
+  "4.0300.industrial.txt#4.0330":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "C. Minimum Building Setbacks 20 feet front & street side; 0 20 feet front & street side; 0"
+      -- one row of the industrial districts' dimensional table, two columns run together.
+      Industrial zones do not allow this building, so the setbacks are for a warehouse. Worth
+      naming that the line is also two cells collapsed into one, the same extraction shape ruled
+      on the corridor chapter's 4.0433 card; it is filed on the merits here rather than on the
+      extractor because the zone answers it first and no amount of column-splitting would make an
+      industrial setback reach a quadplex.
+    fingerprint: e8c5ac76cedabdae
+  "4.0100.residential.txt#4.0132":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Zero-lot-line development: where a wall is built on or 6 inches off a line, the adjacent
+      lot's yard abutting the 6-inch side must be a minimum of 6 feet, and a structure must stand
+      at least 5 feet from the interior side yard boundary. This is the arrangement where two
+      houses share a line and one lot's yard pays for the other's wall -- a standard about a PAIR
+      of lots and about a building type (the zero-lot-line house) this project does not place. The
+      pod is one 56-foot attached structure on one lot, set back from both side lines by the
+      encoded side setback. Neither number here is one it must clear.
+    fingerprint: 98fcfa0dadf5a867
+  "4.0100.residential.txt#4.0136":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Accessory structures in the residential districts: front and side 10 feet, rear 10 with no
+      alley and 6 with one, a 22-foot ceiling on butterfly and mansard roofs and 30 feet where the
+      roof pitches more than 1 foot in 4. A shed, a detached garage, an accessory building -- none
+      of which the pod includes, and the standing ruling that this building has no garage closes
+      the largest of them by name. The roof-pitch height ladder is also a permission rather than a
+      limit on us: it lets a steeper roof stand taller, which loosens, and the pod's 26 feet is
+      measured against the base zone's height, which is encoded.
+    fingerprint: 205f7990989a0a3c
+  "4.1200.civic-neighborhood.txt#4.1232":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "The site with which the activity is associated or 1,000 square feet, whichever is less" --
+      a cap on an outdoor display or activity area in the civic and neighborhood districts. An
+      accessory activity, and a maximum on it. The pod displays nothing outdoors.
+    fingerprint: 6ae62609bb38850c
+  "4.1200.civic-neighborhood.txt#4.1242":
+    queue: nofield
+    outcome: design
+    note: >-
+      Sidewalk widths and what may protrude into them: 6 or 7 feet of sidewalk with appurtenances
+      allowed 1 foot, and a 5-foot minimum in a sidewalk of 5 or 6 feet. Public right-of-way
+      geometry -- the walk between the curb and the property line, which the city builds and the
+      developer improves. It is on the other side of the lot line from everything this screen
+      measures, and a screen that charged a lot for the width of its own sidewalk would
+      double-count land the parcel does not own.
+    fingerprint: 8bd47a834d3565e7
+  "4.1400.pleasant-valley.txt#4":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      TWELVE LINES AND ELEVEN OF THEM ARE ROWS OF A TABLE WITH NO HEADER ATTACHED. "LDR-PV 10 ft.
+      8 ft. 20 ft. 5 ft. N/A N/A 10 ft. 8 ft. 20 ft. 10 ft. 8 ft." is eleven cells on one line and
+      the header that would say which column is a front setback and which a garage setback is not
+      on the card. The same three zone labels then repeat under three further headers -- the table
+      is printed four times over, once per condition -- so the same zone shows 10 ft in one block
+      and 5 ft in another with nothing on the line to say which block it came from. This is the
+      ragged-table shape this project has now met four ways, and the standing rule from the ZDO
+      316 episode applies exactly: fix the CLAIM, never the lines, and never rule on a cell whose
+      column is unknown. The twelfth line, a 32-square-foot sign allowance per unit, is a sign
+      standard. Filed to the extractor list; the Pleasant Valley residential zones deserve to be
+      read off a table somebody can see the header of.
+    fingerprint: 9e7d49647e02a330
+  "4.1400.pleasant-valley.txt#4.1414":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Exceed 1,000 square feet" and "exceed 150 square feet per site" -- ceilings in the Pleasant
+      Valley plan district's accessory and temporary use standards. Maxima on things the pod does
+      not include, in a plan district whose residential dimensional table is on the sibling card
+      and is unreadable as extracted.
+    fingerprint: 7b49cf5d124122a1
+  "4.1400.pleasant-valley.txt#4.142":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "A minimum of 15 percent of the net acreage site area: NC-PV, ME-PV." A common open space
+      requirement, and the two districts it names are the ones this project already lists as
+      declared but unencoded -- NC-PV is neighborhood commercial and ME-PV is mixed employment.
+      Neither carries a quadplex. Worth one line on the denominator, because seven cities in this
+      corpus define a net acre seven different ways and Gresham's is one of the ones where the
+      floor is not the ceiling: a percentage of net acreage may not be borrowed sideways to a
+      residential district's open space, and this layer's own open_space_min_pct comes from
+      7.0420(D)(1) with a gross-lot denominator instead.
+    fingerprint: 543c87bb8a65042c
+  "4.1500.springwater.txt#4.1510":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Porticos, or stoops, of at least 40 square feet" -- one item on the Springwater plan
+      district's list of entry features that satisfy its design standard. A porch of a stated area
+      is the same family as Portland's 25-square-foot porch, Troutdale's 60-square-foot private
+      outdoor area and Fairview's 48-square-foot patio, all ruled the same way in this pass: it
+      describes a feature attached to the building rather than ground the building needs, and it
+      sits on a MENU of alternatives, which is the design-menu false positive this project
+      catalogued on 2026-09-07.
+    fingerprint: 0fc88629fb42b4de
+  "4.1500.springwater.txt#4.1521":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Springwater plan district dimensional rows -- minimum setbacks of 0, 0 and 10 feet front and
+      street side with 5 feet for each 20 of something, maximum setbacks of 10 and 20 feet front
+      and street side, and a height row reading "45 ft.5 100 ft. 120 ft.". Springwater is
+      Gresham's industrial and employment plan district; RTI-SW and IND-SW are its zones, named on
+      the sibling 4.1526 card, and neither carries a quadplex. The rows are also columns run
+      together in the same way the Pleasant Valley table is, so even where a number looked useful
+      it could not be attributed to a district with confidence.
+    fingerprint: 336193d17ad191cf
+  "4.1500.springwater.txt#4.1524":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Buildings with less than 1,000 square feet of floor area" -- an exemption threshold in the
+      Springwater plan district's standards. An exemption, in an industrial plan district, for a
+      building a quarter the pod's floor area.
+    fingerprint: 1498e28655743a46
+  "4.1500.springwater.txt#4.1526":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "A minimum of 15 percent of the gross site area: RTI-SW" and "a minimum of 10 percent of the
+      gross site area: IND-SW" -- open space requirements naming the Springwater plan district's
+      two employment zones by initial. Regional Traded Industrial and Industrial. Neither allows a
+      dwelling, and both figures are shares of an industrial site.
+    fingerprint: 440695902949aee2
+  "4.1500.springwater.txt#4.156":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Of tree diameter per 1,000 square feet of site area; or" -- one limb of a tree-density
+      option in the Springwater plan district, measuring caliper inches against site area. A tree
+      count is not a dimension this screen holds; Portland's Title 11 tree density was ruled the
+      same way on 2026-09-08, where the finding was that a required tree AREA is a formula input
+      rather than a reservation of ground. The "or" at the end of the line is also the tell that
+      this is one option on a menu.
+    fingerprint: 1dc30ac7905f7490
+  "4.1500.springwater.txt#4.1568":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Install a green (vegetated) roof for at least 50 percent of the roof area. (2 points)" --
+      an item on a POINTS MENU in the Springwater plan district's sustainability standards. The
+      points give it away: a menu is a set of ways to earn a score, and a screen that read one
+      item as a requirement would charge every building for a green roof nobody has to build. This
+      is the design-menu shape, in its most literal form.
+    fingerprint: e2a815c5d0eccf35
+  "7.0400.middle-housing-design.txt#7.0440":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Cottage cluster standards: cottages within 50 feet of the common courtyard and connected to
+      it by a path, at least half of them meeting some further test, a courtyard at least 25 feet
+      wide at its narrowest and buildings covering no more than 75 percent of it. A cottage
+      cluster is DETACHED units around a shared courtyard, which the state, Gladstone, Fairview
+      and Gresham's own 3.0120 all define as separate from the attached structure this project
+      places. The one number that could have been borrowed sideways -- 25 feet at the narrowest
+      dimension -- is the courtyard's, and the pod's shared space is a rear parking court, which
+      this chapter's 7.0420(D)(1) open space standard already handles at 15 percent and which is
+      encoded.
+    fingerprint: 3dc365055edc240f
+  "7.0400.middle-housing-design.txt#7.0451":
+    queue: nofield
+    outcome: design
+    note: >-
+      "2 pts. per 0.125 mi. (660 ft.) of path" and "1 pt. per 0.125 mi. (660 ft.) of path" -- rows
+      of a POINTS TABLE awarding credit for on-site multi-use trails and recreation paths. A menu,
+      and the points say so on the line. Nothing here requires a path of any length; it says what
+      building one is worth.
+    fingerprint: 6b911c1933e66e4e
+  "3.0100.definitions.txt#3.0120":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Three definitions carrying numbers. "Cottage. A detached dwelling unit with a footprint of
+      less than 900 square feet that is part of a cottage cluster" -- the state's sentence again,
+      met now in OAR 660-046-0020, Gladstone 17.06.148, Fairview 19.13.030 and here, and each time
+      the answer is the same: detached, courtyarded, 900 square feet apiece, and this project
+      places one attached four-unit structure that these codes define separately. The other two
+      are accessory-structure tests -- 400 square feet or less at the largest horizontal
+      projection, and 6 feet high by 6 feet in any horizontal direction -- which classify a shed
+      and a mechanical cabinet. A definition of something we do not build cannot dimension what we
+      do.
+    fingerprint: 5ae2814980b2997e
+  "pws.6.03-6.04.txt#6.03":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "Local Transitional, Industrial, Commercial 45 feet2 45 feet" -- a row of the Public Works
+      Standards' street right-of-way width table, giving the dedication required for a local
+      street by its functional classification. A right-of-way width is what a developer dedicates
+      to the city when land is subdivided or a street is built; it is on the far side of the lot
+      line from everything this screen measures, and it arrives at the platting stage rather than
+      the building stage. Oregon City's 16.12.016 street cross-section table and Wilsonville's
+      4.177 street standards are the same shape and are ruled the same way in this pass.
+    fingerprint: 1556a05d4b0cf386
 definitions:
   # "Corner Lot. A lot that has frontage on two or more streets. A corner lot
   # also includes a lot abutting the inside curve of a street with a delta
@@ -915,6 +2216,28 @@ zones:
         - value: 20
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+    min_lot_depth_ft:
+      # Table 4.0130 F.1, "Depth: Interior lot", on the "Triplex, Quadplex, and
+      # Cottage Cluster" row. OFR takes 100 ft. from the far end of the same
+      # line and the six columns to its left were never carried across, so the
+      # line counted as cited while this floor was missing. The header row is
+      # quoted with it because the table prints seven districts on one line.
+      # The townhouse rows in this column read 70 as well, on both the
+      # interior and the corner line, so the pod takes the same depth
+      # whether it is platted as one lot or four.
+      value: 70
+      cite: Gresham Development Code Table 4.0130 F
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300"
+      variants:
+        - value: 70
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301"
+        - value: 70
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+        - value: 70
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L309"
   LDR-7:
     section: ["4.01", "7.042"]
     cite_default:
@@ -1067,6 +2390,28 @@ zones:
         - value: 20
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+    min_lot_depth_ft:
+      # Table 4.0130 F.1, "Depth: Interior lot", on the "Triplex, Quadplex, and
+      # Cottage Cluster" row. OFR takes 100 ft. from the far end of the same
+      # line and the six columns to its left were never carried across, so the
+      # line counted as cited while this floor was missing. The header row is
+      # quoted with it because the table prints seven districts on one line.
+      # The townhouse rows in this column read 70 as well, on both the
+      # interior and the corner line, so the pod takes the same depth
+      # whether it is platted as one lot or four.
+      value: 70
+      cite: Gresham Development Code Table 4.0130 F
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300"
+      variants:
+        - value: 70
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301"
+        - value: 70
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+        - value: 70
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L309"
   TLDR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -1358,6 +2703,30 @@ zones:
         - value: 20
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+    min_lot_depth_ft:
+      # Table 4.0130 F.1, "Depth: Interior lot", on the "Triplex, Quadplex, and
+      # Cottage Cluster" row. OFR takes 100 ft. from the far end of the same
+      # line and the six columns to its left were never carried across, so the
+      # line counted as cited while this floor was missing. The header row is
+      # quoted with it because the table prints seven districts on one line.
+      # The townhouse rows are the exception in this column: the interior
+      # line reads "None" and the corner line reads "0 ft.", so a split
+      # plat has no depth floor here at all. Both are written as 0 rather
+      # than left out, because leaving them out would apply the 70 ft.
+      # quadplex figure to a path the city exempts.
+      value: 70
+      cite: Gresham Development Code Table 4.0130 F
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300"
+      variants:
+        - value: 0
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301"
+        - value: 70
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+        - value: 0
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L309"
   LDR-PV:
     section: ["4.14", "7.042"]
     cite_default:

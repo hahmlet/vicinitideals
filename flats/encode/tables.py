@@ -44,7 +44,7 @@ _GAP = re.compile(r"\s{2,}")
 #: Troutdale write theirs. Before the second alternative, every column in
 #: Troutdale's dimensional-standards table failed to read as a zone and the
 #: whole grid was invisible to this reader.
-_ZONE = re.compile(r"^[A-Z]{1,4}[0-9]{0,2}(?:\.[0-9])?(?:-(?:[A-Z]{1,3}|[0-9]{1,2}(?:\.[0-9])?))?$")
+_ZONE = re.compile(r"^[A-Z]{1,5}[0-9]{0,2}(?:\.[0-9])?(?:-(?:[A-Z]{1,3}|[0-9]{1,2}(?:\.[0-9])?))?$")
 #: A row's label column has to name a standard before anything is read from it.
 _HEADER_HINT = re.compile(r"\bstandard\b|\bzone\b", re.I)
 #: Values that are not measurements. Each means something a number cannot say.
@@ -2013,6 +2013,62 @@ def _column_zone(line: str) -> str:
     return found.group(1) if found and _ZONE.match(found.group(1)) else ""
 
 
+def _another_cell(line: str, label: str, block: str, name: str) -> bool:
+    """Whether the row-reading loop would have taken this line as one more cell.
+
+    The refusal that keeps a positional read honest used to ask only whether
+    the line after a row's last cell parses as a *measurement*. That catches a
+    row one number too long and misses a row one ``None`` too long, and the two
+    are the same failure: more cells than the header names columns means the
+    header lost one, and every cell past the gap is filed under its
+    neighbour's zone.
+
+    Clackamas ZDO Table 510-2 is the case, found on 2026-09-09 working the
+    reading queue. Subsection 510.02 names eleven urban commercial and
+    mixed-use districts and every row of the table prints eleven cells; the
+    stored header prints ten, having dropped Station Community Mixed Use
+    between PMU and OA. Ten of the eleven cells in the minimum-street-frontage
+    row are ``None``, so the old test saw no overrun and read SCMU's "100 feet"
+    as OA's -- a number for a district the row never states, wearing a citation
+    that points at exactly the right line. ``ragged.py`` cannot see this one:
+    it compares a use table's body rows against each other, and here every body
+    row agrees. It is the *header* that is short.
+
+    Three of the loop's branches are deliberately not mirrored here, and what
+    they have in common is that each answers for something other than one more
+    zone. The permissive prose branch exists to keep a row alive where a column
+    names no zone, and asking it of the line *after* a row would refuse a table
+    over the notes beneath it. A scoped cell states a standard on a different
+    basis and is what a table prints after its zone columns rather than instead
+    of one -- Fairview's front-setback rows run their zone cells and then
+    "Residential commercial buildings 10 feet". A pointer cell answers by
+    naming another table, and in the trailing position it is almost always the
+    commentary column: Fairview prints "19.30.030(B)(1)(b)" under "Additional
+    Standards and Exceptions" beside the maximum-front-setback row. Counting
+    either of those as an overrun refused that row for every zone in the city.
+
+    So what remains is the set of lines that can only be a column's own answer:
+    a measurement, a dash, a "Variable", and the words a table uses to say the
+    standard does not apply here.
+    """
+    stripped = line.strip()
+    if not stripped or _PAREN_LINE.match(stripped):
+        return False
+    if _ZONE.match(stripped) or _looks_like_label(stripped):
+        # The next table's header, or the next row's label. Both end a row;
+        # neither is a cell.
+        return False
+    if _DASH.match(stripped):
+        return True
+    bare = _PAREN_NOTE.sub("", stripped).strip()
+    trail = _LABEL_REFS.search(bare)
+    if trail:
+        bare = bare[: trail.start()].strip()
+    if _VARIABLE.match(bare) or _NOT_A_NUMBER.match(bare):
+        return True
+    return _grid_value(stripped, label, block, name) is not None
+
+
 def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
     """Zone-keyed values from a stacked grid, the fifth table shape.
 
@@ -2421,11 +2477,13 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     continue
                 cells.append((cell_no, parsed))
                 j += 1
-            overrun = (
-                j < len(live)
-                and not _PAREN_LINE.match(live[j][1])
-                and _grid_value(live[j][1], label, block, name) is not None
-            )
+            leftover = j < len(live) and _another_cell(live[j][1], label, block, name)
+            # A declared-but-uncounted commentary column prints its cell here,
+            # and it never prints a measurement -- that is what makes it
+            # commentary. So a non-numeric leftover is that column where the
+            # header declared one, and one cell too many where it did not.
+            spared = spare > 0 and _grid_value(live[j][1], label, block, name) is None if j < len(live) else False
+            overrun = leftover and not spared
             if len(cells) == len(zones) and not overrun:
                 htype = _housing_type(label) or block_type
                 placeholders = ctx_notes + tuple(

@@ -465,6 +465,25 @@ class TestDrift:
         assert dict(report.open_by_queue).keys() == set(KINDS)
 
 
+def unruled(layer: Layer) -> Layer:
+    """The same layer with its own rulings dropped.
+
+    These tests hand ``orders()`` a ruling and assert on exactly what comes
+    back, which only works while the ruling they hand it is the only one there
+    is. Milwaukie is a real jurisdiction and reviewers keep ruling on it: on
+    2026-09-09 three of its sections were ruled ``applies`` -- the plex
+    driveway apron, the townhouse lot size, the building-design chapter -- and
+    every one of those is an order for work, so it joined the list these tests
+    were asserting the whole contents of.
+
+    The fixture is the fix rather than a longer expected list, because a longer
+    expected list would be a test that goes red every time somebody reads a
+    Milwaukie section. What is under test here is what ``orders()`` does with a
+    ruling, not which sections of Milwaukie happen to be ruled today.
+    """
+    return layer.model_copy(update={"readings": {}})
+
+
 class TestWorkOrdered:
     """A ruling that asks for something is a job, and jobs have to be findable.
 
@@ -504,9 +523,10 @@ class TestWorkOrdered:
     ) -> None:
         from flats.encode.uncited import survey
 
-        one = {MILWAUKIE: layers[MILWAUKIE]}
-        rows = survey([layers[MILWAUKIE]])
-        card = cards(layers[MILWAUKIE], rows=rows)[0]
+        milwaukie = unruled(layers[MILWAUKIE])
+        one = {MILWAUKIE: milwaukie}
+        rows = survey([milwaukie])
+        card = cards(milwaukie, rows=rows)[0]
         ruled = {
             MILWAUKIE: {
                 card.card_key: Reading(
@@ -536,8 +556,9 @@ class TestWorkOrdered:
         """
         from flats.encode.uncited import survey
 
-        one = {MILWAUKIE: layers[MILWAUKIE]}
-        rows = survey([layers[MILWAUKIE]])
+        milwaukie = unruled(layers[MILWAUKIE])
+        one = {MILWAUKIE: milwaukie}
+        rows = survey([milwaukie])
         gone = {
             MILWAUKIE: {
                 "19.999.no-such-chapter.txt#19.999": Reading(
@@ -555,9 +576,10 @@ class TestWorkOrdered:
         """
         from flats.encode.uncited import survey
 
-        one = {MILWAUKIE: layers[MILWAUKIE]}
-        rows = survey([layers[MILWAUKIE]])
-        picked = cards(layers[MILWAUKIE], rows=rows)[:2]
+        milwaukie = unruled(layers[MILWAUKIE])
+        one = {MILWAUKIE: milwaukie}
+        rows = survey([milwaukie])
+        picked = cards(milwaukie, rows=rows)[:2]
         ruled = {
             MILWAUKIE: {
                 picked[0].card_key: Reading(

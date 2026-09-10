@@ -10,6 +10,703 @@ ingest:
   zoning_layer: zoning_milwaukie
   zone_field: ZONE
   strip_lowercase_suffix: false
+readings:
+  "19.500.supplementary.txt#19.505.4":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Cottage Cluster Housing, and the whole of 19.505.4 is written for a housing type this screen
+      does not place. Milwaukie says what one is: a minimum of 3 and a maximum of 12 cottages
+      round a common courtyard at least 15 ft wide at its narrowest, each cottage under a 900 sq
+      ft footprint and the cluster averaging no more than 1,400 sq ft a unit, with 6 ft of
+      separation between detached units. Four attached units on one lot is none of that. The card
+      is the longest in this layer because the section is a complete parallel dimensional regime
+      -- 25 feet or two storeys of height, 15 feet within five to ten feet of a rear lot line, six
+      feet between structures, five foot side and rear setbacks, a ten foot minimum and twenty
+      foot maximum front setback, ten feet between clusters, sixty and sixty-five percent
+      impervious caps -- and every number of it is switched on by the housing type rather than by
+      the zone. The table's own zone tables say so from the other side: 19.302.4 opens with "the
+      standards in Subsection 19.302.4 are not applicable to cottage cluster development". The
+      parking geometry in the same section is worth one note in passing, since it is the only
+      place in Milwaukie's code that says where stalls may not go -- not within 20 ft of a street
+      property line except an alley, not within 10 ft of any other property line with driveways
+      and drive aisles expressly permitted there, parking clusters separated from everything else
+      by 4 ft of landscaping, garages capped at four spaces and 10 ft from a cottage, garage doors
+      no wider than 20 ft. All of it is cottage-cluster-only, and this project has already ruled
+      the pod carries no garage.
+    fingerprint: 13f405d45de414c2
+
+  "19.300.base-zones.txt#19.302.4":
+    queue: missed
+    outcome: not_here
+    note: >-
+      What is left of R-HD's development standards table after this commit took its lot depth and
+      street frontage rows, and none of the three remaining statements is a standard for this
+      building. Line 480, "all other uses require a minimum lot size of 5,000 sq ft", is the
+      sentence that closes the lot-size band list directly above it: the bands name the dwelling
+      types, a quadplex sits in the 3,000 to 4,999 band, and "all other uses" means the uses the
+      bands do not name. This file holds 3,000 for the quadplex, which is the band it belongs to.
+      Line 505 is a table header carrying no number of its own. Line 514 sends properties
+      "identified in Figure 19.302.4" to a 5 ft minimum front yard instead of the 20 the table
+      states -- a relaxation, on a set of properties defined by a map this pipeline does not hold,
+      so ignoring it refuses land the city would allow rather than the reverse.
+    fingerprint: 6084c94964c95590
+  "19.300.base-zones.txt#19.312.7":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Design standards for the North Milwaukie Innovation Area. The ground-floor street wall
+      defined as the area up to the finished ceiling or 15 ft above the floor, the required
+      primary entrance, the prohibition on mansard roofs below three storeys, and the 14 ft
+      minimum ground-floor height are all standards of Section 19.312, which governs the MUTSA and
+      NME sub-areas of that district. Milwaukie's two zones in this file are R-MD and R-HD, and
+      neither is in the Innovation Area. A fourteen-foot ground floor would be a real constraint
+      on a factory-built pod if the district ever came into scope, so this belongs on the zone-gap
+      side rather than being simply waved away: it is not a standard we missed, it is a district
+      we have never encoded.
+    fingerprint: 101378d2fde02980
+  "19.500.supplementary.txt#19.511":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Section 19.511 is the incentives section and every figure on the card raises a ceiling
+      rather than setting one: up to ten percentage points of extra lot coverage, a height
+      allowance for mixed-use residential in the Downtown Mixed Use and General Mixed Use zones,
+      and the affordable-housing incentives that open at a hundred percent of units restricted to
+      households at or below eighty percent of area median income. Reading a bonus can only ever
+      let more building through, so leaving it unread is the conservative direction as well as the
+      correct one. The two zones the bonuses name are not encoded in this file in any case.
+    fingerprint: 1b5af50bbd41dab8
+  "19.600.parking.txt#19.606.4":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The parking lot tree canopy standard, and its own measurement paragraph is what closes it:
+      the requirement is triggered at a quarter acre, "10,890 sq ft, based on the cumulative area
+      measured around the perimeter of all new off-street parking spaces, vehicle maneuvering
+      lanes" and the rest of the paved area. Four stalls and an aisle come to something on the
+      order of two thousand square feet, a fifth of the threshold. The remaining statements --
+      preserved canopy counting toward coverage, isolated planters not counting -- are rules for
+      how to satisfy a standard this project never triggers.
+    fingerprint: a5d1c75cfcbd1355
+  "19.200.definitions.txt#19.202.3":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A measurement definition, not a standard: existing trees are measured at four and a half
+      feet above mean ground level at the base, which is diameter at breast height. It tells a
+      surveyor where to put the tape and says nothing about how tall a building may be.
+    fingerprint: 8774345d6cbec5c8
+  "19.500.supplementary.txt#19.504.6":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Flag lot frontage and accessway design: a flag lot must have 25 ft of accessway and street
+      frontage, abutting flag lots must have 25 ft combined, and no individual accessway in a
+      shared arrangement may be under 10 ft. Against min_frontage_ft the twenty-five is a
+      relaxation -- R-HD's standard-lot figure is 35 and R-MD's is 30 to 35 across the bands, both
+      of which this commit encodes, so a flag lot is already being measured against a stricter
+      number than the city applies to it. The part that is not a relaxation is the accessway
+      itself, the pole of the flag, which has to carry the pod's vehicle access at a minimum of
+      twenty-five feet. Nothing in the registry holds an accessway width and nothing in the
+      pipeline identifies a flag lot, so it is not a standard we missed; it is a lot shape we do
+      not detect. Worth putting beside the corner-lot and lot-line-bearing work, because a flag is
+      as computable from parcel geometry as a corner is.
+    fingerprint: 4755eb8d87789ea2
+  "19.500.supplementary.txt#19.507.3":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Home occupation signage: one sign, no more than four square feet. A sign area on an
+      accessory use, matched to a height field only because it states a figure in feet. Nothing
+      about a dwelling's dimensions is in it.
+    fingerprint: 1ca8b560a662838a
+  "19.300.base-zones.txt#19.600":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Two statements that reached this card from opposite ends of the base-zones file. Line 1049
+      is a table header -- "residential density requirements (dwelling units per acre)" -- with
+      its numbers on the rows below it and none of its own. Line 3976 is the maximum front yard
+      setback in the North Milwaukie Innovation Area: ten feet in the MUTSA, thirty on key streets
+      in the NME. Both belong to Section 19.312, a district this file does not encode, and the
+      section key on this card is a cross-reference the nearest-heading rule picked up rather than
+      the section the lines are in.
+    fingerprint: 06ac44c4b7097454
+  "19.300.base-zones.txt#19.312.6":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A green building bonus in the North Milwaukie Innovation Area: proposals certified under
+      Section 19.510 are permitted an additional allowance. A bonus, in a district this file does
+      not encode, and reading it could only raise a limit.
+    fingerprint: 2319467dc89f2fd1
+  "19.600.parking.txt#19.608.3":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Loading space dimensions: thirty-five feet long, ten wide, thirteen feet six of vertical
+      clearance. Loading berths are required of commercial and industrial uses by floor area, and
+      a four-unit dwelling triggers none. The numbers measure a truck bay, not a building or a
+      lot.
+    fingerprint: f50d0f31301eff0a
+  "19.300.base-zones.txt#19.308.5":
+    queue: condition
+    outcome: never
+    note: >-
+      Off-street parking standards of the C-CS zone, which is Milwaukie's commercial community
+      service district. This corpus encodes Milwaukie's R-MD and R-HD zones; C-CS is not among
+      them and the coverage ledger already carries it as a missing zone against 17 lots. Ruling
+      the condition never applies is a statement about the zones this file screens, not a claim
+      that the section is irrelevant to Milwaukie -- if C-CS is ever encoded, its own parking rows
+      come with it and this card is recomputed from the corpus rather than inherited from this
+      ruling. Seventeen lots is the whole exposure, and every one of them is already reported as
+      unscreened rather than screened green.
+    fingerprint: 3fff08ddf77729c4
+  "19.500.supplementary.txt#19.501.1":
+    queue: condition
+    outcome: never
+    note: >-
+      The applicability sentence of Milwaukie's supplementary development standards, and the
+      condition on it is a date: the standards of this section apply to a single detached dwelling
+      on a lot created after June 3, 2022. Two separate reasons it cannot reach this pod. The
+      building is four attached units, not a single detached dwelling, so the subject of the
+      sentence is a different housing type. And the qualifier is a lot-creation date, which is
+      exactly the kind of parcel history this pipeline holds nothing about -- but it does not need
+      to, because the housing-type gate closes first and closes on its own.
+    fingerprint: 3c1e314eff97b8c6
+  "19.500.supplementary.txt#19.502.3":
+    queue: condition
+    outcome: never
+    note: >-
+      Accessory structure heights for equipment that is not a dwelling: wind turbines and
+      rainwater cisterns, each with its own ceiling and its own setback. A four-unit factory-built
+      pod carries neither, and the numbers govern the accessory object rather than the building or
+      the lot. If a cistern were ever added to a site plan it would be measured against these
+      figures and would not change the building's own height, coverage or setbacks, which are what
+      this screen decides on. Nothing here can move max_height_ft for the pod.
+    fingerprint: c3584aa6c4719c75
+  "19.500.supplementary.txt#19.505.5":
+    queue: condition
+    outcome: applies
+    note: >-
+      The townhouse lot standards -- a minimum lot area of 1,500 square feet per unit -- and they
+      do reach this project, because the split-plat path puts each of the four units on its own
+      lot and Milwaukie states its townhouse row here rather than only in the zone tables. This is
+      already encoded: both R-MD and R-HD carry 1,500 as the `unit_lots` variant of min_lot_sqft,
+      so no number changes and no verdict moves. The card is ruled `applies` rather than closed
+      because the applicability answer is genuinely yes and because these lines are still uncited
+      -- the value we hold was quoted from the zone table, not from this section, and pointing a
+      second citation at the same number is bookkeeping this queue is right to keep asking for.
+      Marked so the next reader does not re-derive the answer.
+    fingerprint: b0c225b25e32c6a5
+  "19.600.parking.txt#19.606.1":
+    queue: condition
+    outcome: never
+    note: >-
+      The drive-aisle standard that switches on at more than five parking spaces. Two things close
+      it. The pod's requirement is four units at 1.5 stalls each, six stalls, which would clear
+      the threshold -- but Section 19.606 states its own scope, and middle housing is excluded
+      from it; that exclusion is already a refusal on this project's record rather than a reading
+      being made for the first time here. Milwaukie's middle-housing parking sits in 19.505, which
+      this corpus encodes. So the section is not a standard we missed for this building; it is a
+      standard the city itself directs away from it.
+    fingerprint: f6313cabf3f8a37b
+  "12.16.access-management.txt#12.16.040":
+    queue: condition
+    outcome: applies
+    note: >-
+      Driveway apron standards, and this one reaches the pod by name -- Milwaukie writes a row for
+      plex development: an apron of at least 12 feet on a local street and 16 on a collector or
+      arterial, no more than 20 feet wide, and set at least 5 feet from a side lot line. That is
+      vehicle access geometry for exactly this building, which is the half of the FLATS question
+      the parking fields do not answer. Nothing in the field registry holds a driveway apron width
+      or its clearance from a side line, so this is not a standard our reader missed; it is a
+      standard the model has nowhere to put. Two of the three numbers are the kind that can fail a
+      narrow lot: a 12 foot apron plus 5 feet of side clearance is 17 feet of frontage committed
+      to access before the building is placed. The 45 foot separation from an intersection on the
+      same page is deliberately left out of this ruling -- it is self-relieving on existing lots
+      by the code's own words. Ruled `applies` so the card stays open as ordered work: an apron
+      field, then the encoding.
+    fingerprint: 5d0a0a9e5b37bcb1
+  "19.500.supplementary.txt#19.505.1":
+    queue: condition
+    outcome: never
+    note: >-
+      The middle-housing design menu: a list of elevation and articulation options from which a
+      proposal satisfies a stated number. Twelve lines of figures, every one of them describing an
+      option rather than a requirement, so no single number on the card is a standard a lot must
+      be able to hold. The applicant chooses which items to meet, and a choice that is available
+      at design time cannot fail a parcel at screening time. This is the same design-menu shape
+      ruled in Gladstone and Wilsonville, and it is being recorded again rather than assumed,
+      because the menu structure has to be read in each city's own words to be sure the code
+      really offers a choice and does not require all of them.
+    fingerprint: dee2326117d5b937
+  "19.300.base-zones.txt#19.307.3":
+    queue: condition
+    outcome: never
+    note: >-
+      The development standards of Milwaukie's C-G zone -- the section opens "In a C-G Zone the
+      following standards shall apply" -- covering minimum lot width of 50 feet, average lot depth
+      of 80, a height ceiling of three storeys or 45 feet whichever is less, and a primary
+      entrance within 45 degrees of the street property line. C-G is Milwaukie's General
+      Commercial district and this corpus encodes R-MD and R-HD. Not a standard our reader missed;
+      a district nobody has encoded, which is the zone-gap ledger's business rather than this
+      queue's.
+    fingerprint: 235ce802e32a0440
+  "19.500.supplementary.txt#19.505.7":
+    queue: condition
+    outcome: never
+    note: >-
+      The section heading settles it: 19.505.7 is "Nonresidential Development", and this screen
+      places four dwellings. Every statement on the card reads that way once the heading is in
+      hand -- the key-corner feature in the GMU Zone (a corner entry, a prominent architectural
+      element within 20 feet of the corner, or a corner cut at 45 degrees), the requirement that
+      30 percent of a nonresidential or mixed-use ground-floor street wall be windows or glazed
+      doors, the two-foot exemption for rooftop equipment, and the sixteen feet an elevator shaft
+      may rise above the height limit when it is incorporated into the roof form. The last of
+      those is an allowance besides, and the pod has no elevator to put in it. Recorded rather
+      than skipped because a card whose statements are all about a facade is exactly the kind a
+      reviewer stops reading, and the reason it does not apply is the heading rather than the
+      content.
+    fingerprint: 7e1fd7b06d56943b
+  "19.300.base-zones.txt#19.302.5":
+    queue: condition
+    outcome: never
+    note: >-
+      Four statements and all four are bonuses. The maximum lot coverage of 19.302.4 is increased
+      by ten percentage points for an addition, by ten for middle housing development, and by five
+      for a further listed feature; an additional ten feet of building height may be permitted
+      above the required maximum in exchange for the stated condition. Every one of them makes the
+      standard looser, and the only direction a relaxation can move a screen is from red toward
+      green. Ignoring them costs a lot that could have been built; taking them would let a lot
+      pass on a bonus nobody has applied for. The conservative default here is not a preference,
+      it is the whole design: an unelected bonus is not a standard the lot has met.
+    fingerprint: 7cb3c78ccb9dfcaf
+  "19.500.supplementary.txt#19.505.3":
+    queue: condition
+    outcome: applies
+    note: >-
+      This one reaches the pod, and the applicability clause says so in its own words: the design
+      elements in Table 19.505.3.D "apply, as described below, to all multi-unit developments and
+      residential care facilities with 3 or more dwelling units on a single lot". Four units on
+      one lot is inside that, and the exemption beside it is for cottage clusters and rowhouses on
+      their own lots. What is already handled: D.1's private open space is encoded as 96 square
+      feet per ground-floor dwelling with the unit-lot exemption; D.2's common open space is
+      already recorded in this file as NOT ENCODED because it is triggered by "buildings with more
+      than 5 dwelling units" and four is not more than five; D.4.b's 50 percent of the linear
+      frontage OF THAT SIDE is already recorded as a different denominator from every other city's
+      street-frontage rule; and D.4.c, garages set 4 feet behind the front facade, needs a garage
+      this design does not have. What is left is D.5.c and D.5.d, and they are a standard nothing
+      here can hold. "For sites not on an arterial street, at least 50% of a site's street
+      frontage, excluding driveways, shall be occupied by buildings that are located no further
+      than 10 ft from the required setback line", and 20 feet where the site is on an arterial.
+      That is two rules in one sentence. The first is a maximum front setback, and it is
+      computable -- both Milwaukie zones that permit a quadplex state a 20-foot front minimum, so
+      the building must stand between 20 and 30 feet of the front lot line -- but the 30 is
+      arithmetic and appears nowhere on the page, and this model has no form for a standard stated
+      as an offset from another standard the way it has `per_height_ft` for one stated as a ratio.
+      Writing 30 would be inventing a number. The second is a minimum share of frontage the
+      building itself must cover, which no field in this registry states: it binds a fixed-width
+      pod on a wide lot, where half the frontage is more building than the pod is long. Both are
+      recorded here rather than encoded, and this card stays open as the standing request for the
+      offset form and the frontage-occupation field.
+    fingerprint: 9d4809ff8e8a6a46
+  "19.300.base-zones.txt#19.301.5":
+    queue: condition
+    outcome: never
+    note: >-
+      The single-dwelling zones' version of the coverage bonuses ruled a card earlier in this
+      batch: ten percentage points added to the 19.301.4.C.4 maximum for a detached addition, ten
+      for middle housing, five more for a further feature. Relaxations, every one, and an
+      unelected bonus is not a standard a lot has met. Ruled separately from the 19.302.5 card
+      because they are separate subsections governing separate zone families, and a decision on
+      one may not silently close the other.
+    fingerprint: 7f6ea90f0a9501cc
+  "19.300.base-zones.txt#19.304.5":
+    queue: condition
+    outcome: never
+    note: >-
+      Section 19.304 is headed "Downtown Zones", and this layer holds two zones -- R-MD from
+      19.301 and R-HD from 19.302. Nothing on this card reaches either. That matters more than
+      usual here, because the statements are the kind that would bind if they did reach: a MINIMUM
+      building height of 25 feet that must be met along all street frontages, which is the one
+      direction a height standard can point that this project's 26-foot design nearly fails; a cap
+      of two development-incentive bonuses for 24 feet of additional height; a rule that height
+      bonuses may not be applied within 50 feet of the R-MD zone; and 12 feet more for a building
+      giving a storey or a quarter of its floor area to housing. All of them are downtown
+      standards. Milwaukie's downtown districts are not missing by accident and not missing
+      unnoticed: the districts ledger reports this jurisdiction at two zones held and eight
+      undeclared, DMU among them with housing mentions against it, so the absence is that ledger's
+      business and closing this card does not close it.
+    fingerprint: dea43e27c3c81832
+  "19.500.supplementary.txt#19.508.4":
+    queue: condition
+    outcome: never
+    note: >-
+      The supplementary chapter's downtown half -- 19.508 is "Downtown Site and Building Design
+      Standards and Guidelines" -- and the same answer as 19.304.5 for the same reason: this layer
+      holds R-MD and R-HD, and neither is a downtown zone. The statements are facade standards in
+      any case: three-quarters of the ground-floor height at 15 feet or more measured floor to
+      ceiling, an upper-storey facade feature no less than every 30 feet, a primary entrance
+      within 5 feet of the corner, a canopy or marquee at least 10 feet long at the corner. A
+      pattern of glass and massing across an elevation is not a rule about where a wall may stand
+      on a lot.
+    fingerprint: cf0b881be951d4df
+  "19.500.supplementary.txt#19.502.2":
+    queue: condition
+    outcome: never
+    note: >-
+      Section 19.502 is "Accessory Structures", and the numbers on this card are a shed's. Two
+      hundred square feet, six hundred, the lesser of 75 percent of the primary structure or 1,500
+      square feet with a floor of 850 on a lot over 10,000 -- those are size caps on the accessory
+      building, and the three-foot figure beside them is the setback it takes. This project places
+      one primary structure holding four attached units and nothing else; the garage question was
+      put and answered on 2026-09-08 and the answer was that there is none. Recorded rather than
+      skipped because an accessory-structure setback wearing the zone's citation is the expensive
+      kind of wrong, and this is the third city whose accessory chapter has matched a setback
+      field for that reason.
+    fingerprint: 3c4151e36ce4b770
+  "19.300.base-zones.txt#19.303.4":
+    queue: condition
+    outcome: never
+    note: >-
+      Section 19.303 is "Commercial Mixed-Use Zones" and its three districts are GMU, NMU and SMU.
+      This layer holds two zones, R-MD and R-HD, so none of the eleven statements reaches a zone
+      the screen can place a pod in. The same answer as 19.304.5 for the same structural reason,
+      and the numbers are the same kind: a 45 ft base height in GMU with two development-incentive
+      bonuses available, a 15 ft step back above the base for any street-facing portion, 45 ft in
+      NMU and 35 ft in SMU with no bonuses in either, an additional storey or 12 ft for a building
+      giving one storey or a quarter of its floor area to housing, no minimum street setback and a
+      10 ft maximum, a primary entrance within 45 degrees of the street property line, and minimum
+      densities of 25 units per acre in GMU and 11.6 in NMU. Two of those would bite if the zone
+      were held -- a maximum street setback of 10 ft is the direction that can refuse a lot
+      outright, and a minimum density of 25 du/acre is a floor a four-unit building meets only on
+      a lot under about 7,000 square feet. That is the districts ledger's business, not this
+      queue's: it already reports Milwaukie at two zones held and eight undeclared, and SMU is one
+      of the eight it names. Closing this card does not close that.
+    fingerprint: 924296c5c573df8b
+  "19.400.overlays.txt#19.402.4":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Two lines out of Milwaukie's natural resource overlay, and neither is about a building. One
+      permits additional disturbance for outdoor uses such as gardens and play areas up to a
+      stated area; the other says plants adjacent to trails may be trimmed but that trimming
+      clearances must not exceed eight feet high and six feet wide. A trimming clearance is a
+      maintenance instruction to whoever holds the machete. The overlay itself is geometry the
+      screening layer carves rather than a dimension this file holds, which is the same treatment
+      every resource corridor in this corpus gets.
+    fingerprint: 8c1c4e0b5fdc2ac7
+  "19.400.overlays.txt#19.404.6":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The Flex Space Overlay Zone's development standards, and the sentence that closes them is
+      the first line of the section: "the development standards of Subsection 19.303.4 apply in
+      the Flex Space Overlay Zone, except as noted below, FOR ANY OF THE USES PERMITTED IN TABLE
+      19.404.4." That table is industrial services, manufacturing, trade schools, and warehousing
+      accessory to them. Housing is not on it -- the overlay exists to let employment uses onto
+      one identified opportunity site in central Milwaukie beyond what the GMU base zone allows.
+      So the 50-foot maximum front yard setback the reader caught, and the permission to park in
+      that setback except along 32nd Ave, are standards for a fabrication shop. Worth naming the
+      direction anyway, because a maximum front setback is the shape that HAS bound this pod
+      elsewhere -- Portland's commercial zones are the case on the record -- and 50 feet is loose
+      even where it applies: it pushes a building toward the street rather than away from it, and
+      this pod's front setback is never near 50.
+    fingerprint: 52043c54d3944b46
+  "19.400.overlays.txt#19.401.3":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The Willamette Greenway Zone's limitations on use, and the reason to look twice is its first
+      sentence rather than its numbers: in the WG Zone "all land use actions and any change or
+      intensification of use, or development permitted in the underlying zone, are CONDITIONAL
+      USES". That is a gate on everything, and it is the kind of thing this project treats as a
+      use question rather than a dimension -- the WG Zone is drawn on the Zoning Map over an
+      underlying zone, and the screening layers carve geography; a conditional-use requirement is
+      the same shape this corpus already encodes as quadplex_allowed false with a conditional
+      variant, in Milwaukie's own zones and in unincorporated Multnomah's LR articles. THE TWO
+      MEASURED LINES DO NOT BIND. Prohibited are "commercial, industrial and residential
+      structures and residential accessory structures exceeding 35 ft in height west of McLoughlin
+      Blvd" -- the pod is 26 -- and "new private noncommercial docks exceeding 400 sq ft", which
+      is a dock. The grading and tree-cutting prohibition in the buffer is corridor geometry the
+      overlay layer holds.
+    fingerprint: 1579f4b4688e9326
+  "19.400.overlays.txt#19.402.15":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Table 19.402.15 and its map-verification procedure -- the machinery that decides where a
+      water quality resource or habitat conservation area actually lies: flood areas within 100
+      feet of the property, the 0-to-100 and 101-to-150 foot bands, whether the site is within 300
+      feet of a river or surface stream, and which combination makes a band HCA or not HCA. Every
+      number is part of drawing a boundary on the ground. That boundary is exactly what the
+      natural-resource overlay layer holds for this county -- the screening that did not exist for
+      Clackamas at all until 2026-09-03 -- and this jurisdiction file holds the zoning dimensions
+      that stand beside it. Two systems, one authority, and the split is deliberate: a corridor is
+      measured from a feature the parcel data locates, never from a lot line, so it carves
+      buildable area rather than becoming a Value. The verification options in the same subsection
+      are how an applicant argues the map is wrong, which is a hearing rather than a standard.
+    fingerprint: a9195948ceaf4f3f
+  "19.400.overlays.txt#19.402.6":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Four lines out of a worked mitigation example -- "Y = 5,000 sq ft outside of HCA/WQR", "Z =
+      -3,500 sq ft (1,500 sq ft - 5,000 sq ft)" and their second pairing -- which are the algebra
+      of how much disturbance a Type I review permits inside a habitat conservation area and how
+      much must be given back. Not standards: variables, filled in twice to show a reader how the
+      formula runs. The area they operate on is the overlay's, held by the screening layer rather
+      than by any field here, and a mitigation ratio changes what a developer plants, not what a
+      lot can hold. The rest of 19.402.6 is limited tree removal, major pruning and utility
+      connections, all of them activities rather than dimensions.
+    fingerprint: cb4d7af76f1ec8ac
+  "19.600.parking.txt#19.609.4":
+    queue: nofield
+    outcome: design
+    note: >-
+      Milwaukie's bicycle parking dimensions, and they are Portland's Table 266-7 almost cell for
+      cell: a standard space 6 feet by 2 with 3 feet 4 inches of clearance, side-by-side at 1 foot
+      6, wall-attached, diagonal at 45 to 60 degrees, vertical at 3 feet 4 by 1 foot 5, stacked,
+      and a larger space at 8 feet. Then the locker rules -- a minimum depth of 6 feet and a door
+      at least 2 feet wide -- the requirement that long-term parking be covered by something
+      permanent and impervious, and an electrical outlet within 10 feet of at least 5 percent of
+      spaces. A rack's footprint is not a building's. All of it fits on a wall of the rear court
+      or inside it, no field in this registry measures a bicycle space, and the same table was
+      ruled the same way on Portland's 33.266.21 card in this pass.
+    fingerprint: 6752857f0381a532
+  "19.200.definitions.txt#19.202.4":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      The ARITHMETIC of Milwaukie's density calculation rather than its rates: divide the net area
+      by 43,560 to get acres, then multiply by the units-per-acre figure, for the minimum on one
+      line and the maximum on the other. 43,560 is the number of square feet in an acre, which is
+      a constant rather than a standard, and the operands the formula multiplies are on the zone
+      tables. Two sentences on why the card closes rather than opening work. Density is measured
+      against a SITE at entitlement, and this screen asks whether one pod fits one existing lot --
+      it measures lot area, setbacks, coverage and the court, never a unit count against an acre,
+      which is the same reason Gladstone's net-acre definition closed on 2026-09-03. And where a
+      minimum density does bite it is already handled by a field: Portland carries its RM floors
+      as sqft_per_unit precisely so what is checked is the operand the table prints rather than a
+      quotient nothing prints. Nothing on this card is such an operand.
+    fingerprint: 46267ce3e0ba9967
+  "19.300.base-zones.txt#19.303.3":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      Two TABLE ROW LABELS with no cells attached: "2. Minimum street frontage (ft)" and "2.
+      Building height (ft)". The numbers that belong to them are in columns the extractor did not
+      carry onto the same line, so the card shows the question and none of the answers. This is
+      the single commonest shape in Milwaukie's base-zone chapter -- four more cards in this pass
+      are the same thing -- and it is our bug rather than the code's: a ledger of measurements has
+      captured the word "(ft)" and treated it as a measurement. Filed to the extractor list. The
+      section itself is 19.303.3, the Commercial Mixed-Use zones' development standards, which is
+      a zone this layer does not carry anyway.
+    fingerprint: d994b546843b6d73
+  "19.300.base-zones.txt#19.301.4":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "Lot size (square feet)" and "1. Minimum yard requirements for primary structures (ft)" --
+      two more table row labels stripped of their cells, in the section that states the
+      residential base zones' dimensions. The numbers themselves are encoded in this layer for
+      R-MD and R-HD; what reached the ledger is the header above them. Same extractor shape as the
+      19.303.3, 19.312.5, 19.510 and 19.201 cards in this pass, and the reason to rule all five
+      the same way is that four of them being one bug is worth knowing.
+    fingerprint: 1a4e89788ccfb7c4
+  "19.300.base-zones.txt#19.201":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "1. Density requirements (dwelling units per acre)" -- a table row label with no cells, plus
+      one footnote that is a whole sentence: "A townhouse is permitted on a corner lot up to 3,500
+      sq ft in area." The footnote is real but it is about a TOWNHOUSE on a corner lot, which is a
+      different building on a lot smaller than this pod could use; it loosens a minimum lot size
+      for somebody else. The header half goes to the extractor list with its four siblings.
+    fingerprint: b0168dc63d860c1c
+  "19.300.base-zones.txt#19.312.5":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "3. Setbacks (ft)" -- a table row label with nothing beside it. Section 19.312 is one of the
+      eight Milwaukie districts this project already lists as declared but never encoded, so the
+      cells this header is missing are cells nobody has read; that is a separate and larger job,
+      tracked on its own, and it is not made smaller by ruling on a fragment. Filed to the
+      extractor list.
+    fingerprint: 27565de3a738282b
+  "19.300.base-zones.txt#19.510":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "3. Street setbacks (ft)" -- the fifth stripped table header in this chapter and the fifth
+      identical ruling. Filed to the extractor list.
+    fingerprint: 459c5fbb165242de
+  "19.300.base-zones.txt#19.303.5":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "A minimum setback of 15 ft shall apply" -- 19.303.5(A), Standards for Residential Street
+      Edges, in the COMMERCIAL MIXED-USE zones. It reaches "properties shown as having a
+      residential edge on Figure 19.303.5, and development that occurs adjacent to or abutting
+      residential zone", and its second limb requires a 15-foot step back above 35 feet within 50
+      feet of 37th Avenue and Monroe Street. Two reasons it does not reach this pod and the first
+      is decisive: Milwaukie's encoded zones are R-MD and R-HD, and the CMU zones this section
+      governs are not among them -- the wrong-district shape this project catalogued on
+      2026-09-07. The step-back limb would not fire in any case at 26 feet. Worth naming what it
+      IS, because the shape has bound elsewhere: a setback deepened by the neighbour's zoning is
+      exactly what Oregon City's abuts_residential_zone condition holds, and neighbour-zone
+      adjacency moved onto this project's computable list on 2026-09-08. If Milwaukie's commercial
+      side is ever encoded, this is the sentence to come back for.
+    fingerprint: 6705b592f152cd39
+  "19.300.base-zones.txt#19.304.3":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "In the DMU Zone, production-related office uses are limited to 20,000 sq ft in total area."
+      A floorplate cap on office space in the Downtown Mixed Use zone -- a zone this layer does
+      not carry, and a use the pod does not contain.
+    fingerprint: f1f54baec96f00f5
+  "19.300.base-zones.txt#19.309.6":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The MANUFACTURING ZONE M's development standards: front 20 feet with no side setback, corner
+      side 10 feet with no rear, a 45-foot height, and one curb cut of up to 45 feet per 150 feet
+      of street frontage. An industrial zone, which does not permit dwellings and is not among the
+      two zones this layer carries. The curb-cut allowance is also the loosest access rule in this
+      corpus and would be an amnesty rather than a constraint if it were ever borrowed sideways.
+    fingerprint: f7a5b977ca2439a9
+  "19.300.base-zones.txt#19.310.4":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Maximum floor area for a limited use shall be 4,000 sq ft" in the Business Industrial Zone
+      BI -- a cap on how large a secondary use may be inside an industrial district. A different
+      zone and a different building, and a maximum in any case.
+    fingerprint: 626bb70a2a5a728a
+  "19.300.base-zones.txt#19.507":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Day care and child care uses are limited to 5,000 sq ft." A floorplate ceiling on a use the
+      pod does not contain. Portland states the same family at 3,000 square feet in three chapters
+      and each was ruled the same way in this pass.
+    fingerprint: beaaba5ffcefe5e7
+  "19.300.base-zones.txt#19.500":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Trees shall have a minimum 2-in caliper at time of planting, measured at 4 ft above grade."
+      A nursery specification: how thick a trunk must be on the day it goes in the ground. It says
+      nothing about how much land is planted, which is the only thing about landscaping that
+      competes with a building, and the areas themselves are set elsewhere.
+    fingerprint: a1eafe284acbe50d
+  "19.500.supplementary.txt#19.501.2":
+    queue: nofield
+    outcome: design
+    note: >-
+      "The porch or deck is at least 5 ft from the front and/or rear lot line" -- one condition in
+      19.501.2's list of projections allowed to encroach into a required yard. It is a PERMISSION:
+      a porch may sit in the setback provided it keeps 5 feet clear of the line. That loosens what
+      may stand in a yard the pod's encoded setbacks already reserve, and the pod does not need
+      it. Recorded rather than skipped because a number beside the words "front lot line" reads
+      like a setback and is the opposite of one.
+    fingerprint: 8db3b96e652e2053
+  "19.500.supplementary.txt#19.504.7":
+    queue: nofield
+    outcome: design
+    note: >-
+      "A walkway into the site shall be provided for every 300 ft of street frontage." A spacing
+      rule for pedestrian entries along a frontage, and it can only require a second walkway on a
+      site with more than 300 feet of street -- an order of magnitude more than a lot holding one
+      pod. A walkway also fits in ground the building and its court already leave.
+    fingerprint: 136a946064562068
+  "19.600.parking.txt#19.604.2":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Off-site parking on a commonly owned site, with the nearest spaces no further than 1,000
+      feet from the use. The same permission Gresham's 9.0821 grants at the same distance and it
+      is refused for the same reason: it RELIEVES a site that cannot hold its own parking, which
+      is the situation this screen exists to detect, and a lot whose stalls are three blocks away
+      has not fitted a pod. It also requires common ownership of two parcels, which is a fact
+      about a portfolio rather than about land.
+    fingerprint: 76c0bcbe66500424
+  "19.600.parking.txt#19.606.2":
+    queue: nofield
+    outcome: design
+    note: >-
+      Interior parking-area landscaping: at least 25 square feet per space, in planting areas of
+      at least 120 square feet, dispersed through the lot. The 25 square feet is a share of a
+      parking area whose size is already determined by the stalls and aisle this layer encodes --
+      it says how much of that area is planted rather than adding to it, and Portland states the
+      identical standard at 45 square feet with the same effect. Where it would bite is a large
+      surface lot; four stalls carry 100 square feet of planting, less than one of the
+      120-square-foot beds the same sentence requires, which is the tell that the rule is written
+      for a different scale.
+    fingerprint: c4762195fd944574
+  "19.600.parking.txt#19.606.3":
+    queue: nofield
+    outcome: design
+    note: >-
+      Two circulation rules. Along collectors and arterials no parking space may be placed so that
+      its manoeuvring area falls in an ingress or egress aisle within 20 feet of the right-of-way
+      -- a rule about where the first stall may sit relative to the throat, which is the same
+      distinction Wilsonville's engineering manual forced a week ago: a throat is not a lane. And
+      pedestrian access must reach every space within 100 feet measured along the drive aisle,
+      which four stalls in a rear court satisfy by construction. Neither adds a dimension the
+      court must clear.
+    fingerprint: 944df200cde930cb
+  "19.600.parking.txt#19.605.1":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Use-based parking ratios: libraries and museums at 1.2 spaces per 1,000 square feet, eating
+      and drinking at 15, general office and banks at 3.4, vehicle repair at 2.5, manufacturing at
+      2. Five rows from a table of other people's buildings. What the pod owes is held in this
+      layer as parking_min_per_unit and comes from the residential row, which is not in this
+      extract.
+    fingerprint: 7b667a918d32fe15
+  "19.600.parking.txt#19.608.2":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Loading spaces: none required below 20,000 square feet of total floor area, one from 20,000
+      to 50,000, two above. The pod is a fraction of the first threshold, so the operative row for
+      this building is the one that requires nothing. Portland's 33.266.310 and Troutdale's 9.120
+      state the same family and were ruled the same way in this pass.
+    fingerprint: b08810013c47954f
+  "19.600.parking.txt#19.609.2":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Bicycle parking ratios by use -- temporary lodging, office, daycare, elementary and middle
+      schools by the classroom, high schools by the classroom. A hotel's and a school's problem.
+      The residential row is not in this extract, and a bicycle space is not a screen question in
+      any case.
+    fingerprint: 57914e6b31933706
+  "19.600.parking.txt#19.611.4":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "An applicant shall be allowed an additional 0.5 sq ft of floor area above the maximum
+      allowed floor area ratio for every 1 sq ft of structured parking" -- an FAR bonus bought by
+      building a garage. Two independent reasons it closes: it is an earned relaxation, which the
+      conservative default declines throughout this corpus, and it is bought with structured
+      parking, which the standing ruling that this pod has no garage rules out. A bonus on a
+      MAXIMUM also points away from anything this screen can fail on.
+    fingerprint: 605a2dfca589869f
+  "19.500.supplementary.txt#19.503.1":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Amateur and CB radio equipment treated as an accessory use, with radio and television towers
+      outside dwellings held to a stated height. A mast is not a building: it takes a footing
+      rather than a footprint, and the county's MCC 39.4782(G) exempts chimneys and antennae from
+      the height maximum outright for the same reason. Nothing here dimensions a dwelling.
+    fingerprint: 75a46fa50a0408e8
 crossrefs:
 
   # --- four references out of the use table, none of them this building ----
@@ -571,6 +1268,52 @@ zones:
         - value: 50
           band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
           quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L144"
+    min_lot_depth_ft:
+      # Table 19.301.4 row B.2, banded by lot size the same way row B.1 above
+      # it is: 70 feet on the smallest band and 80 on the other three. The row
+      # was never carried across, so a shallow lot in this zone has been
+      # screened against no depth floor at all.
+      value: 80
+      cite: MMC Table 19.301.4 B.2
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L150"
+      variants:
+        - value: 70
+          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L147"
+        - value: 80
+          band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L148"
+        - value: 80
+          band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L149"
+    min_frontage_ft:
+      # Table 19.301.4 row B.3.b, "Standard lot": 35 / 30 / 35 / 35 across the
+      # four bands -- the one row in this table that is not monotonic, so the
+      # middle band cannot be inferred from either neighbour.
+      #
+      # Row B.3.a, "Townhouse", prints a single 20 rather than four numbers,
+      # and row A is why: a townhouse is the only dwelling type this zone
+      # permits on a lot under 3,000 sq ft, so the row has one band to state.
+      # Written as a unit_lots variant on that band alone. The flag-lot and
+      # double-flag-lot rows at 25 feet are left out: both are relaxations,
+      # and nothing here measures whether a lot is a flag.
+      value: 35
+      cite: MMC Table 19.301.4 B.3.b
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L158"
+      variants:
+        - value: 35
+          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L155"
+        - value: 30
+          band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L156"
+        - value: 35
+          band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L157"
+        - value: 20
+          when: [unit_lots]
+          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L152,L153"
     max_coverage_pct:
       value: 30
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L245"
@@ -698,6 +1441,25 @@ zones:
     min_lot_width_ft:
       value: 20
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L486"
+    min_lot_depth_ft:
+      # Table 19.302.4, lot standards: 70 feet, stated once for the zone. The
+      # row sits directly under the lot width this file already holds and was
+      # not carried across with it.
+      value: 70
+      cite: MMC Table 19.302.4 A
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L484,L487"
+    min_frontage_ft:
+      # Table 19.302.4, "Minimum street frontage requirements": 35 feet on a
+      # standard lot, 20 on a townhouse lot. The flag-lot and double-flag-lot
+      # rows read 25, and both are left out for the same reason as in R-MD --
+      # a relaxation on a lot shape nothing measures.
+      value: 35
+      cite: MMC Table 19.302.4 A
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L488,L490"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L488,L489"
     max_height_ft:
       value: 45
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L499"

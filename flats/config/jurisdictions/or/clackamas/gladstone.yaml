@@ -31,6 +31,314 @@ ingest:
   zoning_layer: zoning_gladstone
   zone_field: ZONE
   strip_lowercase_suffix: false
+readings:
+  "17.10.r-7.2.txt#17.10.055":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Cottage cluster setbacks and average unit size in R-7.2: ten feet front, five feet side, ten
+      feet rear, six feet between cottages, and a maximum average floor area of 1,400 square feet
+      per dwelling with community buildings counted in. All of it is switched on by the cottage
+      cluster housing type, which is three or more detached units round a courtyard and not four
+      attached units on one lot. Gladstone writes the same section twice, once per residential
+      chapter, so this ruling and the R-5 one are the same reading.
+    fingerprint: 91603797e13d24f8
+
+  "17.12.r-5.txt#17.12.055":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The R-5 copy of Gladstone's cottage cluster section, word for word the same as the R-7.2
+      one: ten foot front and rear setbacks, five foot sides, six feet between cottages, 1,400
+      square feet maximum average floor area per dwelling unit. A housing type this screen does
+      not place, so no number in it reaches the pod.
+    fingerprint: 354b76f70dbf9bec
+  "17.48.parking.txt#17.48.050":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Bicycle parking, and the one line here that does name our building says nothing about the
+      land. Subsection (C) is explicit -- "100 percent of all bicycle parking spaces for
+      multi-household development of four units and more shall be provided as long-term bicycle
+      parking" -- so a four-unit pod does owe bicycle parking, at least two short-term spaces, all
+      of them long-term. It is not a lot-fit constraint: the code's own definitions let short-term
+      parking be "lockers or racks ... located inside a building" and long-term be "racks, storage
+      rooms, or lockers in areas that are secure", both satisfiable inside the pod's own
+      footprint. The remaining statements are the thirty-foot and hundred-foot distances from an
+      entrance and the covering rule, which are placement rules for a facility that takes no site
+      area of its own.
+    fingerprint: 00642e4dfa5c868b
+  "17.10.r-7.2.txt#17.10.050":
+    queue: missed
+    outcome: duplicate
+    note: >-
+      R-7.2's dimensional table, and the one line worth explaining is the side setback. The table
+      carries four setback rows where most cities carry three: "Side setback -- 7.5 ft or 5 ft due
+      to irregular shaped lots", then "Street side setback -- 20 ft", then "Interior side setback
+      -- 5 ft". This file holds 7.5 for the side, which is the stricter of the two numbers the
+      table states for a side lot line, so whichever row governs a quadplex the encoded value
+      refuses no land the city would allow. Recording the ambiguity rather than resolving it: if
+      the five-foot interior row is the operative one for middle housing, we are two and a half
+      feet over-strict on every interior line in this zone, and that is a relaxation to be bought
+      with the original table layout in hand rather than with an extractor's row order. The other
+      statements are the cottage cluster setback reduction, which is a housing type this screen
+      does not place; the eighty percent minimum density, which is stated for subdivisions and
+      PUDs rather than for a building on an existing lot; and the PUD requirement that a quarter
+      of the units be a mix of two or more middle housing types, which is a different application
+      path.
+    fingerprint: 7b21a91236599542
+  "17.12.r-5.txt#17.12.050":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Closed on Gladstone's own glossary, which is the whole reason to read a definition before
+      ruling on a row. The alarming line is the Minimum Vegetation row: "Multi-household dwelling
+      -- at least 20 percent of the total area of the lot" must be left or planted with trees,
+      shrubs or grass. Twenty percent of a lot is a real constraint and this file holds no
+      vegetation minimum for R-5, so on its face it is a miss. It is not. GMC 17.06.141 defines a
+      multi-household dwelling as "a building, designed for occupancy by five or more households
+      living independently of each other", and the pod is four. The same table proves the reading
+      from the other side: its Minimum Lot Area block lists Quadplex and Multi-household dwellings
+      as separate rows with different numbers, 7,000 square feet against 2,500 per dwelling, so
+      the city is not using the phrase loosely. R-7.2's copy of the table carries no vegetation
+      row at all. The other two statements are the cottage cluster setback reduction and the PUD
+      housing-mix requirement, neither of which is this building on this lot.
+    fingerprint: d9906504740f3b15
+  "17.10.r-7.2.txt#17.10.065":
+    queue: missed
+    outcome: not_here
+    note: >-
+      R-7.2's cottage cluster design standards: a common courtyard fifteen feet wide at its
+      narrowest, no off-street parking within twenty feet of a street property line except an
+      alley, none within ten feet of any other property line though driveways and drive aisles are
+      expressly permitted there. Written inside the cottage cluster section and switched on by
+      that housing type, which this screen does not place. Gladstone prints the section once per
+      residential chapter, so this is the same reading as the R-5 card.
+    fingerprint: d2ff854bb327f7de
+  "17.12.r-5.txt#17.12.065":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The R-5 copy of the cottage cluster design standards -- fifteen-foot courtyard, parking kept
+      twenty feet off a street line and ten feet off any other, detached garages capped at four
+      hundred square feet, garage doors at twenty feet wide. A housing type this screen does not
+      place, and a garage this project has ruled the pod does not carry.
+    fingerprint: 85cf7487d90235f3
+  "17.10.r-7.2.txt#17.10.060":
+    queue: condition
+    outcome: never
+    note: >-
+      Roof pitch, and the reason it cannot bind is structural rather than dimensional: it is item
+      (j) of a list the code offers as design alternatives, from which a proposal satisfies some
+      stated number of items. A menu item is not a requirement until it is chosen, and choosing it
+      is the applicant's decision at design time rather than a condition of the lot. This is the
+      design-menu shape this project has now seen in four cities, and the standing rule is the
+      same each time -- an applicant's choice cannot fail a lot, because a different choice is
+      always available. The pitch figure would in any case describe the roof of a pod whose height
+      we already measure against the ceiling.
+    fingerprint: 8a206ecb910cca80
+  "17.12.r-5.txt#17.12.060":
+    queue: condition
+    outcome: never
+    note: >-
+      The same roof-pitch item as 17.10.060, printed again in the R-5 chapter -- Gladstone repeats
+      its design list zone by zone. Item (j) of a menu of design alternatives, satisfied by
+      choosing other items instead, so it states nothing the lot must be able to hold. Ruled the
+      same way for the same reason, and recorded separately because a ruling on one chapter must
+      not silently close another.
+    fingerprint: f710808666c20908
+  "17.48.parking.txt#17.48.060":
+    queue: condition
+    outcome: never
+    note: >-
+      An industrial parking requirement conditioned on employee count -- the row applies to a use
+      with fifty or more employees. A four-unit dwelling has no employees, and Gladstone's
+      residential parking rows are elsewhere in the same chapter and are what this corpus encodes.
+      The condition is about a class of use this project never proposes, so the number behind it
+      can never be reached.
+    fingerprint: 448c1ec7f8bd194c
+  "17.06.definitions.txt#17.06.491":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      One line, and it is the definition of a senior housing center -- "a residential facility
+      providing dwelling units without full kitchens", the residential-care shape. Four units with
+      full kitchens on a single lot is not that building, and Gladstone defines the quadplex
+      separately. A definition that names a use we do not place states nothing about ours.
+    fingerprint: b18de2a42cf99eba
+  "17.06.definitions.txt#17.06.148":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Gladstone's definition of a cottage cluster, and it is the state's own words carried into a
+      city code: "a grouping of no fewer than four detached dwelling units per acre with a
+      footprint of less than 900 square feet each that includes a common courtyard". Detached,
+      courtyarded, 900 square feet apiece. This project places one attached four-unit structure,
+      which Gladstone defines separately, and the 900-square-foot footprint on this card is a
+      ceiling on a building we are not proposing rather than one on ours. Identical in substance
+      to the OAR 660-046-0020 card ruled the same day, which is worth saying: the same sentence
+      appears in the state rule and in at least two city codes, so a reader who meets it a third
+      time should recognise it rather than re-argue it.
+    fingerprint: 87d3b937ae52030c
+  "17.06.definitions.txt#17.06.435":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The definition of a recreation vehicle -- a vacation trailer or self-propelled vehicle
+      equipped with wheels for highway use, intended for human occupancy. A thing that is parked,
+      not a thing that is built, and Gladstone's chapter defines it in order to regulate where one
+      may be stored. Nothing about a four-unit structure on a lot turns on it.
+    fingerprint: 5e9726b74a45d793
+  "17.06.definitions.txt#17.06.358":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "Net acre" -- 43,560 square feet less road rights-of-way and other public dedications, and
+      less environmentally constrained areas: open water, the FM district, the WQ District, Goal 5
+      natural resource areas, slopes over 25 percent, and wetlands needing a Section 404 permit.
+      This is one of the denominators this project catalogues, and it is already read and quoted
+      in this layer's notes -- it is the sentence that names all four of Gladstone's environmental
+      overlays in one breath and the reason they were screened on 2026-09-03. It closes here
+      because of what it is a denominator FOR: net acre is the base for maximum DENSITY, units per
+      acre, and density is not what this screen tests. The screen asks whether one pod fits one
+      lot, so it measures lot area, setbacks, coverage and the court -- never a unit count against
+      an acre. Worth the reminder that seven cities in this corpus define a net acre seven
+      different ways, so this definition may never be borrowed sideways to another jurisdiction's
+      number.
+    fingerprint: c377bf0e3af20964
+  "17.25.hcad.txt#17.25.040":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Exemptions from the Habitat Conservation Area District -- temporary clearing of up to 200
+      square feet per lot of record for site investigations and test pits, and utility facilities
+      adding less than 500 square feet of new impervious surface. Doors out of the overlay, so
+      they loosen, and the overlay itself was read in full on 2026-09-03 when all four of
+      Gladstone's environmental districts were screened for the first time. The decision lives
+      beside the screening layers rather than in this file, and one part of it is worth restating
+      here because it runs against instinct: 17.25.110 hands ground BACK -- "for parcels that
+      contain a Habitat Conservation Area, the minimum front, rear, and side yard setbacks shall
+      be zero" -- and it is deliberately unencoded, because the only HCA boundary anyone publishes
+      for Gladstone is Metro's regional inventory standing in for the HCA Map the Comprehensive
+      Plan adopts, and a grade C proxy may take ground away but may not hand it back.
+    fingerprint: 5f6381a29aad18cc
+  "17.25.hcad.txt#17.25.090":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      A single table footnote -- "5 Only if within 300 feet of a river or surface stream" --
+      qualifying a row in the HCAD's classification table. It is a boundary condition on where the
+      overlay applies, which is the overlay layer's business and not this file's, and it is inside
+      the chapter read on 2026-09-03. A footnote that narrows where a map applies cannot state a
+      dimension for a building.
+    fingerprint: 38fb54af876c4992
+  "17.25.hcad.txt#17.25.100":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The HCAD's development allowances and mitigation ladder: 50 percent of the subject property
+      up to 5,000 square feet on one tier, 65 percent up to 6,000 on another, and then the
+      disturbance shares by habitat class -- 10 percent of High HCA, 15 percent of Moderate, 50
+      percent of Low -- with the inventory rules that put all sites within 50 feet of a surface
+      stream, and forest canopy within 150 feet of a stream or wetland, into the district. Read in
+      full on 2026-09-03 with the rest of the chapter. Every figure describes how much of a MAPPED
+      HABITAT AREA may be disturbed, which is a share of the overlay rather than a share of the
+      lot, and the overlay's extent is held by the screening layer on a Metro proxy. Two of these
+      numbers read as though they capped development on the whole parcel -- "50 percent of the
+      area of the subject property, up to a maximum of 5,000 square feet" is the ceiling on how
+      much HCA may be developed, not on how much building a lot may carry -- and that misreading
+      is the reason this card is closed with a sentence rather than a shrug.
+    fingerprint: 2384076ebb998cff
+  "17.27.wq.txt#17.27.020":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The Water Quality Resource Area District's vegetated corridor widths, printed as the Metro
+      Title 3 ladder they are: 50 feet where the slope is under 25 percent, 15 feet on the shallow
+      limb, and the branches for slopes of 25 percent or more running 150 feet or more against
+      less than 150 feet. A vegetated corridor is measured from a protected water feature, so it
+      is corridor geometry -- carved by the overlay layer, which has held Gladstone's WQ district
+      since 2026-09-03 -- and never a setback from a lot line. This is the same treatment
+      Fairview's creek corridors, Milwaukie's WQRs, Tualatin's wetlands chapters and Portland's
+      top-of-bank rules all get, and the consistency is the point: a corridor width encoded as a
+      yard would apply to every lot in the city instead of the few the water actually reaches.
+    fingerprint: d2c9a9d96c74e955
+  "17.27.wq.txt#17.27.042":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "The site plan shall be drawn at a scale of no less than one inch equaling 20 feet" -- a
+      drafting instruction for a submittal. Not a statement about land at all, and the only reason
+      it reaches this queue is that it contains a number with feet after it. The chapter it sits
+      in was read on 2026-09-03; nothing else on this card.
+    fingerprint: 7629c6ca9a1816d2
+  "17.10.r-7.2.txt#17.10.030":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      READ THE FIRST LINE AND THE WHOLE CARD CHANGES MEANING. "Accessory dwelling units, garages
+      and carports, storage and other buildings shall meet the following minimum setback
+      standards" -- so the 20-foot front, 7.5-foot side, 20-foot street side and 15-foot rear on
+      this card are the ACCESSORY building's yards, not the dwelling's. R-7.2's primary setbacks
+      are encoded in this layer from their own row. The rest is the accessory apparatus: two
+      reduction ladders keyed to floor area (five feet at 450 square feet, three feet at 120), a
+      five-foot yard for uncovered decks over 30 inches, fences, and the ADU rules -- 800 square
+      feet or 75 percent of the primary dwelling, a 26-foot height, and a menu of two-from-a-list
+      design details. An ADU is a different building and this pod has no garage, which is a ruling
+      on the record.
+    fingerprint: 6435780e7a8923a8
+  "17.12.r-5.txt#17.12.030":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The R-5 copy of the same accessory-building section -- 20-foot front reducible to 10 inside
+      Gladstone Town Center, five-foot side, 20-foot street side, 15-foot rear, a zero-setback
+      exception for one accessory structure under 450 square feet, decks at five feet, fences, and
+      the same 800-square-foot 26-foot ADU with its design menu. Accessory buildings, garages and
+      carports by its own opening sentence, and R-5's primary yards are encoded from their own
+      row.
+    fingerprint: 0c9ebb55088dbd56
+  "17.48.parking.txt#17.48.030":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Forty-six statements and the great majority of them are one thing: Gladstone's parking ratio
+      table, priced by use and by three intensity columns -- retail at one space per 300, 196 or
+      161 square feet; office at 370, 294 and 244; a clinic at 256, 204 and 170; a restaurant at
+      300, 52 and 44; a bank, a bowling alley, a dancehall, a skating rink, a sports club at 4.3,
+      5.4 and 6.5 per thousand; manufacturing on a five-step floor-area ladder from 25,000 to
+      200,000 square feet; warehousing on a three-step one; a mortuary priced per eight feet of
+      bench. Other people's buildings, and what the pod owes is held in this layer from the
+      residential row. Three residential-adjacent lines ride along and all three LOOSEN: on-street
+      parking may count toward the requirement, off-site parking is allowed on another parcel
+      within 2,000 feet walking distance, and a unit under 750 square feet requires none at all.
+      The 40 percent canopy is gated at half an acre of new surface parking.
+    fingerprint: 9514b9c49887b0d9
+  "17.48.parking.txt#17.48.040":
+    queue: nofield
+    outcome: design
+    note: >-
+      Layout rules for a parking area: an accessible space no further than 200 feet from the
+      building measured in a straight line, required parking in the same district or a more
+      intensive one, up to 50 percent of spaces sized for compact cars, and a general instruction
+      to avoid large uninterrupted rows. The compact allowance is the applicant's choice and
+      loosens; the accessible-space distance is a placement rule inside an area whose size the
+      stalls and aisle already fix, and this project has already established that a four-unit
+      two-storey pod with no elevator owes no accessible stall under the state building code. The
+      one line that does state a dimension for the court -- "off-street parking and loading areas,
+      including parking spaces and access aisles, shall meet or exceed the minimum dimensional
+      standards identified in Tables 2 and 3" -- is a pointer, and those tables are read and
+      encoded in this layer.
+    fingerprint: c09eb7c3fc661db5
+  "17.12.r-5.txt#17.12.040":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Community commercial within 200 feet from the Portland Avenue C-2 district" -- one entry on
+      R-5's conditional use list, letting a small shop sit near an existing commercial spine. A
+      different use, reached by a conditional use hearing, and 200 feet is the reach of a district
+      boundary rather than a dimension of a building.
+    fingerprint: 9dc4c6f630a0373e
 definitions:
   # "'Corner lot' means the total area of a lot abutting on two or more streets,
   # other than an alley, at their intersection."

@@ -87,6 +87,636 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+readings:
+  "19.163.txt#19.163.050":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Fences around recreational courts, and electric fences capped at ten feet and required to be
+      surrounded by a second non-electric fence. Fence heights, on a use this screen does not
+      place, and no reading of them changes the maximum height of a dwelling.
+    fingerprint: 3fd1eac1f29351c3
+
+  "19.65.txt#19.65.090":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Chapter 19.65 is the Town Center Commercial (TCC) district and this file holds TCC at
+      quadplex_allowed false, so nothing in it can reach the pod. The card would be closed on that
+      alone, but every statement in it is also a design standard rather than a dimension: a
+      twelve-foot ground floor for commercial space, ground-floor window coverage on street-facing
+      facades, entrance counts, a forty-eight square foot private open space at a particular
+      height above the right-of-way, light fixtures spaced thirty feet apart, and then a points
+      menu -- three points for an eight-hundred square foot outdoor common area, three for a
+      community garden of raised beds, three for a children's play area, two for a fifteen-foot
+      ground floor, one for a thirty-two square foot mural. A points menu is the applicant's
+      choice among ways to earn a number, not a floor the land has to clear.
+    fingerprint: 60712976d13c6a67
+  "19.164.txt#19.164.040":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Bicycle parking ratios: one short-term space per ten vehicle spaces within thirty feet of
+      the main entrance for multi-unit dwellings, one long-term space per dwelling unit which may
+      sit in a garage, storage shed, basement or utility room, and the same again for commercial
+      and institutional development at fifty feet. The pod owes four long-term spaces on this
+      reading and the code names indoor locations that satisfy them, so nothing here consumes lot
+      area or refuses a site.
+    fingerprint: 2da29046d1decbaa
+  "19.120.txt#19.120.040":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Chapter 19.120 is the Village Townhouse Residential (VTH) district, and this file holds VTH
+      at quadplex_allowed false: Fairview permits a quadplex in R-6, R-7.5, R-10, RM and VSF and
+      nowhere else. So the seventy percent lot coverage and the zero-foot side setbacks in this
+      section govern a district the pod cannot be placed in, however townhouse-shaped its own form
+      is. Worth being explicit about that, because the name of the district invites the opposite
+      reading: our four attached units are a townhouse row in every physical sense, and it is the
+      use table rather than the shape that decides.
+    fingerprint: e410b738aa7ff216
+  "19.130.txt#19.130.040":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Chapter 19.130 is the Village Office (VO) district, held here at quadplex_allowed false. Its
+      development standards are a fifty-five foot height with tower elements to seventy, and no
+      setback requirements at all -- generous, and unreachable, because the use table keeps the
+      pod out of the district before any dimension is tested.
+    fingerprint: 66e2f47ae57b3d3b
+  "19.80.txt#19.80.040":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The eighty-five percent lot coverage maximum of Fairview's light industrial district, which
+      this file holds at quadplex_allowed false. The sentence is also unusual enough to note in
+      passing: Fairview computes coverage as buildings plus impervious paved surfaces including
+      access, so it is an impervious cap rather than a building footprint cap. Irrelevant here,
+      and worth remembering the day a Fairview residential zone is read for the same word.
+    fingerprint: ef84aee31525f269
+  "19.85.txt#19.85.040":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The general industrial district's eighty-five percent lot coverage, the twin of the light
+      industrial one a chapter earlier and computed the same way, buildings plus impervious paving
+      including access. Fairview holds GI at quadplex_allowed false, so no lot the screen looks at
+      is measured against it.
+    fingerprint: 5f947009fa0a4e66
+  "19.30.txt#19.30.060":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Section 19.30.060 is titled "Design standards for cottage clusters" -- the chapter's own
+      table of contents settles it, with 19.30.040 covering single-unit dwellings, duplexes,
+      triplexes and quadplexes and 19.30.050 covering townhouses. So the nine-hundred square foot
+      cottage footprint, the fifteen-foot common courtyard, the twenty-foot and ten-foot parking
+      setbacks and the four-hundred square foot detached garage all belong to a housing type this
+      screen does not place. The two sections either side of it are where a quadplex's design
+      standards live, and this file quotes them.
+    fingerprint: c2647982a0f617fd
+  "19.13.definitions.txt#19.13.060":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Two definitions from Fairview's definitions chapter, not standards. The first is an
+      exclusion from floor area -- roofed porches and exterior balconies do not count unless walls
+      more than forty-two inches high enclose three-quarters of their perimeter -- and the second
+      is the worked example of what a floor area ratio means, 0.7 to one being 0.7 square feet of
+      floor for each square foot of site. Both tell you how to compute a number that some other
+      section imposes. This file states no FAR for any Fairview zone the pod can be placed in.
+    fingerprint: b745f51c4742c94d
+  "19.13.definitions.txt#19.13.020":
+    queue: condition
+    outcome: cant_tell
+    note: >-
+      Fairview's height datum, and it is a genuine site condition rather than a nuisance. The
+      definition sets the point building height is measured from: normally the higher of the
+      adjoining grades, but on a site that falls more than ten feet across it, the lowest grade
+      plus ten feet. On a steeply falling lot the reference point moves and the effective ceiling
+      changes. The pod stands 26 feet against Fairview ceilings that leave roughly nine feet of
+      slack, so this is not obviously fatal -- but slack of nine feet against a datum shift of up
+      to ten is exactly the range where the answer depends on the parcel. Nothing in this pipeline
+      measures a lot's fall. Filed as depending on the site: it belongs with the unmeasured site
+      facts alongside slope, and it is answerable by data rather than by more reading.
+    fingerprint: 47ffe244eb6ce6b3
+  "19.65.txt#19.65.060":
+    queue: condition
+    outcome: never
+    note: >-
+      A height step-down in the Town Center Commercial district, conditioned on proximity to a
+      lower-height district. Fairview's TCC prohibits the quadplex outright, so the use gate
+      answers red before any height row is read and this condition can never be reached on a lot
+      this screen would otherwise pass. Recorded rather than skipped because a step-down
+      conditioned on the neighbour's zoning is the shape that bit this project in Portland's
+      commercial zones, and the reason it does not bite here is the use table, not the geometry.
+    fingerprint: a832f13ac95cb8d1
+  "19.70.txt#19.70.040":
+    queue: condition
+    outcome: never
+    note: >-
+      A lot coverage figure in the Corridor Commercial district. Fairview's CC does not permit a
+      quadplex, so the district is answered red at the use gate and its coverage row is never
+      consulted. The zone is encoded with quadplex_allowed false, which is a reading from the
+      city's own use table rather than an assumption, so the closure rests on a document and not
+      on a category.
+    fingerprint: b4ad900dce5f9124
+  "19.70.txt#19.70.060":
+    queue: condition
+    outcome: never
+    note: >-
+      Height standards in the Corridor Commercial district, same district and same reason as its
+      coverage row: CC does not permit a quadplex. A height ceiling in a zone the building may not
+      be placed in cannot bind the building.
+    fingerprint: 4a21801fbcc2e4ac
+  "19.80.txt#19.80.050":
+    queue: condition
+    outcome: never
+    note: >-
+      Height standards in Fairview's Light Industrial district, which does not permit dwellings of
+      this type. The condition on the card is a proximity step-down, and like the Town Center one
+      it is unreachable because the use gate closes first. Light industrial land is also on this
+      project's excluded-chapter list for land we do not build on, so the section is doubly out of
+      scope.
+    fingerprint: 444e9763462a21d7
+  "19.85.txt#19.85.060":
+    queue: condition
+    outcome: never
+    note: >-
+      Height standards in Fairview's General Industrial district. Quadplexes are not permitted
+      there, so no dimensional row of the district is ever consulted for this building. Ruled
+      separately from the Light Industrial card because they are separate districts with separate
+      use tables, and one ruling must not be made to cover two documents.
+    fingerprint: dfe54a417970857e
+  "19.80.txt#19.80.030":
+    queue: condition
+    outcome: never
+    note: >-
+      Fairview's Light Industrial rear and side setbacks: none required, except twenty feet where
+      the building is set back from a residential district. It is the abutting-a-residential-zone
+      hinge that recurs across this corpus, and here it cannot be reached because the district
+      prohibits the dwelling. LI is encoded quadplex_allowed false from the city's own use table,
+      and industrial land is on this project's excluded list besides.
+    fingerprint: 466a2c6a15917fe0
+  "19.65.txt#19.65.070":
+    queue: condition
+    outcome: never
+    note: >-
+      The Town Center Commercial bonus menu: ten feet of extra height for each of two options
+      taken, up to twenty, and a percentage credit against the off-street parking requirement.
+      Options B1 through B3 are what earns them -- ground-floor commercial space across half the
+      street frontage, three or more small tenant spaces, or ten to twenty percent of the units
+      made affordable at stated income levels. Elective commitments, every one, and each raises a
+      ceiling or lowers a requirement. TCC also prohibits the quadplex, so the district is
+      answered at the use gate before a bonus could be considered.
+    fingerprint: 79095c5c81f65521
+  "19.115.txt#19.115.040":
+    queue: condition
+    outcome: never
+    note: >-
+      Six statements from the Village Single Family zone, and they divide cleanly. Four are garage
+      standards -- four out of five attached garages set back 20 feet from the front facade, the
+      creek-lot garage exception at four feet, detached garage rear setbacks -- and this project's
+      standing ruling is that the pod carries no garage. The two that are not about garages are
+      the creek rules: on a lot abutting Fairview Creek the rear property line is the creek
+      centerline and the rear setback is 50 feet; on Clear Creek it is 37.5. Those are real and
+      severe against this zone's 15-foot rear yard, and the reason they change nothing is that a
+      stricter rule over the same ground is already applied by a different part of the pipeline.
+      Chapter 19.106 is the authority the overlay layer carves Fairview resource corridors on, and
+      19.106.050(B) forbids development within seventy feet of the corridor centred on Fairview
+      Creek and (C) within forty-five feet of the Clear Creek corridor -- wider than the 50 and
+      the 37.5 this section states. A lot that clears the corridor carve clears the zoning setback
+      automatically, so encoding the narrower number would add a test that can never be the
+      binding one.
+    fingerprint: cf39c5f3e4eef385
+  "19.163.txt#19.163.030":
+    queue: condition
+    outcome: never
+    note: >-
+      Landscaping standards, and the five statements are of two kinds. Three are site landscaping
+      percentages for the general industrial, light industrial and neighborhood commercial
+      districts -- ten percent of the site each -- and none of those districts permits this
+      dwelling. The other two are the parking-lot tree canopy and solar alternative, and the
+      section states its own threshold two lines above them: the standard is triggered by "a new
+      development, or modification to an existing development, that adds more than one-half acre
+      of new surface parking". Six stalls and an aisle come to roughly two thousand square feet
+      against a threshold of nearly twenty-two thousand, a tenth of it. The five percent
+      landscaping that does apply to any parking area is a planting requirement inside the parking
+      area rather than a dimension of it.
+    fingerprint: feb636769103660d
+  "19.30.txt#19.30.030":
+    queue: nofield
+    outcome: design
+    note: >-
+      "All buildings shall have their primary entrance(s) oriented to the street", with multi-unit
+      entrances allowed to be individual doors, a lobby or a breezeway, and no parking or drive
+      between the building and the street where the placement standard is met. Which way the front
+      door faces. The parking limb is the same 19.30.040(E) sentence this layer has already read
+      and recorded as a frontage share rather than a ban.
+    fingerprint: f73d33167b2ea9ed
+  "19.30.txt#19.30.080":
+    queue: condition
+    outcome: never
+    note: >-
+      Fairview's accessory-structure and accessory-dwelling standards, and every number on the
+      card measures a building this project does not propose. Detached accessory dwellings are
+      held to 20 feet of height; an accessory structure of 200 square feet or less must sit behind
+      the front facade of the main building; the maximum size of an accessory structure is 1,000
+      square feet on a lot up to an acre; a detached accessory structure on a corner lot takes a
+      minimum side yard. The pod is a single primary structure holding four attached units and
+      carries no shed, no garage and no second cottage -- the garage question was ruled on
+      2026-09-08 and the answer was that there is none. An accessory-structure setback wearing the
+      zone's citation is the expensive kind of wrong, which is why this is recorded rather than
+      skipped.
+    fingerprint: ed7eeefe3643085d
+  "19.135.txt#19.135.030":
+    queue: condition
+    outcome: never
+    note: >-
+      Every standard on this card is written for the VMU zone, and VMU does not permit this
+      building -- `quadplex_allowed` is false there, checked against the encoding rather than
+      assumed. So the parking lot held to no more than 50 percent of the street frontage, the
+      awning that may reach four feet into the right of way at a minimum clearance of seven, the
+      extra requirement on buildings in the "four corners area" of Figure V-1, and the front
+      facade that must be no less than 18 feet measured from street grade are all rules for a
+      district this screen never places a pod in. Worth naming the one that would have mattered:
+      the 18-foot minimum FACADE height is a floor rather than a ceiling, and a minimum building
+      height is the field gap this project has now met in seven jurisdictions. It stays a gap;
+      this card is not the place it bites.
+    fingerprint: 44f907905e241605
+  "19.85.txt#19.85.070":
+    queue: condition
+    outcome: never
+    note: >-
+      Chapter 19.85 is Fairview's general industrial district. The 90 percent lot coverage, the
+      60-foot base height and the 70 feet available through a conditional use permit are that
+      district's standards, and this project places dwellings. The height numbers are also the
+      wrong direction to matter: both are ceilings more than twice the pod's 26 feet, so even in a
+      zone that permitted the use they could not bind. Recorded rather than skipped because
+      "industrial" is a filter this queue applies by hand and a filter nobody wrote down is a
+      filter that stops being applied.
+    fingerprint: 9b53916fed6e2e5a
+  "19.162.txt#19.162.020":
+    queue: condition
+    outcome: never
+    note: >-
+      The access-and-circulation chapter, and the row this building stands on was settled when
+      19.162.020(L) was read: L.1 names "Single-unit dwelling, duplex, triplex, quadplex, and
+      townhouse uses" and gives them a minimum driveway width of 10 feet and a maximum of 24, and
+      that pair is already encoded off this document with 19.30.040(F)(1)'s 32-foot frontage cap
+      beside it. Everything left on this card is another row or another scale. Line 109 is L.3,
+      developments of more than eight dwelling units and parking areas of sixteen or more spaces,
+      at 24 to 30 feet; line 111 is L.4, "all other uses", which by construction is not a use L.1
+      already named. Line 87 is the block standard -- 530 feet of length and 1,600 feet of
+      perimeter in the residential district -- which measures a street grid and not a lot, and
+      reaches this project only if it were a subdivision laying out new blocks. Line 41 is F,
+      Access Options, whose own sentence calls the four methods "options": alley or mid-block
+      lane, shared driveway, frontage street, direct access. A menu the applicant picks from does
+      not narrow a building envelope, and where one of its branches is cheap it cannot refuse a
+      lot. Worth stating rather than skipping because L.2 sits between the two rows that do not
+      reach us and reads as though it might: "Multiple-unit uses and cottage clusters with between
+      four and seven dwelling units shall have a minimum driveway width of 20 feet". Four dwelling
+      units is what this pod has. It is still not our row, because a quadplex is named a line
+      above in L.1, and a code that lists quadplex separately from multiple-unit uses in
+      consecutive sentences has decided which is which. Twenty feet against ten is a doubling, so
+      reading that row by unit count rather than by use class would have taken ten feet of
+      frontage off every Fairview lot.
+    fingerprint: 1e9930276760b8ed
+  "19.106.txt#19.106.050":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Fairview Creek and Clear Creek conservation easements inside Fairview Village, and this
+      chapter has already been read in full -- 2026-09-02, to verify a screening layer rather than
+      to encode a value -- with both of this card's sentences quoted in the layer note.
+      Development is prohibited within 70 feet of the corridor centred on Fairview Creek and
+      within 45 feet of the Clear Creek corridor, and the easement itself runs not less than 50
+      feet from the Fairview Creek centreline and 37.5 from Clear Creek's. That is a hard
+      prohibition and the reason it is not encoded here is not that it is small: a resource
+      corridor is geometry, the overlay layer carves it out of buildable area on this chapter's
+      authority, and this file holds the zoning standards that stand beside it. The card exists
+      because a chapter screened by geometry is never quoted by a value, which is the one blind
+      spot in how this queue is built and is worth naming rather than closing silently. One trap
+      in the neighbourhood is already on the record too: 19.106.040 C says the general development
+      standards "do not apply to Fairview Lake or natural resources located within Fairview
+      Village", which reads as a loosening and is not, because 19.106.050 puts a wider easement
+      over the same ground.
+    fingerprint: c022cf92a509164b
+  "19.110.txt#19.110.035":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Monument sign dimensions -- 75 square feet of face area, 12 feet tall, 15 feet wide, and a
+      base no more than 36 inches deep. A sign is not a structure this screen places and it
+      competes with nothing this screen measures: it takes no footprint from the pod, no setback,
+      and no verdict anywhere in this project turns on one. Sign chapters recur across all
+      fourteen cities and are closed on the same reasoning each time.
+    fingerprint: cd60660cd779a8e8
+  "19.140.txt#19.140.020":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      On-site pedestrian ways, and the one measuring line is a cap on lighting: "pedestrian ways
+      shall be illuminated throughout the length with pedestrian scale lighting not to exceed 20
+      feet in height". A light pole's height is not the building's, it takes no buildable area,
+      and this section's own title scopes it to commercial, multi-unit dwelling, institutional and
+      office development in the Village. Two reasons and either would do.
+    fingerprint: c34764e59de40c8b
+  "19.140.txt#19.140.090":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Bicycle parking construction standards: when more than seven bicycle spaces are required,
+      half must be covered, and when more than fifteen covered spaces are required, half of those
+      must be enclosed. Both are conditional on a bicycle space count that a four-unit building
+      does not reach, and both describe how a rack is sheltered rather than how much land it
+      takes. Nothing on the card touches the pod's footprint, its parking court, or a yard.
+    fingerprint: 58308ec1de3b810f
+  "19.140.txt#19.140.100":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The blank wall standard: windows must occupy at least 50 percent of the length and 25
+      percent of the ground level wall area, on "exterior building walls which abut sidewalks,
+      plazas, or other public open spaces", with a recess-and-landscape alternative. A facade
+      treatment with a menu attached -- glaze the wall or step it back three feet in fifteen-foot
+      increments and plant it -- and neither branch changes the rectangle the building occupies or
+      where on the lot it may sit. Design standard, not modelled, and the same answer this corpus
+      gives every transparency percentage it meets.
+    fingerprint: bd27648d55019f19
+  "19.106.txt#19.106.040":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Fairview's natural resource general development standards, already read in full on
+      2026-09-02 and written into this layer's note -- the corridor widths of 35, 40, 55 and 80
+      feet, and the trap in subsection C, which says the general standards "do not apply to
+      Fairview Lake or natural resources located within Fairview Village" and reads as a loosening
+      while 19.106.050 puts a wider easement over the same ground. The four lines on this card are
+      the residue that read did not need to quote: an exemption for invasive vegetation removal of
+      300 square feet or less per year, a 10-foot buffer outside the 40-foot riparian protection
+      area, and the DENSITY TRANSFER machinery -- "in order to accommodate any transferred
+      residential densities, dimensional standards and lot sizes may be adjusted by no more than
+      20 percent", with a credit of 10,000 square feet of floor area per acre on commercial and
+      industrial land. That transfer is the one thing here worth a sentence of its own, because a
+      20 percent adjustment of dimensional standards and lot sizes sounds like it could move a
+      verdict. It cannot: it is relief granted to a development that gives up buildable land
+      elsewhere in exchange, at land division, and this screen places a pod on a lot that exists.
+      It also runs both ways by its own words -- "adjusted" -- so encoding it would be encoding a
+      discretion.
+    fingerprint: 77bd0a4e8b75c486
+  "19.106.txt#19.106.060":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      One line, and it is a permission: in the Fairview Lake Area, decks and similar structures
+      are allowed in the buffer setback area provided no more than 20 percent of the lot width
+      within that area is occupied by them. A rule about what may intrude into a resource buffer,
+      not a rule about the lot -- the buffer is the overlay layer's geometry, the deck is a
+      structure this screen does not place, and the whole sentence is an allowance rather than a
+      limit. Chapter 19.106 was read to the ground on 2026-09-02 and the reasons are in the layer
+      note.
+    fingerprint: bd1261824f5eaab1
+  "19.106.txt#19.106.070":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "Greater than 15 feet from the outer limits of the 35- or 40-foot resource protection area"
+      -- a distance band in the table that decides which activities need which review inside
+      Fairview's natural resource overlay. It measures from the resource, not from a lot line,
+      which is the whole reason this corpus screens resource corridors with geometry rather than
+      encoding them as yards: a corridor written as a setback would apply to every lot in the city
+      instead of the few the water reaches. Chapter read 2026-09-02; the widths are quoted in this
+      layer's note.
+    fingerprint: d4180c5c6ead9b1c
+  "19.106.txt#19.106.080":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The inventory table of Fairview's protected corridors, stated as total widths measured from
+      a centreline -- 160 feet total on the widest creek (80 each way), 110 (55 each way), 80 (40
+      each way), 70 (35 each way), and the stream pair at 100 (50 each way) and 75 (37.5 each
+      way). These are the numbers already read on 2026-09-02 and quoted in this layer's note, and
+      they are the strongest environmental constraint in the city: development is prohibited
+      within 70 feet of the Fairview Creek corridor centreline and within 45 of Clear Creek's. Not
+      encoded here, and not because they are small -- because they are geometry. The overlay layer
+      carves them out of buildable area on this chapter's authority and this file holds the zoning
+      standards that stand beside it. Worth repeating on this card because a reader meeting these
+      six lines cold would reasonably ask why a corpus that encodes a five-foot side yard does not
+      encode an eighty-foot one, and the answer is that one is measured from a lot line and the
+      other from a creek.
+    fingerprint: 75f55aecda6b3ff2
+  "19.165.txt#19.165.025":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Street design standards: local street intersections separated by at least 125 feet, and a
+      dead-end street no more than 200 feet long serving no more than eight dwelling units. Both
+      are rules for whoever is LAYING OUT STREETS -- a subdivider drawing a plat -- and neither is
+      a standard a building on an existing lot can meet or fail. The cul-de-sac limb is worth
+      naming because "shall not provide access to greater than eight dwelling units" is the shape
+      that could bind: if a pod's four units were added to an existing dead-end street already
+      serving five, the street would be over. It still is not this screen's question, for the same
+      reason the Tualatin flexible-lot conditions are not -- it is a fact about a street's
+      existing occupancy that no parcel record holds, and it is enforced against the person who
+      created the street, not against the next building on it.
+    fingerprint: 107d0cf226e6881f
+  "19.110.txt#19.110.040":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The definitions section of Chapter 19.110, and the line the reader caught is the front
+      porch: "an open roofed structure attached to the front of the dwelling unit. A front porch
+      shall have a minimum depth of six feet and a minimum width of 12 feet." A definition, so it
+      binds only where a standard elsewhere requires a porch -- and where one does, the six feet
+      of depth would sit in the front yard as a projection rather than displace the building. Two
+      other definitions in the same list are worth recording even though they carry no number this
+      screen takes. "Common line setback means the combined setback distance between two
+      structures on abutting lots" -- a setback that depends on the NEIGHBOUR's building, which is
+      the neighbours'-side shape this project has already catalogued and holds nothing for. And
+      "Net acre means all area within a private development zone excluding public rights-of-way",
+      which is Fairview's entry in the seven-cities-seven-net-acres list: it deducts only
+      rights-of-way, where Gladstone's also deducts four environmental districts and slopes over
+      25 percent, and Tualatin's deducts floodplain, drainage ways and wetlands and then offers a
+      20-or-15-percent formula in place of measuring. Three definitions of the same two words in
+      one county, and none may be borrowed sideways.
+    fingerprint: dfbe59db895c2d9b
+  "19.140.txt#19.140.010":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The block-length trigger in Fairview Village's general standards: a pedestrian connection is
+      required where a block is longer than 600 feet, or on a dead-end street, loop or mid-block.
+      A rule about where a walkway must be cut through a block, aimed at whoever is creating the
+      block. It takes no land from a lot that already exists and it states no dimension for a
+      building. Same stage and same answer as 19.165.025's intersection spacing, ruled the same
+      day.
+    fingerprint: 88610bab62266a9d
+  "19.140.txt#19.140.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Two things, and they are the two halves of a street rather than a lot. "All alleys shall
+      constitute public streets with a minimum right-of-way of 16 feet" is a dedication standard
+      for a subdivider -- and worth noting for a different reason, since alley presence is one of
+      the site facts this corpus holds unmeasured and several cities' parking rules turn on it;
+      this sentence says what an alley is in Fairview, not whether any lot has one. The second is
+      the vision clearance triangle at intersections of streets and alleys, which caps how tall a
+      thing may be near a corner. A vision triangle constrains a hedge, a fence or a sign; it
+      cannot take ground from a rear court, and the objects it governs are ones this model gives
+      no width.
+    fingerprint: 1ac388141f95d45b
+  "19.140.txt#19.140.070":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Planting specifications: deciduous trees fully branched with a minimum two-inch diameter
+      measured five feet above the ground at planting, and the evergreen equivalent. A nursery
+      spec for what goes in the hole, not a rule about how much land the hole takes. The same
+      answer this corpus gives Wilsonville's twelve-foot evergreens and its
+      ninety-five-percent-opaque shrub screen, both closed on the same reasoning within the last
+      week.
+    fingerprint: bd38f380207f5e91
+  "19.164.txt#19.1":
+    queue: nofield
+    outcome: design
+    note: >-
+      Two lines from the vehicle parking chapter, arriving under the key "19.1" -- a page header
+      the sectioner took for a heading, the ninth attribution slip of this pass. The first is a
+      pointer: stall dimensions and compact spaces "in accordance with" Figure 19.164.030.D, and
+      the figure's numbers are read and encoded in this layer as the stall width and depth. The
+      second is the EV conduit requirement, which opens at "new multi-unit residential buildings
+      with FIVE OR MORE residential dwelling units" and so does not reach a four-unit pod -- and
+      conduit is buried service in any case, not floor area. Portland's identical requirement at
+      33.266.110.C was ruled the same way and for the same threshold reason.
+    fingerprint: d1ebd808f216d44b
+  "19.30.txt#19.30.090":
+    queue: nofield
+    outcome: design
+    note: >-
+      Private open space: a ground-floor unit needs a patio or deck of at least 48 square feet,
+      and at least half of the upper-floor units need a balcony or porch of the same size.
+      Forty-eight square feet is six feet by eight -- a deck, and one that sits in the yard the
+      setbacks already reserve or hangs off the building on the upper floor. The section also asks
+      that these spaces face the common open space and away from neighbours, which is orientation.
+      What Fairview requires as a SHARE of the site is held elsewhere and is encoded.
+    fingerprint: 998de5c0c928e1db
+  "19.65.txt#19.65.040":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      TOWN CENTER COMMERCIAL, AND THE ZONE'S OWN FLAG CLOSES IT -- but the sentence inside is
+      worth naming because it is the shape that has bound this pod elsewhere. "Parking and vehicle
+      circulation areas are prohibited in the setback area between the building and the street lot
+      line" is a front-parking ban, and this layer's parking_front_prohibited is `exempt` on the
+      strength of 19.30.040(E), which is the RESIDENTIAL districts' rule and permits front parking
+      subject to a frontage share. So the TCC's ban is a zone-specific tightening the layer
+      default does not carry. It does not reach this building: TCC's quadplex_allowed is false in
+      this file, because 19.65.030 designates a Halsey Street storefront subarea where
+      "residential uses shall be permitted only when part of a mixed use development", the
+      subarea's boundary is a figure this system cannot read, and the conservative reading puts
+      every TCC lot inside it. A stand-alone four-unit townhome is therefore not a permitted
+      building here, and the maximum-setback machinery on the rest of this card falls with it. If
+      TCC is ever opened by a mixed-use variant, this is the sentence to come back for.
+    fingerprint: 4f5009894a1e037f
+  "19.70.txt#19.70.050":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Corridor Commercial pedestrian access and building orientation -- pathways from the
+      right-of-way at an average maximum interval of 100 feet, primary entrances facing the
+      street, no parking between a building and the street. The CC district's quadplex_allowed is
+      false in this file: Table 19.70.020.A's residential row lists residential mixed use,
+      pre-existing manufactured homes and residential care facilities, and Fairview writes closed
+      lists, so a stand-alone four-unit townhome is refused rather than unaddressed. A hundred
+      feet of frontage is also more than a lot holding this pod has.
+    fingerprint: 1e9283e5d4d0dcd8
+  "19.13.definitions.txt#19.13.030":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Two definitions. "Constrained slope means land on slope that is between 15 to 20 percent" --
+      a band on a map, which the natural-resource and hillside screening holds rather than any
+      yard field, and which is a fact about ground rather than about a building. And the cottage
+      cluster: four or more DETACHED units per acre, each under 900 square feet, around a common
+      courtyard. That is the state's sentence carried into a city code, it appears in this corpus
+      in at least four places, and it describes a different building -- this project places one
+      attached four-unit structure, and the 900-square-foot footprint is a ceiling on somebody
+      else's cottage.
+    fingerprint: d9c082c88e4dcd68
+  "19.65.txt#19.65.050":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Town Center Commercial block layout -- exceptions to the alley-or-interior-parking-court
+      standard, and longer blocks allowed in exchange for a mid-block pedestrian pathway. Block
+      length is decided when land is platted, and the TCC district does not permit this building
+      in any case, for the storefront-subarea reason recorded on the 19.65.040 card.
+    fingerprint: dd06c965b89d82bd
+  "19.70.txt#19.70.030":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      CORRIDOR COMMERCIAL SETBACK STANDARDS, AND THEY ARE REAL NUMBERS FOR A DISTRICT THAT DOES
+      NOT ADMIT THIS BUILDING. No minimum front setback and a MAXIMUM of 20 feet, with facades
+      required to occupy at least half the frontage width at that line; a rear minimum of zero
+      feet on street-access lots and eight feet on alley-access ones. A maximum front setback is
+      the shape that binds this pod in Portland's commercial zones, so it is worth stating why it
+      does not bind here: CC's quadplex_allowed is false in this file on the strength of Table
+      19.70.020.A's closed residential row, and 19.70.090.E.2 prohibits residential mixed use east
+      of NE 223rd Avenue besides. The pod cannot be the building these setbacks are drawn for.
+    fingerprint: 6fe6b0af4d0ffbee
+  "19.13.definitions.txt#19.13.190":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Steep slopes means slopes of greater than 30 percent." A definition of ground, not of a
+      building. Where it matters is in deciding what land is constrained, which is the screening
+      layer's business, and a slope percentage is not a dimension any field here holds.
+    fingerprint: 3755272d122357af
+  "19.150.txt#19.150.020":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "The maximum width for a driveway shall be 35 feet" -- Chapter 19.150, Special Development
+      Standards for the VO, VC and VMU zones, and the sentence directly above it scopes the
+      section: shared entrances, rear yard parking and interior driveways "shall be required for
+      all NONRESIDENTIAL uses". Village commercial, mixed use and office land. The carpool and
+      vanpool marking in the same subsection is employee parking, which settles the audience
+      beyond doubt.
+    fingerprint: 13a59e6b302877d2
+  "19.30.txt#19.30.040":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Triplexes and quadplexes on lots or parcels with frontages ONLY ON LOCAL STREETS may have
+      either two driveway approaches not exceeding 32 feet in total width on one frontage, or one
+      maximum 16-foot-wide driveway approach per frontage." This names the building, and it is
+      already a recorded refusal in this layer, written beside the encoded 24-foot maximum: it is
+      a per-frontage allowance and no lot record here knows how many frontages a lot has or what
+      class they are. It is also a menu -- either-or, the applicant's choice -- and it LOOSENS
+      against the 24-foot ceiling on a single opening that this file encodes from
+      19.162.020(L)(1). A driveway approach is where the drive meets the street, drawn rather than
+      dimensioned by land.
+    fingerprint: 83053c6df7f9a5c5
+  "19.30.txt#19.30.050":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Be at an angle of up to 45 degrees from the street" -- one option in a three-way menu for
+      how a dwelling's entrance may be oriented: face the street, angle up to 45 degrees off it,
+      or face a common open space abutted by dwellings on two sides. Forty-five degrees is a
+      door's bearing, not a distance, and a menu the applicant picks from is the catalogued shape
+      that never states a requirement.
+    fingerprint: b56a21456e6dab20
+  "19.80.txt#19.80.020":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Permitted land uses in the LIGHT INDUSTRIAL district, with retail and wholesale trade capped
+      at 5,000 square feet of floor area per building. Industrial land and commercial floorplates.
+      Fairview writes closed lists and this table has no row a four-unit dwelling could stand on.
+    fingerprint: a6c2d56c584515d9
 crossrefs:
   "19.170":
     outcome: other_path
@@ -728,8 +1358,25 @@ zones:
       value: entrance_only
       quote: "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
     setback_front_ft:
+      # Table 19.30.030.A row 8, and the table is not the whole rule. 19.30.030(D)
+      # governs every zone in this chapter: in an "established residential area"
+      # -- one platted before 17 November 2001 -- the front setback of new infill
+      # must come within five feet of the nearest single-unit dwelling's on the
+      # same street, or the average of two flanking ones, floored at 10 feet and
+      # capped at 40. The 10 in the table is the floor of that range, not the
+      # standard, and holding it flat is holding the loosest end of a band four
+      # times as deep. Neither trigger is answerable here: the plat date is not
+      # in the parcel data and the neighbour's setback would need a building
+      # footprint measured to a lot line. Qualified rather than banded, the way
+      # this zone's height already is for 19.30.030(E), so the value cannot
+      # certify a depth the street may not allow.
+      # Found 2026-09-09 working the reading queue.
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L362"
+      qualified_by:
+        fact: established_residential_area
+        cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
+        quote: "or/multnomah/fairview/19.30.txt#L471,L475,L477,L479"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/fairview/19.30.txt#L387"
@@ -924,8 +1571,17 @@ zones:
       value: entrance_only
       quote: "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
     setback_front_ft:
+      # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
+      # same rule: 19.30.030(D) applies to every zone in this chapter, and in an
+      # area platted before 17 November 2001 it sets the front setback from the
+      # nearest single-unit dwelling's rather than from this row -- between 10
+      # and 40 feet. The row's number is the bottom of that range.
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L363"
+      qualified_by:
+        fact: established_residential_area
+        cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
+        quote: "or/multnomah/fairview/19.30.txt#L471,L475,L477,L479"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/fairview/19.30.txt#L389"
@@ -1109,8 +1765,17 @@ zones:
       value: entrance_only
       quote: "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
     setback_front_ft:
+      # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
+      # same rule: 19.30.030(D) applies to every zone in this chapter, and in an
+      # area platted before 17 November 2001 it sets the front setback from the
+      # nearest single-unit dwelling's rather than from this row -- between 10
+      # and 40 feet. The row's number is the bottom of that range.
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L364"
+      qualified_by:
+        fact: established_residential_area
+        cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
+        quote: "or/multnomah/fairview/19.30.txt#L471,L475,L477,L479"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/fairview/19.30.txt#L391"
@@ -1307,8 +1972,17 @@ zones:
       value: entrance_only
       quote: "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
     setback_front_ft:
+      # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
+      # same rule: 19.30.030(D) applies to every zone in this chapter, and in an
+      # area platted before 17 November 2001 it sets the front setback from the
+      # nearest single-unit dwelling's rather than from this row -- between 10
+      # and 40 feet. The row's number is the bottom of that range.
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L366"
+      qualified_by:
+        fact: established_residential_area
+        cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
+        quote: "or/multnomah/fairview/19.30.txt#L471,L475,L477,L479"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/fairview/19.30.txt#L395"

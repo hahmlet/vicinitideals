@@ -110,6 +110,813 @@ ingest:
   zoning_layer: zoning_wilsonville
   zone_field: ZONE_CODE
   strip_lowercase_suffix: false
+readings:
+  "4.planning.txt#4.163":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Wilsonville's FDA-H dimensional standards, filed under 4.163 because a cross-reference in
+      the prose above them -- "as provided in Section 4.184" -- is the nearest thing to a heading
+      the sectioning rule could find. The real home is Section 4.120, the Future Development
+      Agricultural-Holding zone, which begins three hundred lines earlier at line 4279. Thirty
+      thousand square feet of lot, thirty feet front and rear, ten feet side, and forty-five feet
+      from any lot line for a principal building or public swimming pool: a complete regime, for a
+      zone this file does not hold. Wilsonville's five FDA-H variants -- FDAHR, FDAHI, FDAHP,
+      FDAHV and FDAHC -- carry 164 lots between them and every one is zone_missing in the coverage
+      ledger. So this is not a standard we missed reading, it is a zone we have never encoded, and
+      it belongs to that queue. Holding land is also the least likely place in the city for this
+      product: thirty thousand square feet is nearly ten times what the residential zones ask.
+    fingerprint: addfc8eb134e7d25
+
+  "4.planning.txt#4.120":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The rest of the same FDA-H section that reached the 4.163 card, split from it by the same
+      cross-reference problem: a minimum street frontage of 75 feet, a maximum height of 35 feet,
+      a garage or carport at least five feet behind the front of the nearest residential unit and
+      never less than twenty feet behind a sidewalk or right-of-way, and accessory buildings
+      exempted below 120 square feet and ten feet. Same zone, same answer -- FDA-H and its five
+      mapped variants are not encoded in this file, so none of these numbers has a zone to attach
+      to. The garage figures are moot for a second reason, this project having ruled the pod
+      carries none.
+    fingerprint: d27a502ff1f97c29
+  "4.planning.txt#4.184":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Conditional Use Permit regulations. The fifty-foot front, rear and side yards and the
+      five-acre minimum land area belong to the conditional-use standards for schools, churches,
+      municipal and government buildings and semi-public buildings, and the thirty feet and
+      fifteen feet below them are the setbacks for public utility structures and their detached
+      canopies. Every figure is selected by a use this screen does not place, and a conditional
+      use permit is a discretionary path rather than a clear and objective standard in any case.
+    fingerprint: 40d0a67bb317ff25
+  "4.planning.txt#4.176":
+    queue: missed
+    outcome: not_here
+    note: >-
+      RE-RULED 2026-09-09. The four lines still on this card are planting standards -- a
+      continuous shrub screen at least six feet high and ninety-five percent opaque, evergreen
+      trees at a minimum installed height of twelve feet, and the approved species lists split by
+      whether a tree matures over or under fifty feet -- and none of them measures the building or
+      the lot, so the outcome is the same one this card carried before. The REASON is not, and the
+      difference is the whole point of re-ruling rather than leaving it. This card used to close
+      on the sentence "none of them measures the building or the lot" applied to the whole of
+      Section 4.176, and 4.176(.03) measures the lot: "Not less than 15 percent of the total lot
+      area, shall be landscaped with vegetative plant materials." The old reading was true of
+      everything it looked at and stopped one subsection short, which is why it felt safe.
+      Wilsonville held no landscaping field at all, so the screen was giving the pod and its
+      parking court the whole lot minus setbacks on 7,333 lots. Found 2026-09-09 while working the
+      document-residue condition card, and encoded the same day as a layer default of
+      min_landscaped_pct 15 against total lot area -- which is why those two lines are cited now
+      and gone from this card, leaving only the planting standards. The applicability argument,
+      including the two sentences that read as though 4.176 were commercial-only and why neither
+      survives, sits in the note above that value in wilsonville.yaml. The distribution
+      requirement in the same subsection -- the landscaping must sit "in at least three separate
+      and distinct areas of the lot, one of which must be in the contiguous frontage area" -- is a
+      placement test no field here holds and is written down rather than encoded.
+    fingerprint: 1147c4ea8f64667a
+  "4.planning.txt#4.155":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Section 4.155's landscaping requirements for parking areas: a twelve-foot landscaped
+      buffer, islands every forty feet, at least twenty-five percent of required trees planted in
+      the interior, and one tree per eight or six spaces depending on the size of the lot. Nine
+      statements, all of them describing how a parking lot is planted rather than how large it
+      must be or where it may go, so none of them is a number this screen takes -- that part of
+      this ruling stands. THE SENTENCE THAT USED TO STAND HERE HAD IT BACKWARDS and is corrected
+      2026-09-09 rather than left to be re-read: it said "the fifteen percent is a share of the
+      parking area's landscaping rather than a share of the lot". It is the other way round.
+      4.155(.03)B.1 reads "At least 10% of each parking area shall be landscaped ... This
+      landscaping shall count towards the 15 percent total landscaping required in Section
+      4.176.03 for the site development" (L13182-L13185). Ten percent is the parking area's
+      share; fifteen percent is the site's, it is stated in 4.176(.03), and it is now encoded as
+      a layer default. Nothing in 4.155 changes, but the reason had to, because a dismissal that
+      argues from a swapped denominator would have gone on closing the number every time it was
+      met.
+    fingerprint: 27cf0b40899e32c1
+  "4.planning.txt#4.156":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Sign standards, the longest card in this layer at twenty-three statements and every one of
+      them about a sign: cap heights for lettering and logos, how far a sign may be moved
+      laterally, a variance path to exceed thirty-five feet in height, and a table of permitted
+      sign areas graded by building size. Signs are not part of what this screen places, and no
+      figure in the section reaches a dwelling.
+    fingerprint: 8fa20d7490b4d8c9
+  "4.planning.txt#4.156.05":
+    queue: missed
+    outcome: not_here
+    note: >-
+      More of the sign chapter: an exempt flag pole permitted above thirty feet, and sign face
+      areas of six and thirty-two square feet. Sign geometry throughout.
+    fingerprint: 9e9d8a6e55cd1e12
+  "4.planning.txt#4.156.07":
+    queue: missed
+    outcome: not_here
+    note: >-
+      A spacing rule for signs on the same street frontage -- at least two hundred feet apart. It
+      measures the distance between two signs, not any frontage the pod needs.
+    fingerprint: c0231c5e079613a2
+  "4.planning.txt#4.199":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Wireless and transmission towers: a tower more than two hundred feet in height must be
+      compatible with the existing structure. A tower height, on a use this screen does not place.
+    fingerprint: 4c553aa9f7e00560
+  "4.planning.txt#4.801":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Public utility structures in the right-of-way: a maximum height of fifty feet, and a second
+      fifty-foot limit on a structure contained within another structure, qualified by a ten
+      percent test. Utility equipment in a public right-of-way is neither the pod nor its lot.
+    fingerprint: a333e5e8842351c8
+  "4.planning.txt#4.803":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Guy wires for a transmission structure, limited to twenty feet in height. A guy wire is not
+      a building and this screen erects none.
+    fingerprint: ec2b9cc3d62f63df
+  "4.planning.txt#4.156.08":
+    queue: condition
+    outcome: never
+    note: >-
+      Sign standards. Every figure on the card measures a sign -- its height above grade, its
+      area, its setback from a property line -- and they landed against max_height_ft because a
+      sign height is stated in feet. A sign is not a building and this screen places a building.
+      There is no arrangement of these numbers that changes whether a 56 by 36 foot pod, its six
+      stalls and its access fit on a Wilsonville lot.
+    fingerprint: 161869c3ec74fc3e
+  "4.planning.txt#4.113":
+    queue: condition
+    outcome: applies
+    note: >-
+      Section 4.113 is titled "Standards Applying to Residential Developments in any Zone" and it
+      is in the section list of every Wilsonville zone a quadplex may be built in, so this card
+      had to be worked rather than scoped away. Most of it is already ours. Subsection (.02) is a
+      banded setback schedule -- one set for lots over 10,000 square feet and one for lots not
+      exceeding it -- and both bands are encoded on every zone that takes them, with the storey
+      split carried as a `multi_story` variant (side 5 becoming 7, rear 15 becoming 20, and the
+      pod is two storeys so the tighter limb is the one that binds), the party wall as
+      `attached_wall`, and the four-foot alley garage as `abuts_alley`. Nothing there is missed.
+      THE CARD STAYS OPEN ON ONE SENTENCE, and it is a tightening on a condition this layer can
+      already measure. 4.113(.02)A.2: "In the case of a corner lot less than 100 feet in width,
+      abutting more than one street or tract with a private drive, the side yard on the street or
+      private drive side of such lot shall be not less than 20 percent of the width of the lot,
+      but not less than ten feet." All three gates are measured here -- `corner_lot` is computed
+      in this layer from intersecting frontages rather than left unmeasured, lot area decides the
+      band, and lot width is held. What is not held is the VALUE. A setback stated as a share of
+      the lot's own width has no form in this registry; the nearest thing it has is per_height_ft,
+      which is the same idea about a different measurement. Encoded, this zone charges ten feet at
+      the street side. On a corner lot over 10,000 square feet and eighty feet wide the code
+      charges sixteen, and at ninety-nine feet it charges nearly twenty. That is a false-green
+      shape rather than a rounding difference, and it cannot be approximated into bands without
+      inventing numbers the page does not print. Two more sentences on the card are unencodable
+      for reasons already on the record. (.02)A.3 and B.3 set a key lot's front setback at
+      "one-half the sum of" the adjacent corner lot's yard and the adjacent interior lot's setback
+      -- the offset-from-another-standard shape, which nothing in the model can hold and which
+      also needs "key lot" as a geometry nobody computes. (.02)A.4 and B.4 forbid any structure
+      inside the setback for a FUTURE street shown on the adopted Transportation System Plan,
+      which is a map this project does not have and a prohibition rather than a number. Everything
+      else was read and does not move a verdict. (.03) Height Guidelines states no number at all
+      -- it is a list of things the Development Review Board MAY do, and the one limb with a
+      threshold reaches "buildings more than two stories in height", which a two-storey pod is
+      not. (.05) is stormwater facility widths in tracts and planters. (.14), Design Standards for
+      Detached Single-family and Middle Housing, does name this building and was read in full for
+      that reason: articulation by a 20 percent width difference or a five-foot horizontal offset,
+      20 percent of a facade in a different material, a 15 percent paint reflectance difference,
+      transparency at 12.5 or 10 percent depending on how many menu items are used, a 25 square
+      foot porch, an entrance within 45 degrees of the street, windows over 15 percent of each
+      public-facing facade. Every one of them is a facade treatment or a menu, and none changes
+      the rectangle the pod occupies. (.15) is Design Standards for Multi-Family Housing and
+      4.001(96) puts middle housing outside that term. (.10) is accessory dwelling units, (.12)
+      bed and breakfasts, (.07) fences, (.11) a reduced-setback agreement between neighbours,
+      which relaxes. THE OPEN SPACE SENTENCE IS THE FIND. (.01)C requires open space "equal to 25
+      percent of the size of the Gross Development Area", and this layer's standing note said in
+      as many words that nothing in 4.113 states an open space minimum. That claim has been
+      corrected in the layer rather than left standing, because a claim of silence is the one kind
+      nobody re-reads. It still does not reach a build on a lot of record, but for a reason about
+      the denominator: 4.001(84) defines Gross Development Area as the area of a Stage I Master
+      Plan, or where none is required a Tentative Plat, and a quadplex on an existing lot files
+      neither. (.01)B.2 fixes the amount at Stage II Final Plan review, (.01)D.2 counts only land
+      owned by the City, a homeowners' association or a Multi-family owner, and (.01)D.1 wants
+      each counted piece at 1,000 square feet or more. The split plat is the live question and is
+      written into the layer note rather than guessed at here. Last, five statements on this card
+      are not 4.113 at all -- the 10,000 square foot lot, 100 feet of frontage, 50 percent
+      coverage, 50-foot height and 125-foot depth at lines 15997 to 16001 are Section 4.184(.04),
+      Conditional Use Regulations for Churches, pulled onto this card by the cross-reference two
+      paragraphs above them that sends private parks to 4.113. Worth naming as an attribution slip
+      of the same family as the hoisted table: the citation is right about the lines and wrong
+      about whose section they are.
+    fingerprint: 3155334d2066315a
+  "4.planning.txt#4.127":
+    queue: condition
+    outcome: cant_tell
+    note: >-
+      Section 4.127 is the Residential Neighborhood zone, Frog Pond, and it governs exactly one
+      zone in this layer -- RN, and no other zone's section list names it. RN holds
+      `quadplex_allowed: false` on a sentence that could not be plainer, 4.127(.02)B.1.a.ii:
+      "triplexes are permitted only on corner lots, and quadplexes are not permitted." So nothing
+      on this card can change a verdict today. It is filed as depending on the site rather than
+      closed because RN's refusal is the one in this corpus that is explicitly flagged rather than
+      settled. The Town Center note two zones down says why in its own words: the state mandate at
+      ORS 197A.420 and OAR 660-046 makes a city allow middle housing wherever it allows detached
+      single-family dwellings, Town Center allows no detached house so nothing attaches there, and
+      RN "is the opposite case: it allows detached houses and bans the quadplex in the same
+      section." That is why RN's dimensional standards are encoded in full underneath a false use
+      flag, and it is why closing this card as never would be wrong -- a section closed as never
+      is a section nobody reads again, and this one has a live argument standing over it. WHAT IS
+      ON THE CARD IF IT EVER OPENS. Two real tightenings, both turning on a mapped sub-area nobody
+      holds. 4.127's Table 8B note E: "In Urban Form 3, buildings or portions thereof greater than
+      either 2 stories or 25 feet in height shall have a minimum front setback of 20 feet" -- and
+      the pod is two storeys and twenty-six feet, so it crosses the height limb by a foot and
+      takes the twenty. And the note above it: where the minimum front setback is six feet it
+      exists to hold a public utility easement, and "if the City requires a wider PUE the minimum
+      setback shall increase to accommodate the PUE", which is a setback defined by another
+      authority's number and the same shape the offset gap already names. Both need the Urban Form
+      Type, and the Urban Form Types are drawn in prose as distances from streets -- the east
+      boundary "between 480 and 520 feet east of SW 60th Avenue", the west "between 360 and 400
+      feet west", the south "between 300 and 340 feet north of SW Kruse Road" -- with the exact
+      line left to the developer to propose. That is not a boundary a screen can compute; it is a
+      boundary an applicant negotiates. It also compounds a gap this zone already carries: RN
+      covers Frog Pond West, East and South and nothing published says which neighbourhood a lot
+      is in, which is why every dimension here was taken from the binding R-10 column rather than
+      the one that fits. The rest of the card is scope. The subdistrict descriptions at 6606 and
+      7112 to 7148 are map boundaries, not standards. The Table 6B reduction ratio, the 60 percent
+      unit-type cap on Net Development Area and the five-units-or-20-percent affordability
+      calculation are master-plan mix rules that operate on a Stage I area, not on a lot. The
+      transparency percentages at 7800 to 7808, the 50 percent projecting facade element and the
+      entrance-orientation rule are design menus. The 50 percent of building frontage on SW
+      Brisband Street belongs to a ground-floor commercial requirement in A-7. Note H's ten-foot
+      rear setback names cottage clusters and accessory dwelling units, and note I's coverage
+      ladder names lots holding only "Other Detached Units".
+    fingerprint: 1199fdf38d80318b
+  "4.planning.txt#4.132":
+    queue: condition
+    outcome: never
+    note: >-
+      Section 4.132 is the Town Center Zone and TC is the only zone in this layer whose section
+      list names it. TC is a decided RED and the argument was made the way this corpus requires
+      rather than off the use list alone: 4.132 runs 953 lines and never says quadplex, middle
+      housing, townhouse or duplex once; its single residential permitted use is Multiple-family
+      Dwelling Units; and 4.001(96) defines that term to exclude middle housing while 4.001(181)
+      puts the quadplex inside it. The state mandate does not reopen it either, because Town
+      Center permits no detached single-family dwelling for middle housing to attach to. So every
+      measurement on this card is a standard for a building that may not be built here. They are
+      also, read on their own terms, standards for a different building. The four sub-district
+      columns set a minimum front setback of zero and a MAXIMUM of ten to twenty feet, a maximum
+      side yard of twenty, and a minimum building height of TWO STORIES -- a build-to street wall
+      with active ground floors, which is the opposite of a detached pod with a parking court
+      behind it. The rest is block structure and streetscape: a 400-foot maximum block length, a
+      250-foot maximum to a mid-block crossing, 100-foot minimum block dimensions, street trees
+      every 30 feet of frontage, one seat per 250 square feet of plaza and one tree per 800. Two
+      more are height relaxations -- elevator machinery may rise 16 feet above the limit, and
+      roofs over 35 feet need integrated drainage. One is a parking placement rule, 50 percent of
+      the street frontage where parking may sit beside the building. The 12- and 13.5- and
+      16.5-foot figures at 8493 to 8503 are sidewalk and frontage-zone widths per the
+      Transportation System Plan, on the far side of the property line. Nothing here is a number
+      this screen would take even if the use were permitted, and the use is not.
+    fingerprint: 188869297c83d212
+  "4.planning.txt#4.137.2":
+    queue: condition
+    outcome: never
+    note: >-
+      Section 4.137.2, Solar Balance Point Standards, and this layer already carries the reading
+      in its notes: the Maximum Shade Point Height Standard "would refuse this building outright
+      wherever it reaches", because Table 2 allows a shade point of fourteen feet where the shade
+      reduction line sits five feet off the northern lot line and the pod is twenty-six. What
+      keeps it off every lot is where it reaches. 4.137(.01)B applies the solar access standard
+      only inside the S Overlay Zone, which the Council attaches by zone change and only where
+      protecting solar access is "specifically requested by the developer or owner of the site",
+      and the overlay travels in the zone label -- the code's own examples are PDR-S and R-S. No
+      Wilsonville label in this corpus carries the suffix, and that premise is guarded by a test
+      rather than asserted, because it is a claim about what the zoning layer emits and not about
+      what the ordinance says. Every statement on this card sits behind that gate. The twelve
+      include the definition of N as the north-south lot dimension capped at ninety feet, the
+      three exemptions that would spare a wall (an unheated space such as a garage, less than
+      twenty square feet of south-facing glazing, an undeveloped lot), Table 3's permitted shadow
+      heights at the solar feature, and the setback reductions at (.10) -- which are the only
+      lines on the card that touch a number this screen holds, and every one of them RELAXES: a
+      front yard "may be reduced to not less than 12.5 feet" in PDR-7-S, 7.5 in PDR-4-S, 15 in
+      PDR-1-S, with rears and sides likewise. A relaxation on a zone label that does not exist in
+      the data is twice removed from this building. If an S-suffixed label ever does arrive the
+      right answer is a refusal and not a setback, because the standard caps height as a function
+      of the lot's north-south dimension and where the ridge sits, which is a shape this registry
+      has no room for -- that consequence is already written into the layer note and this ruling
+      does not change it.
+    fingerprint: 42d60172c6a44a12
+  "4.planning.txt#4":
+    queue: condition
+    outcome: applies
+    note: >-
+      The residue card: 285 measuring lines that belong to no subsection the sectioner could name,
+      spread from line 251 to line 18,869 of a 19,000-line development code, touching ten fields.
+      It is the largest card in the queue and most of it is other people's buildings. One line in
+      it was the biggest single omission in this layer. THE FIND. 4.176(.03): "Not less than 15
+      percent of the total lot area, shall be landscaped with vegetative plant materials."
+      Wilsonville held no landscaping field at all, so the screen was handing the pod and its
+      parking court the whole lot minus setbacks. Now encoded as a layer default of 15 percent
+      against total lot area. It was not obvious and the argument is worth keeping. Two sentences
+      read as though 4.176 were a commercial standard -- 4.113(.12)9 makes a bed and breakfast
+      home, a use in a residential zone, "comply with the landscaping standards for commercial
+      development found in Section 4.176", and 4.420(.01)B.1 exempts "landscaping on residential
+      lots in residential zones" from Site Design Review. Neither survives. The first has an exact
+      twin one line above it sending the same use to "the off-street parking standards for
+      commercial development found in Section 4.155", and 4.155 plainly does reach residential --
+      its Table 5 opens with a middle-housing row -- so the phrase names a portion of a section
+      rather than the section's reach. The second is an exemption from REVIEW, and 4.420(.01)A.1
+      exempts residential structures only "as long as they meet established clear and objective
+      design and siting standards", which is the sentence that keeps a standard binding on a
+      building nobody reviews. Four things settled it the other way: the section's own opening
+      line, "for use throughout the City"; 4.155(.03)B.1, which says the ten percent parking-area
+      landscaping "shall count towards the 15 percent total landscaping required in Section
+      4.176.03 for the site development"; 4.138(.05)B restating fifteen percent for the Old Town
+      overlay; and the City's own summary of its review process at 4.008(.02)D, "For all projects,
+      at least 15 percent of the net site area must be landscaped", which is carried as
+      corroboration rather than as the standard because a paragraph describing a code is not the
+      code. The denominator differs between those last two and the operative one is taken -- total
+      lot area, which is also the stricter. Not carried: the same subsection asks the landscaping
+      to sit "in at least three separate and distinct areas of the lot, one of which must be in
+      the contiguous frontage area", a placement test no field here holds. TWO CLOSED RULINGS HAD
+      TO BE REOPENED to encode it, and both are the stale-dismissal shape this project already
+      catalogues. The missed-queue card on 4.176 was closed as not_here on the words "none of them
+      measures the building or the lot" -- true of every line it looked at, which were all
+      planting standards, and one subsection short of the one that measures the lot. It is now
+      outcome encode with the reason rewritten. Worse, the card on 4.155 dismissed the number on a
+      swapped denominator: it said "the fifteen percent is a share of the parking area's
+      landscaping rather than a share of the lot", and the code says the opposite -- ten percent
+      is the parking area's share, fifteen is the site's. That ruling's conclusion still stands,
+      because nothing in 4.155 is a number this screen takes, but the reason was rewritten, since
+      a dismissal arguing from a swapped denominator would have gone on closing the number every
+      time it was met. WHAT LOOKED LIKE OUR ZONE AND WAS NOT. Six lines carry the exact shape of a
+      residential dimension block -- minimum lot size 1,000 square feet for each unit, minimum
+      street frontage 100 feet, front yard 30, rear 30, side 24 -- and they are 4.116(.11), Hotels
+      or Motels. The subsection above them, 4.116(.10) Commercial developments generally, is where
+      the 35-foot height and the "None required except when abutting a more restrictive district"
+      setbacks come from. DENSITY DOES NOT BIND, which is worth stating because the R zone prints
+      a density ladder of 3, 5, 7.5 and 12 units per acre. Table 1's note b: "Middle housing
+      units, except townhouses, are not included in calculating maximum density beyond 1 unit per
+      lot or parcel." A quadplex on a lot of record is one unit for density. Note c gives
+      townhouses four times the ladder or 25 per acre, whichever is less, which is the split-plat
+      path again and is left where the layer note leaves it. THE VILLAGE NOTE WAS CHECKED RATHER
+      THAN SKIMMED and it does reach this building, which was the surprising half. Table V-1 note
+      17, "Dwellings on lots without alley access shall be at least 36 feet wide", sits on the
+      Single-Family Dwellings and Duplexes row, and 4.125(.23)(B) says that row's standards are
+      the ones a quadplex takes in the Village. So it applies. It does not bind: the catalog pod
+      is 56 or 80 feet wide. Note 18's one-driveway limit names single-family dwellings and
+      duplexes with front-loaded garages, and this building has no garage. SOLAR, AGAIN, AND AT A
+      DIFFERENT STAGE. 4.137(.05) is the solar access standard for new development and it is a
+      different animal from the 4.137.2 balance point already ruled never: that one needs an
+      S-suffixed overlay label no Wilsonville zone carries, while this one reaches any subdivision
+      or partition. It still does not reach a build on a lot of record, because all three of its
+      compliance routes -- the prescriptive north-south dimension, the protected solar building
+      line "designated on the subdivision or partition plat", and the performance option's deed
+      restrictions -- are things done when lots are drawn. Its exemptions are on the record for
+      the day the split plat is answered: four or more detached or attached homes within 250 feet,
+      less than 20 square feet of south-facing glazing, a lot under 3,000 square feet.
+      RELAXATIONS, DECLINED. 4.155's shared visitor parking trade lets individual lot size drop by
+      2.5 percent and open space fall "from 25 percent down to as low as 22.5 percent of gross
+      development area", both bought with HOA-owned shared spaces within 250 feet under
+      enforceable covenants. Conservative default declines it, and it is moot on a lot of record
+      anyway, where there is no Gross Development Area to take a share of. OTHER STAGES AND OTHER
+      BUILDINGS, which is the bulk. 4.237's land-division lot standards (25 feet of arc frontage
+      on a cul-de-sac, a 100-foot minimum average depth for through lots with planting screens).
+      4.179's solid waste and recycling areas, which trigger on "buildings containing more than
+      ten residential units". 4.176(.02)C, where "buildings larger than 24 feet in height" let the
+      Planning Director require larger or more mature plant materials -- the pod is 26 feet and
+      does cross that trigger, and what waits on the other side is nursery stock size, not lot
+      area, and a may rather than a shall. The Coffee Creek and Basalt Creek employment standards,
+      which is where the 150-foot driveway spacing, the 24-foot maximum driveway width, the
+      30-foot front setback and the frontage-and-acreage table running to 51 acres all come from.
+      4.156 signs, 4.175 lighting, 4.171 natural features, 4.172 flood plain. 4.138's Old Town
+      overlay, whose fifteen percent restates 4.176's, whose "up to 40 percent of lot frontage may
+      be used for parking" is a permission and not a cap, and whose ADU standards name a building
+      this is not. 4.132 Town Center and 4.127 Frog Pond, both ruled on their own cards today. And
+      the five church lines at 15,997 to 16,001, which are 4.184(.04) pulled onto a neighbouring
+      card by a cross-reference and are already named there. DEFINITIONS ACCOUNT FOR THE REST: an
+      alley "no more than 20 feet" wide, an accessory dwelling unit at 800 square feet, a cottage
+      footprint at 900, a driveway sight triangle of 120 degrees, "South facing: True south, or 20
+      degrees east of magnetic south". Measurements inside 4.001, which this project treats as
+      citywide standards where something points at them -- the nine-by-eighteen parking space in
+      this layer's own defaults came from exactly there -- and as vocabulary where nothing does.
+      IT STAYS OPEN on the distribution requirement above, and because a residue card refills
+      every time any part of this document is re-fetched.
+    fingerprint: b1abf8dfde6706e5
+  "pws.201.2.23.txt#201.2.23":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Wilsonville's Public Works Standards 201.2.23, Driveways -- fetched on 2026-09-01 for one
+      reason, to settle whether the drive aisle this city never dimensions in its code is
+      dimensioned in its engineering manual, and the answer written into this layer is that it is
+      not. All nine lines on this card are inside that read. THE AISLE IS NOT HERE: the word
+      appears seven times in 224 pages and every one is in 201.2.23(m), which is the THROAT, not
+      the lane -- a clear drive aisle "containing no parking spaces or intersecting drive aisles"
+      required for 50 feet back from the sidewalk on a driveway under 100 average daily trips,
+      reducible by the City Engineer to 20. It says how far in the first stall may sit, not how
+      wide the lane between two rows has to be. The chain runs on to Detail RD-1105, named
+      "Parking Lot Driveway Aisle", and that drawing is a raster scan with no text layer, so
+      nothing was read off it. THE TWO NUMBERS THE MANUAL DOES HOLD are on this card and are
+      refused on the ROUTE rather than the reading: 201.2.23(l)'s minimum access driveway width of
+      12 feet one-way and 20 feet two-way, and 201.2.23(e)'s 50-foot residential driveway spacing
+      from the nearest intersection. A 20-foot two-way minimum is the size of number that moves
+      lots. Chapter 4 sends this building to the manual in exactly one sentence,
+      4.113(.14)D.4.c.ii, and it is doubly conditional -- lots with more than one frontage, whose
+      frontages are ONLY on collectors and arterials -- and the inventory knows the streets a lot
+      touches for no lot in Oregon. The sentence is also the argument: a code does not carve out
+      what it already covers. And 201.2.23(j) settles what the manual takes itself to be doing --
+      "the City's authorized representative shall make the final determination of maximum driveway
+      width on a case-by-case basis" -- which is discretion, and ORS 197A.400 keeps discretion off
+      housing. The Table 2.12 access spacing rows on this card (1,320 and 1,000 feet on a major
+      arterial, 300 and 100 on a collector) ride the same route and fall with it.
+    fingerprint: 2f1fa0785e59f725
+  "4.planning.txt#4.001":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      EIGHT LINES FROM WILSONVILLE'S DEFINITIONS SECTION AND TWO OF THEM ARE THE EXEMPLAR OF THIS
+      BUTTON. "East-west property line approximately 314 feet south of SW Kruse Road, and on the
+      east by property lines paralleling SW 60th Avenue approximately 863 feet to the east" is a
+      METES-AND-BOUNDS DESCRIPTION -- the legal boundary of a specific plan area, written into the
+      code the way a deed is written. It states no standard about any building; it says where a
+      line on a map runs. A ledger of measurements captured it because it contains feet, and that
+      is our bug rather than Oregon's. The rest of the card is definitional and equally inert: a
+      50-foot figure with its subject cut off, a dwelling unit whose ground-floor footprint is 40
+      percent or less of something, a luminaire's photometric hemisphere beyond 30 degrees from
+      nadir, the 21.3-degree solar altitude that appears in five codes in this corpus, a strip
+      under 20 feet wide that "shall not be recognized as a street", and a nine-by-eighteen space
+      required for each parking space WITHIN A GARAGE -- which the standing no-garage ruling
+      closes. Filed to the extractor list on the strength of the two boundary lines.
+    fingerprint: b2f9e38f0ee190fe
+  "4.planning.txt#4.030":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Three procedural lines: no clearing or grading within 25 feet of an identified area, notice
+      to property owners within 250 feet of a proposal, and a request from owners representing at
+      least 80 percent of a specific area plan. A notice radius, a signature threshold and a
+      construction restriction during review -- the machinery of getting an application heard.
+      None of it is a dimension of a building, and the 25-foot clearing limb is a condition on
+      WORK rather than on what may finally stand.
+    fingerprint: 47fcd54fe66c45fd
+  "4.planning.txt#4.035":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Contour intervals for a submitted survey: two-foot contours on slopes of 6 to 12 percent,
+      five-foot on 12 to 20, ten-foot above 20. A drafting instruction telling a surveyor how
+      finely to draw a map, in the same family as Gladstone's "one inch equaling 20 feet" ruled on
+      2026-09-03. It is not a statement about land at all; it is a statement about a drawing of
+      land.
+    fingerprint: 69d4c6eca75f793c
+  "4.planning.txt#4.1":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Four parking ratios stripped of the use rows they belong to -- 4.1 per 1,000 square feet, 5
+      per 1,000, 1 per 5,000, and a pair of them together. Square-foot ratios of this kind are
+      commercial and institutional rows; residential parking in this corpus is stated per dwelling
+      unit, and what the pod owes is already held. The card is also keyed "4.1", which is not a
+      section number in this code at all but the first cell of a table row that the sectioner took
+      for a heading -- the eighth instance of that shape this week.
+    fingerprint: 021af3df3b8caeff
+  "4.planning.txt#4.116":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Mixed-use floor-area splits: on-site parking not to exceed 30 percent, not more than 50
+      percent of total floor area in an "industrial mixed use" development, not less than 50
+      percent in a "commercial mixed use" one. Shares of a building that contains industry or
+      commerce. The pod contains four dwellings and nothing else, so both limbs are vacuous on it,
+      and the parking limb is a maximum.
+    fingerprint: 27d9843dc4a49360
+  "4.planning.txt#4.118":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Than 25 feet" with its subject cut off, and two lines of a density adjustment -- "units of
+      any requirement in Table 6B by the greater of five units or 20 percent", with the base for
+      that calculation being the number as written in the table. An adjustment to a unit count
+      against a table this layer does not read, expressed as a permission to vary rather than a
+      standard to meet. The pod is four units on one lot and no table 6B row governs it.
+    fingerprint: d3a1783e82333b7a
+  "4.planning.txt#4.123":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Accessory structures less than 120 square feet and ten feet in height are not subject to"
+      the standards that follow -- an exemption for a garden shed. A structure the pod does not
+      include, and an exemption rather than a requirement.
+    fingerprint: 9d29bc6dbcf32cd2
+  "4.planning.txt#4.124":
+    queue: nofield
+    outcome: not_a_statement
+    note: >-
+      "(feet)" -- a column unit label from the PDR zone's dimensional table, alone on a line. The
+      table it labels was read in full on 2026-09-09, when the R and PDR zone dimensions were
+      confirmed and Wilsonville's 15 percent landscaping default was encoded; what reached the
+      ledger is the word above the numbers. Filed to the extractor list with Milwaukie's five
+      stripped headers, which is the same bug in a different city.
+    fingerprint: fab7108da378b1f9
+  "4.planning.txt#4.125":
+    queue: nofield
+    outcome: design
+    note: >-
+      Ten lines and three families, all of them design. BICYCLE PARKING: short-term within 30 feet
+      of the main entrance, half of it covered where ten or more spaces are required, long-term
+      within 300 feet with half covered -- a rack's placement, ruled the same way in Portland,
+      Milwaukie and Happy Valley in this pass. STREET AND PATH GEOMETRY: a 20-foot clear distance
+      between curb extensions and a ramp grade of 8 to 12 percent, which are right-of-way details
+      on the far side of the lot line. AND SPECIFIC AREA PLAN MAPPING: zone designations and
+      streets within 50 feet of an SAP boundary, and significant resources with their 25-foot
+      impact areas within 50 feet of it -- what a plan submission must draw, at the
+      master-planning stage rather than the building stage. Nothing on the card takes ground from
+      a lot.
+    fingerprint: 4efec26915c3a7a2
+  "4.planning.txt#4.134":
+    queue: nofield
+    outcome: design
+    note: >-
+      Wilsonville's commercial design standards, and the gates are the answer. "Applies to a Front
+      Façade longer than 175 feet that has more than 5,250 square feet" of wall -- the pod's front
+      is 56 feet. Building expansions greater than 1,250 square feet; a primary building entrance
+      15 feet wide and 15 feet tall with a weather-protection zone 8 feet deep and 15 wide;
+      entrances located a maximum of 150 feet from a right-of-way; façade planes offset by at
+      least 2 feet. Every one of these shapes an elevation on a large commercial building, and the
+      two that carry thresholds open at three times the pod's frontage. A card that shows the
+      articulation rules without the 175-foot gate they hang behind is the rungs-without-the-door
+      shape this queue keeps producing.
+    fingerprint: 51ae553a4b4ffd55
+  "4.planning.txt#4.135":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Six lines out of the industrial and employment zone standards: retail operations south of
+      Boeckman Road over 50,000 square feet, a 530-foot maximum spacing between local access
+      streets, a 330-foot maximum block length without a pedestrian crossing, and three retail
+      floor-area caps at 3,000, 5,000 and 20,000 square feet. Employment land and commercial
+      floorplates, plus two block-and-street standards that apply to land being laid out rather
+      than to a building on an existing lot. Neither reaches a four-unit dwelling.
+    fingerprint: 6c26c079e5e47a96
+  "4.planning.txt#4.135.5":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      More of the same industrial chapter: 3,000 square feet of floor space in a single building
+      or 20,000 combined, fire exits within 100 feet of any residential district and of any
+      loading space, and a 40 percent development threshold on a parcel planned for industrial
+      use. Industrial land, industrial floorplates, and a fire-exit separation measured from our
+      kind of land outward.
+    fingerprint: 1d423ee81d11ceab
+  "4.planning.txt#4.136.5":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      ATTRIBUTION SLIP AND A CLEAN SCOPE ANSWER. The card is headed 4.136.5, the PF-C Public
+      Facility Corrections Zone, and its two lines are Section 4.137's solar lot options -- "has a
+      north-south dimension of 90 feet or more" and "has a front lot line that is oriented within
+      30 degrees of a true east-west axis" -- which sit on the next page under a running header
+      the sectioner took for a heading. On the merits 4.137 is doubly out of reach. 4.137(.03):
+      "the solar design standard in Section 4.137(.05) shall apply to applications for a
+      DEVELOPMENT TO CREATE LOTS OR BUILDING SITES in those base zones that have an 'S' (solar
+      access) Overlay Zone." Lot creation, not building placement -- and the overlay is applied by
+      the City Council through a zone change and only where "specifically requested by the
+      developer or owner of the site", so it exists on a parcel only because somebody asked for
+      it. The standard is also an 80-percent-of-lots test across a development, which is not a
+      thing a single existing parcel can pass or fail. This is the same shape as MCC 39.4790,
+      ruled on 2026-09-02, and worth the contrast with MCC 39.4801, which is genuinely open
+      precisely because its applicability sentence says "all structures" instead.
+    fingerprint: 1ee42d7d545dd908
+  "4.planning.txt#4.137":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      The solar access section itself -- shadow patterns at a 21.3-degree altitude and azimuths
+      22.7 and 54 degrees east and west of true south, a fully shielded luminaire emitting no more
+      than 0.5 percent of its flux above horizontal, slopes of ten percent or more oriented
+      greater than 45 degrees off south, no more than 20 percent of the lots in a phased
+      subdivision, and 20 percent of an existing structure's south-facing glazing. All of it hangs
+      on 4.137(.03), which applies the design standard to "applications for a development to
+      create lots or building sites in those base zones that have an 'S' (solar access) Overlay
+      Zone". Land division, in an overlay the Council applies on request. The exemption limbs and
+      the shade-reduction geometry are relief from a standard we are outside of, and the luminaire
+      rule is about a lamp.
+    fingerprint: 2227cc705f723ff5
+  "4.planning.txt#4.138":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Back a minimum of 20 feet from any sidewalk or traveled portion of a street across which"
+      -- a setback in Section 4.138, the Old Town Overlay Zone. This project established on
+      2026-09-09 that 4.138 appears in no Wilsonville zone's section list, so it reaches none of
+      the land this layer screens; it is a historic-character overlay on a specific district.
+      Worth the sentence rather than a shrug because a 20-foot setback from a sidewalk is a real
+      number and would matter if the overlay were ever mapped onto screened land.
+    fingerprint: bae7ce6ff39de57a
+  "4.planning.txt#4.139":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Significant Resource Overlay Zone: a corridor a minimum 75 feet wide from the top of the
+      stream bank, a 120-square-foot cumulative area cap, and a 600-square-foot limit on increased
+      coverage over what existed before. A vegetated corridor is measured from a protected water
+      feature rather than from a lot line, which is why every corridor width in this corpus --
+      Gladstone's Metro Title 3 ladder, Fairview's creeks, Milwaukie's water quality resources,
+      Tualatin's wetlands, Portland's top-of-bank -- is carved by the natural-resource overlay
+      layer instead of becoming a yard. Encoding a corridor as a setback would apply it to every
+      lot in the city instead of the few the water reaches. The overlay for this county has held
+      Wilsonville's SROZ since the Clackamas environmental screening closed on 2026-09-03.
+    fingerprint: 875cef02f24037b8
+  "4.planning.txt#4.139.00":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The SROZ corridor ladder printed as a table: 50 feet on the shallow limb, 15 feet on
+      another, and the branch for slopes of 25 percent or more running 150 feet or 200. Metro
+      Title 3 again, and the same answer as the sibling card -- corridor geometry measured from a
+      water feature, held by the overlay screening rather than by any field here.
+    fingerprint: d2924a47c17b716d
+  "4.planning.txt#4.139.06":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Within the Significant Resource Overlay Zone and/or its associated 25 foot Impact Area" --
+      the definition of where a review requirement applies. A boundary condition on an overlay,
+      which is the overlay layer's business, and a distance measured outward from a mapped
+      resource rather than inward from a lot line.
+    fingerprint: 482981a38443423e
+  "4.planning.txt#4.139.07":
+    queue: nofield
+    outcome: design
+    note: >-
+      Mitigation planting inside the SROZ: trees between eight and 12 feet on centre, and a
+      threshold at 3,000 square feet of land developed by impervious improvements within the zone.
+      A planting spacing is a nursery specification, and the impervious threshold decides when a
+      mitigation plan is required rather than how much building a lot may carry. Both sit inside
+      an overlay whose extent the screening layer holds.
+    fingerprint: 0732b523d3998868
+  "4.planning.txt#4.139.10":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The SROZ's hardship relief: where at least 85 percent of a lot lies within the overlay on a
+      surveyed boundary, the City will allow up to 3,000 square feet of impervious residential
+      development, or 5,000 for another use, and applications are noticed to land less than 100
+      feet outside the boundary. This is the door out for a parcel the overlay has swallowed -- it
+      HANDS GROUND BACK, and the standing rule established on Gladstone's 17.25.110 applies: a
+      grade-C proxy boundary may take ground away but may not hand it back. The overlay extent
+      here comes from mapped resource inventories rather than from the surveyed line this relief
+      requires, so granting the 3,000 square feet on our own reading would loosen the screen on
+      the strength of a survey nobody has done.
+    fingerprint: 2c143f1fb3616864
+  "4.planning.txt#4.140":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "Substantially modified (50 percent or more of the regulatory standards have been" changed
+      -- a test for when an approved plan has been altered enough to need a new review. A
+      procedural threshold about a decision, not about a building.
+    fingerprint: fe22e1c2b8958ecb
+  "4.planning.txt#4.154":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Parking spaces along the boundaries of a parking lot over 650 square feet in area" must be
+      screened or landscaped. The gate is the interesting half: 650 square feet is about three
+      stalls, so a four-stall court is over it and the standard does apply -- and what it requires
+      is planting or a screen along the edge of an area whose size is already set by the stalls
+      and the aisle this layer holds. A perimeter treatment does not enlarge the court; it decides
+      what grows around it.
+    fingerprint: bdb23ee4517d5592
+  "4.planning.txt#4.156.06":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Ground mounted sign of 18 square feet or less in area and six feet or less in height above
+      ground" -- a sign allowance. A sign is not a building and nothing in this screen measures
+      one.
+    fingerprint: 098cec8a2c834915
+  "4.planning.txt#4.156.09":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Temporary sign allowances: a combined total of 24 square feet per lot, and a banner not
+      exceeding 32 square feet per face. Signs again.
+    fingerprint: 305403d826ce40c9
+  "4.planning.txt#4.156.11":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Land area required per animal: 10,000 square feet for a goat, llama or sheep, 2,000 for a
+      swine with a maximum of two per lot, 4,000 for an ostrich, 2,000 for an emu. Livestock
+      keeping standards. The card is also mis-keyed -- these lines are Section 4.162's, arriving
+      under 4.156.11's heading -- and the sibling card at 4.162 holds the horse and cow row from
+      the same list, which is the clearest possible demonstration that the sectioner split one
+      table across two headings.
+    fingerprint: b7a0089a0eef03fc
+  "4.planning.txt#4.162":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "One horse or cow: 20,000 square feet" -- the first row of the livestock table whose
+      remaining rows landed on the 4.156.11 card. Same list, same answer: the pod keeps no
+      animals, and a minimum land area per horse is not a minimum lot size for a dwelling.
+    fingerprint: 6ea8578346755de8
+  "4.planning.txt#4.172":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "A minimum of 25 percent of the provided parking spaces must be provided above the" -- a
+      share of parking required to be structured or elevated, in a district that asks for it. A
+      garage requirement, closed by the standing ruling that this pod has no garage, and a share
+      of a stall count rather than a dimension in any case.
+    fingerprint: 49efa9cb729fa97d
+  "4.planning.txt#4.176.03":
+    queue: nofield
+    outcome: design
+    note: >-
+      Two exemption limbs inside the parking-lot tree canopy standard: the canopy requirement is
+      met where "90 percent of parking spaces are within five parking spaces of a tree", and up to
+      25 percent of spaces may be exempted from the calculation. Both loosen. The section they sit
+      in is the one that matters in this chapter for a different reason -- 4.176(.03) is the
+      citywide 15 percent landscape area standard, read on 2026-09-09 and now encoded in this
+      layer as min_landscaped_pct -- and the number that binds is that 15 percent, not the canopy
+      arithmetic around it. A tree count is not a dimension this screen holds.
+    fingerprint: ad4e5b54609a9a64
+  "4.planning.txt#4.177":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Street standards: a 55-foot setback from centreline or 25 feet from the designated
+      right-of-way, dead-end streets not exceeding 200 feet, 12 feet of vertical clearance above
+      the pavement, and arterials paved to 24 feet on a standard sub-base. Right-of-way geometry,
+      delivered when land is subdivided and a street is built. The first line is worth a note
+      because a setback measured from a street CENTRELINE is the shape that tightens where a
+      right-of-way is narrower than its classification asks -- the same standard MCC 39.4782(E)
+      states for unincorporated Multnomah and which is a recorded refusal there, for want of
+      anything measuring the abutting right-of-way against its intended width. Wilsonville's is
+      the same gap, and it is filed here rather than encoded for the same reason.
+    fingerprint: 313fdc1fdd73a9d5
+  "4.planning.txt#4.199.60":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "Additions of 50 percent or more in terms of additional dwelling units, gross floor area" --
+      the threshold at which an alteration to an existing development triggers a full review. A
+      rule about when a project must come back to the board, keyed to a percentage change against
+      what is already there. This screen places a new building on a lot; it has no existing
+      development to measure a 50 percent addition against.
+    fingerprint: 0d459988ff658e78
+  "4.planning.txt#4.514":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Related uses, shall be set back a minimum of 75 feet upland from the top of each bank" -- a
+      stream-bank setback in the Willamette River Greenway provisions. Corridor geometry measured
+      from a water feature, the same 75 feet the SROZ card states, and held by the
+      natural-resource overlay layer rather than by a yard field.
+    fingerprint: 8bddd4c6875e04b8
+  "4.planning.txt#4.610":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "The site is at least 30,000 square feet" -- a threshold in the tree preservation or
+      site-development provisions, above which a plan is required. A site more than three times
+      the size of a lot holding one pod, and what it triggers is a submission rather than a
+      standard.
+    fingerprint: f63872b7fd037f4c
+  "4.planning.txt#4.610.30":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "Minimum scale of one inch equals 100 feet" for a submitted plan. A drafting instruction, in
+      the same family as Gladstone's one-inch-to-20-feet and Wilsonville's own contour intervals.
+      Not a statement about land.
+    fingerprint: 394bf3d40ffb092f
+  "4.planning.txt#4.620.10":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      "By placing stakes a minimum of 50 feet apart and tying ribbon, plastic tape, rope" -- how
+      to flag a tree protection or clearing boundary on the ground during construction. A
+      site-work instruction for the contractor. It cannot be checked by a screen and it constrains
+      nothing about what may finally stand.
+    fingerprint: 2c2f28f2a9a452f0
+  "4.planning.txt#4.802":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Shall not exceed 50 feet, except the following" and a 200-square-foot limit unless approved
+      through a Conditional Use Permit. Section 4.802 is in the signs and wireless provisions; a
+      50-foot ceiling is twice the pod's height and the 200 square feet is an area cap on a
+      structure the pod does not include. The conditional-use limb is discretion in any case.
+    fingerprint: f055033833a124b1
 definitions:
   # "157. Lot, Corner: A lot either (1) where two intersecting lot lines each
   # abut a street or private drive or (2) where the shortest lot line abuts a
@@ -415,9 +1222,114 @@ defaults:
   # Section 4.125, "V -- Village Zone", and the Village is Villebois; the
   # definitions chapter routes the term there and only there ("Open Space
   # Area: A specific measurement. See Section 4.125(.08), Open Space").
-  # Nothing in 4.113 or in the R, RA-H or PDR zones states a private open
-  # space minimum, so a Wilsonville site plan outside the Village reserves
-  # none -- the code as read, not an omission. (or/clackamas/wilsonville/4.planning.txt#L997-L1002)
+  # Nothing in the R, RA-H or PDR zones states a private open space minimum,
+  # so a Wilsonville site plan outside the Village reserves none -- the code
+  # as read, not an omission. (or/clackamas/wilsonville/4.planning.txt#L997-L1002)
+  #
+  # 4.113 IS NOT SILENT, and the sentence above used to say it was. Corrected
+  # 2026-09-09 while reading the 4.113 card: Subsection (.01)C states "the
+  # minimum open space area required in a development is an area equal to 25
+  # percent of the size of the Gross Development Area" (L2958-L2959), and
+  # (.01)B.1 applies it to "all residential development" with two exceptions,
+  # neither of them this building. It is still not a number this screen holds,
+  # but for a reason about the denominator rather than about silence, and the
+  # reason has to be on the record because a claim of silence is the one thing
+  # nobody re-reads. GROSS DEVELOPMENT AREA IS NOT A LOT: 4.001(84) defines it
+  # as "the total or entire area of a Stage I Master Plan, or if no Stage I
+  # Master Plan is required a Tentative Plat", less SROZ and BPA easement land
+  # (L528-L531). A quadplex built on a lot of record files neither, so there is
+  # no Gross Development Area to take a quarter of. Three more sentences agree:
+  # (.01)B.2 fixes the amount "at the time of Stage II Final Plan review",
+  # (.01)D.2 counts only open space owned by the City, a homeowners'
+  # association, or the property owner for Multi-family Development -- and
+  # 4.001(96) puts middle housing outside Multi-family -- and (.01)D.1 asks
+  # each counted piece to be at least 1,000 square feet, which is an amenity
+  # for a neighbourhood rather than a yard on a lot.
+  #
+  # THE SPLIT PLAT IS THE OPEN QUESTION and is written down rather than
+  # settled. A Middle Housing Land Division is processed as a land division
+  # (4.232(.05)A), so a Tentative Plat exists and with it a Gross Development
+  # Area; 25 percent of a 7,000 sq ft parent lot is 1,750, in one piece of at
+  # least 1,000, which would end that path here the way 4.125(.08) ends it in
+  # the Village. Pulling the other way: 4.232(.04)(2) says the resulting units
+  # "shall collectively be considered a single lot, along with the parent lot"
+  # for lot standards, and 4.232(.04)(1) only allows the division of a building
+  # "that could otherwise be built on the lot without a land division" -- so the
+  # building has already cleared the code before the plat is drawn. Not encoded
+  # either way, because a variant that guessed would decide the split path on
+  # this reading rather than on Wilsonville's.
+
+  # LANDSCAPING, read 2026-09-09 off the 4.planning.txt#4 reading card -- the
+  # document-wide residue card, 285 measuring lines with no section of their
+  # own. This layer held no landscaping field at all, which meant the screen
+  # was handing the pod and its parking court the whole lot minus setbacks.
+  # Wilsonville takes fifteen percent of it back.
+  #
+  # THE OPERATIVE SENTENCE is 4.176(.03): "Not less than 15 percent of the
+  # total lot area, shall be landscaped with vegetative plant materials"
+  # (L15367-L15368). The section it sits in says who it is for in its own
+  # first line -- 4.176(.01), "landscaping and screening standards and
+  # regulations for use throughout the City" (L15218-L15219) -- and the
+  # City's own summary of its review process says the same thing in the
+  # plainest words in the document: "For all projects, at least 15 percent of
+  # the net site area must be landscaped including vegetative plant
+  # materials" (4.008(.02)D, L1783-L1785). That last one is a summary
+  # paragraph and is carried as corroboration rather than as the standard,
+  # because a paragraph describing the code is not the code.
+  #
+  # THE DENOMINATOR DIFFERS BETWEEN THOSE TWO and the operative one is taken:
+  # 4.176(.03) says "total lot area", 4.008(.02)D says "net site area". This
+  # project already knows that seven cities mean seven things by "net", and
+  # the larger denominator is also the stricter answer, so total lot area is
+  # both the cited words and the conservative reading.
+  #
+  # IT WAS NOT OBVIOUS, and the argument on the other side is written down
+  # because somebody will meet it again. Two sentences read as though 4.176
+  # were a commercial standard. 4.113(.12)9 makes a bed and breakfast home --
+  # a use in a residential zone -- "comply with the landscaping standards for
+  # commercial development found in Section 4.176", which only needs saying
+  # if 4.176 does not already reach that lot. And 4.420(.01)B.1 exempts
+  # "landscaping on residential lots in residential zones" from Site Design
+  # Review "unless it is part of the open space required under Subsection
+  # 4.113(.01)". Neither survives. The first has an exact twin one line above
+  # it -- (.12)8 sends the same use to "the off-street parking standards for
+  # commercial development found in Section 4.155" -- and 4.155 plainly does
+  # reach residential, its Table 5 opens with a middle-housing row. So the
+  # phrase names a portion of a section, not the section's reach. The second
+  # is an exemption from REVIEW and not from the standard: 4.420(.01)A.1
+  # exempts residential structures from Site Design Review only "as long as
+  # they meet established clear and objective design and siting standards",
+  # which is the sentence that keeps the standards binding on a building
+  # nobody reviews.
+  #
+  # THREE MORE PLACES RESTATE THE NUMBER, which is what settled it. 4.155(.03)
+  # B.1 says the ten percent parking-area landscaping "shall count towards the
+  # 15 percent total landscaping required in Section 4.176.03 for the site
+  # development" (L13184-L13185) -- a cross-reference that has to be talking
+  # about ordinary lots, because parking areas over 650 square feet are what
+  # trigger it. 4.138(.05)B repeats fifteen percent for the Old Town overlay
+  # (L11420). And Town Center's own table prints a "Minimum landscaping" row
+  # at 10, 15, 10 and 10 percent across its four sub-districts (L8735), which
+  # is the one place in the city the number is not fifteen -- TC is not
+  # encoded away from this default because TC holds quadplex_allowed: false
+  # and no screen ever reaches it, and picking one of four columns off a table
+  # this project has been burned by would be inventing a number to fix a zone
+  # nothing reads.
+  #
+  # WHAT IT DOES NOT CARRY: the distribution. The same subsection asks the
+  # landscaping to be "located in at least three separate and distinct areas
+  # of the lot, one of which must be in the contiguous frontage area"
+  # (L15369-L15371). That is a shape test on where the fifteen percent sits,
+  # not on how much of it there is, and no field in this registry holds a
+  # placement rule of that kind. A pod with a parking court behind it and a
+  # planted frontage almost certainly satisfies it; "almost certainly" is why
+  # it is written here instead of encoded.
+  min_landscaped_pct:
+    value: 15
+    cite: Wilsonville Development Code 4.176(.03) Landscape Area, applicability at 4.176(.01); summarised at 4.008(.02)D
+    url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.176LASCBU
+    retrieved: '2026-09-09'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L1783-L1785,L15218-L15219,L15367-L15368"
 
 zones:
   R:

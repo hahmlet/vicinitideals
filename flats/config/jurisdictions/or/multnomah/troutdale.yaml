@@ -25,6 +25,394 @@ ingest:
   zoning_layer: zoning_troutdale
   zone_field: zonecode
   strip_lowercase_suffix: false
+readings:
+  "8.development-standards.txt#8":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Two unrelated fragments that share a card only because the nearest heading above them is the
+      chapter number. The first is the six-foot screening wall for garbage and recycling
+      enclosures, which regulates a screen and not a building. The rest, from line 1313 to 1353,
+      is the manufactured home park section: four-foot pathways, twenty-four foot interior street
+      pavement, cul-de-sacs serving no more than eighteen manufactured home sites with a
+      forty-foot turning radius, resident parking within a hundred feet of the dwelling it serves,
+      and a six-foot sight-obscuring fence round recreational vehicle storage. A manufactured home
+      park is a different development type with its own internal street network, and none of its
+      geometry is a standard the pod's lot has to clear.
+    fingerprint: 367b6c59dff4a1ac
+
+  "8.development-standards.txt#8.140":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Troutdale's cottage cluster section, complete and self-contained: 1,400 square feet maximum
+      average floor area, zero parking spaces per unit under a thousand square feet and one over,
+      cottages within ten feet of the common courtyard, a courtyard fifteen feet wide at its
+      narrowest, four-foot pedestrian paths, parking clusters of no more than eight contiguous
+      spaces separated by four feet of landscaping, no parking within twenty feet of a street
+      property line or ten feet of any other, three-foot screening between parking and courtyards,
+      attached garages to two hundred square feet exempt from the footprint calculation, detached
+      garages capped at four hundred, garage doors at twenty feet. Every number is switched on by
+      the cottage cluster type. The parking location rules read as though they could travel --
+      twenty feet from a street line is a real constraint -- but they are written inside the
+      cottage cluster standards and Troutdale states its own general parking setbacks elsewhere.
+      This project has also already ruled that the pod carries no garage.
+    fingerprint: e04f88d0e9121a54
+  "3.zoning-districts.txt#3.430":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Section 3.430 is "Dimensional Standards for Industrial Zoning Districts" and its three
+      columns are IP, LI and GI. All three refuse a quadplex, so the whole table is inert here: a
+      hundred and fifty foot minimum lot width in IP and none in the other two, twenty-foot front
+      yards throughout, fifteen and ten foot side and street side yards in IP and LI and none in
+      GI, ten-foot rear in IP, and heights of thirty-five and forty-five feet with GI sent to
+      3.430.B.2. The card routed as a missed standard because six of our fields matched at once,
+      which is what an industrial dimensional table looks like from the outside.
+    fingerprint: 9398cb1c8ded806a
+  "9.parking.txt#9.010":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The residential rows of Table 1 are already encoded and banded by lot size -- one space
+      total under 3,000 square feet, two under 5,000, three between 5,000 and 6,999, four per
+      quadplex at 7,000 and above -- so what is left uncited is the rest of the table and the
+      off-site allowance. The uncited residential rows are the cottage cluster and multi-family
+      lines, neither of which is this building. Everything from line 116 down is non-residential:
+      retail per thousand square feet, kiosks, medical and dental, drive-through banks, service
+      stations per thousand square feet of gross lot area, bowling alleys per lane, benches by the
+      foot, schools by student and staff, hospitals by bed. The two remaining statements are
+      relaxations -- required parking may sit off-site within two thousand feet, and disabled
+      parking within two hundred feet of an accessible entrance -- both of which let a site do
+      less on its own land than the strict reading assumes.
+    fingerprint: 290c90a04bcd637d
+  "9.parking.txt#9.115":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The alternatives in Troutdale's parking geometry, none of which this screen takes. The
+      standard stall of nine by eighteen is already held, and so is the twenty-five foot aisle at
+      ninety degrees, in both directions. What is uncited is the compact space at eight by sixteen
+      with up to thirty-five percent of required spaces allowed to use it, the twenty-two foot
+      parallel space, and the aisle widths for angled layouts -- twenty feet at sixty degrees,
+      twenty at forty-five, twelve for parallel on one side, sixteen on both. Each is an option a
+      designer may choose, and each would let the court fit on a narrower strip than the
+      ninety-degree standard layout needs. Taking the strict branch is deliberate: the pod's court
+      is drawn square, and a lot that passes at twenty-five feet of aisle passes at twenty.
+    fingerprint: 2b6bbaf24e5dc7fe
+  "8.development-standards.txt#8.060":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Landscaping specification, and the one line with a threshold excludes us by a unit.
+      Recreation areas at two hundred square feet per dwelling are required "for development
+      containing more than five (5) dwelling units" and the pod has four. The rest is nursery
+      stock: trees with a mature crown spread over fifteen feet and five feet of clear wood, seven
+      feet tall or an inch and a half in caliper at planting, shrubs a gallon in size or two feet
+      high. These describe the plants, not the land they stand on.
+    fingerprint: 40eb34dbbd44913c
+  "8.development-standards.txt#8.170":
+    queue: missed
+    outcome: not_here
+    note: >-
+      Accessory dwelling unit size: no more than eight hundred square feet or half the primary
+      dwelling's floor area, whichever is smaller, except that an interior conversion of a whole
+      floor may exceed it. An ADU is a second, subordinate dwelling on a lot with a house on it,
+      and the pod is four primary units built at once.
+    fingerprint: f955be60cf492fb1
+  "8.development-standards.txt#8.230":
+    queue: missed
+    outcome: encode
+    note: >-
+      A MINIMUM BUILDING HEIGHT, in a district that permits our building, and no field in the
+      registry can hold it. Section 8.230 is "Standards in the MU-3 (Urban Mixed-Use) Zoning
+      District" and its subsection A reads "Middle housing dwelling units shall have a minimum
+      building height of twenty-five (25) feet." This file holds MU-3 at quadplex_allowed true, so
+      the standard reaches. The pod is about twenty-six feet over two storeys and therefore clears
+      it, which is why this is ordered work rather than an alarm, and MU-3 is three lots in
+      Troutdale. The reason to keep the card open is that the gap is not local: unincorporated
+      Clackamas states twenty feet to the top of parapet in ZDO 1005, Milwaukie twenty-five feet
+      along all street frontages for a depth of at least twenty-five, Oregon City twenty-five feet
+      or two storeys in several districts and "two entire stories" in another, Wood Village
+      eighteen feet in NC, and Gresham and Wilsonville each state one in their corridor and
+      town-centre tables. A minimum height can only refuse -- it is the one direction where an
+      unheld standard produces a false GREEN on a single-storey design -- so the field is worth
+      adding before the next city is encoded, not after. Subsection D of the same section, office
+      uses of fifteen thousand square feet or less being required to sit in a multi-storey
+      structure, is not ours.
+    fingerprint: bb54a8e0ee45b453
+  "8.development-standards.txt#8.130":
+    queue: condition
+    outcome: never
+    note: >-
+      A requirement that a primary entrance be located within eight feet of the street-facing
+      facade or its equivalent. It is a design standard about where a door goes on a wall,
+      conditioned on the wall's orientation, and it constrains neither the footprint, the height,
+      the setbacks nor the parking. A factory-built pod's entrance placement is a matter for the
+      elevation drawing and cannot make a lot too small. Nothing measurable about the lot changes.
+    fingerprint: 67e870aede8bfe93
+  "3.zoning-districts.txt#3.130":
+    queue: condition
+    outcome: never
+    note: >-
+      Subsection E of Troutdale's High Density Residential standards, which states its own scope:
+      it governs multi-family development of five or more dwelling units. Four units is below the
+      threshold in the city's own words, so the subsection's height and street-side setback
+      figures do not reach this building. The district itself is in any case encoded with
+      quadplex_allowed false. Two independent closures, and the first of them -- the unit-count
+      threshold written into the subsection -- is the one that would still hold if the use table
+      changed.
+    fingerprint: e0003de0d40ecdff
+  "3.zoning-districts.txt#3":
+    queue: condition
+    outcome: never
+    note: >-
+      Twelve statements out of Troutdale's district chapter, and the two that matter are the table
+      notes under the triplex and quadplex table -- front yard setback 20 feet if driveway access
+      is taken from the front yard, street side yard 20 feet if taken from the street side. This
+      pod parks off a driveway at the front, so if those notes reached our zones they would double
+      the front setback on every Troutdale lot, and that is the kind of finding this queue exists
+      for. They do not reach them, and the reason is which cells carry the marker. Read across the
+      table row by row: LDR-1, LDR-2 and MDR all print a flat "10" for the triplex and quadplex
+      front yard with no note reference. Only the MDR (TC) and HDR (TC) columns print "10 or 20
+      see note 1", and the street-side note 2 appears only in HDR (TC). Neither Town Center column
+      is a mapped zone in the parcel data -- Troutdale's zones there are LDR-1, LDR-2, MDR, HDR,
+      MU-1, MU-2, MU-3, CC, GC, IP, LI, GI, OS and NSA -- so no lot this screen touches is
+      measured against a cell those notes govern. If a Town Center zone is ever added, this ruling
+      is the note to read first. The rest of the card is elsewhere: the duplex rear-yard notes
+      above our table, the townhouse table's front yard, a 5,400 square foot minimum for "all
+      other uses", and, at the far end of the file, the 50-foot buffer and the floor-area caps of
+      Section 3.430, which is the industrial districts -- IP, LI and GI, all of which prohibit
+      this dwelling.
+    fingerprint: 39fa3b6dad7d853e
+  "1.020.definitions.txt#1.020":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Seven lines of Troutdale's definitions, and each number is inside a definition of something
+      the pod is not. A six-foot measuring distance for a building's adjacent grade; a 90-degree
+      sight test for a screen of living plants; a basement defined as a floor 4 feet or more below
+      adjacent grade; a temporary stand of up to 100 square feet; the story test (a floor more
+      than 12 feet above grade at any point, or more than 6 feet over half the perimeter, or
+      opposite walls not more than 2 feet above the floor); and a windscreen, "a fence-like
+      structure, not to exceed six (6) feet in height, on the north or east side of" something.
+      The story definition is worth one sentence because it is the same rule Portland's 33.930 and
+      the county's MCC 39.2000 state and it reaches nothing here: no height this layer holds is
+      expressed in storeys, so a definition that decides when a space counts as one has no number
+      to change. The windscreen is a fence.
+    fingerprint: 58c12280c11d116a
+  "1.020.definitions.txt#1.030":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Above the airport elevation), and upward extending to a height of three hundred fifty (350)
+      feet above" -- part of Troutdale's definition of an airport imaginary surface, the cone of
+      protected airspace around Troutdale Airport. Three hundred and fifty feet is thirteen times
+      the pod's height and the surface it describes rises away from the runway, so no two-storey
+      building anywhere in the city can reach it. Recorded rather than skipped because an airport
+      overlay is exactly the kind of thing that WOULD bind if it were a height cap, and it is not
+      one -- it is a floor beneath which nothing is affected.
+    fingerprint: fa619ce2fb541295
+  "1.020.definitions.txt#1.040":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Three more definitional numbers: a basement whose interior grade is not more than 2 feet
+      below the lowest adjacent exterior grade, a 4-foot ceiling on something at any point, and
+      "four hundred (400) square feet or less when measured at the largest horizontal projection",
+      which is Troutdale's accessory-structure test and the same sentence Gresham's 3.0120 states.
+      Definitions of a basement and a shed. Neither is the building this screen places, and
+      neither changes a number this layer holds.
+    fingerprint: ca52ac0ebf23b77d
+  "3.zoning-districts.txt#3.235":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      A SETBACK-FOR-HEIGHT TRADE, and it is worth reading properly because it is the shape that
+      has bound this pod elsewhere. "Reduced by as much as five (5) feet", and then "for each one
+      (1) foot reduction in the minimum setback, the building height ceiling shall be reduced by
+      two (2) feet. Thus, a building that is set back the maximum five (5) feet closer to the
+      common property line has a building height ceiling that is ten (10) feet lower than the
+      maximum." That is a RELAXATION with a price: the applicant may buy up to 5 feet of setback
+      and pays 2 feet of height per foot bought. The conservative default declines relief, which
+      leaves the base setback and the base height, both encoded from this district's table -- so
+      the trade changes nothing the screen tests. It is also a menu rather than a requirement:
+      nobody has to take it, and a screen that assumed the trade would report a pod fitting on a
+      lot whose owner never applied for it. The pod's 26 feet against a 35-foot ceiling would in
+      fact leave room to buy about 4 feet of setback, which is worth knowing if the fit stage is
+      ever given permission to trade -- but that is a design decision for a person, not a value
+      for a layer.
+    fingerprint: 7d10c3424721a981
+  "3.zoning-districts.txt#3.325":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Shall not be located within three hundred (300) feet of a residentially zoned property" --
+      a separation requirement on a use in one of Troutdale's non-residential districts. A buffer
+      measured from OUR kind of land outward, protecting houses from something else; the pod is
+      the residential use being protected, not the use being kept away. Nothing here dimensions a
+      dwelling.
+    fingerprint: 92482b03b0780c12
+  "3.zoning-districts.txt#3.330":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Trict, but in no case shall be less than fifteen (15) feet" -- the tail of a sentence
+      setting a floor on a setback that otherwise matches an adjoining district's standard. A
+      setback-matching rule of this kind lives in the non-residential districts, where a building
+      next to residential land inherits the neighbour's yard; the pod is on the residential side
+      of that line. The line as captured is also a fragment with its own subject cut off at
+      "trict", so the district it names cannot be read from it.
+    fingerprint: bd6a37cdc09d8b78
+  "3.zoning-districts.txt#3.440":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Retail and service floorplates capped at 5,000 square feet with a 20,000-square-foot limb,
+      and two marijuana separation distances at 1,000 feet from an existing facility and from an
+      existing processor. Commercial use rationing and a state-mandated buffer between cannabis
+      businesses. Neither reaches a dwelling.
+    fingerprint: 68694676f20e30cb
+  "8.development-standards.txt#8.040":
+    queue: nofield
+    outcome: design
+    note: >-
+      Transit-oriented design: a building within 30 feet of a transit street must have an entrance
+      for pedestrians, and where a stop lies within 500 feet of the building entrance the building
+      must be set back no more than some distance. A door rule and a maximum front setback, both
+      gated on proximity to transit -- and whether a lot is near a transit street is on this
+      project's standing list of site facts nothing measures, which is the same reason Portland's
+      Table 120-4 maximum front setback is a recorded refusal in all six RM zones. A maximum front
+      setback is the shape that HAS bound this pod, in Portland's commercial zones, so this is
+      filed with its teeth described rather than waved past.
+    fingerprint: 740faf32e7fa2af6
+  "8.development-standards.txt#8.120":
+    queue: nofield
+    outcome: design
+    note: >-
+      Eighteen lines of Troutdale's residential design standards and they divide three ways, all
+      of them design. THE ENTRANCE FAMILY: within 8 feet of the longest street-facing wall, or at
+      up to 45 degrees from the street, with a porch of at least 25 square feet -- word for word
+      Portland's 33.110.230 and 33.120.231, ruled the same way three times in this pass. THE
+      FACADE MENU: a roof dormer at least 4 feet wide, a balcony at least 2 by 4, a bay window
+      projecting at least 2 feet, a facade offset of at least 2 feet, an entryway recessed at
+      least 3, a covered entryway at least 4 deep -- six items, and the code asks for some of
+      them, which is the design-menu false positive by its clearest tell. THE DRIVEWAY LIMB: two
+      approaches not exceeding 32 feet in total width, or one approach of at most 16 feet, both of
+      them MAXIMA on a way in rather than minima. Two lines want naming separately. A minimum lot
+      size band, "in zones with a minimum lot size between 5,000 and 6,999 square feet" and "7,000
+      square feet or more", is the gate on a standard rather than a standard, and the lot sizes it
+      gates on are already encoded from the district table. And "each townhouse lot has a street
+      frontage of at least fifteen (15) feet on a local" street is a TOWNHOUSE lot standard
+      reached at land division -- a different building on a different plat.
+    fingerprint: 43d816eadd114914
+  "8.development-standards.txt#8.150":
+    queue: nofield
+    outcome: design
+    note: >-
+      Fourteen lines of multi-family design standards, and the reason this card is design rather
+      than a gap is that every number describes the shape of a wall, a roof or a private balcony.
+      Buildings at least 15 feet from one another; no wall longer than 50 feet without a
+      foundation offset of at least 4 feet for at least 16 feet; roofline offsets at intervals of
+      40 feet or less with at least a 4-foot variation; garages set back at least 5 feet behind
+      the front door or detached and at least 50 feet from the front line; a porch at least 5 feet
+      deep that may encroach 5 feet into the front setback. TWO OF THEM DESERVE A SECOND LOOK AND
+      BOTH SURVIVE IT. The 15-foot separation between buildings is a rule about two structures on
+      one site; the pod is one 56-foot structure, so nothing separates from anything. And the
+      60-square-foot private outdoor area required for each unit, stated twice on this card (once
+      as ground-level area with a 6-foot sight-obscuring screen, once as a balcony), is a PER-UNIT
+      amount at 240 square feet for four units -- which is smaller than the open space this layer
+      would carry anyway and is satisfiable on balconies, so it takes no ground. The garage limbs
+      are closed by the standing ruling that the pod has no garage. The last line, accessory
+      structures over 10 feet high complying with the district setbacks, is a shed.
+    fingerprint: f534e77e22045ad8
+  "8.development-standards.txt#8.160":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Twelve lines of MANUFACTURED HOME PARK standards -- a 100-foot minimum park street frontage,
+      a 150-foot minimum park depth, a 20-foot perimeter setback and buffer, a 3-foot berm or a
+      6-foot masonry wall to screen the park, front and rear yards of 10 and 20 feet inside it, 15
+      feet between dwellings, fire hydrants within 500 feet, and a 100-square-foot accessory
+      storage building per space. A manufactured home park is a single site rented in spaces, and
+      its dimensions belong to the park rather than to any lot in it. This project places one
+      attached four-unit structure on one existing parcel; the two share no geometry. The 15-foot
+      separation between dwellings is the only number that could have been borrowed sideways and
+      it cannot -- it separates two manufactured homes on adjacent rented spaces, not two walls of
+      one building.
+    fingerprint: e82156d99e436536
+  "8.development-standards.txt#8.165":
+    queue: nofield
+    outcome: design
+    note: >-
+      "Than a nominal three (3) feet in height for each twelve (12) feet in width" -- part of
+      Troutdale's standard on wall articulation or on a retaining wall's stepping, expressed as a
+      ratio of height to width. A ratio of this kind shapes an elevation rather than reserving
+      ground, and it is stated as a nominal rather than an absolute, which is the code conceding
+      it is a look rather than a limit.
+    fingerprint: 038012beeef96b93
+  "8.development-standards.txt#8.180":
+    queue: nofield
+    outcome: design
+    note: >-
+      "General storage area spaces at a minimum of ten (10) square feet within each unit" --
+      interior storage, INSIDE the dwelling. It is the same requirement West Linn states for
+      senior and handicapped housing at the same 10 square feet, and it takes no land at all: it
+      is a closet. A screen that measures whether a building fits on a lot cannot see inside the
+      building, and a minimum on a room does not change the footprint.
+    fingerprint: eb4a31da626c1d0b
+  "8.development-standards.txt#8.510":
+    queue: nofield
+    outcome: other_stage
+    note: >-
+      Four lines of frontage improvements on one named street: a 9-foot sidewalk on 257th Avenue,
+      a 5-foot landscape strip beside it, trees separated by at least 15 feet exempt from a height
+      standard, and street trees every 40 feet with the developer responsible for them.
+      Right-of-way improvements on a specific arterial, delivered at the permit stage as a
+      condition on the frontage rather than as a standard on the building. The sidewalk and the
+      strip are outside the lot line; the trees are the city's.
+    fingerprint: dda1705e17cd3b4a
+  "9.parking.txt#9.040":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Hundred (100) square feet of transit amenity space provided above and beyond the minimum"
+      -- a parking reduction bought by building a transit amenity. A bonus, and an earned one: the
+      developer gives a shelter or a plaza and takes stalls off the requirement. The conservative
+      default declines relief throughout this corpus, and this one is gated on being near transit,
+      which is a site fact nothing here measures.
+    fingerprint: 125fe735a94add66
+  "9.parking.txt#9.090":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Seven (7) feet. An access aisle of at least five (5) feet wide shall be provided and" --
+      the vertical clearance and access aisle of an ACCESSIBLE parking space. The standing answer
+      on this project is that a four-unit two-storey pod with no elevator owes no accessible
+      stall, under OSSC 1108.7.2, and all fourteen cities here defer the count to it. A city
+      stating the geometry of a stall it does not require of us states nothing about our lot.
+    fingerprint: 7946c0303e66416b
+  "9.parking.txt#9.095":
+    queue: nofield
+    outcome: design
+    note: >-
+      "(80%) opaque when viewed horizontally from between two (2) and eight (8) feet above" grade
+      -- the opacity test for a screen or fence around a parking area. A screening standard says
+      what a barrier must look through, not where it stands; the same sentence appears in Happy
+      Valley's 16.42.060 at six feet and 80 percent and is ruled the same way in this pass. A
+      fence takes no setback and nothing in this screen measures one.
+    fingerprint: 9dde0a5c60118239
+  "9.parking.txt#9.120":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Loading areas: 250 square feet for buildings of 5,000 to 19,999 square feet of gross floor
+      area, 500 square feet from 20,000 to 49,999, and a loading berth with an unobstructed height
+      of 14 feet. Loading docks, keyed to floorplates the pod is a fraction of -- the smallest
+      gate here is 5,000 square feet and opens on a commercial or industrial building. Portland's
+      33.266.310 states the same family at 20,000 square feet and was ruled the same way on the
+      chapter card.
+    fingerprint: e45d616577d987a8
 crossrefs:
 
   # --- the conditional use chapter, which is not the pod''s path -----------
