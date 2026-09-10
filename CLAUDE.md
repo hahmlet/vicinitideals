@@ -272,11 +272,54 @@ when running tests from outside the LAN (e.g. CI).
 ### Running Tests
 ```bash
 uv run pytest tests/ -q -m "unit" --ignore=tests/e2e     # Unit tests only
-uv run pytest flats/tests -q                               # FLATS (no DB needed)
+uv run pytest flats/tests -q -n auto                       # FLATS (no DB needed)
 uv run pytest tests/ -q --ignore=tests/e2e                # Unit + integration
 uv run pytest tests/e2e/ -q -m e2e                        # E2E (needs running app)
 uv run ruff check app/ tests/ flats/ scripts/               # Lint (same scope as CI)
 ```
+
+**`-n auto` is for `flats/tests` and nothing else.** The FLATS suite touches no
+database, no network and no shared file, so it shards cleanly — measured
+2026-09-10 on 16 cores, 13:07 → **2:24** at `-n auto` (16 workers) with the same 3,096 passed / 5
+skipped and zero failures. The `tests/` suites share one Postgres database and
+`TRUNCATE` between tests, so running them under `-n` would have workers wiping
+each other's rows. There is deliberately **no `addopts` in `pyproject.toml`**
+putting `-n` on every run, for exactly that reason.
+
+### The FLATS corpus census — read before touching it
+
+`flats.encode.qualified.qualified()` costs **~14 seconds and is recomputed on
+every call.** Roughly 26 tests across thirteen files run the same corpus-wide
+footnote census with it (`test_every_new_note_is_ruled_and_none_blocks` and its
+siblings in `test_block_limit`, `test_declared_notes`, `test_glued_run`,
+`test_legend_lines`, `test_lettered_markers`, `test_notes_lead`,
+`test_page_frame`, `test_parenthesised_table_names`, `test_wrapped_citations`,
+`test_nested_notes_and_lone_cells`, `test_wilsonville_notes`,
+`test_wood_village`, `test_lake_oswego_notes`). That is **1.3% of the suite
+holding 63% of its runtime**, and it accumulated honestly — each of those tests
+was added the day a new footnote shape was found, and each is individually
+correct. `-n auto` hides the cost. It does not remove it.
+
+**Three rules for anything that touches this, now or later:**
+
+1. **Adding another census test adds another ~14 seconds.** If a new footnote
+   shape needs one, that is fine and correct — but say so, because the number
+   above moves and this note goes stale otherwise.
+2. **If the census is ever cached, it must be a session-scoped pytest fixture —
+   never a module-level `@lru_cache` on `qualified()`.** The standing project
+   rule is *regenerate a ledger before trusting it*; a process-lifetime cache in
+   the module would carry into the CLI ledgers and the review screens, where a
+   stale census is exactly the failure the funnel ledgers exist to prevent.
+   Caching in the test session is safe because the corpus cannot change mid-run.
+3. **A cached census must be invalidated by any test that writes to the corpus.**
+   If a fixture is built, tests that save a document or rewrite a jurisdiction
+   YAML have to opt out of it or clear it, or they will assert against a census
+   taken before their own edit.
+
+Not fixing this is a live decision, re-taken every time the suite is touched.
+Corpus I/O is *not* the cause and caching reads will not help: all 181
+documents (13.3 MB) load in 0.26s and `load_rules()` in 0.19s. The cost is
+processing.
 
 ### Test Creation Requirement
 

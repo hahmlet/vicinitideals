@@ -104,6 +104,13 @@ dev = [
     # Hard per-test timeout so a single hung integration test can't
     # burn the entire CI job (see Integration tests step in ci.yml).
     "pytest-timeout>=2.3",
+    # Parallel test execution. Used ONLY for `flats/tests` -- see the
+    # "Running Tests" note in CLAUDE.md. The FLATS suite touches no database
+    # and no network, so it shards cleanly (measured 2026-09-10 on 16 cores:
+    # 13:07 -> 2:24 at -n auto, 3,096 passed / 5 skipped, zero failures). The
+    # tests/ suites share one Postgres database and TRUNCATE between tests, so
+    # they are NOT parallel-safe and -n must never be applied to them.
+    "pytest-xdist>=3.6",
     "httpx>=0.27",
     "curl-cffi>=0.7",
     "anyio>=4.0",
