@@ -4476,3 +4476,134 @@ prohibition grammar is the obvious answer and is deliberately **not** built
 today — 697 sentences with 19 hits is a 2.7 percent yield, which is a ranking
 problem before it is a screen, and the two hits it would have found are already
 written down.
+
+---
+
+## The other axis of the same decay: a claim about the STORE — 2026-09-09
+
+`stale.py` watches one axis and one only. It asks whether a footnote
+dismissal's reason still says something true about **which zones this layer
+encodes**, because that is the claim somebody else can falsify by doing their
+job. There is a second axis with exactly the same property, and until today
+nothing was watching it:
+
+> "ZDO 1005 is not held" · "a cross-reference to a chapter not in this corpus" ·
+> "Chapter 12.16 … was not in the store" · "never fetched"
+
+A claim about the **store** decays the same way a claim about the zones does,
+and *faster* — fetching a document is a much smaller act than encoding a
+district. Four sentences in `_unincorporated.yaml` saying ZDO 1005 was not held
+went false on 2026-09-08, the day it was fetched, and were found on 2026-09-09
+by hand, while reading for something else. `stale.py` could not have caught
+them: it looks for zone codes and none of the four names one.
+
+`flats/encode/unheld.py` is the standing check for that axis.
+
+### What it found on its first run
+
+Four Gresham zone notes — MDR-PV, HDR-PV, VLDR-SW and OFR — each said Table
+4.0130's parking cell, *"As provided in Section 9.0851"*, was **a
+cross-reference to a chapter not in this corpus, so the state minimum stands**.
+
+Section 9.0800 has been in the store since **2026-08-27**, and 9.0851 is a
+section inside it. What the cross-reference opens onto is not the state cap but
+**zero**:
+
+> **9.0802(A)** — "Vehicle parking minimums are not required for any land use
+> type."
+
+Table 9.0851 states maximums and prints no minimum column at all; 9.0852
+restates the zero for the Civic Neighborhood and Downtown plan districts and
+names neither Pleasant Valley nor Springwater, so the general rule is the whole
+of it.
+
+**The layer already carried that number.** `parking_min_per_unit: 0` sits in
+gresham.yaml's `defaults`, read out of that very chapter, and is recorded there
+as *"the largest single correction this layer has taken"*. So these four
+sentences were not merely stale — **they disagreed with a number in the same
+file**, and pointed at a state minimum the file itself had already refuted.
+That is the row the check ranks first and prints as `<- and quotes it`: not a
+stale sentence but a file arguing with itself.
+
+All four are rewritten rather than deleted, because *why* the note said what it
+said is part of the record.
+
+### How it decides, and the two mistakes it must not make
+
+Resolution is by `crossrefs.opens()` and deliberately by nothing else — two
+ledgers giving two answers to *"do we hold that chapter"* would be worse than
+either alone. It also gets right what a filename cannot: **9.0851 lives inside
+`9.0800.parking.txt`**, so matching references against document names would
+have missed all four notes that motivated the module.
+
+The whole trick is *where in the sentence it looks*. Backwards to the last
+sentence boundary, then forwards only as far as the first comma, colon, dash or
+quotation mark — because after a not-held marker this corpus habitually names
+the documents that **do** mention the thing, and reading those as the subject
+inverts the claim. The worked example is one sentence away in the same file:
+
+> "the Floodplain Management District … whose own chapter is **not in this
+> store**: the only three documents here that name it are this one, ZDO 1012 …
+> and Gladstone 17.25."
+
+Both of those are held. Both are named to say the district is real, not to say
+the store has its chapter. A claim naming no document at all is **dropped**,
+not reported — those are the sibling claims (a map, an overlay, an engineering
+manual, the neighbour's zoning), just as decay-prone and not answerable here,
+because the store is not what would falsify them.
+
+### It reads four places, and two of them no prose harvest can see
+
+Layer and zone `notes` off the loaded model, `#` comments off the file — the
+same harvest `refusals.py` uses — **plus the `crossrefs:` and `readings:`
+ruling blocks**, which are structured fields rather than prose. That is where
+this claim takes its sharpest form: a cross-reference closed *because* we do
+not hold the chapter is a decision **resting on** the absence, not a remark
+about it, and it is the row that should reopen the moment the chapter arrives.
+Adding those two blocks took the report from three claims to seven.
+
+One exclusion, and it is a correctness fix rather than an optimisation:
+**comments inside `code:` are skipped**, because that block is the fetch
+manifest and the comment above an entry is the argument for fetching it —
+*"cited eleven times across the district chapters and never fetched"*. Every
+one of those is a true statement about the past standing directly above the
+document it caused to be fetched. Reading them live would bury the report in
+its own success stories. Worth naming: this was first written against
+`ingest:`, which is the **parcel-join config** and holds no prose at all, so
+the exclusion excluded nothing and only looked correct because the marker could
+not yet see a manifest comment's object. `test_the_manifest_is_the_block_that_lists_documents`
+asserts both halves so the confusion cannot come back quietly.
+
+### Where it stands
+
+```
+written claims that a document is not held: 7
+  the store answers for it today:        0
+  still true, and able to go stale:      5
+  written as history, not as a claim:    2
+```
+
+The five live ones are already on the fetch backlog and agree with it, which is
+the right outcome for a new check: **ZDO 1002** and **ZDO 1021** (unincorporated
+Clackamas crossref rulings), **Happy Valley 16.44** (a reading ruling parked on
+its absence), **Lake Oswego 50.06**, and **Portland Title 17**. Each is a
+sentence that becomes wrong the day its document arrives.
+
+### The test that can survive the corpus being clean
+
+`test_stale.py`'s convention holds here — *the corpus tests assert only that
+whatever the check reports is internally true, and everything about the
+mechanism is tested on text written in the test file* — and it bites harder.
+Once the four Gresham notes were corrected they stopped naming a chapter beside
+the marker, so they left the report **entirely** rather than moving to
+`settled`. The check is now capable of reporting nothing at all, which means a
+synthetic fixture is the only thing that can prove it still fires:
+`test_the_sentence_this_module_was_built_for_still_fires` carries the Gresham
+sentence verbatim and re-asks it of the live store.
+
+One number **is** asserted, and it is asserted at **zero**: no sentence in the
+corpus may be contradicted by the store. Pinning a count is the trap — a ledger
+of our own mistakes goes red the day the last one is fixed. Asserting zero is
+its opposite. It cannot fail on success, and it fails on exactly one event: a
+document arriving that a sentence somewhere still says is missing. Which is the
+day the sentence needs rewriting, and the day nobody is looking.

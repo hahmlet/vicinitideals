@@ -2961,9 +2961,21 @@ zones:
     notes: >-
       Pleasant Valley medium-density sub-district; shares one setback row with
       LDR-PV and takes its own column everywhere else. Off-street parking is
-      row J, "As provided in Section 9.0851" -- a cross-reference to a chapter
-      not in this corpus, so the state minimum stands rather than a number read
-      out of this table. Row K is not encoded and has no field: alley access is
+      row J, "As provided in Section 9.0851". This note used to call that a
+      cross-reference to a chapter not in this corpus and let the state
+      minimum stand. CORRECTED 2026-09-09,
+      and it was wrong in the dangerous direction. Section 9.0800 has been in
+      the store since 2026-08-27 and 9.0851 is a section inside it, so the
+      cross-reference opens. What it opens onto is not the state cap but
+      zero: 9.0802(A), "Vehicle parking minimums are not required for any
+      land use type", with Table 9.0851 stating maximums and printing no
+      minimum column at all. 9.0852 restates the zero for the Civic
+      Neighborhood and Downtown plan districts and names neither Pleasant
+      Valley nor Springwater, so the general rule is the whole of it. This
+      layer already carries that as parking_min_per_unit: 0 in `defaults`,
+      read out of this very chapter -- so the sentence was not merely stale,
+      it disagreed with a number in the same file. Found by
+      flats/encode/unheld.py, which was built for exactly this. Row K is not encoded and has no field: alley access is
       REQUIRED for garage entrances on a lot narrower than 60 feet, which is an
       access constraint on the pod rather than a dimension of it, and it
       applies only to developments whose units have individual garage
@@ -3066,8 +3078,21 @@ zones:
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
     notes: >-
       Pleasant Valley high-density sub-district. Off-street parking is row J,
-      "As provided in Section 9.0851", a cross-reference to a chapter not in
-      this corpus, so the state minimum stands. Row K is not encoded and has no
+      "As provided in Section 9.0851". This note used to call that a
+      cross-reference to a chapter not in this corpus and let the state
+      minimum stand. CORRECTED 2026-09-09,
+      and it was wrong in the dangerous direction. Section 9.0800 has been in
+      the store since 2026-08-27 and 9.0851 is a section inside it, so the
+      cross-reference opens. What it opens onto is not the state cap but
+      zero: 9.0802(A), "Vehicle parking minimums are not required for any
+      land use type", with Table 9.0851 stating maximums and printing no
+      minimum column at all. 9.0852 restates the zero for the Civic
+      Neighborhood and Downtown plan districts and names neither Pleasant
+      Valley nor Springwater, so the general rule is the whole of it. This
+      layer already carries that as parking_min_per_unit: 0 in `defaults`,
+      read out of this very chapter -- so the sentence was not merely stale,
+      it disagreed with a number in the same file. Found by
+      flats/encode/unheld.py, which was built for exactly this. Row K is not encoded and has no
       field: alley access is REQUIRED for garage entrances here outright, not
       only on narrow lots, for developments whose units have individual garage
       entrances. Note 5 on the height row points at Section 4.1416 building
@@ -3405,9 +3430,21 @@ zones:
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L339-L340"
     notes: >-
       Springwater very low density sub-district. Off-street parking is row K,
-      "As provided in Section 9.0851", a cross-reference to a chapter not in
-      this corpus, so the state minimum stands rather than a number read out of
-      this table. Row L, alley access for garage entrances, reads N/A against
+      "As provided in Section 9.0851". This note used to call that a
+      cross-reference to a chapter not in this corpus and let the state
+      minimum stand. CORRECTED 2026-09-09,
+      and it was wrong in the dangerous direction. Section 9.0800 has been in
+      the store since 2026-08-27 and 9.0851 is a section inside it, so the
+      cross-reference opens. What it opens onto is not the state cap but
+      zero: 9.0802(A), "Vehicle parking minimums are not required for any
+      land use type", with Table 9.0851 stating maximums and printing no
+      minimum column at all. 9.0852 restates the zero for the Civic
+      Neighborhood and Downtown plan districts and names neither Pleasant
+      Valley nor Springwater, so the general rule is the whole of it. This
+      layer already carries that as parking_min_per_unit: 0 in `defaults`,
+      read out of this very chapter -- so the sentence was not merely stale,
+      it disagreed with a number in the same file. Found by
+      flats/encode/unheld.py, which was built for exactly this. Row L, alley access for garage entrances, reads N/A against
       All Other Uses here and is not encoded. Row H sends the quadplex row to
       Section 7.0400 for rear height limits, and that is now read and carried.
       7.0420(G)(1) allows 21 ft of roof at the rear setback line and a foot
@@ -3951,8 +3988,20 @@ zones:
     notes: >-
       Office/Residential, the seventh column of the residential tables and the
       only one that was never read. Off-street parking is Table 4.0130 row L,
-      "See Section 9.0800", a cross-reference to a chapter not in this corpus,
-      so the state minimum stands. Row A's 7,200 sq ft is a minimum SITE size
+      "See Section 9.0800". This note used to call that a cross-reference to a
+      chapter not in this corpus and let the state minimum stand. CORRECTED 2026-09-09,
+      and it was wrong in the dangerous direction. Section 9.0800 has been in
+      the store since 2026-08-27 and 9.0851 is a section inside it, so the
+      cross-reference opens. What it opens onto is not the state cap but
+      zero: 9.0802(A), "Vehicle parking minimums are not required for any
+      land use type", with Table 9.0851 stating maximums and printing no
+      minimum column at all. 9.0852 restates the zero for the Civic
+      Neighborhood and Downtown plan districts and names neither Pleasant
+      Valley nor Springwater, so the general rule is the whole of it. This
+      layer already carries that as parking_min_per_unit: 0 in `defaults`,
+      read out of this very chapter -- so the sentence was not merely stale,
+      it disagreed with a number in the same file. Found by
+      flats/encode/unheld.py, which was built for exactly this. Row A's 7,200 sq ft is a minimum SITE size
       and row B's 3,600 a minimum LOT size; both are stated for this column and
       the larger is encoded, because a development on one lot has to satisfy
       both. Row I sends this column to Section 9.0600 for height
