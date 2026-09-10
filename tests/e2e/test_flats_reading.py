@@ -36,6 +36,17 @@ def _card_heading(page: Page) -> str:
     return page.locator("#reading-card h3").inner_text().strip()
 
 
+def _has_card(page: Page) -> bool:
+    """Is there a card on screen at all, or has the queue run out?
+
+    A queue emptying is the outcome the whole surface is for, so no test here
+    may treat it as a failure. It is asked structurally -- the empty state
+    renders no heading and no form -- rather than by matching its wording,
+    which is prose and will be rewritten.
+    """
+    return page.locator("#reading-card h3").count() > 0
+
+
 def test_the_landing_page_lets_you_pick_the_day_s_mode(
     logged_in_page: Page, base_url: str
 ) -> None:
@@ -76,6 +87,9 @@ def test_each_queue_offers_only_the_answers_to_its_own_question(
     page = logged_in_page
     page.goto(f"{base_url}/flats/reading/{queue}")
 
+    if not _has_card(page):
+        pytest.skip(f"the {queue} queue is fully ruled — no card to offer answers on")
+
     labels = page.locator("#reading-card input[name='outcome']")
     count = labels.count()
     assert count, "a card with no answers is not a decision"
@@ -97,8 +111,18 @@ def test_skipping_swaps_the_next_card_in_without_a_page_load(
     wait_for_htmx(page)
 
     assert page.url == url_before, "the queue does not navigate"
-    assert _card_heading(page) != first, "it moved on"
-    expect(page.locator("text=1 skipped").first).to_be_visible()
+    # What proves the swap is that the count of skips came back changed, and it
+    # is asserted on rather than on a heading because a queue worked down to its
+    # last card is this project succeeding, not a regression: skipping the only
+    # card leaves the empty state, which is a correct answer and carries no h3.
+    # Either shape says the same thing, and neither can be true of the old DOM
+    # (before the click the card prints its remaining count with no skip
+    # clause), so a slow swap cannot pass this by accident.
+    expect(page.locator("#reading-card")).to_contain_text(
+        re.compile(r"1 skipped|Skipped past 1", re.I)
+    )
+    if _has_card(page):
+        assert _card_heading(page) != first, "it moved on"
 
 
 def test_a_filter_survives_the_next_card(
@@ -110,11 +134,20 @@ def test_a_filter_survives_the_next_card(
     page.goto(f"{base_url}/flats/reading/missed?layer=or/multnomah/gresham")
 
     expect(page.locator("#reading-card")).to_be_visible()
-    if "Nothing left in this queue" in page.locator("#reading-card").inner_text():
+    if not _has_card(page):
         pytest.skip("Gresham's missed queue is empty — nothing to carry")
 
     page.get_by_role("button", name=re.compile("Can.t tell yet")).click()
     wait_for_htmx(page)
+
+    # The filter has to survive on the URL whether or not a card is left, and
+    # that half is checked unconditionally -- an emptied queue is not licence
+    # for the screen to drop the scope the reviewer chose.
+    assert "layer=or/multnomah/gresham" in page.url, "the filter fell off the URL"
+    # The other half rides on the card's own form, so it needs a card. One card
+    # left is a real corpus state, not a broken filter.
+    if not _has_card(page):
+        pytest.skip("Gresham's missed queue held one card — nothing left to carry it on")
 
     held = page.locator("#reading-card input[name='layer']").input_value()
     assert held == "or/multnomah/gresham"
