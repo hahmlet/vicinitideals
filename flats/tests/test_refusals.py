@@ -285,7 +285,67 @@ pytestmark = pytest.mark.unit
 #: off above 20,000 square feet, and on 2026-09-09 it was encoded instead. A
 #: refusal that leaves because the model grew is the only kind worth
 #: celebrating, and it is why this count is asserted rather than floored.
-EXPECTED = {"notes": 120, "comments": 133, "tests": 17}
+#:
+#: notes 120 -> 122 and comments 133 -> 135 later on 2026-09-09, all four rows
+#: in unincorporated Clackamas and all four the residue of encoding ZDO
+#: 1005.02(E) as `orientation_constraint: axis_required` in PMD, MR-1 and MR-2.
+#: Reading a section to encode one sentence of it is how this ledger grows
+#: fastest, and the growth is the honest part: the encoding took the half of
+#: the subsection a field can hold and this records the half it cannot.
+#:
+#:   The two comments are deduplicated across three zone blocks, which is why
+#:   three insertions produce two rows. One is the ceiling hiding inside a
+#:   percentage: "50 percent of the street frontage ... shall have buildings
+#:   located at the minimum front setback line" is also a cap on frontage,
+#:   because one pod is one building and can cover half a frontage only up to
+#:   twice its own width. No field holds a building's share of a frontage --
+#:   `min_frontage_ft` and `parking_area_max_frontage_pct` are the nearest and
+#:   neither is it -- and this is the SECOND county to leave the same hole,
+#:   Gresham 7.0420(J)(1)(a) being the first. The other is 1005.02(E)(1),
+#:   which buys a 20-foot front setback with pedestrian amenities in it: a
+#:   relaxation, declined by the conservative default.
+#:
+#:   One note is Subsection (H), cited by the same Table 315-4 cell as (E),
+#:   which reaches buildings "located at a major transit stop" and turns on a
+#:   200-foot radius. That is a site fact nothing measures, so it joins the
+#:   unmeasured list rather than a value.
+#:
+#:   The last note is the one worth reading twice, because it is not a
+#:   dimension at all. ZDO 845.01(3) prohibits a quadplex outright in the
+#:   Floodplain Management District -- and A FLAT PROHIBITION STATES NO
+#:   MEASUREMENT, SO NO MEASUREMENT-BASED LEDGER CAN EVER SURFACE IT. All four
+#:   reading queues are built from sentences that state a number; 845.02 and
+#:   845.04 each raised a card and 845.01(3) raised none, though it is the
+#:   strongest of the three. It stays unencoded because the district's own
+#:   chapter is not in this store, because `in_floodplain` is registered in
+#:   conditions.py and used by nothing, and because capping `quadplex_allowed`
+#:   on an unmeasured fact would send every lot in thirteen zones to UNKNOWN,
+#:   which is its own change and not a footnote to this one.
+#:
+#: notes 122 -> 123 the same day, and this one is the reason the sentence above
+#: is written in capitals. Asking "how many prohibitions are invisible to these
+#: queues" directly -- a scan for prohibition grammar across the whole corpus,
+#: 697 sentences, 19 of them naming a housing type this pod could be -- turned
+#: up a SECOND unrecorded one, in the largest land base in the corpus. PCC
+#: 33.110.240.E: "Triplexes and fourplexes are prohibited on lots that do not
+#: have frontage on a maintained street", with narrow exceptions for a private
+#: street or a pedestrian connection that reaches one, and "Payment in lieu of
+#: street improvements does not satisfy this requirement" closing the escape.
+#: It reaches every R zone this corpus encodes a fourplex into.
+#:
+#: Everything MEASURABLE in 33.110.240 is already quoted by portland.yaml --
+#: Table 110-7's lot areas, the outdoor area, the 25-foot accessory ceiling --
+#: so the section is fully cited, raised no card in any of the four queues, and
+#: the one sentence in it that can refuse this building outright was never put
+#: in front of anybody. Two counties, two codes, same blind spot.
+#:
+#: The other seventeen are accounted for and none is a new hole: Wilsonville
+#: RN already carries `quadplex_allowed: false` from the Frog Pond West
+#: sentence (encoded conservatively across all three neighbourhoods, since
+#: nothing published says which one a lot is in); Happy Valley's child-lot
+#: prohibition is ruled in the footnote ledger; the rest are townhouse access
+#: rules, middle-housing land divisions, and one about outdoor storage.
+EXPECTED = {"notes": 123, "comments": 135, "tests": 17}
 #
 # 258 -> 267 on 2026-09-08, later still, and every one of the nine is Oregon
 # City's non-residential side. Nine notes, no comments, which is itself the

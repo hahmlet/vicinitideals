@@ -22,7 +22,34 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   line and not an envelope constraint, and there is no dimension in it for the screen to hold. The same reading is
   recorded as a `fee_in_lieu` crossref ruling on or/multnomah/_unincorporated, which does not hold this document and
   where it still dangles — 11.50.050 A applies the density standards to "sites within the city and the County Urban
-  Pocket Areas" by name.'
+  Pocket Areas" by name.
+
+  A USE PROHIBITION ON THIS EXACT BUILDING, READ 2026-09-09, AND NOT ENCODED. PCC 33.110.240.E opens
+  the triplex and fourplex standards with a sentence that is not a standard: "Triplexes and
+  fourplexes that meet the following standards are allowed in the R20 through R2.5 zones. Triplexes
+  and fourplexes ARE PROHIBITED ON LOTS THAT DO NOT HAVE FRONTAGE ON A MAINTAINED STREET, except
+  lots that have frontage on a private street that connects to a maintained street, and lots that
+  have frontage on a self-contained pedestrian connection created solely for pedestrians and
+  bicycles that connects to a maintained street. Payment in lieu of street improvements does not
+  satisfy this requirement." That last sentence closes the obvious escape, and the whole of it
+  reaches every R zone this layer encodes a fourplex into.
+
+  It is a site fact and nothing here measures it. There is no condition for it in the register
+  either: `flag_lot` is the nearest and it is not the same question, because a flag lot may reach a
+  maintained street down its pole and a lot with generous frontage on an unmaintained one fails.
+  What would answer it is Portland maintenance responsibility cut against the parcel frontage, and
+  that is a data question rather than a reading question. Encoding it means capping
+  `quadplex_allowed` on an unmeasured fact across every R zone in the city, which moves lots to
+  UNKNOWN in the largest land base in this corpus and belongs in its own change with that count in
+  front of it.
+
+  Why it was never on any queue, which is the part worth keeping: THE READING LEDGERS ARE BUILT
+  FROM SENTENCES THAT STATE A MEASUREMENT, AND A FLAT PROHIBITION STATES NONE. Everything
+  measurable in 33.110.240 is already quoted by this file -- Table 110-7''s minimum lot areas, the
+  outdoor area, the 25-foot accessory ceiling -- so the section is fully cited and raised no card
+  in any of the four queues, while the one sentence in it that can refuse this building outright
+  went unread. Found by a deliberate scan for prohibition grammar on 2026-09-09, at the same time
+  as Clackamas ZDO 845.01(3), which is the same shape in a different county.'
 ingest:
   geoid: null
   juris_city_codes:

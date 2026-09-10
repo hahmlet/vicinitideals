@@ -4057,30 +4057,33 @@ loader holds has a file to write to.**
 
 Every card in all four reading queues is ruled. **638 decisions** — 136 missed
 standards, 89 conditions, 93 chapters, 320 no-field sections — and the whole of
-it is this one uncommitted set, because the queues did not exist before it. What
-remains open is 25 cards, and every one of them is open *on purpose*: three
-`read_it`s, three `encode`s, nine `applies`, six `cant_tell`s parked in the
-unmeasured-site-facts list, and four `need_a_field`s. Nothing is open because
+it is one branch, because the queues did not exist before it. What remains open
+is **24 cards**, and every one of them is open *on purpose*: three `read_it`s,
+three `encode`s, nine `applies`, six `cant_tell`s parked in the
+unmeasured-site-facts list, and three `need_a_field`s. Nothing is open because
 nobody got to it.
+
+*(Counts corrected after the Wood Village card below was re-ruled: it was
+committed as a fourth `need_a_field` and is not one.)*
 
 The outcome distribution is the interesting artefact, because it is a
 measurement of what the ledger was actually made of:
 
 | Outcome | Count | What it means |
 |---|---:|---|
-| `other_building` | 227 | a different use, building, zone or table row |
+| `other_building` | 228 | a different use, building, zone or table row |
 | `not_here` | 126 | the condition never reaches this pod |
 | `nothing_here` | 90 | a chapter opened and found empty for us |
 | `design` | 76 | how a thing is drawn, not how much land it takes |
 | `never` | 74 | a condition that cannot be true of this building |
 | `other_stage` | 44 | land division, plat, procedure, submittal |
 | `not_a_statement` | 15 | our extractor, not Oregon's code |
-| `need_a_field` | 4 | a real gap in the model |
+| `need_a_field` | 3 | a real gap in the model |
 
-**Four of 638.** That is the number worth staring at. The ledger's job was never
-to find four things; it was to make it possible to *say* that only four things
+**Three of 638.** That is the number worth staring at. The ledger's job was never
+to find three things; it was to make it possible to *say* that only three things
 were there, and to say it with a checkable sentence attached to each of the
-other 634. Before this pass the honest answer to "what is in the 4,693 unread
+other 635. Before this pass the honest answer to "what is in the 4,693 unread
 lines" was "nobody knows", and an unknown of that size is indistinguishable from
 a corpus full of missed standards.
 
@@ -4094,49 +4097,144 @@ read properly, so nothing was lost. But a reader who did not know that rule
 would have taken those figures, and they would have been right about half the
 time.
 
-### A third standard hiding in a table note
+### The find that was not one, and the shape it belongs to
 
-Wood Village's Town Center, Table 235-2, notes (2) and (3). Ruled
-`need_a_field` and deliberately left open:
+**This subsection replaces a claim made a few hours earlier in the same pass and
+committed in `e8c9dd11`. The claim was wrong.** It is rewritten rather than
+deleted, because the way it went wrong is the useful part.
 
-> (2) For sites abutting a light residential zone or abutting right-of-way
-> adjacent to a light residential zone, the maximum height is twenty-five (25)
-> feet within the first twenty-five (25) feet from the lot line abutting the
-> light residential zone.
->
-> (3) Sites abutting a residential zone shall have a side or rear building
-> setback of fifteen (15) feet from the residential zone.
+The claim was that Wood Village's Town Center carried two unencoded tightenings
+in Table 235-2's notes — note (3) taking the side setback from 5 feet to 15
+where the site abuts a residential zone, and note (2) capping height at 25 feet
+within 25 feet of that lot line, which a 26-foot pod fails by a foot. It was
+filed `need_a_field`, left open, and written up as *"the third real standard
+found in a table NOTE rather than a table cell this week."*
 
-The pod is **26 feet**. It fails note (2) by a foot, inside a band 25 feet deep
-measured from the property line. Note (3) triples TC's encoded side setback from
-5 feet to 15. TC is a zone that can come out GREEN, so lots can be reported green
-today on numbers that do not apply to them.
+**Both notes belong to the other column.** Table 235-2 has two value columns,
+`RESIDENTIAL USE CATEGORIES(1)` and `NONRESIDENTIAL AND MIXED USE`, and every
+marker in it is placed column by column, consistently:
 
-Note (3) is cheap: `abuts_residential_zone` is already registered at
-[flats/rules/conditions.py:549](flats/rules/conditions.py#L549) and Oregon City
-already carries eight `when:` variants on it, and neighbour-zone adjacency is on
-the **computable** half of the unmeasured-site-facts list. It needs one variant
-on `setback_side_ft` and nothing else.
+| Row | Residential | Nonresidential and mixed use |
+|---|---|---|
+| Maximum height | 35 ft | 115 ft**(2)** |
+| Front setback | 10 ft**(5)** | 0 – 10 ft |
+| Garage setback | 20 ft**(5)** | None**(3)**, 22 ft minimum when parallels street |
+| Side setback | 5 ft | None**(3)** |
+| Rear setback | 15 ft | None**(3)** |
+| Minimum landscaping | Same as MR2 zone | 15%**(4)** |
 
-Note (2) is not cheap, and the reason is worth recording. The `step_back` form
-holds a height that increases as you move *away from a street frontage*. This is
-a height that is **capped inside a horizontal band measured from a property
-line** — same grammar, different origin, opposite direction. Reusing `step_back`
-would encode it in the wrong place on the lot.
+`(5)` hangs off residential cells; `(2)`, `(3)` and `(4)` hang off
+nonresidential ones. Note `(5)`'s own first sentence — *"This note applies to
+detached single-family dwelling units"* — confirms the drafter is working a
+column at a time.
 
-Neither is folded into this commit, for the same reason Portland's Eastern
-Pattern Area rear setback and Gresham's 9.0822(A)(6) are not: encoding any of
-them re-runs the fit stage, and a fit re-run is its own change with its own
-before-and-after count.
+**Read in place, the two notes are obviously not ours.** The nonresidential
+column states *no* side, rear or garage setback — the cell is the word `None` —
+and no height under 115 feet. Notes (2) and (3) are what put a floor back under
+a column that has none: a commercial building may stand on its side lot line and
+rise 115 feet *unless* it abuts residential, in which case it owes 15 feet and
+drops to 25 within 25 feet of the line. Against the residential column they
+would be nonsense in one case and a nullity in the other — the residential rear
+setback is *already* the 15 feet note (3) states, and note (2)'s ladder ("one
+additional foot in height for each two feet in lateral distance") climbs *"up to
+the height limit for the zone"*, which is 115 in the column it is printed
+against and 35 in the column it is not. **A ladder written to climb from 25 to
+115 is not a ladder written for a 35-foot column.**
 
-**This is the third real standard found in a table *note* rather than a table
-cell this week**, after Milwaukie's side-yard plane and the Fairview open-space
-percentage. The pattern is now firm enough to name: a note is where a drafter
-puts the case that did not fit the grid, and the case that does not fit the grid
-is disproportionately the case that binds. The footnote-both-ways check reads
-notes attached to *values we took*. Nothing systematically reads the notes
-attached to values we **did not** take — and both Wood Village notes hang off a
-table whose TC row we encoded from.
+The pod is in the residential column: Table 235-1 reads Y on Household Living,
+and note (1)'s single route into the other column needs the dwellings to share a
+structure with a nonresidential use, which a standalone quadplex does not.
+
+**The file already said all of this.** `max_height_ft` in the TC block carries
+the comment, written when the zone was encoded:
+
+> 35 feet in the residential column against 115 in the nonresidential one, which
+> is the widest split in this city's tables. **Footnote (2) hangs off the 115 and
+> not off the 35.**
+
+So this is not a new false-positive shape. It is the one catalogued on
+2026-09-08 and named there in as many words — **a gap claimed against our own
+files without searching them** — recurring in the reader who wrote it down. The
+first time, the claim was that Milwaukie printed a parking table we never took,
+and our own corpus already refused it. This time the claim was a footnote we had
+already located to the other column, in a comment three lines above the value it
+was about.
+
+Two things generalise, and neither is "read more carefully":
+
+- **The blind reading hides our answer by design, so the checking burden falls
+  entirely on the triage step after it** — and both times, that step is where the
+  corpus search did not happen. The discipline has to live at triage, not at
+  reading, because reading is *supposed* to be blind.
+- **A footnote find is not a find until the column is named.** Wood Village's own
+  markers are unambiguous in the extracted text; nothing had to be inferred.
+  [[the column ledger]] already holds the general version of this — a number can
+  be on the cited line and still be the wrong column — and a footnote marker is
+  a number's neighbour, so it inherits the whole problem.
+
+The card is re-ruled `other_building`, with the reasoning above stored on it.
+**TC is unaffected: the 26-foot pod clears 35 feet by nine, and its 5-foot side
+and 15-foot rear stand.** The week's count of standards found hiding in table
+notes goes back to two — Milwaukie's side-yard plane and Fairview's open-space
+percentage — and the honest open-gap count for this pass is **three, not four**.
+
+What survives the correction is the *question* the bad find asked, which is
+still unanswered: the footnote-both-ways check reads notes attached to values we
+took, and nothing systematically reads notes attached to values we did **not**
+take. Both Wood Village notes hang off cells in a table whose other column we
+encoded from. That hole is real; this was not the evidence for it.
+
+
+
+### What the correction exposed: a marker's column is never recorded
+
+The mistake above was possible because of a real hole in the model, and it is
+worth naming separately from the mistake.
+
+`footnotes.Marker` records `doc`, `line`, `mark`, `kind` and `text`. **There is
+no column.** `_markers()` does split a row into cells before matching — the
+end-anchored patterns (`GLUED_MARKER`, `PAREN_MARKER`, `PAREN_LABEL_MARKER`) are
+each a rule about what a cell *ends* with, so an interior marker like Wood
+Village's `10 ft(5)` is found rather than missed — but `add()` dedupes on the
+mark alone and throws the cell away. So the census can say *"note (2) is
+referenced on line 72"* and cannot say *"note (2) is referenced by the
+nonresidential cell on line 72"*.
+
+That is exactly the distinction [[the column ledger]] was built for on the value
+side: `columns.py` exists because a number can be on the cited line and still be
+in somebody else's column, and Gresham's townhouse row — `16 ft. / 16 ft. /
+16 ft. / None / None / 16 ft. / None` — is the case that produced it. **A
+footnote marker is a number's neighbour, so it inherits the whole problem, and
+nothing joins the two modules.**
+
+A probe over every quoted value in the corpus, splitting the cited line with
+`columns.cells()` and matching the encoded figure to a cell, sorts the rows that
+could be sorted:
+
+| | Rows | |
+|---|---:|---|
+| our figure is in **several cells**, at least one marked | 58 | cannot be resolved by figure alone |
+| marked, but **only in another cell** | 26 | the note is a neighbour's |
+| **marker in our own cell** | 2 | the note governs our number |
+| our figure is in no cell of the marked row | 16 | quote reaches a header or a wrapped line |
+
+The two in the last-but-one row are both Wood Village TC — `setback_front_ft`
+and `setback_garage_entrance_ft`, each reading `10 ft(5)` / `20 ft(5)` — and
+note (5) is inert for two independent reasons: its own first sentence scopes it
+to *"detached single-family dwelling units"*, and this pod has no garage. Both
+reasons are now written into the TC block, because a marker in our own cell is
+the one shape that **can** bind and nothing in the file had said what became of
+it.
+
+**The design constraint on any check built here, and it is the important part.**
+This project's settled position is that a footnote governs its whole notes block
+and that `zones:` is the only narrowing — *wide* by default, which is the
+conservative direction. A column check must therefore be **advisory to a
+reviewer and must never narrow a note's scope**: the moment "the marker is in
+another column" is allowed to *dismiss* a note, the check has become an amnesty,
+and this corpus has been bitten by exactly that shape before. Its useful output
+is the 2 and the 58 — *these notes may govern a number you took, go and look* —
+not the 26.
 
 ### Four attribution slips, all the same slip
 
@@ -4161,3 +4259,220 @@ outcome rather than a waste: a card is a section in a document, and eight
 sections are eight things a future re-fetch can move independently. But it is
 worth knowing that one amendment to MCC 39.6900 moves eight cards, and that a
 reviewer who has genuinely read the first has read all eight.
+
+## Half a frontage, and a prohibition no ledger could ever raise — 2026-09-09
+
+The reading queue left three cards open with an errand attached rather than a
+verdict. This is the first of them discharged, and it is worth writing up
+because the errand was the whole difficulty: the card could not be ruled
+without reading a *different* section first, and that is a shape the queue
+will keep producing.
+
+### The card, and the errand
+
+Clackamas ZDO 1005.02(E) says:
+
+> Inside the UGB, except for industrial developments, a minimum of 50 percent
+> of the street frontage of the development site shall have buildings located
+> at the minimum front setback line.
+
+That sentence is not general advice. **Table 315-4's Maximum Front Setback row
+does not print a number for PMD, MR-1, MR-2, HDR or SHD — the cell reads "See
+Subsections 1005.02(E) and (H)"** — so for those districts (E) *is* the maximum
+front setback standard, written as a share of frontage instead of as a depth.
+
+The reason it could not be ruled on sight is that a quadplex in this county is
+middle housing, middle housing is governed by Section 845, and **a general
+standard that middle housing is exempt from is worth nothing.** So the card
+carried an errand: *read 845 before either reading is safe.*
+
+### What 845 actually says, checked in three places
+
+Section 845 is 217 lines and **never mentions Section 1005 in either
+direction** — no adoption, no exemption, no cross-reference. Absence is the
+weakest kind of evidence, so the reading did not stop there:
+
+| Where | What it says | Direction |
+|---|---|---|
+| ZDO 315 note 8 | quadplex development "is subject to Section 845" | 845 is **additive** |
+| Table 315-3 note 23 | 845's standards "apply in addition to" the table's | additive, said twice |
+| ZDO 1005.02 opening | "The following site design standards apply" | **names no use**; carve-outs are industrial and warehouse |
+| ZDO 1005.03(I)(6) | "…multifamily dwellings and middle housing, except middle housing developed pursuant to Section 845…" | the **one** middle-housing exemption |
+| Table 315-3 note 12 | maximum setback standards do not apply to **cottage clusters** under 845 | a use released by name — and not this one |
+
+The fourth row is the one that decides it, and it decides it the other way from
+how it first reads. That exemption hangs off a list of **additional building
+design requirements** — one balcony or bay per four dwelling units, window
+frequency, window-to-window placement — inside subsection 1005.03. A drafter who
+meant to release middle housing from the **site** design standards of 1005.02
+wrote the releasing sentence one subsection away and did not write this one. The
+fifth row corroborates it: the code releases cottage clusters from maximum
+setbacks *by name*, so the sentence that would release a quadplex was to hand
+and was not written.
+
+So (E) reaches this building.
+
+### The encoding, which is Gresham's
+
+`orientation_constraint: axis_required` on **PMD, MR-1 and MR-2** — the three of
+the five that this layer encodes and that permit a quadplex. VA and RCHDR print
+their own numbers (18 and 20 feet) and are untouched; the Table 315-2 districts
+have no Maximum Front Setback row at all.
+
+That value is not a new invention for this reading. Gresham 7.0420(J)(1)(a) asks
+for "a minimum of 50 percent of the site's frontage" to "be occupied by
+buildings oriented to the abutting street", and it has carried
+`axis_required` since 2026-08-15 on the argument that **half a frontage built
+out in a band a few feet deep is only reachable with the long axis parallel to
+the street.** One sentence, two counties, one consequence the fit stage can use.
+
+### The half of it no field holds — now open in two counties
+
+The percentage is also a **ceiling on frontage**, and this is the part worth
+carrying forward. One pod is one building. It can cover half a frontage only up
+to twice its own width; past that, *no* placement of it satisfies (E) at all.
+The registry has `min_frontage_ft` and `parking_area_max_frontage_pct` and
+nothing for a building's share of a frontage.
+
+Gresham's reading left exactly this hole in August and it was recorded there.
+Finding it a second time, in a different county, off a differently-worded
+sentence, is what turns a note into a field request: **a hole two independent
+codes fall into is a hole in the model, not a quirk of one city.**
+
+Also declined, and both deliberately: 1005.02(E)(1), which buys a 20-foot front
+setback with pedestrian amenities placed in it (a relaxation, so the
+conservative default declines it), and Subsection (H), cited by the same table
+cell, which reaches buildings "located at a major transit stop" on a 200-foot
+radius — an unmeasured site fact, which is where it goes.
+
+And 1005.02(L) is why HDR, RCHDR and SHD are still not encoded: solar
+separation stated as `Separation = b x .267 (tan 15 degrees)`, which needs the
+**bearing** of the northern lot line. That is read and refused, not unread — and
+it sits on the computable half of the unmeasured list, so it is a job rather
+than a dead end.
+
+### Four claims that went stale one day after they were written
+
+Three zone notes and one zone-missing header in this layer said ZDO 1005 was
+"not held", "unheld", "not in the store". The document was fetched on
+2026-09-08. The claims were true when written and false the next morning.
+
+`stale.py` did not catch them, and could not have: **it checks claims about
+whether a ZONE is encoded** ("says not encoded, but the layer holds: X"). A
+claim that a **document** is not held is a different axis, and nothing checks
+it. A sweep found **56 document-not-held claims corpus-wide**; these four were
+the only stale ones. The other 52 are still true, and every one of them is a
+claim with a fetch that could falsify it at any time.
+
+The repair is not deletion. HDR/RCHDR/SHD's reason **changed** rather than
+disappeared, and the note now says so: not "we have not read it" but "we have
+read it and cannot hold it".
+
+### The prohibition that no reading queue can ever raise
+
+Reading 845 end to end for the question above turned up something the queue was
+never going to hand anybody. **ZDO 845.01(3):**
+
+> Development of triplexes, quadplexes, townhouses, and cottage clusters,
+> either through new construction or through a conversion of a detached,
+> single-family dwelling, **is prohibited in the Floodplain Management
+> District.**
+
+That is not a tightening of a number. It takes the building off the lot
+entirely, in all thirteen quadplex-permitting zones of this layer at once,
+because 845 states its own scope and names no district — the same reading that
+put its 7,000 sq ft minimum lot size into every one of them.
+
+**All four reading queues are built from sentences that state a measurement.**
+845.02 raised a card and 845.04 raised a card. 845.01(3) raised none, and it is
+the strongest sentence of the three. So:
+
+> **A flat prohibition states no measurement, so no measurement-based ledger
+> can ever surface it.**
+
+That is a hole in the ledger design, not an unread line, and it generalises
+past this section: every "shall not be permitted in", "is prohibited in", "is
+not allowed where" in the corpus is invisible to the same four queues. Whether
+that set is large is now a question worth asking directly, and it is asked with
+a different scan than any of the ones built so far.
+
+It is **recorded and not encoded**, with the reasons written into the layer:
+
+- The Floodplain Management District's own chapter is **not in this store**.
+  Three documents here name it — 845 itself, ZDO 1012 (which subtracts
+  floodplain from a net-area denominator) and Gladstone 17.25 — and none of
+  them states its boundary.
+- `in_floodplain` is registered in `conditions.py` with no assumption and FEMA
+  NFHL named as its evidence, and **nothing in the corpus uses it.** Registered
+  and idle. The first use of it is a screen change, not a YAML edit.
+- A use prohibition gated on an unmeasured fact does not behave like a capped
+  dimension. Capping `quadplex_allowed` across thirteen zones sends every lot in
+  them to UNKNOWN — a verdict change for the whole unincorporated county, which
+  deserves its own change with its own lot count in front of it.
+
+The two standards beside it in the same section were already encoded, months
+ago, from the same document: `driveway_approach_max_width_ft: 32` from
+845.02(3) and `parking_area_max_frontage_pct: 50` from 845.02(4). Checking them
+was part of discharging this errand; they needed nothing.
+
+### So how many more are there? The scan, and the second one
+
+That last paragraph was a hypothesis, so it was tested the same afternoon
+rather than filed. A scan of the whole document store for prohibition grammar —
+*is / are / shall be / shall not be* followed by *prohibited / not permitted /
+not allowed* — returns **697 sentences**. Nineteen of them name a housing type
+this pod could be.
+
+Seventeen of the nineteen are accounted for, and the accounting is the
+reassuring part:
+
+- **Wilsonville RN** already carries `quadplex_allowed: false`, encoded from
+  4.127(.02)B.1.a.ii — *"triplexes are permitted only on corner lots, and
+  quadplexes are not permitted"* — and encoded **conservatively across all
+  three** Frog Pond neighbourhoods, because only the West one is named and
+  nothing published says which neighbourhood a given lot is in.
+- **Happy Valley's** child-lot prohibition (*"Duplexes, triplexes, quadplexes,
+  and cottage clusters are not permitted on a child lot"*) is ruled in the
+  footnote ledger, three times, once per table it hangs under.
+- The remainder are townhouse access rules (Milwaukie's flag lots and Main
+  Street, Gresham's Urban Boulevard and Beech, Fairview's and Clackamas'
+  consolidated driveways), middle-housing **land divisions**, and one about
+  outdoor storage in SCMU.
+
+The eighteenth is ZDO 845.01(3), above. **The nineteenth is Portland, and it
+was not recorded anywhere.**
+
+> **PCC 33.110.240.E.** "Triplexes and fourplexes that meet the following
+> standards are allowed in the R20 through R2.5 zones. **Triplexes and
+> fourplexes are prohibited on lots that do not have frontage on a maintained
+> street**, except lots that have frontage on a private street that connects to
+> a maintained street, and lots that have frontage on a self-contained
+> pedestrian connection created solely for pedestrians and bicycles that
+> connects to a maintained street. **Payment in lieu of street improvements
+> does not satisfy this requirement.**"
+
+That reaches every R zone this corpus encodes a fourplex into, in the largest
+land base it holds — and the last sentence closes the escape a developer would
+otherwise buy.
+
+**Why no queue could raise it.** Everything *measurable* in 33.110.240 is
+already quoted by `portland.yaml` — Table 110-7's minimum lot areas, the
+outdoor area, the 25-foot accessory ceiling — so the section is **fully cited**,
+which is precisely the state that keeps a section out of the uncited ledger. A
+fully-read section with an unread sentence in it is invisible by construction.
+
+It is recorded, not encoded, and the reason is a registry gap rather than a
+data gap alone: **no condition in `conditions.py` asks this question.**
+`flag_lot` is the nearest and it is a different question — a flag lot may reach
+a maintained street down its pole, and a lot with generous frontage on an
+unmaintained one fails. What answers it is Portland's maintenance
+responsibility cut against the parcel frontage.
+
+**Two counties, two codes, one blind spot, found on the same afternoon.** That
+is enough to make it a design finding rather than an anecdote: the reading
+queues measure the corpus along the axis of *numbers we did not take*, and a
+prohibition takes the lot away without stating one. A fifth queue reading
+prohibition grammar is the obvious answer and is deliberately **not** built
+today — 697 sentences with 19 hits is a 2.7 percent yield, which is a ranking
+problem before it is a screen, and the two hits it would have found are already
+written down.

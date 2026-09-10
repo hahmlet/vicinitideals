@@ -261,32 +261,48 @@ readings:
     fingerprint: 5207747f38503b3d
   "235.300.txt#235.300":
     queue: nofield
-    outcome: need_a_field
+    outcome: other_building
     note: >-
-      TWO REAL TIGHTENINGS IN THE TOWN CENTER, BOTH TURNING ON THE NEIGHBOUR'S ZONING, AND BOTH IN
-      THE DANGEROUS DIRECTION. Table 235-2's notes say: "(2) For sites abutting a light
-      residential zone or abutting right-of-way adjacent to a light residential zone, the maximum
-      height is twenty-five (25) feet within the first twenty-five (25) feet from the lot line
-      abutting the light residential zone" and "(3) Sites abutting a residential zone shall have a
-      side or rear building setback of fifteen (15) feet from the residential zone." This file
-      encodes TC at 35 feet of height, a 5-foot side and a 15-foot rear, from the same table. So
-      note (3) triples the side setback on an LR-abutting line, from 5 feet to 15; and note (2)
-      puts a 25-foot ceiling on a 26-FOOT POD inside a 25-foot band off that line, which this
-      design fails by a foot. TC is a zone where the answer can come out GREEN -- quadplex_allowed
-      is true here on Table 235-1's Household Living row -- so a lot reported green on the
-      strength of five feet and thirty-five could be neither. WHY IT IS NOT ENCODED TODAY RATHER
-      THAN WAVED AWAY. The condition itself is available: `abuts_residential_zone` is registered
-      in conditions.py and Oregon City already carries eight `when:` variants on it, and
-      neighbour-zone adjacency moved onto this project's COMPUTABLE list on 2026-09-08 because it
-      can be derived from geometry the inventory already holds. What is missing is narrower. Note
-      (3) needs a variant on setback_side_ft, which is straightforward. Note (2) is a height
-      limited inside a horizontal band measured from one lot line -- a step back from a property
-      line rather than from a street, and the `step_back` form in this model steps up from a
-      street frontage. Encoding either re-runs the fit stage, so this is recorded as its own
-      change rather than folded into a ruling batch, in the same way as Portland's Eastern Pattern
-      Area rear setback and Gresham's 9.0822(A)(6) earlier in this pass. Wood Village is 772 lots
-      and only a slice of them are TC, so this is small by land and large by kind: it is the third
-      case this week of a real standard hiding in a table NOTE rather than a table cell.
+      CORRECTED 2026-09-09. THIS CARD WAS FIRST RULED need_a_field ON THE CLAIM THAT TABLE 235-2'S
+      NOTES (2) AND (3) TIGHTEN THE TOWN CENTER FOR THIS POD. THEY DO NOT, AND THE REASON IS THE
+      COLUMN THE MARKERS SIT IN. Table 235-2 has two value columns, "RESIDENTIAL USE
+      CATEGORIES(1)" and "NONRESIDENTIAL AND MIXED USE", and every marker in the table is
+      column-specific and consistently placed: the height row reads "35 ft" then "115 ft(2)"; the
+      garage row reads "20 ft(5)" then "None(3), 22 ft minimum when parallels street"; the side
+      row reads "5 ft" then "None(3)"; the rear row reads "15 ft" then "None(3)"; the landscaping
+      row reads the MR2 pointer then "15%(4)". So (5) hangs off residential cells, and (2), (3)
+      and (4) hang off nonresidential ones. Note (5)'s own first sentence confirms the drafter is
+      working column by column -- "This note applies to detached single-family dwelling units" --
+      and it is printed only against residential values. WHAT NOTES (2) AND (3) ARE ACTUALLY FOR.
+      The nonresidential column states NO side, rear or garage setback at all -- the cell is the
+      word "None" -- and no height below 115 feet. Notes (2) and (3) are what put a floor back
+      under a column that otherwise has none: a commercial building in the Town Center may stand
+      on its side lot line and rise 115 feet, unless it abuts residential, in which case it owes
+      15 feet of setback and drops to 25 feet of height within 25 feet of that line. Read against
+      the residential column the notes would be nonsense in one case and a nullity in the other:
+      the residential rear setback is ALREADY the 15 feet note (3) states, and note (2)'s 25-foot
+      cap plus its "one additional foot for each two feet of lateral distance" ladder climbs "up
+      to the height limit for the zone", which for a residential use is the 35 feet in the cell
+      beside it rather than the 115 the note is printed against. A ladder written to climb from 25
+      to 115 is not a ladder written for a 35-foot column. THE POD IS IN THE RESIDENTIAL COLUMN.
+      Table 235-1 reads Y on Household Living and WVDC 710.100 defines that as "the residential
+      occupancy of a dwelling unit or a structure by a household" for thirty days or longer,
+      naming no housing type. Note (1) gives the one route into the other column -- "Residential
+      uses included in the same structure as nonresidential mixed uses are regulated as part of
+      the mixed use for purposes of these development standards" -- and it needs the dwellings to
+      share a structure with a nonresidential use. A standalone four-unit attached townhome does
+      not. THE ENCODING WAS ALREADY RIGHT AND ALREADY SAID SO. TC's max_height_ft carries the
+      comment "35 feet in the residential column against 115 in the nonresidential one, which is
+      the widest split in this city's tables. Footnote (2) hangs off the 115 and not off the 35."
+      The 35-foot height, 10-foot front, 5-foot side and 15-foot rear in this file are the
+      residential column read correctly, and the 26-foot pod clears the height by nine feet rather
+      than failing it by one. The first ruling on this card claimed a gap against a file that
+      already answered it, which is the false-positive shape this project catalogued on 2026-09-08
+      and named 'a gap claimed against our own files without searching them'; it is recorded here
+      rather than quietly overwritten because the shape recurring in the reader who wrote it down
+      is the useful part. Ruled other_building: notes (2) and (3) state real standards, in the
+      dangerous direction, for the nonresidential and mixed-use buildings of the Town Center --
+      which is not this one.
     fingerprint: b29314d813aa614d
   "220.320.txt#220.320":
     queue: nofield
@@ -1027,6 +1043,16 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L72"
+    # Footnote (5) is the only marker in Table 235-2 that sits in the
+    # RESIDENTIAL column, and it hangs off both of these two cells -- "10
+    # ft(5)" and "20 ft(5)". It is inert here twice over, and both reasons are
+    # worth having on the record rather than one: its own first sentence scopes
+    # it out ("This note applies to detached single-family dwelling units:
+    # garages shall not be closer to the street than the plane of the
+    # street-facing facade"), and this pod has no garage, which is a declared
+    # exclusion of this project since 2026-09-08. Recorded because a marker in
+    # our own cell is the one shape that CAN bind, and nothing else in this
+    # file said what became of it.
     setback_front_ft:
       value: 10
       quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L73"

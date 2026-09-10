@@ -159,7 +159,35 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   them are live site conditions on a setback or a height -- "If the rear lot line abuts a
   residential zoning district, the minimum shall be 15 feet." Dismissing those today would
   be an amnesty collected by whoever encodes a dimension here tomorrow. Unread blocks, which
-  is what unread is for.'
+  is what unread is for.
+
+  A USE PROHIBITION READ 2026-09-09, AND NOT ENCODED -- written down here because the honest
+  state of it is "read and refused", not silence. ZDO 845.01(3) is flat: "Development of
+  triplexes, quadplexes, townhouses, and cottage clusters, either through new construction or
+  through a conversion of a detached, single-family dwelling, is prohibited in the Floodplain
+  Management District." That is not a tightening of a number. It takes the building off the lot
+  altogether, and it reaches all thirteen quadplex-permitting zones in this layer at once,
+  because Section 845 states its own scope and names no district -- the same reading that put
+  its 7,000 sq ft minimum lot size into every one of them.
+
+  Three things stand between that sentence and an encoding, and each is a reason rather than an
+  excuse. The Floodplain Management District is a mapped overlay whose own chapter is NOT in
+  this store: the only three documents here that name it are this one, ZDO 1012 (which subtracts
+  floodplain from a net-area denominator) and Gladstone 17.25, so nothing we hold states its
+  boundary in words. The condition in_floodplain is registered in the site-fact register with no
+  assumption and FEMA NFHL named as its evidence, and NOTHING IN THE CORPUS USES IT -- it is
+  registered and idle, so the first use of it is a screen change rather than a YAML edit. And a
+  use prohibition gated on an unmeasured fact does not behave like a capped dimension: capping
+  quadplex_allowed across thirteen zones sends every lot in them to UNKNOWN, which is a verdict
+  change for the whole unincorporated county and deserves its own change with its own count of
+  lots in front of it.
+
+  Worth naming apart from the refusal, because it is a hole in a ledger rather than an unread
+  line: A FLAT PROHIBITION STATES NO MEASUREMENT, SO NO MEASUREMENT-BASED LEDGER CAN EVER
+  SURFACE IT. All four reading queues are built from sentences that state a number. 845.02 and
+  845.04 each raised a card; 845.01(3) raised none in any queue, and it is the strongest
+  sentence of the three. It was found by reading the section end to end for a different
+  question, which is the only way it could have been found.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -386,32 +414,47 @@ readings:
     queue: chapter
     outcome: read_it
     note: >-
-      ZDO 1005.02, General Site Design Standards, and this one is work rather than a dismissal. It
-      states two things this project would take and cannot currently hold, on 31,451 lots. THE
-      FIRST IS FRONTAGE OCCUPANCY AS A REQUIREMENT. 1005.02(E): "Inside the UGB, except for
-      industrial developments, a minimum of 50 percent of the street frontage of the development
-      site shall have buildings located at the minimum front setback line." Unlike the
-      twenty-four-item menu in 1005.05, this is a shall with one exception and it is not
-      industrial. It is the same shape Gresham states at 7.0420(J)(1) and that this project
-      carries there as orientation_constraint axis_required, so there is a form for it -- what is
-      missing is the reading that decides whether it reaches a quadplex here. Two sentences bear
-      on that and pull in opposite directions: 1005.03(I)(6) exempts "middle housing developed
-      pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters" from the
-      additional BUILDING DESIGN requirements, which is an exemption written in exactly our name
-      and pointedly attached to 1005.03 rather than to 1005.02; and 1005.02 itself opens with "the
-      following site design standards apply" and names no use at all. Section 845 has to be read
-      before either reading is safe, and that is the errand this card orders. THE SECOND IS THE
-      SOLAR SEPARATION FORMULA at 1005.02(L), which this project already knows about from the
-      other direction -- it is the standard that blocks encoding HDR and RCHDR, 1,182 lots,
-      because it sets a north-south separation as a function of building height and the bearing of
-      the northern lot line, and the corpus's note on it says as much. Its formula line is on this
-      card: "Separation = b x .267 (tan 15 degrees)". 1005.02(L)(3) adds that a neighbour to the
-      north may grant a separation easement that counts toward the distance, and (L) is explicitly
-      outside the reach of Section 904's height exceptions. Also on the card and NOT the reason
-      this is open: 1005.02(E)(1) lets a front setback under 20 feet be increased to 20 where
-      pedestrian amenities are provided, which relaxes; and the walkway standards at (D), which
-      dimension a path rather than a lot.
-    fingerprint: 021b5b8280fa8b4b
+      READ 2026-09-09, AND THE ERRAND THIS CARD ORDERED IS DONE. The card asked for Section 845 to
+      be read before deciding whether 1005.02(E)'s frontage-occupancy requirement reaches a
+      quadplex. Section 845 is in the store and has now been read end to end. IT SAYS NOTHING
+      ABOUT SECTION 1005, in either direction -- no adoption, no exemption, no cross-reference.
+      What the surrounding code says instead, checked in three places rather than assumed: ZDO 315
+      note 8 makes 845 ADDITIVE ("The development of a triplex, quadplex, townhouse, or cottage
+      cluster is subject to Section 845"), Table 315-3 note 23 says its standards "shall apply IN
+      ADDITION TO standards in Table 315-3", and 1005.02 itself opens "The following site design
+      standards apply" and names no use, its only carve-outs being industrial and warehouse
+      buildings. The single exemption written in middle housing's name is 1005.03(I)(6), and
+      reading it in place settles it: it hangs off a list of ADDITIONAL BUILDING DESIGN
+      requirements -- one balcony or bay per four dwelling units, window frequency,
+      window-to-window placement -- inside a different subsection. A drafter who meant to release
+      middle housing from the SITE design standards of 1005.02 wrote the sentence one subsection
+      away and did not write this one. Table 315-3 note 12 is the corroboration: it exempts
+      COTTAGE CLUSTERS, and only cottage clusters, from maximum setback standards. So 1005.02(E)
+      reaches this building. WHAT WAS ENCODED. Table 315-4's Maximum Front Setback cell is not a
+      number for PMD, MR-1, MR-2, HDR and SHD -- it reads "See Subsections 1005.02(E) and (H)" --
+      so (E) IS the maximum front setback standard in those districts, written as a share of
+      frontage rather than as a depth: "a minimum of 50 percent of the street frontage of the
+      development site shall have buildings located at the minimum front setback line." PMD, MR-1
+      and MR-2 are the three of those five this layer encodes and that permit a quadplex, and each
+      now carries `orientation_constraint: axis_required`, which is the identical encoding
+      Gresham's identical 7.0420(J)(1)(a) has carried since 2026-08-15 and rests on the same
+      argument: half a frontage built out in a band a few feet deep is only reachable with the
+      long axis parallel to the street. VA and RCHDR print their own numbers (18 and 20 feet) and
+      are unaffected; the Table 315-2 districts have no Maximum Front Setback row at all. WHAT IS
+      STILL OPEN ON THIS CARD, and why it stays open. First, the part of (E) no field can hold:
+      the percentage is also a ceiling on FRONTAGE, since one pod is one building and can only
+      occupy half of a frontage up to twice its own width, past which no placement satisfies (E)
+      at all. The registry has `min_frontage_ft` and `parking_area_max_frontage_pct` and nothing
+      for a building's share of a frontage -- the same hole Gresham's reading left, now open in
+      two counties. Second, 1005.02(L), the solar separation formula, which is READ and refused
+      rather than unread: "Separation = b x .267 (tan 15 degrees)" needs the BEARING of the
+      northern lot line, a measurement nothing in this system takes, and it is what keeps HDR,
+      RCHDR and SHD unencoded. Third, subsection (H), cited by the same table cell, which reaches
+      buildings at a major transit stop within a 200-foot radius -- an unmeasured site fact. NOT
+      the reason this is open: (E)(1)'s increase to 20 feet for pedestrian amenities, which is a
+      relaxation bought with amenities and declined by the conservative default, and the walkway
+      standards at (D), which dimension a path rather than a lot.
+    fingerprint: cb2991397e49d3b0
   "zdo.1005.txt#1005.09":
     queue: chapter
     outcome: read_it
@@ -1855,11 +1898,15 @@ zones:
   # Five zones are added here and three are deliberately not.
   #
   # HDR (253 lots), RCHDR (32) and SHD (1) print "See Subsection 1005.02(L)"
-  # where their rear and side setbacks belong. ZDO 1005 is not in the store, so
-  # those three cannot be encoded without a fetch, and a zone whose setbacks
-  # are a cross-reference we have not read is exactly the shape this project
-  # refuses to guess at. They stay `zone_missing`, which is a queue entry with
-  # a lot count on it.
+  # where their rear and side setbacks belong. ZDO 1005 was fetched on
+  # 2026-09-08 and 1005.02(L) is now READ -- and it is worse than a missing
+  # document. It sets a north-south separation as a function of building
+  # height and the BEARING of the northern lot line ("Separation = b x .267
+  # (tan 15 degrees)"), which is a measurement nothing in this system takes;
+  # lot-line bearing is on the computable half of the unmeasured-site-facts
+  # list but is not computed yet. So these three stay `zone_missing` for a
+  # reason that has changed under them: not "we have not read it" but "we have
+  # read it and cannot hold it". They remain a queue entry with a lot count.
   #
   # VTH (115) is refused for a different and more uncomfortable reason: its
   # column in Table 315-3 cannot be read by position. The extractor drops empty
@@ -2010,6 +2057,60 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    orientation_constraint:
+      # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
+      # minimum of 50 percent of the street frontage of the development site
+      # shall have buildings located at the minimum front setback line."
+      #
+      # This district's Maximum Front Setback cell in Table 315-4 is not a
+      # number -- it reads "See Subsections 1005.02(E) and (H)" -- so that
+      # sentence IS this district's maximum front setback standard, and the
+      # county wrote it as a share of frontage rather than as a depth.
+      #
+      # ENCODED THE WAY GRESHAM'S IDENTICAL STANDARD IS ENCODED, and for the
+      # identical reason. Gresham 7.0420(J)(1)(a) asks for "a minimum of 50
+      # percent of the site's frontage" to "be occupied by buildings oriented
+      # to the abutting street", and the note beside that value says half a
+      # frontage built out in a band a few feet deep is only reachable with
+      # the long axis parallel to the street. One sentence, two counties, one
+      # consequence the fit stage can actually use.
+      #
+      # WHY THIS REACHES A QUADPLEX, checked in three places rather than
+      # assumed. Section 845 is the middle-housing section and says nothing
+      # about Section 1005 in either direction -- ZDO 315 note 8 makes 845
+      # additive ("subject to Section 845") and Table 315-3 note 23 says its
+      # standards "apply in addition to" the table's. 1005.02 opens "The
+      # following site design standards apply" and names no use; its only
+      # carve-outs are industrial and warehouse. The one exemption written in
+      # middle housing's name is 1005.03(I)(6), and it is attached to a list
+      # of additional BUILDING DESIGN requirements -- balconies per four
+      # units, window placement -- in a different subsection from this one.
+      # Table 315-3 note 12 then exempts cottage clusters, and only cottage
+      # clusters, from maximum setback standards: a drafter who meant to
+      # release a quadplex had the sentence to hand and did not write it.
+      #
+      # WHAT IS NOT ENCODED, because no field holds it. The percentage is also
+      # a ceiling on frontage: one pod is one building, so it can only occupy
+      # half of a frontage up to twice its own width, and past that no
+      # placement satisfies (E) at all. The registry has `min_frontage_ft` and
+      # `parking_area_max_frontage_pct` and nothing for a building's share of
+      # a frontage. That is the same hole Gresham's reading left open, and it
+      # is a floor on what this encoding claims rather than a reason to
+      # withhold it.
+      #
+      # Also not encoded, deliberately: 1005.02(E)(1) lets a front setback
+      # under 20 feet be increased to 20 where pedestrian amenities are
+      # developed in the setback area, which is a relaxation bought with
+      # amenities; and Subsection (H), cited by the same cell, reaches "new
+      # retail, office, mixed use, multifamily, and institutional buildings
+      # located at a major transit stop" and turns on sitting within a
+      # 200-foot radius of one, which is on this project's unmeasured
+      # site-facts list.
+      value: axis_required
+      cite: "Clackamas ZDO 1005.02(E), general site design standards -- frontage occupancy, cited as this district's maximum front setback by Table 315-4"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L25,L61"
     setback_garage_entrance_ft:
       # The same cell, second clause: "15 feet, except 20 feet to garage and
       # carport motor vehicle entries". Encoded although the 2026-09-08 ruling
@@ -2056,11 +2157,17 @@ zones:
       in the corpus that the county never printed -- and because OAR
       660-046-0220(2)(b) forbids applying it in any case. Written out at the
       head of this block. Maximum front setback reads "See Subsections
-      1005.02(E) and (H)" and ZDO 1005 is not held; a maximum front setback
-      can only refuse a lot the screen would otherwise pass, so its absence is
-      a withheld refusal rather than a false GREEN, and it is named here so
-      the fetch is orderable. Minimum density is "See Section 1012" and is not
-      a standard this screen reads.
+      1005.02(E) and (H)". READ AND NOW ENCODED, 2026-09-09: ZDO 1005 was
+      fetched 2026-09-08 and this sentence is no longer a withheld refusal.
+      (E) is a frontage-occupancy rule rather than a depth -- half the site's
+      frontage must carry buildings at the minimum front setback line -- and
+      it is carried on this zone as `orientation_constraint: axis_required`,
+      the same encoding Gresham's identical 7.0420(J)(1)(a) has. See the note
+      beside that value for why it reaches a quadplex and for the part of it
+      no field can hold. (H) is not encoded: it reaches buildings at a major
+      transit stop and turns on a 200-foot radius nothing here measures.
+      Minimum density is "See Section 1012" and is not a standard this screen
+      reads.
 
       Note 10 (a planned unit development has no interior rear or side
       setback) is the only footnote on any PMD cell and is ruled in the
@@ -2091,6 +2198,60 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    orientation_constraint:
+      # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
+      # minimum of 50 percent of the street frontage of the development site
+      # shall have buildings located at the minimum front setback line."
+      #
+      # This district's Maximum Front Setback cell in Table 315-4 is not a
+      # number -- it reads "See Subsections 1005.02(E) and (H)" -- so that
+      # sentence IS this district's maximum front setback standard, and the
+      # county wrote it as a share of frontage rather than as a depth.
+      #
+      # ENCODED THE WAY GRESHAM'S IDENTICAL STANDARD IS ENCODED, and for the
+      # identical reason. Gresham 7.0420(J)(1)(a) asks for "a minimum of 50
+      # percent of the site's frontage" to "be occupied by buildings oriented
+      # to the abutting street", and the note beside that value says half a
+      # frontage built out in a band a few feet deep is only reachable with
+      # the long axis parallel to the street. One sentence, two counties, one
+      # consequence the fit stage can actually use.
+      #
+      # WHY THIS REACHES A QUADPLEX, checked in three places rather than
+      # assumed. Section 845 is the middle-housing section and says nothing
+      # about Section 1005 in either direction -- ZDO 315 note 8 makes 845
+      # additive ("subject to Section 845") and Table 315-3 note 23 says its
+      # standards "apply in addition to" the table's. 1005.02 opens "The
+      # following site design standards apply" and names no use; its only
+      # carve-outs are industrial and warehouse. The one exemption written in
+      # middle housing's name is 1005.03(I)(6), and it is attached to a list
+      # of additional BUILDING DESIGN requirements -- balconies per four
+      # units, window placement -- in a different subsection from this one.
+      # Table 315-3 note 12 then exempts cottage clusters, and only cottage
+      # clusters, from maximum setback standards: a drafter who meant to
+      # release a quadplex had the sentence to hand and did not write it.
+      #
+      # WHAT IS NOT ENCODED, because no field holds it. The percentage is also
+      # a ceiling on frontage: one pod is one building, so it can only occupy
+      # half of a frontage up to twice its own width, and past that no
+      # placement satisfies (E) at all. The registry has `min_frontage_ft` and
+      # `parking_area_max_frontage_pct` and nothing for a building's share of
+      # a frontage. That is the same hole Gresham's reading left open, and it
+      # is a floor on what this encoding claims rather than a reason to
+      # withhold it.
+      #
+      # Also not encoded, deliberately: 1005.02(E)(1) lets a front setback
+      # under 20 feet be increased to 20 where pedestrian amenities are
+      # developed in the setback area, which is a relaxation bought with
+      # amenities; and Subsection (H), cited by the same cell, reaches "new
+      # retail, office, mixed use, multifamily, and institutional buildings
+      # located at a major transit stop" and turns on sitting within a
+      # 200-foot radius of one, which is on this project's unmeasured
+      # site-facts list.
+      value: axis_required
+      cite: "Clackamas ZDO 1005.02(E), general site design standards -- frontage occupancy, cited as this district's maximum front setback by Table 315-4"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L25,L61"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
@@ -2151,7 +2312,9 @@ zones:
       of this block: no field can hold a lot area per dwelling unit, and the
       state forbids the standard anyway. If a field is ever added this is the
       first zone that needs it. Maximum front setback is "See Subsections
-      1005.02(E) and (H)", unheld, and can only refuse. Minimum density is
+      1005.02(E) and (H)" -- read 2026-09-09 and now carried as
+      `orientation_constraint: axis_required`; see the note beside that
+      value. Minimum density is
       "See Section 1012". Notes 3 (a swimming pool's front setback), 4 (a
       corner lot developed with a townhouse), 5 (nonconforming detached
       dwellings), 11 (a swimming pool's side and rear), 12 (accessory
@@ -2181,6 +2344,60 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
+    orientation_constraint:
+      # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
+      # minimum of 50 percent of the street frontage of the development site
+      # shall have buildings located at the minimum front setback line."
+      #
+      # This district's Maximum Front Setback cell in Table 315-4 is not a
+      # number -- it reads "See Subsections 1005.02(E) and (H)" -- so that
+      # sentence IS this district's maximum front setback standard, and the
+      # county wrote it as a share of frontage rather than as a depth.
+      #
+      # ENCODED THE WAY GRESHAM'S IDENTICAL STANDARD IS ENCODED, and for the
+      # identical reason. Gresham 7.0420(J)(1)(a) asks for "a minimum of 50
+      # percent of the site's frontage" to "be occupied by buildings oriented
+      # to the abutting street", and the note beside that value says half a
+      # frontage built out in a band a few feet deep is only reachable with
+      # the long axis parallel to the street. One sentence, two counties, one
+      # consequence the fit stage can actually use.
+      #
+      # WHY THIS REACHES A QUADPLEX, checked in three places rather than
+      # assumed. Section 845 is the middle-housing section and says nothing
+      # about Section 1005 in either direction -- ZDO 315 note 8 makes 845
+      # additive ("subject to Section 845") and Table 315-3 note 23 says its
+      # standards "apply in addition to" the table's. 1005.02 opens "The
+      # following site design standards apply" and names no use; its only
+      # carve-outs are industrial and warehouse. The one exemption written in
+      # middle housing's name is 1005.03(I)(6), and it is attached to a list
+      # of additional BUILDING DESIGN requirements -- balconies per four
+      # units, window placement -- in a different subsection from this one.
+      # Table 315-3 note 12 then exempts cottage clusters, and only cottage
+      # clusters, from maximum setback standards: a drafter who meant to
+      # release a quadplex had the sentence to hand and did not write it.
+      #
+      # WHAT IS NOT ENCODED, because no field holds it. The percentage is also
+      # a ceiling on frontage: one pod is one building, so it can only occupy
+      # half of a frontage up to twice its own width, and past that no
+      # placement satisfies (E) at all. The registry has `min_frontage_ft` and
+      # `parking_area_max_frontage_pct` and nothing for a building's share of
+      # a frontage. That is the same hole Gresham's reading left open, and it
+      # is a floor on what this encoding claims rather than a reason to
+      # withhold it.
+      #
+      # Also not encoded, deliberately: 1005.02(E)(1) lets a front setback
+      # under 20 feet be increased to 20 where pedestrian amenities are
+      # developed in the setback area, which is a relaxation bought with
+      # amenities; and Subsection (H), cited by the same cell, reaches "new
+      # retail, office, mixed use, multifamily, and institutional buildings
+      # located at a major transit stop" and turns on sitting within a
+      # 200-foot radius of one, which is on this project's unmeasured
+      # site-facts list.
+      value: axis_required
+      cite: "Clackamas ZDO 1005.02(E), general site design standards -- frontage occupancy, cited as this district's maximum front setback by Table 315-4"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-08'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L25,L61"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486-L1493"
@@ -2211,7 +2428,8 @@ zones:
       area per dwelling unit, zdo.315.txt#L1462-L1469, so 9,680 square feet of
       net site area for four units -- held out for the two reasons at the head
       of this block), maximum front setback ("See Subsections 1005.02(E) and
-      (H)", unheld, refusal-only) and minimum density ("See Section 1012").
+      (H)" -- read 2026-09-09 and now carried as `orientation_constraint:
+      axis_required`) and minimum density ("See Section 1012").
   VA:
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (Village Apartment)

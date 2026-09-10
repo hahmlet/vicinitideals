@@ -1606,6 +1606,56 @@ decision it is making.
 
 ---
 
+## 17. One decision: two cities ban our building outright on some lots, and we cannot yet tell which lots — **Portland's 12,678 greens are the stake**
+
+Found 2026-09-09. Everything the screen checks is a *measurement* — how tall,
+how far back, how many stalls. Two places in the codes we hold do something
+different: they say our building **may not be built at all** on a lot with a
+particular feature. Neither had ever been read, because every list we keep is a
+list of numbers we might have missed, and neither of these sentences contains a
+number.
+
+**Portland.** The code allows a fourplex in the R zones, then adds: it is
+*prohibited on a lot that does not have frontage on a maintained street*. A
+private street counts if it connects to a maintained one, and so does a
+pedestrian path; paying the city instead of building the street does not. So a
+lot reached only by a private easement, or fronting a road the city does not
+maintain, is off the table no matter how well the building fits.
+
+**Unincorporated Clackamas County.** The middle-housing section says triplexes,
+quadplexes, townhouses and cottage clusters are *prohibited in the Floodplain
+Management District*. This is not the flood-risk screening we already do — it is
+a zoning district the county draws on a map, and we do not hold that map.
+
+Neither is encoded today, and both are written into the files with the reason,
+so nothing here is hidden. What is needed is a choice about how to carry them.
+
+### The options
+
+- **Go and get the two maps** (Portland's street-maintenance responsibility,
+  the county's Floodplain Management District), then apply them lot by lot.
+  Slowest, and the only one that gives a real answer per lot. I can do this
+  without you; it is on my queue either way, and the reason it is a question for
+  you at all is what to do *in the meantime*.
+- **Mark every affected lot "can't tell" until the maps arrive.** Safest, and
+  expensive: it moves Portland's 12,678 green lots — the largest block of green
+  we have — out of the trusted column overnight, for a rule that in reality
+  disqualifies a small minority of them.
+- **Assume every lot fronts a maintained street and is outside the flood
+  district, and write the assumption on the record.** Keeps the numbers, is
+  almost certainly right for the great majority of city lots, and accepts one
+  specific failure: a landlocked or private-drive lot could show green when the
+  code forbids it outright. That failure is caught at the first title or
+  feasibility check on a real deal, which is the point in the process where
+  somebody looks at the street anyway.
+
+**What I would do:** the third as the interim, the first as the fix, and never
+the second — because a rule that disqualifies a minority should not blank out
+the majority while we wait for a map. If you disagree, the third option is the
+one to overturn, and it is one line to change.
+
+---
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
