@@ -880,24 +880,48 @@ city's Village zone has a street-side setback taken from a table with no
 street-side column, off a row headed "Commercial Buildings." Wilsonville has 53
 greens and this is the cheapest of the eight to settle.
 
-**(d) A rule a pod can fail by being too short, and it is now in four
-districts.** "Middle housing dwelling units shall have a minimum building height
-of twenty-five (25) feet." Aimed by name at this building, in a district that
-permits it. Our pod stands 26 feet — and that 26 is a number the design catalog
-itself marks as *not taken from a drawing set*. One foot of margin on an
-unconfirmed dimension. Two ways out and both are yours: confirm the pod's real
-height, or accept that these mixed-use districts want a taller building than we
-make.
+**(d) A rule a pod can fail by being too short — and, now, the whole height
+question answered.** "Middle housing dwelling units shall have a minimum
+building height of twenty-five (25) feet." Aimed by name at this building, in a
+district that permits it. The screen now holds and tests a minimum height, so
+this no longer passes silently, and a corpus-wide search found the same standard
+in three more districts that permit us: Oregon City's MUC-2, MUD and Willamette
+Falls Downtown, all at 25 feet, the last of them also demanding two entire
+storeys.
 
-*Updated 2026-09-10.* The machine has done its half. The screen now holds and
-tests a minimum height, so this no longer passes silently — and a corpus-wide
-search found the same standard in three more districts that permit us: Oregon
-City's MUC-2, MUD and Willamette Falls Downtown, all at 25 feet, the last of
-them also demanding two entire storeys. So the one foot of margin is being
-leaned on in four places rather than one. Nothing in the search would fail us
-today; the nearest thing that would is Wilsonville's 30-foot floor, and it is
-on industrial land we do not build on. **What is still yours is the same
-question and it is now worth more: is the pod actually 26 feet?**
+*Updated 2026-09-10.* This item used to end by asking you to confirm the pod is
+really 26 feet. That was the wrong question. The height is a dial nobody has
+turned yet, not a measurement waiting to be checked — so the machine turned it,
+through every setting from 18 feet to 40, and wrote down what each one is worth.
+Across the 117 districts that permit this building, 295,151 lots:
+
+| If the building is | Lots it can go on | What that costs |
+|---|---|---|
+| anything under 25 ft | 294,826 | 325 lots — the four districts above |
+| **25 ft to 30 ft** | **295,151** | **nothing** |
+| just over 30 ft | 173,078 | 122,073 lots, 9 districts, Portland's R5 the biggest |
+| just over 35 ft | 37,267 | 257,884 lots, 73 districts |
+
+**The answer is a band, and the band is 25 to 30 feet.** Two floors under a flat
+roof with a drainage slope has to reach 25 feet or it gives up those four
+mixed-use districts; two floors under a pitched roof has to stay under 30 or it
+gives up two lots in every five. Everything between those two walls costs
+nothing whatsoever. The 26 feet we have been assuming sits inside the band with
+four feet of room above it and one below.
+
+There is a second, softer cost underneath that one, and it refuses nobody. In
+nine districts — 30,019 lots — a setback is measured off the height of the
+building itself, so a taller building does not become illegal, it needs a bigger
+lot. Milwaukie is where that bites: at 30 feet an R-HD lot has to be about 950
+square feet bigger than at 26, an R-MD lot about 700. Gresham's six districts
+move as well and cost nothing, because the extra distance disappears into the
+parking court that was already behind the building.
+
+**What is still yours is no longer a reading — it is a design decision, and
+these are the numbers to make it with.** Pick a height between 25 and 30 feet,
+or tell us the roof cannot be built inside that band and we will re-run this
+against what it can be. Any candidate can be priced on demand:
+`python -m flats.encode.height --at 27`.
 
 **(e) Three rural Multnomah lot sizes.** The cited sentence says the minimum lot
 size is one acre "except as provided in" a list of other sections, one of which
@@ -928,8 +952,9 @@ It is last on this list for a reason: **this standard is captured and never
 tested**, in every city, so no lot anywhere has ever been graded on a garage
 door. That is also why it should be settled before it ever is.
 
-**What we need from you.** (a), (b) and (d) are readings — a planner or a
-land-use attorney, thirty minutes each. (c) is one email to Wilsonville. (f) is
+**What we need from you.** (a) and (b) are readings — a planner or a
+land-use attorney, thirty minutes each. (d) is no longer a reading: it is a
+height to pick, and the band to pick it from is printed above. (c) is one email to Wilsonville. (f) is
 one PDF someone has to open. (e), (g) and (h) are ours, not yours, and are
 recorded so they are not lost.
 

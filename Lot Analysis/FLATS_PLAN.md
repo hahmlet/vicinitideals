@@ -4777,3 +4777,123 @@ Two of those five were written without the phrase "not encoded" and were
 therefore counted by nothing. The refusals module says in its own docstring
 that over-reporting is its safe direction; silent under-reporting is the
 failure it exists to prevent, so both now say the words. 275 → 276.
+
+## The height is a dial, so turn it and write down the price — 2026-09-10
+
+The min-height work ended by asking the owner a question — *is the pod actually
+26 feet?* — and the answer that came back was that the question was wrong:
+
+> That is variable at this stage. Eventually it will be set at one height, but
+> part of the purpose of this exercise is to find our bounding variables. If a
+> 22' high building works and a 23' eliminates X plots, then we know what our
+> pro/con trade offs are of a height decision. […] This should be a machine
+> solvable problem.
+
+It is, and `flats/encode/height.py` is the machine. Every other question in this
+system takes the design as given and asks which lots it fits; this one runs
+backwards, holding the corpus still and moving the building. The design range it
+sweeps is the one the owner stated — two floors under a flat roof with a
+drainage slope at the bottom, two floors under a pitched roof at the top — with
+`LOW_FT = 18` and `HIGH_FT = 40` set deliberately wider than either bound,
+because a sweep that stops where somebody expects the answer to be cannot show
+them the cliff just past it.
+
+### Height enters this corpus twice, and only one of them is a cliff
+
+**Directly**, as `max_height_ft` and `min_building_height_ft`. These are step
+functions: a district is in or out, every lot in it moves together, and the
+entire cost of a foot is concentrated at the height where a standard is crossed.
+
+**Indirectly**, as a setback *computed from* the height — Milwaukie's and
+Gresham's roof planes, Portland IR's "1 ft. for every 2 ft. of building height".
+These are continuous, and they refuse nobody. A taller building on that land
+does not become illegal; it needs a bigger lot. That cost is invisible to
+anything that reads only `max_height_ft`, and it reaches 30,019 lots.
+
+Nothing in the repository had ever asked either question, because the design was
+a constant.
+
+### The answer, over 117 districts and 295,151 lots
+
+| height | lots kept | too tall | too short |
+|---|---|---|---|
+| 18 – 24.5 ft | 294,826 | 0 | 325 |
+| **25 – 30 ft** | **295,151** | **0** | **0** |
+| 30.5 – 35 ft | 173,078 | 122,073 | 0 |
+| 35.5 – 40 ft | 37,267 | 257,884 | 0 |
+
+**The answer is a band with two walls, not a ceiling.** The low wall is the four
+mixed-use districts encoded the same morning; the high wall is nine districts
+led by Portland R5. Between them nothing at all is at stake, and the catalogue's
+26 ft sits inside with four feet of headroom above and one below. `widest()`
+computes that band and `render()` prints it, because "the lowest ceiling in the
+corpus" is the wrong summary of a two-walled answer.
+
+The sampling is the reason the walls are exact. A fixed step misses a standard
+that falls between two samples and spends most of its rows saying nothing
+happened, so `cliffs()` samples **the stated standards themselves and half a
+foot past each one** — a ceiling admits its own figure and refuses anything over
+it, and the pair of samples is what distinguishes the two.
+
+Storeys are inert. Every storey standard in the corpus is a cap of 3 or 10 or a
+floor of 2, all of which a two-storey building meets, so the whole question is
+feet — and `test_no_storey_standard_binds_on_a_two_storey_building` is what
+keeps that sentence from becoming a stale assumption.
+
+### Eleven numbers were baked to a 26 ft pod and nothing recomputed them
+
+This is the find, and it was not the question being asked.
+
+Eleven values in the corpus were never read off a page. The loader computed them
+from `DESIGN_HEIGHT_FT` at load time, because the code states a plane and a lot
+is checked against a distance. `Value` says so in as many words — *"the constant
+it uses is the tallest design rather than a typical one"* — and that is sound
+encoding with a price attached: **those eleven distances are true of a 26 ft
+building and of nothing else.** Change the design and eleven setbacks are
+silently wrong, in the permissive direction, and until this module existed no
+test in the suite would have gone red.
+
+`derived_at()` is that arithmetic said once, and
+`test_every_derived_setback_reproduces_the_height_it_was_baked_to` runs it
+against all eleven at the catalogue's own height. If the loader and the sweep
+ever disagree about what a roof plane costs, they disagree there first. A second
+test runs the whole substitution end to end and requires every height-coupled
+district to ask for exactly the lot the live screen already asks for — same
+width, same depth, same way round — at the height they share.
+
+The `rise` reading is pinned deliberately. It is documented as *feet of height
+gained per foot of additional distance*, so the distance bought is the height
+above the plane **divided** by it. Every rise in this corpus is 1.0, where
+dividing and multiplying agree and a wrong reading would never show, so the test
+states the 1:2 case that does not exist yet rather than waiting for it.
+
+### Two things the second panel got wrong before anybody read it
+
+Both were found by looking at the first run's output rather than by a test, and
+both were the output lying rather than the arithmetic being wrong.
+
+**Gresham's rear setbacks moved and the lot it asked for did not.** That is
+correct — the rear yard and the parking court behind the building *overlap*, and
+`paper.py` takes the greater of the two, so a rear-yard plane costs nothing at
+all until it is deeper than the court. Six Gresham districts read that way at
+every height in the range. The panel now says `(rear absorbed by court)` instead
+of leaving a reader to conclude the sweep was broken.
+
+**Milwaukie R-MD asked for six more feet of width for a *shorter* building.**
+Also correct, and worse to read: `paper_fit` costs both orientations and reports
+the cheaper one, so the orientation *moves with the setbacks*. A pod that fits
+broadside under a five-foot side yard fits only end-on under an eleven-foot one,
+and comparing widths across that flip compares two different buildings. The
+panel now compares **envelope area**, which survives the flip, and labels the
+flip when it happens.
+
+Neither would have been caught by a test nobody had thought to write. Both are
+tests now.
+
+### What it does not do
+
+It does not turn a setback into a lot count. That needs each parcel's width and
+depth, and this repository holds lots aggregated by zone — the 62 MB parcel
+corpus lives elsewhere. So the second panel reports what the *lot* must be at
+each height and how many lots are exposed to the change, which is the honest
+half of the answer. The first panel is exact.
