@@ -4607,3 +4607,173 @@ of our own mistakes goes red the day the last one is fixed. Asserting zero is
 its opposite. It cannot fail on success, and it fails on exactly one event: a
 document arriving that a sentence somewhere still says is missing. Which is the
 day the sentence needs rewriting, and the day nobody is looking.
+
+---
+
+## The one standard a building can fail by being too SHORT — 2026-09-10
+
+Every bulk standard in the registry until now was a **ceiling**, and a ceiling
+nobody encoded is safe in a boring way: the screen does not test it, and the
+building is no likelier to pass than it deserves. A **floor** inverts the
+asymmetry the whole project rests on. A minimum building height nobody encoded
+lets a design that is too short walk through as **GREEN** — the only shape in
+the corpus where an unheld standard *buys* a verdict instead of costing one.
+
+Two fields close it: `min_building_height_ft` and, where a code counts storeys
+instead of feet, `min_building_height_stories`.
+
+### What ordered the work
+
+The reading queue's `encode` card on **Troutdale TDC 8.230** (5,139 lots),
+whose subsection A reads *"Middle housing dwelling units shall have a minimum
+building height of twenty-five (25) feet"* — aimed by name at this building, in
+a district this file holds at `quadplex_allowed: true`. The card stayed open
+for three weeks with the same sentence in it because closing it needed a
+*field*, not a value.
+
+### Where it binds, and where it does not
+
+Encoded, four districts across two cities:
+
+| Layer | Zone | Standard | Cite |
+|---|---|---|---|
+| Troutdale | MU-3 | 25 ft | TDC 8.230.A, restated in Table 3.230.B |
+| Oregon City | MUC-2 | 25 ft **or** 2 storeys | OCMC 17.29.060.C |
+| Oregon City | MUD | 25 ft **or** 2 storeys | OCMC 17.34.060.C **and** .070.C |
+| Oregon City | WFDD | 2 entire storeys **and** 25 ft | OCMC 17.35.060.C |
+
+Every one of them is mixed-use, which is why both fields are in
+`OPTIONAL_FIELDS`: a residential zone stating no floor is not an unread zone.
+That was not a design choice so much as a discovery —
+`REQUIRED_FIELDS = frozenset(FIELDS) - OPTIONAL_FIELDS` means **every newly
+registered field is required by default**, and `screen.py`'s
+`if any(CHECK_FIELD.get(name, name) in REQUIRED_FIELDS for name in unchecked)`
+blocks GREEN on an unrun check backed by a required field. Registering the two
+fields turned 17 tests red at once, one of them named
+`test_a_standard_the_code_simply_does_not_impose_is_not_a_gap`.
+
+### "Or" is not a form the value model has
+
+Three of the four write a disjunction. The model has no either/or, so the feet
+are encoded and the storey limb is **recorded in the zone note as a relaxation
+this file does not take**. That is the stricter of the two readings — a
+two-storey building under twenty-five feet complies with Oregon City and would
+be sent to REVIEW here — and stricter is the safe direction: it can cost a
+review, never buy a GREEN. WFDD's *"two entire stories AND twenty-five feet"*
+is a conjunction, which the model **can** hold, and it is the only reason
+`min_building_height_stories` exists at all.
+
+Oregon City's NC district writes a third form, *"twenty-five feet or two
+stories, **whichever is less**"* — the weaker of two limbs rather than either or
+both. Nothing encodes it, because NC refuses this use, but the shape is
+recorded: a district that permits our building and writes "whichever is less"
+would need something `min_building_height_ft` alone cannot say.
+
+### The survey was wrong twice, and only a whole-corpus grep found it
+
+The card's own ruling had listed the sightings. Re-grepping the whole store
+before encoding — the standing rule about absence claims, applied to a claim of
+**presence** — corrected two of them:
+
+- **Gresham's corridor figure is townhouse-only.** Table 4.0430 footnote 18
+  gives CMU and CMF a one-storey floor and every other corridor district two,
+  and CMU and CMF *are* encoded here at `quadplex_allowed: true`. It opens
+  "Height limitations for **Townhouses**", and 4.0434 confirms it. It does not
+  reach a quadplex. Gresham's live one is Table 4.1521.G — two storeys in
+  **VC-SW**, a district not yet encoded.
+- **Wilsonville's Table CC-4 is not a town centre.** Section 4.134 is the
+  **Coffee Creek Industrial Design Overlay District**. Its *"Required Minimum
+  Height: 30 feet"* is **the one number in the corpus a 26 ft pod would fail**,
+  and it sits on industrial land this screen does not build on.
+
+Three more state a floor that cannot reach an encoded zone and are written into
+their layer notes so the next encoder does not have to find them again:
+**Milwaukie** 19.304.5.B.2.b (25 ft, plus a depth clause no field holds — "along
+all street frontages for a depth of at least 25 ft"), **Clackamas ZDO
+1005.09** (20 ft, but inside the mapped Fuller Road Station Community — an
+unmeasured site fact, and already a `read_it` card), and **Wood Village** NC
+(18 ft, a district that refuses the use).
+
+### It binds on nothing today, which is the argument for it
+
+Both catalogued pods are 26 ft over two storeys and clear all five encoded
+instances. `test_both_catalogued_pods_clear_every_floor_on_file` asserts exactly
+that, and the point of the test is the sentence in its docstring: **it stops
+being true the moment a single-storey design enters the catalog, and that is
+when the screen needs to already know how to say so.** The ADA reading is what
+puts one there — a single-storey flat is the fix for the accessible-stall
+problem, and a single-storey flat is precisely what these four mixed-use
+districts were written to keep off a main street.
+
+### The card re-ruled itself
+
+Encoding the sentence took it out of the uncited ledger, so the 8.230 card came
+back holding one line — 8.230.D.1, office uses — and having changed queue from
+`missed` to `nofield`. Its stored fingerprint no longer matched, so it reopened
+flagged **moved** rather than staying closed against text nobody had seen. It
+was re-ruled `other_building`, which is the fingerprint mechanism doing the job
+it was built for on the first case that exercised it.
+
+### And encoding it audited the reader, for the fourth time
+
+`test_no_value_anywhere_in_the_corpus_is_misquoted` went red on exactly one of
+the five new values: Oregon City WFDD's `min_building_height_stories`. The
+encoding was right and the quote was right. **The reader could not read the
+sentence.**
+
+17.35.060.C states the floor as *"Two entire stories and twenty-five feet"*.
+The corroboration check that stops a spelled number counting without its unit
+allowed at most three characters of punctuation between the two — because
+"one" and "two" are ordinary English words and a bare match on them would let
+a citation about anything at all stand behind a setback of 1. That window ends
+at the adjective. The feet were corroborated and the storeys read as **no
+number at all**, on the only line in the code that states the standard.
+
+Scanning the whole store for the shape found **489 occurrences in 63
+spellings**, and almost none of them is an adjective:
+
+| gap | example |
+|---|---|
+| `square` | "Four hundred **square** feet" |
+| `dwelling` | "four **dwelling** units" |
+| `parking` | "one **parking** space" |
+| `linear` | "thirty **linear** feet" |
+| `cubic` | "three **cubic** feet" |
+| `bicycle parking` | "seven **bicycle parking** spaces" |
+| `caliper` | "two **caliper** inches" |
+| `entire` | "Two **entire** stories" |
+
+So the rule is not "allow an adjective". It is: **a unit in this corpus is a
+noun phrase, not a word.** Two words may now sit between a spelled number and
+the word the pattern recognises. The gap also picks up *"eighty squar e feet"*,
+where the letter-spacing that breaks spelled numbers had broken the unit
+instead.
+
+The width is bought at a price, and an existing test named the price before the
+change was ten minutes old: `three of the sto-\nries are ours` is pinned as
+**not** evidence for 3, and a two-word window let it through. So the gap words
+must not be function words — a preposition or an article after the number means
+the number has stopped being a measurement and started being a subject. That
+list is the whole guard, and it is why the widening does not loosen the check
+anywhere it was tight.
+
+This is the fourth distinct blindness found in the spelled-number reader, and
+all four were found the same way: **encoding a new district is also an audit of
+the extractor.** A blind reader reports the corpus clean.
+
+### Two pinned counts moved, both in the good direction
+
+A refusal should only ever leave the refusal ledger by **being encoded**, and
+four did: Troutdale MU-3's comment and Oregon City MUC-2 / MUD / WFDD's zone
+notes stopped being prose about a shape the model could not hold and became
+values. Five arrived in their place, every one refused on **scope** rather than
+for want of a field — Clackamas's mapped station community, Milwaukie's
+downtown chapter, Wilsonville's industrial overlay, Gresham's unencoded VC-SW,
+and Oregon City NC's "whichever is less". Refusing on scope is the stronger
+reading and it is only available to somebody who read the applicability
+sentence.
+
+Two of those five were written without the phrase "not encoded" and were
+therefore counted by nothing. The refusals module says in its own docstring
+that over-reporting is its safe direction; silent under-reporting is the
+failure it exists to prevent, so both now say the words. 275 → 276.

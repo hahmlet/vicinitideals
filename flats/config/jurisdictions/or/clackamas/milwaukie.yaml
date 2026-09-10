@@ -3,6 +3,19 @@ kind: city
 eligible: true
 notes: Ported from quadfit rules.yaml. Every value is `draft` — quadfit's verification was against a coarser
   standard (one citation per row) and does not carry over.
+
+
+  MINIMUM BUILDING HEIGHT, surveyed 2026-09-10 when the field was built. Milwaukie states one, it is
+  NOT ENCODED, and the reason is scope rather than the model -- the field now exists and this
+  standard does not reach either zone this layer encodes for the pod. 19.304.5.B.2.b sets 25 feet, and adds a
+  depth rule no field holds -- "must be met along all street frontages for a depth of at least 25 ft
+  from the front of the building" -- with Table 19.304.4 carrying the numbers. It sits in 19.304,
+  the DOWNTOWN zones chapter; R-HD and R-MD are the quadplex-permitting zones here and neither is a
+  downtown district. Recorded rather than encoded because the downtown districts are among the eight
+  this layer has never declared, so whoever encodes DMU will need it, and because the depth clause is
+  a second standard hiding inside the first. Exempt there are additions to existing buildings,
+  accessory structures, and buildings under 1,000 sq ft of floor area -- the pod is twice that.
+  (or/clackamas/milwaukie/19.300.base-zones.txt#L1870,L1878,L1882,L1926-L1938.)
 ingest:
   geoid: null
   juris_city_codes:

@@ -844,7 +844,7 @@ are debts that come due when signing starts, which is item 7.
 | a | Does splitting the plat move our building into the "townhouse" rules? | Gresham | 28,873 lots citywide |
 | b | Is a menu of three permitted distances a minimum? | Fairview VA | 2,456 lots citywide |
 | c | Which column of the Frog Pond table governs an RN lot? | Wilsonville | the city's 53 greens |
-| d | A zoning code that asks a building to be at least 25 ft *tall* | Troutdale MU-3 | 5,139 lots citywide |
+| d | A zoning code that asks a building to be at least 25 ft *tall* | Troutdale MU-3 + 3 Oregon City districts | 5,139 + 1,162 lots |
 | e | Three rural lot minimums whose cited page prints no figure | unincorporated Multnomah | 2,855 lots |
 | f | A setback stated only on a map we have never opened | Milwaukie R-HD | one zone of 622 greens |
 | g | One table cell answering three different questions | Portland IR | one zone |
@@ -880,14 +880,24 @@ city's Village zone has a street-side setback taken from a table with no
 street-side column, off a row headed "Commercial Buildings." Wilsonville has 53
 greens and this is the cheapest of the eight to settle.
 
-**(d) Troutdale MU-3 — the only rule in Oregon a pod can fail by being too
-short.** "Middle housing dwelling units shall have a minimum building height of
-twenty-five (25) feet." Aimed by name at this building, in a district that
+**(d) A rule a pod can fail by being too short, and it is now in four
+districts.** "Middle housing dwelling units shall have a minimum building height
+of twenty-five (25) feet." Aimed by name at this building, in a district that
 permits it. Our pod stands 26 feet — and that 26 is a number the design catalog
 itself marks as *not taken from a drawing set*. One foot of margin on an
 unconfirmed dimension. Two ways out and both are yours: confirm the pod's real
-height, or accept that Troutdale's mixed-use district wants a taller building
-than we make.
+height, or accept that these mixed-use districts want a taller building than we
+make.
+
+*Updated 2026-09-10.* The machine has done its half. The screen now holds and
+tests a minimum height, so this no longer passes silently — and a corpus-wide
+search found the same standard in three more districts that permit us: Oregon
+City's MUC-2, MUD and Willamette Falls Downtown, all at 25 feet, the last of
+them also demanding two entire storeys. So the one foot of margin is being
+leaned on in four places rather than one. Nothing in the search would fail us
+today; the nearest thing that would is Wilsonville's 30-foot floor, and it is
+on industrial land we do not build on. **What is still yours is the same
+question and it is now worth more: is the pod actually 26 feet?**
 
 **(e) Three rural Multnomah lot sizes.** The cited sentence says the minimum lot
 size is one acre "except as provided in" a list of other sections, one of which

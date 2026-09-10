@@ -187,7 +187,19 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   SURFACE IT. All four reading queues are built from sentences that state a number. 845.02 and
   845.04 each raised a card; 845.01(3) raised none in any queue, and it is the strongest
   sentence of the three. It was found by reading the section end to end for a different
-  question, which is the only way it could have been found.'
+  question, which is the only way it could have been found.
+
+
+  MINIMUM BUILDING HEIGHT, surveyed 2026-09-10 when the field was built, and this county states
+  one: "Minimum Building Height: 20 feet, measured to top of parapet or roof." It is not encoded
+  and the reason is scope rather than the model. The sentence is in Subsection 1005.09, the Fuller
+  Road Station Community standards, which apply "in the Fuller Road Station Community, as shown on
+  Comprehensive Plan Map X-CRC-1" -- a mapped area, not a district, and this screen holds no
+  boundary for it. So the fact it turns on is a site fact nothing measures, the same shape as the
+  transit, corner, alley and sewer conditions, and the same shape as the 1005.09 chapter card
+  already open in the reading queue. Twenty feet is inert for a twenty-six-foot pod either way, and
+  the number is written here so that whoever answers that card does not have to find it twice.
+  (or/clackamas/_unincorporated/zdo.1005.txt#L476,L502.)'
 ingest:
   geoid: null
   juris_city_codes:

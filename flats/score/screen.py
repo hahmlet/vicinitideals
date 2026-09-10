@@ -117,6 +117,8 @@ CHECK_FIELD: dict[str, str] = {
     "far": "max_far",
     "height_ft": "max_height_ft",
     "stories": "max_height_stories",
+    "min_height_ft": "min_building_height_ft",
+    "min_stories": "min_building_height_stories",
     "max_units": "max_units",
     "min_units": "min_units_at_trigger",
     "density_du_per_acre": "max_density_du_per_acre",
@@ -363,6 +365,22 @@ def _checks(
         float(design.stories),
         rules.get("max_height_stories"),
         is_maximum=True,
+    )
+    # And the floor. A mixed-use district that writes one is keeping a
+    # single-storey box off a main street, so it is a standard about this
+    # building and not about its neighbours. Both catalogued pods clear every
+    # instance in the corpus; a one-storey design would not.
+    check(
+        "min_height_ft",
+        design.height_ft,
+        rules.get("min_building_height_ft"),
+        is_maximum=False,
+    )
+    check(
+        "min_stories",
+        float(design.stories),
+        rules.get("min_building_height_stories"),
+        is_maximum=False,
     )
     check("max_units", float(design.units), rules.get("max_units"), is_maximum=True)
     # A ceiling on units per acre, measured on the lot in front of us. An acre

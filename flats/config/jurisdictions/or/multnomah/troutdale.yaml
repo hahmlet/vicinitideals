@@ -121,26 +121,45 @@ readings:
       and the pod is four primary units built at once.
     fingerprint: f955be60cf492fb1
   "8.development-standards.txt#8.230":
-    queue: missed
-    outcome: encode
+    queue: nofield
+    outcome: other_building
     note: >-
-      A MINIMUM BUILDING HEIGHT, in a district that permits our building, and no field in the
-      registry can hold it. Section 8.230 is "Standards in the MU-3 (Urban Mixed-Use) Zoning
-      District" and its subsection A reads "Middle housing dwelling units shall have a minimum
-      building height of twenty-five (25) feet." This file holds MU-3 at quadplex_allowed true, so
-      the standard reaches. The pod is about twenty-six feet over two storeys and therefore clears
-      it, which is why this is ordered work rather than an alarm, and MU-3 is three lots in
-      Troutdale. The reason to keep the card open is that the gap is not local: unincorporated
-      Clackamas states twenty feet to the top of parapet in ZDO 1005, Milwaukie twenty-five feet
-      along all street frontages for a depth of at least twenty-five, Oregon City twenty-five feet
-      or two storeys in several districts and "two entire stories" in another, Wood Village
-      eighteen feet in NC, and Gresham and Wilsonville each state one in their corridor and
-      town-centre tables. A minimum height can only refuse -- it is the one direction where an
-      unheld standard produces a false GREEN on a single-storey design -- so the field is worth
-      adding before the next city is encoded, not after. Subsection D of the same section, office
-      uses of fifteen thousand square feet or less being required to sit in a multi-storey
-      structure, is not ours.
-    fingerprint: bb54a8e0ee45b453
+      RE-RULED 2026-09-10, and the card asks a different question than it did. What is left of
+      this section once the minimum building height is encoded is 8.230.D.1 -- office uses of
+      fifteen thousand square feet or less being required to sit in a multi-storey structure --
+      which is a standard about a different building. The queue moved from `missed` to `nofield`
+      with the fingerprint, which is the mechanism working: the ruling below was written about
+      text that is no longer what the card holds, so it came back to be re-ruled rather than
+      quietly staying closed.
+
+
+      WHAT THE CARD ASKED BEFORE, AND HOW IT WAS DISCHARGED. Section 8.230 is
+      "Standards in the MU-3 (Urban Mixed-Use) Zoning District" and its subsection A reads "Middle
+      housing dwelling units shall have a minimum building height of twenty-five (25) feet." This
+      file holds MU-3 at quadplex_allowed true, so the standard reaches, and MU-3 is three lots in
+      Troutdale. The pod is about twenty-six feet over two storeys and clears it, which is why
+      this was ordered work rather than an alarm.
+
+
+      The reason the card stayed open is that the gap was not local, and the survey that closed it
+      is worth keeping because two lines of it were wrong. Right: unincorporated Clackamas states
+      twenty feet to the top of parapet in ZDO 1005, Milwaukie twenty-five feet along all street
+      frontages for a depth of at least twenty-five, Oregon City twenty-five feet or two storeys
+      in MUC-2 and both mixed-use downtown sections and "two entire stories and twenty-five feet"
+      in the Willamette Falls Downtown district, and Wood Village eighteen feet in NC. Wrong:
+      Gresham's corridor figure is footnote 18 to Table 4.0430 and is scoped to TOWNHOUSES by its
+      own first line, so it does not reach a quadplex -- Gresham's live one is Table 4.1521.G, two
+      storeys in VC-SW, a district this layer has not encoded; and Wilsonville's Table CC-4 is not
+      a town centre at all but the Coffee Creek INDUSTRIAL Design Overlay District, whose thirty
+      feet is the one number in the corpus a twenty-six-foot pod would fail and sits on land this
+      screen does not build on. Only a whole-corpus grep found either, which is the standing rule
+      about absence claims applied to a claim of PRESENCE.
+
+
+      `min_building_height_ft` and `min_building_height_stories` are now registered, both optional:
+      four districts corpus-wide state a floor and every one of them is mixed-use, so silence says
+      nothing about whether a zone has been read.
+    fingerprint: c3b55b760edfae98
   "8.development-standards.txt#8.130":
     queue: condition
     outcome: never
@@ -1071,15 +1090,6 @@ zones:
       accessory-structure setbacks (see 5.010) and the 20,000 sq ft maximum
       building footprint are stated and do not bind a 2,016 sq ft building.
   MU-3:
-    # NOT ENCODED, and it is the only standard in this corpus that a pod could
-    # fail by being too SHORT. TDC 8.230.A: "Middle housing dwelling units
-    # shall have a minimum building height of twenty-five (25) feet." Aimed by
-    # name at this building, in a zone that permits it, and there is no field
-    # for a height floor -- `max_height_ft` is a ceiling and the required-field
-    # check has no counterpart. The catalog pod stands 26 ft, so it clears the
-    # bar by one foot on a dimension the catalog itself flags as "not from a
-    # drawing set". A field, not a value, is what closes this.
-    # or/multnomah/troutdale/8.development-standards.txt#L1531
     max_density_du_per_acre:
       # 3.140.B.4: "Maximum density standards shall not apply to duplex,
       # triplex, quadplex, cottage cluster projects ... on a dwelling units per
@@ -1181,6 +1191,23 @@ zones:
       # legal front setback and it is 20 feet.
       value: 20
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L705"
+    min_building_height_ft:
+      # A FLOOR, not a ceiling, and the only standard in this corpus a pod can
+      # fail by being too short. Troutdale states it twice and the two agree.
+      # 8.230.A is quoted because it is the sentence that names the use --
+      # "Middle housing dwelling units shall have a minimum building height of
+      # twenty-five (25) feet" -- in the section headed "Standards in the MU-3
+      # (Urban Mixed-Use) Zoning District". Table 3.230.B says the same number
+      # by column: its Minimum building height row prints N/A under MU-1 and
+      # MU-2 and 25 under MU-3, at 3.zoning-districts.txt#L684,L706. Both
+      # catalogued pods stand 26 ft, so this clears by one foot -- on a
+      # dimension the catalog itself flags as not taken from a drawing set.
+      value: 25
+      cite: TDC 8.230.A (minimum building height for middle housing in MU-3),
+        restated in Table 3.230.B's Minimum building height row, MU-3 column
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/troutdale/8.development-standards.txt#L1529,L1531"
     max_height_ft:
       # 3.230.B prints "see 3.235.D", and 3.235.D states no by-right ceiling at
       # all: everything up to 55 feet takes a Type II site development review
@@ -1199,10 +1226,17 @@ zones:
       carry the same number here.
 
 
-      TWO STANDARDS THIS LAYER CANNOT SCREEN. 3.230.B sets a MINIMUM building
-      height of 25 feet in this column, which the pod clears by a foot at 26,
-      and there is no field for a height floor -- a shorter product would fail
-      MU-3 and nothing here would say so. And 3.235.D grants no height by
+      THE MINIMUM BUILDING HEIGHT IS NOW SCREENED. 8.230.A sets a floor of 25
+      feet on middle housing here and Table 3.230.B prints the same 25 in this
+      column, N/A in the other two; `min_building_height_ft` holds it and the
+      pod clears it by a foot at 26. It was carried in prose for three weeks
+      because the registry had no field for a floor, and a shorter product
+      would have failed MU-3 with nothing here to say so. That is the whole
+      argument for the field: a height floor is the one standard where an
+      unheld number produces a false GREEN rather than a false REVIEW.
+
+
+      ONE STANDARD THIS LAYER STILL CANNOT SCREEN. 3.235.D grants no height by
       right: every building up to 55 feet is subject to a Type II site
       development review. A GREEN in MU-3 therefore means the envelope fits,
       not that the building may be permitted over the counter.

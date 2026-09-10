@@ -512,6 +512,47 @@ def test_a_word_the_typesetter_broke_across_a_line_is_still_a_word() -> None:
     assert not quotes_the_number("setback 20-\n30 feet", 2030)
 
 
+def test_a_unit_is_a_noun_phrase_and_not_always_one_word() -> None:
+    """A fourth blindness in the same guard, found on 2026-09-10 by encoding
+    a minimum building height.
+
+    Oregon City's Willamette Falls Downtown district states its floor as "Two
+    entire stories and twenty-five feet". The feet were corroborated and the
+    storeys were not: the window between a spelled number and its unit stopped
+    at the adjective, so the only line in the code that states the standard
+    read as stating no number at all.
+
+    "Entire" is one spelling of a shape the corpus uses 489 times in 63
+    spellings, and nearly all of them are compound units rather than
+    adjectives -- square feet, dwelling units, parking spaces, linear feet,
+    cubic feet, caliper inches. The unit is a noun phrase.
+
+    The width is bought at a price, and the price is the line below it: two
+    words, and none of them a preposition or an article, because "three OF THE
+    stories" is the number being a subject rather than a measurement.
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number(
+        "C. Minimum building height: Two entire stories and\ntwenty-five feet",
+        2,
+    )
+    assert quotes_the_number("seven bicycle parking spaces", 7)
+    assert quotes_the_number("thirty linear feet", 30)
+    assert quotes_the_number("two caliper inches", 2)
+    assert quotes_the_number("four detached housing units", 4)
+    # The letter-spacing that breaks a spelled NUMBER breaks a unit too, and
+    # the same window carries it: "squar e" is one gap word away from "feet".
+    assert quotes_the_number("Minimum area: eighty squar e feet", 80)
+
+    # A function word after the number ends the measurement.
+    assert not quotes_the_number("three of the stories are ours", 3)
+    assert not quotes_the_number("two or more spaces may be shared", 2)
+    # Two words, not three, and never across a sentence boundary.
+    assert not quotes_the_number("one shall be provided for each space", 1)
+    assert not quotes_the_number("Two. Minimum area: five hundred square feet", 2)
+
+
 def test_a_non_numeric_value_is_never_misquoted() -> None:
     # Permission flags and enums have no number to look for, and flagging
     # them would bury the citations that really did drift.

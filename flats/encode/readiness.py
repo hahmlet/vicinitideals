@@ -432,11 +432,43 @@ _TENS = {
 #: The words in front carry the value on their own -- the numeral in brackets
 #: is the same number said twice, and stepping over it is what lets the unit
 #: behind it be seen.
+#:
+#: A UNIT IN THIS CORPUS IS A NOUN PHRASE, NOT A WORD, which is why up to two
+#: words may sit between the number and the word this pattern recognises.
+#: Oregon City writes "Two entire stories", and a window that ended at the
+#: adjective read the sentence as stating no number at all -- WFDD's minimum
+#: of two storeys was reported misquoted against the only line in the code
+#: that states it. Scanning the whole store for the shape found 489 of them
+#: and 63 spellings, and nearly all are compound units rather than adjectives:
+#: "four hundred square feet", "one parking space", "thirty linear feet",
+#: "three cubic feet", "two caliper inches", "seven bicycle parking spaces".
+#: The gap also picks up "eighty squar e feet", where the letter-spacing that
+#: breaks numbers has broken the unit instead.
+#:
+#: Two words, not more, and the separators between them are whitespace and
+#: hyphens only -- no full stop, so the window cannot cross out of one
+#: sentence and corroborate itself on the next one's unit.
+#:
+#: The gap words have to be words a unit is BUILT from, and the way to say
+#: that without listing every noun in Oregon is to refuse the function words.
+#: A preposition or an article after the number means the number has stopped
+#: being a measurement and started being a subject -- "three OF THE stories
+#: are ours" counts nothing, and a window that let it through would be the
+#: loosening the tight original was written to prevent. That sentence is
+#: pinned in `test_a_word_the_typesetter_broke_across_a_line_is_still_a_word`,
+#: which is what caught this gap the first time it was opened too wide.
+_NOT_A_UNIT_WORD = (
+    r"of|the|an?|or|per|for|in|on|at|to|by|with|from|its|their|such|any|each"
+    r"|all|is|are|be|shall|may|must|that|th[oe]se|this|than|more|less"
+)
+
 _UNIT_WORD = re.compile(
     r"^[\s.,:;)\-]{0,3}"
     r"(?:\(\s*[\d\s.,¼½¾⅓⅔⅛⅜⅝⅞]*\)"
     r"[\s.,:;\-]{0,3})?"
-    r"(?:and\s+)?(?:feet|foot|ft|inch|inches|stor(?:y|ies)|percent"
+    r"(?:and\s+)?"
+    rf"(?:(?!(?:{_NOT_A_UNIT_WORD})\b)[A-Za-z]+[\s\-]{{1,2}}){{0,2}}"
+    r"(?:feet|foot|ft|inch|inches|stor(?:y|ies)|percent"
     r"|unit|units|space|spaces|square|sq|acre|acres|dwelling|dwellings|percent|%)\b",
     re.I,
 )

@@ -160,7 +160,24 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   the back of curb reaches about the front setback line, and the rear-court typology parks four cars
   behind the building, so the two triangles at the cut contain front yard. A city that let front-yard
   parking in at 7.0420(B)(5)(c) takes some of it back here, and this screen never used it.
-  (or/multnomah/gresham/pws.6.03-6.04.txt#L67-L119)'
+  (or/multnomah/gresham/pws.6.03-6.04.txt#L67-L119)
+
+
+  MINIMUM BUILDING HEIGHT, surveyed 2026-09-10 when the field was built, and Gresham states one in
+  two places. Neither reaches an encoded quadplex zone, and one of them looks as though it does.
+  Table 4.0430 footnote 18 gives corridor districts a floor of one storey in CMU and CMF and two
+  everywhere else, and CMU and CMF ARE encoded here at quadplex_allowed true -- but the footnote
+  opens "Height limitations for Townhouses", 4.0434 confirms it ("Heights of townhouses are
+  identified in Table 4.0430, Footnote 18") and states only a maximum for everything else, so it
+  is a standard about a different building. (or/multnomah/gresham/4.0400.corridor.txt#L493-L497,
+  L550-L554.) The live one is Table 4.1521.G, two storeys in VC-SW, exempting retail over 20,000
+  sq ft; 4.1524.B scopes the standard to new commercial, residential and mixed-use buildings and
+  releases institutional buildings, accessory structures and anything under 1,000 sq ft, none of
+  which is this pod. VC-SW is not encoded, so this is a zone gap rather than a field gap and it is
+  written here so that whoever encodes VC-SW does not have to find it again.
+  (or/multnomah/gresham/4.1500.springwater.txt#L624-L626,L694-L696.) Industrial says None outright
+  (4.0300.industrial.txt#L194), and the "minimum height" phrases in the Downtown and Civic
+  Neighborhood chapters are design standards about a building base, not about a building.'
 ingest:
   geoid: null
   juris_city_codes:

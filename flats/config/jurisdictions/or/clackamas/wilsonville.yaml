@@ -102,7 +102,19 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   cited, both exempt rather than absent. Section 4.155 Table 5 is a maximums-and-bicycles table with
   no auto-minimum column, its middle housing row reads "No Limit", and 4.154(F) speaks of minimum
   parking requirements only in the past tense. The Village Zone''s Table V-2 says NR on the same row,
-  so the two tables agree.'
+  so the two tables agree.
+
+
+  MINIMUM BUILDING HEIGHT, surveyed 2026-09-10 when the field was built, and Wilsonville holds the
+  only number in the corpus a catalogued pod would FAIL. Table CC-4 states "Required Minimum
+  Height: 30 feet minimum" and the pod is twenty-six. It is NOT ENCODED, and the reason is scope
+  rather than the model -- the field now exists and this standard does not reach. Section 4.134 is the
+  Coffee Creek INDUSTRIAL Design Overlay District, its standards are keyed to Addressing Streets,
+  Supporting Streets and Through Connections on Figure CC-1, and none of the nine zones this layer
+  permits a quadplex in is inside it. Written down because a thirty-foot floor is the shape that
+  would turn a GREEN into a RED without any field noticing, and because an earlier survey of this
+  standard recorded it as a TOWN CENTRE table, which it is not -- the CC is Coffee Creek.
+  (or/clackamas/wilsonville/4.planning.txt#L67,L9541,L10045-L10047.)'
 ingest:
   geoid: null
   juris_city_codes:

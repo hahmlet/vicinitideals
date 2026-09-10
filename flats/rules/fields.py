@@ -99,6 +99,8 @@ _LABELS: dict[str, str] = {
     "max_height_stories": "max. height (storeys)",
     "max_lot_depth_ratio": "max. lot depth ratio",
     "max_units": "max. units",
+    "min_building_height_ft": "min. height",
+    "min_building_height_stories": "min. height (storeys)",
     "min_building_separation_ft": "min. building separation",
     "min_density_du_per_acre": "min. density (units/acre)",
     "min_density_trigger_lot_sqft": "lot size that triggers min. density",
@@ -250,6 +252,39 @@ _F: tuple[FieldDef, ...] = (
         "where a building may stand and this says how big it may be, so a lot "
         "with room to spare on every yard still fails it.",
         True,
+    ),
+    FieldDef(
+        "min_building_height_ft",
+        "length_ft",
+        "MINIMUM building height. A floor, not a ceiling, and the only field "
+        "in the bulk group that is. Mixed-use and downtown districts write one "
+        "to keep a single-storey box off a main street -- Troutdale TDC 8.230 "
+        "requires twenty-five feet of any middle housing in MU-3, and Oregon "
+        "City states one in three of its mixed-use districts and not in "
+        "MUC-1, which states no height floor at all. Held apart from "
+        "`max_height_ft` rather than as a second bound on it because the two "
+        "are different standards a building has to clear separately, and "
+        "because a screen that only ever tested ceilings would read a zone "
+        "stating both as though it stated one. Both catalogued pods are 26 ft "
+        "over two storeys and clear every instance found, so this encodes "
+        "nothing that binds today -- and it is exactly what a one-storey "
+        "design would run into, which is the design the accessible-stall "
+        "reading points at.",
+        False,
+    ),
+    FieldDef(
+        "min_building_height_stories",
+        "count",
+        "MINIMUM building height where the code counts storeys instead of "
+        "feet. The same argument as `max_height_stories` made on the floor "
+        "rather than the ceiling: a storey count is a different measurement "
+        "and every conversion to feet is an invention. Oregon City's "
+        "Willamette Falls Downtown district requires \"two entire stories AND "
+        "twenty-five feet\", which is a conjunction and needs both fields to "
+        "say it; its other mixed-use chapters write \"or\", which the value "
+        "model has no form for and which is recorded in the zone note as the "
+        "relaxation this encoding does not take.",
+        False,
     ),
     FieldDef("max_far", "ratio", "Maximum floor area ratio.", True, "max_far"),
     FieldDef("max_coverage_pct", "percent", "Maximum building coverage, flat percentage.", True, "max_lot_coverage"),
@@ -730,6 +765,14 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # standing in for the other; listed as required here it would be
         # demanded of every zone whose code states feet.
         "max_height_stories",
+        # The floor under the same question, in either unit. Four districts in
+        # the corpus state one and every one of them is mixed-use: a minimum
+        # height is a main-street standard, not a residential one, so silence
+        # is the ordinary case and says nothing about whether a zone is fully
+        # read. Both are optional for the same reason `max_height_stories` is:
+        # a code that states feet is not incomplete for omitting storeys.
+        "min_building_height_ft",
+        "min_building_height_stories",
         "setback_street_side_ft",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.

@@ -345,7 +345,39 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 123, "comments": 135, "tests": 17}
+EXPECTED = {"notes": 125, "comments": 134, "tests": 17}
+#
+# 275 -> 276 on 2026-09-10, and it is the first time the ledger has been asked
+# to record a field ARRIVING. Four refusals left and five came in, which is
+# what the module's own docstring means by a count that moves both ways.
+#
+# The four that left were all the same standard, and they left because it is
+# now storable: `min_building_height_ft` and `min_building_height_stories`
+# were registered, so Troutdale MU-3's comment and Oregon City's MUC-2, MUD
+# and WFDD zone notes stopped being refusals and became values. That is the
+# only reason a refusal should ever disappear.
+#
+# The five that arrived are the rest of the corpus survey done in the same
+# pass, and every one of them is refused on SCOPE rather than for want of a
+# field -- which is the stronger kind, and only available because somebody
+# read the applicability sentence:
+#
+#   Clackamas ZDO 1005.09's twenty feet applies in the mapped Fuller Road
+#   Station Community, which is a site fact nothing measures.
+#   Milwaukie 19.304.5.B.2.b's twenty-five feet is in the DOWNTOWN chapter
+#   and the quadplex zones here are R-HD and R-MD.
+#   Wilsonville Table CC-4's thirty feet -- the one number in the corpus a
+#   catalogued pod would FAIL -- is the Coffee Creek INDUSTRIAL overlay.
+#   Gresham's live floor is Table 4.1521.G in VC-SW, an unencoded zone, so
+#   it is a zone gap and not a field gap. (Its Table 4.0430 footnote 18,
+#   which looked live in two encoded districts, is scoped to TOWNHOUSES.)
+#   Oregon City NC's 17.24.050.D.2 writes "whichever is less", a third form
+#   of the sentence the value model has no shape for, in a district whose
+#   use gate already refuses this building.
+#
+# Two of those five were phrased without the marker when they were first
+# written and were counted by nothing, which is the under-reporting direction
+# this module says it does not want. They now say the words.
 #
 # 258 -> 267 on 2026-09-08, later still, and every one of the nine is Oregon
 # City's non-residential side. Nine notes, no comments, which is itself the

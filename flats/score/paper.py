@@ -65,7 +65,11 @@ class PaperFit:
     min_area_sqft: float | None = None
     #: Which standard set that floor.
     binding: str = ""
-    #: None where the zone states no height limit we hold.
+    #: None where the zone states no height standard we hold. False where it
+    #: states one the design misses -- a ceiling it exceeds, or a floor it
+    #: does not reach. A mixed-use district that writes a minimum is keeping a
+    #: single-storey box off a main street, and that is a standard about this
+    #: building, so the two bounds answer one question rather than two.
     height_ok: bool | None = None
     #: Which orientation these numbers are for — the less demanding one.
     orientation: str = ""
@@ -108,8 +112,32 @@ class PaperFit:
 
     @property
     def fits_height(self) -> bool:
-        """False only where a height limit is held and the design exceeds it."""
+        """False only where a height standard is held and the design misses it.
+
+        Missing one is now two things, not one: over the ceiling, or under the
+        floor. A zone stating no height standard at all still reads True here
+        -- unasked is not the same as failed, and ``height_ok is None`` is
+        where that distinction is kept.
+        """
         return self.height_ok is not False
+
+
+def _height_ok(
+    design, ceiling: float | None, floor: float | None, storeys: float | None
+) -> bool | None:
+    """Whether the design clears every height standard the zone states.
+
+    ``None`` where it states none of the three, which is not the same as
+    passing: a zone with no height on file has not been asked the question.
+    """
+    bounds = [
+        ceiling is None or design.height_ft <= ceiling,
+        floor is None or design.height_ft >= floor,
+        storeys is None or float(design.stories) >= storeys,
+    ]
+    if ceiling is None and floor is None and storeys is None:
+        return None
+    return all(bounds)
 
 
 def _number(rules: "ZoneResolution", name: str) -> float | None:
@@ -251,6 +279,8 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     )
     coverage = _number(rules, "max_coverage_pct")
     height = _number(rules, "max_height_ft")
+    min_height = _number(rules, "min_building_height_ft")
+    min_stories = _number(rules, "min_building_height_stories")
     # A code that makes the building face the street has taken one of the
     # two orientations away, and the cheaper lot may have been that one.
     axis = rules.get("orientation_constraint") == "axis_required"
@@ -285,6 +315,8 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             ("min_lot_width_ft", min_width),
             ("max_coverage_pct", coverage),
             ("max_height_ft", height),
+            ("min_building_height_ft", min_height),
+            ("min_building_height_stories", min_stories),
         )
         if got is not None
     ]
@@ -329,7 +361,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             parking_depth_ft=court,
             min_area_sqft=area,
             binding=binding,
-            height_ok=None if height is None else design.height_ft <= height,
+            height_ok=_height_ok(design, height, min_height, min_stories),
             orientation=orientation.value,
             plat=design.plat.value,
             unknown=unknown,
