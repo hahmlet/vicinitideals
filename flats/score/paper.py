@@ -277,6 +277,17 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     min_width, width_answered = lot_standard(
         rules, "min_lot_width_ft", per_unit=per_unit, lots=lots
     )
+    # A code that states an average lot width beside the width at the front lot
+    # line is stating two standards on one axis, and the screen measures them
+    # on two different lines. The paper lot is a rectangle, where those two
+    # lines are the same line, so here the two standards collapse into the
+    # larger of them -- which is the honest answer for the question this
+    # function asks: the smallest rectangle that satisfies everything written.
+    min_avg, avg_answered = lot_standard(
+        rules, "min_average_lot_width_ft", per_unit=per_unit, lots=lots
+    )
+    if min_avg is not None:
+        min_width = min_avg if min_width is None else max(min_width, min_avg)
     coverage = _number(rules, "max_coverage_pct")
     height = _number(rules, "max_height_ft")
     min_height = _number(rules, "min_building_height_ft")
@@ -301,6 +312,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         for name, answered in (
             ("min_lot_sqft", lot_answered),
             ("min_lot_width_ft", width_answered),
+            ("min_average_lot_width_ft", avg_answered),
         )
         if not answered
     )
@@ -313,6 +325,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         for name, got in (
             ("min_lot_sqft", min_lot),
             ("min_lot_width_ft", min_width),
+            ("min_average_lot_width_ft", min_avg),
             ("max_coverage_pct", coverage),
             ("max_height_ft", height),
             ("min_building_height_ft", min_height),

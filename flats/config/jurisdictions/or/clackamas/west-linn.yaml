@@ -7,9 +7,26 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   one of these zones and is not one of the dwelling types the lot-size row is broken out by — the rows
   are detached, attached, multifamily and a townhouse-project average — so the base figure is what a
   quadplex is held to, which is the conservative reading of the three. (2) min_frontage_ft is replaced
-  by min_lot_width_ft: what the code states is "Minimum lot width at front lot line", the "Average
-  minimum lot width" printed beneath it is a subdivision average and not encoded, and no chapter states
-  a frontage standard as such. UNPORTED: orientation_constraint=''entrance_only''. quadfit justified this
+  by min_lot_width_ft: what the code states is "Minimum lot width at front lot line", and no chapter
+  states a frontage standard as such. CORRECTED 2026-09-10 -- the rest of this reading used to say that
+  the "Average minimum lot width" printed three rows beneath it was a subdivision average and therefore
+  not encoded. It is not a subdivision average, and the city''s own glossary is what says so. CDC 02.030,
+  at 02.definitions.txt#L652: "Lot width. The horizontal distance between side lot lines, measured at
+  right angles to the lot depth. Average lot width is measured at the midpoints of opposite lot lines."
+  That is one lot, measured on one line, and it is the same measurement Oregon City states in OCMC
+  17.04.700 and the screen already takes (`side_midpoints`, Lot Analysis/quadfit/lotwidth.py). So the
+  city writes two standards on one axis and the two rows want two measurements: a lot 45 ft wide at the
+  street and 90 ft wide across the middle satisfies both of R-15''s rows and would fail a single
+  min_lot_width_ft set to either number alone. Eight of the nine zone chapters print the average row and
+  now carry min_average_lot_width_ft; R-3 prints only the front-line row and holds nothing, which is why
+  the field is optional rather than required. Six of the eight restate the front-line figure -- R-40
+  150/150, R-20 100/100, and R-7, R-5, R-4.5 and R-2.1 all 35/35 -- and two do not: R-15 at 45/80 and
+  R-10 at 35/50. Both width rows in every chapter carry "Does not apply to townhouses or cottage
+  clusters", and CDC 02.030 defines a townhouse as a unit "located on an individual lot or parcel", so
+  both rows bind the single-lot quadplex and neither binds the split plat. Neither is encoded with a
+  unit_lots variant, which is the treatment min_lot_width_ft has carried since the port and is the
+  stricter reading on the split path: it can cost a review, never buy a GREEN.
+  UNPORTED: orientation_constraint=''entrance_only''. quadfit justified this
   in a YAML comment with no citation; it needs its own encoding rather than invented provenance.
   (3) READ AND NOT ENCODED — CDC Chapter 43, the sidewall provisions every dimensional table points at.
   It applies to "all new single-family attached and detached construction", and CDC 02.030 defines
@@ -93,38 +110,60 @@ ingest:
 readings:
   "10.r-15.txt#10.070":
     queue: missed
-    outcome: encode
+    outcome: not_here
     note: >-
-      R-15 states lot width twice and this file holds the smaller. "Minimum lot width at front lot
-      line 45 ft" is what min_lot_width_ft carries; three rows below it "Average minimum lot width
-      80 ft" sits unheld, and a lot has to satisfy both. Checked across every West Linn zone file:
-      R-40 150/150, R-20 100/100, R-7, R-5, R-4.5 and R-2.1 all 35/35, R-3 prints no average row
-      at all -- so exactly two zones state a stricter average than their front-line figure, this
-      one by thirty-five feet and R-10 by fifteen. The zone's own notes line has said "45 ft at
-      front line / 80 ft avg" since the quadfit import, which is where the choice was recorded and
-      why no ledger has ever seen it. Left as ordered work rather than silently raised to 80: the
-      field is called min_lot_width_ft with no measurement attached, so writing 80 into it would
-      refuse a lot forty-five feet wide at the street and ninety feet wide behind, which meets
-      both standards the city wrote. The two rows want two measurements. Both rows carry "Does not
-      apply to townhouses or cottage clusters", so the split-plat path escapes them and the
-      single-lot quadplex does not. The other two statements on this card are a cottage-cluster
-      setback and the Type I/II lands carve-out from the floor area ratio; neither reaches this
-      building.
-    fingerprint: bb15276896fa2b3c
-
+      RE-RULED 2026-09-10, and the card asks a different question than it did. The average lot
+      width is encoded, so what is left of 10.070 is two lines and neither moves a number. The
+      first is the cottage-cluster setback sentence -- ten feet all round for a cottage cluster
+      project -- and a cottage cluster is detached cottages around a common courtyard, not four
+      attached units. The second is the Type I and II lands carve-out from the floor area ratio,
+      which this file already holds: max_far carries a measured_on naming developable net area,
+      cited to CDC 02.030 and CDC 05.025, so the standard is encoded and only this chapter's
+      restatement of it is unquoted. The queue is still `missed` and the fingerprint moved, which
+      is the mechanism working -- the ruling below was written about text that is no longer what
+      the card holds, so it came back to be re-ruled rather than quietly staying closed. WHAT THE
+      CARD ASKED BEFORE, AND HOW IT WAS DISCHARGED. R-15 states lot width twice: "Minimum lot
+      width at front lot line 45 ft" and, three rows under it, "Average minimum lot width 80 ft".
+      This file held the smaller, and the layer note above called the second a subdivision average
+      and therefore not encodable. IT IS NOT A SUBDIVISION AVERAGE, AND THE CITY'S OWN GLOSSARY IS
+      WHAT SAYS SO. CDC 02.030, at 02.definitions.txt#L652: "Lot width. The horizontal distance
+      between side lot lines, measured at right angles to the lot depth. Average lot width is
+      measured at the midpoints of opposite lot lines." One lot, one line, and the same
+      measurement Oregon City states in OCMC 17.04.700 -- which the screen already takes, as
+      `side_midpoints` in Lot Analysis/quadfit/lotwidth.py. So the two rows are two standards on
+      one axis and they wanted two fields rather than one raised number: writing 80 into
+      min_lot_width_ft would refuse a lot forty-five feet wide at the street and ninety feet wide
+      across the middle, which meets both standards the city wrote, and leaving it at 45 never
+      asks the second question at all. min_average_lot_width_ft is registered and optional, and
+      all eight West Linn chapters that print the row now carry it -- R-40 150, R-20 100, R-15 80,
+      R-10 50, and R-7, R-5, R-4.5 and R-2.1 at 35. R-3 prints only the front-line row and holds
+      nothing, which is the corpus's own proof that silence here is ordinary and the field must
+      not be required. Both width rows in every chapter carry "Does not apply to townhouses or
+      cottage clusters", and CDC 02.030 defines a townhouse as a unit "located on an individual
+      lot or parcel", so both rows bind the single-lot quadplex and neither binds the split plat;
+      neither is encoded with a unit_lots variant, which is the treatment min_lot_width_ft has
+      carried since the port and is the stricter reading on that path.
+    fingerprint: e130db1ba22edd38
   "11.r-10.txt#11.070":
     queue: missed
-    outcome: encode
+    outcome: not_here
     note: >-
-      The second of the two zones where West Linn's average lot width is stricter than its
-      front-line width: 35 ft at the front lot line, which this file holds, and 50 ft average,
-      which it does not. Same reading as R-15 and the same reason for leaving it open rather than
-      raising the held number -- min_lot_width_ft names no measurement, and a lot thirty-five feet
-      wide at the street and sixty feet wide behind satisfies both rows the city wrote while
-      failing a single field set to fifty. Both rows are switched off for townhouses and cottage
-      clusters, so this binds the single-lot quadplex and not the split plat. The card's other
-      statement is the cottage-cluster setback sentence, which is a different housing type.
-    fingerprint: e1a21653116d16cb
+      RE-RULED 2026-09-10. The 50 ft average lot width is encoded on min_average_lot_width_ft
+      beside the 35 ft at the front lot line, so what is left of 11.070 is the cottage-cluster
+      setback sentence alone -- ten feet all round for a cottage cluster project -- and a cottage
+      cluster is detached cottages around a common courtyard, not four attached units. Nothing
+      left on this card reaches this building. WHAT THE CARD ASKED BEFORE. R-10 was the second of
+      the two West Linn zones whose two width rows disagree: 35 ft at the front lot line, which
+      this file held, and 50 ft average, which it did not. The reason for leaving it open rather
+      than raising the held number was that min_lot_width_ft named no measurement -- and the
+      city's own glossary names both. CDC 02.030 at 02.definitions.txt#L652: lot width is "the
+      horizontal distance between side lot lines, measured at right angles to the lot depth", and
+      "average lot width is measured at the midpoints of opposite lot lines". Against a figure
+      taken at the front lot line, that means a lot thirty-five feet wide at the street and sixty
+      feet wide across the middle satisfies both rows and would fail a single field set to fifty.
+      Two rows, two measurements, two fields, and both are now held. The full survey of all nine
+      West Linn chapters is in the R-15 ruling on 10.r-15.txt#10.070.
+    fingerprint: 440da5e4a66dd3c4
   "08.r-40.txt#08.070":
     queue: missed
     outcome: not_here
@@ -903,6 +942,9 @@ zones:
     min_lot_width_ft:
       value: 150
       quote: "or/clackamas/west-linn/08.r-40.txt#L140"
+    min_average_lot_width_ft:
+      value: 150
+      quote: "or/clackamas/west-linn/08.r-40.txt#L144"
     max_coverage_pct:
       value: 25
       quote: "or/clackamas/west-linn/08.r-40.txt#L167"
@@ -1012,6 +1054,9 @@ zones:
     min_lot_width_ft:
       value: 100
       quote: "or/clackamas/west-linn/09.r-20.txt#L144"
+    min_average_lot_width_ft:
+      value: 100
+      quote: "or/clackamas/west-linn/09.r-20.txt#L148"
     max_coverage_pct:
       value: 25
       quote: "or/clackamas/west-linn/09.r-20.txt#L169"
@@ -1120,6 +1165,14 @@ zones:
     min_lot_width_ft:
       value: 45
       quote: "or/clackamas/west-linn/10.r-15.txt#L140"
+    # Thirty-five feet wider than the row three above it, and the only
+    # other zone whose two width rows disagree is R-10. Not a stricter
+    # reading of the same line: CDC 02.030 measures this one at the
+    # midpoints of the opposite lot lines and the 45 ft at the front lot
+    # line, so a lot 45 ft at the street and 90 ft behind satisfies both.
+    min_average_lot_width_ft:
+      value: 80
+      quote: "or/clackamas/west-linn/10.r-15.txt#L144"
     max_coverage_pct:
       value: 30
       quote: "or/clackamas/west-linn/10.r-15.txt#L165"
@@ -1204,6 +1257,11 @@ zones:
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/11.r-10.txt#L142"
+    # The second of the two zones whose width rows disagree: 35 ft at the
+    # front lot line, 50 ft measured at the midpoints.
+    min_average_lot_width_ft:
+      value: 50
+      quote: "or/clackamas/west-linn/11.r-10.txt#L145"
     max_coverage_pct:
       # Was cited at L161, which is "35 ft" — the maximum building height.
       # The citation check passed because this zone's coverage and its height
@@ -1360,6 +1418,9 @@ zones:
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/12.r-7.txt#L145"
+    min_average_lot_width_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/12.r-7.txt#L148"
     max_coverage_pct:
       quote: "or/clackamas/west-linn/12.r-7.txt#L166"
       value: 35
@@ -1480,6 +1541,9 @@ zones:
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/13.r-5.txt#L152"
+    min_average_lot_width_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/13.r-5.txt#L156"
     notes: 'quadfit confidence: verified | Max lot coverage does NOT apply to quadplexes (CDC 13.070)
       -> no coverage cap for a 4-plex; SFD base coverage 40%.'
     max_coverage_pct:
@@ -1621,6 +1685,9 @@ zones:
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L178"
+    min_average_lot_width_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L182"
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 14.070); SFD
       base 40%.'
     max_coverage_pct:
@@ -1866,6 +1933,9 @@ zones:
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L193"
+    min_average_lot_width_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L197"
     notes: 'quadfit confidence: needs_verification | ATTACHED quadplex permitted OUTRIGHT. Detached SFD/detached
       quadplex are CONDITIONAL only (16.050(6)). Coverage max does not apply to quadplexes; SFD base 50%.
       Min lot 4,000 for detached SFD - verify.'

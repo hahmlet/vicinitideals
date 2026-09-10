@@ -90,6 +90,19 @@ _SUBJECTS: tuple[tuple[str, str], ...] = (
     # "Width at building line" is Gresham's name for lot width — the heading
     # "E. Minimum Lot Width" is real but its sub-headings replace it as the
     # group, and they say "1. Width at building line: Interior lot" instead.
+    # Two rows on one axis, and the general pattern below would take both.
+    # West Linn prints "Minimum lot width at front lot line" and, three rows
+    # under it, "Average minimum lot width" — and CDC 02.030 measures them on
+    # different lines, so filing the second under the first states 80 ft at a
+    # street edge the city asks 45 of. Listed first, and it also matches
+    # earlier in the label, so it wins either way the tie is broken. Unlike
+    # "average lot size" above, this one is a standard: R-15 states 45 ft at
+    # the front line and 80 ft on average, and a lot has to satisfy both.
+    (
+        r"average (?:minimum |min\.? )?lot width"
+        r"|(?:minimum |min\.? )?average lot width",
+        "min_average_lot_width_ft",
+    ),
     (r"lot width|width at building line", "min_lot_width_ft"),
     # Qualified on purpose: bare "frontage" is a unit of counting in driveway
     # rules — "approaches must not exceed 32 feet per frontage" — and the

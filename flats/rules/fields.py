@@ -107,6 +107,7 @@ _LABELS: dict[str, str] = {
     "min_frontage_ft": "min. frontage",
     "min_landscaped_pct": "min. landscaping %",
     "min_lot_depth_ft": "min. lot depth",
+    "min_average_lot_width_ft": "min. average lot width",
     "min_lot_sqft": "min. lot area",
     "min_lot_width_ft": "min. lot width",
     "min_units_at_trigger": "min. units once triggered",
@@ -192,6 +193,20 @@ _F: tuple[FieldDef, ...] = (
     # --- lot dimensions -------------------------------------------------
     FieldDef("min_lot_sqft", "area_sqft", "Minimum lot area for a fourplex.", False, "min_lot_size"),
     FieldDef("min_lot_width_ft", "length_ft", "Minimum lot width.", False, "min_lot_width"),
+    FieldDef(
+        "min_average_lot_width_ft",
+        "length_ft",
+        "Minimum average lot width, where a code states one beside the width "
+        "at the front lot line. A second standard on the same axis, not a "
+        "refinement of the first: West Linn CDC 02.030 defines lot width as "
+        "the distance between the side lot lines at right angles to the lot "
+        "depth and then says \"Average lot width is measured at the midpoints "
+        "of opposite lot lines\", so a lot forty-five feet wide at the street "
+        "and ninety feet wide behind satisfies a 45 ft front-line row and an "
+        "80 ft average row, and fails a single field set to either number "
+        "alone. Two rows, two measurements, two fields.",
+        False,
+    ),
     FieldDef("min_frontage_ft", "length_ft", "Minimum street frontage.", False, "min_frontage"),
     FieldDef(
         "min_lot_depth_ft",
@@ -781,6 +796,14 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "setback_garage_entrance_ft",
         "min_building_separation_ft",
         "min_lot_width_ft",
+        # One jurisdiction in the corpus states an average lot width beside the
+        # width at the front lot line, and it does not state it everywhere:
+        # West Linn prints the average row in eight of its nine residential
+        # chapters and R-3 prints only the front-line row. So silence is the
+        # ordinary case, a zone that states one width is not an incomplete
+        # zone, and R-3 is the standing proof rather than an argument about
+        # what some future code might do.
+        "min_average_lot_width_ft",
         "min_frontage_ft",
         # Most Oregon codes state neither, and a zone that is silent about depth
         # is not an incomplete zone. Where one does state it, the gap ledger

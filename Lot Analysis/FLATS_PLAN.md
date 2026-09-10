@@ -4897,3 +4897,172 @@ depth, and this repository holds lots aggregated by zone — the 62 MB parcel
 corpus lives elsewhere. So the second panel reports what the *lot* must be at
 each height and how many lots are exposed to the change, which is the honest
 half of the answer. The first panel is exact.
+
+## Two rows on one axis, and the glossary that settled them — 2026-09-10
+
+The last two `outcome: encode` orders in the reading queue were both West Linn
+and both the same shape: a zone that states lot width **twice**. R-15 prints
+"Minimum lot width at front lot line 45 ft" and, three rows under it, "Average
+minimum lot width 80 ft". R-10 prints 35 and 50. Six other chapters print the
+average row and restate the front-line figure; R-3 prints only the front-line
+row and no average at all.
+
+Both orders had been left open rather than discharged by raising the held
+number, and the reason they gave was right: `min_lot_width_ft` names no
+measurement, so writing 80 into it refuses a lot forty-five feet wide at the
+street and ninety feet wide behind — a lot that meets **both** standards the
+city wrote. The orders said "the two rows want two measurements" and stopped
+there, because nothing in the file said what the second measurement was.
+
+### The city had already said, in the chapter nobody re-read
+
+The layer note had claimed since the quadfit port that the average row was *"a
+subdivision average and not encoded"*. It is not a subdivision average, and
+West Linn's own glossary is what says so. CDC 02.030, at
+`02.definitions.txt#L652`:
+
+> **Lot width.** The horizontal distance between side lot lines, measured at
+> right angles to the lot depth. **Average lot width is measured at the
+> midpoints of opposite lot lines.**
+
+One lot, measured on one line. Two sentences, two lines on the ground.
+
+And the second line is not new to this project. It is word for word the
+measurement Oregon City states in OCMC 17.04.700 — *"the perpendicular distance
+measured between the midpoints of the two principal opposite side lot lines"* —
+which the screen has taken since 2026-09-03 as `side_midpoints` in
+`Lot Analysis/quadfit/lotwidth.py`. The measurement West Linn's second row asks
+for was already implemented, against a different city, for the same reason.
+
+This is the fourth find of the shape: **a claim about the code, argued from our
+own files, that the city's own glossary disproves.** Oregon City R-2 was refused
+on "the multi-family zone"; this one was refused on "a subdivision average". In
+both cases no human ruling was needed — only a re-read.
+
+### `min_average_lot_width_ft`
+
+A second field on the same axis, not a stricter reading of the first, because
+neither can stand in for the other in either direction:
+
+| the lot | at the front line | across the middle | R-15 says 45 / 80 |
+|---|---|---|---|
+| rectangle, 45 ft | 45 | 45 | fails the average |
+| tapered, wide behind | 45 | 90 | **clears both** |
+| wedge on a cul-de-sac | 50 | 40 | clears the front line, fails the average |
+| flag lot, pinched at the street | 30 | 90 | fails the front line, clears the average |
+
+Row two is the lot the orders were written about, and it is the one a single
+raised field gets wrong. Row three is the shape the average row exists for.
+
+**Optional, and R-3 is the proof.** `REQUIRED_FIELDS` is
+`frozenset(FIELDS) - OPTIONAL_FIELDS`, so a newly registered field is REQUIRED
+by default and an unrun check backed by a required field blocks GREEN corpus
+wide. R-3 states a front-line width and no average, which is not a half-read
+zone — it is a code that said one thing once. `test_a_zone_holding_one_width_and_not_the_other_is_not_incomplete`
+asserts that over the whole corpus rather than over West Linn, so it holds at
+any corpus size.
+
+**Eight values, all corroborated against their own pages**: R-40 150, R-20 100,
+R-15 80, R-10 50, and R-7, R-5, R-4.5 and R-2.1 at 35. Roughly 20,100 lots sit
+in the two zones where the two rows disagree.
+
+### It rules both ways, or it is an amnesty
+
+The standing rule from the 2026-09-03 lot-width work, applied to a field rather
+than to a measurement. A lot measured narrow across the middle is refused here.
+A lot **nothing measured** is left unchecked, never refused — the measurement
+declines on irregular shapes and on lots with one side lot line, and failing
+those on a number nobody took is the false RED this project exists to avoid.
+Both halves are pinned.
+
+`LotFacts` gains `avg_lot_width_ft`, which is where a screen run would put the
+`side_midpoints` figure. The reach ledger now lists the field under REACHED by
+both `screen.py` and `paper.py`; the silently-unread set is unchanged at 19.
+
+**On paper the two rows collapse.** `paper_fit` asks for the smallest lot the
+pod could legally sit on, and that lot is a rectangle — where the front-line
+width and the average width are the same line. So the paper fit takes the larger
+of the two, and in the six zones that restate the figure it costs nothing.
+
+### And encoding it audited the reader, which is the fifth time
+
+`flats/encode/extract.py` mapped `lot width` to `min_lot_width_ft` with no guard
+on the word before it, so "Average minimum lot width — 80 ft" would have been
+filed as a width **at the front lot line**: 80 feet demanded at a street edge
+the city asks 45 of. The pattern directly above it already carried the guard for
+the other axis — `(?<!average )lot (?:area|size)`, added when Springwater's
+purpose paragraph described character at "an average lot size of 12,000 square
+feet". The difference is that Springwater's average is not a standard and West
+Linn's is, so the fix here is a route to the new field rather than a refusal.
+`tables.py`'s grouped-lot headings got the same two keys.
+
+### The townhouse carve-out, recorded and not taken
+
+Both width rows in every chapter carry *"Does not apply to townhouses or cottage
+clusters"*, and CDC 02.030 defines a townhouse as a unit *"located on an
+individual lot or parcel"*. So both rows bind the single-lot quadplex and
+neither binds the split plat. Neither is encoded with a `unit_lots` variant —
+which is the treatment `min_lot_width_ft` has carried since the port, is the
+stricter reading on that path, and can cost a review but never buy a GREEN.
+Nothing in the shipped catalog takes the split path today.
+
+### The reading queue
+
+Both cards came back `MOVED` rather than settling quietly, which is the
+fingerprint mechanism doing what it was built for: encoding the value took the
+line out of the uncited ledger, the section's text changed under a decision
+written about the old text, and the ruling reopened to be re-read. What is left
+of R-15's card is the cottage-cluster setback sentence and the Type I/II lands
+carve-out from the FAR — a different housing type, and a standard `max_far`
+already holds through its `measured_on`. R-10's card is the cottage-cluster
+sentence alone. Both re-ruled `not_here`.
+
+**The corpus now has no `outcome: encode` order anywhere.**
+
+### The ratchet was red before this change touched it
+
+The mirror audit in `Lot Analysis/quadfit/` is the only thing that compares what
+the screen RUNS on against what the corpus READ, and its two frozen lists are a
+ratchet: a new divergence fails the suite, and so does closing one without
+saying so. Adding a field moves that list by construction, so the first thing
+this change did was fail it. The honest question is which part of the failure is
+ours, and the answer is: one movement of four.
+
+```
+{'min_lot_depth_ft': (29, 35), 'min_lot_width_ft': (66, 67),
+ 'min_building_height_ft': (None, 1)}          # at HEAD, this change stashed
+```
+
+Two failing tests, both red on `main` since **e8c9dd11** and neither of them
+ours. Six consecutive CI runs failed on the same step — `quadfit tests` in the
+light gate — e8c9dd11, 048938f6, b32583bd, 01df7d29, ffe4bf56, a3bbd72d, and
+because the light gate is a prerequisite the **full gate was skipped every
+time**: no integration tests, no E2E, no Trivy, no Semgrep, for six commits.
+
+* **`UNEXPRESSIBLE`**, the standards rules.yaml has no column for. `+6`
+  `min_lot_depth_ft` and `+1` `min_lot_width_ft` from e8c9dd11's Milwaukie and
+  Gresham encoding; `+1` `min_building_height_ft` from 01df7d29, which
+  registered that field. Ours is the fourth: `+8 min_average_lot_width_ft`.
+  `rules.yaml` has not been touched at all since the list was last written, so
+  every movement came from the corpus side — reading a page creates the debt in
+  the older pipeline, it does not pay it.
+* **The banded-standards check**, which found something worth more than the
+  ratchet entry. Milwaukie Table 19.301.4 prints 35 / 30 / 35 / 35 feet of
+  minimum **street frontage** for a standard lot in R-MD, and Table 19.302.4
+  prints 35 for R-HD. The corpus holds both. `rules.yaml` holds *neither* —
+  `min_frontage_ft` is unset in both zones — so the older pipeline applies no
+  frontage minimum in either. This is not the lot-width alias problem: the row
+  is headed "Minimum street frontage requirements", which is the edge s4
+  actually measures. It is left as debt on purpose, because Milwaukie's
+  `frontage_is_lot_width` is false, so switching it on sends short lots to RED
+  rather than review and moves published counts. That belongs to a commit that
+  says so. The band itself is inert either way — the only column that differs,
+  3,000–4,999 sq ft at 30 ft, is a relaxation.
+
+The CI dark-gate family gains a sixth member, and this one is the inverse of the
+first five: the gate was **not** dark. `Lot Analysis/quadfit/tests` was wired
+into the light gate on 2026-09-08 precisely so this could not happen quietly, it
+went red on the next corpus commit, and it stayed red across six of them because
+a red build was not treated as a stop — and it took the whole full gate down
+with it, which is the part that actually cost something. A ratchet is only worth what
+somebody does when it moves.

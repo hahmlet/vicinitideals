@@ -956,6 +956,11 @@ _LOT_GROUPED = {
     "lot area": "min_lot_sqft",
     "width": "min_lot_width_ft",
     "lot width": "min_lot_width_ft",
+    # The other measurement on the same axis. A grid that groups its lot rows
+    # under one heading can print both, and "average width" filed as a width
+    # states the midpoint figure at the front lot line.
+    "average width": "min_average_lot_width_ft",
+    "average lot width": "min_average_lot_width_ft",
     "frontage": "min_frontage_ft",
 }
 #: The unit when it is printed in the label — "Minimum lot width (ft.)" over

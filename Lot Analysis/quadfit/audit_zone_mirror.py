@@ -66,10 +66,48 @@ rather than a recovery, because some would fail the real mid-lot width too.
 West Linn is the control: its tables head the row "Minimum lot width AT FRONT
 LOT LINE", which is the same edge, and its 739 exclusions stand.
 
+WHAT WEST LINN BEING THE CONTROL DOES NOT COVER, recorded 2026-09-10 so the next
+reader need not re-derive it. Those same tables print a SECOND width row under
+the first -- "Average minimum lot width" -- and CDC 02.030 defines it: "Average
+lot width is measured at the midpoints of opposite lot lines", which is word for
+word Oregon City's OCMC 17.04.700 and is already implemented here as the
+`side_midpoints` measure in lotwidth.py. The FLATS corpus now holds it on
+`min_average_lot_width_ft` in eight West Linn zones, and in two of them it is
+stricter than the front-line figure: R-15 asks 45 ft at the street and 80 ft
+across the middle, R-10 asks 35 and 50, roughly 20,100 lots between them. This
+pipeline screens neither of those, because rules.yaml has one width slot and
+`lot_width_measure` names one measure per city -- so carrying both is a change
+to that shape rather than another row in a table. The alias below stays safe;
+what is missing is a second standard nothing is tested against, and the
+direction of that error is a possible false GREEN on a lot that tapers, not a
+false RED.
+
 That one is not fixed here, because fixing it needs a measurement the pipeline
 does not take. Deleting the gate instead would trade 988 possible false reds for
 an unknown number of false greens, which is the wrong direction for a screen
 whose whole job is to be trusted when it says yes.
+
+MILWAUKIE STATES A STREET FRONTAGE AND THIS PIPELINE APPLIES NONE, found
+2026-09-10 by the banded-standards check going red and read out here because it
+is the larger half of what that check found. MMC Table 19.301.4 row B.3.b prints
+35 / 30 / 35 / 35 feet of street frontage for a standard lot in R-MD across the
+four lot-area columns, and Table 19.302.4 prints a single 35 for R-HD. The FLATS
+corpus holds both. rules.yaml holds neither -- `min_frontage_ft` is simply unset
+in both zones -- so nothing is screened, band or flat.
+
+This is NOT the lot-width alias problem below. Milwaukie heads its row "Minimum
+street frontage requirements", which is the run of boundary s4 measures, so the
+number would go straight into the gate with no `frontage_is_lot_width` caveat
+and no new measurement to invent. What stops it being a one-line fix is the
+consequence: `frontage_is_lot_width` is false for Milwaukie, so a lot short of
+35 ft would go RED rather than to review, and the pipeline would drop lots it
+currently passes. That is a change to published counts and belongs in a commit
+that says so, not as a rider on a corpus commit. Left as debt, deliberately, and
+the entry in FLAT_BUT_BANDED points back here.
+
+The band itself is the smaller half and is safe either way: the one column that
+differs, 3,000-4,999 sq ft at 30 ft, is a relaxation, so a flat 35 would be
+stricter than the city there and never looser.
 
 Variant-aware on purpose. A corpus value is a base plus banded and conditioned
 variants -- Wilsonville PDR-1's front setback is 15 on a small lot and 20 on a
@@ -132,6 +170,7 @@ ALIAS_SAME_EDGE: dict[str, str] = {
         "the one rules.yaml carries."
     ),
 }
+
 
 
 @dataclass(frozen=True)

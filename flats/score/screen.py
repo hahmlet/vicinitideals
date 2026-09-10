@@ -113,6 +113,7 @@ CHECK_FIELD: dict[str, str] = {
     "min_lot_area_sqft": "min_lot_sqft",
     "min_frontage_ft": "min_frontage_ft",
     "min_lot_width_ft": "min_lot_width_ft",
+    "min_average_lot_width_ft": "min_average_lot_width_ft",
     "coverage_pct": "max_coverage_pct",
     "far": "max_far",
     "height_ft": "max_height_ft",
@@ -136,6 +137,16 @@ class LotFacts:
     lot_sqft: float
     frontage_ft: float = 0.0
     lot_width_ft: float | None = None
+    #: The same axis, measured the other way the codes ask for. West Linn
+    #: CDC 02.030 states both: lot width is "the horizontal distance between
+    #: side lot lines, measured at right angles to the lot depth", and
+    #: "average lot width is measured at the midpoints of opposite lot lines".
+    #: On a rectangle they are one number; on anything that tapers toward the
+    #: street they are two, which is the whole reason the city prints two rows.
+    #: Left ``None`` where nothing took the measurement, and a ``None`` leaves
+    #: the standard unchecked rather than failing a lot on a number nobody
+    #: measured -- the same bargain ``lot_width_ft`` already strikes.
+    avg_lot_width_ft: float | None = None
     geometry: GeometryTier = GeometryTier.clean
 
     @property
@@ -335,6 +346,20 @@ def _checks(
         check("min_lot_width_ft", lot.lot_width_ft, min_width, is_maximum=False)
     else:
         unchecked.append("min_lot_width_ft")
+    # And the same axis measured at the midpoints, where a code states that
+    # standard too. It is not a stricter reading of the row above: a lot can
+    # clear the front-line figure and fail this one, or the reverse, and a
+    # screen holding one number for both would be wrong in whichever direction
+    # the lot happens to taper. Unmeasured stays unchecked, so this can refuse
+    # a lot that was measured narrow across the middle and can never refuse one
+    # nobody measured.
+    min_avg, avg_answered = lot_standard(
+        rules, "min_average_lot_width_ft", per_unit=per_unit, lots=design.units
+    )
+    if lot.avg_lot_width_ft is not None and avg_answered:
+        check("min_average_lot_width_ft", lot.avg_lot_width_ft, min_avg, is_maximum=False)
+    else:
+        unchecked.append("min_average_lot_width_ft")
 
     allowed_sqft, _source = _coverage_allowed_sqft(rules, lot.lot_sqft)
     if allowed_sqft is None:

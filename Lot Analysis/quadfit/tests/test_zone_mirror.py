@@ -705,20 +705,53 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #:
 #: A CI step now runs this directory, which is the actual fix; the numbers
 #: below are the second fix.
+#:
+#: MOVED AGAIN 2026-09-10, and the CI step did exactly what it was put there to
+#: do -- it went red and stayed red, which is how this was found. Four moves,
+#: and only the last of them belongs to the commit that is writing this line:
+#:
+#:   01df7d29  +1 min_building_height_ft     (-- -> 1) the field did not exist
+#:             before that commit; Troutdale MU-3 states a floor of 25 ft and
+#:             this pipeline has no column for a MINIMUM height. It is the one
+#:             shape where an unheld standard buys a false GREEN rather than a
+#:             false RED, so it is the entry on this list to close first.
+#:   e8c9dd11  +1 min_lot_width_ft           (66 -> 67)
+#:             +6 min_lot_depth_ft           (29 -> 35) Milwaukie R-MD/R-HD and
+#:             Gresham's low-density family. That commit is the only one in the
+#:             range that encoded a lot width or depth, and `rules.yaml` has not
+#:             been touched since the numbers below were last written -- so
+#:             every move here came from the corpus side, which is the ordinary
+#:             direction: reading a page creates the debt, it does not pay it.
+#:   this one  +8 min_average_lot_width_ft   (-- -> 8) West Linn states an
+#:             average lot width beside the width at the front lot line, and
+#:             CDC 02.030 measures them on two different lines. `rules.yaml`
+#:             has one width slot and `lot_width_measure` names one measure per
+#:             city, so the second row has nowhere to go. Direction of the
+#:             error is a possible false GREEN on a lot that tapers -- the
+#:             audit's own docstring carries the long version.
+#:
+#: Three of the four had been red on `main` before anybody looked: SIX
+#: consecutive CI runs failed on this step -- e8c9dd11, 048938f6, b32583bd,
+#: 01df7d29, ffe4bf56, a3bbd72d -- each one pushed and deployed on top of the
+#: red, and because the full gate is gated on the light gate, the integration,
+#: E2E, Trivy and Semgrep steps were SKIPPED all six times. The list is a
+#: ratchet, not a report: it is only worth what somebody does when it moves.
 UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 64,
-    "min_lot_width_ft": 66,
+    "min_lot_width_ft": 67,
     "min_landscaped_pct": 34,
-    "min_lot_depth_ft": 29,
+    "min_lot_depth_ft": 35,
     "setback_front_max_ft": 27,
     "max_density_du_per_acre": 21,
     "min_building_separation_ft": 9,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
     "max_lot_depth_ratio": 4,
+    "min_average_lot_width_ft": 8,
     "max_units": 2,
     "max_height_stories": 2,
     "setback_side_total_ft": 1,
+    "min_building_height_ft": 1,
 }
 
 
@@ -804,7 +837,24 @@ def test_the_inert_standards_are_inert_because_of_their_values() -> None:
 #: sq ft column, and R-MD's own minimum lot is 3,000 unless the plat is unit
 #: lots -- which is not how this pod is built -- so no lot the screen looks at
 #: is ever in that column.
+#:
+#: R-MD's STREET FRONTAGE, added 2026-09-10, has a different reason and it is
+#: worth reading rather than inheriting. Table 19.301.4 row B.3.b prints
+#: 35 / 30 / 35 / 35 across the four columns, so the only column that differs is
+#: a RELAXATION: 30 ft where the rest of the table asks 35. A screen holding the
+#: flat 35 there is stricter than the city, never looser, which is the safe
+#: direction and the direction this project defaults to everywhere else.
+#:
+#: The larger fact is that `rules.yaml` holds no frontage figure for R-MD at all
+#: -- not a band, not the flat 35 -- and the same is true of R-HD, whose row
+#: prints a single 35 and so never reaches this test. Milwaukie's row is headed
+#: "Minimum street frontage requirements", which is the edge s4 actually
+#: measures, so this is not the lot-width alias problem; it is a standard the
+#: corpus reads and the screen does not apply. Closing it would move lots from
+#: green to red, so it is a change of its own rather than a rider on this one,
+#: and `audit_zone_mirror.py`'s docstring carries it as debt.
 FLAT_BUT_BANDED: frozenset[str] = frozenset({
+    "milwaukie/R-MD.min_frontage_ft",
     "milwaukie/R-MD.setback_rear_ft",
     "wilsonville/OTR.setback_rear_ft",
     "wilsonville/PDR1.setback_rear_ft",

@@ -98,7 +98,11 @@ GOVERNS: dict[str, tuple[str, ...]] = {
     # The shape words. A lot's width is not one measurement: some codes take it
     # at the front line, some at the building line, some as a mean of the two
     # side lines. The pod has a fixed footprint, so this is load-bearing.
-    "lot width": ("min_lot_width_ft", "max_building_width_ft"),
+    "lot width": (
+        "min_lot_width_ft",
+        "min_average_lot_width_ft",
+        "max_building_width_ft",
+    ),
     "lot depth": ("min_lot_depth_ft", "max_lot_depth_ratio"),
     "lot line": (
         "setback_front_ft",

@@ -53,6 +53,7 @@ _ALSO: dict[str, tuple[str, ...]] = {
     "setback_garage_entrance_ft": ("garage", "vehicle door", "carport"),
     "min_lot_sqft": ("lot area", "lot size", "square feet per", "site area"),
     "min_lot_width_ft": ("lot width", "width at the building line"),
+    "min_average_lot_width_ft": ("average lot width", "average minimum lot width"),
     "min_frontage_ft": ("frontage", "street frontage", "lot frontage"),
     # Added after the sweep found depth stated in two jurisdictions and the
     # registry had no name for it — the first hole this tool actually paid for.
