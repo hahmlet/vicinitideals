@@ -36,6 +36,7 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from flats.encode.port_quadfit import layer_id_for
+from flats.encode.reading_rate import readings, render as render_rates
 from flats.normalize.condo import classify_frame
 from flats.rules.ledger import (
     COVERAGE,
@@ -289,6 +290,12 @@ def main() -> int:
         if not r.blocking:
             break
         print(f"  {r.jurisdiction:28s} {r.zone:10s} {r.lots:>8,}  {r.status}")
+
+    # The queue says what is left. This says how good what is finished is,
+    # which is the half a backlog cannot show and the half a reader who did
+    # not write it has no other way to check.
+    for line in render_rates(readings()):
+        print(line)
     return 0
 
 
