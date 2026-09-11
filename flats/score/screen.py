@@ -114,6 +114,8 @@ CHECK_FIELD: dict[str, str] = {
     "min_frontage_ft": "min_frontage_ft",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
+    "min_lot_depth_ft": "min_lot_depth_ft",
+    "max_lot_depth_ratio": "max_lot_depth_ratio",
     "coverage_pct": "max_coverage_pct",
     "far": "max_far",
     "height_ft": "max_height_ft",
@@ -147,6 +149,20 @@ class LotFacts:
     #: the standard unchecked rather than failing a lot on a number nobody
     #: measured -- the same bargain ``lot_width_ft`` already strikes.
     avg_lot_width_ft: float | None = None
+    #: Front lot line to rear lot line, measured the way the city that asks
+    #: for it defines that. Thirty-eight zones in eight jurisdictions state a
+    #: minimum lot depth and until this was measured not one of them was ever
+    #: tested -- the standard was encoded, cited and silently skipped.
+    #:
+    #: It is not derivable from the two numbers already here. `area /
+    #: frontage_ft` looks like a depth and is not one, because ``frontage_ft``
+    #: is the SUM of every street-facing edge: a corner lot carries two and one
+    #: parcel in Milwaukie carried seven, so the quotient is a fraction of the
+    #: real depth on exactly the lots most likely to be corners. That proxy
+    #: forecast 38 Milwaukie lots failing on width or depth. Measured, it was
+    #: six. ``None`` where nothing took the measurement, on the same bargain as
+    #: the two rows above.
+    lot_depth_ft: float | None = None
     geometry: GeometryTier = GeometryTier.clean
 
     @property
@@ -360,6 +376,37 @@ def _checks(
         check("min_average_lot_width_ft", lot.avg_lot_width_ft, min_avg, is_maximum=False)
     else:
         unchecked.append("min_average_lot_width_ft")
+    # The other axis. Thirty-eight zones state a minimum lot depth and nothing
+    # had ever compared a lot against one, so every last one of them arrived
+    # here as an unchecked standard -- encoded, cited, and never asked.
+    min_depth, depth_answered = lot_standard(
+        rules, "min_lot_depth_ft", per_unit=per_unit, lots=design.units
+    )
+    if lot.lot_depth_ft is not None and depth_answered:
+        check("min_lot_depth_ft", lot.lot_depth_ft, min_depth, is_maximum=False)
+    else:
+        unchecked.append("min_lot_depth_ft")
+    # And a ceiling on the same number, stated as a multiple of the width
+    # rather than in feet: Fairview 19.30 refuses a lot more than three times
+    # deeper than it is wide. It needs BOTH measurements, so a lot holding one
+    # of them leaves this unchecked rather than assuming the other.
+    max_ratio, ratio_answered = lot_standard(
+        rules, "max_lot_depth_ratio", per_unit=per_unit, lots=design.units
+    )
+    if (
+        ratio_answered
+        and lot.lot_depth_ft is not None
+        and lot.lot_width_ft is not None
+        and lot.lot_width_ft > 0
+    ):
+        check(
+            "max_lot_depth_ratio",
+            lot.lot_depth_ft / lot.lot_width_ft,
+            max_ratio,
+            is_maximum=True,
+        )
+    else:
+        unchecked.append("max_lot_depth_ratio")
 
     allowed_sqft, _source = _coverage_allowed_sqft(rules, lot.lot_sqft)
     if allowed_sqft is None:

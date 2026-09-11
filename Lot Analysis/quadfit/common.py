@@ -336,11 +336,44 @@ class JurisdictionRules(BaseModel):
     #: rather than red, because nothing has been measured to decide with.
     #:
     #: `side_midpoints` is Oregon City's definition, `center_parallel` is
-    #: Tualatin's; the two are not the same measurement and `lotwidth.py` says
+    #: Tualatin's; the two are not the same measurement and `lotdims.py` says
     #: why. The measurement is refused on irregular lots, and on corner lots
     #: under Tualatin's definition, so a city with this set still falls back to
     #: the frontage treatment on every lot the measurement declines.
     lot_width_measure: str | None = None
+
+    #: How this city's code says to measure a lot's DEPTH, when it says. Ten
+    #: of the thirteen cities that state a width or a depth define this, in
+    #: three distinct forms -- `midpoints` (front lot line's midpoint to the
+    #: rear lot line's), `average` (the mean distance across the frontage) and
+    #: `mid_width` (one line up the middle). `lotdims.py` carries the
+    #: definitions and the refusals.
+    #:
+    #: Unlike the width above, setting this changes no verdict on its own:
+    #: `rules.yaml` has no minimum-depth slot to compare against, so what it
+    #: buys is the measurement itself, which FLATS holds thirty-eight encoded
+    #: standards for and had never once been able to take.
+    lot_depth_measure: str | None = None
+
+    #: Which street-facing edge is the FRONT lot line, where a lot faces more
+    #: than one. This is a separate axis from the two measures above and the
+    #: cities answer it separately: `narrowest` is the shortest street-facing
+    #: run, `applicant_choice` is every candidate with the lot conforming if
+    #: any one of them satisfies the standards.
+    #:
+    #: It is not a detail. Every measurement above is taken from the front lot
+    #: line, so on a corner lot the choice of front is the difference between
+    #: a depth of 40 ft and a depth of 100 ft on the same parcel. Gresham
+    #: 3.0100 is explicit that it works the way `applicant_choice` does --
+    #: "the front lot line is determined by the orientation necessary to
+    #: achieve minimum required lot depth" -- and Milwaukie, Happy Valley and
+    #: Troutdale hand the same choice to the applicant in their own words.
+    #:
+    #: Left unset the measurement is taken only where the answer cannot matter,
+    #: which is a lot with one street-facing direction. A city that does not
+    #: say must not be given a rule.
+    front_lot_line_rule: str | None = None
+
     zones: list[ZoneRule] = Field(default_factory=list)
 
     def normalize_zone(self, raw: str | None) -> str | None:

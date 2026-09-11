@@ -607,7 +607,7 @@ def main() -> None:
     # for a number that changes neither. Take it here instead, from the same
     # edges and the same lot polygon s4 would have used.
     if "lot_width_ft" not in lots.columns:
-        from lotwidth import width_ft
+        from lotdims import width_ft
 
         _geoms = dict(zip(_s3c["TLID"], _s3c["geom"]))
         _widths = []

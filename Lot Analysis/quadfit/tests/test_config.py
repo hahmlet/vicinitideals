@@ -379,3 +379,47 @@ def test_the_coarse_dem_is_configured_conservatively() -> None:
     assert sl.fallback_10m_stat == "max"
     assert sl.fallback_10m_window == 5
     assert sl.fallback_10m_may_green is True
+
+
+def test_every_declared_lot_measure_is_one_the_module_can_take():
+    """A typo in `rules.yaml` must not read as "this city states nothing".
+
+    That failure is silent in the worst way: an unknown measure that fell
+    through to `None` would restore the wrong-line comparison the measurement
+    replaced, in a city nobody was looking at, and no test would notice. So the
+    shipped config is checked against the module's own vocabulary.
+    """
+    from common import load_rules
+    from lotdims import DEPTH_MEASURES, FRONT_RULES, WIDTH_MEASURES
+
+    rules = load_rules()
+    for name, j in rules.jurisdictions.items():
+        if j.lot_width_measure is not None:
+            assert j.lot_width_measure in WIDTH_MEASURES, name
+        if j.lot_depth_measure is not None:
+            assert j.lot_depth_measure in DEPTH_MEASURES, name
+        if j.front_lot_line_rule is not None:
+            assert j.front_lot_line_rule in FRONT_RULES, name
+
+
+def test_a_city_measured_on_two_axes_says_which_edge_is_the_front():
+    """Every measurement is taken from the front lot line, so a city with a
+    depth measure and no front rule is only measurable on lots facing one
+    street -- which is a real and conservative state, but a deliberate one.
+
+    Pinned as a pair so that adding a measure without reading the city's
+    front-lot-line definition shows up here rather than as a quiet drop in how
+    many lots got measured.
+    """
+    from common import load_rules
+
+    rules = load_rules()
+    unstated = {
+        name
+        for name, j in rules.jurisdictions.items()
+        if j.lot_depth_measure and not j.front_lot_line_rule
+    }
+    assert unstated == set(), (
+        "these cities have a depth measure and no front lot line rule, so their "
+        f"corner lots go unmeasured: {sorted(unstated)}"
+    )

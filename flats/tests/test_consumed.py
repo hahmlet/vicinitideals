@@ -34,9 +34,17 @@ from flats.rules.fields import FIELDS
 #: measures a lot that way yet. `open_space_min_sqft` is the other kind -- it
 #: already holds numbers the 2026-09-07 blind reading found misquoted, and
 #: nobody noticed because nothing reads it.
+#:
+#: Two more left on 2026-09-10, by the first route: `screen.py` now reads
+#: `min_lot_depth_ft` and `max_lot_depth_ratio`. Thirty-eight zones in eight
+#: jurisdictions state a minimum lot depth and not one had ever been compared
+#: against a lot, because nothing in either pipeline measured a depth -- the
+#: standards were encoded, cited, signed and then silently skipped, which is
+#: the exact failure this set exists to make visible. `lotdims.py` takes the
+#: measurement now, under each city's own definition of it; the ratio needs a
+#: width as well as a depth and goes unchecked on a lot holding only one.
 SILENTLY_UNREAD = frozenset(
     {
-        "min_lot_depth_ft",
         "parking_street_setback_ft",
         "setback_front_max_ft",
         "parking_max_per_unit",
@@ -50,7 +58,6 @@ SILENTLY_UNREAD = frozenset(
         "parking_maneuvering_max_width_ft",
         "driveway_min_width_one_way_ft",
         "parking_area_max_frontage_pct",
-        "max_lot_depth_ratio",
         "max_building_width_ft",
         "parking_front_yard_max_pct",
         "parking_area_max_width_ft",

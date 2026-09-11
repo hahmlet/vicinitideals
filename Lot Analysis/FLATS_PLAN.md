@@ -4931,7 +4931,7 @@ And the second line is not new to this project. It is word for word the
 measurement Oregon City states in OCMC 17.04.700 — *"the perpendicular distance
 measured between the midpoints of the two principal opposite side lot lines"* —
 which the screen has taken since 2026-09-03 as `side_midpoints` in
-`Lot Analysis/quadfit/lotwidth.py`. The measurement West Linn's second row asks
+`Lot Analysis/quadfit/lotdims.py`. The measurement West Linn's second row asks
 for was already implemented, against a different city, for the same reason.
 
 This is the fourth find of the shape: **a claim about the code, argued from our

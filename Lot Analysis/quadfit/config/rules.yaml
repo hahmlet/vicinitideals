@@ -57,6 +57,14 @@ jurisdictions:
     # line is the front; the longer street side takes only the ordinary side
     # setback, so no street-side elevation needed.
     orientation_constraint: entrance_only
+    # Lot depth, PCC 33.930.103: "Lot depths are measured from the midpoints
+    # of opposite lot lines."
+    #   or/multnomah/portland/33.930.txt#L384
+    # Front lot line, PCC 33.910: "On a corner lot, the front lot line is the
+    # shortest of the lot lines that abut a street."
+    #   or/multnomah/portland/33.910.definitions.txt#L754
+    lot_depth_measure: midpoints
+    front_lot_line_rule: narrowest
     zones:
       # Citywide building-coverage formula (Table 110-5), all residential
       # zones: <3,000 sf lot -> 50%; 3,000-4,999 -> 1,500 + 37.5% over 3,000;
@@ -308,6 +316,18 @@ jurisdictions:
     # per-zone axis_required override via 7.0420(J) frontage-occupancy + max
     # front setback.
     orientation_constraint: entrance_only
+    # Lot depth, GDC 3.0100: "The perpendicular distance measured from the
+    # mid-point of the front lot lines to the mid-point of the opposite,
+    # usually the rear, lot line."
+    #   or/multnomah/gresham/3.0100.definitions.txt#L1328
+    # Front lot line, GDC 3.0100 -- the city describes this module's own
+    # selection rule: "For a corner lot where there is no existing building,
+    # the front lot line is determined by the orientation necessary to achieve
+    # minimum required lot depth. If lot depth may be met in both directions,
+    # then the applicant may determine which lot line is the front lot line."
+    #   or/multnomah/gresham/3.0100.definitions.txt#L1332
+    lot_depth_measure: midpoints
+    front_lot_line_rule: applicant_choice
     zones:
       # No lot-coverage percentage caps on quadplexes anywhere in Gresham; the
       # envelope controls are FAR (never binds a 1,000 sf building) and the 15%
@@ -613,6 +633,18 @@ jurisdictions:
     # Municode current through Ord. 899 (6-24-2025); the city-hosted PDF is a
     # superseded 2022 hearing draft.
     orientation_constraint: entrance_only
+    # Lot depth, TDC 1.020: "The horizontal distance measured midway between
+    # the front and rear lot lines."
+    #   or/multnomah/troutdale/1.020.definitions.txt#L528
+    # Front lot line, TDC 1.020: "Front lot lines on corner lots may face
+    # either street".
+    #   or/multnomah/troutdale/1.020.definitions.txt#L548
+    # Not encoded, and deliberately: the same entry makes a continuously
+    # curved corner frontage the front lot line and leaves such a lot with no
+    # rear property line at all. `mid_width` needs no rear so it measures
+    # them anyway; the case is flagged here rather than silently handled.
+    lot_depth_measure: mid_width
+    front_lot_line_rule: applicant_choice
     zones:
       # TDC 8.120.B.1.b declares lot-coverage standards INVALID for tri/quad-
       # plexes — no coverage caps. Min street frontage 20 ft everywhere.
@@ -716,6 +748,12 @@ jurisdictions:
     # pages are Cloudflare-blocked. Also: MAXIMUM front setback 30 ft in
     # R-6/R-7.5/R-10/RM (placement band not modeled — blind spot).
     orientation_constraint: entrance_only
+    # Lot depth, FMC 19.13 -- the term is "Lot depth, average": "the average
+    # distance from the narrowest frontage to the lot line opposite."
+    #   or/multnomah/fairview/19.13.definitions.txt#L343
+    # The same sentence settles the front lot line: the narrowest frontage.
+    lot_depth_measure: average
+    front_lot_line_rule: narrowest
     zones:
       - zone: R-6
         quadplex_allowed: true
@@ -833,6 +871,12 @@ jurisdictions:
     # HB 2001 exhibit (live municipal.codes Cloudflare-blocked; no later
     # amendments found).
     orientation_constraint: entrance_only
+    # Lot depth, WVMC 720.030 -- "LOT DEPTH, AVERAGE. The average distance
+    # from the narrowest frontage to the lot line opposite."  Fairview and
+    # Wood Village share this sentence word for word.
+    #   or/multnomah/wood-village/720.030.definitions.txt#L264
+    lot_depth_measure: average
+    front_lot_line_rule: narrowest
     zones:
       # Corner rear setback is 20 ft (vs 15 standard) in both LR zones — not
       # separately modeled (single rear value); 5 ft delta on corners only.
@@ -934,6 +978,9 @@ jurisdictions:
     # areas (Interlachen, Pleasant Valley) run MCC 39, which has no middle-
     # housing code — the OAR 660-046 Large Cities Model Code applies directly.
     orientation_constraint: entrance_only
+    # States a lot WIDTH and no lot depth (39.2000 Lot Width, L867), so
+    # there is no depth measure to encode. Left unset rather than given a
+    # neighbour's definition.
     zones:
       - zone: R10
         quadplex_allowed: true
@@ -1056,6 +1103,9 @@ jurisdictions:
     # may supersede zone tables per lot. Front porch >=6 ft deep required
     # (LOC 50.06.001.2) — not modeled.
     orientation_constraint: entrance_only
+    # States a lot width and declares no definitions chapter, so there is no
+    # definition of either dimension to encode. The city is switched off in
+    # this screen by an owner decision in any case.
     zones:
       # accessory_allowance_sqft left 0: LO EXEMPTS up to 200 sf of garage
       # from coverage (per-lot bonus, not a reservation) — omitting it is the
@@ -1257,6 +1307,19 @@ jurisdictions:
     zoning_layer: zoning_happy_valley
     zone_field: ZONE
     orientation_constraint: entrance_only
+    # Lot depth, HVMC 16.12: "The distance of a line measured from the
+    # midpoint of the front lot line to the midpoint of the rear lot line."
+    #   or/clackamas/happy-valley/16.12.definitions.txt#L873
+    # Front lot line: the city says two things and they are in tension. The
+    # front-lot-line entry offers the choice -- "On a corner lot, the applicant
+    # or property owner can choose which lot line is to be the front lot line"
+    # (#L883) -- while the side-lot-line entry states flatly that "on a corner
+    # lot, the longer lot line that abuts a street is a side lot line" (#L889).
+    # `narrowest` is the subset of what the applicant may choose, so it cannot
+    # be more generous than the city allows. The tension is the city's.
+    #   or/clackamas/happy-valley/16.12.definitions.txt#L889
+    lot_depth_measure: midpoints
+    front_lot_line_rule: narrowest
     zones:
       - zone: R40
         quadplex_allowed: true
@@ -1434,6 +1497,16 @@ jurisdictions:
     juris_city_codes: [MILWAUKIE]
     zoning_layer: zoning_milwaukie
     zone_field: ZONE
+    # Lot depth, MMC 19.200: "the average horizontal distance between the
+    # front lot line and the rear lot line."  Averaged, so it is sampled
+    # across the frontage rather than taken on one line.
+    #   or/clackamas/milwaukie/19.200.definitions.txt#L462
+    # Front lot line, MMC 19.200: on a corner lot "a line separating the lot
+    # from the street on which the existing or contemplated development will
+    # face" -- the applicant chooses.
+    #   or/clackamas/milwaukie/19.200.definitions.txt#L469
+    lot_depth_measure: average
+    front_lot_line_rule: applicant_choice
     zones:
       - zone: R-MD
         # Table 19.301.4 is one zone in four columns of LOT AREA. A 3,000-6,999
@@ -1500,6 +1573,15 @@ jurisdictions:
     # street frontage sends the lot to review rather than red.
     frontage_is_lot_width: true
     lot_width_measure: side_midpoints
+    # Lot depth, OCMC 17.04: "the distance measured from the mid-point of the
+    # front lot lines to the mid-point of the opposite, usually rear lot line
+    # and generally at approximately right angles to the lot width."
+    #   or/clackamas/oregon-city/17.zoning.txt#L2091
+    # Front lot line, OCMC 17.04.490: "For corner lots, the front lot line is
+    # that with the narrowest frontage."
+    #   or/clackamas/oregon-city/17.zoning.txt#L1701
+    lot_depth_measure: midpoints
+    front_lot_line_rule: narrowest
     zones:
       - zone: R-10
         quadplex_allowed: true
@@ -1640,6 +1722,17 @@ jurisdictions:
     zoning_layer: zoning_west_linn
     zone_field: DESIGNATION
     orientation_constraint: entrance_only
+    # Lot depth, CDC 02.030: "The average horizontal distance between the
+    # front and rear property lines."
+    #   or/clackamas/west-linn/02.definitions.txt#L618
+    # Front lot line, CDC 02.030: "For a corner lot, the shortest lot line
+    # along a street (other than an alley)".
+    #   or/clackamas/west-linn/02.definitions.txt#L628
+    # West Linn states no minimum lot depth in any zone; the measure is
+    # encoded because the definition exists and the width rows need the same
+    # front lot line.
+    lot_depth_measure: average
+    front_lot_line_rule: narrowest
     zones:
       - zone: R-40
         quadplex_allowed: true
@@ -1773,6 +1866,8 @@ jurisdictions:
     # ruled on here.
     frontage_is_lot_width: true
     lot_width_measure: center_parallel
+    # States a lot WIDTH and an AVERAGE lot width (TDC 31.060) and no lot
+    # depth, so there is no depth measure to encode.
     zones:
       - zone: RL
         quadplex_allowed: true
@@ -1804,6 +1899,17 @@ jurisdictions:
     zoning_layer: zoning_wilsonville
     zone_field: ZONE_CODE
     orientation_constraint: entrance_only
+    # Lot depth, WC 4.001: "The lot depth is the mean average distance between
+    # the front lot line and rear lot line of a lot measured within the lot
+    # boundaries."
+    #   or/clackamas/wilsonville/4.planning.txt#L801
+    # Front lot line, WC 4.001 item 161: on a corner lot "the shortest lot line
+    # along a tract with a pathway, street, or private drive is the front lot
+    # line."  Item 121 states a DIFFERENT rule and opens "For purposes of the
+    # solar access regulations" -- scoped to them, and not this.
+    #   or/clackamas/wilsonville/4.planning.txt#L804
+    lot_depth_measure: average
+    front_lot_line_rule: narrowest
     zones:
       - zone: R
         # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over

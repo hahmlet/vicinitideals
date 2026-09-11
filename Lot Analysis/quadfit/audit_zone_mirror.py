@@ -71,7 +71,7 @@ reader need not re-derive it. Those same tables print a SECOND width row under
 the first -- "Average minimum lot width" -- and CDC 02.030 defines it: "Average
 lot width is measured at the midpoints of opposite lot lines", which is word for
 word Oregon City's OCMC 17.04.700 and is already implemented here as the
-`side_midpoints` measure in lotwidth.py. The FLATS corpus now holds it on
+`side_midpoints` measure in lotdims.py. The FLATS corpus now holds it on
 `min_average_lot_width_ft` in eight West Linn zones, and in two of them it is
 stricter than the front-line figure: R-15 asks 45 ft at the street and 80 ft
 across the middle, R-10 asks 35 and 50, roughly 20,100 lots between them. This

@@ -14,7 +14,7 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   at 02.definitions.txt#L652: "Lot width. The horizontal distance between side lot lines, measured at
   right angles to the lot depth. Average lot width is measured at the midpoints of opposite lot lines."
   That is one lot, measured on one line, and it is the same measurement Oregon City states in OCMC
-  17.04.700 and the screen already takes (`side_midpoints`, Lot Analysis/quadfit/lotwidth.py). So the
+  17.04.700 and the screen already takes (`side_midpoints`, Lot Analysis/quadfit/lotdims.py). So the
   city writes two standards on one axis and the two rows want two measurements: a lot 45 ft wide at the
   street and 90 ft wide across the middle satisfies both of R-15''s rows and would fail a single
   min_lot_width_ft set to either number alone. Eight of the nine zone chapters print the average row and
@@ -130,7 +130,7 @@ readings:
       between side lot lines, measured at right angles to the lot depth. Average lot width is
       measured at the midpoints of opposite lot lines." One lot, one line, and the same
       measurement Oregon City states in OCMC 17.04.700 -- which the screen already takes, as
-      `side_midpoints` in Lot Analysis/quadfit/lotwidth.py. So the two rows are two standards on
+      `side_midpoints` in Lot Analysis/quadfit/lotdims.py. So the two rows are two standards on
       one axis and they wanted two fields rather than one raised number: writing 80 into
       min_lot_width_ft would refuse a lot forty-five feet wide at the street and ninety feet wide
       across the middle, which meets both standards the city wrote, and leaving it at 45 never

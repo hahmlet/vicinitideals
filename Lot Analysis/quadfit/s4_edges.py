@@ -37,7 +37,7 @@ TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
 from common import load_rules, read_stage, write_stage
-from lotwidth import width_ft
+from lotdims import dimensions, width_ft
 
 PARALLEL_TOL_DEG = 30.0
 BEARING_CLUSTER_TOL_DEG = 20.0
@@ -185,7 +185,7 @@ def main() -> None:
     # the same parcel from the frontage measured above. Taken here because this
     # is where the edges are classified and it needs nothing else; NaN where
     # the city states a frontage instead, or where the shape declines to be
-    # measured. `lotwidth.py` carries the definitions and the refusals.
+    # measured. `lotdims.py` carries the definitions and the refusals.
     widths = []
     for juris, geom, r in zip(lots["jurisdiction"], lots["geom"], results):
         j = rules.jurisdictions.get(juris)
@@ -195,6 +195,33 @@ def main() -> None:
     lots["lot_width_ft"] = widths
     measured = int(np.isfinite(np.array(widths, dtype=float)).sum())
     print(f"s4 lot width measured on {measured:,} lots")
+
+    # Lot DEPTH, the other axis, where a city's code defines one. Ten of the
+    # thirteen cities that state a width or a depth define this and nothing had
+    # ever taken it -- thirty-eight zones in the FLATS corpus state a minimum
+    # lot depth and every one of them went unchecked, because `area /
+    # frontage_ft` is not a depth and there was nothing else.
+    #
+    # Taken in its own pass rather than folded into the width call above, and
+    # that is deliberate: the width measurement is live in two cities' verdicts
+    # and this must be able to be wrong without moving it.
+    depths = []
+    for juris, geom, r in zip(lots["jurisdiction"], lots["geom"], results):
+        j = rules.jurisdictions.get(juris)
+        if j is None or not j.lot_depth_measure:
+            depths.append(float("nan"))
+            continue
+        o = dimensions(
+            geom, r["edges"], r["front_bearings"], r["tier"],
+            depth_measure=j.lot_depth_measure,
+            front_rule=j.front_lot_line_rule,
+        )
+        depths.append(
+            float("nan") if o is None or o.depth_ft is None else o.depth_ft
+        )
+    lots["lot_depth_ft"] = depths
+    deep = int(np.isfinite(np.array(depths, dtype=float)).sum())
+    print(f"s4 lot depth measured on {deep:,} lots")
 
     from collections import Counter
 
