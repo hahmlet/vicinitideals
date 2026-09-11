@@ -13,14 +13,19 @@ from pathlib import Path
 import pytest
 
 from flats.rules.ledger import (
+    UNZONED_LABEL,
     Clause,
     Coverage,
     ObservedZone,
     Rase,
+    ZoneMiss,
     build_coverage,
     clause_gaps,
     coverage_summary,
+    near_label,
     sections_complete,
+    unweighed,
+    unweighed_zones,
     write_coverage,
 )
 from flats.rules.loader import load_rules
@@ -344,3 +349,169 @@ def test_a_prohibition_a_hearing_can_lift_still_needs_its_numbers() -> None:
     assert rules.resolve(
         "or/multnomah/_unincorporated", "LR7", ("conditional_use",)
     ).values["quadplex_allowed"].value is True
+
+
+# --- the mirror, one level down --------------------------------------
+
+
+def test_a_zone_nobody_weighed_hides_behind_a_city_that_was(tmp_path: Path) -> None:
+    """The claim the zone-granularity check exists to make.
+
+    ``unweighed`` asks "which encoded jurisdiction has no lot?" and, since the
+    two-county ledger was built, correctly answers none. That empty answer is
+    exactly what conceals a city whose *zones* were never counted: a layer is
+    weighed the moment one zone in it is.
+    """
+    rules = rules_with(tmp_path, verified_zone("R5") + verified_zone("R10"))
+
+    rows = build_coverage([ObservedZone(PORTLAND, "R5", lots=100)], rules)
+
+    assert unweighed(rows, rules) == [], "the city is in the ledger, so it is weighed"
+    blind = unweighed_zones(rows, rules)
+    assert [(z.jurisdiction, z.zone) for z in blind] == [(PORTLAND, "R10")]
+
+
+def test_the_map_printing_a_suffix_is_a_join_failure_not_encoding_work(
+    tmp_path: Path,
+) -> None:
+    """Happy Valley, reduced to its bones.
+
+    We encode the stem the code book prints. The map prints the members, and
+    every one lands in the ``zone_missing`` queue asking to be encoded. It
+    already is. The rows carry their evidence so the match is checkable.
+    """
+    rules = rules_with(tmp_path, verified_zone("MURM") + verified_zone("R5"))
+    obs = [
+        ObservedZone(PORTLAND, "R5", lots=100),
+        ObservedZone(PORTLAND, "MURM1", lots=172),
+        ObservedZone(PORTLAND, "MURM2", lots=300),
+    ]
+
+    rows = build_coverage(obs, rules)
+    blind = unweighed_zones(rows, rules)
+
+    assert len(blind) == 1
+    hit = blind[0]
+    assert hit.zone == "MURM"
+    assert hit.cause is ZoneMiss.near_miss
+    # Biggest first: the evidence is ordered so a reader meets the real one.
+    assert hit.candidates == (("MURM2", 300), ("MURM1", 172))
+    assert hit.lots == 472
+    # And those lots are, wrongly, ranked as encoding work in the same ledger.
+    assert {r.zone for r in rows if r.status == Coverage.zone_missing.value} == {
+        "MURM1",
+        "MURM2",
+    }
+
+
+def test_one_district_spelled_three_ways_is_one_finding(tmp_path: Path) -> None:
+    """A leading space and a lowercase letter are not two more districts.
+
+    All three spellings are live in the committed ledger for Happy Valley's
+    MURM2 and all three sit in the queue separately.
+    """
+    rules = rules_with(tmp_path, verified_zone("MURM") + verified_zone("R5"))
+    obs = [
+        ObservedZone(PORTLAND, "R5", lots=100),
+        ObservedZone(PORTLAND, "MURM2", lots=300),
+        ObservedZone(PORTLAND, " MURM2", lots=5),
+        ObservedZone(PORTLAND, "MURm2", lots=1),
+    ]
+
+    blind = unweighed_zones(build_coverage(obs, rules), rules)
+
+    assert len(blind) == 1
+    assert blind[0].lots == 306
+    assert [label for label, _ in blind[0].candidates] == ["MURM2", " MURM2", "MURm2"]
+
+
+def test_a_city_with_no_zoning_join_is_not_encoding_debt(tmp_path: Path) -> None:
+    """Every lot arriving under the sentinel means the join never ran.
+
+    Reported, because absence is not a zero -- but named as its own cause, so
+    it cannot be mistaken for zones anybody has to go and encode.
+    """
+    rules = rules_with(tmp_path, verified_zone("R5") + verified_zone("R10"))
+
+    rows = build_coverage([ObservedZone(PORTLAND, UNZONED_LABEL, lots=14_256)], rules)
+    blind = unweighed_zones(rows, rules)
+
+    assert {z.zone for z in blind} == {"R5", "R10"}
+    assert {z.cause for z in blind} == {ZoneMiss.unzoned}
+    assert all(z.lots == 0 for z in blind), "the sentinel is not evidence of a match"
+
+
+def test_a_district_the_map_does_not_carry_is_its_own_answer(tmp_path: Path) -> None:
+    """Tualatin RML: mapped districts exist, none is this one, none is close."""
+    rules = rules_with(tmp_path, verified_zone("RL") + verified_zone("RML"))
+    obs = [
+        ObservedZone(PORTLAND, "RL", lots=956),
+        ObservedZone(PORTLAND, "RMH", lots=5),
+    ]
+
+    blind = unweighed_zones(build_coverage(obs, rules), rules)
+
+    assert [z.zone for z in blind] == ["RML"]
+    assert blind[0].cause is ZoneMiss.unmapped
+    assert blind[0].candidates == (), "an unmapped zone must not invent evidence"
+
+
+def test_the_blank_join_sentinel_is_never_matched_as_a_label(tmp_path: Path) -> None:
+    """It is not a zone code and nothing may read it as one."""
+    assert not near_label("R5", UNZONED_LABEL)
+    assert not near_label(UNZONED_LABEL, "R5")
+
+
+@pytest.mark.parametrize(
+    "encoded,observed",
+    [
+        ("MURM", "MURM1"),  # the map prints the family members
+        ("MURM2", " MURM2"),  # leading whitespace
+        ("MURM2", "MURm2"),  # case
+        ("R-10", "R10"),  # punctuation, both directions
+        ("R10", "R-10"),
+    ],
+)
+def test_a_label_that_could_be_the_same_district_is_flagged(
+    encoded: str, observed: str
+) -> None:
+    assert near_label(encoded, observed)
+
+
+@pytest.mark.parametrize(
+    "encoded,observed",
+    [
+        ("RML", "RMH"),  # Tualatin: two real districts, one character apart
+        ("R5", "R20"),
+        ("MURM", "MURS"),
+        ("R5", "R5000"),  # a tail this long is a different standard, not a typo
+    ],
+)
+def test_a_substitution_is_not_a_join_failure(encoded: str, observed: str) -> None:
+    """The refusal that makes the flag worth reading.
+
+    An edit-distance rule flags RML/RMH and sends a reader to alias two
+    districts the city defines separately. A false flag here does not cost a
+    minute; it costs a wrong rule.
+    """
+    assert not near_label(encoded, observed)
+
+
+def test_every_unweighed_zone_carries_exactly_one_cause() -> None:
+    """Over the committed ledger, not a fixture. The causes must partition, and
+    only a near miss may carry evidence -- otherwise the report's three
+    sections would double-count or argue with each other."""
+    from flats.rules.ledger import read_coverage
+
+    rules = RuleSet(load_rules())
+    rows = read_coverage()
+    assert rows is not None, "no committed ledger to check against"
+
+    blind = unweighed_zones(rows, rules)
+
+    assert blind, "the check is only worth keeping while it is still asked"
+    for z in blind:
+        if z.cause is ZoneMiss.near_miss:
+            assert z.candidates and z.lots > 0
+        else:
+            assert z.candidates == () and z.lots == 0

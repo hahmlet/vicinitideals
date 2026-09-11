@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import csv
 import enum
+import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
@@ -231,6 +232,196 @@ def unweighed(rows: Sequence[CoverageRow], rules: RuleSet) -> list[UnweighedLaye
         for name, layer in sorted(rules.layers.items())
         if layer.zones and name not in seen
     ]
+
+
+#: What a parcel whose zoning join came back blank is called in the ledger.
+#: Spelled here as well as in ``flats.encode.backlog`` on purpose: this module
+#: is imported by the web app and must not pull in the parquet reader to learn
+#: the name of its own sentinel.
+UNZONED_LABEL = "(unzoned in parcel data)"
+
+
+class ZoneMiss(str, enum.Enum):
+    """Why an encoded zone has never had a lot weighed against it.
+
+    Three causes, and the point of separating them is that they take three
+    different actions. Collapsing them into "not weighed" produces a list
+    nobody can work.
+    """
+
+    #: The zoning join produced nothing for this city, so every lot arrived
+    #: under ``UNZONED_LABEL`` and every zone in the layer is unweighed at
+    #: once. Not an encoding gap -- the encoding is fine and the join is
+    #: absent. Usually a jurisdiction the pipeline is switched off for.
+    unzoned = "unzoned"
+    #: The map does carry this district, under a label we do not hold -- a
+    #: suffix the code text does not print, or dirty data. The lots are
+    #: sitting in the ``zone_missing`` queue as "go encode this" when the
+    #: encoding already exists. Fix the join, not the rules.
+    near_miss = "near_miss"
+    #: The map carries real districts for this city and none of them is this
+    #: one. Either the district was repealed and our text is superseded, or
+    #: it exists on paper and was never mapped. Both need a human; neither is
+    #: answerable from inside this repo.
+    unmapped = "unmapped"
+
+
+@dataclass(frozen=True, slots=True)
+class UnweighedZone:
+    """An encoded zone the parcel corpus has never counted a lot against."""
+
+    jurisdiction: str
+    zone: str
+    cause: ZoneMiss
+    eligible: bool
+    #: Observed labels that look like this zone, biggest first. Populated only
+    #: for :attr:`ZoneMiss.near_miss`; the evidence for the claim, so a reader
+    #: can check the match rather than take it.
+    candidates: tuple[tuple[str, int], ...] = ()
+
+    @property
+    def lots(self) -> int:
+        """Lots sitting under a near-miss label. Zero for the other causes."""
+        return sum(n for _, n in self.candidates)
+
+
+def _norm_zone(zone: str) -> str:
+    """A zone label reduced to what is invariant across a map and a code book.
+
+    Case, whitespace and punctuation are exactly the characters that differ
+    between the two, and never the characters that distinguish two districts:
+    no city has both an ``R-5`` and a separate ``R5``. Stripping them is
+    therefore safe in the direction that matters -- it can merge two spellings
+    of one district, and cannot merge two districts.
+    """
+    return re.sub(r"[^A-Z0-9]", "", zone.upper())
+
+
+def near_label(encoded: str, observed: str) -> bool:
+    """Could ``observed`` on the map be ``encoded`` in the code, mis-joined?
+
+    Deliberately narrow. Two shapes only:
+
+    * **Identical once normalised** -- ``MURM2`` / ``' MURM2'`` / ``MURm2``.
+      Dirty data, and three rows in the queue for one district.
+    * **One is the other plus a short tail** -- ``MURM`` against ``MURM1``,
+      ``MURM2``, ``MURM3``. A code book that prints a family under its stem
+      and a map that prints the members.
+
+    It refuses the obvious third shape, a substitution, and that refusal is
+    the whole reason this is usable. Tualatin encodes ``RML`` and its map
+    prints ``RMH``; those are one character apart and they are two real
+    districts in the city's own code. An edit-distance rule flags that pair
+    and sends a reader to repair something that is not broken. Measured over
+    the committed ledger, this rule fires on exactly one encoded zone
+    corpus-wide and does not fire on ``RML``/``RMH``.
+
+    A hit is a question for a person, never an alias. Nothing here writes a
+    rule: see the module docstring on why a machine agreeing with a machine is
+    still nobody having read the sentence.
+    """
+    a, b = _norm_zone(encoded), _norm_zone(observed)
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    lo, hi = (a, b) if len(a) < len(b) else (b, a)
+    return hi.startswith(lo) and len(hi) - len(lo) <= 2
+
+
+def unweighed_zones(
+    rows: Sequence[CoverageRow], rules: RuleSet
+) -> list[UnweighedZone]:
+    """Encoded **zones** no lot has ever been weighed against.
+
+    :func:`unweighed` asks the same question one level up and, since
+    2026-09-08, correctly returns nothing: every encoded jurisdiction appears
+    in the ledger. That empty answer is what hides these. A city is "weighed"
+    the moment one of its zones is, so a layer can sit in the ledger looking
+    covered while ten of its eleven districts have never been counted.
+
+    Measured on the committed ledger the day this was written: **14 of 220
+    encoded (layer, zone) pairs had never had a lot weighed against them, and
+    :func:`unweighed` reported zero**, because all fourteen live in
+    jurisdictions that do appear.
+
+    They split by :class:`ZoneMiss` into three causes taking three actions:
+
+    * ``unzoned`` -- 12 zones over 3 cities, 14,485 lots arriving with no
+      zone at all (Lake Oswego 14,256, Rivergrove 222, Johnson City 7). The
+      hole :func:`unweighed` names in its own docstring and says is "not
+      fixed here". At zone granularity it is caught automatically, including
+      the two cities nobody had named.
+    * ``near_miss`` -- Happy Valley ``MURM``, against five map labels holding
+      **486 lots**: ``MURM1`` (172), ``MURM2`` (300), ``MURM3`` (8), plus
+      ``' MURM2'`` (5) and ``'MURm2'`` (1), which are the same district spelled
+      with a leading space and a lowercase letter. All five sit in the
+      ``zone_missing`` queue as work to do, and the reading that answers them
+      was already written -- ``happy-valley.yaml`` records "if the layer does
+      print them, they are three ``like`` entries and this note is the reading
+      behind them." The layer does print them. Nothing joined the note to the
+      ledger, because a ``zone_missing`` row carries no hint that a sibling
+      zone in the same file already holds its answer.
+    * ``unmapped`` -- Tualatin ``RML``: encoded, and the map's residential
+      districts are ``RL`` and ``RMH``. Either repealed or never mapped, and
+      the published base rates say to expect this at roughly 3% and 15% of
+      districts respectively, so it will recur.
+
+    **No disposition is recorded here and that is deliberate.** An ``extinct``
+    member was proposed for :class:`Coverage`, but ``Coverage`` types an
+    *observed* pair, and a district that was repealed or never mapped is by
+    definition not observed -- the member would be unreachable by
+    construction. The finding belongs on this dataclass, where the zone is the
+    subject. Where a ruling should eventually live is with the zone in its
+    jurisdiction YAML, and that is worth building when there is a ruling to
+    store rather than a schema to admire.
+
+    Reported from the written ledger, like :func:`unweighed`, for the same
+    reason: what shipped is what a reader is entitled to be told the shape of.
+    """
+    by_layer: dict[str, list[CoverageRow]] = {}
+    for row in rows:
+        by_layer.setdefault(row.jurisdiction, []).append(row)
+
+    out: list[UnweighedZone] = []
+    for name, layer in sorted(rules.layers.items()):
+        seen = by_layer.get(name, [])
+        weighed = {row.zone for row in seen}
+        # Labels still wanted by the queue, minus the blank-join sentinel --
+        # which is not a label and must never be matched against one.
+        missing = [
+            row
+            for row in seen
+            if row.status == Coverage.zone_missing.value and row.zone != UNZONED_LABEL
+        ]
+        # A layer whose every row is the sentinel was never joined at all.
+        joined = any(row.zone != UNZONED_LABEL for row in seen)
+
+        for zone in sorted(layer.zones):
+            if zone in weighed:
+                continue
+            hits = sorted(
+                ((row.zone, row.lots) for row in missing if near_label(zone, row.zone)),
+                key=lambda c: (-c[1], c[0]),
+            )
+            if not joined:
+                cause = ZoneMiss.unzoned
+            elif hits:
+                cause = ZoneMiss.near_miss
+            else:
+                cause = ZoneMiss.unmapped
+            out.append(
+                UnweighedZone(
+                    jurisdiction=name,
+                    zone=zone,
+                    cause=cause,
+                    eligible=bool(layer.eligible),
+                    candidates=tuple(hits) if cause is ZoneMiss.near_miss else (),
+                )
+            )
+
+    out.sort(key=lambda u: (-u.lots, u.jurisdiction, u.zone))
+    return out
 
 
 def coverage_summary(rows: Sequence[CoverageRow]) -> dict[str, int]:

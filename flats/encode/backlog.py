@@ -41,10 +41,12 @@ from flats.rules.ledger import (
     COVERAGE,
     CoverageRow,
     ObservedZone,
+    ZoneMiss,
     build_coverage,
     coverage_summary,
     read_coverage,
     unweighed,
+    unweighed_zones,
     write_coverage,
 )
 from flats.rules.loader import load_rules
@@ -68,6 +70,12 @@ _COLUMNS = [
 #: Deliberately not a zone code: nothing may read it as one, and it has to
 #: sort and print like the gap it is.
 UNZONED = "(unzoned in parcel data)"
+
+
+def _plural(n: int, word: str) -> str:
+    """``1 zone`` / ``3 zones``. A report a person reads should read like one."""
+    return f"{n:,} {word}" + ("" if n == 1 else "s")
+
 
 
 def observed(corpus: Path = CORPUS, *, drop_condos: bool = True) -> list[ObservedZone]:
@@ -198,6 +206,82 @@ def main() -> int:
             "\n  Nothing above is ranked below, counted in the totals, or able "
             "to appear\n  as a gap. Absence of a row is not a zero."
         )
+
+    # The same question one level down, and the level where the misses are.
+    # `unweighed` above returns nothing and is right to: a city is "weighed"
+    # the moment one of its zones is, so a layer can look covered while most
+    # of its districts have never been counted.
+    zone_blind = unweighed_zones(rows, rules)
+    if zone_blind:
+        joined = [z for z in zone_blind if z.cause is ZoneMiss.near_miss]
+        gone = [z for z in zone_blind if z.cause is ZoneMiss.unmapped]
+        nojoin = [z for z in zone_blind if z.cause is ZoneMiss.unzoned]
+        print(
+            f"\nNOT WEIGHED, BY ZONE: {len(zone_blind)} encoded zones no lot has "
+            f"ever been counted against\n  (the jurisdiction check above reports "
+            f"{len(blind)} — every one of these lives in a city that does appear)"
+        )
+
+        if joined:
+            lots = sum(z.lots for z in joined)
+            print(
+                f"\n  THE MAP PRINTS IT UNDER ANOTHER LABEL — "
+                f"{_plural(len(joined), 'zone')}, {lots:,} lots:\n"
+            )
+            for z in joined:
+                print(f"    {z.jurisdiction}  {z.zone}  is encoded; the map prints")
+                for label, n in z.candidates:
+                    print(f"      {label!r:<12} {n:>6,} {'lot' if n == 1 else 'lots'}")
+            print(
+                "\n    Those labels are in the zone_missing queue above, ranked as "
+                "work to do.\n    They are not: the rules exist. What is missing is "
+                "the join. Confirm the\n    reading, then alias them — this is a "
+                "map-to-text discrepancy for a human,\n    and nothing here writes "
+                "a rule."
+            )
+
+        if gone:
+            print(
+                f"\n  ENCODED, AND NOT ON THE MAP AT ALL — "
+                f"{_plural(len(gone), 'zone')}:\n"
+            )
+            for z in gone:
+                print(f"    {z.jurisdiction:32s} {z.zone}")
+            print(
+                "\n    The city has mapped districts and none of them is this one, "
+                "and no near\n    label explains it. Either the district was "
+                "repealed and our text is a\n    superseded edition, or it exists on "
+                "paper and was never mapped. Both need\n    a person; neither is "
+                "answerable from inside this repo."
+            )
+
+        if nojoin:
+            cities: dict[str, int] = {}
+            for z in nojoin:
+                cities[z.jurisdiction] = cities.get(z.jurisdiction, 0) + 1
+            live = [z for z in nojoin if z.eligible]
+            print(
+                f"\n  NO ZONING JOIN FOR THE CITY — "
+                f"{_plural(len(nojoin), 'zone')} over "
+                f"{_plural(len(cities), 'jurisdiction')}:\n"
+            )
+            for name, n in sorted(cities.items()):
+                off = "" if any(z.eligible for z in nojoin if z.jurisdiction == name) \
+                    else "  (eligible: false — expected)"
+                print(f"    {name:32s} {_plural(n, 'zone'):>8s}{off}")
+            if not live:
+                print(
+                    "\n    Every one is a jurisdiction the pipeline is switched off "
+                    "for, so its lots\n    arrive with no zone and every zone in it "
+                    "is unweighed at once. Expected,\n    and the reason to print it "
+                    "is that it stops looking like encoding debt."
+                )
+            else:
+                print(
+                    "\n    At least one of these is switched ON, which means a live "
+                    "city's lots are\n    arriving with no zone. That is a join "
+                    "failure, not a switch."
+                )
 
     print(f"\nTop {args.top} by lots blocked — this is the encoding queue:\n")
     print(f"  {'jurisdiction':28s} {'zone':10s} {'lots':>8s}  status")
