@@ -660,12 +660,16 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #:     46,205 red and 3,927 in review. Every Portland zone on the list is one
 #:     of the 29 recovered ones, which are `needs_verification` and capped at
 #:     review; Fairview and Happy Valley have no greens at all.
-#:   * `min_lot_depth_ft`, 28 zones, same answer and a sharper check. Only one
-#:     green-producing zone in the screen states a depth: Wilsonville R, at 70
-#:     ft. Its twelve greens were measured against it and the shallowest
-#:     implies 120 ft. It is not close, and the corpus reads no middle-housing
-#:     exception for depth the way it does for width and area -- so if this one
-#:     ever gets a column it will be for a lot that does not exist yet.
+#:   * `min_lot_depth_ft` WAS the sharpest of these and is now CLOSED -- see
+#:     the 2026-09-11 entry below. The argument recorded here for leaving it
+#:     alone was that no green-producing zone's greens were anywhere near their
+#:     depth floor, so a column would be "for a lot that does not exist yet".
+#:     That reasoning was sound about GREENS and silently wrong about the
+#:     screen: it measured the risk of the column changing an answer instead of
+#:     the risk of never asking the question, and the second is the one a
+#:     screen is judged on. It is kept here rather than deleted because it is a
+#:     shape worth recognising again -- "this would move nothing" is an
+#:     argument for cheapness, never for correctness.
 #:   * `max_lot_depth_ratio` (3:1, four Fairview zones) and
 #:     `setback_side_total_ft` (Lake Oswego R-7.5) sit behind cities with no
 #:     greens -- Lake Oswego is `eligible: false` and its side yard already has
@@ -736,11 +740,26 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #: red, and because the full gate is gated on the light gate, the integration,
 #: E2E, Trivy and Semgrep steps were SKIPPED all six times. The list is a
 #: ratchet, not a report: it is only worth what somebody does when it moves.
+#:
+#: SHRANK 2026-09-11, and by a column rather than a reading -- the first time
+#: an entry has left this list that way:
+#:
+#:   this one  -35 min_lot_depth_ft          (35 -> gone) `ZoneRule` grew a
+#:             `min_lot_depth_ft`, `s7.policy_gates` judges it, and s4 had
+#:             already begun measuring the depth each city's own glossary
+#:             defines. Nothing had to be read to close it; the standard was
+#:             encoded, cited and mirrored all along, and what was missing was
+#:             a column here and a measurement there. Both now exist.
+#:
+#:             `max_lot_depth_ratio` deliberately STAYS at 4. Fairview states
+#:             depth as a multiple of width in four zones, and this pipeline
+#:             measures Fairview's depth and not its width -- so the ratio has
+#:             one of its two terms. Encoding it against a missing width would
+#:             be a number divided by nothing, which is worse than the gap.
 UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 64,
     "min_lot_width_ft": 67,
     "min_landscaped_pct": 34,
-    "min_lot_depth_ft": 35,
     "setback_front_max_ft": 27,
     "max_density_du_per_acre": 21,
     "min_building_separation_ft": 9,

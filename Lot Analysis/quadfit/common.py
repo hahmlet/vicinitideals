@@ -153,6 +153,27 @@ class ZoneRule(BaseModel):
     # Minimum street frontage for residential use where the code sets one
     # (e.g. Gresham CMF 100 ft). Gates fits in s6 (frontage known after s4).
     min_frontage_ft: float | None = None
+    #: Front lot line to rear lot line, where a code states a floor on it.
+    #: Thirty-five zones in eight cities state one and until this column
+    #: existed not one of them was ever applied: the standard was encoded in
+    #: the FLATS corpus, cited, mirrored by `audit_zone_mirror`, and silently
+    #: skipped, because there was nowhere here to put it and no measurement to
+    #: put against it. `s4` now takes the depth each city's own glossary
+    #: defines (`lot_depth_measure`), so both halves exist.
+    #:
+    #: It is NOT said again by area or frontage. A lot can hold the square
+    #: footage and still be too shallow to fit the pod between its front and
+    #: rear setbacks, and `area / frontage_ft` cannot stand in for it because
+    #: `frontage_ft` is the SUM of every street-facing edge -- a corner lot
+    #: carries two of them and one Milwaukie parcel carried seven.
+    #:
+    #: Purely additive: a depth floor can only take a lot off the board, never
+    #: rescue one, so this cannot manufacture a green. Where the city lets the
+    #: applicant choose the front lot line, the depth s4 stored is the most
+    #: generous orientation available -- Gresham 3.0100 says the front "is
+    #: determined by the orientation necessary to achieve minimum required lot
+    #: depth" -- so a lot that fails here fails facing every street it touches.
+    min_lot_depth_ft: float | None = None
     max_coverage_pct: float | None = None  # building coverage cap, % of lot area
     # Piecewise coverage formula rows [lot_area_break_sqft, base_sqft,
     # marginal_pct_over_break] — e.g. Portland Table 110-5. Overrides

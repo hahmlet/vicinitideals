@@ -559,3 +559,131 @@ def test_a_red_lot_carries_no_review_reasons():
     assert lots["triage"][0] == "red"
     assert lots["binding_constraint"][0] == "pod_no_fit"
     assert lots["review_reasons"][0] == ""
+
+
+class _DepthRules:
+    """Two zones side by side: one states a minimum lot depth, one does not.
+
+    Built from the real config models, so the test goes red if
+    `min_lot_depth_ft` stops being wired through `ZoneRule` -- which is exactly
+    how this standard spent its whole life before the column existed: encoded
+    in the corpus, cited, mirrored by the audit, and applied by nothing.
+    """
+
+    def __init__(self):
+        from common import JurisdictionRules, ZoneRule
+
+        deep = ZoneRule(
+            zone="LDR-5", quadplex_allowed=True, setback_front_ft=20,
+            setback_side_ft=8, setback_rear_ft=20, min_lot_depth_ft=70,
+        )
+        silent = ZoneRule(
+            zone="R5", quadplex_allowed=True, setback_front_ft=20,
+            setback_side_ft=8, setback_rear_ft=20,
+        )
+        self.jurisdictions = {
+            "gresham": JurisdictionRules(eligible=True, zones=[deep]),
+            "portland": JurisdictionRules(eligible=True, zones=[silent]),
+        }
+
+
+def _depth_row(juris, zone, depth=None):
+    row = {"jurisdiction": juris, "zone_raw": zone, "area_sqft": 9000.0,
+           "frontage_ft": 60.0}
+    if depth is not None:
+        row["lot_depth_ft"] = depth
+    return row
+
+
+def _depth_gates(rows):
+    import pandas as pd
+
+    from s7_report import policy_gates
+
+    return policy_gates(pd.DataFrame(rows), _DepthRules())[0]
+
+
+def test_a_lot_too_shallow_for_its_zone_is_excluded():
+    """The standard, applied for the first time.
+
+    Thirty-five zones in eight cities state a minimum lot depth. Until this
+    gate existed every one of them was encoded, cited, mirrored by
+    `audit_zone_mirror` -- and skipped, because there was no column to hold the
+    number and no measurement to hold it against. A lot can carry the required
+    square footage and still be too shallow to fit the pod between its front
+    and rear setbacks, which is the exact shape this catches and area does not.
+    """
+    gates = _depth_gates([
+        _depth_row("gresham", "LDR-5", depth=55.0),
+        _depth_row("gresham", "LDR-5", depth=70.0),
+        _depth_row("gresham", "LDR-5", depth=120.0),
+    ])
+    assert list(gates["depth_ok"]) == [False, True, True]
+    assert list(gates["eligible"]) == [False, True, True]
+    assert list(gates["policy_exclusion"]) == ["below_min_lot_depth", "", ""]
+
+
+def test_a_zone_that_states_no_depth_is_left_alone():
+    """Silence is not a gap, and must not become a hold.
+
+    Portland states a minimum lot width and a minimum lot area and no depth
+    row anywhere; West Linn mentions lot depth exactly once, inside the
+    definition of lot WIDTH. A screen that held every lot in those cities
+    pending a standard their councils never wrote would be inventing a
+    requirement, which is the opposite failure to the one above and just as
+    wrong. Neither flag may be raised, whether or not a depth was measured.
+    """
+    gates = _depth_gates([
+        _depth_row("portland", "R5", depth=40.0),
+        _depth_row("portland", "R5"),
+    ])
+    assert list(gates["depth_ok"]) == [True, True]
+    assert list(gates["depth_unmeasured"]) == [False, False]
+    assert list(gates["eligible"]) == [True, True]
+    assert list(gates["policy_exclusion"]) == ["", ""]
+
+
+def test_a_depth_that_could_not_be_measured_holds_the_lot_instead_of_passing_it():
+    """The conservative default, on the axis that had never had one.
+
+    A third of these lots decline to give up a depth -- tier C and D, no street
+    edge, a body not attached to its own frontage. The zone still states 70 ft.
+    Passing the lot would certify it against a standard nobody applied; failing
+    it would invent a number. So it survives the funnel carrying a flag, the
+    same bargain `frontage_unmeasured` already strikes one axis over.
+    """
+    gates = _depth_gates([
+        _depth_row("gresham", "LDR-5"),
+        _depth_row("gresham", "LDR-5", depth=float("nan")),
+        _depth_row("gresham", "LDR-5", depth=90.0),
+    ])
+    assert list(gates["depth_unmeasured"]) == [True, True, False]
+    assert list(gates["depth_ok"]) == [True, True, True]
+    assert list(gates["eligible"]) == [True, True, True]
+    assert list(gates["policy_exclusion"]) == ["", "", ""]
+
+
+def test_an_unmeasured_depth_sends_the_lot_to_review_and_says_why():
+    """A flag nothing reads is not a hold. This is the other half of the gate
+    above: `depth_unmeasured` has to reach the verdict and name itself in the
+    queue, or the lot passes as green with a caveat sitting unread in a column.
+    """
+    lots = _run([
+        _base_row(depth_unmeasured=True),
+        _base_row(depth_unmeasured=False),
+    ])
+    assert list(lots["triage"]) == ["review", "green"]
+    assert list(lots["review_reasons"]) == ["depth_unmeasured", ""]
+    assert list(lots["binding_constraint"]) == ["", ""]
+
+
+def test_an_unmeasurable_depth_cannot_rescue_a_lot_that_fails_on_its_own():
+    """Review is a hold, not a pardon -- the same rule the frontage flag lives
+    under. A lot the pod does not fit is red whether or not its depth could be
+    measured, or the flag becomes a way to launder a failure into the queue."""
+    lots = _run([
+        _base_row(depth_unmeasured=True, fits_pod=False, fits_cov_pod=False),
+        _base_row(depth_unmeasured=True, tier="D"),
+    ])
+    assert list(lots["triage"]) == ["red", "red"]
+    assert list(lots["binding_constraint"]) == ["pod_no_fit", "no_buildable_envelope"]

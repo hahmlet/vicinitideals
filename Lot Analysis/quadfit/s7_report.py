@@ -126,12 +126,23 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
     min_lot_ok = np.ones(n, dtype=bool)
     frontage_ok = np.ones(n, dtype=bool)
     frontage_unmeasured = np.zeros(n, dtype=bool)
+    depth_ok = np.ones(n, dtype=bool)
+    depth_unmeasured = np.zeros(n, dtype=bool)
     # s4 takes the width where the city defines one and the shape allows it.
     # Absent on a pre-width parquet -> every lot falls back to the frontage
     # treatment, which is what this screen did before the measurement existed.
     lot_width = (
         pd.to_numeric(lots["lot_width_ft"], errors="coerce").to_numpy()
         if "lot_width_ft" in lots.columns
+        else np.full(n, np.nan)
+    )
+    # The other axis, measured the way each city's own glossary defines it.
+    # Absent on a pre-depth parquet -> NaN, and every zone stating a depth
+    # holds its lots for review rather than passing them on a number nobody
+    # took. That is the same bargain the width above strikes.
+    lot_depth = (
+        pd.to_numeric(lots["lot_depth_ft"], errors="coerce").to_numpy()
+        if "lot_depth_ft" in lots.columns
         else np.full(n, np.nan)
     )
     flip_allowed = np.ones(n, dtype=bool)
@@ -174,6 +185,23 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
                     frontage_unmeasured[i] = True
                 else:
                     frontage_ok[i] = False
+        if rule.min_lot_depth_ft is not None:
+            depth = lot_depth[i]
+            if np.isfinite(depth):
+                # Where the city lets the applicant choose the front lot line,
+                # s4 stored the most generous orientation, so this fails only a
+                # lot that is too shallow facing EVERY street it touches --
+                # which is what Gresham 3.0100 describes in words: the front
+                # "is determined by the orientation necessary to achieve
+                # minimum required lot depth."
+                if float(depth) < rule.min_lot_depth_ft:
+                    depth_ok[i] = False
+            else:
+                # The zone states a depth and this lot's shape declined to be
+                # measured (tier C/D, no street edge, a body detached from its
+                # own frontage). Hold it for review; a standard nobody could
+                # apply is not a standard the lot passed.
+                depth_unmeasured[i] = True
         constraint = rule.orientation_constraint or j.orientation_constraint
         flip_allowed[i] = constraint != "axis_required"
         cap = rule.coverage_cap_sqft(float(area))
@@ -184,6 +212,7 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
     gates = pd.DataFrame({
         "elig_jurisdiction": elig_j, "z_ok": z_ok, "min_lot_ok": min_lot_ok,
         "frontage_ok": frontage_ok, "frontage_unmeasured": frontage_unmeasured,
+        "depth_ok": depth_ok, "depth_unmeasured": depth_unmeasured,
         "flip_allowed": flip_allowed,
         "cov_cap": cov_cap, "accessory": accessory,
     }, index=lots.index)
@@ -194,6 +223,7 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
         ("z_overlay_constrained_site", ~gates["z_ok"]),
         ("lot_below_zone_min_area", ~gates["min_lot_ok"]),
         ("below_min_frontage", ~gates["frontage_ok"]),
+        ("below_min_lot_depth", ~gates["depth_ok"]),
     ]
     if ocfg is not None:
         for spec in ocfg.overlays:
@@ -318,6 +348,10 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
         frontage_unmeasured = lots["frontage_unmeasured"].fillna(False).to_numpy().astype(bool)
     else:
         frontage_unmeasured = np.zeros(n, dtype=bool)
+    if "depth_unmeasured" in lots.columns:
+        depth_unmeasured = lots["depth_unmeasured"].fillna(False).to_numpy().astype(bool)
+    else:
+        depth_unmeasured = np.zeros(n, dtype=bool)
     if "slope_tier" in lots.columns:
         slope_bad = np.isin(lots["slope_tier"].astype(str).to_numpy(),
                             ("cost_prohibitive", "unknown"))
@@ -426,7 +460,7 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
 
     review = (flag_suspect | (tier == "C") | unverified_zone | slope_bad
               | sewer_review | overlay_flag | frontage_unmeasured
-              | density_floor_short)
+              | depth_unmeasured | density_floor_short)
     lots["triage"] = np.where(binding != "", "red",
                               np.where(review, "review", "green"))
 
@@ -452,6 +486,7 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
         ("sewer_unconfirmed", sewer_review),
         ("overlay", overlay_flag),
         ("frontage_unmeasured", frontage_unmeasured),
+        ("depth_unmeasured", depth_unmeasured),
         ("density_floor", density_floor_short),
     ):
         m = np.asarray(mask, dtype=bool) & yellow
@@ -1359,6 +1394,11 @@ def main() -> None:
     # caveat travels with the row, not three files away in rules.yaml.
     if "frontage_unmeasured" in lots.columns:
         phase2_cols.append("frontage_unmeasured")
+    # And why a lot in one of the thirty-five depth-stating zones is in the
+    # queue: its shape declined to give up a depth, so the standard could not
+    # be applied either way. Same discipline -- the caveat travels with the row.
+    if "depth_unmeasured" in lots.columns:
+        phase2_cols.append("depth_unmeasured")
     # And why a large Oregon City lot is in the queue looking perfect: it is
     # above its zone's minimum density, so four homes may not be enough on it.
     # Same discipline -- the caveat travels with the row.
@@ -1384,7 +1424,13 @@ def main() -> None:
         # has to be able to see the number the screen decided on. Blank means
         # the shape declined to be measured, or the city states a frontage and
         # this never applied to it.
-        "lot_width_ft", "YEARBUILT", "BLDGSQFT",
+        "lot_width_ft",
+        # The other axis, on the same terms. Thirty-five zones in eight cities
+        # state a minimum lot depth and nothing applied one until this column
+        # existed; a lot that just turned red for `below_min_lot_depth` has to
+        # show the number it was judged on. Blank means the shape declined to
+        # be measured, or the city defines no depth and this never applied.
+        "lot_depth_ft", "YEARBUILT", "BLDGSQFT",
         "BLDGVAL", "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
         # `binding_constraint` says why a lot is RED. `review_reasons` says why
         # it is YELLOW -- next to it, because the two answer the same question
