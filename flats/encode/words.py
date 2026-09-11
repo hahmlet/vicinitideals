@@ -167,6 +167,29 @@ GOVERNS: dict[str, tuple[str, ...]] = {
     ),
     "middle housing": ("quadplex_allowed",),
     "townhouse": ("quadplex_allowed",),
+    # The use-category words. Every entry above measures a building already
+    # allowed; these decide whether it is allowed at all, and no dimension
+    # rescues a wrong answer here. Happy Valley's MUR-M use table permits
+    # "Multifamily dwellings" and its own 16.12 defines multifamily as "five
+    # or more families", so the row that reads as a yes is a no for a
+    # four-unit building. That was caught by one person reading carefully.
+    # Thirty-seven documents in thirteen cities write the word and nothing
+    # asked any of them the same question.
+    #
+    # A use word governs the fields whose value is stated *for that category*:
+    # the permission always, the unit count wherever the category is defined
+    # by one, and density for the words that head a density table.
+    "multifamily": (
+        "quadplex_allowed",
+        "max_units",
+        "max_density_du_per_acre",
+        "min_density_du_per_acre",
+    ),
+    "apartment": ("quadplex_allowed", "max_density_du_per_acre"),
+    "quadplex": ("quadplex_allowed", "max_units"),
+    "duplex": ("quadplex_allowed", "max_units"),
+    "triplex": ("quadplex_allowed", "max_units"),
+    "attached dwelling": ("quadplex_allowed",),
     # The access words. A stall's size and an aisle's width are the assumed-24ft
     # argument; a street that is not a street changes what fronts on what.
     "parking space": ("parking_min_per_unit", "parking_max_per_unit"),
@@ -200,6 +223,15 @@ SPELLINGS: dict[str, tuple[str, ...]] = {
     "story": ("storey", "half story"),
     "middle housing": ("middle housing dwelling unit",),
     "landscaping": ("landscape area", "landscaped area"),
+    # Counted across the 181 stored documents, so the canonical name is the
+    # one the most cities write rather than the one we happened to meet first:
+    # "attached dwelling" is in 18 documents across 12 cities, Portland's
+    # "attached house" in 15 across 6. A hyphen reads as a space here -- see
+    # _flex -- so "multi family" is also how "multi-family" is spelled, and
+    # that is the form 370 of the 485 occurrences take.
+    "multifamily": ("multi family", "multi dwelling", "multiple family"),
+    "quadplex": ("fourplex", "four family", "quadruplex"),
+    "attached dwelling": ("attached house",),
 }
 
 _NOT_WORD = re.compile(r"[^a-z0-9 ]+")
@@ -277,6 +309,21 @@ def _flex(phrase: str) -> str:
     A vowel before the final *y* takes a plain -s: the plural of *alley* is
     alleys, and only *story* becomes stories. Spelling both the same way cost
     the word about vehicle access every plural sentence in the corpus.
+
+    **A hyphen separates two words.** The pattern runs against the raw line,
+    not a normalised one, so joining on whitespace alone cannot read a
+    compound the code hyphenates. Across the compounds these words appear in,
+    the corpus writes a hyphen 1,818 times and a space 319, and nothing else:
+    no en dash, no non-breaking hyphen. So the separator is a character class.
+
+    Measured, not assumed: for the vocabulary that was already here this is a
+    **correction of 23 lines** out of 37,690 -- *street side yard* +18, *open
+    space* +3, *side yard* +2 -- because the spaced primary spelling already
+    caught most hyphenated lines from the other side ("off-street parking
+    space" contains "parking space"). It is load-bearing for the use words
+    instead: the corpus writes *multi-family* 370 times and *multi family*
+    zero, so declaring the spaced spelling without this would have added a
+    word and found nothing with it.
     """
     out = []
     for word in _norm(phrase).split():
@@ -286,7 +333,7 @@ def _flex(phrase: str) -> str:
             out.append(re.escape(word))
         else:
             out.append(re.escape(word) + "s?")
-    return r"\b" + r"\s+".join(out) + r"\b"
+    return r"\b" + r"[\s\-]+".join(out) + r"\b"
 
 
 #: The verbs that hand a word's meaning to another chapter.

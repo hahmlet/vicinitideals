@@ -66,6 +66,7 @@ pytestmark = pytest.mark.unit
 
 PORTLAND = "or/multnomah/portland"
 GRESHAM = "or/multnomah/gresham"
+HAPPY_VALLEY = "or/clackamas/happy-valley"
 
 
 def _stems(text: str) -> tuple[str, ...]:
@@ -222,6 +223,86 @@ class TestUsageGate:
         yard = re.compile(W._flex("yard"), re.I)
         assert not yard.search("a courtyard or plaza open to the sky")
         assert yard.search("The required rear yard is 20 feet")
+
+    def test_a_hyphen_between_two_words_is_a_space(self) -> None:
+        """A compound the code hyphenates is the same word we declared.
+
+        The patterns run against the raw line, so joining on whitespace alone
+        cannot read a compound the code hyphenates -- and across the compounds
+        these words appear in, the corpus writes a hyphen 1,818 times against
+        319 spaces and nothing else. For the vocabulary already here that is
+        worth 23 lines; for the use words it is the whole thing, because
+        *multi-family* is written 370 times and *multi family* never.
+        """
+        stall = re.compile(W._flex("off street parking space"), re.I)
+        assert stall.search("one off-street parking space per dwelling unit")
+        assert stall.search("one off street parking space per dwelling unit")
+
+        multi = re.compile(W._flex("multi family"), re.I)
+        assert multi.search("Multi-family dwellings are permitted outright")
+        assert multi.search("multi family dwellings")
+        assert multi.search("Multi-Families")
+
+        # And the boundaries still hold: a hyphen joins words, it does not
+        # dissolve the ends of them.
+        assert not multi.search("a semimulti-familyish arrangement")
+
+
+# --- can this building be built at all --------------------------------------
+
+
+class TestUseCategoryWords:
+    """The words that decide permission, not dimension.
+
+    Every other word in the registry measures a building already allowed.
+    These decide whether it is allowed, and no dimension rescues a wrong
+    answer: Happy Valley's MUR-M use table permits "Multifamily dwellings"
+    and its own 16.12 defines multifamily as five or more families, so the
+    row that reads as a yes is a no for a four-unit building. That was caught
+    by one person reading carefully, and these cards are what asks the same
+    question of the other twelve cities that write the word.
+    """
+
+    def test_a_use_word_governs_the_permission_field(self) -> None:
+        for term in ("multifamily", "apartment", "quadplex", "duplex",
+                     "triplex", "attached dwelling"):
+            assert term in GOVERNS, term
+            assert "quadplex_allowed" in GOVERNS[term], term
+
+    def test_the_definition_that_was_caught_by_hand_is_on_a_card(self) -> None:
+        """The whole point of the entry, pinned to the sentence it exists for.
+
+        Asserted on the *mechanism* -- a card for this word, carrying this
+        city's own entry -- rather than on a count, because the queue is
+        designed to empty and a test that needed it full would expire.
+        """
+        made = [c for c in cards(load_rules()[HAPPY_VALLEY])
+                if c.term == "multifamily"]
+        assert made, "Happy Valley writes multifamily and holds the permission"
+        card = made[0]
+        assert card.standing == "defined"
+        text = " ".join(d.text for d in card.says).lower()
+        assert "five or more families" in text
+
+    def test_a_city_that_never_writes_the_word_is_not_asked_about_it(self) -> None:
+        """The usage gate has to cover the new words too, or the queue grows
+        by six rows in every city whether or not the question is real.
+        """
+        for layer_id in (PORTLAND, GRESHAM, HAPPY_VALLEY):
+            layer = load_rules()[layer_id]
+            spoken = uses(layer_id, list(GOVERNS))
+            asked = {c.term for c in cards(layer)}
+            for term, count in spoken.items():
+                if count == 0:
+                    assert term not in asked, f"{layer_id}: {term}"
+
+    def test_a_codes_own_name_for_the_building_reaches_our_word(self) -> None:
+        """Portland files "attached house", Happy Valley "attached dwelling",
+        and a fourplex answer must not depend on which one we met first.
+        """
+        assert W._bag("Attached House") in W.forms("attached dwelling")
+        assert W._bag("Fourplex") in W.forms("quadplex")
+        assert W._bag("Multiple Family") in W.forms("multifamily")
 
 
 

@@ -83,6 +83,14 @@ FIELD_MAP: dict[str, str] = {
     # the corpus read the figure and rules.yaml now carries the same number, so
     # the port maps it 1:1 and the mirror audit can check the two agree.
     "min_density_du_per_acre": "min_density_du_per_acre",
+    # Added 2026-09-11, the same way and for the same reason. The corpus held
+    # a minimum lot depth for 35 zones in 8 cities and quadfit had no column
+    # for it, so the standard was encoded, cited, mirrored and never asked;
+    # the column was added to rules.yaml from the corpus's own values via the
+    # mirror audit, `like:` chains and all. It maps 1:1 and the mirror audit
+    # checks the two agree. This test is how that arrived: the port is the
+    # only thing that notices a quadfit column nobody routed anywhere.
+    "min_lot_depth_ft": "min_lot_depth_ft",
     # Zone-level orientation carries the zone's own citation, so it ports. Only
     # the jurisdiction-level default is unciteable — see the layer notes.
     "orientation_constraint": "orientation_constraint",
