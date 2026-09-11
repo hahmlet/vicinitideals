@@ -5,13 +5,16 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-03, after your two answers — the
-Clackamas drawing and the coarse elevation map — were built and run):
-**green 16,530 · review 12,901 · red 262,540** across 291,971 lots in **14**
-cities laid out with real site plans. Greens by city: Portland 12,678 ·
-**Gresham 1,820** · Oregon City 735 · Milwaukie 622 · West Linn 288 ·
-**Troutdale 125** · unincorporated Clackamas 113 · **Wood Village 95** ·
-Wilsonville 53 · unincorporated Multnomah 1.
+Pipeline state when last updated (2026-09-11 evening, after the minimum lot
+depth and minimum lot width rules were both switched on — see the two entries
+at the end of the queued list): **green 16,358 · review 13,055 · red 263,068**
+across 292,481 lots in **14** cities laid out with real site plans. Greens by
+city: Portland 12,678 · Gresham 1,687 · Oregon City 732 · Milwaukie 614 ·
+West Linn 286 · Troutdale 113 · unincorporated Clackamas 113 · Wood Village
+81 · Wilsonville 53 · unincorporated Multnomah 1. (The 2026-09-03 figures the
+prose below still quotes in places were green 16,530 · review 12,901 · red
+262,540; the difference is the two new rules plus a full re-run, both written
+up at the end.)
 
 **Fourteen is fourteen of eighteen.** Four places are switched off and never
 reach the screen at all — Lake Oswego, Maywood Park, Rivergrove and Johnson
@@ -3392,3 +3395,101 @@ the list of places worth hoping about.
   trap that was deliberately designed out: RML and RMH are one character apart,
   and a looser matching rule would have called them the same district and sent
   someone to merge two things Tualatin defines separately.
+- **Every city's minimum lot width is now actually checked — built and run
+  2026-09-11, 42 lots changed colour, 24 fewer greens.** Eleven cities write
+  down a minimum lot width. Until today, nine of them were written in our
+  files and never asked of a single lot, and the other two — Oregon City and
+  Tualatin — were being checked against the wrong line: the length of the
+  lot's street edge, rather than the width across the lot itself, which is
+  what their codes measure. On a rectangle the two are the same. On a wedge
+  at the end of a cul-de-sac, or a lot that fans out behind a narrow opening,
+  they are not, and a lot was passing or failing on a line the city never
+  looks at.
+
+  Each city now gets its width measured the way its own code says. That is
+  six different measurements, not one: across the middle between the two
+  sides (Portland, Oregon City, Happy Valley, West Linn), at the building
+  line — the front setback — rather than at the kerb (Gresham, Milwaukie),
+  halfway between front and back (Troutdale, Fairview, Wood Village,
+  unincorporated Multnomah), through the centre of the lot (Tualatin), and
+  the average width (Wilsonville). Gresham needed a decision: its glossary
+  and its tables measure in two different places, and the table that states
+  the number won, because it is stricter on exactly the tapered lots the rule
+  exists for.
+
+  What moved, both ways as it must: **19 greens went red** because they are
+  genuinely too narrow (Milwaukie 8, Wood Village 7, Gresham 2, Troutdale 2);
+  **17 lots in the review queue went red** for the same reason; **5 greens
+  went to review** because their width could not be measured (Oregon City 3,
+  West Linn 2); and 1 red lot came back to review. In all, **781 lots now
+  fail on width**, but 681 of those were already failing on something else,
+  which is why 781 becomes 42. Greens by city: Milwaukie 622 → 614, Wood
+  Village 88 → 81, Gresham 1,689 → 1,687, Oregon City 735 → 732, Troutdale
+  115 → 113, West Linn 288 → 286. Portland, Wilsonville and unincorporated
+  Clackamas did not move.
+
+  One forecast was wrong, in the good direction. Retiring Oregon City's
+  street-edge shortcut was expected to send about 76 of its greens to the
+  review queue, because the width measurement had been refusing corner lots
+  — it wanted two "side" lines and a corner lot has a street on the second
+  side. Once the front is chosen the city has already said which lines are
+  the sides (Happy Valley's code says it in as many words), so corner lots
+  are now measured — Oregon City went from 7,630 measured widths to 10,269 —
+  and the 76 turned out to be 3.
+
+- **A county minimum lot size that one of our files says is waived and the
+  county's own words say is 7,000 square feet** — found 2026-09-11, agent
+  work, **no lot at stake today**. Nine unincorporated Clackamas zones (R-5
+  through R-30 and the two village zones) carry no minimum lot size in the
+  screening rules, on a reading that the county waives it for this kind of
+  housing. The county's code, in the section written for exactly our
+  building, says: *"The subject lot shall be a minimum of 7,000 square feet
+  for a quadplex."* The waiver our file relies on is real, but it is for
+  splitting the lot up afterwards, not for putting the building on it. This
+  came out of a new check that looks for a number the code states, a column
+  we have for it, and a blank where the number should be; it found 38 such
+  blanks and this is the sharpest. There are 5,313 lots under 7,000 square
+  feet in those nine zones and every one of them is already red for another
+  reason, so nothing changes colour today — but the next lot in those zones
+  that clears everything else would be graded green on ground the county
+  calls too small. Queued to encode the 7,000; no decision needed.
+
+- **Twenty-four zones where the city states a minimum street frontage and we
+  never apply it** — found 2026-09-11, agent work, **1 green and 68 review
+  lots** would turn red. Gresham 13 zones, Happy Valley 8, Milwaukie 2,
+  Troutdale 1 — all with a street-frontage number in the reference files and
+  a blank in the screen. The hesitation is honest: our street-frontage
+  figure adds up *every* street edge a lot has, so a corner lot with 30 feet
+  on each of two streets reads as 60, which is the lenient direction and
+  would let some corner lots pass a 35-foot rule they might not meet on
+  either street alone. Measured against the summed figure as it stands, it
+  would move one Gresham green and 68 review lots (Happy Valley 36, Gresham
+  23, Milwaukie 9) to red. Small, and the direction is stricter, so it is
+  queued behind the items above rather than done tonight.
+
+- **Fewer lots have a depth number than yesterday, and no verdict moved** —
+  found 2026-09-11 while measuring the width work, agent work. Portland lost
+  a depth on 13,217 lots, Oregon City on 823, Happy Valley on 713; Tualatin
+  lost a width on 176. The cause is a side effect of doing the right thing.
+  Those cities say the front of a lot is its narrowest street edge. Before
+  today the screen quietly picked the narrowest street edge *it could
+  measure a depth from*; now it picks the narrowest street edge, full stop,
+  as the code says — and on a corner lot that is sometimes a tiny clipped
+  corner a few feet long, which is not a street front in any useful sense
+  and from which no depth can be taken (one in ten of the affected lots has
+  a "front" under eight feet). None of those lots changed colour, because
+  they were either already red or in a zone that states no depth. The fix is
+  to stop treating a clipped corner as a front, and it is queued as coverage
+  work, not verdict work.
+
+- **The smaller leftovers of the same blank-cell check**, all agent work, all
+  written down so nothing is invisible: Gresham's TLDR zone states an 8,000
+  square foot minimum lot and Happy Valley's MUR-S a 7,000 that neither
+  screen carries; Milwaukie R-HD and Tualatin RL each state a street-side
+  setback for corner lots we hold nothing for; Gresham's two station-centre
+  zones state a minimum density of 18 homes an acre; and Tualatin RML — the
+  district that is not on the map, above — states a lot width measured a
+  seventh way (front plus rear, halved) that nothing takes, left blank on
+  purpose. Fairview's rule that a lot may not be more than a set number of
+  times deeper than it is wide is now buildable, because depth is measured;
+  it was not before.
