@@ -3367,3 +3367,28 @@ the list of places worth hoping about.
   on purpose rather than guessed: if this building is ever split onto four
   separate lots, a plat does exist, and it is not settled whether the quarter
   then applies.
+- **A district we already encoded was sitting in the "go encode this" queue
+  under five different spellings** — found 2026-09-11, agent work, **486 lots**,
+  and it changes no green. Happy Valley's code book prints one district,
+  MUR-M. The county's map prints its members: MUR-M1, MUR-M2 and MUR-M3 — and
+  two of those again with a stray leading space and a stray lowercase letter,
+  which our ledger had been counting as two further unknown districts. All five
+  were queued as work to encode. The rules already exist; what was missing was
+  the join between the map's name and the code's name. The reading that settles
+  it was written into the file back in August and made conditional on one fact
+  nobody had checked: *if the map prints them, they are three copies of MUR-M.*
+  It does. Nothing joined a note saying "if the map prints X" to the ledger that
+  records whether the map prints X. Aliasing them moves the lots from "we have
+  never heard of this district" to "the city says no", which is the answer
+  MUR-M already gives, so no lot changes colour. Left as its own change because
+  it edits rules.
+- **A district we encoded is not on the map at all** — found 2026-09-11,
+  agent work, no lots at stake today and worth an answer anyway. Tualatin's
+  RML. The city's mapped residential districts are RL and RMH, and no
+  near-spelling explains the gap, so either the district was repealed and the
+  text we read is a superseded edition, or it exists on paper and was never
+  mapped. Published base rates put those at roughly 3% and 15% of all
+  districts, so this will recur and the answer is worth finding once. Note the
+  trap that was deliberately designed out: RML and RMH are one character apart,
+  and a looser matching rule would have called them the same district and sent
+  someone to merge two things Tualatin defines separately.
