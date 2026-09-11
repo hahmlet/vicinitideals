@@ -608,3 +608,37 @@ def test_asking_for_nothing_measures_nothing():
     # sampled and handed a pair of numbers nobody asked for.
     assert orientations(RECT, RECT_EDGES, [0.0], "A") == ()
     assert dimensions(RECT, RECT_EDGES, [0.0], "A") is None
+
+
+def test_a_lot_line_a_thousandth_of_a_foot_out_of_square_is_still_100_ft_deep():
+    """The averaged depth must not be dragged down by a corner it cannot measure.
+
+    Sampled at the far end of the front lot line, a lot whose side lot line
+    leans inward by any amount at all is a single point wide: the vertical cut
+    touches the corner and nothing else. That column has no depth to report --
+    and reporting it as *zero* is the one answer that is certainly wrong, since
+    the lot at that corner runs the full distance to its rear lot line.
+
+    This was measured, not imagined. An independent implementation of the same
+    MMC 19.200 sentence, written before this module existed, counts that corner
+    as a zero-depth sample. Across 4,212 Milwaukie parcels the two agree to a
+    median of 0.004 ft -- except on 971 of them, where this module reads higher
+    by almost exactly one forty-first of the lot's depth, which is one zero in
+    a mean of forty-one samples: 199.98 ft against 195.11, 202.82 against
+    197.88, 100.34 against 95.46.
+
+    So the skip is load-bearing and it is pinned here. The lot below is a plain
+    100 ft deep rectangle whose left lot line is one thousandth of a foot out
+    of square over its whole length -- ordinary surveyed geometry. Its depth is
+    100 ft. Counting the corner would call it 97.6.
+    """
+    leaning = Polygon([(0, 0), (50, 0), (50, 100), (0.001, 100)])
+    edges = [
+        [0, 0, 50, 0, "F"],
+        [50, 0, 50, 100, "S"],
+        [50, 100, 0.001, 100, "R"],
+        [0.001, 100, 0, 0, "S"],
+    ]
+    got = dimensions(leaning, edges, [0.0], "A", depth_measure="average")
+    assert got is not None
+    assert got.depth_ft == pytest.approx(100.0, abs=0.05)

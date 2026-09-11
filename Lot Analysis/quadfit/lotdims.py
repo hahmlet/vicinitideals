@@ -149,6 +149,43 @@ declares no definitions chapter, and is switched off in this screen anyway.
 **West Linn**'s first width row is headed "Minimum lot width AT FRONT LOT
 LINE", so its number is the street edge s4 already measures and nothing here
 may touch it; only its *average* row is measured here.
+
+Checked against a second implementation
+---------------------------------------
+
+Run on 2026-09-11 over the 6,931 Milwaukie parcels in ``s4_lots.parquet``,
+against ``/root/milw_dims.py`` on LXC 137 -- an implementation of the same two
+MMC 19.200 sentences, written the day before this module existed and sharing no
+code with it.
+
+``building_line`` **width agreed on 4,178 of 4,212 single-front parcels within
+1 ft, median 0.03 ft.** Two readings of one sentence, arriving at the same line.
+
+``average`` depth agreed to a median of **0.004 ft on 3,132 parcels** and then
+parted company on 1,080, and the disagreement is worth more than the agreement
+because it found a bug -- in the other one, twice:
+
+* **971 parcels, this module reading higher by ~1/41 of the depth.** The other
+  implementation samples 41 columns across the front lot line and counts the
+  degenerate one at the far corner -- where the cut touches a single point --
+  as a *zero-depth* sample. One zero in a mean of forty-one: 199.98 ft against
+  195.11, 202.82 against 197.88. :func:`_column` returns ``None`` there
+  instead, which is why. Pinned by
+  ``test_a_lot_line_a_thousandth_of_a_foot_out_of_square_is_still_100_ft_deep``.
+* **A rounded frame, worth 2.387 ft of median error.** The other implementation
+  buckets street-facing edges to 5 degrees and then rotates the lot by the
+  *bucket*, up to 2.50 degrees off the real bearing. Re-run on the true bearing
+  its median disagreement with this module fell from 2.387 ft to 0.004 ft,
+  which is what identifies the frame as the cause rather than the arithmetic.
+
+The 109 still apart by over 5 ft are flag lots and parcels whose body is not
+attached to their own frontage, where this module measures only the piece
+standing on the front lot line and the other measures to the far side of the
+parcel. That is the conservative direction and it is deliberate.
+
+On Milwaukie's own standards the two methods do not deliver the same verdict:
+291 R-MD parcels fail ``min_lot_depth_ft`` here against the reference's 411,
+and 264 of the 291 fail facing *every* street they touch.
 """
 
 from __future__ import annotations
