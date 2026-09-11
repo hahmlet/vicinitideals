@@ -37,7 +37,7 @@ TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
 from common import load_rules, read_stage, write_stage
-from lotdims import dimensions, width_ft
+from lotdims import dimensions
 
 PARALLEL_TOL_DEG = 30.0
 BEARING_CLUSTER_TOL_DEG = 20.0
@@ -181,45 +181,61 @@ def main() -> None:
     lots["front_bearings_json"] = [json.dumps(r["front_bearings"]) for r in results]
     lots["frontage_ft"] = [r["frontage_ft"] for r in results]
 
-    # Lot WIDTH, where a city's code asks for one, which is a different line on
-    # the same parcel from the frontage measured above. Taken here because this
-    # is where the edges are classified and it needs nothing else; NaN where
-    # the city states a frontage instead, or where the shape declines to be
-    # measured. `lotdims.py` carries the definitions and the refusals.
-    widths = []
-    for juris, geom, r in zip(lots["jurisdiction"], lots["geom"], results):
-        j = rules.jurisdictions.get(juris)
-        measure = None if j is None else j.lot_width_measure
-        w = width_ft(measure, geom, r["edges"], r["front_bearings"], r["tier"])
-        widths.append(float("nan") if w is None else w)
-    lots["lot_width_ft"] = widths
-    measured = int(np.isfinite(np.array(widths, dtype=float)).sum())
-    print(f"s4 lot width measured on {measured:,} lots")
-
-    # Lot DEPTH, the other axis, where a city's code defines one. Ten of the
-    # thirteen cities that state a width or a depth define this and nothing had
-    # ever taken it -- thirty-eight zones in the FLATS corpus state a minimum
-    # lot depth and every one of them went unchecked, because `area /
-    # frontage_ft` is not a depth and there was nothing else.
+    # Lot WIDTH and lot DEPTH, where a city's code defines them -- two
+    # different lines on the same parcel from the frontage measured above, and
+    # from each other. Taken here because this is where the edges are
+    # classified; NaN where the city defines no measure, or where the shape
+    # declines to be measured. `lotdims.py` carries the definitions, the
+    # citations and the refusals.
     #
-    # Taken in its own pass rather than folded into the width call above, and
-    # that is deliberate: the width measurement is live in two cities' verdicts
-    # and this must be able to be wrong without moving it.
-    depths = []
-    for juris, geom, r in zip(lots["jurisdiction"], lots["geom"], results):
+    # One call per lot, not one per axis, and that is the point. Where the
+    # city lets the applicant choose the front lot line, the lot conforms if
+    # ONE front satisfies BOTH standards -- a corner lot that is wide enough
+    # facing north and deep enough facing east conforms to neither -- so the
+    # zone's width and depth floors go in with the geometry and `pick` chooses
+    # a single front against both. The front setback goes in too, because two
+    # of the six width forms are taken at the building line rather than the
+    # kerb, and both are banded by lot area in the zones that state them.
+    #
+    # Until 2026-09-11 the width was taken in its own pass with no standard
+    # and no setback, which refused Milwaukie's and Gresham's form outright
+    # and, under `applicant_choice`, reported the most generous depth rather
+    # than the depth of the front the lot would actually be built to face.
+    widths, depths = [], []
+    for juris, zraw, area, geom, r in zip(
+        lots["jurisdiction"], lots["zone_raw"], lots["area_sqft"],
+        lots["geom"], results,
+    ):
         j = rules.jurisdictions.get(juris)
-        if j is None or not j.lot_depth_measure:
+        if j is None or not (j.lot_width_measure or j.lot_depth_measure):
+            widths.append(float("nan"))
             depths.append(float("nan"))
             continue
+        rule = j.rule_for(zraw)
+        a = None if area is None else float(area)
         o = dimensions(
             geom, r["edges"], r["front_bearings"], r["tier"],
+            width_measure=j.lot_width_measure,
             depth_measure=j.lot_depth_measure,
             front_rule=j.front_lot_line_rule,
+            front_setback_ft=(
+                None if rule is None else rule.effective_setback_front_ft(a)
+            ),
+            min_width_ft=(
+                None if rule is None else rule.banded("min_lot_width_ft", a)
+            ),
+            min_depth_ft=None if rule is None else rule.min_lot_depth_ft,
+        )
+        widths.append(
+            float("nan") if o is None or o.width_ft is None else o.width_ft
         )
         depths.append(
             float("nan") if o is None or o.depth_ft is None else o.depth_ft
         )
+    lots["lot_width_ft"] = widths
     lots["lot_depth_ft"] = depths
+    measured = int(np.isfinite(np.array(widths, dtype=float)).sum())
+    print(f"s4 lot width measured on {measured:,} lots")
     deep = int(np.isfinite(np.array(depths, dtype=float)).sum())
     print(f"s4 lot depth measured on {deep:,} lots")
 

@@ -150,9 +150,38 @@ class ZoneRule(BaseModel):
     # Minimum lot area for a quadplex where the code sets one (e.g. Portland
     # Table 110-7). Lots below this drop in the s3 funnel.
     min_lot_sqft: float | None = None
-    # Minimum street frontage for residential use where the code sets one
-    # (e.g. Gresham CMF 100 ft). Gates fits in s6 (frontage known after s4).
+    #: Minimum STREET FRONTAGE where the code states one -- the run of
+    #: boundary that touches a street, which is the line s4's `frontage_ft`
+    #: measures. Gresham's CMF asks 100 ft of it; West Linn heads its row
+    #: "Minimum lot width AT FRONT LOT LINE", which is the same edge under
+    #: another name. Compared against `frontage_ft` in s7 and nothing else.
+    #:
+    #: Until 2026-09-11 this column also carried Oregon City's and Tualatin's
+    #: lot WIDTH, flagged by a jurisdiction-level `frontage_is_lot_width`
+    #: because there was nowhere else to put a number the code measures across
+    #: the middle of the lot. That number now has its own column below, the
+    #: flag is gone, and this one means one thing everywhere.
     min_frontage_ft: float | None = None
+    #: Minimum LOT WIDTH where the code states one, measured the way this
+    #: city's glossary says to (`JurisdictionRules.lot_width_measure`) and
+    #: compared against s4's `lot_width_ft`. Sixty-seven zones in eleven
+    #: cities state one; until this column existed only Oregon City's and
+    #: Tualatin's were applied, and those through the frontage column above.
+    #:
+    #: Not the same line as the frontage, and the difference is the whole
+    #: reason for two columns: a cul-de-sac wedge is 30 ft at the street and
+    #: 70 across the middle, a flag lot is 15 at the street and 60 behind the
+    #: pole, and a lot with generous frontage can be pinched behind it. The
+    #: measurement rules both ways. Where the shape declines to be measured
+    #: the lot is held for review, on the same terms as `min_lot_depth_ft`.
+    #:
+    #: Banded in Milwaukie's R-MD through `lot_size_bands`, where the width a
+    #: lot owes depends on its area; read it with `banded("min_lot_width_ft",
+    #: area)`. Corner-lot variants (Gresham asks 40 on a corner where it asks
+    #: 35 inside the block) are not carried, on the same convention as every
+    #: other corner-lot row in this file: the interior figure is the base and
+    #: the corner one is a site fact this file has no slot for.
+    min_lot_width_ft: float | None = None
     #: Front lot line to rear lot line, where a code states a floor on it.
     #: Thirty-five zones in eight cities state one and until this column
     #: existed not one of them was ever applied: the standard was encoded in
@@ -332,35 +361,25 @@ class JurisdictionRules(BaseModel):
     # axis, everywhere verified so far; axis_required restricts fit testing to
     # width-facing placements only.
     orientation_constraint: OrientationConstraint = "entrance_only"
-    # This city's dimensional table states a LOT WIDTH and defines it as
-    # measured across the MIDDLE of the lot -- Oregon City 17.04.700 "between
-    # the midpoints of the two principal opposite side lot lines", Tualatin TDC
-    # 31.060 "at the center of the lot". `min_frontage_ft` carries that number
-    # because there is nowhere else to put it, but s4 measures the run of
-    # boundary that TOUCHES A STREET, which is a different line on the same
-    # parcel: identical on a rectangle, nothing alike on a wedge, a flag lot or
-    # anything that tapers toward the road.
-    #
-    # Where this is set, falling short sends the lot to REVIEW instead of
-    # dropping it in the funnel. The pipeline cannot take the measurement the
-    # code asks for, and a lot the screen is unable to judge belongs in front of
-    # a person, not in the red pile. It cannot turn anything green.
-    #
-    # Leave it false where the table pins the measurement to the street edge --
-    # West Linn heads the row "Minimum lot width AT FRONT LOT LINE", so its
-    # number is the one s4 measures and its exclusions are sound.
-    frontage_is_lot_width: bool = False
-
-    #: How this city's code says to measure that width, when it says. Set it
-    #: and the screen takes the measurement and rules on it; leave it unset and
-    #: the number keeps the treatment above -- short on frontage goes to review
-    #: rather than red, because nothing has been measured to decide with.
+    #: How this city's code says to measure a lot's WIDTH, when it says. Six
+    #: forms across eleven cities -- `side_midpoints` (Oregon City, Happy
+    #: Valley, Portland, West Linn's average row), `midway_front_rear`
+    #: (Troutdale, Fairview, Wood Village, unincorporated Multnomah),
+    #: `center_parallel` (Tualatin), `building_line` (Milwaukie, Gresham),
+    #: `mean_width` (Wilsonville) and `setback_rectangle` (Portland's
+    #: single-dwelling zones, which state no width yet). `lotdims.py` carries
+    #: the definitions, the citations and the refusals.
     #:
-    #: `side_midpoints` is Oregon City's definition, `center_parallel` is
-    #: Tualatin's; the two are not the same measurement and `lotdims.py` says
-    #: why. The measurement is refused on irregular lots, and on corner lots
-    #: under Tualatin's definition, so a city with this set still falls back to
-    #: the frontage treatment on every lot the measurement declines.
+    #: s4 takes the measurement on every tier A/B lot in the city; s7 compares
+    #: it against each zone's `min_lot_width_ft`. A lot the shape declines --
+    #: tier C/D, a body detached from its frontage, a Tualatin corner lot --
+    #: is held for REVIEW where its zone states a width, because a standard
+    #: nobody could apply is not a standard the lot passed. That is the same
+    #: bargain the depth strikes, and until 2026-09-11 it was NOT the bargain
+    #: the width struck: an unmeasured Oregon City lot fell back to its street
+    #: frontage as a proxy, passing on it if it cleared the number. The proxy
+    #: is retired; what it was holding up is counted in the commit that
+    #: retired it.
     lot_width_measure: str | None = None
 
     #: How this city's code says to measure a lot's DEPTH, when it says. Ten
@@ -368,12 +387,7 @@ class JurisdictionRules(BaseModel):
     #: three distinct forms -- `midpoints` (front lot line's midpoint to the
     #: rear lot line's), `average` (the mean distance across the frontage) and
     #: `mid_width` (one line up the middle). `lotdims.py` carries the
-    #: definitions and the refusals.
-    #:
-    #: Unlike the width above, setting this changes no verdict on its own:
-    #: `rules.yaml` has no minimum-depth slot to compare against, so what it
-    #: buys is the measurement itself, which FLATS holds thirty-eight encoded
-    #: standards for and had never once been able to take.
+    #: definitions and the refusals. Compared against `min_lot_depth_ft`.
     lot_depth_measure: str | None = None
 
     #: Which street-facing edge is the FRONT lot line, where a lot faces more
@@ -389,6 +403,9 @@ class JurisdictionRules(BaseModel):
     #: "the front lot line is determined by the orientation necessary to
     #: achieve minimum required lot depth" -- and Milwaukie, Happy Valley and
     #: Troutdale hand the same choice to the applicant in their own words.
+    #: Under `applicant_choice` the width and the depth must be satisfied by
+    #: ONE front, which is why s4 takes both in a single call with the zone's
+    #: standards to hand rather than the best of each separately.
     #:
     #: Left unset the measurement is taken only where the answer cannot matter,
     #: which is a lot with one street-facing direction. A city that does not

@@ -51,63 +51,58 @@ RM, Happy Valley's R20CC says R20. `like:` is how the corpus writes that, on
 purpose, so a reference keeps tracking its source instead of going stale as a
 copy. Reading a zone's own block and stopping there makes every one of them
 look unread, and this audit did exactly that until it was taught to walk the
-chain. The other fifteen were nothing of the kind either. rules.yaml calls the standard `min_frontage_ft`; the corpus reads it off a
-row headed "Minimum lot width" and files it as `min_lot_width_ft`. Every number
-agrees. What does not necessarily agree is the LINE ON THE GROUND. s7 measures
-the run of boundary that touches a street; Oregon City 17.04.700 measures
-"between the midpoints of the two principal opposite side lot lines" and
-Tualatin TDC 31.060 "at the center of the lot". On a rectangle those are the
-same. On a cul-de-sac wedge, a flag lot or anything that tapers they are not,
-and 988 lots -- 896 in Oregon City, 92 in Tualatin -- are currently excluded at
-`below_min_frontage` by a number the code never applied to their street edge.
-605 of them already FIT: the pod is drawn inside the envelope, clears every
-setback, and the lot dies at a gate three steps earlier. 605 is a ceiling
-rather than a recovery, because some would fail the real mid-lot width too.
-West Linn is the control: its tables head the row "Minimum lot width AT FRONT
-LOT LINE", which is the same edge, and its 739 exclusions stand.
+chain. The other fifteen were nothing of the kind either: rules.yaml called
+the standard `min_frontage_ft` and the corpus read it off a row headed "Minimum
+lot width" and filed it as `min_lot_width_ft`. Every number agreed. What did
+not agree was the LINE ON THE GROUND -- s7 measures the run of boundary that
+touches a street, and Oregon City 17.04.700 measures "between the midpoints of
+the two principal opposite side lot lines" -- and for a year the pipeline
+tested one against the other, excluding 988 lots at `below_min_frontage` on a
+number the code never applied to their street edge.
 
-WHAT WEST LINN BEING THE CONTROL DOES NOT COVER, recorded 2026-09-10 so the next
-reader need not re-derive it. Those same tables print a SECOND width row under
-the first -- "Average minimum lot width" -- and CDC 02.030 defines it: "Average
-lot width is measured at the midpoints of opposite lot lines", which is word for
-word Oregon City's OCMC 17.04.700 and is already implemented here as the
-`side_midpoints` measure in lotdims.py. The FLATS corpus now holds it on
-`min_average_lot_width_ft` in eight West Linn zones, and in two of them it is
-stricter than the front-line figure: R-15 asks 45 ft at the street and 80 ft
-across the middle, R-10 asks 35 and 50, roughly 20,100 lots between them. This
-pipeline screens neither of those, because rules.yaml has one width slot and
-`lot_width_measure` names one measure per city -- so carrying both is a change
-to that shape rather than another row in a table. The alias below stays safe;
-what is missing is a second standard nothing is tested against, and the
-direction of that error is a possible false GREEN on a lot that tapers, not a
-false RED.
-
-That one is not fixed here, because fixing it needs a measurement the pipeline
-does not take. Deleting the gate instead would trade 988 possible false reds for
-an unknown number of false greens, which is the wrong direction for a screen
-whose whole job is to be trusted when it says yes.
+CLOSED 2026-09-11 by a column. `ZoneRule.min_lot_width_ft` now exists, s4
+measures the width the way each city's own glossary says to, s7 judges it at
+`below_min_lot_width`, and sixty-four zones in eleven cities carry the figure
+under its own name -- so MIRRORED compares it directly and the alias below has
+shrunk to the one city where the corpus's "lot width" really is the street
+edge. West Linn heads its row "Minimum lot width AT FRONT LOT LINE" and then
+prints a SECOND width row beneath it, "Average minimum lot width", which CDC
+02.030 measures "at the midpoints of opposite lot lines" -- word for word
+Oregon City's form. Both rows are now carried: the first as `min_frontage_ft`
+(the alias, same edge), the second as `min_lot_width_ft`, which REMAPPED sends
+to the corpus's `min_average_lot_width_ft` for that one city so the audit
+compares 50 against 50 rather than 50 against the front-line 35.
 
 MILWAUKIE STATES A STREET FRONTAGE AND THIS PIPELINE APPLIES NONE, found
-2026-09-10 by the banded-standards check going red and read out here because it
-is the larger half of what that check found. MMC Table 19.301.4 row B.3.b prints
-35 / 30 / 35 / 35 feet of street frontage for a standard lot in R-MD across the
-four lot-area columns, and Table 19.302.4 prints a single 35 for R-HD. The FLATS
-corpus holds both. rules.yaml holds neither -- `min_frontage_ft` is simply unset
-in both zones -- so nothing is screened, band or flat.
-
-This is NOT the lot-width alias problem below. Milwaukie heads its row "Minimum
-street frontage requirements", which is the run of boundary s4 measures, so the
-number would go straight into the gate with no `frontage_is_lot_width` caveat
-and no new measurement to invent. What stops it being a one-line fix is the
-consequence: `frontage_is_lot_width` is false for Milwaukie, so a lot short of
-35 ft would go RED rather than to review, and the pipeline would drop lots it
-currently passes. That is a change to published counts and belongs in a commit
-that says so, not as a rider on a corpus commit. Left as debt, deliberately, and
-the entry in FLAT_BUT_BANDED points back here.
+2026-09-10 by the banded-standards check going red. MMC Table 19.301.4 row
+B.3.b prints 35 / 30 / 35 / 35 feet of street frontage for a standard lot in
+R-MD across the four lot-area columns, and Table 19.302.4 prints a single 35
+for R-HD. The FLATS corpus holds both. rules.yaml holds neither, and it is not
+alone: Gresham, Happy Valley and Troutdale's HDR all print a street frontage
+the corpus reads and this file leaves blank, twenty-four zones between them.
+Milwaukie heads its row "Minimum street frontage requirements", which is the
+edge s4 measures, so none of these needs a new measurement -- what stops them
+being a one-line fix is that a lot short of the number goes RED, and dropping
+lots the screen currently passes is a change to published counts that belongs
+in a commit that says so. Left as debt, deliberately; `unfilled_standards()`
+is the ledger that now carries it, so it cannot be forgotten twice.
 
 The band itself is the smaller half and is safe either way: the one column that
 differs, 3,000-4,999 sq ft at 30 ft, is a relaxation, so a flat 35 would be
 stricter than the city there and never looser.
+
+A COLUMN THAT EXISTS AND A ROW LEFT BLANK, the shape `unfilled_standards()`
+was built for on 2026-09-11 and the first thing it found was not about width.
+`unexpressible_standards()` asks whether rules.yaml HAS a column; once a column
+exists corpus-wide, a zone that leaves it empty is invisible to that check and
+to `scan()`, which only compares numbers both files state. Nine Clackamas
+County zones leave `min_lot_sqft` blank on a written reading that ZDO 845
+waives the minimum for a middle-housing land division; the corpus reads the
+same section as a 7,000 sq ft floor on the lot a quadplex stands on. Two
+readings of one page, and the blank row is the only place they meet. Not
+settled here -- the direction is a possible false GREEN, so it is a question
+for the county text and its own commit -- but it is frozen in the tests now
+rather than carried in nobody's head.
 
 Variant-aware on purpose. A corpus value is a base plus banded and conditioned
 variants -- Wilsonville PDR-1's front setback is 15 on a small lot and 20 on a
@@ -133,8 +128,9 @@ REPO = Path(__file__).resolve().parents[2]
 RULES = REPO / "Lot Analysis" / "quadfit" / "config" / "rules.yaml"
 
 #: rules.yaml zone key -> FLATS field registry name. Only the dimensions both
-#: sides state. Height and depth are deliberately absent: rules.yaml keeps them
-#: in prose in its `notes`, so there is nothing to compare.
+#: sides state. Height is deliberately absent: rules.yaml keeps it in prose in
+#: its `notes`, so there is nothing to compare. Width and depth joined on
+#: 2026-09-11, the day each got a column of its own.
 MIRRORED: dict[str, str] = {
     "setback_front_ft": "setback_front_ft",
     "setback_side_ft": "setback_side_ft",
@@ -143,7 +139,26 @@ MIRRORED: dict[str, str] = {
     "min_lot_sqft": "min_lot_sqft",
     "max_coverage_pct": "max_coverage_pct",
     "min_frontage_ft": "min_frontage_ft",
+    "min_lot_width_ft": "min_lot_width_ft",
+    "min_lot_depth_ft": "min_lot_depth_ft",
     "min_density_du_per_acre": "min_density_du_per_acre",
+}
+
+#: (jurisdiction, rules.yaml zone key) -> the corpus field it holds in THAT
+#: city, where MIRRORED's corpus-wide name would be the wrong one. Consulted
+#: before MIRRORED everywhere a rules.yaml number meets a corpus value.
+#:
+#: West Linn prints two width rows on two lines of the ground and the corpus
+#: files them apart: "Minimum lot width at front lot line" as
+#: `min_lot_width_ft` and "Average minimum lot width" -- CDC 02.030, "at the
+#: midpoints of opposite lot lines" -- as `min_average_lot_width_ft`. This
+#: pipeline holds the first as `min_frontage_ft`, because that IS the street
+#: edge (see ALIASES), and the second as `min_lot_width_ft` under the
+#: `side_midpoints` measure. Read West Linn's `min_lot_width_ft` against the
+#: corpus's `min_lot_width_ft` and R-10 reports 50 against 35, which is two
+#: rows of one table and not a drift.
+REMAPPED: dict[tuple[str, str], str] = {
+    ("west_linn", "min_lot_width_ft"): "min_average_lot_width_ft",
 }
 
 #: rules.yaml names a standard the corpus files under a different name. A match
@@ -153,21 +168,23 @@ MIRRORED: dict[str, str] = {
 #:
 #: s7 compares a lot's measured `frontage_ft` -- the run of boundary that
 #: touches a street -- against `min_frontage_ft`. A code's "lot width" is
-#: usually not that. Oregon City 17.04.700 measures it "between the midpoints of
-#: the two principal opposite side lot lines"; Tualatin TDC 31.060 measures it
-#: "at the center of the lot". Both are the middle of the lot, not the street
-#: edge, and a wedge lot on a cul-de-sac passes one and fails the other.
+#: usually not that, and until 2026-09-11 Oregon City's and Tualatin's mid-lot
+#: widths sat in this column for want of another; they now sit in
+#: `min_lot_width_ft` and the alias fires only where the code's "lot width" is
+#: genuinely the street edge.
 ALIASES: dict[str, str] = {"min_frontage_ft": "min_lot_width_ft"}
 
 #: The jurisdictions where the alias is safe, and why. Per-city on purpose:
 #: this is a question about one table's wording, and the answer does not
-#: travel. Anything not listed here is screening the wrong edge.
+#: travel. Anything not listed here is screening the wrong edge, and the fix
+#: is to move the number to `min_lot_width_ft`, not to add a line here.
 ALIAS_SAME_EDGE: dict[str, str] = {
     "west_linn": (
         "CDC 08.070 through 16.070 head the row 'Minimum lot width AT FRONT "
         "LOT LINE' and print a second 'Average minimum lot width' beneath it. "
         "The first is the street edge, which is what s7 measures, and it is "
-        "the one rules.yaml carries."
+        "the one `min_frontage_ft` carries; the second is carried as "
+        "`min_lot_width_ft` and compared through REMAPPED."
     ),
 }
 
@@ -426,6 +443,7 @@ def banded_standards() -> list[str]:
     for juris, z, zl, layer in _pairs(top, corpus):
         held_all = z.get("lot_size_bands") or {}
         for mine, theirs in MIRRORED.items():
+            theirs = REMAPPED.get((juris, mine), theirs)
             value = zl.values.get(theirs) or layer.defaults.get(theirs)
             if value is None:
                 continue
@@ -477,30 +495,100 @@ def unexpressible_standards() -> dict[str, list[str]]:
     how many zones each one is silent on.
     """
     top, corpus = _load()
-    # What rules.yaml can express is every column it actually uses, not a
-    # hand-kept list. Reading it off the file is the difference between a
-    # ledger that shrinks when a column is added and one that has to be
-    # remembered -- and this ledger exists because something was not
-    # remembered.
-    carried = {"quadplex_allowed", "coverage_curve", "orientation_constraint",
-               "max_far", "max_height_ft"}
-    for _, spec in top.items():
-        if not isinstance(spec, dict) or "zones" not in spec:
-            continue
-        for row in spec["zones"] or []:
-            for key in row:
-                carried.add(MIRRORED.get(key, key))
+    expressible = _expressible(top)
     out: dict[str, list[str]] = {}
     for juris, z, eff, layer in _pairs(top, corpus):
         for field, value in eff.values.items():
             if value is None or value.value is None:
                 continue
-            if field in carried:
+            if field in expressible[juris]:
                 continue
             if field in ROUTED_ELSEWHERE:
                 continue
             out.setdefault(field, []).append(f"{juris}/{z['zone']}")
     return {k: sorted(v) for k, v in sorted(out.items(), key=lambda kv: -len(kv[1]))}
+
+
+def _expressible(top: dict) -> dict[str, set[str]]:
+    """Per jurisdiction, the corpus fields rules.yaml has somewhere to put.
+
+    What rules.yaml can express is every column it actually uses, not a
+    hand-kept list. Reading it off the file is the difference between a ledger
+    that shrinks when a column is added and one that has to be remembered --
+    and this ledger exists because something was not remembered.
+
+    Per jurisdiction because REMAPPED is: West Linn's `min_lot_width_ft`
+    column reaches the corpus's `min_average_lot_width_ft`, and nobody else's
+    does. A Tualatin RML "average lot width" -- TDC 31.060's front-plus-rear
+    over two, a different measurement under the same words -- would land in
+    the same corpus field and must NOT read as expressible on the strength of
+    a West Linn remap.
+    """
+    columns = {"quadplex_allowed", "coverage_curve", "orientation_constraint",
+               "max_far", "max_height_ft"}
+    for spec in top.values():
+        if not isinstance(spec, dict) or "zones" not in spec:
+            continue
+        for row in spec["zones"] or []:
+            columns.update(row)
+    base = {MIRRORED.get(k, k) for k in columns}
+    base |= {ALIASES[k] for k in columns if k in ALIASES}
+    out: dict[str, set[str]] = {}
+    for juris in top:
+        out[juris] = base | {
+            theirs for (j, mine), theirs in REMAPPED.items()
+            if j == juris and mine in columns
+        }
+    return out
+
+
+def unfilled_standards() -> list[str]:
+    """Zones where the corpus states a number, rules.yaml has the column, and
+    the row is blank.
+
+    The gap between the other two checks. `scan()` compares numbers both files
+    state; `unexpressible_standards()` asks whether a column exists at all.
+    Neither sees a column that exists corpus-wide and is empty in one zone --
+    which is exactly what a deliberate omission looks like, and exactly what a
+    forgotten one looks like too. Milwaukie's street frontage sat in that gap
+    for a day as prose in this file's docstring before this existed; Tualatin
+    RML's lot width is filed there on purpose, because TDC 31.060's "average
+    lot width" is a seventh form lotdims.py does not take; nine Clackamas
+    County minimum-lot rows are there on a reading of ZDO 845 the corpus does
+    not share. Three different reasons, one shape, and the shape is what the
+    frozen list in tests/test_zone_mirror.py holds so each reason has to be
+    written down.
+
+    Skips zones rules.yaml does not screen -- `quadplex_allowed: false`, or a
+    jurisdiction switched off with `eligible: false` -- because a dimension
+    nothing measures against is not a gap. Skips a row the alias covers, since
+    West Linn's front-line width IS carried, under `min_frontage_ft`. Counts a
+    band as filled.
+    """
+    top, corpus = _load()
+    aliased = {(a.jurisdiction, a.zone, a.corpus_field) for a in aliases()}
+    out: list[str] = []
+    for juris, z, zl, layer in _pairs(top, corpus):
+        if not top[juris].get("eligible", True) or not z.get("quadplex_allowed"):
+            continue
+        bands = z.get("lot_size_bands") or {}
+        for mine, theirs in MIRRORED.items():
+            theirs = REMAPPED.get((juris, mine), theirs)
+            if z.get(mine) is not None or bands.get(mine):
+                continue
+            if (juris, z["zone"], theirs) in aliased:
+                continue
+            value = zl.values.get(theirs) or layer.defaults.get(theirs)
+            if value is None:
+                continue
+            limbs = _limbs(value)
+            if not limbs:
+                continue
+            out.append(
+                f"{juris}/{z['zone']}.{mine} corpus {theirs}="
+                f"{'/'.join(_n(v) for v in limbs)}"
+            )
+    return sorted(out)
 
 
 def unscreened_zones() -> dict[str, list[str]]:
@@ -682,7 +770,7 @@ def aliases() -> list[Alias]:
             shipped = z.get(mine)
             if shipped is None:
                 continue
-            theirs = MIRRORED.get(mine, mine)
+            theirs = REMAPPED.get((juris, mine), MIRRORED.get(mine, mine))
             if zl.values.get(theirs) or layer.defaults.get(theirs):
                 continue  # the corpus states it under its own name
             value = zl.values.get(alt) or layer.defaults.get(alt)
@@ -739,6 +827,7 @@ def scan() -> tuple[list[Divergence], list[str], int]:
             shipped = z.get(mine)
             if shipped is None:
                 continue
+            theirs = REMAPPED.get((juris, mine), theirs)
             shipped = _stepped_back(z, mine, float(shipped))
             value = zl.values.get(theirs) or layer.defaults.get(theirs)
             if value is None:
@@ -779,7 +868,8 @@ def main() -> None:
         print("   ", a)
     if wrong_edge:
         print("    ^ these compare a lot's STREET FRONTAGE against a width the")
-        print("      code measures across the middle of the lot. See ALIASES.")
+        print("      code measures across the middle of the lot. Move the number")
+        print("      to min_lot_width_ft and set lot_width_measure. See ALIASES.")
 
     print(f"{len(uncited)} stated by rules.yaml with nothing in the corpus behind them")
     for u in uncited:
@@ -806,6 +896,12 @@ def main() -> None:
           f"has no column for and no other way in")
     for field, zones in unexpressible.items():
         print(f"    {field}: {len(zones)} zones")
+
+    unfilled = unfilled_standards()
+    print(f"{len(unfilled)} rows where the corpus states a number, the column "
+          f"exists, and rules.yaml leaves it blank")
+    for row in unfilled:
+        print("   ", row)
 
     unscreened = unscreened_zones()
     n = sum(len(v) for v in unscreened.values())

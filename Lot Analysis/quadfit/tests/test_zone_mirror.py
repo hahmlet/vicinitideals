@@ -348,9 +348,9 @@ def test_the_village_zone_mirrors_exactly() -> None:
     assert v["confidence"] == "needs_verification"
 
 
-#: The fifteen dimensions the two files hold under different names, split by
-#: whether the two names measure the same line on the ground. Frozen as keys so
-#: a newly encoded city cannot join either list silently -- the whole point is
+#: The dimensions the two files hold under different names, split by whether
+#: the two names measure the same line on the ground. Frozen as keys so a
+#: newly encoded city cannot join either list silently -- the whole point is
 #: that the safe half and the unsafe half look identical until somebody reads
 #: the table heading.
 KNOWN_ALIAS_SAME_EDGE: frozenset[str] = frozenset({
@@ -361,27 +361,27 @@ KNOWN_ALIAS_SAME_EDGE: frozenset[str] = frozenset({
     "west_linn/R-2.1.min_frontage_ft",
 })
 
-KNOWN_ALIAS_WRONG_EDGE: frozenset[str] = frozenset({
-    "oregon_city/R-10.min_frontage_ft", "oregon_city/R-8.min_frontage_ft",
-    "oregon_city/R-6.min_frontage_ft", "oregon_city/R-5.min_frontage_ft",
-    "oregon_city/R-3.5.min_frontage_ft", "tualatin/RL.min_frontage_ft",
-    # R-2 joined on 2026-09-08, encoded the same day, and it joins the UNSAFE
-    # half for the same reason its five siblings are here: 17.04.700 is one
-    # definition for the whole city. Ported anyway rather than left out --
-    # withholding the number would drop the district at `zone_not_in_rules`
-    # instead of over-excluding at `below_min_frontage`, and a lot the screen
-    # never looks at is worse than one it looks at too strictly.
-    "oregon_city/R-2.min_frontage_ft",
-})
+#: EMPTY since 2026-09-11, and it held seven rows for a year before that: six
+#: Oregon City zones and Tualatin's RL, every one a mid-lot WIDTH -- OCMC
+#: 17.04.700 "between the midpoints of the two principal opposite side lot
+#: lines", TDC 31.060 "at the center of the lot" -- carried in a street
+#: frontage column because there was no other, and judged against the street
+#: edge because that is what the column is judged against. They left by a
+#: column: `ZoneRule.min_lot_width_ft` exists, the seven numbers moved into
+#: it, and MIRRORED compares them under their own name. The list stays because
+#: the way onto it is still open -- port a city's "lot width" into
+#: `min_frontage_ft` and it lands here -- and the way off is the same as it
+#: was: move the number, name the measure.
+KNOWN_ALIAS_WRONG_EDGE: frozenset[str] = frozenset()
 
 
 def test_the_frontage_numbers_are_quoted_after_all() -> None:
-    """These fifteen read as uncited and were not.
+    """These nine read as uncited and were not.
 
     rules.yaml calls the standard `min_frontage_ft`; the corpus reads it off a
     row headed "Minimum lot width" and files it under that name. Every number
     matches a limb of the corpus value, which is the part that is fine. The
-    part that is not fine is the next test.
+    part that has to stay fine is the next test.
     """
     audit = _audit()
     alias = audit.aliases()
@@ -401,23 +401,23 @@ def test_the_frontage_numbers_are_quoted_after_all() -> None:
     assert not [u for u in uncited if "min_frontage_ft" in u], uncited
 
 
-def test_six_of_them_measure_the_wrong_line_on_the_lot() -> None:
-    """The finding, frozen.
+def test_none_of_them_measure_the_wrong_line_on_the_lot() -> None:
+    """The finding, frozen -- at zero, which is where it took a column to get.
 
     s7 compares a lot's measured `frontage_ft` -- boundary that touches a
     street -- against `min_frontage_ft`. Oregon City 17.04.700 defines lot
     width "between the midpoints of the two principal opposite side lot lines";
     Tualatin TDC 31.060 measures it "at the center of the lot". Neither is the
-    street edge. West Linn heads its row "Minimum lot width AT FRONT LOT LINE",
-    which is, and that is the only reason its nine are safe.
+    street edge, and for a year both sat in the frontage column and were
+    judged against it: 896 Oregon City lots and 92 Tualatin lots excluded at
+    `below_min_frontage` on a line the code never measured, 605 of them
+    already fitting the pod inside their own envelope.
 
-    896 Oregon City lots and 92 Tualatin lots are excluded at
-    `below_min_frontage` today, and 605 of them already fit the pod inside
-    their own envelope -- drawn, clearing every setback, killed at a gate three
-    steps before anything looked at the building. Closing this needs a
-    lot-width measurement the pipeline does not take; deleting the gate instead
-    would buy at most those 605 back at the price of an unknown number of false
-    greens.
+    Since 2026-09-11 those numbers live in `min_lot_width_ft`, s4 takes the
+    measurement each city's glossary describes, and the alias fires only in
+    West Linn, whose tables head the row "Minimum lot width AT FRONT LOT
+    LINE". That is the only reason its nine are safe, and it is asserted
+    below rather than assumed.
     """
     audit = _audit()
     alias = audit.aliases()
@@ -756,9 +756,38 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #:             measures Fairview's depth and not its width -- so the ratio has
 #:             one of its two terms. Encoding it against a missing width would
 #:             be a number divided by nothing, which is worse than the gap.
+#:
+#: SHRANK AGAIN 2026-09-11, later the same day, by the same route:
+#:
+#:   this one  -67 min_lot_width_ft          (67 -> gone) `ZoneRule` grew a
+#:             `min_lot_width_ft`; s4 measures the width under each city's own
+#:             definition -- six forms across eleven cities -- and s7 judges
+#:             it at `below_min_lot_width`. The seven Oregon City and Tualatin
+#:             numbers that had been sitting in the frontage column moved into
+#:             it, and fifty-seven more were carried across from the corpus
+#:             under their own name. Sixty-four filled, not sixty-seven: R-3 in
+#:             West Linn states only the front-line width, which is the
+#:             frontage alias; Lake Oswego's R-7.5 is switched off; and
+#:             Tualatin's RML is left blank on purpose, because TDC 31.060's
+#:             "average lot width" is front-plus-rear over two, a seventh form
+#:             nothing measures. That blank is now pinned in UNFILLED below,
+#:             which is the ledger this shrink created a need for.
+#:            -8 min_average_lot_width_ft    (8 -> gone) West Linn's second
+#:             width row, the one measured at the midpoints of opposite lot
+#:             lines. It is Oregon City's form under another name, so it
+#:             needed no new measurement -- only somewhere to go. It goes in
+#:             `min_lot_width_ft`, and the audit's REMAPPED table sends that
+#:             column to the corpus's `min_average_lot_width_ft` for West Linn
+#:             alone, so R-10's 50 is compared against the 50 it came from
+#:             rather than the 35 on the row above it.
+#:
+#:             `max_lot_depth_ratio` STILL stays at 4, and the reason has
+#:             flipped: Fairview's width now exists, so the ratio has both its
+#:             terms. It is a follow-on, not a rider -- a ratio of two
+#:             measurements is a new comparison, and this commit is already
+#:             moving verdicts in eleven cities.
 UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 64,
-    "min_lot_width_ft": 67,
     "min_landscaped_pct": 34,
     "setback_front_max_ft": 27,
     "max_density_du_per_acre": 21,
@@ -766,7 +795,6 @@ UNEXPRESSIBLE: dict[str, int] = {
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
     "max_lot_depth_ratio": 4,
-    "min_average_lot_width_ft": 8,
     "max_units": 2,
     "max_height_stories": 2,
     "setback_side_total_ft": 1,
@@ -809,7 +837,7 @@ INERT_BY_ARITHMETIC: dict[str, float] = {
 
 
 def test_the_inert_standards_are_inert_because_of_their_values() -> None:
-    """Three of the thirteen can never bite, and this is why rather than that.
+    """Three of the twelve can never bite, and this is why rather than that.
 
     The ledger note above says these are safe whatever the corpus does next,
     which is a claim about the NUMBERS: four units meet a cap of four and clear
@@ -870,10 +898,23 @@ def test_the_inert_standards_are_inert_because_of_their_values() -> None:
 #: "Minimum street frontage requirements", which is the edge s4 actually
 #: measures, so this is not the lot-width alias problem; it is a standard the
 #: corpus reads and the screen does not apply. Closing it would move lots from
-#: green to red, so it is a change of its own rather than a rider on this one,
-#: and `audit_zone_mirror.py`'s docstring carries it as debt.
+#: green to red, so it is a change of its own rather than a rider on this one.
+#: Since 2026-09-11 UNFILLED below is the list that carries it.
+#:
+#: R-MD's LOT DEPTH joined 2026-09-11, the day `min_lot_depth_ft` entered
+#: MIRRORED and this check could see it. Table 19.301.4 row B.2 prints 70 ft
+#: in the 1,500-2,999 column and 80 in the other three; rules.yaml holds 80.
+#: Same reason as the rear yard two rows up: the zone's own minimum lot is
+#: 3,000, so no lot that reaches the depth gate is in the column that differs,
+#: and where the band would matter the flat figure is the stricter one.
+#:
+#: R-MD's LOT WIDTH is the counter-example, and it is deliberately NOT here:
+#: 30 / 50 / 60 across the three reachable columns, where the higher columns
+#: are STRICTER than the lowest. Held flat at 30 it would pass a 7,000 sq ft
+#: lot the city asks 60 of, so it is carried as a band and reads `banded`.
 FLAT_BUT_BANDED: frozenset[str] = frozenset({
     "milwaukie/R-MD.min_frontage_ft",
+    "milwaukie/R-MD.min_lot_depth_ft",
     "milwaukie/R-MD.setback_rear_ft",
     "wilsonville/OTR.setback_rear_ft",
     "wilsonville/PDR1.setback_rear_ft",
@@ -907,6 +948,146 @@ def test_a_table_with_two_columns_of_lot_area_is_held_as_two_columns() -> None:
         "a banded standard is being screened as one number: "
         f"new {sorted(flat - FLAT_BUT_BANDED)}, closed {sorted(FLAT_BUT_BANDED - flat)}"
     )
+
+
+def test_a_band_that_tightens_with_lot_size_is_carried_as_a_band() -> None:
+    """The one banded standard where FLAT would be the wrong answer, pinned.
+
+    Milwaukie R-MD's lot width climbs with the lot: 30 ft under 5,000 sq ft,
+    50 to 7,000, 60 above. Every other FLAT row in this file is safe because
+    the column that differs is a relaxation nothing reaches; this one is the
+    other way round, and a flat 30 would wave through a 9,000 sq ft lot that
+    is 40 ft wide against a code asking 60. So it is held as a band, the
+    audit reads it as `banded`, and the band answers per lot.
+    """
+    from common import load_rules
+
+    audit = _audit()
+    rows = {r.split(" ")[1]: r.split(" ")[0] for r in audit.banded_standards()}
+    assert rows.get("milwaukie/R-MD.min_lot_width_ft") == "banded", rows
+
+    r = load_rules().jurisdictions["milwaukie"].rule_for("R-MD")
+    assert [r.banded("min_lot_width_ft", a) for a in (3_000, 4_999, 5_000, 6_999, 7_000, 9_000)] == [
+        30, 30, 50, 50, 60, 60,
+    ]
+    # And with no area in hand the scalar is the smallest reachable column,
+    # so a caller that has not learned the band is lenient, never strict on a
+    # lot it cannot place.
+    assert r.banded("min_lot_width_ft", None) == 30
+
+
+#: Zones where the corpus states a number, rules.yaml has a column for it, and
+#: the row is blank. Found 2026-09-11 by the check built to pin one deliberate
+#: blank -- Tualatin RML's lot width -- which turned up thirty-seven more that
+#: nobody had deliberately anything. Each group below has its own reason, and
+#: none of the reasons is "fixed here": every one of these moves a verdict in
+#: the strict direction, so each is a commit that says so.
+#:
+#: STREET FRONTAGE, 24 zones in Gresham, Happy Valley, Milwaukie and Troutdale.
+#: The corpus reads a "Minimum street frontage" row in each -- the edge s4
+#: already measures, so no new measurement is needed -- and rules.yaml has
+#: never held it. Before 2026-09-11 the frontage column was also carrying
+#: Oregon City's mid-lot width, and filling it in a city with an
+#: `applicant_choice` corner-lot rule would have needed care about which edge;
+#: now it is one number with one meaning everywhere and the fill is a port.
+#: A lot short of it goes RED. Follow-on.
+#:
+#: MINIMUM LOT, 12 zones. Nine are Clackamas County's urban residential
+#: districts, and they are the sharp one: rules.yaml leaves the row blank on a
+#: written reading that ZDO 845 WAIVES the minimum for a middle-housing land
+#: division, while the corpus reads 845.01 as a 7,000 sq ft floor on the lot a
+#: quadplex stands on, "the same number in every district". Two readings of
+#: one section, and the direction of the disagreement is a possible false
+#: GREEN on every lot under 7,000 sq ft in nine zones. Needs the county text
+#: read once more with both readings in hand. Gresham TLDR (8,000), Happy
+#: Valley MURS (7,000, 6,000 on a unit lot) and Tualatin RML (4,500) are plain
+#: omissions.
+#:
+#: STREET-SIDE SETBACK, 2 zones: Milwaukie R-HD's 15 (5 on the mapped
+#: properties) and Tualatin RL's 10. A corner lot in either is screened on
+#: the interior side yard at the street. Omissions.
+#:
+#: MINIMUM DENSITY, Gresham SC and SC-RJ at 18 du/acre. Omissions, and the
+#: dangerous direction: a lot can be too big for four units to be enough.
+#:
+#: LOT WIDTH, Tualatin RML, the one blank that is on purpose. TDC 41.220 heads
+#: the row "Minimum AVERAGE lot width" and 31.060 defines it as front lot line
+#: plus rear lot line over two -- a seventh form `lotdims.py` does not take,
+#: on two lines `center_parallel` does not draw. RML has no mapped lots. Left
+#: unmeasured rather than measured wrong; rules.yaml says so beside the row.
+UNFILLED: frozenset[str] = frozenset({
+    "clackamas_unincorporated/R10.min_lot_sqft",
+    "clackamas_unincorporated/R15.min_lot_sqft",
+    "clackamas_unincorporated/R20.min_lot_sqft",
+    "clackamas_unincorporated/R30.min_lot_sqft",
+    "clackamas_unincorporated/R5.min_lot_sqft",
+    "clackamas_unincorporated/R7.min_lot_sqft",
+    "clackamas_unincorporated/R8.5.min_lot_sqft",
+    "clackamas_unincorporated/VR45.min_lot_sqft",
+    "clackamas_unincorporated/VR57.min_lot_sqft",
+    "gresham/DRL-1.min_frontage_ft",
+    "gresham/DRL-2.min_frontage_ft",
+    "gresham/HDR-PV.min_frontage_ft",
+    "gresham/LDR-5.min_frontage_ft",
+    "gresham/LDR-7.min_frontage_ft",
+    "gresham/LDR-PV.min_frontage_ft",
+    "gresham/LDR-SW.min_frontage_ft",
+    "gresham/MDR-12.min_frontage_ft",
+    "gresham/MDR-24.min_frontage_ft",
+    "gresham/SC-RJ.min_density_du_per_acre",
+    "gresham/SC.min_density_du_per_acre",
+    "gresham/TLDR.min_frontage_ft",
+    "gresham/TLDR.min_lot_sqft",
+    "gresham/TR.min_frontage_ft",
+    "happy_valley/MURS.min_lot_sqft",
+    "happy_valley/R10.min_frontage_ft",
+    "happy_valley/R15.min_frontage_ft",
+    "happy_valley/R20.min_frontage_ft",
+    "happy_valley/R20CC.min_frontage_ft",
+    "happy_valley/R40.min_frontage_ft",
+    "happy_valley/R5.min_frontage_ft",
+    "happy_valley/R7.min_frontage_ft",
+    "happy_valley/R8.5.min_frontage_ft",
+    "milwaukie/R-HD.min_frontage_ft",
+    "milwaukie/R-HD.setback_street_side_ft",
+    "milwaukie/R-MD.min_frontage_ft",
+    "tualatin/RL.setback_street_side_ft",
+    "tualatin/RML.min_lot_sqft",
+    "tualatin/RML.min_lot_width_ft",
+})
+
+
+def test_a_blank_row_under_an_existing_column_is_written_down() -> None:
+    """The gap between `scan` and `unexpressible_standards`, closed.
+
+    `scan` compares numbers both files state. `unexpressible_standards` asks
+    whether rules.yaml has a column at all. A column that exists corpus-wide
+    and is blank in one zone is invisible to both, and that is the shape of a
+    deliberate omission and a forgotten one alike. Milwaukie's frontage lived
+    in that gap as a paragraph of prose; this is the list instead.
+
+    Every width-stating zone the corpus holds is filled but one, and the one
+    is here with its reason. A zone that stops being blank leaves the list and
+    this goes red until the entry is removed, which is the moment to say what
+    moved. A zone that joins goes red the same way.
+    """
+    audit = _audit()
+    found = {row.split(" ")[0] for row in audit.unfilled_standards()}
+    assert found == UNFILLED, (
+        f"new {sorted(found - UNFILLED)}, filled {sorted(UNFILLED - found)}"
+    )
+
+    # The one deliberate blank, and the reason it is deliberate has to be on
+    # the row in rules.yaml, not only here.
+    rml = _zone("tualatin", "RML")
+    assert "min_lot_width_ft" not in rml
+    src = io.open(_audit().RULES, encoding="utf-8").read()
+    assert "AVERAGE lot width" in src and "seventh form" in src
+
+    # And every OTHER width-stating zone both files hold is filled: the width
+    # column did not arrive with holes in it.
+    blank_widths = {k for k in found if k.endswith(".min_lot_width_ft")}
+    assert blank_widths == {"tualatin/RML.min_lot_width_ft"}, blank_widths
 
 
 def test_the_band_answers_per_lot_and_not_per_zone() -> None:

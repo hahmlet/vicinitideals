@@ -85,13 +85,72 @@ def test_a_square_lot_measures_the_same_either_way():
 
 
 def test_a_lot_with_one_side_line_is_not_measured():
-    """A corner lot's second street edge is classified as frontage, which
-    leaves one side lot line and no pair to measure between. Two thirds of the
-    lots this declines are that shape. Declining is the point: the alternative
-    is a distance between a side line and a street edge, which is not the
-    distance the section names."""
+    """With no front in hand, a corner lot's second street edge is classified
+    as frontage, which leaves one side lot line and no pair to measure
+    between. Declining is the point: the alternative is a distance between a
+    side line and a street edge, which is not the distance the section names.
+
+    This is the bare form, as `width_ft` calls it. The pipeline goes through
+    `dimensions`, which hands the form a front and the answer changes -- the
+    next test."""
     one_side = [e for e in WEDGE_EDGES if e[4] != "S"] + [WEDGE_EDGES[1]]
     assert side_midpoints_width_ft(WEDGE, one_side) is None
+
+
+def test_a_corner_lot_is_measured_from_its_chosen_front_and_ruled_both_ways():
+    """2,724 Oregon City lots and every corner lot in Happy Valley, Portland
+    and West Linn were refused by the midpoints form for want of two `S`
+    edges, and would have gone to review the day the frontage proxy retired.
+    They are corner lots, and the city has already said what their sides are:
+    Happy Valley's glossary, "on a corner lot, the longer lot line that abuts
+    a street is a side lot line". Once the front is chosen, the longer street
+    edge is a side and the pair exists.
+
+    The 40 x 100 corner lot facing its narrowest street (Oregon City's rule)
+    is 40 ft wide between the midpoints of its two long lines. Against a 35 ft
+    standard it conforms; against 50 it does not -- the same measurement, both
+    verdicts, or it would be an amnesty for the lots the proxy used to hold.
+    """
+    corner = Polygon([(0, 0), (40, 0), (40, 100), (0, 100)])
+    edges = [
+        [0, 0, 40, 0, "F"],
+        [40, 0, 40, 100, "S"],
+        [40, 100, 0, 100, "R"],
+        [0, 100, 0, 0, "F"],
+    ]
+    # s4's classifier would call the left edge F and the right edge parallel
+    # to it -- no S at all. Strip the S to reproduce that, so the test cannot
+    # pass on a classification the pipeline never produces.
+    edges = [e[:4] + ["F" if e[4] == "F" else ("R" if e[4] == "R" else "X")]
+             for e in edges]
+    assert side_midpoints_width_ft(corner, edges) is None, "bare form still refuses"
+
+    got = dimensions(
+        corner, edges, [0.0, 90.0], "A",
+        width_measure="side_midpoints", depth_measure="midpoints",
+        front_rule="narrowest", min_width_ft=35.0,
+    )
+    assert got is not None
+    assert got.front_ft == 40.0 and got.width_ft == 40.0 and got.depth_ft == 100.0
+    assert got.width_ft >= 35.0, "conforms to 35"
+    assert got.width_ft < 50.0, "and would not conform to 50"
+
+    # A corner lot whose interior side converges on the long street: the
+    # midpoints join runs from (0, 50) on the street side to (50, 50) on the
+    # interior side. Fifty across the middle, on a lot that is 40 at the kerb.
+    splay = Polygon([(0, 0), (40, 0), (60, 100), (0, 100)])
+    splay_edges = [
+        [0, 0, 40, 0, "F"],
+        [40, 0, 60, 100, "S"],
+        [60, 100, 0, 100, "R"],
+        [0, 100, 0, 0, "F"],
+    ]
+    wide = dimensions(
+        splay, splay_edges, [0.0, 90.0], "A",
+        width_measure="side_midpoints", front_rule="narrowest",
+    )
+    assert wide is not None and wide.front_ft == 40.0
+    assert wide.width_ft == pytest.approx(50.0)
 
 
 def test_a_join_across_ground_the_lot_does_not_own_is_not_a_width():

@@ -125,21 +125,19 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
     z_ok = np.ones(n, dtype=bool)
     min_lot_ok = np.ones(n, dtype=bool)
     frontage_ok = np.ones(n, dtype=bool)
-    frontage_unmeasured = np.zeros(n, dtype=bool)
+    width_ok = np.ones(n, dtype=bool)
+    width_unmeasured = np.zeros(n, dtype=bool)
     depth_ok = np.ones(n, dtype=bool)
     depth_unmeasured = np.zeros(n, dtype=bool)
-    # s4 takes the width where the city defines one and the shape allows it.
-    # Absent on a pre-width parquet -> every lot falls back to the frontage
-    # treatment, which is what this screen did before the measurement existed.
+    # s4 takes the width and the depth the way each city's own glossary
+    # defines them. Absent on an older parquet -> NaN, and every zone stating
+    # the standard holds its lots for review rather than passing them on a
+    # number nobody took.
     lot_width = (
         pd.to_numeric(lots["lot_width_ft"], errors="coerce").to_numpy()
         if "lot_width_ft" in lots.columns
         else np.full(n, np.nan)
     )
-    # The other axis, measured the way each city's own glossary defines it.
-    # Absent on a pre-depth parquet -> NaN, and every zone stating a depth
-    # holds its lots for review rather than passing them on a number nobody
-    # took. That is the same bargain the width above strikes.
     lot_depth = (
         pd.to_numeric(lots["lot_depth_ft"], errors="coerce").to_numpy()
         if "lot_depth_ft" in lots.columns
@@ -167,33 +165,40 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
             continue
         if rule.min_lot_sqft is not None and float(area) < rule.min_lot_sqft:
             min_lot_ok[i] = False
-        if rule.min_frontage_ft is not None:
+        if rule.min_frontage_ft is not None and float(frontage) < rule.min_frontage_ft:
+            # Street frontage, the line s4 sums: one number, one meaning.
+            frontage_ok[i] = False
+        min_width = rule.banded("min_lot_width_ft", float(area))
+        if min_width is not None:
             width = lot_width[i]
-            if j.lot_width_measure and np.isfinite(width):
+            if np.isfinite(width):
                 # The city's own measurement, taken. It rules both ways: a lot
                 # too narrow at the street can be wide enough across the middle
                 # and pass, and a lot with generous street frontage can be
-                # pinched behind it and fail.
-                if float(width) < rule.min_frontage_ft:
-                    frontage_ok[i] = False
-            elif float(frontage) < rule.min_frontage_ft:
-                # Where the city's number is a mid-lot WIDTH rather than a
-                # street frontage and no width could be measured, the screen is
-                # not entitled to a verdict: it measured a different line. Hold
-                # the lot for review instead of dropping it.
-                if j.frontage_is_lot_width:
-                    frontage_unmeasured[i] = True
-                else:
-                    frontage_ok[i] = False
+                # pinched behind it and fail. Under `applicant_choice` s4
+                # stored the front that comes closest to satisfying width and
+                # depth TOGETHER, so a lot that fails here fails facing every
+                # street it could be built to face.
+                if float(width) < min_width:
+                    width_ok[i] = False
+            else:
+                # The zone states a width and this lot's shape declined to be
+                # measured. Hold it for review; a standard nobody could apply
+                # is not a standard the lot passed. Until 2026-09-11 this
+                # branch fell back to the street frontage as a proxy and passed
+                # the lot if that cleared the number -- which is a verdict on a
+                # line the city does not measure, and it is gone.
+                width_unmeasured[i] = True
         if rule.min_lot_depth_ft is not None:
             depth = lot_depth[i]
             if np.isfinite(depth):
                 # Where the city lets the applicant choose the front lot line,
-                # s4 stored the most generous orientation, so this fails only a
-                # lot that is too shallow facing EVERY street it touches --
-                # which is what Gresham 3.0100 describes in words: the front
-                # "is determined by the orientation necessary to achieve
-                # minimum required lot depth."
+                # s4 stored the front that comes closest to satisfying both
+                # standards, so this fails only a lot that is too shallow
+                # facing EVERY street it could be built to face -- which is
+                # what Gresham 3.0100 describes in words: the front "is
+                # determined by the orientation necessary to achieve minimum
+                # required lot depth."
                 if float(depth) < rule.min_lot_depth_ft:
                     depth_ok[i] = False
             else:
@@ -211,7 +216,8 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
 
     gates = pd.DataFrame({
         "elig_jurisdiction": elig_j, "z_ok": z_ok, "min_lot_ok": min_lot_ok,
-        "frontage_ok": frontage_ok, "frontage_unmeasured": frontage_unmeasured,
+        "frontage_ok": frontage_ok,
+        "width_ok": width_ok, "width_unmeasured": width_unmeasured,
         "depth_ok": depth_ok, "depth_unmeasured": depth_unmeasured,
         "flip_allowed": flip_allowed,
         "cov_cap": cov_cap, "accessory": accessory,
@@ -223,6 +229,7 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
         ("z_overlay_constrained_site", ~gates["z_ok"]),
         ("lot_below_zone_min_area", ~gates["min_lot_ok"]),
         ("below_min_frontage", ~gates["frontage_ok"]),
+        ("below_min_lot_width", ~gates["width_ok"]),
         ("below_min_lot_depth", ~gates["depth_ok"]),
     ]
     if ocfg is not None:
@@ -344,10 +351,10 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     juris = lots["jurisdiction"].astype(str).to_numpy()
     zone = lots["zone"].astype(str).to_numpy()
     unverified_zone = np.array([(juris[i], zone[i]) in unver for i in range(n)])
-    if "frontage_unmeasured" in lots.columns:
-        frontage_unmeasured = lots["frontage_unmeasured"].fillna(False).to_numpy().astype(bool)
+    if "width_unmeasured" in lots.columns:
+        width_unmeasured = lots["width_unmeasured"].fillna(False).to_numpy().astype(bool)
     else:
-        frontage_unmeasured = np.zeros(n, dtype=bool)
+        width_unmeasured = np.zeros(n, dtype=bool)
     if "depth_unmeasured" in lots.columns:
         depth_unmeasured = lots["depth_unmeasured"].fillna(False).to_numpy().astype(bool)
     else:
@@ -459,7 +466,7 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     lots["density_floor_short"] = density_floor_short
 
     review = (flag_suspect | (tier == "C") | unverified_zone | slope_bad
-              | sewer_review | overlay_flag | frontage_unmeasured
+              | sewer_review | overlay_flag | width_unmeasured
               | depth_unmeasured | density_floor_short)
     lots["triage"] = np.where(binding != "", "red",
                               np.where(review, "review", "green"))
@@ -485,7 +492,7 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
         ("slope", slope_bad),
         ("sewer_unconfirmed", sewer_review),
         ("overlay", overlay_flag),
-        ("frontage_unmeasured", frontage_unmeasured),
+        ("width_unmeasured", width_unmeasured),
         ("depth_unmeasured", depth_unmeasured),
         ("density_floor", density_floor_short),
     ):
@@ -637,31 +644,24 @@ def main() -> None:
     _s3c = _s3c.assign(lat=np.round(_lat, 6), lng=np.round(_lng, 6))
     lots = lots.merge(_s3c[["TLID", "lat", "lng"]], on="TLID", how="left")
 
-    # A parquet built before s4 measured lot width has no column for it, and
-    # re-running s4 would mean re-running the envelope and the fit behind it
-    # for a number that changes neither. Take it here instead, from the same
-    # edges and the same lot polygon s4 would have used.
-    if "lot_width_ft" not in lots.columns:
-        from lotdims import width_ft
+    # Lot width and lot depth are s4's, taken from s4's own parquet rather
+    # than from the copy s6s carried forward. The envelope and the fit behind
+    # s5 and s6 do not read either number, so re-running s4 alone -- three
+    # minutes -- refreshes both without the four hours of stages between it
+    # and here, and this is where that refresh lands. A stage that predates
+    # the columns leaves them NaN, which policy_gates holds for review.
+    import pyarrow.parquet as pq
 
-        _geoms = dict(zip(_s3c["TLID"], _s3c["geom"]))
-        _widths = []
-        for _tlid, _juris, _tier, _ej, _fbj in zip(
-            lots["TLID"], lots["jurisdiction"], lots["tier"],
-            lots["edges_json"], lots["front_bearings_json"],
-        ):
-            _j = rules.jurisdictions.get(_juris)
-            _m = None if _j is None else _j.lot_width_measure
-            _w = width_ft(
-                _m, _geoms.get(_tlid),
-                json.loads(_ej) if _ej else [],
-                json.loads(_fbj) if _fbj else [],
-                _tier,
-            )
-            _widths.append(float("nan") if _w is None else _w)
-        lots["lot_width_ft"] = _widths
-        print(f"s7: lot width backfilled on "
-              f"{int(np.isfinite(np.array(_widths, dtype=float)).sum()):,} lots")
+    _s4p = stage_path("s4_lots")
+    _dims = [c for c in ("lot_width_ft", "lot_depth_ft")
+             if c in pq.read_schema(_s4p).names]
+    if _dims:
+        _s4d = pd.read_parquet(_s4p, columns=["TLID", *_dims])
+        lots = lots.drop(columns=[c for c in _dims if c in lots.columns])
+        lots = lots.merge(_s4d[["TLID", *_dims]], on="TLID", how="left")
+        for _c in _dims:
+            print(f"s7: {_c} from s4 on "
+                  f"{int(np.isfinite(pd.to_numeric(lots[_c], errors='coerce')).sum()):,} lots")
 
     ocfg = load_overlays()
     lots["current_use"] = current_use_column(
@@ -1387,13 +1387,13 @@ def main() -> None:
     phase2_cols += [c for c in (
         "slope_p85_pct", "slope_tier", "slope_source", "sewer_main_dist_ft",
         "in_sewer_district", "envelope_setback_sqft") if c in lots.columns]
-    # Why an Oregon City or Tualatin lot is sitting in the review queue with
-    # nothing apparently wrong with it: its street frontage fell short of a
-    # number the code measures across the middle of the lot, and the pipeline
-    # cannot take that measurement. Same idea as `geometry_assumed` -- the
-    # caveat travels with the row, not three files away in rules.yaml.
-    if "frontage_unmeasured" in lots.columns:
-        phase2_cols.append("frontage_unmeasured")
+    # Why a lot in one of the sixty-seven width-stating zones is sitting in
+    # the review queue with nothing apparently wrong with it: its shape
+    # declined to give up a width, so the standard could not be applied either
+    # way. Same idea as `geometry_assumed` -- the caveat travels with the row,
+    # not three files away in rules.yaml.
+    if "width_unmeasured" in lots.columns:
+        phase2_cols.append("width_unmeasured")
     # And why a lot in one of the thirty-five depth-stating zones is in the
     # queue: its shape declined to give up a depth, so the standard could not
     # be applied either way. Same discipline -- the caveat travels with the row.
@@ -1416,14 +1416,14 @@ def main() -> None:
     csv_cols = [
         "TLID", "SITEADDR", "lat", "lng", "jurisdiction", "zone", "tier",
         "area_sqft", "envelope_sqft", "frontage_ft",
-        # Next to the frontage, because it is not the frontage. In Oregon City
-        # and Tualatin the minimum a lot is judged against is a WIDTH across
-        # the middle, and since 55d1e34c the verdict uses this column rather
-        # than the street edge. A reviewer looking at a lot that just turned
-        # red for `below_min_frontage`, or one held at `frontage_unmeasured`,
-        # has to be able to see the number the screen decided on. Blank means
-        # the shape declined to be measured, or the city states a frontage and
-        # this never applied to it.
+        # Next to the frontage, because it is not the frontage. Sixty-seven
+        # zones in eleven cities state a minimum lot WIDTH, measured the way
+        # each city's glossary says -- across the middle, at the building
+        # line, as a mean -- and `below_min_lot_width` judges this column, not
+        # the street edge. A reviewer looking at a lot that just turned red for
+        # it, or one held at `width_unmeasured`, has to be able to see the
+        # number the screen decided on. Blank means the shape declined to be
+        # measured, or the city defines no width and this never applied.
         "lot_width_ft",
         # The other axis, on the same terms. Thirty-five zones in eight cities
         # state a minimum lot depth and nothing applied one until this column

@@ -91,6 +91,18 @@ FIELD_MAP: dict[str, str] = {
     # checks the two agree. This test is how that arrived: the port is the
     # only thing that notices a quadfit column nobody routed anywhere.
     "min_lot_depth_ft": "min_lot_depth_ft",
+    # Added 2026-09-11, later the same day, by the same route: the corpus held
+    # a minimum lot width for 67 zones in 12 cities and quadfit had one slot
+    # for it, `min_frontage_ft`, which s7 judges against the street edge. Now
+    # the width has its own column and the frontage column means one thing.
+    # Maps 1:1 for every city but West Linn, whose `min_lot_width_ft` is the
+    # SECOND width row its tables print -- "Average minimum lot width", the
+    # corpus's `min_average_lot_width_ft` -- because its first row is the
+    # street edge and already travels as `min_frontage_ft`. The mirror audit's
+    # REMAPPED table compares that one city on the right field; this port is a
+    # one-shot that ran in August and is kept as the check that no quadfit
+    # column goes unrouted, so the 1:1 here is a route, not a reading.
+    "min_lot_width_ft": "min_lot_width_ft",
     # Zone-level orientation carries the zone's own citation, so it ports. Only
     # the jurisdiction-level default is unciteable — see the layer notes.
     "orientation_constraint": "orientation_constraint",
@@ -114,7 +126,9 @@ FIELD_MAP: dict[str, str] = {
 #: corpus reads those bands off the page as `variants` carrying a `band:`, one
 #: quote apiece; rules.yaml grew a flat `{field: [[threshold, value]]}` mirror
 #: of them so the pipeline could apply the right column to a lot whose area it
-#: knows. All 24 rows of that mirror are held here, which
+#: knows. All 26 rows of that mirror are held here -- 24 until 2026-09-11,
+#: when Milwaukie R-MD's lot width joined as the first band that TIGHTENS
+#: with lot size, 30 / 50 / 60 ft -- which
 #: `test_a_backported_band_has_to_already_be_here` walks and asserts.
 #:
 #: One difference is deliberate and runs the safe way: quadfit takes the

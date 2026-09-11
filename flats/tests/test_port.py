@@ -130,7 +130,7 @@ def test_a_backported_band_has_to_already_be_here() -> None:
                         f"variant banded there nor that base value"
                     )
                     checked += 1
-    assert checked == 24, f"expected 24 banded rows, walked {checked}"
+    assert checked == 26, f"expected 26 banded rows, walked {checked}"
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:

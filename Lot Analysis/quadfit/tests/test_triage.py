@@ -322,66 +322,70 @@ def test_the_coarse_gate_is_off_when_the_column_is_absent() -> None:
 
 
 # ---------------------------------------------------------------------------
-# A frontage number that is really a mid-lot width
+# Lot width is not street frontage
 # ---------------------------------------------------------------------------
 
 
-def test_an_unmeasurable_frontage_holds_a_lot_at_review():
-    """Oregon City and Tualatin state a lot WIDTH and measure it across the
-    middle of the lot; s4 measures the boundary that touches a street. Those
-    are different lines, so falling short of the number is not a verdict the
-    screen has earned -- it is a question for a person.
+def test_an_unmeasurable_width_holds_a_lot_at_review():
+    """Sixty-four zones in eleven cities state a lot WIDTH, and each city's
+    glossary says where on the lot to take it -- across the middle, at the
+    building line, as a mean. A lot whose shape declines the measurement has
+    not passed that standard and has not failed it; it is a question for a
+    person.
 
     The lot must not be red (nothing about it failed), must not be green (the
     code's standard is genuinely unchecked), and must carry no binding
     constraint, because there is no constraint it is known to violate.
     """
     lots = _run([
-        _base_row(frontage_unmeasured=True),
-        _base_row(frontage_unmeasured=False),
+        _base_row(width_unmeasured=True),
+        _base_row(width_unmeasured=False),
     ])
     assert list(lots["triage"]) == ["review", "green"]
+    assert list(lots["review_reasons"]) == ["width_unmeasured", ""]
     assert list(lots["binding_constraint"]) == ["", ""]
 
 
-def test_an_unmeasurable_frontage_cannot_rescue_a_lot_that_fails_on_its_own():
+def test_an_unmeasurable_width_cannot_rescue_a_lot_that_fails_on_its_own():
     """Review is a hold, not a pardon. A lot the pod does not fit is red
-    whether or not its frontage was measurable, or the flag would be a way to
+    whether or not its width was measurable, or the flag would be a way to
     launder a failure into the queue."""
     lots = _run([
-        _base_row(frontage_unmeasured=True, fits_pod=False, fits_cov_pod=False),
-        _base_row(frontage_unmeasured=True, tier="D"),
+        _base_row(width_unmeasured=True, fits_pod=False, fits_cov_pod=False),
+        _base_row(width_unmeasured=True, tier="D"),
     ])
     assert list(lots["triage"]) == ["red", "red"]
     assert list(lots["binding_constraint"]) == ["pod_no_fit", "no_buildable_envelope"]
 
 
-def _gate_frame(rows):
-    import pandas as pd
-
-    from s7_report import policy_gates
-
-    return policy_gates(pd.DataFrame(rows), _GateRules())[0]
-
-
 class _GateRules:
-    """The three shapes side by side, built from the real config models so the
-    test breaks if `frontage_is_lot_width` or `lot_width_measure` stops being
-    wired through."""
+    """Two cities on the same 65 ft number, built from the real config models
+    so the test breaks if `min_lot_width_ft`, `min_frontage_ft` or
+    `lot_width_measure` stops being wired through.
 
-    def __init__(self, measure=None):
+    Oregon City states the 65 as a lot WIDTH -- OCMC 17.04.700, between the
+    midpoints of the side lot lines -- and West Linn states it as a width AT
+    THE FRONT LOT LINE, which is the street edge s4 sums as `frontage_ft`.
+    Same figure, two columns, two different lines on the ground.
+    """
+
+    def __init__(self):
         from common import JurisdictionRules, ZoneRule
 
-        zone = ZoneRule(
+        width = ZoneRule(
+            zone="R-10", quadplex_allowed=True, setback_front_ft=20,
+            setback_side_ft=8, setback_rear_ft=20, min_lot_width_ft=65,
+        )
+        frontage = ZoneRule(
             zone="R-10", quadplex_allowed=True, setback_front_ft=20,
             setback_side_ft=8, setback_rear_ft=20, min_frontage_ft=65,
         )
         self.jurisdictions = {
             "oregon_city": JurisdictionRules(
-                eligible=True, frontage_is_lot_width=True,
-                lot_width_measure=measure, zones=[zone]),
+                eligible=True, lot_width_measure="side_midpoints",
+                zones=[width]),
             "west_linn": JurisdictionRules(
-                eligible=True, frontage_is_lot_width=False, zones=[zone]),
+                eligible=True, zones=[frontage]),
         }
 
 
@@ -393,30 +397,35 @@ def _gate_row(juris, frontage, width=None):
     return row
 
 
-def _measured_gates(rows):
+def _gate_frame(rows):
     import pandas as pd
 
     from s7_report import policy_gates
 
-    return policy_gates(pd.DataFrame(rows), _GateRules("side_midpoints"))[0]
+    return policy_gates(pd.DataFrame(rows), _GateRules())[0]
 
 
-def test_a_width_standard_does_not_drop_a_lot_in_the_funnel():
-    """The same 40 ft lot under the same 65 ft number, in two cities.
+def test_a_width_standard_and_a_frontage_standard_are_two_gates():
+    """The same 40 ft of street under the same 65 ft number, in two cities.
 
     West Linn's tables head the row "Minimum lot width AT FRONT LOT LINE", so
-    its number IS the street edge and the lot is properly excluded. Oregon
-    City's is measured across the middle of the lot, so the lot survives the
-    funnel carrying a flag instead.
+    its number IS the street edge and the lot is excluded at
+    `below_min_frontage`. Oregon City's is measured across the middle of the
+    lot, and 40 ft of street says nothing about that: with the width taken
+    the lot is judged on it, and with the width declined it is held. Neither
+    Oregon City lot touches the frontage gate, and no West Linn lot touches
+    the width gate.
     """
     gates = _gate_frame([
+        _gate_row("oregon_city", 40.0, width=70.0),
+        _gate_row("west_linn", 40.0, width=70.0),
         _gate_row("oregon_city", 40.0),
-        _gate_row("west_linn", 40.0),
-        _gate_row("oregon_city", 80.0),
     ])
     assert list(gates["eligible"]) == [True, False, True]
     assert list(gates["policy_exclusion"]) == ["", "below_min_frontage", ""]
-    assert list(gates["frontage_unmeasured"]) == [True, False, False]
+    assert list(gates["frontage_ok"]) == [True, False, True]
+    assert list(gates["width_ok"]) == [True, True, True]
+    assert list(gates["width_unmeasured"]) == [False, False, True]
 
 
 def test_a_measured_width_rules_in_both_directions():
@@ -429,31 +438,84 @@ def test_a_measured_width_rules_in_both_directions():
     test and fails the one the city actually wrote. A measurement that could
     only rescue lots would not be a measurement, it would be an amnesty.
     """
-    gates = _measured_gates([
+    gates = _gate_frame([
         _gate_row("oregon_city", 40.0, width=70.0),
         _gate_row("oregon_city", 80.0, width=55.0),
     ])
     assert list(gates["eligible"]) == [True, False]
-    assert list(gates["policy_exclusion"]) == ["", "below_min_frontage"]
-    assert list(gates["frontage_unmeasured"]) == [False, False]
+    assert list(gates["policy_exclusion"]) == ["", "below_min_lot_width"]
+    assert list(gates["width_ok"]) == [True, False]
+    assert list(gates["width_unmeasured"]) == [False, False]
 
 
-def test_a_width_that_could_not_be_measured_keeps_the_older_treatment():
-    """The measurement declines on a third of these lots -- corner lots, flag
-    lots, anything whose sides do not pair up. Those must land exactly where
-    they landed before it existed: short on frontage goes to review, and a lot
-    that clears the number on frontage is not disturbed. Otherwise fixing the
-    measurement would push three thousand lots that pass today into a queue on
-    the grounds that nobody measured them, which is true of every lot in the
-    city the day before this shipped.
+def test_a_width_that_could_not_be_measured_holds_the_lot_instead_of_passing_it():
+    """The conservative default, and it is the opposite of what this test
+    pinned until 2026-09-11.
+
+    Until then an unmeasured Oregon City lot fell back to its street frontage:
+    short on frontage went to review, and a lot that cleared the number on
+    frontage passed. The argument was that fixing the measurement should not
+    push lots that pass today into a queue. It was the wrong argument -- the
+    lots "passed" on a line the city does not measure, so what they had was
+    not a pass but an unasked question, and 76 Oregon City greens stood on it.
+    The depth gate never had the proxy and never needed it; the width now
+    strikes the same bargain. A zone states a width, the shape declines to
+    give one up, the lot is held -- whatever its frontage says.
     """
-    gates = _measured_gates([
+    gates = _gate_frame([
         _gate_row("oregon_city", 40.0),
         _gate_row("oregon_city", 80.0),
+        _gate_row("oregon_city", 80.0, width=float("nan")),
     ])
+    assert list(gates["eligible"]) == [True, True, True]
+    assert list(gates["policy_exclusion"]) == ["", "", ""]
+    assert list(gates["width_ok"]) == [True, True, True]
+    assert list(gates["width_unmeasured"]) == [True, True, True]
+
+
+def test_a_zone_that_states_no_width_is_left_alone():
+    """Silence is not a gap, and must not become a hold. West Linn's zone here
+    states a frontage and no width, so neither width flag may be raised for
+    it whether or not s4 happened to measure one."""
+    gates = _gate_frame([
+        _gate_row("west_linn", 80.0, width=30.0),
+        _gate_row("west_linn", 80.0),
+    ])
+    assert list(gates["width_ok"]) == [True, True]
+    assert list(gates["width_unmeasured"]) == [False, False]
     assert list(gates["eligible"]) == [True, True]
-    assert list(gates["policy_exclusion"]) == ["", ""]
-    assert list(gates["frontage_unmeasured"]) == [True, False]
+
+
+def test_a_banded_width_asks_more_of_a_bigger_lot():
+    """Milwaukie R-MD's width climbs with the lot -- 30 ft under 5,000 sq ft,
+    50 to 7,000, 60 above -- and the gate has to read the band per lot, not
+    the scalar per zone. The same 45 ft width passes on a 4,000 sq ft lot and
+    fails on a 6,000 sq ft one."""
+    import pandas as pd
+
+    from common import JurisdictionRules, ZoneRule
+    from s7_report import policy_gates
+
+    zone = ZoneRule(
+        zone="R-MD", quadplex_allowed=True, setback_front_ft=20,
+        setback_side_ft=5, setback_rear_ft=20, min_lot_width_ft=30,
+        lot_size_bands={"min_lot_width_ft": [[5000, 50], [7000, 60]]},
+    )
+
+    class _R:
+        jurisdictions = {
+            "milwaukie": JurisdictionRules(
+                eligible=True, lot_width_measure="building_line", zones=[zone]),
+        }
+
+    rows = [
+        {"jurisdiction": "milwaukie", "zone_raw": "R-MD", "area_sqft": a,
+         "frontage_ft": 60.0, "lot_width_ft": 45.0}
+        for a in (4000.0, 6000.0, 8000.0)
+    ]
+    gates = policy_gates(pd.DataFrame(rows), _R())[0]
+    assert list(gates["width_ok"]) == [True, False, False]
+    assert list(gates["policy_exclusion"]) == ["", "below_min_lot_width", "below_min_lot_width"]
 
 
 def test_a_lot_can_be_too_big_for_four_homes():
@@ -650,7 +712,7 @@ def test_a_depth_that_could_not_be_measured_holds_the_lot_instead_of_passing_it(
     edge, a body not attached to its own frontage. The zone still states 70 ft.
     Passing the lot would certify it against a standard nobody applied; failing
     it would invent a number. So it survives the funnel carrying a flag, the
-    same bargain `frontage_unmeasured` already strikes one axis over.
+    same bargain `width_unmeasured` strikes one axis over.
     """
     gates = _depth_gates([
         _depth_row("gresham", "LDR-5"),
@@ -678,7 +740,7 @@ def test_an_unmeasured_depth_sends_the_lot_to_review_and_says_why():
 
 
 def test_an_unmeasurable_depth_cannot_rescue_a_lot_that_fails_on_its_own():
-    """Review is a hold, not a pardon -- the same rule the frontage flag lives
+    """Review is a hold, not a pardon -- the same rule the width flag lives
     under. A lot the pod does not fit is red whether or not its depth could be
     measured, or the flag becomes a way to launder a failure into the queue."""
     lots = _run([

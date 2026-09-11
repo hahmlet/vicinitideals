@@ -24,8 +24,14 @@ Width forms
     "The perpendicular distance measured between the midpoints of the two
     principal opposite side lot lines and generally at approximately right
     angles to the lot depth." Oregon City OCMC 17.04.700, Happy Valley MC
-    16.12, Gresham 3.0100, Portland 33.930.100.B (every zone but the
-    single-dwelling ones), and the second of West Linn's two width rows.
+    16.12, Portland 33.930.100.B (every zone but the single-dwelling ones),
+    and the second of West Linn's two width rows.
+
+    On a corner lot the "side lot lines" are read from the chosen front --
+    the longer street edge becomes a side, as Happy Valley's glossary says
+    outright -- rather than from s4's ``S`` class, which on a corner lot is
+    empty. Until 2026-09-11 that emptiness was refusing every corner lot in
+    Oregon City, 2,724 of them, for want of a line the city had already named.
 
 ``midway_front_rear``
     "The horizontal distance between the side lot lines, measured at right
@@ -51,6 +57,20 @@ Width forms
     line**." Milwaukie MMC 19.200. At the setback, not at the kerb, which on
     anything that tapers toward the road is the difference between a refusal
     and a pass.
+
+    Gresham too, and it is worth saying why, because Gresham's glossary reads
+    like ``side_midpoints``: 3.0100 defines *Lot Width* as "the perpendicular
+    distance measured between the mid-points of the two principal opposite
+    side lot lines". But every table that states the standard -- 4.0130 E,
+    4.1130 and Springwater's 4.1508 D -- heads the row **"Width at building
+    line"**, and 3.0100 defines *Building Line* as "a line parallel to the
+    front lot line and passing through the most forward point or plane of a
+    building". The table is the more specific statement about where THIS
+    standard is taken, so it governs; on a vacant lot the most forward legal
+    building line is the front setback, which is the same line Milwaukie
+    measures at. The two forms agree on a rectangle and differ on a wedge,
+    where the table's line sits nearer the street and is the stricter of the
+    two -- the conservative direction.
 
 ``mean_width``
     "The **mean** horizontal distance between the side lot lines of a lot
@@ -150,6 +170,13 @@ declares no definitions chapter, and is switched off in this screen anyway.
 LINE", so its number is the street edge s4 already measures and nothing here
 may touch it; only its *average* row is measured here.
 
+One zone is not served either. Tualatin's RML table (TDC 41.220) heads its
+row "Minimum AVERAGE lot width", and 31.060 defines that as "the sum of the
+length of the front lot line and the rear lot line divided by 2" -- a seventh
+form, on two lines neither ``center_parallel`` nor anything else here draws.
+RML has no mapped lots, so no form was built for it; its standard is left
+unset in rules.yaml with the reason beside it.
+
 Checked against a second implementation
 ---------------------------------------
 
@@ -222,6 +249,12 @@ _SAMPLES = 41
 #: Portland's rectangle is 40 ft deep "or extend to the rear property line,
 #: whichever is less" (33.930.100.A).
 _PORTLAND_RECT_DEPTH_FT = 40.0
+
+#: How far off parallel a lot line can be and still be "the opposite" one. A
+#: rear lot line faces the front; a side lot line does not, and on a corner lot
+#: the difference is the whole measurement. The same 30 degrees s4 uses to
+#: class an edge ``R``, so a lot with one street reads the same here as there.
+_OPPOSITE_TOL_DEG = 30.0
 
 _EPS = 1e-6
 
@@ -472,7 +505,35 @@ def _samples(lo: float, hi: float) -> list[float]:
 # --- width forms -------------------------------------------------------------
 
 
-def side_midpoints_width_ft(geom, edges) -> float | None:
+def _sides_facing(edges, members, frame: _Frame) -> list:
+    """The side lot lines of a lot seen from one front.
+
+    s4 classes an edge ``S`` only when it is off-parallel to EVERY street the
+    lot touches, so a corner lot -- two streets at right angles, every other
+    edge parallel to one of them -- has no ``S`` edges at all, and the
+    midpoints form was refusing every corner lot in the city. But once a
+    front is chosen the city has already said which edges are the sides:
+    Happy Valley's glossary puts it flatly, "on a corner lot, the longer lot
+    line that abuts a street is a side lot line", and Oregon City's and
+    Portland's side lot line is any line that is neither front nor rear. So
+    from a given front, a side is any edge that is not that front and not
+    opposite it -- the same 30-degree test s4 uses for ``R``, taken in this
+    front's frame rather than against every street at once. On a lot with one
+    street the two readings are the same set of edges.
+    """
+    chosen = {tuple(e[:4]) for e in members}
+    out = []
+    for raw, e in zip(edges, _in_frame(edges, frame)):
+        if tuple(raw[:4]) in chosen or _length(raw) <= _EPS:
+            continue
+        tilt = abs(math.degrees(math.atan2(e[3] - e[1], e[2] - e[0]))) % 180.0
+        if min(tilt, 180.0 - tilt) <= _OPPOSITE_TOL_DEG:
+            continue
+        out.append(raw)
+    return out
+
+
+def side_midpoints_width_ft(geom, edges, front=None) -> float | None:
     """Oregon City: the distance between the midpoints of the two principal
     opposite side lot lines.
 
@@ -481,15 +542,23 @@ def side_midpoints_width_ft(geom, edges) -> float | None:
     for are the ones whose sides converge. The pair is the longest two side
     lines whose join stays inside the lot; a lot offering no such pair is not
     measured.
+
+    ``front`` is ``(members, frame)`` for the front lot line the lot is being
+    judged from. With it, the side lot lines are read relative to that front
+    (:func:`_sides_facing`), which is what lets a corner lot be measured;
+    without it, they are the edges s4 classed ``S``, which on a corner lot is
+    none.
     """
     import shapely
     from shapely.geometry import LineString
 
     if geom is None or geom.is_empty:
         return None
-    sides = sorted(
-        (e for e in edges if len(e) > 4 and e[4] == "S"), key=_length, reverse=True
-    )
+    if front is None:
+        candidates = [e for e in edges if len(e) > 4 and e[4] == "S"]
+    else:
+        candidates = _sides_facing(edges, front[0], front[1])
+    sides = sorted(candidates, key=_length, reverse=True)
     if len(sides) < 2:
         return None
     inside = geom.buffer(_INSIDE_TOL_FT)
@@ -631,12 +700,6 @@ def setback_rectangle_width_ft(rg, fy, setback_ft) -> float | None:
 # --- depth forms -------------------------------------------------------------
 
 
-#: How far off parallel a lot line can be and still be "the opposite" one. A
-#: rear lot line faces the front; a side lot line does not, and on a corner lot
-#: the difference is the whole measurement.
-_OPPOSITE_TOL_DEG = 30.0
-
-
 def midpoints_depth_ft(edges, frame: _Frame) -> float | None:
     """Oregon City, Gresham, Happy Valley, Portland: mid-point of the front lot
     line to mid-point of the rear lot line.
@@ -729,7 +792,7 @@ def orientations(
             continue
         w = d = None
         if width_measure == "side_midpoints":
-            w = side_midpoints_width_ft(geom, edges)
+            w = side_midpoints_width_ft(geom, edges, front=(members, f))
         elif width_measure == "center_parallel":
             w = center_parallel_width_ft(geom, front_bearings)
         elif width_measure == "midway_front_rear":
@@ -852,10 +915,14 @@ def dimensions(
 def width_ft(measure: str | None, geom, edges, front_bearings, tier: str):
     """The lot's width under one city's definition, or ``None`` if unmeasured.
 
-    Kept at its original signature because s4 and s7 both call it per lot and
-    neither has a setback or a standard to hand at that point. The two forms
-    that need one -- Milwaukie's building line and Portland's rectangle -- are
-    refused here and taken through :func:`dimensions` instead.
+    A convenience for tests and one-off probes, no longer on the pipeline's
+    path: s4 takes width and depth in one :func:`dimensions` call per lot,
+    with the zone's setback and standards to hand, because the two have to be
+    satisfied by one front and this signature cannot say which. The forms that
+    need a setback -- Milwaukie's and Gresham's building line, Portland's
+    rectangle -- are refused here for that reason, and a corner lot under
+    ``side_midpoints`` is refused too, because with no front rule there is no
+    front to read the sides from.
     """
     if not measure or tier not in MEASURABLE_TIERS:
         return None

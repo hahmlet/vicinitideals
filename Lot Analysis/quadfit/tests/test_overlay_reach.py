@@ -16,7 +16,7 @@ the guard has to be a test that treats silence as failure.
 So: a jurisdiction the screen grades must either have an environmental overlay
 pointed at it, or appear in `UNSCREENED` with a written reason and a date. A
 city earns the exemption by having somebody say why, never by being left off a
-list -- the same rule the frontage work settled on for `frontage_is_lot_width`.
+list -- the same rule the frontage work settled on for `ALIAS_SAME_EDGE`.
 Adding a jurisdiction to `rules.yaml` now fails this test until one or the
 other is true, which is the whole point: the cost of the gap is that nobody
 had to decide anything.
