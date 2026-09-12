@@ -144,7 +144,7 @@ jobs:
       # ~14s, is recomputed on every call, and ~26 tests across thirteen files
       # run the same corpus-wide footnote census with it -- 1.3% of the suite
       # holding 63% of its runtime. Parallelism hides that; it does not fix it.
-      # See CLAUDE.md, "The FLATS corpus census".
+      # See docs/TESTING.md, "The FLATS corpus census".
       - name: FLATS tests
         run: uv run pytest flats/tests -q -n auto
 

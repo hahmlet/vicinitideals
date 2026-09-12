@@ -9,7 +9,7 @@
 > CI (`.github/workflows/ci.yml`) runs the entire suite with **no per-file
 > ignores** — light gate `-m unit`, full gate everything non-E2E plus the full
 > E2E suite. Suite size ~1,370 non-E2E + ~150 E2E tests, all green.
-> See CLAUDE.md "Testing" for the authoritative commands.
+> See docs/TESTING.md for the authoritative commands.
 
 ## What We Have Today
 

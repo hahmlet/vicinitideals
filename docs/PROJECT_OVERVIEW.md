@@ -169,12 +169,137 @@ See: [docs/ops/](docs/ops/) for release checklist and rollback runbook.
 
 | Document | Contents |
 |---|---|
-| [docs/testing-strategy.md](docs/testing-strategy.md) | Test architecture, unit vs integration, engine coverage |
+| [docs/TESTING.md](docs/TESTING.md) | Current test infrastructure, commands, corpus-census rule, CI pipeline |
+| [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md) | Accepted limitations and deferred fixes |
+| [docs/testing-strategy.md](docs/testing-strategy.md) | Historical test design doc (stale) |
 | [docs/ui-plan.md](docs/ui-plan.md) | Model builder UI specification, module breakdown |
 | [docs/ops/](docs/ops/) | Release checklist, rollback runbook, observability SLO spec |
 | [docs/verification/](docs/verification/) | QA test matrix, model output drift baselines |
 | [docs/security/](docs/security/) | Security considerations |
 | [docs/api/](docs/api/examples/) | API payload examples |
+
+---
+
+## 6. Repository layout
+
+```
+app/
+  api/routers/
+    ui_model_builder.py  # Model builder routes (builder page, panel, forms, sensitivity, calc status)
+    ui_settings.py       # Settings, org, source vehicles, scenario templates
+    ui_deals_pipeline.py # Deal list/CRUD, opportunities, opp wizard, deal creation
+    ui_wizards.py        # Timeline wizard, deal setup wizard
+    ui_model_outputs.py  # Excel/investor export, draw schedule, NOI, history
+    ui_data_intel.py     # Brokers, Crexi-sourced oppos, Crexi dedup
+    ui_portfolios.py     # Portfolios, deal search, saved filters
+    ui_helpers.py        # Shared helpers (auth/scope, formatting, base context)
+    auth_routes.py     # Login, register, verify email, password reset
+    capital.py         # Capital stack API
+    deals.py, scenarios.py, projects.py, listings.py, parcels.py, ...
+  engines/
+    cashflow.py        # Monthly cashflow engine (~1800 lines)
+    draw_schedule.py   # Self-referential draw sizing
+    waterfall.py       # Equity distribution waterfall
+    underwriting.py    # Deal metrics (cap rate, CoC, IRR, DSCR, LTV)
+    sensitivity.py     # Multi-variable sensitivity tables
+  models/
+    deal.py            # Deal, Scenario, OperationalInputs, UseLine, IncomeStream, OpEx
+    capital.py         # CapitalModule, WaterfallTier, DrawSource
+    milestone.py       # Timeline milestones with trigger chains
+    project.py         # Project, Opportunity
+    parcel.py, scraped_listing.py, org.py, ...
+  schemas/
+    capital.py         # Pydantic schemas for JSONB columns (source/carry/exit_terms)
+    deal.py            # JSON export/import schemas
+  emails/
+    sender.py          # Async Resend wrapper (httpx, no SDK)
+    tokens.py          # itsdangerous token generation
+    templates/         # Email HTML templates
+  scrapers/            # One module per data source
+  tasks/               # Celery tasks (scraping, parcel seed, analysis)
+  exporters/           # Excel + JSON export/import
+  templates/           # Jinja2 HTML templates (HTMX partials in templates/partials/)
+  config.py            # pydantic-settings (reads .env)
+  scripts/             # CLI utilities (seed_e2e_user.py, check_promotion_gates.py)
+alembic/versions/      # Alembic migrations — check the directory for the current head
+tests/
+  engines/             # Unit tests: cashflow, draw_schedule, underwriting, waterfall
+  api/, models/, exporters/, scrapers/, tasks/, contract/
+  e2e/                 # Playwright E2E tests
+  conftest.py          # Shared fixtures: per-run Postgres test DB, seed helpers
+scripts/               # Ops/CLI utilities (post-deploy smoke, audits, backfills)
+  check_flats_firewall.py  # Enforces the FLATS / financial-engine boundary (runs in CI)
+flats/                 # FLATS — parcel screening. Imports nothing from app/engines.
+  rules/
+    fields.py          # Field registry — the one place a zoning standard is named
+    model.py           # Provenance-bearing Value; draft -> verified -> stale lifecycle
+    loader.py          # jurisdiction YAML -> Layer objects, accumulating all errors
+    resolver.py        # state -> county -> city resolution, with `preempts` override
+    ledger.py          # Coverage ledger (missing zones) + clause ledger (missing rules)
+  normalize/condo.py   # Condo / air-parcel detector — recall-biased three verdicts
+  encode/              # port_quadfit.py (one-shot import), backlog.py (work queue)
+                       # words.py — the word-review queue: what a city's own
+                       # definitions mean for the numbers we measured in them.
+                       # Worked *before* signing, not after.
+  config/jurisdictions/or/<county>/<city>.yaml   # The encoded rules
+  tests/               # Runs in the CI light gate; no DB fixtures
+Lot Analysis/
+  FLATS_PLAN.md        # FLATS architecture, encoding standard, build order
+  quadfit/             # FLATS' predecessor pipeline (s0-s7). Being replaced.
+docs/
+  FINANCIAL_MODEL.md   # Math reference for the financial engine
+  PROJECT_OVERVIEW.md  # This file
+  TESTING.md           # Current test infrastructure and runbooks
+  KNOWN_ISSUES.md      # Accepted limitations and deferred fixes
+  Troubleshooting/     # Per-symptom debug guides (start here when something breaks)
+  ops/, security/, verification/, wireframes/
+```
+
+---
+
+## 7. Engine and data-model concepts
+
+### Financial Engine (cashflow.py)
+
+- **4 carry types**: `io_only` (True IO), `interest_reserve` (avg-draw, day-precise via `period_interest_months()`), `capitalized_interest` (PIK, full-balance, day-precise via `period_interest_months()`), `pi` (amortizing). Statistical `(N+1)/2` and `N` factors are used for the principal sizing solve; period-level cash flows use `app/engines/interest.py:period_interest_months()` with actual day-count conventions.
+- **Per-loan active windows**: each loan's pre-op months from `_loan_pre_op_months(module)`, NOT global `constr_months_total`
+- **`_PERIOD_TYPE_RANK` + `_APS_TO_RANK`**: maps `active_phase_start` to phase ordering for windowed month counting
+- **Auto-sizing**: `_auto_size_debt_modules()` with one-pass algebraic divisor fold-in for closing costs (Sources = Uses invariant)
+- **DSCR-capped mode**: principal capped via `newton_solve.solve_principal_for_dscr()` (Newton-Raphson with bisection fallback); when DSCR cap binds, gap is surfaced to user
+- **Source-Use eligibility**: `app/engines/source_routing.py` — `eligible_sources_for_use()` / `route_use_to_sources()`; permissive by default, whitelist via `capital_modules.eligible_use_tags` or `use_lines.eligible_module_ids`
+- **Default loan closing costs**: `_DEFAULT_LOAN_COSTS` table per `funder_type`
+- **`vehicle_type` + `equity_role` are canonical** on `CapitalModule` (post-0085); `funder_type` is a legacy bridge field retained for backward compat
+- Uses `Decimal` arithmetic throughout (`MONEY_PLACES = Decimal("0.000001")`)
+
+### Milestone Timeline
+
+- Milestones use **trigger chains** (`trigger_milestone_id`) — `computed_start()` resolves dates via chain-walk
+- Timeline wizard does **two-pass creation**: Pass 1 creates milestones with durations, Pass 2 wires trigger IDs
+- Without trigger chains, engine falls back to `OperationalInputs.*_months` scalars (NULL → 1mo fallback) — production bug fixed in commit `5d5caf4`
+
+### Entity Hierarchy
+
+```
+Deal → Opportunity → Project → Milestones (timeline)
+Scenario → UseLines, CapitalModules, IncomeStreams, ExpenseLines, DrawSources, WaterfallTiers
+Parcel → ScrapedListings (many listings per parcel)
+```
+
+Old `Deal` ORM class now `Scenario`. (`DealModel` alias removed 2026-06-15.)
+
+### Capital Stack
+
+`CapitalModule` stores structured data in JSONB columns: `source` (CapitalSourceSchema), `carry` (CapitalCarrySchema), `exit_terms`. `extra="allow"` on schemas preserves engine-written keys not declared in schema.
+
+---
+
+## 8. Auth system
+
+- **Session-based auth** with `bcrypt` password hashing
+- **Email verification** (soft gate): yellow banner for unverified users, `POST /resend-verification`
+- **Password reset**: `itsdangerous.URLSafeTimedSerializer` with password-hash-prefix binding (single-use), 30-min expiry
+- **Rate limiting**: Redis-backed fixed-window counters (`app/api/rate_limit.py`), 5/15min per IP + 3/hour per email on `/forgot-password`
+- **Email delivery**: async httpx to Resend API (no SDK), graceful no-op when `RESEND_API_KEY` empty
 
 ---
 
