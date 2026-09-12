@@ -901,6 +901,20 @@ jurisdictions:
     # between the front and rear lot lines."
     #   or/multnomah/fairview/19.13.definitions.txt#L347
     lot_width_measure: midway_front_rear
+    # An alley IS a street here, in the city's own glossary: "Alley means a
+    # narrow street (10-foot to 20-foot right-of-way) ... which has been
+    # dedicated or deeded to the public", and the land division chapter
+    # says "all alleys shall constitute public streets". "Frontage" is any
+    # property line "abutting a public or private street". So the alley
+    # behind a Fairview Village lot is counted as frontage and set back as a
+    # street line, which is what every other city in the corpus says it is
+    # NOT. The tension is real -- 19.30 speaks of "a public street (other
+    # than an alley)" -- but the definitions govern, and there is no
+    # frontage minimum in this city for the reading to be generous on.
+    #   or/multnomah/fairview/19.13.definitions.txt#L83
+    #   or/multnomah/fairview/19.13.definitions.txt#L255
+    #   or/multnomah/fairview/19.140.txt#L79
+    alley_is_street: true
     zones:
       - zone: R-6
         quadplex_allowed: true
@@ -1398,6 +1412,21 @@ jurisdictions:
     zone_field: ZONE
     require_inside_ugb: true
     orientation_constraint: entrance_only
+    # An alley IS a street here. ZDO 202: "STREET: See ROAD", and a road is
+    # "a public or private way created to provide ingress to, or egress
+    # from, one or more lots"; the front lot line is "any boundary line
+    # separating a lot from a County, public, state, or private road, or
+    # from an access drive". ZDO 845.03 then says it outright, "a front lot
+    # line that separates the lot from an improved alley". So an alley edge
+    # keeps its street classification in the county: it is frontage, it is
+    # a candidate front, and it takes the front setback. Every city in the
+    # corpus that defines the term reads the other way; see the
+    # `alley_is_street` field in common.py for the list.
+    #   or/clackamas/_unincorporated/zdo.202.definitions.txt#L283
+    #   or/clackamas/_unincorporated/zdo.202.definitions.txt#L445
+    #   or/clackamas/_unincorporated/zdo.202.definitions.txt#L559
+    #   or/clackamas/_unincorporated/zdo.845.txt#L195
+    alley_is_street: true
     # Metro regional-zoning ZONE literals verified against the downloaded layer
     # (CITY='Clackamas Co.'): R5 R7 R8.5 R10 R15 R20 R30 VR57 VR45 — the nine
     # ZDO-282 quadplex-eligible urban residential districts. Multi-family

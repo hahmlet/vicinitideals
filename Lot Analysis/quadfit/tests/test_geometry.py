@@ -95,6 +95,97 @@ def test_landlocked_tier_d():
     assert r["tier"] == "D"
 
 
+def _classify_with_alleys(lot, streets, alleys):
+    from s4_edges import classify_lot
+
+    sg = np.array(streets, dtype=object)
+    ag = np.array(alleys, dtype=object)
+    return classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        alley_tree=STRtree(ag), alley_geoms=ag,
+    )
+
+
+def _lot_with_an_alley_behind():
+    """100x100, street 30 ft south of the front edge, alley 10 ft north of the
+    back one -- the ordinary Portland block."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 110), (160, 110)])
+    return lot, [street], [alley]
+
+
+def test_an_alley_behind_the_lot_is_the_rear_lot_line_not_a_second_front():
+    """Portland 33.910: "Street lot line does not include lot lines that abut
+    an alley." Gresham 3.0100 and Oregon City 17.04.1000: "A lot line abutting
+    an alley is a rear lot line."
+
+    Until 2026-09-11 the alley was in the street file s4 classified against
+    and nothing told it apart, so the line along it was ``F``: it was summed
+    into the street frontage, it took the front setback, and it was a
+    candidate front lot line. Told apart, it is class ``A`` and none of those.
+    """
+    lot, streets, alleys = _lot_with_an_alley_behind()
+    r = _classify_with_alleys(lot, streets, alleys)
+    assert r["tier"] == "A", "one street, one frontage direction"
+    assert len(r["front_bearings"]) == 1
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert classes.count("F") == 1 and classes.count("A") == 1
+    assert "R" not in classes, "the alley line IS the rear; nothing else is"
+    assert r["frontage_ft"] == pytest.approx(100, abs=1), "the street's length only"
+
+
+def test_where_the_code_says_an_alley_is_a_street_it_is_read_as_one():
+    """Clackamas County ZDO 202 ("STREET: See ROAD") and Fairview 19.13
+    ("Alley means a narrow street") say the opposite of the other eleven, and
+    those two are run against the whole file: the alley is a street edge with
+    everything that follows. The same parcel, the other reading."""
+    lot, streets, alleys = _lot_with_an_alley_behind()
+    r = _classify(lot, streets + alleys)
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert classes.count("F") == 2 and "A" not in classes
+    assert r["frontage_ft"] == pytest.approx(200, abs=1)
+
+
+def test_a_lot_whose_only_public_way_is_an_alley_keeps_it_as_frontage():
+    """Demoting the alley on a lot with nothing else would turn a lot on a
+    public way into a landlocked one. Portland 33.910: "Where primary access
+    is not possible, the alley may provide primary vehicle access." So it is
+    read as it was before alleys were told apart."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    far_street = LineString([(-60, -500), (160, -500)])
+    alley = LineString([(-60, 110), (160, 110)])
+    r = _classify_with_alleys(lot, [far_street], [alley])
+    assert r["tier"] == "A"
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert classes.count("F") == 1 and "A" not in classes
+    assert r["frontage_ft"] == pytest.approx(100, abs=1)
+
+
+def test_an_alley_edge_takes_the_rear_setback_in_the_envelope():
+    """s5 sets the alley line back as a rear lot line. With front 20, rear 5
+    and side 5 on a 100x100 lot, an ``A`` rear leaves the same envelope an
+    ``R`` rear does, and 15 ft more than an ``F`` one."""
+    from s5_envelope import build_envelope
+
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    setbacks = {"F": 20.0, "R": 5.0, "S": 5.0}
+    setbacks["A"] = setbacks["R"]
+
+    def env_with(rear_cls):
+        edges = [
+            [0, 0, 100, 0, "F"],
+            [100, 0, 100, 100, "S"],
+            [100, 100, 0, 100, rear_cls],
+            [0, 100, 0, 0, "S"],
+        ]
+        return build_envelope(lot, edges, setbacks, "A").area
+
+    assert env_with("A") == pytest.approx(env_with("R"))
+    assert env_with("A") == pytest.approx(90 * 75)
+    assert env_with("F") == pytest.approx(90 * 60)
+
+
 # ---------------------------------------------------------------------------
 # s5 — envelope
 # ---------------------------------------------------------------------------

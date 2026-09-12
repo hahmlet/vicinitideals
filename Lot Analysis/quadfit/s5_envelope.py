@@ -83,6 +83,13 @@ def main() -> None:
             "R": rule.effective_setback_rear_ft(lot_area_sqft=area),
             "S": rule.effective_setback_side_ft(lot_area_sqft=area),
         }
+        # An alley edge is a rear lot line -- Gresham 3.0100 and Oregon City
+        # 17.04.1000 say so in those words, Wilsonville 4.113 measures "Rear
+        # Setback ... from the rear lot line abutting the alley" -- so it
+        # takes the rear setback. Multnomah County 33.110 waives the setback
+        # from an alley altogether and Fairview lets a garage sit on the
+        # line; neither relief is modelled, which is the strict side.
+        setbacks["A"] = setbacks["R"]
         # Corner lots (tier B): we can't tell which street edge is the legal
         # front, so every street edge takes max(front, street_side) —
         # conservative when the street-side setback exceeds the front.

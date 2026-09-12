@@ -412,6 +412,45 @@ class JurisdictionRules(BaseModel):
     #: say must not be given a rule.
     front_lot_line_rule: str | None = None
 
+    #: Whether a lot line along an ALLEY is a street lot line in this city.
+    #:
+    #: RLIS's streets file carries alleys (TYPE 1600, named alleys added by
+    #: Metro in 2025) beside every other public way, and until 2026-09-11 s4
+    #: classified against the whole file, so a lot with an alley behind it
+    #: had that line marked ``F``: the alley's length went into the street
+    #: frontage sum, the alley took the front (or street-side) setback, and
+    #: on a corner lot the rear lot line vanished -- 8,505 lots lost their
+    #: depth to it the day the front rule went live.
+    #:
+    #: Eleven of the thirteen cities that define the term say the opposite,
+    #: in their own words: Portland 33.910 ("Street lot line does not include
+    #: lot lines that abut an alley"), Gresham 3.0100 and Oregon City 17.04
+    #: ("a lot line abutting an alley is a rear lot line"), Wood Village
+    #: 720.030, Milwaukie 19.300 ("abut a public street other than an alley"),
+    #: Happy Valley 16.12, Gladstone 17.06, West Linn 02, Wilsonville 4,
+    #: Troutdale 1.020 and Multnomah County 39.2000 (an alley is a "service"
+    #: way to "the back or side of properties otherwise abutting on a
+    #: street"), and Tualatin 31 ("abutting two intersecting streets other
+    #: than an alley"). That is the default, ``False``: s4 classes the line
+    #: ``A``, it is neither front nor frontage, s5 sets it back as a rear
+    #: lot line, and the site plan faces the street. (Portland 33.266 and
+    #: Fairview 19.145 require the driveway to come FROM the alley where
+    #: there is one; that is not modelled in either direction, before or
+    #: after this flag.)
+    #:
+    #: Two say an alley IS a street and are set ``True`` beside the citation:
+    #: Clackamas County (ZDO 202 "STREET: See ROAD", any public way giving
+    #: ingress to a lot, and ZDO 845.03 speaks of "a front lot line that
+    #: separates the lot from an improved alley") and Fairview (FMC 19.13
+    #: "Alley means a narrow street", 19.140 "all alleys shall constitute
+    #: public streets"). There the file is read whole, as before.
+    #:
+    #: A lot whose ONLY street-facing line is an alley keeps it as frontage
+    #: in every city. Demoting it would turn a lot with a public way on it
+    #: into a landlocked one, and Portland 33.910 allows that "where primary
+    #: access is not possible, the alley may provide primary vehicle access".
+    alley_is_street: bool = False
+
     zones: list[ZoneRule] = Field(default_factory=list)
 
     def normalize_zone(self, raw: str | None) -> str | None:

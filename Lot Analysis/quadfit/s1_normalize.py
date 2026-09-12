@@ -3,7 +3,7 @@
 - Taxlots: validity repair, drop empty/degenerate geometry, explode
   multipolygons keeping the largest part, condo-stack dedupe (many TLIDs
   sharing one footprint collapse to a representative row with stack_count).
-- Streets: geometry + name only.
+- Streets: geometry, name, RLIS TYPE/FTYPE and an `alley` flag (TYPE 1600).
 - Zoning layers (every layer referenced by rules.yaml): validity repair +
   zone_raw column extracted from the configured zone_field.
 - UGB: polygons as-is.
@@ -113,12 +113,47 @@ def normalize_streets() -> None:
         gj = f.get("geometry")
         if not gj:
             continue
+        props = f.get("properties", {})
         rows.append({
-            "name": f.get("properties", {}).get("STREETNAME"),
+            "name": props.get("STREETNAME"),
+            "type": _street_type(props.get("TYPE")),
+            "ftype": (props.get("FTYPE") or "").strip() or None,
+            "alley": is_alley(props),
             "geom": shape(gj),
         })
-    print(f"streets: {len(rows):,} centerline features")
+    alleys = sum(1 for r in rows if r["alley"])
+    print(f"streets: {len(rows):,} centerline features, {alleys:,} of them alleys")
     write_stage(pd.DataFrame(rows), "s1_streets")
+
+
+#: RLIS `STREETS` TYPE code for an alley (Metro's metadata: 1600 "Alley";
+#: named alleys were added to the file on 2025-04-14). FTYPE 'ALY' is the
+#: street-type suffix and every segment carrying it is TYPE 1600, but both
+#: are read in case a future release keeps one and drops the other.
+ALLEY_TYPE = 1600
+ALLEY_FTYPE = "ALY"
+
+
+def _street_type(value: Any) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def is_alley(props: dict[str, Any]) -> bool:
+    """Whether an RLIS street segment is an alley.
+
+    s4 classifies a lot line as street frontage by its distance to the nearest
+    segment in this file, and the file holds alleys beside every other public
+    way. In eleven of the thirteen cities that define the term an alley is
+    not a street lot line -- Portland 33.910, Gresham 3.0100, Oregon City
+    17.04.1000 and the rest listed on `JurisdictionRules.alley_is_street` --
+    so the flag is carried here for s4 to keep the two apart.
+    """
+    return _street_type(props.get("TYPE")) == ALLEY_TYPE or (
+        (props.get("FTYPE") or "").strip().upper() == ALLEY_FTYPE
+    )
 
 
 def normalize_zoning() -> None:

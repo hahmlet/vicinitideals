@@ -423,3 +423,19 @@ def test_a_city_measured_on_two_axes_says_which_edge_is_the_front():
         "these cities have a depth measure and no front lot line rule, so their "
         f"corner lots go unmeasured: {sorted(unstated)}"
     )
+
+
+def test_the_two_cities_where_an_alley_is_a_street_are_the_two_that_say_so():
+    """Eleven of the thirteen cities that define the term say an alley is not
+    a street lot line, and s4 reads it as a rear line for them. Clackamas
+    County (ZDO 202, "STREET: See ROAD") and Fairview (FMC 19.13, "Alley means
+    a narrow street") say it is, and are the only two flagged. Pinned as a
+    set: a third city joining needs its definition read and cited beside the
+    flag, and one leaving needs the same, because the flag decides what the
+    street frontage sum, the tier, and the setback on that line all are.
+    """
+    from common import load_rules
+
+    rules = load_rules()
+    flagged = {name for name, j in rules.jurisdictions.items() if j.alley_is_street}
+    assert flagged == {"clackamas_unincorporated", "fairview"}

@@ -6,6 +6,18 @@ each remaining edge measure distance from its midpoint to the nearest street
 centerline. Edges within street_threshold_ft are frontage. Rear = non-front
 edges roughly parallel (±30° mod 180) to a front bearing; sides = the rest.
 
+Edge classes:
+  F  street frontage -- within the threshold of a street centerline
+  A  alley -- within the threshold of an alley and of no street. Not frontage,
+     not a candidate front lot line, set back as a rear lot line by s5, and
+     not a street the site plan faces. Only produced in cities whose
+     code says an alley is not a street (`JurisdictionRules.alley_is_street`
+     is False); where it says the opposite the alley is read as any other
+     street and classes F. A lot whose only street-facing line is an alley
+     keeps it as F in every city -- see the same field for why.
+  R  rear -- not a street, roughly parallel to a front bearing
+  S  side -- the rest
+
 Tiers:
   A  clean, near-convex, one street frontage direction
   B  corner (2+ distinct frontage directions) — both bearings kept for fit
@@ -83,8 +95,15 @@ def cluster_bearings(bearings_lengths: list[tuple[float, float]]) -> list[float]
 
 
 def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
-                 simplify_tol: float) -> dict:
-    """Classify one lot polygon. Returns dict of edge/tier attributes."""
+                 simplify_tol: float, *, alley_tree=None, alley_geoms=None) -> dict:
+    """Classify one lot polygon. Returns dict of edge/tier attributes.
+
+    ``alley_tree``/``alley_geoms`` hold the alley centerlines separately from
+    the streets. An edge near an alley and near no street classes ``A``; an
+    edge near both is a street edge, because the street is the one the code
+    cares about. Pass neither and every segment given is a street, which is
+    how the two cities whose code says an alley is a street are run.
+    """
     import shapely
     from shapely.geometry import LineString, Point
 
@@ -99,13 +118,27 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
     if not edges:
         return {"tier": "D", "edges": [], "front_bearings": [], "frontage_ft": 0.0}
 
-    # Frontage test: midpoint distance to nearest street centerline.
+    # Frontage test: midpoint distance to nearest street centerline, and
+    # failing that to the nearest alley.
     front_flags = []
+    alley_flags = []
     for x1, y1, x2, y2, ln, _b in edges:
         mid = Point((x1 + x2) / 2, (y1 + y2) / 2)
         nearest_idx = street_tree.nearest(mid)
         dist = mid.distance(street_geoms[nearest_idx])
-        front_flags.append(dist <= threshold_ft)
+        is_front = dist <= threshold_ft
+        front_flags.append(is_front)
+        is_alley = False
+        if not is_front and alley_tree is not None and len(alley_geoms):
+            a_idx = alley_tree.nearest(mid)
+            is_alley = mid.distance(alley_geoms[a_idx]) <= threshold_ft
+        alley_flags.append(is_alley)
+
+    # A lot with an alley and no street: the alley is its frontage, as it
+    # was before alleys were told apart. Demoting it would make the lot
+    # landlocked, which a lot on a public way is not.
+    if not any(front_flags) and any(alley_flags):
+        front_flags, alley_flags = alley_flags, [False] * len(edges)
 
     if not any(front_flags):
         return {"tier": "D", "edges": [], "front_bearings": [], "frontage_ft": 0.0}
@@ -117,9 +150,13 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
 
     # Edge classes.
     classed = []
-    for (x1, y1, x2, y2, ln, b), is_front in zip(edges, front_flags):
+    for (x1, y1, x2, y2, ln, b), is_front, is_alley in zip(
+        edges, front_flags, alley_flags
+    ):
         if is_front:
             cls = "F"
+        elif is_alley:
+            cls = "A"
         elif any(bearing_delta(b, fb) <= PARALLEL_TOL_DEG for fb in front_bearings):
             cls = "R"
         else:
@@ -164,15 +201,39 @@ def main() -> None:
     rules = load_rules()
     lots = read_stage("s3_lots")
     streets = read_stage("s1_streets")
-    street_geoms = np.array(list(streets["geom"]), dtype=object)
-    tree = STRtree(street_geoms)
+    # Alleys are told apart from streets (s1 flags them from RLIS TYPE 1600)
+    # and classified against separately, except in the cities whose code
+    # says an alley is a street, which are run against the whole file.
+    if "alley" not in streets.columns:
+        raise SystemExit(
+            "s1_streets has no 'alley' column -- re-run s1_normalize.py --only streets"
+        )
+    is_alley = streets["alley"].fillna(False).astype(bool).to_numpy()
+    all_geoms = np.array(list(streets["geom"]), dtype=object)
+    street_geoms = all_geoms[~is_alley]
+    alley_geoms = all_geoms[is_alley]
+    tree_all = STRtree(all_geoms)
+    tree_streets = STRtree(street_geoms)
+    tree_alleys = STRtree(alley_geoms) if len(alley_geoms) else None
     thr = rules.defaults.street_threshold_ft
     tol = rules.defaults.simplify_tolerance_ft
+    alley_is_street = {
+        name: j.alley_is_street for name, j in rules.jurisdictions.items()
+    }
 
-    print(f"s4: classifying {len(lots):,} lots against {len(street_geoms):,} street segments")
+    print(
+        f"s4: classifying {len(lots):,} lots against {len(street_geoms):,} street "
+        f"segments and {len(alley_geoms):,} alley segments"
+    )
     results = []
-    for n, geom in enumerate(lots["geom"]):
-        results.append(classify_lot(geom, tree, street_geoms, thr, tol))
+    for n, (geom, juris) in enumerate(zip(lots["geom"], lots["jurisdiction"])):
+        if alley_is_street.get(juris, False):
+            results.append(classify_lot(geom, tree_all, all_geoms, thr, tol))
+        else:
+            results.append(classify_lot(
+                geom, tree_streets, street_geoms, thr, tol,
+                alley_tree=tree_alleys, alley_geoms=alley_geoms,
+            ))
         if n and n % 20000 == 0:
             print(f"  {n:,}/{len(lots):,}")
 
@@ -242,6 +303,8 @@ def main() -> None:
     from collections import Counter
 
     print("s4 tier distribution:", dict(Counter(lots["tier"])))
+    with_alley = sum(1 for r in results if any(e[4] == "A" for e in r["edges"]))
+    print(f"s4 lots with an alley edge (class A): {with_alley:,}")
     write_stage(lots, "s4_lots")
     print("s4 done.")
 

@@ -256,6 +256,52 @@ _PORTLAND_RECT_DEPTH_FT = 40.0
 #: class an edge ``R``, so a lot with one street reads the same here as there.
 _OPPOSITE_TOL_DEG = 30.0
 
+#: Street-facing lot line shorter than this, sitting between two other
+#: street-facing runs that turn a corner between them, is the clipped corner
+#: of a corner lot -- the chamfer or the surveyed arc where two rights-of-way
+#: meet -- and not a front lot line. Fairview 19.165 asks a corner radius of
+#: "not less than 20 feet" at an arterial and Wilsonville 4.237 "not less
+#: than ten feet" anywhere; a 25 ft radius quarter-circle is 39 ft of lot
+#: line, so the cap sits above it and under the narrowest real front any
+#: city here allows (Portland R5 asks 36 ft of width). Gresham measures its
+#: street frontage "from the corner radius end point to the property corner"
+#: (4.0130 note 10), which is the same reading.
+_CLIP_MAX_FT = 45.0
+
+#: The narrowest lot any city here has on the ground: Portland's 25 ft
+#: plats. A street-facing run at least this long may be a front; nothing
+#: shorter is one on its own.
+_NARROWEST_FRONT_FT = 25.0
+
+#: Where the street ends inside the chain -- the lot's second street lies
+#: past the 50 ft the edge classifier looks, so the arc has a street-facing
+#: run on one side only -- nothing local tells a 33 ft chord from the 33 ft
+#: front of a narrow corner lot with a street down its side, and a single
+#: chord that long is left. Under this it is dropped: a 12.7 ft radius is
+#: 20 ft of quarter-circle, and it sits under :data:`_NARROWEST_FRONT_FT`.
+_END_CLIP_MAX_FT = 20.0
+
+#: Two street-facing runs meet on a curve rather than at a corner when the
+#: turn between them is gentle and the arc it implies is wide: radius = chord
+#: / (2 sin(turn / 2)), on the shorter of the two edges meeting there, which
+#: for chords surveyed on a circle is the circle's radius. Corner arcs are
+#: surveyed at 10 to 25 ft radii (the two citations above); the lot line
+#: around a cul-de-sac bulb is 38 to 55 ft (a West Linn bulb lot read at 38
+#: to 50 across its four chords); a curving street is wider still. Measured
+#: on every pair of adjacent street-facing edges in both counties on
+#: 2026-09-12: joints turning 5 to 12 degrees imply a median radius of 130
+#: to 280 ft, joints turning 20 to 45 degrees imply 14 to 31.
+_CURVE_MIN_RADIUS_FT = 30.0
+
+#: How far, end to end, one curved front lot line may turn before it is two.
+#: A corner is 90. Summed joint by joint, not read off the two end bearings:
+#: bearings here are modulo 180 and a difference between two of them is at
+#: most 90, so a front wrapped 128 degrees round a lot read as 52 and passed.
+#: Two West Linn lots on the outside of a hairpin had their whole street
+#: line, seven and eight chords, joined into one 190 and 217 ft "front" that
+#: way, and lost both their width and their depth to it.
+_CURVE_MAX_SWEEP_DEG = 75.0
+
 _EPS = 1e-6
 
 WIDTH_MEASURES = frozenset({
@@ -329,8 +375,79 @@ def front_groups(edges) -> list[tuple[float, list]]:
     settles this in the text: "when the lot line abutting a street is curved,
     the front lot line follows the curve" (OCMC 17.04.490). A run does.
 
+    A run is built in two steps. Pieces within :data:`_FRONT_BUCKET_DEG` of
+    each other are one run outright. Then two runs that meet on a curve --
+    turning no more than :data:`_OPPOSITE_TOL_DEG`, on an arc at least
+    :data:`_CURVE_MIN_RADIUS_FT` wide, and not sweeping more than
+    :data:`_CURVE_MAX_SWEEP_DEG` end to end once joined -- are joined too. A
+    Fairview lot on a bend surveyed as five chords eleven to thirteen degrees
+    apart is one front under that and five under the bucket alone; the bucket
+    alone gave it a 13 ft front and a 20 ft depth on a 73,000 sq ft parcel.
+    The radius is what keeps the corner out of it: a corner arc is drawn at
+    ten to twenty-five feet, a bend in a street at a hundred or more.
+
     A corner, by contrast, turns through something near a right angle in one
     step, which breaks the run and gives the two fronts a corner lot has.
+
+    And the corner itself is not a third one. Where two streets meet the lot
+    line is usually clipped -- a chamfer, or an arc surveyed as a few short
+    chords -- and each piece of that clip is a street-facing run in its own
+    right, turning too sharply to join either neighbour. Under "the front lot
+    line is the shortest lot line abutting a street" a ten-foot chamfer won
+    against both streets on 3,995 lots the day the rule went live, and the
+    whole parcel was then measured square to a line nobody would build to.
+    So a chain of short runs between two street-facing runs that turn a
+    corner between them is dropped from the candidates. Its length still
+    counts in s4's frontage sum; it is only not a front. The two runs that
+    bound the chain are the nearest on each side that are a street line in
+    their own right: not short (:data:`_CLIP_MAX_FT`), or the run the
+    street ends on when that is long enough to be a front by itself
+    (:data:`_NARROWEST_FRONT_FT`), so a 35 ft front on a narrow corner lot
+    bounds the arc beside it rather than being swallowed into it, while the
+    22 ft second chord of a bent front does not, and stays in the chain
+    with the first. Between two long runs the chain is
+    the corner whatever its radius (Gresham 4.0130 note 10 measures frontage
+    "from the corner radius end point"); between a long run and a short
+    street, it is a clip only if it is short all told and not smooth at
+    every joint, because a chain that is smooth from end to end and ends at
+    a side lot line is the frontage of a lot on a cul-de-sac bulb, and that
+    is a front.
+
+    A corner arc at the end of the street -- a Portland lot with an 86 ft
+    front, a 13 ft chord turning fifty degrees, then the side lot line,
+    because its second street lies past the 50 ft the edge classifier looks
+    -- has a bounding run on one side only, and nothing local tells a 33 ft
+    chord there from the 33 ft front of a narrow corner lot with a street
+    down its side. So off the end of a run that could be a front
+    (:data:`_NARROWEST_FRONT_FT`) a chain that turns away and is not smooth
+    is dropped when it is under :data:`_END_CLIP_MAX_FT` all told; or, up to
+    :data:`_CLIP_MAX_FT`, when it is two or more chords on a circle tighter
+    than any street bend (:data:`_CURVE_MIN_RADIUS_FT`), turning the same
+    way at every joint and meeting the side lot line at a tangent as a
+    corner arc does and a second street never does -- a Wilsonville lot
+    read its 79 ft front as 7 ft on the 7 and 19 ft chords of a 24 ft
+    radius. A 25 ft front, one chord, is never in reach of either.
+
+    Nor is the last 50 ft of a side lot line a front. The edge classifier
+    marks a lot line street-facing for lying within reach of a street, and
+    the end of a side lot line where it meets the street qualifies; what
+    gives it away is that it continues straight into a lot line that is not
+    street-facing, and turns a corner into one that is. A Portland lot with
+    a 62 ft front read its 30 ft of side line as the front and measured 200
+    ft of width across it. Such an edge is dropped before the runs are
+    built, unless the lot has no other street-facing edge.
+
+    Clips are taken before the curves are joined, because the joint where a
+    straight street meets its own corner arc turns half a chord's step and
+    reads as an arc twice as wide as the corner really is; and taken again
+    after, because a front surveyed as four chords of 12 ft is short in
+    every piece and long as a run, and the corner beside it is only a clip
+    once the run is one thing. The two passes alternate until nothing moves.
+    The turn matters too: a 20 ft by 766 ft strip in Oregon City with a
+    street along both long sides has a 20 ft end between two street-facing
+    runs, and that end is its front, not a clip. Where every run on the lot
+    would go that way nothing is dropped, because a lot has to have a front
+    and a sliver made of clips is a shape for tier C, not for this.
     """
     n = len(edges)
     is_front = [
@@ -338,7 +455,22 @@ def front_groups(edges) -> list[tuple[float, list]]:
     ]
     if not any(is_front):
         return []
-    runs: list[list] = []
+    # The last 50 ft of a side lot line: straight on from a lot line that is
+    # not street-facing, and turning a corner into one that is.
+    tails = [
+        i for i in range(n) if is_front[i] and any(
+            not is_front[nb]
+            and _length(edges[nb]) > _EPS
+            and abs(_offset(_bearing(edges[nb]), _bearing(edges[i]))) <= _FRONT_BUCKET_DEG
+            and is_front[other]
+            and abs(_offset(_bearing(edges[other]), _bearing(edges[i]))) > _OPPOSITE_TOL_DEG
+            for nb, other in (((i - 1) % n, (i + 1) % n), ((i + 1) % n, (i - 1) % n))
+        )
+    ]
+    if len(tails) < sum(is_front):
+        for i in tails:
+            is_front[i] = False
+    runs: list[list[int]] = []
     prev_i = None
     for i, e in enumerate(edges):
         if not is_front[i]:
@@ -349,9 +481,9 @@ def front_groups(edges) -> list[tuple[float, list]]:
             and prev_i == i - 1
             and abs(_offset(_bearing(e), _bearing(edges[prev_i]))) <= _FRONT_BUCKET_DEG
         ):
-            runs[-1].append(e)
+            runs[-1].append(i)
         else:
-            runs.append([e])
+            runs.append([i])
         prev_i = i
     # The boundary is a ring, so a run can straddle the start of the list.
     if (
@@ -363,14 +495,161 @@ def front_groups(edges) -> list[tuple[float, list]]:
     ):
         runs[0] = runs[-1] + runs[0]
         runs.pop()
-    groups = []
-    for members in runs:
+
+    def _run_len(idx: list[int]) -> float:
+        return sum(_length(edges[i]) for i in idx)
+
+    def _contiguous(a: list[int], b: list[int]) -> bool:
+        return b[0] == (a[-1] + 1) % n
+
+    def _on_a_curve(a: list[int], b: list[int]) -> bool:
+        """Runs ``a`` then ``b``, consecutive on the ring, meet on a curve."""
+        ea, eb = edges[a[-1]], edges[b[0]]
+        turn = abs(_offset(_bearing(eb), _bearing(ea)))
+        if turn > _OPPOSITE_TOL_DEG:
+            return False
+        radius = min(_length(ea), _length(eb)) / (2.0 * math.sin(math.radians(turn) / 2.0))
+        if radius < _CURVE_MIN_RADIUS_FT:
+            return False
+        joined = a + b
+        sweep = abs(sum(
+            _offset(_bearing(edges[j]), _bearing(edges[i]))
+            for i, j in zip(joined, joined[1:])
+        ))
+        return sweep <= _CURVE_MAX_SWEEP_DEG
+
+    def _bounding(k: int, step: int) -> int | None:
+        """The nearest run from ``runs[k]`` in direction ``step`` that is a
+        street line a clip can hang from: one that is not short, or the run
+        the street ends on when that is long enough to be a front by itself.
+        None if the street ends at ``runs[k]``, or on something shorter."""
+        j = k
+        while True:
+            j2 = (j + step) % len(runs)
+            a, b = (runs[j], runs[j2]) if step > 0 else (runs[j2], runs[j])
+            if j2 == k or not _contiguous(a, b):
+                return None if j == k or _run_len(runs[j]) < _NARROWEST_FRONT_FT else j
+            j = j2
+            if _run_len(runs[j]) >= _CLIP_MAX_FT:
+                return j
+
+    def _tight_arc(path: list[int], step: int) -> bool:
+        """``path`` is an anchor run and the chain off its end, in ring
+        order. True when the chain is chords of a corner arc: turning the
+        same way at every joint from the anchor on, on a circle under
+        _CURVE_MIN_RADIUS_FT at every joint inside the chain (the anchor's
+        own joint is left out, because a straight line meeting its arc turns
+        half a chord's step and reads twice as wide), and meeting whatever
+        lot line follows at a tangent."""
+        joints = [(edges[runs[x][-1]], edges[runs[y][0]]) for x, y in zip(path, path[1:])]
+        turns = [_offset(_bearing(eb), _bearing(ea)) for ea, eb in joints]
+        if len({t > 0 for t in turns}) > 1 or any(abs(t) < _EPS for t in turns):
+            return False
+        anchor_joint = 0 if step > 0 else len(joints) - 1
+        for q, ((ea, eb), t) in enumerate(zip(joints, turns)):
+            if q == anchor_joint:
+                continue
+            radius = min(_length(ea), _length(eb)) / (2.0 * math.sin(math.radians(abs(t)) / 2.0))
+            if radius >= _CURVE_MIN_RADIUS_FT:
+                return False
+        fi = runs[path[-1]][-1] if step > 0 else runs[path[0]][0]
+        beyond = edges[(fi + step) % n]
+        return abs(_offset(_bearing(beyond), _bearing(edges[fi]))) <= _OPPOSITE_TOL_DEG
+
+    def _is_clip(k: int) -> bool:
+        if _run_len(runs[k]) >= _CLIP_MAX_FT:
+            return False
+        before, after = _bounding(k, -1), _bounding(k, +1)
+        if before == after:
+            return False
+        if before is not None and after is not None:
+            chain, j = [], (before + 1) % len(runs)
+            while j != after:
+                chain.append(j)
+                j = (j + 1) % len(runs)
+            # Two streets meeting turn a corner. Two street-facing runs that
+            # are parallel to each other are the long sides of a strip with a
+            # street on three sides, and the short end between them is its
+            # front.
+            turn = abs(_offset(_mean_bearing(runs[after]), _mean_bearing(runs[before])))
+            if turn <= _OPPOSITE_TOL_DEG:
+                return False
+            if _run_len(runs[before]) >= _CLIP_MAX_FT and _run_len(runs[after]) >= _CLIP_MAX_FT:
+                return True
+            if sum(_run_len(runs[j]) for j in chain) >= _CLIP_MAX_FT:
+                return False
+            # A chain that is smooth at every joint and reaches the end of
+            # the street is a bend in one street, not the corner of two: the
+            # lot line round a cul-de-sac bulb.
+            path = [before, *chain, after]
+            return not all(_on_a_curve(runs[x], runs[y]) for x, y in zip(path, path[1:]))
+        # The street ends inside the chain. Off the end of a run that could
+        # be a front, a chain that turns away from it and is not smooth
+        # where it does is the corner arc of a lot whose second street was
+        # not found: outright when it is shorter than any front, and up to
+        # the clip cap when it is chords of a tight arc that runs tangent
+        # into the side lot line.
+        anchor, step = (before, +1) if before is not None else (after, -1)
+        if _run_len(runs[anchor]) < _NARROWEST_FRONT_FT:
+            return False
+        chain, j = [], anchor
+        while True:
+            j2 = (j + step) % len(runs)
+            a, b = (runs[j], runs[j2]) if step > 0 else (runs[j2], runs[j])
+            if j2 == anchor or not _contiguous(a, b):
+                break
+            chain.append(j2)
+            j = j2
+        total = sum(_run_len(runs[j]) for j in chain)
+        if total >= _CLIP_MAX_FT:
+            return False
+        turn = abs(_offset(
+            _mean_bearing([i for j in chain for i in runs[j]]), _mean_bearing(runs[anchor])
+        ))
+        if turn <= _OPPOSITE_TOL_DEG:
+            return False
+        path = [anchor, *chain] if step > 0 else [*reversed(chain), anchor]
+        if all(_on_a_curve(runs[x], runs[y]) for x, y in zip(path, path[1:])):
+            return False
+        if total < _END_CLIP_MAX_FT:
+            return True
+        return len(chain) >= 2 and _tight_arc(path, step)
+
+    def _mean_bearing(idx: list[int]) -> float:
+        members = [edges[i] for i in idx]
         total = sum(_length(e) for e in members)
         base = _bearing(members[0])
-        mean = base + sum(
-            _length(e) * _offset(_bearing(e), base) for e in members
-        ) / total
-        groups.append((mean % 180.0, members))
+        return (base + sum(_length(e) * _offset(_bearing(e), base) for e in members) / total) % 180.0
+
+    # Clips out, then curves joined, and again until nothing moves: the
+    # joint where a straight street meets its corner arc turns only half a
+    # chord's step and reads as an arc twice as wide as the corner really
+    # is, so the clips go first; and a run that is short in every piece is
+    # long once joined, and only then bounds the corner beside it.
+    moved = True
+    while moved:
+        moved = False
+        kept = [runs[k] for k in range(len(runs)) if not _is_clip(k)]
+        if kept and len(kept) < len(runs):
+            runs = kept
+            moved = True
+        joined_one = True
+        while joined_one and len(runs) > 1:
+            joined_one = False
+            for k in range(len(runs)):
+                a, b = runs[k], runs[(k + 1) % len(runs)]
+                if a is b or not _contiguous(a, b) or not _on_a_curve(a, b):
+                    continue
+                if k + 1 < len(runs):
+                    runs[k] = a + b
+                    del runs[k + 1]
+                else:
+                    runs[0] = a + b
+                    del runs[k]
+                joined_one = moved = True
+                break
+
+    groups = [(_mean_bearing(idx), [edges[i] for i in idx]) for idx in runs]
     return sorted(
         groups, key=lambda g: sum(_length(e) for e in g[1]), reverse=True
     )
@@ -392,6 +671,13 @@ class _Frame:
     fx1: float
     origin: object
     angle: float
+    #: How far the front lot line itself stands above ``fy`` at its highest.
+    #: Zero for a straight front. A front that is a chain of chords -- a
+    #: curve, or a street that wobbles a degree or two between survey pins --
+    #: is put on its mean line, and its chords sit a few feet either side of
+    #: it. A column of the lot "stands on the front lot line" as far up as the
+    #: front lot line itself goes.
+    rise: float = 0.0
 
 
 def _frame(geom, members, bearing_deg) -> "_Frame | None":
@@ -420,7 +706,8 @@ def _frame(geom, members, bearing_deg) -> "_Frame | None":
         ) / total
         if rg.centroid.y > fy:
             xs = [c[0] for p in rf.geoms for c in p.coords]
-            return _Frame(rg, fy, min(xs), max(xs), origin, angle)
+            rise = max(c[1] for p in rf.geoms for c in p.coords) - fy
+            return _Frame(rg, fy, min(xs), max(xs), origin, angle, max(rise, 0.0))
     return None
 
 
@@ -471,12 +758,22 @@ def _row(rg, y) -> float | None:
     return max((b - a for a, b in parts), default=None)
 
 
-def _column(rg, x, fy) -> float | None:
+def _column(rg, x, fy, rise: float = 0.0) -> float | None:
     """How deep the lot runs at ``x``, measured back from the front lot line.
 
     The piece taken is the one standing on the front line. A lot with a body
     detached from its frontage in this column has no depth here, and returns
     ``None`` so the sample is skipped rather than counted as zero.
+
+    ``rise`` is how far the front lot line stands above its own mean line
+    (:attr:`_Frame.rise`). A front surveyed as three chords that wobble two
+    degrees between pins is put on one line, and at the middle of the lot
+    that line can pass a few feet *below* the chord that is there, so the
+    lot in that column starts above the line and, on a half-foot tolerance,
+    stood on nothing. Troutdale's depth is one column up the middle, and 288
+    of its lots lost their depth that way the day fronts were joined. The
+    depth is still taken from the mean line; only the test of what stands on
+    it reaches as high as the front itself does.
     """
     import shapely
     from shapely.geometry import LineString
@@ -490,7 +787,7 @@ def _column(rg, x, fy) -> float | None:
             continue
         ys = [c[1] for c in p.coords]
         lo, hi = min(ys), max(ys)
-        if lo <= fy + _INSIDE_TOL_FT <= hi:
+        if lo <= fy + rise + _INSIDE_TOL_FT <= hi:
             return hi - fy
     return None
 
@@ -700,25 +997,53 @@ def setback_rectangle_width_ft(rg, fy, setback_ft) -> float | None:
 # --- depth forms -------------------------------------------------------------
 
 
-def midpoints_depth_ft(edges, frame: _Frame) -> float | None:
+def midpoints_depth_ft(edges, frame: _Frame, front=None) -> float | None:
     """Oregon City, Gresham, Happy Valley, Portland: mid-point of the front lot
     line to mid-point of the rear lot line.
 
-    The rear lot line is taken from the edges classified ``R``, but only those
-    that are *opposite this front* -- beyond it, and within 30 degrees of
-    parallel to it. A corner lot has two candidate fronts and one rear edge,
-    and that edge is the rear of only one of them; measuring to it from the
-    other is a diagonal across the parcel, which is longer than either
-    dimension and would pass a depth standard on a lot that fails it.
+    The rear lot line is whichever lot line is *opposite this front* -- beyond
+    it, within 30 degrees of parallel to it, and not the front itself. That is
+    the definition in every city that has one: Portland 33.910 "a lot line
+    that is opposite a front lot line", Gresham 3.0100 and Oregon City
+    17.04.1000 "opposite to and more distant from the front lot line". It is
+    a property of the pair, front and rear, and not a label on the edge.
 
-    Where no rear edge qualifies the measurement is refused rather than
-    substituted with the far boundary, because "the opposite, usually the rear,
-    lot line" names a line, and a lot whose classification does not offer one
-    is not a lot this module may second-guess.
+    Until 2026-09-11 it was read from s4's ``R`` class instead, which is the
+    same set of edges on a lot with one street and a different one on every
+    lot with two: s4 classes against every street the parcel touches, so on a
+    corner lot the line opposite the side street is ``R`` and the line
+    opposite the front is ``F`` if a second street or an alley runs behind
+    it, or simply if the parcel is narrow enough for its rear line to sit
+    within the street threshold of the side street -- and 8,505 corner lots
+    had no depth at all. The one thing the label was guarding against -- the
+    diagonal, measured from a front to the rear of the *other* front -- is
+    what the parallel test refuses, so it is the parallel test that stays.
+    ``front`` is the chosen front's members and is never its own rear.
+
+    "Opposite" also means on the far side. A frontage that curves is a run
+    of short street-facing lines each turning a few degrees from the last,
+    and every one of them but the chosen run is parallel enough to pass the
+    30-degree test and sits a foot or two beyond the chosen run's line.
+    Averaged in with the true rear they dragged the "rear midpoint" up to the
+    street on 13,904 lots the first time this ran without the ``R`` label,
+    and a 239 ft lot came out 1.78 ft deep. So a candidate has to lie in the
+    far half of the lot as seen from this front -- beyond the midline between
+    the front lot line and the lot's furthest extent -- which is where a rear
+    lot line is and where a bend in the front is not. The same test retires
+    a jog in a side line near the street that the ``R`` label used to admit
+    (a West Linn lot read 0.91 ft deep through one of those).
+
+    Where no edge qualifies the measurement is refused rather than
+    substituted with the far boundary, because "the opposite, usually the
+    rear, lot line" names a line and a lot with none is held for a person.
     """
-    rears = [e for e in edges if len(e) > 4 and e[4] == "R" and _length(e) > _EPS]
+    chosen = {tuple(e[:4]) for e in (front or ())}
+    rears = [
+        e for e in edges if tuple(e[:4]) not in chosen and _length(e) > _EPS
+    ]
     if not rears:
         return None
+    far_side = frame.fy + max(_INSIDE_TOL_FT, (frame.rg.bounds[3] - frame.fy) / 2.0)
     opposite = []
     for e in _in_frame(rears, frame):
         run = math.hypot(e[2] - e[0], e[3] - e[1])
@@ -727,7 +1052,7 @@ def midpoints_depth_ft(edges, frame: _Frame) -> float | None:
         tilt = abs(math.degrees(math.atan2(e[3] - e[1], e[2] - e[0]))) % 180.0
         if min(tilt, 180.0 - tilt) > _OPPOSITE_TOL_DEG:
             continue
-        if (e[1] + e[3]) / 2.0 <= frame.fy + _INSIDE_TOL_FT:
+        if (e[1] + e[3]) / 2.0 <= far_side:
             continue
         opposite.append((run, (e[0] + e[2]) / 2.0, (e[1] + e[3]) / 2.0))
     if not opposite:
@@ -738,7 +1063,7 @@ def midpoints_depth_ft(edges, frame: _Frame) -> float | None:
     return round(math.hypot(rx - (frame.fx0 + frame.fx1) / 2.0, ry - frame.fy), 2)
 
 
-def average_depth_ft(rg, fy, fx0, fx1) -> float | None:
+def average_depth_ft(rg, fy, fx0, fx1, rise: float = 0.0) -> float | None:
     """Milwaukie, West Linn, Wilsonville, Fairview, Wood Village: the average
     horizontal distance between the front lot line and the rear lot line.
 
@@ -746,15 +1071,17 @@ def average_depth_ft(rg, fy, fx0, fx1) -> float | None:
     front lot line and the rear lot line" is a distance from. Columns where the
     lot does not stand on the front line are skipped, not counted as zero.
     """
-    depths = [d for x in _samples(fx0, fx1) if (d := _column(rg, x, fy)) is not None]
+    depths = [
+        d for x in _samples(fx0, fx1) if (d := _column(rg, x, fy, rise)) is not None
+    ]
     if not depths:
         return None
     return round(sum(depths) / len(depths), 2)
 
 
-def mid_width_depth_ft(rg, fy, fx0, fx1) -> float | None:
+def mid_width_depth_ft(rg, fy, fx0, fx1, rise: float = 0.0) -> float | None:
     """Troutdale: the depth taken up the middle of the lot."""
-    d = _column(rg, (fx0 + fx1) / 2.0, fy)
+    d = _column(rg, (fx0 + fx1) / 2.0, fy, rise)
     return None if d is None else round(d, 2)
 
 
@@ -805,11 +1132,11 @@ def orientations(
             w = setback_rectangle_width_ft(f.rg, f.fy, front_setback_ft)
 
         if depth_measure == "midpoints":
-            d = midpoints_depth_ft(edges, f)
+            d = midpoints_depth_ft(edges, f, members)
         elif depth_measure == "average":
-            d = average_depth_ft(f.rg, f.fy, f.fx0, f.fx1)
+            d = average_depth_ft(f.rg, f.fy, f.fx0, f.fx1, f.rise)
         elif depth_measure == "mid_width":
-            d = mid_width_depth_ft(f.rg, f.fy, f.fx0, f.fx1)
+            d = mid_width_depth_ft(f.rg, f.fy, f.fx0, f.fx1, f.rise)
 
         if w is None and d is None:
             continue
