@@ -368,6 +368,20 @@ jurisdictions:
       # envelope controls are FAR (never binds a 1,000 sf building) and the 15%
       # private-open-space minimum (7.0420(D)) — not modeled, noted as blind
       # spot. min_lot values are the zone minimum lot size (same as SFD).
+      # Street frontage, Table 4.0130 G.1 "Minimum Street Frontage: Interior
+      # lots", the "All other uses" row -- townhouses have their own row at
+      # 16, and a townhouse is a unit-lot building. Corner lots owe 40 in every
+      # district under G.2, and that is not carried: s4's `frontage_ft` is the
+      # SUM of a lot's street edges, so a corner lot reads long, and holding
+      # the interior number against that sum fails only a lot whose street
+      # edges TOGETHER fall short of it. Every red it makes is a true one; the
+      # corner lots it lets through are the lenient direction. Note 9 lets an
+      # applicant in LDR-7, LDR-5, TR and TLDR ask for a reduction under
+      # 10.1520 -- an option to ask is not a standard. Blank in all ten
+      # districts until 2026-09-11, when the mirror's unfilled-cell ledger
+      # asked why; the downtown, Pleasant Valley and Springwater tables state
+      # the same row and are cited on their zones.
+      #   or/multnomah/gresham/4.0100.residential.txt#L312-L314,L383
       - zone: LDR-5
         quadplex_allowed: true
         setback_front_ft: 10
@@ -380,6 +394,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
+        min_frontage_ft: 35  # or/multnomah/gresham/4.0100.residential.txt#L314
         min_lot_depth_ft: 70
         # Table 4.0130 E.1 "Width at building line: Interior lot", on the "Duplex, Triplex,
         # Quadplex, and Cottage Cluster" row. The corner-lot line (E.2) asks more and is a
@@ -404,6 +419,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 7000
+        min_frontage_ft: 40  # or/multnomah/gresham/4.0100.residential.txt#L314
         min_lot_depth_ft: 70
         # Table 4.0130 E.1, interior lot, quadplex row; corner line not carried (see LDR-5).
         #   or/multnomah/gresham/4.0100.residential.txt#L274
@@ -419,6 +435,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 15
         setback_street_side_ft: 10
+        min_frontage_ft: 35  # or/multnomah/gresham/4.0100.residential.txt#L314
         # Table 4.0130 E.1, interior lot, quadplex row; corner line not carried (see LDR-5).
         #   or/multnomah/gresham/4.0100.residential.txt#L274
         min_lot_width_ft: 16
@@ -439,6 +456,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 4000
+        min_frontage_ft: 35  # or/multnomah/gresham/4.0100.residential.txt#L314
         min_lot_depth_ft: 70
         # Table 4.0130 E.1, interior lot, quadplex row; corner line not carried (see LDR-5).
         #   or/multnomah/gresham/4.0100.residential.txt#L274
@@ -460,6 +478,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
+        min_frontage_ft: 35  # or/multnomah/gresham/4.1400.pleasant-valley.txt#L295
         min_density_du_per_acre: 5.3  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf"
@@ -477,6 +496,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
+        min_frontage_ft: 35  # or/multnomah/gresham/4.1500.springwater.txt#L269
         min_lot_depth_ft: 80
         # Table 4.1508 D.1 "Width at building line: Interior lot", "All Other Uses"
         # row. Corner lot line asks more, not carried.
@@ -494,6 +514,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_lot_sqft: 3600
+        min_frontage_ft: 45  # or/multnomah/gresham/4.0100.residential.txt#L314
         # Table 4.0130 E.1, interior lot, quadplex row; corner line not carried (see LDR-5).
         #   or/multnomah/gresham/4.0100.residential.txt#L274
         min_lot_width_ft: 16
@@ -509,6 +530,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_lot_sqft: 11000
+        min_frontage_ft: 45  # or/multnomah/gresham/4.0100.residential.txt#L314
         # Table 4.0130 E.1, interior lot, quadplex row; corner line not carried (see LDR-5).
         #   or/multnomah/gresham/4.0100.residential.txt#L274
         min_lot_width_ft: 16
@@ -531,6 +553,7 @@ jurisdictions:
         setback_rear_ft: 10
         setback_street_side_ft: 10
         min_lot_sqft: 4000
+        min_frontage_ft: 35  # or/multnomah/gresham/4.1100.downtown.txt#L518
         min_lot_depth_ft: 70
         # Table 4.1130 "Width at building line, interior lot: 35 feet single detached,
         # duplex, triplex, and quadplex". Corner lot 40, not carried.
@@ -549,6 +572,7 @@ jurisdictions:
         setback_rear_ft: 10
         setback_street_side_ft: 10
         min_lot_sqft: 4000
+        min_frontage_ft: 35  # or/multnomah/gresham/4.1100.downtown.txt#L518
         min_lot_depth_ft: 70
         # Table 4.1130 "Width at building line, interior lot: 35 feet single detached,
         # duplex, triplex, and quadplex". Corner lot 40, not carried.
@@ -1386,11 +1410,24 @@ jurisdictions:
     # modeled since we test the building footprint). Middle housing keeps the
     # base setbacks measured from the parent lot (Table 315-2 fn 9), which is
     # exactly the as-if-empty parcel-edge envelope this screen tests. Coverage
-    # 50% applies to quadplexes (they are NOT exempt). min_lot_sqft is omitted:
-    # ZDO-282 waives the minimum lot size for a middle-housing land division
-    # (Section 845), so the more-permissive division path governs. Street-side
-    # (corner) setback is not in the base tables — Section 903 handles corners —
-    # so it is left unset (needs_verification).
+    # 50% applies to quadplexes (they are NOT exempt).
+    # min_lot_sqft is 7,000 in every district, ZDO 845.01(1)(b): "The subject
+    # lot shall be a minimum of ... 7,000 square feet for a quadplex or a
+    # cottage cluster." Until 2026-09-11 the row was left blank on a reading
+    # that ZDO-282 waives the minimum lot size for a middle-housing land
+    # division (Section 845) -- and it does, for the CHILD lots the division
+    # creates (1012.02(H) waives Table 315-2's district figure there), not
+    # for the parent lot the building stands on. 845.01 states its floor on
+    # "the subject lot", and 845.01(2)'s exemption list runs 845.02 through
+    # 845.04: it does not reach 845.01 itself, even for a conversion. The
+    # figure is the one OAR 660-046-0220(2) lets a city ask of a quadplex
+    # lot, adopted at the ceiling. The day it was filled, 5,313 lots in these
+    # nine districts were under 7,000 sq ft and every one was already red
+    # for something else, so the blank had moved no verdict; it was wrong in
+    # the direction that could have.
+    #   or/clackamas/_unincorporated/zdo.845.txt#L3,L7
+    # Street-side (corner) setback is not in the base tables — Section 903
+    # handles corners — so it is left unset (needs_verification).
     zones:
       - zone: R5
         quadplex_allowed: true
@@ -1398,6 +1435,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282 (quadplex by-right); ZDO Section 315 Table 315-2 (dwelling front 15, garage 20, side 5, rear 20, coverage 50%)"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
@@ -1408,6 +1446,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282; ZDO Section 315 Table 315-2"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
@@ -1418,6 +1457,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282; ZDO Section 315 Table 315-2"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
@@ -1428,6 +1468,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282; ZDO Section 315 Table 315-2"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
@@ -1438,6 +1479,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282; ZDO Section 315 Table 315-2"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
@@ -1448,6 +1490,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282; ZDO Section 315 Table 315-2"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
@@ -1458,6 +1501,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282; ZDO Section 315 Table 315-2"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
@@ -1468,6 +1512,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 15
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282; ZDO Section 315 Table 315-3 (Village Residential VR-5/7: front 10, max front 18, side 0/5, rear 15, coverage 50%)"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
@@ -1478,6 +1523,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 15
         max_coverage_pct: 50
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
         source: "Clackamas ZDO-282; ZDO Section 315 Table 315-3 (Village Residential VR-4/5)"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -1510,6 +1556,21 @@ jurisdictions:
     #   or/clackamas/happy-valley/16.12.definitions.txt#L938-L939
     lot_width_measure: side_midpoints
     zones:
+      # Street frontage, each district table's "Street frontage (minimum)" row,
+      # "All other lots". The row above it, "Lots fronting on cul-de-sac", is
+      # looser in every table (35 in R-5 to R-10, 50-70 in R-15 to R-40) and
+      # is not carried: nothing here knows whether a lot's street is a
+      # cul-de-sac bulb, and carrying the looser row across would pass lots
+      # the code holds to the interior number -- the reading the corpus took.
+      # So a bulb lot reading under the interior number is a false red this
+      # file CAN produce, and it is written here so the next person to see a
+      # curved-front lot fail on frontage knows why. Measured 2026-09-11 when
+      # the rows were filled: 36 review lots and no green fell under the
+      # number, in a city with no greens. The townhouse row (20) is a unit-lot
+      # figure.
+      #   or/clackamas/happy-valley/16.22.residential.txt#L284-L286 (R-40/R-20/R-15)
+      #   or/clackamas/happy-valley/16.22.residential.txt#L474-L476 (R-10/R-8.5/R-7)
+      #   or/clackamas/happy-valley/16.22.residential.txt#L650-L652 (R-5)
       - zone: R40
         quadplex_allowed: true
         setback_front_ft: 22
@@ -1517,6 +1578,7 @@ jurisdictions:
         setback_rear_ft: 22
         setback_street_side_ft: 15
         min_lot_sqft: 40000
+        min_frontage_ft: 100
         min_lot_depth_ft: 200
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L282
@@ -1533,6 +1595,7 @@ jurisdictions:
         setback_rear_ft: 22
         setback_street_side_ft: 15
         min_lot_sqft: 20000
+        min_frontage_ft: 80
         min_lot_depth_ft: 100
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L282
@@ -1549,6 +1612,7 @@ jurisdictions:
         setback_rear_ft: 22
         setback_street_side_ft: 15
         min_lot_sqft: 15000
+        min_frontage_ft: 60
         min_lot_depth_ft: 90
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L282
@@ -1565,6 +1629,7 @@ jurisdictions:
         setback_rear_ft: 22
         setback_street_side_ft: 15
         min_lot_sqft: 10000
+        min_frontage_ft: 50
         min_lot_depth_ft: 80
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L472
@@ -1581,6 +1646,7 @@ jurisdictions:
         setback_rear_ft: 22
         setback_street_side_ft: 15
         min_lot_sqft: 8500
+        min_frontage_ft: 50
         min_lot_depth_ft: 70
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L472
@@ -1597,6 +1663,7 @@ jurisdictions:
         setback_rear_ft: 22
         setback_street_side_ft: 15
         min_lot_sqft: 7000
+        min_frontage_ft: 50
         min_lot_depth_ft: 70
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L472
@@ -1613,6 +1680,7 @@ jurisdictions:
         setback_rear_ft: 20
         setback_street_side_ft: 8
         min_lot_sqft: 7000
+        min_frontage_ft: 40
         min_lot_depth_ft: 60
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L648
@@ -1628,6 +1696,11 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         setback_street_side_ft: 8
+        # Table 16.22.040-2 is one table for R-5 and MUR-S, and the MUR-S column
+        # of "Lot size (minimum): Quadplex and cottage cluster" prints 7,000 --
+        # the one cell in a column that mostly reads "Variable" that is not.
+        #   or/clackamas/happy-valley/16.22.residential.txt#L642,L644
+        min_lot_sqft: 7000
         min_density_du_per_acre: 6  # per NET developable area; the lot's gross area bounds it
         source: "HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD"
         source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
@@ -1645,6 +1718,7 @@ jurisdictions:
         setback_rear_ft: 22
         setback_street_side_ft: 15
         min_lot_sqft: 20000
+        min_frontage_ft: 80
         min_lot_depth_ft: 100
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L282
@@ -1755,6 +1829,16 @@ jurisdictions:
         setback_rear_ft: 20
         setback_street_side_ft: 15
         min_lot_sqft: 3000
+        # Table 19.301.4 row B.3.b, "Standard lot", four columns of LOT AREA:
+        # 35 / 30 / 35 / 35 -- the one row in the table that is not monotonic,
+        # so the 30 at 3,000-4,999 sq ft is the scalar (the smallest reachable
+        # column; 1,500-2,999 is below the zone's own minimum lot) and 35 from
+        # 5,000 is the band. The townhouse row (20) is a unit-lot figure; the
+        # flag-lot rows (25) are relaxations nothing here can see. This was the
+        # blank audit_zone_mirror.py carried as prose for a day before the
+        # unfilled-cell ledger existed to hold it.
+        #   or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154-L158
+        min_frontage_ft: 30
         min_lot_depth_ft: 80
         # Table 19.301.4 row B.1, four columns of LOT AREA: 30 ft at
         # 3,000-4,999 sq ft, 50 at 5,000-6,999, 60 at 7,000 and up. The
@@ -1768,6 +1852,7 @@ jurisdictions:
           setback_street_side_ft: [[7000, 20]]
           max_coverage_pct: [[7000, 30]]
           min_lot_width_ft: [[5000, 50], [7000, 60]]
+          min_frontage_ft: [[5000, 35]]
         source: "MMC 19.301 Moderate Density Residential, Table 19.301.4; use table 19.301.2"
         source_url: "https://ecode360.com/43860500"
         confidence: verified
@@ -1784,7 +1869,17 @@ jurisdictions:
         # exceptions are chimneys and 30-inch eaves; neither is a wall.
         step_back_side: {height_ft: 25, slope_degrees: 45, cite: "MMC Table 19.302.4, Side yard height plane limit"}
         setback_rear_ft: 15
+        # Table 19.302.4, street side yard: 15 (5 on a unit lot, not this
+        # building). Front is 20, so on a corner lot s5 already holds every
+        # street edge to 20 and this changes no envelope; carried so the row
+        # is not blank against a code that states it.
+        #   or/clackamas/milwaukie/19.300.base-zones.txt#L497
+        setback_street_side_ft: 15
         min_lot_sqft: 3000
+        # Table 19.302.4 A, minimum street frontage, standard lot: 35 (townhouse
+        # 20, a unit-lot figure).
+        #   or/clackamas/milwaukie/19.300.base-zones.txt#L488,L490
+        min_frontage_ft: 35
         min_lot_depth_ft: 70
         # Table 19.302.4, minimum lot width.
         #   or/clackamas/milwaukie/19.300.base-zones.txt#L486
@@ -2152,6 +2247,13 @@ jurisdictions:
         setback_front_ft: 15
         setback_side_ft: 5
         setback_rear_ft: 15
+        # TDC Table 40-3, "Secondary Frontage on Corner Lot": 10 feet, one
+        # number. The notes line below had it as orientation-dependent (garage
+        # ~20 / house ~12) from a secondary source and left it blank; the city's
+        # own table states 10. Front is 15, so s5 already holds a corner lot's
+        # second street edge to 15 and this changes no envelope.
+        #   or/clackamas/tualatin/40-41.residential.txt#L213-L214
+        setback_street_side_ft: 10
         min_lot_sqft: 6500
         min_lot_width_ft: 50
         max_coverage_pct: 60
@@ -2165,6 +2267,11 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 10
         setback_street_side_ft: 10
+        # TDC 41.220: "Quadplex 4,500 square feet" (1,400 on a unit lot). RML
+        # has no mapped lots, so this reaches nothing today; filled so the row
+        # is not blank against a code that states it.
+        #   or/clackamas/tualatin/40-41.residential.txt#L478
+        min_lot_sqft: 4500
         max_coverage_pct: 60
         # No lot width, deliberately. TDC 41.220 heads its row "Minimum
         # AVERAGE lot width" (50 ft for a quadplex), and 31.060 defines that

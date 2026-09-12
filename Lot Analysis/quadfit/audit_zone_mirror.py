@@ -554,16 +554,29 @@ def unfilled_standards() -> list[str]:
     for a day as prose in this file's docstring before this existed; Tualatin
     RML's lot width is filed there on purpose, because TDC 31.060's "average
     lot width" is a seventh form lotdims.py does not take; nine Clackamas
-    County minimum-lot rows are there on a reading of ZDO 845 the corpus does
-    not share. Three different reasons, one shape, and the shape is what the
-    frozen list in tests/test_zone_mirror.py holds so each reason has to be
-    written down.
+    County minimum-lot rows sat there for a day on a reading of ZDO 845 the
+    corpus did not share, until the county's text was read again with both
+    readings in hand and the corpus's held. Three different reasons, one
+    shape, and the shape is what the frozen list in tests/test_zone_mirror.py
+    holds so each reason has to be written down. On its first day the list
+    held thirty-eight rows; the second day, one -- and one of the
+    thirty-eight turned out to be a wrong number in the CORPUS, Gresham
+    TLDR's 8,000 sq ft minimum lot, which was 4.0137's large-lot subdivision
+    option for two other districts filed under the wrong one.
 
     Skips zones rules.yaml does not screen -- `quadplex_allowed: false`, or a
     jurisdiction switched off with `eligible: false` -- because a dimension
     nothing measures against is not a gap. Skips a row the alias covers, since
     West Linn's front-line width IS carried, under `min_frontage_ft`. Counts a
     band as filled.
+
+    And asks about the BASE, not the limbs. A corpus value whose base is
+    exempt and whose only numbers sit on `when:` variants -- Gresham HDR-PV's
+    street frontage (20 on a corner, 18 on a unit lot, none otherwise), SC's
+    minimum density (18 on a unit lot only) -- states no number for the row
+    rules.yaml would hold, which is the base. Listing those as blanks sent
+    three rows to the frozen ledger on 2026-09-11 that nobody could have
+    filled without inventing the general case from a special one.
     """
     top, corpus = _load()
     aliased = {(a.jurisdiction, a.zone, a.corpus_field) for a in aliases()}
@@ -579,7 +592,7 @@ def unfilled_standards() -> list[str]:
             if (juris, z["zone"], theirs) in aliased:
                 continue
             value = zl.values.get(theirs) or layer.defaults.get(theirs)
-            if value is None:
+            if value is None or value.value is None:
                 continue
             limbs = _limbs(value)
             if not limbs:

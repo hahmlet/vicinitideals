@@ -885,21 +885,18 @@ def test_the_inert_standards_are_inert_because_of_their_values() -> None:
 #: lots -- which is not how this pod is built -- so no lot the screen looks at
 #: is ever in that column.
 #:
-#: R-MD's STREET FRONTAGE, added 2026-09-10, has a different reason and it is
-#: worth reading rather than inheriting. Table 19.301.4 row B.3.b prints
-#: 35 / 30 / 35 / 35 across the four columns, so the only column that differs is
-#: a RELAXATION: 30 ft where the rest of the table asks 35. A screen holding the
-#: flat 35 there is stricter than the city, never looser, which is the safe
-#: direction and the direction this project defaults to everywhere else.
-#:
-#: The larger fact is that `rules.yaml` holds no frontage figure for R-MD at all
-#: -- not a band, not the flat 35 -- and the same is true of R-HD, whose row
-#: prints a single 35 and so never reaches this test. Milwaukie's row is headed
-#: "Minimum street frontage requirements", which is the edge s4 actually
-#: measures, so this is not the lot-width alias problem; it is a standard the
-#: corpus reads and the screen does not apply. Closing it would move lots from
-#: green to red, so it is a change of its own rather than a rider on this one.
-#: Since 2026-09-11 UNFILLED below is the list that carries it.
+#: R-MD's STREET FRONTAGE sat here from 2026-09-10 to the evening of
+#: 2026-09-11 and is now a band, not a FLAT row. Table 19.301.4 row B.3.b
+#: prints 35 / 30 / 35 / 35 across the four columns, so the only column that
+#: differs is a RELAXATION: 30 ft where the rest of the table asks 35 -- and
+#: while rules.yaml held nothing for it at all the argument was that a flat
+#: 35 would be the stricter, safe reading. When the row was filled the band
+#: was cheaper than the argument: `min_frontage_ft: 30` with a step to 35 at
+#: 5,000 sq ft says exactly what the table says, `banded()` answers per lot,
+#: and s7's frontage gate learned to ask it (it had been reading the scalar).
+#: The 1,500-2,999 column is unreachable anyway, R-MD's minimum lot being
+#: 3,000, so the band and a flat 35 grade the same lots; the band is here
+#: because it is the table and needs no prose to defend it.
 #:
 #: R-MD's LOT DEPTH joined 2026-09-11, the day `min_lot_depth_ft` entered
 #: MIRRORED and this check could see it. Table 19.301.4 row B.2 prints 70 ft
@@ -913,7 +910,6 @@ def test_the_inert_standards_are_inert_because_of_their_values() -> None:
 #: are STRICTER than the lowest. Held flat at 30 it would pass a 7,000 sq ft
 #: lot the city asks 60 of, so it is carried as a band and reads `banded`.
 FLAT_BUT_BANDED: frozenset[str] = frozenset({
-    "milwaukie/R-MD.min_frontage_ft",
     "milwaukie/R-MD.min_lot_depth_ft",
     "milwaukie/R-MD.setback_rear_ft",
     "wilsonville/OTR.setback_rear_ft",
@@ -979,80 +975,41 @@ def test_a_band_that_tightens_with_lot_size_is_carried_as_a_band() -> None:
 #: Zones where the corpus states a number, rules.yaml has a column for it, and
 #: the row is blank. Found 2026-09-11 by the check built to pin one deliberate
 #: blank -- Tualatin RML's lot width -- which turned up thirty-seven more that
-#: nobody had deliberately anything. Each group below has its own reason, and
-#: none of the reasons is "fixed here": every one of these moves a verdict in
-#: the strict direction, so each is a commit that says so.
+#: nobody had deliberately anything. Thirty-eight on the morning of
+#: 2026-09-11; ONE by that evening, and the thirty-seven went three ways:
 #:
-#: STREET FRONTAGE, 24 zones in Gresham, Happy Valley, Milwaukie and Troutdale.
-#: The corpus reads a "Minimum street frontage" row in each -- the edge s4
-#: already measures, so no new measurement is needed -- and rules.yaml has
-#: never held it. Before 2026-09-11 the frontage column was also carrying
-#: Oregon City's mid-lot width, and filling it in a city with an
-#: `applicant_choice` corner-lot rule would have needed care about which edge;
-#: now it is one number with one meaning everywhere and the fill is a port.
-#: A lot short of it goes RED. Follow-on.
+#: FILLED, 33. Street frontage in Gresham (10), Happy Valley (8) and
+#: Milwaukie (2, R-MD as a band -- 30 ft under 5,000 sq ft, 35 from there);
+#: the nine Clackamas County minimum lots; Happy Valley MURS and Tualatin
+#: RML minimum lots; Milwaukie R-HD and Tualatin RL street-side setbacks.
+#: Each is one number from the corpus, cited beside its row in rules.yaml.
+#: The Clackamas nine had been blank on a written reading that ZDO 845 waives
+#: the minimum for a middle-housing land division; the county's text says
+#: "the subject lot shall be a minimum of ... 7,000 square feet for a
+#: quadplex", the waiver is 1012.02(H)'s and reaches the child lots a
+#: division creates, and 845.01(2)'s own exemption list skips 845.01. Every
+#: fill moves verdicts in the strict direction or not at all; the run ledger
+#: in memory has the counts.
 #:
-#: MINIMUM LOT, 12 zones. Nine are Clackamas County's urban residential
-#: districts, and they are the sharp one: rules.yaml leaves the row blank on a
-#: written reading that ZDO 845 WAIVES the minimum for a middle-housing land
-#: division, while the corpus reads 845.01 as a 7,000 sq ft floor on the lot a
-#: quadplex stands on, "the same number in every district". Two readings of
-#: one section, and the direction of the disagreement is a possible false
-#: GREEN on every lot under 7,000 sq ft in nine zones. Needs the county text
-#: read once more with both readings in hand. Gresham TLDR (8,000), Happy
-#: Valley MURS (7,000, 6,000 on a unit lot) and Tualatin RML (4,500) are plain
-#: omissions.
+#: NEVER BLANK, 3. Gresham HDR-PV's street frontage and SC/SC-RJ's minimum
+#: density have an EXEMPT base and numbers only on `when:` variants (corner
+#: lot, unit lot). The corpus states no number for the general case, which is
+#: the row rules.yaml holds; `unfilled_standards()` now asks about the base.
 #:
-#: STREET-SIDE SETBACK, 2 zones: Milwaukie R-HD's 15 (5 on the mapped
-#: properties) and Tualatin RL's 10. A corner lot in either is screened on
-#: the interior side yard at the street. Omissions.
+#: WRONG IN THE CORPUS, 1. Gresham TLDR's 8,000 sq ft minimum lot quoted
+#: 4.0137 -- the Large Lot Subdivision Option FOR LDR-5 AND LDR-7, a
+#: subdivision type in two other districts. Table 4.0130's TLDR column prints
+#: None in both rows that could hold a minimum, and gresham.yaml's own CMF
+#: prose already said "TLDR has no minimum lot size". The cell is exempt now.
+#: A ledger built to find blanks in rules.yaml found a wrong number in the
+#: corpus, because it asked WHY the blank was there.
 #:
-#: MINIMUM DENSITY, Gresham SC and SC-RJ at 18 du/acre. Omissions, and the
-#: dangerous direction: a lot can be too big for four units to be enough.
-#:
-#: LOT WIDTH, Tualatin RML, the one blank that is on purpose. TDC 41.220 heads
-#: the row "Minimum AVERAGE lot width" and 31.060 defines it as front lot line
+#: LEFT BLANK ON PURPOSE, 1. Tualatin RML's lot width: TDC 41.220 heads the
+#: row "Minimum AVERAGE lot width" and 31.060 defines it as front lot line
 #: plus rear lot line over two -- a seventh form `lotdims.py` does not take,
 #: on two lines `center_parallel` does not draw. RML has no mapped lots. Left
 #: unmeasured rather than measured wrong; rules.yaml says so beside the row.
 UNFILLED: frozenset[str] = frozenset({
-    "clackamas_unincorporated/R10.min_lot_sqft",
-    "clackamas_unincorporated/R15.min_lot_sqft",
-    "clackamas_unincorporated/R20.min_lot_sqft",
-    "clackamas_unincorporated/R30.min_lot_sqft",
-    "clackamas_unincorporated/R5.min_lot_sqft",
-    "clackamas_unincorporated/R7.min_lot_sqft",
-    "clackamas_unincorporated/R8.5.min_lot_sqft",
-    "clackamas_unincorporated/VR45.min_lot_sqft",
-    "clackamas_unincorporated/VR57.min_lot_sqft",
-    "gresham/DRL-1.min_frontage_ft",
-    "gresham/DRL-2.min_frontage_ft",
-    "gresham/HDR-PV.min_frontage_ft",
-    "gresham/LDR-5.min_frontage_ft",
-    "gresham/LDR-7.min_frontage_ft",
-    "gresham/LDR-PV.min_frontage_ft",
-    "gresham/LDR-SW.min_frontage_ft",
-    "gresham/MDR-12.min_frontage_ft",
-    "gresham/MDR-24.min_frontage_ft",
-    "gresham/SC-RJ.min_density_du_per_acre",
-    "gresham/SC.min_density_du_per_acre",
-    "gresham/TLDR.min_frontage_ft",
-    "gresham/TLDR.min_lot_sqft",
-    "gresham/TR.min_frontage_ft",
-    "happy_valley/MURS.min_lot_sqft",
-    "happy_valley/R10.min_frontage_ft",
-    "happy_valley/R15.min_frontage_ft",
-    "happy_valley/R20.min_frontage_ft",
-    "happy_valley/R20CC.min_frontage_ft",
-    "happy_valley/R40.min_frontage_ft",
-    "happy_valley/R5.min_frontage_ft",
-    "happy_valley/R7.min_frontage_ft",
-    "happy_valley/R8.5.min_frontage_ft",
-    "milwaukie/R-HD.min_frontage_ft",
-    "milwaukie/R-HD.setback_street_side_ft",
-    "milwaukie/R-MD.min_frontage_ft",
-    "tualatin/RL.setback_street_side_ft",
-    "tualatin/RML.min_lot_sqft",
     "tualatin/RML.min_lot_width_ft",
 })
 
@@ -1088,6 +1045,42 @@ def test_a_blank_row_under_an_existing_column_is_written_down() -> None:
     # column did not arrive with holes in it.
     blank_widths = {k for k in found if k.endswith(".min_lot_width_ft")}
     assert blank_widths == {"tualatin/RML.min_lot_width_ft"}, blank_widths
+
+
+def test_a_number_the_corpus_states_only_for_a_special_case_is_not_a_blank() -> None:
+    """Gresham HDR-PV's street frontage is exempt at the base and 20 on a
+    corner lot; SC's minimum density is exempt at the base and 18 on a unit
+    lot. Neither states a number for the ordinary lot, which is the row
+    rules.yaml holds, so neither is a blank -- and on 2026-09-11 all three
+    were listed as one, which would have had somebody fill the general case
+    from a special one. The ledger asks about the base."""
+    audit = _audit()
+    found = {row.split(" ")[0] for row in audit.unfilled_standards()}
+    for key in ("gresham/HDR-PV.min_frontage_ft", "gresham/SC.min_density_du_per_acre",
+                "gresham/SC-RJ.min_density_du_per_acre"):
+        assert key not in found, key
+
+    # The exemption really is at the base, not a missing row.
+    from flats.rules.loader import load_rules as load_corpus
+
+    layer = load_corpus()["or/multnomah/gresham"]
+    frontage = layer.zones["HDR-PV"].values["min_frontage_ft"]
+    assert frontage.value is None and getattr(frontage, "exempt", False)
+    assert any(v.value == 20 for v in frontage.variants)
+
+
+def test_the_frontage_band_answers_per_lot() -> None:
+    """Milwaukie R-MD's standard-lot frontage is 35 / 30 / 35 / 35 across the
+    table's four lot-area columns -- not monotonic, so the middle band cannot
+    be inferred from either neighbour. The scalar is the smallest reachable
+    column and the band carries the step at 5,000."""
+    from common import load_rules
+
+    rows = {r.split(" ")[1]: r.split(" ")[0] for r in _audit().banded_standards()}
+    assert rows.get("milwaukie/R-MD.min_frontage_ft") == "banded", rows
+    r = load_rules().jurisdictions["milwaukie"].rule_for("R-MD")
+    assert [r.banded("min_frontage_ft", a) for a in (3_000, 4_999, 5_000, 9_000)] == [30, 30, 35, 35]
+    assert r.banded("min_frontage_ft", None) == 30
 
 
 def test_the_band_answers_per_lot_and_not_per_zone() -> None:

@@ -165,8 +165,11 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
             continue
         if rule.min_lot_sqft is not None and float(area) < rule.min_lot_sqft:
             min_lot_ok[i] = False
-        if rule.min_frontage_ft is not None and float(frontage) < rule.min_frontage_ft:
+        min_front = rule.banded("min_frontage_ft", float(area))
+        if min_front is not None and float(frontage) < min_front:
             # Street frontage, the line s4 sums: one number, one meaning.
+            # Banded in Milwaukie R-MD, where the standard lot's frontage
+            # climbs from 30 to 35 ft at 5,000 sq ft.
             frontage_ok[i] = False
         min_width = rule.banded("min_lot_width_ft", float(area))
         if min_width is not None:

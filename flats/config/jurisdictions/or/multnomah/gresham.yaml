@@ -2540,8 +2540,25 @@ zones:
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
     min_lot_sqft:
-      value: 8000
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L593"
+      # Table 4.0130, TLDR column, prints None in BOTH rows that could hold a
+      # minimum: A, Minimum Site Size, "All other uses" (L239), and B, Minimum
+      # Lot Size, "All other uses" (L243). No minimum lot in this district for
+      # this building -- which this file already said in prose, at CMF: "TLDR
+      # has no minimum lot size where CMF's is 10,000 square feet."
+      #
+      # Until 2026-09-11 this cell held 8,000 sq ft quoting L593. L593 is
+      # 4.0137, the LARGE LOT SUBDIVISION OPTION FOR LDR-5 AND LDR-7: an
+      # optional subdivision type available in two OTHER districts, whose
+      # "minimum lot size in a large lot subdivision" governs the lots that
+      # option creates and no lot in TLDR. A wrong number in the refusing
+      # direction -- every TLDR lot under 8,000 sq ft read as too small.
+      # Found by the quadfit mirror's unfilled-cell ledger, which asked why
+      # rules.yaml left TLDR blank when the corpus stated a number; the answer
+      # was that the number was filed under the wrong district. The 2026-09-07
+      # blind re-read did not catch it because it re-reads the cited line,
+      # and the cited line does say 8,000.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L239,L243"
       variants:
         # Table 4.0130 B, the Townhouse row, prints None in all seven of its
         # columns: no minimum lot size at all on a unit lot. A zero is a

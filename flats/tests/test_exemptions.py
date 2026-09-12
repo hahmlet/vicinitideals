@@ -119,7 +119,20 @@ pytestmark = pytest.mark.unit
 # exemptions on it change no lot's verdict. They are counted because the day
 # that field is wired to a verdict is the day the reading has to already be
 # right, and because an exemption is the one value form a person has to sign.
-EXPECTED = {"stated": 201, "numeric": 43, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 202, "numeric": 43, "marker": 0, "dash": 2, "silent": 0}
+# 201 -> 202 on 2026-09-11: Gresham TLDR's minimum lot size, and this one is a
+# CORRECTION with an exemption as its price. The cell had held 8,000 sq ft
+# quoting 4.0137 -- the Large Lot Subdivision Option for LDR-5 and LDR-7, a
+# subdivision type in two other districts. Table 4.0130's TLDR column prints
+# None in both rows that could carry a minimum (site size, lot size), and the
+# file's own CMF prose already said "TLDR has no minimum lot size". Found
+# from the OTHER side of the mirror: the quadfit audit's unfilled-cell ledger
+# asked why rules.yaml left TLDR blank when the corpus stated a number, and
+# the answer was that the number was filed under the wrong district. The
+# blind re-read of 2026-09-07 could not have caught it, because it re-reads
+# the cited line and the cited line does say 8,000. A wrong number in the
+# refusing direction while it stood; an exemption to sign now that it does
+# not.
 # 196 -> 201 on 2026-09-08, and all five are the same sentence in five
 # different chapters of Oregon City's Title 17: "Minimum lot area: None."
 # MUC-1, MUC-2, MUD, C and WFDD each print it, each on its own line, each

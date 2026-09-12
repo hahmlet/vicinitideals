@@ -126,9 +126,11 @@ FIELD_MAP: dict[str, str] = {
 #: corpus reads those bands off the page as `variants` carrying a `band:`, one
 #: quote apiece; rules.yaml grew a flat `{field: [[threshold, value]]}` mirror
 #: of them so the pipeline could apply the right column to a lot whose area it
-#: knows. All 26 rows of that mirror are held here -- 24 until 2026-09-11,
+#: knows. All 27 rows of that mirror are held here -- 24 until 2026-09-11,
 #: when Milwaukie R-MD's lot width joined as the first band that TIGHTENS
-#: with lot size, 30 / 50 / 60 ft -- which
+#: with lot size, 30 / 50 / 60 ft, and 27 from the same evening, when R-MD's
+#: street frontage joined as the first band that is not monotonic at all,
+#: 35 / 30 / 35 / 35 -- which
 #: `test_a_backported_band_has_to_already_be_here` walks and asserts.
 #:
 #: One difference is deliberate and runs the safe way: quadfit takes the

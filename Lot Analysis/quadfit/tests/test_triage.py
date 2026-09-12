@@ -518,6 +518,34 @@ def test_a_banded_width_asks_more_of_a_bigger_lot():
     assert list(gates["policy_exclusion"]) == ["", "below_min_lot_width", "below_min_lot_width"]
 
 
+def test_a_banded_frontage_asks_more_of_a_bigger_lot():
+    """Milwaukie R-MD's standard-lot street frontage is 30 ft under 5,000 sq
+    ft and 35 from there, so the gate reads the band per lot. The same 32 ft
+    of frontage passes a 4,000 sq ft lot and fails a 6,000 sq ft one."""
+    import pandas as pd
+
+    from common import JurisdictionRules, ZoneRule
+    from s7_report import policy_gates
+
+    zone = ZoneRule(
+        zone="R-MD", quadplex_allowed=True, setback_front_ft=20,
+        setback_side_ft=5, setback_rear_ft=20, min_frontage_ft=30,
+        lot_size_bands={"min_frontage_ft": [[5000, 35]]},
+    )
+
+    class _R:
+        jurisdictions = {"milwaukie": JurisdictionRules(eligible=True, zones=[zone])}
+
+    rows = [
+        {"jurisdiction": "milwaukie", "zone_raw": "R-MD", "area_sqft": a,
+         "frontage_ft": 32.0, "lot_width_ft": float("nan")}
+        for a in (4000.0, 6000.0)
+    ]
+    gates = policy_gates(pd.DataFrame(rows), _R())[0]
+    assert list(gates["frontage_ok"]) == [True, False]
+    assert list(gates["policy_exclusion"]) == ["", "below_min_frontage"]
+
+
 def test_a_lot_can_be_too_big_for_four_homes():
     """The one standard in the corpus where MORE land is the problem.
 
