@@ -4,17 +4,29 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **Commit the quadfit alley + far-side-guard patch.** Nine files under
-   `Lot Analysis/quadfit/` are modified and uncommitted (common.py, rules.yaml,
-   lotdims.py, s1_normalize.py, s4_edges.py, s5_envelope.py and three test
-   files). Last session reported 209 quadfit tests passing with it. Carried
-   from the 2026-09-11 session — re-run the quadfit tests before committing.
-2. **LXC 137 `alley_run2` failed at `s6_placement.py` (missing file).** The
-   pipeline re-run with the alley patch stopped at s6; the first run's s5 output
-   is on disk. Find out what s6 could not find, then finish the run and publish
-   the green/review/red counts (see the Quadfit memory before quoting numbers).
-   Carried from 2026-09-11.
-3. **Portland "end of street" arc is knowingly unhandled** in `_is_clip` — the
-   one-sided clip logic was reverted because it mis-clipped corner-lot second
-   fronts. Decide whether to handle it another way or record it as a refusal.
-   Carried from 2026-09-11.
+1. **Portland 33.266 / Fairview 19.145: vehicle access must come *from* the
+   alley where there is one, and the site plan still faces the street.** The
+   alley edge is now classed `A` in `Lot Analysis/quadfit/s4_edges.py`, so the
+   fact is known; nothing lays the pod out with its parking off the alley.
+   12 Portland greens went red on 2026-09-12 for exactly this (they lay out
+   from the alley side and not from the street). Decide whether s6s tries an
+   alley-fed layout on class-`A` lots in those two cities, or records the
+   refusal. Carried from 2026-09-12.
+2. **Wire `abuts_alley` into FLATS from quadfit class `A`.** The site fact is
+   registered in `flats/rules/fields.py` and nothing fills it; s4's
+   `edges_json` now carries the answer for 11,794 lots. One job with the
+   bearing + neighbour-zone facts already noted as computable. Carried from
+   2026-09-12.
+3. **End-of-street corner arcs of two or more chords (20–45 ft) are still
+   picked as the front on ~1,300 lots** in the "narrowest street edge"
+   cities — the second street lies past the 50 ft the edge classifier looks,
+   so the arc has a street run on one side only and `_is_clip` cannot tell it
+   from a narrow corner lot's real front. Single chords under 20 ft are
+   dropped (`_END_CLIP_MAX_FT`); the multi-chord case is the residue. Either
+   look further for the second street when a chain turns 60°+ on a tight
+   radius, or record it as a refusal. Carried from 2026-09-11, narrowed
+   2026-09-12.
+4. **Happy Valley cul-de-sac frontage (22 review lots)** — HV asks 35 ft on
+   a bulb and more on a straight street; the screen cannot tell a bulb. The
+   curve-merge machinery in `lotdims.front_groups` now knows a chord chain's
+   radius and sweep, which is most of a bulb detector. Carried from 2026-09-11.

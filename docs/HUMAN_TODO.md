@@ -5,17 +5,16 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-11, late evening, after the
-minimum lot depth and minimum lot width rules were switched on and the
-thirty-three blank cells the width work turned up were filled — see the
-entries at the end of the queued list): **green 16,357 · review 12,987 · red
-263,137** across 292,481 lots in **14** cities laid out with real site plans.
-Greens by city: Portland 12,678 · Gresham 1,686 · Oregon City 732 · Milwaukie
-614 · West Linn 286 · Troutdale 113 · unincorporated Clackamas 113 · Wood
-Village 81 · Wilsonville 53 · unincorporated Multnomah 1. (The 2026-09-03
+Pipeline state when last updated (2026-09-12, morning, after alleys stopped
+counting as streets and clipped corners stopped counting as fronts — see the
+last entry of the queued list): **green 16,662 · review 12,941 · red
+262,878** across 292,481 lots in **14** cities laid out with real site plans.
+Greens by city: Portland 12,907 · Gresham 1,757 · Oregon City 732 · Milwaukie
+614 · West Linn 285 · Troutdale 117 · unincorporated Clackamas 113 · Wood
+Village 83 · Wilsonville 53 · unincorporated Multnomah 1. (The 2026-09-03
 figures the prose below still quotes in places were green 16,530 · review
-12,901 · red 262,540; the difference is the two new rules, the fills, and a
-full re-run, all written up at the end.)
+12,901 · red 262,540; the difference is the depth and width rules, the
+fills, the alley change, and full re-runs, all written up at the end.)
 
 **Fourteen is fourteen of eighteen.** Four places are switched off and never
 reach the screen at all — Lake Oswego, Maywood Park, Rivergrove and Johnson
@@ -3491,8 +3490,15 @@ the list of places worth hoping about.
   23, Milwaukie 9) to red. Small, and the direction is stricter, so it is
   queued behind the items above rather than done tonight.
 
-- **Fewer lots have a depth number than yesterday, and no verdict moved** —
-  found 2026-09-11 while measuring the width work, agent work. Portland lost
+- ~~**Fewer lots have a depth number than yesterday, and no verdict moved**~~
+  — **DONE 2026-09-12, next morning, and it grew into the alley entry
+  below.** 13,316 of the 14,925 lost depths are back, and 12,156 more lots
+  have a depth than had one before the width work began (235,515 against
+  223,359); Tualatin's widths are back to 528 of the 608. The 1,609 still
+  without are lots whose narrowest street edge is genuinely a sliver — a
+  notch, a stub, a lot ringed by street on three sides — and the clipped
+  corner was never the whole story. Original entry kept below for the
+  record. — found 2026-09-11 while measuring the width work, agent work. Portland lost
   a depth on 13,217 lots, Oregon City on 823, Happy Valley on 713; Tualatin
   lost a width on 176. The cause is a side effect of doing the right thing.
   Those cities say the front of a lot is its narrowest street edge. Before
@@ -3505,6 +3511,113 @@ the list of places worth hoping about.
   they were either already red or in a zone that states no depth. The fix is
   to stop treating a clipped corner as a front, and it is queued as coverage
   work, not verdict work.
+
+- **An alley is not a street, and a clipped corner is not a front — built
+  and run 2026-09-12, 407 lots changed colour, 305 more greens.** Two things the screen had been
+  getting wrong about the shape of a lot, found while chasing the depth
+  entry above, and fixed together because the second could not be measured
+  honestly until the first was.
+
+  *The alley.* Metro's street file lists alleys beside every other public
+  way, and the screen had been reading it whole, so a lot with an alley
+  behind it was treated as if it had a street there: the alley's length was
+  added to its street frontage, the alley took the front setback instead of
+  the rear one, and on a corner lot the back of the lot vanished — there was
+  no rear line left to measure a depth to. **11,794 lots have an alley
+  edge** (Portland 11,519, Gresham 214, Wilsonville 30, West Linn 24,
+  Milwaukie 7). Eleven of the thirteen cities that define the term say in
+  their own words that an alley is not a street lot line — Portland,
+  Gresham, Oregon City, Milwaukie, Wood Village, Happy Valley, Gladstone,
+  West Linn, Wilsonville, Troutdale, the county — so in those cities an
+  alley edge is now its own kind of line: not frontage, never the front, set
+  back as the rear of the lot. **Two say the opposite and are left as they
+  were:** unincorporated Clackamas ("a front lot line that separates the lot
+  from an improved alley") and Fairview ("all alleys shall constitute public
+  streets"). A lot whose *only* public way is an alley keeps it as its
+  frontage everywhere, because Portland's own code allows exactly that. 1,173
+  lots that had been graded as corner lots because of an alley are now
+  ordinary interior lots.
+
+  *The clipped corner.* Where two streets meet, the surveyed lot line cuts
+  across the corner in a short chamfer or a small arc, and the cities whose
+  front is "the narrowest street edge" were handed that clip as the front
+  — a "front" a few feet long, from which no depth can be taken. The screen
+  now reads the street line the way a surveyor drew it: a short street-facing
+  run sitting between two longer ones that turn a corner between them is the
+  clip and not a front; nothing under 25 feet is a front on its own (the
+  narrowest lot any of these cities has on the ground is Portland's 25-foot
+  plats); and a street line surveyed as a chain of short pieces around a
+  gentle curve is one front, not ten, up to a three-quarter turn. Two
+  smaller things came out of running it: Troutdale's depth is taken straight
+  up the middle of the lot, and 288 of its lots lost that depth the moment
+  their wobbly three-piece fronts were joined into one, until the joined front
+  was allowed to stand a foot or two off its own average line; and two West
+  Linn lots on the outside of a hairpin had their entire street line, seven
+  and eight pieces long, joined into one 200-foot "front", because the check
+  on how far a curve may turn was reading the two end pieces and a bend of
+  128 degrees looks like 52 on a compass that only goes to 180.
+
+  *What it did to the measurements, both ways.* Lots with a depth number:
+  **208,434 → 235,515**, past the 223,359 there were before the width work.
+  Lots with a width: 242,587 → 242,135 (629 gained one, 1,081 lost one).
+  The lots handed a "front" under 20 feet fell from 30,500 to 10,049. Depth
+  changed on 27,861 lots measured both times (shorter on 14,949, longer on
+  12,912) and width on 16,375 (narrower on 10,698, wider on 5,677). **1,820
+  lots that had a depth yesterday have none today** (Portland 1,080, Gresham
+  460, Oregon City 138, Happy Valley 117, Troutdale 15, West Linn 6,
+  Wilsonville 3, Fairview 1): yesterday's number was taken off a clip or a
+  single stray piece that the screen now rightly refuses as a front, and the
+  real front they are left with has no lot line opposite it — triangles,
+  wedges, corner lots with a diagonal back, cul-de-sac bulbs, lots on the
+  outside of a bend. Loosening the "opposite" test would recover about 890 of
+  them and hand a side line to 235 as if it were the rear, so they are held
+  as unmeasured rather than measured wrong.
+
+  *What it did to verdicts.* **Green 16,357 → 16,662, review 12,987 →
+  12,941, red 263,137 → 262,878.** 407 lots moved, in six directions. **243
+  red lots went green** — 241 in Portland, every one with an alley behind
+  it: the alley had been
+  taking the front setback and the site plan had been trying to face it, and
+  the building would not lay out; with the alley set back as the rear of the
+  lot the buildable area grew by 250 to 450 square feet and the plan lays out
+  from the street. The other two are Wood Village lots whose depth, measured
+  from the real front, now clears the minimum. **81 review lots went green**
+  (Gresham 77, Troutdale 4) because they finally have a depth number and it
+  passes. **46 red lots came back to the review queue** (Portland 41 for the
+  alley reason above, held for an unverified zone or a slope; Happy Valley 3
+  and Gresham 2 no longer under the depth or width minimum). And the other
+  way, as it must: **12 Portland greens went red** — all with an alley, all
+  lots where the plan laid out from the alley side and does not lay out from
+  the street (see the first thing not done, below); **18 review lots went
+  red** (Portland 15, mostly commercial lots along an alley whose rear
+  setback is larger than the street one they had been getting, plus one
+  each in Gresham, Happy Valley and Wilsonville newly under a minimum); and
+  **7 greens went to review** (Gresham 6, West Linn 1) because they are among
+  the 1,820 whose depth is now honestly unmeasured. Greens by city: Portland
+  12,678 → 12,907, Gresham 1,686 → 1,757, Troutdale 113 → 117, Wood Village
+  81 → 83, West Linn 286 → 285; Oregon City, Milwaukie, Wilsonville and the
+  two county areas did not move. Lots the screen holds as depth-unmeasured
+  fell from 7,113 to 5,937; width-unmeasured rose from 10,824 to 10,894.
+
+  Three things it does not do, written down so they are not mistaken for
+  done. **Portland and Fairview both require the driveway to come *from* the
+  alley where there is one** (Portland 33.266, on 11,519 lots; Fairview
+  19.145) and the site plan still faces the street; a pod that only fits with
+  its parking off the alley is still refused, and one that fits off the
+  street where the city would send it round the back is still passed.
+  **Multnomah County waives the setback from an alley altogether** (33.110)
+  and Fairview lets a garage sit on the alley line; neither relief is
+  modelled, which is the strict side. And **5,614 lots still have a narrowest
+  street edge under 20 feet beside a real run of 45 feet or more** (2,655 of
+  them in the clean shape tiers; Portland 3,925, Happy Valley 378,
+  Wilsonville 370, West Linn 364, Oregon City 348) — slivers, notches, stubs
+  and lots ringed by street, plus about 1,300 corner arcs at the end of a
+  street whose second street lies past the 50 feet the screen looks. Those
+  are the honest residue of "the front is the narrowest street edge", and
+  they are review lots, not greens. A last 128 lots have a street run that
+  continues straight into a non-street line — a lot line drawn along a
+  street the file does not carry, or a paper street — and 44 of those are
+  picked as the front; left alone.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found
