@@ -5,13 +5,13 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-12, morning, after alleys stopped
-counting as streets and clipped corners stopped counting as fronts — see the
-last entry of the queued list): **green 16,662 · review 12,941 · red
-262,878** across 292,481 lots in **14** cities laid out with real site plans.
-Greens by city: Portland 12,907 · Gresham 1,757 · Oregon City 732 · Milwaukie
-614 · West Linn 285 · Troutdale 117 · unincorporated Clackamas 113 · Wood
-Village 83 · Wilsonville 53 · unincorporated Multnomah 1. (The 2026-09-03
+Pipeline state when last updated (2026-09-12, afternoon, after Portland's
+alley lots were laid out from the alley — see the entry of that name in the
+queued list): **green 17,114 · review 13,038 · red 262,329** across 292,481
+lots in **14** cities laid out with real site plans. Greens by city: Portland
+13,359 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
+Troutdale 117 · unincorporated Clackamas 113 · Wood Village 83 · Wilsonville
+53 · unincorporated Multnomah 1. (The 2026-09-03
 figures the prose below still quotes in places were green 16,530 · review
 12,901 · red 262,540; the difference is the depth and width rules, the
 fills, the alley change, and full re-runs, all written up at the end.)
@@ -3588,7 +3588,7 @@ the list of places worth hoping about.
   and Gresham 2 no longer under the depth or width minimum). And the other
   way, as it must: **12 Portland greens went red** — all with an alley, all
   lots where the plan laid out from the alley side and does not lay out from
-  the street (see the first thing not done, below); **18 review lots went
+  the street (fixed the same afternoon — see the next entry); **18 review lots went
   red** (Portland 15, mostly commercial lots along an alley whose rear
   setback is larger than the street one they had been getting, plus one
   each in Gresham, Happy Valley and Wilsonville newly under a minimum); and
@@ -3600,14 +3600,15 @@ the list of places worth hoping about.
   fell from 7,113 to 5,937; width-unmeasured rose from 10,824 to 10,894.
 
   Three things it does not do, written down so they are not mistaken for
-  done. **Portland and Fairview both require the driveway to come *from* the
+  done. ~~**Portland and Fairview both require the driveway to come *from* the
   alley where there is one** (Portland 33.266, on 11,519 lots; Fairview
   19.145) and the site plan still faces the street; a pod that only fits with
   its parking off the alley is still refused, and one that fits off the
-  street where the city would send it round the back is still passed.
-  **Multnomah County waives the setback from an alley altogether** (33.110)
-  and Fairview lets a garage sit on the alley line; neither relief is
-  modelled, which is the strict side. And **5,614 lots still have a narrowest
+  street where the city would send it round the back is still passed.~~ —
+  done the same afternoon, next entry. **Portland waives the setback from an
+  alley altogether** (33.110.220.C.9) and Fairview lets a garage sit on the
+  alley line; neither relief is modelled, which is the strict side, and the
+  Portland one is now first in the agent's queue. And **5,614 lots still have a narrowest
   street edge under 20 feet beside a real run of 45 feet or more** (2,655 of
   them in the clean shape tiers; Portland 3,925, Happy Valley 378,
   Wilsonville 370, West Linn 364, Oregon City 348) — slivers, notches, stubs
@@ -3618,6 +3619,70 @@ the list of places worth hoping about.
   continues straight into a non-street line — a lot line drawn along a
   street the file does not carry, or a paper street — and 44 of those are
   picked as the front; left alone.
+
+- **Portland sends the driveway to the alley, and the screen now does too —
+  built and run 2026-09-12, afternoon, 549 lots changed colour, 452 more
+  greens, every one of them in Portland, and not one lot lost its colour.**
+  One sentence of Portland's parking chapter: *"If the lot abuts an alley,
+  all parking and vehicle access to the site must be from the alley."* Until
+  today the screen laid every lot out the same way — homes across the front,
+  a lane down one side from the street, the parking court behind — and on
+  Portland's 11,519 alley lots that was the wrong drawing in both directions:
+  a lot too narrow for a side lane was refused when the city would have sent
+  its cars in from the back, and a lot that passed on a street lane was
+  passing on a lane the city forbids.
+
+  *What it draws now.* On a Portland lot with an alley, the homes still
+  face the street and the court still sits behind them; the lane from the
+  street is gone, and the court is reached from the alley instead — either
+  it stands right on the strip along the alley (987 of the 1,418 plans),
+  or a short straight lane runs from it to the alley. A lot whose court
+  cannot reach the alley that way is refused with its own reason (*no
+  lane reaches the court from the alley*) rather than quietly handed the
+  street lane. Every other city is untouched by design; the rule is
+  Portland's and the county's copy of the same chapter, and no county lot
+  has an alley. Two drafts along the way refused thirteen lots whose court
+  really could reach the alley — an alley that bends around the corner of
+  the lot, and an oddly shaped lot whose whole edge the screen holds
+  further back — and both were fixed before this run. Seven refusals
+  remain, and none of them is a lot that would otherwise have passed: four
+  are built-out shops or apartment sites, one is a nine-acre street parcel.
+
+  *What it did, both ways.* **Green 16,662 → 17,114, review 12,941 → 13,038,
+  red 262,878 → 262,329.** **452 red lots went green** — all Portland, all
+  with an alley (R5 278, R2.5 172, R10 2), every one refused yesterday for
+  want of a side lane and laid out today off its alley with four to eight
+  stalls. **97 red lots came back to the review queue** the same way (RM2
+  31, RM1 17, R5 15, CM2 10, R7 8, the rest scattered), held now on an
+  unverified zone, the density floor, slope or sewer rather than on the
+  plan. And the other way: **no green and no review lot went red.** At the
+  drawing level four lots that had a street plan lost it — their court
+  cannot be reached from the alley — but all four were already red as
+  built-out commercial or apartment sites, so nothing turned on them. Of
+  the twelve greens the morning's alley change had turned red, five are
+  green again and seven stay red because their court is too shallow from
+  either side. Greens by city: Portland 12,907 → 13,359; Gresham, Oregon
+  City, Milwaukie, West Linn, Troutdale, Wood Village, Wilsonville and the
+  two county areas did not move a lot. **All 937 Portland greens with an
+  alley are now on the alley-fed drawing; yesterday all 485 of them were on
+  a street lane.** Where a lot had a plan both days, 723 seat the same
+  number of cars, 84 seat more, none fewer.
+
+  *What it still does not do — the strict side, on purpose.* The court
+  still draws its own turning aisle on the lot; Portland lets cars back
+  straight out into the alley when there is 20 feet to manoeuvre across it,
+  and the street file does not say how wide an alley is. And **Portland
+  waives the setback from an alley altogether** — "no side, rear, or garage
+  entrance setback is required from a lot line abutting an alley" — while
+  the screen still sets an alley edge back as the rear of the lot, 5 to 10
+  feet. That one is the largest thing left on these lots: a court too
+  shallow by a car's length is the reason 6,700 of Portland's alley lots
+  are red, and 5 to 10 feet is a car's length. It is first in the agent's
+  queue; it needs the longer run (about an hour and a half). Fairview says
+  the same thing as Portland in its VTH and VA zones and gets nothing here,
+  because it reads an alley as a street and the inventory holds no VTH lot
+  and no Fairview lot within 50 feet of an alley — moot on the data, not
+  refused.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

@@ -4,23 +4,30 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **Portland 33.266 / Fairview 19.145: vehicle access must come *from* the
-   alley where there is one, and the site plan still faces the street.** The
-   alley edge is now classed `A` in `Lot Analysis/quadfit/s4_edges.py`, so the
-   fact is known; nothing lays the pod out with its parking off the alley.
-   12 Portland greens went red on 2026-09-12 for exactly this (they lay out
-   from the alley side and not from the street), and every Portland green
-   with an alley is passing on a street-fed layout the city would not
-   permit. Decide whether s6s tries an alley-fed layout on class-`A` lots in
-   those two cities, or records the refusal. Same lots, same decision: the
-   alley-side setback relief (Multnomah County 33.110 waives it, Fairview lets
-   a garage sit on the alley line) is not modelled either — strict side.
+1. **Portland waives the setback from an alley, and s5 still charges it.**
+   PCC 33.110.220.C.9: "No side, rear, or garage entrance setback is
+   required from a lot line abutting an alley" (single-dwelling zones);
+   33.120.220 says the same of the garage entrance in the multi-dwelling
+   zones. `Lot Analysis/quadfit/s5_envelope.py` sets a class-`A` edge back
+   as the rear (5–10 ft), so every one of Portland's 11,519 alley lots has a
+   court 5–10 ft shallower than the city would allow — and `court_too_shallow`
+   is the reason 6,700 of them are red. An s5 change is a full s5→s7 run
+   (~86 min); measure both ways against `/root/lots_results_after_alleyfeed.csv`
+   on 137. Decide whether the relief reaches the whole building or only the
+   garage entrance in 33.120 before encoding it there. Related and smaller:
+   33.266.130.F.1.b(2) lets stalls back straight out into the alley with 20
+   ft of manoeuvring across it, which would drop the on-site aisle the
+   alley-fed court still draws — needs alley widths RLIS does not carry.
    Carried from 2026-09-12.
 2. **Wire `abuts_alley` into FLATS from quadfit class `A`.** The site fact is
    registered in `flats/rules/fields.py` and nothing fills it; s4's
-   `edges_json` now carries the answer for 11,794 lots. One job with the
-   bearing + neighbour-zone facts already noted as computable. Carried from
-   2026-09-12.
+   `edges_json` carries the answer for 11,794 lots, and s6s now acts on it
+   for Portland (`DrivewayRules.alley_access_required`, the one driveway
+   field with no FLATS counterpart — add it to `DRIVEWAY_MIRRORED` in
+   `test_parking_geometry.py` and lift the NOT ENCODED note beside
+   `parking_street_setback_ft` in portland.yaml the same day). One job with
+   the bearing + neighbour-zone facts already noted as computable. Carried
+   from 2026-09-12.
 3. **5,614 lots still get a "narrowest street edge" under 20 ft beside a
    real run of 45 ft or more** (2,655 in the clean shape tiers; Portland
    3,925). The tractable part is ~1,300 end-of-street corner arcs of two or

@@ -824,6 +824,33 @@ class DrivewayRules(BaseModel):
     #: building and the parking area. Raises the design gap where it exceeds
     #: it; Fairview's 4 ft does not.
     building_buffer_ft: float | None = None
+    #: True where the city sends every driveway to the ALLEY when the lot has
+    #: one. Portland says it of this building in one sentence, PCC
+    #: 33.266.120.C.3: "If the lot abuts an alley, all parking and vehicle
+    #: access to the site must be from the alley." On such a lot s6s draws no
+    #: lane from the street: the pod still faces the street, the court still
+    #: sits behind it, and the court is reached from the alley lot line (s4
+    #: class ``A``) across the alley setback, straight up from the court or
+    #: straight out of its side. A lot the alley cannot reach that way fails
+    #: `no_alley_lane` rather than being handed the street lane the city
+    #: forbids.
+    #:
+    #: The one field on this model with no FLATS counterpart. The corpus
+    #: records 33.266.120.C.3 as NOT ENCODED (portland.yaml, beside
+    #: `parking_street_setback_ft`) because FLATS has no alley fact yet;
+    #: quadfit does, since 2026-09-12, so the mirror runs ahead of the
+    #: corpus here and the drift test does not check it. The day
+    #: `abuts_alley` is wired into FLATS this belongs in DRIVEWAY_MIRRORED.
+    #:
+    #: Fairview FMC 19.145.090 says the same of its VTH and VA zones ("access
+    #: to garages shall be exclusively from the alley. No driveway access
+    #: onto the street") and is NOT set here: Fairview reads an alley as a
+    #: street (`alley_is_street`), so its alley edges class ``F`` and there
+    #: is no ``A`` edge to lay out from -- and it would make no difference,
+    #: because the inventory holds no VTH lot and no Fairview lot within 50
+    #: ft of an alley in the streets file (measured 2026-09-12). Moot on the
+    #: data, not refused; revisit when either changes.
+    alley_access_required: bool | None = None
 
     #: `open_space_min_pct` -- private open space as a share of the gross lot.
     #: Gresham states 15 percent and is now the only city that gets it, where
@@ -916,10 +943,16 @@ class SiteplanSpec(BaseModel):
     parking_per_unit_preferred: float = 2.0  # 8 / pod (where the city caps none)
     units_per_pod: int = 4
 
-    # Single honest typology (see class docstring). Kept as a list so a future
-    # cell can add typologies without a schema change.
-    layout_methods: list[Literal["townhome_rear_court"]] = Field(
-        default_factory=lambda: ["townhome_rear_court"]
+    # One typology, two ways in (see class docstring). `townhome_rear_court`
+    # is the pod across the front, a lane down one side from the street and a
+    # court behind; `townhome_rear_court_alley` is the same pod and the same
+    # court reached from the alley instead, drawn only in a city that sets
+    # `alley_access_required` and only on a lot with an alley edge. Kept as a
+    # list so a future cell can add typologies without a schema change.
+    layout_methods: list[Literal["townhome_rear_court",
+                                 "townhome_rear_court_alley"]] = Field(
+        default_factory=lambda: ["townhome_rear_court",
+                                 "townhome_rear_court_alley"]
     )
 
     # Stall + drive geometry, per jurisdiction — never one global number. See

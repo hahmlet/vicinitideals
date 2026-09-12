@@ -109,7 +109,7 @@ siteplan:
   parking_per_unit_target: 1.5     # 6/pod  (design target)
   parking_per_unit_preferred: 2.0  # 8/pod  (preferred; legal — no LDR-5 ceiling)
   units_per_pod: 4
-  layout_methods: [townhome_rear_court]
+  layout_methods: [townhome_rear_court, townhome_rear_court_alley]
   # Stall + aisle, per city, mirroring the FLATS corpus defaults for each
   # (flats/config/jurisdictions/or/multnomah/*.yaml). A drift test asserts they
   # still match, so change the corpus and re-run it — not this file alone.
@@ -626,9 +626,22 @@ siteplan:
     #
     # Portland states NO maximum approach width. Absent rather than null: the
     # chapter was read and the ceiling is not there.
+    #
+    # 33.266.120.C.3, one sentence: "If the lot abuts an alley, all parking
+    # and vehicle access to the site must be from the alley." So on a lot
+    # with an alley edge (s4 class A -- 11,519 Portland lots on 2026-09-12)
+    # the side lane from the street is not drawn at all; the court behind the
+    # pod is reached from the alley, and a lot the alley cannot reach fails
+    # `no_alley_lane`. The corpus holds this sentence as NOT ENCODED because
+    # FLATS has no alley fact; this is the one line here that runs ahead of
+    # it (see DrivewayRules.alley_access_required). The county's copy of the
+    # chapter (multnomah/_unincorporated/33.266, for the four Portland
+    # pockets) carries the same sentence word for word and is not set on the
+    # county cell: no unincorporated Multnomah lot carries an alley edge.
     portland:
       drive_min_one_way_ft: 9
       drive_min_two_way_ft: 9
+      alley_access_required: true
       parking_front_prohibited: true
       parking_front_yard_max_pct: 40
       parking_street_setback_ft: 10
@@ -659,7 +672,7 @@ siteplan:
         EX: null
         CI2: null
         IR: null
-      cite: PCC 33.266.120.C; Table 110-4 outdoor area
+      cite: PCC 33.266.120.C, .C.3 alley access; Table 110-4 outdoor area
     # FMC 19.162.020(L)(1): a residential driveway approach is 10 ft minimum
     # and 24 ft maximum. 19.30.040(F)(1)'s 32 ft is the per-frontage budget for
     # all approaches together, so 24 is the ceiling on this single opening.

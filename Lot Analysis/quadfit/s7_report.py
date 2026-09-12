@@ -1146,7 +1146,7 @@ def main() -> None:
                         f"| {sp.stall_cap_for(c)} | {int(m.sum()):,} "
                         f"| {ok_c:,} ({_pct(ok_c, int(m.sum()))}) |")
             methods = [(meth, int((pil["layout_method"] == meth).to_numpy().sum()))
-                       for meth in ("townhome_rear_court",)]
+                       for meth in ("townhome_rear_court", "townhome_rear_court_alley")]
             method_str = ", ".join(f"{meth} {n:,}" for meth, n in methods if n)
             ok_os = int(pil["open_space_ok"].to_numpy().sum())
             L.append(f"\nLayout method used: {method_str or 'none'}. "
@@ -1187,6 +1187,9 @@ def main() -> None:
                          "the rectangle is there, too shallow for a stall and an aisle"),
                         ("no_side_lane",
                          "court and building both fit; no lane reaches the court"),
+                        ("no_alley_lane",
+                         "court and building both fit; the city sends the driveway "
+                         "to the alley and no lane reaches the court from it"),
                         ("too_few_stalls",
                          "a plan was drawn, short of the marketability floor"),
                         ("no_open_space",
