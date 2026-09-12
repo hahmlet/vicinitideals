@@ -80,12 +80,24 @@ go in a worktree under `../vicinitideals-worktrees/<slug>/` — **confirm with t
 user first** before creating one. One branch = one shippable slice = one
 worktree. Setup and cleanup commands: [docs/ops/worktrees.md](docs/ops/worktrees.md).
 
+### Follow-up queue
+
+[docs/FOLLOWUPS.md](docs/FOLLOWUPS.md) is the standing list of follow-ups
+offered but not yet done. **Write to it at the moment you offer options**
+("want me to do B or C next?") — not at wrap-up, because a session can end
+without warning. One numbered line per item, with enough context to start
+cold: what, where, why, and any decision still pending. Remove an item when it
+is done (git records the work) or the user declines it. Read it at the start of
+every session before proposing work; "do the next thing" means the top of the
+list. Keep it under a screen — it is a queue, not a log.
+
 ### End-of-session checklist
 
 When the user indicates the session is ending:
 
-1. **Undone items** — anything discussed but not finished, plus follow-ups (open
-   questions, deferred fixes, "later" items).
+1. **Undone items** — sync [docs/FOLLOWUPS.md](docs/FOLLOWUPS.md): add anything
+   discussed but not finished, remove what is done or declined, prune what has
+   gone stale.
 2. **Completed work summary** — commits (branch + SHA), pushes, deploys, decisions
    not captured in commit messages.
 3. **Worktree trim** — remove a merged, finished worktree; leave work in progress;
