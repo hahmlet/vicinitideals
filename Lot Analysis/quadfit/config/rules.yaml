@@ -87,6 +87,11 @@ jurisdictions:
         setback_front_ft: 20
         setback_side_ft: 10
         setback_rear_ft: 10
+        # PCC 33.110.220.D.9: "No side, rear, or garage entrance setback is
+        # required from a lot line abutting an alley." The alley edge (s4 class
+        # A) is otherwise a rear lot line and takes setback_rear_ft.
+        #   or/multnomah/portland/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 12000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
@@ -98,6 +103,11 @@ jurisdictions:
         setback_front_ft: 20
         setback_side_ft: 10
         setback_rear_ft: 10
+        # PCC 33.110.220.D.9: "No side, rear, or garage entrance setback is
+        # required from a lot line abutting an alley." The alley edge (s4 class
+        # A) is otherwise a rear lot line and takes setback_rear_ft.
+        #   or/multnomah/portland/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 6000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
@@ -109,6 +119,11 @@ jurisdictions:
         setback_front_ft: 15
         setback_side_ft: 5
         setback_rear_ft: 5
+        # PCC 33.110.220.D.9: "No side, rear, or garage entrance setback is
+        # required from a lot line abutting an alley." The alley edge (s4 class
+        # A) is otherwise a rear lot line and takes setback_rear_ft.
+        #   or/multnomah/portland/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 4200
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
@@ -120,6 +135,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 5
+        # PCC 33.110.220.D.9: "No side, rear, or garage entrance setback is
+        # required from a lot line abutting an alley." The alley edge (s4 class
+        # A) is otherwise a rear lot line and takes setback_rear_ft.
+        #   or/multnomah/portland/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 3000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
@@ -131,6 +151,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 5
+        # PCC 33.110.220.D.9: "No side, rear, or garage entrance setback is
+        # required from a lot line abutting an alley." The alley edge (s4 class
+        # A) is otherwise a rear lot line and takes setback_rear_ft.
+        #   or/multnomah/portland/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 1500
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
@@ -255,6 +280,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 5
+        # PCC 33.120.220.B.3.g: "No side or rear building setback is required
+        # from a lot line abutting an alley"; 33.120.220.E.1.b says the same of
+        # the garage entrance. The alley edge is otherwise a rear lot line.
+        #   or/multnomah/portland/33.120.txt#L1053-L1054, #L1228
+        setback_alley_ft: 0
         min_lot_sqft: 4000
         # PCC Table 120-4, RM zones: minimum lot width 33 ft; 33.930.100.B measures it.
         #   or/multnomah/portland/33.120.txt (Table 120-4)
@@ -270,6 +300,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 5
+        # PCC 33.120.220.B.3.g: "No side or rear building setback is required
+        # from a lot line abutting an alley"; 33.120.220.E.1.b says the same of
+        # the garage entrance. The alley edge is otherwise a rear lot line.
+        #   or/multnomah/portland/33.120.txt#L1053-L1054, #L1228
+        setback_alley_ft: 0
         min_lot_sqft: 4000
         # PCC Table 120-4 (see RM1).
         #   or/multnomah/portland/33.120.txt (Table 120-4)
@@ -285,6 +320,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 10
         setback_rear_ft: 10
+        # PCC 33.120.220.B.3.g: "No side or rear building setback is required
+        # from a lot line abutting an alley"; 33.120.220.E.1.b says the same of
+        # the garage entrance. The alley edge is otherwise a rear lot line.
+        #   or/multnomah/portland/33.120.txt#L1053-L1054, #L1228
+        setback_alley_ft: 0
         setback_street_side_ft: 5
         min_lot_sqft: 4000
         # PCC Table 120-4 (see RM1).
@@ -301,6 +341,11 @@ jurisdictions:
         setback_front_ft: 5
         setback_side_ft: 10
         setback_rear_ft: 10
+        # PCC 33.120.220.B.3.g: "No side or rear building setback is required
+        # from a lot line abutting an alley"; 33.120.220.E.1.b says the same of
+        # the garage entrance. The alley edge is otherwise a rear lot line.
+        #   or/multnomah/portland/33.120.txt#L1053-L1054, #L1228
+        setback_alley_ft: 0
         setback_street_side_ft: 5
         min_lot_sqft: 4000
         # PCC Table 120-4 (see RM1).
@@ -1201,6 +1246,11 @@ jurisdictions:
         setback_front_ft: 20
         setback_side_ft: 10
         setback_rear_ft: 10
+        # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
+        # from a lot line abutting an alley. Matter of record -- no county lot
+        # carries an alley edge (s4, 2026-09-12).
+        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 6000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets); 33.418"
@@ -1212,6 +1262,11 @@ jurisdictions:
         setback_front_ft: 20
         setback_side_ft: 10
         setback_rear_ft: 10
+        # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
+        # from a lot line abutting an alley. Matter of record -- no county lot
+        # carries an alley edge (s4, 2026-09-12).
+        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 12000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Dunthorpe-Riverdale is largely R20); 33.418"
@@ -1229,6 +1284,11 @@ jurisdictions:
         setback_front_ft: 15
         setback_side_ft: 5
         setback_rear_ft: 5
+        # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
+        # from a lot line abutting an alley. Matter of record -- no county lot
+        # carries an alley edge (s4, 2026-09-12).
+        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 4200
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7"
@@ -1299,6 +1359,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 5
+        # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
+        # from a lot line abutting an alley. Matter of record -- no county lot
+        # carries an alley edge (s4, 2026-09-12).
+        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        setback_alley_ft: 0
         min_lot_sqft: 3000
         source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets); 33.110.205"
         source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"

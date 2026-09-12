@@ -439,3 +439,36 @@ def test_the_two_cities_where_an_alley_is_a_street_are_the_two_that_say_so():
     rules = load_rules()
     flagged = {name for name, j in rules.jurisdictions.items() if j.alley_is_street}
     assert flagged == {"clackamas_unincorporated", "fairview"}
+
+
+def test_the_zones_that_waive_the_setback_from_an_alley_are_the_ones_that_say_so():
+    """PCC 33.110.220.D.9 (single-dwelling: "No side, rear, or garage entrance
+    setback is required from a lot line abutting an alley") and 33.120.220.B.3.g
+    (multi-dwelling: "No side or rear building setback"). The county's copy of
+    33.110 carries the same sentence for its Portland-administered pockets.
+    33.130 (commercial) has no such sentence, so CM/CE/CX get nothing and
+    their alley line is a rear lot line. RX is not in the set because its rear
+    is already zero and the field would say nothing. Pinned as a set: a zone
+    joining needs its sentence read and cited beside the number, a zone
+    leaving needs the same, because the number is the difference between a
+    court on the alley line and a court a car's length short of it."""
+    from common import load_rules
+
+    rules = load_rules()
+    zero = {(jn, z.zone) for jn, j in rules.jurisdictions.items()
+            for z in j.zones if z.setback_alley_ft == 0}
+    assert zero == {("portland", z) for z in ("R20", "R10", "R7", "R5", "R2.5",
+                                               "RM1", "RM2", "RM3", "RM4")} | {
+        ("multnomah_unincorporated", z) for z in ("R20", "R10", "R7", "R5")}
+    nonzero = {(jn, z.zone, z.setback_alley_ft) for jn, j in rules.jurisdictions.items()
+               for z in j.zones if z.setback_alley_ft not in (None, 0)}
+    assert nonzero == set()     # nobody states a number that is not zero
+    pdx = rules.jurisdictions["portland"]
+    for zn in ("CM1", "CM2", "CM3", "CE", "CX", "RX"):
+        z = pdx.rule_for(zn)
+        assert z.setback_alley_ft is None, zn
+        assert z.effective_setback_alley_ft(lot_area_sqft=5000.0) == z.effective_setback_rear_ft(
+            lot_area_sqft=5000.0), zn
+    r5 = pdx.rule_for("R5")
+    assert r5.effective_setback_alley_ft(lot_area_sqft=5000.0) == 0.0
+    assert r5.effective_setback_rear_ft(lot_area_sqft=5000.0) > 0

@@ -71,10 +71,13 @@ court already stands there. A lot the alley cannot reach that way fails
 leave forward off the court's own aisle: 33.266.130.F.1.b(2) would let them
 back straight into the alley given twenty feet of manoeuvring to its far side,
 but the streets file carries centrelines and not widths, so that relief is not
-taken. Nor is 33.110.220.C.9 (no rear setback from an alley) -- the envelope
-is s5's and stands the full rear setback off the alley; strict side. Fairview
-19.145.090 says the same of VTH/VA and is moot on the data (no VTH lot, no
-Fairview lot within 50 ft of an alley); see `alley_access_required`.
+taken. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask no side or
+rear setback from a lot line abutting an alley, `ZoneRule.setback_alley_ft`
+carries the zero, s5 cuts the envelope to the alley line, and the strip this
+stage looks for along the alley is whatever s5 left there (`lot_setbacks`,
+asked here rather than re-derived). Fairview 19.145.090 says the same of
+VTH/VA and is moot on the data (no VTH lot, no Fairview lot within 50 ft of
+an alley); see `alley_access_required`.
 
 NOT modelled, and the largest known gap in this stage: where a code says
 parking may not SIT. Happy Valley 16.43.030.E.4 sets a parking area back from a
@@ -117,6 +120,7 @@ TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
 from common import DATA_DIR, load_footprints, load_rules, read_stage, write_stage
+from s5_envelope import lot_setbacks
 from s6_fit import _cell_grid, _integral, _placement
 
 _CFG: dict = {}
@@ -253,38 +257,26 @@ def _lane_to_alley(free, mouths, rr: int, cc: int, rh: int, rw: int, drive_c: in
     return None
 
 
-def _alley_setback_for(rules, jur: str, zone: str, area: float, tier: str,
-                       cache: dict) -> float:
+def _alley_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> float:
     """How far s5 stood the envelope off the alley lot line, in feet.
 
-    On a tier A or B lot that is the REAR setback -- s5 sets an alley edge
-    back as a rear lot line, in those words -- so the layout has to be told
-    the same number the envelope was cut to. On a tier C lot it is not: s5
-    gives an irregular lot one uniform inset by the LARGEST of its setbacks,
-    front included, so the strip along the alley there is as wide as the
-    front yard (ten feet in Portland's R5 against a five-foot rear), and a
-    lane told to look five feet found nothing on seven of the thirteen lots
-    it refused on 2026-09-12. Same per-cell cache shape as the front, with
-    every band that feeds the number and the tier in the key.
+    Asked of s5's own arithmetic (`lot_setbacks`) rather than re-derived, so
+    the layout is told the number the envelope was actually cut to. On a
+    tier A or B lot that is the alley setback -- the rear, or the code's own
+    where it states one (zero in Portland's R zones). On a tier C lot it is
+    not: s5 gives an irregular lot one uniform inset by the LARGEST of its
+    setbacks, front included, so the strip along the alley there is as wide
+    as the front yard (ten feet in Portland's R5 against a five-foot rear),
+    and a lane told to look five feet found nothing on seven of the thirteen
+    lots it refused on 2026-09-12.
     """
     jr = rules.jurisdictions.get(jur)
     zr = jr.rule_for(zone) if jr else None
-    uniform = tier == "C"
-    band = 0
-    for field in (("setback_rear_ft", "setback_front_ft", "setback_side_ft")
-                  if uniform else ("setback_rear_ft",)):
-        rows = zr.lot_size_bands.get(field) if zr else None
-        band = band * 8 + (sum(1 for at_least, _ in rows if area >= at_least)
-                           if rows else 0)
-    key = (jur, zone, band, uniform)
-    if key not in cache:
-        v = float((zr.effective_setback_rear_ft(lot_area_sqft=area)
-                   if zr else None) or 0.0)
-        if uniform and zr:
-            v = max(v, float(zr.effective_setback_front_ft(area) or 0.0),
-                    float(zr.effective_setback_side_ft(lot_area_sqft=area) or 0.0))
-        cache[key] = v
-    return cache[key]
+    if zr is None:
+        return 0.0
+    d = lot_setbacks(zr, area, tier)
+    v = max(d.values()) if tier == "C" else d["A"]
+    return float(v or 0.0)
 
 
 def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[float]],
@@ -731,14 +723,12 @@ def main() -> None:
         return setbacks[key]
 
     # The alley edge stands off by the setback s5 cut the envelope to along
-    # it -- the rear setback on a tier A/B lot, the largest of the three on
-    # a tier C lot -- and that strip is what an alley-fed lane crosses.
-    # See `_alley_setback_for`.
-    alley_setbacks: dict[tuple[str, str, int, bool], float] = {}
-
+    # it -- the alley setback on a tier A/B lot (zero in Portland's R zones),
+    # the largest of the four on a tier C lot -- and that strip is what an
+    # alley-fed lane crosses. See `_alley_setback_for`.
     def _alley_setback(jur: str, zone: str, area: float = 0.0,
                        tier: str = "A") -> float:
-        return _alley_setback_for(rules, jur, zone, area, tier, alley_setbacks)
+        return _alley_setback_for(rules, jur, zone, area, tier)
 
     # Each city's own numbers, keyed by name and handed to the workers whole.
     # The ARRANGEMENT is per-corpus -- pod at the front, one side driveway, a

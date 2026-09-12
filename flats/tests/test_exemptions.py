@@ -102,7 +102,7 @@ pytestmark = pytest.mark.unit
 #
 # 183 -> 189 stated and 37 -> 43 numeric on 2026-09-07, and it is one finding
 # twelve times: Portland waives the garage entrance setback against an alley in
-# BOTH residential chapters, and neither waiver was held. 33.110.220.C.9 says
+# BOTH residential chapters, and neither waiver was held. 33.110.220.D.9 says
 # it for the single-dwelling zones -- "Alley. No side, rear, or garage entrance
 # setback is required from a lot line abutting an alley" -- and 33.120.283.E.1.b
 # says it for the multi-dwelling ones. Every one of the twelve zones carried
@@ -119,7 +119,17 @@ pytestmark = pytest.mark.unit
 # exemptions on it change no lot's verdict. They are counted because the day
 # that field is wired to a verdict is the day the reading has to already be
 # right, and because an exemption is the one value form a person has to sign.
-EXPECTED = {"stated": 202, "numeric": 43, "marker": 0, "dash": 2, "silent": 0}
+# 43 -> 48 numeric on 2026-09-12, and it is the 33.110 half of the finding
+# above, five more times: unincorporated Multnomah's Portland-administered
+# pockets are encoded off the county's own copy of 33.110, which prints the
+# same sentence at the same lines (33.110.220.D.9 -- the 2026-09-07 notes had
+# said C, which is the extensions subsection; fixed the same day), and R5,
+# R7, R10, R20 and RF had the flat 18 only. Same bucket for the same reason:
+# the citation opens on a bare "9.". Found from the quadfit side, where s5 now
+# cuts the building envelope to the alley line under the same sentence and
+# the port asked what the corpus held for it. No county lot carries an alley
+# edge in the street file, so nothing moves on either screen.
+EXPECTED = {"stated": 202, "numeric": 48, "marker": 0, "dash": 2, "silent": 0}
 # 201 -> 202 on 2026-09-11: Gresham TLDR's minimum lot size, and this one is a
 # CORRECTION with an exemption as its price. The cell had held 8,000 sq ft
 # quoting 4.0137 -- the Large Lot Subdivision Option for LDR-5 and LDR-7, a

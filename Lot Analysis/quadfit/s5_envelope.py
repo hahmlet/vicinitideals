@@ -9,6 +9,16 @@ edges, confined to corner wedges).
 Tier C (irregular/flag): uniform inward buffer by the max setback — strictly
 conservative fallback. Tier D lots are excluded from fitting (envelope empty).
 
+An alley edge (s4 class ``A``) is a rear lot line and takes the rear setback,
+except where the code states a setback of its own from a line abutting an
+alley: Portland states zero (33.110.220.D.9, 33.120.220.B.3.g), so on a
+Portland R lot the envelope runs to the alley line and the court s6s draws
+behind the pod can stand on it. `lot_setbacks` is the one place the four
+numbers are decided, and s6s reads the same function so the strip it looks
+for along the alley is the strip s5 actually left. The tier C inset is still
+the largest of the four, alley included, so an irregular lot gets no relief
+from a zero -- strict side, 228 Portland alley lots.
+
 Envelope parts smaller than MIN_PART_SQFT are dropped (nothing fits there).
 """
 
@@ -27,6 +37,32 @@ from common import load_rules, read_stage, write_stage
 MIN_PART_SQFT = 200.0
 
 SETBACK_FOR_CLASS = {"F": "setback_front_ft", "R": "setback_rear_ft", "S": "setback_side_ft"}
+
+
+def lot_setbacks(rule, area_sqft: float, tier: str) -> dict[str, float]:
+    """The setback each edge class of one lot owes, in feet, as s5 cuts it.
+
+    Rear and side come through the step-back: five Gresham districts and two
+    Milwaukie zones cap the roof at the setback line and make it rise a foot
+    per foot beyond, so a 26 ft pod owes more yard than the district table
+    prints (see ZoneRule.effective_setback_*). All of them come through the
+    lot-size band: Wilsonville prints its residential setback table twice,
+    once for lots over 10,000 sq ft and once for lots under, and neither
+    column is "the zone's setback". The alley takes the rear unless the code
+    states its own (`ZoneRule.setback_alley_ft`). Corner lots (tier B): we
+    can't tell which street edge is the legal front, so every street edge
+    takes max(front, street_side) -- conservative when the street-side
+    setback exceeds the front.
+    """
+    setbacks = {
+        "F": rule.effective_setback_front_ft(area_sqft),
+        "R": rule.effective_setback_rear_ft(lot_area_sqft=area_sqft),
+        "S": rule.effective_setback_side_ft(lot_area_sqft=area_sqft),
+        "A": rule.effective_setback_alley_ft(lot_area_sqft=area_sqft),
+    }
+    if tier == "B" and rule.setback_street_side_ft:
+        setbacks["F"] = max(setbacks["F"], rule.setback_street_side_ft)
+    return setbacks
 
 
 def build_envelope(geom, edges: list, setbacks: dict[str, float], tier: str):
@@ -70,31 +106,13 @@ def main() -> None:
     for n, row in enumerate(lots.itertuples(index=False)):
         j = rules.jurisdictions[row.jurisdiction]
         rule = j.rule_for(row.zone_raw)
-        # Rear and side come through the step-back: five Gresham districts
-        # and two Milwaukie zones cap the roof at the setback line and make it
-        # rise a foot per foot beyond, so a 26 ft pod owes more yard than the
-        # district table prints. See ZoneRule.effective_setback_*.
-        # ...and all three come through the lot-size band: Wilsonville prints
-        # its residential setback table twice, once for lots over 10,000 sq ft
-        # and once for lots under, and neither column is "the zone's setback".
-        area = float(row.area_sqft)
-        setbacks = {
-            "F": rule.effective_setback_front_ft(area),
-            "R": rule.effective_setback_rear_ft(lot_area_sqft=area),
-            "S": rule.effective_setback_side_ft(lot_area_sqft=area),
-        }
         # An alley edge is a rear lot line -- Gresham 3.0100 and Oregon City
         # 17.04.1000 say so in those words, Wilsonville 4.113 measures "Rear
-        # Setback ... from the rear lot line abutting the alley" -- so it
-        # takes the rear setback. Multnomah County 33.110 waives the setback
-        # from an alley altogether and Fairview lets a garage sit on the
-        # line; neither relief is modelled, which is the strict side.
-        setbacks["A"] = setbacks["R"]
-        # Corner lots (tier B): we can't tell which street edge is the legal
-        # front, so every street edge takes max(front, street_side) —
-        # conservative when the street-side setback exceeds the front.
-        if row.tier == "B" and rule.setback_street_side_ft:
-            setbacks["F"] = max(setbacks["F"], rule.setback_street_side_ft)
+        # Setback ... from the rear lot line abutting the alley" -- and takes
+        # the rear setback unless the code states its own from an alley
+        # (Portland: none). Fairview lets a garage sit on the alley line and
+        # reads an alley as a street, so it has no A edge to relieve.
+        setbacks = lot_setbacks(rule, float(row.area_sqft), row.tier)
         env = build_envelope(row.geom, json.loads(row.edges_json), setbacks, row.tier)
         envs.append(env)
         env_area.append(env.area)

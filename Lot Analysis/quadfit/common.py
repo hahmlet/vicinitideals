@@ -124,6 +124,26 @@ class ZoneRule(BaseModel):
     # tier-B lots via max(front, street_side) — conservative, since the true
     # front edge legally takes only the front setback.
     setback_street_side_ft: float | None = None
+    #: Setback from a lot line abutting an ALLEY, where the code states one
+    #: of its own. Unset, the alley line takes the rear setback: an alley
+    #: edge is a rear lot line (Gresham 3.0100, Oregon City 17.04.1000,
+    #: Wilsonville 4.113 measure it so) and s5 sets it back as one. Portland
+    #: states zero, and states it twice -- 33.110.220.D.9 "No side, rear, or
+    #: garage entrance setback is required from a lot line abutting an alley"
+    #: for the single-dwelling zones, 33.120.220.B.3.g "No side or rear
+    #: building setback is required from a lot line abutting an alley" and
+    #: 33.120.220.E.1.b for the garage entrance in the multi-dwelling zones.
+    #: The commercial chapter (33.130) has no such sentence, so CM/CE/CX lots
+    #: keep the rear setback on their alley. The county's Portland-administered
+    #: pockets run the same 33.110 and carry the same zero; no county lot has
+    #: an alley edge, so there it is a matter of record.
+    #:
+    #: Read through `effective_setback_alley_ft`, which is what s5 cuts the
+    #: envelope to along a class-``A`` edge and what s6s is told the alley
+    #: strip is. A stated value is taken as printed: no step-back is added
+    #: over it, because no city that waives the alley setback also states a
+    #: roof plane from that line. The day one does, add it here.
+    setback_alley_ft: float | None = None
     # Rear/side roof-height planes. See StepBack: the printed setback above
     # stays what the district table prints, and the ENVELOPE uses the effective
     # figure these produce for a DESIGN_HEIGHT_FT building. Every one of them
@@ -325,6 +345,17 @@ class ZoneRule(BaseModel):
         if base is None or self.step_back_side is None:
             return base
         return base + self.step_back_side.extra_ft(height_ft)
+
+    def effective_setback_alley_ft(
+        self, height_ft: float = DESIGN_HEIGHT_FT, lot_area_sqft: float | None = None
+    ) -> float | None:
+        """The setback from a lot line abutting an alley: the code's own where
+        it states one (`setback_alley_ft`), else the rear a building of this
+        height stands at, because an alley edge is a rear lot line."""
+        own = self.banded("setback_alley_ft", lot_area_sqft)
+        if own is not None:
+            return own
+        return self.effective_setback_rear_ft(height_ft, lot_area_sqft)
 
     def coverage_cap_sqft(self, lot_area_sqft: float) -> float | None:
         """Max combined building coverage for a lot, or None if uncapped."""

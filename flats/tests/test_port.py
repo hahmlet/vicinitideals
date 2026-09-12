@@ -17,6 +17,7 @@ from flats.encode.port_quadfit import (
     BACKPORTED,
     COUNTY,
     FIELD_MAP,
+    HELD_AS_VARIANT,
     layer_id_for,
     load_quadfit,
     port,
@@ -62,7 +63,7 @@ def test_a_skipped_key_has_to_already_be_here() -> None:
     for jname, spec in load_quadfit()["jurisdictions"].items():
         layer = ruleset.layers.get(layer_id_for(jname))
         for row in spec.get("zones") or []:
-            for key in (BACKPORTED - {"lot_size_bands"}) & set(row):
+            for key in (BACKPORTED - {"lot_size_bands"} - set(HELD_AS_VARIANT)) & set(row):
                 field = "setback_" + key.removeprefix("step_back_") + "_ft"
                 zone = layer.zones.get(row["zone"]) if layer else None
                 held = zone.values.get(field) if zone else None
@@ -78,6 +79,46 @@ def test_a_skipped_key_has_to_already_be_here() -> None:
                 assert float(held.before_step_back) == float(row[field])
                 checked += 1
     assert checked == 8, f"expected 8 declared planes, walked {checked}"
+
+
+def test_the_alley_zero_has_to_already_be_here() -> None:
+    """The same proof, for the third key on that list.
+
+    `setback_alley_ft: 0` in rules.yaml is PCC 33.110.220.D.9 / 33.120.220.B.3.g
+    made into a number s5 can cut with. The corpus read the sentence first and
+    holds it -- on `setback_garage_entrance_ft`, as an exemption switched by
+    `abuts_alley`, with the quote -- so every quadfit zone that states the
+    zero has to be a zone where that variant already stands. Thirteen zones:
+    Portland's five R and four RM, and the county's four Portland-administered
+    R zones, whose copy of 33.110 prints the same sentence at the same lines.
+    A fourteenth zone stating the zero without the variant is a number the
+    corpus never read, which is the thing BACKPORTED must not hide. And the
+    number is only ever zero: the sentence waives the setback, it does not
+    shorten it.
+    """
+    ruleset = RuleSet(load_rules())
+    field, condition = HELD_AS_VARIANT["setback_alley_ft"]
+    walked: set[tuple[str, str]] = set()
+    for jname, spec in load_quadfit()["jurisdictions"].items():
+        layer = ruleset.layers.get(layer_id_for(jname))
+        for row in spec.get("zones") or []:
+            if "setback_alley_ft" not in row:
+                continue
+            assert row["setback_alley_ft"] == 0, (jname, row["zone"])
+            zone = layer.zones.get(row["zone"]) if layer else None
+            held = zone.values.get(field) if zone else None
+            assert held is not None, f"{jname}/{row['zone']} holds no {field}"
+            alley = [v for v in held.variants if condition in (v.when or ())]
+            assert alley and all(v.exempt for v in alley), (
+                f"{jname}/{row['zone']} states setback_alley_ft and the corpus "
+                f"holds no {condition} exemption on {field} -- a number nobody read"
+            )
+            assert all("abutting an" in v.prov.quote or "#L746" in v.prov.quote
+                       or "#L1228" in v.prov.quote for v in alley), (jname, row["zone"])
+            walked.add((jname, row["zone"]))
+    assert walked == {("portland", z) for z in ("R20", "R10", "R7", "R5", "R2.5",
+                                                 "RM1", "RM2", "RM3", "RM4")} | {
+        ("multnomah_unincorporated", z) for z in ("R20", "R10", "R7", "R5")}
 
 
 def _band_is_held(held, threshold: float, value: float) -> bool:

@@ -5,11 +5,12 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-12, afternoon, after Portland's
-alley lots were laid out from the alley — see the entry of that name in the
-queued list): **green 17,114 · review 13,038 · red 262,329** across 292,481
-lots in **14** cities laid out with real site plans. Greens by city: Portland
-13,359 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
+Pipeline state when last updated (2026-09-12, evening, after Portland's
+alley lots were laid out from the alley and the setback from the alley was
+dropped — see the two entries of those names in the queued list): **green
+17,163 · review 13,053 · red 262,265** across 292,481 lots in **14** cities
+laid out with real site plans. Greens by city: Portland
+13,408 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
 Troutdale 117 · unincorporated Clackamas 113 · Wood Village 83 · Wilsonville
 53 · unincorporated Multnomah 1. (The 2026-09-03
 figures the prose below still quotes in places were green 16,530 · review
@@ -3606,7 +3607,7 @@ the list of places worth hoping about.
   its parking off the alley is still refused, and one that fits off the
   street where the city would send it round the back is still passed.~~ —
   done the same afternoon, next entry. **Portland waives the setback from an
-  alley altogether** (33.110.220.C.9) and Fairview lets a garage sit on the
+  alley altogether** (33.110.220.D.9) and Fairview lets a garage sit on the
   alley line; neither relief is modelled, which is the strict side, and the
   Portland one is now first in the agent's queue. And **5,614 lots still have a narrowest
   street edge under 20 feet beside a real run of 45 feet or more** (2,655 of
@@ -3619,6 +3620,68 @@ the list of places worth hoping about.
   continues straight into a non-street line — a lot line drawn along a
   street the file does not carry, or a paper street — and 44 of those are
   picked as the front; left alone.
+
+- **Portland charges no setback from an alley, and the screen now charges
+  none either — built and run 2026-09-12, evening, 64 lots changed colour,
+  49 more greens, every one in Portland, none lost; and the run showed that
+  the setback was the smaller half of the problem.** Portland's residential
+  chapters say it in one sentence each: *"No side, rear, or garage entrance
+  setback is required from a lot line abutting an alley"* (the single-family
+  zones) and *"No side or rear building setback is required from a lot line
+  abutting an alley"* (the apartment zones). The commercial chapter says
+  nothing of the kind, so the commercial zones get nothing here. Until this
+  evening the screen set an alley edge back as if it were the rear of the
+  lot — 5 to 10 feet — so on 10,393 of Portland's 11,519 alley lots the
+  buildable ground stopped a car's length short of where the city lets it
+  go. Now it runs to the alley line on those lots (a median 200 square feet
+  more ground apiece), and on no lot anywhere did the buildable ground get
+  smaller. The county's four Portland-administered pockets carry the same
+  sentence and got the same number, on paper only: no county lot has an
+  alley.
+
+  *What it did, both ways.* **Green 17,114 → 17,163, review 13,038 →
+  13,053, red 262,329 → 262,265.** 49 red lots went green (R5 34, R2.5 14,
+  R10 1), every one refused yesterday because its court was too shallow and
+  laid out today with four to six cars parked off the alley. 15 red lots
+  came back to the review queue the same way (RM2 5, R5 4, RM1 4), held now
+  on an unverified zone, sewer or the density floor rather than on the plan.
+  The other way: no green and no review lot went red, no lot lost its plan,
+  and every city but Portland is byte-for-byte what it was. Two small
+  honest wrinkles, neither a change of colour: one R7 review lot parks four
+  cars where it parked five, and one red R2.5 lot that parked one car now
+  parks none — on both, the bigger ground let the building sit somewhere
+  else and the court behind it came out shallower. Greens by city: Portland
+  13,359 → 13,408. All 986 Portland greens with an alley are on the
+  alley-fed drawing.
+
+  *What the run showed.* The count of alley lots refused for a shallow
+  court went UP, 6,700 → 8,228 — not because anything got worse (1,490 of
+  those had no court at all before, and now have one that is still too
+  shallow) but because the setback was never the real shortfall. The
+  typical Portland alley lot is 50 by 100 feet. The screen asks the court
+  behind the homes for 42 feet of depth: an 18-foot parking space and a
+  24-foot lane to back out into. Portland's code states the space and says
+  nothing about the lane, so the 24 is the screen's own assumption from a
+  national design manual. On an alley lot the cars back straight out into
+  the alley, and the lane the screen insists on drawing inside the lot is
+  the alley itself. Whether to let the alley count as that lane — and how
+  wide an alley has to be for that (the street file does not say how wide
+  any alley is; Portland's parking chapter speaks of 20 feet of manoeuvring
+  room across one) — is the decision
+  that governs those 8,228 lots, roughly 7,000 of them the plain rectangles.
+  It is a decision about the screen's assumption, not about the code, and it
+  is first in the agent's queue with the question spelled out.
+
+  *On the encoding side.* The same sentence had been read into the encoding
+  in September for the garage entrance only, and the letter of the
+  subsection was recorded wrong in six places (C for D); fixed. The county's
+  five residential zones now carry the garage-entrance waiver Portland's
+  have carried since the 7th (exemption ledger 43 → 48 on the "numeral"
+  shelf, same artefact as before). The rear-and-side half of the sentence is
+  deliberately NOT encoded on the FLATS side yet: the screen's alley fact
+  says a lot touches an alley, not which edge does, and a waiver switched by
+  that would drop both side yards of a lot whose alley is behind it. It waits
+  for a fact that names the edge, which is queued with the alley wiring.
 
 - **Portland sends the driveway to the alley, and the screen now does too —
   built and run 2026-09-12, afternoon, 549 lots changed colour, 452 more
@@ -3677,8 +3740,9 @@ the list of places worth hoping about.
   the screen still sets an alley edge back as the rear of the lot, 5 to 10
   feet. That one is the largest thing left on these lots: a court too
   shallow by a car's length is the reason 6,700 of Portland's alley lots
-  are red, and 5 to 10 feet is a car's length. It is first in the agent's
-  queue; it needs the longer run (about an hour and a half). Fairview says
+  are red, and 5 to 10 feet is a car's length. (Done the same evening — see
+  the entry above it; the setback turned out to be the smaller half.)
+  Fairview says
   the same thing as Portland in its VTH and VA zones and gets nothing here,
   because it reads an alley as a street and the inventory holds no VTH lot
   and no Fairview lot within 50 feet of an alley — moot on the data, not

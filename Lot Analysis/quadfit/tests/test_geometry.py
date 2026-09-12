@@ -186,6 +186,37 @@ def test_an_alley_edge_takes_the_rear_setback_in_the_envelope():
     assert env_with("F") == pytest.approx(90 * 60)
 
 
+def test_a_zero_alley_setback_runs_the_envelope_to_the_alley_line():
+    """PCC 33.110.220.D.9 / 33.120.220.B.3.g: no side or rear setback from a
+    lot line abutting an alley. s5 takes the ``A`` number it is handed and
+    nothing else -- at zero the envelope reaches the alley line, at the rear's
+    five it stops five short. ``lot_setbacks`` hands the zero for the zones
+    that state it and the rear for every other."""
+    from common import load_rules
+    from s5_envelope import build_envelope, lot_setbacks
+
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    edges = [[0, 0, 100, 0, "F"], [100, 0, 100, 100, "S"],
+             [100, 100, 0, 100, "A"], [0, 100, 0, 0, "S"]]
+    base = {"F": 20.0, "R": 5.0, "S": 5.0}
+    env0 = build_envelope(lot, edges, {**base, "A": 0.0}, "A")
+    env5 = build_envelope(lot, edges, {**base, "A": 5.0}, "A")
+    assert env0.area == pytest.approx(90 * 80)
+    assert env0.bounds[3] == pytest.approx(100.0)   # on the alley line
+    assert env5.area == pytest.approx(90 * 75)
+    assert env5.bounds[3] == pytest.approx(95.0)
+
+    rules = load_rules()
+    pdx = lot_setbacks(rules.jurisdictions["portland"].rule_for("R5"), 5000.0, "A")
+    assert pdx["A"] == 0.0 and pdx["R"] > 0
+    gre_rule = rules.jurisdictions["gresham"].rule_for("LDR-5")
+    gre = lot_setbacks(gre_rule, 5000.0, "A")
+    assert gre["A"] == gre["R"] > 0
+    # Tier C is one uniform inset by the LARGEST of the four; the alley's zero
+    # never shrinks it, and the strict side is said so in s5's docstring.
+    assert max(lot_setbacks(rules.jurisdictions["portland"].rule_for("R5"), 5000.0, "C").values()) == pdx["F"]
+
+
 # ---------------------------------------------------------------------------
 # s5 — envelope
 # ---------------------------------------------------------------------------

@@ -139,9 +139,32 @@ FIELD_MAP: dict[str, str] = {
 #: lot size quadfit asks for the bigger setback and the smaller coverage, which
 #: is conservative. It is a rounding convention, not a reading, and the corpus
 #: is the one that matches the sentence.
+#:
+#: `setback_alley_ft` is the third, from 2026-09-12, and it is the same story
+#: with one field's name changed. PCC 33.110.220.D.9 -- "No side, rear, or
+#: garage entrance setback is required from a lot line abutting an alley" --
+#: was read by the reading queue on 2026-09-07 and is held on every Portland
+#: R and RM zone as an `exempt: true` variant `when: [abuts_alley]` on
+#: `setback_garage_entrance_ft`, quoting the sentence. rules.yaml grew a flat
+#: zero for the same zones only so that s5 could cut the building envelope to
+#: the alley line instead of a rear setback short of it. The port cannot route
+#: a number into a variant, and the corpus is the one holding the sentence
+#: with its citation, so the key is held here and
+#: `test_the_alley_zero_has_to_already_be_here` walks every zone that states
+#: it. What the corpus does NOT hold is the rear-and-side half of the sentence
+#: on `setback_rear_ft` / `setback_side_ft`: `abuts_alley` is a lot-level fact
+#: and an exemption switched by it would waive BOTH side yards on a lot whose
+#: alley is behind it, which is the false-GREEN direction. That half waits on
+#: a fact that names the line (FOLLOWUPS).
 BACKPORTED: frozenset[str] = frozenset(
-    {"step_back_rear", "step_back_side", "lot_size_bands"}
+    {"step_back_rear", "step_back_side", "lot_size_bands", "setback_alley_ft"}
 )
+
+#: The field and condition under which the corpus holds a backported key that
+#: is not a step-back plane or a band: the proof test looks here.
+HELD_AS_VARIANT: dict[str, tuple[str, str]] = {
+    "setback_alley_ft": ("setback_garage_entrance_ft", "abuts_alley"),
+}
 
 #: Retrieval dates from the quadfit header. Clackamas was compiled later.
 RETRIEVED = {"multnomah": "2026-07-24", "clackamas": "2026-07-28"}

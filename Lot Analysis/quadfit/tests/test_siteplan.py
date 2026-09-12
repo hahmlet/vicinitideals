@@ -864,25 +864,73 @@ def test_an_alley_that_turns_the_corner_is_reached_at_the_bend():
 
 
 def test_a_tier_c_lot_is_told_the_setback_its_envelope_was_cut_to():
-    """s5 insets an irregular (tier C) lot uniformly by its LARGEST setback,
-    so the strip along its alley is the front yard's width, not the rear's.
-    Seven of the thirteen Portland lots refused from the alley on 2026-09-12
-    were tier C lots told to look five feet for a strip that was ten."""
+    """s6s asks s5 (`lot_setbacks`) how far the envelope stands off the
+    alley rather than working it out again, so the two cannot disagree. On a
+    tier A/B lot that is the alley setback -- zero in Portland's R5, the rear
+    in Gresham, which says nothing of alleys. On a tier C lot it is not: s5
+    insets an irregular lot uniformly by its LARGEST setback, so the strip
+    along its alley is the front yard's width. Seven of the thirteen Portland
+    lots refused from the alley on 2026-09-12 were tier C lots told to look
+    five feet for a strip that was ten."""
     import s6s_siteplan
     from common import load_rules
+    from s5_envelope import lot_setbacks
 
     rules = load_rules()
     zr = rules.jurisdictions["portland"].rule_for("R5")
     rear = float(zr.effective_setback_rear_ft(lot_area_sqft=5000.0))
     front = float(zr.effective_setback_front_ft(5000.0))
-    assert front > rear, (front, rear)     # the premise: R5 fronts deeper than it backs
-    cache: dict = {}
+    side = float(zr.effective_setback_side_ft(lot_area_sqft=5000.0))
+    assert front > rear > 0, (front, rear)  # the premise: R5 fronts deeper than it backs
     for tier in ("A", "B"):
-        assert s6s_siteplan._alley_setback_for(
-            rules, "portland", "R5", 5000.0, tier, cache) == rear
+        assert s6s_siteplan._alley_setback_for(rules, "portland", "R5", 5000.0, tier) == 0.0
+        assert lot_setbacks(zr, 5000.0, tier)["A"] == 0.0
     assert s6s_siteplan._alley_setback_for(
-        rules, "portland", "R5", 5000.0, "C", cache) == max(front, rear, float(
-            zr.effective_setback_side_ft(lot_area_sqft=5000.0)))
+        rules, "portland", "R5", 5000.0, "C") == max(front, rear, side)
+    # Gresham: the alley is a rear lot line and nothing more, step-back included.
+    gz = rules.jurisdictions["gresham"].rule_for("LDR-5")
+    g_rear = float(gz.effective_setback_rear_ft(lot_area_sqft=5000.0))
+    assert g_rear > float(gz.setback_rear_ft)      # the roof plane adds to the printed 15
+    assert s6s_siteplan._alley_setback_for(rules, "gresham", "LDR-5", 5000.0, "A") == g_rear
+    assert lot_setbacks(gz, 5000.0, "A")["A"] == g_rear
+
+
+def test_with_no_setback_from_the_alley_the_court_stands_on_the_alley_line():
+    """PCC 33.110.220.D.9: no rear setback from a lot line abutting an alley.
+    A 100 x 85 Portland R5 lot is too shallow for a court behind the pod
+    when the envelope stops the rear setback short of the alley, and holds
+    eight stalls when it runs to the alley line -- the court stands on the
+    line, the lane is nothing, and nothing drawn leaves the lot. Five feet is
+    a car's length short on 6,700 of Portland's 11,519 alley lots."""
+    s6s = _sp_setup_cities()
+    from common import load_rules
+    from s5_envelope import build_envelope, lot_setbacks
+
+    W, D = 100.0, 85.0
+    lot = box(0.0, 0.0, W, D)
+    edges = [[0, 0, W, 0, "F"], [W, 0, W, D, "S"], [W, D, 0, D, "A"], [0, D, 0, 0, "S"]]
+    fe, ae = [[0.0, 0.0, W, 0.0]], [[0.0, D, W, D]]
+    zr = load_rules().jurisdictions["portland"].rule_for("R5")
+    sb = lot_setbacks(zr, W * D, "A")
+    assert sb["A"] == 0.0 and sb["R"] > 0
+
+    def plan(alley_setback):
+        env = build_envelope(lot, edges, {**sb, "A": alley_setback}, "A")
+        return env, _run(s6s, env, fe, W * D, jurisdiction="portland", zone="R5",
+                         parking_setback_ft=10.0, front_setback_ft=sb["F"],
+                         alley_edges=ae, alley_setback_ft=alley_setback)
+
+    env_r, r_rear = plan(sb["R"])         # yesterday: the alley charged as a rear
+    assert r_rear["site_plan_ok"] is False and r_rear["layout_fail"] == "court_too_shallow"
+    env_0, r = plan(0.0)                  # today: the code's own zero
+    assert env_0.bounds[3] == pytest.approx(D)      # the envelope runs to the alley line
+    assert env_0.area > env_r.area
+    assert r["site_plan_ok"] is True and r["layout_method"] == "townhome_rear_court_alley"
+    assert r["stalls_provided"] == 8
+    assert r["driveway_len_ft"] == pytest.approx(0.0)
+    court = r["geoms"]["parking_court"]
+    assert court.bounds[3] == pytest.approx(D, abs=0.6)   # on the alley line
+    assert lot.buffer(0.01).contains(court)
 
 
 def test_a_side_alley_is_reached_out_of_the_courts_side():
