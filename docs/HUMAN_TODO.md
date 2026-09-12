@@ -5,16 +5,17 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-11 evening, after the minimum lot
-depth and minimum lot width rules were both switched on — see the two entries
-at the end of the queued list): **green 16,358 · review 13,055 · red 263,068**
-across 292,481 lots in **14** cities laid out with real site plans. Greens by
-city: Portland 12,678 · Gresham 1,687 · Oregon City 732 · Milwaukie 614 ·
-West Linn 286 · Troutdale 113 · unincorporated Clackamas 113 · Wood Village
-81 · Wilsonville 53 · unincorporated Multnomah 1. (The 2026-09-03 figures the
-prose below still quotes in places were green 16,530 · review 12,901 · red
-262,540; the difference is the two new rules plus a full re-run, both written
-up at the end.)
+Pipeline state when last updated (2026-09-11, late evening, after the
+minimum lot depth and minimum lot width rules were switched on and the
+thirty-three blank cells the width work turned up were filled — see the
+entries at the end of the queued list): **green 16,357 · review 12,987 · red
+263,137** across 292,481 lots in **14** cities laid out with real site plans.
+Greens by city: Portland 12,678 · Gresham 1,686 · Oregon City 732 · Milwaukie
+614 · West Linn 286 · Troutdale 113 · unincorporated Clackamas 113 · Wood
+Village 81 · Wilsonville 53 · unincorporated Multnomah 1. (The 2026-09-03
+figures the prose below still quotes in places were green 16,530 · review
+12,901 · red 262,540; the difference is the two new rules, the fills, and a
+full re-run, all written up at the end.)
 
 **Fourteen is fourteen of eighteen.** Four places are switched off and never
 reach the screen at all — Lake Oswego, Maywood Park, Rivergrove and Johnson
@@ -3437,9 +3438,15 @@ the list of places worth hoping about.
   are now measured — Oregon City went from 7,630 measured widths to 10,269 —
   and the 76 turned out to be 3.
 
-- **A county minimum lot size that one of our files says is waived and the
-  county's own words say is 7,000 square feet** — found 2026-09-11, agent
-  work, **no lot at stake today**. Nine unincorporated Clackamas zones (R-5
+- ~~**A county minimum lot size that one of our files says is waived and the
+  county's own words say is 7,000 square feet**~~ — **DONE 2026-09-11, same
+  evening.** The 7,000 is in the screen for all nine zones, and Happy
+  Valley's MUR-S 7,000 went in with it. 6,830 lots are now under a minimum
+  they were not being held to (5,313 in the county, 1,517 in Happy Valley
+  MUR-S) and, as forecast, every one was already red for something else:
+  **no verdict moved.** The rule is there for the next lot that clears
+  everything else. Original entry kept below for the record. — found
+  2026-09-11, agent work, **no lot at stake today**. Nine unincorporated Clackamas zones (R-5
   through R-30 and the two village zones) carry no minimum lot size in the
   screening rules, on a reading that the county waives it for this kind of
   housing. The county's code, in the section written for exactly our
@@ -3454,9 +3461,26 @@ the list of places worth hoping about.
   that clears everything else would be graded green on ground the county
   calls too small. Queued to encode the 7,000; no decision needed.
 
-- **Twenty-four zones where the city states a minimum street frontage and we
-  never apply it** — found 2026-09-11, agent work, **1 green and 68 review
-  lots** would turn red. Gresham 13 zones, Happy Valley 8, Milwaukie 2,
+- ~~**Twenty-four zones where the city states a minimum street frontage and we
+  never apply it**~~ — **DONE 2026-09-11, same evening, and the forecast was
+  exact: 1 green and 68 review lots went red** (Happy Valley 36, Gresham 23 +
+  the one green, Milwaukie 9), nothing went the other way. Twenty zones got
+  the number in the end, not twenty-four: Gresham 10, Happy Valley 8,
+  Milwaukie 2 (R-MD's climbs from 30 to 35 feet at 5,000 square feet, and the
+  screen now asks the right figure for the lot's size); the other four were
+  zones where our building is not allowed at all, so nothing is ever judged
+  there, or a zone that states the number only for a special case — a
+  corner, a unit lot — and nothing for the ordinary lot, so there was
+  nothing to carry. The one green lost is a Gresham LDR-7 lot with
+  37 feet of street against the city's 40. Two small honesties remain and
+  neither is worth a decision: **22 of the 36 Happy Valley lots have 35 feet
+  or more**, which is the city's figure for a lot on a cul-de-sac bulb, so
+  if any of the 22 sit on one they are red on the standard-lot number and
+  would pass on the cul-de-sac one — the screen cannot yet tell a bulb from
+  a straight street, and these were review lots, not greens; and Gresham's
+  code lets a frontage be reduced by application in some cases, which no
+  screen can grant. Original entry kept below for the record. — found
+  2026-09-11, agent work, **1 green and 68 review lots** would turn red. Gresham 13 zones, Happy Valley 8, Milwaukie 2,
   Troutdale 1 — all with a street-frontage number in the reference files and
   a blank in the screen. The hesitation is honest: our street-frontage
   figure adds up *every* street edge a lot has, so a corner lot with 30 feet
@@ -3482,7 +3506,27 @@ the list of places worth hoping about.
   to stop treating a clipped corner as a front, and it is queued as coverage
   work, not verdict work.
 
-- **The smaller leftovers of the same blank-cell check**, all agent work, all
+- ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
+  2026-09-11, same evening, with one surprise.** The blank-cell check found
+  38 blanks in the morning and ends the day at one. Happy Valley MUR-S's
+  7,000 and the two street-side setbacks (Milwaukie R-HD, Tualatin RL) are
+  in; the setbacks change no building footprint, because both are smaller
+  than the front setback the screen already holds a corner lot's second
+  street to. Gresham's station-centre density "of 18 homes an acre" turned
+  out to be stated only for a special kind of lot, with nothing for the
+  ordinary case, so it was never a blank. **The surprise is Gresham TLDR's
+  8,000 square foot minimum lot, which was wrong in our reference file, not
+  missing from the screen.** The 8,000 belongs to a large-lot subdivision
+  option written for two *other* Gresham zones; TLDR's own table has no
+  minimum lot at all, and the file's own notes already said so. It is
+  corrected. Worth knowing why it survived: the second-reading check that
+  re-read every number blind in early September could not have caught it,
+  because it re-reads the line each number cites, and the cited line really
+  does say 8,000 — it just says it about a different zone. This one was
+  caught from the other side, by a check asking why the screen had left a
+  cell blank that the reference file had filled. Tualatin RML's lot width
+  stays blank on purpose (a seventh way of measuring, on a district with no
+  lots). Original entry kept below for the record. All agent work, all
   written down so nothing is invisible: Gresham's TLDR zone states an 8,000
   square foot minimum lot and Happy Valley's MUR-S a 7,000 that neither
   screen carries; Milwaukie R-HD and Tualatin RL each state a street-side
