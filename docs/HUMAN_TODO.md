@@ -3775,12 +3775,25 @@ the list of places worth hoping about.
   that send the driveway to the alley carry the rule: Gresham because its
   code states it, Portland because you ruled it — and Portland's row says
   which. **The caveat, written into the code and the summary:** no
-  ordinance and no map we hold states how wide any alley is (the "25" in
-  Gresham's public-works table is a sight-line triangle, not an alley).
-  The plans trust the alley's width the way the 24-foot lane trusted a
-  national manual. If an alley turned out to be too narrow to back into,
-  those plans would be wrong; there are 5,579 of them, all in Portland,
-  and each is marked.
+  ordinance states how wide any alley is (the "25" in Gresham's
+  public-works table is a sight-line triangle, not an alley). The plans
+  trust the alley's width the way the 24-foot lane trusted a national
+  manual. If an alley turned out to be too narrow to back into, those
+  plans would be wrong; there are 5,579 of them, all in Portland, and
+  each is marked. *Corrected the next morning, at your question:* the
+  parcel map we already hold DOES draw every alley's width — the public
+  right-of-way is its own shape in the file — and a probe measured it on
+  92% of the alley lots: the typical Portland alley is 14 feet wide, most
+  are 12 to 16, about a tenth are under 10. Portland's own rule for
+  backing into an alley wants 20 feet of room from the end of the space
+  to the far side of the alley, with the shortfall made up on the lot;
+  applying it would turn the trusted width into a measured one and would
+  send some of the 3,300 back (the lot then needs 18 feet plus the
+  shortfall behind the homes; the typical 50-by-100 has about 29). The
+  probe also found about 80 of the new greens whose "alley" edge actually
+  touches a neighbour's lot, not the alley — the same measurement fixes
+  those. Feasibility only, as you asked; it is item 3 in the agent's
+  queue, not yet a go.
 
   *What it did, both ways.* **Green 17,163 → 20,463, review 13,053 →
   13,665, red 262,265 → 258,353.** 3,300 red lots went green (R5 1,880,
