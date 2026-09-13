@@ -886,13 +886,16 @@ class DrivewayRules(BaseModel):
     #: A lot the alley cannot reach that way fails `no_alley_lane` rather than
     #: being handed the street lane the city forbids.
     #:
-    #: The one field on this model with no FLATS counterpart. The corpus
-    #: records 33.266.120.C.3 and 7.0420(B)(1) as NOT ENCODED (portland.yaml
-    #: beside `parking_street_setback_ft`, gresham.yaml in the driveway notes)
-    #: because FLATS has no alley fact yet; quadfit does, since 2026-09-12, so
-    #: the mirror runs ahead of the corpus here and the drift test does not
-    #: check it. The day `abuts_alley` is wired into FLATS this belongs in
-    #: DRIVEWAY_MIRRORED.
+    #: Mirrored in FLATS as `parking_alley_access_required` since 2026-09-13
+    #: (portland.yaml beside `parking_street_setback_ft`, gresham.yaml in the
+    #: driveway block, wilsonville.yaml and west-linn.yaml likewise), read on
+    #: a lot under `abuts_alley`, which `flats.geom.alley` fills from this
+    #: pipeline's s4 class ``A`` edges. `BOOL_MIRRORED` in
+    #: test_parking_geometry pins the two: a city whose row says True has to
+    #: have the sentence in the corpus, and a city whose corpus has the
+    #: sentence has to say True here. From 2026-09-12 to 2026-09-13 this was
+    #: the one field on the model with no FLATS counterpart, and the mirror
+    #: ran ahead of the corpus.
     #:
     #: Fairview FMC 19.145.090 says the same of its VTH and VA zones ("access
     #: to garages shall be exclusively from the alley. No driveway access

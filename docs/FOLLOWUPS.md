@@ -4,26 +4,7 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **Wire `abuts_alley` into FLATS from quadfit class `A`, and name the
-   line.** The site fact is registered in `flats/rules/fields.py` and nothing
-   fills it; s4's `edges_json` carries the answer for 11,340 lots (every
-   one with a measured `alley_width_ft` since 2026-09-13), and s6s
-   acts on it for Portland (`DrivewayRules.alley_access_required`, the one
-   driveway field with no FLATS counterpart — add it to `DRIVEWAY_MIRRORED`
-   in `test_parking_geometry.py` and lift the NOT ENCODED note beside
-   `parking_street_setback_ft` in portland.yaml the same day). The fact has
-   to say WHICH lot line abuts the alley (rear / side), not just that one
-   does: PCC 33.110.220.D.9 and 33.120.220.B.3.g waive the side AND rear
-   setback from that line, quadfit's s5 now cuts to it (`setback_alley_ft`,
-   2026-09-12), and the corpus holds the sentence only as the
-   `setback_garage_entrance_ft` exemption because an `exempt: true when:
-   [abuts_alley]` on `setback_side_ft` would waive both side yards of a lot
-   whose alley is behind it (see `HELD_AS_VARIANT` in
-   `flats/encode/port_quadfit.py`). Encode the rear/side variants the day the
-   per-line fact exists. One job with the bearing + neighbour-zone facts
-   already noted as computable. Carried from 2026-09-12. **Approved by
-   Steph 2026-09-13 ("I'm good with 1 and 2").**
-2. **5,614 lots still get a "narrowest street edge" under 20 ft beside a
+1. **5,614 lots still get a "narrowest street edge" under 20 ft beside a
    real run of 45 ft or more** (2,655 in the clean shape tiers; Portland
    3,925). The tractable part is ~1,300 end-of-street corner arcs of two or
    more chords (20–45 ft): the second street lies past the 50 ft the edge
@@ -35,7 +16,20 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ringed by street, plus 128 lots whose street run continues straight into
    a non-street line (44 picked as the front) — likely a street the file
    does not carry. Carried from 2026-09-11, widened 2026-09-12.
-3. **Happy Valley cul-de-sac frontage (22 review lots)** — HV asks 35 ft on
+2. **Happy Valley cul-de-sac frontage (22 review lots)** — HV asks 35 ft on
    a bulb and more on a straight street; the screen cannot tell a bulb. The
    curve-merge machinery in `lotdims.front_groups` now knows a chord chain's
    radius and sweep, which is most of a bulb detector. Carried from 2026-09-11.
+3. **The side half of the alley waiver — a per-side setback in the FLATS
+   model.** PCC 33.110.220.D.9 / 33.120.220.B.3.g (and the county's copy)
+   waive the SIDE setback from a lot line abutting an alley as well as the
+   rear. The rear half shipped 2026-09-13 keyed to `alley_at_rear`; the
+   side half is refused in portland.yaml (RF) and `_unincorporated.yaml`
+   (R10) because `setback_side_ft` is one number for both side lines and an
+   `exempt: true when: [alley_at_side]` on it would waive the far side yard
+   too. `alley_at_side` is measured and registered (quadfit s4 class `A`
+   more than 30° off the frontage; `flats.geom.alley`) and switches nothing
+   — `test_alley_at_side_switches_nothing_yet` pins that. Needs a per-side
+   field (or `setback_side_ft` split into near/far by the envelope), then
+   the exemption on the alley side only. Small population: alley-beside
+   lots are mostly corners. Offered 2026-09-13.

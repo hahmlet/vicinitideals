@@ -2034,15 +2034,21 @@ defaults:
   # figure, and a pod with no garage would read as unconstrained under
   # Gresham's version and constrained under everyone else's. Left out rather
   # than blurred. (or/multnomah/gresham/7.0400.middle-housing-design.txt#L229-L232)
-  #
-  # NOT ENCODED: 7.0420(B)(1) and 7.0431(B)(1), access shall be taken from an
-  # alley where the lot abuts one. Every city in this corpus states it and no
-  # parcel record here knows where the alleys are. quadfit's does since
-  # 2026-09-12 (s4 classes the alley lot line `A` off the streets file), and
-  # its s6s lays the 214 Gresham alley lots out from the alley under this
-  # sentence (`alley_access_required`, footprints.yaml) -- the mirror runs
-  # ahead of the corpus here until `abuts_alley` is wired through.
-  # (or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460)
+  # 7.0420(B)(1): "Lots, including middle housing without existing access,
+  # that abut an alley, shall take access from the alley." The townhouse
+  # chapter says the same at 7.0431(B)(1) ("For lots abutting an alley,
+  # access shall be taken from the alley"), so the value does not move with
+  # the plat. A refusal from 2026-08-27 to 2026-09-13 for want of a parcel
+  # record that knew where the alleys were; quadfit's s4 measures them and
+  # `abuts_alley` is filled from it. Read on a lot only under `abuts_alley`;
+  # the site plan's mirror is `alley_access_required` on the Gresham row of
+  # footprints.yaml, pinned to this by test_parking_geometry.
+  parking_alley_access_required:
+    value: true
+    cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
   #
   # NOT ENCODED: Public Works Standards 6.03, where a driveway may meet the
   # street. Table 6.03 sets the minimum distance from a driveway centerline to
@@ -2117,7 +2123,7 @@ zones:
         # alley 8 ft (not modeled)", which is a gap somebody wrote down and
         # then imported.
         - value: 8
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
       step_back:
         height_ft: 21
@@ -2288,7 +2294,7 @@ zones:
         # alley 8 ft (not modeled)", which is a gap somebody wrote down and
         # then imported.
         - value: 8
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
       step_back:
         height_ft: 21
@@ -2463,7 +2469,7 @@ zones:
         # alley 8 ft (not modeled)", which is a gap somebody wrote down and
         # then imported.
         - value: 8
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
     setback_street_side_ft:
       value: 10
@@ -2618,7 +2624,7 @@ zones:
         # alley 8 ft (not modeled)", which is a gap somebody wrote down and
         # then imported.
         - value: 8
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
       step_back:
         height_ft: 21
@@ -2794,7 +2800,7 @@ zones:
       variants:
         # Rear No Alley 10, Rear With Alley 8 -- the last two columns.
         - value: 8
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L394"
       step_back:
         height_ft: 21
@@ -2980,7 +2986,7 @@ zones:
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
       variants:
         - value: 8
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
     setback_street_side_ft:
       value: 10
@@ -3101,13 +3107,13 @@ zones:
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
       variants:
         - value: 5
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
         - value: 10
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L396,L399"
         - value: 5
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L396,L399"
     setback_street_side_ft:
       value: 5
@@ -3206,7 +3212,7 @@ zones:
       variants:
         # Rear No Alley 15, Rear With Alley 8 -- the last two columns.
         - value: 8
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L347,L349-L353"
       step_back:
         height_ft: 21
@@ -3442,7 +3448,7 @@ zones:
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
       variants:
         - value: 8
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
       step_back:
         height_ft: 21
@@ -3583,7 +3589,7 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
         - value: 8
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     setback_street_side_ft:
       value: 20
@@ -3746,7 +3752,7 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
         - value: 8
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     setback_street_side_ft:
       value: 20
@@ -4010,7 +4016,7 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
         - value: 8
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     setback_street_side_ft:
       # 20 feet, the deepest street side in the chapter, against 8 for a
@@ -4237,7 +4243,7 @@ zones:
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L506"
       variants:
         - value: 6
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1100.downtown.txt#L507"
     setback_street_side_ft:
       value: 10
@@ -4382,7 +4388,7 @@ zones:
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L506"
       variants:
         - value: 6
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1100.downtown.txt#L507"
     setback_street_side_ft:
       value: 10
@@ -4529,7 +4535,7 @@ zones:
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L506"
       variants:
         - value: 6
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L507"
     setback_street_side_ft:
       value: 10
@@ -4670,7 +4676,7 @@ zones:
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L506"
       variants:
         - value: 6
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L507"
     setback_street_side_ft:
       value: 10
@@ -4874,7 +4880,7 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
         - value: 5
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
     setback_street_side_ft:
       value: 5
@@ -5023,7 +5029,7 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
         - value: 5
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
     setback_street_side_ft:
       value: 5
@@ -5145,7 +5151,7 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
         - value: 5
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
     setback_street_side_ft:
       value: 5
@@ -5257,7 +5263,7 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
         - value: 5
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
     setback_street_side_ft:
       value: 5
@@ -5374,7 +5380,7 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
         - value: 5
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
     setback_street_side_ft:
       value: 5

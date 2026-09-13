@@ -3684,6 +3684,9 @@ the list of places worth hoping about.
   says a lot touches an alley, not which edge does, and a waiver switched by
   that would drop both side yards of a lot whose alley is behind it. It waits
   for a fact that names the edge, which is queued with the alley wiring.
+  *The edge is named now — 2026-09-13, late evening; the entry below the
+  Wilsonville/West Linn one. The rear half is encoded; the side half is
+  still refused, for the reason given there.*
 
 - **Portland sends the driveway to the alley, and the screen now does too —
   built and run 2026-09-12, afternoon, 549 lots changed colour, 452 more
@@ -3966,6 +3969,47 @@ the list of places worth hoping about.
   one, 4 have too little) — the way in was never their problem. No lot
   lost a plan, a car, or a colour. Every lot outside the 53 alley lots of
   the two cities is byte-for-byte what it was.
+
+- **The encoding side knows which lot line the alley is on now — built
+  2026-09-13, late evening. No lot changed colour, because the screen that
+  reads this encoding does not yet run at county scale; what changed is
+  what it will say when it does, and it now says it from a measurement
+  instead of a guess.** Since the garage-entrance waiver was read in
+  September the encoding has carried a question — *does this lot touch an
+  alley?* — that nothing answered, so every lot was treated as if it did
+  not. The parcel pipeline has measured every alley since last night (the
+  entry two above this one). Tonight the answer crosses over, and it
+  crosses over as three facts rather than one: *the lot touches an alley*,
+  *the alley is behind it*, *the alley is beside it*. The split is the
+  whole point. Portland's sentence — *"No side, rear, or garage entrance
+  setback is required from a lot line abutting an alley"* — is about one
+  line, and a rear-yard waiver switched by *"touches an alley somewhere"*
+  would open the back yard of a lot whose alley runs down its side. That is
+  the direction that manufactures a false green, so the back-yard waiver
+  is switched only by *the alley is behind it*, and the encoding's own
+  test refuses any back-yard rule keyed to the looser fact.
+
+  *What was encoded.* The back-yard half of Portland's alley sentence, on
+  all twelve Portland residential zones and the county's five, with the
+  sentence quoted (the apartment zones have their own copy of it at
+  33.120.220.B.3.g, which had not been cited anywhere until tonight).
+  Gresham's *"Rear With Alley"* column, Troutdale's alley rear yards and
+  Fairview's Town Center one — 28 rules that were already in the encoding
+  keyed to the loose fact — are re-keyed to the precise one. And the
+  driveway rule the parcel pipeline has drawn from since the 12th (*"all
+  parking and vehicle access to the site must be from the alley"*) is a
+  value in the encoding for Portland, Gresham, Wilsonville and West Linn
+  instead of a note saying it could not be, with a test that pins the two
+  sides to each other so neither can drift.
+
+  *What was refused, and why.* The SIDE half of the same sentence. The
+  encoding holds one side-yard number for both sides of a lot, so a waiver
+  on it would drop the far side yard as well as the alley one. The fact is
+  measured and recorded (*the alley is beside it*) and switches nothing
+  until the model can hold a per-side setback; it is item 3 in the agent's
+  queue. Also worth knowing: a lot whose *only* public way is the alley is
+  recorded as fronting on it, not as touching one, so the waiver does not
+  reach it — the conservative reading, and a small population.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

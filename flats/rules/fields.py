@@ -118,6 +118,7 @@ _LABELS: dict[str, str] = {
     "parking_area_max_width_ft": "max. parking area width",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_front_prohibited": "parking banned in front of building",
+    "parking_alley_access_required": "vehicle access must be from the alley",
     "parking_front_yard_max_pct": "max. vehicle share of front yard",
     "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
     "parking_max_per_unit": "max. parking per unit",
@@ -543,6 +544,26 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "parking_alley_access_required",
+        "bool",
+        "True where the code sends the driveway to the alley on a lot that "
+        "has one: parking and vehicle access must come from the alley, and "
+        "a curb cut on the street is not allowed. Portland 33.266.120.C.3 "
+        "(\"If the lot abuts an alley, all parking and vehicle access to "
+        "the site must be from the alley\"), Gresham 7.0420(B)(1), "
+        "Wilsonville 4.113(.14)(D)(4)(c)(i) and West Linn 48.025(B)(3)(a) "
+        "all do; Milwaukie only lets a stall sit near one and is NOT this. "
+        "A bool and not a placement rule because the sentence routes the "
+        "drive, it does not size or place the court -- the court's own "
+        "standards still apply once the car is off the alley. Read on a lot "
+        "only under `abuts_alley`, which quadfit measures; on a lot with "
+        "no alley it is inert. The screen's site plan holds the same switch "
+        "as `DrivewayRules.alley_access_required` in "
+        "`Lot Analysis/quadfit/config/footprints.yaml`, and "
+        "test_parking_geometry pins the two to each other.",
+        None,
+    ),
+    FieldDef(
         "parking_street_setback_ft",
         "length_ft",
         "How far a parking area must sit back from a street lot line. "
@@ -857,6 +878,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_area_max_width_ft",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
+        "parking_alley_access_required",
         "parking_street_setback_ft",
         "parking_building_buffer_ft",
         "open_space_min_pct",

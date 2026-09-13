@@ -261,28 +261,37 @@ def test_west_linn_states_both_ends_of_its_curb_cut(
     assert lines[176].startswith("B. Maximum curb cut width shall be 36 feet")
 
 
-def test_the_four_standards_this_model_cannot_hold_are_still_refused(
+def test_the_three_standards_this_model_cannot_hold_are_still_refused(
     west_linn: Layer,
 ) -> None:
-    """Ten values encoded against four refusals, in one layer, in one reading.
+    """Eleven values encoded against three refusals, in one layer.
 
     The refusal ledger counts these by marker and the count is asserted
     elsewhere; what is pinned here is that each one names what it is refusing,
     because a refusal whose subject is not written down is a sentence nobody
-    can revisit. All four are shapes rather than gaps -- the standards exist
+    can revisit. All three are shapes rather than gaps -- the standards exist
     and are perfectly clear, and no field in the registry can carry them.
 
-    Five rows rather than four: the layer already carried one before this
-    reading, on the 0.30 floor under its floor area ratios.
+    Four rows rather than three: the layer already carried one before the
+    2026-08-27 reading, on the 0.30 floor under its floor area ratios.
+
+    There were four refusals from that reading until 2026-09-13. The alley-
+    first rule, 48.025(B)(3)(a) Option 1, was refused because "nothing here
+    knows whether a parcel abuts an alley", and that is the one reason a
+    refusal may leave for: the fact arrived. It is `parking_alley_access_
+    required` now, and the assertion below is that the word "alley" is no
+    longer the subject of any West Linn refusal -- a comment that kept
+    refusing an encoded value would be the ledger lying.
     """
     from flats.encode.refusals import refusals
 
     mine = [
         r for r in refusals() if r.kind == "comments" and "west-linn" in r.where
     ]
-    assert len(mine) == 5, [r.text[:60] for r in mine]
+    assert len(mine) == 4, [r.text[:60] for r in mine]
     subjects = " ".join(r.text.lower() for r in mine)
     assert "curb cut spacing" in subjects
-    assert "alley" in subjects
+    assert "alley" not in subjects
     assert "grade" in subjects
     assert "clearance" in subjects
+    assert west_linn.defaults["parking_alley_access_required"].value is True

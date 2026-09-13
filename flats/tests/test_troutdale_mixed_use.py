@@ -133,7 +133,7 @@ def test_the_orientation_fact_is_not_the_zoning_fact(troutdale: Layer) -> None:
 def test_the_pairs_that_could_tie_are_spelled_out(rules: RuleSet) -> None:
     """A two-storey building on an alley lot matches two variants at once.
 
-    `multi_story` puts the rear yard at 20 and `abuts_alley` puts it at 5, both
+    `multi_story` puts the rear yard at 20 and `alley_at_rear` puts it at 5, both
     one condition deep, and the model refuses a tie rather than guessing --
     which would send the lot to UNKNOWN. There is nothing to guess: 3.235.C.5.b
     states the five with no storey step at all, so the pair is encoded.
@@ -141,7 +141,7 @@ def test_the_pairs_that_could_tie_are_spelled_out(rules: RuleSet) -> None:
     for held, rear in (
         ((), 15),
         (("multi_story",), 20),
-        (("multi_story", "abuts_alley"), 5),
+        (("multi_story", "alley_at_rear"), 5),
         (("multi_story", "abuts_nonresidential_zone"), 10),
     ):
         res = rules.resolve(TROUTDALE, "MU-2", held)

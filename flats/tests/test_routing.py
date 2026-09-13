@@ -206,6 +206,14 @@ FOLLOWED = {
     "or/multnomah/fairview 19.115.020 -> 19.30",
     "or/multnomah/fairview 19.115.040 -> 19.30.030",
     "or/multnomah/gresham 9.0802 -> 9.0822",
+    # Closed 2026-09-13 by a citation landing inside the SOURCE rather than
+    # the target, which is the other way a redirect can close. 48.025(B)(3)(a)
+    # Option 1 hands access to "an existing or proposed alley or mid-block
+    # lane" and 48.060 held the curb-cut widths that were cited; nothing had
+    # ever quoted 48.025 itself. `parking_alley_access_required` quotes it now
+    # (48.access.txt#L55), so both ends of the pointer are read by this layer
+    # and the ledger has nothing left to send anybody to.
+    "or/clackamas/west-linn 48.025 -> 48.060",
 }
 
 

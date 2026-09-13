@@ -111,10 +111,21 @@ LEDGER = Path(__file__).resolve().parents[2] / "data" / "flats" / "exemptions.cs
 #: a sentence about something else. An over-scoped bucket costs a re-read; an
 #: under-scoped one costs a false GREEN, which is the trade this whole module
 #: is here to take.
+#: One phrase admitted on 2026-09-13, and it is the narrowest one that reads
+#: Portland's alley sentence: "No side, rear, or garage entrance setback is
+#: required from a lot line abutting an alley" (33.110.220.D.9) and "No side
+#: or rear building setback is required ..." (33.120.220.B.3.g). The general
+#: "no ... required" alternative allows three words between and no comma;
+#: the first sentence has five words and two commas, the second five words.
+#: Twenty-two rows had been read as `numeric` on the strength of the "9."
+#: that opens the line, and eight as `silent`, for a sentence that states
+#: the exemption in as many words. Scoped to "setback is required" so it
+#: closes a row only for a value quoting a sentence about a setback.
 _EXEMPT = re.compile(
     r"(\bnone\b"
     r"|\bno\s+(?:\w+\s+){0,3}(?:minimum|maximum|min\.|max\.|required|requirement"
     r"|limit|limits|standard|standards|density|cap)\b"
+    r"|\bno\s+(?:[\w,]+\s+){0,6}setback\s+is\s+required\b"
     r"|\bis\s+not\s+(?:the\s+)?(?:\w+\s+){0,2}(?:minimum|maximum)\b"
     r"|\bnot\s+required\b|\bnot\s+applicable\b|\bn/a\b|\bexempt|\bunlimited\b"
     r"|(?:do|does|shall|may|will|is|are)\s+not\s+apply"

@@ -43,7 +43,7 @@ from __future__ import annotations
 
 import enum
 from dataclasses import dataclass
-from typing import Iterable, Literal
+from typing import Iterable, Literal, Mapping
 
 Kind = Literal["elective", "site_fact", "design_fact", "relief"]
 
@@ -177,8 +177,44 @@ _C: tuple[ConditionDef, ...] = (
         "abuts_alley",
         "site_fact",
         "Has alley access, which in most codes moves parking off the street "
-        "frontage and relaxes the garage entrance setback.",
-        evidence="alley centreline layer",
+        "frontage and relaxes the garage entrance setback. Answered by "
+        "quadfit's s4 since 2026-09-13: a lot line within 50 ft of an alley "
+        "centreline with an alley of 8 to 40 ft measured across it in the "
+        "taxlot fabric (edge class `A`; `flats.geom.alley` reads it). Held "
+        "whenever either per-line fact below is, and nowhere else -- see "
+        "ENTAILS.",
+        evidence="quadfit s4 class A edge (RLIS alley centreline, width measured across the taxlot fabric)",
+        assume=False,
+    ),
+    ConditionDef(
+        "alley_at_rear",
+        "site_fact",
+        "The lot line abutting the alley is the REAR line -- the one opposite "
+        "the frontage, within 30 degrees of parallel to it. Portland "
+        "33.110.220.D.9 and 33.120.220.B.3.g waive the rear setback from "
+        "such a line, Gresham Table 4.0130 prints a \"Rear With Alley\" "
+        "column for it, Troutdale note 4 zeroes the rear yard \"for lots "
+        "with rear alley access\". Split from `abuts_alley` because a lot "
+        "whose alley runs down its SIDE abuts an alley too, and an exemption "
+        "on the rear setback switched by the lot-level fact would open the "
+        "rear yard of a lot whose alley is nowhere near it -- the "
+        "false-GREEN direction.",
+        evidence="quadfit s4 class A edge whose bearing is within 30 degrees of a frontage bearing",
+        assume=False,
+    ),
+    ConditionDef(
+        "alley_at_side",
+        "site_fact",
+        "The lot line abutting the alley is a SIDE line -- more than 30 "
+        "degrees off the frontage. The same sentences waive the side setback "
+        "from such a line, and the corpus does NOT encode that half: "
+        "`setback_side_ft` is one number for both side lines, so an "
+        "exemption switched by this fact would waive the far side yard as "
+        "well. Registered so the bridge can say which line it found and so "
+        "the refusal is stated against a real fact rather than a missing "
+        "one; nothing resolves on it until the model holds per-side "
+        "setbacks.",
+        evidence="quadfit s4 class A edge whose bearing is more than 30 degrees off every frontage bearing",
         assume=False,
     ),
     ConditionDef(
@@ -721,6 +757,43 @@ _C: tuple[ConditionDef, ...] = (
 
 CONDITIONS: dict[str, ConditionDef] = {c.name: c for c in _C}
 
+#: A site fact whose truth carries another with it. `alley_at_rear` is a
+#: statement about WHICH line abuts the alley, so holding it is holding
+#: `abuts_alley`; the two per-line facts are the only way `abuts_alley` is
+#: ever answered, so a parent observed False settles both children too.
+#: `configure` applies this in both directions and refuses an observation
+#: that contradicts it (a rear alley on a lot said to abut none), because a
+#: registry that lets the pair drift apart has split one concept into two.
+ENTAILS: dict[str, tuple[str, ...]] = {
+    "alley_at_rear": ("abuts_alley",),
+    "alley_at_side": ("abuts_alley",),
+}
+
+
+def close_entailed(observed: Mapping[str, bool]) -> dict[str, bool]:
+    """Close a set of observations under ENTAILS, both ways.
+
+    A child observed True makes each parent True; a parent observed False
+    makes each child False where the child was not stated. A child True
+    against a parent stated False is refused: two sources disagree and
+    nothing here can pick. Names are not validated -- ``configure`` does that
+    -- so the closure can be applied to a raw data-layer answer first.
+    """
+    out = dict(observed)
+    for child, parents in ENTAILS.items():
+        if out.get(child) is True:
+            for parent in parents:
+                if out.get(parent) is False:
+                    raise ValueError(
+                        f"{child} observed True but {parent} observed False -- "
+                        f"holding {child} is holding {parent}"
+                    )
+                out[parent] = True
+    for child, parents in ENTAILS.items():
+        if child not in out and any(out.get(p) is False for p in parents):
+            out[child] = False
+    return out
+
 #: Conditions whose truth we assert rather than observe. A configuration
 #: leaning on one of these cannot be GREEN — it is our belief, not a fact.
 ASSUMED = frozenset(c.name for c in _C if c.kind == "site_fact" and c.assume is not None)
@@ -782,7 +855,9 @@ __all__ = [
     "ASSUMED_TIER",
     "ASSUMED_USE_TIER",
     "CONDITIONS",
+    "ENTAILS",
     "ConditionDef",
+    "close_entailed",
     "Kind",
     "Tier",
     "condition",

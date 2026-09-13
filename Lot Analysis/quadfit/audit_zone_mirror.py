@@ -412,12 +412,21 @@ def _pairs(top: dict, corpus: dict):
 #: OTHER than rules.yaml -- the per-city parking and open-space figures the site
 #: plan generator carries in `footprints.yaml` and `common.py`. They have no
 #: column here and are not missing.
+#:
+#: The two driveway bools joined on 2026-09-13. Both travel as `DrivewayRules`
+#: on the city's `footprints.yaml` row (`parking_front_prohibited`,
+#: `alley_access_required`) and `BOOL_MIRRORED` in test_parking_geometry pins
+#: each to its corpus field. Wilsonville's Village Zone is the first to state
+#: one at ZONE level -- 4.125(.05)(B), its own copy of the alley rule -- which
+#: is what put it in front of this scan; the layer-level copies never were.
 ROUTED_ELSEWHERE: frozenset[str] = frozenset({
     "open_space_min_pct",
     "open_space_min_sqft",
     "parking_max_per_unit",
     "parking_min_per_unit",
     "parking_street_setback_ft",
+    "parking_front_prohibited",
+    "parking_alley_access_required",
 })
 
 

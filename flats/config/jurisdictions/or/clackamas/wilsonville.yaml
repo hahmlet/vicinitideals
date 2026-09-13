@@ -1198,6 +1198,25 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
     quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+  # 4.113(.14)(D)(4)(c)(i), the quadplex driveway standard: "For lots or
+  # parcels abutting an alley that is improved with a paved surface, access
+  # must be taken from the alley (see Figure 8. Alley Access)"; the townhouse
+  # copy at E.5 says the same (#L3835-L3838), so no `unit_lots` variant. Two
+  # readings, both taken the strict way and both approved by Steph
+  # 2026-09-13: the sentence sits under (c), "lots or parcels with more than
+  # one frontage", and an alley IS the second frontage -- that is why the
+  # sentence is there -- so a lot with one street and an alley is covered;
+  # and "improved with a paved surface" is in no file held here, so a lot on
+  # an unpaved alley is sent to the alley anyway, and if the city would in
+  # fact let it use the street the lot may be better than the screen says.
+  # Read on a lot only under `abuts_alley`; the site plan's mirror is
+  # `alley_access_required` on the Wilsonville row of footprints.yaml.
+  parking_alley_access_required:
+    value: true
+    cite: Wilsonville Development Code 4.113(.14)(D)(4)(c)(i), access from the alley for lots abutting a paved one; townhouse copy at 4.113(.14)E.5
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L3556-L3559,L3835-L3838"
   # Subsection E is "Standards applicable to Townhouses", which under state
   # law is this building on four unit lots rather than one -- the `unit_lots`
   # lever, said in Wilsonville's words. E.5.a requires access from a paved
@@ -2425,6 +2444,17 @@ zones:
       # not taken -- it is a loosening, and the pod has no outbuilding.
       value: 45
       quote: "or/clackamas/wilsonville/4.planning.txt#L5023,L5027-L5028,L5049"
+    # The layer holds this from 4.113(.14)(D)(4)(c)(i), and the Village Zone
+    # states its own copy at 4.125(.05)(B) with fewer conditions -- no second
+    # frontage, no paved surface: "All lots with access to a public street,
+    # and an alley, shall take vehicular access from the alley to a garage or
+    # parking area, except as determined by the City Engineer." Held on the
+    # zone's own sentence so the citation is the one that governs Villebois,
+    # where the alley is the plan; the value is the same either way.
+    parking_alley_access_required:
+      value: true
+      cite: Wilsonville Development Code 4.125(.05)(B), vehicular access from the alley
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4928-L4929"
     notes: 'THE VILLAGE ZONE IS VILLEBOIS, and until 2026-09-01 the screen dropped every lot in it.
       This is the largest single block of unencoded land left in the corpus -- 2,508 lots at s2, more
       than PDR-3''s 1,778 and larger than any other Wilsonville zone -- and it was invisible rather
@@ -2494,11 +2524,10 @@ zones:
       house the row was written for: 56 or 80 feet of pod across a 70-foot lot is well over 60 percent.
       Recorded rather than encoded because the model cannot hold the shape, not because it binds.
 
-      NOT ENCODED: 4.125(.05)(B), alley access. "All lots with access to a public street, and an alley,
-      shall take vehicular access from the alley to a garage or parking area, except as determined by
-      the City Engineer." Villebois is an alley village and this decides which side of the lot the
-      driveway lands on, which changes the site plan without changing the envelope. It needs
-      `abuts_alley`, a registered site fact nothing computes.
+      4.125(.05)(B), alley access, was refused here from 2026-09-01 to 2026-09-13 because it "needs
+      `abuts_alley`, a registered site fact nothing computes". quadfit''s s4 computes it now, and the
+      sentence is `parking_alley_access_required` on this zone -- Villebois is an alley village and
+      this decides which side of the lot the driveway lands on.
 
       NOT ENCODED: the garage notes on the Single-Family row -- note 7 (garage 3 to 5 feet off the
       alley, or 18 feet where a parking space sits between), note 8 (street-loaded garage 20 feet back

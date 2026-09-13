@@ -55,6 +55,13 @@ DRIVEWAY_MIRRORED = {
     "open_space_sqft": "open_space_min_sqft",
 }
 
+#: The bool half of the same map, checked by its own test because a bool is
+#: three-valued in the corpus (true / exempt / absent) and two-valued here.
+BOOL_MIRRORED = {
+    "parking_front_prohibited": "parking_front_prohibited",
+    "alley_access_required": "parking_alley_access_required",
+}
+
 
 def _corpus_value(layer_id: str, field: str):
     """The innermost layer's Value for one field, exempt ones included.
@@ -455,18 +462,29 @@ def test_the_front_parking_ban_is_mirrored_as_a_ban_and_not_as_a_cap():
     frontage instead. A ban and a cap are not the same rule; encoding one as
     the other is how a front-yard court gets drawn in a city that forbids it,
     or refused in a city that allows it.
+
+    `alley_access_required` is the second bool and is checked the same way,
+    since 2026-09-13 when FLATS gained `parking_alley_access_required` and an
+    `abuts_alley` that quadfit fills: Portland, Gresham, Wilsonville and West
+    Linn send the driveway to the alley, and every other city's row is empty
+    because its code was read and routes nothing (Milwaukie places a stall
+    near the alley; it does not route the driveway). Before that day this
+    field was the one on DrivewayRules with no counterpart, and the mirror
+    ran ahead of the corpus.
     """
     from common import load_footprints
     from flats.encode.port_quadfit import layer_id_for
 
     for jurisdiction, dw in load_footprints().siteplan.driveway.items():
-        read = _one_lot_value(layer_id_for(jurisdiction), "parking_front_prohibited")
-        stated = None if read is None else bool(read.value)
-        assert dw.parking_front_prohibited == stated, (
-            f"{jurisdiction}: footprints.yaml ships parking_front_prohibited="
-            f"{dw.parking_front_prohibited} where the corpus reads {stated}"
-            + (f" ({read.prov.cite})" if read is not None else " (nothing)")
-        )
+        for mine, theirs in BOOL_MIRRORED.items():
+            read = _one_lot_value(layer_id_for(jurisdiction), theirs)
+            stated = None if read is None else bool(read.value)
+            shipped = getattr(dw, mine)
+            assert shipped == stated, (
+                f"{jurisdiction}: footprints.yaml ships {mine}={shipped} where the "
+                f"corpus reads {theirs} = {stated}"
+                + (f" ({read.prov.cite})" if read is not None else " (nothing)")
+            )
 
 
 def test_a_city_that_states_open_space_by_zone_is_mirrored_for_every_zone():

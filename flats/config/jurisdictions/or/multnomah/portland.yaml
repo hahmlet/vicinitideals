@@ -1963,15 +1963,20 @@ defaults:
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.266.txt#L302-L305"
-  #
-  # NOT ENCODED: 33.266.120.C.3, "If the lot abuts an alley, all parking and
-  # vehicle access to the site must be from the alley." Every city in this
-  # corpus states it and no parcel record here knows where the alleys are.
-  # quadfit's does since 2026-09-12 (s4 classes the alley lot line `A` off
-  # the streets file), and its s6s lays Portland's 11,519 alley lots out from
-  # the alley under this sentence (`alley_access_required`, footprints.yaml)
-  # -- the mirror runs ahead of the corpus here until `abuts_alley` is wired
-  # through. (or/multnomah/portland/33.266.txt#L313-L314)
+  # 33.266.120.C.3: "Vehicle area access. If the lot abuts an alley, all
+  # parking and vehicle access to the site must be from the alley." Held as
+  # a refusal from 2026-08-27 to 2026-09-13 because no parcel record knew
+  # where the alleys were; quadfit's s4 has measured them since 2026-09-12
+  # and `abuts_alley` is filled from it, so the sentence is a value now. Read
+  # on a lot only under `abuts_alley`; the site plan's mirror of it is
+  # `alley_access_required` on the Portland row of footprints.yaml, pinned
+  # to this by test_parking_geometry.
+  parking_alley_access_required:
+    value: true
+    cite: PCC 33.266.120.C.3, all parking and vehicle access from the alley where the lot abuts one
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L313-L314"
   #
   # NOT ENCODED: 33.266.120.C.4, parking in garages takes the garage setback
   # of the base zone. `setback_garage_entrance_ft` already carries that figure
@@ -2034,6 +2039,25 @@ zones:
     setback_rear_ft:
       value: 10
       quote: or/multnomah/portland/33.110.txt#L462
+      variants:
+        # 33.110.220.D.9, the sentence the garage-entrance exemption on this
+        # zone already quotes: "Alley. No side, rear, or garage entrance
+        # setback is required from a lot line abutting an alley." This is the
+        # REAR half, and it is keyed to `alley_at_rear` -- the fact that names
+        # the line -- not to `abuts_alley`: keyed to the lot-level fact it
+        # would open the rear yard of a lot whose alley runs down its side,
+        # which is the false-GREEN direction. Filled from quadfit's measured
+        # alley edges (s4 class A, bearing within 30 degrees of the frontage)
+        # since 2026-09-13; before that nothing answered `abuts_alley` and the
+        # garage exemption above was a matter of record.
+        # The SIDE half is NOT ENCODED: `setback_side_ft` is one number for
+        # both side lines, so an exemption on it switched by `alley_at_side`
+        # would waive the far side yard as well. It waits on a per-side
+        # setback in the model; `alley_at_side` is measured and registered so
+        # the refusal is against a fact we hold, not a fact we lack.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.110.txt#L746-L747"
     setback_side_ft:
       value: 10
       quote: or/multnomah/portland/33.110.txt#L460
@@ -2071,6 +2095,12 @@ zones:
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/portland/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
+        # and the side-half refusal are on RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 12000
       quote: "or/multnomah/portland/33.110.txt#L1550"
@@ -2134,6 +2164,12 @@ zones:
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/portland/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
+        # and the side-half refusal are on RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 6000
       quote: "or/multnomah/portland/33.110.txt#L1551"
@@ -2221,6 +2257,12 @@ zones:
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/portland/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
+        # and the side-half refusal are on RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 4200
       quote: "or/multnomah/portland/33.110.txt#L1552"
@@ -2307,6 +2349,12 @@ zones:
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/portland/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
+        # and the side-half refusal are on RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 3000
       quote: "or/multnomah/portland/33.110.txt#L1553"
@@ -2384,6 +2432,12 @@ zones:
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/portland/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
+        # and the side-half refusal are on RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 1500
       quote: "or/multnomah/portland/33.110.txt#L1554"
@@ -2515,6 +2569,16 @@ zones:
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      variants:
+        # 33.120.220.B.3.g: "Alley. No side or rear building setback is
+        # required from a lot line abutting an alley." The multi-dwelling
+        # chapter's own copy of the R-zone sentence, not the garage sentence
+        # (33.120.283.E.1.b, which is on setback_garage_entrance_ft). The rear
+        # half, keyed to `alley_at_rear` for the reason given on RF; the side
+        # half is refused there too.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
     setback_garage_entrance_ft:
       # 33.120.283.E.1.b: "No setback is required from a lot line abutting an
       # alley." Unconditional, and this file held only Table 120-4's flat 18.
@@ -2604,6 +2668,11 @@ zones:
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      variants:
+        # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
     setback_garage_entrance_ft:
       # NOT ENCODED: the either/or. 33.120.283.E.1.a states this standard as a
       # forbidden BAND rather than a floor -- "In the RM2, RM3, RM4, and RX
@@ -2731,6 +2800,15 @@ zones:
         - value: 5
           when: [low_rise]
           quote: "or/multnomah/portland/33.120.txt#L990-L997"
+        # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+        # Spelled out against `low_rise` as well: B.3.g states no height step,
+        # and two one-condition matches would tie and send the lot to UNKNOWN.
+        - exempt: true
+          when: [low_rise, alley_at_rear]
+          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
     setback_street_side_ft:
       value: 5
       quote: "or/multnomah/portland/33.120.txt#L994-L997"
@@ -2857,6 +2935,15 @@ zones:
         - value: 5
           when: [low_rise]
           quote: "or/multnomah/portland/33.120.txt#L990-L997"
+        # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+        # Spelled out against `low_rise` as well: B.3.g states no height step,
+        # and two one-condition matches would tie and send the lot to UNKNOWN.
+        - exempt: true
+          when: [low_rise, alley_at_rear]
+          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
     setback_street_side_ft:
       value: 5
       quote: "or/multnomah/portland/33.120.txt#L994-L997"
@@ -2982,6 +3069,11 @@ zones:
     setback_rear_ft:
       value: 0
       quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      variants:
+        # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
     setback_garage_entrance_ft:
       # NOT ENCODED: the either/or. 33.120.283.E.1.a states this standard as a
       # forbidden BAND rather than a floor -- "In the RM2, RM3, RM4, and RX
@@ -3085,6 +3177,11 @@ zones:
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      variants:
+        # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
     setback_garage_entrance_ft:
       # 33.120.283.E.1.b: "No setback is required from a lot line abutting an
       # alley." Unconditional, and this file held only Table 120-4's flat 18.

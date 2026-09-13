@@ -345,7 +345,23 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 125, "comments": 134, "tests": 17}
+EXPECTED = {"notes": 124, "comments": 133, "tests": 17}
+#
+# 276 -> 274 on 2026-09-13, late evening, and the count moved in both
+# directions on one day for a second time. Four refusals LEFT, all the same
+# sentence in four codes -- "access shall be taken from the alley" in Portland
+# 33.266.120.C.3, Gresham 7.0420(B)(1), West Linn 48.025(B)(3)(a) and the
+# Wilsonville Village Zone's 4.125(.05)(B) -- and every one of them had been
+# refused for one stated reason, that `abuts_alley` was "a registered site
+# fact nothing computes". quadfit's s4 computes it now, so the four became
+# `parking_alley_access_required`. Two ARRIVED in the same files: the SIDE
+# half of Portland's alley waiver ("No side, rear, or garage entrance setback
+# is required from a lot line abutting an alley"), refused on the RF and the
+# county R10 rows the day its rear half was encoded, because `setback_side_ft`
+# is one number for both side lines and a waiver on it would drop the far yard
+# too. The rear half had been the same refusal since 2026-09-07 and it closed
+# the way this ledger says a refusal should: by the fact arriving, not by the
+# reason being forgotten.
 #
 # 275 -> 276 on 2026-09-10, and it is the first time the ledger has been asked
 # to record a field ARRIVING. Four refusals left and five came in, which is

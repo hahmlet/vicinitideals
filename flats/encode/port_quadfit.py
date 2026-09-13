@@ -150,12 +150,16 @@ FIELD_MAP: dict[str, str] = {
 #: the alley line instead of a rear setback short of it. The port cannot route
 #: a number into a variant, and the corpus is the one holding the sentence
 #: with its citation, so the key is held here and
-#: `test_the_alley_zero_has_to_already_be_here` walks every zone that states
-#: it. What the corpus does NOT hold is the rear-and-side half of the sentence
-#: on `setback_rear_ft` / `setback_side_ft`: `abuts_alley` is a lot-level fact
-#: and an exemption switched by it would waive BOTH side yards on a lot whose
-#: alley is behind it, which is the false-GREEN direction. That half waits on
-#: a fact that names the line (FOLLOWUPS).
+#: `test_the_alley_setback_has_to_already_be_here` walks every zone that
+#: states it. The REAR half of the sentence joined on 2026-09-13 as an
+#: `exempt: true` variant `when: [alley_at_rear]` on `setback_rear_ft` -- the
+#: fact that names the line, filled from quadfit's measured alley edges by
+#: `flats.geom.alley` -- because keyed to the lot-level `abuts_alley` it would
+#: open the rear yard of a lot whose alley runs down its side. The SIDE half
+#: is still refused: `setback_side_ft` is one number for both side lines and
+#: an exemption on it would waive the far side yard too, the false-GREEN
+#: direction; `alley_at_side` is measured and registered so the refusal is
+#: stated against a fact we hold.
 BACKPORTED: frozenset[str] = frozenset(
     {"step_back_rear", "step_back_side", "lot_size_bands", "setback_alley_ft"}
 )
@@ -163,16 +167,18 @@ BACKPORTED: frozenset[str] = frozenset(
 #: Where the corpus holds a backported key that is not a step-back plane or a
 #: band, by the SHAPE of the quadfit value: the proof test looks here. A
 #: `setback_alley_ft` of zero is Portland's waiver, and the corpus holds it
-#: as the `abuts_alley` exemption on the garage entrance (the rear-and-side
-#: half of the sentence waits on a per-line fact, above). A non-zero one is
-#: Gresham's "Rear With Alley" column, and the corpus holds it as an
-#: `abuts_alley` variant on `setback_rear_ft` carrying the same number --
-#: switched by `abuts_alley` ALONE, because a variant also keyed to
-#: `unit_lots` is the townhouse row and quadfit draws the one-lot plat.
+#: as the `abuts_alley` exemption on the garage entrance (a lot-level fact
+#: is the right key for a garage: the entrance is wherever the alley is)
+#: and, since 2026-09-13, as the `alley_at_rear` exemption on the rear
+#: setback. A non-zero one is Gresham's "Rear With Alley" column, and the
+#: corpus holds it as an `alley_at_rear` variant on `setback_rear_ft`
+#: carrying the same number -- switched by `alley_at_rear` ALONE, because a
+#: variant also keyed to `unit_lots` is the townhouse row and quadfit draws
+#: the one-lot plat.
 HELD_AS_VARIANT: dict[str, dict[str, tuple[str, str]]] = {
     "setback_alley_ft": {
         "zero": ("setback_garage_entrance_ft", "abuts_alley"),
-        "number": ("setback_rear_ft", "abuts_alley"),
+        "number": ("setback_rear_ft", "alley_at_rear"),
     },
 }
 

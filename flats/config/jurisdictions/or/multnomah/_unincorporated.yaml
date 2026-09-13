@@ -2857,6 +2857,21 @@ zones:
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9 in the county's copy of the chapter, the sentence the
+        # garage-entrance exemption on this zone quotes: "Alley. No side, rear,
+        # or garage entrance setback is required from a lot line abutting an
+        # alley." The rear half, keyed to `alley_at_rear` -- the fact that
+        # names the line -- because keyed to `abuts_alley` it would open the
+        # rear yard of a lot whose alley runs down its side. Filled from
+        # quadfit's measured alley edges since 2026-09-13; no county lot
+        # carries one today, so this is a matter of record until one does.
+        # The side half is NOT ENCODED: `setback_side_ft` is one number for
+        # both side lines, and an exemption on it would waive the far side
+        # yard too. It waits on a per-side setback in the model.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 6000
       quote: "or/multnomah/_unincorporated/33.110.txt#L1551"
@@ -2926,6 +2941,11 @@ zones:
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- see R10.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 12000
       quote: "or/multnomah/_unincorporated/33.110.txt#L1550"
@@ -2993,6 +3013,11 @@ zones:
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- see R10.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3038,6 +3063,11 @@ zones:
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- see R10.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     setback_garage_entrance_ft:
       # 33.110.220.D.9 in the county's copy of the chapter, the same sentence
       # at the same lines as Portland's: "Alley. No side, rear, or garage
@@ -3162,6 +3192,11 @@ zones:
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+      variants:
+        # 33.110.220.D.9, the rear half, keyed to the line -- see R10.
+        - exempt: true
+          when: [alley_at_rear]
+          quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 4200
       quote: "or/multnomah/_unincorporated/33.110.txt#L1552"

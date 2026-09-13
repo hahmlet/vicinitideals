@@ -150,9 +150,14 @@ def cluster_bearings(bearings_lengths: Iterable[tuple[float, float]]) -> list[fl
 class StreetIndex:
     """Street centerlines, queryable for nearest distance.
 
-    Taxlot layers exclude right-of-way, so a lot line genuinely abuts the ROW
-    gap and centerline distance is a sound frontage proxy — roughly half the
-    right-of-way width plus any planting strip.
+    A lot line on a street abuts the right-of-way, so the distance from the
+    line's midpoint to the centerline is a sound frontage proxy — roughly
+    half the right-of-way width plus any planting strip. The taxlot layers
+    do draw the right-of-way, as their own rows (Multnomah's ``-STR`` per
+    quarter-section, Clackamas's ``ROADS``; quadfit's ``NOT_A_TAXLOT_RE``
+    names them), and where an alley is platted as nothing at all the gap in
+    the fabric is the alley — which is how its width is measured. Neither
+    reaches this index: it holds centerlines only.
     """
 
     def __init__(self, streets: Sequence[BaseGeometry]) -> None:

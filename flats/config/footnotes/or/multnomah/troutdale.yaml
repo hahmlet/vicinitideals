@@ -99,10 +99,12 @@ notes:
   - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L371"
     digest: "1b03340f4814"
     state: encoded
-    encoded_as: "setback_rear_ft variant, when [unit_lots, abuts_alley], 0 ft"
+    encoded_as: "setback_rear_ft variant, when [unit_lots, alley_at_rear], 0 ft"
     reason: >-
       the "10 or 0" rear yard in 3.130.C is this note; the 0 is carried only
-      where an alley is observed, and the base stays 10
+      where an alley is observed at the REAR (the note says "rear alley
+      access", and since 2026-09-13 the fact names the line), and the base
+      stays 10
 
   # --- 3.235, mixed use, and 3.330, commercial ------------------------
   #

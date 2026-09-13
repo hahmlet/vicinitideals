@@ -169,7 +169,7 @@ def test_the_alley_step_is_kept_even_though_it_cannot_fire(
         if v.value == 8
     ]
     assert len(eight) == 1
-    assert set(eight[0].when) == {"abuts_nonresidential_zone", "abuts_alley"}
+    assert set(eight[0].when) == {"abuts_nonresidential_zone", "alley_at_rear"}
 
 
 def test_the_height_step_downs_cannot_reach_a_twenty_six_foot_pod(

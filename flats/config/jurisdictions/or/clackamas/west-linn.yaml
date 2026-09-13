@@ -809,6 +809,23 @@ defaults:
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     retrieved: '2026-08-27'
     quote: "or/clackamas/west-linn/48.access.txt#L173,L177"
+  # 48.025(B)(3)(a), Option 1: "If a property has access to an alley or lane,
+  # direct access to a public street is not permitted." The chapter first
+  # puts access on the street (B.3) and offers the alley as an option the
+  # applicant may request "subject to approval by the City Engineer through
+  # a discretionary process", then, inside that option, forbids street
+  # access to any lot that has an alley. Taken as written, the strict way,
+  # at Steph's approval 2026-09-13: a lot with an alley is sent to it. If
+  # the city in practice reads the option as elective, a lot the alley plan
+  # fails may be better than the screen says. Read on a lot only under
+  # `abuts_alley`; the site plan's mirror is `alley_access_required` on the
+  # West Linn row of footprints.yaml.
+  parking_alley_access_required:
+    value: true
+    cite: West Linn CDC 48.025(B)(3)(a), Option 1 -- no direct street access where the property has access to an alley or lane
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/48.access.txt#L55"
   #
   # NOT ENCODED: curb cut spacing, 48.060(C) and (D). Eleven numbers between
   # them and every one is selected by a street classification -- 150 feet from
@@ -820,14 +837,10 @@ defaults:
   # spacing, in a city that states it in more detail.
   # (or/clackamas/west-linn/48.access.txt#L179,L193)
   #
-  # NOT ENCODED: the alley-first rule, 48.025(B)(3)(a). "Option 1. Access is
-  # from an existing or proposed alley or mid-block lane. If a property has
-  # access to an alley or lane, direct access to a public street is not
-  # permitted." Not a width and not a setback -- it moves the driveway to the
-  # other side of the lot, which changes the whole plan. Gresham's is refused
-  # for the same reason and it is the same missing fact: nothing here knows
-  # whether a parcel abuts an alley.
-  # (or/clackamas/west-linn/48.access.txt#L55)
+  # The alley-first rule, 48.025(B)(3)(a), was refused here from 2026-08-27
+  # to 2026-09-13 as "the same missing fact" as Gresham's: nothing knew
+  # whether a parcel abuts an alley. quadfit's s4 measures that now and the
+  # rule is `parking_alley_access_required` above.
   #
   # NOT ENCODED: grade limits on the vehicle areas, of which West Linn states
   # three. The driveway centerline is held to 15 percent, stated twice -- CDC

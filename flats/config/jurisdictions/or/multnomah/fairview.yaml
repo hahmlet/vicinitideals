@@ -2263,7 +2263,7 @@ zones:
           when: [abuts_nonresidential_zone]
           quote: "or/multnomah/fairview/19.65.txt#L155,L201,L203"
         - value: 8
-          when: [abuts_nonresidential_zone, abuts_alley]
+          when: [abuts_nonresidential_zone, alley_at_rear]
           quote: "or/multnomah/fairview/19.65.txt#L155,L201,L203"
       # 19.163.030(C), the citywide landscape area standards, read 2026-08-26.
       # The chapter applies to "all developments requiring site design review,

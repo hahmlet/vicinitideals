@@ -43,6 +43,15 @@ from flats.rules.fields import FIELDS
 #: the exact failure this set exists to make visible. `lotdims.py` takes the
 #: measurement now, under each city's own definition of it; the ratio needs a
 #: width as well as a depth and goes unchecked on a lot holding only one.
+#:
+#: One ARRIVED on 2026-09-13: `parking_alley_access_required`, the bool that
+#: replaced four cities' "NOT ENCODED: access shall be taken from the alley"
+#: notes the day `abuts_alley` was filled from quadfit's alley edges. It sits
+#: here beside `parking_front_prohibited` for the same reason that one does:
+#: both are read by the site plan on the quadfit side (`alley_access_required`
+#: on the footprints row, pinned to this field by `BOOL_MIRRORED`), and no
+#: FLATS screen lays out a driveway yet. Declared unread, not forgotten -- the
+#: screen that takes it is the one that takes the whole driveway block.
 SILENTLY_UNREAD = frozenset(
     {
         "parking_street_setback_ft",
@@ -53,6 +62,7 @@ SILENTLY_UNREAD = frozenset(
         "driveway_approach_max_width_ft",
         "min_building_separation_ft",
         "parking_front_prohibited",
+        "parking_alley_access_required",
         "driveway_approach_min_width_ft",
         "driveway_min_width_two_way_ft",
         "parking_maneuvering_max_width_ft",

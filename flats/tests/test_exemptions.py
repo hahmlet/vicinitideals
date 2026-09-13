@@ -129,7 +129,22 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 202, "numeric": 48, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 232, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+# 202 -> 232 stated and 48 -> 37 numeric on 2026-09-13, late evening, and it
+# is two things at once. Nineteen new exemptions: the REAR half of Portland's
+# alley sentence, `exempt: true when: [alley_at_rear]` on `setback_rear_ft` in
+# the twelve Portland residential zones (RM3 and RM4 twice, spelled out
+# against `low_rise` so the two do not tie) and the county's five -- keyed to
+# the line the alley touches, not the lot, because `abuts_alley` is filled
+# from quadfit's measured alley edges now and a rear waiver switched by "an
+# alley somewhere" would open the rear yard of a lot whose alley is beside
+# it. The RM/RX/RMP copy is 33.120.220.B.3.g ("No side or rear building
+# setback is required from a lot line abutting an alley"), cited for the
+# first time. And a ledger correction: that sentence and the 33.110 one had
+# been landing in `numeric` (the "9." opening the line) and `silent`, so the
+# ledger admitted the phrase "no ... setback is required" and the twenty-two
+# garage-entrance rows of 2026-09-07 and 2026-09-12 moved to `stated` with
+# the nineteen. Every row on the alley sentence now reads as what it is.
 # 201 -> 202 on 2026-09-11: Gresham TLDR's minimum lot size, and this one is a
 # CORRECTION with an exemption as its price. The cell had held 8,000 sq ft
 # quoting 4.0137 -- the Large Lot Subdivision Option for LDR-5 and LDR-7, a

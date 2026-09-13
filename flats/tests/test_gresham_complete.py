@@ -179,10 +179,10 @@ def test_the_alley_buys_nothing_here_unless_the_plat_is_split(
     and only the split path reaches the shorter number.
     """
     plain = rules.resolve(GRESHAM, "OFR")
-    with_alley = rules.resolve(GRESHAM, "OFR", ("abuts_alley",))
+    with_alley = rules.resolve(GRESHAM, "OFR", ("alley_at_rear",))
     assert plain.values["setback_rear_ft"].value == 15
     assert with_alley.values["setback_rear_ft"].value == 15
-    split = rules.resolve(GRESHAM, "OFR", ("unit_lots", "abuts_alley"))
+    split = rules.resolve(GRESHAM, "OFR", ("unit_lots", "alley_at_rear"))
     assert split.values["setback_rear_ft"].value == 8
 
 

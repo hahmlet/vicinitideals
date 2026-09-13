@@ -1031,7 +1031,7 @@ zones:
         # at least twenty feet wide. This layer cannot check the alley's width,
         # so the five is the code's number and the proviso is unverified.
         - value: 5
-          when: [abuts_alley]
+          when: [alley_at_rear]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L759,L765-L767"
         # Spelled out against `multi_story` because both variants would
         # otherwise match a two-storey building on an alley lot at equal
@@ -1039,7 +1039,7 @@ zones:
         # is nothing to guess here: C.5.b.ii states the five with no storey
         # step at all.
         - value: 5
-          when: [multi_story, abuts_alley]
+          when: [multi_story, alley_at_rear]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L759,L765-L767"
         # C.5.a.i: ten feet without an alley where the rear line abuts a
         # non-residential district, and no storey step there either.
@@ -1362,7 +1362,7 @@ zones:
       variants:
         # Note 4: a townhouse lot with rear alley access owes no rear yard.
         - value: 0
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L362-L363,L371"
     max_height_ft:
       value: 35
@@ -1503,7 +1503,7 @@ zones:
       variants:
         # Note 4: a townhouse lot with rear alley access owes no rear yard.
         - value: 0
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L362-L363,L371"
     max_height_ft:
       value: 35
@@ -1644,7 +1644,7 @@ zones:
       variants:
         # Note 4: a townhouse lot with rear alley access owes no rear yard.
         - value: 0
-          when: [unit_lots, abuts_alley]
+          when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L362-L363,L371"
     max_height_ft:
       value: 35

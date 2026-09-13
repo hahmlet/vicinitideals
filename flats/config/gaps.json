@@ -1,5 +1,5 @@
 {
-  "digest": "1fb624d4de1f7791e019994e1a550ea9b770062c49d3d1bd07e746dbdeee67e7",
+  "digest": "d943f0fd66c77c8ffbe03ac1d66bd8c01b92b641eaa489e168ea34b11f4e5010",
   "layers": {
     "or": {
       "misattributed": [],
@@ -258,7 +258,7 @@
         },
         {
           "zone": "TCC",
-          "field": "setback_rear_ft [abuts_alley+abuts_nonresidential_zone]",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+alley_at_rear]",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
           "quote": "or/multnomah/fairview/19.65.txt#L155,L201,L203"

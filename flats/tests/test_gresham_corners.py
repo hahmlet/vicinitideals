@@ -159,7 +159,7 @@ def test_the_townhouse_side_yard_is_tighter_than_the_row_above_it(rules: RuleSet
 
 def test_the_cmf_rear_yard_follows_the_alley(rules: RuleSet) -> None:
     assert rules.resolve(GRESHAM, "CMF", ("unit_lots",)).values["setback_rear_ft"].value == 10
-    alley = rules.resolve(GRESHAM, "CMF", ("unit_lots", "abuts_alley"))
+    alley = rules.resolve(GRESHAM, "CMF", ("unit_lots", "alley_at_rear"))
     assert alley.values["setback_rear_ft"].value == 5
 
 
@@ -233,7 +233,7 @@ def test_pleasant_valley_garage_setback_now_runs(rules: RuleSet) -> None:
 def test_pleasant_valley_reads_its_last_three_columns(rules: RuleSet) -> None:
     shared = rules.resolve(GRESHAM, "LDR-PV", ("attached_wall",))
     assert shared.values["setback_side_ft"].value == 0
-    alley = rules.resolve(GRESHAM, "LDR-PV", ("abuts_alley",))
+    alley = rules.resolve(GRESHAM, "LDR-PV", ("alley_at_rear",))
     # 8 in the table, 13 on the ground: 7.0420(G)(1)'s roof plane pushes a 26
     # ft box five feet off whichever rear setback applies. See test_step_back.
     held = rules.layers[GRESHAM].zones["LDR-PV"].values["setback_rear_ft"]

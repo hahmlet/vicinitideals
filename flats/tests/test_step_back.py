@@ -124,7 +124,7 @@ def test_the_step_back_reaches_the_exceptions_too(gresham: Layer) -> None:
     nothing about alleys.
     """
     held = gresham.zones["LDR-PV"].values["setback_rear_ft"]
-    alley = next(v for v in held.variants if v.when == ("abuts_alley",))
+    alley = next(v for v in held.variants if v.when == ("alley_at_rear",))
 
     assert alley.value == 13
     assert alley.before_step_back == 8
@@ -135,12 +135,14 @@ def test_the_alley_column_that_was_never_read_across(gresham: Layer) -> None:
 
     quadfit's own imported note on LDR-5 said "rear w/ alley 8 ft (not
     modeled)" — a gap somebody wrote down and then carried into this corpus
-    unencoded. It is a lever rather than a tightening: `abuts_alley` is assumed
-    False, so the deeper yard still binds by default.
+    unencoded. It is a lever rather than a tightening: `alley_at_rear` is
+    assumed False where nothing measured it, so the deeper yard still binds
+    by default -- and it is keyed to the LINE, because a rear yard that
+    loosens for an alley beside the lot would be the false-GREEN direction.
     """
     for zone in ("LDR-5", "LDR-7", "TR", "TLDR"):
         held = gresham.zones[zone].values["setback_rear_ft"]
-        alley = next(v for v in held.variants if v.when == ("abuts_alley",))
+        alley = next(v for v in held.variants if v.when == ("alley_at_rear",))
         # TLDR is not stepped back, so its 8 is both the printed figure and the
         # effective one; the other three carry the 8 as what the table says.
         assert (alley.before_step_back or alley.value) == 8, zone

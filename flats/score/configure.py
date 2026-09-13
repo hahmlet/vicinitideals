@@ -40,7 +40,7 @@ from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING, Collection, Mapping
 
 from flats.designs.model import Design
-from flats.rules.conditions import CONDITIONS, condition
+from flats.rules.conditions import CONDITIONS, close_entailed, condition
 from flats.rules.model import LOT_MEASURES
 
 if TYPE_CHECKING:  # screen imports this module, so the arrow points one way
@@ -90,6 +90,11 @@ def configure(
 
     ``elect`` is what the developer commits to. Explicit on purpose: nothing
     infers an incentive.
+
+    Observations are closed under :data:`flats.rules.conditions.ENTAILS`
+    before anything else: ``{"alley_at_rear": True}`` holds ``abuts_alley``
+    too, ``{"abuts_alley": False}`` settles both per-line facts, and a child
+    True beside a parent False is refused.
     """
     seen = dict(observed or {})
     for name in seen:
@@ -99,6 +104,11 @@ def configure(
                 f"{name} is {kind}, not something observed about the parcel — "
                 f"pass an elective to 'elect', and never pass relief here"
             )
+    # A per-line fact carries its parent (an alley at the rear IS an alley),
+    # and a parent answered False answers the children. Closed here so the
+    # registry's assumption never fills a slot the observation already
+    # settled, and a contradiction is refused rather than resolved twice.
+    seen = close_entailed(seen)
     for name in elect:
         kind = condition(name).kind
         if kind != "elective":

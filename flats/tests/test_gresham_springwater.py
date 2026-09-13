@@ -227,7 +227,7 @@ def test_the_alley_column_of_the_rear_is_read_in_both_districts(
         assert held.variants[0].before_step_back == 8, zone
 
         assert rules.resolve(GRESHAM, zone).values["setback_rear_ft"].value == base + 5
-        with_alley = rules.resolve(GRESHAM, zone, ("abuts_alley",))
+        with_alley = rules.resolve(GRESHAM, zone, ("alley_at_rear",))
         assert with_alley.values["setback_rear_ft"].value == 13, zone
 
 

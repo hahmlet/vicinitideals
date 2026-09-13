@@ -220,12 +220,22 @@ def test_the_zone_is_held_at_needs_verification(village) -> None:
     assert "2,508 lots" in note
 
 
-def test_the_refusals_name_what_the_model_cannot_hold(wilsonville: Layer) -> None:
-    """Four of them, and none is a number this corpus could have typed.
+def test_the_refusals_name_what_the_model_cannot_hold(
+    wilsonville: Layer, village
+) -> None:
+    """Three of them, and none is a number this corpus could have typed.
 
-    A build-to percentage, a design pattern book, an alley-access rule and a
-    set of garage setbacks for a building with no garage. Counted so that the
-    refusal ledger carries them rather than the reasoning dying in a comment.
+    A build-to percentage, a design pattern book and a set of garage setbacks
+    for a building with no garage. Counted so that the refusal ledger carries
+    them rather than the reasoning dying in a comment.
+
+    There were four until 2026-09-13. The alley-access rule, 4.125(.05)(B),
+    was refused because it "needs `abuts_alley`, a registered site fact
+    nothing computes", and that is the one reason a refusal is allowed to
+    leave for: the fact arrived. quadfit's s4 measures the alley edge now and
+    the sentence is `parking_alley_access_required` on this zone, quoting its
+    own copy rather than the layer's 4.113 one because Villebois is the alley
+    village and its sentence carries no paved-surface condition.
 
     Each assertion is a phrase from the first 320 characters of its refusal,
     because that is the window the ledger keeps -- a refusal whose reason runs
@@ -237,5 +247,9 @@ def test_the_refusals_name_what_the_model_cannot_hold(wilsonville: Layer) -> Non
     text = " ".join(r.text for r in refusals(WILSONVILLE))
     assert "Architectural Pattern Book" in text
     assert "Minimum Building Frontage Width" in text
-    assert "alley access" in text
-    assert "except as determined by the City Engineer" in text
+    assert "except as determined by the City Engineer" not in text
+
+    held = village.values["parking_alley_access_required"]
+    assert held.value is True
+    assert "4.125(.05)(B)" in held.prov.cite
+    assert held.prov.quote == "or/clackamas/wilsonville/4.planning.txt#L4928-L4929"

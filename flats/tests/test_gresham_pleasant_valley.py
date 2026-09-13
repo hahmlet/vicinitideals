@@ -238,9 +238,9 @@ def test_the_alley_is_the_looser_column_by_ten_feet_in_one_district(
     rear = gresham.zones["HDR-PV"].values["setback_rear_ft"]
     assert rear.value == 15
     assert [(v.value, v.when) for v in rear.variants] == [
-        (5, ("abuts_alley",)),
+        (5, ("alley_at_rear",)),
         (10, ("unit_lots",)),
-        (5, ("unit_lots", "abuts_alley")),
+        (5, ("unit_lots", "alley_at_rear")),
     ]
     # HDR-PV and MDR-PV are outside 7.0420(G)(1)'s list and read the table as
     # printed; LDR-PV is inside it and carries the same two figures five feet
@@ -261,7 +261,7 @@ def test_an_alley_actually_loosens_the_rear_when_it_is_named(
 ) -> None:
     """The variant is not decoration -- resolving with the fact moves the number."""
     without = rules.resolve(GRESHAM, "HDR-PV")
-    with_alley = rules.resolve(GRESHAM, "HDR-PV", ("abuts_alley",))
+    with_alley = rules.resolve(GRESHAM, "HDR-PV", ("alley_at_rear",))
     assert without.values["setback_rear_ft"].value == 15
     assert with_alley.values["setback_rear_ft"].value == 5
 

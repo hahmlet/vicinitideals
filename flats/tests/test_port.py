@@ -92,13 +92,19 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
     Portland's five R and four RM, and the county's four Portland-administered
     R zones, whose copy of 33.110 prints the same sentence at the same lines.
 
+    Since 2026-09-13 the zero also has to be the REAR half of the sentence:
+    an `alley_at_rear` exemption on `setback_rear_ft` on every one of those
+    zones -- keyed to the line, not the lot, because a rear waiver switched by
+    `abuts_alley` would open the rear yard of a lot whose alley is beside it.
+
     `setback_alley_ft: 8` (5, 6) is Gresham's "Rear With Alley" column, which
-    the corpus holds as an `abuts_alley` variant on `setback_rear_ft` with the
-    number and the table's lines. So every quadfit zone that states a number
-    has to be a zone where a variant switched by `abuts_alley` ALONE carries
-    that same number -- alone, because the corridor and MDR-12/MDR-24/OFR
-    variants are keyed `[unit_lots, abuts_alley]`, the townhouse row, and
-    quadfit draws the one-lot plat. And the other way round: every Gresham
+    the corpus holds as an `alley_at_rear` variant on `setback_rear_ft` with
+    the number and the table's lines. So every quadfit zone that states a
+    number has to be a zone where a variant switched by `alley_at_rear` ALONE
+    carries that same number -- alone, because the corridor and
+    MDR-12/MDR-24/OFR variants are keyed `[unit_lots, alley_at_rear]`, the
+    townhouse row, and quadfit draws the one-lot plat. And the other way
+    round: every Gresham
     zone quadfit carries whose corpus entry holds such a variant has to state
     the number, or the mirror is short a column the corpus already read. A
     zone stating either shape without the variant is a number the corpus
@@ -126,6 +132,19 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
                 )
                 assert all("abutting an" in v.prov.quote or "#L746" in v.prov.quote
                            or "#L1228" in v.prov.quote for v in alley), (jname, row["zone"])
+                # ... and the rear half, on the line that names the line.
+                rear = zone.values.get("setback_rear_ft")
+                assert rear is not None, f"{jname}/{row['zone']} holds no setback_rear_ft"
+                rear_alley = [v for v in rear.variants if "alley_at_rear" in (v.when or ())]
+                assert rear_alley and all(v.exempt for v in rear_alley), (
+                    f"{jname}/{row['zone']} states setback_alley_ft and the corpus "
+                    f"holds no alley_at_rear exemption on setback_rear_ft"
+                )
+                assert all("#L746" in v.prov.quote or "#L1053" in v.prov.quote
+                           for v in rear_alley), (jname, row["zone"])
+                assert not any("abuts_alley" in (v.when or ()) for v in rear.variants), (
+                    f"{jname}/{row['zone']}: a rear waiver keyed to the lot, not the line"
+                )
                 zeros.add((jname, row["zone"]))
                 continue
             alone = [v for v in held.variants if tuple(v.when or ()) == (condition,)]
@@ -731,7 +750,7 @@ def test_troutdale_reads_the_quadplex_table_not_the_duplex_one() -> None:
         assert split.values["setback_side_ft"].value == 5
 
         alley = rules.resolve(
-            "or/multnomah/troutdale", zone, conditions=("unit_lots", "abuts_alley")
+            "or/multnomah/troutdale", zone, conditions=("unit_lots", "alley_at_rear")
         )
         assert alley.values["setback_rear_ft"].value == 0
 
