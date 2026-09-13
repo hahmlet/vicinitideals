@@ -853,10 +853,27 @@ siteplan:
     # garages plus outdoor parking and maneuvering, 50% of ANY street frontage
     # — on a corner lot it binds twice. No private open space: Section
     # 4.125(.08) is the Village Zone, which is Villebois.
+    #
+    # The driveway goes to the alley: 4.113(.14)(D)(4)(c)(i), the quadplex
+    # driveway standard (`wilsonville/4.planning.txt#L3556-L3559`), "For lots
+    # or parcels abutting an alley that is improved with a paved surface,
+    # access must be taken from the alley"; the townhouse copy says the same
+    # (#L3835-L3838). Two readings made here, both noted: the sentence sits
+    # under "lots or parcels with more than one frontage", and an alley IS
+    # the second frontage -- that is why the sentence is there -- so a lot
+    # with one street and an alley is covered; and "improved with a paved
+    # surface" is not in any file held here, so a lot on an unpaved alley
+    # is sent to it anyway, the strict way (the plan then needs the alley
+    # to be usable; if it is not, the city's street rule would apply and the
+    # lot may be better than the screen says). Villebois's own alley rule,
+    # 4.125, is moot: its 30 alley lots are all OTR. Taken 2026-09-13 at
+    # Steph's approval of the reading; nothing says the alley is the aisle,
+    # so the court keeps its own.
     wilsonville:
       approach_max_ft: 32
       parking_max_frontage_pct: 50
-      cite: Wilsonville Development Code 4.113(.14)D.3 and D.4
+      alley_access_required: true
+      cite: Wilsonville Development Code 4.113(.14)D.3 and D.4; 4.113(.14)(D)(4)(c)(i) alley access
     # No stall geometry read at all, so this city is not laid out; the driveway
     # half was read and is recorded so the mirror does not report it unread.
     # ZDO 845.02 is Fairview's and Wilsonville's shape word for word, because
@@ -885,12 +902,28 @@ siteplan:
     # No private open space, no front-parking ban, no frontage share and no
     # maneuvering cap: read and absent, which is the fourth city of six to
     # state no open-space reserve for this building.
+    #
+    # The driveway goes to the alley: 48.025(B)(3)(a), Option 1
+    # (`west-linn/48.access.txt#L55`): "If a property has access to an alley
+    # or lane, direct access to a public street is not permitted." The
+    # reading, noted because the chapter is not tidy: (B)(3) opens by
+    # putting access on a public street and calls the alley "Option 1",
+    # an alternative the applicant may request through a discretionary
+    # process -- and then, inside that option, forbids street access to any
+    # property that has an alley. The screen takes the sentence as written
+    # (a lot with an alley parks off it), which is the strict side: where
+    # the city would in fact let such a lot use the street, the screen may
+    # call it red for an alley plan that fails. The Willamette historic
+    # district says the same of garages (`25.willamette-historic.txt#L432,
+    # L440`). Taken 2026-09-13 at Steph's approval of the reading; nothing
+    # says the alley is the aisle, so the court keeps its own 24 ft.
     west_linn:
       approach_min_ft: 16
       approach_max_ft: 36
       drive_min_one_way_ft: 15
       drive_min_two_way_ft: 24
-      cite: West Linn CDC 48.030(E) service drive widths; 48.060(A) and (B) curb cut
+      alley_access_required: true
+      cite: West Linn CDC 48.030(E) service drive widths; 48.060(A) and (B) curb cut; 48.025(B)(3)(a) Option 1 alley access
     # Read with the geometry above, out of two chapters. TDC 9.080(A): a
     # driveway to an off-street parking area is improved at 20 feet two-way
     # and 12 one-way. (B) drops it to 10 for "a single-family or two-family

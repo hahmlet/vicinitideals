@@ -5,10 +5,10 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-13, evening, after the alley's
-width was measured from the parcel map instead of trusted — see the alley
-entries in the queued list): **green
-20,204 · review 13,519 · red 256,122** across 289,845 lots in **14** cities
+Pipeline state when last updated (2026-09-13, late evening, after the
+alley's width was measured from the parcel map and Wilsonville and West Linn
+joined the alley-fed cities — see the alley entries in the queued list):
+**green 20,204 · review 13,521 · red 256,120** across 289,845 lots in **14** cities
 laid out with real site plans (2,636 rows that were streets and water drawn
 as lots are gone from the count). Greens by city: Portland
 16,449 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
@@ -3868,8 +3868,8 @@ the list of places worth hoping about.
   Portland's 8,228 lots, not Gresham's handful. (Ruled the same night —
   the entry above.) Wilsonville and West Linn
   also send the driveway to the alley (54 lots between them, all red
-  today); Milwaukie only lets a stall sit near one. Those two are next in
-  the agent's queue, ten minutes each.
+  today); Milwaukie only lets a stall sit near one. *Both switched on the
+  same evening — the second entry below the alley-width one.*
 
 - **The alley's width is measured now, not trusted — built and run
   2026-09-13 evening, four rules deep, and it moved 369 lots — 258 of
@@ -3933,6 +3933,39 @@ the list of places worth hoping about.
   says how many alley-aisle plans have a width on record and how many
   pave a shortfall. Nothing in the alley drawing is trusted any more; the
   24-foot lane on the lots that keep one still is.
+
+- **Wilsonville and West Linn send the driveway to the alley now, as
+  their codes say — switched on 2026-09-13 late evening, and it moved
+  2 lots.** Wilsonville's quadplex driveway rule: *"For lots or
+  parcels abutting an alley that is improved with a paved surface, access
+  must be taken from the alley."* West Linn's access chapter: *"If a
+  property has access to an alley or lane, direct access to a public
+  street is not permitted."* Two readings you should know about, both
+  taken the strict way. Wilsonville's sentence sits under a heading about
+  lots with more than one frontage; the alley is that second frontage, so
+  a lot with one street and an alley is covered. Its "paved" condition is
+  not in any file we hold, so a lot on an unpaved alley is sent to the
+  alley anyway — if the city would in fact let it use the street, the
+  screen may be calling it red for an alley plan that fails. West Linn's
+  chapter first puts access on the street and offers the alley as an
+  option the applicant may ask for, then, inside that option, forbids
+  street access to any lot that has an alley; the screen takes the
+  sentence as written. Milwaukie is deliberately not in this group: its
+  one alley sentence places a parking space, it does not route the
+  driveway. Neither city says the alley is the parking aisle, so the court
+  on these lots keeps its own aisle and the alley is only the way in.
+
+  *What it did, both ways.* **Green 20,204 → 20,204, review 13,519 →
+  13,521, red 256,122 → 256,120.** Two Wilsonville lots in the Old Town
+  district that had no way to get a car from the street to the back now
+  come in off their 16-foot alley, seat six cars in the target tier, and
+  move from red to the review queue (held there on the unverified Old Town
+  zone, not on the plan). Nothing else moved: Wilsonville's other 19 alley
+  lots fail on a court too shallow and the alley does not change that, and
+  West Linn's 24 alley lots fail on the court itself (11 have no room for
+  one, 4 have too little) — the way in was never their problem. No lot
+  lost a plan, a car, or a colour. Every lot outside the 53 alley lots of
+  the two cities is byte-for-byte what it was.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

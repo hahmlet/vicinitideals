@@ -676,14 +676,19 @@ def test_a_drawn_plan_short_of_stalls_is_not_a_geometry_failure():
 # ---------------------------------------------------------------------------
 
 
-def test_footprints_yaml_sends_two_cities_driveways_to_the_alley():
-    """Portland (PCC 33.266.120.C.3) and Gresham (GDC 7.0420(B)(1), "Lots,
+def test_footprints_yaml_sends_four_cities_driveways_to_the_alley():
+    """Portland (PCC 33.266.120.C.3), Gresham (GDC 7.0420(B)(1), "Lots,
     including middle housing without existing access, that abut an alley,
-    shall take access from the alley") send the driveway round the back, and
-    each says so on its own row with the section beside it. Pinned as a set:
-    the flag must not leak to a city by default, and a city joining needs its
-    sentence read. (Until 2026-09-12 this test said Gresham had no such
-    sentence; it had, in the chapter the driveway row already cited.)"""
+    shall take access from the alley"), Wilsonville (4.113(.14)(D)(4)(c)(i),
+    "access must be taken from the alley") and West Linn (48.025(B)(3)(a),
+    "direct access to a public street is not permitted") send the driveway
+    round the back, and each says so on its own row with the section beside
+    it. Pinned as a set: the flag must not leak to a city by default, and a
+    city joining needs its sentence read. Milwaukie is NOT here: its one
+    alley sentence places a stall, it does not route the driveway. (Until
+    2026-09-12 this test said Gresham had no such sentence; it had, in the
+    chapter the driveway row already cited. Wilsonville and West Linn joined
+    2026-09-13.)"""
     from common import load_footprints
 
     sp = load_footprints().siteplan
@@ -693,8 +698,15 @@ def test_footprints_yaml_sends_two_cities_driveways_to_the_alley():
     gre = sp.driveway_for("gresham")
     assert gre is not None and gre.alley_access_required is True
     assert "7.0420(B)(1)" in gre.cite
+    wil = sp.driveway_for("wilsonville")
+    assert wil is not None and wil.alley_access_required is True
+    assert "4.113(.14)(D)(4)(c)(i)" in wil.cite
+    wl = sp.driveway_for("west_linn")
+    assert wl is not None and wl.alley_access_required is True
+    assert "48.025(B)(3)(a)" in wl.cite
     assert {j for j, dw in sp.driveway.items() if dw.alley_access_required} == {
-        "portland", "gresham"}
+        "portland", "gresham", "wilsonville", "west_linn"}
+    assert sp.driveway_for("milwaukie").alley_access_required is not True
     assert "townhome_rear_court_alley" in sp.layout_methods
 
 

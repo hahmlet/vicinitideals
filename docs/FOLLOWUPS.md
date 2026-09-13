@@ -23,31 +23,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    per-line fact exists. One job with the bearing + neighbour-zone facts
    already noted as computable. Carried from 2026-09-12. **Approved by
    Steph 2026-09-13 ("I'm good with 1 and 2").**
-2. **Wilsonville and West Linn send the driveway to the alley too; Milwaukie
-   does not.** Read 2026-09-13 while doing Gresham: Wilsonville
-   4.113(.14)(D)(4)(c)(i) (`wilsonville/4.planning.txt#L3556-L3559`, the
-   quadplex driveway standard: *"For lots or parcels abutting an alley that
-   is improved with a paved surface, access must be taken from the alley"*;
-   the townhouse copy `#L3835-L3838`; Villebois 4.125 `#L4928-L4929` is
-   moot, its 30 alley lots are all OTR) and West Linn 48.025(B)(3)(a)
-   (`west-linn/48.access.txt#L55`, Option 1: *"If a property has access to
-   an alley or lane, direct access to a public street is not permitted"*;
-   Willamette historic `25.willamette-historic.txt#L432,L440` says the
-   same for garages). Milwaukie's only alley sentence
-   (`19.500.supplementary.txt#L1988`) lets a stall sit within 10 ft of an
-   alley line — placement, not access — and its 7 alley lots stay
-   street-fed. Set `alley_access_required: true` on wilsonville and
-   west_linn in `config/footprints.yaml` with those cites (Wilsonville's
-   "paved" condition is unmeasured — take it, note it), pin them in
-   `test_footprints_yaml_sends_two_cities_driveways_to_the_alley`, s6s→s7
-   (~10 min) measured both ways. Stake: 54 lots, all red today (Wilsonville
-   30 OTR: 21 under the zone minimum, 22 fail the plan — 19
-   `court_too_shallow`, 3 `no_side_lane`; West Linn 24 R-5: 14
-   `siteplan_no_layout`, 11 of them `no_court`). Neither city states an
-   alley setback. Offered 2026-09-13. **Approved by Steph 2026-09-13; the
-   measurement baseline is `/root/lots_results_after_alleywidth4.csv`
-   (the alley-width run of the same evening).**
-3. **5,614 lots still get a "narrowest street edge" under 20 ft beside a
+2. **5,614 lots still get a "narrowest street edge" under 20 ft beside a
    real run of 45 ft or more** (2,655 in the clean shape tiers; Portland
    3,925). The tractable part is ~1,300 end-of-street corner arcs of two or
    more chords (20–45 ft): the second street lies past the 50 ft the edge
@@ -59,7 +35,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ringed by street, plus 128 lots whose street run continues straight into
    a non-street line (44 picked as the front) — likely a street the file
    does not carry. Carried from 2026-09-11, widened 2026-09-12.
-4. **Happy Valley cul-de-sac frontage (22 review lots)** — HV asks 35 ft on
+3. **Happy Valley cul-de-sac frontage (22 review lots)** — HV asks 35 ft on
    a bulb and more on a straight street; the screen cannot tell a bulb. The
    curve-merge machinery in `lotdims.front_groups` now knows a chord chain's
    radius and sweep, which is most of a bulb detector. Carried from 2026-09-11.
