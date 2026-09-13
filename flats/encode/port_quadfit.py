@@ -160,10 +160,20 @@ BACKPORTED: frozenset[str] = frozenset(
     {"step_back_rear", "step_back_side", "lot_size_bands", "setback_alley_ft"}
 )
 
-#: The field and condition under which the corpus holds a backported key that
-#: is not a step-back plane or a band: the proof test looks here.
-HELD_AS_VARIANT: dict[str, tuple[str, str]] = {
-    "setback_alley_ft": ("setback_garage_entrance_ft", "abuts_alley"),
+#: Where the corpus holds a backported key that is not a step-back plane or a
+#: band, by the SHAPE of the quadfit value: the proof test looks here. A
+#: `setback_alley_ft` of zero is Portland's waiver, and the corpus holds it
+#: as the `abuts_alley` exemption on the garage entrance (the rear-and-side
+#: half of the sentence waits on a per-line fact, above). A non-zero one is
+#: Gresham's "Rear With Alley" column, and the corpus holds it as an
+#: `abuts_alley` variant on `setback_rear_ft` carrying the same number --
+#: switched by `abuts_alley` ALONE, because a variant also keyed to
+#: `unit_lots` is the townhouse row and quadfit draws the one-lot plat.
+HELD_AS_VARIANT: dict[str, dict[str, tuple[str, str]]] = {
+    "setback_alley_ft": {
+        "zero": ("setback_garage_entrance_ft", "abuts_alley"),
+        "number": ("setback_rear_ft", "abuts_alley"),
+    },
 }
 
 #: Retrieval dates from the quadfit header. Clackamas was compiled later.

@@ -1967,7 +1967,11 @@ defaults:
   # NOT ENCODED: 33.266.120.C.3, "If the lot abuts an alley, all parking and
   # vehicle access to the site must be from the alley." Every city in this
   # corpus states it and no parcel record here knows where the alleys are.
-  # (or/multnomah/portland/33.266.txt#L313-L314)
+  # quadfit's does since 2026-09-12 (s4 classes the alley lot line `A` off
+  # the streets file), and its s6s lays Portland's 11,519 alley lots out from
+  # the alley under this sentence (`alley_access_required`, footprints.yaml)
+  # -- the mirror runs ahead of the corpus here until `abuts_alley` is wired
+  # through. (or/multnomah/portland/33.266.txt#L313-L314)
   #
   # NOT ENCODED: 33.266.120.C.4, parking in garages takes the garage setback
   # of the base zone. `setback_garage_entrance_ft` already carries that figure

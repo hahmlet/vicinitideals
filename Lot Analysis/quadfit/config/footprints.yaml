@@ -606,11 +606,31 @@ siteplan:
     # Nine is what `driveway_cut_min_design_ft` already assumed for everybody,
     # so this moves no lot — it replaces a design assumption with a citation,
     # and it narrows Gresham's cut to a 9-to-10 foot window.
+    #
+    # 7.0420(B)(1), the first sentence of the quadplex chapter's access rules:
+    # "Lots, including middle housing without existing access, that abut an
+    # alley, shall take access from the alley." The same sentence Portland
+    # states in 33.266.120.C.3, and it reaches the same 214 Gresham lots whose
+    # alley edge s4 classes A (CMF 77, MDR-PV 72, LDR-PV 27, LDR-5 18, HDR-PV
+    # 15, TR 5 on 2026-09-12). On those the lane from the street is not drawn;
+    # the court is reached from the alley across the alley setback, which is
+    # the "Rear With Alley" column of the district table (rules.yaml
+    # `setback_alley_ft`: 8 ft in most districts, 5 in HDR-PV, 6 downtown,
+    # and the plain rear in CMF where the alley column is the townhouse's).
+    # 7.0420(B)(5)(c) lets two spaces per unit sit "in the rear yard setback
+    # when there is an alley", which this stage does not take: the strip
+    # stays pavement, not stalls. Figure 9.0825A's note, "Public alley width
+    # may be included as part of aisle width", is the alley-as-aisle relief
+    # this stage does not take either, for want of an alley width in the
+    # streets file (FOLLOWUPS). The corpus holds 7.0420(B)(1) as NOT ENCODED
+    # (gresham.yaml, driveway notes) for the same reason Portland's is: FLATS
+    # has no alley fact yet.
     gresham:
       approach_min_ft: 9
       approach_max_ft: 10
+      alley_access_required: true
       open_space_pct: 15
-      cite: GDC 7.0420(B)(2)(b)(ii) approach width; PWS 6.03 approach minimum; 7.0420(D)(1) private open space
+      cite: GDC 7.0420(B)(2)(b)(ii) approach width; PWS 6.03 approach minimum; 7.0420(B)(1) alley access; 7.0420(D)(1) private open space
     # Portland is the only city that bans front parking outright AND caps the
     # front yard AND sets a stall back from the street — 33.266.120.C.1.a,
     # .C.2 and .C.1.b. All three are satisfied by a rear court, and the ban
@@ -633,8 +653,8 @@ siteplan:
     # the side lane from the street is not drawn at all; the court behind the
     # pod is reached from the alley, and a lot the alley cannot reach fails
     # `no_alley_lane`. The corpus holds this sentence as NOT ENCODED because
-    # FLATS has no alley fact; this is the one line here that runs ahead of
-    # it (see DrivewayRules.alley_access_required). The county's copy of the
+    # FLATS has no alley fact; this line and Gresham's run ahead of it (see
+    # DrivewayRules.alley_access_required). The county's copy of the
     # chapter (multnomah/_unincorporated/33.266, for the four Portland
     # pockets) carries the same sentence word for word and is not set on the
     # county cell: no unincorporated Multnomah lot carries an alley edge.

@@ -5,9 +5,10 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-12, evening, after Portland's
-alley lots were laid out from the alley and the setback from the alley was
-dropped — see the two entries of those names in the queued list): **green
+Pipeline state when last updated (2026-09-13, small hours, after Gresham's
+alley lots got their alley setback and alley access, which moved nothing;
+the numbers are the 2026-09-12 evening ones — see the three alley entries in
+the queued list): **green
 17,163 · review 13,053 · red 262,265** across 292,481 lots in **14** cities
 laid out with real site plans. Greens by city: Portland
 13,408 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
@@ -3747,6 +3748,50 @@ the list of places worth hoping about.
   because it reads an alley as a street and the inventory holds no VTH lot
   and no Fairview lot within 50 feet of an alley — moot on the data, not
   refused.
+
+- **Gresham's alley lots now get Gresham's alley setback and Gresham's
+  alley-access rule — built and run 2026-09-13, small hours; no lot changed
+  colour, and the run says why.** Gresham prints a "Rear With Alley" column
+  in its district tables: 8 feet instead of 15 in the single-family and
+  Pleasant Valley zones, 5 instead of 15 in HDR-PV, 6 instead of 10
+  downtown — and the same 21-foot roof rule that applies at the ordinary
+  rear line applies at that one, so a 26-foot building stands 13 feet off
+  the alley in LDR-5 rather than 20. Until tonight the screen charged those
+  lots the plain rear. It also has the same sentence Portland has, in the
+  quadplex chapter's own words: *"Lots, including middle housing without
+  existing access, that abut an alley, shall take access from the alley."*
+  Both are in now, for the 214 Gresham lots with an alley behind them. Seven
+  zones deliberately get no alley setback because their column is written
+  for townhouses, not a fourplex on one lot: CMF (77 of the 214), CMU, SC,
+  SC-RJ, and three whose table prints "NA" on the fourplex row.
+
+  *What it did, both ways.* **Green 17,163, review 13,053, red 262,265 — not
+  one lot moved in either direction**, and nothing outside those 214 lots
+  changed by a byte. The buildable ground grew on 117 of the 214 (a median
+  150 square feet), 28 lots that had no buildable ground at all now have
+  some, and one irregular vacant lot that could not reach the street now
+  cannot reach the alley either — the same refusal under its new name. Why
+  no colour changed: **194 of Gresham's 214 alley lots are red for being
+  smaller than their zone's minimum lot** (all 77 CMF lots, 71 of the 72 in
+  MDR-PV), 17 more cannot seat the building even on the bigger ground, and
+  only 5 get as far as the parking drawing. Gresham's alley lots are not a
+  parking problem; they are a lot-size problem, and the setback was never
+  going to move them. The work is right and it is measured; the stake was
+  small.
+
+  *What the reading turned up, and it bears on the decision above.*
+  Gresham's parking chapter says, under its own stall-and-aisle figure:
+  *"Public alley width may be included as part of aisle width … but all
+  stalls must be on private property, off the public right-of-way."* That
+  is the "is the alley the aisle?" question, answered yes by a city in its
+  own code — for Gresham it is not a screen assumption. What no code and no
+  file states is how wide any alley is (the 25 in Gresham's public-works
+  table turned out to be a sight-triangle, not an alley width). The
+  decision stays with you, with that evidence added; the stake is
+  Portland's 8,228 lots, not Gresham's handful. Wilsonville and West Linn
+  also send the driveway to the alley (54 lots between them, all red
+  today); Milwaukie only lets a stall sit near one. Those two are next in
+  the agent's queue, ten minutes each.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

@@ -138,11 +138,25 @@ class ZoneRule(BaseModel):
     #: pockets run the same 33.110 and carry the same zero; no county lot has
     #: an alley edge, so there it is a matter of record.
     #:
+    #: Gresham states a NUMBER, not a waiver: every residential setback table
+    #: prints a "Rear No Alley" column beside a "Rear With Alley" one, and on
+    #: the quadplex row the alley column reads 8 ft where the plain rear is
+    #: 15 (LDR-5, LDR-7, TLDR, TR -- Table 4.0131; LDR-SW, and VLDR-SW from
+    #: 20 -- Table 4.1508), 8 where it is 10 (LDR-PV, MDR-PV -- Table 4.1415B),
+    #: 5 where it is 15 (HDR-PV) and 6 where it is 10 (DRL-1, DRL-2 -- Table
+    #: 4.1130). The corridor and MDR-12/MDR-24/OFR tables print the alley
+    #: relief on the TOWNHOUSE row only (Table 4.0430 note 1.c; the quadplex
+    #: row of 4.0131 reads "NA"), which is the unit-lot plat and not the one
+    #: drawn here, so CMF/CMU/SC/SC-RJ/MDR-12/MDR-24/OFR keep the plain rear.
+    #:
     #: Read through `effective_setback_alley_ft`, which is what s5 cuts the
     #: envelope to along a class-``A`` edge and what s6s is told the alley
-    #: strip is. A stated value is taken as printed: no step-back is added
-    #: over it, because no city that waives the alley setback also states a
-    #: roof plane from that line. The day one does, add it here.
+    #: strip is. A stated value takes the rear roof plane on top of it where
+    #: the zone has one: Gresham 7.0420(G)(1) puts the 21 ft roof "at the rear
+    #: setback line", and with an alley that line is the alley column's, so a
+    #: 26 ft pod in LDR-5 stands 8 + 5 = 13 ft from the alley and 15 + 5 = 20
+    #: from a rear lot line with no alley. Portland's zones state no plane, so
+    #: its zero stays zero.
     setback_alley_ft: float | None = None
     # Rear/side roof-height planes. See StepBack: the printed setback above
     # stays what the district table prints, and the ENVELOPE uses the effective
@@ -350,12 +364,15 @@ class ZoneRule(BaseModel):
         self, height_ft: float = DESIGN_HEIGHT_FT, lot_area_sqft: float | None = None
     ) -> float | None:
         """The setback from a lot line abutting an alley: the code's own where
-        it states one (`setback_alley_ft`), else the rear a building of this
-        height stands at, because an alley edge is a rear lot line."""
+        it states one (`setback_alley_ft`), with the rear roof plane on top of
+        it where the zone has one, else the rear a building of this height
+        stands at, because an alley edge is a rear lot line."""
         own = self.banded("setback_alley_ft", lot_area_sqft)
-        if own is not None:
+        if own is None:
+            return self.effective_setback_rear_ft(height_ft, lot_area_sqft)
+        if self.step_back_rear is None:
             return own
-        return self.effective_setback_rear_ft(height_ft, lot_area_sqft)
+        return own + self.step_back_rear.extra_ft(height_ft)
 
     def coverage_cap_sqft(self, lot_area_sqft: float) -> float | None:
         """Max combined building coverage for a lot, or None if uncapped."""
@@ -858,20 +875,24 @@ class DrivewayRules(BaseModel):
     #: True where the city sends every driveway to the ALLEY when the lot has
     #: one. Portland says it of this building in one sentence, PCC
     #: 33.266.120.C.3: "If the lot abuts an alley, all parking and vehicle
-    #: access to the site must be from the alley." On such a lot s6s draws no
-    #: lane from the street: the pod still faces the street, the court still
-    #: sits behind it, and the court is reached from the alley lot line (s4
-    #: class ``A``) across the alley setback, straight up from the court or
-    #: straight out of its side. A lot the alley cannot reach that way fails
-    #: `no_alley_lane` rather than being handed the street lane the city
-    #: forbids.
+    #: access to the site must be from the alley." Gresham says it in the
+    #: quadplex design chapter, GDC 7.0420(B)(1): "Lots, including middle
+    #: housing without existing access, that abut an alley, shall take access
+    #: from the alley" (7.0431(B)(1) and 7.0440(G)(1) repeat it for townhouses
+    #: and cottage clusters). On such a lot s6s draws no lane from the street:
+    #: the pod still faces the street, the court still sits behind it, and the
+    #: court is reached from the alley lot line (s4 class ``A``) across the
+    #: alley setback, straight up from the court or straight out of its side.
+    #: A lot the alley cannot reach that way fails `no_alley_lane` rather than
+    #: being handed the street lane the city forbids.
     #:
     #: The one field on this model with no FLATS counterpart. The corpus
-    #: records 33.266.120.C.3 as NOT ENCODED (portland.yaml, beside
-    #: `parking_street_setback_ft`) because FLATS has no alley fact yet;
-    #: quadfit does, since 2026-09-12, so the mirror runs ahead of the
-    #: corpus here and the drift test does not check it. The day
-    #: `abuts_alley` is wired into FLATS this belongs in DRIVEWAY_MIRRORED.
+    #: records 33.266.120.C.3 and 7.0420(B)(1) as NOT ENCODED (portland.yaml
+    #: beside `parking_street_setback_ft`, gresham.yaml in the driveway notes)
+    #: because FLATS has no alley fact yet; quadfit does, since 2026-09-12, so
+    #: the mirror runs ahead of the corpus here and the drift test does not
+    #: check it. The day `abuts_alley` is wired into FLATS this belongs in
+    #: DRIVEWAY_MIRRORED.
     #:
     #: Fairview FMC 19.145.090 says the same of its VTH and VA zones ("access
     #: to garages shall be exclusively from the alley. No driveway access

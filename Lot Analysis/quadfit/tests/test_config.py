@@ -451,7 +451,16 @@ def test_the_zones_that_waive_the_setback_from_an_alley_are_the_ones_that_say_so
     is already zero and the field would say nothing. Pinned as a set: a zone
     joining needs its sentence read and cited beside the number, a zone
     leaving needs the same, because the number is the difference between a
-    court on the alley line and a court a car's length short of it."""
+    court on the alley line and a court a car's length short of it.
+
+    Gresham states a NUMBER rather than a waiver: a "Rear With Alley" column
+    on every district table, read on the quadplex row (Table 4.0131 for
+    LDR-5/LDR-7/TLDR/TR, 4.1415B for the Pleasant Valley three, 4.1508's "All
+    Other Uses" row for the Springwater two, 4.1130 downtown). MDR-12, MDR-24
+    and OFR print "NA" on that row, and the corridor zones' alley rear is
+    Table 4.0430 note 1.c, the townhouse note -- unit lots, not this plat --
+    so none of those seven states the field, and CMF's 77 alley lots keep
+    the plain rear. Pinned by number for the same reason as the zeros."""
     from common import load_rules
 
     rules = load_rules()
@@ -462,7 +471,19 @@ def test_the_zones_that_waive_the_setback_from_an_alley_are_the_ones_that_say_so
         ("multnomah_unincorporated", z) for z in ("R20", "R10", "R7", "R5")}
     nonzero = {(jn, z.zone, z.setback_alley_ft) for jn, j in rules.jurisdictions.items()
                for z in j.zones if z.setback_alley_ft not in (None, 0)}
-    assert nonzero == set()     # nobody states a number that is not zero
+    assert nonzero == {("gresham", z, 8.0) for z in ("LDR-5", "LDR-7", "TLDR", "TR",
+                                                     "LDR-PV", "MDR-PV", "LDR-SW",
+                                                     "VLDR-SW")} | {
+        ("gresham", "HDR-PV", 5.0), ("gresham", "DRL-1", 6.0), ("gresham", "DRL-2", 6.0)}
+    gr = rules.jurisdictions["gresham"]
+    for zn in ("MDR-12", "MDR-24", "OFR", "CMF", "CMU", "SC", "SC-RJ"):
+        z = gr.rule_for(zn)
+        assert z.setback_alley_ft is None, zn
+        assert z.effective_setback_alley_ft(lot_area_sqft=5000.0) == z.effective_setback_rear_ft(
+            lot_area_sqft=5000.0), zn
+    for jn, zn, v in nonzero:
+        z = rules.jurisdictions[jn].rule_for(zn)
+        assert v < z.setback_rear_ft, zn          # the alley column is the looser one
     pdx = rules.jurisdictions["portland"]
     for zn in ("CM1", "CM2", "CM3", "CE", "CX", "RX"):
         z = pdx.rule_for(zn)

@@ -432,6 +432,12 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # Table 4.0131, the quadplex row: "Rear No Alley" 15 ft, "Rear With Alley" 8
+        # ft. The lot line abutting an alley is a rear lot line (3.0100), and
+        # 7.0420(B)(1) sends the driveway to it; s5 cuts the envelope to this number
+        # on a class-A edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400
+        setback_alley_ft: 8
         # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
         # the roof may be 21 ft at the rear setback line and rises a foot for
         # every foot further back. The 15 ft above is what Table 4.0130 prints;
@@ -451,12 +457,18 @@ jurisdictions:
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: verified
-        notes: "Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR 1.0. Height 35 ft."
+        notes: "Quadplex P outright. Rear w/ alley 8 ft (setback_alley_ft, 2026-09-12). FAR 1.0. Height 35 ft."
       - zone: LDR-7
         quadplex_allowed: true
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # Table 4.0131, the quadplex row: rear 15 ft without an alley, 8 ft with
+        # one. The lot line abutting an alley is a rear lot line (3.0100), and
+        # 7.0420(B)(1) sends the driveway to it; s5 cuts the envelope to this number
+        # on a class-A edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400
+        setback_alley_ft: 8
         # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
         # the roof may be 21 ft at the rear setback line and rises a foot for
         # every foot further back. The 15 ft above is what Table 4.0130 prints;
@@ -479,6 +491,12 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # Table 4.0131, the quadplex row: rear 15 ft without an alley, 8 ft with
+        # one. The lot line abutting an alley is a rear lot line (3.0100), and
+        # 7.0420(B)(1) sends the driveway to it; s5 cuts the envelope to this number
+        # on a class-A edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400
+        setback_alley_ft: 8
         setback_street_side_ft: 10
         min_frontage_ft: 35  # or/multnomah/gresham/4.0100.residential.txt#L314
         # Table 4.0130 E.1, interior lot, quadplex row; corner line not carried (see LDR-5).
@@ -494,6 +512,12 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # Table 4.0131, the quadplex row: rear 15 ft without an alley, 8 ft with
+        # one. The lot line abutting an alley is a rear lot line (3.0100), and
+        # 7.0420(B)(1) sends the driveway to it; s5 cuts the envelope to this number
+        # on a class-A edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400
+        setback_alley_ft: 8
         # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
         # the roof may be 21 ft at the rear setback line and rises a foot for
         # every foot further back. The 15 ft above is what Table 4.0130 prints;
@@ -516,6 +540,12 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 10
+        # Table 4.1415B, the quadplex row: "Rear No Alley" 10 ft, "Rear With Alley"
+        # 8 ft. The lot line abutting an alley is a rear lot line (3.0100), and
+        # 7.0420(B)(1) sends the driveway to it; s5 cuts the envelope to this number
+        # on a class-A edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L394
+        setback_alley_ft: 8
         # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
         # the roof may be 21 ft at the rear setback line and rises a foot for
         # every foot further back. The 10 ft above is what Table 4.0130 prints;
@@ -534,6 +564,13 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # Table 4.1508, the "All Other Uses" row a single-lot quadplex sits on: rear
+        # 15 ft without an alley, 8 ft with one. The lot line abutting an alley is a
+        # rear lot line (3.0100), and 7.0420(B)(1) sends the driveway to it; s5 cuts
+        # the envelope to this number on a class-A edge
+        # (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.1500.springwater.txt#L347,L349-L353
+        setback_alley_ft: 8
         # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
         # the roof may be 21 ft at the rear setback line and rises a foot for
         # every foot further back. The 15 ft above is what Table 4.0130 prints;
@@ -557,6 +594,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 10
         setback_rear_ft: 15
+        # Table 4.0131 prints "NA" in the Rear With Alley column of the MDR-12 / OFR
+        # / MDR-24 quadplex row; the 8 ft alley figure two rows down is the
+        # Townhouse row, the unit-lot plat this stage does not draw. No
+        # setback_alley_ft: the alley line takes the rear 15.
+        # or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404
         setback_street_side_ft: 20
         min_lot_sqft: 3600
         min_frontage_ft: 45  # or/multnomah/gresham/4.0100.residential.txt#L314
@@ -573,6 +615,10 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 10
         setback_rear_ft: 15
+        # Table 4.0131 prints "NA" in the Rear With Alley column of the quadplex
+        # row; the alley relief is on the Townhouse row (unit lots). No
+        # setback_alley_ft.
+        # or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404
         setback_street_side_ft: 20
         min_lot_sqft: 11000
         min_frontage_ft: 45  # or/multnomah/gresham/4.0100.residential.txt#L314
@@ -596,6 +642,12 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 10
+        # Table 4.1130, quadplex in any district: "REAR No Alley: 10, Alley: 6". The
+        # lot line abutting an alley is a rear lot line (3.0100), and 7.0420(B)(1)
+        # sends the driveway to it; s5 cuts the envelope to this number on a class-A
+        # edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.1100.downtown.txt#L506-L507
+        setback_alley_ft: 6
         setback_street_side_ft: 10
         min_lot_sqft: 4000
         min_frontage_ft: 35  # or/multnomah/gresham/4.1100.downtown.txt#L518
@@ -615,6 +667,12 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 10
+        # Table 4.1130, quadplex in any district: rear 10 ft without an alley, 6 ft
+        # with one. The lot line abutting an alley is a rear lot line (3.0100), and
+        # 7.0420(B)(1) sends the driveway to it; s5 cuts the envelope to this number
+        # on a class-A edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.1100.downtown.txt#L506-L507
+        setback_alley_ft: 6
         setback_street_side_ft: 10
         min_lot_sqft: 4000
         min_frontage_ft: 35  # or/multnomah/gresham/4.1100.downtown.txt#L518
@@ -634,6 +692,12 @@ jurisdictions:
         setback_front_ft: 5
         setback_side_ft: 0
         setback_rear_ft: 15
+        # Table 4.0430 note 1.c, "Rear Yard = 10 feet if there is no alley; 5 feet
+        # if there is an alley", is the TOWNHOUSE note (unit lots); the quadplex row
+        # states 15 and no alley column, and a whole-chapter grep for "alley" finds
+        # no other rear setback. No setback_alley_ft: 77 of Gresham's 214 alley lots
+        # are CMF and keep the plain rear on the one-lot plat.
+        # or/multnomah/gresham/4.0400.corridor.txt#L416,L428
         setback_street_side_ft: 5
         min_lot_sqft: 10000
         min_frontage_ft: 100
@@ -692,6 +756,9 @@ jurisdictions:
         setback_front_ft: 5
         setback_side_ft: 0
         setback_rear_ft: 15
+        # Table 4.0430 note 1.c's alley rear is the townhouse note (unit lots); no
+        # alley column on the quadplex row. No setback_alley_ft.
+        # or/multnomah/gresham/4.0400.corridor.txt#L416,L428
         setback_street_side_ft: 5
         min_lot_sqft: 10000
         min_frontage_ft: 100
@@ -705,6 +772,13 @@ jurisdictions:
         setback_front_ft: 5
         setback_side_ft: 5
         setback_rear_ft: 15
+        # Table 4.1415B, the quadplex row: rear 15 ft without an alley, 5 ft with
+        # one -- the only district in the chapter where the alley column is the
+        # looser of the two by ten feet. The lot line abutting an alley is a rear
+        # lot line (3.0100), and 7.0420(B)(1) sends the driveway to it; s5 cuts the
+        # envelope to this number on a class-A edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395
+        setback_alley_ft: 5
         setback_street_side_ft: 5
         min_density_du_per_acre: 25  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
@@ -716,6 +790,12 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 10
+        # Table 4.1415B, the quadplex row: rear 10 ft without an alley, 8 ft with
+        # one. The lot line abutting an alley is a rear lot line (3.0100), and
+        # 7.0420(B)(1) sends the driveway to it; s5 cuts the envelope to this number
+        # on a class-A edge (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L394
+        setback_alley_ft: 8
         setback_street_side_ft: 10
         min_lot_sqft: 3000
         min_frontage_ft: 35
@@ -729,6 +809,10 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 10
         setback_rear_ft: 15
+        # Table 4.0131 prints "NA" in the Rear With Alley column of the quadplex
+        # row; the alley relief is on the Townhouse row (unit lots). No
+        # setback_alley_ft.
+        # or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404
         setback_street_side_ft: 20
         min_lot_sqft: 7200
         min_lot_depth_ft: 100
@@ -745,6 +829,9 @@ jurisdictions:
         setback_front_ft: 5
         setback_side_ft: 0
         setback_rear_ft: 15
+        # Table 4.0430 note 1.c's alley rear is the townhouse note (unit lots); no
+        # alley column on the quadplex row. No setback_alley_ft.
+        # or/multnomah/gresham/4.0400.corridor.txt#L416,L428
         setback_street_side_ft: 5
         min_lot_sqft: 10000
         min_frontage_ft: 100
@@ -757,6 +844,9 @@ jurisdictions:
         setback_front_ft: 5
         setback_side_ft: 0
         setback_rear_ft: 15
+        # Table 4.0430 note 1.c's alley rear is the townhouse note (unit lots); no
+        # alley column on the quadplex row. No setback_alley_ft.
+        # or/multnomah/gresham/4.0400.corridor.txt#L416,L428
         setback_street_side_ft: 5
         min_lot_sqft: 10000
         min_frontage_ft: 100
@@ -771,6 +861,13 @@ jurisdictions:
         # 20 is what Table 4.1508 prints. 7.0420(G)(1) caps the roof at 21 ft on
         # that line, so the 26 ft pod stands at 25 -- derived, not typed.
         setback_rear_ft: 20
+        # Table 4.1508, the "All Other Uses" row a single-lot quadplex sits on: rear
+        # 20 ft without an alley, 8 ft with one. The lot line abutting an alley is a
+        # rear lot line (3.0100), and 7.0420(B)(1) sends the driveway to it; s5 cuts
+        # the envelope to this number on a class-A edge
+        # (`effective_setback_alley_ft`).
+        #   or/multnomah/gresham/4.1500.springwater.txt#L347-L348
+        setback_alley_ft: 8
         setback_street_side_ft: 20
         min_lot_sqft: 10000
         min_lot_depth_ft: 100

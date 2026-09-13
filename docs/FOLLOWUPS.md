@@ -19,7 +19,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    alley. If yes: in s6s the alley-fed court needs `stall_depth` (+ the
    part of the aisle the alley does not supply) and the lane test stays; an
    s6s change is s6s→s7 only (~10 min), measured both ways against
-   `/root/lots_results_after_alleysb.csv` on 137. Offered 2026-09-12.
+   `/root/lots_results_after_galley.csv` on 137. Offered 2026-09-12.
+   **Gresham answers the first half in its own code** (found 2026-09-13):
+   Figure 9.0825A's note, `gresham/9.0800.parking.txt#L355-L357` — *"For
+   one row of stalls use stall depth (D) plus aisle width (A1 or A2) as
+   minimum width. Public alley width may be included as part of aisle
+   width (A1 or A2) dimension, but all stalls must be on private property,
+   off the public right-of-way."* So for Gresham it is not an assumption
+   but a stated relief; the alley WIDTH is still the unknown for both
+   cities (PWS Table 6.04 "Alleys 25" is a clear-vision triangle, not a
+   width; RLIS carries none). Gresham's 214 alley lots are 194
+   `lot_below_zone_min_area`, so the relief buys Gresham little; Portland's
+   8,228 are the stake.
 2. **Wire `abuts_alley` into FLATS from quadfit class `A`, and name the
    line.** The site fact is registered in `flats/rules/fields.py` and nothing
    fills it; s4's `edges_json` carries the answer for 11,794 lots, and s6s
@@ -37,18 +48,28 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `flats/encode/port_quadfit.py`). Encode the rear/side variants the day the
    per-line fact exists. One job with the bearing + neighbour-zone facts
    already noted as computable. Carried from 2026-09-12.
-3. **Gresham's alley rear setbacks are in FLATS and not in quadfit.** 214
-   Gresham lots carry a class-`A` edge (CMF 77, MDR-PV 72, LDR-PV 27, LDR-5
-   18, HDR-PV 15, TR 5) and the corpus holds `abuts_alley` variants on
-   `setback_rear_ft` for CMF, LDR-PV, HDR-PV, MDR-24, OFR and the
-   Springwater zones (`flats/tests/test_gresham_*.py`), read off the page
-   with quotes; `Lot Analysis/quadfit/config/rules.yaml` has no
-   `setback_alley_ft` for any of them, so s5 charges those lots the plain
-   rear. Carry the numbers across (the field takes a number, not only a
-   zero), cite the same lines, and re-run s5→s7 (~86 min) measured both ways
-   against `/root/lots_results_after_alleysb.csv` on 137. Wilsonville 30,
-   West Linn 24 and Milwaukie 7 alley lots: read their codes for the same
-   sentence first. Offered 2026-09-12.
+3. **Wilsonville and West Linn send the driveway to the alley too; Milwaukie
+   does not.** Read 2026-09-13 while doing Gresham: Wilsonville
+   4.113(.14)(D)(4)(c)(i) (`wilsonville/4.planning.txt#L3556-L3559`, the
+   quadplex driveway standard: *"For lots or parcels abutting an alley that
+   is improved with a paved surface, access must be taken from the alley"*;
+   the townhouse copy `#L3835-L3838`; Villebois 4.125 `#L4928-L4929` is
+   moot, its 30 alley lots are all OTR) and West Linn 48.025(B)(3)(a)
+   (`west-linn/48.access.txt#L55`, Option 1: *"If a property has access to
+   an alley or lane, direct access to a public street is not permitted"*;
+   Willamette historic `25.willamette-historic.txt#L432,L440` says the
+   same for garages). Milwaukie's only alley sentence
+   (`19.500.supplementary.txt#L1988`) lets a stall sit within 10 ft of an
+   alley line — placement, not access — and its 7 alley lots stay
+   street-fed. Set `alley_access_required: true` on wilsonville and
+   west_linn in `config/footprints.yaml` with those cites (Wilsonville's
+   "paved" condition is unmeasured — take it, note it), pin them in
+   `test_footprints_yaml_sends_two_cities_driveways_to_the_alley`, s6s→s7
+   (~10 min) measured both ways. Stake: 54 lots, all red today (Wilsonville
+   30 OTR: 21 under the zone minimum, 22 fail the plan — 19
+   `court_too_shallow`, 3 `no_side_lane`; West Linn 24 R-5: 14
+   `siteplan_no_layout`, 11 of them `no_court`). Neither city states an
+   alley setback. Offered 2026-09-13.
 4. **5,614 lots still get a "narrowest street edge" under 20 ft beside a
    real run of 45 ft or more** (2,655 in the clean shape tiers; Portland
    3,925). The tractable part is ~1,300 end-of-street corner arcs of two or

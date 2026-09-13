@@ -2037,7 +2037,12 @@ defaults:
   #
   # NOT ENCODED: 7.0420(B)(1) and 7.0431(B)(1), access shall be taken from an
   # alley where the lot abuts one. Every city in this corpus states it and no
-  # parcel record here knows where the alleys are. (or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460)
+  # parcel record here knows where the alleys are. quadfit's does since
+  # 2026-09-12 (s4 classes the alley lot line `A` off the streets file), and
+  # its s6s lays the 214 Gresham alley lots out from the alley under this
+  # sentence (`alley_access_required`, footprints.yaml) -- the mirror runs
+  # ahead of the corpus here until `abuts_alley` is wired through.
+  # (or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460)
   #
   # NOT ENCODED: Public Works Standards 6.03, where a driveway may meet the
   # street. Table 6.03 sets the minimum distance from a driveway centerline to

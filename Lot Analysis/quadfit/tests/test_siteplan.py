@@ -662,20 +662,25 @@ def test_a_drawn_plan_short_of_stalls_is_not_a_geometry_failure():
 # ---------------------------------------------------------------------------
 
 
-def test_footprints_yaml_sends_portlands_driveway_to_the_alley():
-    """Portland is the one city in the mirror that sends the driveway round
-    the back, and it says so on its own row with the section beside it.
-    Nobody else does: an alley edge in Gresham is a rear lot line and nothing
-    more, and the flag must not leak there by default."""
+def test_footprints_yaml_sends_two_cities_driveways_to_the_alley():
+    """Portland (PCC 33.266.120.C.3) and Gresham (GDC 7.0420(B)(1), "Lots,
+    including middle housing without existing access, that abut an alley,
+    shall take access from the alley") send the driveway round the back, and
+    each says so on its own row with the section beside it. Pinned as a set:
+    the flag must not leak to a city by default, and a city joining needs its
+    sentence read. (Until 2026-09-12 this test said Gresham had no such
+    sentence; it had, in the chapter the driveway row already cited.)"""
     from common import load_footprints
 
     sp = load_footprints().siteplan
     pdx = sp.driveway_for("portland")
     assert pdx is not None and pdx.alley_access_required is True
     assert "33.266.120.C" in pdx.cite and ".C.3" in pdx.cite
-    for j, dw in sp.driveway.items():
-        if j != "portland":
-            assert not dw.alley_access_required, j
+    gre = sp.driveway_for("gresham")
+    assert gre is not None and gre.alley_access_required is True
+    assert "7.0420(B)(1)" in gre.cite
+    assert {j for j, dw in sp.driveway.items() if dw.alley_access_required} == {
+        "portland", "gresham"}
     assert "townhome_rear_court_alley" in sp.layout_methods
 
 
@@ -718,17 +723,66 @@ def test_a_lot_too_narrow_for_a_side_lane_lays_out_off_its_alley():
     assert r["stalls_provided"] >= 4
 
 
-def test_an_alley_edge_changes_nothing_in_a_city_that_says_nothing():
-    """Gresham has 214 lots with an alley edge and no sentence sending the
-    driveway to it. The edge is a rear lot line there and the plan is the
-    street-fed one, refused for the same reason it was refused yesterday."""
+def test_an_alley_edge_changes_nothing_in_a_city_whose_row_does_not_send_it_there():
+    """The flag is per city and defaults off. Happy Valley's row does not
+    carry it -- the one alley sentence in its code, LDC 16.22.050.D.4.f, is
+    the VTH district's garage rule and reaches no quadplex here -- so an
+    alley edge on a Happy Valley lot is a rear lot line and nothing more: the
+    plan is the street-fed one, refused for the same reason as without it.
+    Gresham used to be the city in this test, on the claim that its code had
+    no such sentence; 7.0420(B)(1) is that sentence."""
     s6s = _sp_setup_cities()
     env, fe, ae, area = _alley_lot(48.0, 150.0, "rear")
-    r = _run(s6s, env, fe, area, jurisdiction="gresham",
+    r = _run(s6s, env, fe, area, jurisdiction="happy_valley",
              alley_edges=ae, alley_setback_ft=REAR_S)
     assert r["site_plan_ok"] is False
     assert r["layout_fail"] == "no_side_lane"
     assert r["layout_method"] == "none"
+    # and the same lot in Gresham, whose row does send it there, lays out
+    r = _run(s6s, env, fe, area, jurisdiction="gresham", zone="LDR-5",
+             alley_edges=ae, alley_setback_ft=REAR_S)
+    assert r["site_plan_ok"] is True
+    assert r["layout_method"] == "townhome_rear_court_alley"
+
+
+def test_a_gresham_lot_with_an_alley_parks_off_it_across_the_alley_column():
+    """GDC Table 4.0131 reads rear 15 ft / with alley 8 ft on the quadplex
+    row, 7.0420(G)(1) adds five feet of roof plane off either line for a 26
+    ft pod, and 7.0420(B)(1) sends the driveway to the alley. A 100 x 100
+    LDR-5 lot is too shallow for a court behind the pod when the alley line
+    is charged the rear's twenty, and parks eight off the alley when it is
+    charged the alley column's thirteen -- with the thirteen-foot strip, not
+    a lane from the street, as the pavement between court and alley."""
+    s6s = _sp_setup_cities()
+    from common import load_rules
+    from s5_envelope import build_envelope, lot_setbacks
+
+    W, D = 100.0, 100.0
+    lot = box(0.0, 0.0, W, D)
+    edges = [[0, 0, W, 0, "F"], [W, 0, W, D, "S"], [W, D, 0, D, "A"], [0, D, 0, 0, "S"]]
+    fe, ae = [[0.0, 0.0, W, 0.0]], [[0.0, D, W, D]]
+    zr = load_rules().jurisdictions["gresham"].rule_for("LDR-5")
+    sb = lot_setbacks(zr, W * D, "A")
+    assert sb["R"] == pytest.approx(20.0) and sb["A"] == pytest.approx(13.0)
+
+    def plan(alley_setback):
+        env = build_envelope(lot, edges, {**sb, "A": alley_setback}, "A")
+        return env, _run(s6s, env, fe, W * D, jurisdiction="gresham", zone="LDR-5",
+                         front_setback_ft=sb["F"],
+                         alley_edges=ae, alley_setback_ft=alley_setback)
+
+    env_r, r_rear = plan(sb["R"])          # the alley charged as a plain rear
+    assert r_rear["site_plan_ok"] is False and r_rear["layout_fail"] == "court_too_shallow"
+    env_a, r = plan(sb["A"])               # the alley column, roof plane included
+    assert env_a.bounds[3] == pytest.approx(D - 13.0)
+    assert env_a.area > env_r.area
+    assert r["site_plan_ok"] is True and r["layout_method"] == "townhome_rear_court_alley"
+    assert r["stalls_provided"] == 8
+    assert "driveway" not in r["geoms"]
+    assert r["driveway_len_ft"] == pytest.approx(13.0)      # the strip, nothing else
+    court = r["geoms"]["parking_court"]
+    assert court.bounds[3] == pytest.approx(D - 13.0, abs=0.6)
+    assert lot.buffer(0.01).contains(court)
 
 
 def test_an_alley_the_court_cannot_reach_is_refused_not_handed_the_street():
@@ -866,8 +920,9 @@ def test_an_alley_that_turns_the_corner_is_reached_at_the_bend():
 def test_a_tier_c_lot_is_told_the_setback_its_envelope_was_cut_to():
     """s6s asks s5 (`lot_setbacks`) how far the envelope stands off the
     alley rather than working it out again, so the two cannot disagree. On a
-    tier A/B lot that is the alley setback -- zero in Portland's R5, the rear
-    in Gresham, which says nothing of alleys. On a tier C lot it is not: s5
+    tier A/B lot that is the alley setback -- zero in Portland's R5, the
+    alley column plus the roof plane in Gresham's LDR-5, the rear in a Gresham
+    zone whose table prints no alley column. On a tier C lot it is not: s5
     insets an irregular lot uniformly by its LARGEST setback, so the strip
     along its alley is the front yard's width. Seven of the thirteen Portland
     lots refused from the alley on 2026-09-12 were tier C lots told to look
@@ -887,12 +942,21 @@ def test_a_tier_c_lot_is_told_the_setback_its_envelope_was_cut_to():
         assert lot_setbacks(zr, 5000.0, tier)["A"] == 0.0
     assert s6s_siteplan._alley_setback_for(
         rules, "portland", "R5", 5000.0, "C") == max(front, rear, side)
-    # Gresham: the alley is a rear lot line and nothing more, step-back included.
+    # Gresham LDR-5: Table 4.0131's alley column (8) plus the roof plane that
+    # 7.0420(G)(1) hangs off the rear setback line, wherever that line is.
     gz = rules.jurisdictions["gresham"].rule_for("LDR-5")
     g_rear = float(gz.effective_setback_rear_ft(lot_area_sqft=5000.0))
-    assert g_rear > float(gz.setback_rear_ft)      # the roof plane adds to the printed 15
-    assert s6s_siteplan._alley_setback_for(rules, "gresham", "LDR-5", 5000.0, "A") == g_rear
-    assert lot_setbacks(gz, 5000.0, "A")["A"] == g_rear
+    plane = g_rear - float(gz.setback_rear_ft)
+    assert plane > 0                                # the roof plane adds to the printed 15
+    g_alley = float(gz.setback_alley_ft) + plane
+    assert g_alley < g_rear
+    assert s6s_siteplan._alley_setback_for(rules, "gresham", "LDR-5", 5000.0, "A") == g_alley
+    assert lot_setbacks(gz, 5000.0, "A")["A"] == g_alley
+    # Gresham CMF: no alley column on the quadplex row, so the rear, plane and all.
+    cz = rules.jurisdictions["gresham"].rule_for("CMF")
+    c_rear = float(cz.effective_setback_rear_ft(lot_area_sqft=12000.0))
+    assert cz.setback_alley_ft is None
+    assert s6s_siteplan._alley_setback_for(rules, "gresham", "CMF", 12000.0, "A") == c_rear
 
 
 def test_with_no_setback_from_the_alley_the_court_stands_on_the_alley_line():

@@ -59,8 +59,11 @@ approximate (documented seams toward realism):
 
 THE ALLEY. Portland sends the driveway round the back in one sentence, PCC
 33.266.120.C.3: "If the lot abuts an alley, all parking and vehicle access to
-the site must be from the alley." On a Portland lot with an alley edge (s4
-class ``A``; `DrivewayRules.alley_access_required` names the city) the plan is
+the site must be from the alley." Gresham says it of the same building in GDC
+7.0420(B)(1): "Lots, including middle housing without existing access, that
+abut an alley, shall take access from the alley." On a lot in either city with
+an alley edge (s4 class ``A``; `DrivewayRules.alley_access_required` names the
+city) the plan is
 `townhome_rear_court_alley`: the same pod across the same front, the same court
 behind it, and NO lane from the street -- the court is reached from the alley
 lot line across the alley setback, by a lane of the city's width running
@@ -71,13 +74,16 @@ court already stands there. A lot the alley cannot reach that way fails
 leave forward off the court's own aisle: 33.266.130.F.1.b(2) would let them
 back straight into the alley given twenty feet of manoeuvring to its far side,
 but the streets file carries centrelines and not widths, so that relief is not
-taken. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask no side or
-rear setback from a lot line abutting an alley, `ZoneRule.setback_alley_ft`
-carries the zero, s5 cuts the envelope to the alley line, and the strip this
-stage looks for along the alley is whatever s5 left there (`lot_setbacks`,
-asked here rather than re-derived). Fairview 19.145.090 says the same of
-VTH/VA and is moot on the data (no VTH lot, no Fairview lot within 50 ft of
-an alley); see `alley_access_required`.
+taken -- nor is Gresham's, Figure 9.0825A: "Public alley width may be
+included as part of aisle width", the same relief stated outright and unusable
+for the same reason. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask
+no side or rear setback from a lot line abutting an alley, and Gresham's
+district tables print a "Rear With Alley" column (8 ft where the plain rear
+is 15); `ZoneRule.setback_alley_ft` carries the zero or the number, s5 cuts
+the envelope to it, and the strip this stage looks for along the alley is
+whatever s5 left there (`lot_setbacks`, asked here rather than re-derived).
+Fairview 19.145.090 says the same of VTH/VA and is moot on the data (no VTH
+lot, no Fairview lot within 50 ft of an alley); see `alley_access_required`.
 
 NOT modelled, and the largest known gap in this stage: where a code says
 parking may not SIT. Happy Valley 16.43.030.E.4 sets a parking area back from a
@@ -263,7 +269,8 @@ def _alley_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> fl
     Asked of s5's own arithmetic (`lot_setbacks`) rather than re-derived, so
     the layout is told the number the envelope was actually cut to. On a
     tier A or B lot that is the alley setback -- the rear, or the code's own
-    where it states one (zero in Portland's R zones). On a tier C lot it is
+    where it states one (zero in Portland's R zones, 8 ft plus the roof plane
+    in Gresham's LDR-5). On a tier C lot it is
     not: s5 gives an irregular lot one uniform inset by the LARGEST of its
     setbacks, front included, so the strip along the alley there is as wide
     as the front yard (ten feet in Portland's R5 against a five-foot rear),
@@ -723,7 +730,8 @@ def main() -> None:
         return setbacks[key]
 
     # The alley edge stands off by the setback s5 cut the envelope to along
-    # it -- the alley setback on a tier A/B lot (zero in Portland's R zones),
+    # it -- the alley setback on a tier A/B lot (zero in Portland's R zones,
+    # Gresham's alley column plus its roof plane),
     # the largest of the four on a tier C lot -- and that strip is what an
     # alley-fed lane crosses. See `_alley_setback_for`.
     def _alley_setback(jur: str, zone: str, area: float = 0.0,
