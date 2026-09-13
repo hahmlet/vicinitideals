@@ -76,24 +76,33 @@ THE ALLEY AS THE AISLE (Steph's ruling, 2026-09-13; `DrivewayRules.alley_is_aisl
 names the city). On an alley-fed lot the cars in the row of stalls along the
 alley back straight out into it, so the aisle the court used to draw inside
 the lot is the alley itself. Where the city's row says so, a court standing
-on the alley strip is asked for one stall depth (18 ft) instead of a stall
-and an aisle (42 ft in Portland), and that row is drawn against the alley
-edge -- `townhome_rear_court_alley_aisle`, its own name so every crosstab
-shows how many plans rest on it. Gresham states the relief outright, Figure
-9.0825A: "Public alley width may be included as part of aisle width (A1 or
-A2) dimension, but all stalls must be on private property, off the public
-right-of-way." Portland's fourplex chapter, 33.266.120, states the 9 x 18
-stall and neither an aisle nor a forward-motion rule; its all-other-
-development chapter, 33.266.130.F.1.b(2), lets parking areas be "designed so
-that vehicles back out into an alley" given 20 ft of manoeuvring to the
-alley's far side, some of it on-site where the alley is narrower. No code
-and no file here states how wide any alley is (RLIS carries centrelines;
-Gresham PWS Table 6.04's "Alleys 25" is a clear-vision triangle), so this
-drawing TRUSTS the alley's width the way the assumed aisle trusts SUDAS: a
-ruling about the screen's own assumption, recorded in HUMAN_TODO, not a
-reading of the code. It is taken only where it buys a stall -- a court deep
-enough for its own aisle keeps it -- so the count of plans on this drawing
-is the count that need it. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask
+on the alley strip is asked for one stall depth (18 ft) plus whatever the
+alley's width leaves short of the room a car needs to back out, instead of
+a stall and a full aisle (42 ft in Portland), and that row is drawn against
+the alley edge -- `townhome_rear_court_alley_aisle`, its own name so every
+crosstab shows how many plans rest on it. Gresham states the relief
+outright, Figure 9.0825A: "Public alley width may be included as part of
+aisle width (A1 or A2) dimension, but all stalls must be on private
+property, off the public right-of-way." Portland's fourplex chapter,
+33.266.120, states the 9 x 18 stall and neither an aisle nor a forward-
+motion rule; its all-other-development chapter, 33.266.130.F.1.b(2), lets
+parking areas be "designed so that vehicles back out into an alley" given
+20 ft of manoeuvring to the alley's far side, "some of this maneuvering
+area" on-site where the alley is narrower. The room is the city's
+(`DrivewayRules.alley_backout_ft`: Portland's twenty; Gresham's one-way
+aisle, 23 ft, where the row states none), and THE ALLEY'S WIDTH IS
+MEASURED: s4 reads it as the gap in the taxlot fabric between the lot and
+the first private lot across the alley, looking through the right-of-way
+polygon where the file draws one, or off the alley's centreline where the
+land beyond is a freeway (`alley_width_ft`; the typical Portland alley is
+14 ft), so the shortfall -- six feet on that alley in Portland -- is paved
+on the lot between the stalls and the alley line and counted in the parking
+area. Until 2026-09-13 the width was trusted, the way the assumed aisle
+trusts SUDAS; now nothing in this drawing is. A lot whose alley has no
+width on record is laid out as if the alley were nothing, the strict way.
+It is taken only where it buys a stall -- a court deep enough for its own
+aisle keeps it -- so the count of plans on this drawing is the count that
+need it. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask
 no side or rear setback from a lot line abutting an alley, and Gresham's
 district tables print a "Rear With Alley" column (8 ft where the plain rear
 is 15); `ZoneRule.setback_alley_ft` carries the zero or the number, s5 cuts
@@ -147,7 +156,7 @@ from pathlib import Path
 TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
-from common import DATA_DIR, load_footprints, load_rules, read_stage, write_stage
+from common import DATA_DIR, load_footprints, load_rules, read_stage, stage_path, write_stage
 from s5_envelope import lot_setbacks
 from s6_fit import _cell_grid, _integral, _placement
 
@@ -301,7 +310,7 @@ def _row_boxes(rr: int, cc: int, rh: int, rw: int, rows: int, stalls: int,
 
 
 def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
-                        sw_c: int, sd_c: int, cap: int):
+                        sw_c: int, sd_c: int, cap: int, sb_c: int = 0):
     """The row of stalls that backs straight out into the alley, or None.
 
     Three edges of the court, in the order a plan reads: its back (the alley
@@ -309,11 +318,13 @@ def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
     a corner lot). A stall stands on an edge only where every cell of its
     width along that edge is on the alley strip (`_alley_mouths`), so a court
     whose back is half against the alley and half against a notch parks
-    along the half that is; and a stall is `sd_c` deep INTO the court, which
-    is the whole depth the court is asked for -- the aisle is the alley.
-    Returns (stalls, boxes, edge) for the edge that seats the most, boxes as
-    (r0, c0, h, w) in grid cells; the back wins a tie. None where no edge
-    seats one.
+    along the half that is; and a stall is `sd_c` deep INTO the court behind
+    `sb_c` cells of manoeuvring room along the alley edge -- the on-site
+    part of the back-out room the alley's width does not cover -- which
+    together are the whole depth the court is asked for. The aisle is the
+    alley. Returns (stalls, boxes, edge) for the edge that seats the most,
+    boxes as (r0, c0, h, w) in grid cells; the back wins a tie. None where
+    no edge seats one.
     """
     import numpy as np
 
@@ -329,14 +340,14 @@ def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
         return out
 
     edges = []
-    if rh >= sd_c:
+    if rh >= sd_c + sb_c:
         edges.append(("back", mouths[rr + rh - 1, cc:cc + rw],
-                      lambda s: (rr + rh - sd_c, cc + s, sd_c, sw_c)))
-    if rw >= sd_c:
+                      lambda s: (rr + rh - sb_c - sd_c, cc + s, sd_c, sw_c)))
+    if rw >= sd_c + sb_c:
         edges.append(("right", mouths[rr:rr + rh, cc + rw - 1],
-                      lambda s: (rr + s, cc + rw - sd_c, sw_c, sd_c)))
+                      lambda s: (rr + s, cc + rw - sb_c - sd_c, sw_c, sd_c)))
         edges.append(("left", mouths[rr:rr + rh, cc],
-                      lambda s: (rr + s, cc, sw_c, sd_c)))
+                      lambda s: (rr + s, cc + sb_c, sw_c, sd_c)))
     best = None
     for edge, on, box_at in edges:
         boxes = []
@@ -380,7 +391,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                jurisdiction: str = "", zone: str = "",
                parking_setback_ft: float | None = None,
                alley_edges: list[list[float]] | None = None,
-               alley_setback_ft: float = 0.0) -> dict:
+               alley_setback_ft: float = 0.0,
+               alley_width_ft: float | None = None) -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
 
     Returns a dict of scalar results + `geoms` (role -> shapely geometry in the
@@ -409,6 +421,10 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     `alley_setback_ft` is how far the envelope stands off those lines, which
     is the strip the lane crosses to reach the alley and the distance that
     tells an envelope cell on the alley side from one on any other.
+    `alley_width_ft` is the alley's width as s4 measured it across the
+    taxlot fabric, read only where the cell says `alley_aisle`: the
+    city's back-out room (`alley_need`) less this width is paved on the lot
+    behind the stalls. None -- no width on record -- is laid out as zero.
     """
     import numpy as np
     import shapely
@@ -510,6 +526,16 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     sd_c = max(1, math.ceil(stall_d / res))
     drive_c = max(1, round(drive_w / res))
     gap_c = max(0, round(gap / res))
+    # THE ALLEY AS THE AISLE: the room a car backing out of its stall needs
+    # is the city's (`alley_need` -- Portland's twenty feet to the far side
+    # of the alley, Gresham's one-way aisle), the alley's measured width
+    # counts toward it, and the rest is paved on the lot between the stalls
+    # and the alley line. An alley with no width on record counts for
+    # nothing: the strict reading, not the generous one.
+    alley_need: float = cell.get("alley_need") or aisle_one
+    shortfall_ft = (max(0.0, alley_need - (alley_width_ft or 0.0))
+                    if alley_aisle else 0.0)
+    sb_c = math.ceil(round(shortfall_ft / res, 6))
     # A 4-plex never needs more than 2/unit — unless the city says fewer, in
     # which case the city's number is the cap and the higher tiers are simply
     # not reachable here. Milwaukie's one-per-unit is the live case.
@@ -583,7 +609,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             # The alley as the aisle: the stalls that stand on the alley strip
             # and back straight out into it, asked for a stall depth and no
             # aisle. Counted beside the court's own aisle, never instead of it.
-            on_alley = (_alley_aisle_stalls(mouths, rr, cc, rh, rw, sw_c, sd_c, cap)
+            on_alley = (_alley_aisle_stalls(mouths, rr, cc, rh, rw, sw_c, sd_c, cap, sb_c)
                         if alley_aisle else None)
             if n_ct <= 0 and on_alley is None:
                 continue
@@ -622,10 +648,12 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                     best_stalls = n_al
                     plan = {
                         "rect": (rr, cc, rh, rw), "stalls": n_al,
-                        # No aisle inside the lot: the alley is it, and the
-                        # pavement between the stalls and the alley is the
-                        # setback strip, as on the lane-less plan above.
-                        "aisle": 0.0, "span_ft": 0.0,
+                        # The aisle inside the lot is only what the alley's
+                        # width leaves short of the back-out room, along the
+                        # row; the rest of the aisle IS the alley. The
+                        # pavement past that is the setback strip, as on
+                        # the lane-less plan above.
+                        "aisle": shortfall_ft, "span_ft": n_al * stall_w,
                         "bld": (name, br, bc, bh, bw, ww * dd),
                         "stall_boxes": boxes,
                         "driveway": None, "driveway_len_c": 0,
@@ -729,9 +757,9 @@ def _work_chunk(chunk):
     import shapely
 
     out = []
-    for idx, env_wkb, bearings, fedges, area, fsb, jur, zone, psb, aedges, asb in chunk:
+    for idx, env_wkb, bearings, fedges, area, fsb, jur, zone, psb, aedges, asb, aw in chunk:
         r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur, zone, psb,
-                       aedges, asb)
+                       aedges, asb, aw)
         r["geoms_hex"] = {role: shapely.to_wkb(g).hex() for role, g in r.pop("geoms").items()}
         out.append((idx, r))
     return out
@@ -744,6 +772,8 @@ def main() -> None:
     args = ap.parse_args()
 
     import numpy as np
+    import pandas as pd
+    import pyarrow.parquet as pq
     import shapely
 
     rules = load_rules()
@@ -755,6 +785,19 @@ def main() -> None:
     # Re-attach the carved setback envelope (s5o geom) — s6 drops it.
     s5o = read_stage("s5o_lots")[["TLID", "geom"]].rename(columns={"geom": "env_geom"})
     lots = lots.merge(s5o, on="TLID", how="left")
+    # The alley's width is s4's (`alley_width_ft`, the gap in the taxlot
+    # fabric), taken from s4's own parquet the way s7 takes the lot width,
+    # so an s4-only refresh reaches the plans without the stages between.
+    # NaN where the lot has no alley edge or the stage predates the column,
+    # and NaN is laid out as zero: an alley of no known width earns no
+    # back-out room.
+    _s4p = stage_path("s4_lots")
+    lots = lots.drop(columns=[c for c in ("alley_width_ft",) if c in lots.columns])
+    if "alley_width_ft" in pq.read_schema(_s4p).names:
+        lots = lots.merge(pd.read_parquet(_s4p, columns=["TLID", "alley_width_ft"]),
+                          on="TLID", how="left")
+    else:
+        lots["alley_width_ft"] = float("nan")
 
     n = len(lots)
     site_ok = np.zeros(n, dtype=bool)
@@ -870,6 +913,12 @@ def main() -> None:
             "open_by_zone": dict(dw.open_space_sqft_by_zone) if dw else {},
             "alley_access": bool(dw and dw.alley_access_required),
             "alley_aisle": bool(dw and dw.alley_is_aisle),
+            # The back-out room the alley's width is measured against: the
+            # city's own number where its row states one, else its one-way
+            # aisle (Figure 9.0825A's reading, in Gresham's case).
+            "alley_need": (dw.alley_backout_ft
+                           if dw and dw.alley_backout_ft is not None
+                           else g.aisle_one_way_ft),
         }
 
     # Where a city keeps stalls off the street, say what it asks and whether
@@ -940,6 +989,7 @@ def main() -> None:
                   if cells[jur]["alley_access"] else [])
         if aedges:
             alley_fed[jur] += 1
+        _aw = row["alley_width_ft"]
         tasks.append((
             int(i), shapely.to_wkb(row["env_geom"]),
             json.loads(row["front_bearings_json"]), fedges,
@@ -948,13 +998,15 @@ def main() -> None:
             sp.parking_street_setback_for(jur, zone),
             aedges, _alley_setback(jur, zone, float(row["area_sqft"]),
                                    str(row["tier"])),
+            None if _aw is None or not np.isfinite(float(_aw)) else float(_aw),
         ))
     for j, k in alley_fed.items():
         print(f"s6s: {j} sends the driveway to the alley on a lot that has one "
               f"(alley_access_required); {k:,} lots in scope carry an alley edge "
               f"and are laid out from it, with no lane from the street"
-              + ("; the alley is the aisle where that seats more stalls "
-                 "(alley_is_aisle)" if cells[j]["alley_aisle"] else ""))
+              + (f"; the alley is the aisle where that seats more stalls "
+                 f"(alley_is_aisle), with {cells[j]['alley_need']:g} ft of back-out "
+                 f"room asked of its measured width" if cells[j]["alley_aisle"] else ""))
 
     chunk_size = 500
     chunks = [tasks[i:i + chunk_size] for i in range(0, len(tasks), chunk_size)]
@@ -999,16 +1051,27 @@ def main() -> None:
           f"site_plan_ok {int(site_ok.sum()):,}; tiers "
           + ", ".join(f"{t}={int((tier == t).sum()):,}"
                       for t in ("preferred", "target", "minimum", "fail")))
-    # The plans that rest on the alley's width, said out loud for the same
+    # The plans that stand on the alley's width, said out loud for the same
     # reason the assumed aisle is: a caveat that only lives in a column is a
-    # caveat nobody reads.
+    # caveat nobody reads -- and here the width is measured, so say that too.
     on_alley = method == "townhome_rear_court_alley_aisle"
     if on_alley.any():
         per = lots.loc[on_alley, "jurisdiction"].value_counts()
+        _w = pd.to_numeric(lots.loc[on_alley, "alley_width_ft"],
+                           errors="coerce").to_numpy(dtype=float)
+        _need = np.array([cells[j]["alley_need"]
+                          for j in lots.loc[on_alley, "jurisdiction"]], dtype=float)
+        _short = np.maximum(0.0, _need - np.nan_to_num(_w, nan=0.0))
+        _ok = np.isfinite(_w)
         print(f"s6s: {int(on_alley.sum()):,} plans park against the alley and "
-              f"back out into it (alley_is_aisle; the alley's width is not in "
-              f"any file and is trusted): "
-              + ", ".join(f"{j} {v:,}" for j, v in per.items()))
+              f"back out into it (alley_is_aisle): "
+              + ", ".join(f"{j} {v:,}" for j, v in per.items())
+              + f"; the alley's width is on record for {int(_ok.sum()):,} of them"
+              + (f" (p50 {np.median(_w[_ok]):.0f} ft)" if _ok.any() else "")
+              + f", {int((_short > 0).sum()):,} pave the shortfall of the back-out "
+                f"room on the lot"
+              + (f" (p50 {np.median(_short[_short > 0]):.0f} ft)"
+                 if (_short > 0).any() else ""))
     # Per city, because that is the whole reason this stage stopped being one
     # cell: a city's stall and aisle are what decide its lots, and a total hides
     # which city paid for which number.

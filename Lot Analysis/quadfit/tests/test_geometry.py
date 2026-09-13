@@ -162,6 +162,230 @@ def test_a_lot_whose_only_public_way_is_an_alley_keeps_it_as_frontage():
     assert r["frontage_ft"] == pytest.approx(100, abs=1)
 
 
+def _classify_with_fabric(lot, streets, alleys, lots, rows=()):
+    """s4 as it runs since 2026-09-13: the alley centrelines AND the taxlot
+    fabric -- this lot, its neighbours (``lots``) and the right-of-way
+    polygons (``rows``), which are not private land."""
+    from s4_edges import classify_lot
+
+    sg = np.array(streets, dtype=object)
+    ag = np.array(alleys, dtype=object)
+    lg = np.array([lot, *lots, *rows], dtype=object)
+    private = np.array([True] * (1 + len(lots)) + [False] * len(rows))
+    return classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        alley_tree=STRtree(ag), alley_geoms=ag,
+        lot_tree=STRtree(lg), lot_geoms=lg, lot_private=private,
+    )
+
+
+def test_the_alleys_width_is_the_gap_to_the_lot_across_it():
+    """The alley is the gap in the taxlot fabric between this lot and the
+    first private lot beyond, with the centreline inside it. A neighbour
+    whose front line is 14 ft behind a 100 x 100 lot's rear line, the
+    centreline 7 ft out: the edge is class A and `alley_width_ft` is 14 --
+    the typical Portland alley -- whether the file draws the right-of-way
+    as a `-STR` polygon in the gap or as nothing at all (179 of Portland's
+    alleys are drawn as nothing; the first run demoted every one)."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 107), (160, 107)])
+    behind = shapely.box(0, 114, 100, 214)
+    strip = shapely.box(-60, 100, 160, 114)
+    for rows in ([], [strip]):
+        r = _classify_with_fabric(lot, [street], [alley], [behind], rows)
+        assert r["tier"] == "A"
+        classes = [cls for *_xy, cls in r["edges"]]
+        assert classes.count("A") == 1 and classes.count("F") == 1
+        assert r["alley_width_ft"] == pytest.approx(14.0, abs=0.1)
+        assert r["alley_edges_demoted"] == 0
+    # The same lot the other way round in the file -- clockwise -- measures
+    # the same: the ray is cast out of the lot whichever way the ring runs.
+    r_cw = _classify_with_fabric(Polygon(list(lot.exterior.coords)[::-1]),
+                                 [street], [alley], [behind])
+    assert r_cw["alley_width_ft"] == pytest.approx(14.0, abs=0.1)
+    # And a lot stacked on this one (a condo file, the same footprint twice)
+    # is not the far side of anything.
+    r_st = _classify_with_fabric(lot, [street], [alley], [lot, behind])
+    assert r_st["alley_width_ft"] == pytest.approx(14.0, abs=0.1)
+
+
+def test_an_alley_edge_with_a_neighbour_across_it_is_not_on_the_alley():
+    """Fifty feet of centreline is not an alley. On the 2026-09-13 probe
+    937 class-A edges abutted a neighbour's lot with an address, the alley
+    running behind THAT lot, and 82 of them stood under a green that parked
+    four cars in the neighbour's yard. With the fabric in hand the test is
+    whether the alley lies across the edge: here the neighbour does, and
+    the centreline runs 27 ft behind its front line, so the edge is the
+    rear lot line it always was."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 127), (160, 127)])      # 27 ft out: within 50
+    neighbour = shapely.box(0, 100, 100, 200)          # but directly across
+    r = _classify_with_fabric(lot, [street], [alley], [neighbour])
+    assert r["tier"] == "A"
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert "A" not in classes and classes.count("R") == 1
+    assert r["alley_width_ft"] is None
+    assert r["alley_edges_demoted"] == 1
+    # And a lot whose only public way was that centreline is landlocked,
+    # not fronted on the alley behind the neighbour.
+    far_street = LineString([(-60, -500), (160, -500)])
+    r = _classify_with_fabric(lot, [far_street], [alley], [neighbour])
+    assert r["tier"] == "D" and r["alley_edges_demoted"] == 1
+
+
+def test_a_sliver_between_the_lot_and_the_alley_is_not_the_alley():
+    """A 2 ft private sliver along the rear line, the alley behind it: the
+    gap to the first private lot is 2 ft, which is no alley's width, and
+    the centreline is 9 ft out, past the far side by more than the
+    tolerance, so the gap is not the alley and the edge is not on it."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 109), (160, 109)])
+    sliver = shapely.box(0, 100, 100, 102)
+    behind = shapely.box(0, 116, 100, 216)
+    r = _classify_with_fabric(lot, [street], [alley], [sliver, behind])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert "A" not in classes
+    assert r["alley_width_ft"] is None and r["alley_edges_demoted"] == 1
+
+
+def test_a_right_of_way_split_down_the_middle_is_one_alley():
+    """Multnomah's `-STR` lots are one per quarter-section, and a section
+    line can run down an alley's centre. The ray looks through both halves
+    to the lot beyond, so a 7 + 7 alley measures 14, not 7."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 107), (160, 107)])
+    halves = [shapely.box(-60, 100, 160, 107), shapely.box(-60, 107, 160, 114)]
+    behind = shapely.box(0, 114, 100, 214)
+    r = _classify_with_fabric(lot, [street], [alley], [behind], halves)
+    assert r["alley_width_ft"] == pytest.approx(14.0, abs=0.1)
+
+
+def test_a_lot_at_the_alleys_dead_end_is_not_on_it():
+    """An alley that ends against a 50 ft rear line touches 14 ft of it.
+    The midpoint's ray runs down the alley's length -- 80 ft with no lot
+    across it, which is what the 145 chords over 40 ft on the probe were --
+    and the rays either side of it start on the flanking neighbours' lot
+    lines, a gap of nothing. None of five finds an alley; the lot parks
+    nothing in anyone's yard."""
+    lot = Polygon([(0, 0), (50, 0), (50, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(25, 100), (25, 300)])
+    strip = shapely.box(18, 100, 32, 300)
+    flanks = [shapely.box(-50, 100, 18, 200), shapely.box(32, 100, 100, 200)]
+    r = _classify_with_fabric(lot, [street], [alley], flanks, [strip])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert "A" not in classes
+    assert r["alley_width_ft"] is None and r["alley_edges_demoted"] == 1
+
+
+def test_a_side_alley_opposite_the_midpoint_is_not_a_hole_in_the_alley():
+    """A T: the alley behind the lot has another leaving it opposite the
+    lot's midpoint. The midpoint's ray runs up that leg and finds no lot
+    within 80 ft, which is not a width; the four rays either side find
+    the lots across at 14 ft. Four of five is the alley. (The second run
+    wanted the midpoint itself and demoted `1N1E13CB -09300`, a green on a
+    10 ft alley, for the T behind it.)"""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alleys = [LineString([(-60, 107), (160, 107)]), LineString([(50, 107), (50, 400)])]
+    across = [shapely.box(-60, 114, 43, 214), shapely.box(57, 114, 160, 214)]
+    r = _classify_with_fabric(lot, [street], alleys, across)
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert classes.count("A") == 1
+    assert r["alley_width_ft"] == pytest.approx(14.0, abs=0.1)
+    assert r["alley_edges_demoted"] == 0
+
+
+def test_a_centreline_drawn_short_of_its_right_of_way_is_still_the_alley():
+    """RLIS draws a platted alley's centreline shorter than the strip the
+    taxlot file holds for it: behind this 50 ft lot the strip runs on and
+    the lot across is 16 ft out, but the centreline stops 10 ft before
+    the lot's first corner. No ray crosses it; four of the five rays'
+    bands along the alley reach it (`ALLEY_CL_ALONG_FT`), so the edge is
+    on the alley and the width is 16. (The second run wanted the crossing
+    and demoted 170 such lots, 52 of them greens.) Draw the centreline 30
+    ft out instead -- inside the lot across, not in the gap -- and no band
+    holds it: the strip is not this alley."""
+    lot = Polygon([(0, 0), (50, 0), (50, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    strip = shapely.box(-300, 100, 300, 116)
+    behind = shapely.box(-300, 116, 300, 216)
+    short = LineString([(-300, 108), (-10, 108)])
+    r = _classify_with_fabric(lot, [street], [short], [behind], [strip])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert classes.count("A") == 1
+    assert r["alley_width_ft"] == pytest.approx(16.0, abs=0.1)
+    elsewhere = LineString([(-300, 130), (300, 130)])
+    r = _classify_with_fabric(lot, [street], [elsewhere], [behind], [strip])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert "A" not in classes and r["alley_edges_demoted"] == 1
+
+
+def test_an_alley_along_the_freeway_is_measured_off_its_centreline():
+    """Behind the lot a 16 ft strip, and beyond it the freeway: public land
+    as far as the ray reaches, no private lot to measure to (72 Portland
+    lots back onto I-5 this way, 17 onto the St. Johns rail cut). The lot
+    line is on public land and the centreline crosses the ray 8 ft out,
+    so the alley is 16 ft wide. Take the strip away -- the lot line on
+    private land, the same centreline, nothing across for 80 ft -- and
+    there is no alley to stand the centreline in for."""
+    lot = Polygon([(0, 0), (50, 0), (50, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-300, 108), (300, 108)])
+    strip = shapely.box(-300, 100, 300, 116)
+    freeway = shapely.box(-300, 116, 300, 400)
+    r = _classify_with_fabric(lot, [street], [alley], [], [strip, freeway])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert classes.count("A") == 1
+    assert r["alley_width_ft"] == pytest.approx(16.0, abs=0.1)
+    r = _classify_with_fabric(lot, [street], [alley], [], [])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert "A" not in classes and r["alley_edges_demoted"] == 1
+
+
+def test_an_eight_foot_strip_is_the_narrowest_alley():
+    """`ALLEY_WIDTH_MIN_FT` is tested on the width as reported, to a tenth:
+    a strip that measures 7.98 ft is an 8 ft alley (a block of eight in
+    NE Portland), and one that measures 7.9 is not."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 104), (160, 104)])
+    r = _classify_with_fabric(lot, [street], [alley], [shapely.box(0, 107.98, 100, 208)])
+    assert r["alley_width_ft"] == pytest.approx(8.0, abs=0.01)
+    r = _classify_with_fabric(lot, [street], [alley], [shapely.box(0, 107.9, 100, 208)])
+    assert r["alley_width_ft"] is None and r["alley_edges_demoted"] == 1
+
+
+def test_a_gap_too_wide_to_be_an_alley_is_not_one():
+    """The far side 60 ft out with the centreline 7 ft out is a ray across
+    the alley and on through the street beyond, not a 60 ft alley: past
+    `ALLEY_WIDTH_MAX_FT` nothing is a width."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 107), (160, 107)])
+    behind = shapely.box(0, 160, 100, 260)
+    r = _classify_with_fabric(lot, [street], [alley], [behind])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert "A" not in classes
+    assert r["alley_width_ft"] is None and r["alley_edges_demoted"] == 1
+
+
+def test_without_the_fabric_the_centreline_alone_decides():
+    """The fabric is optional: a caller without it (the two cities whose
+    code says an alley is a street never pass alleys at all, and a stage
+    run before 2026-09-13 passed no polygons) gets the centreline test
+    alone, no width and no demotion."""
+    lot, streets, alleys = _lot_with_an_alley_behind()
+    r = _classify_with_alleys(lot, streets, alleys)
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert classes.count("A") == 1
+    assert r["alley_width_ft"] is None and r["alley_edges_demoted"] == 0
+
+
 def test_an_alley_edge_takes_the_rear_setback_in_the_envelope():
     """s5 sets the alley line back as a rear lot line. With front 20, rear 5
     and side 5 on a 100x100 lot, an ``A`` rear leaves the same envelope an

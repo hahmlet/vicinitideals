@@ -916,13 +916,31 @@ class DrivewayRules(BaseModel):
     #: into an alley" with 20 ft of manoeuvring to its far side -- so on
     #: Portland's row this is Steph's ruling of 2026-09-13 on the screen's
     #: own assumption (the 24 ft aisle is SUDAS, not the code; see
-    #: `StallGeometry.aisle_assumed`), recorded in docs/HUMAN_TODO.md. No
-    #: code and no file states an alley's width; a plan drawn this way trusts
-    #: it, and s6s names such plans `townhome_rear_court_alley_aisle` so the
-    #: number that trust is doing is always countable. Meaningless without
-    #: `alley_access_required`; not a FLATS field (the corpus has no alley
-    #: fact), so the drift test does not check it.
+    #: `StallGeometry.aisle_assumed`), recorded in docs/HUMAN_TODO.md. The
+    #: alley's width is MEASURED, since 2026-09-13, by s4 as the gap in the
+    #: taxlot fabric from the lot to the first private lot across the alley
+    #: (`alley_width_ft`; 14 ft is the typical Portland alley), and the
+    #: court is asked for the stall depth
+    #: plus whatever that width leaves short of `alley_backout_ft` -- so
+    #: the plan trusts nothing. A lot whose alley has no width on record is
+    #: laid out as if it were zero, the strict way. s6s names such plans
+    #: `townhome_rear_court_alley_aisle` so the number is always countable.
+    #: Meaningless without `alley_access_required`; not a FLATS field (the
+    #: corpus has no alley fact), so the drift test does not check it.
     alley_is_aisle: bool | None = None
+    #: The clear room a car backing out of its stall must have, from the end
+    #: of the stall to the far side of the alley, in feet; the alley's own
+    #: width counts toward it and the rest is paved on the lot between the
+    #: stalls and the alley line. Portland states 20 (33.266.130.F.1.b(2):
+    #: "there must be a maneuvering area of at least 20 feet between the end
+    #: of each parking space and the opposite side of the alley. If the
+    #: alley is less than 20 feet wide, some of this maneuvering area will
+    #: be on-site"). Left empty on a row that carries `alley_is_aisle`, the
+    #: city's own one-way aisle is the room, which is what Gresham's Figure
+    #: 9.0825A says in its own words ("Public alley width may be included
+    #: as part of aisle width (A1 or A2) dimension"): 23 ft there. Read
+    #: only where `alley_is_aisle` is set.
+    alley_backout_ft: float | None = None
 
     #: `open_space_min_pct` -- private open space as a share of the gross lot.
     #: Gresham states 15 percent and is now the only city that gets it, where
@@ -1450,6 +1468,16 @@ def reproject_4326_to_2913(geoms: list[Any]) -> list[Any]:
         return np.column_stack([x, y])
 
     return [None if g is None else shapely.transform(g, _fn) for g in geoms]
+
+
+#: The taxlot IDs that are not taxlots. Multnomah draws every quarter-
+#: section's streets as one lot `1N2E26AC  -STR` (two spaces, then the
+#: suffix), its rivers `-RIV`, its railways `-RR`; Clackamas ends the same
+#: shapes `ROADS` and `WATER`. No owner, no address, no zone anyone builds
+#: in. s3 drops them from the universe; s4 looks through them when it
+#: measures an alley. Tracts (Multnomah `-TR`) are NOT here: some are
+#: buildable, and one across an alley is private land.
+NOT_A_TAXLOT_RE = r"(?:-STR|-RIV|-RR|ROADS|WATER)$"
 
 
 def stage_path(name: str) -> Path:

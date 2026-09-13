@@ -6,6 +6,13 @@ report time in s7 — so toggling a jurisdiction or adjusting a threshold needs
 only an s7 re-run (seconds), not a pipeline re-run.
 
 Structural drops (first-hit counted, written to funnel.json):
+  0. not a taxlot: the right-of-way and the water, which the taxlot file
+     holds as polygons of their own (Multnomah `-STR` / `-RIV` / `-RR`,
+     Clackamas `ROADS` / `WATER`; `common.NOT_A_TAXLOT_RE`). s4 looks
+     through them, out of s1, when it measures an alley's width; nothing
+     else downstream should ever see one. 2,636 reached lots_results.csv
+     before 2026-09-13 (1,778 `-STR`, 756 `ROADS`, 49 `WATER`, 28 `-RIV`,
+     25 `-RR`), 39 of them in review and one green.
   1. condo-stack representative (stacked platting is not a redevelopable lot)
   2. jurisdiction unmapped (JURIS_CITY not in rules)
   3. jurisdiction ineligible AND no zone rules compiled (e.g. Maywood Park —
@@ -32,7 +39,7 @@ from pathlib import Path
 TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
-from common import DATA_DIR, load_rules, read_stage, write_stage
+from common import DATA_DIR, NOT_A_TAXLOT_RE, load_rules, read_stage, write_stage
 
 NARROW_TEST_BUFFER_FT = -10.0  # lot must survive a 10 ft inward buffer somewhere
 
@@ -59,6 +66,11 @@ def main() -> None:
 
     print(f"s3: starting from {len(lots):,} lots (structural filter only)")
 
+    # The right-of-way and the water, first, so no later count includes a
+    # street. s4 reads the street polygons back out of s1_lots to measure an
+    # alley's width, which is the only use anything here has for them.
+    drop(lots["TLID"].astype(str).str.contains(NOT_A_TAXLOT_RE, regex=True),
+         "not_a_taxlot")
     drop(lots["stacked"], "condo_stack")
     drop(lots["jurisdiction"].isna(), "jurisdiction_unmapped")
 

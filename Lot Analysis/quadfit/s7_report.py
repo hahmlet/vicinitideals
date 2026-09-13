@@ -647,16 +647,18 @@ def main() -> None:
     _s3c = _s3c.assign(lat=np.round(_lat, 6), lng=np.round(_lng, 6))
     lots = lots.merge(_s3c[["TLID", "lat", "lng"]], on="TLID", how="left")
 
-    # Lot width and lot depth are s4's, taken from s4's own parquet rather
-    # than from the copy s6s carried forward. The envelope and the fit behind
-    # s5 and s6 do not read either number, so re-running s4 alone -- three
-    # minutes -- refreshes both without the four hours of stages between it
-    # and here, and this is where that refresh lands. A stage that predates
-    # the columns leaves them NaN, which policy_gates holds for review.
+    # Lot width, lot depth and the alley's width are s4's, taken from s4's
+    # own parquet rather than from the copy s6s carried forward. The envelope
+    # and the fit behind s5 and s6 do not read any of the three, so
+    # re-running s4 alone -- three minutes -- refreshes them without the
+    # four hours of stages between it and here, and this is where that
+    # refresh lands (the site plan takes the alley's width the same way). A
+    # stage that predates the columns leaves them NaN, which policy_gates
+    # holds for review on the two lot dimensions.
     import pyarrow.parquet as pq
 
     _s4p = stage_path("s4_lots")
-    _dims = [c for c in ("lot_width_ft", "lot_depth_ft")
+    _dims = [c for c in ("lot_width_ft", "lot_depth_ft", "alley_width_ft")
              if c in pq.read_schema(_s4p).names]
     if _dims:
         _s4d = pd.read_parquet(_s4p, columns=["TLID", *_dims])
@@ -829,9 +831,11 @@ def main() -> None:
                   "because the city never published one. "
                   "`geometry_assumed` marks them in `lots_results.csv`.")
     if "layout_method" in lots.columns:
-        # The other trust a plan can rest on, and the larger one: the alley
+        # The other reading a plan can rest on, and the larger one: the alley
         # as the aisle (Steph's ruling of 2026-09-13; Gresham Figure 9.0825A).
-        # No file states an alley's width, so these plans assume it.
+        # The alley's width is measured, since the same day, across the gap
+        # in the taxlot fabric (s4 `alley_width_ft`), and
+        # the plan pays the city's back-out room less that width on the lot.
         oa = (lots["layout_method"].astype(str).to_numpy()
               == "townhome_rear_court_alley_aisle")
         green = lots["triage"].to_numpy() == "green"
@@ -844,15 +848,29 @@ def main() -> None:
             n_both = (int((oa & green & lots["geometry_assumed"].fillna(False)
                            .to_numpy().astype(bool)).sum())
                       if "geometry_assumed" in lots.columns else 0)
+            _w = (pd.to_numeric(lots.loc[oa & green, "alley_width_ft"], errors="coerce")
+                  if "alley_width_ft" in lots.columns else pd.Series(dtype=float))
+            _w = _w[np.isfinite(_w)]
             L.append(
                 f"\nOf the greens, **{n_oa:,}** park against the alley and back "
                 "out into it (" + ", ".join(f"{k} {v:,}" for k, v in per.items())
-                + ") — the court is one stall deep and the alley is its aisle. "
-                  "Gresham's parking figure says the alley width may count; "
-                  "Portland's fourplex chapter states no aisle at all; neither "
-                  "city nor the street file states how wide any alley is, so "
-                  "the width is trusted. `layout_method = "
-                  "townhome_rear_court_alley_aisle` marks them in `lots_results.csv`."
+                + ") — the court is one stall deep, plus whatever the alley's "
+                  "width leaves short of the room a car needs to back out, and "
+                  "the alley is its aisle. Gresham's parking figure says the "
+                  "alley width may count toward the aisle; Portland's fourplex "
+                  "chapter states no aisle, and its general chapter asks 20 ft "
+                  "from the end of the stall to the alley's far side. The width "
+                  "is measured, not trusted: s4 reads it as the gap in the "
+                  "parcel fabric from the lot to the first private lot across "
+                  "the alley (`alley_width_ft`"
+                + (f"; on record for {len(_w):,} of these {n_oa:,}, median "
+                   f"{_w.median():.0f} ft, {int((_w < 20).sum()):,} narrower than "
+                   "20 ft and paying the difference on the lot"
+                   if len(_w) else
+                   f"; on record for none of these {n_oa:,}, each laid out as if "
+                   "the alley were nothing")
+                + "). `layout_method = townhome_rear_court_alley_aisle` marks "
+                  "them in `lots_results.csv`."
                 + (f" {n_both:,} of them are also inside the assumed-aisle figure "
                    "above (the city's aisle is assumed, and the lot keeps its "
                    "city's row) though on the lot itself they draw no aisle at all."
@@ -1466,7 +1484,12 @@ def main() -> None:
         # existed; a lot that just turned red for `below_min_lot_depth` has to
         # show the number it was judged on. Blank means the shape declined to
         # be measured, or the city defines no depth and this never applied.
-        "lot_depth_ft", "YEARBUILT", "BLDGSQFT",
+        "lot_depth_ft",
+        # The alley's width, where the lot has an alley edge (s4 class A):
+        # the gap in the taxlot fabric to the lot across the alley, and the
+        # number a `townhome_rear_court_alley_aisle` plan paid the back-out
+        # room against. Blank means no alley edge.
+        "alley_width_ft", "YEARBUILT", "BLDGSQFT",
         "BLDGVAL", "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
         # `binding_constraint` says why a lot is RED. `review_reasons` says why
         # it is YELLOW -- next to it, because the two answer the same question

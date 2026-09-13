@@ -5,12 +5,13 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-13, small hours, after Steph's
-ruling that on an alley lot the alley is the parking aisle — see the first
-alley entry in the queued list): **green
-20,463 · review 13,665 · red 258,353** across 292,481 lots in **14** cities
-laid out with real site plans. Greens by city: Portland
-16,708 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
+Pipeline state when last updated (2026-09-13, evening, after the alley's
+width was measured from the parcel map instead of trusted — see the alley
+entries in the queued list): **green
+20,204 · review 13,519 · red 256,122** across 289,845 lots in **14** cities
+laid out with real site plans (2,636 rows that were streets and water drawn
+as lots are gone from the count). Greens by city: Portland
+16,449 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
 Troutdale 117 · unincorporated Clackamas 113 · Wood Village 83 · Wilsonville
 53 · unincorporated Multnomah 1. (The 2026-09-03
 figures the prose below still quotes in places were green 16,530 · review
@@ -3792,8 +3793,8 @@ the list of places worth hoping about.
   shortfall behind the homes; the typical 50-by-100 has about 29). The
   probe also found about 80 of the new greens whose "alley" edge actually
   touches a neighbour's lot, not the alley — the same measurement fixes
-  those. Feasibility only, as you asked; it is item 3 in the agent's
-  queue, not yet a go.
+  those. *Built and run the same evening at your go — the entry after
+  Gresham's, below; the numbers in this entry are the trusted-width run's.*
 
   *What it did, both ways.* **Green 17,163 → 20,463, review 13,053 →
   13,665, red 262,265 → 258,353.** 3,300 red lots went green (R5 1,880,
@@ -3869,6 +3870,69 @@ the list of places worth hoping about.
   also send the driveway to the alley (54 lots between them, all red
   today); Milwaukie only lets a stall sit near one. Those two are next in
   the agent's queue, ten minutes each.
+
+- **The alley's width is measured now, not trusted — built and run
+  2026-09-13 evening, four rules deep, and it moved 369 lots — 258 of
+  them greens: 36 that were parking on a neighbour's land, and 222 whose
+  court is now asked for the back-out room the code states.** Your morning
+  question — can we measure the alley off the parcel map, and where two
+  lots sit a foot apart is the alley an easement over them rather than a
+  strip between — turned out to be the right rule, and the first rule
+  built was the wrong one. In order, because each was measured before the
+  next was written:
+  1. The first read the width off the public strip the parcel map draws
+     for an alley. But 179 Portland alleys are drawn as nothing at all: no
+     strip, just a 12-to-20-foot gap between the lot and the neighbour's
+     rear line with the alley's centreline in it. Those 179 lost their
+     alley. Your rule — measure to the neighbour's line — is what brought
+     them back.
+  2. The second measured the gap but asked that the alley's centreline
+     cross the middle of the lot line. The county draws a platted alley's
+     centreline shorter than the alley itself — it stops 25 to 40 feet
+     before some lots — and 170 lots on a real 16-foot alley lost it, 52
+     of them green.
+  3. The third looks for the centreline anywhere along the alley within
+     50 feet, and wants at least 8 feet of alley. 89 lots still lost it:
+     72 back onto I-5 through Eliot, Boise and Overlook, 17 onto the St.
+     Johns rail cut. Across the alley there is no lot for a hundred feet,
+     only public land, so there was nothing to measure to.
+  4. The fourth takes the centreline as the alley's middle where the land
+     beyond is public, and that is the one that ran.
+
+  *What it does.* On every lot with an alley behind or beside it, five
+  lines are cast out across the alley and the width is the gap to the
+  first private land on the other side, looking through the public strip
+  where the map draws one. The typical Portland alley is 14 feet; a tenth
+  are 10 or under; none is over 30. Then Portland's own rule for backing
+  into an alley (20 feet of room from the end of the parking space to the
+  far side of the alley, with the shortfall made up on the lot — the
+  sentence quoted in the entry above) sets the court: 18 feet for the
+  space plus 6 on a 14-foot alley. Gresham's figure counts the alley's
+  width toward its 23-foot one-way aisle the same way. An edge is not on
+  the alley — and the lot does not park off it — where fewer than three
+  of the five lines find an alley of 8 to 40 feet with the centreline in
+  it: 343 lots lost their alley this way (333 Portland, 10 Gresham).
+  278 of them had a neighbour's lot directly across the "alley" line
+  with the alley 20 to 50 feet behind it — those are the wrong greens the
+  probe found — 34 have the alley as an easement along the lot line with
+  no width the map can give, and the rest are dead ends and public
+  strips under 8 feet wide (4 to 7 feet; no car backs into one). And
+  2,636 rows that were streets, rivers and railways drawn as lots are
+  out of the count for good (one was green, 39 in review).
+
+  *What it did, both ways.* **Green 20,462 → 20,204, review 13,626 →
+  13,519, red 255,757 → 256,122** (before-figures counted on the same
+  289,845 lots). The 369 moves: 258 green → red, all Portland — 36 of them lost the alley altogether (a neighbour's lot was across the line), and 222 keep a real alley but lose stalls or the court to the back-out room its measured width demands, because they had exactly a stall's depth to spare and the trusted width had asked for nothing more; 109 review → red the same two ways; and 2 red → review, where the deeper court happened to fit a fourth stall. Every lot that changed in any way —
+  1,379 of them — sits within 50 feet of an alley; every other lot in the
+  two counties is byte-for-byte what it was. Portland's alley-aisle plans went from 5,579 to 5,256, and 3,064 of those are green; the alley behind them is 15 feet at the median, 4,453 are narrower than the 20 feet the back-out rule wants and pave the difference on the lot, and 140 are under 10 feet. Of the 332 plans that are gone, 289 lost the court to the deeper depth, and 132 of the 332 had been green.
+
+  *For the record.* The Portland row carries `alley_backout_ft: 20` with
+  the sentence; Gresham's row leaves it empty and the aisle stands in, as
+  its figure says. The width sits in the results file as
+  `alley_width_ft` beside every lot that has one, and the summary now
+  says how many alley-aisle plans have a width on record and how many
+  pave a shortfall. Nothing in the alley drawing is trusted any more; the
+  24-foot lane on the lots that keep one still is.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

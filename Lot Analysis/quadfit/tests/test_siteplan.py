@@ -57,6 +57,8 @@ def _sp_setup(res: float = 0.5):
             "open_by_zone": dict(dw.open_space_sqft_by_zone),
             "alley_access": bool(dw.alley_access_required),
             "alley_aisle": bool(dw.alley_is_aisle),
+            "alley_need": (dw.alley_backout_ft if dw.alley_backout_ft is not None
+                           else geom.aisle_one_way_ft),
         }},
         "methods": ["townhome_rear_court", "townhome_rear_court_alley",
                     "townhome_rear_court_alley_aisle"],
@@ -90,6 +92,9 @@ def _sp_setup_cities(res: float = 0.5):
             "open_by_zone": dict(dw.open_space_sqft_by_zone) if dw else {},
             "alley_access": bool(dw and dw.alley_access_required),
             "alley_aisle": bool(dw and dw.alley_is_aisle),
+            "alley_need": (dw.alley_backout_ft
+                           if dw and dw.alley_backout_ft is not None
+                           else g.aisle_one_way_ft),
         }
 
     s6s_siteplan._init_worker({
@@ -116,11 +121,12 @@ def _rect_lot(W: float, D: float):
 
 def _run(s6s, env, front_edges, area, bearing=0.0, jurisdiction="gresham",
          zone="", parking_setback_ft=None, front_setback_ft=None,
-         alley_edges=None, alley_setback_ft=0.0):
+         alley_edges=None, alley_setback_ft=0.0, alley_width_ft=None):
     return s6s.layout_lot(
         shapely.to_wkb(env), [bearing], front_edges, area,
         FRONT_S if front_setback_ft is None else front_setback_ft,
-        jurisdiction, zone, parking_setback_ft, alley_edges, alley_setback_ft)
+        jurisdiction, zone, parking_setback_ft, alley_edges, alley_setback_ft,
+        alley_width_ft)
 
 
 def _alley_lot(W: float, D: float, where: str = "rear"):
@@ -145,12 +151,15 @@ def _alley_lot(W: float, D: float, where: str = "rear"):
     return env, fe, ae, lot.area
 
 
-def _run_pdx(s6s, env, fe, ae, area, bearing=0.0):
-    """Portland's cell, with the alley edges and the alley setback handed in
-    the way s6s main() hands them."""
+def _run_pdx(s6s, env, fe, ae, area, bearing=0.0, alley_width_ft=20.0):
+    """Portland's cell, with the alley edges, the alley setback and the
+    alley's measured width handed in the way s6s main() hands them. The
+    width defaults to the twenty feet Portland's back-out rule asks, so a
+    test about the drawing and not the width owes nothing on the lot."""
     return _run(s6s, env, fe, area, bearing=bearing, jurisdiction="portland",
                 zone="R5", parking_setback_ft=10.0,
-                alley_edges=ae, alley_setback_ft=REAR_S)
+                alley_edges=ae, alley_setback_ft=REAR_S,
+                alley_width_ft=alley_width_ft)
 
 
 # ---------------------------------------------------------------------------
@@ -761,9 +770,12 @@ def test_a_gresham_lot_with_an_alley_parks_off_it_across_the_alley_column():
     street, as the pavement between court and alley. Since 2026-09-13 the
     twenty-foot reading is not refused either: Figure 9.0825A lets the alley
     width count as the aisle, so the shallow court parks its eight against
-    the alley and backs out into it, on the drawing that says so by name.
-    The thirteen-foot reading still prefers the court's own aisle at the
-    same eight -- a plan that needs no alley width wins the tie."""
+    the alley and backs out into it, on the drawing that says so by name --
+    with the alley's MEASURED width, 20 ft here, counted toward the 23 ft
+    one-way aisle and the three-foot difference paved on the lot behind
+    the stalls, exactly as the figure's note has it. The thirteen-foot
+    reading still prefers the court's own aisle at the same eight -- a plan
+    that needs no alley wins the tie."""
     s6s = _sp_setup_cities()
     from common import load_rules
     from s5_envelope import build_envelope, lot_setbacks
@@ -780,13 +792,16 @@ def test_a_gresham_lot_with_an_alley_parks_off_it_across_the_alley_column():
         env = build_envelope(lot, edges, {**sb, "A": alley_setback}, "A")
         return env, _run(s6s, env, fe, W * D, jurisdiction="gresham", zone="LDR-5",
                          front_setback_ft=sb["F"],
-                         alley_edges=ae, alley_setback_ft=alley_setback)
+                         alley_edges=ae, alley_setback_ft=alley_setback,
+                         alley_width_ft=20.0)
 
     env_r, r_rear = plan(sb["R"])          # the alley charged as a plain rear
     assert r_rear["site_plan_ok"] is True
     assert r_rear["layout_method"] == "townhome_rear_court_alley_aisle"
     assert r_rear["stalls_provided"] == 8
-    assert r_rear["parking_area_sqft"] == pytest.approx(8 * 8.5 * 18.5)   # no aisle on the lot
+    # Eight stalls, and the 3 ft of the 23 ft aisle the 20 ft alley does not
+    # cover, paved along the row on the lot.
+    assert r_rear["parking_area_sqft"] == pytest.approx(8 * 8.5 * 18.5 + 3.0 * 8 * 8.5)
     env_a, r = plan(sb["A"])               # the alley column, roof plane included
     assert env_a.bounds[3] == pytest.approx(D - 13.0)
     assert env_a.area > env_r.area
@@ -981,8 +996,9 @@ def test_with_no_setback_from_the_alley_the_court_stands_on_the_alley_line():
     line, the lane is nothing, and nothing drawn leaves the lot. Five feet is
     a car's length short on 6,700 of Portland's 11,519 alley lots. (Since the
     2026-09-13 ruling the five-foot reading parks its eight against the alley
-    instead of failing; the zero-foot reading keeps the court's own aisle at
-    the same eight, because that plan trusts no alley width.)"""
+    instead of failing -- a 14 ft alley, the typical one, with six feet of
+    back-out room paved on the lot; the zero-foot reading keeps the court's
+    own aisle at the same eight, because that plan needs no alley.)"""
     s6s = _sp_setup_cities()
     from common import load_rules
     from s5_envelope import build_envelope, lot_setbacks
@@ -999,11 +1015,13 @@ def test_with_no_setback_from_the_alley_the_court_stands_on_the_alley_line():
         env = build_envelope(lot, edges, {**sb, "A": alley_setback}, "A")
         return env, _run(s6s, env, fe, W * D, jurisdiction="portland", zone="R5",
                          parking_setback_ft=10.0, front_setback_ft=sb["F"],
-                         alley_edges=ae, alley_setback_ft=alley_setback)
+                         alley_edges=ae, alley_setback_ft=alley_setback,
+                         alley_width_ft=14.0)
 
     env_r, r_rear = plan(sb["R"])         # yesterday: the alley charged as a rear
     assert r_rear["layout_method"] == "townhome_rear_court_alley_aisle"
     assert r_rear["stalls_provided"] == 8
+    assert r_rear["parking_area_sqft"] == pytest.approx(8 * 9.0 * 18.0 + 6.0 * 8 * 9.0)
     env_0, r = plan(0.0)                  # today: the code's own zero
     assert env_0.bounds[3] == pytest.approx(D)      # the envelope runs to the alley line
     assert env_0.area > env_r.area
@@ -1092,6 +1110,11 @@ def test_footprints_yaml_lets_two_cities_use_the_alley_as_the_aisle():
         assert sp.driveway_for(j).alley_access_required is True, j
     assert "9.0825A" in sp.driveway_for("gresham").cite
     assert "townhome_rear_court_alley_aisle" in sp.layout_methods
+    # The back-out room the alley's measured width is held against: Portland
+    # states its twenty (33.266.130.F.1.b(2)); Gresham's row leaves it empty
+    # and the one-way aisle stands in, as Figure 9.0825A's note says.
+    assert sp.driveway_for("portland").alley_backout_ft == 20
+    assert sp.driveway_for("gresham").alley_backout_ft is None
 
 
 def test_a_typical_portland_alley_lot_parks_against_the_alley_and_backs_into_it():
@@ -1099,9 +1122,12 @@ def test_a_typical_portland_alley_lot_parks_against_the_alley_and_backs_into_it(
     40 ft of envelope wide, the pod turned to fit it (36 wide, 56 deep), and
     29 ft left behind the pod -- 13 short of a stall and its aisle, which is
     why 8,228 of Portland's 11,519 alley lots were `court_too_shallow`. With
-    the alley as the aisle the court needs 18, and four stalls stand against
-    the alley line and back straight out into it: the minimum tier, no lane,
-    no aisle on the lot, and the plan named for the width it trusts."""
+    the alley as the aisle and a 20 ft alley behind the lot the court needs
+    18, and four stalls stand against the alley line and back straight out
+    into it: the minimum tier, no lane, no aisle on the lot, and the plan
+    named for the drawing it stands on. The width is measured, not trusted:
+    `test_the_alleys_width_is_paid_for_on_the_lot` is the same lot on the
+    alleys Portland actually has."""
     s6s = _sp_setup_cities()
     from common import load_rules
     from s5_envelope import build_envelope, lot_setbacks
@@ -1115,10 +1141,11 @@ def test_a_typical_portland_alley_lot_parks_against_the_alley_and_backs_into_it(
     env = build_envelope(lot, edges, sb, "A")
     assert env.bounds == pytest.approx((5.0, 10.0, 45.0, 100.0))
 
-    def plan(alley_edges):
+    def plan(alley_edges, width=20.0):
         return _run(s6s, env, fe, W * D, jurisdiction="portland", zone="R5",
                     parking_setback_ft=10.0, front_setback_ft=sb["F"],
-                    alley_edges=alley_edges, alley_setback_ft=0.0)
+                    alley_edges=alley_edges, alley_setback_ft=0.0,
+                    alley_width_ft=width)
 
     r0 = plan([])                                   # from the street: no aisle fits
     assert r0["site_plan_ok"] is False and r0["layout_fail"] == "court_too_shallow"
@@ -1158,9 +1185,60 @@ def test_a_typical_portland_alley_lot_parks_against_the_alley_and_backs_into_it(
     r_rot = _run(s6s, affinity.rotate(env, theta, origin=(0.0, 0.0)), [rot(fe[0])], W * D,
                  bearing=theta, jurisdiction="portland", zone="R5",
                  parking_setback_ft=10.0, front_setback_ft=sb["F"],
-                 alley_edges=[rot(ae[0])], alley_setback_ft=0.0)
+                 alley_edges=[rot(ae[0])], alley_setback_ft=0.0, alley_width_ft=20.0)
     assert r_rot["layout_method"] == "townhome_rear_court_alley_aisle"
     assert r_rot["stalls_provided"] == 4
+
+
+def test_the_alleys_width_is_paid_for_on_the_lot():
+    """33.266.130.F.1.b(2): "there must be a maneuvering area of at least
+    20 feet between the end of each parking space and the opposite side of
+    the alley. If the alley is less than 20 feet wide, some of this
+    maneuvering area will be on-site." The same 50 x 100 R5 lot, 29 ft
+    behind the pod, on the alleys Portland actually has (s4 measures them
+    across the taxlot fabric; the typical one is 14 ft):
+
+    - 14 ft: the stalls stand six feet in from the alley line, the six feet
+      are pavement counted in the parking area, and the court needs 24.
+    - 10 ft: ten feet in, the court needs 28 of its 29. Still four cars.
+    - 8 ft: the court would need 30. `court_too_shallow` -- an alley two
+      feet narrower is a lot one foot too shallow.
+    - no width on record: laid out as if the alley were nothing, so the
+      court would need 38. Refused, the strict way; it used to pass."""
+    s6s = _sp_setup_cities()
+    from common import load_rules
+    from s5_envelope import build_envelope, lot_setbacks
+
+    W, D = 50.0, 100.0
+    lot = box(0.0, 0.0, W, D)
+    edges = [[0, 0, W, 0, "F"], [W, 0, W, D, "S"], [W, D, 0, D, "A"], [0, D, 0, 0, "S"]]
+    fe, ae = [[0.0, 0.0, W, 0.0]], [[0.0, D, W, D]]
+    sb = lot_setbacks(load_rules().jurisdictions["portland"].rule_for("R5"), W * D, "A")
+    env = build_envelope(lot, edges, sb, "A")
+
+    def plan(width):
+        return _run(s6s, env, fe, W * D, jurisdiction="portland", zone="R5",
+                    parking_setback_ft=10.0, front_setback_ft=sb["F"],
+                    alley_edges=ae, alley_setback_ft=0.0, alley_width_ft=width)
+
+    for width, on_site in ((14.0, 6.0), (10.0, 10.0)):
+        r = plan(width)
+        assert r["site_plan_ok"] is True, width
+        assert r["layout_method"] == "townhome_rear_court_alley_aisle"
+        assert r["stalls_provided"] == 4
+        assert r["parking_area_sqft"] == pytest.approx(4 * 9.0 * 18.0 + on_site * 4 * 9.0)
+        stalls = [r["geoms"][k] for k in sorted(r["geoms"]) if k.startswith("stall_")]
+        assert len(stalls) == 4
+        for st in stalls:
+            x0, y0, x1, y1 = st.bounds
+            assert y1 == pytest.approx(D - on_site, abs=0.6), width   # the room, on the lot
+            assert y1 - y0 == pytest.approx(18.0, abs=0.6)
+            assert lot.buffer(0.01).contains(st)
+    for width in (8.0, None):
+        r = plan(width)
+        assert r["site_plan_ok"] is False, width
+        assert r["layout_fail"] == "court_too_shallow", width
+        assert r["layout_method"] == "none", width
 
 
 def test_a_court_deep_enough_for_its_own_aisle_keeps_it():

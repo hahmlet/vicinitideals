@@ -626,12 +626,15 @@ siteplan:
     # dimension, but all stalls must be on private property, off the public
     # right-of-way." That is `alley_is_aisle`, taken 2026-09-13: on an
     # alley-fed lot the row of stalls along the alley backs out into it and
-    # the court is asked for the stall depth alone. The alley's width is not
-    # in any file held here (PWS Table 6.04's "Alleys 25" is a clear-vision
-    # triangle) and is trusted; the stalls stay on the lot, off the
-    # right-of-way, as the note asks. The corpus holds 7.0420(B)(1) as NOT
-    # ENCODED (gresham.yaml, driveway notes) for the same reason Portland's
-    # is: FLATS has no alley fact yet.
+    # the court is asked for the stall depth plus whatever the alley's width
+    # leaves short of the one-way aisle (A1, 23 ft) -- the note's own
+    # arithmetic, with the alley's width MEASURED by s4 across the gap in
+    # the taxlot fabric, this lot to the first private lot beyond (PWS Table
+    # 6.04's "Alleys 25" is a clear-vision triangle, not a width). No
+    # `alley_backout_ft` on this row: empty means A1, as the note says. The
+    # stalls stay on the lot, off the right-of-way, as the note asks. The
+    # corpus holds 7.0420(B)(1) as NOT ENCODED (gresham.yaml, driveway
+    # notes) for the same reason Portland's is: FLATS has no alley fact yet.
     gresham:
       approach_min_ft: 9
       approach_max_ft: 10
@@ -679,16 +682,25 @@ siteplan:
     # alley. However, there must be a maneuvering area of at least 20 feet
     # between the end of each parking space and the opposite side of the
     # alley. If the alley is less than 20 feet wide, some of this
-    # maneuvering area will be on-site." No file here states an alley's
-    # width, so the ruling trusts it; the plans that rest on that trust are
-    # `townhome_rear_court_alley_aisle` in every output. 8,228 of Portland's
-    # 11,519 alley lots were `court_too_shallow` on 2026-09-12 for want of
-    # 42 ft behind the pod; see docs/HUMAN_TODO.md for the decision as put.
+    # maneuvering area will be on-site." That sentence's twenty is
+    # `alley_backout_ft`, applied to the alley's MEASURED width: s4 measures
+    # the gap in the taxlot fabric from this lot to the first private lot
+    # beyond, looking through the right-of-way polygon where the file draws
+    # one (the typical Portland alley is 14 ft; 12 to 16 on two thirds of
+    # them), and the court is asked for the stall depth plus the shortfall
+    # (18 + 6 on a 14 ft alley), paved on the lot between the stalls and
+    # the alley line.
+    # Until 2026-09-13 the width was trusted; it is not any more. The plans
+    # that rest on the ruling are `townhome_rear_court_alley_aisle` in every
+    # output. 8,228 of Portland's 11,519 alley lots were `court_too_shallow`
+    # on 2026-09-12 for want of 42 ft behind the pod; see docs/HUMAN_TODO.md
+    # for the decision as put.
     portland:
       drive_min_one_way_ft: 9
       drive_min_two_way_ft: 9
       alley_access_required: true
       alley_is_aisle: true
+      alley_backout_ft: 20
       parking_front_prohibited: true
       parking_front_yard_max_pct: 40
       parking_street_setback_ft: 10
