@@ -4,34 +4,7 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **On a Portland alley lot, is the alley the aisle?** After the setback
-   relief (2026-09-12 evening) 8,228 of Portland's 11,519 alley lots are
-   still `court_too_shallow` (tier A 7,043; R5 4,183, R2.5 2,838, RM1 580),
-   and the typical one is 50 x 100 ft. s6s asks the court for
-   `stall_depth_ft + aisle_two_way_ft` = 18 + 24 = 42 ft behind the pod;
-   the 24 is `aisle_assumed: true` in `config/footprints.yaml` (SUDAS 8B-1,
-   PCC 33.266.120 states the 9 x 18 space and no aisle), and on an alley-fed
-   court the cars back straight into the alley, so the aisle drawn inside
-   the lot is the alley itself. DECISION for Steph (plain English is in
-   HUMAN_TODO): let the alley count as the aisle on `townhome_rear_court_alley`
-   plans, and on what alley width — RLIS carries none; 33.266.130.F.1.b(2)
-   (which excludes .120 areas) speaks of 20 ft of manoeuvring across an
-   alley. If yes: in s6s the alley-fed court needs `stall_depth` (+ the
-   part of the aisle the alley does not supply) and the lane test stays; an
-   s6s change is s6s→s7 only (~10 min), measured both ways against
-   `/root/lots_results_after_galley.csv` on 137. Offered 2026-09-12.
-   **Gresham answers the first half in its own code** (found 2026-09-13):
-   Figure 9.0825A's note, `gresham/9.0800.parking.txt#L355-L357` — *"For
-   one row of stalls use stall depth (D) plus aisle width (A1 or A2) as
-   minimum width. Public alley width may be included as part of aisle
-   width (A1 or A2) dimension, but all stalls must be on private property,
-   off the public right-of-way."* So for Gresham it is not an assumption
-   but a stated relief; the alley WIDTH is still the unknown for both
-   cities (PWS Table 6.04 "Alleys 25" is a clear-vision triangle, not a
-   width; RLIS carries none). Gresham's 214 alley lots are 194
-   `lot_below_zone_min_area`, so the relief buys Gresham little; Portland's
-   8,228 are the stake.
-2. **Wire `abuts_alley` into FLATS from quadfit class `A`, and name the
+1. **Wire `abuts_alley` into FLATS from quadfit class `A`, and name the
    line.** The site fact is registered in `flats/rules/fields.py` and nothing
    fills it; s4's `edges_json` carries the answer for 11,794 lots, and s6s
    acts on it for Portland (`DrivewayRules.alley_access_required`, the one
@@ -48,7 +21,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `flats/encode/port_quadfit.py`). Encode the rear/side variants the day the
    per-line fact exists. One job with the bearing + neighbour-zone facts
    already noted as computable. Carried from 2026-09-12.
-3. **Wilsonville and West Linn send the driveway to the alley too; Milwaukie
+2. **Wilsonville and West Linn send the driveway to the alley too; Milwaukie
    does not.** Read 2026-09-13 while doing Gresham: Wilsonville
    4.113(.14)(D)(4)(c)(i) (`wilsonville/4.planning.txt#L3556-L3559`, the
    quadplex driveway standard: *"For lots or parcels abutting an alley that
@@ -70,7 +43,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `court_too_shallow`, 3 `no_side_lane`; West Linn 24 R-5: 14
    `siteplan_no_layout`, 11 of them `no_court`). Neither city states an
    alley setback. Offered 2026-09-13.
-4. **5,614 lots still get a "narrowest street edge" under 20 ft beside a
+3. **5,614 lots still get a "narrowest street edge" under 20 ft beside a
    real run of 45 ft or more** (2,655 in the clean shape tiers; Portland
    3,925). The tractable part is ~1,300 end-of-street corner arcs of two or
    more chords (20–45 ft): the second street lies past the 50 ft the edge
@@ -82,7 +55,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ringed by street, plus 128 lots whose street run continues straight into
    a non-street line (44 picked as the front) — likely a street the file
    does not carry. Carried from 2026-09-11, widened 2026-09-12.
-5. **Happy Valley cul-de-sac frontage (22 review lots)** — HV asks 35 ft on
+4. **Happy Valley cul-de-sac frontage (22 review lots)** — HV asks 35 ft on
    a bulb and more on a straight street; the screen cannot tell a bulb. The
    curve-merge machinery in `lotdims.front_groups` now knows a chord chain's
    radius and sweep, which is most of a bulb detector. Carried from 2026-09-11.

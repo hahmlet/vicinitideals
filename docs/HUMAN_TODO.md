@@ -5,13 +5,12 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-13, small hours, after Gresham's
-alley lots got their alley setback and alley access, which moved nothing;
-the numbers are the 2026-09-12 evening ones — see the three alley entries in
-the queued list): **green
-17,163 · review 13,053 · red 262,265** across 292,481 lots in **14** cities
+Pipeline state when last updated (2026-09-13, small hours, after Steph's
+ruling that on an alley lot the alley is the parking aisle — see the first
+alley entry in the queued list): **green
+20,463 · review 13,665 · red 258,353** across 292,481 lots in **14** cities
 laid out with real site plans. Greens by city: Portland
-13,408 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
+16,708 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
 Troutdale 117 · unincorporated Clackamas 113 · Wood Village 83 · Wilsonville
 53 · unincorporated Multnomah 1. (The 2026-09-03
 figures the prose below still quotes in places were green 16,530 · review
@@ -3610,7 +3609,7 @@ the list of places worth hoping about.
   done the same afternoon, next entry. **Portland waives the setback from an
   alley altogether** (33.110.220.D.9) and Fairview lets a garage sit on the
   alley line; neither relief is modelled, which is the strict side, and the
-  Portland one is now first in the agent's queue. And **5,614 lots still have a narrowest
+  Portland one was taken the same evening (next entries). And **5,614 lots still have a narrowest
   street edge under 20 feet beside a real run of 45 feet or more** (2,655 of
   them in the clean shape tiers; Portland 3,925, Happy Valley 378,
   Wilsonville 370, West Linn 364, Oregon City 348) — slivers, notches, stubs
@@ -3670,8 +3669,9 @@ the list of places worth hoping about.
   any alley is; Portland's parking chapter speaks of 20 feet of manoeuvring
   room across one) — is the decision
   that governs those 8,228 lots, roughly 7,000 of them the plain rectangles.
-  It is a decision about the screen's assumption, not about the code, and it
-  is first in the agent's queue with the question spelled out.
+  It is a decision about the screen's assumption, not about the code. **Ruled
+  2026-09-13 ("alley is lane") — built, run and measured the same night;
+  the entry above this one has the numbers.**
 
   *On the encoding side.* The same sentence had been read into the encoding
   in September for the garage entrance only, and the letter of the
@@ -3749,6 +3749,69 @@ the list of places worth hoping about.
   and no Fairview lot within 50 feet of an alley — moot on the data, not
   refused.
 
+- **On an alley lot, the alley is the parking aisle — your ruling of
+  2026-09-13 ("alley is lane"), built, run and measured the same night:
+  3,300 Portland lots went red → green and 612 more red → review; nothing
+  went the other way.** The question, as put: the screen used to insist
+  that every lot hold an 18-foot parking space AND a 24-foot lane behind
+  the homes for the cars to back out into — 42 feet — and the typical
+  Portland alley lot, 50 by 100, has about 29 feet behind the homes. But
+  on an alley lot the cars back straight out into the alley; the lane
+  the screen was drawing inside the lot was the alley itself. Portland's
+  own fourplex parking rule states the space and says nothing about a
+  lane. Gresham's parking figure says in so many words that a public
+  alley's width may count as the aisle, provided every parking space
+  stays on private land. You ruled that the alley counts.
+
+  *What it does.* On a lot with an alley behind it (or beside it), the row
+  of parking spaces along the alley now stands against the alley line,
+  18 feet deep into the lot, and the cars back out into the alley; no
+  lane is drawn inside the lot. It is only used where it seats MORE cars
+  than a lot's own lane would — a lot deep enough for its own lane keeps
+  it — so the count of plans resting on the alley is the count that need
+  it. Every such plan is named for what it rests on
+  (`townhome_rear_court_alley_aisle`) in every table and in the results
+  file, and the summary says how many greens stand on it. Both cities
+  that send the driveway to the alley carry the rule: Gresham because its
+  code states it, Portland because you ruled it — and Portland's row says
+  which. **The caveat, written into the code and the summary:** no
+  ordinance and no map we hold states how wide any alley is (the "25" in
+  Gresham's public-works table is a sight-line triangle, not an alley).
+  The plans trust the alley's width the way the 24-foot lane trusted a
+  national manual. If an alley turned out to be too narrow to back into,
+  those plans would be wrong; there are 5,579 of them, all in Portland,
+  and each is marked.
+
+  *What it did, both ways.* **Green 17,163 → 20,463, review 13,053 →
+  13,665, red 262,265 → 258,353.** 3,300 red lots went green (R5 1,880,
+  R2.5 1,420; 3,272 of them in the clean shape tier), every one refused
+  the night before for a court too shallow and laid out tonight with four
+  to eight cars against the alley — 3,240 in the minimum tier (four or
+  five cars), 51 in the target tier (six or seven), 9 in the preferred (eight). 612 red lots came back to the review queue the same
+  way (RM1 323, RM2 124, R5 76, R2.5 51, the rest CM/RM3), held now on an
+  unverified zone (427), unconfirmed sewer (85), slope (39) or the
+  density floor rather than on the plan. The other way: **no green and no
+  review lot went red, no lot lost a plan, no lot lost a car** (24 lots
+  that already had a plan off their own lane traded it for the alley
+  because the alley seated more — four cars to five, six to eight), and
+  every city but Portland, and every Portland lot without an alley, is
+  byte-for-byte what it was. Gresham's 214 alley lots did not move for the
+  reason already recorded (194 are under their zone's minimum lot size).
+  Of Portland's 11,519 alley lots, 8,228 were refused for a shallow court
+  the night before; 2,673 still are (their ground behind the homes is
+  under 18 feet, or the court cannot reach the alley), and 1,563 now draw
+  a plan of one to three cars and are refused for too few — a truer reason
+  than "no plan", and the same colour. Greens by city: Portland 13,408 →
+  16,708. Of Portland's 4,286 greens with an alley, 3,314 park against the
+  alley and 972 keep a lane of their own.
+
+  *For the record.* The Portland row in the driveway table carries the
+  ruling with the date and the words "STEPH'S RULING", the nearest sentence
+  Portland has (its all-other-buildings chapter lets cars back into an
+  alley given 20 feet of room to its far side), and the note that the
+  fourplex chapter is silent. The 24-foot lane on the lots that keep one
+  is still the assumed number it was.
+
 - **Gresham's alley lots now get Gresham's alley setback and Gresham's
   alley-access rule — built and run 2026-09-13, small hours; no lot changed
   colour, and the run says why.** Gresham prints a "Rear With Alley" column
@@ -3788,7 +3851,8 @@ the list of places worth hoping about.
   file states is how wide any alley is (the 25 in Gresham's public-works
   table turned out to be a sight-triangle, not an alley width). The
   decision stays with you, with that evidence added; the stake is
-  Portland's 8,228 lots, not Gresham's handful. Wilsonville and West Linn
+  Portland's 8,228 lots, not Gresham's handful. (Ruled the same night —
+  the entry above.) Wilsonville and West Linn
   also send the driveway to the alley (54 lots between them, all red
   today); Milwaukie only lets a stall sit near one. Those two are next in
   the agent's queue, ten minutes each.

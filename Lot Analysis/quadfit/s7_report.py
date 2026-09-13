@@ -828,6 +828,35 @@ def main() -> None:
                   "own; only the aisle width comes from the national standard, "
                   "because the city never published one. "
                   "`geometry_assumed` marks them in `lots_results.csv`.")
+    if "layout_method" in lots.columns:
+        # The other trust a plan can rest on, and the larger one: the alley
+        # as the aisle (Steph's ruling of 2026-09-13; Gresham Figure 9.0825A).
+        # No file states an alley's width, so these plans assume it.
+        oa = (lots["layout_method"].astype(str).to_numpy()
+              == "townhome_rear_court_alley_aisle")
+        green = lots["triage"].to_numpy() == "green"
+        n_oa = int((oa & green).sum())
+        if n_oa:
+            per = lots.loc[oa & green, "jurisdiction"].value_counts()
+            # Portland's aisle is assumed, so its alley-fed greens are inside
+            # the figure above as well; say so rather than let the two counts
+            # look like they add.
+            n_both = (int((oa & green & lots["geometry_assumed"].fillna(False)
+                           .to_numpy().astype(bool)).sum())
+                      if "geometry_assumed" in lots.columns else 0)
+            L.append(
+                f"\nOf the greens, **{n_oa:,}** park against the alley and back "
+                "out into it (" + ", ".join(f"{k} {v:,}" for k, v in per.items())
+                + ") — the court is one stall deep and the alley is its aisle. "
+                  "Gresham's parking figure says the alley width may count; "
+                  "Portland's fourplex chapter states no aisle at all; neither "
+                  "city nor the street file states how wide any alley is, so "
+                  "the width is trusted. `layout_method = "
+                  "townhome_rear_court_alley_aisle` marks them in `lots_results.csv`."
+                + (f" {n_both:,} of them are also inside the assumed-aisle figure "
+                   "above (the city's aisle is assumed, and the lot keeps its "
+                   "city's row) though on the lot itself they draw no aisle at all."
+                   if n_both else ""))
     L.append("\nThe human-review queue is `review_candidates.csv`.")
 
     # What the queue is actually made of. The binding-constraint table below
@@ -1146,7 +1175,8 @@ def main() -> None:
                         f"| {sp.stall_cap_for(c)} | {int(m.sum()):,} "
                         f"| {ok_c:,} ({_pct(ok_c, int(m.sum()))}) |")
             methods = [(meth, int((pil["layout_method"] == meth).to_numpy().sum()))
-                       for meth in ("townhome_rear_court", "townhome_rear_court_alley")]
+                       for meth in ("townhome_rear_court", "townhome_rear_court_alley",
+                                    "townhome_rear_court_alley_aisle")]
             method_str = ", ".join(f"{meth} {n:,}" for meth, n in methods if n)
             ok_os = int(pil["open_space_ok"].to_numpy().sum())
             L.append(f"\nLayout method used: {method_str or 'none'}. "

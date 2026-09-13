@@ -903,6 +903,26 @@ class DrivewayRules(BaseModel):
     #: ft of an alley in the streets file (measured 2026-09-12). Moot on the
     #: data, not refused; revisit when either changes.
     alley_access_required: bool | None = None
+    #: True where, on an alley-fed lot, the row of stalls along the alley may
+    #: back straight out into it -- the alley is the aisle, and the court is
+    #: asked for a stall depth instead of a stall and an aisle. Two grounds,
+    #: one per city that carries it. Gresham states it, Figure 9.0825A's
+    #: note: "Public alley width may be included as part of aisle width (A1
+    #: or A2) dimension, but all stalls must be on private property, off the
+    #: public right-of-way." Portland does not state it of this building --
+    #: 33.266.120 gives the fourplex a 9 x 18 stall and neither an aisle nor a
+    #: forward-motion rule, and 33.266.130.F.1.b(2) says of all OTHER
+    #: development that parking "may be designed so that vehicles back out
+    #: into an alley" with 20 ft of manoeuvring to its far side -- so on
+    #: Portland's row this is Steph's ruling of 2026-09-13 on the screen's
+    #: own assumption (the 24 ft aisle is SUDAS, not the code; see
+    #: `StallGeometry.aisle_assumed`), recorded in docs/HUMAN_TODO.md. No
+    #: code and no file states an alley's width; a plan drawn this way trusts
+    #: it, and s6s names such plans `townhome_rear_court_alley_aisle` so the
+    #: number that trust is doing is always countable. Meaningless without
+    #: `alley_access_required`; not a FLATS field (the corpus has no alley
+    #: fact), so the drift test does not check it.
+    alley_is_aisle: bool | None = None
 
     #: `open_space_min_pct` -- private open space as a share of the gross lot.
     #: Gresham states 15 percent and is now the only city that gets it, where
@@ -995,16 +1015,22 @@ class SiteplanSpec(BaseModel):
     parking_per_unit_preferred: float = 2.0  # 8 / pod (where the city caps none)
     units_per_pod: int = 4
 
-    # One typology, two ways in (see class docstring). `townhome_rear_court`
+    # One typology, three ways in (see class docstring). `townhome_rear_court`
     # is the pod across the front, a lane down one side from the street and a
     # court behind; `townhome_rear_court_alley` is the same pod and the same
     # court reached from the alley instead, drawn only in a city that sets
-    # `alley_access_required` and only on a lot with an alley edge. Kept as a
-    # list so a future cell can add typologies without a schema change.
+    # `alley_access_required` and only on a lot with an alley edge;
+    # `townhome_rear_court_alley_aisle` is that court with its stalls against
+    # the alley and backing out into it, drawn only where the city's row adds
+    # `alley_is_aisle` and only where it seats more stalls than the court's
+    # own aisle would. Kept as a list so a future cell can add typologies
+    # without a schema change.
     layout_methods: list[Literal["townhome_rear_court",
-                                 "townhome_rear_court_alley"]] = Field(
+                                 "townhome_rear_court_alley",
+                                 "townhome_rear_court_alley_aisle"]] = Field(
         default_factory=lambda: ["townhome_rear_court",
-                                 "townhome_rear_court_alley"]
+                                 "townhome_rear_court_alley",
+                                 "townhome_rear_court_alley_aisle"]
     )
 
     # Stall + drive geometry, per jurisdiction — never one global number. See

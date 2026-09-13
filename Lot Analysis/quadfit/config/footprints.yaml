@@ -109,7 +109,7 @@ siteplan:
   parking_per_unit_target: 1.5     # 6/pod  (design target)
   parking_per_unit_preferred: 2.0  # 8/pod  (preferred; legal — no LDR-5 ceiling)
   units_per_pod: 4
-  layout_methods: [townhome_rear_court, townhome_rear_court_alley]
+  layout_methods: [townhome_rear_court, townhome_rear_court_alley, townhome_rear_court_alley_aisle]
   # Stall + aisle, per city, mirroring the FLATS corpus defaults for each
   # (flats/config/jurisdictions/or/multnomah/*.yaml). A drift test asserts they
   # still match, so change the corpus and re-run it — not this file alone.
@@ -619,18 +619,26 @@ siteplan:
     # and the plain rear in CMF where the alley column is the townhouse's).
     # 7.0420(B)(5)(c) lets two spaces per unit sit "in the rear yard setback
     # when there is an alley", which this stage does not take: the strip
-    # stays pavement, not stalls. Figure 9.0825A's note, "Public alley width
-    # may be included as part of aisle width", is the alley-as-aisle relief
-    # this stage does not take either, for want of an alley width in the
-    # streets file (FOLLOWUPS). The corpus holds 7.0420(B)(1) as NOT ENCODED
-    # (gresham.yaml, driveway notes) for the same reason Portland's is: FLATS
-    # has no alley fact yet.
+    # stays pavement, not stalls. Figure 9.0825A's note
+    # (`gresham/9.0800.parking.txt#L355-L357`): "For one row of stalls use
+    # stall depth (D) plus aisle width (A1 or A2) as minimum width. Public
+    # alley width may be included as part of aisle width (A1 or A2)
+    # dimension, but all stalls must be on private property, off the public
+    # right-of-way." That is `alley_is_aisle`, taken 2026-09-13: on an
+    # alley-fed lot the row of stalls along the alley backs out into it and
+    # the court is asked for the stall depth alone. The alley's width is not
+    # in any file held here (PWS Table 6.04's "Alleys 25" is a clear-vision
+    # triangle) and is trusted; the stalls stay on the lot, off the
+    # right-of-way, as the note asks. The corpus holds 7.0420(B)(1) as NOT
+    # ENCODED (gresham.yaml, driveway notes) for the same reason Portland's
+    # is: FLATS has no alley fact yet.
     gresham:
       approach_min_ft: 9
       approach_max_ft: 10
       alley_access_required: true
+      alley_is_aisle: true
       open_space_pct: 15
-      cite: GDC 7.0420(B)(2)(b)(ii) approach width; PWS 6.03 approach minimum; 7.0420(B)(1) alley access; 7.0420(D)(1) private open space
+      cite: GDC 7.0420(B)(2)(b)(ii) approach width; PWS 6.03 approach minimum; 7.0420(B)(1) alley access; Figure 9.0825A note alley width as aisle; 7.0420(D)(1) private open space
     # Portland is the only city that bans front parking outright AND caps the
     # front yard AND sets a stall back from the street — 33.266.120.C.1.a,
     # .C.2 and .C.1.b. All three are satisfied by a rear court, and the ban
@@ -658,10 +666,29 @@ siteplan:
     # chapter (multnomah/_unincorporated/33.266, for the four Portland
     # pockets) carries the same sentence word for word and is not set on the
     # county cell: no unincorporated Multnomah lot carries an alley edge.
+    #
+    # `alley_is_aisle` on this row is STEPH'S RULING of 2026-09-13, not a
+    # sentence of the code, and it is written down as such. 33.266.120 gives
+    # the fourplex its 9 x 18 stall and states no aisle and no rule about
+    # leaving in a forward motion; the 24 ft aisle the court draws is SUDAS
+    # (`aisle_assumed`), and on an alley-fed lot the cars back straight out
+    # into the alley, so the lane drawn inside the lot was the alley twice
+    # over. The nearest sentence Portland has is in the chapter for every
+    # OTHER building, 33.266.130.F.1.b(2) (`portland/33.266.txt#L485-L488`):
+    # "Parking areas may be designed so that vehicles back out into an
+    # alley. However, there must be a maneuvering area of at least 20 feet
+    # between the end of each parking space and the opposite side of the
+    # alley. If the alley is less than 20 feet wide, some of this
+    # maneuvering area will be on-site." No file here states an alley's
+    # width, so the ruling trusts it; the plans that rest on that trust are
+    # `townhome_rear_court_alley_aisle` in every output. 8,228 of Portland's
+    # 11,519 alley lots were `court_too_shallow` on 2026-09-12 for want of
+    # 42 ft behind the pod; see docs/HUMAN_TODO.md for the decision as put.
     portland:
       drive_min_one_way_ft: 9
       drive_min_two_way_ft: 9
       alley_access_required: true
+      alley_is_aisle: true
       parking_front_prohibited: true
       parking_front_yard_max_pct: 40
       parking_street_setback_ft: 10

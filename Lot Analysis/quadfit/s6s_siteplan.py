@@ -70,13 +70,30 @@ lot line across the alley setback, by a lane of the city's width running
 straight up from the court's back or straight out of its side to the cells of
 the envelope that stand on the alley strip, or by nothing at all when the
 court already stands there. A lot the alley cannot reach that way fails
-`no_alley_lane`; it is not handed the street lane the city forbids. Cars still
-leave forward off the court's own aisle: 33.266.130.F.1.b(2) would let them
-back straight into the alley given twenty feet of manoeuvring to its far side,
-but the streets file carries centrelines and not widths, so that relief is not
-taken -- nor is Gresham's, Figure 9.0825A: "Public alley width may be
-included as part of aisle width", the same relief stated outright and unusable
-for the same reason. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask
+`no_alley_lane`; it is not handed the street lane the city forbids.
+
+THE ALLEY AS THE AISLE (Steph's ruling, 2026-09-13; `DrivewayRules.alley_is_aisle`
+names the city). On an alley-fed lot the cars in the row of stalls along the
+alley back straight out into it, so the aisle the court used to draw inside
+the lot is the alley itself. Where the city's row says so, a court standing
+on the alley strip is asked for one stall depth (18 ft) instead of a stall
+and an aisle (42 ft in Portland), and that row is drawn against the alley
+edge -- `townhome_rear_court_alley_aisle`, its own name so every crosstab
+shows how many plans rest on it. Gresham states the relief outright, Figure
+9.0825A: "Public alley width may be included as part of aisle width (A1 or
+A2) dimension, but all stalls must be on private property, off the public
+right-of-way." Portland's fourplex chapter, 33.266.120, states the 9 x 18
+stall and neither an aisle nor a forward-motion rule; its all-other-
+development chapter, 33.266.130.F.1.b(2), lets parking areas be "designed so
+that vehicles back out into an alley" given 20 ft of manoeuvring to the
+alley's far side, some of it on-site where the alley is narrower. No code
+and no file here states how wide any alley is (RLIS carries centrelines;
+Gresham PWS Table 6.04's "Alleys 25" is a clear-vision triangle), so this
+drawing TRUSTS the alley's width the way the assumed aisle trusts SUDAS: a
+ruling about the screen's own assumption, recorded in HUMAN_TODO, not a
+reading of the code. It is taken only where it buys a stall -- a court deep
+enough for its own aisle keeps it -- so the count of plans on this drawing
+is the count that need it. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask
 no side or rear setback from a lot line abutting an alley, and Gresham's
 district tables print a "Rear With Alley" column (8 ft where the plain rear
 is 15); `ZoneRule.setback_alley_ft` carries the zero or the number, s5 cuts
@@ -97,6 +114,11 @@ Gresham is drawn to its stall and its aisle, and to Gresham's driveway rules.
 
 Geometry works in the front-aligned rotated frame (front lot line along the
 grid, building/stalls axis-aligned), then rotates back to EPSG:2913 for output.
+
+`layout_method` is `townhome_rear_court` (lane from the street),
+`townhome_rear_court_alley` (reached from the alley, parked off the court's
+own aisle) or `townhome_rear_court_alley_aisle` (parked against the alley,
+backing out into it).
 
 Output stage `s6s_lots` carries every s6 column forward and adds:
   site_plan_ok (bool) · parking_tier · stalls_provided · layout_method ·
@@ -263,6 +285,73 @@ def _lane_to_alley(free, mouths, rr: int, cc: int, rh: int, rw: int, drive_c: in
     return None
 
 
+def _row_boxes(rr: int, cc: int, rh: int, rw: int, rows: int, stalls: int,
+               sw_c: int, sd_c: int) -> list[tuple[int, int, int, int]]:
+    """The stall boxes of a court parked off its own aisle: one row along
+    the front of the court, or two along its front and back with the aisle
+    between, tiled from its left edge. (r0, c0, h, w) in grid cells."""
+    boxes: list[tuple[int, int, int, int]] = []
+    for band_i in range(rows):
+        y0 = rr + (band_i * (rh - sd_c) if rows == 2 else 0)
+        x = cc
+        while x + sw_c <= cc + rw and len(boxes) < stalls:
+            boxes.append((int(y0), x, sd_c, sw_c))
+            x += sw_c
+    return boxes
+
+
+def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
+                        sw_c: int, sd_c: int, cap: int):
+    """The row of stalls that backs straight out into the alley, or None.
+
+    Three edges of the court, in the order a plan reads: its back (the alley
+    behind a mid-block lot), then its right and left sides (the alley beside
+    a corner lot). A stall stands on an edge only where every cell of its
+    width along that edge is on the alley strip (`_alley_mouths`), so a court
+    whose back is half against the alley and half against a notch parks
+    along the half that is; and a stall is `sd_c` deep INTO the court, which
+    is the whole depth the court is asked for -- the aisle is the alley.
+    Returns (stalls, boxes, edge) for the edge that seats the most, boxes as
+    (r0, c0, h, w) in grid cells; the back wins a tie. None where no edge
+    seats one.
+    """
+    import numpy as np
+
+    def runs(on):
+        # (start, length) of each maximal run of True along an edge.
+        out, start = [], None
+        for i, v in enumerate(list(on) + [False]):
+            if v and start is None:
+                start = i
+            elif not v and start is not None:
+                out.append((start, i - start))
+                start = None
+        return out
+
+    edges = []
+    if rh >= sd_c:
+        edges.append(("back", mouths[rr + rh - 1, cc:cc + rw],
+                      lambda s: (rr + rh - sd_c, cc + s, sd_c, sw_c)))
+    if rw >= sd_c:
+        edges.append(("right", mouths[rr:rr + rh, cc + rw - 1],
+                      lambda s: (rr + s, cc + rw - sd_c, sw_c, sd_c)))
+        edges.append(("left", mouths[rr:rr + rh, cc],
+                      lambda s: (rr + s, cc, sw_c, sd_c)))
+    best = None
+    for edge, on, box_at in edges:
+        boxes = []
+        for start, length in runs(np.asarray(on, dtype=bool)):
+            for k in range(length // sw_c):
+                if len(boxes) >= cap:
+                    break
+                boxes.append(box_at(start + k * sw_c))
+        if boxes and (best is None or len(boxes) > len(best[1])):
+            best = (edge, boxes)
+    if best is None:
+        return None
+    return len(best[1]), best[1], best[0]
+
+
 def _alley_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> float:
     """How far s5 stood the envelope off the alley lot line, in feet.
 
@@ -346,6 +435,9 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     # city that says so on a lot without one is laid out from the street like
     # anyone else.
     alley_fed = bool(cell.get("alley_access")) and bool(alley_edges)
+    # ... and where the city's row says the alley is the aisle, the row of
+    # stalls along it backs straight out (THE ALLEY AS THE AISLE, above).
+    alley_aisle = alley_fed and bool(cell.get("alley_aisle"))
 
     # `layout_fail` names how far the lot got before the plan gave out. A flat
     # "no layout" is the largest single reason in the whole screen -- 148,939
@@ -488,34 +580,58 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             rows = (2 if cd_ft >= 2 * stall_d + aisle_two
                     else 1 if cd_ft >= stall_d + aisle_one else 0)
             n_ct = min(cap, rows * int(cw_ft // stall_w))
-            if n_ct <= 0:
+            # The alley as the aisle: the stalls that stand on the alley strip
+            # and back straight out into it, asked for a stall depth and no
+            # aisle. Counted beside the court's own aisle, never instead of it.
+            on_alley = (_alley_aisle_stalls(mouths, rr, cc, rh, rw, sw_c, sd_c, cap)
+                        if alley_aisle else None)
+            if n_ct <= 0 and on_alley is None:
                 continue
             reach = max(reach, 3)
             free = ok.copy()
             free[br:br + bh, bc:bc + bw] = False
+            # A plan on the court's own aisle beats one on the alley at equal
+            # stalls, whichever came first: it needs no alley width, and the
+            # count of plans on the alley drawing stays the count that need it.
+            trusts_alley = plan is not None and plan["method"] == "townhome_rear_court_alley_aisle"
             if alley_fed:
                 # From the alley: a straight lane from the court to the cells
                 # on the alley strip, or none at all when the court already
                 # stands there. Nothing is drawn from the street; the city
                 # forbids it, and a lot that cannot be reached from the alley
                 # is refused rather than handed the street lane.
-                lane = _lane_to_alley(free, mouths, rr, cc, rh, rw, drive_c)
-                if lane is None:
-                    continue
-                if n_ct <= best_stalls:
-                    continue
-                best_stalls = n_ct
-                r0, c0, h, w = lane
-                lane_len_c = h if w == drive_c else w
-                plan = {
-                    "rect": (rr, cc, rh, rw), "rows": rows, "stalls": n_ct,
-                    "aisle": aisle_two if rows == 2 else aisle_one,
-                    "span_ft": cw_ft, "bld": (name, br, bc, bh, bw, ww * dd),
-                    "driveway": lane if lane_len_c else None,
-                    "driveway_len_c": lane_len_c,
-                    "driveway_len": lane_len_c * res + alley_setback_ft,
-                    "reaches": True, "method": "townhome_rear_court_alley",
-                }
+                lane = (_lane_to_alley(free, mouths, rr, cc, rh, rw, drive_c)
+                        if n_ct > 0 else None)
+                if lane is not None and (n_ct > best_stalls
+                                         or (n_ct == best_stalls and trusts_alley)):
+                    best_stalls = n_ct
+                    r0, c0, h, w = lane
+                    lane_len_c = h if w == drive_c else w
+                    plan = {
+                        "rect": (rr, cc, rh, rw), "stalls": n_ct,
+                        "aisle": aisle_two if rows == 2 else aisle_one,
+                        "span_ft": cw_ft, "bld": (name, br, bc, bh, bw, ww * dd),
+                        "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
+                        "driveway": lane if lane_len_c else None,
+                        "driveway_len_c": lane_len_c,
+                        "driveway_len": lane_len_c * res + alley_setback_ft,
+                        "reaches": True, "method": "townhome_rear_court_alley",
+                    }
+                if on_alley is not None and on_alley[0] > best_stalls:
+                    n_al, boxes, _edge = on_alley
+                    best_stalls = n_al
+                    plan = {
+                        "rect": (rr, cc, rh, rw), "stalls": n_al,
+                        # No aisle inside the lot: the alley is it, and the
+                        # pavement between the stalls and the alley is the
+                        # setback strip, as on the lane-less plan above.
+                        "aisle": 0.0, "span_ft": 0.0,
+                        "bld": (name, br, bc, bh, bw, ww * dd),
+                        "stall_boxes": boxes,
+                        "driveway": None, "driveway_len_c": 0,
+                        "driveway_len": alley_setback_ft,
+                        "reaches": True, "method": "townhome_rear_court_alley_aisle",
+                    }
                 continue
             # Side driveway: first clear column run (in the envelope, clear of the
             # building) at least drive_c wide, running alongside the building from
@@ -539,9 +655,10 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                 continue
             best_stalls = n_ct
             plan = {
-                "rect": (rr, cc, rh, rw), "rows": rows, "stalls": n_ct,
+                "rect": (rr, cc, rh, rw), "stalls": n_ct,
                 "aisle": aisle_two if rows == 2 else aisle_one,
                 "span_ft": cw_ft, "bld": (name, br, bc, bh, bw, ww * dd),
+                "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
                 "driveway": (0, corridor_c0, rr, drive_c), "driveway_len_c": rr,
                 "driveway_len": rr * res + front_setback_ft, "reaches": True,
                 "method": "townhome_rear_court",
@@ -580,14 +697,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     from shapely.geometry import LineString
     emit("utility", LineString([(bx_center, miny + br * res), (bx_center, miny)]))
 
-    placed = 0
-    for band_i in range(plan["rows"]):
-        y0 = rr + (band_i * (rh - sd_c) if plan["rows"] == 2 else 0)
-        x = cc
-        while x + sw_c <= cc + rw and placed < stalls:
-            emit(f"stall_{placed}", cell_box(int(y0), x, sd_c, sw_c))
-            placed += 1
-            x += sw_c
+    for i, (y0, x0, h, w) in enumerate(plan["stall_boxes"]):
+        emit(f"stall_{i}", cell_box(y0, x0, h, w))
 
     ok_plan = bool(stalls >= _CFG["min_stalls"] and plan["reaches"]
                    and open_space_ok)
@@ -758,6 +869,7 @@ def main() -> None:
             "open_sqft": (dw.open_space_sqft or 0.0) if dw else 0.0,
             "open_by_zone": dict(dw.open_space_sqft_by_zone) if dw else {},
             "alley_access": bool(dw and dw.alley_access_required),
+            "alley_aisle": bool(dw and dw.alley_is_aisle),
         }
 
     # Where a city keeps stalls off the street, say what it asks and whether
@@ -840,7 +952,9 @@ def main() -> None:
     for j, k in alley_fed.items():
         print(f"s6s: {j} sends the driveway to the alley on a lot that has one "
               f"(alley_access_required); {k:,} lots in scope carry an alley edge "
-              f"and are laid out from it, with no lane from the street")
+              f"and are laid out from it, with no lane from the street"
+              + ("; the alley is the aisle where that seats more stalls "
+                 "(alley_is_aisle)" if cells[j]["alley_aisle"] else ""))
 
     chunk_size = 500
     chunks = [tasks[i:i + chunk_size] for i in range(0, len(tasks), chunk_size)]
@@ -885,6 +999,16 @@ def main() -> None:
           f"site_plan_ok {int(site_ok.sum()):,}; tiers "
           + ", ".join(f"{t}={int((tier == t).sum()):,}"
                       for t in ("preferred", "target", "minimum", "fail")))
+    # The plans that rest on the alley's width, said out loud for the same
+    # reason the assumed aisle is: a caveat that only lives in a column is a
+    # caveat nobody reads.
+    on_alley = method == "townhome_rear_court_alley_aisle"
+    if on_alley.any():
+        per = lots.loc[on_alley, "jurisdiction"].value_counts()
+        print(f"s6s: {int(on_alley.sum()):,} plans park against the alley and "
+              f"back out into it (alley_is_aisle; the alley's width is not in "
+              f"any file and is trusted): "
+              + ", ".join(f"{j} {v:,}" for j, v in per.items()))
     # Per city, because that is the whole reason this stage stopped being one
     # cell: a city's stall and aisle are what decide its lots, and a total hides
     # which city paid for which number.
