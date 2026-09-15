@@ -1126,6 +1126,69 @@ def test_a_corner_arc_surveyed_in_chords_is_the_clip_even_when_the_second_street
     assert lens == [(100, 1), (147, 3)], "the side street, and one front of 100 + 25 + 22"
 
 
+def test_a_stub_past_a_second_front_hangs_from_that_front_not_from_the_long_one():
+    """A Wilsonville lot: 70 ft of front, a 44 ft second front turning 60
+    degrees off it, and a 3 ft stub past that, turning again into the rear
+    lot line. The stub's chain was measured from the 70 ft front, the
+    nearest run over the clip cap, so it was 47 ft of chain, over the cap,
+    and the 3 ft stub stayed a candidate -- and "narrowest" measured the
+    lot to it. It hangs from the 44 ft front, which could be a front by
+    itself, and is 3 ft of stub off its end.
+
+    A Portland corner lot, 96 ft by 51, whose side street line steps 7 ft
+    into the lot for its last 7 ft: the step and the piece past it are 14
+    ft of chain off the 44 ft side front, not two fronts of their own.
+
+    Both ways: between two long fronts a 30 ft diagonal with a chord each
+    side is still the corner and still goes -- a run that could be a front
+    bounds a chain only where the street ends past it.
+    """
+    stub = Polygon([(0, 0), (70, 0), (92, 38.1), (89.4, 39.6), (0, 39.6)])
+    edges = [
+        [0, 0, 70, 0, "F"],
+        [70, 0, 92, 38.1, "F"],            # 44 ft at 60 degrees
+        [92, 38.1, 89.4, 39.6, "F"],       # 3 ft at 150
+        [89.4, 39.6, 0, 39.6, "R"],
+        [0, 39.6, 0, 0, "S"],
+    ]
+    groups = front_groups(edges)
+    assert sorted(round(b) for b, _ in groups) == [0, 60], "the two fronts; the stub is neither"
+    o = dimensions(
+        stub, edges, [g[0] for g in groups], "A",
+        width_measure="side_midpoints", depth_measure="midpoints", front_rule="narrowest",
+    )
+    assert o is not None and o.front_ft == pytest.approx(44.0, abs=0.1)
+
+    jog = Polygon([(0, 0), (96, 0), (96, 44.5), (88.8, 44.5), (88.8, 51.1), (0, 51.1)])
+    edges = [
+        [0, 0, 96, 0, "F"],
+        [96, 0, 96, 44.5, "F"],
+        [96, 44.5, 88.8, 44.5, "F"],       # the step
+        [88.8, 44.5, 88.8, 51.1, "F"],     # the piece past it
+        [88.8, 51.1, 0, 51.1, "R"],
+        [0, 51.1, 0, 0, "R"],
+    ]
+    groups = front_groups(edges)
+    assert sorted(round(b) for b, _ in groups) == [0, 90]
+    o = dimensions(
+        jog, edges, [g[0] for g in groups], "A",
+        width_measure="side_midpoints", depth_measure="midpoints", front_rule="narrowest",
+    )
+    assert o is not None and o.front_ft == pytest.approx(44.5, abs=0.1)
+
+    pts = [(0.0, 0.0), (80.0, 0.0)]
+    for L, ang in ((8.0, 22.5), (30.0, 45.0), (8.0, 67.5)):
+        x, y = pts[-1]
+        pts.append((round(x + L * math.cos(math.radians(ang)), 2), round(y + L * math.sin(math.radians(ang)), 2)))
+    x, y = pts[-1]
+    pts += [(x, y + 80.0), (0.0, y + 80.0)]
+    kinds = ["F", "F", "F", "F", "F", "R", "S"]
+    edges = [[*pts[k], *pts[(k + 1) % len(pts)], kinds[k]] for k in range(len(pts))]
+    assert Polygon(pts).is_valid
+    lens = sorted(round(sum(math.hypot(e[2] - e[0], e[3] - e[1]) for e in m)) for _, m in front_groups(edges))
+    assert lens == [80, 80], "the corner, diagonal and all, is not a front"
+
+
 def test_the_end_of_a_side_lot_line_is_not_a_front_for_lying_near_the_street():
     """A Portland lot, 62 ft of front on the south street, 206 ft deep: the
     west side lot line is surveyed in two pieces, and the classifier marks

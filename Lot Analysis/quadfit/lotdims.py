@@ -405,7 +405,15 @@ def front_groups(edges) -> list[tuple[float, list]]:
     (:data:`_NARROWEST_FRONT_FT`), so a 35 ft front on a narrow corner lot
     bounds the arc beside it rather than being swallowed into it, while the
     22 ft second chord of a bent front does not, and stays in the chain
-    with the first. Between two long runs the chain is
+    with the first. Where the street ends inside the chain, so that it has
+    a bounding run on one side only, the chain hangs from the nearest run
+    toward it that could be a front by itself, not from the nearest long
+    one: a Wilsonville lot with a 70 ft front, a 44 ft second front and a
+    3 ft stub past that read the stub and the second front as one 47 ft
+    chain off the 70, over the cap, and kept the stub as a front. Of the
+    3,588 clean-shape lots on 2026-09-15 with a street-facing run under 20
+    ft beside one of 45 or more, 217 were that shape, and 118 more were the
+    same stub beside a front of 25 to 45 ft. Between two long runs the chain is
     the corner whatever its radius (Gresham 4.0130 note 10 measures frontage
     "from the corner radius end point"); between a long run and a short
     street, it is a clip only if it is short all told and not smooth at
@@ -592,6 +600,16 @@ def front_groups(edges) -> list[tuple[float, list]]:
         anchor, step = (before, +1) if before is not None else (after, -1)
         if _run_len(runs[anchor]) < _NARROWEST_FRONT_FT:
             return False
+        # The chain hangs from the nearest run toward it that could be a
+        # front by itself, not from the nearest long one: a 44 ft second
+        # front between the long front and a 3 ft stub is a front, and the
+        # stub is a stub off its end, not 47 ft of chain off the 70.
+        j = k
+        while (j2 := (j - step) % len(runs)) != anchor:
+            if _run_len(runs[j2]) >= _NARROWEST_FRONT_FT:
+                anchor = j2
+                break
+            j = j2
         chain, j = [], anchor
         while True:
             j2 = (j + step) % len(runs)
