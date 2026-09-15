@@ -31,6 +31,7 @@ from lotdims import (  # noqa: E402
     DEPTH_MEASURES,
     WIDTH_MEASURES,
     _frame,
+    bulb_circles,
     center_parallel_width_ft,
     dimensions,
     front_groups,
@@ -1187,6 +1188,103 @@ def test_a_stub_past_a_second_front_hangs_from_that_front_not_from_the_long_one(
     assert Polygon(pts).is_valid
     lens = sorted(round(sum(math.hypot(e[2] - e[0], e[3] - e[1]) for e in m)) for _, m in front_groups(edges))
     assert lens == [80, 80], "the corner, diagonal and all, is not a front"
+
+
+def _arc_lot(radius, start_deg, stop_deg, chords, depth=100.0):
+    """A lot whose front is ``chords`` chords on a circle of ``radius`` about
+    the origin, from ``start_deg`` to ``stop_deg``, with the body running
+    ``depth`` ft outward from the arc: the cul-de-sac wedge, drawn with the
+    lot OUTSIDE the circle. Returns the ring's edges with the arc classed F.
+    """
+    angs = [math.radians(start_deg + (stop_deg - start_deg) * k / chords) for k in range(chords + 1)]
+    arc = [(radius * math.cos(a), radius * math.sin(a)) for a in angs]
+    far = radius + depth
+    body = [(far * math.cos(angs[-1]), far * math.sin(angs[-1])),
+            (far * math.cos(angs[0]), far * math.sin(angs[0]))]
+    pts = arc + body
+    kinds = ["F"] * chords + ["S", "R", "S"]
+    return [[*pts[k], *pts[(k + 1) % len(pts)], kinds[k]] for k in range(len(pts))]
+
+
+def _corner_arc_lot():
+    """A 120 by 120 corner lot with the corner rounded on a 20 ft circle,
+    three chords, the lot INSIDE the circle; both streets classed F."""
+    cx, cy, r = 100.0, 100.0, 20.0
+    arc = [(cx + r * math.cos(math.radians(a)), cy + r * math.sin(math.radians(a))) for a in (270, 300, 330, 360)]
+    pts = [(0.0, 0.0), (100.0, 0.0)] + arc + [(120.0, 120.0), (0.0, 120.0)]
+    kinds = ["S", "F", "F", "F", "F", "F", "R", "S"]
+    return [[*pts[k], *pts[(k + 1) % len(pts)], kinds[k]] for k in range(len(pts))]
+
+
+def test_a_bulb_lots_front_lies_on_one_circle_of_the_turnarounds_radius():
+    """Happy Valley 16.12: a cul-de-sac lot "has a front lot line contiguous
+    with the outer radius of a curve". Four chords on a 50 ft circle, the
+    lot outside it, read as that circle -- centre and radius recovered to
+    a tenth of a foot -- whichever way round the ring is drawn.
+
+    And the three shapes that share a joint or two with it do not. A corner
+    arc, three chords on a 20 ft circle with the lot INSIDE it, is convex
+    where the bulb is concave, and is nothing. A bend in the street,
+    three chords on a 200 ft circle, turns the right way on a radius no
+    turnaround is laid out at, and is nothing. A bulb lot whose frontage
+    runs off the bulb and round a 20 ft corner arc onto the stem yields the
+    bulb's circle and not the corner's: the run is the longest run of
+    joints that qualify, not the whole chain.
+    """
+    edges = _arc_lot(50.0, 250, 330, 4)
+    (cx, cy, r), = bulb_circles(edges)
+    assert (cx, cy, r) == pytest.approx((0.0, 0.0, 50.0), abs=0.1)
+    reversed_ring = [[e[2], e[3], e[0], e[1], e[4]] for e in edges[::-1]]
+    (cx, cy, r), = bulb_circles(reversed_ring)
+    assert (cx, cy, r) == pytest.approx((0.0, 0.0, 50.0), abs=0.1)
+
+    assert bulb_circles(_corner_arc_lot()) == []
+    assert bulb_circles(_arc_lot(200.0, 260, 290, 3)) == []
+
+    # The bulb's four chords, then a 20 ft corner arc of three chords
+    # turning the other way, then 60 ft straight along the stem.
+    bulb = _arc_lot(50.0, 250, 330, 4)[:4]
+    px, py = bulb[-1][2], bulb[-1][3]
+    heading = math.radians(60)  # the tangent where the bulb arc ends
+    ccx = px + 20.0 * math.cos(heading - math.pi / 2)
+    ccy = py + 20.0 * math.sin(heading - math.pi / 2)
+    corner = []
+    for k in range(1, 4):
+        a = heading + math.pi / 2 - math.radians(30) * k
+        qx, qy = ccx + 20.0 * math.cos(a), ccy + 20.0 * math.sin(a)
+        corner.append([px, py, qx, qy, "F"])
+        px, py = qx, qy
+    heading -= math.pi / 2
+    sx, sy = px + 60.0 * math.cos(heading), py + 60.0 * math.sin(heading)
+    fx, fy = 150.0 * math.cos(math.radians(250)), 150.0 * math.sin(math.radians(250))
+    x0, y0 = bulb[0][0], bulb[0][1]
+    mixed = bulb + corner + [[px, py, sx, sy, "F"], [sx, sy, fx, fy, "R"], [fx, fy, x0, y0, "S"]]
+    assert Polygon([(e[0], e[1]) for e in mixed]).is_valid
+    circles = bulb_circles(mixed)
+    assert len(circles) == 1
+    assert circles[0] == pytest.approx((0.0, 0.0, 50.0), abs=0.1)
+
+
+def test_a_bulb_is_still_read_where_the_lots_actually_are():
+    """The same bulb lot, drawn where Happy Valley is: Oregon state plane
+    north, in feet, puts every vertex seven and a half million feet east
+    and six hundred and fifty thousand north of the origin. The first
+    county-wide run of this reading on 2026-09-15 flagged no lot at all --
+    the circle fit's normal equations carry the coordinates to the fourth
+    power, which at that scale leaves no digits for the fifty-foot answer,
+    and every fit came back with a negative radius squared. Every test
+    above draws its lot about (0, 0) and never saw it. The fit is about the
+    points' own mean now, and here it has to recover the same circle, to
+    the same tenth of a foot, from the same joints, seven million feet
+    from home.
+    """
+    ex, ny = 7_650_000.0, 650_000.0
+    edges = [[e[0] + ex, e[1] + ny, e[2] + ex, e[3] + ny, e[4]] for e in _arc_lot(50.0, 250, 330, 4)]
+    (cx, cy, r), = bulb_circles(edges)
+    assert (cx, cy, r) == pytest.approx((ex, ny, 50.0), abs=0.1)
+    # And a corner arc there is still nothing: the lot is inside its circle.
+    corner = [[e[0] + ex, e[1] + ny, e[2] + ex, e[3] + ny, e[4]] for e in _corner_arc_lot()]
+    assert bulb_circles(corner) == []
 
 
 def test_the_end_of_a_side_lot_line_is_not_a_front_for_lying_near_the_street():

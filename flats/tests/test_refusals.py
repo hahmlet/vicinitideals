@@ -345,7 +345,23 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 124, "comments": 133, "tests": 17}
+EXPECTED = {"notes": 124, "comments": 129, "tests": 17}
+#
+# 274 -> 270 on 2026-09-15, afternoon, and once again a fact arrived. Five
+# refusals LEFT, all one row: Happy Valley's "Lots fronting on cul-de-sac"
+# street frontage, refused in a comment beside the interior number on all
+# seven of its residential zones (three of them, R-10/R-8.5/R-7, share one
+# window and counted once) for the one reason a looser row should be --
+# "whether a lot fronts a cul-de-sac is not a fact this screen measures".
+# quadfit's s4 measures it now (`fronts_cul_de_sac`: the front chords on one
+# circle of a turnaround's radius, turning toward the street, with a street
+# ending inside it; `flats.geom.culdesac` reads it), and the row is held as a
+# variant switched by the fact, on those seven and on Wilsonville's PDR3,
+# PDR4 and RN. One ARRIVED in the same file: the other half of Wilsonville
+# Table 8A note J, no frontage at all "when the lot fronts on an approved,
+# platted private drive", which the RN comment had declined without the
+# marker ("Neither relief is encoded") and now states as the refusal it is.
+# Nothing here measures a platted private drive.
 #
 # 276 -> 274 on 2026-09-13, late evening, and the count moved in both
 # directions on one day for a second time. Four refusals LEFT, all the same

@@ -95,6 +95,45 @@ def test_landlocked_tier_d():
     assert r["tier"] == "D"
 
 
+def _bulb_lot(radius=45.0):
+    """A wedge on a cul-de-sac bulb of ``radius`` about the origin: four
+    chords of arc from 250 to 330 degrees, the body 100 ft outward."""
+    angs = [math.radians(250 + 20 * k) for k in range(5)]
+    arc = [(radius * math.cos(a), radius * math.sin(a)) for a in angs]
+    far = radius + 100.0
+    return Polygon(arc + [(far * math.cos(angs[-1]), far * math.sin(angs[-1])),
+                          (far * math.cos(angs[0]), far * math.sin(angs[0]))])
+
+
+def _fronts_bulb(lot, streets):
+    from shapely.strtree import STRtree
+
+    from s4_edges import dead_ends, fronts_cul_de_sac
+
+    r = _classify(lot, streets)
+    ends = dead_ends(streets)
+    return fronts_cul_de_sac(r["edges"], STRtree(ends) if ends else None, ends), r
+
+
+def test_a_lot_on_a_bulb_fronts_a_cul_de_sac_only_where_the_street_ends_in_it():
+    """Both halves of Happy Valley's definition. The lot line on "the outer
+    radius of a curve" is the same four chords in both cases; what differs
+    is the street. A centreline that runs into the bulb and stops is "a
+    street ... permanently terminated and provided with a vehicular
+    turnaround", and the lot fronts a cul-de-sac. The same centreline
+    carried on through -- a knuckle in a winding street, surveyed at the
+    same radius, its ends 300 ft away -- is not.
+    """
+    lot = _bulb_lot()
+    on_bulb, r = _fronts_bulb(lot, [LineString([(0, 300), (0, 0)])])
+    assert sum(e[4] == "F" for e in r["edges"]) == 4
+    assert on_bulb is True
+
+    knuckle, r = _fronts_bulb(lot, [LineString([(0, 300), (0, 0), (-300, 0)])])
+    assert sum(e[4] == "F" for e in r["edges"]) == 4, "the same four chords"
+    assert knuckle is False
+
+
 def _classify_with_alleys(lot, streets, alleys):
     from s4_edges import classify_lot
 

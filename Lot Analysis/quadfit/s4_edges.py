@@ -30,6 +30,16 @@ Edge classes:
   R  rear -- not a street, roughly parallel to a front bearing
   S  side -- the rest
 
+Two more columns ride with the classes. `alley_width_ft` is described
+above. `fronts_cul_de_sac` says whether the front lot line lies on the outer
+radius of a cul-de-sac bulb -- its chords on a circle of a turnaround's
+radius, turning toward the street, with a street centreline ending inside
+that circle (`lotdims.bulb_circles`, `dead_ends`, `fronts_cul_de_sac`).
+Happy Valley's district tables and Wilsonville's PDR-3, PDR-4 and RN ask such
+a lot less street frontage than an interior lot, and s7 applies that row only
+where this column is True; a lot not proven on a bulb is held to the interior
+number.
+
 Tiers:
   A  clean, near-convex, one street frontage direction
   B  corner (2+ distinct frontage directions) — both bearings kept for fit
@@ -65,7 +75,7 @@ TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
 from common import NOT_A_TAXLOT_RE, load_rules, read_stage, write_stage
-from lotdims import dimensions
+from lotdims import bulb_circles, dimensions
 
 PARALLEL_TOL_DEG = 30.0
 BEARING_CLUSTER_TOL_DEG = 20.0
@@ -215,6 +225,69 @@ def _alley_width(x1: float, y1: float, x2: float, y2: float, outward: float,
     if len(widths) < ALLEY_SAMPLES_MIN_HIT:
         return None
     return round(min(widths), 1)
+
+
+def dead_ends(street_geoms) -> list:
+    """Where the streets end: every centreline endpoint, snapped to the foot,
+    that exactly one segment touches, as shapely Points.
+
+    The second half of Happy Valley's definition of a cul-de-sac -- "the
+    other end permanently terminated and provided with a vehicular
+    turnaround" (HVMC 16.12) -- read off the street file. The centreline of
+    a cul-de-sac runs into the bulb and stops; the centreline through a
+    knuckle keeps going. Alleys are not passed in: an alley's dead end is
+    not a street's. Of the 20,808 dead ends in the two counties' non-alley
+    centrelines on 2026-09-15, 7 lie within 5 ft of another node and 13
+    on the body of another line -- a gap in the network, not an end -- so
+    the file is clean enough to read this way without snapping further.
+    """
+    from collections import Counter
+
+    import shapely
+    from shapely.geometry import Point
+
+    seen: Counter = Counter()
+    for g in street_geoms:
+        if g is None or g.is_empty:
+            continue
+        parts = shapely.get_parts(g) if g.geom_type != "LineString" else [g]
+        for part in parts:
+            c = part.coords
+            seen[(round(c[0][0]), round(c[0][1]))] += 1
+            seen[(round(c[-1][0]), round(c[-1][1]))] += 1
+    return [Point(k) for k, v in seen.items() if v == 1]
+
+
+def fronts_cul_de_sac(edges, dead_tree, dead_points) -> bool:
+    """Whether this lot's front lot line lies on the outer radius of a
+    cul-de-sac bulb: a chain of its street-facing chords reads as such a
+    circle (`lotdims.bulb_circles`) AND a street ends inside that circle.
+
+    Both halves are required. The circle alone is a knuckle in a winding
+    street as often as a bulb -- 3,343 of the 11,594 lots with such an arc
+    in the run that shipped on 2026-09-15 had no street ending within it
+    (the prototype, on 11,684, found the nearest a median 281 ft away) --
+    and the dead end alone is every lot along a stub street. Where the two
+    agree, the street ends inside the very circle the lot line is surveyed
+    on, which is a turnaround by construction: 8,251 lots, and on the
+    prototype's 8,280 the dead end sat within 10 ft of the fitted centre on
+    3,635 and within 30 ft on 6,537, the rest being centrelines drawn to
+    the throat of the bulb rather than its middle.
+
+    False where nothing is known, which is the conservative side: the
+    cul-de-sac frontage row is looser than the interior one, so a lot not
+    proven to be on a bulb is held to the interior number.
+    """
+    if dead_tree is None or not dead_points:
+        return False
+    from shapely.geometry import Point
+
+    for cx, cy, r in bulb_circles(edges):
+        centre = Point(cx, cy)
+        k = dead_tree.nearest(centre)
+        if k is not None and centre.distance(dead_points[k]) <= r:
+            return True
+    return False
 
 
 def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
@@ -368,6 +441,10 @@ def main() -> None:
     tree_all = STRtree(all_geoms)
     tree_streets = STRtree(street_geoms)
     tree_alleys = STRtree(alley_geoms) if len(alley_geoms) else None
+    # Where the streets end, for the cul-de-sac test below. Streets only:
+    # an alley's dead end is not a turnaround, in either kind of city.
+    dead_points = dead_ends(street_geoms)
+    tree_dead = STRtree(dead_points) if dead_points else None
     # The whole taxlot fabric -- every neighbour, and the right-of-way
     # polygons s3 dropped -- read out of s1 so an alley edge can be asked
     # whether the alley actually lies across it, and how wide it is.
@@ -425,6 +502,24 @@ def main() -> None:
         print("s4 alley edges demoted (near a centreline, no alley across the edge): "
               + ", ".join(f"{j} {int(r['sum']):,} on {int(r.iloc[1]):,} lots"
                           for j, r in per[per["sum"] > 0].iterrows()))
+
+    # Whether the front lot line lies on a cul-de-sac bulb: the chords on a
+    # circle of a turnaround's radius, turning toward the street, with a
+    # street ending inside the circle. Happy Valley's district tables and
+    # Wilsonville's PDR-3, PDR-4 and RN ask such a lot less street frontage
+    # than an interior lot (`ZoneRule.min_frontage_cul_de_sac_ft`), and s7
+    # applies that row only where this is True. Taken in every city, so the
+    # count means the same thing everywhere; it switches nothing where the
+    # zone states no such row.
+    lots["fronts_cul_de_sac"] = [
+        fronts_cul_de_sac(r["edges"], tree_dead, dead_points) for r in results
+    ]
+    _cds = lots["fronts_cul_de_sac"].to_numpy(dtype=bool)
+    if _cds.any():
+        per = lots.assign(_c=_cds).groupby("jurisdiction")["_c"].sum()
+        print(f"s4 lots fronting a cul-de-sac bulb: {int(_cds.sum()):,} "
+              f"({len(dead_points):,} street ends): "
+              + ", ".join(f"{j} {int(v):,}" for j, v in per[per > 0].items()))
 
     # Lot WIDTH and lot DEPTH, where a city's code defines them -- two
     # different lines on the same parcel from the frontage measured above, and

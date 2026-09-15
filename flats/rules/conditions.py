@@ -218,6 +218,27 @@ _C: tuple[ConditionDef, ...] = (
         assume=False,
     ),
     ConditionDef(
+        "fronts_cul_de_sac",
+        "site_fact",
+        "The front lot line lies on the outer radius of a cul-de-sac "
+        "turnaround: two or more street-facing chords turning toward the "
+        "street on one circle of 30 to 80 ft, with a street centreline "
+        "ending inside that circle. Happy Valley 16.12 defines the lot (\"a "
+        "front lot line contiguous with the outer radius of a curve\") and "
+        "the street (\"one end open to traffic and the other end permanently "
+        "terminated and provided with a vehicular turnaround\"), and its "
+        "district tables ask such a lot 35 ft of street frontage where any "
+        "other lot owes 50 (R-5 to R-10), 50 to 70 against 60 to 100 (R-15 "
+        "to R-40); Wilsonville Table 2 note F and Table 8A note J reduce "
+        "PDR-3, PDR-4 and RN to 24. Answered by quadfit's s4 since "
+        "2026-09-15 (`flats.geom.culdesac` reads it). False where nothing "
+        "is known, which is the safe side: every row this switches is "
+        "looser than the one it replaces, so a lot not proven on a bulb "
+        "keeps the interior number.",
+        evidence="quadfit s4 `fronts_cul_de_sac` (a circle of a turnaround's radius fitted to the frontage chords, with a dead-end street node inside it)",
+        assume=False,
+    ),
+    ConditionDef(
         "local_street",
         "site_fact",
         "The frontage is a local street rather than an arterial or collector. "

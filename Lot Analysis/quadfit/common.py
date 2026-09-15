@@ -196,6 +196,20 @@ class ZoneRule(BaseModel):
     #: the middle of the lot. That number now has its own column below, the
     #: flag is gone, and this one means one thing everywhere.
     min_frontage_ft: float | None = None
+    #: The code's own street-frontage row for a lot on a cul-de-sac bulb,
+    #: where it prints one beside the interior row: Happy Valley's district
+    #: tables ("Lots fronting on cul-de-sac" 35 against "All other lots" 50
+    #: in R-5 to R-10, 50 to 70 against 60 to 100 in R-15 to R-40) and
+    #: Wilsonville's PDR-3, PDR-4 and RN (24 "when the lot fronts a
+    #: cul-de-sac"). Applied by s7 in place of `min_frontage_ft` ONLY where
+    #: s4 measured the bulb -- `fronts_cul_de_sac`: the front lot line's
+    #: chords on a circle of a turnaround's radius, turning toward the street,
+    #: with a street centreline ending inside it. Never where the fact is
+    #: unknown: the row is looser, so a lot not proven on a bulb keeps the
+    #: interior number, and the reading can only loosen. Until 2026-09-15 the
+    #: row was read and not carried, and a bulb lot reading under the interior
+    #: number was a false red this file produced on purpose.
+    min_frontage_cul_de_sac_ft: float | None = None
     #: Minimum LOT WIDTH where the code states one, measured the way this
     #: city's glossary says to (`JurisdictionRules.lot_width_measure`) and
     #: compared against s4's `lot_width_ft`. Sixty-seven zones in eleven
@@ -289,6 +303,17 @@ class ZoneRule(BaseModel):
                 raise ValueError(f"zone {self.zone}: coverage_curve rows need 3 values")
             if breaks != sorted(breaks):
                 raise ValueError(f"zone {self.zone}: coverage_curve breaks must ascend")
+        if self.min_frontage_cul_de_sac_ft is not None and (
+            self.min_frontage_ft is None
+            or self.min_frontage_cul_de_sac_ft > self.min_frontage_ft
+        ):
+            # The bulb row stands beside an interior row and under it. A
+            # tighter bulb row would make every bulb the measurement misses
+            # an amnesty, which is the direction the fact cannot be trusted in.
+            raise ValueError(
+                f"zone {self.zone}: min_frontage_cul_de_sac_ft needs a "
+                "min_frontage_ft at or above it"
+            )
         for name, rows in self.lot_size_bands.items():
             if not hasattr(self, name):
                 raise ValueError(f"zone {self.zone}: lot_size_bands has no field {name}")

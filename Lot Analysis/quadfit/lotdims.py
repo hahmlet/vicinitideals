@@ -302,6 +302,22 @@ _CURVE_MIN_RADIUS_FT = 30.0
 #: way, and lost both their width and their depth to it.
 _CURVE_MAX_SWEEP_DEG = 75.0
 
+#: A cul-de-sac bulb, as its lot line reads. The turnaround is laid out at a
+#: 40 to 55 ft right-of-way radius and the lot line sits on it, so the chords
+#: of a bulb lot's front lie on a circle of that size: 45 to 58 ft on the 38
+#: Happy Valley bulb lots the prototype read on 2026-09-15, one at 70; 41 to
+#: 61 ft between the tenth and ninetieth percentile of the 8,280 it found
+#: across both counties. A corner arc is the other way round -- the lot inside the
+#: circle -- and 8 to 27 ft; a bend in a street is 100 ft and more. The
+#: floor is the curve floor above, for the same reason.
+_BULB_MIN_RADIUS_FT = _CURVE_MIN_RADIUS_FT
+_BULB_MAX_RADIUS_FT = 80.0
+
+#: How far the vertices of a bulb's chords may sit off the one circle fitted
+#: through them. Chords surveyed on an arc fit to a hundredth of a foot;
+#: three chords that merely happen to turn the same way do not.
+_BULB_FIT_TOL_FT = 1.5
+
 _EPS = 1e-6
 
 WIDTH_MEASURES = frozenset({
@@ -671,6 +687,171 @@ def front_groups(edges) -> list[tuple[float, list]]:
     return sorted(
         groups, key=lambda g: sum(_length(e) for e in g[1]), reverse=True
     )
+
+
+def _turn(a, b) -> float:
+    """The signed change of heading from edge ``a`` to edge ``b``, in (-180, 180].
+
+    Full headings, not the modulo-180 bearings the rest of this module works
+    in: which WAY a joint turns is the whole question here.
+    """
+    ha = math.degrees(math.atan2(a[3] - a[1], a[2] - a[0]))
+    hb = math.degrees(math.atan2(b[3] - b[1], b[2] - b[0]))
+    return (hb - ha + 180.0) % 360.0 - 180.0
+
+
+def _fit_circle(pts) -> tuple[float, float, float, float] | None:
+    """The least-squares circle through ``pts``: ``(cx, cy, r, rms)``.
+
+    Kasa's fit -- linear in ``(x^2 + y^2) = 2 cx x + 2 cy y + c`` -- solved
+    by elimination on its three normal equations. Collinear points have no
+    circle and return None.
+
+    Fitted about the points' own mean, not the origin. The normal equations
+    carry x^3 and x^4, and at Oregon state-plane coordinates -- seven
+    million feet east -- those are 1e20 and 1e27 against a right-hand side
+    that differs in its last few digits: the elimination returned a negative
+    radius squared, hence None, for every lot in both counties, and the
+    first county-wide run of the bulb reading on 2026-09-15 flagged nothing.
+    Fifty feet from a local origin the same arithmetic recovers the circle
+    to 1e-12 ft, and that is what the unit tests, drawn about (0, 0), had
+    been proving.
+    """
+    x0 = sum(x for x, _ in pts) / len(pts)
+    y0 = sum(y for _, y in pts) / len(pts)
+    sx = sy = sxx = syy = sxy = sz = sxz = syz = 0.0
+    for x, y in pts:
+        x -= x0
+        y -= y0
+        z = x * x + y * y
+        sx += x; sy += y; sxx += x * x; syy += y * y; sxy += x * y  # noqa: E702
+        sz += z; sxz += x * z; syz += y * z  # noqa: E702
+    n = float(len(pts))
+    m = [[sxx, sxy, sx, sxz], [sxy, syy, sy, syz], [sx, sy, n, sz]]
+    for col in range(3):
+        piv = max(range(col, 3), key=lambda r: abs(m[r][col]))
+        if abs(m[piv][col]) < _EPS:
+            return None
+        m[col], m[piv] = m[piv], m[col]
+        for r in range(3):
+            if r != col:
+                f = m[r][col] / m[col][col]
+                m[r] = [v - f * w for v, w in zip(m[r], m[col])]
+    a, b, c = (m[r][3] / m[r][r] for r in range(3))
+    cx, cy = a / 2.0, b / 2.0
+    r2 = c + cx * cx + cy * cy
+    if r2 <= 0.0:
+        return None
+    r = math.sqrt(r2)
+    cx += x0
+    cy += y0
+    rms = math.sqrt(sum((math.hypot(x - cx, y - cy) - r) ** 2 for x, y in pts) / n)
+    return cx, cy, r, rms
+
+
+def bulb_circles(edges) -> list[tuple[float, float, float]]:
+    """The circles this lot's street-facing chords lie on where they read as
+    the outer radius of a cul-de-sac bulb: ``(cx, cy, r)`` for each.
+
+    Happy Valley MC 16.12 defines a cul-de-sac lot as one that "has a front
+    lot line contiguous with the outer radius of a curve", and a cul-de-sac
+    as "a street having one end open to traffic and the other end
+    permanently terminated and provided with a vehicular turnaround". Its
+    district tables then ask a lot "fronting on cul-de-sac" 35 ft of street
+    where they ask any other lot 50 (R-5 to R-10), and 50 to 70 against 60
+    to 100 (R-15 to R-40); Wilsonville 4.124 Table 2 note F and 4.127 Table
+    8A note J reduce PDR-3, PDR-4 and RN to 24 ft "when the lot fronts a
+    cul-de-sac". The row is looser, so a reading of it can only loosen, and
+    a lot this is not sure of keeps the interior number.
+
+    What is read here is the first half of the definition, the curve: two or
+    more street-facing chords in ring order, every joint of which turns
+    toward the street -- the lot lies OUTSIDE the circle, which is what
+    "outer radius" means, and what tells a bulb from a corner arc, where the
+    lot lies inside -- on a radius, read joint by joint as :func:`front_groups`
+    reads it, between :data:`_BULB_MIN_RADIUS_FT` and
+    :data:`_BULB_MAX_RADIUS_FT`, and whose vertices then sit on one circle
+    to within :data:`_BULB_FIT_TOL_FT`. The longest such run inside each
+    chain of street-facing edges, not the whole chain: a bulb lot whose
+    frontage continues round a corner arc onto the stem has both, and the
+    corner's chords end the run without disqualifying it. The other half of
+    the definition, the turnaround, is s4's to read off the street file --
+    a street ends inside the circle -- because a knuckle in a winding
+    street is surveyed at the same radius and turns the same way, and only
+    the dead end tells them apart.
+
+    Measured on both counties on 2026-09-15, in the run that shipped:
+    11,594 lots carry such an arc, 8,251 of them with a street ending
+    inside it, 319 in Happy Valley and 361 in Wilsonville. (The prototype
+    it was written from, fitting its circles with a least-squares solver
+    rather than the elimination here, read 11,684 / 8,280 / 321 / 363: the
+    same lots to within a few at the fit tolerance.) Of the 81 Happy Valley
+    lots then red on frontage with a frontage between the bulb row and the
+    interior row, 38 were on a bulb by the prototype's reading. The other
+    43 were 22 straight fronts, 10 bends of 100 to 300 ft radius, 6 corner
+    arcs, and 5 arcs of bulb radius with no street ending within 230 ft of
+    their centre; every one keeps the interior number.
+    """
+    n = len(edges)
+    is_front = [
+        bool(len(e) > 4 and e[4] == "F" and _length(e) > _EPS) for e in edges
+    ]
+    if n < 2 or not any(is_front):
+        return []
+    # Which way round the ring runs: the boundary of a counter-clockwise
+    # ring turns left into the lot at a convex vertex, so a joint that turns
+    # RIGHT there is bending away from the lot, toward the street.
+    orient = 1.0 if sum(e[0] * e[3] - e[2] * e[1] for e in edges) > 0.0 else -1.0
+    # Chains of street-facing edges in ring order, wrapping past the end.
+    if all(is_front):
+        chains = [list(range(n))]
+    else:
+        start = next(i for i in range(n) if not is_front[i])
+        chains, run = [], []
+        for q in range(1, n + 1):
+            i = (start + q) % n
+            if is_front[i]:
+                run.append(i)
+            elif run:
+                chains.append(run)
+                run = []
+        if run:
+            chains.append(run)
+    out = []
+    for chain in chains:
+        es = [edges[i] for i in chain]
+        # Each joint: toward the street, on a bulb's radius.
+        good = []
+        for a, b in zip(es, es[1:]):
+            t = _turn(a, b) * orient
+            if t >= -_EPS:
+                good.append(False)
+                continue
+            radius = min(_length(a), _length(b)) / (2.0 * math.sin(math.radians(-t) / 2.0))
+            good.append(_BULB_MIN_RADIUS_FT <= radius <= _BULB_MAX_RADIUS_FT)
+        # The longest run of consecutive good joints, then its circle.
+        best, i = None, 0
+        while i < len(good):
+            if not good[i]:
+                i += 1
+                continue
+            j = i
+            while j + 1 < len(good) and good[j + 1]:
+                j += 1
+            if best is None or j - i > best[1] - best[0]:
+                best = (i, j)
+            i = j + 1
+        if best is None:
+            continue
+        arc = es[best[0]:best[1] + 2]
+        pts = [(e[0], e[1]) for e in arc] + [(arc[-1][2], arc[-1][3])]
+        fit = _fit_circle(pts)
+        if fit is None:
+            continue
+        cx, cy, r, rms = fit
+        if rms <= _BULB_FIT_TOL_FT and _BULB_MIN_RADIUS_FT <= r <= _BULB_MAX_RADIUS_FT:
+            out.append((cx, cy, r))
+    return out
 
 
 @dataclass(frozen=True)

@@ -186,6 +186,72 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
     assert corpus_alone - carried == {"DCC", "DTM"}     # zones not in the inventory
 
 
+def test_the_cul_de_sac_frontage_has_to_already_be_here() -> None:
+    """The same proof for the fourth key, `min_frontage_cul_de_sac_ft`.
+
+    rules.yaml states it on Happy Valley's eight zones and Wilsonville's
+    PDR3, PDR4 and RN so that s7 can hold a lot s4 measured on a bulb to the
+    cul-de-sac row instead of the interior one. The corpus read those rows
+    first -- and refused them, in a comment beside each interior number,
+    until the fact was measured -- so every quadfit zone that states the
+    column has to be a zone where a `fronts_cul_de_sac` variant on
+    `min_frontage_ft` already carries that same number, switched by the fact
+    ALONE (the `[unit_lots, fronts_cul_de_sac]` pair beside it is the
+    townhome row, and quadfit draws the one-lot plat), and lower than the
+    base it replaces. And the other way round: every carried zone whose
+    corpus entry holds such a variant has to state the column, or the mirror
+    is short a row the corpus already read.
+    """
+    ruleset = RuleSet(load_rules())
+    field, condition = HELD_AS_VARIANT["min_frontage_cul_de_sac_ft"]["number"]
+
+    def holding(layer, zname):
+        # The value block that states the field, following `like:` (Happy
+        # Valley R20CC adopts R-20's table by reference) within the layer.
+        zone = layer.zones.get(zname) if layer else None
+        while zone is not None and field not in zone.values and zone.like is not None:
+            zone = layer.zones.get(zone.like.zone)
+        return zone.values.get(field) if zone else None
+
+    stated: dict[tuple[str, str], float] = {}
+    for jname, spec in load_quadfit()["jurisdictions"].items():
+        layer = ruleset.layers.get(layer_id_for(jname))
+        for row in spec.get("zones") or []:
+            if "min_frontage_cul_de_sac_ft" not in row:
+                continue
+            number = float(row["min_frontage_cul_de_sac_ft"])
+            held = holding(layer, row["zone"])
+            assert held is not None, f"{jname}/{row['zone']} holds no {field}"
+            alone = [v for v in held.variants if tuple(v.when or ()) == (condition,)]
+            assert alone, (
+                f"{jname}/{row['zone']} states min_frontage_cul_de_sac_ft {number:g} "
+                f"and the corpus holds no {condition}-only variant on {field} -- a "
+                f"number nobody read"
+            )
+            assert {float(v.value) for v in alone} == {number}, (jname, row["zone"], number)
+            assert number < float(held.value), (jname, row["zone"])
+            assert all("cul-de-sac" in v.prov.quote or v.prov.quote.endswith(
+                ("#L285", "#L475", "#L651", "#L4740", "#L7254")) for v in alone), (jname, row["zone"])
+            # and quadfit's own pair reads the same way: the bulb row below the interior one
+            assert number < float(row["min_frontage_ft"]), (jname, row["zone"])
+            stated[(jname, row["zone"])] = number
+    assert stated == {("happy_valley", z): n for z, n in (
+        ("R40", 70.0), ("R20", 50.0), ("R15", 50.0), ("R10", 35.0), ("R8.5", 35.0),
+        ("R7", 35.0), ("R5", 35.0), ("R20CC", 50.0))} | {
+        ("wilsonville", z): 24.0 for z in ("PDR3", "PDR4", "RN")}
+    # and nothing the corpus holds in that shape is missing from the mirror
+    for jname in ("happy_valley", "wilsonville"):
+        layer = ruleset.layers[layer_id_for(jname)]
+        carried = {row["zone"] for row in load_quadfit()["jurisdictions"][jname]["zones"]}
+        corpus_alone = {
+            zname for zname in layer.zones
+            if (held := holding(layer, zname)) is not None
+            and any(tuple(v.when or ()) == (condition,) for v in held.variants)
+        }
+        assert corpus_alone & carried == {z for (j, z) in stated if j == jname}, jname
+        assert corpus_alone <= carried, (jname, corpus_alone - carried)
+
+
 def _band_is_held(held, threshold: float, value: float) -> bool:
     """Whether the corpus carries `value` for lots at or above `threshold`."""
     for variant in held.variants:

@@ -380,20 +380,31 @@ class _GateRules:
             zone="R-10", quadplex_allowed=True, setback_front_ft=20,
             setback_side_ft=8, setback_rear_ft=20, min_frontage_ft=65,
         )
+        # Happy Valley's R-10 table: 50 ft of street for "All other lots",
+        # 35 for "Lots fronting on cul-de-sac".
+        bulb_row = ZoneRule(
+            zone="R-10", quadplex_allowed=True, setback_front_ft=20,
+            setback_side_ft=8, setback_rear_ft=20, min_frontage_ft=50,
+            min_frontage_cul_de_sac_ft=35,
+        )
         self.jurisdictions = {
             "oregon_city": JurisdictionRules(
                 eligible=True, lot_width_measure="side_midpoints",
                 zones=[width]),
             "west_linn": JurisdictionRules(
                 eligible=True, zones=[frontage]),
+            "happy_valley": JurisdictionRules(
+                eligible=True, zones=[bulb_row]),
         }
 
 
-def _gate_row(juris, frontage, width=None):
+def _gate_row(juris, frontage, width=None, bulb=None):
     row = {"jurisdiction": juris, "zone_raw": "R-10", "area_sqft": 9000.0,
            "frontage_ft": frontage}
     if width is not None:
         row["lot_width_ft"] = width
+    if bulb is not None:
+        row["fronts_cul_de_sac"] = bulb
     return row
 
 
@@ -426,6 +437,56 @@ def test_a_width_standard_and_a_frontage_standard_are_two_gates():
     assert list(gates["frontage_ok"]) == [True, False, True]
     assert list(gates["width_ok"]) == [True, True, True]
     assert list(gates["width_unmeasured"]) == [False, False, True]
+
+
+def test_the_cul_de_sac_row_applies_only_where_the_bulb_was_measured():
+    """Happy Valley asks 35 ft of street on a cul-de-sac bulb and 50 on any
+    other lot. The row is looser, so the fact has to be proven, not
+    assumed: 40 ft of street passes on a lot s4 read on a bulb and fails on
+    one it did not -- and on one it never looked at, which is the older
+    parquet with no column. The bulb row is still a number: 30 ft fails it
+    on a bulb, and is red on frontage like any other short lot. And a bulb
+    that clears both rows is not counted as rescued by the looser one.
+    """
+    gates = _gate_frame([
+        _gate_row("happy_valley", 40.0, bulb=True),
+        _gate_row("happy_valley", 40.0, bulb=False),
+        _gate_row("happy_valley", 30.0, bulb=True),
+        _gate_row("happy_valley", 60.0, bulb=True),
+    ])
+    assert list(gates["frontage_ok"]) == [True, False, False, True]
+    assert list(gates["policy_exclusion"]) == ["", "below_min_frontage", "below_min_frontage", ""]
+    assert list(gates["frontage_on_bulb_row"]) == [True, False, True, True]
+    assert list(gates["frontage_bulb_rescued"]) == [True, False, False, False]
+
+    # No column at all -- an s4 parquet from before the measurement -- is
+    # the interior number everywhere, not an error and not a pass.
+    gates = _gate_frame([_gate_row("happy_valley", 40.0)])
+    assert list(gates["frontage_ok"]) == [False]
+    assert list(gates["frontage_on_bulb_row"]) == [False]
+
+    # A city with no bulb row is untouched by the fact.
+    gates = _gate_frame([_gate_row("west_linn", 40.0, bulb=True)])
+    assert list(gates["frontage_ok"]) == [False]
+    assert list(gates["frontage_on_bulb_row"]) == [False]
+
+
+def test_a_bulb_row_tighter_than_the_interior_row_is_refused():
+    """The row can only loosen. A bulb row above the interior one would make
+    every bulb the measurement misses an amnesty, and a bulb row with no
+    interior row beside it has nothing to be looser than."""
+    from pydantic import ValidationError
+
+    from common import ZoneRule
+
+    base = dict(zone="R-10", quadplex_allowed=True, setback_front_ft=20,
+                setback_side_ft=8, setback_rear_ft=20)
+    with pytest.raises(ValidationError):
+        ZoneRule(**base, min_frontage_ft=35, min_frontage_cul_de_sac_ft=50)
+    with pytest.raises(ValidationError):
+        ZoneRule(**base, min_frontage_cul_de_sac_ft=35)
+    ZoneRule(**base, min_frontage_ft=50, min_frontage_cul_de_sac_ft=35)
+    ZoneRule(**base, min_frontage_ft=35, min_frontage_cul_de_sac_ft=35)
 
 
 def test_a_measured_width_rules_in_both_directions():

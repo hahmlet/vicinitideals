@@ -143,6 +143,17 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
         if "lot_depth_ft" in lots.columns
         else np.full(n, np.nan)
     )
+    # Whether s4 read the front lot line as the outer radius of a cul-de-sac
+    # bulb. Absent on an older parquet -> False everywhere, which is the
+    # interior number everywhere: the bulb row is looser, and it is applied
+    # only to a lot the measurement is sure of.
+    fronts_bulb = (
+        lots["fronts_cul_de_sac"].fillna(False).to_numpy().astype(bool)
+        if "fronts_cul_de_sac" in lots.columns
+        else np.zeros(n, dtype=bool)
+    )
+    frontage_on_bulb_row = np.zeros(n, dtype=bool)
+    frontage_bulb_rescued = np.zeros(n, dtype=bool)
     flip_allowed = np.ones(n, dtype=bool)
     cov_cap = np.full(n, np.nan)
     accessory = np.zeros(n)
@@ -166,11 +177,24 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
         if rule.min_lot_sqft is not None and float(area) < rule.min_lot_sqft:
             min_lot_ok[i] = False
         min_front = rule.banded("min_frontage_ft", float(area))
+        if fronts_bulb[i] and rule.min_frontage_cul_de_sac_ft is not None:
+            # The code's own row for a lot on a cul-de-sac bulb -- Happy
+            # Valley's "Lots fronting on cul-de-sac", Wilsonville's note F
+            # and note J -- in place of the interior row, on the lots s4
+            # measured the bulb on and no other. `frontage_bulb_rescued`
+            # marks the lot that clears this row and not the interior one,
+            # so the summary can say what the row bought.
+            frontage_on_bulb_row[i] = True
+            frontage_bulb_rescued[i] = (
+                min_front is not None and float(frontage) < min_front
+            )
+            min_front = rule.min_frontage_cul_de_sac_ft
         if min_front is not None and float(frontage) < min_front:
             # Street frontage, the line s4 sums: one number, one meaning.
             # Banded in Milwaukie R-MD, where the standard lot's frontage
             # climbs from 30 to 35 ft at 5,000 sq ft.
             frontage_ok[i] = False
+            frontage_bulb_rescued[i] = False
         min_width = rule.banded("min_lot_width_ft", float(area))
         if min_width is not None:
             width = lot_width[i]
@@ -220,6 +244,8 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
     gates = pd.DataFrame({
         "elig_jurisdiction": elig_j, "z_ok": z_ok, "min_lot_ok": min_lot_ok,
         "frontage_ok": frontage_ok,
+        "frontage_on_bulb_row": frontage_on_bulb_row,
+        "frontage_bulb_rescued": frontage_bulb_rescued,
         "width_ok": width_ok, "width_unmeasured": width_unmeasured,
         "depth_ok": depth_ok, "depth_unmeasured": depth_unmeasured,
         "flip_allowed": flip_allowed,
@@ -658,15 +684,22 @@ def main() -> None:
     import pyarrow.parquet as pq
 
     _s4p = stage_path("s4_lots")
+    _s4cols = pq.read_schema(_s4p).names
     _dims = [c for c in ("lot_width_ft", "lot_depth_ft", "alley_width_ft")
-             if c in pq.read_schema(_s4p).names]
-    if _dims:
-        _s4d = pd.read_parquet(_s4p, columns=["TLID", *_dims])
-        lots = lots.drop(columns=[c for c in _dims if c in lots.columns])
-        lots = lots.merge(_s4d[["TLID", *_dims]], on="TLID", how="left")
+             if c in _s4cols]
+    # And whether the front lot line is on a cul-de-sac bulb, the same way:
+    # s4's, refreshed by re-running s4 alone, read by policy_gates.
+    _flags = [c for c in ("fronts_cul_de_sac",) if c in _s4cols]
+    if _dims or _flags:
+        _s4d = pd.read_parquet(_s4p, columns=["TLID", *_dims, *_flags])
+        lots = lots.drop(columns=[c for c in _dims + _flags if c in lots.columns])
+        lots = lots.merge(_s4d, on="TLID", how="left")
         for _c in _dims:
             print(f"s7: {_c} from s4 on "
                   f"{int(np.isfinite(pd.to_numeric(lots[_c], errors='coerce')).sum()):,} lots")
+        for _c in _flags:
+            lots[_c] = lots[_c].fillna(False).astype(bool)
+            print(f"s7: {_c} from s4 on {int(lots[_c].sum()):,} lots")
 
     ocfg = load_overlays()
     lots["current_use"] = current_use_column(
@@ -875,6 +908,29 @@ def main() -> None:
                    "above (the city's aisle is assumed, and the lot keeps its "
                    "city's row) though on the lot itself they draw no aisle at all."
                    if n_both else ""))
+    if "fronts_cul_de_sac" in lots.columns:
+        # The cul-de-sac frontage row, where a code prints one, applied only
+        # to the lots s4 read the bulb on. Said here because it is the one
+        # place a measured fact makes a standard LOOSER, and the count of
+        # lots it bought is the count to watch.
+        cds = lots["fronts_cul_de_sac"].fillna(False).to_numpy().astype(bool)
+        on_row = lots["frontage_on_bulb_row"].to_numpy().astype(bool)
+        rescued = lots["frontage_bulb_rescued"].to_numpy().astype(bool)
+        if cds.any():
+            per = lots.loc[on_row, "jurisdiction"].value_counts()
+            L.append(
+                f"\n**{int(cds.sum()):,}** lots have their front lot line on the "
+                "outer radius of a cul-de-sac bulb (`fronts_cul_de_sac`: the "
+                "chords on a circle of a turnaround's radius, turning toward the "
+                "street, with a street centreline ending inside it). "
+                f"**{int(on_row.sum()):,}** of them sit in a zone whose code asks a "
+                "bulb lot less street frontage than an interior lot -- Happy "
+                "Valley's district tables, Wilsonville's PDR-3, PDR-4 and RN -- "
+                "and were judged on that row ("
+                + ", ".join(f"{k} {v:,}" for k, v in per.items())
+                + f"); **{int(rescued.sum()):,}** clear the bulb row and not the "
+                  "interior one. Every other lot keeps the interior number, "
+                  "including the bulb lots the measurement is not sure of.")
     L.append("\nThe human-review queue is `review_candidates.csv`.")
 
     # What the queue is actually made of. The binding-constraint table below
@@ -1453,6 +1509,13 @@ def main() -> None:
     # be applied either way. Same discipline -- the caveat travels with the row.
     if "depth_unmeasured" in lots.columns:
         phase2_cols.append("depth_unmeasured")
+    # And why a Happy Valley or Wilsonville lot under its zone's frontage
+    # number is NOT red on it: s4 read its front lot line on a cul-de-sac
+    # bulb and the code's bulb row applied. The fact and the row travel with
+    # the row of the CSV.
+    for _c in ("fronts_cul_de_sac", "frontage_on_bulb_row", "frontage_bulb_rescued"):
+        if _c in lots.columns:
+            phase2_cols.append(_c)
     # And why a large Oregon City lot is in the queue looking perfect: it is
     # above its zone's minimum density, so four homes may not be enough on it.
     # Same discipline -- the caveat travels with the row.

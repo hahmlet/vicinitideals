@@ -896,9 +896,13 @@ zones:
       # width rows below were not, so RML has been screened with no width floor.
       #
       # The two relaxations on the row are left out. "May be reduced to 30 feet
-      # if on a cul-de-sac" turns on a street geometry nothing here measures,
-      # and the 26 ft Flexible Lot Subdivision figure is a different application
-      # path. Both would let more land through than the row does.
+      # if on a cul-de-sac" turned on a street geometry nothing measured when
+      # this was written; since 2026-09-15 quadfit s4 reads it
+      # (`fronts_cul_de_sac`, held on Happy Valley's and Wilsonville's
+      # FRONTAGE rows), and this WIDTH row's 30 ft is queued in
+      # docs/FOLLOWUPS.md behind a width gate on the quadfit side. The 26 ft
+      # Flexible Lot Subdivision figure is a different application path. Both
+      # would let more land through than the row does.
       value: 50
       cite: TDC 41.220 Table, Minimum Average Lot Width
       quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L501-L503"

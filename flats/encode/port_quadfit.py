@@ -160,8 +160,25 @@ FIELD_MAP: dict[str, str] = {
 #: an exemption on it would waive the far side yard too, the false-GREEN
 #: direction; `alley_at_side` is measured and registered so the refusal is
 #: stated against a fact we hold.
+#:
+#: `min_frontage_cul_de_sac_ft` is the fourth, from 2026-09-15, and it is the
+#: alley story again on a different row. Happy Valley's district tables print
+#: "Lots fronting on cul-de-sac" above "All other lots" (35 against 50 in R-5
+#: to R-10, 50 to 70 against 60 to 100 in R-15 to R-40) and Wilsonville's
+#: Table 2 note F and Table 8A note J reduce PDR-3, PDR-4 and RN to 24. The
+#: corpus read every one of those rows first and refused them in a comment,
+#: for the one reason a looser row should be refused: nothing measured the
+#: fact. quadfit's s4 measures it now (`fronts_cul_de_sac`: the front chords
+#: on one circle of a turnaround's radius, turning toward the street, with a
+#: street ending inside it), rules.yaml grew the column so s7 could apply the
+#: row on the lots it measured, and the corpus holds the same number as a
+#: `fronts_cul_de_sac` variant on `min_frontage_ft`, filled by
+#: `flats.geom.culdesac`. The port cannot route a number into a variant, so
+#: the key is held here and `test_the_cul_de_sac_frontage_has_to_already_be_here`
+#: walks every zone that states it, both ways.
 BACKPORTED: frozenset[str] = frozenset(
-    {"step_back_rear", "step_back_side", "lot_size_bands", "setback_alley_ft"}
+    {"step_back_rear", "step_back_side", "lot_size_bands", "setback_alley_ft",
+     "min_frontage_cul_de_sac_ft"}
 )
 
 #: Where the corpus holds a backported key that is not a step-back plane or a
@@ -174,11 +191,19 @@ BACKPORTED: frozenset[str] = frozenset(
 #: corpus holds it as an `alley_at_rear` variant on `setback_rear_ft`
 #: carrying the same number -- switched by `alley_at_rear` ALONE, because a
 #: variant also keyed to `unit_lots` is the townhouse row and quadfit draws
-#: the one-lot plat.
+#: the one-lot plat. A `min_frontage_cul_de_sac_ft` is Happy Valley's "Lots
+#: fronting on cul-de-sac" row or Wilsonville's note F / note J, and the
+#: corpus holds it as a `fronts_cul_de_sac` variant on `min_frontage_ft` --
+#: again switched by the fact ALONE, because the `[unit_lots,
+#: fronts_cul_de_sac]` pair beside it is the townhome row spelled out so a
+#: townhome pod on a bulb does not tie.
 HELD_AS_VARIANT: dict[str, dict[str, tuple[str, str]]] = {
     "setback_alley_ft": {
         "zero": ("setback_garage_entrance_ft", "abuts_alley"),
         "number": ("setback_rear_ft", "alley_at_rear"),
+    },
+    "min_frontage_cul_de_sac_ft": {
+        "number": ("min_frontage_ft", "fronts_cul_de_sac"),
     },
 }
 

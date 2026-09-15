@@ -1863,6 +1863,17 @@ zones:
     min_frontage_ft:
       value: 40
       quote: "or/clackamas/wilsonville/4.planning.txt#L4724"
+      variants:
+        # Table 2 note F, on this cell and PDR-4's: "Lot frontage may be
+        # reduced to 24 feet when the lot fronts a cul-de-sac." Held since
+        # 2026-09-15, switched by `fronts_cul_de_sac`, which quadfit's s4
+        # measures (`flats.geom.culdesac` reads it): the front lot line on one
+        # circle of a turnaround's radius, turning toward the street, with a
+        # street ending inside the circle. A lot the screen has not proven on
+        # a bulb still owes 40.
+        - value: 24
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4740"
     max_coverage_pct:
       value: 50
       quote: "or/clackamas/wilsonville/4.planning.txt#L4724"
@@ -1955,6 +1966,17 @@ zones:
     min_frontage_ft:
       value: 35
       quote: "or/clackamas/wilsonville/4.planning.txt#L4726"
+      variants:
+        # Table 2 note F, on this cell and PDR-4's: "Lot frontage may be
+        # reduced to 24 feet when the lot fronts a cul-de-sac." Held since
+        # 2026-09-15, switched by `fronts_cul_de_sac`, which quadfit's s4
+        # measures (`flats.geom.culdesac` reads it): the front lot line on one
+        # circle of a turnaround's radius, turning toward the street, with a
+        # street ending inside the circle. A lot the screen has not proven on
+        # a bulb still owes 35.
+        - value: 24
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4740"
     max_coverage_pct:
       value: 75
       quote: "or/clackamas/wilsonville/4.planning.txt#L4726"
@@ -2193,13 +2215,28 @@ zones:
       # and waives it entirely for a lot fronting a platted private drive, N
       # measures it at the front door for courtyard cluster housing. Table 8B
       # spells the same column out as "Min. lot width/street frontage per lot".
-      # Neither relief is encoded: no condition names a cul-de-sac or a private
-      # drive, and both would loosen this.
+      # The cul-de-sac half of J is held below since 2026-09-15, switched by
+      # `fronts_cul_de_sac`, which quadfit's s4 measures (`flats.geom.culdesac`
+      # reads it): the front lot line on one circle of a turnaround's radius,
+      # turning toward the street, with a street ending inside the circle.
+      # The private-drive half is not encoded: whether a lot fronts "an
+      # approved, platted private drive" is a fact nothing measures, and it
+      # would waive this entirely. A lot the screen has not proven on a bulb
+      # still owes 40.
       value: 40
       quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
       variants:
+        # Note J: "May be reduced to 24' when the lot fronts a cul-de-sac."
+        - value: 24
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7254"
         - value: 20
           when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
+        # Note I gives a townhouse 20 whatever it fronts, and a relief cannot
+        # tighten it. Spelled out so the two one-condition rows do not tie.
+        - value: 20
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
     max_coverage_pct:
       # 40 is R-10. The three rows read 40 / 45 / 60 and the file used to hold

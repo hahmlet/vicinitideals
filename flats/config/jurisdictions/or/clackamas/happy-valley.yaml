@@ -964,13 +964,27 @@ zones:
       value: 200
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
     min_frontage_ft:
-      # L286 is the "All other lots" row. The row above it is a cul-de-sac
-      # exception, which is not encoded: whether a lot fronts a cul-de-sac is
-      # not a fact this screen measures, and reading the looser row across
-      # would pass lots the code holds to 100.
+      # L286 is the "All other lots" row. The row above it, L285, is the
+      # cul-de-sac row -- 70 feet where this one asks 100 -- and since
+      # 2026-09-15 it is held below, switched by `fronts_cul_de_sac`, which
+      # quadfit's s4 measures (`flats.geom.culdesac` reads it): the front lot
+      # line on one circle of a turnaround's radius, turning toward the
+      # street, with a street ending inside the circle. Until then the row
+      # was refused for the one reason a looser row should be: nothing
+      # measured the fact, and reading it across would have passed lots the
+      # code holds to 100. A lot the screen has not proven on a bulb still
+      # owes 100.
       value: 100
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
       variants:
+        # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
+        # lot line contiguous with the outer radius of a curve" -- and the
+        # street: "one end open to traffic and the other end permanently
+        # terminated and provided with a vehicular turnaround". Both halves
+        # are what s4 reads.
+        - value: 70
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L285"
         # The row below the general one: townhomes, twenty feet, in every
         # column of every residential table in this chapter. The comment this
         # replaces called it "a standard for a different product than the pod"
@@ -978,6 +992,12 @@ zones:
         # the townhome density row three fields up is already read.
         - value: 20
           when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+        # A townhome on a bulb is still a townhome: the townhome row is a row
+        # of its own and stands in every column, and a relief cannot tighten
+        # it. Spelled out so the two one-condition rows above do not tie.
+        - value: 20
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
     max_coverage_pct:
       value: 20
@@ -1160,13 +1180,27 @@ zones:
       value: 100
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
     min_frontage_ft:
-      # L286 is the "All other lots" row. The row above it is a cul-de-sac
-      # exception, which is not encoded: whether a lot fronts a cul-de-sac is
-      # not a fact this screen measures, and reading the looser row across
-      # would pass lots the code holds to 80.
+      # L286 is the "All other lots" row. The row above it, L285, is the
+      # cul-de-sac row -- 50 feet where this one asks 80 -- and since
+      # 2026-09-15 it is held below, switched by `fronts_cul_de_sac`, which
+      # quadfit's s4 measures (`flats.geom.culdesac` reads it): the front lot
+      # line on one circle of a turnaround's radius, turning toward the
+      # street, with a street ending inside the circle. Until then the row
+      # was refused for the one reason a looser row should be: nothing
+      # measured the fact, and reading it across would have passed lots the
+      # code holds to 80. A lot the screen has not proven on a bulb still
+      # owes 80.
       value: 80
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
       variants:
+        # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
+        # lot line contiguous with the outer radius of a curve" -- and the
+        # street: "one end open to traffic and the other end permanently
+        # terminated and provided with a vehicular turnaround". Both halves
+        # are what s4 reads.
+        - value: 50
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L285"
         # The row below the general one: townhomes, twenty feet, in every
         # column of every residential table in this chapter. The comment this
         # replaces called it "a standard for a different product than the pod"
@@ -1174,6 +1208,12 @@ zones:
         # the townhome density row three fields up is already read.
         - value: 20
           when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+        # A townhome on a bulb is still a townhome: the townhome row is a row
+        # of its own and stands in every column, and a relief cannot tighten
+        # it. Spelled out so the two one-condition rows above do not tie.
+        - value: 20
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
     max_coverage_pct:
       value: 30
@@ -1354,13 +1394,27 @@ zones:
       value: 90
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
     min_frontage_ft:
-      # L286 is the "All other lots" row. The row above it is a cul-de-sac
-      # exception, which is not encoded: whether a lot fronts a cul-de-sac is
-      # not a fact this screen measures, and reading the looser row across
-      # would pass lots the code holds to 60.
+      # L286 is the "All other lots" row. The row above it, L285, is the
+      # cul-de-sac row -- 50 feet where this one asks 60 -- and since
+      # 2026-09-15 it is held below, switched by `fronts_cul_de_sac`, which
+      # quadfit's s4 measures (`flats.geom.culdesac` reads it): the front lot
+      # line on one circle of a turnaround's radius, turning toward the
+      # street, with a street ending inside the circle. Until then the row
+      # was refused for the one reason a looser row should be: nothing
+      # measured the fact, and reading it across would have passed lots the
+      # code holds to 60. A lot the screen has not proven on a bulb still
+      # owes 60.
       value: 60
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
       variants:
+        # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
+        # lot line contiguous with the outer radius of a curve" -- and the
+        # street: "one end open to traffic and the other end permanently
+        # terminated and provided with a vehicular turnaround". Both halves
+        # are what s4 reads.
+        - value: 50
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L285"
         # The row below the general one: townhomes, twenty feet, in every
         # column of every residential table in this chapter. The comment this
         # replaces called it "a standard for a different product than the pod"
@@ -1368,6 +1422,12 @@ zones:
         # the townhome density row three fields up is already read.
         - value: 20
           when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+        # A townhome on a bulb is still a townhome: the townhome row is a row
+        # of its own and stands in every column, and a relief cannot tighten
+        # it. Spelled out so the two one-condition rows above do not tie.
+        - value: 20
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
     max_coverage_pct:
       value: 35
@@ -1546,18 +1606,36 @@ zones:
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
     min_frontage_ft:
       # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
-      # Absent from this zone until now. The row above it, "Lots fronting on
-      # cul-de-sac", states a smaller 35 feet; that one is not encoded because
-      # whether a lot fronts a cul-de-sac is not a fact this screen measures,
-      # and reading the looser row across would pass lots the code holds to
-      # 50.
+      # The row above it, "Lots fronting on cul-de-sac", states a smaller 35
+      # feet, and since 2026-09-15 it is held below, switched by
+      # `fronts_cul_de_sac`, which quadfit's s4 measures (`flats.geom.culdesac`
+      # reads it): the front lot line on one circle of a turnaround's radius,
+      # turning toward the street, with a street ending inside the circle.
+      # Until then the row was refused for the one reason a looser row should
+      # be: nothing measured the fact, and reading it across would have passed
+      # lots the code holds to 50. A lot the screen has not proven on a bulb
+      # still owes 50.
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
       variants:
+        # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
+        # lot line contiguous with the outer radius of a curve" -- and the
+        # street: "one end open to traffic and the other end permanently
+        # terminated and provided with a vehicular turnaround". Both halves
+        # are what s4 reads.
+        - value: 35
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L475"
         # The row below: townhomes, twenty feet in every column of every
         # residential table in this chapter.
         - value: 20
           when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+        # A townhome on a bulb is still a townhome: the townhome row is a row
+        # of its own and stands in every column, and a relief cannot tighten
+        # it. Spelled out so the two one-condition rows above do not tie.
+        - value: 20
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
@@ -1733,18 +1811,36 @@ zones:
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
     min_frontage_ft:
       # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
-      # Absent from this zone until now. The row above it, "Lots fronting on
-      # cul-de-sac", states a smaller 35 feet; that one is not encoded because
-      # whether a lot fronts a cul-de-sac is not a fact this screen measures,
-      # and reading the looser row across would pass lots the code holds to
-      # 50.
+      # The row above it, "Lots fronting on cul-de-sac", states a smaller 35
+      # feet, and since 2026-09-15 it is held below, switched by
+      # `fronts_cul_de_sac`, which quadfit's s4 measures (`flats.geom.culdesac`
+      # reads it): the front lot line on one circle of a turnaround's radius,
+      # turning toward the street, with a street ending inside the circle.
+      # Until then the row was refused for the one reason a looser row should
+      # be: nothing measured the fact, and reading it across would have passed
+      # lots the code holds to 50. A lot the screen has not proven on a bulb
+      # still owes 50.
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
       variants:
+        # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
+        # lot line contiguous with the outer radius of a curve" -- and the
+        # street: "one end open to traffic and the other end permanently
+        # terminated and provided with a vehicular turnaround". Both halves
+        # are what s4 reads.
+        - value: 35
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L475"
         # The row below: townhomes, twenty feet in every column of every
         # residential table in this chapter.
         - value: 20
           when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+        # A townhome on a bulb is still a townhome: the townhome row is a row
+        # of its own and stands in every column, and a relief cannot tighten
+        # it. Spelled out so the two one-condition rows above do not tie.
+        - value: 20
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
@@ -1920,18 +2016,36 @@ zones:
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
     min_frontage_ft:
       # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
-      # Absent from this zone until now. The row above it, "Lots fronting on
-      # cul-de-sac", states a smaller 35 feet; that one is not encoded because
-      # whether a lot fronts a cul-de-sac is not a fact this screen measures,
-      # and reading the looser row across would pass lots the code holds to
-      # 50.
+      # The row above it, "Lots fronting on cul-de-sac", states a smaller 35
+      # feet, and since 2026-09-15 it is held below, switched by
+      # `fronts_cul_de_sac`, which quadfit's s4 measures (`flats.geom.culdesac`
+      # reads it): the front lot line on one circle of a turnaround's radius,
+      # turning toward the street, with a street ending inside the circle.
+      # Until then the row was refused for the one reason a looser row should
+      # be: nothing measured the fact, and reading it across would have passed
+      # lots the code holds to 50. A lot the screen has not proven on a bulb
+      # still owes 50.
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
       variants:
+        # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
+        # lot line contiguous with the outer radius of a curve" -- and the
+        # street: "one end open to traffic and the other end permanently
+        # terminated and provided with a vehicular turnaround". Both halves
+        # are what s4 reads.
+        - value: 35
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L475"
         # The row below: townhomes, twenty feet in every column of every
         # residential table in this chapter.
         - value: 20
           when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+        # A townhome on a bulb is still a townhome: the townhome row is a row
+        # of its own and stands in every column, and a relief cannot tighten
+        # it. Spelled out so the two one-condition rows above do not tie.
+        - value: 20
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
@@ -2139,18 +2253,36 @@ zones:
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L649"
     min_frontage_ft:
       # Table 16.22.040-2, "Street frontage (minimum)", "All other lots" row.
-      # Absent from this zone until now. The row above it, "Lots fronting on
-      # cul-de-sac", states a smaller 35 feet; that one is not encoded because
-      # whether a lot fronts a cul-de-sac is not a fact this screen measures,
-      # and reading the looser row across would pass lots the code holds to
-      # 40.
+      # The row above it, "Lots fronting on cul-de-sac", states a smaller 35
+      # feet, and since 2026-09-15 it is held below, switched by
+      # `fronts_cul_de_sac`, which quadfit's s4 measures (`flats.geom.culdesac`
+      # reads it): the front lot line on one circle of a turnaround's radius,
+      # turning toward the street, with a street ending inside the circle.
+      # Until then the row was refused for the one reason a looser row should
+      # be: nothing measured the fact, and reading it across would have passed
+      # lots the code holds to 40. A lot the screen has not proven on a bulb
+      # still owes 40.
       value: 40
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L650,L652"
       variants:
+        # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
+        # lot line contiguous with the outer radius of a curve" -- and the
+        # street: "one end open to traffic and the other end permanently
+        # terminated and provided with a vehicular turnaround". Both halves
+        # are what s4 reads.
+        - value: 35
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L651"
         # The row below: townhomes, twenty feet in every column of every
         # residential table in this chapter.
         - value: 20
           when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L653"
+        # A townhome on a bulb is still a townhome: the townhome row is a row
+        # of its own and stands in every column, and a relief cannot tighten
+        # it. Spelled out so the two one-condition rows above do not tie.
+        - value: 20
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L653"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,

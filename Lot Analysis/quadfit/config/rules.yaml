@@ -1747,21 +1747,29 @@ jurisdictions:
     #   or/clackamas/happy-valley/16.12.definitions.txt#L938-L939
     lot_width_measure: side_midpoints
     zones:
-      # Street frontage, each district table's "Street frontage (minimum)" row,
-      # "All other lots". The row above it, "Lots fronting on cul-de-sac", is
-      # looser in every table (35 in R-5 to R-10, 50-70 in R-15 to R-40) and
-      # is not carried: nothing here knows whether a lot's street is a
-      # cul-de-sac bulb, and carrying the looser row across would pass lots
-      # the code holds to the interior number -- the reading the corpus took.
-      # So a bulb lot reading under the interior number is a false red this
-      # file CAN produce, and it is written here so the next person to see a
-      # curved-front lot fail on frontage knows why. Measured 2026-09-11 when
-      # the rows were filled: 36 review lots and no green fell under the
-      # number, in a city with no greens. The townhouse row (20) is a unit-lot
-      # figure.
+      # Street frontage, each district table's "Street frontage (minimum)"
+      # row, in both of its lines. "All other lots" is `min_frontage_ft`;
+      # "Lots fronting on cul-de-sac" -- looser in every table, 35 in R-5 to
+      # R-10, 50 to 70 in R-15 to R-40 -- is `min_frontage_cul_de_sac_ft`,
+      # carried since 2026-09-15 and applied by s7 only where s4 measured the
+      # bulb: HVMC 16.12 defines a cul-de-sac lot by "a front lot line
+      # contiguous with the outer radius of a curve" and a cul-de-sac as a
+      # dead-end street "provided with a vehicular turnaround", and s4 reads
+      # both halves -- the front lot line's chords on a circle of 30 to 80
+      # ft turning toward the street, with a street centreline ending inside
+      # that circle (`fronts_cul_de_sac`). A lot not proven on a bulb keeps
+      # the interior number, so the reading can only loosen, and only on lots
+      # it is sure of. Until then the row was read and not carried, and a
+      # bulb lot reading under the interior number was a false red this file
+      # produced on purpose: 81 such lots were red on frontage on 2026-09-15,
+      # 38 of them on a bulb by this reading; the other 43 are straight
+      # fronts, bends and corner arcs, and keep the interior number. The
+      # townhouse row (20) is a unit-lot figure.
       #   or/clackamas/happy-valley/16.22.residential.txt#L284-L286 (R-40/R-20/R-15)
       #   or/clackamas/happy-valley/16.22.residential.txt#L474-L476 (R-10/R-8.5/R-7)
       #   or/clackamas/happy-valley/16.22.residential.txt#L650-L652 (R-5)
+      #   or/clackamas/happy-valley/16.12.definitions.txt#L931-L932 (cul-de-sac lot)
+      #   or/clackamas/happy-valley/16.12.definitions.txt#L1672-L1673 (cul-de-sac)
       - zone: R40
         quadplex_allowed: true
         setback_front_ft: 22
@@ -1770,6 +1778,7 @@ jurisdictions:
         setback_street_side_ft: 15
         min_lot_sqft: 40000
         min_frontage_ft: 100
+        min_frontage_cul_de_sac_ft: 70
         min_lot_depth_ft: 200
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L282
@@ -1787,6 +1796,7 @@ jurisdictions:
         setback_street_side_ft: 15
         min_lot_sqft: 20000
         min_frontage_ft: 80
+        min_frontage_cul_de_sac_ft: 50
         min_lot_depth_ft: 100
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L282
@@ -1804,6 +1814,7 @@ jurisdictions:
         setback_street_side_ft: 15
         min_lot_sqft: 15000
         min_frontage_ft: 60
+        min_frontage_cul_de_sac_ft: 50
         min_lot_depth_ft: 90
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L282
@@ -1821,6 +1832,7 @@ jurisdictions:
         setback_street_side_ft: 15
         min_lot_sqft: 10000
         min_frontage_ft: 50
+        min_frontage_cul_de_sac_ft: 35
         min_lot_depth_ft: 80
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L472
@@ -1838,6 +1850,7 @@ jurisdictions:
         setback_street_side_ft: 15
         min_lot_sqft: 8500
         min_frontage_ft: 50
+        min_frontage_cul_de_sac_ft: 35
         min_lot_depth_ft: 70
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L472
@@ -1855,6 +1868,7 @@ jurisdictions:
         setback_street_side_ft: 15
         min_lot_sqft: 7000
         min_frontage_ft: 50
+        min_frontage_cul_de_sac_ft: 35
         min_lot_depth_ft: 70
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L472
@@ -1872,6 +1886,7 @@ jurisdictions:
         setback_street_side_ft: 8
         min_lot_sqft: 7000
         min_frontage_ft: 40
+        min_frontage_cul_de_sac_ft: 35
         min_lot_depth_ft: 60
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L648
@@ -1910,6 +1925,7 @@ jurisdictions:
         setback_street_side_ft: 15
         min_lot_sqft: 20000
         min_frontage_ft: 80
+        min_frontage_cul_de_sac_ft: 50
         min_lot_depth_ft: 100
         # HV LDC 16.22 dimensional table for the district.
         #   or/clackamas/happy-valley/16.22.residential.txt#L282
@@ -2620,6 +2636,11 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 40
+        # WDC 4.124 Table 2 note F, on the PDR-3 and PDR-4 cells only: "Lot
+        # frontage may be reduced to 24 feet when the lot fronts a
+        # cul-de-sac." Applied where s4 measured the bulb (`fronts_cul_de_sac`).
+        #   or/clackamas/wilsonville/4.planning.txt#L4740
+        min_frontage_cul_de_sac_ft: 24
         max_coverage_pct: 50
         lot_size_bands:
           setback_front_ft: [[10000, 20]]
@@ -2644,6 +2665,9 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 35
+        # WDC 4.124 Table 2 note F, as on PDR-3.
+        #   or/clackamas/wilsonville/4.planning.txt#L4740
+        min_frontage_cul_de_sac_ft: 24
         max_coverage_pct: 75
         lot_size_bands:
           setback_front_ft: [[10000, 20]]
@@ -2719,6 +2743,13 @@ jurisdictions:
         #   or/clackamas/wilsonville/4.planning.txt#L7179-L7236
         min_lot_width_ft: 40
         min_frontage_ft: 35
+        # Table 8A note J, on the width/frontage column of every row: "May be
+        # reduced to 24' when the lot fronts a cul-de-sac." Applied where s4
+        # measured the bulb (`fronts_cul_de_sac`). The note's other half, no
+        # frontage at all on a platted private drive, is a fact nothing here
+        # measures and is not carried.
+        #   or/clackamas/wilsonville/4.planning.txt#L7254
+        min_frontage_cul_de_sac_ft: 24
         max_coverage_pct: 60
         lot_size_bands:
           setback_side_ft: [[10000, 10]]
