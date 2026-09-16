@@ -70,6 +70,25 @@ async def test_list_all_users_returns_all_sorted_by_name(
 # ---------------------------------------------------------------------------
 
 
+async def test_list_all_users_includes_one_who_has_not_finished_onboarding(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    """/register creates a user with no organisation and sends them to the
+    wizard; listing users must not 500 on that row. Production did, on
+    2026-09-15, the first evening such a user existed -- the response schema
+    demanded a UUID the ORM never promised."""
+    _org, user_a = await seed_org(session)
+    pending = User(id=uuid.uuid4(), org_id=None, name="Pending Person")
+    session.add(pending)
+    await session.flush()
+
+    resp = await client.get("/api/users")
+    assert resp.status_code == 200, resp.text
+    rows = {row["id"]: row for row in resp.json()}
+    assert rows[str(pending.id)]["org_id"] is None
+    assert rows[str(user_a.id)]["org_id"] is not None
+
+
 async def test_list_org_users_scoped_to_org(
     client: AsyncClient, session: AsyncSession
 ) -> None:

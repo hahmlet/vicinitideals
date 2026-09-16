@@ -43,7 +43,12 @@ class UserCreate(UserBase):
 
 class UserRead(UserBase):
     id: uuid.UUID
-    org_id: uuid.UUID
+    # None until the user finishes onboarding: /register creates the row with
+    # no organisation and sends them to the wizard (`User.org_id` is nullable
+    # for exactly this). A required UUID here turned every such user into a
+    # 500 on GET /api/users -- caught by the post-deploy smoke check on
+    # 2026-09-15, the first evening a registered-but-not-onboarded user existed.
+    org_id: uuid.UUID | None = None
     is_org_admin: bool = False
     created_at: datetime
 
