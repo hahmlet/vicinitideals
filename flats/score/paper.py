@@ -381,6 +381,13 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             unsigned=unsigned,
             excluded=(
                 "setback_street_side_ft (corner lots only)",
+                # The side setback on the one side line abutting an alley --
+                # zero in Portland. The paper fit has no edges and asks both
+                # side yards in full, which overstates the width an
+                # alley-side lot needs by the waived yard: the conservative
+                # direction. The envelope (`flats.geom.envelope`) applies it
+                # to the alley edge alone.
+                "setback_alley_side_ft (alley-side lots only; the paper fit has no edges)",
                 "min_frontage_ft (measured at the street, not the envelope)",
                 # Ruled 2026-09-08: the pod parks in a rear court and has no
                 # garage, so a garage-entrance setback cannot reach it. This is

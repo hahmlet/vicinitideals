@@ -2866,12 +2866,22 @@ zones:
         # rear yard of a lot whose alley runs down its side. Filled from
         # quadfit's measured alley edges since 2026-09-13; no county lot
         # carries one today, so this is a matter of record until one does.
-        # The side half is NOT ENCODED: `setback_side_ft` is one number for
-        # both side lines, and an exemption on it would waive the far side
-        # yard too. It waits on a per-side setback in the model.
+        # The side half is on `setback_alley_side_ft` below, its own field,
+        # because `setback_side_ft` is one number for both side lines.
         - exempt: true
           when: [alley_at_rear]
           quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
+    setback_alley_side_ft:
+      # The SIDE half of 33.110.220.D.9 in the county's copy of the chapter,
+      # held since 2026-09-15 on the line it is about -- the side setback on
+      # the one side lot line abutting an alley. Refused until then because
+      # `setback_side_ft` is one number for both side lines and an exemption
+      # on it would have waived the far side yard too; the per-line field is
+      # read by the envelope for the alley edge alone, so the far yard keeps
+      # its 10. No county lot carries an alley edge in the street file, so
+      # like the other two halves this is a matter of record until one does.
+      exempt: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 6000
       quote: "or/multnomah/_unincorporated/33.110.txt#L1551"
@@ -2946,6 +2956,13 @@ zones:
         - exempt: true
           when: [alley_at_rear]
           quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
+    setback_alley_side_ft:
+      # The SIDE half of the alley sentence quoted on the rear setback above,
+      # on the one line it is about: no side setback from a side lot line
+      # abutting an alley. Its own field because `setback_side_ft` is one
+      # number for both side lines; the far side yard keeps that number.
+      exempt: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 12000
       quote: "or/multnomah/_unincorporated/33.110.txt#L1550"
@@ -3018,6 +3035,13 @@ zones:
         - exempt: true
           when: [alley_at_rear]
           quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
+    setback_alley_side_ft:
+      # The SIDE half of the alley sentence quoted on the rear setback above,
+      # on the one line it is about: no side setback from a side lot line
+      # abutting an alley. Its own field because `setback_side_ft` is one
+      # number for both side lines; the far side yard keeps that number.
+      exempt: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3068,6 +3092,13 @@ zones:
         - exempt: true
           when: [alley_at_rear]
           quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
+    setback_alley_side_ft:
+      # The SIDE half of the alley sentence quoted on the rear setback above,
+      # on the one line it is about: no side setback from a side lot line
+      # abutting an alley. Its own field because `setback_side_ft` is one
+      # number for both side lines; the far side yard keeps that number.
+      exempt: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     setback_garage_entrance_ft:
       # 33.110.220.D.9 in the county's copy of the chapter, the same sentence
       # at the same lines as Portland's: "Alley. No side, rear, or garage
@@ -3197,6 +3228,13 @@ zones:
         - exempt: true
           when: [alley_at_rear]
           quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
+    setback_alley_side_ft:
+      # The SIDE half of the alley sentence quoted on the rear setback above,
+      # on the one line it is about: no side setback from a side lot line
+      # abutting an alley. Its own field because `setback_side_ft` is one
+      # number for both side lines; the far side yard keeps that number.
+      exempt: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
     min_lot_sqft:
       value: 4200
       quote: "or/multnomah/_unincorporated/33.110.txt#L1552"

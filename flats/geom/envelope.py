@@ -17,6 +17,17 @@ Corner lots take the stricter of the front and street-side setback on every
 street edge, because geometry cannot say which street line is legally the
 front. Fragments too small to hold anything are dropped — a pod does not fit in
 a forty-square-foot wedge, and carrying it costs a raster.
+
+*The alley line.* Portland (and the county's copy of its chapter) requires no
+side or rear setback from a lot line abutting an alley. The rear half is a
+rule about the rear line, and the rule layer holds it on the rear setback
+itself, switched by ``alley_at_rear`` — so it arrives here as a ``rear_ft`` of
+zero and needs nothing more. The side half is a rule about ONE of the two side
+lines, and ``setback_side_ft`` is one number for both; so it has its own field,
+``setback_alley_side_ft``, which arrives as :attr:`Setbacks.alley_side_ft` and
+is applied to the side edge flagged :attr:`~flats.geom.edges.Edge.alley` and to
+no other. None means the code does not distinguish that line, and it takes the
+ordinary side setback. The far side yard is never touched either way.
 """
 
 from __future__ import annotations
@@ -27,7 +38,7 @@ import shapely
 from shapely.geometry import LineString, MultiPolygon
 from shapely.geometry.base import BaseGeometry
 
-from flats.geom.edges import EdgeClass, LotEdges, Tier
+from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
 
 #: Envelope fragments below this hold nothing worth rasterizing.
 MIN_PART_SQFT = 200.0
@@ -35,7 +46,7 @@ MIN_PART_SQFT = 200.0
 
 @dataclass(frozen=True, slots=True)
 class Setbacks:
-    """The four numbers the envelope is cut with, in feet."""
+    """The numbers the envelope is cut with, in feet."""
 
     front_ft: float = 0.0
     side_ft: float = 0.0
@@ -43,6 +54,12 @@ class Setbacks:
     #: The side setback along a second street. None means the code does not
     #: distinguish it, in which case a corner lot uses the front setback.
     street_side_ft: float | None = None
+    #: The side setback on the side line abutting an alley
+    #: (``setback_alley_side_ft``; zero where the code waives it). None means
+    #: the code does not distinguish that line and it takes ``side_ft``. Read
+    #: for the side edge flagged ``alley`` only; the other side line never
+    #: sees it.
+    alley_side_ft: float | None = None
 
     def for_class(self, cls: EdgeClass) -> float:
         return {
@@ -50,6 +67,12 @@ class Setbacks:
             EdgeClass.rear: self.rear_ft,
             EdgeClass.side: self.side_ft,
         }[cls]
+
+    def for_edge(self, edge: Edge) -> float:
+        """The setback one edge takes: its class's, unless it is the alley side."""
+        if edge.alley and edge.cls is EdgeClass.side and self.alley_side_ft is not None:
+            return self.alley_side_ft
+        return self.for_class(edge.cls)
 
     @property
     def largest_ft(self) -> float:
@@ -64,6 +87,7 @@ class Setbacks:
             side_ft=self.side_ft,
             rear_ft=self.rear_ft,
             street_side_ft=self.street_side_ft,
+            alley_side_ft=self.alley_side_ft,
         )
 
 
@@ -104,7 +128,7 @@ def buildable(
 
     strips = []
     for edge in edges.edges:
-        d = setbacks.for_class(edge.cls)
+        d = setbacks.for_edge(edge)
         if d <= 0:
             continue
         strips.append(

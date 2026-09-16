@@ -207,13 +207,15 @@ _C: tuple[ConditionDef, ...] = (
         "site_fact",
         "The lot line abutting the alley is a SIDE line -- more than 30 "
         "degrees off the frontage. The same sentences waive the side setback "
-        "from such a line, and the corpus does NOT encode that half: "
-        "`setback_side_ft` is one number for both side lines, so an "
-        "exemption switched by this fact would waive the far side yard as "
-        "well. Registered so the bridge can say which line it found and so "
-        "the refusal is stated against a real fact rather than a missing "
-        "one; nothing resolves on it until the model holds per-side "
-        "setbacks.",
+        "from such a line, and since 2026-09-15 the corpus holds that half "
+        "on `setback_alley_side_ft` -- the side setback on that ONE line -- "
+        "as an exemption, rather than on `setback_side_ft`, which is one "
+        "number for both side lines and would have waived the far side yard "
+        "too. The envelope reads the per-line field for the side edge on the "
+        "alley and nothing else, so this fact does not switch a variant: the "
+        "bridge reports it beside `alley_at_rear` so a caller can see which "
+        "line was found, and `flats.geom.edges.LotEdges.alley_facts` reports "
+        "the same three facts off a FLATS-native classification.",
         evidence="quadfit s4 class A edge whose bearing is more than 30 degrees off every frontage bearing",
         assume=False,
     ),

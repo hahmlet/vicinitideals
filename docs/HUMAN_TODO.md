@@ -3685,8 +3685,9 @@ the list of places worth hoping about.
   that would drop both side yards of a lot whose alley is behind it. It waits
   for a fact that names the edge, which is queued with the alley wiring.
   *The edge is named now — 2026-09-13, late evening; the entry below the
-  Wilsonville/West Linn one. The rear half is encoded; the side half is
-  still refused, for the reason given there.*
+  Wilsonville/West Linn one. The rear half is encoded; the side half
+  followed on 2026-09-15, evening, on a field of its own — see the note
+  under "What was refused, and why" there.*
 
 - **Portland sends the driveway to the alley, and the screen now does too —
   built and run 2026-09-12, afternoon, 549 lots changed colour, 452 more
@@ -4010,6 +4011,16 @@ the list of places worth hoping about.
   queue. Also worth knowing: a lot whose *only* public way is the alley is
   recorded as fronting on it, not as touching one, so the waiver does not
   reach it — the conservative reading, and a small population.
+  *Held now — 2026-09-15, evening. The model has a second side-yard number
+  for the one side line that sits on an alley, the way it already had one
+  for the side line that sits on a second street. Portland and the county's
+  copy of its chapter set it to "none required", on the seventeen zones
+  that hold the other two halves of the sentence; the far side yard keeps
+  its ordinary number, because the new field is read only for the line on
+  the alley. No verdict moved: the map side (quadfit) had cut its envelope
+  to zero on the alley edge since 2026-09-12 whichever way the line ran, so
+  this brings the code-reading side level with it rather than changing a
+  colour. Refusals ledger 270 → 268.*
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

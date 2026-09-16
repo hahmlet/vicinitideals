@@ -132,6 +132,7 @@ _LABELS: dict[str, str] = {
     "setback_side_ft": "side setback",
     "setback_side_total_ft": "combined side setbacks",
     "setback_street_side_ft": "street-side setback",
+    "setback_alley_side_ft": "alley-side setback",
 }
 
 
@@ -165,6 +166,18 @@ _F: tuple[FieldDef, ...] = (
         "Minimum street-side setback on a corner lot.",
         False,
         "corner_side_setback",
+    ),
+    FieldDef(
+        "setback_alley_side_ft",
+        "length_ft",
+        "Minimum side setback on the ONE side lot line that abuts an alley. "
+        "Held apart from setback_side_ft, which is one number for both side "
+        "lines, because Portland 33.110.220.D.9 / 33.120.220.B.3.g waive the "
+        "side setback \"from a lot line abutting an alley\" and a waiver on "
+        "the shared number would open the far side yard too. The envelope "
+        "applies it to the side edge on the alley and to no other; absent, "
+        "that line takes setback_side_ft.",
+        False,
     ),
     FieldDef(
         "setback_front_max_ft",
@@ -810,6 +823,12 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "min_building_height_ft",
         "min_building_height_stories",
         "setback_street_side_ft",
+        # A side setback stated for the side line on an alley, the way the
+        # street-side one is stated for the side line on a street: two codes
+        # in the corpus distinguish that line (Portland and the county's copy
+        # of its chapter, both by waiving it), and a zone silent about it is
+        # a zone whose alley-side line takes the ordinary side setback.
+        "setback_alley_side_ft",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",

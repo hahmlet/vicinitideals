@@ -232,6 +232,120 @@ def test_a_corner_adjustment_is_a_no_op_without_a_street_side_standard() -> None
     assert plain.on_a_corner() is plain
 
 
+# --- the alley line ---------------------------------------------------
+
+#: An alley centerline 10 ft east of the lot, short enough that only the east
+#: edge's midpoint is within reach of it (the front's and rear's are 44.7 ft).
+EAST_ALLEY = LineString([(70, 20), (70, 80)])
+#: The same alley behind the lot instead, 10 ft north of the rear line.
+NORTH_ALLEY = LineString([(10, 110), (50, 110)])
+
+NO_ALLEY = {"abuts_alley": False, "alley_at_rear": False, "alley_at_side": False}
+
+
+def with_alley(alley, streets=(SOUTH_ST,)):
+    return classify(
+        LOT,
+        StreetIndex(list(streets)),
+        street_threshold_ft=THRESHOLD,
+        alleys=StreetIndex([alley]),
+    )
+
+
+def test_an_alley_is_not_a_street_and_its_line_is_still_a_side() -> None:
+    # Eleven codes say an alley is not a street, and every setback table is
+    # written for the street: the alley line keeps the class its bearing
+    # gives it and carries the flag beside it.
+    edges = with_alley(EAST_ALLEY)
+
+    flagged = [e for e in edges.edges if e.alley]
+    assert len(flagged) == 1
+    assert flagged[0].cls is EdgeClass.side
+    assert flagged[0].x1 == flagged[0].x2 == 60.0
+    assert edges.tier is Tier.clean
+    assert edges.frontage_ft == pytest.approx(60.0)
+    assert edges.alley_facts() == {
+        "abuts_alley": True, "alley_at_rear": False, "alley_at_side": True,
+    }
+
+
+def test_an_alley_behind_the_lot_names_the_rear_line() -> None:
+    edges = with_alley(NORTH_ALLEY)
+
+    assert next(e for e in edges.edges if e.alley).cls is EdgeClass.rear
+    assert edges.alley_facts() == {
+        "abuts_alley": True, "alley_at_rear": True, "alley_at_side": False,
+    }
+
+
+def test_without_an_alley_index_no_line_is_an_alley() -> None:
+    assert not any(e.alley for e in named().edges)
+    assert named().alley_facts() == NO_ALLEY
+
+
+def test_a_lot_whose_only_public_way_is_the_alley_fronts_on_it() -> None:
+    # As quadfit's s4 does: the alley is the frontage, the lot is not
+    # landlocked, and no line is carved out as an alley line -- the lot owes
+    # its front setback to the alley and the waiver does not reach it.
+    edges = classify(
+        LOT, StreetIndex([]), street_threshold_ft=THRESHOLD, alleys=StreetIndex([EAST_ALLEY])
+    )
+
+    assert not edges.landlocked
+    assert edges.tier is Tier.clean
+    front = edges.of_class(EdgeClass.front)
+    assert len(front) == 1 and front[0].x1 == 60.0
+    assert not any(e.alley for e in edges.edges)
+    assert edges.alley_facts() == NO_ALLEY
+
+
+def test_the_alley_side_setback_comes_off_the_alley_line_and_no_other() -> None:
+    # Portland: no side setback from a lot line abutting an alley. The east
+    # line is reached; the west yard keeps its five feet.
+    edges = with_alley(EAST_ALLEY)
+    waived = Setbacks(front_ft=10, side_ft=5, rear_ft=5, alley_side_ft=0)
+
+    env = buildable(LOT, edges, waived)
+
+    assert env.bounds == pytest.approx((5.0, 10.0, 60.0, 95.0))
+    assert env.area == pytest.approx(55 * 85)
+
+
+def test_a_code_that_does_not_distinguish_the_alley_line_cuts_it_as_a_side() -> None:
+    # None means "no such standard": the alley-side line takes side_ft.
+    edges = with_alley(EAST_ALLEY)
+
+    env = buildable(LOT, edges, SETBACKS)
+
+    assert env.bounds == pytest.approx((5.0, 10.0, 55.0, 95.0))
+
+
+def test_the_alley_side_setback_does_not_reach_a_rear_alley() -> None:
+    # The rear half of the waiver rides on the rear setback itself, switched
+    # by alley_at_rear in the rule layer; here it arrives as rear_ft, and an
+    # alley_side_ft of zero says nothing about a rear line.
+    edges = with_alley(NORTH_ALLEY)
+    env = buildable(LOT, edges, Setbacks(front_ft=10, side_ft=5, rear_ft=5, alley_side_ft=0))
+
+    assert env.bounds == pytest.approx((5.0, 10.0, 55.0, 95.0))
+
+
+def test_the_alley_side_setback_survives_the_corner_adjustment() -> None:
+    both = Setbacks(front_ft=10, side_ft=5, rear_ft=5, street_side_ft=15, alley_side_ft=0)
+
+    assert both.on_a_corner().alley_side_ft == 0
+    assert both.largest_ft == 15
+
+
+def test_a_setback_is_read_per_edge() -> None:
+    edges = with_alley(EAST_ALLEY)
+    s = Setbacks(front_ft=10, side_ft=5, rear_ft=7, alley_side_ft=0)
+
+    by_class = {e.cls: s.for_edge(e) for e in edges.edges if not e.alley}
+    assert by_class == {EdgeClass.front: 10, EdgeClass.side: 5, EdgeClass.rear: 7}
+    assert s.for_edge(next(e for e in edges.edges if e.alley)) == 0
+
+
 # --- the chain: lot to verdict input ----------------------------------
 
 

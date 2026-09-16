@@ -252,15 +252,62 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     assert keyed_to_line == 28 + 19
 
 
-def test_alley_at_side_switches_nothing_yet(layers) -> None:
-    """The side half is refused on purpose: `setback_side_ft` is one number
-    for both side lines. The day the model holds a per-side setback this
-    test is the one to delete."""
+def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:
+    """`setback_side_ft` is one number for both side lines, so a waiver on
+    it switched by `alley_at_side` would open the far side yard: the
+    false-GREEN direction, and the reason the side half was refused from
+    2026-09-13 to 2026-09-15. It is held now on `setback_alley_side_ft`,
+    the side setback on the one line abutting the alley, and the envelope
+    reads that for the alley edge alone. So: nothing anywhere keys a
+    variant to `alley_at_side` -- the per-line field needs no switch -- and
+    every zone that holds the garage half of Portland's sentence holds the
+    side half as an exemption on the per-line field, quoting the sentence."""
+    held_on_the_line: set[tuple[str, str]] = set()
     for lid, layer in layers.items():
         for zname, zone in layer.zones.items():
             for fname, held in zone.values.items():
                 for v in held.variants:
                     assert "alley_at_side" not in (v.when or ()), (lid, zname, fname)
+            side_line = zone.values.get("setback_alley_side_ft")
+            if side_line is not None:
+                assert side_line.exempt and side_line.value is None, (lid, zname)
+                assert "abutting an" in side_line.prov.quote or any(
+                    tag in side_line.prov.quote for tag in ("#L746", "#L1053")
+                ), (lid, zname, side_line.prov.quote)
+                held_on_the_line.add((lid, zname))
+            # The garage half is Portland's sentence only in the two layers
+            # that quote 33.110 / 33.120; Oregon City's alley garage row is a
+            # different code with no side clause.
+            garage = zone.values.get("setback_garage_entrance_ft")
+            if lid.startswith("or/multnomah/") and garage is not None and any(
+                "abuts_alley" in (v.when or ()) for v in garage.variants
+            ):
+                assert side_line is not None, (lid, zname, "garage half without the side half")
+    # Twelve Portland zones and the county's five Portland-administered ones.
+    assert len(held_on_the_line) == 17, sorted(held_on_the_line)
+    assert {lid for lid, _ in held_on_the_line} == {
+        "or/multnomah/portland", "or/multnomah/_unincorporated",
+    }
+
+
+def test_the_side_waiver_resolves_on_the_lot_and_leaves_the_far_yard(layers) -> None:
+    """On a Portland R5 lot with the alley down its side, the resolver hands
+    the screen an exempted `setback_alley_side_ft` and the full 5 ft
+    `setback_side_ft` -- the far yard is untouched -- and the rear waiver
+    does not fire, because `alley_at_side` is not `alley_at_rear`."""
+    ruleset = RuleSet(layers)
+    got = ruleset.resolve(
+        "or/multnomah/portland", "R5",
+        conditions={"alley_at_side", "abuts_alley", "multi_story"},
+    )
+    assert "setback_alley_side_ft" in got.exempted
+    assert got.get("setback_side_ft") == 5
+    assert got.get("setback_rear_ft") == 5
+    # ... and with no alley at all the per-line field is exempt still -- the
+    # field is only ever read for an edge that IS the alley line, so a
+    # lot-level resolution of it says nothing about a lot without one.
+    plain = ruleset.resolve("or/multnomah/portland", "R5", conditions={"multi_story"})
+    assert plain.get("setback_side_ft") == 5
 
 
 def test_portlands_rear_waiver_reaches_every_zone_with_the_garage_one(layers) -> None:

@@ -156,10 +156,14 @@ FIELD_MAP: dict[str, str] = {
 #: fact that names the line, filled from quadfit's measured alley edges by
 #: `flats.geom.alley` -- because keyed to the lot-level `abuts_alley` it would
 #: open the rear yard of a lot whose alley runs down its side. The SIDE half
-#: is still refused: `setback_side_ft` is one number for both side lines and
-#: an exemption on it would waive the far side yard too, the false-GREEN
-#: direction; `alley_at_side` is measured and registered so the refusal is
-#: stated against a fact we hold.
+#: joined on 2026-09-15 on a field of its own, `setback_alley_side_ft` -- the
+#: side setback on the one side line abutting an alley -- as a plain
+#: `exempt: true`: `setback_side_ft` is one number for both side lines and an
+#: exemption on it would have waived the far side yard too, the false-GREEN
+#: direction, and a per-line field needs no switch because the envelope
+#: reads it for the alley edge alone. So one quadfit zero is three corpus
+#: entries, one per clause of the sentence, and the proof test walks all
+#: three.
 #:
 #: `min_frontage_cul_de_sac_ft` is the fourth, from 2026-09-15, and it is the
 #: alley story again on a different row. Happy Valley's district tables print
@@ -185,9 +189,11 @@ BACKPORTED: frozenset[str] = frozenset(
 #: band, by the SHAPE of the quadfit value: the proof test looks here. A
 #: `setback_alley_ft` of zero is Portland's waiver, and the corpus holds it
 #: as the `abuts_alley` exemption on the garage entrance (a lot-level fact
-#: is the right key for a garage: the entrance is wherever the alley is)
-#: and, since 2026-09-13, as the `alley_at_rear` exemption on the rear
-#: setback. A non-zero one is Gresham's "Rear With Alley" column, and the
+#: is the right key for a garage: the entrance is wherever the alley is),
+#: since 2026-09-13 as the `alley_at_rear` exemption on the rear setback,
+#: and since 2026-09-15 as a plain exemption on `setback_alley_side_ft`,
+#: the field that is the alley-side line (:data:`ZERO_ALSO_HELD_ON`). A
+#: non-zero one is Gresham's "Rear With Alley" column, and the
 #: corpus holds it as an `alley_at_rear` variant on `setback_rear_ft`
 #: carrying the same number -- switched by `alley_at_rear` ALONE, because a
 #: variant also keyed to `unit_lots` is the townhouse row and quadfit draws
@@ -206,6 +212,12 @@ HELD_AS_VARIANT: dict[str, dict[str, tuple[str, str]]] = {
         "number": ("min_frontage_ft", "fronts_cul_de_sac"),
     },
 }
+
+#: The side half of Portland's alley zero is not a variant at all but a field
+#: that names the line -- the side setback on the one side lot line abutting
+#: an alley -- held as `exempt: true` on every zone that holds the other two
+#: halves. A quadfit zone stating `setback_alley_ft: 0` has to hold this too.
+ZERO_ALSO_HELD_ON: dict[str, str] = {"setback_alley_ft": "setback_alley_side_ft"}
 
 #: Retrieval dates from the quadfit header. Clackamas was compiled later.
 RETRIEVED = {"multnomah": "2026-07-24", "clackamas": "2026-07-28"}

@@ -199,7 +199,7 @@ GOVERNS: dict[str, tuple[str, ...]] = {
         "setback_street_side_ft",
         "parking_street_setback_ft",
     ),
-    "alley": ("min_frontage_ft", "setback_rear_ft"),
+    "alley": ("min_frontage_ft", "setback_rear_ft", "setback_alley_side_ft"),
     "landscaping": ("min_landscaped_pct",),
     "open space": ("open_space_min_pct", "open_space_min_sqft"),
 }

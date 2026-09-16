@@ -129,7 +129,19 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 232, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 249, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+# 232 -> 249 stated on 2026-09-15, evening: the SIDE half of the same alley
+# sentence, seventeen times, and the third value form the one sentence has
+# taken. The garage half is a variant on the garage entrance keyed to the
+# lot; the rear half is a variant on the rear setback keyed to the rear line;
+# the side half is a rule about ONE of a lot's two side lines and
+# `setback_side_ft` is one number for both, so it could not be a variant on
+# anything without waiving the far yard. It is a base `exempt: true` on a
+# field that IS the line, `setback_alley_side_ft` -- optional, like the
+# street-side setback it is modelled on -- in the twelve Portland zones and
+# the county's five, quoting 33.110.220.D.9 or 33.120.220.B.3.g. Seventeen
+# more exemptions to sign, each of them the false-GREEN form, each of them
+# read by the envelope for the side edge on the alley and nothing else.
 # 202 -> 232 stated and 48 -> 37 numeric on 2026-09-13, late evening, and it
 # is two things at once. Nineteen new exemptions: the REAR half of Portland's
 # alley sentence, `exempt: true when: [alley_at_rear]` on `setback_rear_ft` in

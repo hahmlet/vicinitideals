@@ -18,6 +18,7 @@ from flats.encode.port_quadfit import (
     COUNTY,
     FIELD_MAP,
     HELD_AS_VARIANT,
+    ZERO_ALSO_HELD_ON,
     layer_id_for,
     load_quadfit,
     port,
@@ -96,6 +97,10 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
     an `alley_at_rear` exemption on `setback_rear_ft` on every one of those
     zones -- keyed to the line, not the lot, because a rear waiver switched by
     `abuts_alley` would open the rear yard of a lot whose alley is beside it.
+    And since 2026-09-15 the SIDE half: a plain exemption on
+    `setback_alley_side_ft`, the field that IS the alley-side line, with
+    nothing keyed to `alley_at_side` on `setback_side_ft`, which is one
+    number for both side lines and would waive the far yard too.
 
     `setback_alley_ft: 8` (5, 6) is Gresham's "Rear With Alley" column, which
     the corpus holds as an `alley_at_rear` variant on `setback_rear_ft` with
@@ -144,6 +149,19 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
                            for v in rear_alley), (jname, row["zone"])
                 assert not any("abuts_alley" in (v.when or ()) for v in rear.variants), (
                     f"{jname}/{row['zone']}: a rear waiver keyed to the lot, not the line"
+                )
+                # ... and the side half, on the field that is the line.
+                side_line = zone.values.get(ZERO_ALSO_HELD_ON["setback_alley_ft"])
+                assert side_line is not None and side_line.exempt, (
+                    f"{jname}/{row['zone']} states setback_alley_ft and the corpus "
+                    f"holds no setback_alley_side_ft exemption -- the side half unread"
+                )
+                assert "#L746" in side_line.prov.quote or "#L1053" in side_line.prov.quote, (
+                    jname, row["zone"],
+                )
+                side = zone.values["setback_side_ft"]
+                assert not any("alley_at_side" in (v.when or ()) for v in side.variants), (
+                    f"{jname}/{row['zone']}: a side waiver on the number both side lines share"
                 )
                 zeros.add((jname, row["zone"]))
                 continue

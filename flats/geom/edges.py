@@ -20,6 +20,23 @@ mean the street layer has a gap. One of those is a real exclusion and the other
 is a data bug, and they are indistinguishable from here. So the lot keeps a
 conservative envelope and carries :attr:`LotEdges.landlocked`, and the verdict
 is somebody else's decision downstream.
+
+**An alley is not a street, and the line on it is still a rear or a side.**
+Eleven of the fourteen codes read for this say so outright, and every setback
+table is written for the street. So an alley centerline never makes a front;
+the edge on it keeps the orientation class its bearing gives it -- rear where it
+runs with the frontage, side where it does not -- and carries
+:attr:`Edge.alley` beside that class, because the codes carve that one line
+out. Portland 33.110.220.D.9 waives the "side, rear, or garage entrance setback
+... from a lot line abutting an alley"; the rear half of that is a rule about
+the rear line and rides on the rear setback, and the side half is a rule about
+ONE of the two side lines, which is why the flag is on the edge and not on the
+lot. :meth:`LotEdges.alley_facts` reports the same three facts the quadfit
+bridge (:mod:`flats.geom.alley`) does -- ``abuts_alley``, ``alley_at_rear``,
+``alley_at_side`` -- so the edge the rules resolve on is the edge the envelope
+cuts. A lot whose only public way is the alley takes it as frontage, as
+quadfit's s4 does, so that a lot on a public way is not called landlocked; such
+a lot owes its front setback to the alley and reports no alley facts.
 """
 
 from __future__ import annotations
@@ -86,6 +103,11 @@ class Edge:
     length_ft: float
     bearing_deg: float
     cls: EdgeClass
+    #: The line abuts an alley. Orthogonal to ``cls``: an alley edge is still
+    #: rear or side by its bearing, and the flag is what lets a setback table
+    #: carve that one line out (Portland waives the side and rear setback from
+    #: it). Never set on a front -- an alley is not a street.
+    alley: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -107,6 +129,18 @@ class LotEdges:
 
     def of_class(self, cls: EdgeClass) -> tuple[Edge, ...]:
         return tuple(e for e in self.edges if e.cls is cls)
+
+    def alley_facts(self) -> dict[str, bool]:
+        """The three alley site facts, as ``configure(observed=...)`` takes them.
+
+        The same shape :func:`flats.geom.alley.observed_alley` returns from
+        quadfit's edge record, produced here from this classification so a
+        caller that names its own edges resolves the rules on the line it is
+        about to cut. Every key is always present: a False is a measurement.
+        """
+        rear = any(e.alley and e.cls is EdgeClass.rear for e in self.edges)
+        side = any(e.alley and e.cls is EdgeClass.side for e in self.edges)
+        return {"abuts_alley": rear or side, "alley_at_rear": rear, "alley_at_side": side}
 
 
 def bearing_deg(x1: float, y1: float, x2: float, y2: float) -> float:
@@ -204,18 +238,34 @@ def classify(
     *,
     street_threshold_ft: float,
     simplify_tol_ft: float = 1.0,
+    alleys: StreetIndex | None = None,
 ) -> LotEdges:
-    """Name every edge of one lot and rate the confidence of the naming."""
+    """Name every edge of one lot and rate the confidence of the naming.
+
+    ``streets`` holds street centerlines only; ``alleys`` holds the alley
+    centerlines, kept apart because an alley is not a street (see the module
+    docstring). An edge within ``street_threshold_ft`` of an alley and not of
+    a street is flagged :attr:`Edge.alley` and classed rear or side by its
+    bearing like any other. Where a street wins, the street wins: a line
+    within reach of both is frontage.
+    """
     segments = _segments(lot, simplify_tol_ft)
     irregular, convexity = _is_irregular(lot, len(segments))
 
     if not segments:
         return LotEdges(Tier.landlocked, (), (), 0.0, convexity)
 
-    fronts = [
-        streets.distance(Point((x1 + x2) / 2, (y1 + y2) / 2)) <= street_threshold_ft
-        for x1, y1, x2, y2, _len, _b in segments
+    mids = [Point((x1 + x2) / 2, (y1 + y2) / 2) for x1, y1, x2, y2, _len, _b in segments]
+    fronts = [streets.distance(m) <= street_threshold_ft for m in mids]
+    on_alley = [
+        not f and alleys is not None and alleys.distance(m) <= street_threshold_ft
+        for m, f in zip(mids, fronts)
     ]
+
+    if not any(fronts) and any(on_alley):
+        # The alley is the lot's only public way, so it is the frontage -- the
+        # lot is not landlocked -- and no line is carved out as an alley line.
+        fronts, on_alley = on_alley, [False] * len(segments)
 
     if not any(fronts):
         # No street found. Every edge is a side, which is the strictest reading
@@ -232,14 +282,14 @@ def classify(
     frontage_ft = sum(s[4] for s, f in zip(segments, fronts) if f)
 
     edges = []
-    for (x1, y1, x2, y2, length, b), is_front in zip(segments, fronts):
+    for (x1, y1, x2, y2, length, b), is_front, is_alley in zip(segments, fronts, on_alley):
         if is_front:
             cls = EdgeClass.front
         elif any(bearing_delta(b, fb) <= PARALLEL_TOL_DEG for fb in front_bearings):
             cls = EdgeClass.rear
         else:
             cls = EdgeClass.side
-        edges.append(Edge(x1, y1, x2, y2, length, b, cls))
+        edges.append(Edge(x1, y1, x2, y2, length, b, cls, alley=is_alley))
 
     if irregular:
         tier = Tier.irregular

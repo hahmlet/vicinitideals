@@ -345,7 +345,21 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 124, "comments": 129, "tests": 17}
+EXPECTED = {"notes": 124, "comments": 127, "tests": 17}
+#
+# 270 -> 268 on 2026-09-15, evening, and this time no fact arrived -- a FIELD
+# did. Two refusals LEFT, the same clause in two copies of one chapter: the
+# SIDE half of PCC 33.110.220.D.9 / 33.120.220.B.3.g, "No side, rear, or
+# garage entrance setback is required from a lot line abutting an alley",
+# refused beside the rear half on Portland RF and the county's R10 since
+# 2026-09-13 because `setback_side_ft` is one number for both side lines and
+# an exemption on it switched by `alley_at_side` would have waived the far
+# side yard too. The fact was measured all along; what the model lacked was
+# a place to put a rule about ONE side line. `setback_alley_side_ft` is that
+# place -- the side setback on the one side lot line abutting an alley, the
+# way `setback_street_side_ft` is the one on a street -- and it is held as a
+# plain exemption on the seventeen zones that hold the other two halves. The
+# envelope (`flats.geom.envelope`) reads it for the alley edge alone.
 #
 # 274 -> 270 on 2026-09-15, afternoon, and once again a fact arrived. Five
 # refusals LEFT, all one row: Happy Valley's "Lots fronting on cul-de-sac"
