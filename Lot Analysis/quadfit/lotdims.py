@@ -875,15 +875,22 @@ def bulb_front(edges, groups=None) -> tuple[float, float, float] | None:
     one.
 
     Where it is not, nothing is collapsed and the lot is measured, or
-    refused, exactly as before. On Tualatin's bulb lots the runs off the
-    circle were a second street across the back of the lot -- TDC's double
-    frontage lot, and two fronts -- and, at the throat of the bulb, the arc
-    running on into the stem's straight front or the corner arc between
-    them: one street, but a front line that is partly the arc and partly
-    not, whose direction "at the center of the lot" this does not claim to
-    know. 39 of the 68 tier-B two-bearing bulb lots were wholly on the
-    circle and 29 were not; every tier-C one is refused by its tier before
-    reaching here.
+    refused, exactly as before. Counted on Tualatin's 81 bulb lots
+    (2026-09-16): 43 measured here, 6 refused by tier C, and 32 with a
+    front run off the circle, of two shapes. Nineteen have that run
+    SEPARATED from the arc by side lines -- a straight street edge across
+    the back or side of the lot, TDC's double frontage lot, two fronts --
+    and are refused as the corner rule always refused them. Thirteen have
+    it CONTIGUOUS with the arc: lots at the throat of the bulb, the arc
+    running on round the corner arc onto the stem's straight front, 10 to
+    125 ft of straight on 34 to 76 ft of arc. One street, but a front line
+    that is partly the arc and partly not, and "parallel to the front lot
+    line" on a bent line is not a direction 31.060 states: the arc's chord
+    and the chord across the whole front's ends read those thirteen 75 to
+    138 ft wide, 1 to 38 ft apart, none within reach of the 50 and every
+    one bound on layout or pod fit first. No threshold was set to pick a
+    reading for them -- it could be tested against nothing -- and they
+    stay unmeasured, as they were under the interior row.
 
     The other half of the cul-de-sac reading -- a street ending inside the
     circle, which s4 reads off the street file -- is not needed for this.

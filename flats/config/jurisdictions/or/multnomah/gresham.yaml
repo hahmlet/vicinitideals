@@ -198,6 +198,23 @@ readings:
       solar array, so nothing here is a number we hold or should hold.
     fingerprint: 1c1e7e23af7027a9
 
+  "4.0100.residential.txt#4.0137":
+    queue: missed
+    outcome: not_here
+    note: >-
+      The Large Lot Subdivision Option for LDR-5 and LDR-7. Its 8,000 square feet is "the minimum
+      lot size in a large lot subdivision": the floor on the lots that optional subdivision type
+      creates, in two districts, when an applicant elects it -- not the minimum lot size of any
+      district, and not a standard an existing lot is measured against. This layer held the figure
+      once, on TLDR, until 2026-09-11, when the quadfit mirror's unfilled-cell ledger asked why
+      rules.yaml left TLDR blank; the answer was that L593 had been filed under the wrong district,
+      and every TLDR lot under 8,000 square feet had been read as too small. The min_lot_sqft cell
+      on TLDR records that history beside its corrected citation. The section's other figures --
+      an 8,000 to 14,000 average, 50 ft width at the building line, 100 ft depth, 7.5 ft interior
+      side -- are the same thing: dimensions of the lots the option makes. Not a number we hold or
+      should hold.
+    fingerprint: 3bce438649cce6d0
+
   "4.1500.springwater.txt#4.1595":
     queue: missed
     outcome: not_here
