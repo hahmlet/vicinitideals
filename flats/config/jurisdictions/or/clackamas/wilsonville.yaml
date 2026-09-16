@@ -17,12 +17,15 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   A pod is two storeys, so on a small lot it is bound by 15/7/20.
 
 
-  NOT ENCODED: on a lot over 10,000 sq ft the corner-lot street side setback is
-  20 percent of the lot width with a ten-foot floor (4.113(.02)A.2). That is a
-  function of the lot, not a number, and setback_street_side_ft carries the
-  ten-foot floor from the small-lot column (A.2/B.2) instead. Wide corner lots
-  are therefore screened against a setback smaller than the code requires —
-  worth a rule shape that can hold a percentage-of-width standard.
+  THE CORNER SIDE YARD IS A SHARE OF THE LOT WIDTH. On a lot over 10,000 sq ft
+  the corner-lot street side setback is 20 percent of the lot width with a
+  ten-foot floor (4.113(.02)A.2), and from 2026-09-16 setback_street_side_ft
+  carries it as a `pct_of_lot_width` variant on every zone that takes its
+  setbacks from 4.113(.02): corner lot, over 10,000 sq ft, under 100 ft wide,
+  and the number is worked out from the lot''s measured width. Before that the
+  field held only the ten-foot floor, and a 78 ft corner lot that owes 15.6 was
+  read as clear. A corner lot in that band whose width is unmeasured is refused
+  rather than handed the floor.
 
 
   ALSO NOT ENCODED: the key-lot front setback (half the sum of two neighbouring
@@ -266,8 +269,8 @@ readings:
       stalls and its access fit on a Wilsonville lot.
     fingerprint: 161869c3ec74fc3e
   "4.planning.txt#4.113":
-    queue: condition
-    outcome: applies
+    queue: missed
+    outcome: not_here
     note: >-
       Section 4.113 is titled "Standards Applying to Residential Developments in any Zone" and it
       is in the section list of every Wilsonville zone a quadplex may be built in, so this card
@@ -277,20 +280,29 @@ readings:
       split carried as a `multi_story` variant (side 5 becoming 7, rear 15 becoming 20, and the
       pod is two storeys so the tighter limb is the one that binds), the party wall as
       `attached_wall`, and the four-foot alley garage as `abuts_alley`. Nothing there is missed.
-      THE CARD STAYS OPEN ON ONE SENTENCE, and it is a tightening on a condition this layer can
-      already measure. 4.113(.02)A.2: "In the case of a corner lot less than 100 feet in width,
-      abutting more than one street or tract with a private drive, the side yard on the street or
-      private drive side of such lot shall be not less than 20 percent of the width of the lot,
-      but not less than ten feet." All three gates are measured here -- `corner_lot` is computed
-      in this layer from intersecting frontages rather than left unmeasured, lot area decides the
-      band, and lot width is held. What is not held is the VALUE. A setback stated as a share of
-      the lot's own width has no form in this registry; the nearest thing it has is per_height_ft,
-      which is the same idea about a different measurement. Encoded, this zone charges ten feet at
-      the street side. On a corner lot over 10,000 square feet and eighty feet wide the code
-      charges sixteen, and at ninety-nine feet it charges nearly twenty. That is a false-green
-      shape rather than a rounding difference, and it cannot be approximated into bands without
-      inventing numbers the page does not print. Two more sentences on the card are unencodable
-      for reasons already on the record. (.02)A.3 and B.3 set a key lot's front setback at
+      THE SENTENCE THE CARD STAYED OPEN ON IS ENCODED (2026-09-16). 4.113(.02)A.2: "In the case
+      of a corner lot less than 100 feet in width, abutting more than one street or tract with a
+      private drive, the side yard on the street or private drive side of such lot shall be not
+      less than 20 percent of the width of the lot, but not less than ten feet." From 2026-09-09
+      to 2026-09-16 this card was ruled `applies` on that one sentence: all three gates were
+      measured here -- `corner_lot`, lot area for the band, lot width -- and what was not held
+      was the VALUE, a setback stated as a share of the lot's own width, which no form in the
+      registry could hold; the field charged the ten-foot floor, and a corner lot over 10,000
+      square feet and eighty feet wide, which the code charges sixteen, read as clear. The
+      registry now has the form: `pct_of_lot_width` with a `floor_ft`, on a variant, turned into
+      feet from the lot's measured width when the lot is resolved, and refused -- not handed the
+      floor -- where the width is unmeasured. It is on setback_street_side_ft in every zone that
+      takes its setbacks from 4.113(.02) (R, OTR, PDR1 to PDR6), under `corner_lot` and two bands,
+      lot_sqft over 10,000 and lot_width_ft under 100. Counted on the county pipeline the day it
+      was encoded: 205 measured Wilsonville corner lots in that band, 199 already red and 4 review
+      on other grounds, 2 green at 76 and 78 ft; the pipeline's own envelope charges the larger of
+      the front and street-side setbacks on every street edge of a corner lot, and the over-10,000
+      front is 20, so 20 percent of any width under 100 never exceeds what it charges already and
+      no county verdict moves. With that sentence quoted the card no longer carries a condition
+      and routes to the missed queue, where it is ruled not_here: nothing left on it is a
+      standard for this building on a lot of record that the layer misses -- the reasons follow,
+      line by line. Two sentences are unencodable for reasons already on the record. (.02)A.3
+      and B.3 set a key lot's front setback at
       "one-half the sum of" the adjacent corner lot's yard and the adjacent interior lot's setback
       -- the offset-from-another-standard shape, which nothing in the model can hold and which
       also needs "key lot" as a geometry nobody computes. (.02)A.4 and B.4 forbid any structure
@@ -327,8 +339,14 @@ readings:
       of the same family as the hoisted table: the citation is right about the lines and wrong
       about whose section they are. Re-confirmed 2026-09-15: Table 2 note F (24 feet of frontage
       when the lot fronts a cul-de-sac, line 4740) left the card when it was encoded as a
-      fronts_cul_de_sac variant; the one sentence the card stays open on, (.02)A.2, is still here.
-    fingerprint: 5b8ee1cd6a23345f
+      fronts_cul_de_sac variant. Lines 3013 to 3016, the corner side yard, left it 2026-09-16 the
+      same way. What the card holds after that, all of it ruled above: the open space sentence
+      and its denominator, the stormwater facility widths, the (.14) and (.15) design menus, the
+      ADU size and height, an existing dwelling's expansion ceiling, the garage door width, the
+      townhouse lot width of 20 feet (held, in every zone that states it), the subdivision
+      adjustment of up to 20 percent (a land division, not a lot of record) and the four church
+      figures that are 4.184.
+    fingerprint: 5e43f28bcf0e4b3b
   "4.planning.txt#4.127":
     queue: condition
     outcome: cant_tell
@@ -1429,6 +1447,23 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      variants:
+        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
+        # than 100 feet in width ... the side yard on the street or private
+        # drive side of such lot shall be not less than 20 percent of the
+        # width of the lot, but not less than ten feet." A share of the lot's
+        # own width, worked out on the lot; the page prints 20 and ten and
+        # never the result. The 10 above is B.2's small-lot figure and A.2's
+        # floor, and stays the number at 100 ft and wider, where A.2 states
+        # no share. Two bands, both of which must hold; a lot whose width is
+        # unmeasured is refused here rather than handed the floor.
+        - pct_of_lot_width: 20
+          floor_ft: 10
+          when: [corner_lot]
+          band:
+            - {measure: lot_sqft, more_than: 10000}
+            - {measure: lot_width_ft, less_than: 100}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
@@ -1550,6 +1585,23 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      variants:
+        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
+        # than 100 feet in width ... the side yard on the street or private
+        # drive side of such lot shall be not less than 20 percent of the
+        # width of the lot, but not less than ten feet." A share of the lot's
+        # own width, worked out on the lot; the page prints 20 and ten and
+        # never the result. The 10 above is B.2's small-lot figure and A.2's
+        # floor, and stays the number at 100 ft and wider, where A.2 states
+        # no share. Two bands, both of which must hold; a lot whose width is
+        # unmeasured is refused here rather than handed the floor.
+        - pct_of_lot_width: 20
+          floor_ft: 10
+          when: [corner_lot]
+          band:
+            - {measure: lot_sqft, more_than: 10000}
+            - {measure: lot_width_ft, less_than: 100}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
@@ -1668,6 +1720,23 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      variants:
+        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
+        # than 100 feet in width ... the side yard on the street or private
+        # drive side of such lot shall be not less than 20 percent of the
+        # width of the lot, but not less than ten feet." A share of the lot's
+        # own width, worked out on the lot; the page prints 20 and ten and
+        # never the result. The 10 above is B.2's small-lot figure and A.2's
+        # floor, and stays the number at 100 ft and wider, where A.2 states
+        # no share. Two bands, both of which must hold; a lot whose width is
+        # unmeasured is refused here rather than handed the floor.
+        - pct_of_lot_width: 20
+          floor_ft: 10
+          when: [corner_lot]
+          band:
+            - {measure: lot_sqft, more_than: 10000}
+            - {measure: lot_width_ft, less_than: 100}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
@@ -1760,6 +1829,23 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      variants:
+        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
+        # than 100 feet in width ... the side yard on the street or private
+        # drive side of such lot shall be not less than 20 percent of the
+        # width of the lot, but not less than ten feet." A share of the lot's
+        # own width, worked out on the lot; the page prints 20 and ten and
+        # never the result. The 10 above is B.2's small-lot figure and A.2's
+        # floor, and stays the number at 100 ft and wider, where A.2 states
+        # no share. Two bands, both of which must hold; a lot whose width is
+        # unmeasured is refused here rather than handed the floor.
+        - pct_of_lot_width: 20
+          floor_ft: 10
+          when: [corner_lot]
+          band:
+            - {measure: lot_sqft, more_than: 10000}
+            - {measure: lot_width_ft, less_than: 100}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
@@ -1852,6 +1938,23 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      variants:
+        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
+        # than 100 feet in width ... the side yard on the street or private
+        # drive side of such lot shall be not less than 20 percent of the
+        # width of the lot, but not less than ten feet." A share of the lot's
+        # own width, worked out on the lot; the page prints 20 and ten and
+        # never the result. The 10 above is B.2's small-lot figure and A.2's
+        # floor, and stays the number at 100 ft and wider, where A.2 states
+        # no share. Two bands, both of which must hold; a lot whose width is
+        # unmeasured is refused here rather than handed the floor.
+        - pct_of_lot_width: 20
+          floor_ft: 10
+          when: [corner_lot]
+          band:
+            - {measure: lot_sqft, more_than: 10000}
+            - {measure: lot_width_ft, less_than: 100}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
@@ -1955,6 +2058,23 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      variants:
+        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
+        # than 100 feet in width ... the side yard on the street or private
+        # drive side of such lot shall be not less than 20 percent of the
+        # width of the lot, but not less than ten feet." A share of the lot's
+        # own width, worked out on the lot; the page prints 20 and ten and
+        # never the result. The 10 above is B.2's small-lot figure and A.2's
+        # floor, and stays the number at 100 ft and wider, where A.2 states
+        # no share. Two bands, both of which must hold; a lot whose width is
+        # unmeasured is refused here rather than handed the floor.
+        - pct_of_lot_width: 20
+          floor_ft: 10
+          when: [corner_lot]
+          band:
+            - {measure: lot_sqft, more_than: 10000}
+            - {measure: lot_width_ft, less_than: 100}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
@@ -2058,6 +2178,23 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      variants:
+        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
+        # than 100 feet in width ... the side yard on the street or private
+        # drive side of such lot shall be not less than 20 percent of the
+        # width of the lot, but not less than ten feet." A share of the lot's
+        # own width, worked out on the lot; the page prints 20 and ten and
+        # never the result. The 10 above is B.2's small-lot figure and A.2's
+        # floor, and stays the number at 100 ft and wider, where A.2 states
+        # no share. Two bands, both of which must hold; a lot whose width is
+        # unmeasured is refused here rather than handed the floor.
+        - pct_of_lot_width: 20
+          floor_ft: 10
+          when: [corner_lot]
+          band:
+            - {measure: lot_sqft, more_than: 10000}
+            - {measure: lot_width_ft, less_than: 100}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
@@ -2150,6 +2287,23 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      variants:
+        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
+        # than 100 feet in width ... the side yard on the street or private
+        # drive side of such lot shall be not less than 20 percent of the
+        # width of the lot, but not less than ten feet." A share of the lot's
+        # own width, worked out on the lot; the page prints 20 and ten and
+        # never the result. The 10 above is B.2's small-lot figure and A.2's
+        # floor, and stays the number at 100 ft and wider, where A.2 states
+        # no share. Two bands, both of which must hold; a lot whose width is
+        # unmeasured is refused here rather than handed the floor.
+        - pct_of_lot_width: 20
+          floor_ft: 10
+          when: [corner_lot]
+          band:
+            - {measure: lot_sqft, more_than: 10000}
+            - {measure: lot_width_ft, less_than: 100}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4.planning.txt#L3047"

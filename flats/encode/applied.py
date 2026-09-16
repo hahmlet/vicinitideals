@@ -165,6 +165,7 @@ _FIGURES = (
     "acres_per_dwelling",
     "per_height_ft",
     "floor_ft",
+    "pct_of_lot_width",
     "reduce_pct",
     "before_step_back",
 )
@@ -183,8 +184,7 @@ def _numbers_of(value) -> Iterable[float]:
             continue
         if isinstance(raw, (int, float)):
             yield float(raw)
-    band = getattr(value, "band", None)
-    if band is not None:
+    for band in getattr(value, "bands", ()) or ():
         for attr in _BOUNDS:
             raw = getattr(band, attr, None)
             if isinstance(raw, (int, float)) and not isinstance(raw, bool):

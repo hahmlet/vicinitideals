@@ -82,6 +82,17 @@ class CornerVariant:
         try:
             base, alt = float(self.base), float(self.alt)
         except (TypeError, ValueError):
+            # A share of the lot's width (Wilsonville's 20 percent, never
+            # under ten) is no one number, but it never drops below its
+            # floor: where the floor is the base, it can only tighten.
+            pct = getattr(self.alt, "pct", None)
+            floor = getattr(self.alt, "floor_ft", None)
+            try:
+                base = float(self.base)
+            except (TypeError, ValueError):
+                return "unclassified"
+            if pct is not None and floor is not None and self.field in TIGHTENS:
+                return "tightens" if float(floor) >= base else "unclassified"
             return "unclassified"
         if base == alt:
             return "same"

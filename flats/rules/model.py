@@ -615,6 +615,58 @@ def _num(v: float) -> str:
     return str(int(v)) if float(v).is_integer() else str(v)
 
 
+class LotWidthShare(BaseModel):
+    """A setback stated as a share of the lot's own width, with a floor.
+
+    WDC 4.113(.02)A.2: on a corner lot over 10,000 sq ft and less than 100 ft
+    wide, "the side yard on the street or private drive side of such lot
+    shall be not less than 20 percent of the width of the lot, but not less
+    than ten feet." The code prints 20 and prints 10 and prints 15.6 -- what
+    a 78 ft lot owes -- nowhere. Same bargain as `reduce_pct` and
+    `per_dwelling`: the file states the operands the sentence contains, and
+    the arithmetic is done here, on the lot, where it can be checked.
+
+    Not a form of :class:`Value`. A share of the lot's width is a number only
+    once a lot is in hand, and a base standard is read with no lot at all --
+    the rules table, the paper lot, the why-page all print it. So it lives on
+    a :class:`Variant`, where a lot is already what selects it, and
+    :meth:`Value.under` turns it into feet from the lot's measured width or
+    refuses when the width is unmeasured, exactly as it refuses an unmeasured
+    lot against a band. Until then it reads as one number in the ledgers:
+    the fingerprint, the gaps digest and the why-page all print it as the
+    sentence states it.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    #: The share, as the code prints it: 20 for "20 percent".
+    pct: float
+    #: The least the yard may be, in feet, where the sentence states one.
+    floor_ft: float | None = None
+
+    @model_validator(mode="after")
+    def _a_share_is_a_percentage(self) -> LotWidthShare:
+        if isinstance(self.pct, bool) or not 0 < self.pct <= 100:
+            raise ValueError(f"pct_of_lot_width {self.pct} is not a percentage of the lot width")
+        if self.floor_ft is not None and (isinstance(self.floor_ft, bool) or self.floor_ft < 0):
+            raise ValueError(f"floor_ft {self.floor_ft} is not a length")
+        return self
+
+    def feet(self, width_ft: float) -> float:
+        """What this lot owes: the share of its width, never under the floor.
+
+        Rounded the way `_reduced` rounds a cut base, so 20 percent of 78 ft
+        reads 15.6 and not 15.600000000000001.
+        """
+        return max(float(self.floor_ft or 0), round(self.pct / 100 * float(width_ft), 6))
+
+    def __str__(self) -> str:
+        # Deterministic, because the signing fingerprint and the gaps digest
+        # both hash `str(value)`; and readable, because the why-page prints it.
+        floor = f", not less than {_num(self.floor_ft)} ft" if self.floor_ft is not None else ""
+        return f"{_num(self.pct)}% of lot width{floor}"
+
+
 class Variant(BaseModel):
     """The same standard, at a different number, under stated conditions.
 
@@ -691,27 +743,77 @@ class Variant(BaseModel):
     #: The lot sizes this number was written for, where the table bands them.
     #: A band narrows the same way a condition does, and both may apply: the
     #: affordable exception to the 3,000–4,999 sq ft column is one sentence.
-    band: Band | None = None
+    #: More than one band is one sentence too, on different measures -- WDC
+    #: 4.113(.02)A.2 governs a lot "over 10,000 square feet" that is "less
+    #: than 100 feet in width" -- and every band must hold. The common case
+    #: is still written `band:`, singular, and folded in below.
+    bands: tuple[Band, ...] = ()
     prov: Provenance
     status: Status = Status.draft
     reviewer: str | None = None
     reviewed: date | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _one_band_is_a_tuple_of_one(cls, data: Any) -> Any:
+        # Every file and most callers write `band:`, singular. Folded here
+        # rather than kept as a second field, so there is one place a band
+        # lives and nothing can read the singular and miss the plural.
+        if not isinstance(data, dict) or "band" not in data:
+            return data
+        data = dict(data)
+        band = data.pop("band")
+        if band is None:
+            return data
+        if data.get("bands"):
+            raise ValueError("a variant states 'band' or 'bands', not both")
+        data["bands"] = (band,)
+        return data
 
     @property
     def trusted(self) -> bool:
         return self.status.trusted
 
     @property
+    def band(self) -> Band | None:
+        """The one band, where there is one. Readers that only know the
+        singular keep working; a two-band variant answers None here and is
+        read through `bands`."""
+        return self.bands[0] if len(self.bands) == 1 else None
+
+    @property
+    def pct_of_lot_width(self) -> float | None:
+        """The share the code prints, where this number is one -- the figure
+        the citation check looks for on the page."""
+        return self.value.pct if isinstance(self.value, LotWidthShare) else None
+
+    @property
+    def floor_ft(self) -> float | None:
+        """The floor under that share, where the sentence states one."""
+        return self.value.floor_ft if isinstance(self.value, LotWidthShare) else None
+
+    @property
     def key(self) -> tuple[str, ...]:
-        """What addresses this variant — its conditions, plus its band.
+        """What addresses this variant — its conditions, plus its bands.
 
         Signing, orphan detection and the review queue all identify a variant
         by the set of things that select it. Before bands that set was the
         conditions alone, and a banded variant carrying none of them would
         have addressed as the base.
         """
-        names = self.when + ((self.band.token,) if self.band else ())
+        names = self.when + tuple(b.token for b in self.bands)
         return tuple(sorted(names))
+
+    @model_validator(mode="after")
+    def _bands_are_on_different_measures(self) -> Variant:
+        # Two bands on one measure are one band written twice, or a
+        # contradiction; either way not what a sentence says.
+        seen: set[str] = set()
+        for b in self.bands:
+            if b.measure in seen:
+                raise ValueError(f"a variant states one band per lot measure — {b.measure} twice")
+            seen.add(b.measure)
+        return self
 
     @model_validator(mode="after")
     def _conditions_are_registered(self) -> Variant:
@@ -835,6 +937,11 @@ class Effective:
     #: None as a zero would fail every lot on a standard the code exempts it
     #: from, which is the worst of the two ways to be wrong.
     exempt: bool = False
+    #: Where this number is a share of the lot's own width: the share and
+    #: floor it was computed from, so attribution can say "20 percent of the
+    #: lot's 78 ft, under 4.113(.02)A.2" rather than presenting 15.6 as a
+    #: figure somebody read.
+    lot_width_share: LotWidthShare | None = None
 
     @property
     def trusted(self) -> bool:
@@ -1486,7 +1593,7 @@ class Value(BaseModel):
     def _variants_are_distinguishable(self) -> Value:
         seen: set[tuple[str, ...]] = set()
         for variant in self.variants:
-            if not variant.when and variant.band is None:
+            if not variant.when and not variant.bands:
                 # A variant with nothing selecting it is the base value written
                 # twice, and nothing downstream could say which one applies.
                 raise ValueError(
@@ -1512,31 +1619,24 @@ class Value(BaseModel):
         base. The overlap is not: whichever variant sorted first would win,
         silently and differently per field.
         """
-        banded = [v for v in self.variants if v.band is not None]
+        banded = [v for v in self.variants if v.bands]
         for i, a in enumerate(banded):
             for b in banded[i + 1 :]:
-                if a.band.measure != b.band.measure:
-                    continue
                 if frozenset(a.when) != frozenset(b.when):
                     continue
-                (lo_a, closed_a), (lo_b, closed_b) = a.band.lower, b.band.lower
-                if lo_a == lo_b:
-                    low, closed = lo_a, closed_a and closed_b
-                elif lo_a > lo_b:
-                    low, closed = lo_a, closed_a
-                else:
-                    low, closed = lo_b, closed_b
-                high = min(a.band.upper, b.band.upper)
-                high_closed = (a.band.upper_closed or a.band.upper > high) and (
-                    b.band.upper_closed or b.band.upper > high
-                )
-                # Touching at a single point is an overlap only when the lower
-                # bound includes that point: "over 10,000" and "up to 10,000"
-                # meet at 10,000 and share no lot.
-                if low < high or (low == high and closed and high_closed):
+                by_a = {x.measure: x for x in a.bands}
+                by_b = {x.measure: x for x in b.bands}
+                if set(by_a) != set(by_b):
+                    # Different measures are a narrowing, not two columns of
+                    # one table: "over 10,000 sq ft" against "over 10,000 sq
+                    # ft and under 100 ft wide" is the pair 4.113(.02)A.2
+                    # writes, and the deeper one wins at resolution.
+                    continue
+                if all(_bands_overlap(by_a[m], by_b[m]) for m in by_a):
                     raise ValueError(
-                        f"{self.name}: lot bands {a.band.token} and {b.band.token} "
-                        f"overlap — a lot in both would take whichever sorted first"
+                        f"{self.name}: lot bands {'+'.join(x.token for x in a.bands)} "
+                        f"and {'+'.join(x.token for x in b.bands)} overlap — a lot "
+                        f"in both would take whichever sorted first"
                     )
         return self
 
@@ -1562,7 +1662,7 @@ class Value(BaseModel):
         residual column, not a safe default, so a screen that cannot measure
         the lot must not quietly use it.
         """
-        return any(v.band is not None for v in self.variants)
+        return any(v.bands for v in self.variants)
 
     def under(
         self,
@@ -1571,11 +1671,16 @@ class Value(BaseModel):
     ) -> Effective:
         """The value that applies when these conditions hold, on this lot.
 
-        A variant applies when every condition it names is active and its band,
-        if it has one, contains the lot. The most specific match wins —
+        A variant applies when every condition it names is active and every
+        band it carries contains the lot. The most specific match wins —
         "affordable and corner" beats "affordable" — because a code that states
         both meant the pair to be different from either alone. A band counts
-        toward specificity for the same reason a condition does.
+        toward specificity for the same reason a condition does, and so does
+        each further band.
+
+        A winner stated as a share of the lot's width is turned into feet
+        here, from the lot's measured width; a lot whose width is unmeasured
+        is refused the same way an unmeasured lot is refused against a band.
 
         Two equally-specific matches are not resolved. Picking one would mean
         guessing which of two encoded rules the drafters meant, and that guess
@@ -1602,14 +1707,18 @@ class Value(BaseModel):
         for v in self.variants:
             if not set(v.when) <= held:
                 continue
-            if v.band is None:
-                matches.append(v)
+            verdicts = [(b, b.holds(lot)) for b in v.bands]
+            if any(h is False for _, h in verdicts):
+                # Outside one of its bands, so not this variant -- whatever
+                # the other bands could or could not tell. A 9,000 sq ft lot
+                # with no measured width is not in a column written for lots
+                # over 10,000, and refusing it for the width it lacks would
+                # route it to UNKNOWN over a number it cannot owe.
                 continue
-            holds = v.band.holds(lot)
-            if holds:
-                matches.append(v)
-            elif holds is None:
-                unmeasured.append(v)
+            if any(h is None for _, h in verdicts):
+                unmeasured.extend(b for b, h in verdicts if h is None)
+                continue
+            matches.append(v)
         if unmeasured:
             return Effective(
                 self.value,
@@ -1617,7 +1726,7 @@ class Value(BaseModel):
                 self.status,
                 self.reviewer,
                 self.reviewed,
-                ambiguous=tuple(sorted(v.band.token for v in unmeasured)),
+                ambiguous=tuple(sorted({b.token for b in unmeasured})),
                 exempt=self.exempt,
             )
         if not matches:
@@ -1642,6 +1751,31 @@ class Value(BaseModel):
                 exempt=self.exempt,
             )
         winner = best[0]
+        if isinstance(winner.value, LotWidthShare):
+            width = None if lot is None else lot.get("lot_width_ft")
+            if width is None:
+                # The sentence selected this lot and the number it states is
+                # a share of a width nobody measured. Same refusal as an
+                # unmeasured lot against a band: the base is the wrong
+                # column, and handing it over would call the answer known.
+                return Effective(
+                    self.value,
+                    self.prov,
+                    self.status,
+                    self.reviewer,
+                    self.reviewed,
+                    ambiguous=("lot_width_ft:unmeasured",),
+                    exempt=self.exempt,
+                )
+            return Effective(
+                winner.value.feet(width),
+                winner.prov,
+                winner.status,
+                winner.reviewer,
+                winner.reviewed,
+                when=winner.key,
+                lot_width_share=winner.value,
+            )
         return Effective(
             winner.value,
             winner.prov,
@@ -1654,9 +1788,28 @@ class Value(BaseModel):
         )
 
 
+def _bands_overlap(a: Band, b: Band) -> bool:
+    """Whether two bands on one measure share a lot.
+
+    Touching at a single point is an overlap only when the lower bound
+    includes that point: "over 10,000" and "up to 10,000" meet at 10,000 and
+    share no lot.
+    """
+    (lo_a, closed_a), (lo_b, closed_b) = a.lower, b.lower
+    if lo_a == lo_b:
+        low, closed = lo_a, closed_a and closed_b
+    elif lo_a > lo_b:
+        low, closed = lo_a, closed_a
+    else:
+        low, closed = lo_b, closed_b
+    high = min(a.upper, b.upper)
+    high_closed = (a.upper_closed or a.upper > high) and (b.upper_closed or b.upper > high)
+    return low < high or (low == high and closed and high_closed)
+
+
 def _depth(v: Variant) -> int:
     """How specific a variant is — every thing that had to be true to pick it."""
-    return len(v.when) + (1 if v.band is not None else 0)
+    return len(v.when) + len(v.bands)
 
 
 def check_kind(name: str, v: Any) -> None:
@@ -1670,6 +1823,15 @@ def check_kind(name: str, v: Any) -> None:
     kind = fd.kind
     if v is None:
         raise ValueError(f"{name}: value may not be null — omit the field instead")
+    if isinstance(v, LotWidthShare):
+        # A share of the lot's width comes to feet, so it is a length and
+        # nothing else: a lot area or a count stated as a share of a width
+        # would be a sentence no code writes.
+        if kind != "length_ft":
+            raise ValueError(
+                f"{name}: a share of the lot width is a length, and this field holds a {kind}"
+            )
+        return
     if kind == "bool":
         if not isinstance(v, bool):
             raise ValueError(f"{name}: expected a boolean, got {type(v).__name__}")

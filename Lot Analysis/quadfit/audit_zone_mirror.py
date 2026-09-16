@@ -458,8 +458,16 @@ def banded_standards() -> list[str]:
                 continue
             edges: set[float] = set()
             for v in getattr(value, "variants", ()) or ():
-                band = getattr(v, "band", None)
-                if band is None or band.measure != "lot_sqft":
+                # A variant may band the lot on more than one measure --
+                # Wilsonville's corner side yard is written for lots over
+                # 10,000 sq ft AND under 100 ft wide -- and the lot-area band
+                # is the one this ledger is about.
+                bands = getattr(v, "bands", None)
+                if bands is None:
+                    single = getattr(v, "band", None)
+                    bands = () if single is None else (single,)
+                band = next((b for b in bands if b.measure == "lot_sqft"), None)
+                if band is None:
                     continue
                 edge = band.more_than if band.more_than is not None else band.at_least
                 if edge is None and band.at_most is not None:

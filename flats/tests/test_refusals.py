@@ -345,7 +345,20 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 124, "comments": 127, "tests": 17}
+EXPECTED = {"notes": 123, "comments": 127, "tests": 17}
+#
+# 268 -> 267 on 2026-09-16: a FORM arrived. One refusal LEFT, Wilsonville's
+# header paragraph "NOT ENCODED: on a lot over 10,000 sq ft the corner-lot
+# street side setback is 20 percent of the lot width with a ten-foot floor
+# (4.113(.02)A.2). That is a function of the lot, not a number" -- the one
+# refusal in the corpus whose every gate was measured (corner, area, width)
+# and whose only missing piece was a place to put a share of the lot's own
+# width. `pct_of_lot_width` with a `floor_ft` on a variant is that place
+# (`flats/tests/test_lot_width_share.py`), worked out on the lot at
+# resolution and refused where the width is unmeasured; the eight zones that
+# take their setbacks from 4.113(.02) carry it under `corner_lot` and two
+# bands, lot_sqft over 10,000 and lot_width_ft under 100. The header now
+# records the encoding where it recorded the refusal.
 #
 # 270 -> 268 on 2026-09-15, evening, and this time no fact arrived -- a FIELD
 # did. Two refusals LEFT, the same clause in two copies of one chapter: the

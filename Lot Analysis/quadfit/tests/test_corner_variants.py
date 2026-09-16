@@ -103,25 +103,37 @@ def test_the_ten_feet_in_the_old_note_is_wood_village_and_it_is_a_cost() -> None
     assert rear.direction == "tightens"
 
 
-def test_only_four_reachable_corner_rules_can_move_a_building() -> None:
+def test_only_twelve_reachable_corner_rules_can_move_a_building() -> None:
     """How much the unbuilt feature is actually worth, pinned.
 
     Twenty-nine corner rules would fire, but a lot-width or frontage minimum
     only ever decides whether a zone's rules apply at all -- it does not move a
-    wall. Four touch a setback, which is what changes an envelope, and 23 of
+    wall. Four touched a setback, which is what changes an envelope, and 23 of
     the other 25 are Gresham's, a city with no green lots at all.
 
     Measured against the 2026-09-01 run: 20 green lots are corners in the one
     jurisdiction (Wilsonville) holding a reachable corner setback. That is why
-    this is scheduled rather than built. If the number here grows -- a newly
-    encoded city with greens and a corner setback -- the calculation changes
-    and the feature stops being cheap to defer.
+    this is scheduled rather than built. If the number here grows in a NEW
+    jurisdiction -- a newly encoded city with greens and a corner setback --
+    the calculation changes and the feature stops being cheap to defer.
+
+    Eight joined 2026-09-16 without changing it: Wilsonville's street-side
+    yard on a corner lot over 10,000 sq ft and under 100 ft wide is 20
+    percent of the lot width (WDC 4.113(.02)A.2), carried as a share on the
+    eight zones that take their setbacks from 4.113(.02). Same jurisdiction,
+    and the quadfit envelope already charges every street edge of a corner
+    lot the larger of the front and the street side, where the over-10,000
+    front is 20 -- more than 20 percent of any width under 100 -- so the
+    pipeline's corner lots were being cut at least that deep already.
     """
     audit = _audit()
     setbacky = [v for v in audit.scan()
                 if v.reachable and v.direction == "tightens"
                 and v.field.startswith("setback_")]
-    assert len(setbacky) == 4, [str(v) for v in setbacky]
+    assert len(setbacky) == 12, [str(v) for v in setbacky]
     assert {v.layer for v in setbacky} == {
         "or/multnomah/wood-village", "or/clackamas/wilsonville",
     }, sorted({v.layer for v in setbacky})
+    shares = [v for v in setbacky if getattr(v.alt, "pct", None) is not None]
+    assert len(shares) == 8 and {v.field for v in shares} == {"setback_street_side_ft"}
+    assert all(v.alt.floor_ft == v.base == 10 for v in shares), [str(v) for v in shares]

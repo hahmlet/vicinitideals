@@ -909,6 +909,19 @@ def test_the_inert_standards_are_inert_because_of_their_values() -> None:
 #: 30 / 50 / 60 across the three reachable columns, where the higher columns
 #: are STRICTER than the lowest. Held flat at 30 it would pass a 7,000 sq ft
 #: lot the city asks 60 of, so it is carried as a band and reads `banded`.
+#:
+#: Wilsonville's STREET SIDE joined 2026-09-16, the day the corpus learned to
+#: hold WDC 4.113(.02)A.2: on a corner lot over 10,000 sq ft and under 100 ft
+#: wide the street-side yard is 20 percent of the lot width, never under ten.
+#: That is a share of the lot's own width, which `lot_size_bands` cannot
+#: carry -- it holds one number per column -- and it does not need to. s5
+#: charges every street edge of a corner lot the LARGER of the front and the
+#: street-side setback, and the over-10,000 front is 20 (`lot_size_bands`
+#: setback_front_ft [[10000, 20]] on every one of these zones): 20 percent of
+#: any width under 100 is under 20, so the flat 10 and the share grade every
+#: lot in the band the same, and no county verdict moves. The eight rows
+#: below say exactly that. If the front band ever drops under 20, or s5
+#: stops taking the max, this reason is gone with it and the rows come out.
 FLAT_BUT_BANDED: frozenset[str] = frozenset({
     "milwaukie/R-MD.min_lot_depth_ft",
     "milwaukie/R-MD.setback_rear_ft",
@@ -920,6 +933,14 @@ FLAT_BUT_BANDED: frozenset[str] = frozenset({
     "wilsonville/PDR5.setback_rear_ft",
     "wilsonville/PDR6.setback_rear_ft",
     "wilsonville/R.setback_rear_ft",
+    "wilsonville/OTR.setback_street_side_ft",
+    "wilsonville/PDR1.setback_street_side_ft",
+    "wilsonville/PDR2.setback_street_side_ft",
+    "wilsonville/PDR3.setback_street_side_ft",
+    "wilsonville/PDR4.setback_street_side_ft",
+    "wilsonville/PDR5.setback_street_side_ft",
+    "wilsonville/PDR6.setback_street_side_ft",
+    "wilsonville/R.setback_street_side_ft",
 })
 
 
@@ -970,6 +991,42 @@ def test_a_band_that_tightens_with_lot_size_is_carried_as_a_band() -> None:
     # so a caller that has not learned the band is lenient, never strict on a
     # lot it cannot place.
     assert r.banded("min_lot_width_ft", None) == 30
+
+
+def test_wilsonvilles_corner_side_yard_share_never_exceeds_the_front_s5_charges() -> None:
+    """The reason the eight street-side FLAT rows are safe, pinned as a
+    mechanism rather than as a list.
+
+    WDC 4.113(.02)A.2 asks 20 percent of the lot width on a corner lot over
+    10,000 sq ft and under 100 ft wide -- at most 20 ft, just under. The
+    corpus holds that as a share (see `flats/tests/test_lot_width_share.py`);
+    rules.yaml holds the ten-foot floor. That is enough because s5 charges
+    every street edge of a corner lot (tier B) the LARGER of the front and
+    the street-side setback, and the over-10,000 front is 20 in each of these
+    zones. So the share is inside what the envelope already cuts, on every
+    lot the band reaches, and the two encodings grade the same lots. The
+    assertion below is the premise; if it fails, the FLAT rows above are no
+    longer safe and the share has to be carried here too.
+    """
+    from common import load_rules
+    from s5_envelope import lot_setbacks
+
+    wilsonville = load_rules().jurisdictions["wilsonville"]
+    zones = [
+        row.split("/")[1].split(".")[0]
+        for row in FLAT_BUT_BANDED
+        if row.startswith("wilsonville/") and row.endswith(".setback_street_side_ft")
+    ]
+    assert len(zones) == 8, zones
+    for zone in zones:
+        r = wilsonville.rule_for(zone)
+        # The widest lot in the band is just under 100 ft; 20 percent of it
+        # is just under 20 ft.
+        share_at_most = 0.2 * 100
+        for area in (10_001, 12_000, 20_000):
+            corner = lot_setbacks(r, area, "B")
+            assert corner["F"] >= share_at_most, (zone, area, corner)
+        assert r.setback_street_side_ft == 10, zone
 
 
 #: Zones where the corpus states a number, rules.yaml has a column for it, and

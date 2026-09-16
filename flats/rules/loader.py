@@ -38,6 +38,7 @@ from flats.rules.model import (
     CodeDocument,
     Incorporation,
     Layer,
+    LotWidthShare,
     Preempt,
     Provenance,
     Reading,
@@ -129,6 +130,16 @@ def _parse_values(
             problems.append(f"{where}: {exc.args[0]}")
             continue
 
+        if isinstance(node, dict) and "pct_of_lot_width" in node:
+            # A share of the lot's width is a number only once a lot is in
+            # hand, and a base standard is read with none -- the rules table
+            # and the paper lot both print it. WDC 4.113(.02)A.2 states its
+            # share for corner lots in one lot band, which is a variant.
+            problems.append(
+                f"{where}.{key}: 'pct_of_lot_width' is a number only on a lot — "
+                f"state it as a variant, under the condition(s) and band it applies to"
+            )
+            continue
         if isinstance(node, dict) and (
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "per_units",
              "spaces_total", "acres", "acres_per_dwelling", "per_height_ft",
@@ -654,18 +665,56 @@ def _parse_variants(
                 "per_dwelling",
                 "acres_per_dwelling",
                 "spaces_total",
+                "pct_of_lot_width",
             }
             & set(node)
         ):
             problems.append(
                 f"{at}: expected a mapping with a 'value', a 'reduce_pct', an "
                 f"'acres', a 'per_dwelling', an 'acres_per_dwelling', a "
-                f"'spaces_total', or 'exempt: true'"
+                f"'spaces_total', a 'pct_of_lot_width', or 'exempt: true'"
             )
             continue
         body = dict(node)
         value = body.pop("value", None)
         exempt = bool(body.pop("exempt", False))
+        pct_of_width = body.pop("pct_of_lot_width", None)
+        floor_ft = body.pop("floor_ft", None)
+        if pct_of_width is not None:
+            if value is not None:
+                problems.append(
+                    f"{at}: a variant states a number or a share of the lot "
+                    f"width, not both"
+                )
+                continue
+            if not isinstance(pct_of_width, (int, float)) or isinstance(
+                pct_of_width, bool
+            ):
+                problems.append(f"{at}: 'pct_of_lot_width' expects a number")
+                continue
+            if floor_ft is not None and (
+                not isinstance(floor_ft, (int, float)) or isinstance(floor_ft, bool)
+            ):
+                problems.append(f"{at}: 'floor_ft' expects a number")
+                continue
+            # WDC 4.113(.02)A.2: "not less than 20 percent of the width of
+            # the lot, but not less than ten feet". The file states the 20 and
+            # the 10 the sentence prints; what a 78 ft lot owes is worked out
+            # on the lot, in `Value.under`, where it can be checked.
+            try:
+                value = LotWidthShare(
+                    pct=float(pct_of_width),
+                    floor_ft=None if floor_ft is None else float(floor_ft),
+                )
+            except Exception as exc:
+                problems.append(f"{at}: {_terse(exc)}")
+                continue
+        elif floor_ft is not None:
+            problems.append(
+                f"{at}: 'floor_ft' is the floor under a 'pct_of_lot_width' and "
+                f"states nothing on its own"
+            )
+            continue
         acres = body.pop("acres", None)
         if acres is not None:
             if value is not None:
@@ -772,20 +821,31 @@ def _parse_variants(
             problems.append(f"{at}: 'when' must list the condition(s) this applies under")
             continue
         raw_band = body.pop("band", None)
-        band: Band | None = None
+        bands: list[Band] = []
         if raw_band is not None:
-            if not isinstance(raw_band, dict):
-                problems.append(
-                    f"{at}.band: expected a mapping — measure, and a bound: "
-                    f"at_least or more_than, and/or at_most"
-                )
+            # One mapping, or a list of them where the sentence bands the lot
+            # on more than one measure -- "over 10,000 square feet" and "less
+            # than 100 feet in width" is one sentence and two bands.
+            raw_bands = raw_band if isinstance(raw_band, list) else [raw_band]
+            bad = False
+            for j, one in enumerate(raw_bands):
+                if not isinstance(one, dict):
+                    problems.append(
+                        f"{at}.band: expected a mapping — measure, and a bound: "
+                        f"at_least or more_than, and/or at_most — or a list of them"
+                    )
+                    bad = True
+                    break
+                try:
+                    bands.append(Band(**one))
+                except Exception as exc:
+                    where_band = f"{at}.band[{j}]" if isinstance(raw_band, list) else f"{at}.band"
+                    problems.append(f"{where_band}: {_terse(exc)}")
+                    bad = True
+                    break
+            if bad:
                 continue
-            try:
-                band = Band(**raw_band)
-            except Exception as exc:
-                problems.append(f"{at}.band: {_terse(exc)}")
-                continue
-        if not when and band is None:
+        if not when and not bands:
             problems.append(
                 f"{at}: 'when' must list the condition(s) this applies under, "
                 f"or 'band' the lot sizes it was written for"
@@ -823,7 +883,7 @@ def _parse_variants(
                         None if spaces_total is None else float(spaces_total)
                     ),
                     when=tuple(str(c) for c in when),
-                    band=band,
+                    bands=tuple(bands),
                     prov=Provenance(**_prov_args(merged)),
                     status=Status(declared),
                     reviewer=body.get("reviewer"),
