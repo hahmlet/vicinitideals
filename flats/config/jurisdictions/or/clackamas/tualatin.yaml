@@ -50,9 +50,10 @@ readings:
       What is left of Table 41.220 after this commit took the row that mattered. The RML minimum
       average lot width for a quadplex -- fifty feet, with fourteen on the townhouse row -- was
       stated here and held nowhere, while RL carried the identical rows from Table 40.220 a page
-      earlier; both are now encoded, and the two relaxations on the row are deliberately not,
-      since "may be reduced to 30 feet if on a cul-de-sac" turns on a street geometry nothing
-      measures and the twenty-six foot figure belongs to Flexible Lot Subdivisions. Everything
+      earlier; both are now encoded, and of the two relaxations on the row one is held and one
+      deliberately not: "may be reduced to 30 feet if on a cul-de-sac" turned on a street geometry
+      nothing measured until 2026-09-15 and is a fronts_cul_de_sac variant since, and the
+      twenty-six foot figure belongs to Flexible Lot Subdivisions. Everything
       still uncited on the card is another building's row: 20,000 square feet and seventy-five or
       a hundred feet of width for multi-family structures of five or more units and for
       condominium ownership, 10,000 and 20,000 for other permitted and conditional uses, 3,000
@@ -324,8 +325,10 @@ readings:
       6,500, conditional uses at 6,000. The quadplex rows of the same two blocks -- 6,500 square
       feet and 50 feet -- are read and encoded in this layer, and it is worth saying that they are
       the same numbers, because a card showing four neighbouring rows and not the fifth invites
-      the conclusion that the fifth is missing.
-    fingerprint: c69b36121b24d6ca
+      the conclusion that the fifth is missing. Re-confirmed 2026-09-15 evening: the quadplex
+      row's cul-de-sac relief (30 feet, L192-L193) left the card when it was encoded on
+      min_lot_width_ft; the six lines that remain are the other housing types' rows as before.
+    fingerprint: 893dd3abc0dbe190
   "40-41.residential.txt#40.320":
     queue: nofield
     outcome: other_building
@@ -785,15 +788,36 @@ zones:
           when: [unit_lots]
           quote: "or/clackamas/tualatin/40-41.residential.txt#L166"
     min_lot_width_ft:
+      # Table 40.220, MINIMUM LOT WIDTH, the quadplex row. The relief printed
+      # under it -- "May be reduced to 30 feet if on a cul-de-sac" -- is
+      # held below since 2026-09-15, switched by `fronts_cul_de_sac`, which
+      # quadfit's s4 measures (`flats.geom.culdesac` reads it): the front
+      # lot line on one circle of a turnaround's radius, turning toward the
+      # street, with a street ending inside the circle. Until then the
+      # relief was refused for the one reason a looser row should be:
+      # nothing measured the fact. A lot not proven on a bulb still owes 50.
       value: 50
       quote: "or/clackamas/tualatin/40-41.residential.txt#L190-L191"
       variants:
+        # The cul-de-sac relief, on the same row. A lot WIDTH -- TDC 31.060
+        # measures it at the centre of the lot, parallel to the front lot
+        # line -- and not the street frontage Happy Valley's and
+        # Wilsonville's bulb rows loosen; the field says which.
+        - value: 30
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L192-L193"
         # "T ownhouse None" — the table states no minimum lot width for a
         # townhouse. Encoded as zero rather than left out, because left out
         # would inherit the 50 ft quadplex row, which is the opposite of what
         # the row says.
         - value: 0
           when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L196"
+        # The townhouse row spelled out beside the relief, so a townhome pod
+        # on a bulb does not tie two one-condition rows into UNKNOWN. It says
+        # what the townhouse row says: the relief cannot tighten "None".
+        - value: 0
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/tualatin/40-41.residential.txt#L196"
     max_coverage_pct:
       value: 60
@@ -810,8 +834,9 @@ zones:
       rows differ (45% coverage, and a 6,500 sq ft lot stated as a subdivision average). min_frontage_ft
       50 is dropped: the table states a minimum lot WIDTH, not a frontage, and the two are not the same
       test on a flag or cul-de-sac lot. Relief the table states and this file does not encode: front
-      12 ft to an unenclosed porch, lot width 30 ft on a cul-de-sac, zero side setback where townhouse
-      units attach, height to 50 ft through Type II Architectural Review. Corner-lot street side is 10
+      12 ft to an unenclosed porch, zero side setback where townhouse units attach, height to 50 ft
+      through Type II Architectural Review (lot width 30 ft on a cul-de-sac was on this list until
+      2026-09-15; it is held on min_lot_width_ft now that the bulb is measured). Corner-lot street side is 10
       ft measured from the secondary frontage, which the code determines by where the front door faces.
       TDC 36.410 is read and ruled: it reduces the RL minimum lot to 5,000 sq ft in a Flexible Lot
       Subdivision, and the chapter opens by putting itself under "the discretionary subdivision
@@ -895,23 +920,35 @@ zones:
       # zone did not: the lot-size rows above it were carried across and the
       # width rows below were not, so RML has been screened with no width floor.
       #
-      # The two relaxations on the row are left out. "May be reduced to 30 feet
-      # if on a cul-de-sac" turned on a street geometry nothing measured when
-      # this was written; since 2026-09-15 quadfit s4 reads it
-      # (`fronts_cul_de_sac`, held on Happy Valley's and Wilsonville's
-      # FRONTAGE rows), and this WIDTH row's 30 ft is queued in
-      # docs/FOLLOWUPS.md behind a width gate on the quadfit side. The 26 ft
-      # Flexible Lot Subdivision figure is a different application path. Both
-      # would let more land through than the row does.
+      # Of the two relaxations on the row, one is held and one is not. "May
+      # be reduced to 30 feet if on a cul-de-sac" turned on a street geometry
+      # nothing measured when this was written; since 2026-09-15 quadfit s4
+      # reads it (`fronts_cul_de_sac`) and the 30 is the variant below, as
+      # on RL. The 26 ft Flexible Lot Subdivision figure is a different
+      # application path and stays out. On the quadfit side this zone
+      # carries no width at all -- the row is an AVERAGE width, a form its
+      # measurement does not take, on a district with no mapped lots -- so
+      # the bulb relief has no interior row to stand under there and is
+      # held here only; test_port pins that as the one such zone.
       value: 50
       cite: TDC 41.220 Table, Minimum Average Lot Width
       quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L501-L503"
       variants:
+        # The cul-de-sac relief on the quadplex row, since 2026-09-15.
+        - value: 30
+          when: [fronts_cul_de_sac]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L503-L504"
         # The Townhouse row, which is the split-plat path. RL prints "None"
         # here and this zone prints a number, so the two are not the same
         # standard written twice.
         - value: 14
           when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L500"
+        # The townhouse row spelled out beside the relief, so a townhome pod
+        # on a bulb does not tie. The relief is printed on the quadplex row
+        # and not on this one, so the pair says what the townhouse row says.
+        - value: 14
+          when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L500"
     max_coverage_pct:
       value: 60
@@ -930,8 +967,9 @@ zones:
       standard any single lot passes or fails. Street side comes from the corner-lot rule, which sets
       the front-yard setback on any street-facing side except for duplexes, triplexes and quadplexes,
       where it is 10 ft. Relief not encoded: lot size and width reductions for Flexible Lot
-      Subdivisions under TDC 36.410, width 30 ft on a cul-de-sac, zero side setback where townhouse
-      units attach, height to 50 ft where setbacks are 1.5x the height. TDC 36.410 is read: 3,000 sq
+      Subdivisions under TDC 36.410, zero side setback where townhouse units attach, height to 50 ft
+      where setbacks are 1.5x the height (width 30 ft on a cul-de-sac left this list 2026-09-15 and is
+      held on min_lot_width_ft). TDC 36.410 is read: 3,000 sq
       ft in RML, discretionary, and conditioned on a one-acre site, five percent open space and a
       unit mix — a loosening this screen has no business claiming. One error found in reading it.
       TDC 41.300(1) sends the reader to "TDC 36.410(2)(b)" for the lot size, lot width, building

@@ -180,9 +180,20 @@ FIELD_MAP: dict[str, str] = {
 #: `flats.geom.culdesac`. The port cannot route a number into a variant, so
 #: the key is held here and `test_the_cul_de_sac_frontage_has_to_already_be_here`
 #: walks every zone that states it, both ways.
+#:
+#: `min_lot_width_cul_de_sac_ft` is the fifth, from 2026-09-15 evening, and
+#: it is the same relief on a different line. Tualatin's Tables 40.220 and
+#: 41.220 say of the quadplex row's 50 ft of lot WIDTH -- measured at the
+#: centre of the lot, TDC 31.060, not along the street -- "May be reduced to
+#: 30 feet if on a cul-de-sac." The corpus holds it as a `fronts_cul_de_sac`
+#: variant on `min_lot_width_ft` in both zones; rules.yaml states the column
+#: on RL alone, because RML's width is an average the quadfit measurement does
+#: not take and a bulb row cannot stand under an interior row that is not
+#: there. `test_the_cul_de_sac_width_has_to_already_be_here` walks it both
+#: ways and names RML as the one zone held in the corpus and not the mirror.
 BACKPORTED: frozenset[str] = frozenset(
     {"step_back_rear", "step_back_side", "lot_size_bands", "setback_alley_ft",
-     "min_frontage_cul_de_sac_ft"}
+     "min_frontage_cul_de_sac_ft", "min_lot_width_cul_de_sac_ft"}
 )
 
 #: Where the corpus holds a backported key that is not a step-back plane or a
@@ -202,7 +213,9 @@ BACKPORTED: frozenset[str] = frozenset(
 #: corpus holds it as a `fronts_cul_de_sac` variant on `min_frontage_ft` --
 #: again switched by the fact ALONE, because the `[unit_lots,
 #: fronts_cul_de_sac]` pair beside it is the townhome row spelled out so a
-#: townhome pod on a bulb does not tie.
+#: townhome pod on a bulb does not tie. A `min_lot_width_cul_de_sac_ft` is
+#: Tualatin's "may be reduced to 30 feet if on a cul-de-sac" on the lot
+#: WIDTH row, held the same way on `min_lot_width_ft`.
 HELD_AS_VARIANT: dict[str, dict[str, tuple[str, str]]] = {
     "setback_alley_ft": {
         "zero": ("setback_garage_entrance_ft", "abuts_alley"),
@@ -210,6 +223,9 @@ HELD_AS_VARIANT: dict[str, dict[str, tuple[str, str]]] = {
     },
     "min_frontage_cul_de_sac_ft": {
         "number": ("min_frontage_ft", "fronts_cul_de_sac"),
+    },
+    "min_lot_width_cul_de_sac_ft": {
+        "number": ("min_lot_width_ft", "fronts_cul_de_sac"),
     },
 }
 

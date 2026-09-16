@@ -230,6 +230,19 @@ class ZoneRule(BaseModel):
     #: other corner-lot row in this file: the interior figure is the base and
     #: the corner one is a site fact this file has no slot for.
     min_lot_width_ft: float | None = None
+    #: The code's own lot-WIDTH row for a lot on a cul-de-sac bulb, where it
+    #: prints one beside the interior row. Tualatin's Table 40.220 (RL) says
+    #: of the quadplex row's 50 ft: "May be reduced to 30 feet if on a
+    #: cul-de-sac." The same shape as `min_frontage_cul_de_sac_ft` on the
+    #: row above it, and the same discipline: applied by s7 in place of
+    #: `min_lot_width_ft` ONLY where s4 measured the bulb (`fronts_cul_de_sac`),
+    #: never where the fact is unknown, because the row is looser and a lot
+    #: not proven on a bulb keeps the interior number. It is a WIDTH, so it
+    #: is compared against `lot_width_ft` and not the street edge; a bulb lot
+    #: whose width the shape declined to measure is held for review on the
+    #: bulb row exactly as it was on the interior one. Until 2026-09-15 the
+    #: row was read into the FLATS corpus and refused there in a comment.
+    min_lot_width_cul_de_sac_ft: float | None = None
     #: Front lot line to rear lot line, where a code states a floor on it.
     #: Thirty-five zones in eight cities state one and until this column
     #: existed not one of them was ever applied: the standard was encoded in
@@ -313,6 +326,17 @@ class ZoneRule(BaseModel):
             raise ValueError(
                 f"zone {self.zone}: min_frontage_cul_de_sac_ft needs a "
                 "min_frontage_ft at or above it"
+            )
+        if self.min_lot_width_cul_de_sac_ft is not None and (
+            self.min_lot_width_ft is None
+            or self.min_lot_width_cul_de_sac_ft > self.min_lot_width_ft
+        ):
+            # Same lock on the width row: a bulb row with no interior row
+            # beside it has nothing to be looser than, and one above it would
+            # make every bulb the measurement misses an amnesty.
+            raise ValueError(
+                f"zone {self.zone}: min_lot_width_cul_de_sac_ft needs a "
+                "min_lot_width_ft at or above it"
             )
         for name, rows in self.lot_size_bands.items():
             if not hasattr(self, name):

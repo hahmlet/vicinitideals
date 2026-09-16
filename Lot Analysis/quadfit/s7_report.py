@@ -154,6 +154,8 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
     )
     frontage_on_bulb_row = np.zeros(n, dtype=bool)
     frontage_bulb_rescued = np.zeros(n, dtype=bool)
+    width_on_bulb_row = np.zeros(n, dtype=bool)
+    width_bulb_rescued = np.zeros(n, dtype=bool)
     flip_allowed = np.ones(n, dtype=bool)
     cov_cap = np.full(n, np.nan)
     accessory = np.zeros(n)
@@ -196,6 +198,20 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
             frontage_ok[i] = False
             frontage_bulb_rescued[i] = False
         min_width = rule.banded("min_lot_width_ft", float(area))
+        if fronts_bulb[i] and rule.min_lot_width_cul_de_sac_ft is not None:
+            # The code's own WIDTH row for a lot on a cul-de-sac bulb --
+            # Tualatin's "may be reduced to 30 feet if on a cul-de-sac" --
+            # in place of the interior row, on the lots s4 measured the bulb
+            # on and no other. `width_bulb_rescued` marks the lot whose
+            # measured width clears this row and not the interior one; a
+            # lot whose width was not taken is held below either way.
+            width_on_bulb_row[i] = True
+            width_bulb_rescued[i] = (
+                min_width is not None
+                and np.isfinite(lot_width[i])
+                and float(lot_width[i]) < min_width
+            )
+            min_width = rule.min_lot_width_cul_de_sac_ft
         if min_width is not None:
             width = lot_width[i]
             if np.isfinite(width):
@@ -208,6 +224,7 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
                 # street it could be built to face.
                 if float(width) < min_width:
                     width_ok[i] = False
+                    width_bulb_rescued[i] = False
             else:
                 # The zone states a width and this lot's shape declined to be
                 # measured. Hold it for review; a standard nobody could apply
@@ -247,6 +264,8 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
         "frontage_on_bulb_row": frontage_on_bulb_row,
         "frontage_bulb_rescued": frontage_bulb_rescued,
         "width_ok": width_ok, "width_unmeasured": width_unmeasured,
+        "width_on_bulb_row": width_on_bulb_row,
+        "width_bulb_rescued": width_bulb_rescued,
         "depth_ok": depth_ok, "depth_unmeasured": depth_unmeasured,
         "flip_allowed": flip_allowed,
         "cov_cap": cov_cap, "accessory": accessory,
@@ -931,6 +950,25 @@ def main() -> None:
                 + f"); **{int(rescued.sum()):,}** clear the bulb row and not the "
                   "interior one. Every other lot keeps the interior number, "
                   "including the bulb lots the measurement is not sure of.")
+            # And the WIDTH row, where a code prints one: Tualatin RL's 50 ft
+            # "may be reduced to 30 feet if on a cul-de-sac". A different
+            # line on the ground -- across the middle of the lot, not along
+            # the street -- so it is counted apart, and a bulb lot whose
+            # width the shape declined to measure is still held.
+            w_row = lots["width_on_bulb_row"].to_numpy().astype(bool)
+            w_resc = lots["width_bulb_rescued"].to_numpy().astype(bool)
+            if w_row.any():
+                w_held = w_row & lots["width_unmeasured"].to_numpy().astype(bool)
+                per_w = lots.loc[w_row, "jurisdiction"].value_counts()
+                L.append(
+                    f"**{int(w_row.sum()):,}** of the bulb lots sit in a zone whose "
+                    "code asks a bulb lot less lot WIDTH than an interior lot -- "
+                    "Tualatin RL, 30 ft against 50 -- and were judged on that row ("
+                    + ", ".join(f"{k} {v:,}" for k, v in per_w.items())
+                    + f"); **{int(w_resc.sum()):,}** clear the bulb row and not the "
+                      f"interior one, and **{int(w_held.sum()):,}** are held because "
+                      "the shape declined to be measured, as they were under the "
+                      "interior row.")
     L.append("\nThe human-review queue is `review_candidates.csv`.")
 
     # What the queue is actually made of. The binding-constraint table below
@@ -1513,7 +1551,8 @@ def main() -> None:
     # number is NOT red on it: s4 read its front lot line on a cul-de-sac
     # bulb and the code's bulb row applied. The fact and the row travel with
     # the row of the CSV.
-    for _c in ("fronts_cul_de_sac", "frontage_on_bulb_row", "frontage_bulb_rescued"):
+    for _c in ("fronts_cul_de_sac", "frontage_on_bulb_row", "frontage_bulb_rescued",
+               "width_on_bulb_row", "width_bulb_rescued"):
         if _c in lots.columns:
             phase2_cols.append(_c)
     # And why a large Oregon City lot is in the queue looking perfect: it is

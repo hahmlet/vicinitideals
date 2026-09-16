@@ -270,6 +270,83 @@ def test_the_cul_de_sac_frontage_has_to_already_be_here() -> None:
         assert corpus_alone <= carried, (jname, corpus_alone - carried)
 
 
+def test_the_cul_de_sac_width_has_to_already_be_here() -> None:
+    """The same proof for the fifth key, `min_lot_width_cul_de_sac_ft`.
+
+    Tualatin's Tables 40.220 and 41.220 say of the quadplex row's 50 ft of
+    lot WIDTH "May be reduced to 30 feet if on a cul-de-sac." rules.yaml
+    states the column on RL so that s7 can hold a lot s4 measured on a bulb
+    to 30 across the centre of the lot instead of 50. The corpus read the
+    row first -- and refused the relief in a comment until the fact was
+    measured -- so every quadfit zone that states the column has to be a
+    zone where a `fronts_cul_de_sac` variant on `min_lot_width_ft` carries
+    that same number, switched by the fact ALONE, and lower than the base.
+
+    The other way round has one named exception. RML's corpus entry holds
+    the same relief on its filed 50, and rules.yaml carries NO width for RML
+    at all: the row is an AVERAGE width, a form the quadfit measurement does
+    not take, on a district with no mapped lots. A bulb row cannot stand
+    under an interior row that is not there, so RML is held in the corpus
+    and not the mirror -- and this test says so by name, so a second such
+    zone cannot arrive quietly.
+    """
+    ruleset = RuleSet(load_rules())
+    field, condition = HELD_AS_VARIANT["min_lot_width_cul_de_sac_ft"]["number"]
+    assert field == "min_lot_width_ft"      # a width, not the street edge
+
+    stated: dict[tuple[str, str], float] = {}
+    for jname, spec in load_quadfit()["jurisdictions"].items():
+        layer = ruleset.layers.get(layer_id_for(jname))
+        for row in spec.get("zones") or []:
+            if "min_lot_width_cul_de_sac_ft" not in row:
+                continue
+            number = float(row["min_lot_width_cul_de_sac_ft"])
+            zone = layer.zones.get(row["zone"]) if layer else None
+            held = zone.values.get(field) if zone else None
+            assert held is not None, f"{jname}/{row['zone']} holds no {field}"
+            alone = [v for v in held.variants if tuple(v.when or ()) == (condition,)]
+            assert alone, (
+                f"{jname}/{row['zone']} states min_lot_width_cul_de_sac_ft {number:g} "
+                f"and the corpus holds no {condition}-only variant on {field} -- a "
+                f"number nobody read"
+            )
+            assert {float(v.value) for v in alone} == {number}, (jname, row["zone"], number)
+            assert number < float(held.value), (jname, row["zone"])
+            assert all(v.prov.quote.endswith(("#L192-L193", "#L503-L504")) for v in alone), (
+                jname, row["zone"])
+            # quadfit's own pair reads the same way, and on the WIDTH row: the
+            # bulb figure under the interior one, with no frontage in sight
+            assert number < float(row["min_lot_width_ft"]), (jname, row["zone"])
+            assert "min_frontage_ft" not in row, (jname, row["zone"])
+            stated[(jname, row["zone"])] = number
+    assert stated == {("tualatin", "RL"): 30.0}
+
+    # and the other way round: everything the corpus holds in that shape is
+    # either in the mirror or the one average-width row the mirror leaves blank
+    layer = ruleset.layers[layer_id_for("tualatin")]
+    rows = {row["zone"]: row for row in load_quadfit()["jurisdictions"]["tualatin"]["zones"]}
+    corpus_alone = {
+        zname for zname, zone in layer.zones.items()
+        if (held := zone.values.get(field)) is not None
+        and any(tuple(v.when or ()) == (condition,) for v in held.variants)
+    }
+    assert corpus_alone == {"RL", "RML"}
+    blank = {z for z in corpus_alone if "min_lot_width_cul_de_sac_ft" not in rows[z]}
+    assert blank == {"RML"}, blank
+    assert "min_lot_width_ft" not in rows["RML"], (
+        "RML now carries a width in rules.yaml; its cul-de-sac row can stand under it"
+    )
+    # ... and no other layer holds the relief on the width field
+    for lid, other in ruleset.layers.items():
+        if lid == layer_id_for("tualatin"):
+            continue
+        for zname, zone in other.zones.items():
+            held = zone.values.get(field)
+            assert held is None or not any(
+                condition in (v.when or ()) for v in held.variants
+            ), (lid, zname)
+
+
 def _band_is_held(held, threshold: float, value: float) -> bool:
     """Whether the corpus carries `value` for lots at or above `threshold`."""
     for variant in held.variants:

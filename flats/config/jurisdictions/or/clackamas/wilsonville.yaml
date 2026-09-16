@@ -325,8 +325,10 @@ readings:
       Conditional Use Regulations for Churches, pulled onto this card by the cross-reference two
       paragraphs above them that sends private parks to 4.113. Worth naming as an attribution slip
       of the same family as the hoisted table: the citation is right about the lines and wrong
-      about whose section they are.
-    fingerprint: 3155334d2066315a
+      about whose section they are. Re-confirmed 2026-09-15: Table 2 note F (24 feet of frontage
+      when the lot fronts a cul-de-sac, line 4740) left the card when it was encoded as a
+      fronts_cul_de_sac variant; the one sentence the card stays open on, (.02)A.2, is still here.
+    fingerprint: 5b8ee1cd6a23345f
   "4.planning.txt#4.127":
     queue: condition
     outcome: cant_tell

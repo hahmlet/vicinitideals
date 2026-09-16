@@ -387,6 +387,13 @@ class _GateRules:
             setback_side_ft=8, setback_rear_ft=20, min_frontage_ft=50,
             min_frontage_cul_de_sac_ft=35,
         )
+        # Tualatin's RL table, on the WIDTH row: 50 ft, "may be reduced to
+        # 30 feet if on a cul-de-sac". Measured at the centre of the lot.
+        width_bulb_row = ZoneRule(
+            zone="R-10", quadplex_allowed=True, setback_front_ft=15,
+            setback_side_ft=5, setback_rear_ft=15, min_lot_width_ft=50,
+            min_lot_width_cul_de_sac_ft=30,
+        )
         self.jurisdictions = {
             "oregon_city": JurisdictionRules(
                 eligible=True, lot_width_measure="side_midpoints",
@@ -395,6 +402,9 @@ class _GateRules:
                 eligible=True, zones=[frontage]),
             "happy_valley": JurisdictionRules(
                 eligible=True, zones=[bulb_row]),
+            "tualatin": JurisdictionRules(
+                eligible=True, lot_width_measure="center_parallel",
+                zones=[width_bulb_row]),
         }
 
 
@@ -471,10 +481,51 @@ def test_the_cul_de_sac_row_applies_only_where_the_bulb_was_measured():
     assert list(gates["frontage_on_bulb_row"]) == [False]
 
 
+def test_the_cul_de_sac_width_row_applies_only_where_the_bulb_was_measured():
+    """Tualatin's row is a lot WIDTH, not a street edge: 50 ft across the
+    centre of the lot, 30 on a cul-de-sac. So the bulb row is read against
+    `lot_width_ft` and never against the frontage -- 40 ft of width passes
+    on a lot s4 read on a bulb and fails on one it did not, whatever the
+    street says; 25 ft fails the bulb row too; and a bulb lot whose width
+    the shape declined to measure is held on the bulb row exactly as it was
+    held on the interior one, because a looser number nobody could apply is
+    still a number nobody applied. The frontage gate never notices."""
+    gates = _gate_frame([
+        _gate_row("tualatin", 30.0, width=40.0, bulb=True),
+        _gate_row("tualatin", 30.0, width=40.0, bulb=False),
+        _gate_row("tualatin", 30.0, width=25.0, bulb=True),
+        _gate_row("tualatin", 30.0, width=70.0, bulb=True),
+        _gate_row("tualatin", 30.0, bulb=True),
+    ])
+    assert list(gates["width_ok"]) == [True, False, False, True, True]
+    assert list(gates["width_unmeasured"]) == [False, False, False, False, True]
+    assert list(gates["policy_exclusion"]) == [
+        "", "below_min_lot_width", "below_min_lot_width", "", ""]
+    assert list(gates["width_on_bulb_row"]) == [True, False, True, True, True]
+    assert list(gates["width_bulb_rescued"]) == [True, False, False, False, False]
+    assert list(gates["frontage_ok"]) == [True] * 5
+    assert list(gates["frontage_on_bulb_row"]) == [False] * 5
+
+    # An older parquet with no bulb column is the interior number everywhere.
+    gates = _gate_frame([_gate_row("tualatin", 30.0, width=40.0)])
+    assert list(gates["width_ok"]) == [False]
+    assert list(gates["width_on_bulb_row"]) == [False]
+
+    # A city whose bulb row is on the FRONTAGE is untouched on the width gate,
+    # and a city with no bulb row at all is untouched by the fact.
+    gates = _gate_frame([
+        _gate_row("happy_valley", 40.0, width=40.0, bulb=True),
+        _gate_row("oregon_city", 40.0, width=40.0, bulb=True),
+    ])
+    assert list(gates["width_on_bulb_row"]) == [False, False]
+    assert list(gates["width_ok"]) == [True, False]
+
+
 def test_a_bulb_row_tighter_than_the_interior_row_is_refused():
     """The row can only loosen. A bulb row above the interior one would make
     every bulb the measurement misses an amnesty, and a bulb row with no
-    interior row beside it has nothing to be looser than."""
+    interior row beside it has nothing to be looser than. Both rows, the
+    frontage one and the width one."""
     from pydantic import ValidationError
 
     from common import ZoneRule
@@ -487,6 +538,14 @@ def test_a_bulb_row_tighter_than_the_interior_row_is_refused():
         ZoneRule(**base, min_frontage_cul_de_sac_ft=35)
     ZoneRule(**base, min_frontage_ft=50, min_frontage_cul_de_sac_ft=35)
     ZoneRule(**base, min_frontage_ft=35, min_frontage_cul_de_sac_ft=35)
+    with pytest.raises(ValidationError):
+        ZoneRule(**base, min_lot_width_ft=30, min_lot_width_cul_de_sac_ft=50)
+    with pytest.raises(ValidationError):
+        ZoneRule(**base, min_lot_width_cul_de_sac_ft=30)
+    # ... and a frontage row does not stand in for the missing width row
+    with pytest.raises(ValidationError):
+        ZoneRule(**base, min_frontage_ft=50, min_lot_width_cul_de_sac_ft=30)
+    ZoneRule(**base, min_lot_width_ft=50, min_lot_width_cul_de_sac_ft=30)
 
 
 def test_a_measured_width_rules_in_both_directions():

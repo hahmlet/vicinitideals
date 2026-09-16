@@ -829,8 +829,10 @@ readings:
       2026-09-08 when the county's mirror of it was ruled; C.1.a's vehicle-area prohibition,
       C.1.b's 40-percent front-yard cap (which reduces to "drive width not more than 40 percent of
       lot width" and never binds on a lot wide enough for the pod), C.3's alley mandate and C.4's
-      garage setback are all on that record.
-    fingerprint: b8c53b78c78d4bda
+      garage setback are all on that record. Re-confirmed 2026-09-15: one of the four lines has
+      since been quoted by an encoding and left the card; the three that remain are C.2.a's
+      10-foot strip and its exceptions and the 9-foot shared driveway, ruled above.
+    fingerprint: ebaece0910fd774a
   "33.266.txt#33.266.110":
     queue: nofield
     outcome: other_building
