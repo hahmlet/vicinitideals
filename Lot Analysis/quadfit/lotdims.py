@@ -854,6 +854,98 @@ def bulb_circles(edges) -> list[tuple[float, float, float]]:
     return out
 
 
+def bulb_front(edges, groups=None) -> tuple[float, float, float] | None:
+    """The cul-de-sac bulb circle this lot's WHOLE frontage lies on, as
+    ``(cx, cy, r)``, or None: a lot with a candidate front off the circle,
+    or with no bulb arc at all.
+
+    A lot on a bulb is not a corner lot. TDC 31.060 defines one as "a lot
+    abutting two intersecting streets other than an alley", and a
+    turnaround is the end of one street. But its front lot line is surveyed
+    as a chain of chords a dozen or more degrees apart, and s4's bearing
+    clustering reads that chain as two bearings on 74 of Tualatin's 81 bulb
+    lots (2026-09-15), which under :func:`center_parallel_width_ft` is the
+    corner-lot refusal. So the question is asked of the shape instead: is
+    every candidate front (:func:`front_groups`) on one circle that
+    :func:`bulb_circles` reads as a bulb's, to the same tolerance the fit
+    itself is held to? Where it is, the lot has one front lot line, the
+    arc, however many runs or bearings it was read as; and whether the
+    chain was joined into one run or split by the sweep cap does not enter
+    into it, because the cap guards a mean line and nothing here is put on
+    one.
+
+    Where it is not, nothing is collapsed and the lot is measured, or
+    refused, exactly as before. On Tualatin's bulb lots the runs off the
+    circle were a second street across the back of the lot -- TDC's double
+    frontage lot, and two fronts -- and, at the throat of the bulb, the arc
+    running on into the stem's straight front or the corner arc between
+    them: one street, but a front line that is partly the arc and partly
+    not, whose direction "at the center of the lot" this does not claim to
+    know. 39 of the 68 tier-B two-bearing bulb lots were wholly on the
+    circle and 29 were not; every tier-C one is refused by its tier before
+    reaching here.
+
+    The other half of the cul-de-sac reading -- a street ending inside the
+    circle, which s4 reads off the street file -- is not needed for this.
+    The dead end tells a turnaround from a knuckle in a winding street so
+    the looser BULB ROW is applied only where the code's condition holds;
+    which row applies is s7's question. Whether the lot has one front or
+    two is settled by the arc alone: a lot outside a circle of that radius
+    lies on a bend in one street, bulb or knuckle, and 17 Tualatin lots on
+    such a knuckle are measured the same way and held to the interior 50.
+    """
+    if groups is None:
+        groups = front_groups(edges)
+    if not groups:
+        return None
+    pts = [
+        (x, y)
+        for _, members in groups for e in members
+        for x, y in ((e[0], e[1]), (e[2], e[3]))
+    ]
+    for cx, cy, r in bulb_circles(edges):
+        if all(abs(math.hypot(x - cx, y - cy) - r) <= _BULB_FIT_TOL_FT for x, y in pts):
+            return cx, cy, r
+    return None
+
+
+def _centre(geom):
+    """The centre of the lot: its centroid, or, where the centroid falls on
+    ground the lot does not own, a point inside it."""
+    centre = geom.centroid
+    return centre if geom.covers(centre) else geom.representative_point()
+
+
+def _bulb_chord(groups) -> float | None:
+    """The bearing of a bulb lot's front lot line, for measuring "parallel
+    to" it: the chord across the arc's ends, which on an arc of under a
+    half turn joins the two front vertices farthest apart. It is what a
+    surveyor draws for a curved front, and it is the bearing s4 already
+    stores for a bulb lot whose chords cluster to one -- their
+    length-weighted mean -- so a lot measured before this reading is
+    measured the same after it. The tangent at the lot centre's angle was
+    tried first and agrees on a wedge whose sides run out from the arc, but
+    on a lot leaning to one side of its bulb it parts from the chord by
+    twenty degrees and is the tangent at a point of the circle the lot's
+    front does not reach; on nine Tualatin lots it moved a settled number
+    by up to 19 ft. None on fewer than two vertices.
+    """
+    pts = [
+        (x, y)
+        for _, members in groups for e in members
+        for x, y in ((e[0], e[1]), (e[2], e[3]))
+    ]
+    best = None
+    for i, (ax, ay) in enumerate(pts):
+        for bx, by in pts[i + 1:]:
+            d = math.hypot(bx - ax, by - ay)
+            if d > _EPS and (best is None or d > best[0]):
+                best = (d, ax, ay, bx, by)
+    if best is None:
+        return None
+    return _bearing(best[1:])
+
+
 @dataclass(frozen=True)
 class _Frame:
     """The lot seen from one candidate front: that line on y=``fy``, body above.
@@ -1085,6 +1177,13 @@ def center_parallel_width_ft(geom, front_bearings) -> float | None:
     centre stands on -- not the total clipped length, because on a lot that
     wraps around a neighbour the chord can re-enter further along and that
     second piece is somebody else's width.
+
+    Two bearings are a corner lot, refused: 31.060 measures one "between
+    the front lot line and a side lot line", a different pair of lines on
+    a different axis. A lot on a cul-de-sac bulb also arrives with two
+    bearings and is not a corner lot; :func:`orientations` reads that
+    shape first (:func:`bulb_front`) and calls this with the one bearing
+    of the chord across the arc's ends.
     """
     import shapely
     from shapely.geometry import LineString, Point
@@ -1094,9 +1193,7 @@ def center_parallel_width_ft(geom, front_bearings) -> float | None:
     # A corner lot measures something else entirely under this definition.
     if len(front_bearings) > 1:
         return None
-    centre = geom.centroid
-    if not geom.covers(centre):
-        centre = geom.representative_point()
+    centre = _centre(geom)
     x0, y0, x1, y1 = geom.bounds
     reach = _CHORD_REACH * max(math.hypot(x1 - x0, y1 - y0), 1.0)
     theta = math.radians(float(front_bearings[0]))
@@ -1312,7 +1409,21 @@ def orientations(
         return ()
 
     out: list[Orientation] = []
-    for bearing, members in front_groups(edges):
+    groups = front_groups(edges)
+    # Under Tualatin's form a lot whose whole frontage is the arc of a
+    # cul-de-sac bulb has one front lot line, the arc, whatever s4's
+    # clustering or the sweep cap made of it, and its width is taken
+    # through the centre of the lot parallel to the chord across the arc's
+    # ends (`bulb_front`, `_bulb_chord`). The other forms are framed on a
+    # mean line, where a bulb arc is already one run under the sweep cap
+    # or two fronts over it, and are left.
+    arc_bearing = None
+    if width_measure == "center_parallel" and groups:
+        if bulb_front(edges, groups) is not None:
+            arc_bearing = _bulb_chord(groups)
+    if arc_bearing is not None:
+        groups = [(arc_bearing, [e for _, members in groups for e in members])]
+    for bearing, members in groups:
         f = _frame(geom, members, bearing)
         if f is None:
             continue
@@ -1320,7 +1431,9 @@ def orientations(
         if width_measure == "side_midpoints":
             w = side_midpoints_width_ft(geom, edges, front=(members, f))
         elif width_measure == "center_parallel":
-            w = center_parallel_width_ft(geom, front_bearings)
+            w = center_parallel_width_ft(
+                geom, front_bearings if arc_bearing is None else [bearing]
+            )
         elif width_measure == "midway_front_rear":
             w = midway_front_rear_width_ft(f.rg, f.fy)
         elif width_measure == "building_line":

@@ -32,6 +32,7 @@ from lotdims import (  # noqa: E402
     WIDTH_MEASURES,
     _frame,
     bulb_circles,
+    bulb_front,
     center_parallel_width_ft,
     dimensions,
     front_groups,
@@ -1216,6 +1217,54 @@ def _corner_arc_lot():
     return [[*pts[k], *pts[(k + 1) % len(pts)], kinds[k]] for k in range(len(pts))]
 
 
+def _bulb_lot_running_onto_the_stem():
+    """A lot at the throat of a bulb: the bulb's four chords on a 50 ft
+    circle, then a 20 ft corner arc of three chords turning the other way,
+    then 60 ft straight along the stem, every one of them street-facing."""
+    bulb = _arc_lot(50.0, 250, 330, 4)[:4]
+    px, py = bulb[-1][2], bulb[-1][3]
+    heading = math.radians(60)  # the tangent where the bulb arc ends
+    ccx = px + 20.0 * math.cos(heading - math.pi / 2)
+    ccy = py + 20.0 * math.sin(heading - math.pi / 2)
+    corner = []
+    for k in range(1, 4):
+        a = heading + math.pi / 2 - math.radians(30) * k
+        qx, qy = ccx + 20.0 * math.cos(a), ccy + 20.0 * math.sin(a)
+        corner.append([px, py, qx, qy, "F"])
+        px, py = qx, qy
+    heading -= math.pi / 2
+    sx, sy = px + 60.0 * math.cos(heading), py + 60.0 * math.sin(heading)
+    fx, fy = 150.0 * math.cos(math.radians(250)), 150.0 * math.sin(math.radians(250))
+    x0, y0 = bulb[0][0], bulb[0][1]
+    return bulb + corner + [[px, py, sx, sy, "F"], [sx, sy, fx, fy, "R"], [fx, fy, x0, y0, "S"]]
+
+
+def _bulb_lot_between_parallel_sides(
+    radius, sweep_deg, chords, depth=100.0, at=(0.0, 0.0), lean_deg=0.0
+):
+    """A lot on a cul-de-sac bulb whose side lot lines run straight back
+    from the two ends of the arc, parallel to each other: the one bulb lot
+    whose width is known without measuring it, 2 R sin(sweep / 2) along
+    the chord across the arc's ends at every depth. The arc is ``chords``
+    chords on a circle of ``radius`` about ``at``, centred on the +x axis,
+    the lot outside it; ``lean_deg`` swings both sides off the radial
+    together, so the lot leans to one side of its bulb without changing
+    that width. Returns the polygon and the ring's edges, the arc classed
+    F, the rear R.
+    """
+    ox, oy = at
+    half = sweep_deg / 2.0
+    angs = [math.radians(half - sweep_deg * k / chords) for k in range(chords + 1)]
+    arc = [(ox + radius * math.cos(a), oy + radius * math.sin(a)) for a in angs]
+    h = radius * math.sin(math.radians(half))
+    x0 = ox + radius * math.cos(math.radians(half))
+    dx, dy = depth * math.cos(math.radians(lean_deg)), depth * math.sin(math.radians(lean_deg))
+    pts = arc + [(x0 + dx, oy - h + dy), (x0 + dx, oy + h + dy)]
+    kinds = ["F"] * chords + ["S", "R", "S"]
+    edges = [[*pts[k], *pts[(k + 1) % len(pts)], kinds[k]] for k in range(len(pts))]
+    return Polygon(pts), edges
+
+
 def test_a_bulb_lots_front_lies_on_one_circle_of_the_turnarounds_radius():
     """Happy Valley 16.12: a cul-de-sac lot "has a front lot line contiguous
     with the outer radius of a curve". Four chords on a 50 ft circle, the
@@ -1241,24 +1290,7 @@ def test_a_bulb_lots_front_lies_on_one_circle_of_the_turnarounds_radius():
     assert bulb_circles(_corner_arc_lot()) == []
     assert bulb_circles(_arc_lot(200.0, 260, 290, 3)) == []
 
-    # The bulb's four chords, then a 20 ft corner arc of three chords
-    # turning the other way, then 60 ft straight along the stem.
-    bulb = _arc_lot(50.0, 250, 330, 4)[:4]
-    px, py = bulb[-1][2], bulb[-1][3]
-    heading = math.radians(60)  # the tangent where the bulb arc ends
-    ccx = px + 20.0 * math.cos(heading - math.pi / 2)
-    ccy = py + 20.0 * math.sin(heading - math.pi / 2)
-    corner = []
-    for k in range(1, 4):
-        a = heading + math.pi / 2 - math.radians(30) * k
-        qx, qy = ccx + 20.0 * math.cos(a), ccy + 20.0 * math.sin(a)
-        corner.append([px, py, qx, qy, "F"])
-        px, py = qx, qy
-    heading -= math.pi / 2
-    sx, sy = px + 60.0 * math.cos(heading), py + 60.0 * math.sin(heading)
-    fx, fy = 150.0 * math.cos(math.radians(250)), 150.0 * math.sin(math.radians(250))
-    x0, y0 = bulb[0][0], bulb[0][1]
-    mixed = bulb + corner + [[px, py, sx, sy, "F"], [sx, sy, fx, fy, "R"], [fx, fy, x0, y0, "S"]]
+    mixed = _bulb_lot_running_onto_the_stem()
     assert Polygon([(e[0], e[1]) for e in mixed]).is_valid
     circles = bulb_circles(mixed)
     assert len(circles) == 1
@@ -1285,6 +1317,116 @@ def test_a_bulb_is_still_read_where_the_lots_actually_are():
     # And a corner arc there is still nothing: the lot is inside its circle.
     corner = [[e[0] + ex, e[1] + ny, e[2] + ex, e[3] + ny, e[4]] for e in _corner_arc_lot()]
     assert bulb_circles(corner) == []
+
+
+def test_a_lot_on_a_bulb_is_one_front_under_tualatins_form_and_is_measured_parallel_to_the_arc():
+    """TDC 31.060: lot width is "the horizontal distance between the side
+    lot lines, ordinarily measured parallel to the front lot line, at the
+    center of the lot" -- or, on a corner lot, something else, and a corner
+    lot is "a lot abutting two intersecting streets". A lot on a cul-de-sac
+    bulb abuts one street. Its front lot line is the arc, surveyed as
+    chords fifteen degrees apart, and s4 clusters those into two bearings
+    on 74 of Tualatin's 81 bulb lots, which the chord-through-the-centre
+    form took for the corner-lot refusal: the row for a lot on a bulb was
+    encoded on 2026-09-15 and reached four lots.
+
+    Drawn so the answer is known without measuring: the side lot lines run
+    straight back from the ends of the arc, parallel, so the lot is exactly
+    2 R sin(sweep / 2) wide at every depth. Four chords on a 60 degree arc
+    of a 50 ft circle: 50 ft wide, one run under the sweep cap, and the two
+    bearings s4 would report are not the corner-lot refusal but the arc.
+    Eight chords on 120 degrees: 86.6 ft wide, TWO runs under the cap, and
+    still one front -- the whole arc, all eight chords, is the front lot
+    line. Which bearings s4 read does not enter into it.
+
+    And both ways. The same arc with a second street across the back of
+    the lot is TDC's double frontage lot and is refused: a run off the
+    circle. A lot at the throat, its arc running on round the corner arc
+    onto the stem, has a front line that is partly the arc and partly not,
+    and is refused too. A tier-C lot is refused by its tier. And the
+    chord-through-the-centre form itself, handed two bearings, still says
+    no: the reading of the shape is where the arc is proven, not a loosening
+    of the corner rule.
+    """
+    poly, edges = _bulb_lot_between_parallel_sides(50.0, 60, 4)
+    assert poly.is_valid
+    assert len(front_groups(edges)) == 1
+    assert bulb_front(edges) == pytest.approx((0.0, 0.0, 50.0), abs=0.1)
+    clustered = [75.0, 105.0]  # what s4's 20-degree clustering makes of the chords
+    o = dimensions(poly, edges, clustered, "B", width_measure="center_parallel")
+    assert o is not None and o.width_ft == pytest.approx(50.0, abs=0.01)
+    assert o.front_ft == pytest.approx(4 * 2 * 50.0 * math.sin(math.radians(7.5)), abs=0.05)
+    assert center_parallel_width_ft(poly, clustered) is None, "the corner rule is not loosened"
+
+    poly, edges = _bulb_lot_between_parallel_sides(50.0, 120, 8)
+    assert poly.is_valid
+    assert len(front_groups(edges)) == 2, "split by the sweep cap"
+    o = dimensions(poly, edges, [60.0, 90.0, 120.0], "B", width_measure="center_parallel")
+    assert o is not None and o.width_ft == pytest.approx(2 * 50.0 * math.sin(math.radians(60)), abs=0.01)
+    assert o.front_ft == pytest.approx(8 * 2 * 50.0 * math.sin(math.radians(7.5)), abs=0.05)
+    # Nor does it matter what s4 read: one bearing, the same answer.
+    o1 = dimensions(poly, edges, [90.0], "A", width_measure="center_parallel")
+    assert o1 is not None and o1.width_ft == o.width_ft
+
+    # A street across the back: two fronts, refused.
+    through = [e[:4] + ["F"] if e[4] == "R" else e for e in edges]
+    assert bulb_front(through) is None
+    assert dimensions(poly, through, [60.0, 90.0, 120.0], "B", width_measure="center_parallel") is None
+    # The arc running on round the corner onto the stem: refused.
+    mixed = _bulb_lot_running_onto_the_stem()
+    assert bulb_circles(mixed), "it is on a bulb"
+    assert bulb_front(mixed) is None, "but its front is not all the arc"
+    mixed_poly = Polygon([(e[0], e[1]) for e in mixed])
+    assert dimensions(mixed_poly, mixed, [15.0, 60.0], "B", width_measure="center_parallel") is None
+    # And the tier refuses before any of this is asked.
+    assert dimensions(poly, edges, [60.0, 90.0], "C", width_measure="center_parallel") is None
+
+
+def test_a_lot_leaning_on_its_bulb_is_measured_along_the_chord_across_the_arcs_ends():
+    """"Parallel to the front lot line": on an arc, parallel to the chord
+    across its ends, which is what a surveyor draws for a curved front and
+    what s4 already stores for a bulb lot whose chords cluster to one
+    bearing. A lot leaning thirty degrees to one side of its bulb, sides
+    still parallel, is still exactly 2 R sin(sweep / 2) wide along that
+    chord; the tangent at the lot centre's angle, tried first, is the
+    tangent at a point of the circle this lot's front never reaches and
+    read the width 5 to 19 ft off on nine Tualatin lots. So the number
+    here is the chord's, and it is the number the same lot got before the
+    arc was read at all, handed the one bearing s4 clusters its chords to:
+    the reading measures what was refused, the way the rest were measured.
+    """
+    poly, edges = _bulb_lot_between_parallel_sides(50.0, 36, 2, lean_deg=-30.0)
+    assert poly.is_valid
+    assert bulb_front(edges) == pytest.approx((0.0, 0.0, 50.0), abs=0.1)
+    want = 2 * 50.0 * math.sin(math.radians(18))
+    o = dimensions(poly, edges, [72.0, 108.0], "B", width_measure="center_parallel")
+    assert o is not None and o.width_ft == pytest.approx(want, abs=0.01)
+    # The chord across the ends is vertical here: bearing 90. Same lot,
+    # one bearing, measured as it was before this reading: the same number.
+    o1 = dimensions(poly, edges, [90.0], "A", width_measure="center_parallel")
+    assert o1 is not None and o1.width_ft == o.width_ft
+    assert center_parallel_width_ft(poly, [90.0]) == pytest.approx(want, abs=0.01)
+    # And the tangent at the centre's angle would not have been: the lot's
+    # centre sits well off the arc's bisector, and a chord thrown on that
+    # tangent through the centre crosses the lot on another line.
+    c = poly.centroid
+    tangent = (math.degrees(math.atan2(c.y, c.x)) + 90.0) % 180.0
+    assert abs(tangent - 90.0) > 10
+    assert center_parallel_width_ft(poly, [tangent]) != pytest.approx(want, abs=0.5)
+
+
+def test_a_bulb_lots_width_is_taken_where_the_lots_actually_are():
+    """The 50 ft lot above, seven and a half million feet east and six
+    hundred and fifty thousand north, where Tualatin is. The circle fit
+    that reads the bulb was exact at the origin and nothing at this scale
+    once; the chord across the arc's ends and the chord through the lot's
+    centre are the same arithmetic on the same coordinates, and have to
+    give the same 50 ft here."""
+    ex, ny = 7_650_000.0, 650_000.0
+    poly, edges = _bulb_lot_between_parallel_sides(50.0, 60, 4, at=(ex, ny))
+    assert bulb_front(edges) == pytest.approx((ex, ny, 50.0), abs=0.1)
+    o = dimensions(poly, edges, [75.0, 105.0], "B", width_measure="center_parallel")
+    assert o is not None and o.width_ft == pytest.approx(50.0, abs=0.01)
 
 
 def test_the_end_of_a_side_lot_line_is_not_a_front_for_lying_near_the_street():
