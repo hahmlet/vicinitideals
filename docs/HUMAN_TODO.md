@@ -5,14 +5,14 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-13, late evening, after the
-alley's width was measured from the parcel map and Wilsonville and West Linn
-joined the alley-fed cities — see the alley entries in the queued list):
-**green 20,204 · review 13,521 · red 256,120** across 289,845 lots in **14** cities
+Pipeline state when last updated (2026-09-17, evening, after a one-row
+parking court was sized to the two-way driving aisle — the entry at the end
+of the built-and-run list):
+**green 20,125 · review 13,508 · red 256,212** across 289,845 lots in **14** cities
 laid out with real site plans (2,636 rows that were streets and water drawn
 as lots are gone from the count). Greens by city: Portland
-16,449 · Gresham 1,757 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
-Troutdale 117 · unincorporated Clackamas 113 · Wood Village 83 · Wilsonville
+16,449 · Gresham 1,715 · Oregon City 732 · Milwaukie 614 · West Linn 285 ·
+Troutdale 117 · unincorporated Clackamas 113 · Wood Village 46 · Wilsonville
 53 · unincorporated Multnomah 1. (The 2026-09-03
 figures the prose below still quotes in places were green 16,530 · review
 12,901 · red 262,540; the difference is the depth and width rules, the
@@ -4043,6 +4043,47 @@ the list of places worth hoping about.
   to zero on the alley edge since 2026-09-12 whichever way the line ran, so
   this brings the code-reading side level with it rather than changing a
   colour. Refusals ledger 270 → 268.*
+
+- **A parking court with one row of cars is sized to the two-way driving
+  aisle now, on the county map as it always was on the paper lot — built
+  and run 2026-09-17, evening. 79 greens gone, 42 in Gresham and 37 in
+  Wood Village, and every one of them was a plan a car could not have
+  used.** Every parking chapter prints two aisle widths: a narrower one
+  for an aisle traffic flows *through* in one direction, and a wider one
+  for an aisle cars use both ways. The court we draw sits behind the
+  building at the end of one side driveway; a car drives in, parks, and
+  leaves the way it came, so the aisle in front of the stalls carries
+  traffic both ways whether there is one row of cars on it or two. The
+  paper lot has charged the two-way width for that reason since it was
+  written. The county drawing charged it for a two-row court but sized a
+  one-row court to the *one-way* figure, and in twelve of the fourteen
+  cities nobody could tell, because they print the same number for both.
+  Gresham prints 23 and 24, a foot apart. Wood Village prints **12 and
+  24**: the county map was drawing courts in Wood Village where a car in a
+  head-in space had twelve feet of pavement to back out into, and calling
+  them green.
+
+  *What it did, both ways.* **Green 20,204 → 20,125, review 13,523 →
+  13,508, red 256,118 → 256,212.** 94 lots changed colour, all of them to
+  red, all in the two cities: Gresham 42 green and 12 review, Wood Village
+  37 green and 3 review. 113 plans were lost outright (59 Gresham, 54 Wood
+  Village; 19 of those were already red for another reason), and not one
+  survived with fewer cars — when the court is a foot too shallow for a
+  row, there is no row. 63 now fail on the court itself and 50 on the
+  driveway beside the building, because with the shallow court gone the
+  next-best attempt on those lots is a pod turned sideways that leaves no
+  room for the lane. **Wood Village lost nearly half its greens (83 →
+  46)**, which is the size of what a 12-foot aisle had been buying. Every
+  lot outside Gresham and Wood Village is byte-for-byte what it was. The
+  before-and-after was measured on the existing drawings before the code
+  was touched (121 plans stood on a court the two-way aisle does not fit),
+  so the run confirmed a count rather than discovering one.
+
+  *What was left alone, on purpose.* Where a lot parks against an alley
+  and backs out into it, the room a car needs is still the city's one-way
+  figure — that was your ruling of 2026-09-13, and an alley is a through
+  lane with two ends, which is exactly the situation a one-way aisle
+  describes. Nothing about those lots moved.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

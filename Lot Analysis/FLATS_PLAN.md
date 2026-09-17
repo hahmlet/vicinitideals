@@ -1128,6 +1128,20 @@ such, bound to the catalog (rear_court / street_only only) by a test, and quadfi
 `lane_ft_for` no longer refuses a city for it. The FOLLOWUPS item that would have added a
 "cannot be drawn" state was dissolved by the reading, 2026-09-17.
 
+**The one-row court is two-way on the county map too (812d41f2, 2026-09-17).** `court_depth`
+has always read `parking_aisle_two_way_ft` and declared the one-way figure excluded ("the
+court is two-way": a car reaches a rear court down one lane and leaves the way it came).
+quadfit's s6s sized a two-row court to `aisle_two` but a one-row court to `aisle_one`, which
+only shows where a city prints two numbers — Gresham 23 / 24 and Wood Village 12 / 24 — and in
+both the county drawing was the shallower. Measured before the change on the s6s parquet:
+121 one-row plans stood on a court the two-way aisle does not fit (65 Gresham, 56 Wood
+Village on 12 ft behind a 90-degree stall). Run: **green 20,204 → 20,125, review 13,523 →
+13,508, red 256,118 → 256,212**, 94 moves all to red (Gresham 42 green + 12 review, Wood
+Village 37 green + 3 review), 113 plans lost and none kept with fewer stalls; Wood Village
+green 83 → 46. Every other city prints one figure for both directions and moved nothing.
+`alley_need` (the back-out room behind a stall on the alley) still defaults to the one-way
+figure — an alley is a through lane, Steph's 2026-09-13 ruling — and is untouched.
+
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,
 but records `width_ft`/`depth_ft` unrotated. `screen._checks` compared `best_depth_ft`

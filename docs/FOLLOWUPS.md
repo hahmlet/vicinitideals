@@ -4,22 +4,20 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **The county drawing sizes a one-row court on the ONE-WAY aisle.**
-   `s6s_siteplan.py` L606-607 takes one row of stalls when the court is at
-   least `stall_d + aisle_one` deep and charges `aisle_one` for it; the
-   paper lot and the screen charge the two-way figure on purpose
-   (`paper.court_depth`: a dead-end court off one side lane is entered and
-   left forward, "the court is two-way", `parking_aisle_one_way_ft` declared
-   excluded). Where the two figures differ the county drawing is the
-   shallower one: Gresham 23 vs 24 (1 ft, the largest population), Wood
-   Village 12 vs 24 (12 ft -- a 12 ft aisle behind 90-degree stalls is not a
-   court a car backs out of). Every other city prints one figure. Decide
-   which product is right (the paper lot's reasoning looks right), make s6s
-   read `aisle_two` for the one-row court, measure the Gresham + Wood Village
-   verdict moves before running (check the binding constraint first), then
-   the county run. Offered 2026-09-17.
-2. **The screen still has no production caller.** `flats/score/screen.py`
+1. **The screen still has no production caller.** `flats/score/screen.py`
    (`screen()`, `fit_for`) is exercised only by tests; the plan page shows
    the paper lot, not the screen's triage. Wiring a caller is the step that
    turns the FLATS screen from a tested module into a product. Offered
    2026-09-17.
+2. **The court search takes the biggest rectangle, not the deepest one that
+   holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
+   the maximum-AREA all-clear rectangle behind the building and then asks
+   whether it is deep enough for a row of stalls (stall + two-way aisle). A
+   wide, shallow rectangle can win that contest on an irregular lot while a
+   narrower rectangle one cell over is deep enough for a row -- a lot refused
+   `court_too_shallow` that has a court. Conservative direction (a lost
+   GREEN, never a false one), so it has waited; the 2026-09-17 aisle run
+   turned 113 plans into `court_too_shallow` / `no_side_lane` and some may be
+   of this kind. Measure first: re-search the failed lots for the deepest
+   rectangle at least `cap x stall_w` wide and count how many would hold a
+   row, before changing the search. Offered 2026-09-17.
