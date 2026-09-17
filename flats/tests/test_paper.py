@@ -209,8 +209,9 @@ def test_the_standards_left_out_are_named_and_why(tmp_path: Path) -> None:
     # Declared for the same reason as the garage below: an unread field with
     # no reason written against it reads exactly like one nobody noticed.
     assert any(x.startswith("parking_aisle_one_way_ft ") for x in got.excluded)
-    # The lane beside the building is two-way for the same reason, and a
-    # ceiling on that lane cannot widen a lot. Both named, neither silent.
+    # The lane beside the building is two-way for the same reason, and the
+    # townhouse "maneuvering area" cap is a condition of a front-parking
+    # option this design never takes. Both named, neither silent.
     assert any(x.startswith("driveway_min_width_one_way_ft ") for x in got.excluded)
     assert any(x.startswith("parking_maneuvering_max_width_ft ") for x in got.excluded)
     # The wall-to-stall standoff WAS on this list until 2026-09-17; it is
@@ -654,6 +655,46 @@ def test_the_garage_setback_is_declared_left_out_not_silently_dropped(
     got = fit(tmp_path)
 
     assert any(s.startswith("setback_garage_entrance_ft ") for s in got.excluded)
+
+
+def test_the_townhouse_lane_ceiling_is_a_condition_of_a_branch_the_pod_does_not_take(
+    tmp_path: Path,
+) -> None:
+    """Milwaukie's 10 ft (19.505.5.F.1.b) is not a ceiling on this lane.
+
+    In all six codes that state it, "outdoor on-site parking and maneuvering
+    areas do not exceed N ft wide on any lot" is one of the conditions a
+    townhouse project must meet to be ALLOWED a front-facade garage, front-yard
+    parking or a driveway in front of a townhouse. A project that does not
+    meet them takes the other branch -- parking accessed on the back facade or
+    in the rear yard, one consolidated driveway not in front of any townhouse
+    -- which is this design exactly, and which states no width. Reading the
+    10 as a cap on the side lane would refuse Milwaukie's townhouse plat for
+    the very plan its code describes. So: stated or not, on four lots or one,
+    the number moves nothing, and the answer says why it was left out."""
+    from flats.designs.model import ParkingConfig, load_catalog
+
+    without = fit(tmp_path, design=SPLIT)
+    capped = fit(tmp_path, design=SPLIT, parking_maneuvering_max_width_ft=10)
+
+    assert capped.lane_ft == without.lane_ft == 12
+    assert (capped.min_width_ft, capped.min_depth_ft, capped.min_area_sqft) == (
+        without.min_width_ft, without.min_depth_ft, without.min_area_sqft
+    )
+    assert capped.complete and capped.certain
+    assert any(
+        x.startswith("parking_maneuvering_max_width_ft ") and "front-parking" in x
+        for x in capped.excluded
+    )
+    # The guard. A tuck_under design puts a garage on the front facade and a
+    # side_drive design parks in the side yard, which the rear branch forbids
+    # -- either is on the front-parking branch, where the cap is real.
+    behind = {ParkingConfig.rear_court, ParkingConfig.street_only}
+    for design in load_catalog():
+        assert design.parking.config in behind, (
+            f"{design.key} parks in front or beside -- parking_maneuvering_max_width_ft "
+            "is no longer excludable, see PaperFit.excluded and court_across"
+        )
 
 
 def test_no_catalog_design_has_a_garage() -> None:

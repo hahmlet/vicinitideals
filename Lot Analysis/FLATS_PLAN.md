@@ -1119,8 +1119,14 @@ end-on because five more feet cost more on the wider broadside lot, and in nine 
 (Oregon City R-5/R-6/R-8, Gresham LDR-7 and OFR, Clackamas VR-4/5 and VR-5/7) the pod's own
 envelope now exceeds the code's minimum lot and is the binding figure. County verdicts did
 not move; the screen's `fit_ft` moved with the paper lot because both read `court_depth`.
-The townhouse-lot lane ceiling (`parking_maneuvering_max_width_ft`) is the last piece of the
-county drawing the paper lot does not carry, declared in `PaperFit.excluded`.
+The "townhouse-lot lane ceiling" (`parking_maneuvering_max_width_ft`, Milwaukie 10 / five
+cities 12) turned out on reading not to be a piece of the drawing at all: in all six codes
+the sentence is a condition of the **front-parking option** (front-facade garage, front-yard
+parking, driveway in front of a townhouse), and a rear court off one consolidated side
+driveway is the other branch, which states no width. Declared in `PaperFit.excluded` as
+such, bound to the catalog (rear_court / street_only only) by a test, and quadfit's
+`lane_ft_for` no longer refuses a city for it. The FOLLOWUPS item that would have added a
+"cannot be drawn" state was dissolved by the reading, 2026-09-17.
 
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,

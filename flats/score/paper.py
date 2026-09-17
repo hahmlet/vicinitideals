@@ -333,10 +333,22 @@ def court_across(design: Design, rules: "ZoneResolution") -> Across:
     forward. The lane runs beside the building, so it is charged with the
     building's width, not with the court's — the court is behind both.
 
-    What this still does not read: ``parking_maneuvering_max_width_ft``, a
-    ceiling on the lane some cities state for townhouse lots. A ceiling below
-    the lane is a site plan nobody can draw, not a wider lot, and the paper
-    fit has no state for "cannot be drawn"; it is declared in ``excluded``.
+    What this does not read, and why: ``parking_maneuvering_max_width_ft``,
+    the 10 or 12 ft six cities state for townhouse lots. Until 2026-09-17 this
+    docstring called it a ceiling on the lane and said a ceiling below the
+    lane was a site plan nobody could draw. It is not a ceiling on this lane.
+    In every one of the six codes the sentence is one of the conditions a
+    townhouse project must meet **to be allowed a garage on the front facade,
+    parking in the front yard or a driveway in front of a townhouse**
+    (Milwaukie 19.505.5.F.1, Gresham 7.0431(B)(3)(a), Fairview 19.30.050(D)(1),
+    Wilsonville 4.113(.14)E.5.b, Oregon City 17.16.040.A, Clackamas
+    845.03(E)(1) -- the state model code's shape). A project that parks in a
+    rear court off one consolidated side driveway is on the other branch
+    (F.2 / (b) / (D)(2) / c. / B / (E)(2)), which asks exactly that of it and
+    states no width. The cap never reaches this design, and reading it as one
+    would have refused Milwaukie's townhouse plat for a plan its code
+    describes. Declared in ``excluded``, bound to the catalog by
+    ``test_the_townhouse_lane_ceiling_is_a_condition_of_a_branch_the_pod_does_not_take``.
     """
     if not design.parking.court_depth_ft or design.parking.config not in _COURT_CONFIGS:
         return Across()
@@ -530,14 +542,17 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 "parking_aisle_one_way_ft (the court is two-way)",
                 # The same reasoning for the lane beside the building.
                 "driveway_min_width_one_way_ft (the lane is two-way)",
-                # A ceiling on the lane, stated by six cities for townhouse
-                # lots only, at 10 or 12 ft. A ceiling cannot widen a lot; a
-                # ceiling below the lane the design draws is a site plan that
-                # cannot be drawn at all, which is a state this answer does
-                # not have. The county pipeline holds it (s6s drops the lane
-                # where the cap is under it); here it is on the record as
-                # unread rather than silently passed.
-                "parking_maneuvering_max_width_ft (a ceiling on the lane, not a width the lot owes)",
+                # The 10 or 12 ft six cities state for townhouse lots is a
+                # condition of the FRONT-parking option -- a garage on the
+                # front facade, parking in the front yard, a driveway in
+                # front of a townhouse -- and this design takes the other
+                # branch: a rear court off one consolidated side driveway,
+                # which is what that branch requires and which it caps at
+                # nothing. See `court_across`. Holds only while every catalog
+                # design parks behind or on the street; a tuck_under or
+                # side_drive design would be on the front branch, and the
+                # test named in `court_across` fails the day one lands.
+                "parking_maneuvering_max_width_ft (a condition of the front-parking option; the pod parks behind)",
             ),
         )
         if best is None or _worse(best, candidate):

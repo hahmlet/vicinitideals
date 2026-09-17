@@ -1455,7 +1455,16 @@ four feet, and four does not lower the five. Nearly every zone moved by exactly
 that five feet; in nine of them (Oregon City, Gresham, unincorporated Clackamas)
 the building's own footprint-plus-parking is now larger than the code's minimum
 lot, so the code's number stopped being the one to argue with. County verdicts
-did not move.
+did not move. *And the day after, the one piece we thought was still missing
+turned out not to be a piece at all:* six cities say a townhouse lot's parking
+and driveway strip may be no more than 10 or 12 feet wide, and we had read that
+as a lid on the side driveway that a car could not get under -- one the
+Milwaukie townhouse plat would have failed. Read in place, every one of the six
+says it only of a project that puts its garage or parking on the front of the
+building; a project that parks behind, off one shared side driveway, which is
+the only kind we draw, is the other option those same sentences describe, and
+that option carries no width at all. Nothing moved anywhere; what changed is
+that a false refusal was taken off the table before it was ever built.
 
 **The false GREEN found on the way in.** Separately, and worse: when a pod fits
 a lot only by turning sideways, the screen was comparing the wrong two numbers.

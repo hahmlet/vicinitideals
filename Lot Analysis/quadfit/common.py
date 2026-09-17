@@ -884,11 +884,16 @@ class DrivewayRules(BaseModel):
     #: only one that takes lots away: a minimum cannot be traded down.
     drive_min_one_way_ft: float | None = None
     drive_min_two_way_ft: float | None = None
-    #: `parking_maneuvering_max_width_ft` -- a CEILING on the same lane. It is
-    #: None on every one-lot row here because the model code states it of
-    #: townhouse lots only; it is carried so the unit-lot branch has somewhere
-    #: to land, and because a 10 ft cap under a 12 ft lane is a city that
-    #: cannot be drawn rather than a city drawn narrow.
+    #: `parking_maneuvering_max_width_ft` -- NOT a ceiling on the same lane,
+    #: though until 2026-09-17 this comment said it was. In every code that
+    #: states it (Milwaukie 10, five cities 12) the sentence is one of the
+    #: conditions a townhouse project meets to be allowed a front-facade
+    #: garage, front-yard parking or a driveway in front of a townhouse; a
+    #: project that parks in a rear court off one consolidated side driveway
+    #: is on the other branch, which states no width. None on every one-lot
+    #: row because the model code states it of townhouse lots only; carried so
+    #: the unit-lot branch has somewhere to land, and read by nothing that
+    #: draws this typology.
     maneuvering_max_ft: float | None = None
     #: `parking_area_max_frontage_pct` / `parking_area_max_width_ft` -- how much
     #: of the street frontage garages and parking may occupy. Satisfied by
@@ -1146,14 +1151,17 @@ class SiteplanSpec(BaseModel):
         """The driveway rules a jurisdiction publishes, or None if unread."""
         return self.driveway.get(jurisdiction)
 
-    def lane_ft_for(self, jurisdiction: str) -> float | None:
-        """Width of the side lane in this city, or None if it cannot be drawn.
+    def lane_ft_for(self, jurisdiction: str) -> float:
+        """Width of the side lane in this city.
 
-        The design lane, widened to any minimum the city states. None where the
-        city caps a maneuvering area BELOW what a car needs — Milwaukie's ten
-        feet on the townhouse path is the live case — because a lane drawn
-        narrower than a car is a site plan nobody can build, and a lane drawn
-        wider than the cap is one nobody can permit.
+        The design lane, widened to any minimum the city states. Until
+        2026-09-17 this returned None where `maneuvering_max_ft` sat under the
+        lane, on the reading that Milwaukie's ten feet on the townhouse path
+        was a ceiling a car could not get under. It is not: that ten is a
+        condition of the front-parking option, and the rear-court drawing this
+        stage makes is on the branch that states no width (see the field's
+        note above). No one-lot row ever carried the cap, so nothing was ever
+        refused by it; the return type says so now.
         """
         lane = self.driveway_lane_design_ft
         dw = self.driveway_for(jurisdiction)
@@ -1161,8 +1169,6 @@ class SiteplanSpec(BaseModel):
             return lane
         if dw.drive_min_two_way_ft is not None:
             lane = max(lane, dw.drive_min_two_way_ft)
-        if dw.maneuvering_max_ft is not None and dw.maneuvering_max_ft < lane:
-            return None
         return lane
 
     def curb_cut_ft_for(self, jurisdiction: str) -> float | None:
@@ -1188,8 +1194,6 @@ class SiteplanSpec(BaseModel):
         the lane already clears the floor.
         """
         lane = self.lane_ft_for(jurisdiction)
-        if lane is None:
-            return None
         dw = self.driveway_for(jurisdiction)
         cut = lane if dw is None or dw.approach_max_ft is None else min(
             lane, dw.approach_max_ft

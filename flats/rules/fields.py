@@ -499,13 +499,17 @@ _F: tuple[FieldDef, ...] = (
     FieldDef(
         "parking_maneuvering_max_width_ft",
         "length_ft",
-        "Widest strip of outdoor parking and maneuvering area the code allows "
-        "on a lot, where the code caps the strip rather than its share of the "
-        "frontage. This is the state model code's townhouse branch and it is "
-        "brutal: Gresham, Fairview, Wilsonville and Oregon City all say 12 "
-        "feet and Milwaukie says 10, which is a driveway and not a court. It "
-        "is normally reached only on unit lots -- the same rule usually "
-        "states a 50-percent-of-frontage allowance for the one-lot case.",
+        "Widest strip of outdoor parking and maneuvering area a townhouse lot "
+        "may carry IF the project puts a garage on the front facade, parking "
+        "in the front yard or a driveway in front of a townhouse. That is the "
+        "state model code's shape and every city here keeps it: the figure is "
+        "one of the conditions of the front-parking option (Gresham, Fairview, "
+        "Wilsonville, Oregon City and Clackamas 12 feet, Milwaukie 10), and a "
+        "project that parks behind off one consolidated driveway is on the "
+        "other branch, which states no width. It reaches a design that parks "
+        "in front and no other; it is not a ceiling on a rear court's lane. "
+        "Normally stated on unit lots only -- the one-lot rule is usually a "
+        "50-percent-of-frontage allowance instead.",
         True,
     ),
     FieldDef(

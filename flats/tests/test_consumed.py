@@ -61,9 +61,10 @@ from flats.rules.fields import FIELDS
 #: the code will not permit is not one the lot must be wide enough for --
 #: Milwaukie's one-per-unit cap narrows the pod's court from 54 ft to 36).
 #: Three by the second: `driveway_min_width_one_way_ft` (the lane is two-way,
-#: as the aisle is), `parking_maneuvering_max_width_ft` (a ceiling on that
-#: lane cannot widen a lot, and a ceiling under it is a plan that cannot be
-#: drawn, a state the paper fit lacks) and `parking_building_buffer_ft` --
+#: as the aisle is), `parking_maneuvering_max_width_ft` (a condition of the
+#: front-parking option on townhouse lots -- ruled 2026-09-17 after a day of
+#: calling it a lane ceiling; the pod parks behind, on the branch that states
+#: no width) and `parking_building_buffer_ft` --
 #: which moved to the first route the same evening, when the court's depth
 #: grew the 5 ft standoff off the rear wall and the buffer became the figure
 #: that can raise it.

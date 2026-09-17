@@ -668,14 +668,18 @@ def test_greshams_curb_cut_is_ten_feet_on_the_plat_this_stage_draws():
     assert sp.lane_ft_for("gresham") == 12.0
 
 
-def test_a_lane_a_city_forbids_is_a_city_that_is_not_laid_out():
-    """A maneuvering cap under a car's width is a refusal, not a narrow drive.
+def test_a_townhouse_maneuvering_cap_does_not_reach_the_rear_court_lane():
+    """Milwaukie's ten feet is a condition of front parking, not a lane ceiling.
 
-    Milwaukie's townhouse path caps outdoor parking and maneuvering areas at
-    ten feet, which is a single-file driveway and not a court. Nothing in the
-    shipped one-lot config hits this, so it is exercised directly: the point is
-    that the generator declines the city rather than drawing a lane two feet
-    narrower than the code allows a car to be.
+    Until 2026-09-17 this test pinned the opposite: a `maneuvering_max_ft`
+    under the lane made the city undrawable. MMC 19.505.5.F.1.b -- and the
+    same sentence in Gresham, Fairview, Wilsonville, Oregon City and Clackamas
+    -- is one of the conditions a townhouse project meets to be ALLOWED a
+    front-facade garage, front-yard parking or a driveway in front of a
+    townhouse. The plan this stage draws (rear court, one consolidated side
+    driveway) is the other branch, F.2, which requires exactly that and caps
+    it at nothing. Nothing in the shipped one-lot config carries the cap, so
+    it is exercised directly: the city is drawn, at the design lane.
     """
     from common import DrivewayRules, StallGeometry, load_footprints
 
@@ -684,9 +688,9 @@ def test_a_lane_a_city_forbids_is_a_city_that_is_not_laid_out():
         stall_width_ft=9, stall_depth_ft=18, aisle_one_way_ft=24, aisle_two_way_ft=24
     )
     sp.driveway["testville"] = DrivewayRules(maneuvering_max_ft=10)
-    assert sp.lane_ft_for("testville") is None
-    assert sp.curb_cut_ft_for("testville") is None
-    assert "testville" not in sp.cities_it_can_dimension()
+    assert sp.lane_ft_for("testville") == sp.driveway_lane_design_ft
+    assert sp.curb_cut_ft_for("testville") == sp.driveway_lane_design_ft
+    assert "testville" in sp.cities_it_can_dimension()
 
 
 def test_the_unit_lot_plat_is_refused_while_the_mirror_is_the_one_lot_branch():
@@ -770,7 +774,7 @@ def test_an_opening_may_be_wider_than_the_lane_behind_it():
 
     for jurisdiction, dw in sp.driveway.items():
         cut = sp.curb_cut_ft_for(jurisdiction)
-        if dw.approach_min_ft is None or sp.lane_ft_for(jurisdiction) is None:
+        if dw.approach_min_ft is None:
             continue
         assert cut is not None, (
             f"{jurisdiction}: a stated approach floor made the city undrawable"
