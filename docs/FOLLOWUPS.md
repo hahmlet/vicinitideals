@@ -4,10 +4,22 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **The screen still has no production caller.** `flats/score/screen.py`
-   (`screen()`, `fit_for`) is exercised only by tests; the plan page shows
-   the paper lot, not the screen's triage. Wiring a caller is the step that
-   turns the FLATS screen from a tested module into a product. Offered
+1. **The screen still has no production caller -- DECISION PENDING
+   (asked 2026-09-17).** `flats/score/screen.py` (`screen()`, `fit_for`) is
+   exercised only by tests. The real gap is data, not code: `flats.lots`,
+   `flats.runs`, `flats.lot_results` are all EMPTY in production (checked
+   2026-09-17); the acquire/normalize/assign ingest is the one unchecked
+   Phase 0 box (`flats/config/pipeline.yaml` lists the sources, nothing
+   downloads them). Three shapes offered: (A) a bridge stage that reads
+   quadfit's per-lot measurements on LXC 137 (s4 width/depth/alley/cul-de-
+   sac, s5o envelope, s6 fits) into `LotFacts` + `Fit` + `configure()`, runs
+   the screen on all 289,845 lots x catalog, writes `flats.lot_results`, and
+   compares against quadfit's triage -- the Phase 0 exit test, fastest, leans
+   on quadfit's measurements; (B) FLATS's own ingest from the county GIS
+   sources into `flats.lots`, its own geometry, then the screen and the web
+   views (Phase 3) -- self-standing, several sessions; (C) a one-lot lookup
+   page (address/TLID -> fetch the parcel -> screen -> verdict with reasons)
+   -- small and visible, no county numbers. Recommended A. Offered
    2026-09-17.
 2. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
