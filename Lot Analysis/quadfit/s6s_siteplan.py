@@ -603,8 +603,18 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             cr, cc, rh, rw = rect
             rr = court_r0 + cr                     # court top row in full grid
             cw_ft, cd_ft = rw * res, rh * res
+            # THE COURT IS TWO-WAY, ONE ROW OR TWO. A car reaches this court
+            # down one side lane and leaves the way it came, so the aisle in
+            # front of the stalls carries traffic both ways whether stalls
+            # stand on one side of it or both. Until 2026-09-17 a one-row
+            # court was sized to the city's ONE-way aisle, which is a figure
+            # for a court with an exit at the far end -- 23 ft in Gresham and
+            # 12 in Wood Village, where a car backing out of a 90-degree
+            # stall into 12 ft of pavement is not a drawing. The paper lot
+            # (`flats.score.paper.court_depth`) had ruled the same way all
+            # along; this is the county drawing agreeing with it.
             rows = (2 if cd_ft >= 2 * stall_d + aisle_two
-                    else 1 if cd_ft >= stall_d + aisle_one else 0)
+                    else 1 if cd_ft >= stall_d + aisle_two else 0)
             n_ct = min(cap, rows * int(cw_ft // stall_w))
             # The alley as the aisle: the stalls that stand on the alley strip
             # and back straight out into it, asked for a stall depth and no
@@ -635,7 +645,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                     lane_len_c = h if w == drive_c else w
                     plan = {
                         "rect": (rr, cc, rh, rw), "stalls": n_ct,
-                        "aisle": aisle_two if rows == 2 else aisle_one,
+                        "aisle": aisle_two,
                         "span_ft": cw_ft, "bld": (name, br, bc, bh, bw, ww * dd),
                         "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
                         "driveway": lane if lane_len_c else None,
@@ -684,7 +694,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             best_stalls = n_ct
             plan = {
                 "rect": (rr, cc, rh, rw), "stalls": n_ct,
-                "aisle": aisle_two if rows == 2 else aisle_one,
+                "aisle": aisle_two,
                 "span_ft": cw_ft, "bld": (name, br, bc, bh, bw, ww * dd),
                 "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
                 "driveway": (0, corridor_c0, rr, drive_c), "driveway_len_c": rr,

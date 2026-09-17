@@ -242,8 +242,8 @@ def test_c_tightening_too_narrow_for_side_lane():
     # 46 ft lot -> a 36 ft envelope, which the 36 ft-wide pod misses by the
     # half-cell the raster leaves at the edge. So the only pod that seats here
     # is the skinny one, 80 ft deep, and what actually stops the plan is the
-    # 39 ft of court left behind it -- 2.5 ft short of one row of stalls and a
-    # one-way aisle. `layout_fail` says so; see the two tests that assert it.
+    # 39 ft of court left behind it -- 3.5 ft short of one row of stalls and a
+    # two-way aisle. `layout_fail` says so; see the two tests that assert it.
     env, fe, area, lot = _rect_lot(46.0, 150.0)
     r = _run(s6s, env, fe, area)
     assert r["site_plan_ok"] is False
@@ -630,8 +630,8 @@ def test_a_lot_two_feet_short_of_a_court_blames_the_court():
     """The same frontage two feet narrower, and a different answer.
 
     At 46 ft the wide pod no longer places at all, so the only attempt left is
-    the 80 ft-deep skinny pod, and the 39 ft behind it is 2.5 ft short of a
-    stall and a one-way aisle. Nothing about the lane is reached or reported.
+    the 80 ft-deep skinny pod, and the 39 ft behind it is 3.5 ft short of a
+    stall and a two-way aisle. Nothing about the lane is reached or reported.
     These two lots differ by two feet of frontage and belong to different
     piles: this one is answered by a shallower parking bay, the other by a
     narrower driveway, and lumping them together hides both.
@@ -641,6 +641,51 @@ def test_a_lot_two_feet_short_of_a_court_blames_the_court():
     r = _run(s6s, env, fe, area)
     assert r["site_plan_ok"] is False
     assert r["layout_fail"] == "court_too_shallow"
+
+
+def test_a_one_row_court_is_sized_to_the_two_way_aisle():
+    """A court reached down one lane is two-way, one row of stalls or two.
+
+    Until 2026-09-17 a one-row court was sized to the city's ONE-way aisle --
+    a figure for a court with an exit at the far end -- while the paper lot
+    (`flats.score.paper.court_depth`) charged the two-way one, on the reading
+    that a car leaves this court the way it came. The two figures differ in
+    Gresham (23 / 24) and Wood Village (12 / 24), and in both the county
+    drawing was the shallower: 121 plans stood on a court a two-way aisle
+    does not fit, 56 of them in Wood Village on 12 ft of pavement behind a
+    90-degree stall. This pins the drawing to the paper lot's reading.
+    """
+    s6s = _sp_setup()
+    # Gresham: 18.5 ft stall. Behind the wide pod on a 109 ft lot the court
+    # is 42 ft -- a row on the one-way figure (41.5), none on the two-way
+    # (42.5). A foot deeper and the row is back, charged at 24. The lot is
+    # 88 ft wide so the skinny pod cannot lie broadside and stop one stage
+    # later for want of a lane; the reason reported is the court's.
+    env, fe, area, lot = _rect_lot(88.0, 109.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is False and r["layout_fail"] == "court_too_shallow"
+    env, fe, area, lot = _rect_lot(88.0, 110.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is True and r["layout_method"] == "townhome_rear_court"
+    minx, miny, maxx, maxy = r["geoms"]["parking_court"].bounds
+    assert maxy - miny < 2 * 18.5 + 24.0                       # one row
+    assert r["parking_area_sqft"] == pytest.approx(
+        r["stalls_provided"] * 8.5 * 18.5 + 24.0 * (maxx - minx))
+    # Wood Village prints 12 ft one-way and 24 two-way against the same
+    # 9 x 19 stall (WVDC Table 350-3, 90 degrees). A 36 ft court held a row
+    # on the 12; it holds none on the 24.
+    s6s._CFG["cells"]["wood_village_like"] = dict(
+        s6s._CFG["cells"]["gresham"], stall_w=9.0, stall_d=19.0,
+        aisle_one=12.0, aisle_two=24.0)
+    env, fe, area, lot = _rect_lot(88.0, 102.0)
+    r = _run(s6s, env, fe, area, jurisdiction="wood_village_like")
+    assert r["site_plan_ok"] is False and r["layout_fail"] == "court_too_shallow"
+    env, fe, area, lot = _rect_lot(88.0, 110.0)
+    r = _run(s6s, env, fe, area, jurisdiction="wood_village_like")
+    assert r["site_plan_ok"] is True
+    minx, miny, maxx, maxy = r["geoms"]["parking_court"].bounds
+    assert r["parking_area_sqft"] == pytest.approx(
+        r["stalls_provided"] * 9.0 * 19.0 + 24.0 * (maxx - minx))
 
 
 def test_the_reason_is_the_furthest_attempt_not_the_last():
