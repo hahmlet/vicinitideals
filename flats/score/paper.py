@@ -66,10 +66,10 @@ class PaperFit:
     #: Front lot line to rear: footprint, front setback, and whichever is
     #: deeper of the rear setback and the parking court behind the building.
     min_depth_ft: float | None = None
-    #: What the parking asks of the lot behind the building — a row of stalls
-    #: and the aisle serving them, the design's own geometry raised by any
-    #: figure the zone states. 0.0 where the design parks nowhere the lot has
-    #: to give depth for.
+    #: What the parking asks of the lot behind the building — the standoff
+    #: off the rear wall, a row of stalls and the aisle serving them, the
+    #: design's own geometry raised by any figure the zone states. 0.0 where
+    #: the design parks nowhere the lot has to give depth for.
     parking_depth_ft: float = 0.0
     #: What that row of stalls asks across the lot: the stalls the design
     #: draws, raised to the zone's legal minimum and cut to its cap, each the
@@ -236,6 +236,12 @@ def court_depth(design: Design, rules: "ZoneResolution") -> tuple[float, tuple[s
     footprint plus its two setbacks, as though six cars parked nowhere. In most
     of Oregon that court is about 42 ft — deeper than the building itself — so
     leaving it out was the largest single overstatement of what a lot can hold.
+    The strip between the rear wall and the first stall is charged too, since
+    2026-09-17: the county drawing has always stood the court 5 ft off the
+    building (``SiteplanSpec.building_parking_gap_ft``), and a court that
+    starts at the wall is 5 ft shallower than any site plan we would draw.
+    Fairview is the one city that states its own buffer, and its 4 ft does
+    not raise the design's 5.
 
     **A missing aisle width is not a missing standard.** Portland, Milwaukie and
     Wilsonville each dimension a parking space for this building and state no
@@ -263,15 +269,19 @@ def court_depth(design: Design, rules: "ZoneResolution") -> tuple[float, tuple[s
     if not court or design.parking.config not in _COURT_CONFIGS:
         return 0.0, ()
     used: list[str] = []
+    gap = design.parking.building_gap_ft
     stall = design.parking.stall_depth_ft
     aisle = design.parking.aisle_ft
+    if (stated := _number(rules, "parking_building_buffer_ft")) is not None:
+        used.append("parking_building_buffer_ft")
+        gap = max(gap, stated)
     if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
         used.append("parking_stall_depth_ft")
         stall = max(stall, stated)
     if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
         used.append("parking_aisle_two_way_ft")
         aisle = max(aisle, stated)
-    return stall + aisle, tuple(used)
+    return gap + stall + aisle, tuple(used)
 
 
 @dataclass(frozen=True, slots=True)
@@ -528,13 +538,6 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # where the cap is under it); here it is on the record as
                 # unread rather than silently passed.
                 "parking_maneuvering_max_width_ft (a ceiling on the lane, not a width the lot owes)",
-                # The standoff between the rear wall and the first stall --
-                # Fairview's 4 ft, and the 5 ft quadfit draws everywhere.
-                # It is depth, and the court's depth here is stall plus aisle
-                # with nothing between the wall and the stall; charging it
-                # would move the FLATS screen's own fit, which reads the same
-                # court. Offered as a follow-up, not slipped in.
-                "parking_building_buffer_ft (a depth the court does not yet carry)",
             ),
         )
         if best is None or _worse(best, candidate):

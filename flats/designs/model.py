@@ -156,19 +156,27 @@ class Parking(BaseModel):
     #: (``SiteplanSpec.driveway_lane_design_ft``); a city's two-way driveway
     #: minimum raises it.
     lane_ft: float = Field(default=12.0, gt=0)
+    #: Clear ground between the building's rear wall and the first stall. A
+    #: car does not park against a wall: there is a walk, a downspout, a door
+    #: that has to open, and quadfit's site-plan generator has always stood
+    #: the court this far off the building whatever the code says
+    #: (``SiteplanSpec.building_parking_gap_ft``). A city's own buffer raises
+    #: it; Fairview's 4 ft does not.
+    building_gap_ft: float = Field(default=5.0, ge=0)
 
     @property
     def court_depth_ft(self) -> float:
         """Depth this parking asks of the lot behind the building.
 
-        A rear court is one row of stalls plus the aisle serving them. Nothing
-        is charged where the design parks under the building, on the street, or
+        A rear court is the standoff off the rear wall, one row of stalls, and
+        the aisle serving them -- 5 + 18 + 24 = 47 ft as drawn. Nothing is
+        charged where the design parks under the building, on the street, or
         not at all. What the court asks *across* the lot is a separate question
         answered by :meth:`court_width_ft` and :attr:`lane_width_ft`.
         """
         if self.config is not ParkingConfig.rear_court or not self.stalls_per_unit:
             return 0.0
-        return self.stall_depth_ft + self.aisle_ft
+        return self.building_gap_ft + self.stall_depth_ft + self.aisle_ft
 
     @property
     def lane_width_ft(self) -> float:

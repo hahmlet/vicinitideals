@@ -415,6 +415,25 @@ def test_a_lot_deep_enough_for_the_building_and_not_its_parking_fails() -> None:
     assert result.triage is Triage.red
 
 
+def test_the_standoff_off_the_rear_wall_is_inside_the_courts_charge() -> None:
+    # The county drawing keeps 5 ft between the rear wall and the first
+    # stall, and until 2026-09-17 this screen seated the stall on the wall:
+    # an envelope with room for the stall and the aisle and not the standoff
+    # holds no court we would draw. Short by the standoff is short.
+    gap = DESIGN.parking.building_gap_ft
+    asked = next(c for c in run(f=fit(), relief=NO_RELIEF).checks if c.check == "fit_ft")
+
+    assert gap == 5.0
+    assert asked.threshold == pytest.approx(36.0 + COURT_FT)
+    assert COURT_FT == gap + DESIGN.parking.stall_depth_ft + DESIGN.parking.aisle_ft
+    assert run(f=fit(over_ft=-gap + 1.0), relief=NO_RELIEF).triage is Triage.red
+    # A city's wider buffer deepens the charge the way its wider aisle does;
+    # a narrower one (Fairview's 4) does not shallow it.
+    assert run(rules(parking_building_buffer_ft=8), f=fit(over_ft=0.0), relief=NO_RELIEF).triage is Triage.red
+    assert run(rules(parking_building_buffer_ft=8), f=fit(over_ft=3.0)).triage is Triage.green
+    assert run(rules(parking_building_buffer_ft=4), f=fit(over_ft=0.0)).triage is Triage.green
+
+
 def test_a_required_rear_yard_is_ground_the_court_can_park_on() -> None:
     # The envelope already has the rear setback taken off it, and every Oregon
     # code read for this lets you park in a rear yard. So the setback and the

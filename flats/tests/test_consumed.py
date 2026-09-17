@@ -63,9 +63,10 @@ from flats.rules.fields import FIELDS
 #: Three by the second: `driveway_min_width_one_way_ft` (the lane is two-way,
 #: as the aisle is), `parking_maneuvering_max_width_ft` (a ceiling on that
 #: lane cannot widen a lot, and a ceiling under it is a plan that cannot be
-#: drawn, a state the paper fit lacks) and `parking_building_buffer_ft` (the
-#: standoff between wall and stall, a depth the court does not carry yet and
-#: one the FLATS screen's fit shares).
+#: drawn, a state the paper fit lacks) and `parking_building_buffer_ft` --
+#: which moved to the first route the same evening, when the court's depth
+#: grew the 5 ft standoff off the rear wall and the buffer became the figure
+#: that can raise it.
 SILENTLY_UNREAD = frozenset(
     {
         "parking_street_setback_ft",
@@ -134,22 +135,23 @@ def test_the_parking_minimum_and_the_maximum_are_both_read(rows):
 
 def test_the_court_is_read_on_both_axes(rows):
     """Depth (stall + aisle) since 2026-09-08, width (stall x count, and the
-    lane beside the building) since 2026-09-17. A court read on one axis was
-    the largest overstatement of what a lot could hold; read on one axis and
-    a half it would be the second-largest."""
+    lane beside the building) since 2026-09-17, and the standoff between the
+    rear wall and the first stall since the same evening. A court read on one
+    axis was the largest overstatement of what a lot could hold; read on one
+    axis and a half it would be the second-largest."""
     by = {r.field: r for r in rows}
     for name in (
         "parking_stall_depth_ft",
         "parking_aisle_two_way_ft",
         "parking_stall_width_ft",
         "driveway_min_width_two_way_ft",
+        "parking_building_buffer_ft",
     ):
         assert by[name].reached, name
         assert "flats/score/paper.py" in by[name].readers, name
     for name in (
         "driveway_min_width_one_way_ft",
         "parking_maneuvering_max_width_ft",
-        "parking_building_buffer_ft",
     ):
         assert not by[name].reached, name
         assert by[name].declared, f"{name} is unread with no reason on the record"

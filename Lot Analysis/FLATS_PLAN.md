@@ -1110,9 +1110,17 @@ when `paper.court_across` and `screen.fit_for` began asking the envelope for
 `max(building + lane, stalls × stall width)` — stalls raised to the zone's minimum and cut
 to its cap, stall width and lane raised by the zone's figures — the rectangle quadfit's s6s
 had always drawn. A `Fit` searched narrower than the zone asks is reported as
-`COURT_WIDTH_UNMEASURED` (UNKNOWN), never scored. The 5 ft wall-to-stall gap and the
-townhouse-lot lane ceiling (`parking_maneuvering_max_width_ft`) are the pieces of the county
-drawing neither answer carries yet; both are declared in `PaperFit.excluded`.
+`COURT_WIDTH_UNMEASURED` (UNKNOWN), never scored. The same evening the court's depth grew
+the **5 ft standoff between the rear wall and the first stall** (`Parking.building_gap_ft`,
+the `SiteplanSpec.building_parking_gap_ft` quadfit had always drawn; `parking_building_buffer_ft`
+raises it, and Fairview's 4 does not): the court is 47.0 / 47.5 / 48.0 ft across 191 / 108 /
+141 zone-plat rows, 296 of 302 costed rows moved (median +5 ft, +330 sq ft), 41 turned
+end-on because five more feet cost more on the wider broadside lot, and in nine zones
+(Oregon City R-5/R-6/R-8, Gresham LDR-7 and OFR, Clackamas VR-4/5 and VR-5/7) the pod's own
+envelope now exceeds the code's minimum lot and is the binding figure. County verdicts did
+not move; the screen's `fit_ft` moved with the paper lot because both read `court_depth`.
+The townhouse-lot lane ceiling (`parking_maneuvering_max_width_ft`) is the last piece of the
+county drawing the paper lot does not carry, declared in `PaperFit.excluded`.
 
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,

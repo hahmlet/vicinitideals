@@ -464,8 +464,14 @@ def _design_card(design: Design, plat: str) -> dict[str, Any]:
         "height": design.height_ft,
         "stalls": design.stalls_required,
         # The design's own court, before any city raises it. Named on the page
-        # because every depth in the table below now carries it.
+        # because every depth in the table below now carries it -- and broken
+        # into its three pieces, because 47 ft is not a number anyone can
+        # check against a car until it reads as 5 off the wall, 18 of stall
+        # and 24 of aisle.
         "court": design.parking.court_depth_ft,
+        "gap": design.parking.building_gap_ft,
+        "stall_depth": design.parking.stall_depth_ft,
+        "aisle": design.parking.aisle_ft,
         "court_width": design.court_width_ft,
         "lane": design.parking.lane_width_ft,
         "typology": design.typology.value,

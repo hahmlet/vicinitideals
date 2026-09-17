@@ -339,10 +339,13 @@ async def test_a_plan_page_says_what_lot_the_building_needs(
     # refuses a fourplex is a fact about the market, not a row to hide.
     assert "Portland" in page.text
     # The depth column carries the parking court as of 2026-09-08, and a
-    # 118 ft answer for a 36 ft building is startling until the page says
-    # where 42 ft of it went. Silently folding it in would read as a bug.
+    # 123 ft answer for a 36 ft building is startling until the page says
+    # where 47 ft of it went. Silently folding it in would read as a bug --
+    # and 47 is itself a number nobody can check against a car until the
+    # header breaks it into the standoff, the stall and the aisle.
     assert "Parking court" in page.text
     assert "ft court" in page.text
+    assert "ft off the wall" in page.text
     # And the width column carries the court across it as of 2026-09-17: a
     # 64 ft answer for the same 36 ft building is the six stalls behind it,
     # or the lane beside it, and the row says which one set it.

@@ -1446,7 +1446,16 @@ said — so the figures above were the optimistic end. *Charged since 2026-09-17
 the paper lot and the screen's fit both ask for the wider of the building with
 its lane beside it and the row of stalls behind it, using each city's own stall
 width, driveway minimum and parking cap. The county pipeline had always drawn
-it that way, so no county verdict moved.
+it that way, so no county verdict moved. *And the same evening, the five feet
+between the back wall and the first parking space:* a car does not park against
+a wall, the county drawing had always kept five feet there, and the paper lot
+had not -- so every court above is five feet deeper than this said (47 feet in
+most of Oregon, not 42). Fairview is the one city that writes its own figure,
+four feet, and four does not lower the five. Nearly every zone moved by exactly
+that five feet; in nine of them (Oregon City, Gresham, unincorporated Clackamas)
+the building's own footprint-plus-parking is now larger than the code's minimum
+lot, so the code's number stopped being the one to argue with. County verdicts
+did not move.
 
 **The false GREEN found on the way in.** Separately, and worse: when a pod fits
 a lot only by turning sideways, the screen was comparing the wrong two numbers.
