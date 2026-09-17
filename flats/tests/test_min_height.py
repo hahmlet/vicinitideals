@@ -99,7 +99,12 @@ def rules(**overrides) -> ZoneResolution:
 
 
 def fit() -> Fit:
-    """Room to spare on everything geometric, so height is the only question."""
+    """Room to spare on everything geometric, so height is the only question.
+
+    Searched as wide as the pod's parking asks across (the building with its
+    lane beside it, since 2026-09-17), or the screen would rightly refuse to
+    take the depth found as evidence.
+    """
     depth_ft = 36.0
     best = depth_ft + DESIGN.parking.court_depth_ft + 4.0
     return Fit(
@@ -108,6 +113,7 @@ def fit() -> Fit:
         depth_ft=depth_ft,
         best_depth_ft=best,
         slack_ft=best - depth_ft,
+        across_ft=max(56.0 + DESIGN.parking.lane_width_ft, DESIGN.court_width_ft),
     )
 
 

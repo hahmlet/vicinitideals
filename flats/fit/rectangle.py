@@ -44,7 +44,17 @@ class Fit:
     slack_ft: float
     angle_deg: float | None = None
     orientation: Orientation | None = None
-    #: The winning rectangle in the lot's own coordinates, when asked for.
+    #: What the envelope was searched for, across, in the winning orientation:
+    #: the design's own side, or wider where the caller charged the drive lane
+    #: beside the building or the parking court behind it (the court sits
+    #: behind both, so it is the wider of building-plus-lane and court, never
+    #: their sum). ``None`` on a fit built without the search -- the screen
+    #: reads that as "the parking's width was never looked for", which is not
+    #: the same as a court of no width.
+    across_ft: float | None = None
+    #: The winning rectangle in the lot's own coordinates, when asked for:
+    #: ``across_ft`` wide and the building deep, so the lane or the court
+    #: shows in it and the depth the court needs behind the building does not.
     placement: BaseGeometry | None = None
 
     @property
@@ -123,18 +133,32 @@ class Fitter:
         *,
         allow_flip: bool = True,
         placement: bool = True,
+        lane_ft: float = 0.0,
+        court_width_ft: float = 0.0,
     ) -> Fit:
-        """Best fit for one rectangle across every angle and orientation."""
+        """Best fit for one rectangle across every angle and orientation.
+
+        ``lane_ft`` and ``court_width_ft`` are what the rectangle's parking
+        asks across the lot: a drive lane down one flank of the building, and
+        a row of stalls behind it. Each orientation is searched at the wider
+        of the building plus its lane and the court -- the court sits behind
+        both, so the lane is never added to it -- and the depth that has to be
+        found stays the building's own. What the court needs *behind* the
+        building is depth, charged by the screen against the rear yard, not
+        here. Both default to zero, which is the bare rectangle.
+        """
         options: list[tuple[Orientation, float, float]] = [
-            (Orientation.width_facing, width_ft, depth_ft)
+            (Orientation.width_facing, max(width_ft + lane_ft, court_width_ft), depth_ft)
         ]
         if allow_flip and width_ft != depth_ft:
-            options.append((Orientation.depth_facing, depth_ft, width_ft))
+            options.append(
+                (Orientation.depth_facing, max(depth_ft + lane_ft, court_width_ft), width_ft)
+            )
 
         best: Fit | None = None
         best_grid: Grid | None = None
-        for orientation, w_ft, d_ft in options:
-            got_ft, grid = self._best(w_ft)
+        for orientation, across_ft, d_ft in options:
+            got_ft, grid = self._best(across_ft)
             slack = got_ft - d_ft
             if best is None or slack > best.slack_ft:
                 best = Fit(
@@ -145,6 +169,7 @@ class Fitter:
                     slack_ft=slack,
                     angle_deg=grid.angle_deg if grid else None,
                     orientation=orientation,
+                    across_ft=across_ft,
                 )
                 best_grid = grid
 
@@ -152,12 +177,9 @@ class Fitter:
         if not (placement and best.fits and best_grid is not None):
             return best
 
-        w_ft, d_ft = (
-            (width_ft, depth_ft)
-            if best.orientation is Orientation.width_facing
-            else (depth_ft, width_ft)
-        )
-        w_cells, d_cells = cells_for(w_ft, self.res), cells_for(d_ft, self.res)
+        assert best.across_ft is not None
+        d_ft = depth_ft if best.orientation is Orientation.width_facing else width_ft
+        w_cells, d_cells = cells_for(best.across_ft, self.res), cells_for(d_ft, self.res)
         hit = best_grid.first_window(d_cells, w_cells)
         if hit is None:
             return best
@@ -170,16 +192,34 @@ class Fitter:
             slack_ft=best.slack_ft,
             angle_deg=best.angle_deg,
             orientation=best.orientation,
+            across_ft=best.across_ft,
             placement=best_grid.to_world(row, col, d_cells, w_cells),
         )
 
-    def fit_design(self, design: Design, *, axis_required: bool = False, placement: bool = True):
-        """Fit one catalog design. ``axis_required`` forbids the flipped orientation."""
+    def fit_design(
+        self,
+        design: Design,
+        *,
+        axis_required: bool = False,
+        placement: bool = True,
+        lane_ft: float | None = None,
+        court_width_ft: float | None = None,
+    ) -> Fit:
+        """Fit one catalog design. ``axis_required`` forbids the flipped orientation.
+
+        The design's own lane and court width are charged unless the caller
+        passes a city's -- ``flats.score.screen.fit_for`` does, from the
+        zone's stall width, driveway minimum and parking cap. A design that
+        parks on the street charges nothing across and this is the bare
+        footprint.
+        """
         return self.fit(
             design.footprint.width_ft,
             design.footprint.depth_ft,
             allow_flip=not axis_required,
             placement=placement,
+            lane_ft=design.parking.lane_width_ft if lane_ft is None else lane_ft,
+            court_width_ft=design.court_width_ft if court_width_ft is None else court_width_ft,
         )
 
     def frontier(self, widths_ft: Sequence[float]) -> tuple[float, ...]:

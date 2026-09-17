@@ -1439,10 +1439,14 @@ own: an 18-foot stall and a 24-foot lane, which is the same figure our site
 plans have always been drawn to. Refusing to answer for those three would have
 been the wrong kind of caution. The pod still has to turn round.
 
-**What is still not charged, and which way it errs.** The court's *width*. Six
+**What was still not charged, and which way it erred.** The court's *width*. Six
 stalls need about 54 feet across, and the driveway reaching them needs its own.
-Both are unmeasured, and both can only make a lot need **more** than this now
-says — so the figures above remain the optimistic end.
+Both were unmeasured, and both can only make a lot need **more** than this
+said — so the figures above were the optimistic end. *Charged since 2026-09-17:*
+the paper lot and the screen's fit both ask for the wider of the building with
+its lane beside it and the row of stalls behind it, using each city's own stall
+width, driveway minimum and parking cap. The county pipeline had always drawn
+it that way, so no county verdict moved.
 
 **The false GREEN found on the way in.** Separately, and worse: when a pod fits
 a lot only by turning sideways, the screen was comparing the wrong two numbers.

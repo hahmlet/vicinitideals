@@ -286,6 +286,77 @@ def test_an_empty_envelope_fits_nothing() -> None:
     assert not f.fit(56, 36).fits
 
 
+# --- what the parking asks across the lot ------------------------------
+#
+# Since 2026-09-17 a search can be asked for more than the building: the
+# drive lane down one flank of it, or the row of stalls behind it. Pure
+# geometry still -- two widths in feet, no zoning -- but it is the width the
+# envelope has to hold, and a lot that holds the building and not its cars
+# holds no pod.
+
+
+def test_a_bare_rectangle_is_the_default() -> None:
+    fit = fitter(LOT).fit(56, 36)
+
+    assert fit.fits
+    assert fit.across_ft == pytest.approx(56.0)
+
+
+def test_the_lane_is_searched_beside_the_building() -> None:
+    # 60 ft of frontage holds a 56 ft building and not the building with a
+    # 12 ft lane beside it. Turned end-on the lane fits (36 + 12) but the 56
+    # ft run does not, so the lot is out.
+    fit = fitter(LOT).fit(56, 36, lane_ft=12)
+
+    assert not fit.fits
+    assert fitter(shapely.box(0, 0, 68, 40)).fit(56, 36, lane_ft=12).fits
+
+
+def test_the_court_is_searched_behind_the_building_never_beside_the_lane() -> None:
+    # The court sits behind both the building and its lane, so the width
+    # asked is the wider of building-plus-lane and court, never their sum:
+    # 68 ft holds a 56 ft building, its 12 ft lane and a 54 ft court, and
+    # 80 is not asked.
+    fit = fitter(shapely.box(0, 0, 68, 40)).fit(56, 36, lane_ft=12, court_width_ft=54)
+
+    assert fit.fits
+    assert fit.across_ft == pytest.approx(68.0)
+
+
+def test_a_court_wider_than_the_building_sets_the_width_end_on() -> None:
+    # End-on the building is 36 and its lane makes 48; a 54 ft court is the
+    # wider figure and the one the envelope has to hold.
+    fit = fitter(shapely.box(0, 0, 55, 60)).fit(56, 36, lane_ft=12, court_width_ft=54)
+
+    assert fit.fits
+    assert fit.orientation is Orientation.depth_facing
+    assert fit.across_ft == pytest.approx(54.0)
+    assert not fitter(shapely.box(0, 0, 53, 60)).fit(56, 36, lane_ft=12, court_width_ft=54).fits
+
+
+def test_the_placement_is_as_wide_as_the_search() -> None:
+    # The rectangle placed is what was looked for: the building with its lane,
+    # at the building's depth. The court's own depth is the screen's business.
+    fit = fitter(shapely.box(0, 0, 70, 40)).fit(56, 36, lane_ft=12)
+
+    assert fit.placement is not None
+    assert fit.placement.area == pytest.approx(68 * 36, rel=1e-6)
+
+
+def test_a_design_carries_its_own_lane_and_court_into_the_search() -> None:
+    # `fit_design` charges what the design draws unless a city's figures are
+    # passed in: the pod's 12 ft lane and six 9 ft stalls. 60 x 40 holds the
+    # bare 56 x 36 and not the pod with its parking.
+    from flats.designs.model import load_catalog
+
+    pod = load_catalog().latest("pod56x36")
+    f = fitter(LOT)
+
+    assert f.fit(56, 36).fits
+    assert not f.fit_design(pod).fits
+    assert f.fit_design(pod, lane_ft=0.0, court_width_ft=0.0).fits
+
+
 # --- reusing the raster across designs --------------------------------
 
 

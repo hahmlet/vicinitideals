@@ -1104,9 +1104,15 @@ is permitted in every Oregon code read for this — so the charge is `max(rear, 
 `paper_fit` and `max(0, court - rear)` on top of the fit threshold in `screen`. A zone
 stating no rear setback pays the whole court. Measured impact: **all 120
 quadplex-permitting zones need 12–42 ft more depth, mean 27, none exempt**
-(court resolves to 42.0 / 42.5 / 43.0 ft across 61 / 32 / 27 zones). What is still uncharged is the
-court's *width* (six stalls ≈ 54 ft across) and the driveway reaching it; both can only
-raise the requirement, so the paper fit remains the optimistic bound.
+(court resolves to 42.0 / 42.5 / 43.0 ft across 61 / 32 / 27 zones). The court's *width*
+(six stalls ≈ 54 ft across) and the lane reaching it were still uncharged until 2026-09-17,
+when `paper.court_across` and `screen.fit_for` began asking the envelope for
+`max(building + lane, stalls × stall width)` — stalls raised to the zone's minimum and cut
+to its cap, stall width and lane raised by the zone's figures — the rectangle quadfit's s6s
+had always drawn. A `Fit` searched narrower than the zone asks is reported as
+`COURT_WIDTH_UNMEASURED` (UNKNOWN), never scored. The 5 ft wall-to-stall gap and the
+townhouse-lot lane ceiling (`parking_maneuvering_max_width_ft`) are the pieces of the county
+drawing neither answer carries yet; both are declared in `PaperFit.excluded`.
 
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,

@@ -21,8 +21,10 @@ import pytest
 
 pytest.importorskip("shapely")
 
+import shapely  # noqa: E402
+
 from flats.designs.model import Orientation, Plat, load_catalog  # noqa: E402
-from flats.fit.rectangle import Fit  # noqa: E402
+from flats.fit.rectangle import Fit, Fitter  # noqa: E402
 from flats.geom.edges import Tier as GeometryTier  # noqa: E402
 from flats.rules.conditions import Tier  # noqa: E402
 from flats.rules.model import Provenance, Status  # noqa: E402
@@ -36,6 +38,7 @@ from flats.score.relief import (  # noqa: E402
 )
 from flats.score.configure import configure  # noqa: E402
 from flats.score.screen import (  # noqa: E402
+    COURT_WIDTH_UNMEASURED,
     FACT_ASSUMED,
     FACT_UNOBSERVED,
     GEOMETRY_UNREADABLE,
@@ -46,6 +49,7 @@ from flats.score.screen import (  # noqa: E402
     LotFacts,
     Triage,
     backlog,
+    fit_for,
     histogram,
     screen,
 )
@@ -130,9 +134,15 @@ def rules(verdict: RuleVerdict = RuleVerdict.trusted, **overrides) -> ZoneResolu
 #: screen charges the part of it a rear setback does not already provide, and
 #: `CLEAR` states no rear setback, so the whole court is charged here.
 COURT_FT = DESIGN.parking.court_depth_ft
+#: And across it, broadside: the building with its lane beside it (56 + 12)
+#: or the six-stall court (54), whichever is wider. `CLEAR` states no stall
+#: width, driveway or cap, so this is the design's own figure. A synthetic
+#: fit has to say it was searched this wide, or the screen -- rightly -- will
+#: not take its depth as evidence.
+ACROSS_FT = max(56.0 + DESIGN.parking.lane_width_ft, DESIGN.court_width_ft)
 
 
-def fit(*, over_ft: float = 4.0, depth_ft: float = 36.0) -> Fit:
+def fit(*, over_ft: float = 4.0, depth_ft: float = 36.0, across_ft: float | None = ACROSS_FT) -> Fit:
     """A synthetic fit, stated as room to spare rather than as a raw depth.
 
     ``over_ft`` is feet of envelope beyond everything the pod needs -- itself
@@ -148,6 +158,7 @@ def fit(*, over_ft: float = 4.0, depth_ft: float = 36.0) -> Fit:
         depth_ft=depth_ft,
         best_depth_ft=best_depth_ft,
         slack_ft=best_depth_ft - depth_ft,
+        across_ft=across_ft,
     )
 
 
@@ -436,6 +447,8 @@ def test_a_pod_that_only_fits_end_on_is_measured_against_the_run_it_needed() -> 
         best_depth_ft=50.0,
         slack_ft=-6.0,
         orientation=Orientation.depth_facing,
+        # End-on the court (54) is wider than the building and its lane (48).
+        across_ft=DESIGN.court_width_ft,
     )
 
     assert end_on.required_ft == pytest.approx(56.0)
@@ -448,6 +461,115 @@ def test_the_slack_reported_is_the_one_the_check_used() -> None:
     result = run(f=fit(over_ft=7.0))
 
     assert result.fit_slack_ft == pytest.approx(7.0)
+
+
+# --- the court across the lot, and the lane that reaches it -----------------
+#
+# Until 2026-09-17 the fit searched the envelope for the building's own width
+# and the screen took whatever depth it found. Six stalls behind a 36 ft end
+# of building are 54 ft across, and a 12 ft lane beside a 56 ft front is 68:
+# the envelope has to hold THAT, and a search for the building alone on a lot
+# too narrow for its cars reads as a fit. The paper lot and the county pipeline
+# both charge it; these pin the screen doing the same, and refusing a fit that
+# did not.
+
+
+def test_a_fit_searched_at_the_building_alone_is_not_evidence() -> None:
+    # A Fit built around the bare footprint never looked for the lane or the
+    # court. The lot may well hold them -- nobody asked -- so this is a hole
+    # in the measurement, reported as one, and never a RED.
+    bare = fit(over_ft=10.0, across_ft=None)
+
+    result = run(f=bare, relief=NO_RELIEF)
+
+    assert result.triage is Triage.unknown
+    assert COURT_WIDTH_UNMEASURED in result.reasons
+    assert "fit_across_ft" in result.unchecked
+
+
+def test_a_fit_searched_at_what_the_zone_asks_is_evidence() -> None:
+    assert run(f=fit(over_ft=10.0, across_ft=ACROSS_FT)).triage is Triage.green
+    # Searched wider than asked is still evidence: a run found at 80 ft
+    # across is a run found at 68.
+    assert run(f=fit(over_ft=10.0, across_ft=80.0)).triage is Triage.green
+
+
+def test_a_city_that_widens_the_court_or_the_lane_stales_a_narrower_search() -> None:
+    # Happy Valley's 20 ft two-way driveway makes the building and its lane 76
+    # broadside; a fit searched at 68 measured a rectangle this zone does not
+    # accept. Same for a stall width that makes the court the wider figure.
+    wide_lane = rules(driveway_min_width_two_way_ft=20)
+    assert run(wide_lane, f=fit(over_ft=10.0)).triage is Triage.unknown
+    assert run(wide_lane, f=fit(over_ft=10.0, across_ft=76.0)).triage is Triage.green
+
+    wide_stalls = rules(parking_stall_width_ft=12)  # 72 ft of court, over the 68
+    assert COURT_WIDTH_UNMEASURED in run(wide_stalls, f=fit(over_ft=10.0)).reasons
+
+
+def test_a_parking_cap_can_narrow_what_the_search_had_to_find() -> None:
+    # Milwaukie caps this building at one stall per unit: four stalls are 36
+    # ft, and end-on the building with its lane (48) is the wider figure. A
+    # fit searched at 48 end-on is enough there, where the uncapped six would
+    # have needed 54.
+    capped = rules(parking_max_per_unit=1)
+    end_on = Fit(
+        fits=True,
+        width_ft=56.0,
+        depth_ft=36.0,
+        best_depth_ft=56.0 + COURT_FT + 4.0,
+        slack_ft=COURT_FT + 4.0,
+        orientation=Orientation.depth_facing,
+        across_ft=48.0,
+    )
+
+    assert run(capped, f=end_on).triage is Triage.green
+    assert COURT_WIDTH_UNMEASURED in run(rules(), f=end_on).reasons
+
+
+def test_fit_for_searches_the_envelope_at_what_the_zone_asks() -> None:
+    # A 50 x 120 envelope holds the 36 ft end of the building with room to
+    # spare and holds neither the 54 ft court behind it nor the 68 ft of
+    # building-and-lane broadside. The bare search says the pod fits; the
+    # one the screen asks for says it does not, and the screen then has a
+    # real miss to score rather than a hole.
+    fitter = Fitter(shapely.box(0, 0, 50, 120), (0.0,), res=1.0)
+
+    bare = fitter.fit(56, 36)
+    asked = fit_for(fitter, DESIGN, rules())
+
+    assert bare.fits and bare.orientation is Orientation.depth_facing
+    assert not asked.fits
+    assert asked.best_depth_ft == 0.0, "nothing that wide anywhere"
+    assert asked.across_ft >= 54.0
+    result = screen(rules(), LOT, DESIGN, asked, policy=POLICY, relief=NO_RELIEF)
+    assert result.triage is Triage.red
+    assert result.head == "fit_ft"
+    assert COURT_WIDTH_UNMEASURED not in result.reasons
+
+
+def test_fit_for_reads_the_citys_figures_not_only_the_designs() -> None:
+    # 55 ft across holds the six-stall court end-on (54) and not the same
+    # court at Gladstone's 9.5 ft stalls (57). The zone's numbers travel into
+    # the search, which is the whole reason `fit_for` exists.
+    fitter = Fitter(shapely.box(0, 0, 55, 120), (0.0,), res=1.0)
+
+    assert fit_for(fitter, DESIGN, rules()).fits
+    wider = fit_for(fitter, DESIGN, rules(parking_stall_width_ft=9.5))
+    assert not wider.fits
+    assert wider.best_depth_ft == 0.0, "57 end-on and 68 broadside; 55 holds neither"
+
+
+def test_a_design_that_parks_on_the_street_is_searched_at_its_footprint() -> None:
+    street = DESIGN.model_copy(
+        update={"parking": DESIGN.parking.model_copy(update={"stalls_per_unit": 0})}
+    )
+    fitter = Fitter(shapely.box(0, 0, 60, 120), (0.0,), res=1.0)
+
+    got = fit_for(fitter, street, rules(parking_min_per_unit=0))
+
+    assert got.fits
+    assert got.across_ft == pytest.approx(56.0)
+    assert got.orientation is Orientation.width_facing
 
 # --- a ceiling counted in storeys instead of feet ---------------------
 

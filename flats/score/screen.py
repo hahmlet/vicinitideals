@@ -47,14 +47,14 @@ import enum
 from dataclasses import dataclass, field as _dc_field
 from typing import Any, Sequence
 
-from flats.designs.model import Design, Plat
-from flats.fit.rectangle import Fit
+from flats.designs.model import Design, Orientation, Plat
+from flats.fit.rectangle import Fit, Fitter
 from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
-from flats.score.paper import court_depth, lot_standard
+from flats.score.paper import court_across, court_depth, lot_standard
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
     ReliefOutcome,
@@ -100,6 +100,12 @@ FACT_UNOBSERVED = "FACT_UNOBSERVED"
 
 #: The zone forbids the use outright and lists no conditional-use path.
 USE_PROHIBITED = "USE_PROHIBITED"
+#: The fit was searched at the building's width alone, and what this zone's
+#: parking asks across the lot -- the lane beside the building, or the row of
+#: stalls behind it -- is wider. Whatever depth that search found is not
+#: evidence the pod fits with its cars, and no verdict may rest on it. Our
+#: backlog: the caller has to search again at the width `fit_for` asks.
+COURT_WIDTH_UNMEASURED = "COURT_WIDTH_UNMEASURED"
 
 #: Checks computed from a proxy that runs in the lot's favour.
 OPTIMISTIC_CHECKS = frozenset({"open_space_pct", "landscaped_pct"})
@@ -330,6 +336,15 @@ def _checks(
             jurisdiction=where,
         )
     )
+    # And across. The court's width and the lane beside the building are
+    # not a second check: they are what the envelope had to be searched FOR,
+    # and `fit_for` asks the search at that width. A fit searched narrower --
+    # a bare footprint, or a court sized by some other zone's stall width --
+    # measured a rectangle this zone does not accept, so the depth it found is
+    # no evidence either way. That is a hole in the measurement, not a miss
+    # on the lot, and it is reported as one rather than scored.
+    if _searched_narrower_than(fit, design, rules):
+        unchecked.append("fit_across_ft")
 
     # Lot area and lot width are the two standards the plat path changes, and
     # they are read through the same helper the paper fit uses. A rule file
@@ -557,6 +572,49 @@ def _unconfirmed(outcomes: Sequence[ReliefOutcome]) -> tuple[str, ...]:
     return (RELIEF_UNCONFIRMED,) if leaning else ()
 
 
+def _searched_narrower_than(fit: Fit, design: Design, rules: ZoneResolution) -> bool:
+    """Whether the fit's search was narrower than this zone's parking asks.
+
+    The width asked is the paper lot's (:func:`flats.score.paper.court_across`):
+    the building in the orientation that won, plus its lane, or the court,
+    whichever is wider. A fit that never recorded a search width
+    (``across_ft`` is None) was built around the bare footprint, and reads as
+    searched at the building's own side.
+    """
+    across = court_across(design, rules)
+    facing = fit.orientation or Orientation.width_facing
+    side = (
+        design.footprint.width_ft
+        if facing is Orientation.width_facing
+        else design.footprint.depth_ft
+    )
+    asked = max(side + across.lane_ft, across.width_ft)
+    searched = side if fit.across_ft is None else fit.across_ft
+    return searched + 1e-9 < asked
+
+
+def fit_for(
+    fitter: Fitter, design: Design, rules: ZoneResolution, *, placement: bool = True
+) -> Fit:
+    """The fit :func:`screen` expects for this design in this zone.
+
+    The envelope is searched at what the zone's parking asks across the lot
+    -- the design's lane and court, raised by the city's driveway minimum and
+    stall width and cut by its parking cap, exactly as the paper lot charges
+    them -- and the flip is forbidden where the code makes the building face
+    the street. A fit built any other way is reported by the screen as
+    ``COURT_WIDTH_UNMEASURED`` wherever it was searched too narrow.
+    """
+    across = court_across(design, rules)
+    return fitter.fit_design(
+        design,
+        axis_required=rules.get("orientation_constraint") == "axis_required",
+        placement=placement,
+        lane_ft=across.lane_ft,
+        court_width_ft=across.width_ft,
+    )
+
+
 def screen(
     rules: ZoneResolution,
     lot: LotFacts,
@@ -655,6 +713,8 @@ def screen(
         reasons.append(NO_FRONTAGE)
     if lot.geometry is GeometryTier.irregular:
         reasons.append(GEOMETRY_UNREADABLE)
+    if "fit_across_ft" in unchecked:
+        reasons.append(COURT_WIDTH_UNMEASURED)
     if any(CHECK_FIELD.get(name, name) in REQUIRED_FIELDS for name in unchecked):
         reasons.append(STANDARD_NOT_ENCODED)
     if unmeasured and FACT_UNOBSERVED not in reasons:
