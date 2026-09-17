@@ -343,6 +343,11 @@ async def test_a_plan_page_says_what_lot_the_building_needs(
     # where 42 ft of it went. Silently folding it in would read as a bug.
     assert "Parking court" in page.text
     assert "ft court" in page.text
+    # And the width column carries the court across it as of 2026-09-17: a
+    # 64 ft answer for the same 36 ft building is the six stalls behind it,
+    # or the lane beside it, and the row says which one set it.
+    assert "ft across" in page.text
+    assert "stalls," in page.text or "ft lane" in page.text
 
 
 async def test_the_plat_path_is_a_control_not_a_second_catalog_entry(

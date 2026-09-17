@@ -29,6 +29,7 @@ built on draft encoding is legible as one rather than mistaken for a verdict.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING
 
@@ -43,6 +44,12 @@ BY_MIN_LOT = "min_lot_sqft"
 BY_COVERAGE = "max_coverage_pct"
 BY_ENVELOPE = "envelope"
 
+#: What sets the width, for the same reason. The building with the lane
+#: beside it, the row of stalls behind it, or a lot-width standard above both.
+ACROSS_BUILDING = "building"
+ACROSS_COURT = "parking_court"
+ACROSS_MIN_WIDTH = "min_lot_width_ft"
+
 
 @dataclass(frozen=True, slots=True)
 class PaperFit:
@@ -51,7 +58,10 @@ class PaperFit:
     design: str
     jurisdiction: str
     zone: str
-    #: Frontage the footprint plus its side setbacks consumes.
+    #: Frontage the envelope plus its side setbacks consumes. The envelope
+    #: across is the footprint with the drive lane beside it, or the row of
+    #: stalls behind it, whichever is wider; a lot-width standard can then
+    #: raise the whole.
     min_width_ft: float | None = None
     #: Front lot line to rear: footprint, front setback, and whichever is
     #: deeper of the rear setback and the parking court behind the building.
@@ -61,6 +71,17 @@ class PaperFit:
     #: figure the zone states. 0.0 where the design parks nowhere the lot has
     #: to give depth for.
     parking_depth_ft: float = 0.0
+    #: What that row of stalls asks across the lot: the stalls the design
+    #: draws, raised to the zone's legal minimum and cut to its cap, each the
+    #: design's stall width or the zone's if wider. 0.0 with no rear court.
+    parking_width_ft: float = 0.0
+    #: The drive lane beside the building that reaches the court, the design's
+    #: figure raised by the zone's two-way driveway minimum. 0.0 with no court.
+    lane_ft: float = 0.0
+    #: How many stalls the court was drawn with, after the zone's floor and cap.
+    stalls: int = 0
+    #: Which of the three set ``min_width_ft`` in the reported orientation.
+    width_binding: str = ""
     #: The binding area floor across every standard that states one.
     min_area_sqft: float | None = None
     #: Which standard set that floor.
@@ -201,8 +222,8 @@ def lot_standard(
 
 #: Parking configurations that put a row of stalls and its drive aisle behind
 #: the building. ``tuck_under`` is inside the footprint and ``street_only``
-#: provides none, so neither asks the lot for depth the footprint does not
-#: already show. ``side_drive`` costs *width* rather than depth; no catalog
+#: provides none, so neither asks the lot for depth or width the footprint
+#: does not already show. ``side_drive`` costs width and no depth; no catalog
 #: design uses it, and charging it is a separate piece of work.
 _COURT_CONFIGS = frozenset({ParkingConfig.rear_court})
 
@@ -229,10 +250,10 @@ def court_depth(design: Design, rules: "ZoneResolution") -> tuple[float, tuple[s
     plan and would be a different typology, so the narrower number is never
     substituted for it.
 
-    What this still does not charge: the court's *width*. Six stalls need about
-    54 ft across, and the side driveway reaching them needs its own — both are
-    width questions, both are unmodelled, and both can only make a lot need
-    more than this says.
+    This is the court's *depth* only. What it asks across the lot — the row
+    of stalls side by side, and the lane down the building's flank that
+    reaches them — is :func:`court_across`, and the two are charged on the two
+    axes they occupy.
 
     Returns ``(depth, from_code)``, where ``from_code`` names the standards the
     zone actually supplied. An empty tuple against a non-zero depth means the
@@ -251,6 +272,87 @@ def court_depth(design: Design, rules: "ZoneResolution") -> tuple[float, tuple[s
         used.append("parking_aisle_two_way_ft")
         aisle = max(aisle, stated)
     return stall + aisle, tuple(used)
+
+
+@dataclass(frozen=True, slots=True)
+class Across:
+    """What a rear court asks of the lot's width, and where the figures came from."""
+
+    #: Stalls the court is drawn with: the design's target, raised to the
+    #: zone's legal minimum, cut to its cap.
+    stalls: int = 0
+    #: Those stalls side by side, each the wider of the design's and the zone's.
+    width_ft: float = 0.0
+    #: The two-way lane beside the building from the street to the court.
+    lane_ft: float = 0.0
+    #: Standards the zone actually supplied. Empty against non-zero figures
+    #: means the numbers are the design's own.
+    from_code: tuple[str, ...] = ()
+
+
+def court_across(design: Design, rules: "ZoneResolution") -> Across:
+    """How much width this design's own parking needs, and where.
+
+    A rear court is one row of stalls side by side behind the building, and a
+    lane down one flank of the building to reach it. Until 2026-09-17 the
+    paper lot charged the court's depth and not its width, and said so in its
+    own docstring: six stalls at 9 ft are 54 ft across, wider than the 36 ft
+    end of the pod in front of them, so every zone where the pod fit end-on
+    was reading about 18 ft narrower than the county pipeline draws it.
+    quadfit's s6s has always placed the stalls by width inside the envelope,
+    so no county verdict rested on the gap; this is the paper answer catching
+    up with the drawing.
+
+    **How many stalls.** The design's target (``stalls_required``), raised to
+    the zone's legal minimum where it states one, then cut to the zone's cap
+    where it states one — a court the code will not permit is not a court the
+    lot has to be wide enough for. Milwaukie caps this building at one stall
+    per unit, so the pod's six become four and the court narrows to 36 ft; a
+    city with no cap (most) draws the six. Fractions round up: half a car
+    still needs a whole cell. A cap below the legal minimum would be a code
+    at war with itself and is not resolved here.
+
+    **How wide each.** The design's stall width, raised by the zone's. Gresham
+    dimensions a stall at 8.5 ft and that does not shrink the court, for the
+    same reason its narrower aisle does not deepen it — the design is drawn to
+    a 9 ft cell and a smaller one is a different drawing.
+
+    **The lane.** The design's 12 ft, raised by the zone's two-way driveway
+    minimum where it states one (Happy Valley 20, Tualatin 22, West Linn 24).
+    The two-way figure, as with the aisle: the court is entered and left
+    forward. The lane runs beside the building, so it is charged with the
+    building's width, not with the court's — the court is behind both.
+
+    What this still does not read: ``parking_maneuvering_max_width_ft``, a
+    ceiling on the lane some cities state for townhouse lots. A ceiling below
+    the lane is a site plan nobody can draw, not a wider lot, and the paper
+    fit has no state for "cannot be drawn"; it is declared in ``excluded``.
+    """
+    if not design.parking.court_depth_ft or design.parking.config not in _COURT_CONFIGS:
+        return Across()
+    used: list[str] = []
+    units = design.units
+    stalls = math.ceil(round(design.stalls_required, 6))
+    if (floor := _number(rules, "parking_min_per_unit")) is not None:
+        used.append("parking_min_per_unit")
+        stalls = max(stalls, math.ceil(round(floor * units, 6)))
+    if (cap := _number(rules, "parking_max_per_unit")) is not None:
+        used.append("parking_max_per_unit")
+        stalls = min(stalls, math.floor(round(cap * units, 6)))
+    stall = design.parking.stall_width_ft
+    if (stated := _number(rules, "parking_stall_width_ft")) is not None:
+        used.append("parking_stall_width_ft")
+        stall = max(stall, stated)
+    lane = design.parking.lane_width_ft
+    if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
+        used.append("driveway_min_width_two_way_ft")
+        lane = max(lane, stated)
+    return Across(
+        stalls=stalls,
+        width_ft=stalls * stall,
+        lane_ft=lane,
+        from_code=tuple(used),
+    )
 
 
 def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
@@ -302,6 +404,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     # 8 ft either side of one would be 16.
     sides = _pair(side, side_total)
     court, court_from_code = court_depth(design, rules)
+    across = court_across(design, rules)
     needed = (
         ("setback_front_ft", front),
         ("setback_rear_ft", rear),
@@ -320,6 +423,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     if side_total is not None:
         used.append("setback_side_total_ft")
     used += list(court_from_code)
+    used += list(across.from_code)
     used += [
         name
         for name, got in (
@@ -337,9 +441,19 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
 
     best: PaperFit | None = None
     for orientation, width_ft, depth_ft in design.oriented(axis_required=axis):
-        needed_width = width_ft + sides if sides is not None else None
-        if needed_width is not None and min_width is not None:
-            needed_width = max(needed_width, min_width)
+        # Across the lot the envelope is the building with its lane beside it,
+        # or the row of stalls behind it, whichever is wider -- the court sits
+        # behind both, so the lane is never added to the court. This is the
+        # rectangle quadfit's site plan draws inside the setbacks, and it is
+        # why the pod end-on is not a 36 ft question: six stalls are 54.
+        building = width_ft + across.lane_ft
+        if across.width_ft > building:
+            envelope_ft, width_binding = across.width_ft, ACROSS_COURT
+        else:
+            envelope_ft, width_binding = building, ACROSS_BUILDING
+        needed_width = envelope_ft + sides if sides is not None else None
+        if needed_width is not None and min_width is not None and min_width > needed_width:
+            needed_width, width_binding = min_width, ACROSS_MIN_WIDTH
         # The court sits between the building's rear wall and the rear lot
         # line, and a required rear yard is land you may drive and park on in
         # every Oregon code read for this — so the two overlap rather than
@@ -372,6 +486,10 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             min_width_ft=needed_width,
             min_depth_ft=needed_depth,
             parking_depth_ft=court,
+            parking_width_ft=across.width_ft,
+            lane_ft=across.lane_ft,
+            stalls=across.stalls,
+            width_binding=width_binding if needed_width is not None else "",
             min_area_sqft=area,
             binding=binding,
             height_ok=_height_ok(design, height, min_height, min_stories),
@@ -400,6 +518,23 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # narrower one-way aisle would understate the court on the
                 # strength of a site plan nobody has drawn.
                 "parking_aisle_one_way_ft (the court is two-way)",
+                # The same reasoning for the lane beside the building.
+                "driveway_min_width_one_way_ft (the lane is two-way)",
+                # A ceiling on the lane, stated by six cities for townhouse
+                # lots only, at 10 or 12 ft. A ceiling cannot widen a lot; a
+                # ceiling below the lane the design draws is a site plan that
+                # cannot be drawn at all, which is a state this answer does
+                # not have. The county pipeline holds it (s6s drops the lane
+                # where the cap is under it); here it is on the record as
+                # unread rather than silently passed.
+                "parking_maneuvering_max_width_ft (a ceiling on the lane, not a width the lot owes)",
+                # The standoff between the rear wall and the first stall --
+                # Fairview's 4 ft, and the 5 ft quadfit draws everywhere.
+                # It is depth, and the court's depth here is stall plus aisle
+                # with nothing between the wall and the stall; charging it
+                # would move the FLATS screen's own fit, which reads the same
+                # court. Offered as a follow-up, not slipped in.
+                "parking_building_buffer_ft (a depth the court does not yet carry)",
             ),
         )
         if best is None or _worse(best, candidate):

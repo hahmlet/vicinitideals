@@ -399,6 +399,13 @@ def _plan_rows(design: Design) -> list[dict[str, Any]]:
                     # it: a 118 ft answer for a 36 ft building is startling
                     # until you can see that 42 ft of it is where the cars go.
                     "court": fit.parking_depth_ft,
+                    # And beside the width, the same courtesy: 64 ft for a
+                    # 36 ft end of building is the six stalls behind it, or
+                    # the lane down its flank, and the row says which.
+                    "court_width": fit.parking_width_ft,
+                    "lane": fit.lane_ft,
+                    "stalls": fit.stalls,
+                    "width_binding": fit.width_binding,
                     "area": fit.min_area_sqft,
                     "binding": fit.binding,
                     "orientation": fit.orientation,
@@ -459,6 +466,8 @@ def _design_card(design: Design, plat: str) -> dict[str, Any]:
         # The design's own court, before any city raises it. Named on the page
         # because every depth in the table below now carries it.
         "court": design.parking.court_depth_ft,
+        "court_width": design.court_width_ft,
+        "lane": design.parking.lane_width_ft,
         "typology": design.typology.value,
         "delivery": design.delivery.method.value,
         "plat": costed.plat.value,

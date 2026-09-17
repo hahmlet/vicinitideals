@@ -24,7 +24,8 @@
     <div><span class="muted">Storeys</span> <strong>{{ design.stories }}</strong></div>
     <div><span class="muted">Height</span> <strong>{{ design.height }} ft</strong></div>
     <div><span class="muted">Stalls provided</span> <strong>{{ design.stalls }}</strong></div>
-    {% if design.court %}<div><span class="muted">Parking court</span> <strong>{{ "{:,.0f}".format(design.court) }} ft deep</strong></div>{% endif %}
+    {% if design.court %}<div><span class="muted">Parking court</span> <strong>{{ "{:,.0f}".format(design.court) }} ft deep · {{ "{:,.0f}".format(design.court_width) }} ft across</strong></div>{% endif %}
+    {% if design.lane %}<div><span class="muted">Drive lane</span> <strong>{{ "{:,.0f}".format(design.lane) }} ft</strong></div>{% endif %}
   </div>
 
   <div class="toolbar" style="gap:8px">
@@ -97,7 +98,13 @@
               <span class="badge badge-red">no</span>
             {% endif %}
           </td>
-          <td class="col-right">{% if row.width %}{{ "{:,.0f}".format(row.width) }} ft{% else %}—{% endif %}</td>
+          <td class="col-right">
+            {% if row.width %}{{ "{:,.0f}".format(row.width) }} ft
+              {%- if row.width_binding == 'parking_court' %}<br><span class="muted" style="font-size:11px">{{ row.stalls }} stalls, {{ "{:,.0f}".format(row.court_width) }} ft across</span>
+              {%- elif row.width_binding == 'building' and row.lane %}<br><span class="muted" style="font-size:11px">incl. {{ "{:,.0f}".format(row.lane) }} ft lane</span>
+              {%- elif row.width_binding == 'min_lot_width_ft' %}<br><span class="muted" style="font-size:11px">minimum lot width</span>{% endif %}
+            {% else %}—{% endif %}
+          </td>
           <td class="col-right">
             {% if row.depth %}{{ "{:,.0f}".format(row.depth) }} ft
               {%- if row.court %}<br><span class="muted" style="font-size:11px">incl. {{ "{:,.0f}".format(row.court) }} ft court</span>{% endif %}

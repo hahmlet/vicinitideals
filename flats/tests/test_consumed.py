@@ -29,11 +29,12 @@ from flats.rules.fields import FIELDS
 #: court is two-way. Declared is not the same as read, and that is the point --
 #: a reason on the record can be argued with, and a silence cannot.
 #:
-#: What is left of the parking-geometry block (widths, driveways, maneuvering)
-#: is still the honest kind: those numbers size the court *across*, and nothing
-#: measures a lot that way yet. `open_space_min_sqft` is the other kind -- it
-#: already holds numbers the 2026-09-07 blind reading found misquoted, and
-#: nobody noticed because nothing reads it.
+#: What is left of the parking-geometry block is the part about a lot's
+#: EDGES -- the approach at the curb, the share of the frontage a court may
+#: take, the setback from the street -- which the paper lot has none of.
+#: `open_space_min_sqft` is the other kind -- it already holds numbers the
+#: 2026-09-07 blind reading found misquoted, and nobody noticed because
+#: nothing reads it.
 #:
 #: Two more left on 2026-09-10, by the first route: `screen.py` now reads
 #: `min_lot_depth_ft` and `max_lot_depth_ratio`. Thirty-eight zones in eight
@@ -52,26 +53,33 @@ from flats.rules.fields import FIELDS
 #: on the footprints row, pinned to this field by `BOOL_MIRRORED`), and no
 #: FLATS screen lays out a driveway yet. Declared unread, not forgotten -- the
 #: screen that takes it is the one that takes the whole driveway block.
+#:
+#: Six left on 2026-09-17, when the paper lot started charging the court's
+#: WIDTH (`paper.court_across`). Three by the first route: `parking_stall_width_ft`
+#: (six stalls side by side), `driveway_min_width_two_way_ft` (the lane down
+#: the building's flank that reaches them) and `parking_max_per_unit` (a court
+#: the code will not permit is not one the lot must be wide enough for --
+#: Milwaukie's one-per-unit cap narrows the pod's court from 54 ft to 36).
+#: Three by the second: `driveway_min_width_one_way_ft` (the lane is two-way,
+#: as the aisle is), `parking_maneuvering_max_width_ft` (a ceiling on that
+#: lane cannot widen a lot, and a ceiling under it is a plan that cannot be
+#: drawn, a state the paper fit lacks) and `parking_building_buffer_ft` (the
+#: standoff between wall and stall, a depth the court does not carry yet and
+#: one the FLATS screen's fit shares).
 SILENTLY_UNREAD = frozenset(
     {
         "parking_street_setback_ft",
         "setback_front_max_ft",
-        "parking_max_per_unit",
         "open_space_min_sqft",
-        "parking_stall_width_ft",
         "driveway_approach_max_width_ft",
         "min_building_separation_ft",
         "parking_front_prohibited",
         "parking_alley_access_required",
         "driveway_approach_min_width_ft",
-        "driveway_min_width_two_way_ft",
-        "parking_maneuvering_max_width_ft",
-        "driveway_min_width_one_way_ft",
         "parking_area_max_frontage_pct",
         "max_building_width_ft",
         "parking_front_yard_max_pct",
         "parking_area_max_width_ft",
-        "parking_building_buffer_ft",
     }
 )
 
@@ -107,16 +115,44 @@ def test_street_side_setback_is_excluded_on_the_record_not_forgotten(rows):
     assert "flats/score/paper.py" in row.declared
 
 
-def test_the_parking_minimum_is_read_and_the_maximum_is_not(rows):
-    """The asymmetry the footnote re-read turned up, pinned.
+def test_the_parking_minimum_and_the_maximum_are_both_read(rows):
+    """The asymmetry the footnote re-read turned up, and its closing.
 
     Milwaukie caps middle housing at 0.5 spaces per unit on an arterial. That
-    is tighter than the 1.0 we hold, and it cannot produce a wrong answer
-    today for the single reason that nothing asks for the ceiling.
+    is tighter than the 1.0 we hold, and from 2026-09-07 to 2026-09-17 it
+    could not produce a wrong answer for the single reason that nothing asked
+    for the ceiling. The paper lot asks now: the cap cuts the stalls the
+    court is drawn with, so a wrong ceiling is a wrong lot width. The screen
+    still reads only the floor, which is the count a lot can fail.
     """
     by = {r.field: r for r in rows}
     assert by["parking_min_per_unit"].reached
-    assert not by["parking_max_per_unit"].reached
+    assert by["parking_max_per_unit"].reached
+    assert "flats/score/paper.py" in by["parking_max_per_unit"].readers
+    assert "flats/score/paper.py" in by["parking_min_per_unit"].readers
+
+
+def test_the_court_is_read_on_both_axes(rows):
+    """Depth (stall + aisle) since 2026-09-08, width (stall x count, and the
+    lane beside the building) since 2026-09-17. A court read on one axis was
+    the largest overstatement of what a lot could hold; read on one axis and
+    a half it would be the second-largest."""
+    by = {r.field: r for r in rows}
+    for name in (
+        "parking_stall_depth_ft",
+        "parking_aisle_two_way_ft",
+        "parking_stall_width_ft",
+        "driveway_min_width_two_way_ft",
+    ):
+        assert by[name].reached, name
+        assert "flats/score/paper.py" in by[name].readers, name
+    for name in (
+        "driveway_min_width_one_way_ft",
+        "parking_maneuvering_max_width_ft",
+        "parking_building_buffer_ft",
+    ):
+        assert not by[name].reached, name
+        assert by[name].declared, f"{name} is unread with no reason on the record"
 
 
 def test_a_field_stated_nowhere_carries_no_weight(rows):

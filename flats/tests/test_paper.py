@@ -17,7 +17,16 @@ import pytest
 from flats.designs.model import Design, Plat
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
-from flats.score.paper import BY_COVERAGE, BY_ENVELOPE, BY_MIN_LOT, _pair, paper_fit
+from flats.score.paper import (
+    ACROSS_BUILDING,
+    ACROSS_COURT,
+    ACROSS_MIN_WIDTH,
+    BY_COVERAGE,
+    BY_ENVELOPE,
+    BY_MIN_LOT,
+    _pair,
+    paper_fit,
+)
 from flats.tests.signing import sign_encoded
 
 pytestmark = pytest.mark.unit
@@ -32,8 +41,11 @@ CITE = (
     "  quote: \"or/multnomah/gresham/9.0100.txt#L2\"\n"
 )
 
-#: Front 20, rear 20, side 5. Broadside the pod wants 66 x 76; end-on 46 x 96,
-#: which is the smaller lot and the one the answer should be about.
+#: Front 20, rear 20, side 5. The pod's six stalls at 9 ft are a 54 ft court,
+#: and its lane is 12 ft. Broadside the envelope is the building plus the
+#: lane (68) and the lot is 78 x 98; end-on the court is wider than the
+#: building plus the lane (48), so the lot is 64 x 118 -- the smaller lot, and
+#: the one the answer should be about.
 BASE: dict[str, object] = {
     "setback_front_ft": 20,
     "setback_rear_ft": 20,
@@ -94,24 +106,25 @@ def fit(root: Path, design: Design = POD, draft: str = "", **fields: object):
 
 def test_the_cheaper_orientation_is_the_one_reported(tmp_path: Path) -> None:
     # Both depths carry the 42 ft rear court, which is deeper than the 20 ft
-    # rear setback and so replaces it: broadside 66 x 98 = 6,468, end-on
-    # 46 x 118 = 5,428. Reporting the first would tell somebody a lot they can
-    # build on is too small.
+    # rear setback and so replaces it; both widths carry the court across or
+    # the lane beside the building, whichever is wider: broadside 78 x 98 =
+    # 7,644, end-on 64 x 118 = 7,552. Reporting the first would tell somebody
+    # a lot they can build on is too small.
     got = fit(tmp_path)
 
-    assert (got.min_width_ft, got.min_depth_ft) == (46, 118)
+    assert (got.min_width_ft, got.min_depth_ft) == (64, 118)
     assert got.orientation == "depth_facing"
-    assert got.min_area_sqft == 5428
+    assert got.min_area_sqft == 7552
     assert got.binding == BY_ENVELOPE
     assert got.complete
 
 
 def test_a_minimum_lot_area_above_the_envelope_is_what_binds(tmp_path: Path) -> None:
-    # The envelope says 4,416 and the code says 7,000. The lot has to clear
+    # The envelope says 7,552 and the code says 9,000. The lot has to clear
     # both, and the page should say which one is the thing to argue with.
-    got = fit(tmp_path, min_lot_sqft=7000)
+    got = fit(tmp_path, min_lot_sqft=9000)
 
-    assert got.min_area_sqft == 7000
+    assert got.min_area_sqft == 9000
     assert got.binding == BY_MIN_LOT
 
 
@@ -125,16 +138,17 @@ def test_a_coverage_cap_states_a_lot_size_without_naming_one(tmp_path: Path) -> 
 
 
 def test_a_lot_width_minimum_widens_a_narrower_envelope(tmp_path: Path) -> None:
-    # End-on, the building plus its side yards is 46 ft. Where the code sets a
-    # 100 ft minimum lot width, 100 is the requirement and 46 is not.
+    # End-on, the court plus its side yards is 64 ft. Where the code sets a
+    # 100 ft minimum lot width, 100 is the requirement and 64 is not.
     assert fit(tmp_path, min_lot_width_ft=100).min_width_ft == 100
 
 
 def test_a_width_minimum_can_flip_which_orientation_is_cheaper(tmp_path: Path) -> None:
-    # A 60 ft minimum buys nothing end-on — that lot still has to be 96 deep,
-    # so 60 x 96 loses to 66 x 76 and the building turns to face the street.
+    # A 70 ft minimum costs nothing broadside — that lot is 78 wide already —
+    # but end-on it lifts 64 to 70, and 70 x 118 loses to 78 x 98, so the
+    # building turns to face the street.
     assert fit(tmp_path).orientation == "depth_facing"
-    assert fit(tmp_path, min_lot_width_ft=60).orientation == "width_facing"
+    assert fit(tmp_path, min_lot_width_ft=70).orientation == "width_facing"
 
 
 # --- what may be used ------------------------------------------------
@@ -146,7 +160,7 @@ def test_a_number_nobody_has_read_yet_is_used_and_named(tmp_path: Path) -> None:
     # draft as a requirement. It is used, and the answer says it rests on it.
     got = fit(tmp_path, draft="setback_side_ft")
 
-    assert got.min_width_ft == 46
+    assert got.min_width_ft == 64
     assert got.unsigned == ("setback_side_ft",)
     assert got.complete, "stated but unread is not missing"
     assert not got.signed
@@ -194,6 +208,12 @@ def test_the_standards_left_out_are_named_and_why(tmp_path: Path) -> None:
     # Declared for the same reason as the garage below: an unread field with
     # no reason written against it reads exactly like one nobody noticed.
     assert any(x.startswith("parking_aisle_one_way_ft ") for x in got.excluded)
+    # The lane beside the building is two-way for the same reason; a ceiling
+    # on that lane cannot widen a lot; and the wall-to-stall standoff is a
+    # depth the court does not carry yet. All three named, none silent.
+    assert any(x.startswith("driveway_min_width_one_way_ft ") for x in got.excluded)
+    assert any(x.startswith("parking_maneuvering_max_width_ft ") for x in got.excluded)
+    assert any(x.startswith("parking_building_buffer_ft ") for x in got.excluded)
 
 
 # --- height ----------------------------------------------------------
@@ -216,12 +236,12 @@ def test_a_two_storey_pod_fails_a_limit_it_exceeds(tmp_path: Path) -> None:
 
 
 def test_four_lots_need_four_of_the_codes_townhouse_minimum(tmp_path: Path) -> None:
-    # The zone says 7,000 for a fourplex and 1,500 for a townhouse lot. Split,
-    # the project needs four of the 1,500s; whole, it needs the 7,000.
-    banded = {"min_lot_sqft": (7000, 1500)}
+    # The zone says 9,000 for a fourplex and 2,000 for a townhouse lot. Split,
+    # the project needs four of the 2,000s; whole, it needs the 9,000.
+    banded = {"min_lot_sqft": (9000, 2000)}
 
-    assert fit(tmp_path, design=SPLIT, **banded).min_area_sqft == 6000
-    assert fit(tmp_path, **banded).min_area_sqft == 7000
+    assert fit(tmp_path, design=SPLIT, **banded).min_area_sqft == 8000
+    assert fit(tmp_path, **banded).min_area_sqft == 9000
 
 
 def test_the_fourplex_minimum_is_not_multiplied_into_a_townhouse_one(tmp_path: Path) -> None:
@@ -233,7 +253,7 @@ def test_the_fourplex_minimum_is_not_multiplied_into_a_townhouse_one(tmp_path: P
     got = fit(tmp_path, design=SPLIT, min_lot_sqft=7000)
 
     assert "min_lot_sqft" in got.unknown
-    assert got.min_area_sqft == 5428, "the envelope still answers"
+    assert got.min_area_sqft == 7552, "the envelope still answers"
     assert not got.complete
 
 
@@ -241,7 +261,7 @@ def test_shared_walls_do_not_multiply_the_side_yards(tmp_path: Path) -> None:
     # Only the two ends of the row see a side yard, whichever way it is
     # platted. Scaling setbacks with the lots would invent six yards.
     assert fit(tmp_path, design=SPLIT).min_depth_ft == fit(tmp_path).min_depth_ft
-    assert fit(tmp_path, design=SPLIT).min_width_ft == 46
+    assert fit(tmp_path, design=SPLIT).min_width_ft == 64
 
 
 def test_the_coverage_cap_does_not_care_how_the_ground_is_divided(tmp_path: Path) -> None:
@@ -278,16 +298,16 @@ def test_the_parent_lots_minimum_governs_a_middle_housing_land_division(
     tmp_path: Path,
 ) -> None:
     # ORS 92.031(2)(b): the plan must comply with the regulations "applicable
-    # to the original lot or parcel". One 7,000 sq ft lot meets the zone and
+    # to the original lot or parcel". One 9,000 sq ft lot meets the zone and
     # the four lots inside it inherit nothing further to meet.
     got = fit(
         tmp_path,
         design=SPLIT,
-        min_lot_sqft=7000,
+        min_lot_sqft=9000,
         land_division_parent_standards=True,
     )
 
-    assert got.min_area_sqft == 7000
+    assert got.min_area_sqft == 9000
     assert got.complete, "the standard is stated; the statute says which one applies"
 
 
@@ -295,12 +315,12 @@ def test_the_parent_lot_rule_is_not_four_parent_lots(tmp_path: Path) -> None:
     # The failure this exists to prevent: reading "the original lot's standard
     # applies" as "and once per resulting lot". A city may not charge four
     # minimum lot sizes for splitting one building.
-    whole = fit(tmp_path, min_lot_sqft=7000)
+    whole = fit(tmp_path, min_lot_sqft=9000)
     split = fit(
-        tmp_path, design=SPLIT, min_lot_sqft=7000, land_division_parent_standards=True
+        tmp_path, design=SPLIT, min_lot_sqft=9000, land_division_parent_standards=True
     )
 
-    assert split.min_area_sqft == whole.min_area_sqft
+    assert split.min_area_sqft == whole.min_area_sqft == 9000
 
 
 def test_a_citys_own_townhouse_row_still_wins(tmp_path: Path) -> None:
@@ -311,11 +331,11 @@ def test_a_citys_own_townhouse_row_still_wins(tmp_path: Path) -> None:
     got = fit(
         tmp_path,
         design=SPLIT,
-        min_lot_sqft=(7000, 1500),
+        min_lot_sqft=(9000, 2000),
         land_division_parent_standards=True,
     )
 
-    assert got.min_area_sqft == 6000
+    assert got.min_area_sqft == 8000
 
 
 def test_without_the_statute_the_split_path_still_admits_it_does_not_know(
@@ -330,9 +350,9 @@ def test_without_the_statute_the_split_path_still_admits_it_does_not_know(
 def test_the_one_lot_path_is_untouched_by_the_statute(tmp_path: Path) -> None:
     # It is a rule about land division. A quadplex on one lot divides nothing,
     # and its answer must not move because the flag is present.
-    assert fit(tmp_path, min_lot_sqft=7000).min_area_sqft == fit(
-        tmp_path, min_lot_sqft=7000, land_division_parent_standards=True
-    ).min_area_sqft
+    assert fit(tmp_path, min_lot_sqft=9000).min_area_sqft == fit(
+        tmp_path, min_lot_sqft=9000, land_division_parent_standards=True
+    ).min_area_sqft == 9000
 
 
 # --- a code that regulates the pair, not either yard ---------------------
@@ -428,6 +448,163 @@ def test_a_design_that_parks_on_the_street_is_charged_no_court(
 
     assert got.parking_depth_ft == 0.0
     assert got.min_depth_ft == 56 + 20 + 20
+    # Nor for anything beside it: no court, no lane to reach one.
+    assert (got.parking_width_ft, got.lane_ft, got.stalls) == (0.0, 0.0, 0)
+    assert got.min_width_ft == 36 + 10
+    assert got.width_binding == ACROSS_BUILDING
+
+
+# --- the parking court, across the lot -----------------------------------
+#
+# Until 2026-09-17 the court was charged for its depth and not its width, and
+# court_depth's own docstring said so: six stalls at 9 ft are 54 ft across,
+# wider than the 36 ft end of the pod in front of them, and the lane down the
+# building's flank that reaches them is 12 ft more beside the building. The
+# county pipeline (quadfit s6s) has always drawn both inside the envelope, so
+# no verdict rested on the gap; these pin the paper answer catching up.
+
+
+def test_the_court_is_charged_across_the_lot(tmp_path: Path) -> None:
+    # End-on the building is 36 ft and its lane makes 48; the six stalls
+    # behind it are 54. The court is the wider, so the lot is 54 plus two
+    # 5 ft side yards, and the answer says the court is what set it.
+    got = fit(tmp_path)
+
+    assert got.stalls == 6
+    assert got.parking_width_ft == 54
+    assert got.lane_ft == 12
+    assert got.min_width_ft == 54 + 10
+    assert got.width_binding == ACROSS_COURT
+
+
+def test_the_lane_is_charged_beside_the_building_not_the_court(tmp_path: Path) -> None:
+    # Turned to face the street by a 70 ft minimum, the building is 56 and its
+    # lane makes 68 -- wider than the court, which sits behind both. The lot
+    # is 68 plus the side yards, and the lane is never added to the 54.
+    got = fit(tmp_path, min_lot_width_ft=70)
+
+    assert got.orientation == "width_facing"
+    assert got.min_width_ft == 56 + 12 + 10
+    assert got.width_binding == ACROSS_BUILDING
+
+
+def test_a_lot_width_minimum_above_both_is_named_as_the_binding_width(
+    tmp_path: Path,
+) -> None:
+    got = fit(tmp_path, min_lot_width_ft=100)
+
+    assert got.min_width_ft == 100
+    assert got.width_binding == ACROSS_MIN_WIDTH
+
+
+def test_a_city_that_asks_for_a_wider_stall_widens_the_court(tmp_path: Path) -> None:
+    # Gladstone prints 9.5 ft. Six of them are 57, so the end-on lot is 67 x
+    # 118 = 7,906 -- now more than 78 x 98 broadside -- and the building turns
+    # to face the street. Six inches of stall moved the whole answer.
+    got = fit(tmp_path, parking_stall_width_ft=9.5)
+
+    assert got.parking_width_ft == 57
+    assert got.orientation == "width_facing"
+    assert got.min_width_ft == 78
+    assert got.min_area_sqft == 7644 > 7552, "wider than the lot at 9 ft, either way round"
+
+
+def test_a_city_that_asks_for_a_narrower_stall_does_not_shrink_the_court(
+    tmp_path: Path,
+) -> None:
+    # Gresham prints 8.5 ft. That is a legal minimum, not a statement that the
+    # pod's six cars fit in 51 ft -- the design's own cell is the floor, as
+    # its own aisle is for the depth.
+    got = fit(tmp_path, parking_stall_width_ft=8.5)
+
+    assert got.parking_width_ft == 54
+    assert got.min_width_ft == 64
+
+
+def test_a_citys_driveway_minimum_widens_the_lane_and_can_take_over(
+    tmp_path: Path,
+) -> None:
+    # Happy Valley's two-way driveway is 20 ft. Beside the 36 ft end of the
+    # pod that is 56 -- now wider than the 54 ft court -- so the lane, not
+    # the court, sets the lot, and the answer says so.
+    got = fit(tmp_path, driveway_min_width_two_way_ft=20)
+
+    assert got.lane_ft == 20
+    assert got.min_width_ft == 36 + 20 + 10
+    assert got.width_binding == ACROSS_BUILDING
+    # A narrower minimum (Portland prints 9) does not narrow the lane.
+    assert fit(tmp_path, driveway_min_width_two_way_ft=9).lane_ft == 12
+
+
+def test_a_parking_cap_narrows_the_court(tmp_path: Path) -> None:
+    # Milwaukie caps this building at one stall per unit. A court the code
+    # will not permit is not one the lot has to be wide enough for: four
+    # stalls are 36 ft, narrower than the building and its lane, so the
+    # building sets the width.
+    got = fit(tmp_path, parking_max_per_unit=1)
+
+    assert got.stalls == 4
+    assert got.parking_width_ft == 36
+    assert got.min_width_ft == 36 + 12 + 10
+    assert got.width_binding == ACROSS_BUILDING
+    # A cap above the design's six changes nothing (West Linn prints 2).
+    assert fit(tmp_path, parking_max_per_unit=2).stalls == 6
+
+
+def test_a_legal_minimum_above_the_design_widens_the_court(tmp_path: Path) -> None:
+    # The design's 1.5 per unit is a marketability target. A code asking two
+    # per unit is asking eight stalls, and the court is 72 ft.
+    got = fit(tmp_path, parking_min_per_unit=2)
+
+    assert got.stalls == 8
+    assert got.parking_width_ft == 72
+    assert got.min_width_ft == 72 + 10
+    # A minimum below the design's target does not lower it.
+    assert fit(tmp_path, parking_min_per_unit=1).stalls == 6
+
+
+def test_a_fraction_of_a_stall_is_a_whole_cell(tmp_path: Path) -> None:
+    # Portland's 1.35 per unit cap is 5.4 stalls on four units, which is five
+    # cars, never five and two-fifths; and a design targeting 1.1 per unit
+    # draws five cells, not 4.4.
+    capped = fit(tmp_path, parking_max_per_unit=1.35)
+    assert capped.stalls == 5
+    assert capped.parking_width_ft == 45
+
+    tight = POD.model_copy(
+        update={"parking": POD.parking.model_copy(update={"stalls_per_unit": 1.1})}
+    )
+    assert fit(tmp_path, design=tight).stalls == 5
+
+
+def test_the_width_standards_are_named_where_the_answer_rests_on_them(
+    tmp_path: Path,
+) -> None:
+    # Every figure read for the width is in `used`, so a draft one surfaces
+    # as unsigned exactly as a draft setback does.
+    for name, value in (
+        ("parking_stall_width_ft", 9.5),
+        ("driveway_min_width_two_way_ft", 20),
+        ("parking_min_per_unit", 1),
+        ("parking_max_per_unit", 2),
+    ):
+        got = fit(tmp_path, draft=name, **{name: value})
+        assert got.unsigned == (name,), name
+        assert got.complete, "stated but unread is not missing"
+
+
+def test_the_court_width_is_the_designs_own_where_the_code_states_nothing(
+    tmp_path: Path,
+) -> None:
+    # Eleven of fourteen layers print a 9 ft stall; none has to for the
+    # answer to exist. The design carries its geometry, and a zone stating no
+    # stall width, lane, floor or cap gets the drawing's figures and is not
+    # reported as an unanswered lot.
+    got = fit(tmp_path)
+
+    assert got.complete
+    assert got.certain
+    assert (got.stalls, got.parking_width_ft, got.lane_ft) == (6, 54, 12)
 
 
 def test_the_garage_setback_is_declared_left_out_not_silently_dropped(

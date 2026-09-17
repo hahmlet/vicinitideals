@@ -25,6 +25,7 @@ and site-plan stages decide whether one lands on a lot.
 from __future__ import annotations
 
 import enum
+import math
 from pathlib import Path
 from typing import Any, Iterable, Iterator
 
@@ -141,9 +142,20 @@ class Parking(BaseModel):
     config: ParkingConfig
     #: Depth of one stall in the court. Raised by a code that asks for more.
     stall_depth_ft: float = Field(default=18.0, gt=0)
+    #: Width of one stall in the court, from the same SUDAS table at 90
+    #: degrees. Raised by a code that asks for more; a code that asks for less
+    #: (Gresham, 8.5) does not shrink it, for the same reason a narrower aisle
+    #: does not — the design is drawn to this and a smaller cell is a
+    #: different drawing.
+    stall_width_ft: float = Field(default=9.0, gt=0)
     #: Width of the drive aisle serving the court, two-way. Raised by a code
     #: that asks for more.
     aisle_ft: float = Field(default=24.0, gt=0)
+    #: Width of the lane running beside the building from the street to the
+    #: rear court, two-way. The figure quadfit's site-plan generator draws
+    #: (``SiteplanSpec.driveway_lane_design_ft``); a city's two-way driveway
+    #: minimum raises it.
+    lane_ft: float = Field(default=12.0, gt=0)
 
     @property
     def court_depth_ft(self) -> float:
@@ -151,11 +163,39 @@ class Parking(BaseModel):
 
         A rear court is one row of stalls plus the aisle serving them. Nothing
         is charged where the design parks under the building, on the street, or
-        not at all — and a side drive costs *width*, which nothing models yet.
+        not at all. What the court asks *across* the lot is a separate question
+        answered by :meth:`court_width_ft` and :attr:`lane_width_ft`.
         """
         if self.config is not ParkingConfig.rear_court or not self.stalls_per_unit:
             return 0.0
         return self.stall_depth_ft + self.aisle_ft
+
+    @property
+    def lane_width_ft(self) -> float:
+        """Width the drive to a rear court takes beside the building.
+
+        The court is behind the building and the street is in front of it, so
+        a lane has to pass down one side, and the lot is that much wider than
+        the footprint. 0.0 for every other configuration: a street-only design
+        drives nowhere, and a tuck-under's drive is inside the footprint. A
+        ``side_drive`` design would charge width here too, and no catalog
+        design uses one.
+        """
+        if self.config is not ParkingConfig.rear_court or not self.stalls_per_unit:
+            return 0.0
+        return self.lane_ft
+
+    def court_width_ft(self, stalls: float) -> float:
+        """Width a rear court of this many stalls takes across the lot.
+
+        One row, side by side, each the stall width: six stalls at 9 ft is 54
+        ft, which is wider than the 36 ft end of the pod that stands in front
+        of it. A fractional count is a stall — half a car still needs a whole
+        cell. 0.0 where the design has no rear court to put them in.
+        """
+        if self.config is not ParkingConfig.rear_court or not self.stalls_per_unit:
+            return 0.0
+        return math.ceil(stalls) * self.stall_width_ft
 
 
 class DeliverySpec(BaseModel):
@@ -247,6 +287,11 @@ class Design(BaseModel):
     def stalls_required(self) -> float:
         """Stalls this design wants. The zone's legal minimum is separate."""
         return self.parking.stalls_per_unit * self.units
+
+    @property
+    def court_width_ft(self) -> float:
+        """Width the design's own stall count takes across a rear court."""
+        return self.parking.court_width_ft(self.stalls_required)
 
     def oriented(
         self, *, axis_required: bool = False
