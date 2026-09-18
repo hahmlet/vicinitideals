@@ -4,25 +4,20 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **Load the county run into production.** The bridge
-   (`flats/ingest/quadfit.py`) has run the whole map twice on 137: six-stall
-   `/root/bridge_county` (before) and four-stall `/root/bridge_county2`
-   (after, 2026-09-18, 25,182 s, `lots.parquet` 579,690 rows = 289,845 lots
-   x `pod56x36@2` / `pod80x25@2`, plus `meta.json`, `summary.md`; the
-   both-ways ruling is at `/root/both_ways_county.txt` and
-   `/root/county_dig2.txt`, numbers in FLATS_PLAN §2 "The county run, and
-   the stall count it settled" and HUMAN_TODO's built-and-run entry: green
-   34,445 -> 42,115, none lost). Next: a one-shot script that writes
-   `flats.runs` (one row: code/rules version, design keys, params from
-   `meta.json`), `flats.lots` (TLID, county, jurisdiction, zone, area, geom
-   + centroid from s4 -- geometry travels 137 -> 114, so the parquet or a
-   GeoPackage moves first) and `flats.lot_results` (lot x design: tier =
-   the screen's verdict, UNKNOWN today; `checks` JSONB carries `if_signed`,
-   reasons, head, fit, stalls charged/seated/band, so the signed colour is
-   queryable without a re-run). Never a direct data edit; the script is
-   idempotent on (tlid, design_key, run_id). Decide before writing: does
-   the app show the verdict or the if-signed colour first (the verdict,
-   with the colour beside it, per the 2026-09-17 data-source ruling).
+1. **A page that shows the loaded results, lot by lot.** The four-stall
+   county run is in production (`flats.runs` id 2, 289,845 lots, 579,690
+   results; loader `scripts/flats_load_bridge.py`, bundle kept at
+   `/root/stacks/vicinitideals/data/flats/bridge/county2` on 114) and
+   nothing in the app reads it. Smallest useful step: `GET /flats/lots`
+   (filter by jurisdiction / zone / colour, count by colour) and
+   `GET /flats/lots/{county}/{tlid}` (outline + centroid, address, zone,
+   facts, each design's verdict with `if_signed` + stalls + binding beside
+   it, quadfit's colour from `facts.quadfit`) -- read-only HTMX, verdict
+   first and the signed colour beside it per the 2026-09-17 ruling. Also
+   owed by the loader: quadfit's carved envelope (s5o `wkb`) is not
+   carried -- needs a geometry column on `flats.lots` (migration) before
+   the page can draw what the screen fitted on. Disk: do not load another
+   county run before HUMAN_TODO 19 or clearing run 2.
 2. **An authoritative offline source for lots (Steph 2026-09-17: "we will
    need an authoritative offline source").** FLATS's own durable, versioned
    copy of the taxlots, streets and zoning it screens -- option (B) refined:

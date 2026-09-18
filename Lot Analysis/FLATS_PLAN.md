@@ -1264,7 +1264,23 @@ more on 239. The band on all 42,115 greens: preferred 20,868, target 12,674, min
 Clackamas 10,328 / 113, unincorporated Multnomah 963 / 1, Troutdale 448 / 117, Gladstone
 438 / 0, Wilsonville 426 / 53, Wood Village 144 / 46, Gresham 62 / 1,715, Oregon City
 0 / 732, Milwaukie 0 / 614, West Linn 0 / 285 — the zeros and Gresham are the unobserved
-site facts, not the court.
+site facts, not the court. **Loaded into production the same evening** by
+`scripts/flats_load_bridge.py` (4eea27d5, 51f84c1c): `export` on 137 joins the run to s4's
+polygon / address / zone, s5o's envelope / slope / sewer / flood and quadfit's own verdict
+and writes a bundle (57 + 15 MB, 2.5 min); `scp` to 114; `load` in the api container COPYs
+it through temp tables and upserts — `flats.runs` id 2 (`code_version` 9b045c40,
+`rules_version` the sha256 of `flats/config/jurisdictions`), `flats.designs` ×2,
+`flats.lots` 289,845 (MultiPolygon 2913, centroid 4326; `county` is the assessor's roll, so
+Portland's Clackamas-County lots are `clackamas`; `jurisdiction` is the layer id;
+`facts` carries tier, frontage, width, depth, bearings, alley, cul-de-sac, the observed
+dict, envelope areas, slope, sewer, flood and `quadfit.{triage, binding_constraint,
+policy_exclusion, parking_tier, stalls_provided, layout_method}`), `flats.lot_results`
+579,690 (`tier` = the screen's word, `unknown` everywhere; `checks` carries `if_signed`,
+reasons, head, failing, fit, stalls, leaning; `binding` head-first). Verified inside the
+transaction against the bundle's counts and again by hand: per-lot best `if_signed` green
+42,115 / yellow 234,152 / unknown 12,944 / red 634. Cost: 1.2 GB after `VACUUM FULL`
+(a dry run leaves dead tuples the size of the load); VM 114 at 85% — HUMAN_TODO 19. The
+carved envelope is not carried (no column); nothing in the app reads these tables yet.
 
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,

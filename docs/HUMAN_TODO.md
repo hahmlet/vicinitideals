@@ -1795,6 +1795,24 @@ changes; the third is a day.
 
 ---
 
+## 19. One chore for you: the app server's disk is 85% full, and the screen's results are what filled it
+
+The app server (the virtual machine the site runs on) has a 40 GB disk.
+Loading the screen's county results into its database on 2026-09-18 used
+about 1.2 GB — the lot outlines and the verdicts for two building designs
+— and took it from 80% to 85% full, with 5.8 GB left. Each further
+county run adds roughly another 0.7 GB unless old runs are cleared out, and
+a disk that fills up stops the site, not just the screen.
+
+**What I'd like you to do:** grow the virtual machine's disk in Proxmox
+(doubling it to 80 GB is plenty for a year of runs), then tell me and I
+will grow the filesystem inside and confirm. Until then I will not load
+another county run without clearing the previous one first. The trade-off
+if you would rather not: I can slim what each verdict stores by about half,
+which is a code change and loses some detail from old runs, or delete each
+run's results when the next one lands — cheaper but nothing to compare
+against.
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
@@ -4297,8 +4315,18 @@ the list of places worth hoping about.
   732, Milwaukie 0 / 614, West Linn 0 / 285 — the zeros and Gresham are
   unmeasured site facts (item 14), not the court. The screen says green on
   21,660 lots the county map calls red (was 17,837) and 7,259 it calls
-  review. Next: these results go into the app's database so they can be
-  seen lot by lot.
+  review.
+
+  *Loaded into the app's database the same evening (2026-09-18).* Every
+  lot (289,845, with its outline, address, zone and the facts the screen
+  read) and every verdict (579,690 — two building designs per lot) now
+  sit in the app's own tables, checked row for row against the run: the
+  colours above come back exactly from the database. The verdict stored
+  is the screen's honest "can't tell yet" on every lot, with the colour
+  it would take once the rules are signed stored beside it, never in its
+  place — the 17 September ruling. Nothing on the site shows them yet; a
+  page that does is the next item on my queue. One cost to know about:
+  the app server's disk went from 80% to 85% full (item 19).
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

@@ -18,7 +18,11 @@ neither has the other's libraries:
   built in PostGIS (``ST_GeomFromWKB`` at SRID 2913, the centroid transformed
   to 4326), so nothing geospatial is needed on the Python side. Run twice, the
   second load changes nothing but ``updated_run_id``. ``--dry-run`` does the
-  whole load in a transaction and rolls it back.
+  whole load in a transaction and rolls it back -- and leaves dead tuples the
+  size of the load behind (the county: 2.4 GB), so after a dry run on a full
+  county follow the real load with ``VACUUM (FULL, ANALYZE)`` on
+  ``flats.lot_results`` and ``flats.lots`` (14 s on 2026-09-18, 3.0 -> 1.8 GB),
+  one statement per ``psql -c``. The county load itself is about a minute.
 
 What lands where:
 
