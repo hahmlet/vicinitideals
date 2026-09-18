@@ -6,7 +6,11 @@
 # 500 sqft unit fitting proves nothing.
 #
 # width_ft is the dimension parallel to the front lot line before rotation.
-version: 1
+# Version 2, 2026-09-18: the parking count became three bands and the screen
+# charges the floor (one per home, a 36 ft row) where version 1 charged the
+# 1.5-per-home target (54 ft). A run under each is a different court and the
+# two are not comparable, which is what the version is for.
+version: 2
 label: "Pod 56 x 36 — 4 x 14 ft units"
 typology: townhome_rear_court
 footprint: {width_ft: 56, depth_ft: 36}
@@ -14,9 +18,14 @@ units: 4
 stories: 2
 height_ft: 26
 parking:
-  # Marketability target, not a legal floor. Gresham LDR-5 requires zero stalls
-  # (CFEC citywide elimination, 9.0802(A)) and sets no maximum.
-  stalls_per_unit: 1.5
+  # Same rule as the county map (Steph, 2026-09-18: "same as the county map.
+  # 4 is enough to sell"). The floor is what the colour charges -- one per
+  # home, the least the pod is built with; the target is what sells; the
+  # preferred is the most drawn, and the seat count reported beside the
+  # colour stops there. None of the three is the law: Gresham LDR-5 requires
+  # zero stalls (CFEC citywide elimination, 9.0802(A)) and sets no maximum;
+  # a zone's own minimum raises the charged count and its cap cuts it.
+  stalls_per_unit: {floor: 1.0, target: 1.5, preferred: 2.0}
   config: rear_court
 delivery:
   method: panelized

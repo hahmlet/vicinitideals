@@ -19,6 +19,7 @@ from flats.designs.model import (
     DesignCatalog,
     DesignStatus,
     Orientation,
+    StallBands,
     Typology,
     load_catalog,
 )
@@ -180,6 +181,62 @@ def test_derived_areas() -> None:
     assert d.stalls_required == 6.0
 
 
+# --- the stall bands ---------------------------------------------------
+#
+# Since 2026-09-18 a design's stalls per unit are the county map's three
+# bands: the floor is what the screen charges, the target is what sells, the
+# preferred is where the seat count reported beside the colour stops. Steph,
+# on the screen's six-stall court: "same as the county map. 4 is enough to
+# sell."
+
+
+def test_a_bare_number_is_one_band() -> None:
+    # Every catalog entry before the bands existed was a single figure, and
+    # it meant "this design parks exactly this many". That reading holds.
+    d = design()
+
+    assert d.parking.stalls_per_unit == StallBands(floor=1.5, target=1.5, preferred=1.5)
+    assert (d.stalls_required, d.stalls_target, d.stalls_preferred) == (6.0, 6.0, 6.0)
+
+
+def test_three_bands_charge_the_floor_and_report_the_rest() -> None:
+    d = design(parking={"stalls_per_unit": {"floor": 1, "target": 1.5, "preferred": 2}, "config": "rear_court"})
+
+    assert d.stalls_required == 4.0, "what the lot is charged for"
+    assert d.stalls_target == 6.0
+    assert d.stalls_preferred == 8.0
+    assert d.court_width_ft == 36.0, "four stalls at 9 ft, the width of the pod's end"
+
+
+def test_the_bands_must_ascend() -> None:
+    with pytest.raises(ValueError, match="ascend"):
+        StallBands(floor=2, target=1.5, preferred=2)
+    with pytest.raises(ValueError, match="ascend"):
+        StallBands(floor=1, target=2, preferred=1.5)
+
+
+def test_a_seat_count_lands_in_the_county_maps_band() -> None:
+    # quadfit's parking_tier names, so the two products' reports read the same.
+    bands = StallBands(floor=1, target=1.5, preferred=2)
+
+    assert [bands.band(n, 4) for n in (4, 5, 6, 7, 8, 9)] == [
+        "minimum", "minimum", "target", "target", "preferred", "preferred"
+    ]
+    with pytest.raises(ValueError, match="below the floor"):
+        bands.band(3, 4)
+
+
+def test_a_design_whose_floor_is_zero_parks_nothing_on_the_lot() -> None:
+    # A target above a zero floor is a wish, not a charge: nothing is asked
+    # of the lot for a car the design would build without.
+    d = design(parking={"stalls_per_unit": {"floor": 0, "target": 1, "preferred": 1}, "config": "rear_court"})
+
+    assert not d.parking.parks
+    assert d.parking.court_depth_ft == 0.0
+    assert d.parking.lane_width_ft == 0.0
+    assert d.court_width_ft == 0.0
+
+
 def test_both_orientations_are_offered() -> None:
     assert design().oriented() == (
         (Orientation.width_facing, 56, 36),
@@ -216,9 +273,20 @@ def test_duplicate_key_in_the_catalog_constructor_is_refused() -> None:
 def test_shipped_catalog_loads() -> None:
     cat = load_catalog()
 
-    assert {d.key for d in cat} == {"pod56x36@1", "pod80x25@1"}
+    assert {d.key for d in cat} == {"pod56x36@2", "pod80x25@2"}
     assert all(d.typology is Typology.townhome_rear_court for d in cat)
     assert all(d.status is DesignStatus.active for d in cat)
+
+
+def test_the_shipped_pods_carry_the_county_maps_three_bands() -> None:
+    # Version 2 of both pods, 2026-09-18: the floor is one stall per home, the
+    # least the product is built with and what the screen charges; six and
+    # eight are the county map's target and preferred, the same three numbers
+    # quadfit's parking_per_unit_min / _target / _preferred have held since
+    # 2026-07-28. Version 1 charged the target and was retired for it.
+    for d in load_catalog():
+        assert d.parking.stalls_per_unit == StallBands(floor=1.0, target=1.5, preferred=2.0), d.key
+        assert d.stalls_required == 4.0, d.key
 
 
 def test_shipped_pods_match_the_quadfit_footprints() -> None:
@@ -226,8 +294,8 @@ def test_shipped_pods_match_the_quadfit_footprints() -> None:
     # results stop being comparable with the runs already on disk.
     cat = load_catalog()
 
-    assert (cat.get("pod56x36@1").footprint.width_ft, cat.get("pod56x36@1").footprint.depth_ft) == (56, 36)
-    assert (cat.get("pod80x25@1").footprint.width_ft, cat.get("pod80x25@1").footprint.depth_ft) == (80, 25)
+    assert (cat.get("pod56x36@2").footprint.width_ft, cat.get("pod56x36@2").footprint.depth_ft) == (56, 36)
+    assert (cat.get("pod80x25@2").footprint.width_ft, cat.get("pod80x25@2").footprint.depth_ft) == (80, 25)
 
 
 def test_unconfirmed_values_are_declared_not_hidden() -> None:

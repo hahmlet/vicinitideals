@@ -43,7 +43,9 @@ numbers were assumed in the lot's favour.
 
 from __future__ import annotations
 
+import dataclasses
 import enum
+import math
 from dataclasses import dataclass, field as _dc_field
 from typing import Any, Sequence
 
@@ -133,6 +135,7 @@ CHECK_FIELD: dict[str, str] = {
     "density_du_per_acre": "max_density_du_per_acre",
     "min_density_du_per_acre": "min_density_du_per_acre",
     "parking_stalls": "parking_min_per_unit",
+    "parking_cap": "parking_max_per_unit",
     "open_space_pct": "open_space_min_pct",
     "landscaped_pct": "min_landscaped_pct",
 }
@@ -197,6 +200,23 @@ class Screening:
     #: counts the parking court and the orientation the pod actually stood in,
     #: not the raw geometry's, which counts neither.
     fit_slack_ft: float | None = None
+    #: Stalls the colour was charged for: the design's floor (one per home),
+    #: raised to the zone's legal minimum, cut to its cap. 0 for a design
+    #: with no court.
+    stalls_charged: int = 0
+    #: How many stalls the lot seats, floor to the design's preferred count
+    #: (or the zone's cap), in one row behind the building at the depth the
+    #: parking needs. The number beside the colour, never inside it -- Steph
+    #: 2026-09-18, *"same as the county map. 4 is enough to sell"*: a lot
+    #: seating four is green on parking, and this says whether it seats
+    #: six or eight. 0 where not even the floor holds; ``None`` where the fit
+    #: was built without looking (:attr:`flats.fit.rectangle.Fit.stalls`).
+    stalls_seated: int | None = None
+    #: Which of the design's bands ``stalls_seated`` lands in -- ``minimum``,
+    #: ``target`` or ``preferred``, the county map's own names -- and
+    #: ``None`` where there is no count to band or the count is under the
+    #: design's floor (a cap cut it, and ``parking_cap`` says so).
+    parking_band: str | None = None
 
     #: The blocker that most explains the outcome — largest proportional
     #: shortfall, not the tightest. This is what the rule-cost ledger counts;
@@ -318,20 +338,13 @@ def _checks(
     #
     # The court sits between the building's rear wall and the rear lot line,
     # and the envelope has already had the rear setback taken off it -- so the
-    # setback is land the court may use, and only the excess is charged. This
-    # is the same overlap `paper_fit` states as `max(rear, court)`; where a
-    # jurisdiction bars parking from a required rear yard the two would stack
-    # instead, which is an unmeasured condition on the human list rather than a
-    # thing assumed away here. A zone stating no rear setback charges the whole
-    # court, which is both conservative and correct: no yard, no shared ground.
-    court, _court_from_code = court_depth(design, rules)
-    rear_held = rules.get("setback_rear_ft")
-    rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
+    # setback is land the court may use, and only the excess is charged
+    # (`_court_beyond_rear`).
     out.append(
         policy.evaluate(
             "fit_ft",
             fit.best_depth_ft,
-            fit.required_ft + max(0.0, court - rear_ft),
+            fit.required_ft + _court_beyond_rear(design, rules),
             is_maximum=False,
             jurisdiction=where,
         )
@@ -508,15 +521,45 @@ def _checks(
             )
         )
 
+    # The stalls the design provides against what the law asks. For a rear
+    # court that is the charged count -- the design's floor raised to this
+    # minimum -- so the only way it fails is a cap below the minimum, a code
+    # at war with itself; the lot's own room for the row is the fit check
+    # above, searched at exactly this width. A design that parks nowhere the
+    # lot has to give room for (under the building, on the street) provides
+    # its floor. Kept as a check so a zone that states a minimum reads as
+    # measured against it, and one that states none reads as the hole it is.
     per_unit = rules.get("parking_min_per_unit")
     if per_unit is None:
         unchecked.append("parking_stalls")
     else:
+        provided = court_across(design, rules).stalls or math.ceil(design.stalls_required)
         out.append(
             policy.evaluate(
                 "parking_stalls",
-                design.stalls_required,
+                float(provided),
                 float(per_unit) * design.units,
+                is_maximum=False,
+                jurisdiction=where,
+            )
+        )
+
+    # And the other way round: a ceiling below the least this product is
+    # built with. Portland's EX permits half a stall per home -- two on a
+    # fourplex -- and a court of two is not this design whatever the lot
+    # holds; the county map refuses the same plan as ``too_few_stalls``.
+    # Read against the design's floor, not the zone's minimum: Portland
+    # states no minimum, so the check above never runs there, and until
+    # 2026-09-18 a lot under that cap screened GREEN on a court the code
+    # will not permit. A design that parks nothing on the lot has no floor
+    # a cap can undercut.
+    cap = rules.get("parking_max_per_unit")
+    if cap is not None and design.parking.parks:
+        out.append(
+            policy.evaluate(
+                "parking_cap",
+                float(math.floor(round(cap * design.units, 6))),
+                float(math.ceil(round(design.stalls_required, 6))),
                 is_maximum=False,
                 jurisdiction=where,
             )
@@ -591,6 +634,67 @@ def _unencoded(field: str, rules: ZoneResolution) -> bool:
     return alternative is None or alternative not in rules.values
 
 
+def _court_beyond_rear(design: Design, rules: ZoneResolution) -> float:
+    """Depth the parking court needs past the rear setback, in feet.
+
+    The court sits between the building's rear wall and the rear lot line,
+    and the envelope has already had the rear setback taken off it -- so the
+    setback is land the court may use, and only the excess is charged. This
+    is the same overlap ``paper_fit`` states as ``max(rear, court)``; where a
+    jurisdiction bars parking from a required rear yard the two would stack
+    instead, which is an unmeasured condition on the human list rather than a
+    thing assumed away here. A zone stating no rear setback charges the whole
+    court, which is both conservative and correct: no yard, no shared ground.
+    """
+    court, _court_from_code = court_depth(design, rules)
+    rear_held = rules.get("setback_rear_ft")
+    rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
+    return max(0.0, court - rear_ft)
+
+
+def seats(
+    fitter: Fitter, design: Design, rules: ZoneResolution, *, axis_required: bool = False
+) -> int | None:
+    """How many stalls the lot seats -- the number beside the colour.
+
+    Counts up from the charged floor to the most the zone lets the design
+    draw (:attr:`flats.score.paper.Across.most`), asking the envelope at
+    each count for a row that wide beside the building, at the depth the
+    building and its court need past the rear yard, in every orientation
+    the zone allows, and keeps the best. Same shape as the county map's
+    ``stalls_provided`` since 2026-07-28: a lot is green at the floor and
+    the count says how much more it holds. Steph, 2026-09-18: *"same as the
+    county map. 4 is enough to sell."*
+
+    Cheap on purpose. A count whose row is no wider than the building and
+    its lane costs nothing -- the floor's search already found that window
+    -- and each wider one is a single yes/no over the grids
+    (:meth:`flats.fit.rectangle.Fitter.holds`), stopping at the first no.
+    The pod's 56 ft side and 12 ft lane are 68 ft across, which seats seven
+    at 9 ft for free; only the eighth is a question.
+
+    Returns 0 where not even the floor holds at that depth, and ``None``
+    for a design with no court to count.
+    """
+    across = court_across(design, rules)
+    if not across.stalls:
+        return None
+    behind = _court_beyond_rear(design, rules)
+    best = 0
+    for _orientation, side, deep in design.oriented(axis_required=axis_required):
+        depth = deep + behind
+        seated = 0
+        held: float | None = None
+        for n in range(across.stalls, across.most + 1):
+            width = max(side + across.lane_ft, n * across.stall_ft)
+            if width != held and not fitter.holds(width, depth):
+                break
+            held = width
+            seated = n
+        best = max(best, seated)
+    return best
+
+
 def _searched_narrower_than(fit: Fit, design: Design, rules: ZoneResolution) -> bool:
     """Whether the fit's search was narrower than this zone's parking asks.
 
@@ -625,12 +729,18 @@ def fit_for(
     ``COURT_WIDTH_UNMEASURED`` wherever it was searched too narrow.
     """
     across = court_across(design, rules)
-    return fitter.fit_design(
+    axis_required = rules.get("orientation_constraint") == "axis_required"
+    fit = fitter.fit_design(
         design,
-        axis_required=rules.get("orientation_constraint") == "axis_required",
+        axis_required=axis_required,
         placement=placement,
         lane_ft=across.lane_ft,
         court_width_ft=across.width_ft,
+    )
+    # And how many more the lot seats, floor to preferred: the number the
+    # screen reports beside the colour (:func:`seats`).
+    return dataclasses.replace(
+        fit, stalls=seats(fitter, design, rules, axis_required=axis_required)
     )
 
 
@@ -660,6 +770,7 @@ def screen(
         return Screening(triage=Triage.unknown, reasons=(GEOMETRY_UNREADABLE,))
 
     where = rules.jurisdiction
+    across = court_across(design, rules)
     checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
@@ -695,6 +806,18 @@ def screen(
         # need and the orientation the pod actually stood in. `fit.slack_ft`
         # knows about neither.
         "fit_slack_ft": next((c.slack for c in checks if c.check == "fit_ft"), fit.slack_ft),
+        "stalls_charged": across.stalls,
+        "stalls_seated": fit.stalls,
+        # A band only from the design's floor up: below it the count is
+        # the charge a cap cut short (parking_cap says so) or a row the
+        # lot does not hold (fit_ft does), and the colour already speaks.
+        "parking_band": (
+            design.parking_band(fit.stalls)
+            if fit.stalls is not None
+            and fit.stalls >= across.stalls > 0
+            and fit.stalls >= design.stalls_required
+            else None
+        ),
         "ask": hardest.tier if hardest else Tier.as_of_right,
         "relief": tuple(outcomes),
     }

@@ -1179,6 +1179,57 @@ Portland lot read `STANDARD_NOT_ENCODED` — uncertifiable on a standard that do
 exist; `_unencoded()` now asks the resolver's question (exempted and `ALTERNATIVES` are
 answers), d8938d15, sample green 112 → 342.
 
+**The county run, and the stall count it settled (2026-09-18).** The full map under the
+six-stall screen — 289,845 lots × 2 designs, 24,949 s on 16 workers, `/root/bridge_county`
+— is the *before* measurement. Of quadfit's 20,125 greens the signed colour is **GREEN
+10,038, YELLOW 7,372, UNKNOWN 2,715, RED 0**; the whole county green 34,445 / yellow
+242,159 / unknown 12,607 / red 634. Every one of the 7,372 yellows heads on `fit_ft`
+(Portland R5 3,723, R2.5 1,776, R7 1,081, Gresham LDR-5 172), and quadfit's own
+`stalls_provided` splits them: **4,977 seat four or five on the county map** (own lane
+1,699, alley 3,278), 375 more park on the alley and seat six-plus, and 2,020 seat
+six-plus off their own lane with the row along the lot (3,653 on the alley in all). The county's 12,607 unknowns once signed are `FACT_UNOBSERVED` 9,749 /
+`GEOMETRY_UNREADABLE` 2,641 / `FACT_ASSUMED` 1,958 / `RULE_AMBIGUOUS` 154 /
+`STANDARD_NOT_ENCODED` 10. GREEN
+where quadfit is red, 17,837: `siteplan_no_layout` 10,068, `z_overlay` 6,164,
+`no_public_sewer` 764, `existing_commercial` 419, `existing_multifamily` 330 — the policy
+gates and the sweep of FOLLOWUPS 4 — and `too_few_stalls` 19, where quadfit's largest
+rectangle seats two or three and the screen's row across the lot held six: the court's
+shape, FOLLOWUPS 4 (a), read the other way. By jurisdiction, FLATS / quadfit greens: Portland
+22,936 / 16,449, unincorporated Clackamas 9,261 / 113, Gresham 52 / 1,715, Oregon City
+0 / 732, Milwaukie 0 / 614, West Linn 0 / 285. Steph's ruling on the count, verbatim:
+*"Same as the county map. 4 is enough to sell."* — HUMAN_TODO 18, and with it item 5
+(one stall per home is marketable; Milwaukie's greens stand). Built the same day: a
+design's `stalls_per_unit` is `StallBands(floor, target, preferred)` — 1 / 1.5 / 2, the
+numbers quadfit's `parking_per_unit_min/_target/_preferred` have held since 2026-07-28,
+and a bare number in a catalog file is one band; both pods are **version 2** for it
+(`pod56x36@2`, `pod80x25@2`; version 1 charged the target). **The floor is what the
+colour charges**: `court_across` counts `stalls_required` (floor × units) raised to the
+zone's `parking_min_per_unit` and cut to its `parking_max_per_unit`, so the pod's row is
+36 ft — the width of its own end — and the 54-ft row that turned 50-ft Portland lots
+sideways is gone; the count now only widens the search where the law asks more than one
+per home (Clackamas MR-1/MR-2 at 1.5 → 54 ft, a 2.0 minimum → 72). **The rest is a
+report.** `screen.seats()` walks the count from the charge to `Across.most` (preferred cut
+to the cap) per allowed orientation, asking `Fitter.holds()` for a row that wide at the
+depth the building and its court need past the rear yard; a row no wider than the
+building and its lane is free (68 ft broadside seats seven), each wider one is one window
+test, and the walk stops at the first refusal. `fit_for` carries it as `Fit.stalls`, and
+`Screening` reports `stalls_charged`, `stalls_seated` and `parking_band` — quadfit's
+`minimum` / `target` / `preferred` — beside the colour, never inside it. The bridge writes
+the three columns and `compare()` crosstabs the band against quadfit's `parking_tier` on
+the lots both call green. **The other way round is a check, not a report.** Portland's
+EX permits 0.5 per home — two stalls on a fourplex — and a court of two is not this
+product; quadfit refuses the plan as `too_few_stalls`, and the screen did not read the
+cap against anything because Portland states no minimum for `parking_stalls` to run on.
+`parking_cap` (field `parking_max_per_unit`) now compares what the cap permits with the
+design's floor; the band is `None` below the floor. No EX lot was green under the
+six-stall screen (993 lots: yellow and unknown), so nothing was lost to it; they now
+answer on the cap. What the change is expected to move,
+before the re-run: the yellows on 54–67-ft envelopes and wherever the flip was refused
+(median `fit_across_ft` on the 7,372 is 68 — the building and its lane — so the court's
+width only bound end-on); the 3,653 alley lots and the 2,020 row-along-the-lot lots are
+FOLLOWUPS 4 (b) and (a), unchanged by this. The re-run is both ways against
+`/root/bridge_county`.
+
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,
 but records `width_ft`/`depth_ft` unrotated. `screen._checks` compared `best_depth_ft`

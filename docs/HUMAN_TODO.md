@@ -549,19 +549,18 @@ Housing Act Design Manual on covered multifamily dwellings. ORS 447.210
 above, all of it from the stored provenance corpus under
 `flats/provenance/docs/or/`.
 
-## 5. Business decision: Milwaukie legally caps parking at 4 stalls — **622 greens**
+## ~~5. Business decision: Milwaukie legally caps parking at 4 stalls~~ — **DECIDED 2026-09-18: one stall per home sells; Milwaukie's greens stand**
 
 Milwaukie's code caps a quadplex at **1 parking space per unit — 4 total**,
 which is exactly the marketability floor. Every legal Milwaukie site plan is a
 minimum-parking plan; the 1.5-per-unit and 2-per-unit tiers are not something
 that city will permit at any lot size.
 
-Decision needed: **is 1 stall per unit marketable for this product?** If not,
-Milwaukie's 622 greens should be deprioritized before any diligence money is
-spent on them. No agent work either way — this is a product call. (Was 845
-until the 2026-09-02 run; 186 of those lots turned out not to fit a legal site
-plan once Milwaukie's side yard was read as a *sloping* height plane rather
-than a flat 5 ft, which is a correctness gain, not a loss.)
+The question was: **is 1 stall per unit marketable for this product?** Your
+answer, given on item 18 the same day and covering this one — *"4 is enough
+to sell"* — is yes. Nothing moves: Milwaukie's 614 greens (622 at the time
+this was written) stay on the buy list, and both products now say the same
+thing about them: green, with "four of four" written beside the colour.
 
 ## 6. Data ask: sewer coverage in Happy Valley, unincorporated Clackamas, Tualatin
 
@@ -1718,7 +1717,22 @@ one to overturn, and it is one line to change.
 
 ---
 
-## 18. One decision: should the new screen insist on room for six cars, or four? — **a fifth to a third of the county map's greens ride on it**
+## ~~18. One decision: should the new screen insist on room for six cars, or four?~~ — **DECIDED 2026-09-18: four, the same as the county map; built the same day**
+
+**Your ruling, verbatim: *"Same as the county map. 4 is enough to sell."***
+That is the second option below, and it is built: the new screen now charges
+one space per home — four, or more only where a city's law asks more — and
+writes beside the colour how many the lot would actually seat, up to eight,
+in the county map's own three words (minimum, target, preferred). Both
+building designs are on a new version for it (the old one insisted on six,
+and results keyed to it are still readable). One thing came out of the
+building that was not on the table: a city whose *cap* is below four —
+Portland's central employment zone allows two spaces for four homes — used
+to slip through as green because Portland has no parking minimum for the
+screen to measure against; it now fails on the cap the way the county map
+refuses those plans. The county-wide re-run against the six-car run is the
+next step, and its numbers land in the built-and-run entry at the end of
+the list.
 
 Found 2026-09-17, the first evening the new screen (FLATS) was run against
 the county map's lots (the built-and-run entry at the end of the list). The
@@ -4214,6 +4228,34 @@ the list of places worth hoping about.
   not setbacks; cutting its own from the codes we encoded is the next
   step. Slope is still assumed flat, and the assumption is named on every
   lot where a rule turns on it.
+
+  *The whole map, run overnight (finished 2026-09-18, seven hours).* Of
+  the county map's 20,125 greens the new screen, once signed, **agrees on
+  10,038, says "needs an exception" on 7,372, "can't tell" on 2,715, and
+  red on none.** Every one of the 7,372 is the parking court, and the
+  county map's own drawings say why: 4,977 of them seat only four or five
+  cars there (1,699 off their own lane, 3,278 against an alley) — the
+  six-car question, item 18, which you answered that day; 375 more park
+  against an alley and seat six or more; and 2,020 seat six or more with
+  the row turned along the lot. The alley and the turned row are on my
+  queue. Across the whole
+  county: green 34,445, exception 242,159, can't tell 12,607, red 634.
+  Green by city, screen / county map: Portland 22,936 / 16,449,
+  unincorporated Clackamas 9,261 / 113, Gresham 52 / 1,715, Oregon City
+  0 / 732, Milwaukie 0 / 614, West Linn 0 / 285, Wilsonville 324 / 53,
+  Troutdale 407 / 117, Gladstone 296 / 0. The screen says green on 17,837
+  lots the county map calls red: 10,068 it could not lay a plan on at the
+  street angle, 6,164 in Portland's constrained-sites overlay, 764 without
+  sewer, 749 already built as shops or apartments — the blanket policies
+  and the every-angle search named above — and 19 where the county map's
+  court seats two or three cars and the screen's row holds six, the
+  court's shape again. The "can't tell"s carry these reasons (a lot can
+  carry more than one): 9,749 wait on a site fact nobody has measured,
+  2,641 have a shape the screen could not read, 1,958 lean on an
+  assumption, 154 sit where the code's own words are ambiguous, and 10 on
+  a standard not yet written down. **These are the
+  before numbers.** The four-car screen you chose is built and the map is
+  being re-run against this one, both ways.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

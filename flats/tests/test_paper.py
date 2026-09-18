@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-from flats.designs.model import Design, Plat
+from flats.designs.model import Design, Plat, StallBands
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
 from flats.score.paper import (
@@ -25,6 +25,7 @@ from flats.score.paper import (
     BY_ENVELOPE,
     BY_MIN_LOT,
     _pair,
+    court_across,
     paper_fit,
 )
 from flats.tests.signing import sign_encoded
@@ -480,7 +481,7 @@ def test_a_design_that_parks_on_the_street_is_charged_no_court(
     # Gresham LDR-5 requires zero stalls. A design that takes that deal asks
     # the lot for nothing behind the building, and the old arithmetic returns.
     street = POD.model_copy(
-        update={"parking": POD.parking.model_copy(update={"stalls_per_unit": 0})}
+        update={"parking": POD.parking.model_copy(update={"stalls_per_unit": StallBands.one(0)})}
     )
     got = fit(tmp_path, design=street)
 
@@ -610,9 +611,44 @@ def test_a_fraction_of_a_stall_is_a_whole_cell(tmp_path: Path) -> None:
     assert capped.parking_width_ft == 45
 
     tight = POD.model_copy(
-        update={"parking": POD.parking.model_copy(update={"stalls_per_unit": 1.1})}
+        update={"parking": POD.parking.model_copy(update={"stalls_per_unit": StallBands.one(1.1)})}
     )
     assert fit(tmp_path, design=tight).stalls == 5
+
+
+def test_a_banded_design_is_charged_its_floor_and_the_rest_is_a_ceiling(
+    tmp_path: Path,
+) -> None:
+    # The shipped pods since 2026-09-18: one stall per home is the least the
+    # product is built with, so four is the row the lot is charged for -- 36
+    # ft, the width of the pod's end, so the building and its lane set the
+    # width. Six is what sells and eight the most drawn; neither is asked of
+    # any lot. `most` is where the screen's seat count stops.
+    banded = POD.model_copy(
+        update={
+            "parking": POD.parking.model_copy(
+                update={"stalls_per_unit": StallBands(floor=1, target=1.5, preferred=2)}
+            )
+        }
+    )
+    got = fit(tmp_path, design=banded)
+
+    assert got.stalls == 4
+    assert got.parking_width_ft == 36
+    assert got.min_width_ft == 36 + 12 + 10
+    assert got.width_binding == ACROSS_BUILDING
+    zone = rules(tmp_path, "", {}).resolve(GRESHAM, "R5", banded.conditions)
+    across = court_across(banded, zone)
+    assert (across.stalls, across.most, across.stall_ft) == (4, 8, 9.0)
+    # The law raises the charge and the cap cuts both the charge and the
+    # ceiling: Milwaukie's one per home leaves nothing to count past four.
+    capped = rules(tmp_path, "", {"parking_max_per_unit": 1}).resolve(GRESHAM, "R5", banded.conditions)
+    assert (court_across(banded, capped).stalls, court_across(banded, capped).most) == (4, 4)
+    raised = rules(tmp_path, "", {"parking_min_per_unit": 1.5}).resolve(GRESHAM, "R5", banded.conditions)
+    assert (court_across(banded, raised).stalls, court_across(banded, raised).most) == (6, 8)
+    # Portland's 1.35 cap: five cells, and the ceiling is the same five.
+    portland = rules(tmp_path, "", {"parking_max_per_unit": 1.35}).resolve(GRESHAM, "R5", banded.conditions)
+    assert (court_across(banded, portland).stalls, court_across(banded, portland).most) == (4, 5)
 
 
 def test_the_width_standards_are_named_where_the_answer_rests_on_them(

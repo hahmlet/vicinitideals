@@ -71,8 +71,8 @@ class PaperFit:
     #: design's own geometry raised by any figure the zone states. 0.0 where
     #: the design parks nowhere the lot has to give depth for.
     parking_depth_ft: float = 0.0
-    #: What that row of stalls asks across the lot: the stalls the design
-    #: draws, raised to the zone's legal minimum and cut to its cap, each the
+    #: What that row of stalls asks across the lot: the design's floor,
+    #: raised to the zone's legal minimum and cut to its cap, each the
     #: design's stall width or the zone's if wider. 0.0 with no rear court.
     parking_width_ft: float = 0.0
     #: The drive lane beside the building that reaches the court, the design's
@@ -288,13 +288,19 @@ def court_depth(design: Design, rules: "ZoneResolution") -> tuple[float, tuple[s
 class Across:
     """What a rear court asks of the lot's width, and where the figures came from."""
 
-    #: Stalls the court is drawn with: the design's target, raised to the
+    #: Stalls the court is charged at: the design's floor, raised to the
     #: zone's legal minimum, cut to its cap.
     stalls: int = 0
     #: Those stalls side by side, each the wider of the design's and the zone's.
     width_ft: float = 0.0
     #: The two-way lane beside the building from the street to the court.
     lane_ft: float = 0.0
+    #: One stall's width in this zone -- what one more seat costs across.
+    stall_ft: float = 0.0
+    #: The most stalls this zone lets the design draw: its preferred count,
+    #: cut to the cap. Where the seat count reported beside the colour
+    #: stops; never what a lot is charged for.
+    most: int = 0
     #: Standards the zone actually supplied. Empty against non-zero figures
     #: means the numbers are the design's own.
     from_code: tuple[str, ...] = ()
@@ -313,14 +319,21 @@ def court_across(design: Design, rules: "ZoneResolution") -> Across:
     so no county verdict rested on the gap; this is the paper answer catching
     up with the drawing.
 
-    **How many stalls.** The design's target (``stalls_required``), raised to
-    the zone's legal minimum where it states one, then cut to the zone's cap
-    where it states one — a court the code will not permit is not a court the
-    lot has to be wide enough for. Milwaukie caps this building at one stall
-    per unit, so the pod's six become four and the court narrows to 36 ft; a
-    city with no cap (most) draws the six. Fractions round up: half a car
-    still needs a whole cell. A cap below the legal minimum would be a code
-    at war with itself and is not resolved here.
+    **How many stalls.** The design's floor (``stalls_required`` -- one per
+    home, the least the pod is built with), raised to the zone's legal
+    minimum where it states one, then cut to the zone's cap where it states
+    one — a court the code will not permit is not a court the lot has to be
+    wide enough for. Fractions round up: half a car still needs a whole cell.
+    A cap below the legal minimum would be a code at war with itself and is
+    not resolved here. Until 2026-09-18 the count charged was the design's
+    1.5-per-home *target* -- six stalls, a 54 ft row wider than the pod's
+    36 ft end -- and 4,977 of the county map's 20,125 greens seated four or
+    five and could never have been green here whatever the drawing did.
+    Steph's ruling that day, *"same as the county map. 4 is enough to
+    sell"*, made the floor the charge and the rest a report: ``most`` is the
+    preferred count cut to the same cap, and the screen counts how many of
+    them the lot seats and says so beside the colour
+    (:attr:`flats.score.screen.Screening.stalls_seated`).
 
     **How wide each.** The design's stall width, raised by the zone's. Gresham
     dimensions a stall at 8.5 ft and that does not shrink the court, for the
@@ -355,12 +368,15 @@ def court_across(design: Design, rules: "ZoneResolution") -> Across:
     used: list[str] = []
     units = design.units
     stalls = math.ceil(round(design.stalls_required, 6))
+    most = math.ceil(round(design.stalls_preferred, 6))
     if (floor := _number(rules, "parking_min_per_unit")) is not None:
         used.append("parking_min_per_unit")
         stalls = max(stalls, math.ceil(round(floor * units, 6)))
     if (cap := _number(rules, "parking_max_per_unit")) is not None:
         used.append("parking_max_per_unit")
         stalls = min(stalls, math.floor(round(cap * units, 6)))
+        most = min(most, math.floor(round(cap * units, 6)))
+    most = max(most, stalls)
     stall = design.parking.stall_width_ft
     if (stated := _number(rules, "parking_stall_width_ft")) is not None:
         used.append("parking_stall_width_ft")
@@ -373,6 +389,8 @@ def court_across(design: Design, rules: "ZoneResolution") -> Across:
         stalls=stalls,
         width_ft=stalls * stall,
         lane_ft=lane,
+        stall_ft=stall,
+        most=most,
         from_code=tuple(used),
     )
 

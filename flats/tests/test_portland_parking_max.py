@@ -9,7 +9,10 @@ allows is not a legal placement however neatly it fits.
 
 The number that matters is 1.35 per unit, which is five stalls for a fourplex
 and not six, against a catalog target of 1.5. Thirteen of Portland's
-twenty-eight zones are under a cap the pod as specified is over.
+twenty-eight zones are under a cap the pod's target is over -- and since
+2026-09-18 the screen charges the pod's floor of one per home, which no cap
+here reaches, so what the cap does in those thirteen is stop the seat count
+reported beside the colour at five.
 
 Two readings decide which zone gets which number, and both are one sentence
 each in a different chapter: 33.120.020 lists the six multi-dwelling zones and
@@ -128,28 +131,33 @@ def test_splitting_the_pod_onto_unit_lots_lifts_the_1_35() -> None:
     assert layer.zones["EX"].values["parking_max_per_unit"].variants == ()
 
 
-def test_the_catalog_pod_is_over_the_cap_in_thirteen_zones(rules: RuleSet) -> None:
+def test_the_catalog_pods_target_is_over_the_cap_in_thirteen_zones(rules: RuleSet) -> None:
     """The finding, stated as a number rather than as a worry.
 
-    Both catalog entries ask 1.5 stalls per unit. Nothing in this test decides
-    what the screen should do about that -- the design's figure is a
-    marketability target and the zone's is law, and reconciling them is the
-    site-plan stage's job. What this pins is that the conflict is now visible
-    at all, which it was not while the field did not exist.
+    Both catalog entries sell at 1.5 stalls per unit and are built with one.
+    The screen charges the one (Steph, 2026-09-18: "4 is enough to sell"),
+    so in twelve of the thirteen zones the cap costs no lot its colour and
+    only cuts the count reported beside it to five, the floor's band. EX is
+    the thirteenth and the other case: half a stall per home is two on a
+    fourplex, below the floor, and a lot there fails the screen's
+    ``parking_cap`` check the way the county map refuses the plan as
+    ``too_few_stalls``. What this pins is that the conflict is visible at
+    all, which it was not while the field did not exist.
     """
     catalog = load_catalog()
-    target = catalog.get("pod56x36@1").parking.stalls_per_unit
-    assert target == 1.5
+    bands = catalog.get("pod56x36@2").parking.stalls_per_unit
+    assert (bands.floor, bands.target) == (1.0, 1.5)
 
-    over = [
-        zone
+    caps = {
+        zone: held.value
         for zone in load_rules()[PORTLAND].zones
         if (held := rules.resolve(PORTLAND, zone).values.get("parking_max_per_unit"))
-        and held.value < target
-    ]
+    }
+    over = [zone for zone, cap in caps.items() if cap < bands.target]
 
     assert sorted(over) == sorted((*CAPPED, "EX"))
     assert len(over) == 13
+    assert [zone for zone, cap in caps.items() if cap < bands.floor] == ["EX"]
 
 
 def test_the_parking_chapter_has_no_unread_notes_left() -> None:

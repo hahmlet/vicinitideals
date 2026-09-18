@@ -437,6 +437,9 @@ def row_for(s: Screened) -> dict[str, Any]:
         "ask": s.screening.ask.value,
         "fits": bool(s.fit.fits),
         "fit_slack_ft": s.screening.fit_slack_ft,
+        "stalls_charged": s.screening.stalls_charged,
+        "stalls_seated": s.screening.stalls_seated,
+        "parking_band": s.screening.parking_band,
         "fit_best_depth_ft": s.fit.best_depth_ft,
         "fit_required_ft": s.fit.required_ft,
         "fit_across_ft": s.fit.across_ft,
@@ -518,11 +521,23 @@ def compare(frame: Any, results: Path = LOTS_RESULTS) -> str:
     import pandas as pd
 
     lots = per_lot(frame)
-    q = pd.read_csv(
-        results,
-        usecols=["TLID", "triage", "binding_constraint", "policy_exclusion"],
-        dtype=str,
-    )
+    # The stall columns arrived in quadfit's s6s on 2026-07-28; a results
+    # file from before them still compares on the colour, with the band
+    # table reading "(none)" throughout rather than refusing the report.
+    wanted = [
+        "TLID",
+        "triage",
+        "binding_constraint",
+        "policy_exclusion",
+        "parking_tier",
+        "stalls_provided",
+        "layout_method",
+    ]
+    header = pd.read_csv(results, nrows=0).columns
+    q = pd.read_csv(results, usecols=[c for c in wanted if c in header], dtype=str)
+    for name in wanted:
+        if name not in q.columns:
+            q[name] = pd.Series(pd.NA, index=q.index, dtype="string")
     m = lots.merge(q, on="TLID", how="left", suffixes=("", "_quadfit"))
     m["quadfit"] = m["triage_quadfit"].fillna("absent")
     lines: list[str] = []
@@ -557,6 +572,38 @@ def compare(frame: Any, results: Path = LOTS_RESULTS) -> str:
     lines.append(_counts(green_where_red["binding_constraint"].fillna("(none)")) + "\n")
     lines.append("quadfit's policy exclusion:\n")
     lines.append(_counts(green_where_red["policy_exclusion"].fillna("(none)")) + "\n")
+    # The stall count beside the colour, against the county map's own. Both
+    # products charge the floor and report the band since 2026-09-18, so on
+    # the lots both call green the bands should mostly agree; where the
+    # screen seats fewer, the difference is the court's shape (one row
+    # across here, the largest rectangle either way round there) or the
+    # alley the county map parks on and the screen does not yet draw.
+    both = m[(m["if_signed"] == "green") & (m["quadfit"] == "green")]
+    lines.append(f"### Stalls seated, where both are green: {len(both):,} lots\n")
+    lines.append("FLATS band (rows) against quadfit's parking_tier (columns):\n")
+    lines.append(
+        _table(
+            pd.crosstab(
+                both["parking_band"].fillna("(none)"),
+                both["parking_tier"].fillna("(none)"),
+                margins=True,
+            )
+        )
+        + "\n"
+    )
+    seated = pd.to_numeric(both["stalls_seated"], errors="coerce")
+    provided = pd.to_numeric(both["stalls_provided"], errors="coerce")
+    diff = seated - provided
+    lines.append("FLATS stalls seated less quadfit's stalls provided:\n")
+    lines.append(_counts(diff.dropna().astype(int).astype(str)) + "\n")
+    alley = both["layout_method"].fillna("").str.contains("alley")
+    lines.append(
+        f"Of those seating fewer, {int((alley & (diff < 0)).sum()):,} park on the "
+        f"alley in quadfit.\n"
+    )
+    lines.append("FLATS band on every lot the screen calls green once signed:\n")
+    green = m[m["if_signed"] == "green"]
+    lines.append(_counts(green["parking_band"].fillna("(none)")) + "\n")
     unknown = m[m["if_signed"] == "unknown"]
     lines.append(f"### Still UNKNOWN once signed: {len(unknown):,} lots\n")
     lines.append(

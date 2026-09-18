@@ -3,7 +3,9 @@
 # The other quadfit candidate. Same 2,000 sqft pod area as pod56x36 with the
 # aspect ratio inverted: it needs 24 more feet of frontage but only 25 feet of
 # depth, which is what unlocks shallow lots.
-version: 1
+# Version 2, 2026-09-18: the parking count became three bands and the screen
+# charges the floor -- see pod56x36.yaml.
+version: 2
 label: "Pod 80 x 25 — 4 x 20 ft units"
 typology: townhome_rear_court
 footprint: {width_ft: 80, depth_ft: 25}
@@ -11,7 +13,9 @@ units: 4
 stories: 2
 height_ft: 26
 parking:
-  stalls_per_unit: 1.5
+  # The county map's bands: floor charged, target sells, preferred is where
+  # the seat count stops. See pod56x36.yaml.
+  stalls_per_unit: {floor: 1.0, target: 1.5, preferred: 2.0}
   config: rear_court
 delivery:
   method: panelized

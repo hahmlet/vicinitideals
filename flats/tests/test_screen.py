@@ -23,7 +23,7 @@ pytest.importorskip("shapely")
 
 import shapely  # noqa: E402
 
-from flats.designs.model import Orientation, Plat, load_catalog  # noqa: E402
+from flats.designs.model import Orientation, Plat, StallBands, load_catalog  # noqa: E402
 from flats.fit.rectangle import Fit, Fitter  # noqa: E402
 from flats.geom.edges import Tier as GeometryTier  # noqa: E402
 from flats.rules.conditions import Tier  # noqa: E402
@@ -52,6 +52,7 @@ from flats.score.screen import (  # noqa: E402
     fit_for,
     histogram,
     screen,
+    seats,
 )
 from flats.score.slack import SlackPolicy, Verdict  # noqa: E402
 
@@ -140,10 +141,11 @@ def rules(
 #: `CLEAR` states no rear setback, so the whole court is charged here.
 COURT_FT = DESIGN.parking.court_depth_ft
 #: And across it, broadside: the building with its lane beside it (56 + 12)
-#: or the six-stall court (54), whichever is wider. `CLEAR` states no stall
-#: width, driveway or cap, so this is the design's own figure. A synthetic
-#: fit has to say it was searched this wide, or the screen -- rightly -- will
-#: not take its depth as evidence.
+#: or the court at the design's floor -- four stalls, 36 ft since version 2
+#: -- whichever is wider. `CLEAR` asks one stall per home, the floor, and
+#: states no stall width, driveway or cap, so this is the design's own
+#: figure. A synthetic fit has to say it was searched this wide, or the
+#: screen -- rightly -- will not take its depth as evidence.
 ACROSS_FT = max(56.0 + DESIGN.parking.lane_width_ft, DESIGN.court_width_ft)
 
 
@@ -471,8 +473,9 @@ def test_a_pod_that_only_fits_end_on_is_measured_against_the_run_it_needed() -> 
         best_depth_ft=50.0,
         slack_ft=-6.0,
         orientation=Orientation.depth_facing,
-        # End-on the court (54) is wider than the building and its lane (48).
-        across_ft=DESIGN.court_width_ft,
+        # End-on the building and its lane (48) are wider than the four-stall
+        # court (36); searched at what the zone asks.
+        across_ft=36.0 + DESIGN.parking.lane_width_ft,
     )
 
     assert end_on.required_ft == pytest.approx(56.0)
@@ -490,12 +493,20 @@ def test_the_slack_reported_is_the_one_the_check_used() -> None:
 # --- the court across the lot, and the lane that reaches it -----------------
 #
 # Until 2026-09-17 the fit searched the envelope for the building's own width
-# and the screen took whatever depth it found. Six stalls behind a 36 ft end
-# of building are 54 ft across, and a 12 ft lane beside a 56 ft front is 68:
-# the envelope has to hold THAT, and a search for the building alone on a lot
-# too narrow for its cars reads as a fit. The paper lot and the county pipeline
-# both charge it; these pin the screen doing the same, and refusing a fit that
-# did not.
+# and the screen took whatever depth it found. A row of stalls behind a 36 ft
+# end of building, and a 12 ft lane beside a 56 ft front (68): the envelope
+# has to hold THAT, and a search for the building alone on a lot too narrow
+# for its cars reads as a fit. The paper lot and the county pipeline both
+# charge it; these pin the screen doing the same, and refusing a fit that did
+# not.
+#
+# How many stalls the row is charged at changed on 2026-09-18. Until then it
+# was the design's target -- six, a 54 ft row wider than the pod's end -- and
+# 4,977 of the county map's 20,125 greens, seating four or five, could never
+# have been green here. Steph: "same as the county map. 4 is enough to sell."
+# So the floor is charged (one per home, raised by the zone's legal minimum,
+# cut by its cap), and how many more the lot seats is counted and reported
+# beside the colour, in the county map's bands.
 
 
 def test_a_fit_searched_at_the_building_alone_is_not_evidence() -> None:
@@ -526,16 +537,21 @@ def test_a_city_that_widens_the_court_or_the_lane_stales_a_narrower_search() -> 
     assert run(wide_lane, f=fit(over_ft=10.0)).triage is Triage.unknown
     assert run(wide_lane, f=fit(over_ft=10.0, across_ft=76.0)).triage is Triage.green
 
-    wide_stalls = rules(parking_stall_width_ft=12)  # 72 ft of court, over the 68
-    assert COURT_WIDTH_UNMEASURED in run(wide_stalls, f=fit(over_ft=10.0)).reasons
+    # Same for a legal minimum that makes the court the wider figure: two per
+    # home is eight stalls, 72 ft, over the 68. A wider stall alone does not
+    # -- four at 12 ft are 48, still inside the building and its lane.
+    two_per_home = rules(parking_min_per_unit=2.0)
+    assert COURT_WIDTH_UNMEASURED in run(two_per_home, f=fit(over_ft=10.0)).reasons
+    assert run(rules(parking_stall_width_ft=12), f=fit(over_ft=10.0)).triage is Triage.green
 
 
-def test_a_parking_cap_can_narrow_what_the_search_had_to_find() -> None:
-    # Milwaukie caps this building at one stall per unit: four stalls are 36
-    # ft, and end-on the building with its lane (48) is the wider figure. A
-    # fit searched at 48 end-on is enough there, where the uncapped six would
-    # have needed 54.
-    capped = rules(parking_max_per_unit=1)
+def test_the_floor_is_charged_and_a_legal_minimum_above_it_widens_the_search() -> None:
+    # End-on the building with its lane (48) is wider than the four-stall
+    # court (36), so a fit searched at 48 end-on is enough at the floor --
+    # where the six-stall target charged until 2026-09-18 would have needed
+    # 54. Clackamas MR-1 asks 1.5 per home: that IS six, the row is 54 again,
+    # and the same fit is stale there. A cap at one per home (Milwaukie)
+    # changes nothing about the charge -- four is four.
     end_on = Fit(
         fits=True,
         width_ft=56.0,
@@ -546,17 +562,22 @@ def test_a_parking_cap_can_narrow_what_the_search_had_to_find() -> None:
         across_ft=48.0,
     )
 
-    assert run(capped, f=end_on).triage is Triage.green
-    assert COURT_WIDTH_UNMEASURED in run(rules(), f=end_on).reasons
+    at_floor = run(rules(), f=end_on)
+    assert at_floor.triage is Triage.green
+    assert at_floor.stalls_charged == 4
+    assert run(rules(parking_max_per_unit=1), f=end_on).triage is Triage.green
+    raised = run(rules(parking_min_per_unit=1.5), f=end_on)
+    assert raised.stalls_charged == 6
+    assert COURT_WIDTH_UNMEASURED in raised.reasons
 
 
 def test_fit_for_searches_the_envelope_at_what_the_zone_asks() -> None:
-    # A 50 x 120 envelope holds the 36 ft end of the building with room to
-    # spare and holds neither the 54 ft court behind it nor the 68 ft of
-    # building-and-lane broadside. The bare search says the pod fits; the
-    # one the screen asks for says it does not, and the screen then has a
-    # real miss to score rather than a hole.
-    fitter = Fitter(shapely.box(0, 0, 50, 120), (0.0,), res=1.0)
+    # A 45 x 120 envelope holds the 36 ft end of the building with room to
+    # spare and holds neither the 48 ft of building-and-lane end-on nor the
+    # 68 broadside. The bare search says the pod fits; the one the screen
+    # asks for says it does not, and the screen then has a real miss to
+    # score rather than a hole.
+    fitter = Fitter(shapely.box(0, 0, 45, 120), (0.0,), res=1.0)
 
     bare = fitter.fit(56, 36)
     asked = fit_for(fitter, DESIGN, rules())
@@ -564,28 +585,31 @@ def test_fit_for_searches_the_envelope_at_what_the_zone_asks() -> None:
     assert bare.fits and bare.orientation is Orientation.depth_facing
     assert not asked.fits
     assert asked.best_depth_ft == 0.0, "nothing that wide anywhere"
-    assert asked.across_ft >= 54.0
+    assert asked.across_ft >= 48.0
+    assert asked.stalls == 0, "not even the floor's row holds"
     result = screen(rules(), LOT, DESIGN, asked, policy=POLICY, relief=NO_RELIEF)
     assert result.triage is Triage.red
     assert result.head == "fit_ft"
     assert COURT_WIDTH_UNMEASURED not in result.reasons
+    assert (result.stalls_charged, result.stalls_seated, result.parking_band) == (4, 0, None)
 
 
 def test_fit_for_reads_the_citys_figures_not_only_the_designs() -> None:
-    # 55 ft across holds the six-stall court end-on (54) and not the same
-    # court at Gladstone's 9.5 ft stalls (57). The zone's numbers travel into
+    # Where the law asks 1.5 per home the row is six stalls: 55 ft across
+    # holds it end-on at the design's 9 ft (54) and not at Gladstone's 9.5
+    # (57). The zone's numbers -- the minimum and the stall -- travel into
     # the search, which is the whole reason `fit_for` exists.
     fitter = Fitter(shapely.box(0, 0, 55, 120), (0.0,), res=1.0)
 
-    assert fit_for(fitter, DESIGN, rules()).fits
-    wider = fit_for(fitter, DESIGN, rules(parking_stall_width_ft=9.5))
+    assert fit_for(fitter, DESIGN, rules(parking_min_per_unit=1.5)).fits
+    wider = fit_for(fitter, DESIGN, rules(parking_min_per_unit=1.5, parking_stall_width_ft=9.5))
     assert not wider.fits
     assert wider.best_depth_ft == 0.0, "57 end-on and 68 broadside; 55 holds neither"
 
 
 def test_a_design_that_parks_on_the_street_is_searched_at_its_footprint() -> None:
     street = DESIGN.model_copy(
-        update={"parking": DESIGN.parking.model_copy(update={"stalls_per_unit": 0})}
+        update={"parking": DESIGN.parking.model_copy(update={"stalls_per_unit": StallBands.one(0)})}
     )
     fitter = Fitter(shapely.box(0, 0, 60, 120), (0.0,), res=1.0)
 
@@ -594,6 +618,128 @@ def test_a_design_that_parks_on_the_street_is_searched_at_its_footprint() -> Non
     assert got.fits
     assert got.across_ft == pytest.approx(56.0)
     assert got.orientation is Orientation.width_facing
+    assert got.stalls is None, "no court to count"
+    result = screen(rules(parking_min_per_unit=0), LOT, street, got, policy=POLICY)
+    assert (result.stalls_charged, result.stalls_seated, result.parking_band) == (0, None, None)
+
+
+# --- the seat count beside the colour ---------------------------------------
+#
+# The colour charges the floor. How many more the lot seats -- floor to
+# preferred, four to eight on the pod -- is counted by `seats`, carried on the
+# fit, and reported by the screen in the county map's bands: minimum (4-5),
+# target (6-7), preferred (8). A row no wider than the building and its lane
+# is free; each wider one is one yes/no over the grids.
+
+
+def counted(width_ft: float, depth_ft: float, rule_set=None, **over):
+    """Fit and screen the pod on a box this wide and this deep."""
+    fitter = Fitter(shapely.box(0, 0, width_ft, depth_ft), (0.0,), res=1.0)
+    zone = rule_set or rules(**over)
+    got = fit_for(fitter, DESIGN, zone)
+    return screen(zone, LOT, DESIGN, got, policy=POLICY, relief=NO_RELIEF)
+
+
+def test_the_seat_count_walks_from_the_floor_to_the_preferred() -> None:
+    # Broadside the building and its lane are 68 ft, which seats seven at 9
+    # ft for free; the eighth is a 72 ft row and a question the envelope has
+    # to answer. End-on (48) the sixth stall is the first that costs width.
+    seven = counted(68, 120)
+    eight = counted(72, 120)
+    five = counted(50, 120)
+
+    assert (seven.triage, seven.stalls_charged, seven.stalls_seated, seven.parking_band) == (
+        Triage.green, 4, 7, "target"
+    )
+    assert (eight.stalls_seated, eight.parking_band) == (8, "preferred")
+    # 50 ft holds the pod end-on with its lane (48) and a fifth stall (45),
+    # not a sixth (54); broadside (68) it holds nothing.
+    assert (five.triage, five.stalls_seated, five.parking_band) == (Triage.green, 5, "minimum")
+
+
+def test_the_seats_are_counted_at_the_depth_the_court_needs() -> None:
+    # A row is only a seat if the court it sits in fits behind the building:
+    # broadside the pod and its court are 83 ft deep, end-on 103. A 72 x 90
+    # box seats eight broadside and nothing end-on; at 80 deep it seats
+    # nothing at all, and the fit fails with it.
+    assert counted(72, 90).stalls_seated == 8
+    short = counted(72, 80)
+    assert short.triage is Triage.red and short.head == "fit_ft"
+    assert (short.stalls_seated, short.parking_band) == (0, None)
+    # A required rear yard is ground the court parks on, for the count as
+    # for the colour: 20 ft of it leaves 27 of court to find, so 70 deep is
+    # enough where it was not.
+    with_yard = counted(72, 70, setback_rear_ft=20)
+    assert with_yard.triage is Triage.green
+    assert with_yard.stalls_seated == 8
+    assert counted(72, 70).stalls_seated == 0
+
+
+def test_a_cap_cuts_the_count_and_never_the_colour() -> None:
+    # Milwaukie caps this building at one stall per home. A lot that would
+    # seat eight is still green -- four is enough to sell -- and the count
+    # stops where the code does, so the band is the floor's. Portland's 1.35
+    # is five cells, and the same band.
+    milwaukie = counted(72, 120, parking_max_per_unit=1)
+    portland = counted(72, 120, parking_max_per_unit=1.35)
+
+    assert milwaukie.triage is Triage.green
+    assert (milwaukie.stalls_charged, milwaukie.stalls_seated, milwaukie.parking_band) == (4, 4, "minimum")
+    assert (portland.stalls_seated, portland.parking_band) == (5, "minimum")
+
+
+def test_a_cap_below_the_floor_refuses_the_lot_the_way_the_county_map_does() -> None:
+    # Portland's EX permits half a stall per home: two on a fourplex. The
+    # charge is cut to two, and a court of two is not this product, so the
+    # lot fails on the cap -- quadfit's too_few_stalls -- rather than
+    # screening green on a row the code will not permit. Portland states no
+    # minimum, so this cannot ride on the stall-count check; it is its own.
+    # The count beside the colour is the two, and it has no band.
+    ex = counted(72, 120, parking_min_per_unit=None, parking_max_per_unit=0.5)
+
+    assert ex.triage is Triage.red and ex.head == "parking_cap"
+    assert (ex.stalls_charged, ex.stalls_seated, ex.parking_band) == (2, 2, None)
+    cap = next(c for c in ex.checks if c.check == "parking_cap")
+    assert (cap.observed, cap.threshold) == (2.0, 4.0)
+    # A cap at the floor is not below it; and a design that parks on the
+    # street has no floor a cap can undercut.
+    assert counted(72, 120, parking_max_per_unit=1).triage is Triage.green
+    street = DESIGN.model_copy(
+        update={"parking": DESIGN.parking.model_copy(update={"stalls_per_unit": StallBands.one(0)})}
+    )
+    fitter = Fitter(shapely.box(0, 0, 60, 120), (0.0,), res=1.0)
+    zone = rules(parking_min_per_unit=0, parking_max_per_unit=0.5)
+    on_street = screen(zone, LOT, street, fit_for(fitter, street, zone), policy=POLICY, relief=NO_RELIEF)
+    assert on_street.triage is Triage.green
+    assert "parking_cap" not in {c.check for c in on_street.checks}
+    # Where the adjustment chapter has been read, an application, not a wall.
+    fitter = Fitter(shapely.box(0, 0, 72, 120), (0.0,), res=1.0)
+    zone = rules(parking_min_per_unit=None, parking_max_per_unit=0.5)
+    asked = screen(zone, LOT, DESIGN, fit_for(fitter, DESIGN, zone), policy=POLICY, relief=READ)
+    assert asked.triage is Triage.yellow
+    assert asked.ask is Tier.discretionary
+
+
+def test_a_legal_minimum_raises_the_floor_the_count_starts_from() -> None:
+    # Clackamas MR-1 asks 1.5 per home: six is the charge, so a 50 ft lot
+    # that seats five at the design's floor is short here, and a 72 ft lot
+    # counts from six to eight.
+    short = counted(50, 120, parking_min_per_unit=1.5)
+    assert short.triage is Triage.red and short.head == "fit_ft"
+    assert (short.stalls_charged, short.stalls_seated) == (6, 0)
+
+    wide = counted(72, 120, parking_min_per_unit=1.5)
+    assert (wide.stalls_charged, wide.stalls_seated, wide.parking_band) == (6, 8, "preferred")
+
+
+def test_a_code_that_fixes_the_buildings_face_counts_one_orientation() -> None:
+    # The five a 50 ft lot seats are end-on. Where the code makes the pod
+    # face the street it cannot turn, and broadside 50 holds no row at all.
+    fitter = Fitter(shapely.box(0, 0, 50, 120), (0.0,), res=1.0)
+
+    assert seats(fitter, DESIGN, rules()) == 5
+    assert seats(fitter, DESIGN, rules(), axis_required=True) == 0
+    assert fit_for(fitter, DESIGN, rules(orientation_constraint="axis_required")).stalls == 0
 
 # --- a ceiling counted in storeys instead of feet ---------------------
 
@@ -779,14 +925,34 @@ def test_minimum_density_only_bites_above_its_trigger() -> None:
     assert big.head == "min_units"
 
 
-def test_parking_compares_what_the_design_provides_to_what_the_code_demands() -> None:
-    # The pod carries 1.5 stalls per unit. A code asking 2.0 outruns it.
+def test_parking_charges_the_floor_raised_by_the_law_not_the_target() -> None:
+    # The pod is built with one stall per home and sold with more. A code
+    # asking one is met by the floor. A code asking two raises the charge to
+    # eight -- a 72 ft row, wider than the 68 the synthetic fit was searched
+    # at -- and the room for that row is the fit's question, never a count
+    # the design "provides" or falls short of.
     ok = run(rules(parking_min_per_unit=1.0))
-    short = run(rules(parking_min_per_unit=2.0), relief=NO_RELIEF)
+    raised = run(rules(parking_min_per_unit=2.0), relief=NO_RELIEF)
+    wide = run(rules(parking_min_per_unit=2.0), f=fit(over_ft=4.0, across_ft=72.0))
 
     assert ok.triage is Triage.green
-    assert short.triage is Triage.red
-    assert short.head == "parking_stalls"
+    assert ok.stalls_charged == 4
+    assert raised.triage is Triage.unknown
+    assert COURT_WIDTH_UNMEASURED in raised.reasons
+    assert raised.stalls_charged == 8
+    assert wide.triage is Triage.green
+    stalls = next(c for c in wide.checks if c.check == "parking_stalls")
+    assert (stalls.observed, stalls.threshold, stalls.verdict) == (8.0, 8.0, Verdict.passes)
+
+
+def test_only_a_cap_below_the_minimum_fails_the_stall_count() -> None:
+    # A code at war with itself: two per home required, one per home
+    # permitted. The charge is cut to the cap and the count check says so.
+    at_war = run(rules(parking_min_per_unit=2.0, parking_max_per_unit=1.0), relief=NO_RELIEF)
+
+    assert at_war.triage is Triage.red
+    assert at_war.head == "parking_stalls"
+    assert at_war.stalls_charged == 4
 
 
 def test_open_space_is_flagged_as_a_favourable_approximation() -> None:

@@ -335,6 +335,13 @@ def test_the_flat_row_carries_the_verdict_the_signed_colour_and_what_leaned(
     assert r["if_signed"] == s.signed.triage.value
     assert r["if_signed_reasons"] == ",".join(s.signed.reasons)
     assert r["fit_across_ft"] == s.fit.across_ft
+    # The stall count beside the colour, in the county map's own three
+    # columns: what the row was charged at, how many the lot seats, which
+    # band that is. This pod is one band (1.5, six stalls) and the 40 ft
+    # envelope holds no row of six, so it seats none and has no band.
+    assert r["stalls_charged"] == s.screening.stalls_charged == 6
+    assert r["stalls_seated"] == s.screening.stalls_seated == 0
+    assert r["parking_band"] is None
     assert json.loads(r["observed"]) == dict(lot.observed)
     # Only the guesses a standard here turns on are reported as leaning.
     leaning = set(s.config.leans_on(s.rules.levers))
@@ -372,6 +379,9 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
             "triage": ["green", "red"],
             "binding_constraint": ["", "pod_no_fit"],
             "policy_exclusion": ["", ""],
+            "parking_tier": ["minimum", ""],
+            "stalls_provided": ["4", ""],
+            "layout_method": ["one_row_rear", ""],
         }
     ).to_csv(results, index=False)
     out = tmp_path / "bridge"
@@ -388,6 +398,15 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     summary = (out / "summary.md").read_text(encoding="utf-8")
     assert "| unknown |" in summary and "RULE_UNVERIFIED" in summary
     assert "against quadfit" in summary
+    assert "Stalls seated, where both are green" in summary
+    assert {"stalls_charged", "stalls_seated", "parking_band"} <= set(frame.columns)
     assert log and log[-1].startswith("bridge: wrote")
     # The comparison can be re-run from the parquet alone.
     assert compare(frame, results).startswith("# FLATS screen from the county map")
+    # And against a results file from before quadfit reported its stalls:
+    # the colours still compare, the band table just has nothing in it.
+    older = tmp_path / "older_results.csv"
+    pd.read_csv(results).drop(columns=["parking_tier", "stalls_provided", "layout_method"]).to_csv(
+        older, index=False
+    )
+    assert "Stalls seated, where both are green" in compare(frame, older)

@@ -114,12 +114,74 @@ class Footprint(BaseModel):
         return self.width_ft * self.depth_ft
 
 
+class StallBands(BaseModel):
+    """Stalls per unit in the three bands the county map has reported since
+    2026-07-28, and the screen since 2026-09-18.
+
+    **The floor is what the colour charges.** One stall per home is the least
+    this product is built with, so it is the row the lot has to be wide and
+    deep enough for; a lot that seats the floor is green on parking, and how
+    many more it seats is reported beside the colour, never inside it.
+    Steph, 2026-09-18, on the screen's six-stall court: *"same as the county
+    map. 4 is enough to sell."* The target is what sells (one and a half per
+    home); the preferred is the most anyone would draw, and where the count
+    stops. quadfit's ``parking_per_unit_min`` / ``_target`` / ``_preferred``
+    and its ``parking_tier`` of ``minimum`` / ``target`` / ``preferred`` are
+    the same three numbers and the same three names.
+
+    A bare number in a catalog file is one band -- a design that parks
+    exactly that many and reports no more -- which is what every entry meant
+    before the bands existed.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    #: The least the design is built with. What the screen charges.
+    floor: float = Field(ge=0)
+    #: What sells. A lot seating this many or more is in the target band.
+    target: float = Field(ge=0)
+    #: The most drawn. The seat count stops here whatever the lot holds.
+    preferred: float = Field(ge=0)
+
+    @model_validator(mode="after")
+    def _bands_ascend(self) -> StallBands:
+        if not (self.floor <= self.target <= self.preferred):
+            raise ValueError(
+                f"stalls_per_unit bands must ascend: floor {self.floor} <= target "
+                f"{self.target} <= preferred {self.preferred}"
+            )
+        return self
+
+    @classmethod
+    def one(cls, per_unit: float) -> StallBands:
+        """One band: the design parks this many, no more and no less."""
+        return cls(floor=per_unit, target=per_unit, preferred=per_unit)
+
+    def band(self, stalls: float, units: int) -> str:
+        """Which band a count of stalls on a building of ``units`` lands in.
+
+        ``minimum`` from the floor up to the target, ``target`` from there to
+        the preferred, ``preferred`` at or above it -- quadfit's
+        ``parking_tier`` names, so the two products' bands read the same. A
+        count below the floor has no band: the colour already says so.
+        """
+        if stalls < self.floor * units - 1e-9:
+            raise ValueError(f"{stalls} stalls is below the floor of {self.floor * units}")
+        if stalls >= self.preferred * units - 1e-9:
+            return "preferred"
+        if stalls >= self.target * units - 1e-9:
+            return "target"
+        return "minimum"
+
+
 class Parking(BaseModel):
     """How many cars this design parks, and the ground that takes to do.
 
     The count and the geometry are different kinds of fact and are sourced
-    differently. The *count* is a marketability target and the code states a
-    separate legal minimum. The *geometry* is the design's own: a court has to
+    differently. The *count* is three bands -- the floor the colour charges,
+    the target that sells, the preferred the drawing stops at
+    (:class:`StallBands`) -- and the code states a separate legal minimum
+    and, in three cities, a cap. The *geometry* is the design's own: a court has to
     be wide enough to back out of whether or not the city ever wrote a number
     down, and three of our cities deliberately never did — Portland, Milwaukie
     and Wilsonville each state parking dimensions for this building and no
@@ -136,9 +198,11 @@ class Parking(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    #: Marketability target, not a legal floor. The legal minimum comes from the
-    #: rule set and may be lower — Gresham LDR-5 requires zero.
-    stalls_per_unit: float = Field(ge=0)
+    #: The three bands. The floor is what the screen charges the lot for and
+    #: is the product's own least, not the law's: Gresham LDR-5 requires zero
+    #: and the pod is still built with four. The zone's legal minimum raises
+    #: the charged count where it is higher, its cap cuts it.
+    stalls_per_unit: StallBands
     config: ParkingConfig
     #: Depth of one stall in the court. Raised by a code that asks for more.
     stall_depth_ft: float = Field(default=18.0, gt=0)
@@ -164,6 +228,25 @@ class Parking(BaseModel):
     #: it; Fairview's 4 ft does not.
     building_gap_ft: float = Field(default=5.0, ge=0)
 
+    @field_validator("stalls_per_unit", mode="before")
+    @classmethod
+    def _a_number_is_one_band(cls, raw: object) -> object:
+        if isinstance(raw, bool):
+            return raw
+        if isinstance(raw, (int, float)):
+            return StallBands.one(float(raw))
+        return raw
+
+    @property
+    def parks(self) -> bool:
+        """Whether the design puts any car on the lot by its own floor.
+
+        A design whose floor is zero would be built without parking where
+        the lot has no room, so nothing is charged for it -- not the court's
+        depth, not its row, not the lane -- whatever its target says.
+        """
+        return self.stalls_per_unit.floor > 0
+
     @property
     def court_depth_ft(self) -> float:
         """Depth this parking asks of the lot behind the building.
@@ -174,7 +257,7 @@ class Parking(BaseModel):
         not at all. What the court asks *across* the lot is a separate question
         answered by :meth:`court_width_ft` and :attr:`lane_width_ft`.
         """
-        if self.config is not ParkingConfig.rear_court or not self.stalls_per_unit:
+        if self.config is not ParkingConfig.rear_court or not self.parks:
             return 0.0
         return self.building_gap_ft + self.stall_depth_ft + self.aisle_ft
 
@@ -189,19 +272,19 @@ class Parking(BaseModel):
         ``side_drive`` design would charge width here too, and no catalog
         design uses one.
         """
-        if self.config is not ParkingConfig.rear_court or not self.stalls_per_unit:
+        if self.config is not ParkingConfig.rear_court or not self.parks:
             return 0.0
         return self.lane_ft
 
     def court_width_ft(self, stalls: float) -> float:
         """Width a rear court of this many stalls takes across the lot.
 
-        One row, side by side, each the stall width: six stalls at 9 ft is 54
-        ft, which is wider than the 36 ft end of the pod that stands in front
-        of it. A fractional count is a stall — half a car still needs a whole
-        cell. 0.0 where the design has no rear court to put them in.
+        One row, side by side, each the stall width: four stalls at 9 ft is
+        36 ft, the width of the pod's end, and six is 54 ft, wider than it. A
+        fractional count is a stall — half a car still needs a whole cell.
+        0.0 where the design has no rear court to put them in.
         """
-        if self.config is not ParkingConfig.rear_court or not self.stalls_per_unit:
+        if self.config is not ParkingConfig.rear_court or not self.parks:
             return 0.0
         return math.ceil(stalls) * self.stall_width_ft
 
@@ -293,12 +376,32 @@ class Design(BaseModel):
 
     @property
     def stalls_required(self) -> float:
-        """Stalls this design wants. The zone's legal minimum is separate."""
-        return self.parking.stalls_per_unit * self.units
+        """The least stalls this design is built with: the floor, on every unit.
+
+        What the screen charges the lot for. The zone's legal minimum is
+        separate and raises it; the target and the preferred count are
+        :attr:`stalls_target` and :attr:`stalls_preferred`, and neither is
+        asked of any lot.
+        """
+        return self.parking.stalls_per_unit.floor * self.units
+
+    @property
+    def stalls_target(self) -> float:
+        """Stalls that sell: the target band's lower edge, on every unit."""
+        return self.parking.stalls_per_unit.target * self.units
+
+    @property
+    def stalls_preferred(self) -> float:
+        """The most stalls anyone would draw for this design."""
+        return self.parking.stalls_per_unit.preferred * self.units
+
+    def parking_band(self, stalls: float) -> str:
+        """Which band a seat count on this design lands in -- see :meth:`StallBands.band`."""
+        return self.parking.stalls_per_unit.band(stalls, self.units)
 
     @property
     def court_width_ft(self) -> float:
-        """Width the design's own stall count takes across a rear court."""
+        """Width the design's own floor takes across a rear court."""
         return self.parking.court_width_ft(self.stalls_required)
 
     def oriented(

@@ -330,7 +330,7 @@ async def test_a_plan_page_says_what_lot_the_building_needs(
 ):
     await _login(client, session)
 
-    page = await client.get("/flats/plans/pod56x36@1")
+    page = await client.get("/flats/plans/pod56x36@2")
 
     assert page.status_code == 200
     assert "Lot area" in page.text
@@ -360,8 +360,8 @@ async def test_the_plat_path_is_a_control_not_a_second_catalog_entry(
     # building, the same zones, a different number.
     await _login(client, session)
 
-    one = await client.get("/flats/plans/pod56x36@1?plat=one_lot")
-    four = await client.get("/flats/plans/pod56x36@1?plat=unit_lots")
+    one = await client.get("/flats/plans/pod56x36@2?plat=one_lot")
+    four = await client.get("/flats/plans/pod56x36@2?plat=unit_lots")
 
     assert one.status_code == four.status_code == 200
     assert one.text != four.text
@@ -381,7 +381,7 @@ async def test_the_plan_pages_print_no_python_objects_either(
 ):
     await _login(client, session)
 
-    for url in ("/flats/plans", "/flats/plans/pod56x36@1"):
+    for url in ("/flats/plans", "/flats/plans/pod56x36@2"):
         page = await client.get(url)
 
         assert page.status_code == 200

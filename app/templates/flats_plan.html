@@ -23,7 +23,7 @@
     <div><span class="muted">Units</span> <strong>{{ design.units }}</strong></div>
     <div><span class="muted">Storeys</span> <strong>{{ design.stories }}</strong></div>
     <div><span class="muted">Height</span> <strong>{{ design.height }} ft</strong></div>
-    <div><span class="muted">Stalls provided</span> <strong>{{ design.stalls }}</strong></div>
+    <div><span class="muted">Stalls charged</span> <strong>{{ "{:,.0f}".format(design.stalls) }}</strong> <span class="muted" style="font-size:11px">target {{ "{:,.0f}".format(design.stalls_target) }}, up to {{ "{:,.0f}".format(design.stalls_preferred) }} reported beside the colour</span></div>
     {% if design.court %}<div><span class="muted">Parking court</span> <strong>{{ "{:,.0f}".format(design.court) }} ft deep · {{ "{:,.0f}".format(design.court_width) }} ft across</strong> <span class="muted" style="font-size:11px">{{ "{:,.0f}".format(design.gap) }} ft off the wall + {{ "{:,.0f}".format(design.stall_depth) }} ft stall + {{ "{:,.0f}".format(design.aisle) }} ft aisle</span></div>{% endif %}
     {% if design.lane %}<div><span class="muted">Drive lane</span> <strong>{{ "{:,.0f}".format(design.lane) }} ft</strong></div>{% endif %}
   </div>
@@ -128,7 +128,7 @@
             {% else %}<span class="badge badge-red">too tall</span>{% endif %}
           </td>
           <td class="muted" style="font-size:11px">
-            {% if row.stalls_short %}{{ row.stalls_short }} stalls short{% else %}ok{% endif %}
+            {% if row.stalls_raised %}+{{ row.stalls_raised }} by law{% else %}ok{% endif %}
           </td>
           <td class="muted" style="font-size:11px">
             {% if row.unknown %}{{ row.unknown | join(", ") }}{% endif %}

@@ -56,6 +56,13 @@ class Fit:
     #: ``across_ft`` wide and the building deep, so the lane or the court
     #: shows in it and the depth the court needs behind the building does not.
     placement: BaseGeometry | None = None
+    #: How many stalls the caller found room for, when it looked
+    #: (:func:`flats.score.screen.fit_for`): the most of the design's counts,
+    #: floor to preferred, whose row the envelope holds beside the building
+    #: at the depth the parking needs, in any orientation allowed. 0 when
+    #: not even the floor holds. ``None`` on a fit built without the search
+    #: -- not looked for, which is not the same as none.
+    stalls: int | None = None
 
     @property
     def required_ft(self) -> float:
@@ -125,6 +132,17 @@ class Fitter:
             if got > best_cells:
                 best_cells, best_grid = got, grid
         return best_cells * self.res, best_grid
+
+    def holds(self, across_ft: float, depth_ft: float) -> bool:
+        """Whether a rectangle this wide and this deep fits at any angle.
+
+        A yes/no, not a margin: one window test per grid and the first hit
+        ends it, where :meth:`fit` binary-searches every grid for the deepest
+        run. That is what makes it cheap enough to ask several times per lot
+        -- the screen asks it once per stall it counts beyond the floor.
+        """
+        w_cells, d_cells = cells_for(across_ft, self.res), cells_for(depth_ft, self.res)
+        return any(grid.has_window(d_cells, w_cells) for grid in self.grids)
 
     def fit(
         self,

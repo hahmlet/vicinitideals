@@ -87,13 +87,15 @@ def test_gresham_states_an_auto_parking_maximum_and_none_is_encoded() -> None:
     The number that would bind is 2.0 spaces per unit, on a development of four
     or more dwelling units outside the eleven districts at (A)(1); quadplexes
     and townhouses inside them, and townhouses anywhere, read None. Against a
-    catalog target of 1.5 there is nothing to encode -- and encoding it anyway
-    would mean reading five further tables, because Table 9.0851 is expressly
-    displaced in the Downtown, Civic Neighborhood, Corridor and Pleasant Valley
-    districts, which is 22 of this layer's 38 zones.
+    catalog that charges one stall per unit and draws at most two there is
+    nothing to encode -- and encoding it anyway would mean reading five
+    further tables, because Table 9.0851 is expressly displaced in the
+    Downtown, Civic Neighborhood, Corridor and Pleasant Valley districts,
+    which is 22 of this layer's 38 zones.
 
-    Pinned so that the absence reads as a decision. If a design ever asks more
-    than 2.0 stalls per unit, this is the test that should fail.
+    Pinned so that the absence reads as a decision. If a design ever draws
+    more than 2.0 stalls per unit -- the preferred band, where the seat count
+    the screen reports stops -- this is the test that should fail.
     """
     layer = load_rules()[GRESHAM]
 
@@ -102,7 +104,7 @@ def test_gresham_states_an_auto_parking_maximum_and_none_is_encoded() -> None:
         assert "parking_max_per_unit" not in zone.values, zone.zone
 
     for design in load_catalog():
-        assert design.parking.stalls_per_unit <= 2.0, design.id
+        assert design.parking.stalls_per_unit.preferred <= 2.0, design.id
 
 
 def test_the_layers_that_state_a_parking_ceiling_are_the_three_that_state_one() -> None:

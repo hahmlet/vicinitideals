@@ -417,9 +417,10 @@ def _plan_rows(design: Design) -> list[dict[str, Any]]:
                     # would otherwise render as an empty page.
                     "unsigned": len(fit.unsigned),
                     "certain": fit.certain,
-                    # A stall minimum above what the design parks is not a no —
-                    # it is the number the site plan has to find room for.
-                    "stalls_short": (
+                    # A stall minimum above the design's floor is not a no —
+                    # the paper lot already charges the raised count (that is
+                    # `fit.stalls`); this is how many the law added.
+                    "stalls_raised": (
                         round(stalls * design.units - design.stalls_required, 2)
                         if isinstance(stalls, (int, float))
                         and stalls * design.units > design.stalls_required
@@ -462,7 +463,11 @@ def _design_card(design: Design, plat: str) -> dict[str, Any]:
         "units": design.units,
         "stories": design.stories,
         "height": design.height_ft,
+        # The floor the screen charges, and the two bands above it that are
+        # reported beside the colour rather than asked of any lot.
         "stalls": design.stalls_required,
+        "stalls_target": design.stalls_target,
+        "stalls_preferred": design.stalls_preferred,
         # The design's own court, before any city raises it. Named on the page
         # because every depth in the table below now carries it -- and broken
         # into its three pieces, because 47 ft is not a number anyone can

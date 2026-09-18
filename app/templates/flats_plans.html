@@ -44,7 +44,7 @@
           <th class="col-right">Footprint</th>
           <th class="col-right">Units</th>
           <th class="col-right">Height</th>
-          <th class="col-right">Stalls</th>
+          <th class="col-right">Stalls charged</th>
           <th class="col-right">Zones</th>
           <th class="col-right">Fourplex allowed</th>
           <th class="col-right">Clears on paper</th>
@@ -66,7 +66,7 @@
           <td class="col-right">{{ d.width }} × {{ d.depth }} ft</td>
           <td class="col-right">{{ d.units }}</td>
           <td class="col-right">{{ d.height }} ft</td>
-          <td class="col-right">{{ d.stalls }}</td>
+          <td class="col-right">{{ "{:,.0f}".format(d.stalls) }} <span class="muted" style="font-size:11px">of {{ "{:,.0f}".format(d.stalls_preferred) }}</span></td>
           <td class="col-right">{{ d.zones }}</td>
           <td class="col-right">{{ d.allowed }}</td>
           <td class="col-right"><strong>{{ d.on_paper }}</strong></td>
