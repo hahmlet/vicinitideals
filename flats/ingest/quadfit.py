@@ -1,0 +1,743 @@
+"""The county map as quadfit measured it, read into the screen's inputs.
+
+:func:`flats.score.screen.screen` had no production caller until 2026-09-17.
+The gap was never code: ``flats.lots``, ``flats.runs`` and
+``flats.lot_results`` were all empty, because the acquire / normalize /
+assign ingest in ``flats/config/pipeline.yaml`` names its sources and
+nothing downloads them. Asked which way to fill it, Steph ruled: *"bridge
+from the county map for now, but we will need an authoritative offline
+source."* This module is the bridge. The offline source is FOLLOWUPS item 2
+and replaces this module when it is built; nothing here should be read as
+the product's data layer.
+
+**What it reads.** quadfit's stage files, where s4 and s5o leave them
+(``data/quadfit/``): the lot's area, frontage, width and depth; its edges
+with their classes and the clustered street directions; whether its front
+is on a cul-de-sac bulb; the carved buildable envelope; the FEMA flood
+columns; the sanitary-main distance and the Clackamas district flag. The
+same files :mod:`flats.geom.alley` and :mod:`flats.geom.culdesac` already
+read one fact each from. quadfit's own verdict (``lots_results.csv``) is
+read only by :func:`compare`, to sit beside FLATS's, never to inform it.
+
+**What it hands the screen.** One :class:`~flats.score.screen.LotFacts`
+per lot; the site facts quadfit measured *with the registry's meaning* --
+see :func:`observed_facts`, which names each one and refuses the rest; a
+:class:`~flats.rules.resolver.ZoneResolution` from the corpus under
+:func:`~flats.score.configure.configure`; and a
+:class:`~flats.fit.rectangle.Fit` searched by :func:`~flats.score.screen.fit_for`
+at the width the zone's parking asks. The envelope is quadfit's carved one,
+on purpose: fitting on the same ground quadfit fitted on is what lets a
+disagreement between the two products be read as a difference in the
+rules and the parking, not in the setbacks. FLATS cutting its own envelope
+from the corpus setbacks (:func:`flats.geom.envelope.buildable`) is the
+next step, not this one.
+
+**What the verdict is today.** Every value in the corpus is ``draft`` --
+no ``flats/config/verifications.jsonl`` exists -- so the screen answers
+UNKNOWN / ``RULE_UNVERIFIED`` on every lot whose zone it holds. That is the
+Phase 0 exit state the plan asked for ("everything in REVIEW pending
+verification"), and it is reported as the verdict. Beside it,
+:attr:`Screened.signed` is the same checks with the one ``unverified``
+reason lifted and nothing else changed: what the lot would be once the
+numbers are signed. Its colour is the ``if_signed`` column of every output
+and the one the comparison against quadfit reads, because a table of
+289,845 UNKNOWNs measures nothing.
+
+**What it does not see.** Slope, held on the registry's assumption
+(``steep_slope`` False) although quadfit carries a DEM percentile and
+Gresham's hillside overlay: the condition is "steep enough to trigger a
+hillside overlay", a per-city threshold nothing here holds, and the
+assumption is named on every lot where a standard turns on it. Flag lots
+the same way. The lots quadfit excluded before it fit anything (condos,
+stacked parcels, non-residential zones) are screened here like any other;
+the comparison shows them as quadfit RED against whatever FLATS found.
+"""
+
+from __future__ import annotations
+
+import dataclasses
+import json
+import math
+from collections.abc import Iterable, Iterator, Mapping, Sequence
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+from flats.designs.model import Design
+from flats.encode.port_quadfit import COUNTY, layer_id_for
+from flats.fit.angles import DEFAULT_STEP_DEG, angles_for
+from flats.fit.rectangle import Fit, Fitter
+from flats.geom.alley import ALLEY_FACTS, S4_LOTS, observed_alley
+from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
+from flats.geom.edges import Tier
+from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
+from flats.score.configure import Configuration, configure
+from flats.score.relief import ReliefPolicy
+from flats.score.screen import LotFacts, Screening, fit_for, screen
+from flats.score.slack import SlackPolicy, Verdict as CheckVerdict
+
+#: quadfit's per-lot stage record after the envelope was cut and carved
+#: (s5o): the same columns as s4 plus the envelope, slope, sewer and the
+#: overlay flags. The envelope is here and nowhere else.
+S5O_LOTS = S4_LOTS.with_name("s5o_lots.parquet")
+
+#: quadfit's own verdict per lot, for :func:`compare` only.
+LOTS_RESULTS = S4_LOTS.with_name("lots_results.csv")
+
+#: s4's tier letter -> the screen's geometry tier. Same four states, same
+#: meaning: ``B`` is two or more street directions, ``C`` is concave or
+#: many-sided or pole-shaped, ``D`` is no street within reach.
+TIER: dict[str, Tier] = {
+    "A": Tier.clean,
+    "B": Tier.corner,
+    "C": Tier.irregular,
+    "D": Tier.landlocked,
+}
+
+#: How close a mapped sanitary main has to be for ``public_sewer`` to be
+#: observed True. quadfit's figure (``s7_report.SEWER_REVIEW_FT``): a
+#: four-plex ties into a main at the street, and a main farther off than
+#: this is not confirmed to serve the lot. Copied rather than imported
+#: because ``Lot Analysis/quadfit`` is not a package this product depends on.
+SEWER_MAIN_REACH_FT = 50.0
+
+#: Jurisdictions whose sewer *district* layer quadfit holds. Only here does
+#: "outside every district and no main in reach" mean no public sewer; a
+#: Multnomah lot with no main in reach is unconfirmed, not unserved.
+CLACKAMAS: frozenset[str] = frozenset(j for j, c in COUNTY.items() if c == "clackamas")
+
+#: The s4 columns the bridge reads, and the s5o ones. Columns a stage file
+#: written before they existed lacks are read as absent (see
+#: :func:`iter_rows`); the bridge then answers those facts the way the
+#: registry does rather than inventing a False.
+S4_COLUMNS: tuple[str, ...] = (
+    "TLID",
+    "jurisdiction",
+    "zone",
+    "tier",
+    "area_sqft",
+    "frontage_ft",
+    "lot_width_ft",
+    "lot_depth_ft",
+    "edges_json",
+    "front_bearings_json",
+    "fronts_cul_de_sac",
+    "split_zone",
+)
+S5O_COLUMNS: tuple[str, ...] = (
+    "TLID",
+    "ovl_fema_sfha",
+    "ovl_fema_floodway",
+    "sewer_main_dist_ft",
+    "in_sewer_district",
+    "wkb",
+)
+
+#: The site facts this bridge can observe, in the order they are reported.
+#: Anything not here is left to the registry -- assumed and named, or
+#: unknown -- exactly as if no data layer had been consulted.
+OBSERVABLE: tuple[str, ...] = (
+    *ALLEY_FACTS,
+    *CUL_DE_SAC_FACTS,
+    "corner_lot",
+    "split_zone",
+    "in_floodplain",
+    "public_sewer",
+    "in_sewer_district",
+)
+
+
+def _is_true(value: object) -> bool:
+    """A parquet boolean that may arrive as numpy.bool_, None or NaN."""
+    if value is None or isinstance(value, float) and math.isnan(value):
+        return False
+    return bool(value)
+
+
+def _answered(value: object) -> bool:
+    """Whether a nullable boolean column holds an answer on this row."""
+    if value is None:
+        return False
+    return not (isinstance(value, float) and math.isnan(value))
+
+
+def _finite(value: object) -> float | None:
+    """A float column's value, or None where it was null."""
+    if value is None:
+        return None
+    try:
+        f = float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
+    return f if math.isfinite(f) else None
+
+
+def observed_facts(row: Mapping[str, Any]) -> dict[str, bool]:
+    """The site facts quadfit measured, in the registry's words.
+
+    Each key is present only where quadfit took the measurement the
+    condition's ``evidence`` line describes; a key absent here is a question
+    nobody asked, which :func:`~flats.score.configure.configure` treats
+    differently from an answer of False.
+
+    * ``abuts_alley`` / ``alley_at_rear`` / ``alley_at_side`` -- s4's edge
+      classes, through :func:`flats.geom.alley.observed_alley`. Only where the
+      lot has edges: a lot s4 could not trace (tier ``D``) has no alley record
+      and gets the registry's assumption, named, rather than a False that
+      reads as a measurement.
+    * ``fronts_cul_de_sac`` -- s4's bulb test; False is the conservative
+      row and so is answered on every lot.
+    * ``corner_lot`` -- two or more clustered street directions on the
+      frontage, which is s4's tier ``B`` and the registry's "abuts a street
+      on two or more sides". Same caveat as the alley: only with edges.
+    * ``split_zone`` -- s2's majority rule: the winning zone covers under
+      90 % of the lot. A sliver under that is read by quadfit as zoning-map
+      noise against the taxlot fabric, and the bridge carries that reading
+      both ways.
+    * ``in_floodplain`` -- inside FEMA's special flood hazard area or its
+      floodway, the registry's evidence line verbatim.
+    * ``public_sewer`` -- True where a mapped main is within
+      :data:`SEWER_MAIN_REACH_FT`; False only in Clackamas, outside every
+      sanitary district, with no main in reach -- quadfit's ``no_public_sewer``.
+      Everywhere else it is left unasked: a Multnomah lot with no main in
+      reach is unconfirmed, and the registry refuses to guess sewer.
+    * ``in_sewer_district`` -- the Clackamas district flag, where the layer
+      answered.
+    """
+    out: dict[str, bool] = {}
+    edges = json.loads(row.get("edges_json") or "[]")
+    bearings = json.loads(row.get("front_bearings_json") or "[]")
+    if edges:
+        out.update(observed_alley(edges, bearings))
+        out["corner_lot"] = len(bearings) >= 2
+    out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
+    if _answered(row.get("split_zone")):
+        out["split_zone"] = _is_true(row.get("split_zone"))
+    if _answered(row.get("ovl_fema_sfha")) or _answered(row.get("ovl_fema_floodway")):
+        out["in_floodplain"] = _is_true(row.get("ovl_fema_sfha")) or _is_true(
+            row.get("ovl_fema_floodway")
+        )
+    dist = _finite(row.get("sewer_main_dist_ft"))
+    near_main = dist is not None and dist <= SEWER_MAIN_REACH_FT
+    if near_main:
+        out["public_sewer"] = True
+    elif row.get("jurisdiction") in CLACKAMAS and _answered(row.get("in_sewer_district")):
+        in_district = _is_true(row.get("in_sewer_district"))
+        out["in_sewer_district"] = in_district
+        if not in_district:
+            out["public_sewer"] = False
+    return out
+
+
+@dataclass(frozen=True, slots=True)
+class QuadfitLot:
+    """One lot as the bridge hands it to the screen."""
+
+    tlid: str
+    jurisdiction: str
+    zone: str
+    #: The corpus layer for the jurisdiction, or None where
+    #: :func:`~flats.encode.port_quadfit.layer_id_for` knows no county for
+    #: it -- resolved then as ``jurisdiction_not_encoded``.
+    layer_id: str | None
+    facts: LotFacts
+    observed: Mapping[str, bool]
+    #: s4's clustered street directions, the angles an ``axis_required``
+    #: zone confines the search to.
+    front_bearings: tuple[float, ...]
+    #: quadfit's carved envelope; None where s5o left none.
+    envelope: Any
+
+
+def lot_from_row(row: Mapping[str, Any]) -> QuadfitLot:
+    """Build the screen's inputs for one stage-file row."""
+    import shapely
+
+    tier = TIER.get(str(row.get("tier")), Tier.irregular)
+    frontage = _finite(row.get("frontage_ft"))
+    facts = LotFacts(
+        lot_sqft=_finite(row.get("area_sqft")) or 0.0,
+        frontage_ft=frontage if frontage is not None else 0.0,
+        lot_width_ft=_finite(row.get("lot_width_ft")),
+        lot_depth_ft=_finite(row.get("lot_depth_ft")),
+        geometry=tier,
+    )
+    juris = str(row.get("jurisdiction"))
+    try:
+        layer_id: str | None = layer_id_for(juris)
+    except KeyError:
+        layer_id = None
+    wkb = row.get("wkb")
+    envelope = shapely.from_wkb(wkb) if wkb else None
+    return QuadfitLot(
+        tlid=str(row["TLID"]),
+        jurisdiction=juris,
+        zone=str(row.get("zone")),
+        layer_id=layer_id,
+        facts=facts,
+        observed=observed_facts(row),
+        front_bearings=tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]")),
+        envelope=envelope,
+    )
+
+
+def iter_rows(
+    s4: Path = S4_LOTS,
+    s5o: Path = S5O_LOTS,
+    *,
+    limit: int | None = None,
+    sample: int | None = None,
+    seed: int = 0,
+    jurisdictions: Iterable[str] = (),
+) -> Iterator[dict[str, Any]]:
+    """Every lot's bridge row, s4 facts joined to s5o's envelope on TLID.
+
+    Read from two files rather than one because s4 is re-run alone (a width
+    or alley refresh) and s5o then predates its newest columns -- s7 joins
+    them the same way. A column either file lacks is simply absent from the
+    row, and :func:`observed_facts` leaves that fact unasked.
+    """
+    import pandas as pd
+    import pyarrow.parquet as pq
+
+    have4 = set(pq.read_schema(s4).names)
+    have5 = set(pq.read_schema(s5o).names)
+    left = pd.read_parquet(s4, columns=[c for c in S4_COLUMNS if c in have4])
+    right = pd.read_parquet(s5o, columns=[c for c in S5O_COLUMNS if c in have5])
+    frame = left.merge(right, on="TLID", how="left")
+    if jurisdictions:
+        frame = frame[frame["jurisdiction"].isin(set(jurisdictions))]
+    if sample is not None and sample < len(frame):
+        frame = frame.sample(n=sample, random_state=seed)
+    if limit is not None:
+        frame = frame.head(limit)
+    # Every null -- NaN, NaT, pandas' NA -- leaves as None, so the readers
+    # above see one shape of "no answer" whatever dtype the column arrived in.
+    frame = frame.astype(object).where(frame.notna(), None)
+    yield from frame.to_dict("records")
+
+
+@dataclass(frozen=True, slots=True)
+class Screened:
+    """One lot x design through the screen, with what it was screened under."""
+
+    lot: QuadfitLot
+    design: Design
+    rules: ZoneResolution
+    config: Configuration
+    fit: Fit
+    screening: Screening
+    #: The same checks with ``RULE_UNVERIFIED`` lifted and nothing else
+    #: changed -- what this lot becomes when the corpus is signed -- and
+    #: ``screening`` itself for every other rule verdict. Its checks, head
+    #: and ask are the verdict's own; only the colour and the reasons can
+    #: differ. Named, never mistaken for the verdict.
+    signed: Screening
+    #: How many angles the envelope was searched at, and the sweep step.
+    angles: int
+    step_deg: float
+
+
+def _if_signed(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    design: Design,
+    fit: Fit,
+    screening: Screening,
+    *,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    config: Configuration,
+) -> Screening:
+    if rules.verdict is not RuleVerdict.unverified:
+        return screening
+    signed = dataclasses.replace(rules, verdict=RuleVerdict.trusted, untrusted=())
+    return screen(signed, lot, design, fit, policy=policy, relief=relief, config=config)
+
+
+def screen_lot(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+) -> list[Screened]:
+    """Screen one lot against every design, one envelope search for all.
+
+    The configuration and the resolution are per design (a design's own
+    conditions ride in); the :class:`~flats.fit.rectangle.Fitter` is built
+    once, at the angles the zone allows: a zone that makes the building face
+    the street confines the search to s4's street directions, every other
+    zone gets the sweep with those directions folded in. A lot with no
+    street direction is swept either way -- not knowing the front is not a
+    reason to search nothing, and ``NO_FRONTAGE`` already names the lot.
+    """
+    layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
+    resolved: list[tuple[Design, Configuration, ZoneResolution]] = []
+    for design in designs:
+        config = configure(lot.facts, design, observed=lot.observed)
+        got = rules.resolve(layer_id, lot.zone, config.conditions, lot=config.measures)
+        resolved.append((design, config, got))
+
+    axis_required = any(
+        got.get("orientation_constraint") == "axis_required" for _, _, got in resolved
+    )
+    angles = angles_for(
+        lot.front_bearings,
+        axis_required=axis_required and bool(lot.front_bearings),
+        step_deg=step_deg,
+    )
+    fitter = Fitter(lot.envelope, angles)
+
+    out: list[Screened] = []
+    for design, config, got in resolved:
+        fit = fit_for(fitter, design, got, placement=False)
+        result = screen(got, lot.facts, design, fit, policy=policy, relief=relief, config=config)
+        shadow = _if_signed(
+            got, lot.facts, design, fit, result, policy=policy, relief=relief, config=config
+        )
+        out.append(
+            Screened(
+                lot=lot,
+                design=design,
+                rules=got,
+                config=config,
+                fit=fit,
+                screening=result,
+                signed=shadow,
+                angles=len(angles),
+                step_deg=step_deg,
+            )
+        )
+    return out
+
+
+def row_for(s: Screened) -> dict[str, Any]:
+    """One flat record per lot x design, what the batch writes."""
+    leaning = s.config.leans_on(s.rules.levers)
+    failing = tuple(c.check for c in s.screening.checks if c.verdict is CheckVerdict.fails)
+    return {
+        "TLID": s.lot.tlid,
+        "jurisdiction": s.lot.jurisdiction,
+        "zone": s.lot.zone,
+        "layer_id": s.lot.layer_id,
+        "tier": s.lot.facts.geometry.value,
+        "design": s.design.key,
+        "rule_verdict": s.rules.verdict.value,
+        "triage": s.screening.triage.value,
+        "if_signed": s.signed.triage.value,
+        "reasons": ",".join(s.screening.reasons),
+        "if_signed_reasons": ",".join(s.signed.reasons),
+        "head": s.screening.head,
+        "dominant": s.screening.dominant,
+        "failing": ",".join(failing),
+        "unchecked": ",".join(s.screening.unchecked),
+        "ask": s.screening.ask.value,
+        "fits": bool(s.fit.fits),
+        "fit_slack_ft": s.screening.fit_slack_ft,
+        "fit_best_depth_ft": s.fit.best_depth_ft,
+        "fit_required_ft": s.fit.required_ft,
+        "fit_across_ft": s.fit.across_ft,
+        "fit_angle_deg": s.fit.angle_deg,
+        "fit_orientation": s.fit.orientation.value if s.fit.orientation else None,
+        "lot_sqft": s.lot.facts.lot_sqft,
+        "frontage_ft": s.lot.facts.frontage_ft,
+        "lot_width_ft": s.lot.facts.lot_width_ft,
+        "lot_depth_ft": s.lot.facts.lot_depth_ft,
+        "observed": json.dumps(dict(sorted(s.lot.observed.items()))),
+        "assumed_leaning": ",".join(n for n in leaning if n in s.config.assumed),
+        "unknown_leaning": ",".join(n for n in leaning if n in s.config.unknown),
+        "angles": s.angles,
+        "step_deg": s.step_deg,
+    }
+
+
+# --- the batch ---------------------------------------------------------------
+
+_WORKER: dict[str, Any] = {}
+
+
+def _init_worker(step_deg: float) -> None:
+    """Load the corpus, catalog and policies once per process."""
+    from flats.designs.model import load_catalog
+    from flats.encode.load import load_trusted
+    from flats.score import relief as relief_mod, slack as slack_mod
+
+    _WORKER["rules"] = load_trusted(strict=False).rules
+    _WORKER["designs"] = list(load_catalog())
+    _WORKER["policy"] = slack_mod.load_policy()
+    _WORKER["relief"] = relief_mod.load_policy()
+    _WORKER["step_deg"] = step_deg
+
+
+def _work_chunk(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    for row in rows:
+        lot = lot_from_row(row)
+        for s in screen_lot(
+            lot,
+            _WORKER["designs"],
+            rules=_WORKER["rules"],
+            policy=_WORKER["policy"],
+            relief=_WORKER["relief"],
+            step_deg=_WORKER["step_deg"],
+        ):
+            out.append(row_for(s))
+    return out
+
+
+#: Best colour a lot's designs reached, for the one-line-per-lot view.
+_RANK: dict[str, int] = {"green": 0, "yellow": 1, "unknown": 2, "red": 3}
+
+
+def per_lot(frame: Any) -> Any:
+    """Collapse lot x design rows to one per lot: the best design's colour.
+
+    A lot is as good as the best pod that stands on it, so GREEN beats
+    YELLOW beats UNKNOWN beats RED, and the head and reasons carried are the
+    winning design's.
+    """
+    ranked = frame.assign(_rank=frame["if_signed"].map(_RANK))
+    ranked = ranked.sort_values(["TLID", "_rank"], kind="stable")
+    return ranked.drop_duplicates("TLID", keep="first").drop(columns="_rank")
+
+
+def compare(frame: Any, results: Path = LOTS_RESULTS) -> str:
+    """FLATS's ``if_signed`` beside quadfit's triage, as a markdown report.
+
+    quadfit's colours are ``green`` / ``review`` / ``red``; FLATS's are
+    GREEN / YELLOW / UNKNOWN / RED. The crosstab is per lot (the best
+    design), then per jurisdiction, then the checks and reasons behind the
+    two disagreements that matter: FLATS RED where quadfit is green (a
+    standard one product enforces and the other does not, or a measurement
+    that differs), and FLATS GREEN where quadfit is red (the same, the other
+    way). Everything else is bookkeeping.
+    """
+    import pandas as pd
+
+    lots = per_lot(frame)
+    q = pd.read_csv(
+        results,
+        usecols=["TLID", "triage", "binding_constraint", "policy_exclusion"],
+        dtype=str,
+    )
+    m = lots.merge(q, on="TLID", how="left", suffixes=("", "_quadfit"))
+    m["quadfit"] = m["triage_quadfit"].fillna("absent")
+    lines: list[str] = []
+    lines.append("# FLATS screen from the county map -- against quadfit\n")
+    lines.append(
+        f"{len(frame):,} lot x design rows, {len(lots):,} lots, "
+        f"{frame['design'].nunique()} designs; sweep step "
+        f"{frame['step_deg'].iloc[0] if len(frame) else '?'} deg.\n"
+    )
+    lines.append("## The verdict as it stands\n")
+    lines.append(_counts(frame["triage"]) + "\n")
+    lines.append("Reasons on the verdict, lot x design rows:\n")
+    lines.append(_counts(frame["reasons"].str.split(",").explode().replace("", "(none)")) + "\n")
+    lines.append("## If signed -- per lot (best design) against quadfit's triage\n")
+    ct = pd.crosstab(m["if_signed"], m["quadfit"], margins=True)
+    lines.append(_table(ct) + "\n")
+    lines.append("### By jurisdiction: FLATS if-signed GREEN / quadfit green\n")
+    by = (
+        m.assign(fg=m["if_signed"] == "green", qg=m["quadfit"] == "green")
+        .groupby("jurisdiction")
+        .agg(lots=("TLID", "size"), flats_green=("fg", "sum"), quadfit_green=("qg", "sum"))
+        .sort_values("lots", ascending=False)
+    )
+    lines.append(_table(by) + "\n")
+    red_where_green = m[(m["if_signed"] == "red") & (m["quadfit"] == "green")]
+    lines.append(f"### FLATS RED where quadfit is green: {len(red_where_green):,} lots\n")
+    lines.append("Tightest failing check (head):\n")
+    lines.append(_counts(red_where_green["head"].fillna("(none)")) + "\n")
+    green_where_red = m[(m["if_signed"] == "green") & (m["quadfit"] == "red")]
+    lines.append(f"### FLATS GREEN where quadfit is red: {len(green_where_red):,} lots\n")
+    lines.append("quadfit's binding constraint:\n")
+    lines.append(_counts(green_where_red["binding_constraint"].fillna("(none)")) + "\n")
+    lines.append("quadfit's policy exclusion:\n")
+    lines.append(_counts(green_where_red["policy_exclusion"].fillna("(none)")) + "\n")
+    unknown = m[m["if_signed"] == "unknown"]
+    lines.append(f"### Still UNKNOWN once signed: {len(unknown):,} lots\n")
+    lines.append(
+        _counts(unknown["if_signed_reasons"].str.split(",").explode().replace("", "(none)"))
+        + "\n"
+    )
+    lines.append("Assumed facts a standard turns on (lot x design rows):\n")
+    lines.append(
+        _counts(frame["assumed_leaning"].str.split(",").explode().replace("", "(none)")) + "\n"
+    )
+    lines.append("Unobserved facts a standard turns on (lot x design rows):\n")
+    lines.append(
+        _counts(frame["unknown_leaning"].str.split(",").explode().replace("", "(none)")) + "\n"
+    )
+    return "\n".join(lines)
+
+
+def _table(frame: Any) -> str:
+    """A DataFrame as a markdown table, index first, without tabulate."""
+    cols = [str(c) for c in frame.columns]
+    head = "| " + " | ".join([str(frame.index.name or ""), *cols]) + " |"
+    rule = "|---|" + "---:|" * len(cols)
+    body = [
+        "| " + " | ".join([str(idx), *(_cell(v) for v in row)]) + " |"
+        for idx, row in zip(frame.index, frame.itertuples(index=False))
+    ]
+    return "\n".join([head, rule, *body])
+
+
+def _cell(value: Any) -> str:
+    try:
+        return f"{int(value):,}" if float(value) == int(value) else f"{float(value):,.1f}"
+    except (TypeError, ValueError):
+        return str(value)
+
+
+def _counts(series: Any, top: int = 25) -> str:
+    vc = series.value_counts()
+    rows = [f"| {k} | {v:,} |" for k, v in vc.head(top).items()]
+    if len(vc) > top:
+        rows.append(f"| ... {len(vc) - top} more | |")
+    return "\n".join(["| value | rows |", "|---|---:|", *rows])
+
+
+def run(
+    out: Path,
+    *,
+    s4: Path = S4_LOTS,
+    s5o: Path = S5O_LOTS,
+    results: Path | None = LOTS_RESULTS,
+    processes: int = 1,
+    limit: int | None = None,
+    sample: int | None = None,
+    seed: int = 0,
+    jurisdictions: Iterable[str] = (),
+    step_deg: float = DEFAULT_STEP_DEG,
+    chunk_size: int = 500,
+    log: Any = print,
+) -> Path:
+    """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
+
+    Parts are written as they finish (``parts/NNNNN.parquet``) and
+    concatenated at the end, so a run that dies at hour three keeps its
+    first three hours. Re-running with the same ``out`` starts over.
+    """
+    import time
+    from multiprocessing import Pool
+
+    import pandas as pd
+
+    out.mkdir(parents=True, exist_ok=True)
+    parts_dir = out / "parts"
+    parts_dir.mkdir(exist_ok=True)
+    for old in parts_dir.glob("*.parquet"):
+        old.unlink()
+
+    rows = list(
+        iter_rows(s4, s5o, limit=limit, sample=sample, seed=seed, jurisdictions=jurisdictions)
+    )
+    chunks = [rows[i : i + chunk_size] for i in range(0, len(rows), chunk_size)]
+    log(f"bridge: {len(rows):,} lots in {len(chunks)} chunks, {processes} processes, "
+        f"{step_deg} deg step")
+    t0 = time.time()
+    done = 0
+
+    def _write(i: int, records: list[dict[str, Any]]) -> None:
+        pd.DataFrame.from_records(records).to_parquet(parts_dir / f"{i:05d}.parquet", index=False)
+
+    if processes <= 1:
+        _init_worker(step_deg)
+        for i, chunk in enumerate(chunks):
+            _write(i, _work_chunk(chunk))
+            done += len(chunk)
+            log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
+    else:
+        with Pool(processes, initializer=_init_worker, initargs=(step_deg,)) as pool:
+            for i, records in enumerate(pool.imap(_work_chunk, chunks)):
+                _write(i, records)
+                done += len(chunks[i])
+                if i % 10 == 0 or i == len(chunks) - 1:
+                    log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
+
+    parts = sorted(parts_dir.glob("*.parquet"))
+    frame = (
+        pd.concat([pd.read_parquet(p) for p in parts], ignore_index=True)
+        if parts
+        else pd.DataFrame()
+    )
+    frame.to_parquet(out / "lots.parquet", index=False)
+    meta = {
+        "lots": len(rows),
+        "rows": len(frame),
+        "step_deg": step_deg,
+        "processes": processes,
+        "seconds": round(time.time() - t0, 1),
+        "s4": str(s4),
+        "s5o": str(s5o),
+        "sample": sample,
+        "limit": limit,
+        "jurisdictions": sorted(jurisdictions),
+    }
+    (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
+    if results is not None and results.exists() and len(frame):
+        (out / "summary.md").write_text(compare(frame, results), encoding="utf-8")
+    log(f"bridge: wrote {len(frame):,} rows to {out / 'lots.parquet'} in {meta['seconds']}s")
+    return out / "lots.parquet"
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    import argparse
+
+    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("--out", type=Path, default=S4_LOTS.parents[1] / "flats" / "bridge")
+    ap.add_argument("--s4", type=Path, default=S4_LOTS)
+    ap.add_argument("--s5o", type=Path, default=S5O_LOTS)
+    ap.add_argument("--results", type=Path, default=LOTS_RESULTS)
+    ap.add_argument("--processes", type=int, default=1)
+    ap.add_argument("--limit", type=int)
+    ap.add_argument("--sample", type=int)
+    ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--jurisdiction", action="append", default=[])
+    ap.add_argument("--step-deg", type=float, default=DEFAULT_STEP_DEG)
+    ap.add_argument("--chunk-size", type=int, default=500)
+    args = ap.parse_args(argv)
+    run(
+        args.out,
+        s4=args.s4,
+        s5o=args.s5o,
+        results=args.results,
+        processes=args.processes,
+        limit=args.limit,
+        sample=args.sample,
+        seed=args.seed,
+        jurisdictions=args.jurisdiction,
+        step_deg=args.step_deg,
+        chunk_size=args.chunk_size,
+    )
+    return 0
+
+
+__all__ = [
+    "CLACKAMAS",
+    "LOTS_RESULTS",
+    "OBSERVABLE",
+    "S4_COLUMNS",
+    "S5O_COLUMNS",
+    "S5O_LOTS",
+    "SEWER_MAIN_REACH_FT",
+    "TIER",
+    "QuadfitLot",
+    "Screened",
+    "compare",
+    "iter_rows",
+    "lot_from_row",
+    "observed_facts",
+    "per_lot",
+    "row_for",
+    "run",
+    "screen_lot",
+]
+
+
+if __name__ == "__main__":  # pragma: no cover
+    raise SystemExit(main())
