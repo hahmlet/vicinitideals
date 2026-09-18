@@ -52,7 +52,7 @@ from flats.fit.rectangle import Fit, Fitter
 from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
-from flats.rules.resolver import Verdict as RuleVerdict, ZoneResolution
+from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
 from flats.score.paper import court_across, court_depth, lot_standard
 from flats.score.relief import (
@@ -572,6 +572,25 @@ def _unconfirmed(outcomes: Sequence[ReliefOutcome]) -> tuple[str, ...]:
     return (RELIEF_UNCONFIRMED,) if leaning else ()
 
 
+def _unencoded(field: str, rules: ZoneResolution) -> bool:
+    """Whether a standard the screen could not measure against is a hole.
+
+    Only a required field nothing supplies is one. Two other silences look
+    the same from the check's side and are answers, not holes, and the
+    resolver already tells them apart when it counts ``missing_required``:
+    the code was read and states no such standard (``exempt: true`` --
+    Portland has no parking minimum), or states it in the other unit (a
+    storey cap where the chapter prints no height in feet). Reporting either
+    as "we never encoded it" sends somebody to look for a number that does
+    not exist, and -- found by the first county run, 2026-09-17 -- left every
+    Portland lot uncertifiable however many signatures it collected.
+    """
+    if field not in REQUIRED_FIELDS or field in rules.exempted:
+        return False
+    alternative = ALTERNATIVES.get(field)
+    return alternative is None or alternative not in rules.values
+
+
 def _searched_narrower_than(fit: Fit, design: Design, rules: ZoneResolution) -> bool:
     """Whether the fit's search was narrower than this zone's parking asks.
 
@@ -715,7 +734,7 @@ def screen(
         reasons.append(GEOMETRY_UNREADABLE)
     if "fit_across_ft" in unchecked:
         reasons.append(COURT_WIDTH_UNMEASURED)
-    if any(CHECK_FIELD.get(name, name) in REQUIRED_FIELDS for name in unchecked):
+    if any(_unencoded(CHECK_FIELD.get(name, name), rules) for name in unchecked):
         reasons.append(STANDARD_NOT_ENCODED)
     if unmeasured and FACT_UNOBSERVED not in reasons:
         # A standard stated per a quantity nobody surveyed, on a lot whose own

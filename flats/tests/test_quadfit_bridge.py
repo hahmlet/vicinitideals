@@ -282,6 +282,9 @@ def test_the_verdict_is_the_screens_own_and_the_signed_colour_stands_beside_it(
     # The signed colour is a real answer, reached by the same checks.
     assert s.signed.triage in (Triage.green, Triage.yellow, Triage.red)
     assert "RULE_UNVERIFIED" not in s.signed.reasons
+    # Portland states no parking minimum (`exempt: true`), and the code
+    # saying so is an answer: the signed colour may not call it a hole.
+    assert "STANDARD_NOT_ENCODED" not in s.signed.reasons
     assert s.signed.checks == s.screening.checks
     assert s.signed.head == s.screening.head
     # The fit was searched at the width the zone's parking asks, never the

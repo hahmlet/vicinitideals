@@ -109,12 +109,17 @@ CLEAR = {
 LOT = LotFacts(lot_sqft=6000, frontage_ft=60, lot_width_ft=60)
 
 
-def rules(verdict: RuleVerdict = RuleVerdict.trusted, **overrides) -> ZoneResolution:
+def rules(
+    verdict: RuleVerdict = RuleVerdict.trusted,
+    exempted: tuple[str, ...] = (),
+    **overrides,
+) -> ZoneResolution:
     values = {**CLEAR, **overrides}
     return ZoneResolution(
         jurisdiction=WHERE,
         zone="R5",
         verdict=verdict,
+        exempted=exempted,
         values={
             name: Resolved(
                 name=name,
@@ -642,6 +647,34 @@ def test_a_missing_required_standard_blocks_green() -> None:
     assert result.triage is Triage.unknown
     assert STANDARD_NOT_ENCODED in result.reasons
     assert "parking_stalls" in result.unchecked
+
+
+def test_a_standard_the_code_exempts_is_an_answer_not_a_gap() -> None:
+    """``exempt: true`` is an encoding: the code was read and states no such
+    standard. Portland has no parking minimum, and the first county run
+    (2026-09-17) found every Portland lot UNKNOWN / STANDARD_NOT_ENCODED on
+    that silence -- uncertifiable however many numbers were signed, on a
+    standard nobody could ever encode because it does not exist.
+    """
+    result = run(rules(parking_min_per_unit=None, exempted=("parking_min_per_unit",)))
+
+    assert result.triage is Triage.green
+    assert STANDARD_NOT_ENCODED not in result.reasons
+    # Still reported as unchecked: nothing was measured, and the ledger of
+    # what the screen did not compare is not the ledger of what is missing.
+    assert "parking_stalls" in result.unchecked
+
+
+def test_a_height_stated_in_storeys_alone_is_not_a_missing_height() -> None:
+    """The other silence that is an answer: Gresham SC caps at ten storeys and
+    prints no height in feet. The resolver counts that as answered; the
+    screen has to agree or the zone can never be certified.
+    """
+    result = run(rules(max_height_ft=None, max_height_stories=10))
+
+    assert result.triage is Triage.green
+    assert STANDARD_NOT_ENCODED not in result.reasons
+    assert "height_ft" in result.unchecked
 
 
 def test_a_gap_rides_along_on_a_yellow_instead_of_hiding_it() -> None:
