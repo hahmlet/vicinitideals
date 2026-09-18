@@ -4,30 +4,25 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **The county re-run under the four-stall screen, then the load into
-   production.** The bridge (`flats/ingest/quadfit.py`, 7a32a5e3) ran the
-   whole map under the six-stall screen (`/root/bridge_county` on 137,
-   289,845 lots, 24,949 s; numbers in FLATS_PLAN §2 "The county run, and
-   the stall count it settled" and HUMAN_TODO's built-and-run entry). Steph
-   2026-09-18: *"same as the county map. 4 is enough to sell"* -- built as
-   `StallBands` / `pod56x36@2` / `pod80x25@2`, the floor charged, the seat
-   count + band beside the colour, and `parking_cap` for a cap below the
-   floor (9b045c40, deployed). Sample re-run both ways (`/root/bridge_sample`
-   vs `/root/bridge_sample2`, same 3,000 lots, `/root/both_ways.py`): green
-   342 -> 420, **0 greens lost**, 78 yellow -> green all on `fit_ft` (end-on
-   at 48 / 37 ft where 54 was refused; seat 4 x 28, 5 x 50, all band
-   minimum; quadfit green 23 / red 46 / review 9), 6 Portland EX unknown ->
-   yellow on `parking_cap`, 3 yellow -> unknown (fit passes, a fact
-   unobserved). quadfit-green / FLATS-yellow 63 -> 38 (30 alley, 5 row
-   along the lot, 3 other). Band vs quadfit's tier on the 123 both-green:
-   96 agree, 27 FLATS seats fewer (court shape). **The county re-run is
-   RUNNING**: launched 10:51 UTC 2026-09-18 to `/root/bridge_county2`
-   (`/root/bridge_county2.log`, 16 processes, ~7 h). Next: `python
-   /root/both_ways.py /root/bridge_county /root/bridge_county2` on 137,
-   write the numbers into FLATS_PLAN (§2 "The county run, and the stall
-   count it settled") + HUMAN_TODO (item 18 and the built-and-run entry),
-   then load `flats.lots` / `flats.runs` / `flats.lot_results` in
-   production from the parquet (geometry travels 137 -> 114).
+1. **Load the county run into production.** The bridge
+   (`flats/ingest/quadfit.py`) has run the whole map twice on 137: six-stall
+   `/root/bridge_county` (before) and four-stall `/root/bridge_county2`
+   (after, 2026-09-18, 25,182 s, `lots.parquet` 579,690 rows = 289,845 lots
+   x `pod56x36@2` / `pod80x25@2`, plus `meta.json`, `summary.md`; the
+   both-ways ruling is at `/root/both_ways_county.txt` and
+   `/root/county_dig2.txt`, numbers in FLATS_PLAN §2 "The county run, and
+   the stall count it settled" and HUMAN_TODO's built-and-run entry: green
+   34,445 -> 42,115, none lost). Next: a one-shot script that writes
+   `flats.runs` (one row: code/rules version, design keys, params from
+   `meta.json`), `flats.lots` (TLID, county, jurisdiction, zone, area, geom
+   + centroid from s4 -- geometry travels 137 -> 114, so the parquet or a
+   GeoPackage moves first) and `flats.lot_results` (lot x design: tier =
+   the screen's verdict, UNKNOWN today; `checks` JSONB carries `if_signed`,
+   reasons, head, fit, stalls charged/seated/band, so the signed colour is
+   queryable without a re-run). Never a direct data edit; the script is
+   idempotent on (tlid, design_key, run_id). Decide before writing: does
+   the app show the verdict or the if-signed colour first (the verdict,
+   with the colour beside it, per the 2026-09-17 data-source ruling).
 2. **An authoritative offline source for lots (Steph 2026-09-17: "we will
    need an authoritative offline source").** FLATS's own durable, versioned
    copy of the taxlots, streets and zoning it screens -- option (B) refined:
@@ -70,8 +65,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (`geom/envelope.buildable`) instead of quadfit's carved one, and
    `steep_slope` from s5o's DEM percentile / Gresham's hillside overlay
    (assumed False today, named on every lot it leans on). County-scale
-   sizes from the 2026-09-18 run, on the 7,372 quadfit-green / FLATS-yellow
-   lots: (b) 3,653 on the alley, (a) 2,020 six-plus with the row along the
-   lot; (c) + (d) are 17,837 GREEN-where-red (siteplan_no_layout 10,068,
-   z_overlay 6,164, no_public_sewer 764, existing_* 749). The stall count
-   was decided 2026-09-18 (HUMAN_TODO 18) and is out of this item.
+   sizes from the four-stall county run (2026-09-18, `/root/bridge_county2`),
+   on the 4,024 quadfit-green / FLATS-yellow lots (all `fit_ft`): (b) 3,507
+   on the alley (2,976 seating four there), (a) 517 off their own lane, 268
+   of them seating eight with the row along the lot; (c) + (d) are 21,660
+   GREEN-where-red. Also under (a), the other direction: on the 13,196 lots
+   both call green FLATS seats FEWER than quadfit on 3,881 (one row across
+   where s6s found two) and MORE on 160 (`target` where quadfit's tier is
+   `minimum` 100, `preferred` where `target` 58) -- find what the screen's
+   row counts that s6s's rectangle does not before changing either. The
+   stall count was decided 2026-09-18 (HUMAN_TODO 18) and is out of this
+   item.

@@ -1732,8 +1732,14 @@ to slip through as green because Portland has no parking minimum for the
 screen to measure against; it now fails on the cap the way the county map
 refuses those plans. On the same 3,000-lot sample as before, the four-car
 screen turns 78 "needs an exception" lots green and loses no green at
-all; the county-wide re-run is running, and its numbers land in the
-built-and-run entry at the end of the list.
+all. **The whole county, re-run the same day (7 hours):** greens 34,445 →
+42,115 — 7,670 more, **none lost**; of the county map's 20,125 greens the
+screen now agrees on 13,196 (was 10,038) and says "needs an exception" on
+4,024 (was 7,372), nearly all of them lots that park against an alley or
+lay the row along the lot, which are the next two items in the agent's
+queue, not this decision. Every one of Portland's 993 central-employment
+lots now reads "needs an exception" on the cap. Details in the built-and-run
+entry at the end of the list.
 
 Found 2026-09-17, the first evening the new screen (FLATS) was run against
 the county map's lots (the built-and-run entry at the end of the list). The
@@ -4255,8 +4261,44 @@ the list of places worth hoping about.
   2,641 have a shape the screen could not read, 1,958 lean on an
   assumption, 154 sit where the code's own words are ambiguous, and 10 on
   a standard not yet written down. **These are the
-  before numbers.** The four-car screen you chose is built and the map is
-  being re-run against this one, both ways.
+  before numbers.**
+
+  *The same map under the four-car screen you chose (re-run 2026-09-18,
+  seven hours, ruled both ways against the run above).* Across the whole
+  county: **green 34,445 → 42,115, and not one green lost**; exception
+  242,159 → 234,152, can't tell 12,607 → 12,944, red 634 → 634. 8,636
+  lots moved. **7,670 turned green**, every one a lot where the six-car
+  row had turned the building sideways and run out of room; with four
+  cars the building stands straight and fits. They seat four (2,558) or
+  five (5,112) cars — the county map's "minimum" tier — and the county
+  map itself calls 3,158 of them green, 3,822 red (its blanket policies
+  and street-angle fit, above) and 689 review. Portland 6,254,
+  unincorporated Clackamas 1,067, Gladstone 142, Wilsonville 102, Wood
+  Village 44, Troutdale 41, Gresham 10. **652 went from "needs an
+  exception" to "can't tell"**: the building fits now, so the screen
+  reached a site fact nobody has measured (516), a lot shape it cannot
+  read (106) or both (22) — mostly Gresham LDR-5 / LDR-7 (286) and
+  Oregon City R-10 / R-6 / R-8 (133), item 14's list. **314 went from
+  "can't tell" to "needs an exception"**: Portland's central-employment
+  cap of two cars per fourplex; all 993 of those lots now say so, none
+  green. Of the county map's 20,125 greens the screen now **agrees on
+  13,196 (was 10,038), says "needs an exception" on 4,024 (was 7,372),
+  "can't tell" on 2,905, red on none.** The 4,024 are the residue this
+  decision was expected to leave: 3,507 park against an alley on the
+  county map and 517 off their own lane, 268 of those with the row turned
+  along the lot — the alley and the turned row, both on my queue. Where
+  both products say green (13,196 lots) the car count agrees on 9,155;
+  the screen seats fewer on 3,881 (one row across, where the county map
+  found two) and more on 160 — the second direction of the court-shape
+  item, now queued with it. Green by city, screen / county map: Portland
+  29,190 / 16,449, unincorporated Clackamas 10,328 / 113, unincorporated
+  Multnomah 963 / 1, Troutdale 448 / 117, Gladstone 438 / 0, Wilsonville
+  426 / 53, Wood Village 144 / 46, Gresham 62 / 1,715, Oregon City 0 /
+  732, Milwaukie 0 / 614, West Linn 0 / 285 — the zeros and Gresham are
+  unmeasured site facts (item 14), not the court. The screen says green on
+  21,660 lots the county map calls red (was 17,837) and 7,259 it calls
+  review. Next: these results go into the app's database so they can be
+  seen lot by lot.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

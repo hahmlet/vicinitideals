@@ -1234,8 +1234,37 @@ four or five, band `minimum`; quadfit calls 23 of them green, 46 red, 9 review),
 Portland EX lots unknown → yellow on `parking_cap`, 3 yellow → unknown (the fit passes and
 a fact is unobserved). quadfit-green / FLATS-yellow 63 → 38: 30 on the alley, 5 with the
 row along the lot. On the 123 lots both call green the band agrees with `parking_tier` on
-96 and FLATS seats fewer on 27 — the court's shape. The county re-run (`/root/bridge_county2`)
-is ruled both ways against `/root/bridge_county` when it lands.
+96 and FLATS seats fewer on 27 — the court's shape. **The county, both ways
+(`/root/bridge_county2`, 289,845 lots, 25,182 s, same lots as the six-stall run):** green
+34,445 → **42,115**, yellow 242,159 → 234,152, unknown 12,607 → 12,944, red 634 → 634;
+**no green lost**. 8,636 lots moved. 7,670 turned green (7,669 from yellow, 1 from
+unknown), every one headed on `fit_ft` before: the flip at 48 ft for `pod56x36` (4,780)
+and 37–38 for `pod80x25` (2,842), 48 more at 45–47, where 68 or 92 was refused; they
+seat four (2,558) or five (5,112), all band `minimum`; quadfit calls 3,158 of them
+green, 3,822 red, 689 review; Portland 6,254, unincorporated Clackamas 1,067, Gladstone
+142, Wilsonville 102, Wood Village 44, Troutdale 41, Gresham 10. 652 yellow → unknown:
+the four-stall court fits (646) or turns on the fact (6), and what is left is a site
+fact unobserved (516), the geometry unreadable (106) or both (22) — Gresham LDR-5 184 /
+LDR-7 102 / TLDR 27, Oregon City R-10 62 / R-6 45 / R-8 26, Portland R10 37 / R7 20,
+Fairview R-7.5 21. 314 unknown → yellow: Portland EX on `parking_cap`; **all 993 EX lots
+are now yellow** (973 head on the cap), none green, none unknown. Of quadfit's 20,125
+greens the signed colour is now **GREEN 13,196 / YELLOW 4,024 / UNKNOWN 2,905 / RED 0**
+(was 10,038 / 7,372 / 2,715 / 0). The 4,024 yellows all head on `fit_ft`: 3,507 park on
+the alley in quadfit (2,976 of them seating four) and 517 off their own lane, 268 of
+those seating eight with the row along the lot — FOLLOWUPS 4 (b) and (a), the residue
+this change was expected to leave. GREEN where quadfit is red 21,660 (was 17,837), where
+review 7,259. On the 13,196 lots both call green the band agrees with `parking_tier` on
+9,155 (minimum 1,542, target 2,459, preferred 5,154); FLATS seats fewer on 3,881 (band
+`minimum` where quadfit drew `preferred` 1,603, `target` where `preferred` 2,252 — the
+court's shape, one row across) and **more on 160** (`target` where quadfit's tier is
+`minimum` 100, `preferred` where `target` 58 — the other direction of 4 (a), queued
+there). Seated minus provided: equal on 9,045, one to four fewer on 3,912, one to three
+more on 239. The band on all 42,115 greens: preferred 20,868, target 12,674, minimum
+8,573. By jurisdiction, FLATS / quadfit greens: Portland 29,190 / 16,449, unincorporated
+Clackamas 10,328 / 113, unincorporated Multnomah 963 / 1, Troutdale 448 / 117, Gladstone
+438 / 0, Wilsonville 426 / 53, Wood Village 144 / 46, Gresham 62 / 1,715, Oregon City
+0 / 732, Milwaukie 0 / 614, West Linn 0 / 285 — the zeros and Gresham are the unobserved
+site facts, not the court.
 
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,
