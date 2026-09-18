@@ -111,7 +111,8 @@ def _make_run(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
                 "has_z_overlay": False, "zone_frac": 1.0, "stack_count": 1, "wkb": shapely.to_wkb(POLY_A),
             },
             {
-                "TLID": LOT_B, "COUNTY": "M", "SITEADDR": "1829 NW 25TH AVE", "jurisdiction": "portland",
+                # Portland's jurisdiction, Clackamas County's roll: the county is the roll's.
+                "TLID": LOT_B, "COUNTY": "C", "SITEADDR": "1829 NW 25TH AVE", "jurisdiction": "portland",
                 "zone_raw": "R2.5", "zone": "R2.5", "area_sqft": 7200.0, "tier": "B", "frontage_ft": 60.0,
                 "lot_width_ft": 60.0, "lot_depth_ft": 120.0, "front_bearings_json": "[0.0, 90.0]",
                 "alley_width_ft": 20.0, "fronts_cul_de_sac": False, "split_zone": False, "inside_ugb": True,
@@ -164,7 +165,7 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
 
     assert {p.name for p in out.iterdir()} == {LOTS_FILE, RESULTS_FILE, RUN_FILE}
     assert run["design_keys"] == list(DESIGNS)
-    assert run["counties"] == ["multnomah"]
+    assert run["counties"] == ["clackamas", "multnomah"]
     assert run["code_version"] == "abc1234"
     assert run["rules_version"] == rules_version()
     assert run["counts"] == {
@@ -172,7 +173,7 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
         "results": 4,
         "tiers": {"unknown": 4},
         "if_signed": {"green": 1, "red": 1, "unknown": 1, "yellow": 1},
-        "by_county": {"multnomah": 2},
+        "by_county": {"clackamas": 1, "multnomah": 1},
     }
     assert run["params"]["source_id"] == run["source_id"]
     assert run["status"] == "complete"
@@ -202,6 +203,7 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
         "layout_method": "rear_court",
     }
     b = next(r for r in lots if r["tlid"] == LOT_B)
+    assert (b["county"], b["jurisdiction"]) == ("clackamas", "or/multnomah/portland")
     assert json.loads(b["facts"])["quadfit"]["policy_exclusion"] == "z_overlay_constrained_site"
     assert json.loads(b["facts"])["alley_width_ft"] == 20.0
 
@@ -273,7 +275,7 @@ async def test_the_load_lands_every_row_where_the_schema_keys_it(tmp_path: Path,
     run = (await session.execute(text("SELECT status, design_keys, counties, code_version, rules_version, params->>'source_id' FROM flats.runs"))).one()
     assert run[0] == "complete"
     assert list(run[1]) == list(DESIGNS)
-    assert list(run[2]) == ["multnomah"]
+    assert list(run[2]) == ["clackamas", "multnomah"]
     assert run[4] == rules_version()
     assert run[5] == json.loads((bundle / RUN_FILE).read_text())["source_id"]
 

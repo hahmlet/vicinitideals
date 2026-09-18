@@ -208,6 +208,24 @@ def _int(value: Any) -> int | None:
     return None if v is None else int(round(v))
 
 
+#: RLIS's county letter on the taxlot record.
+COUNTY_LETTER = {"M": "multnomah", "C": "clackamas", "W": "washington"}
+
+
+def lot_county(s4: dict[str, Any]) -> str:
+    """The taxlot's county -- the assessor's, from s4's ``COUNTY`` letter.
+
+    Not the jurisdiction's: Portland reaches into Clackamas County and Happy
+    Valley into Multnomah, and ``(county, tlid)`` is the lot's natural key, so
+    it takes the county whose roll the TLID is on. The jurisdiction's county
+    is the fallback for a stage file without the letter.
+    """
+    letter = _clean(s4.get("COUNTY"))
+    if isinstance(letter, str) and letter.strip().upper()[:1] in COUNTY_LETTER:
+        return COUNTY_LETTER[letter.strip().upper()[:1]]
+    return COUNTY.get(str(s4.get("jurisdiction")), "unknown")
+
+
 def lot_facts(s4: dict[str, Any], s5o: dict[str, Any], observed: dict[str, Any], quadfit: dict[str, Any]) -> dict[str, Any]:
     """The design-independent record for one lot, from the four sources."""
     bearings_raw = _clean(s4.get("front_bearings_json"))
@@ -378,7 +396,7 @@ def export(
         for tlid in tlids:
             s4r = s4_rows[tlid]
             juris = str(s4r.get("jurisdiction"))
-            county = COUNTY.get(juris) or {"M": "multnomah", "C": "clackamas"}.get(str(s4r.get("COUNTY")), "unknown")
+            county = lot_county(s4r)
             try:
                 layer = layer_id_for(juris)
             except KeyError:
@@ -414,8 +432,7 @@ def export(
         w.writerow(RESULT_COLUMNS)
         for row in frame.to_dict("records"):
             tlid = row["TLID"]
-            juris = str(s4_rows[tlid].get("jurisdiction"))
-            county = COUNTY.get(juris) or {"M": "multnomah", "C": "clackamas"}.get(str(s4_rows[tlid].get("COUNTY")), "unknown")
+            county = lot_county(s4_rows[tlid])
             tier = str(row.get("triage"))
             if tier not in TIERS:
                 raise SystemExit(f"unexpected triage {tier!r} on {tlid} {row.get('design')}")
