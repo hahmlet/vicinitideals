@@ -1730,9 +1730,10 @@ building that was not on the table: a city whose *cap* is below four —
 Portland's central employment zone allows two spaces for four homes — used
 to slip through as green because Portland has no parking minimum for the
 screen to measure against; it now fails on the cap the way the county map
-refuses those plans. The county-wide re-run against the six-car run is the
-next step, and its numbers land in the built-and-run entry at the end of
-the list.
+refuses those plans. On the same 3,000-lot sample as before, the four-car
+screen turns 78 "needs an exception" lots green and loses no green at
+all; the county-wide re-run is running, and its numbers land in the
+built-and-run entry at the end of the list.
 
 Found 2026-09-17, the first evening the new screen (FLATS) was run against
 the county map's lots (the built-and-run entry at the end of the list). The

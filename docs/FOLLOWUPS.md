@@ -12,15 +12,22 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    2026-09-18: *"same as the county map. 4 is enough to sell"* -- built as
    `StallBands` / `pod56x36@2` / `pod80x25@2`, the floor charged, the seat
    count + band beside the colour, and `parking_cap` for a cap below the
-   floor. Next: re-run on 137 under version 2 -- sample first (`--sample
-   3000 --seed 0 --processes 12 --chunk-size 250`), then the county (~7 h)
-   to `/root/bridge_county2` -- and rule it BOTH ways against
-   `/root/bridge_county`: greens gained on the court's width (expected on
-   54-67-ft envelopes and where the flip was refused), anything lost (EX
-   lots on `parking_cap`; nothing else should move), and the band table
-   against quadfit's `parking_tier`. Then load `flats.lots` / `flats.runs`
-   / `flats.lot_results` in production from the parquet (geometry travels
-   137 -> 114).
+   floor (9b045c40, deployed). Sample re-run both ways (`/root/bridge_sample`
+   vs `/root/bridge_sample2`, same 3,000 lots, `/root/both_ways.py`): green
+   342 -> 420, **0 greens lost**, 78 yellow -> green all on `fit_ft` (end-on
+   at 48 / 37 ft where 54 was refused; seat 4 x 28, 5 x 50, all band
+   minimum; quadfit green 23 / red 46 / review 9), 6 Portland EX unknown ->
+   yellow on `parking_cap`, 3 yellow -> unknown (fit passes, a fact
+   unobserved). quadfit-green / FLATS-yellow 63 -> 38 (30 alley, 5 row
+   along the lot, 3 other). Band vs quadfit's tier on the 123 both-green:
+   96 agree, 27 FLATS seats fewer (court shape). **The county re-run is
+   RUNNING**: launched 10:51 UTC 2026-09-18 to `/root/bridge_county2`
+   (`/root/bridge_county2.log`, 16 processes, ~7 h). Next: `python
+   /root/both_ways.py /root/bridge_county /root/bridge_county2` on 137,
+   write the numbers into FLATS_PLAN (§2 "The county run, and the stall
+   count it settled") + HUMAN_TODO (item 18 and the built-and-run entry),
+   then load `flats.lots` / `flats.runs` / `flats.lot_results` in
+   production from the parquet (geometry travels 137 -> 114).
 2. **An authoritative offline source for lots (Steph 2026-09-17: "we will
    need an authoritative offline source").** FLATS's own durable, versioned
    copy of the taxlots, streets and zoning it screens -- option (B) refined:

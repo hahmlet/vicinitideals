@@ -1227,8 +1227,15 @@ answer on the cap. What the change is expected to move,
 before the re-run: the yellows on 54–67-ft envelopes and wherever the flip was refused
 (median `fit_across_ft` on the 7,372 is 68 — the building and its lane — so the court's
 width only bound end-on); the 3,653 alley lots and the 2,020 row-along-the-lot lots are
-FOLLOWUPS 4 (b) and (a), unchanged by this. The re-run is both ways against
-`/root/bridge_county`.
+FOLLOWUPS 4 (b) and (a), unchanged by this. Measured first on the same 3,000-lot sample,
+both ways (`/root/both_ways.py`): green 342 → 420, **no green lost**, 78 yellow → green
+all on `fit_ft` (the flip at 48 ft — or 37 for pod80x25 — where 54 was refused; they seat
+four or five, band `minimum`; quadfit calls 23 of them green, 46 red, 9 review), 6
+Portland EX lots unknown → yellow on `parking_cap`, 3 yellow → unknown (the fit passes and
+a fact is unobserved). quadfit-green / FLATS-yellow 63 → 38: 30 on the alley, 5 with the
+row along the lot. On the 123 lots both call green the band agrees with `parking_tier` on
+96 and FLATS seats fewer on 27 — the court's shape. The county re-run (`/root/bridge_county2`)
+is ruled both ways against `/root/bridge_county` when it lands.
 
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,
