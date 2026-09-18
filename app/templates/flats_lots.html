@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}Lots — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  {% if missing %}
+    <div class="alert alert-warning">No lot called <code>{{ missing }}</code> in the run.</div>
+  {% endif %}
+
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Lots</h2>
+      <p class="muted" style="margin:4px 0 0">
+        Every lot the screen has looked at, and what it said. The <strong>verdict</strong> is
+        what the screen can stand behind today; the <strong>colour if signed</strong> is what
+        it would say once the rules it rests on are confirmed as read. The two are shown
+        side by side and the first is never replaced by the second.
+      </p>
+    </div>
+  </div>
+
+  {% if not run %}
+    <div class="alert alert-warning">No completed run has been loaded yet.</div>
+  {% else %}
+
+  <form method="get" action="/flats/lots" class="toolbar" style="gap:8px;flex-wrap:wrap;align-items:flex-end">
+    <input type="hidden" name="run" value="{{ run.id }}">
+    <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted">City
+      <select name="jurisdiction" style="min-width:180px">
+        <option value="">All cities</option>
+        {% for layer_id, label in cities %}
+          <option value="{{ layer_id }}" {% if layer_id == jurisdiction %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted">Zone
+      {% if zones %}
+        <select name="zone" style="min-width:100px">
+          <option value="">All zones</option>
+          {% for z in zones %}
+            <option value="{{ z }}" {% if z == zone %}selected{% endif %}>{{ z }}</option>
+          {% endfor %}
+        </select>
+      {% else %}
+        <input type="text" name="zone" value="{{ zone }}" placeholder="e.g. R5" style="width:90px">
+      {% endif %}
+    </label>
+    <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted">Building
+      <select name="design">
+        <option value="" {% if not design %}selected{% endif %}>Either design</option>
+        {% for key in designs %}
+          <option value="{{ key }}" {% if key == design %}selected{% endif %}>{{ key }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted">Address or lot number
+      <input type="text" name="q" value="{{ q }}" placeholder="2833 SE 71ST or 1S2E08BA" style="width:220px">
+    </label>
+    <input type="hidden" name="colour" value="{{ colour }}">
+    <button class="btn btn-sm btn-primary" type="submit">Show</button>
+    {% if jurisdiction or zone or q or colour or design %}
+      <a class="btn btn-sm btn-secondary" href="/flats/lots?run={{ run.id }}">Clear</a>
+    {% endif %}
+  </form>
+
+  {% set base_query = "run=" ~ run.id ~ "&jurisdiction=" ~ (jurisdiction|urlencode) ~ "&zone=" ~ (zone|urlencode) ~ "&design=" ~ (design|urlencode) ~ "&q=" ~ (q|urlencode) %}
+
+  <div id="lot-counts" class="toolbar" style="gap:18px;flex-wrap:wrap;align-items:baseline">
+    <div>
+      <span class="muted">Lots</span>
+      <strong>{{ "{:,}".format(counts.lots) }}</strong>
+    </div>
+    <div>
+      <span class="muted">Verdict today</span>
+      {% for c in colours %}{% if counts.verdict.get(c) %}
+        <span class="badge {{ badges[c] }}" title="{{ verdict_words[c] }}">{{ c }} {{ "{:,}".format(counts.verdict[c]) }}</span>
+      {% endif %}{% endfor %}
+    </div>
+    <div>
+      <span class="muted">If signed as read</span>
+      <a class="btn btn-sm {% if not colour %}btn-primary{% else %}btn-secondary{% endif %}"
+         href="/flats/lots?{{ base_query }}">all</a>
+      {% for c in colours %}
+        <a class="btn btn-sm {% if colour == c %}btn-primary{% else %}btn-secondary{% endif %}"
+           href="/flats/lots?{{ base_query }}&colour={{ c }}" title="{{ colour_words[c] }}">
+          {{ c }} {{ "{:,}".format(counts.if_signed.get(c, 0)) }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table" id="lot-table">
+      <thead>
+        <tr>
+          <th>Address</th>
+          <th>Lot number</th>
+          <th>City</th>
+          <th>Zone</th>
+          <th class="col-right">Lot size</th>
+          <th>Verdict</th>
+          <th>If signed</th>
+          <th>Per design</th>
+          <th>County map says</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lot in lots %}
+        <tr onclick="window.location='{{ lot.href }}?run={{ run.id }}'">
+          <td><a href="{{ lot.href }}?run={{ run.id }}">{{ lot.address or "(no address)" }}</a></td>
+          <td class="col-mono">{{ lot.tlid }}</td>
+          <td>{{ lot.city }}</td>
+          <td>{{ lot.zone or "—" }}{% if lot.zone_raw and lot.zone_raw != lot.zone %} <span class="muted" style="font-size:11px">({{ lot.zone_raw }})</span>{% endif %}</td>
+          <td class="col-right">{% if lot.area %}{{ "{:,.0f}".format(lot.area) }} sf{% else %}—{% endif %}</td>
+          <td><span class="badge {{ badges.get(lot.verdict, 'badge-gray') }}" title="{{ lot.verdict_words }}">{{ lot.verdict }}</span></td>
+          <td><span class="badge {{ lot.badge }}" title="{{ lot.colour_words }}">{{ lot.colour }}</span></td>
+          <td style="font-size:12px">
+            {% for r in lot.results %}
+              <div><span class="muted">{{ r.design }}</span>
+                <span class="badge {{ r.badge }}">{{ r.colour }}</span>
+                {% if r.stalls_seated is not none %}<span class="muted">{{ r.stalls_seated }} cars</span>{% endif %}
+                {% if r.head %}<span class="muted">· {{ r.head }}</span>{% endif %}
+              </div>
+            {% endfor %}
+          </td>
+          <td style="font-size:12px">
+            {% if lot.quadfit.triage %}
+              <span class="badge {{ badges.get(lot.quadfit.triage, 'badge-gray') }}">{{ lot.quadfit.triage }}</span>
+              {% if lot.quadfit.binding_constraint %}<span class="muted">{{ lot.quadfit.binding_constraint }}</span>{% endif %}
+              {% if lot.quadfit.policy_exclusion %}<span class="muted">{{ lot.quadfit.policy_exclusion }}</span>{% endif %}
+            {% else %}—{% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="9" class="muted">No lots match.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="toolbar" style="gap:8px;align-items:center">
+    <span class="muted" style="font-size:12px">
+      {% if shown %}Showing {{ "{:,}".format((page - 1) * per_page + 1) }}–{{ "{:,}".format([page * per_page, shown]|min) }} of {{ "{:,}".format(shown) }}{% endif %}
+    </span>
+    <span style="flex:1"></span>
+    {% if page > 1 %}
+      <a class="btn btn-sm btn-secondary" href="/flats/lots?{{ base_query }}&colour={{ colour }}&page={{ page - 1 }}">Previous</a>
+    {% endif %}
+    {% if page < pages %}
+      <a class="btn btn-sm btn-secondary" href="/flats/lots?{{ base_query }}&colour={{ colour }}&page={{ page + 1 }}">Next</a>
+    {% endif %}
+  </div>
+
+  <p class="muted" style="font-size:12px;margin:12px 0 0">
+    Run {{ run.id }}{% if run.finished %}, finished {{ run.finished }}{% endif %}{% if run.code_version %}, code {{ run.code_version }}{% endif %}
+    — {{ run.designs|join(" and ") }}.
+    {% if runs|length > 1 %}
+      Other runs:
+      {% for other in runs %}{% if other.id != run.id %}
+        <a href="/flats/lots?run={{ other.id }}">{{ other.id }}{% if other.finished %} ({{ other.finished }}){% endif %}</a>
+      {% endif %}{% endfor %}
+    {% endif %}
+    <br>
+    <strong>Verdict</strong> is the screen's own answer, and it stays "unknown" on every lot until the
+    rules behind it are signed. <strong>If signed</strong> is the colour the same lot takes the moment
+    they are. <strong>County map says</strong> is the older screen's answer on the same lot, kept beside
+    ours so the two can be compared, never averaged. "Either design" gives each lot the better of its
+    two designs; pick one to see that design alone.
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

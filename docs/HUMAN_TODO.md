@@ -1813,6 +1813,32 @@ which is a code change and loses some detail from old runs, or delete each
 run's results when the next one lands — cheaper but nothing to compare
 against.
 
+## 20. One decision: where the screen's own copy of the county's map data should live
+
+The screen still reads its lots from the county map's files on the analysis
+box — the "bridge" you approved on 17 September "for now", with an offline
+source of our own as the standing requirement. Building that source is the
+next thing on my queue, and one choice is yours before I start. The copy has
+to be somewhere durable and versioned: a download of the county's tax lots,
+streets and zoning that we keep, date-stamp, and re-run against, so that a
+verdict can always be traced to the map it was read from.
+
+**Option A — in the app's database (recommended).** The lot table the app
+now has (item 19's 1.2 GB) becomes the copy: each county download lands there
+with its date, and old versions stay until pruned. One place, backed up with
+everything else, visible on the Lots page the day it lands. Costs disk on the
+app server — roughly 1–2 GB per county download kept — so it depends on item
+19 being done first.
+
+**Option B — as files on the analysis box.** Cheaper on the app server and
+faster to re-run against, but a second place to back up, invisible from the
+site until a run is loaded, and the analysis box is the one with no backups
+today.
+
+The trade-off as you would say it: A is "one copy, safer, needs the bigger
+disk"; B is "two copies, cheaper, more manual". Reply "A" or "B" (or "A once
+the disk is grown").
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
@@ -4324,9 +4350,21 @@ the list of places worth hoping about.
   colours above come back exactly from the database. The verdict stored
   is the screen's honest "can't tell yet" on every lot, with the colour
   it would take once the rules are signed stored beside it, never in its
-  place — the 17 September ruling. Nothing on the site shows them yet; a
-  page that does is the next item on my queue. One cost to know about:
-  the app server's disk went from 80% to 85% full (item 19).
+  place — the 17 September ruling. One cost to know about: the app
+  server's disk went from 80% to 85% full (item 19).
+
+  *And a page to see them (2026-09-18, later the same evening).* **Lots**
+  in the left-hand menu, under Plans: every lot the screen looked at,
+  counted by verdict and by the colour it would take once signed, with the
+  four colours as buttons; filter by city, by zone within a city, by
+  building design ("either design" gives each lot the better of its two,
+  which is how the 42,115 was counted), or search by address or lot number.
+  Click a lot and its own page opens: the verdict first and the colour
+  beside it, each design's answer with the cars it seats and the check
+  that binds, the county map's colour next to ours for comparison, the
+  facts the screen read (frontage, width, depth, alley, slope, sewer,
+  flood), an outline of the lot drawn to scale, and a link to it on a map.
+  Read-only: nothing on it can be signed or changed, on purpose.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

@@ -39,14 +39,16 @@ Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
 """
 from __future__ import annotations
 
+import json
 import re
 from datetime import datetime, timezone
 from functools import lru_cache
 from typing import Any, Sequence
+from urllib.parse import quote
 
 from fastapi import APIRouter, Form, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
-from sqlalchemy import func, select
+from sqlalchemy import case, func, or_, select
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
@@ -54,8 +56,11 @@ from app.config import settings
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import (
     FlatsCrossrefRuling,
+    FlatsLot,
+    FlatsLotResult,
     FlatsReadingRuling,
     FlatsRuleSignature,
+    FlatsRun,
     FlatsWordRuling,
 )
 from flats.encode import legible
@@ -2646,6 +2651,498 @@ async def flats_words_rule(
     )
     await session.commit()
     return await render(at=skipped)
+
+
+# --- lots: what the screen said about each one -------------------------
+#
+# The county run lands in ``flats.lots`` / ``flats.lot_results`` and until
+# these two pages nothing read it: 289,845 lots and their verdicts, visible
+# only through psql. The list counts by colour and filters by city, zone and
+# colour; the lot page shows one lot, the facts the screen read off it, and
+# what each building design was told -- the verdict first, and the colour it
+# would take once the rules are signed beside it, never in its place (the
+# 2026-09-17 ruling). Read-only: a ruling on a lot is a ruling on the code
+# that produced it, and those live on the signing pages.
+
+#: The colours in the order a lot is best described by them. A lot with one
+#: green design and one red is a green lot -- the buyer picks the design --
+#: so "either design" takes the lowest rank across the run's designs, the
+#: same choice ``flats.ingest.quadfit.per_lot`` makes.
+_COLOURS = ("green", "yellow", "unknown", "red")
+
+#: What each colour means, said once and reused on both pages.
+_COLOUR_WORDS = {
+    "green": "clears every standard we hold",
+    "yellow": "clears, with an exception to ask the city for",
+    "unknown": "cannot be told yet",
+    "red": "misses a standard no exception covers",
+}
+
+#: What the verdict the screen actually gave means. Today it is "unknown" on
+#: every lot because no rule is signed; the colour beside it is the answer
+#: *if* the rules it rests on are confirmed as read.
+_VERDICT_WORDS = {
+    "unknown": "cannot be told yet — the rules behind it are not signed",
+    "green": "clears every signed standard",
+    "yellow": "clears, with an exception to ask for",
+    "red": "misses a signed standard",
+}
+
+#: Reason codes, said to somebody who will not open ``flats/score/screen.py``.
+_REASON_WORDS = {
+    "RULE_UNVERIFIED": "a rule this rests on has not been signed",
+    "RELIEF_UNCONFIRMED": "the exception it would ask for has not been read",
+    "FACT_UNOBSERVED": "a fact about the site nothing has measured decides which number applies",
+    "FACT_ASSUMED": "a fact about the site was assumed rather than measured",
+    "GEOMETRY_UNREADABLE": "the lot's outline could not be read",
+    "NO_FRONTAGE": "no street frontage was found",
+    "STANDARD_NOT_ENCODED": "a standard the zone states is not encoded",
+    "USE_NOT_ENCODED": "whether the zone allows a fourplex is not encoded",
+    "USE_PROHIBITED": "the zone forbids the use outright",
+    "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
+}
+
+#: The badge class each colour wears.
+_BADGE = {"green": "badge-green", "yellow": "badge-yellow", "unknown": "badge-gray", "red": "badge-red"}
+
+#: Lots per page of the list. Fifty rows is one screen with the filters
+#: still in view; the counts above the table are what say how many there are.
+_LOTS_PAGE = 50
+
+#: Pixels across the lot outline drawn on the lot page.
+_OUTLINE_PX = 260
+
+
+def _said_reason(code: str) -> str:
+    return _REASON_WORDS.get(code, code.replace("_", " ").lower())
+
+
+def _city_label(jurisdiction: str) -> str:
+    layer = _layers().get(jurisdiction)
+    return layer.label if layer is not None else jurisdiction
+
+
+def _lot_href(county: str, tlid: str) -> str:
+    return f"/flats/lots/{county}/{quote(tlid, safe='')}"
+
+
+async def _runs(session: DBSession) -> list[FlatsRun]:
+    """Completed runs, newest first. The list and the lot page read one run;
+    an older one is reachable by ``?run=`` so two runs can be compared."""
+    stmt = (
+        select(FlatsRun)
+        .where(FlatsRun.status == "complete")
+        .order_by(FlatsRun.id.desc())
+    )
+    return list((await session.execute(stmt)).scalars())
+
+
+def _rank(column: Any) -> Any:
+    """0..3 for the four colours in ``_COLOURS`` order, 4 for anything else."""
+    return case(*[(column == c, i) for i, c in enumerate(_COLOURS)], else_=len(_COLOURS))
+
+
+def _best(run_id: int, design: str | None) -> Any:
+    """One row per lot: the lowest verdict rank and the lowest signed-colour
+    rank across the run's designs (or the one design asked for)."""
+    result = FlatsLotResult
+    colour = result.checks["if_signed"].astext
+    stmt = select(
+        result.lot_id.label("lot_id"),
+        func.min(_rank(result.tier)).label("verdict"),
+        func.min(_rank(colour)).label("colour"),
+    ).where(result.run_id == run_id)
+    if design:
+        stmt = stmt.where(result.design_key == design)
+    return stmt.group_by(result.lot_id).subquery("best")
+
+
+def _lot_conditions(jurisdiction: str, zone: str, q: str) -> list[Any]:
+    lot = FlatsLot
+    conditions: list[Any] = []
+    if jurisdiction:
+        conditions.append(lot.jurisdiction == jurisdiction)
+    if zone:
+        conditions.append(lot.zone == zone)
+    if q.strip():
+        like = f"%{q.strip()}%"
+        conditions.append(or_(lot.tlid.ilike(like), lot.site_address.ilike(like)))
+    return conditions
+
+
+async def _lot_counts(
+    session: DBSession, run_id: int, design: str | None, conditions: list[Any]
+) -> dict[str, dict[str, int]]:
+    """How many lots wear each verdict and each signed colour under the filter."""
+    best = _best(run_id, design)
+    stmt = (
+        select(best.c.verdict, best.c.colour, func.count())
+        .select_from(FlatsLot)
+        .join(best, best.c.lot_id == FlatsLot.id)
+        .where(*conditions)
+        .group_by(best.c.verdict, best.c.colour)
+    )
+    verdicts = {c: 0 for c in _COLOURS}
+    colours = {c: 0 for c in _COLOURS}
+    for verdict, colour, n in (await session.execute(stmt)).all():
+        if 0 <= verdict < len(_COLOURS):
+            verdicts[_COLOURS[verdict]] += n
+        if 0 <= colour < len(_COLOURS):
+            colours[_COLOURS[colour]] += n
+    return {"verdict": verdicts, "if_signed": colours, "lots": sum(colours.values())}
+
+
+def _result_card(row: FlatsLotResult) -> dict[str, Any]:
+    """One design's answer on one lot, flattened for the template. The verdict
+    is the first key and the signed colour the second, on purpose."""
+    checks = row.checks or {}
+    stalls = checks.get("stalls") or {}
+    leaning = checks.get("leaning") or {}
+    colour = checks.get("if_signed") or "unknown"
+    return {
+        "design": row.design_key,
+        "verdict": row.tier,
+        "verdict_words": _VERDICT_WORDS.get(row.tier, row.tier),
+        "colour": colour,
+        "colour_words": _COLOUR_WORDS.get(colour, colour),
+        "badge": _BADGE.get(colour, "badge-gray"),
+        "reasons": [_said_reason(x) for x in checks.get("reasons") or []],
+        "colour_reasons": [_said_reason(x) for x in checks.get("if_signed_reasons") or []],
+        "head": checks.get("head"),
+        "failing": list(checks.get("failing") or []),
+        "unchecked": list(checks.get("unchecked") or []),
+        "binding": list(row.binding or []),
+        "slack_ft": float(row.slack_ft) if row.slack_ft is not None else None,
+        "fits": checks.get("fits"),
+        "fit": checks.get("fit") or {},
+        "stalls_charged": stalls.get("charged"),
+        "stalls_seated": stalls.get("seated"),
+        "band": stalls.get("band"),
+        "ask": checks.get("ask"),
+        "unknown_facts": list(leaning.get("unknown") or []),
+        "assumed_facts": list(leaning.get("assumed") or []),
+    }
+
+
+def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, Any]]) -> dict[str, Any]:
+    facts = lot.facts or {}
+    best_colour = _COLOURS[colour] if 0 <= colour < len(_COLOURS) else "unknown"
+    best_verdict = _COLOURS[verdict] if 0 <= verdict < len(_COLOURS) else "unknown"
+    return {
+        "id": lot.id,
+        "tlid": lot.tlid,
+        "county": lot.county,
+        "jurisdiction": lot.jurisdiction,
+        "city": _city_label(lot.jurisdiction),
+        "zone": lot.zone,
+        "zone_raw": lot.zone_raw,
+        "address": lot.site_address or "",
+        "area": float(lot.area_sqft) if lot.area_sqft is not None else None,
+        "verdict": best_verdict,
+        "verdict_words": _VERDICT_WORDS.get(best_verdict, best_verdict),
+        "colour": best_colour,
+        "colour_words": _COLOUR_WORDS.get(best_colour, best_colour),
+        "badge": _BADGE.get(best_colour, "badge-gray"),
+        "results": results,
+        "quadfit": facts.get("quadfit") or {},
+        "href": _lot_href(lot.county, lot.tlid),
+    }
+
+
+async def _lot_rows(
+    session: DBSession,
+    run_id: int,
+    design: str | None,
+    conditions: list[Any],
+    colour: str,
+    page: int,
+) -> list[dict[str, Any]]:
+    best = _best(run_id, design)
+    stmt = (
+        select(FlatsLot, best.c.verdict, best.c.colour)
+        .join(best, best.c.lot_id == FlatsLot.id)
+        .where(*conditions)
+    )
+    if colour in _COLOURS:
+        stmt = stmt.where(best.c.colour == _COLOURS.index(colour))
+    stmt = (
+        stmt.order_by(FlatsLot.jurisdiction, FlatsLot.tlid)
+        .offset((page - 1) * _LOTS_PAGE)
+        .limit(_LOTS_PAGE)
+    )
+    lots = (await session.execute(stmt)).all()
+    by_lot: dict[int, list[dict[str, Any]]] = {}
+    ids = [lot.id for lot, _, _ in lots]
+    if ids:
+        found = await session.execute(
+            select(FlatsLotResult)
+            .where(FlatsLotResult.run_id == run_id, FlatsLotResult.lot_id.in_(ids))
+            .order_by(FlatsLotResult.design_key)
+        )
+        for row in found.scalars():
+            if design and row.design_key != design:
+                continue
+            by_lot.setdefault(row.lot_id, []).append(_result_card(row))
+    return [_lot_row(lot, verdict, colour_rank, by_lot.get(lot.id, [])) for lot, verdict, colour_rank in lots]
+
+
+async def _zones_in(session: DBSession, jurisdiction: str) -> list[str]:
+    if not jurisdiction:
+        return []
+    stmt = (
+        select(FlatsLot.zone)
+        .where(FlatsLot.jurisdiction == jurisdiction, FlatsLot.zone.is_not(None))
+        .distinct()
+        .order_by(FlatsLot.zone)
+    )
+    return [z for z in (await session.execute(stmt)).scalars() if z]
+
+
+def _run_card(run: FlatsRun) -> dict[str, Any]:
+    counts = (run.params or {}).get("counts") or {}
+    return {
+        "id": run.id,
+        "finished": run.finished_at.strftime("%Y-%m-%d %H:%M UTC") if run.finished_at else "",
+        "code_version": (run.code_version or "")[:8],
+        "designs": list(run.design_keys or []),
+        "counties": list(run.counties or []),
+        "lots": counts.get("lots"),
+        "notes": run.notes or "",
+    }
+
+
+def _lots_ctx(
+    runs: list[FlatsRun],
+    run: FlatsRun | None,
+    *,
+    jurisdiction: str = "",
+    zone: str = "",
+    colour: str = "",
+    design: str = "",
+    q: str = "",
+    page: int = 1,
+) -> dict[str, Any]:
+    cities = sorted(
+        ((layer_id, layer.label) for layer_id, layer in _layers().items()), key=lambda kv: kv[1]
+    )
+    return {
+        "runs": [_run_card(r) for r in runs],
+        "run": _run_card(run) if run is not None else None,
+        "cities": cities,
+        "jurisdiction": jurisdiction,
+        "zone": zone,
+        "colour": colour if colour in _COLOURS else "",
+        "design": design,
+        "q": q,
+        "page": page,
+        "per_page": _LOTS_PAGE,
+        "colours": _COLOURS,
+        "colour_words": _COLOUR_WORDS,
+        "verdict_words": _VERDICT_WORDS,
+        "badges": _BADGE,
+    }
+
+
+@router.get("/flats/lots", response_class=HTMLResponse)
+async def flats_lots(
+    request: Request,
+    session: DBSession,
+    jurisdiction: str = Query(""),
+    zone: str = Query(""),
+    colour: str = Query(""),
+    design: str = Query(""),
+    q: str = Query(""),
+    run: int | None = Query(None),
+    page: int = Query(1, ge=1),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    runs = await _runs(session)
+    chosen = next((r for r in runs if r.id == run), None) if run else (runs[0] if runs else None)
+    ctx = {
+        **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
+        **_lots_ctx(runs, chosen, jurisdiction=jurisdiction, zone=zone, colour=colour, design=design, q=q, page=page),
+        "counts": {"verdict": {}, "if_signed": {}, "lots": 0},
+        "lots": [],
+        "zones": [],
+        "pages": 0,
+    }
+    if chosen is None:
+        return templates.TemplateResponse(request, "flats_lots.html", ctx)
+    designs = list(chosen.design_keys or [])
+    picked = design if design in designs else None
+    ctx["design"] = picked or ""
+    ctx["designs"] = designs
+    conditions = _lot_conditions(jurisdiction, zone, q)
+    counts = await _lot_counts(session, chosen.id, picked, conditions)
+    shown = counts["if_signed"].get(colour, counts["lots"]) if colour in _COLOURS else counts["lots"]
+    ctx["counts"] = counts
+    ctx["shown"] = shown
+    ctx["pages"] = max(1, -(-shown // _LOTS_PAGE))
+    ctx["lots"] = await _lot_rows(session, chosen.id, picked, conditions, colour, page)
+    ctx["zones"] = await _zones_in(session, jurisdiction)
+    return templates.TemplateResponse(request, "flats_lots.html", ctx)
+
+
+def _outline(geojson: str | None) -> dict[str, Any] | None:
+    """The lot's rings scaled into a ``_OUTLINE_PX`` box, north up.
+
+    EPSG:2913 is a projected grid in feet with y increasing northward, so the
+    only transform is a flip and a scale; the box's width in feet is printed
+    beside it so the drawing has a size.
+    """
+    if not geojson:
+        return None
+    try:
+        shape = json.loads(geojson)
+    except ValueError:
+        return None
+    polygons = shape.get("coordinates") or []
+    if shape.get("type") == "Polygon":
+        polygons = [polygons]
+    rings = [ring for polygon in polygons for ring in polygon if len(ring) >= 3]
+    if not rings:
+        return None
+    xs = [x for ring in rings for x, _y in ring]
+    ys = [y for ring in rings for _x, y in ring]
+    span = max(max(xs) - min(xs), max(ys) - min(ys)) or 1.0
+    pad = 8
+    scale = (_OUTLINE_PX - 2 * pad) / span
+    x0, y0 = min(xs), min(ys)
+    width_px = (max(xs) - x0) * scale + 2 * pad
+    height_px = (max(ys) - y0) * scale + 2 * pad
+    paths = []
+    for ring in rings:
+        points = " ".join(
+            f"{pad + (x - x0) * scale:.1f},{height_px - pad - (y - y0) * scale:.1f}" for x, y in ring
+        )
+        paths.append(points)
+    return {
+        "paths": paths,
+        "width": round(width_px),
+        "height": round(height_px),
+        "feet_across": round(max(xs) - x0),
+        "feet_deep": round(max(ys) - y0),
+    }
+
+
+def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
+    """The facts the screen read, as label / value pairs a person can scan.
+    Only what is present is listed; a missing fact is left out rather than
+    printed as None."""
+
+    def ft(value: Any) -> str:
+        return f"{float(value):,.0f} ft" if value is not None else ""
+
+    def sqft(value: Any) -> str:
+        return f"{float(value):,.0f} sf" if value is not None else ""
+
+    def yes(value: Any) -> str:
+        return "" if value is None else ("yes" if value else "no")
+
+    observed = facts.get("observed") or {}
+    envelope = facts.get("envelope") or {}
+    slope = facts.get("slope") or {}
+    sewer = facts.get("sewer") or {}
+    flood = facts.get("flood") or {}
+    bearings = facts.get("front_bearings_deg") or []
+    rows = [
+        ("Frontage", ft(facts.get("frontage_ft"))),
+        ("Lot width", ft(facts.get("lot_width_ft"))),
+        ("Lot depth", ft(facts.get("lot_depth_ft"))),
+        ("Street side faces", ", ".join(f"{float(b):.0f}°" for b in bearings)),
+        ("Outline quality", str(facts.get("geometry_tier") or "")),
+        ("Corner lot", yes(observed.get("corner_lot"))),
+        ("Alley", yes(observed.get("abuts_alley"))),
+        ("Alley at the rear", yes(observed.get("alley_at_rear"))),
+        ("Alley at the side", yes(observed.get("alley_at_side"))),
+        ("Alley width", ft(facts.get("alley_width_ft"))),
+        ("On a cul-de-sac bulb", yes(facts.get("fronts_cul_de_sac"))),
+        ("Split between zones", yes(facts.get("split_zone"))),
+        (
+            "Share in this zone",
+            f"{float(facts['zone_frac']) * 100:.0f}%" if facts.get("zone_frac") is not None else "",
+        ),
+        ("Inside the urban growth boundary", yes(facts.get("inside_ugb"))),
+        ("Carries a z overlay", yes(facts.get("has_z_overlay"))),
+        ("Buildable envelope", sqft(envelope.get("sqft"))),
+        ("Envelope after setbacks", sqft(envelope.get("setback_sqft"))),
+        ("Envelope after carving", sqft(envelope.get("carved_sqft"))),
+        (
+            "Slope (mean / 85th / max)",
+            " / ".join(
+                f"{float(slope[k]):.0f}%" for k in ("mean_pct", "p85_pct", "max_pct") if slope.get(k) is not None
+            )
+            + (f" ({slope['source']})" if slope.get("source") else ""),
+        ),
+        ("Public sewer", yes(observed.get("public_sewer"))),
+        ("In a sewer district", yes(sewer.get("in_district"))),
+        ("Nearest sewer main", ft(sewer.get("main_dist_ft"))),
+        ("In a flood hazard area", yes(flood.get("sfha"))),
+        ("In a floodway", yes(flood.get("floodway"))),
+    ]
+    return [(label, value) for label, value in rows if value]
+
+
+@router.get("/flats/lots/{county}/{tlid:path}", response_class=HTMLResponse)
+async def flats_lot(
+    request: Request,
+    session: DBSession,
+    county: str,
+    tlid: str,
+    run: int | None = Query(None),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    runs = await _runs(session)
+    chosen = next((r for r in runs if r.id == run), None) if run else (runs[0] if runs else None)
+    stmt = select(
+        FlatsLot,
+        func.ST_AsGeoJSON(FlatsLot.geom),
+        func.ST_Y(FlatsLot.centroid),
+        func.ST_X(FlatsLot.centroid),
+    ).where(FlatsLot.county == county, FlatsLot.tlid == tlid)
+    found = (await session.execute(stmt)).first()
+    if found is None:
+        ctx = {
+            **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
+            **_lots_ctx(runs, chosen),
+            "counts": {"verdict": {}, "if_signed": {}, "lots": 0},
+            "lots": [],
+            "zones": [],
+            "pages": 0,
+            "missing": f"{county} {tlid}",
+        }
+        return templates.TemplateResponse(request, "flats_lots.html", ctx, status_code=404)
+    lot, geojson, lat, lon = found
+    results: list[dict[str, Any]] = []
+    if chosen is not None:
+        rows = await session.execute(
+            select(FlatsLotResult)
+            .where(FlatsLotResult.run_id == chosen.id, FlatsLotResult.lot_id == lot.id)
+            .order_by(FlatsLotResult.design_key)
+        )
+        results = [_result_card(r) for r in rows.scalars()]
+    ranks = [_COLOURS.index(r["colour"]) if r["colour"] in _COLOURS else len(_COLOURS) for r in results]
+    verdicts = [_COLOURS.index(r["verdict"]) if r["verdict"] in _COLOURS else len(_COLOURS) for r in results]
+    card = _lot_row(lot, min(verdicts) if verdicts else 2, min(ranks) if ranks else 2, results)
+    facts = lot.facts or {}
+    return templates.TemplateResponse(
+        request,
+        "flats_lot.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
+            **_lots_ctx(runs, chosen),
+            "lot": card,
+            "facts": _fact_rows(facts),
+            "quadfit": facts.get("quadfit") or {},
+            "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
+            "outline": _outline(geojson),
+            "lat": lat,
+            "lon": lon,
+            "source": facts.get("source") or "",
+        },
+    )
 
 
 @router.get("/flats/{layer_id:path}", response_class=HTMLResponse)

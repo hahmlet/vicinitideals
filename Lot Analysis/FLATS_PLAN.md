@@ -1280,7 +1280,14 @@ reasons, head, failing, fit, stalls, leaning; `binding` head-first). Verified in
 transaction against the bundle's counts and again by hand: per-lot best `if_signed` green
 42,115 / yellow 234,152 / unknown 12,944 / red 634. Cost: 1.2 GB after `VACUUM FULL`
 (a dry run leaves dead tuples the size of the load); VM 114 at 85% — HUMAN_TODO 19. The
-carved envelope is not carried (no column); nothing in the app reads these tables yet.
+carved envelope is not carried (no column). **Read by two pages the same night:** `/flats/lots`
+(counts by verdict and by `if_signed` with the four colours as filters; city / zone / design /
+search; "either design" = the per-lot best, the same rank `per_lot()` uses, so the page shows
+the 42,115) and `/flats/lots/{county}/{tlid}` (verdict first, colour beside it, each design's
+`checks` opened up in words, quadfit's `facts.quadfit` colour beside ours, the facts, the
+outline as SVG from `ST_AsGeoJSON`). Migration 0131 indexes `(run_id, checks->>'if_signed',
+lot_id, design_key)` so the counts are an index read. Read-only; the fitted building is not
+drawn (FOLLOWUPS 4: no envelope column, and `fit_for` returns no position).
 
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,

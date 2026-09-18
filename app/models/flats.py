@@ -235,6 +235,18 @@ class FlatsLotResult(Base):
     __table_args__ = (
         Index("ix_flats_lot_results_run_tier", "run_id", "tier"),
         Index("ix_flats_lot_results_design_tier", "design_key", "tier"),
+        # The signed colour lives inside ``checks`` (the verdict is ``tier``,
+        # and the colour is kept beside it, never in its place), so counting
+        # or filtering lots by it would otherwise read every row's JSON.
+        # Covering (lot_id, design_key) lets a run's per-lot best colour come
+        # off the index alone -- 579,690 entries, not 665 MB of rows.
+        Index(
+            "ix_flats_lot_results_run_colour",
+            "run_id",
+            text("(checks ->> 'if_signed')"),
+            "lot_id",
+            "design_key",
+        ),
         {"schema": SCHEMA},
     )
 

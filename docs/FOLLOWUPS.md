@@ -4,29 +4,16 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **A page that shows the loaded results, lot by lot.** The four-stall
-   county run is in production (`flats.runs` id 2, 289,845 lots, 579,690
-   results; loader `scripts/flats_load_bridge.py`, bundle kept at
-   `/root/stacks/vicinitideals/data/flats/bridge/county2` on 114) and
-   nothing in the app reads it. Smallest useful step: `GET /flats/lots`
-   (filter by jurisdiction / zone / colour, count by colour) and
-   `GET /flats/lots/{county}/{tlid}` (outline + centroid, address, zone,
-   facts, each design's verdict with `if_signed` + stalls + binding beside
-   it, quadfit's colour from `facts.quadfit`) -- read-only HTMX, verdict
-   first and the signed colour beside it per the 2026-09-17 ruling. Also
-   owed by the loader: quadfit's carved envelope (s5o `wkb`) is not
-   carried -- needs a geometry column on `flats.lots` (migration) before
-   the page can draw what the screen fitted on. Disk: do not load another
-   county run before HUMAN_TODO 19 or clearing run 2.
-2. **An authoritative offline source for lots (Steph 2026-09-17: "we will
+1. **An authoritative offline source for lots (Steph 2026-09-17: "we will
    need an authoritative offline source").** FLATS's own durable, versioned
    copy of the taxlots, streets and zoning it screens -- option (B) refined:
    `flats/config/pipeline.yaml` already names the county GIS sources and
    `flats/ingest/sources.py` validates them; nothing downloads, normalizes
    or assigns. Replaces the quadfit-parquet bridge above when built. Several
-   sessions; needs a decision on where the copy lives (disk on 137 vs
-   `flats.lots` in Postgres) before starting.
-3. **The court search takes the biggest rectangle, not the deepest one that
+   sessions; waits on HUMAN_TODO 20 (where the copy lives -- `flats.lots`
+   in Postgres now holds every lot with its outline, which answers half of
+   it) before starting.
+2. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks
    whether it is deep enough for a row of stalls (stall + two-way aisle). A
@@ -38,7 +25,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    of this kind. Measure first: re-search the failed lots for the deepest
    rectangle at least `cap x stall_w` wide and count how many would hold a
    row, before changing the search. Offered 2026-09-17.
-4. **Four places the screen and the county map disagree, found by the
+3. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's
    shape -- `court_across` draws one row of stalls across the lot behind
@@ -71,3 +58,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    row counts that s6s's rectangle does not before changing either. The
    stall count was decided 2026-09-18 (HUMAN_TODO 18) and is out of this
    item.
+4. **Draw what the screen fitted on the lot page.** `/flats/lots/{county}/
+   {tlid}` (`app/api/routers/ui_flats.py`, the "lots" section) draws the
+   outline only. Two things are missing before the building can be
+   drawn on it: quadfit's carved envelope (s5o `wkb`) is not carried by
+   `scripts/flats_load_bridge.py` -- a geometry column on `flats.lots`
+   (migration) and one more `export` column; and the screen's `fit_for`
+   reports depth / across / angle / orientation but no *position*, so a
+   placement (the rectangle's origin on the lot, in 2913 feet) has to be
+   returned by the fit and stored in `checks.fit` before anything can be
+   drawn. Offered 2026-09-18 with the pages.
