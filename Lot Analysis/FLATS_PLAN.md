@@ -1142,6 +1142,43 @@ green 83 → 46. Every other city prints one figure for both directions and move
 `alley_need` (the back-out room behind a stall on the alley) still defaults to the one-way
 figure — an alley is a through lane, Steph's 2026-09-13 ruling — and is untouched.
 
+**The screen's first caller is a bridge from the county map (7a32a5e3, 2026-09-17).**
+`screen()` had every input built and no producer: `flats.lots` was empty because the
+acquire / normalize / assign stages in `config/pipeline.yaml` name their sources and
+nothing downloads them. Steph's ruling, verbatim: *"bridge from the county map for now,
+but we will need an authoritative offline source."* `flats/ingest/quadfit.py` is the
+bridge — it reads quadfit's s4 + s5o stage files on LXC 137 (area, frontage, width,
+depth, edges and bearings, the bulb flag, the carved envelope, FEMA, the sewer main and
+district) into `LotFacts`, says each site fact quadfit measured in the registry's words
+(`observed_facts`: the three alley facts, `fronts_cul_de_sac`, `corner_lot`,
+`split_zone`, `in_floodplain`, `public_sewer` / `in_sewer_district`; slope and flag lots
+stay on the named assumption), resolves the corpus under `configure()`, searches the
+envelope with `Fitter` at the width `fit_for` asks, and runs `screen()` for every lot ×
+catalog design. The envelope is quadfit's on purpose, so a disagreement reads as rules
+and parking, not setbacks. Every (jurisdiction, zone) on the map resolves in the corpus
+(all 289,845 lots, 14 layers). *The verdict is UNKNOWN / `RULE_UNVERIFIED` on every
+lot* — every value is draft — which is this phase's exit state; beside it every output
+carries `if_signed`, the same checks with that reason lifted, and the comparison against
+quadfit's triage (`compare`, `summary.md`) reads that column. Measured on a random 3,000
+lots at the product's 1° sweep (376 s on 12 workers; the county is ~10 h and runs in the
+background): of quadfit's 198 greens the signed colour is **GREEN 100, YELLOW 63, UNKNOWN
+35, RED 0**. The 35 wait on unobserved facts (`local_street`, `through_lot`,
+`north_of_marine_drive`, `sidewalk_easement`). All 63 yellows head on `fit_ft` and are
+the court: 33 park on the alley in quadfit (`alley_is_aisle`, absent from
+`flats/score/`), 18 seat six-plus stalls with the row laid along the lot (`court_across`
+draws one row across it, s6s lays stalls in the largest rectangle either way round), and
+12 seat four or five — quadfit's legal floor against the design's six-stall target,
+HUMAN_TODO 18. The other way, 178 GREEN where quadfit is red: 94 `siteplan_no_layout`
+lots the 180° sweep found a fit on where s6 fits at the front bearings only (41 in
+unincorporated Clackamas), 66 in Portland's `z` overlay and 11 `no_public_sewer` —
+quadfit policy gates no encoded standard turns on. Whole sample: green 342, yellow
+2,507, unknown 145, red 6. The four divergences are FOLLOWUPS 4, queued not changed. The
+first pass also found a screen defect: Portland's `parking_min_per_unit` is `exempt:
+true` and `screen()` tested unchecked fields against `REQUIRED_FIELDS` alone, so every
+Portland lot read `STANDARD_NOT_ENCODED` — uncertifiable on a standard that does not
+exist; `_unencoded()` now asks the resolver's question (exempted and `ALTERNATIVES` are
+answers), d8938d15, sample green 112 → 342.
+
 **`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
 orientation by searching the envelope at the design's *depth* and needing its *width*,
 but records `width_ft`/`depth_ft` unrotated. `screen._checks` compared `best_depth_ft`
@@ -1560,7 +1597,7 @@ An earlier draft of this section said otherwise; §6 is the decision.
 | ✅ | `geom/` — edge classification and the buildable envelope |
 | ✅ | `fit/` — 0–180° rotation sweep, rasterizer, fit-with-a-margin (Phase 2 pulled forward) |
 | ✅ | `score/screen.py` — GREEN/YELLOW/RED/UNKNOWN with split attribution (tightest vs dominant) |
-| | Ingest: `config/pipeline.yaml` (data sources per county) and the acquire/normalize/assign stages |
+| ✅ | Ingest — the bridge from quadfit's county map (`ingest/quadfit.py`, 2026-09-17): every lot × design screened, UNKNOWN pending signing with `if_signed` beside it; the acquire/normalize/assign stages of `config/pipeline.yaml` are still the offline source owed (FOLLOWUPS 2) |
 
 **On "100% blocked".** That is the correct reading of the first ledger, not a
 regression. Every ported value is `draft` by design, so no zone can produce GREEN until
@@ -1568,6 +1605,12 @@ verification runs — which is Phase 1, and is the point.
 
 *Exit: pipeline reproduces quadfit's numbers, everything in REVIEW pending verification,
 backlog visible, financial engine provably untouched.*
+
+*Measured 2026-09-17 on a 3,000-lot sample (the county run follows): everything UNKNOWN
+pending verification; on the signed colour, RED on none of quadfit's greens, GREEN on 100
+of 198, and every YELLOW on the parking court — the paragraph after the one-row court
+in §2 ("The screen's first caller is a bridge from the county map") has the split and the
+four divergences.*
 
 ### Phase 1 — Encoding engine ← **the project**
 RASE extraction harness. Provenance store with text hashing. Drift watch. Verification CLI.

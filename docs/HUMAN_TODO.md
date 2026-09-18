@@ -1718,6 +1718,62 @@ one to overturn, and it is one line to change.
 
 ---
 
+## 18. One decision: should the new screen insist on room for six cars, or four? — **a fifth to a third of the county map's greens ride on it**
+
+Found 2026-09-17, the first evening the new screen (FLATS) was run against
+the county map's lots (the built-and-run entry at the end of the list). The
+two products draw the same parking court behind the homes — a row of spaces
+and a lane beside the building to reach it — and they disagree about how
+many spaces the lot has to hold.
+
+**The county map (quadfit)** draws six or eight where they fit and is
+satisfied with four where they do not: four is the legal floor (one per
+home, and the state caps what a city may ask at that), and a lot that seats
+four is green. **The new screen** charges six up front — one and a half per
+home, which the design file itself calls *"a marketability target, not a
+legal floor"* — and asks the lot to be wide enough for them. Six spaces at
+nine feet are a 54-foot row. On a 50-by-100 Portland lot the row does not
+fit across the lot, so the screen turns the building sideways, runs out of
+depth, and calls the lot *"needs an exception"* where the county map calls
+it green with four cars.
+
+In a 3,000-lot sample the county map has 198 greens. The screen, once its
+numbers are signed, agrees on 100, says "can't tell" on 35 (a site fact
+nobody has measured — item 14's list), and calls 63 "needs an exception",
+every one of the 63 on the parking court. Of those 63: 33 park against an
+alley on the county map, which the screen cannot yet draw; 18 seat six or
+more cars with the row turned along the lot instead of across it, which
+the screen cannot draw either — both are fixes on my queue, not questions
+for you; and **12 seat only four or five cars and would fail a six-car
+screen whatever it drew.** Thirty of the alley lots also seat only four or
+five, so once the alley is drawn the count decides 42 of the 63 — a fifth
+of the county map's greens.
+
+### The options
+
+- **Keep six.** The colour means "a buyer gets a space and a half per
+  home". Safer for the sale, and a fifth of the county map's greens turn to
+  "needs an exception" on a standard no city imposes, so the two products
+  disagree permanently on the most common lot in Portland.
+- **Charge the legal floor — four, or whatever the zone requires — and
+  report beside the colour how many more would fit.** The colour then
+  answers the legal question the screen exists to answer, and the
+  marketability number sits next to it the way every other slack figure
+  does. The two products agree on the floor. What it costs: a green lot may
+  seat only four cars, and you read the second number to know.
+- **Six for the colour, four for the exception.** A lot that seats four but
+  not six is yellow with the reason written as "parking: four of six" so it
+  is never confused with a yellow that needs a real variance. Cheapest to
+  read, but it keeps a yellow on thousands of lots for something you could
+  sell.
+
+**What I would do:** the second. The screen's colour is a legal answer; the
+number of cars a buyer would like is a preference, and preferences belong
+beside the verdict, not inside it. If you choose the first, nothing
+changes; the third is a day.
+
+---
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
@@ -4084,6 +4140,80 @@ the list of places worth hoping about.
   figure — that was your ruling of 2026-09-13, and an alley is a through
   lane with two ends, which is exactly the situation a one-way aisle
   describes. Nothing about those lots moved.
+
+- **The new screen has been run against the county map for the first
+  time — built and run 2026-09-17, evening. Every lot comes back
+  "unverified", which is the truth, and the colour it *would* give once
+  the numbers are signed is written beside it; on that colour it never
+  contradicts a county-map green with a red, and it found one bug in
+  itself on the first pass.** The new screen (FLATS, the successor to the
+  county map) had every part built — the encoded codes, the fit, the
+  parking, the verdict — and had never been handed a real lot: the tables
+  it was meant to read from were empty because nothing downloads the
+  county's map data yet. Your ruling was *"bridge from the county map for
+  now, but we will need an authoritative offline source."* So there is now
+  a bridge: it reads the county map's own measurements of every lot
+  (size, frontage, width, depth, which edges are streets and which is an
+  alley, whether the front is on a cul-de-sac bulb, the buildable area
+  after setbacks and overlays, the flood map, the sewer main and district)
+  into the new screen, which looks up the zoning we encoded, fits the
+  building with its parking court and lane at every angle, and gives its
+  verdict — for every lot in both counties and both building designs. The
+  offline source stays on the list (it replaces the bridge when built).
+
+  *What the verdict is.* **Unknown, on every lot, for one reason: nothing
+  is signed (item 7).** That is not a defect; it is what the plan said the
+  screen must say until a person has confirmed the numbers, and the first
+  run is the first time it has said it about real land. Beside it, every
+  output carries the colour the same checks give with that one reason
+  lifted — named `if_signed`, never put in the verdict's place — because a
+  table of 289,845 "unknown"s tells you nothing about whether the screen
+  works. Everything below reads that column.
+
+  *What it found, on a random 3,000 of the 289,845 lots (eight minutes; the
+  full map is running overnight and its numbers come next).* The county map
+  has 198 greens in the sample. The new screen, once signed, **agrees on
+  100, says "can't tell" on 35 and "needs an exception" on 63 — and calls
+  none of them red.** The 35 all wait on a site fact nobody has measured
+  (is it a local street, a through lot, north of Marine Drive, on a
+  sidewalk easement — item 14's list). All 63 exceptions are the parking
+  court, and they split three ways: 33 park against an alley on the county
+  map, which the screen cannot draw yet; 18 seat six or more cars with the
+  row turned along the lot, which it cannot draw either; and 12 seat only
+  four or five, which the county map accepts as the legal floor and the
+  screen does not — **that last one is item 18, a decision for you.** The
+  other way: the screen says green on 178 lots the county map calls red
+  and 64 it holds for review. 94 of the 178 are lots the county map could
+  not lay a plan on at the street angle while the screen, trying every
+  angle, found one (41 in unincorporated Clackamas, where the county map
+  has no greens in the sample); 66 sit in Portland's "constrained sites"
+  overlay and 11 have no sewer — rules the county map applies as a blanket
+  policy and the screen does not apply at all, because no zoning standard
+  we encoded turns on them. Across the whole sample: green 342, exception
+  2,507, can't tell 145, red 6. Green by city: Portland 227 (county map
+  154), unincorporated Clackamas 87 (0), unincorporated Multnomah 10 (0),
+  Troutdale 6, Wood Village 3, Gladstone 3, Wilsonville 3; Gresham 0
+  (county map 27), Oregon City 0 (8), Milwaukie 0 (5), West Linn 0 (3) —
+  those four are all "can't tell" or the court, never red.
+
+  *The bug it found in itself, fixed the same evening.* Portland has no
+  parking minimum — the code simply has no such section, and our file says
+  so, in those words. The screen read that silence as "we never encoded
+  Portland's parking minimum" and refused to certify any Portland lot,
+  forever, on a number nobody could ever supply because it does not exist.
+  167 of the 279 "can't tell" lots in the first pass were that. The rule
+  that tells the two silences apart already existed one layer down; the
+  screen now asks it. Green on the sample went from 112 to 342.
+
+  *What was left alone, on purpose.* The four places the two products
+  disagree by design — the shape of the court, the alley as the aisle,
+  the county map's blanket policies (constrained sites, sewer, existing
+  use), and fitting at every angle versus the street angle — are named,
+  counted and queued, not changed. The screen fits on the county map's
+  buildable area for now, so a disagreement is about rules and parking,
+  not setbacks; cutting its own from the codes we encoded is the next
+  step. Slope is still assumed flat, and the assumption is named on every
+  lot where a rule turns on it.
 
 - ~~**The smaller leftovers of the same blank-cell check**~~ — **DONE
   2026-09-11, same evening, with one surprise.** The blank-cell check found

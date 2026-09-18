@@ -4,22 +4,22 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **The screen's production caller is a bridge from the county map --
-   DECIDED 2026-09-17, IN PROGRESS.** Steph: "bridge from the county map for
-   now, but we will need an authoritative offline source." So: (A) a bridge
-   stage that reads quadfit's per-lot measurements on LXC 137 (s4 width /
-   depth / edges / alley / cul-de-sac, s5o carved envelope + slope + sewer +
-   FEMA, `lots_results.csv` triage) into `LotFacts` + `configure(observed=)`
-   + `Fitter`/`fit_for` + `screen()` for every lot x catalog design, writes
-   per-lot FLATS verdicts to a parquet, and compares against quadfit's
-   triage -- the Phase 0 exit test ("pipeline reproduces quadfit's numbers,
-   everything in REVIEW pending verification"). Every corpus value is still
-   `draft` (no `flats/config/verifications.jsonl` exists), so the honest
-   verdict is UNKNOWN / RULE_UNVERIFIED on every lot; the bridge also
-   reports the colour the same checks would give once signed, named as such.
-   Later step, not started: load `flats.lots` / `flats.runs` /
-   `flats.lot_results` in production from that parquet (geometry has to
-   travel 137 -> 114).
+1. **The bridge from the county map is BUILT and running (7a32a5e3,
+   2026-09-17); the county run and its numbers are next.**
+   `flats/ingest/quadfit.py` reads quadfit's s4 + s5o on LXC 137 into
+   `LotFacts` + `configure(observed=)` + `Fitter`/`fit_for` + `screen()` for
+   every lot x design and writes `lots.parquet` / `meta.json` / `summary.md`
+   with the comparison against quadfit's triage. Verdict is UNKNOWN /
+   RULE_UNVERIFIED everywhere (all 1,942 values draft); the `if_signed`
+   column is the same checks with that reason lifted. The 3,000-lot sample
+   at 1 degree took 376 s on 12 workers (`/root/bridge_sample`); the full
+   county (289,845 lots, 580 chunks) is ~10 h and was launched 2026-09-17
+   19:40 PDT in the background at `/root/bridge_county` on 137
+   (`/root/bridge_county.log`; parts land per chunk). Next: read its
+   `summary.md`, write the county numbers into FLATS_PLAN (the paragraph
+   after the one-row court) and HUMAN_TODO (the built-and-run entry), then
+   load `flats.lots` / `flats.runs` / `flats.lot_results` in production from
+   the parquet (geometry travels 137 -> 114).
 2. **An authoritative offline source for lots (Steph 2026-09-17: "we will
    need an authoritative offline source").** FLATS's own durable, versioned
    copy of the taxlots, streets and zoning it screens -- option (B) refined:
@@ -40,3 +40,27 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    of this kind. Measure first: re-search the failed lots for the deepest
    rectangle at least `cap x stall_w` wide and count how many would hold a
    row, before changing the search. Offered 2026-09-17.
+4. **Four places the screen and the county map disagree, found by the
+   bridge's sample run (2026-09-17) and left alone on purpose.** Named so
+   the comparison stays readable, each its own change: (a) the court's
+   shape -- `court_across` draws one row of stalls across the lot behind
+   the building (six at 9 ft = 54 ft), quadfit's s6s lays the stalls in the
+   largest rectangle behind the building whichever way round fits, so a
+   63-ft-wide Portland R5 lot seats eight along its depth where the 54-ft
+   row does not fit across it -- 18 of the 63 quadfit greens the screen
+   calls yellow (all on `fit_ft`) seat six-plus that way; (b) the alley is
+   the aisle (Steph 2026-09-13) on the county map and nowhere in
+   `flats/score/` -- 33 of the 63 park on the alley in quadfit; (c)
+   quadfit's policy gates are not site facts: `z_overlay_constrained_site`
+   (PCC 33.418), the overlay kill layers, `existing_*` current use and the
+   sewer gate (`no_public_sewer` is a hard gate there; here `public_sewer`
+   is observed but no Clackamas standard turns on it) -- 84 of the 178
+   screen-GREEN / quadfit-red lots in the sample; (d) the sweep -- the
+   screen tries 180 angles, s6 fits at the front bearings only, and 94 of
+   those 178 are quadfit `siteplan_no_layout` lots the sweep found a fit on.
+   Also owed: FLATS's own envelope from the corpus setbacks
+   (`geom/envelope.buildable`) instead of quadfit's carved one, and
+   `steep_slope` from s5o's DEM percentile / Gresham's hillside overlay
+   (assumed False today, named on every lot it leans on). The stall count
+   itself (six charged vs quadfit's four-as-a-floor) is Steph's call --
+   HUMAN_TODO 18.
