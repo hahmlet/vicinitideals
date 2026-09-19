@@ -164,3 +164,45 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    counted under its own `layout_method`; (iv) through lots as two fronts
    where the code says so. Measure the affected population first (corner
    lots by city, through lots, lots wider than deep) before any county run.
+
+6. **Green and outdoor space: charge the SHAPE, not just the amount.**
+   Offered 2026-09-19 when Steph asked whether we consider outdoor-space
+   rules for townhomes. What exists: the county map (s6s) subtracts
+   building + court + driveway from the lot and tests the leftover against
+   the city's stated AMOUNT (Gresham 15 %, Portland 250/200 per lot and 192
+   in RM, Milwaukie 384 = 96 x 4, Multnomah county by zone; 0 of 46,212
+   drawn plans on the September map fall short, Portland's tightest has 848
+   sq ft to spare, median leftover 49-77 % of the lot -- as an amount it
+   never decides a colour); the app screen reads `open_space_min_pct` and
+   `min_landscaped_pct` as lot MINUS BUILDING only (parking never
+   subtracted though every code excludes pavement -- `OPTIMISTIC_CHECKS`)
+   and never reads `open_space_min_sqft` at all (encoded in Portland x18,
+   Milwaukie, Multnomah LR7; the reach ledger should already list it).
+   What no layer holds: Portland 33.110.240 -- a contiguous 250 sq ft in
+   which a 12 x 12 square fits, outside the front setback, not vehicle
+   area; Milwaukie Table 19.505.3.D.1 -- a 96 sq ft patio per GROUND-FLOOR
+   UNIT, 5 ft minimum dimension, opening from inside the unit, fenced from
+   the neighbour (not on unit lots) -- on a rear-court plan those four
+   patios sit between the back wall and the court, i.e. inside the depth
+   `court_too_shallow` (140,472 lots) already fights over; Happy Valley
+   16.42.030(B)(1) 20 % landscaping named for fourplexes, Portland RM
+   15-30 %, Oregon City R-2 15 %, Fairview 20-25 %, Wilsonville 15 % -- no
+   landscaping reserve on the county map at all. Ruled and NOT owed:
+   Troutdale 8.120.B.1.b voids open space for quadplexes (its 60 sq ft/unit
+   is a balcony); Oregon City 17.62.057 is multi-family, the quadplex
+   chapter states none; Wilsonville's 25 % is Villebois, delivered
+   communally; Gladstone / Tualatin / West Linn / Clackamas county state
+   none for this building. Options: (a) honest leftover in the screen --
+   subtract court + lane (the fit knows both), read the sqft field, drop
+   the optimistic label; cheap, few or no moves expected; (b) the shape on
+   the drawing -- Milwaukie: `gap` behind the wall becomes max(gap, patio
+   depth = 96 / unit width) on 916 ok plans; Portland: place a 12 x 12
+   square in the leftover outside the front setback and off the pavement
+   (`no_open_space` then means something); (c) landscaping share on the
+   county map; (d) what the leftover is FOR -- sheds, garages, ADUs, a
+   second pod -- is product direction, not a rule; the leftover medians
+   above say a second pod is plausible on many lots and belongs with
+   FOLLOWUPS 5's "least ground under pavement". Measure the affected
+   population (Milwaukie ok plans with court depth within 7 ft of the
+   floor; Portland ok plans with no 12 x 12 square outside the pavement)
+   before any county run.
