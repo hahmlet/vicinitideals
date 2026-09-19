@@ -2006,7 +2006,7 @@ only a code appearing for the first time will) or tell me which of
 those codes to encode first, since a lot in an unencoded zone can never
 be green.
 
-## ~~21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?~~ -- **DECIDED 2026-09-19: green first, then the preferred parking band, then the shorter street; more parking is not a goal**
+## ~~21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?~~ -- **DECIDED 2026-09-19: green first, then the preferred parking band, then the side with the least exposure to a street; more parking is not a goal**
 
 You ruled on 19 September: trying each street as the front only applies
 where the lot has more than one street *and* the city leaves the choice to
@@ -2038,15 +2038,21 @@ The options, plainest first:
 **Your ruling (19 September), in your words:** *"In order of priority
 1) which orientation turns the lot green 2) if both green, which gets us
 to preferred parking amount 3) if both preferred parking amount OR both
-reach minimum parking amount, shortest street. 'We can fit more parking'
-isn't necessarily a good thing. We may want to optimize for sufficient,
-but minimal parking so we can fit a 2nd pod."* Recorded in the agent
-queue (item 5) as the rule the drawing will follow, and the "sufficient
-but minimal" point is kept as a standing preference: the drawing today
-keeps whichever way round seats the *most* cars, and that rule will be
-revisited when item 5 is built. One reading I have taken until you say
-otherwise: where one way reaches the middle ("target") band and the other
-only the minimum, the higher band wins before the shorter street decides.
+reach minimum parking amount, the side that has the least exposure to
+street. This might be rear, it might be shortest street, etc. 'We can fit
+more parking' isn't necessarily a good thing. We may want to optimize for
+sufficient, but minimal parking so we can fit a 2nd pod."* So the last
+tie-break is about where the *cars* end up, not which street the house
+faces: of the ways that park equally well, take the one whose parking
+court sits on the side least seen from any street -- the back of a
+corner lot where there is one, otherwise along the shorter street.
+Recorded in the agent queue (item 5) as the rule the drawing will follow,
+and the "sufficient but minimal" point is kept as a standing preference:
+the drawing today keeps whichever way round seats the *most* cars, and
+that rule will be revisited when item 5 is built. One reading I have
+taken until you say otherwise: where one way reaches the middle
+("target") band and the other only the minimum, the higher band wins
+before the exposure rule decides.
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 

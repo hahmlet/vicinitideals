@@ -114,8 +114,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    not, take the one that parks; if both park, HUMAN_TODO 21 DECIDED
    2026-09-19: (1) the orientation that turns the lot green, (2) if both
    green, the one that reaches the `preferred` band, (3) if both preferred
-   or both only `minimum`, the shorter street (my reading: a higher band
-   wins before the street decides). **More parking is not a goal** --
+   or both only `minimum`, the orientation whose COURT has the least
+   exposure to a street -- "might be rear, might be shortest street" --
+   measured as the court's frontage on street edges (s4 edge classes: a
+   court touching no street edge beats one along the shorter street beats
+   one along the longer); my reading: a higher band wins before exposure
+   decides. **More parking is not a goal** --
    Steph: "optimize for sufficient, but minimal parking so we can fit a 2nd
    pod" -- so s6s's "keep the orientation with the MOST stalls" rule is
    to be revisited here (green, then band, then the least ground under
