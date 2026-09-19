@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import sys
 from pathlib import Path
 from typing import Any, Literal
@@ -38,7 +39,12 @@ if str(REPO_ROOT) not in sys.path:  # the pipeline runs these as scripts
 from flats.rules.fields import DESIGN_HEIGHT_FT  # noqa: E402
 
 GIS_CACHE_DIR = REPO_ROOT / "data" / "gis_cache" / "oregon"
-DATA_DIR = REPO_ROOT / "data" / "quadfit"
+#: Every stage reads and writes under here. ``QUADFIT_DATA_DIR`` points a run at
+#: another tree -- one per county-map snapshot, staged by
+#: ``scripts/flats_stage_quadfit_raw.py`` -- so a re-measurement from a newer
+#: copy of the county never overwrites the stage files the live run was read
+#: from. Unset, the tree is the one it has always been.
+DATA_DIR = Path(os.environ["QUADFIT_DATA_DIR"]).resolve() if os.environ.get("QUADFIT_DATA_DIR") else REPO_ROOT / "data" / "quadfit"
 
 # RLIS native CRS: NAD83(HARN) / Oregon North, international feet. All pipeline
 # geometry works in this CRS so setbacks/footprints are in feet with no

@@ -77,6 +77,9 @@
         {% endif %}
       </div>
 
+      {% if not r.screened %}
+      <div class="muted" style="font-size:12px" id="not-screened-{{ r.design|replace('@', '-') }}">Not screened: nothing measured this lot, so no check was run and no fit was searched.</div>
+      {% else %}
       <table class="data-table" style="font-size:12px">
         <tbody>
           <tr><td class="col-muted">Parking</td>
@@ -108,6 +111,7 @@
           {% endif %}
         </tbody>
       </table>
+      {% endif %}
     </div>
     {% endfor %}
 

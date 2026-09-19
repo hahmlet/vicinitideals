@@ -28,22 +28,47 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    attr_change 11,395 / reshape 1,291 / split 946 / merge 356 / renumbered
    46 / added 7 / deleted 5 / vacated 1; 1,354 rows put a decision in
    doubt; Metro's list agrees (recall 97-100 %, precision 94-99 %; the
-   warning is < 80 %). These are the runbook's normal ranges. *Still
-   owed, in order:* **phase 3** -- `flats/ingest/
-   normalize.py` (every lot from the snapshot, jurisdiction from JURIS_CITY,
-   majority-area zoning, `facts.assessor` adopted, unknown zone codes KEPT
-   and screened UNKNOWN / ZONE_NOT_ENCODED -- quadfit's s3 drops them
-   today), `assign.py`, `scripts/flats_stage_quadfit_raw.py` (four key
-   renames + `derive_fema_split` + SOURCE.json), the nine overlays missing
-   from `pipeline.yaml` (Happy Valley NROZ + slope, Milwaukie greenway /
-   HCA / wetlands / WQR, Oregon City NROD, Tualatin NRPO + stream buffer;
-   URLs in `Lot Analysis/quadfit/s0_acquire.py`), loader `--delta` +
-   `snapshots.checks` (the promotion-blocking thresholds); **phase 4** --
-   migration 0134 (re-review flags on decisions), `app/services/
+   warning is < 80 %). These are the runbook's normal ranges. *Phase 3
+   shipped 2026-09-19:* the 19 Clackamas city overlays quadfit read but the
+   registry lacked (West Linn x6, Wilsonville SROZ, Happy Valley NROZ +
+   slope, Milwaukie x4, Oregon City NROD, Tualatin x5 -- 61 datasets now),
+   `scripts/flats_stage_quadfit_raw.py` (a quadfit tree per snapshot:
+   links under quadfit's names, four renames, FEMA split, DEM tiles shared
+   from July, `SOURCE.json`; refuses a snapshot that is not whole;
+   `QUADFIT_DATA_DIR` moves every quadfit stage), `flats/ingest/
+   normalize.py` (every lot from the snapshot: jurisdiction from
+   JURIS_CITY, majority-area zoning, roll values, condo, and a **gate** --
+   JURISDICTION_NOT_ENCODED / JURISDICTION_OFF / OUTSIDE_UGB / NO_ZONE /
+   ZONE_NOT_ENCODED; the September map: 400,032 lots, 311,202 screenable,
+   5,329 in 128 zone codes the rules do not hold -- commercial, industrial,
+   farm, Wilsonville PD*, Happy Valley MUR*), `flats/ingest/assign.py`
+   (the bridge's rows byte for byte + one `unknown` row per design for
+   every other lot with the reason, NOT_MEASURED carrying quadfit's s3
+   step from the new `s3_dropped.csv`), the loader (`export` takes an
+   unmeasured lot's record from the normalized table and gives every lot
+   `facts.assessor` / `facts.condo` / `facts.snapshot_zone` and a real
+   `condo_verdict`; a snapshot-fed run loads as `candidate`; `load` ends
+   by writing `flats.snapshots.checks` from `flats/ingest/checks.py` --
+   layers_incomplete, count_drift 5 % / taxlots 2 %, new_zones (codes the
+   copy in use did not have; the rest carried), lots_drift 2 %,
+   zone_changes 10 % of a city, rlis_agreement recall 80 % -- and `counts`
+   for the next refresh to compare against). *In flight on 137 (started
+   2026-09-19 07:23 UTC):* quadfit s1..s7 from the September tree
+   (`/root/qf_sep.log`; s4 saw 290,032 lots vs July's 289,845), then the
+   bridge (~7 h, `/root/bridge_sep`), then assign -> export -> scp to 114
+   -> `load --snapshot 3` (dry run first) -> VACUUM -> `?run=<id>`. When
+   it lands: HUMAN_TODO 20 "built so far" gets the numbers (the first
+   candidate WILL trip new_zones -- snapshot 1 is synthetic and knew no
+   codes -- so Steph reads it; that is the design). *Still owed:* **phase
+   4** -- migration 0134 (re-review flags on decisions), `app/services/
    flats_refresh.py` promote / rollback / drift, `scripts/flats_promote.py`,
-   page `/flats/refresh`, the runbook, `docs/ops/data-sources-active.md`
-   RLIS section marked decommissioned. Terrain (DEM tiles) stays
-   `deferred` until the slope stage exists.
+   page `/flats/refresh` showing the six checks, the runbook `docs/ops/
+   flats-county-refresh.md`, `docs/ops/data-sources-active.md` RLIS section
+   marked decommissioned. Terrain (DEM tiles) stays `deferred` until the
+   slope stage exists. Two loose ends found by the September map, queued
+   not fixed: Happy Valley's layer carries both `MURM2` and `MURm2` (one
+   lot; the source's casing, kept as it is), and Oregon City's zoning
+   layer says `County` on 14 lots inside its boundary.
 2. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks

@@ -1,0 +1,191 @@
+"""The promotion gate's numbers: what a refreshed county copy must pass before the agent may promote it.
+
+Steph's rule (2026-09-19): *"Me, when clean; you, when warned."* This module
+decides "clean" versus "warned" -- nothing else. It is pure: the loader
+gathers the inputs from the database at the end of a candidate load and
+stores the result on ``flats.snapshots.checks``; the promotion service reads
+that column back. Every code is always present, tripped or not, so the page
+can show the whole gate and not only the failures:
+
+``layers_incomplete``
+    A dataset the acquire stage refused or failed, or one with features it
+    never fetched. The copy is not whole; nothing measured from it is trusted.
+``count_drift``
+    A dataset's feature count moved more than :data:`COUNT_DRIFT` (taxlots
+    :data:`TAXLOT_DRIFT`) against the copy in use -- the shape a layer takes
+    when the service behind it was replaced (Gladstone came back as the
+    regional fabric).
+``new_zones``
+    Zone codes on the county map that the rules do not hold and the copy in
+    use did not have either. Those lots screen ``unknown``; encoding a code is
+    a human's work. A code already unencoded in the copy in use (the
+    commercial and farm zones the rules leave alone on purpose) is carried,
+    counted, and does not trip -- otherwise every refresh would warn forever
+    about the same 5,000 lots.
+``lots_drift``
+    The measured lot count moved more than :data:`TAXLOT_DRIFT` against the
+    run in use.
+``zone_changes``
+    More than :data:`ZONE_CHANGE_SHARE` of one jurisdiction's lots changed
+    zone between the two copies (a rezoning, or a zoning layer that moved).
+``rlis_agreement``
+    Metro's own change list and our delta disagree: recall under
+    :data:`RLIS_AGREEMENT` on either side in either county.
+
+A threshold is a warning, never a verdict on the data: a tripped check means
+a person reads the report before the copy is promoted.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+#: A dataset's feature count may move this much before it is a warning.
+COUNT_DRIFT = 0.05
+#: The taxlot fabric, and the measured lot count, are held tighter.
+TAXLOT_DRIFT = 0.02
+#: The share of one jurisdiction's lots that may change zone quietly.
+ZONE_CHANGE_SHARE = 0.10
+#: The smallest jurisdiction the zone-change share is read on.
+ZONE_CHANGE_FLOOR = 20
+#: Recall of Metro's added / deleted lists below this is a disagreement.
+RLIS_AGREEMENT = 0.80
+#: The dataset the tighter drift applies to.
+TAXLOTS = "rlis_taxlots"
+#: Manifest statuses that leave a dataset whole (deferred and retired are on purpose).
+WHOLE = ("acquired", "present", "deferred", "retired")
+#: The statuses under which a dataset has a file, and so a feature count worth comparing.
+FETCHED = ("acquired", "present")
+
+CODES = ("layers_incomplete", "count_drift", "new_zones", "lots_drift", "zone_changes", "rlis_agreement")
+
+
+def _pct(new: float, old: float) -> float:
+    return abs(new - old) / old if old else (1.0 if new else 0.0)
+
+
+def _check(tripped: bool, detail: str) -> dict[str, Any]:
+    return {"tripped": bool(tripped), "detail": detail}
+
+
+def snapshot_checks(
+    *,
+    datasets: dict[str, dict[str, Any]],
+    baseline_datasets: dict[str, dict[str, Any]] | None,
+    new_zones: dict[str, dict[str, int]] | None,
+    baseline_new_zones: dict[str, dict[str, int]] | None,
+    measured: int,
+    baseline_measured: int | None,
+    zone_changes: dict[str, tuple[int, int]],
+    crosscheck: dict[str, Any] | None,
+) -> dict[str, dict[str, Any]]:
+    """Every promotion check, tripped or not.
+
+    ``datasets`` / ``baseline_datasets`` are ``snapshots.counts["datasets"]``
+    (``{key: {status, features, unfetched}}``) for the copy being loaded and
+    the copy in use; ``zone_changes`` is ``{jurisdiction: (changed, total)}``
+    over the lots both copies hold; ``crosscheck`` is the delta's
+    ``report["delta"]["crosscheck"]``.
+    """
+    out: dict[str, dict[str, Any]] = {}
+
+    broken = []
+    for key, d in sorted(datasets.items()):
+        status = d.get("status")
+        unfetched = int(d.get("unfetched") or 0)
+        if status not in WHOLE:
+            broken.append(f"{key}: {status}")
+        elif unfetched:
+            broken.append(f"{key}: {unfetched} features never fetched")
+    out["layers_incomplete"] = _check(
+        bool(broken),
+        "; ".join(broken) if broken else f"every one of {len(datasets)} datasets whole",
+    )
+
+    moved = []
+    compared = 0
+    if baseline_datasets:
+        for key, d in sorted(datasets.items()):
+            before = baseline_datasets.get(key) or {}
+            if d.get("status") not in FETCHED or before.get("status") not in FETCHED:
+                continue  # a layer that is not whole is layers_incomplete's finding, not this one's
+            old, new = before.get("features"), d.get("features")
+            if old is None or new is None:
+                continue
+            compared += 1
+            limit = TAXLOT_DRIFT if key == TAXLOTS else COUNT_DRIFT
+            if _pct(new, old) > limit:
+                moved.append(f"{key}: {old:,} -> {new:,} ({_pct(new, old):+.1%})")
+    out["count_drift"] = _check(
+        bool(moved),
+        "; ".join(moved)
+        if moved
+        else (f"{compared} datasets within tolerance" if compared else "no earlier copy holds feature counts; nothing to compare"),
+    )
+
+    codes = []
+    carried = 0
+    for layer_id, by_code in sorted((new_zones or {}).items()):
+        known = set((baseline_new_zones or {}).get(layer_id) or {})
+        fresh = {c: n for c, n in by_code.items() if c not in known}
+        carried += len(by_code) - len(fresh)
+        if fresh:
+            codes.append(f"{layer_id}: " + ", ".join(f"{c} ({n:,})" for c, n in sorted(fresh.items())))
+    if codes:
+        detail = "; ".join(codes)
+        if carried:
+            detail += f" -- and {carried} unencoded codes carried from the earlier copy"
+    elif carried:
+        detail = f"no new codes; {carried} unencoded codes carried from the earlier copy"
+    else:
+        detail = "every zone code on the map is in the rules"
+    out["new_zones"] = _check(bool(codes), detail)
+
+    if baseline_measured:
+        pct = _pct(measured, baseline_measured)
+        out["lots_drift"] = _check(
+            pct > TAXLOT_DRIFT,
+            f"{baseline_measured:,} -> {measured:,} measured lots ({(measured - baseline_measured) / baseline_measured:+.1%})",
+        )
+    else:
+        out["lots_drift"] = _check(False, f"{measured:,} measured lots; no earlier run to compare")
+
+    shifted = []
+    read = 0
+    for juris, (changed, total) in sorted(zone_changes.items()):
+        if total < ZONE_CHANGE_FLOOR:
+            continue
+        read += 1
+        if changed / total > ZONE_CHANGE_SHARE:
+            shifted.append(f"{juris}: {changed:,} of {total:,} ({changed / total:.0%})")
+    if shifted:
+        quiet = "; ".join(shifted)
+    elif read:
+        quiet = f"{read} jurisdictions within tolerance"
+    elif zone_changes:
+        quiet = f"{len(zone_changes)} jurisdictions share fewer than {ZONE_CHANGE_FLOOR} lots with the earlier copy"
+    else:
+        quiet = "no lots shared with an earlier copy"
+    out["zone_changes"] = _check(bool(shifted), quiet)
+
+    if crosscheck and crosscheck.get("counties"):
+        low = []
+        for county, sides in sorted(crosscheck["counties"].items()):
+            for side in ("added", "deleted"):
+                recall = (sides.get(side) or {}).get("recall")
+                if recall is not None and recall < RLIS_AGREEMENT:
+                    low.append(f"{county} {side}: recall {recall:.0%}")
+        out["rlis_agreement"] = _check(
+            bool(low),
+            "; ".join(low) if low else f"min recall {crosscheck.get('min_recall')} against Metro's change list",
+        )
+    else:
+        out["rlis_agreement"] = _check(False, "no delta cross-check stored for this copy")
+
+    return out
+
+
+def tripped(checks: dict[str, dict[str, Any]] | None) -> list[str]:
+    """The codes that block an agent's promotion, in the gate's order."""
+    checks = checks or {}
+    return [c for c in CODES if (checks.get(c) or {}).get("tripped")]

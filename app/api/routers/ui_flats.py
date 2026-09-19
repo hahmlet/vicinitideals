@@ -2701,6 +2701,28 @@ _REASON_WORDS = {
     "USE_NOT_ENCODED": "whether the zone allows a fourplex is not encoded",
     "USE_PROHIBITED": "the zone forbids the use outright",
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
+    # The county copy's own reasons (flats.ingest.normalize gates and the
+    # assign stage): why a lot on the map was never screened.
+    "JURISDICTION_NOT_ENCODED": "the city this lot is in has no encoded rules",
+    "JURISDICTION_OFF": "the city this lot is in is switched off",
+    "OUTSIDE_UGB": "outside the urban growth boundary",
+    "NO_ZONE": "no zoning polygon covers this lot",
+    "ZONE_NOT_ENCODED": "the zone code on the map is not in the rules",
+    "ZONE_REFERENCE_MISSING": "the zone points at a zone the rules do not hold",
+    "ZONE_REFERENCE_CYCLE": "the zone's references loop",
+    "RULE_AMBIGUOUS": "two readings of a rule this rests on disagree",
+    "NOT_MEASURED": "the county map's measurement never reached this lot",
+    "quadfit:sliver_area": "the county map's measurement skipped it: under 1,000 sq ft",
+    "quadfit:too_narrow_20ft": "the county map's measurement skipped it: under 20 ft wide",
+    "quadfit:zone_quadplex_not_allowed": "the county map's measurement skipped it: its rules say the zone does not allow a fourplex",
+    "quadfit:zone_not_in_rules": "the county map's measurement skipped it: the zone is not in its rules",
+    "quadfit:no_zone_assigned": "the county map's measurement skipped it: no zone was assigned",
+    "quadfit:outside_ugb": "the county map's measurement skipped it: outside the growth boundary",
+    "quadfit:jurisdiction_unmapped": "the county map's measurement skipped it: the city is not mapped",
+    "quadfit:jurisdiction_ineligible_no_rules": "the county map's measurement skipped it: the city has no rules there",
+    "quadfit:condo_stack": "the county map's measurement skipped it: a condo stack",
+    "quadfit:not_a_taxlot": "the county map's measurement skipped it: not a taxlot",
+    "quadfit:unknown": "the county map's measurement did not reach it and no step claims it",
 }
 
 #: The badge class each colour wears.
@@ -2715,7 +2737,11 @@ _OUTLINE_PX = 260
 
 
 def _said_reason(code: str) -> str:
-    return _REASON_WORDS.get(code, code.replace("_", " ").lower())
+    if code in _REASON_WORDS:
+        return _REASON_WORDS[code]
+    if code.startswith("quadfit:"):
+        return f"the county map's measurement skipped it: {code[8:].replace('_', ' ')}"
+    return code.replace("_", " ").lower()
 
 
 def _city_label(jurisdiction: str) -> str:
@@ -2826,8 +2852,13 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
     stalls = checks.get("stalls") or {}
     leaning = checks.get("leaning") or {}
     colour = checks.get("if_signed") or "unknown"
+    # A row the screen never wrote (the assign stage's ``unknown`` for a lot
+    # nobody measured) has no checks to call failing and no fit to call
+    # missing; the older bridge rows predate the flag and were all screened.
+    screened = checks.get("screened", True)
     return {
         "design": row.design_key,
+        "screened": screened,
         "verdict": row.tier,
         "verdict_words": _VERDICT_WORDS.get(row.tier, row.tier),
         "colour": colour,
@@ -2840,8 +2871,8 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "unchecked": list(checks.get("unchecked") or []),
         "binding": list(row.binding or []),
         "slack_ft": float(row.slack_ft) if row.slack_ft is not None else None,
-        "fits": checks.get("fits"),
-        "fit": checks.get("fit") or {},
+        "fits": checks.get("fits") if screened else None,
+        "fit": (checks.get("fit") or {}) if screened else {},
         "stalls_charged": stalls.get("charged"),
         "stalls_seated": stalls.get("seated"),
         "band": stalls.get("band"),
@@ -3073,13 +3104,27 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
     def yes(value: Any) -> str:
         return "" if value is None else ("yes" if value else "no")
 
+    def money(value: Any) -> str:
+        return f"${float(value):,.0f}" if value is not None else ""
+
     observed = facts.get("observed") or {}
     envelope = facts.get("envelope") or {}
     slope = facts.get("slope") or {}
     sewer = facts.get("sewer") or {}
     flood = facts.get("flood") or {}
+    roll = facts.get("assessor") or {}
+    condo = facts.get("condo") or {}
+    unmeasured = facts.get("unmeasured") or {}
     bearings = facts.get("front_bearings_deg") or []
     rows = [
+        (
+            "Not measured",
+            " -- ".join(
+                x for x in (_said_reason(unmeasured["reason"]) if unmeasured.get("reason") else "",
+                            _said_reason(f"quadfit:{unmeasured['quadfit_step']}") if unmeasured.get("quadfit_step") else "")
+                if x
+            ),
+        ),
         ("Frontage", ft(facts.get("frontage_ft"))),
         ("Lot width", ft(facts.get("lot_width_ft"))),
         ("Lot depth", ft(facts.get("lot_depth_ft"))),
@@ -3113,8 +3158,25 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Nearest sewer main", ft(sewer.get("main_dist_ft"))),
         ("In a flood hazard area", yes(flood.get("sfha"))),
         ("In a floodway", yes(flood.get("floodway"))),
+        # The assessor's roll, adopted from the county copy on every refresh.
+        ("Condo", f"{condo['verdict']}" + (f" ({condo['reason']})" if condo.get("reason") else "") if condo.get("verdict") and condo["verdict"] != "land" else ""),
+        ("Assessed value", money(roll.get("assessed_value"))),
+        ("Real market value (land / building / total)", " / ".join(money(roll.get(k)) or "-" for k in ("land_value", "building_value", "total_value")) if any(roll.get(k) is not None for k in ("land_value", "building_value", "total_value")) else ""),
+        ("Year built", str(roll["year_built"]) if roll.get("year_built") else ""),
+        ("Building size", sqft(roll.get("building_sqft")) if roll.get("building_sqft") else ""),
+        ("Last sale", (f"{money(roll['sale_price'])} " if roll.get("sale_price") else "") + (f"on {_roll_date(roll['sale_date'])}" if roll.get("sale_date") else "")),
+        ("Property code / state class", " / ".join(str(roll[k]) for k in ("prop_code", "state_class") if roll.get(k))),
+        ("Land use", str(roll["land_use"]) if roll.get("land_use") else ""),
     ]
     return [(label, value) for label, value in rows if value]
+
+
+def _roll_date(value: Any) -> str:
+    """RLIS's ``YYYYMMDD`` sale date as ``YYYY-MM-DD``; anything else as it came."""
+    text = str(value).strip()
+    if len(text) == 8 and text.isdigit():
+        return f"{text[:4]}-{text[4:6]}-{text[6:]}"
+    return text
 
 
 @router.get("/flats/lots/{county}/{tlid:path}", response_class=HTMLResponse)

@@ -176,9 +176,12 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
         "tiers": {"unknown": 4},
         "if_signed": {"green": 1, "red": 1, "unknown": 1, "yellow": 1},
         "by_county": {"clackamas": 1, "multnomah": 1},
+        "by_source": {"quadfit": 2},
+        "unmeasured": {},
     }
     assert run["params"]["source_id"] == run["source_id"]
-    assert run["status"] == "complete"
+    assert run["status"] == "complete", "a run read from quadfit's own tree is the copy in use"
+    assert run["snapshot_date"] is None and run["new_zones"] == {}
 
     lots = _read(out / LOTS_FILE)
     assert [tuple(r) for r in lots][0] == LOT_COLUMNS
@@ -186,6 +189,7 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
     a = next(r for r in lots if r["tlid"] == LOT_A)
     assert (a["county"], a["jurisdiction"], a["zone_raw"], a["zone"]) == ("multnomah", "or/multnomah/portland", "R5", "R5")
     assert a["site_address"] == "1234 SE MAIN ST"
+    assert a["condo_verdict"] == "land", "without a normalized table every lot is land, as the bridge always said"
     assert float(a["area_sqft"]) == 5000.0
     assert shapely.from_wkb(bytes.fromhex(a["wkb_hex"])).equals(POLY_A)
     facts = json.loads(a["facts"])
@@ -249,6 +253,102 @@ def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
 
     with pytest.raises(SystemExit, match="1 lots in the run are not in"):
         export(run_dir, tmp_path / "bundle", s4=short, s5o=s5o, quadfit_results=results)
+
+
+LOT_C = "1S1E01AA -00100"  # in s4 but never measured by the bridge; the snapshot answers for it
+LOT_D = "1S1E01AA -00200"  # in the snapshot only: dropped by quadfit's filter
+
+
+def _make_snapshot_run(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
+    """The bridge run plus two ``unknown`` lots the assign stage added, and the normalized table they came from."""
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    frame = pd.read_parquet(run_dir / "lots.parquet")
+    extra = []
+    for design in DESIGNS:
+        extra.append(_bridge_row(LOT_C, design, jurisdiction="or/clackamas/milwaukie", zone=None, layer_id="or/clackamas/milwaukie", tier=None, rule_verdict=None, triage="unknown", if_signed="unknown", reasons="ZONE_NOT_ENCODED", if_signed_reasons="ZONE_NOT_ENCODED", head="", dominant=None, ask=None, fits=False, fit_slack_ft=None, stalls_charged=None, stalls_seated=None, parking_band=None, fit_best_depth_ft=None, fit_required_ft=None, fit_angle_deg=None, fit_across_ft=None, fit_orientation=None, lot_sqft=7000.0, frontage_ft=None, lot_width_ft=None, lot_depth_ft=None, observed="{}", assumed_leaning="", unknown_leaning="", angles=None, step_deg=None))
+        extra.append(_bridge_row(LOT_D, design, jurisdiction="or/multnomah/portland", zone="R5", layer_id="or/multnomah/portland", tier=None, rule_verdict=None, triage="unknown", if_signed="unknown", reasons="NOT_MEASURED,quadfit:sliver_area", if_signed_reasons="NOT_MEASURED,quadfit:sliver_area", head="", dominant=None, ask=None, fits=False, fit_slack_ft=None, stalls_charged=None, stalls_seated=None, parking_band=None, fit_best_depth_ft=None, fit_required_ft=None, fit_angle_deg=None, fit_across_ft=None, fit_orientation=None, lot_sqft=800.0, frontage_ft=None, lot_width_ft=None, lot_depth_ft=None, observed="{}", assumed_leaning="", unknown_leaning="", angles=None, step_deg=None))
+    pd.concat([frame, pd.DataFrame(extra)], ignore_index=True).to_parquet(run_dir / "lots.parquet", index=False)
+
+    normalized = tmp_path / "normalized"
+    normalized.mkdir()
+    roll = {"LANDVAL": 250000, "BLDGVAL": 180000, "TOTALVAL": 430000, "ASSESSVAL": 310500, "YEARBUILT": 1948, "BLDGSQFT": 1250, "SALEDATE": "20210615", "SALEPRICE": 415000, "PROP_CODE": "101", "STATECLASS": "101", "LANDUSE": "SFR"}
+    pd.DataFrame(
+        [
+            {"county": "multnomah", "tlid": LOT_A, "juris_city": "PO", "jurisdiction": "or/multnomah/portland", "site_address": "1234 SE MAIN ST", "area_sqft": 5000.0, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": "R5", "zone": "R5", "zone_frac": 1.0, "split_zone": False, "inside_ugb": True, "gate": None, **roll, "wkb": shapely.to_wkb(POLY_A)},
+            {"county": "clackamas", "tlid": LOT_B, "juris_city": "PO", "jurisdiction": "or/multnomah/portland", "site_address": "1829 NW 25TH AVE", "area_sqft": 7200.0, "part_count": 1, "stack_count": 1, "condo_verdict": "suspect", "condo_reason": "stacked", "zone_raw": "R2.5", "zone": "R2.5", "zone_frac": 1.0, "split_zone": False, "inside_ugb": True, "gate": None, **{k: None for k in roll}, "wkb": shapely.to_wkb(POLY_B)},
+            {"county": "clackamas", "tlid": LOT_C, "juris_city": "MI", "jurisdiction": "or/clackamas/milwaukie", "site_address": "9 SE HARRISON ST", "area_sqft": 7000.0, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": "QQ9", "zone": None, "zone_frac": 1.0, "split_zone": False, "inside_ugb": True, "gate": "ZONE_NOT_ENCODED", **roll, "wkb": shapely.to_wkb(POLY_A)},
+            {"county": "multnomah", "tlid": LOT_D, "juris_city": "PO", "jurisdiction": "or/multnomah/portland", "site_address": None, "area_sqft": 800.0, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": "R5", "zone": "R5", "zone_frac": 0.97, "split_zone": False, "inside_ugb": True, "gate": None, **{k: None for k in roll}, "wkb": shapely.to_wkb(shapely.box(7_640_100.0, 680_000.0, 7_640_120.0, 680_040.0))},
+        ]
+    ).to_parquet(normalized / "lots.parquet", index=False)
+    meta = json.loads((run_dir / "meta.json").read_text(encoding="utf-8"))
+    meta.update(
+        caller="flats.ingest.assign",
+        snapshot_date="2026-09-18",
+        normalized=str(normalized),
+        new_zones={"or/clackamas/milwaukie": {"QQ9": 1}},
+        lots=4,
+        rows=8,
+        assign={"measured": 2, "unmeasured": 2, "by_reason": {"NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}},
+    )
+    (run_dir / "meta.json").write_text(json.dumps(meta), encoding="utf-8")
+    return run_dir, s4, s5o, results, normalized
+
+
+def test_a_snapshot_fed_run_exports_every_lot_as_a_candidate(tmp_path: Path) -> None:
+    run_dir, s4, s5o, results, normalized = _make_snapshot_run(tmp_path)
+    out = tmp_path / "bundle"
+
+    run = export(run_dir, out, s4=s4, s5o=s5o, quadfit_results=results)
+
+    assert run["status"] == "candidate"
+    assert run["snapshot_date"] == "2026-09-18"
+    assert run["new_zones"] == {"or/clackamas/milwaukie": {"QQ9": 1}}
+    assert run["params"]["caller"] == "flats.ingest.assign"
+    assert run["counts"]["lots"] == 4 and run["counts"]["results"] == 8
+    assert run["counts"]["by_source"] == {"quadfit": 3, "snapshot": 1}, "LOT_C is in s4 (measured by quadfit, screened by nobody); only LOT_D is the snapshot's"
+    assert run["counts"]["unmeasured"] == {"NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}
+    assert run["counts"]["if_signed"] == {"green": 1, "red": 1, "unknown": 5, "yellow": 1}
+
+    lots = {r["tlid"]: r for r in _read(out / LOTS_FILE)}
+    assert set(lots) == {LOT_A, LOT_B, LOT_C, LOT_D}
+    # A measured lot keeps s4's record and gains the roll and the condo verdict.
+    a = lots[LOT_A]
+    assert (a["jurisdiction"], a["zone"], a["condo_verdict"]) == ("or/multnomah/portland", "R5", "land")
+    facts = json.loads(a["facts"])
+    assert facts["quadfit_jurisdiction"] == "portland" and facts["geometry_tier"] == "A"
+    assert facts["assessor"] == {"land_value": 250000.0, "building_value": 180000.0, "total_value": 430000.0, "assessed_value": 310500.0, "year_built": 1948, "building_sqft": 1250.0, "sale_date": "20210615", "sale_price": 415000.0, "prop_code": "101", "state_class": "101", "land_use": "SFR"}
+    assert facts["condo"] == {"verdict": "land", "reason": None}
+    assert facts["snapshot_zone"] == {"raw": "R5", "zone": "R5", "gate": None}
+    b = lots[LOT_B]
+    assert b["condo_verdict"] == "suspect" and json.loads(b["facts"])["condo"] == {"verdict": "suspect", "reason": "stacked"}
+    assert json.loads(b["facts"])["assessor"]["total_value"] is None
+    # A lot quadfit never measured takes the snapshot's record and says why it is unanswered.
+    d = lots[LOT_D]
+    assert (d["county"], d["jurisdiction"], d["zone"], d["site_address"], d["condo_verdict"]) == ("multnomah", "or/multnomah/portland", "R5", "", "land")
+    assert float(d["area_sqft"]) == 800.0 and shapely.from_wkb(bytes.fromhex(d["wkb_hex"])).area == 800.0
+    df = json.loads(d["facts"])
+    assert df["source"] == "snapshot"
+    assert df["unmeasured"] == {"reason": "NOT_MEASURED", "quadfit_step": "sliver_area"}
+    assert df["zone_frac"] == 0.97 and df["juris_city"] == "PO" and df["observed"] == {}
+    assert "geometry_tier" not in df
+    c = json.loads(lots[LOT_C]["facts"])
+    assert c["snapshot_zone"] == {"raw": "QQ9", "zone": None, "gate": "ZONE_NOT_ENCODED"}
+
+    rows = _read(out / RESULTS_FILE)
+    unknowns = [r for r in rows if r["tlid"] == LOT_D]
+    assert len(unknowns) == 2 and {r["tier"] for r in unknowns} == {"unknown"}
+    assert json.loads(unknowns[0]["checks"])["reasons"] == ["NOT_MEASURED", "quadfit:sliver_area"]
+    assert json.loads(unknowns[0]["binding"]) == []
+    assert {r["county"] for r in rows if r["tlid"] == LOT_C} == {"clackamas"}
+
+
+def test_a_lot_in_neither_the_stage_file_nor_the_snapshot_refuses_the_export(tmp_path: Path) -> None:
+    run_dir, s4, s5o, results, normalized = _make_snapshot_run(tmp_path)
+    short = normalized / "lots.parquet"
+    pd.read_parquet(short).query("tlid != @LOT_D").to_parquet(short, index=False)
+
+    with pytest.raises(SystemExit, match=r"1 lots in the run are not in .* or "):
+        export(run_dir, tmp_path / "bundle", s4=s4, s5o=s5o, quadfit_results=results)
 
 
 # --- the load ----------------------------------------------------------
@@ -444,6 +544,81 @@ async def test_a_second_copy_lands_beside_the_first_and_a_run_reads_one_copy(
         "SELECT count(*) FROM flats.lot_results r JOIN flats.lots l ON l.id = r.lot_id "
         "JOIN flats.runs u ON u.id = r.run_id WHERE l.snapshot_id <> u.snapshot_id",
     ) == 0
+
+
+@pytest.mark.asyncio
+async def test_a_candidate_load_writes_the_promotion_gate_on_its_snapshot(
+    tmp_path: Path, session: AsyncSession, _test_db_url: str
+) -> None:
+    """The gate is read against the copy the default run shows, and written in the load's own transaction."""
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    july_bundle = tmp_path / "july"
+    export(run_dir, july_bundle, s4=s4, s5o=s5o, quadfit_results=results)
+    july = await _snapshot(session, taken="2026-07-28")
+    await session.execute(
+        text("UPDATE flats.snapshots SET counts = CAST(:c AS jsonb) WHERE id = :s"),
+        {"c": json.dumps({"lots": 2, "datasets": {"rlis_taxlots": {"status": "acquired", "features": 1000, "unfetched": 0}}}), "s": july},
+    )
+    await session.commit()
+    await load(july_bundle, _test_db_url, snapshot_id=july)
+
+    (tmp_path / "sep").mkdir()
+    sep_dir, s4b, s5ob, results_b, normalized = _make_snapshot_run(tmp_path / "sep")
+    sep_bundle = tmp_path / "sep_bundle"
+    export(sep_dir, sep_bundle, s4=s4b, s5o=s5ob, quadfit_results=results_b)
+    september = await _snapshot(session, taken="2026-09-18", status="candidate")
+    await session.execute(
+        text("UPDATE flats.snapshots SET counts = CAST(:c AS jsonb), report = CAST(:r AS jsonb) WHERE id = :s"),
+        {
+            "c": json.dumps({"features": 1040, "datasets": {"rlis_taxlots": {"status": "acquired", "features": 1040, "unfetched": 0}, "zoning_portland": {"status": "acquired", "features": 5, "unfetched": 2}}}),
+            "r": json.dumps({"delta": {"crosscheck": {"min_recall": 0.9, "agrees": True, "counties": {"multnomah": {"added": {"recall": 0.9}, "deleted": {"recall": 0.95}}}}}}),
+            "s": september,
+        },
+    )
+    await session.commit()
+
+    dry = await load(sep_bundle, _test_db_url, snapshot_id=september, dry_run=True)
+    assert dry["rolled_back"] is True and "checks" in dry
+    stored = (await session.execute(text("SELECT checks, counts FROM flats.snapshots WHERE id = :s"), {"s": september})).one()
+    assert stored[0] == {} and "lots" not in stored[1], "a dry run leaves the gate unwritten"
+
+    report = await load(sep_bundle, _test_db_url, snapshot_id=september)
+
+    assert report["verified"] is True
+    assert set(report["checks"]) == {"layers_incomplete", "count_drift", "new_zones", "lots_drift", "zone_changes", "rlis_agreement"}
+    assert report["blocks"] == ["layers_incomplete", "count_drift", "new_zones", "lots_drift"]
+    checks = report["checks"]
+    assert checks["layers_incomplete"]["detail"] == "zoning_portland: 2 features never fetched"
+    assert checks["count_drift"]["detail"] == "rlis_taxlots: 1,000 -> 1,040 (+4.0%)"
+    assert checks["new_zones"]["detail"] == "or/clackamas/milwaukie: QQ9 (1)"
+    assert checks["lots_drift"]["detail"] == "2 -> 3 measured lots (+50.0%)"
+    assert checks["zone_changes"]["detail"] == "1 jurisdictions share fewer than 20 lots with the earlier copy"
+    assert checks["rlis_agreement"]["tripped"] is False
+
+    row = (await session.execute(text("SELECT checks, counts, status FROM flats.snapshots WHERE id = :s"), {"s": september})).one()
+    assert row[0] == checks
+    assert row[1]["lots"] == 4 and row[1]["measured"] == 3 and row[1]["results"] == 8
+    assert row[1]["by_reason"] == {"NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}
+    assert row[1]["new_zones"] == {"or/clackamas/milwaukie": {"QQ9": 1}}, "the next refresh reads these as already known"
+    assert row[1]["baseline_snapshot_id"] == july
+    assert row[1]["features"] == 1040, "the counts the register step wrote stay"
+    assert row[2] == "candidate", "a load never promotes"
+    run = (await session.execute(text("SELECT status FROM flats.runs WHERE snapshot_id = :s"), {"s": september})).scalar_one()
+    assert run == "candidate"
+    verdicts = (
+        await session.execute(
+            text("SELECT l.condo_verdict, r.tier, r.checks->>'if_signed' FROM flats.lot_results r JOIN flats.lots l ON l.id = r.lot_id WHERE l.snapshot_id = :s AND l.tlid = :t"),
+            {"s": september, "t": LOT_B},
+        )
+    ).all()
+    assert {v[0] for v in verdicts} == {"suspect"}, "the condo verdict is the snapshot's, not a constant"
+    unmeasured = (
+        await session.execute(
+            text("SELECT l.facts->'unmeasured'->>'reason', r.tier, r.checks->'reasons' FROM flats.lot_results r JOIN flats.lots l ON l.id = r.lot_id WHERE l.snapshot_id = :s AND l.tlid = :t"),
+            {"s": september, "t": LOT_D},
+        )
+    ).all()
+    assert unmeasured and all(u[0] == "NOT_MEASURED" and u[1] == "unknown" and u[2] == ["NOT_MEASURED", "quadfit:sliver_area"] for u in unmeasured)
 
 
 # --- load-changes ---------------------------------------------------------------

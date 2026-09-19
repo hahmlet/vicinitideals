@@ -5,7 +5,9 @@ minimum lot area, minimum frontage) are annotated as columns and applied at
 report time in s7 — so toggling a jurisdiction or adjusting a threshold needs
 only an s7 re-run (seconds), not a pipeline re-run.
 
-Structural drops (first-hit counted, written to funnel.json):
+Structural drops (first-hit counted, written to funnel.json; every dropped
+TLID with its step to s3_dropped.csv, for the FLATS stage that owes each lot
+in the county an answer):
   0. not a taxlot: the right-of-way and the water, which the taxlot file
      holds as polygons of their own (Multnomah `-STR` / `-RIV` / `-RR`,
      Clackamas `ROADS` / `WATER`; `common.NOT_A_TAXLOT_RE`). s4 looks
@@ -56,10 +58,16 @@ def main() -> None:
     lots = read_stage("s2_lots")
     funnel: list[dict] = [{"step": "all_taxlots", "count": int(len(lots))}]
 
+    # Every dropped lot by name, so a reader downstream (the FLATS assign
+    # stage, which owes every lot in the county an answer) can say WHICH step
+    # kept a lot from being measured instead of only how many.
+    dropped: list[pd.DataFrame] = []
+
     def drop(mask, reason: str):
         nonlocal lots
         n = int(mask.sum())
         if n:
+            dropped.append(pd.DataFrame({"TLID": lots.loc[mask, "TLID"].astype(str).to_numpy(), "step": reason}))
             lots = lots[~mask]
         funnel.append({"step": reason, "dropped": n, "remaining": int(len(lots))})
         print(f"  -{n:>8,}  {reason:<28} remaining {len(lots):,}")
@@ -120,6 +128,9 @@ def main() -> None:
           "(policy gates applied later in s7)")
     write_stage(lots, "s3_lots")
     (DATA_DIR / "funnel.json").write_text(json.dumps(funnel, indent=2), encoding="utf-8")
+    gone = pd.concat(dropped, ignore_index=True) if dropped else pd.DataFrame({"TLID": [], "step": []})
+    gone.to_csv(DATA_DIR / "s3_dropped.csv", index=False)
+    print(f"s3: wrote {len(gone):,} dropped lots by step to s3_dropped.csv")
     print("s3 done.")
 
 

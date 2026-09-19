@@ -32,6 +32,18 @@ neither has the other's libraries:
   copies) into ``flats.lot_changes`` for one ``--from`` / ``--to`` pair of
   registered snapshots, replacing that pair's rows if they were loaded before.
 
+A run directory written by ``flats.ingest.assign`` (every lot in the county:
+the bridge's rows plus an ``unknown`` row per design for each lot quadfit did
+not measure) names its normalized lot table in ``meta.json``; ``export`` then
+takes the lot record for an unmeasured lot from that table (polygon, address,
+jurisdiction, zone, the assessor's roll values, the condo verdict) and for a
+measured lot adds the same roll values and verdict beside s4's facts. Such a
+run is loaded with ``status: candidate`` -- reachable with ``?run=``, never
+the default until promoted -- and the load ends by writing the snapshot's
+``checks``: the promotion-blocking thresholds (a layer not whole, a feature
+count that moved, a zone code the rules lack, a city whose zones moved, a
+county change list that disagrees with ours), each ``{tripped, detail}``.
+
 What lands where:
 
 * ``lot_results.tier`` carries the screen's OWN word -- ``green`` / ``yellow``
@@ -88,6 +100,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from flats.designs.model import Design, load_catalog  # noqa: E402
 from flats.encode.port_quadfit import COUNTY, layer_id_for  # noqa: E402
+from flats.ingest.checks import snapshot_checks, tripped  # noqa: E402
 from flats.rules.loader import CONFIG_ROOT as RULES_ROOT  # noqa: E402
 
 #: The files a bundle is made of.
@@ -104,6 +117,7 @@ LOT_COLUMNS = (
     "site_address",
     "area_sqft",
     "wkb_hex",
+    "condo_verdict",
     "facts",
 )
 RESULT_COLUMNS = ("tlid", "county", "design_key", "tier", "slack_ft", "binding", "checks")
@@ -293,6 +307,60 @@ def lot_facts(s4: dict[str, Any], s5o: dict[str, Any], observed: dict[str, Any],
     )
 
 
+#: RLIS roll columns the normalize stage carries, and the fact each becomes.
+ASSESSOR = (
+    ("LANDVAL", "land_value", "num"),
+    ("BLDGVAL", "building_value", "num"),
+    ("TOTALVAL", "total_value", "num"),
+    ("ASSESSVAL", "assessed_value", "num"),
+    ("YEARBUILT", "year_built", "int"),
+    ("BLDGSQFT", "building_sqft", "num"),
+    ("SALEDATE", "sale_date", "str"),
+    ("SALEPRICE", "sale_price", "num"),
+    ("PROP_CODE", "prop_code", "str"),
+    ("STATECLASS", "state_class", "str"),
+    ("LANDUSE", "land_use", "str"),
+)
+
+
+def assessor_facts(nr: dict[str, Any]) -> dict[str, Any]:
+    """The roll values from a normalized lot row, adopted as they are."""
+    out: dict[str, Any] = {}
+    for column, name, kind in ASSESSOR:
+        value = _clean(nr.get(column))
+        if value is None:
+            out[name] = None
+        elif kind == "int":
+            out[name] = _int(value)
+        elif kind == "num":
+            out[name] = _num(value)
+        else:
+            out[name] = str(value).strip() or None
+    return out
+
+
+def snapshot_facts(nr: dict[str, Any], row: dict[str, Any]) -> dict[str, Any]:
+    """The design-independent record for a lot the snapshot holds and quadfit never measured."""
+    reasons = _split(row.get("reasons"))
+    step = next((r.split(":", 1)[1] for r in reasons if r.startswith("quadfit:")), None)
+    return _clean(
+        {
+            "source": "snapshot",
+            "unmeasured": {
+                "reason": next((r for r in reasons if not r.startswith("quadfit:")), None),
+                "quadfit_step": step,
+            },
+            "juris_city": nr.get("juris_city"),
+            "split_zone": nr.get("split_zone"),
+            "zone_frac": _num(nr.get("zone_frac")),
+            "inside_ugb": nr.get("inside_ugb"),
+            "stack_count": _int(nr.get("stack_count")),
+            "part_count": _int(nr.get("part_count")),
+            "observed": {},
+        }
+    )
+
+
 def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     """What one lot x design row becomes in ``lot_results.checks``."""
     return _clean(
@@ -307,6 +375,9 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
             "unchecked": _split(row.get("unchecked")),
             "ask": row.get("ask"),
             "rule_verdict": row.get("rule_verdict"),
+            # The screen wrote this row (a synthetic ``unknown`` from the
+            # assign stage carries no rule verdict and no measurement).
+            "screened": _clean(row.get("rule_verdict")) is not None,
             "fits": row.get("fits"),
             "fit": {
                 "slack_ft": _num(row.get("fit_slack_ft")),
@@ -357,8 +428,14 @@ def export(
     s5o: Path | None = None,
     quadfit_results: Path | None = None,
     code_version: str | None = None,
+    normalized: Path | None = None,
 ) -> dict[str, Any]:
-    """Write the bundle for one bridge run; returns ``run.json``'s content."""
+    """Write the bundle for one run; returns ``run.json``'s content.
+
+    ``normalized`` (or ``meta.json``'s ``normalized``) is the normalize stage's
+    directory; with it, a lot the run carries that s4 lacks takes its record
+    from there, and every lot gains the roll values and the condo verdict.
+    """
     import pandas as pd
     import pyarrow.parquet as pq
 
@@ -373,7 +450,10 @@ def export(
 
     s4 = s4 or Path(meta.get("s4") or S4_LOTS)
     s5o = s5o or Path(meta.get("s5o") or S5O_LOTS)
+    if quadfit_results is None and meta.get("quadfit_dir"):
+        quadfit_results = Path(meta["quadfit_dir"]) / "lots_results.csv"
     quadfit_results = quadfit_results or LOTS_RESULTS
+    normalized = normalized or (Path(meta["normalized"]) if meta.get("normalized") else None)
 
     have4 = set(pq.read_schema(s4).names)
     left = pd.read_parquet(s4, columns=["TLID", *[c for c in S4_WANTED if c in have4]])
@@ -393,10 +473,21 @@ def export(
     s4_rows = left.to_dict("index")
     s5o_rows = right.to_dict("index")
     q_rows = q.to_dict("index")
+    n_rows: dict[str, dict[str, Any]] = {}
+    if normalized is not None:
+        n = pd.read_parquet(normalized / "lots.parquet")
+        n["tlid"] = n["tlid"].astype(str).str.rstrip()
+        n = n[n["tlid"].isin(tlids)].astype(object)
+        n = n.where(n.notna(), None).set_index("tlid")
+        if n.index.has_duplicates:
+            twice = sorted(set(n.index[n.index.duplicated()]))
+            raise SystemExit(f"{normalized}: a TLID names lots in two counties: {twice[:5]}")
+        n_rows = n.to_dict("index")
 
-    missing = [t for t in tlids if t not in s4_rows]
+    missing = [t for t in tlids if t not in s4_rows and t not in n_rows]
     if missing:
-        raise SystemExit(f"{len(missing)} lots in the run are not in {s4}: {missing[:5]}")
+        where = f"{s4}" if normalized is None else f"{s4} or {normalized}"
+        raise SystemExit(f"{len(missing)} lots in the run are not in {where}: {missing[:5]}")
 
     out.mkdir(parents=True, exist_ok=True)
     counties: Counter[str] = Counter()
@@ -405,36 +496,65 @@ def export(
     first_row: dict[str, dict[str, Any]] = {}
     for row in frame.to_dict("records"):
         first_row.setdefault(row["TLID"], row)
+    county_of: dict[str, str] = {}
+    sources: Counter[str] = Counter()
     with gzip.open(out / LOTS_FILE, "wt", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(LOT_COLUMNS)
         for tlid in tlids:
-            s4r = s4_rows[tlid]
-            juris = str(s4r.get("jurisdiction"))
-            county = lot_county(s4r)
-            try:
-                layer = layer_id_for(juris)
-            except KeyError:
-                layer = f"quadfit:{juris}"
+            nr = n_rows.get(tlid, {})
             observed_raw = first_row[tlid].get("observed")
             try:
                 observed = json.loads(observed_raw) if observed_raw else {}
             except (TypeError, ValueError):
                 observed = {}
-            facts = lot_facts(s4r, s5o_rows.get(tlid, {}), observed, q_rows.get(tlid, {}))
-            wkb = s4r.get("wkb")
-            area = _num(s4r.get("area_sqft"))
+            if tlid in s4_rows:
+                # Measured: s4's record, as the bridge always exported it.
+                s4r = s4_rows[tlid]
+                juris = str(s4r.get("jurisdiction"))
+                county = lot_county(s4r)
+                try:
+                    layer = layer_id_for(juris)
+                except KeyError:
+                    layer = f"quadfit:{juris}"
+                facts = lot_facts(s4r, s5o_rows.get(tlid, {}), observed, q_rows.get(tlid, {}))
+                zone_raw, zone, address = s4r.get("zone_raw"), s4r.get("zone"), s4r.get("SITEADDR")
+                wkb = s4r.get("wkb")
+                area = _num(s4r.get("area_sqft"))
+                sources["quadfit"] += 1
+            else:
+                # Unmeasured: the snapshot's record, and the reason it was not measured.
+                county = str(nr.get("county"))
+                layer = str(nr.get("jurisdiction") or "")
+                facts = snapshot_facts(nr, first_row[tlid])
+                zone_raw, zone, address = nr.get("zone_raw"), nr.get("zone"), nr.get("site_address")
+                wkb = nr.get("wkb")
+                area = _num(nr.get("area_sqft"))
+                sources["snapshot"] += 1
+            if nr:
+                facts["assessor"] = assessor_facts(nr)
+                facts["condo"] = {
+                    "verdict": _clean(nr.get("condo_verdict")) or "land",
+                    "reason": _clean(nr.get("condo_reason")),
+                }
+                facts["snapshot_zone"] = {
+                    "raw": _clean(nr.get("zone_raw")),
+                    "zone": _clean(nr.get("zone")),
+                    "gate": _clean(nr.get("gate")),
+                }
+            county_of[tlid] = county
             counties[county] += 1
             w.writerow(
                 [
                     tlid,
                     county,
                     layer,
-                    _clean(s4r.get("zone_raw")) or "",
-                    _clean(s4r.get("zone")) or "",
-                    _clean(s4r.get("SITEADDR")) or "",
+                    _clean(zone_raw) or "",
+                    _clean(zone) or "",
+                    _clean(address) or "",
                     "" if area is None else repr(area),
                     wkb.hex() if isinstance(wkb, (bytes, bytearray)) else "",
+                    _clean(nr.get("condo_verdict")) or "land",
                     json.dumps(facts, separators=(",", ":")),
                 ]
             )
@@ -447,7 +567,7 @@ def export(
         w.writerow(RESULT_COLUMNS)
         for row in frame.to_dict("records"):
             tlid = row["TLID"]
-            county = lot_county(s4_rows[tlid])
+            county = county_of[tlid]
             tier = str(row.get("triage"))
             if tier not in TIERS:
                 raise SystemExit(f"unexpected triage {tier!r} on {tlid} {row.get('design')}")
@@ -471,24 +591,33 @@ def export(
     seconds = float(meta.get("seconds") or 0.0)
     started = finished - timedelta(seconds=seconds)
     host = socket.gethostname()
+    from_snapshot = normalized is not None
     run = {
         "source_id": f"{host}:{run_dir.resolve()}:{finished.isoformat()}",
         "started_at": started.isoformat(),
         "finished_at": finished.isoformat(),
-        "status": "complete",
+        # A run read from a dated snapshot is a candidate until promoted; the
+        # bridge's July run was loaded complete because it WAS the copy in use.
+        "status": "candidate" if from_snapshot else "complete",
         "code_version": code_version or _git_head(REPO_ROOT),
         "rules_version": rules_version(),
         "design_keys": designs,
         "counties": sorted(counties),
+        "snapshot_date": meta.get("snapshot_date"),
+        "new_zones": meta.get("new_zones") or {},
         "params": {
-            **{k: v for k, v in meta.items() if k not in {"lots", "rows"}},
+            **{k: v for k, v in meta.items() if k not in {"lots", "rows", "funnel"}},
             "source_id": f"{host}:{run_dir.resolve()}:{finished.isoformat()}",
             "host": host,
             "run_dir": str(run_dir.resolve()),
-            "caller": "flats.ingest.quadfit",
+            "caller": meta.get("caller") or "flats.ingest.quadfit",
         },
         "notes": (
-            f"bridge run from quadfit's county map ({host}:{run_dir}); the verdict is the "
+            f"every lot of the {meta.get('snapshot_date')} county map ({host}:{run_dir}): the screen's "
+            f"verdict where quadfit measured, unknown with a reason where it did not; if_signed sits in "
+            f"checks beside it"
+            if from_snapshot
+            else f"bridge run from quadfit's county map ({host}:{run_dir}); the verdict is the "
             f"screen's, if_signed sits in checks beside it"
         ),
         "counts": {
@@ -497,6 +626,8 @@ def export(
             "tiers": dict(sorted(tiers.items())),
             "if_signed": dict(sorted(signed.items())),
             "by_county": dict(sorted(counties.items())),
+            "by_source": dict(sorted(sources.items())),
+            "unmeasured": (meta.get("assign") or {}).get("by_reason", {}),
         },
     }
     (out / RUN_FILE).write_text(json.dumps(run, indent=2), encoding="utf-8")
@@ -569,7 +700,9 @@ async def load(
         try:
             async with conn.transaction():
                 snapshot = await conn.fetchrow(
-                    "SELECT id, snapshot_date, status FROM flats.snapshots WHERE id = $1", snapshot_id
+                    "SELECT id, snapshot_date, status, counts::text AS counts, report::text AS report "
+                    "FROM flats.snapshots WHERE id = $1",
+                    snapshot_id,
                 )
                 if snapshot is None:
                     raise SystemExit(f"no flats.snapshots row {snapshot_id}; register the snapshot first")
@@ -654,7 +787,7 @@ async def load(
                            CASE WHEN wkb_hex IS NULL THEN NULL ELSE
                              ST_Transform(ST_Centroid(
                                ST_SetSRID(ST_GeomFromWKB(decode(wkb_hex, 'hex')), 2913)), 4326) END,
-                           'land', facts::jsonb, $1, $1
+                           COALESCE(NULLIF(condo_verdict, ''), 'land'), facts::jsonb, $1, $1
                     FROM tmp_lots
                     ON CONFLICT (snapshot_id, county, tlid) DO UPDATE SET
                         jurisdiction = EXCLUDED.jurisdiction,
@@ -759,6 +892,13 @@ async def load(
                 if problems:
                     raise SystemExit("VERIFY FAILED: " + "; ".join(problems))
                 report["verified"] = True
+
+                # The promotion gate, written on the snapshot in the same
+                # transaction: a candidate is never in the database without
+                # its checks beside it.
+                checks = await _snapshot_checks(conn, snapshot, snapshot_id, run, n_lots)
+                report["checks"] = checks
+                report["blocks"] = tripped(checks)
                 if dry_run:
                     raise _RolledBack()
         except _RolledBack:
@@ -766,6 +906,70 @@ async def load(
     finally:
         await conn.close()
     return report
+
+
+async def _snapshot_checks(conn: Any, snapshot: Any, snapshot_id: int, run: dict[str, Any], n_lots: int) -> dict[str, Any]:
+    """Gather the gate's inputs from the rows just written and store the result.
+
+    The baseline is the copy the newest complete run reads -- the one the
+    page shows by default -- when it is a different copy from this one.
+    """
+    counts = json.loads(snapshot["counts"] or "{}")
+    stored_report = json.loads(snapshot["report"] or "{}")
+    baseline = await conn.fetchrow(
+        """
+        SELECT s.id, s.counts::text AS counts
+        FROM flats.runs r JOIN flats.snapshots s ON s.id = r.snapshot_id
+        WHERE r.status = 'complete' AND r.snapshot_id <> $1
+        ORDER BY r.finished_at DESC LIMIT 1
+        """,
+        snapshot_id,
+    )
+    baseline_counts = json.loads(baseline["counts"] or "{}") if baseline else {}
+    zone_changes: dict[str, tuple[int, int]] = {}
+    if baseline:
+        rows = await conn.fetch(
+            """
+            SELECT n.jurisdiction, count(*)::int AS total,
+                   count(*) FILTER (WHERE n.zone IS DISTINCT FROM o.zone)::int AS changed
+            FROM flats.lots n
+            JOIN flats.lots o ON o.snapshot_id = $2 AND o.county = n.county AND o.tlid = n.tlid
+            WHERE n.snapshot_id = $1
+            GROUP BY n.jurisdiction
+            """,
+            snapshot_id,
+            baseline["id"],
+        )
+        zone_changes = {r["jurisdiction"]: (r["changed"], r["total"]) for r in rows}
+    by_source = (run["counts"].get("by_source") or {})
+    measured = int(by_source.get("quadfit", n_lots))
+    baseline_measured = baseline_counts.get("measured") or baseline_counts.get("lots")
+    checks = snapshot_checks(
+        datasets=counts.get("datasets") or {},
+        baseline_datasets=baseline_counts.get("datasets") or None,
+        new_zones=run.get("new_zones") or {},
+        baseline_new_zones=baseline_counts.get("new_zones") or None,
+        measured=measured,
+        baseline_measured=int(baseline_measured) if baseline_measured else None,
+        zone_changes=zone_changes,
+        crosscheck=(stored_report.get("delta") or {}).get("crosscheck"),
+    )
+    written = {
+        "lots": n_lots,
+        "measured": measured,
+        "results": run["counts"]["results"],
+        "tiers": run["counts"].get("tiers", {}),
+        "by_reason": run["counts"].get("unmeasured", {}),
+        "new_zones": run.get("new_zones") or {},
+        "baseline_snapshot_id": baseline["id"] if baseline else None,
+    }
+    await conn.execute(
+        "UPDATE flats.snapshots SET checks = $2::jsonb, counts = COALESCE(counts, '{}'::jsonb) || $3::jsonb WHERE id = $1",
+        snapshot_id,
+        json.dumps(checks),
+        json.dumps(written),
+    )
+    return checks
 
 
 async def load_changes(
@@ -858,6 +1062,7 @@ def main(argv: list[str] | None = None) -> int:
     ex.add_argument("--s5o", type=Path, default=None, help="override quadfit's s5o_lots.parquet")
     ex.add_argument("--quadfit-results", type=Path, default=None, help="override quadfit's lots_results.csv")
     ex.add_argument("--code-version", default=None, help="git SHA the run was made with (default: this checkout's HEAD)")
+    ex.add_argument("--normalized", type=Path, default=None, help="the normalize stage's directory (default: meta.json's)")
 
     ld = sub.add_parser("load", help="load a bundle into flats.* (needs asyncpg)")
     ld.add_argument("--bundle", type=Path, required=True)
@@ -883,8 +1088,10 @@ def main(argv: list[str] | None = None) -> int:
             s5o=args.s5o,
             quadfit_results=args.quadfit_results,
             code_version=args.code_version,
+            normalized=args.normalized,
         )
-        print(json.dumps({k: run[k] for k in ("source_id", "code_version", "rules_version", "design_keys", "counties", "counts")}, indent=2))
+        keys = ("source_id", "status", "snapshot_date", "code_version", "rules_version", "design_keys", "counties", "counts")
+        print(json.dumps({k: run.get(k) for k in keys}, indent=2))
         return 0
 
     db_url = args.db_url
@@ -905,6 +1112,12 @@ def main(argv: list[str] | None = None) -> int:
             load(args.bundle, db_url, snapshot_id=args.snapshot, dry_run=args.dry_run, batch_size=args.batch_size)
         )
     print(json.dumps(report, indent=2, default=str))
+    if report.get("verified") and "checks" in report:
+        blocks = report["blocks"]
+        print(
+            f"promotion gate: {'WARNED -- ' + ', '.join(blocks) + '; Steph reads the report' if blocks else 'clean'}",
+            file=sys.stderr,
+        )
     return 0 if report.get("verified") else 1
 
 

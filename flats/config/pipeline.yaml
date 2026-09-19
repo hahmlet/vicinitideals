@@ -375,6 +375,184 @@ datasets:
       serving both counties; a third county needs its ID added here in the
       same breath as its jurisdictions.
 
+  # --- Clackamas city overlays ---------------------------------------------
+  # The environmental layers quadfit's s5o screens against, registered here
+  # so a snapshot carries every layer the measurement reads (they were
+  # fetched by quadfit's s0 alone until 2026-09-19 and stayed at their July
+  # vintage undated). Kill / flag / carve is decided in
+  # `Lot Analysis/quadfit/config/overlays.yaml`, not here; s0_acquire.py holds
+  # the code readings behind each one.
+
+  overlay_west_linn_wra_stream:
+    kind: arcgis
+    label: West Linn water resource area streams
+    provides: overlay
+    geometry: polyline
+    url: https://geo.westlinnoregon.gov/server/rest/services/Operational/RiparianCI/MapServer/2
+    fields: [NAME, TYPE]
+    where: TYPE = 'STREAM'
+    serves: [or/clackamas/west-linn]
+    notes: One service, three TYPE values, three registry entries -- the code gives each type a different width.
+
+  overlay_west_linn_wra_ephemeral:
+    kind: arcgis
+    label: West Linn water resource area ephemeral streams
+    provides: overlay
+    geometry: polyline
+    url: https://geo.westlinnoregon.gov/server/rest/services/Operational/RiparianCI/MapServer/2
+    fields: [NAME, TYPE]
+    where: TYPE = 'EPHEMERAL'
+    serves: [or/clackamas/west-linn]
+
+  overlay_west_linn_wra_piped:
+    kind: arcgis
+    label: West Linn piped watercourses
+    provides: overlay
+    geometry: polyline
+    url: https://geo.westlinnoregon.gov/server/rest/services/Operational/RiparianCI/MapServer/2
+    fields: [NAME, TYPE]
+    where: TYPE = 'PIPED'
+    serves: [or/clackamas/west-linn]
+
+  overlay_west_linn_rci:
+    kind: arcgis
+    label: West Linn riparian corridor inventory
+    provides: overlay
+    url: https://geo.westlinnoregon.gov/server/rest/services/Operational/RiparianCI/MapServer/1
+    fields: [OBJECTID]
+    serves: [or/clackamas/west-linn]
+
+  overlay_west_linn_wetlands:
+    kind: arcgis
+    label: West Linn wetland inventory
+    provides: overlay
+    url: https://geo.westlinnoregon.gov/server/rest/services/Operational/WetlandInventory/MapServer/1
+    fields: [WET_CD, WET_COW_CD, ACRES]
+    serves: [or/clackamas/west-linn]
+
+  overlay_west_linn_flood:
+    kind: arcgis
+    label: West Linn flood management area
+    provides: overlay
+    url: https://geo.westlinnoregon.gov/server/rest/services/Operational/FloodManagement/MapServer/1
+    fields: [OBJECTID]
+    serves: [or/clackamas/west-linn]
+
+  overlay_wilsonville_sroz:
+    kind: arcgis
+    label: Wilsonville significant resource overlay zone impact area
+    provides: overlay
+    url: https://gis.wilsonvillemaps.com/server/rest/services/LandUseDataset/SROZ_ImpactArea/MapServer/166
+    fields: [SROZ_ID, SIG, ACRES, BUFF_DIST]
+    serves: [or/clackamas/wilsonville]
+    notes: >-
+      The city publishes the ring, not the resource: each polygon is an
+      exterior boundary with one hole and the hole is the SROZ. quadfit fills
+      the holes on load (overlays.yaml `fill_holes`); the fetched shape is
+      kept as published.
+
+  overlay_happy_valley_nroz:
+    kind: arcgis
+    label: Happy Valley natural resources overlay zone
+    provides: overlay
+    url: https://services5.arcgis.com/fuVQ9NIPGnPhCBXp/arcgis/rest/services/NaturalResourceOZ/FeatureServer/1
+    fields: [Id]
+    serves: [or/clackamas/happy-valley]
+
+  overlay_happy_valley_slope:
+    kind: arcgis
+    label: Happy Valley steep slopes overlay zone
+    provides: overlay
+    url: https://services5.arcgis.com/fuVQ9NIPGnPhCBXp/arcgis/rest/services/SteepSlopesOZ/FeatureServer/0
+    fields: [Id, Area]
+    serves: [or/clackamas/happy-valley]
+    notes: 5,435 polygons, about 300 MB as GeoJSON -- the largest overlay in the registry.
+
+  overlay_milwaukie_hca:
+    kind: arcgis
+    label: Milwaukie habitat conservation area
+    provides: overlay
+    url: https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/Milwaukie_Zoning/FeatureServer/7
+    fields: [TOWNSHIP, Link]
+    serves: [or/clackamas/milwaukie]
+
+  overlay_milwaukie_wqr:
+    kind: arcgis
+    label: Milwaukie water quality resource
+    provides: overlay
+    url: https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/Milwaukie_Zoning/FeatureServer/6
+    fields: [Id, Link]
+    serves: [or/clackamas/milwaukie]
+
+  overlay_milwaukie_wetlands:
+    kind: arcgis
+    label: Milwaukie wetland inventory
+    provides: overlay
+    url: https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/Milwaukie_Zoning/FeatureServer/5
+    fields: [SOURCE, Link]
+    serves: [or/clackamas/milwaukie]
+
+  overlay_milwaukie_greenway:
+    kind: arcgis
+    label: Milwaukie Willamette Greenway zone
+    provides: overlay
+    url: https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/Milwaukie_Zoning/FeatureServer/8
+    fields: [HIST, Link]
+    serves: [or/clackamas/milwaukie]
+
+  overlay_oregon_city_nrod:
+    kind: arcgis
+    label: Oregon City natural resource overlay district
+    provides: overlay
+    url: https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/2
+    fields: [NROD, Acres]
+    serves: [or/clackamas/oregon-city]
+
+  overlay_tualatin_nrpo:
+    kind: arcgis
+    label: Tualatin natural resource protection overlay district
+    provides: overlay
+    url: https://tualgis.ci.tualatin.or.us/server/rest/services/EnvironmentalExplorer/MapServer/23
+    fields: [TYPE, CLASS, CLASS_NAME, ACRES]
+    serves: [or/clackamas/tualatin]
+
+  overlay_tualatin_wpd_nobuild:
+    kind: arcgis
+    label: Tualatin wetlands protection district, protected area and setback
+    provides: overlay
+    url: https://tualgis.ci.tualatin.or.us/server/rest/services/EnvironmentalExplorer/MapServer/25
+    fields: [TYPE, ACRES]
+    where: TYPE <> 'Wetlands Fringe Area'
+    serves: [or/clackamas/tualatin]
+    notes: The protected-area TYPE value carries a trailing space in the published data, so the split filters on what it is not.
+
+  overlay_tualatin_wfa:
+    kind: arcgis
+    label: Tualatin wetlands fringe area
+    provides: overlay
+    url: https://tualgis.ci.tualatin.or.us/server/rest/services/EnvironmentalExplorer/MapServer/25
+    fields: [TYPE, ACRES]
+    where: TYPE = 'Wetlands Fringe Area'
+    serves: [or/clackamas/tualatin]
+
+  overlay_tualatin_stream_buffer:
+    kind: arcgis
+    label: Tualatin 50 ft stream buffer
+    provides: overlay
+    url: https://tualgis.ci.tualatin.or.us/server/rest/services/EnvironmentalExplorer/MapServer/26
+    fields: [NAME, IS_PIPED, FCODE_DESC]
+    where: IS_PIPED = 'FALSE'
+    serves: [or/clackamas/tualatin]
+
+  overlay_tualatin_stream_piped:
+    kind: arcgis
+    label: Tualatin piped stream segments
+    provides: overlay
+    url: https://tualgis.ci.tualatin.or.us/server/rest/services/EnvironmentalExplorer/MapServer/26
+    fields: [NAME, IS_PIPED, FCODE_DESC]
+    where: IS_PIPED = 'TRUE'
+    serves: [or/clackamas/tualatin]
+
   # --- sanitary sewer ------------------------------------------------------
 
   util_sewer_portland:

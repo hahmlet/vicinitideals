@@ -564,6 +564,77 @@ async def test_the_lot_page_lists_the_facts_the_screen_read(
     assert "None" not in facts
 
 
+async def test_a_lot_the_map_holds_but_nobody_measured_says_why_and_shows_the_roll(
+    client: AsyncClient, session: AsyncSession
+):
+    """A snapshot-fed run carries every lot; one quadfit skipped is ``unknown``
+    with the county copy's reason, its roll values shown, and no check or fit
+    claimed that was never run."""
+    await _login(client, session)
+    run = await _seed(session)
+    lot = FlatsLot(
+        tlid="1S2E08BA  -09600", county="multnomah", jurisdiction="or/multnomah/portland",
+        zone_raw="R5", zone="R5", site_address="2841 SE 71ST AVE", area_sqft=800,
+        geom=_box(7_650_100, 680_000, 20, 40), centroid="SRID=4326;POINT(-122.5901 45.5019)",
+        condo_verdict="suspect",
+        facts={
+            "source": "snapshot",
+            "unmeasured": {"reason": "NOT_MEASURED", "quadfit_step": "sliver_area"},
+            "juris_city": "PO", "split_zone": False, "zone_frac": 1.0, "inside_ugb": True,
+            "stack_count": 1, "part_count": 1, "observed": {},
+            "assessor": {"land_value": 250000.0, "building_value": 180000.0, "total_value": 430000.0,
+                         "assessed_value": 310500.0, "year_built": 1948, "building_sqft": 1250.0,
+                         "sale_date": "20210615", "sale_price": 415000.0, "prop_code": "101",
+                         "state_class": "101", "land_use": "SFR"},
+            "condo": {"verdict": "suspect", "reason": "stacked"},
+            "snapshot_zone": {"raw": "R5", "zone": "R5", "gate": None},
+        },
+        first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=run.snapshot_id,
+    )
+    session.add(lot)
+    await session.flush()
+    for key in DESIGNS:
+        session.add(
+            FlatsLotResult(
+                lot_id=lot.id, design_key=key, run_id=run.id, tier="unknown", slack_ft=None, binding=[],
+                checks={"verdict": "unknown", "if_signed": "unknown",
+                        "reasons": ["NOT_MEASURED", "quadfit:sliver_area"],
+                        "if_signed_reasons": ["NOT_MEASURED", "quadfit:sliver_area"],
+                        "head": None, "failing": [], "unchecked": [], "ask": None, "rule_verdict": None,
+                        "screened": False, "fits": False,
+                        "fit": {"slack_ft": None, "best_depth_ft": None, "required_ft": None, "across_ft": None,
+                                "angle_deg": None, "orientation": None},
+                        "stalls": {"charged": None, "seated": None, "band": None},
+                        "leaning": {"assumed": [], "unknown": []}, "search": {"angles": None, "step_deg": None}},
+            )
+        )
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09600")
+
+    assert page.status_code == 200
+    body = page.text.split('id="lot-verdict"', 1)[1]
+    # (the apostrophe in "map's" is HTML-escaped; assert past it)
+    assert "measurement never reached this lot" in body
+    assert "measurement skipped it: under 1,000 sq ft" in body
+    assert 'id="not-screened-pod56x36-2"' in body and "Not screened" in body
+    assert "none failing" not in body and "does not fit" not in body and "cars charged" not in body
+    facts = page.text.split('id="lot-facts"', 1)[1]
+    assert "Not measured" in facts
+    assert "Assessed value" in facts and "$310,500" in facts
+    assert "$250,000 / $180,000 / $430,000" in facts
+    assert "Year built" in facts and "1948" in facts
+    assert "1,250 sf" in facts
+    assert "$415,000 on 2021-06-15" in facts
+    assert "suspect (stacked)" in facts
+    assert "SFR" in facts
+    assert "None" not in facts
+    assert "Facts read from snapshot" in page.text
+    # The list page carries it too, as unknown, without a fit it never had.
+    listing = await client.get("/flats/lots?q=2841")
+    assert "2841 SE 71ST AVE" in listing.text
+
+
 async def test_a_lot_nobody_loaded_says_so(client: AsyncClient, session: AsyncSession):
     await _login(client, session)
     await _seed(session)

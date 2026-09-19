@@ -769,10 +769,15 @@ def fetch_arcgis_layer(slug: str, url: str, out_fields: list[str], force: bool,
     _write_geojson(path, features, slug)
 
 
-def derive_fema_split(force: bool) -> None:
-    """Split raw NFHL zones into floodway (carve) vs SFHA fringe (flag)."""
-    src = raw_path("overlay_fema_flood")
-    fw_path, fr_path = raw_path("overlay_fema_floodway"), raw_path("overlay_fema_sfha")
+def derive_fema_split(force: bool, raw_dir: Path | None = None) -> None:
+    """Split raw NFHL zones into floodway (carve) vs SFHA fringe (flag).
+
+    ``raw_dir`` lets the FLATS staging script derive the pair inside another
+    data tree (one per county-map snapshot); the default is this run's own.
+    """
+    raw_dir = raw_dir or RAW_DIR
+    src = raw_dir / "overlay_fema_flood.geojson"
+    fw_path, fr_path = raw_dir / "overlay_fema_floodway.geojson", raw_dir / "overlay_fema_sfha.geojson"
     if not src.exists() or (fw_path.exists() and fr_path.exists() and not force):
         return
     doc = json.loads(src.read_text(encoding="utf-8"))
