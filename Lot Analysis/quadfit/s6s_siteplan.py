@@ -412,8 +412,18 @@ def _street_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> f
     return float(v or 0.0)
 
 
+def _extent_along(xy, bearing: float) -> float:
+    """The lot's length along a bearing: the spread of its corners projected
+    onto that direction. On every simple shape this is the length of the lot
+    LINE that runs at that bearing -- the whole line, corner to corner,
+    whether or not a street abuts all of it."""
+    t = math.radians(bearing)
+    proj = [x * math.cos(t) + y * math.sin(t) for x, y in xy]
+    return max(proj) - min(proj) if proj else 0.0
+
+
 def _candidate_fronts(bearings: list[float], front_edges: list[list[float]],
-                      rule: str | None) -> list[tuple[float, list, list]]:
+                      rule: str | None, lot_xy=None) -> list[tuple[float, list, list]]:
     """The streets this lot may be laid out to face, one entry each.
 
     Each entry is (bearing, that street's front edges, the other streets'
@@ -426,9 +436,16 @@ def _candidate_fronts(bearings: list[float], front_edges: list[list[float]],
 
     - `shortest` -- Portland 33.910, Oregon City 17.04.490, Wilsonville
       4.001, West Linn 02, Multnomah 39.2000, Wood Village 720.030: the front
-      is the street with the shorter lot line. One entry, unless the two are
+      is the street with the shorter lot LINE. One entry, unless the two are
       equal (within a foot, the platted "equal" of 33.910), when the
-      applicant chooses and both are tried.
+      applicant chooses and both are tried. The line's length is the lot's
+      extent along the bearing (`_extent_along` over `lot_xy`, the lot's
+      corners), NOT the sum of that street's front edges: the September run
+      of 2026-09-19 read the sum and faced 738 lots the wrong way -- a lot
+      with streets at both ends and along one side sums its two ends past
+      the side, and a jogged frontage's perpendicular step (30 ft on
+      1S2E15BB-02800) is no second street. Without the corners (a test) the
+      front-edge sum stands in.
     - `owner` / `entrance` / `both` -- Gladstone, Happy Valley, Milwaukie,
       Gresham, Troutdale; Tualatin, Fairview; Clackamas ZDO 202: the
       choice is the applicant's (or follows the door, which the applicant
@@ -455,8 +472,10 @@ def _candidate_fronts(bearings: list[float], front_edges: list[list[float]],
     if len(groups) < 2:
         return [(float(bearings[0]), list(front_edges), [])]
     if rule == "shortest":
-        groups.sort(key=lambda g: g[2])
-        keep = [g for g in groups if g[2] <= groups[0][2] + 1.0]
+        def line_len(g):
+            return _extent_along(lot_xy, g[0]) if lot_xy else g[2]
+        groups.sort(key=line_len)
+        keep = [g for g in groups if line_len(g) <= line_len(groups[0]) + 1.0]
     elif rule in ("owner", "entrance", "both"):
         keep = groups
     else:
@@ -510,7 +529,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                alley_edges: list[list[float]] | None = None,
                alley_setback_ft: float = 0.0,
                alley_width_ft: float | None = None,
-               street_setback_ft: float | None = None) -> dict:
+               street_setback_ft: float | None = None,
+               lot_xy=None) -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
 
     Returns a dict of scalar results + `geoms` (role -> shapely geometry in the
@@ -550,6 +570,10 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     lane from the SIDE street crosses and the reach that finds the envelope
     cells standing on a street, for the court's exposure. None means the
     front setback, which is right on a lot with one street.
+
+    `lot_xy` is the lot's corners, (x, y) pairs, for the length of each street
+    LOT LINE where the city's front is the shorter one (`_candidate_fronts`);
+    None (a test) falls back to the length of the street's front edges.
 
     WHICH STREET IS THE FRONT, AND WHERE THE LANE COMES FROM (FOLLOWUPS 5;
     Steph's ruling of 2026-09-19, HUMAN_TODO 21). On a corner lot the pod is
@@ -743,7 +767,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     # -> too shallow to park in; stalls counted -> no lane reaches them.
     reach, REACH = 0, ("no_building", "no_court", "court_too_shallow",
                        "no_alley_lane" if alley_fed else "no_side_lane")
-    fronts = _candidate_fronts(bearings, front_edges, front_rule)
+    fronts = _candidate_fronts(bearings, front_edges, front_rule, lot_xy)
     for b, fe, se in fronts:
         # Rotate so this front bearing aligns to the grid, then pick the 180deg
         # orientation that puts THIS street's lot line at MIN-y ("south") --
@@ -990,9 +1014,9 @@ def _work_chunk(chunk):
 
     out = []
     for (idx, env_wkb, bearings, fedges, area, fsb, jur, zone, psb, aedges, asb, aw,
-         ssb) in chunk:
+         ssb, xy) in chunk:
         r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur, zone, psb,
-                       aedges, asb, aw, ssb)
+                       aedges, asb, aw, ssb, xy)
         r["geoms_hex"] = {role: shapely.to_wkb(g).hex() for role, g in r.pop("geoms").items()}
         out.append((idx, r))
     return out
@@ -1272,6 +1296,8 @@ def main() -> None:
                                    str(row["tier"])),
             None if _aw is None or not np.isfinite(float(_aw)) else float(_aw),
             _street_setback(jur, zone, float(row["area_sqft"]), str(row["tier"])),
+            # the lot's corners, for the length of a street lot LINE
+            [(e[0], e[1]) for e in edges],
         ))
     for j, k in alley_fed.items():
         print(f"s6s: {j} sends the driveway to the alley on a lot that has one "

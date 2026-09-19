@@ -126,13 +126,13 @@ def _rect_lot(W: float, D: float):
 def _run(s6s, env, front_edges, area, bearing=0.0, jurisdiction="gresham",
          zone="", parking_setback_ft=None, front_setback_ft=None,
          alley_edges=None, alley_setback_ft=0.0, alley_width_ft=None,
-         bearings=None, street_setback_ft=None):
+         bearings=None, street_setback_ft=None, lot_xy=None):
     return s6s.layout_lot(
         shapely.to_wkb(env), [bearing] if bearings is None else bearings,
         front_edges, area,
         FRONT_S if front_setback_ft is None else front_setback_ft,
         jurisdiction, zone, parking_setback_ft, alley_edges, alley_setback_ft,
-        alley_width_ft, street_setback_ft)
+        alley_width_ft, street_setback_ft, lot_xy)
 
 
 def _corner_lot(W: float, D: float, notch=None):
@@ -1601,3 +1601,38 @@ def test_the_corner_summary_survives_a_lot_with_no_street_bearing():
     # nothing drawn to two fronts: no line at all
     assert s6s._corner_summary(["[]"], ["portland"], [0], [float("nan")], ["none"],
                                ["portland"]) is None
+
+
+def test_the_shorter_street_is_the_shorter_lot_line_not_the_shorter_edge_sum():
+    """Portland 33.910 makes the SHORTER street lot line the front. The
+    September run of 2026-09-19 read the length of each street as the sum of
+    its front edges and faced 738 lots the wrong way: 1S2E11CA-01400 has
+    streets at both 72 ft ends and along one 135 ft side, so the ends summed
+    to 144 and the side "won"; 1S2E15BB-02800's frontage jogs, and the 30 ft
+    step of the jog "won" over the 66 ft end it is part of. A lot line runs
+    corner to corner: its length is the lot's extent along the bearing."""
+    s6s = _sp_setup()
+    cf = s6s._candidate_fronts
+    # streets at both ends and along the east side; s4 lists the ends' sum first
+    W, D = 72.0, 135.0
+    fe = [[0.0, 0.0, W, 0.0], [0.0, D, W, D], [W, 0.0, W, D]]
+    xy = [(0.0, 0.0), (W, 0.0), (W, D), (0.0, D)]
+    kept = cf([0.0, 90.0], fe, "shortest", xy)
+    assert [b for b, _, _ in kept] == [0.0]                       # the 72 ft ends
+    assert len(kept[0][1]) == 2 and len(kept[0][2]) == 1          # both ends face, the side serves
+    assert [b for b, _, _ in cf([0.0, 90.0], fe, "shortest")] == [90.0]   # the sum, as before
+    # a jogged frontage: 36 ft east, 30 ft north, 30 ft east along the south end
+    jog = [[0.0, 0.0, 36.0, 0.0], [36.0, 0.0, 36.0, 30.0], [36.0, 30.0, 66.0, 30.0]]
+    jxy = [(0.0, 0.0), (36.0, 0.0), (36.0, 30.0), (66.0, 30.0), (66.0, 132.0), (0.0, 132.0)]
+    assert [b for b, _, _ in cf([0.0, 90.0], jog, "shortest", jxy)] == [0.0]
+    assert [b for b, _, _ in cf([0.0, 90.0], jog, "shortest")] == [90.0]   # the 30 ft step
+    # and the drawing: the three-street lot faces its end and parks; read
+    # the other way it is 72 ft deep from the side street and refused
+    s6s = _with_words(s6s, "gresham", "shortest", "any")
+    env = box(SIDE_S, FRONT_S, W - FRONT_S, D - FRONT_S)
+    r = _run(s6s, env, fe, W * D, bearings=[0.0, 90.0], lot_xy=xy)
+    assert r["fronts_tried"] == 1 and r["front_bearing_deg"] == 0.0
+    assert r["site_plan_ok"] is True
+    r0 = _run(s6s, env, fe, W * D, bearings=[0.0, 90.0])
+    assert r0["site_plan_ok"] is False
+    assert r0["layout_fail"] == "court_too_shallow"
