@@ -68,3 +68,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    placement (the rectangle's origin on the lot, in 2913 feet) has to be
    returned by the fit and stored in `checks.fit` before anything can be
    drawn. Offered 2026-09-18 with the pages.
+5. **Dependabot: `anyio` 4.13.0 -> 4.14.2 (one critical, one moderate,
+   both raised 2026-09-18 on `uv.lock`).** `uv lock --upgrade-package
+   anyio`, full `tests/` suite (anyio underlies httpx / starlette / the
+   async test client), commit `uv.lock` alone, deploy (the image installs
+   from the lock), read CI. Small; do it at the top of the next session
+   before FLATS work.
