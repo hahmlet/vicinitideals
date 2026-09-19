@@ -101,14 +101,20 @@ datasets:
       Fairview's code is PDF-only, and neither county publishes unincorporated
       zoning through ArcGIS.
 
-  rlis_ugb:
-    kind: rlis_zip
+  ugb_metro:
+    kind: arcgis
     label: Urban growth boundary
     provides: boundary
-    url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
-    member: BOUNDARY/ugb.shp
+    url: https://gis.oregonmetro.gov/arcgis/rest/services/OpenData/BoundaryDataWebMerc/MapServer/6
+    fields: [UGB]
+    native_srid: 3857
     serves: [or/multnomah, or/clackamas]
-    notes: HB 2001's fourplex mandate follows the UGB, not city population.
+    notes: >-
+      HB 2001's fourplex mandate follows the UGB, not city population. Was the
+      RLIS ZIP member BOUNDARY/ugb.shp until the first acquire snapshot
+      (2026-09-18) found the quarterly archive no longer carries it (426
+      members, PLANNING/ugb_history.shp is amendments not the boundary); Metro's
+      own boundary service publishes the one polygon in Web Mercator.
 
   # --- authoritative city zoning -------------------------------------------
 
@@ -192,8 +198,14 @@ datasets:
     provides: zoning
     url: https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7
     zone_field: ZONE
-    fields: [ZONE]
+    fields: [ZONE, CITY]
+    where: CITY = 'Gladstone'
     serves: [or/clackamas/gladstone]
+    notes: >-
+      The layer on Gladstone's service is the regional zoning fabric with a CITY
+      column (18,258 polygons, Forest Grove to Canby); the where clause keeps
+      Gladstone's 35. Without it the first acquire snapshot (2026-09-18) took
+      312 MB of other cities' zoning under Gladstone's name.
     notes: >-
       Oregon City hosts this on Gladstone's behalf and the service is
       countywide. Gladstone lots pick their own polygons in the majority-area
@@ -336,9 +348,15 @@ datasets:
     provides: overlay
     url: https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28
     fields: [FLD_ZONE, ZONE_SUBTY, SFHA_TF, STATIC_BFE]
-    where: '"DFIRM_ID" = ''41051C'''
+    where: '"DFIRM_ID" IN (''41051C'', ''41005C'')'
     serves: [or/multnomah, or/clackamas]
-    notes: NFHL rejects the unquoted form of the where clause intermittently — keep the quoting exactly as written.
+    notes: >-
+      NFHL rejects the unquoted form of the where clause intermittently — keep
+      the quoting exactly as written. DFIRM_ID is the county FIPS: 41051C
+      Multnomah, 41005C Clackamas. The clause named Multnomah alone until the
+      first acquire snapshot (2026-09-18) showed 3,476 features for a dataset
+      serving both counties; a third county needs its ID added here in the
+      same breath as its jurisdictions.
 
   # --- sanitary sewer ------------------------------------------------------
 
@@ -383,9 +401,13 @@ datasets:
     label: Wood Village sanitary mains
     provides: utility
     geometry: polyline
-    url: https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services/Sanitary_Sewer_Main/FeatureServer/19
+    url: https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services/WV_Sewer/FeatureServer/0
     fields: [DIAMETER, MATERIAL]
     serves: [or/multnomah/wood-village]
+    notes: >-
+      Was Sanitary_Sewer_Main/FeatureServer/19 (222 mains when quadfit took it,
+      2026-07-27); that service answered "Invalid URL" to the first acquire
+      snapshot (2026-09-18). The city republished as WV_Sewer/0 (274 mains).
 
   util_sewer_oregon_city:
     kind: arcgis

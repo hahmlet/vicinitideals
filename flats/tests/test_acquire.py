@@ -498,6 +498,32 @@ def test_the_manifest_names_the_snapshot_and_reads_back(tmp_path: Path) -> None:
     assert lines[1].startswith("zoning_portland: acquired -- 2 features")
 
 
+def test_a_dataset_the_registry_dropped_is_retired_not_deleted(tmp_path: Path) -> None:
+    # The first real snapshot found the RLIS ZIP no longer carries ugb.shp and
+    # the registry moved the boundary to Metro's service under a new key. The
+    # old entry must stop reading as part of the snapshot without anything
+    # here deleting a file.
+    out = tmp_path / "2026-09-18"
+    both = ARCGIS_ONLY + f"""
+  zoning_gresham:
+    kind: arcgis
+    label: Gresham zoning
+    provides: zoning
+    url: {ARCGIS}
+    zone_field: ZONE
+    fields: [ZONE]
+    serves: [or/multnomah/portland]
+"""
+    acquire(load_pipeline(registry(tmp_path, both)), out, client=client(ArcGIS(n=2)), log=quiet)
+
+    doc = acquire(load_pipeline(registry(tmp_path, ARCGIS_ONLY)), out, client=client(ArcGIS(n=2)), log=quiet)
+
+    assert doc["datasets"]["zoning_gresham"]["status"] == "retired"
+    assert (out / "zoning_gresham.geojson").exists()
+    assert doc["datasets"]["zoning_portland"]["status"] == "present"
+    assert any(line.startswith("zoning_gresham: retired") for line in describe(doc))
+
+
 def test_a_snapshot_is_named_by_its_date(tmp_path: Path) -> None:
     with pytest.raises(ValueError):
         snapshot_dir("latest", tmp_path)

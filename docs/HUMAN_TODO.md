@@ -1866,6 +1866,17 @@ what it hashed to, how many shapes it holds and whether the source still
 has the columns we expect -- refusing to keep a copy that does not. Where
 the cleaned-up copy lands is the only part still waiting on A or B.
 
+The first copy was taken the same night on the analysis box: every source
+on our list, 453,782 tax lots across the two counties, about 25 minutes,
+1.6 GB. Taking it caught four mistakes in our own list of sources that
+nothing had noticed before — the flood-zone request only ever asked for
+Multnomah County, so every Clackamas lot would have read as "not in a
+floodplain"; the regional archive no longer contains the growth-boundary
+file we named; Gladstone's "zoning" was the whole region's zoning under
+Gladstone's name; and Wood Village's sewer map had moved. All four are
+fixed and the copy re-taken; a check now stops the first one from coming
+back.
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once

@@ -31,7 +31,8 @@ zone field is geometry nobody can zone, and a file that exists would be read
 as one. A dataset the server would not give up (an error on every retry) is
 ``failed``, with the error in the manifest. Terrain (``tnm_dem``) is
 ``deferred`` -- tiles are not a vector layer and the slope stage that needs
-them is not built.
+them is not built. A dataset the registry has since dropped is ``retired``:
+its file stays, its entry stops counting.
 
 **What it does not do.** Nothing is normalized, joined or assigned; the files
 are the sources as published, with the columns the registry asked for. A
@@ -576,6 +577,14 @@ def acquire(
     finally:
         if own:
             client.close()
+    if keys is None:
+        # A dataset the registry dropped stays on disk (nothing here deletes)
+        # but its entry stops reading as part of the snapshot.
+        for key, entry in doc["datasets"].items():
+            if key not in pipeline.datasets and entry.get("status") != "retired":
+                entry["status"] = "retired"
+                entry["error"] = "no longer in the registry"
+        _write_manifest(directory, doc)
     return doc
 
 

@@ -23,7 +23,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    which is HUMAN_TODO 20 and the only part that waits on it; then
    `screen()` reads from there and `ingest/quadfit.py` becomes the
    comparison only. Terrain (DEM tiles) is `deferred` by acquire until the
-   slope stage exists.
+   slope stage exists. First snapshot on 137: `data/flats/sources/
+   2026-09-18/` (41 datasets, 1.6 GB, 453,782 taxlots); its four registry
+   fixes (FEMA both counties, UGB from Metro's service, Gladstone `where`,
+   Wood Village sewer URL) are in `pipeline.yaml` with notes.
 2. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks

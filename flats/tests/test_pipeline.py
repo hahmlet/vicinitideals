@@ -112,6 +112,23 @@ def test_every_source_lands_in_the_working_crs() -> None:
         assert ds.native_srid != p.working_srid
 
 
+#: County path -> the FIPS FEMA keys its flood panels by.
+_FIPS = {"or/multnomah": "41051C", "or/clackamas": "41005C"}
+
+
+def test_a_where_clause_that_names_a_county_names_every_county_it_serves() -> None:
+    # The FEMA clause named Multnomah alone while the dataset served both
+    # counties; every Clackamas lot read "not in a floodplain" and nothing
+    # said so. Found by the first acquire snapshot (2026-09-18), 3,476
+    # features where 6,068 were owed.
+    for ds in load_pipeline().datasets.values():
+        if not ds.where or not any(f in ds.where for f in _FIPS.values()):
+            continue
+        for county, fips in _FIPS.items():
+            if ds.covers(county):
+                assert fips in ds.where, f"{ds.key}: serves {county} but its where clause omits {fips}"
+
+
 def test_the_registry_can_be_read_aloud() -> None:
     lines = describe(load_pipeline())
 
