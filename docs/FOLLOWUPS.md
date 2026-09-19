@@ -108,17 +108,48 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    already count a sideways placement the drawing would refuse -- the two
    disagree on wide lots and neither asks the code. No field holds "side
    parking allowed / forbidden" (`parking_front_prohibited` is the front
-   only); the drawing's docstring names it as its largest gap. Corner and
-   through lots: `s4_edges.cluster_bearings` orders fronts by length and
-   s6s takes `bearings[0]` only -- lane from the longer street, court away
-   from it, so the court can stand along the second street inset only by
-   `setback_street_side_ft`, and a lot with streets at both ends (bearings
-   mod 180 = one cluster) gets its court facing the other street, which
-   Portland's rule forbids; `frontage_ft` sums both street edges on a
-   corner. Do in this order: (i) a per-line field `parking_side_prohibited`
-   read per city (whole-document grep each parking chapter), (ii) a named
-   side-court arrangement in s6s counted under its own `layout_method` so
-   every crosstab shows how many plans rest on it, (iii) s6s tries each
-   street as the front and checks the court against every street's rule.
-   Measure the affected population first (corner lots, through lots, lots
-   wider than deep) before any county run.
+   only). **Steph's ruling 2026-09-19 on the front:** trying each street
+   as the front applies ONLY where the lot has more than one street AND
+   the code leaves the choice to us; if one front parks and the other does
+   not, take the one that parks; if both park, a further deciding factor
+   (HUMAN_TODO 21 -- recommended: the code's own tie-break where it states
+   one, else the most stalls, else the shorter street). And read every
+   city for multi-street rules even where the front is clear. Whole-corpus
+   grep 2026-09-19 (`flats/provenance/docs`, "corner lot|through lot|double
+   frontage" near "front lot line"): the CHOICE IS OURS in Gladstone
+   (17.06, owner designates), Happy Valley (16.12, applicant chooses,
+   through lots too), Milwaukie (19.200, "the street on which the
+   development will face"), Troutdale (1.020, either street unless the
+   corner is one continuous curve), Fairview (19.13, set by the main
+   entrance) and Gresham (3.0100, owner; Manager if disputed); the CODE
+   FIXES IT as the SHORTEST street line in Portland (33.910; equal ->
+   choose), Oregon City (17 "narrowest frontage"), Wilsonville (4.planning
+   "shortest"), Multnomah unincorporated (39 "narrowest") and Wood Village
+   (720.030 FRONT LOT LINES "shortest"; its FRONTAGE definition says owner
+   -- two definitions, read both); BOTH STREETS ARE FRONTS (two front
+   setbacks) in Clackamas ZDO 202 (corner and through lots; 315 [4] gives a
+   corner townhouse 10 ft from one of them), Gresham 4.0131 (double
+   frontage), Lake Oswego 50.04 (through lots) and Portland (a through lot
+   has two front lot lines); Tualatin 40-41 gives every street side the
+   front setback. Multi-street RULES beyond the front: Gresham
+   7.0431(B)(3)(b)(ii) and Oregon City 17 (L5350) -- a townhouse project on
+   a corner lot takes access from a single driveway on the SIDE street;
+   Fairview 19.162.5 -- a double-frontage lot takes access from the
+   lowest-classification street first; Wilsonville corner lots under 100
+   ft wide get a street-side yard rule. FINDING: `s4_edges.cluster_bearings`
+   orders fronts by LENGTH and s6s takes `bearings[0]`, so the drawing
+   makes the LONGER street the front -- the opposite of Portland / Oregon
+   City / Wilsonville / the county, where the front is the shortest -- and
+   puts the lane on the front street where Gresham and Oregon City send a
+   corner lot's driveway to the side street; a lot with streets at both
+   ends (bearings mod 180 = one cluster) gets its court facing the other
+   street; `frontage_ft` sums both street edges on a corner. Do in this
+   order: (i) per-line fields read per city -- `parking_side_prohibited`,
+   `front_lot_line_corner` (shortest | owner | both | entrance | curve) and
+   `corner_access_street` (side | lowest_class | any) -- whole-document
+   grep each parking and definitions chapter; (ii) s6s: the front per the
+   city's rule, our choice only where the rule leaves it, the lane from
+   the street the rule names; (iii) a named side-court arrangement in s6s
+   counted under its own `layout_method`; (iv) through lots as two fronts
+   where the code says so. Measure the affected population first (corner
+   lots by city, through lots, lots wider than deep) before any county run.

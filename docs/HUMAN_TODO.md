@@ -2006,6 +2006,38 @@ only a code appearing for the first time will) or tell me which of
 those codes to encode first, since a lot in an unencoded zone can never
 be green.
 
+## 21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?
+
+You ruled on 19 September: trying each street as the front only applies
+where the lot has more than one street *and* the city leaves the choice to
+us; if one way parks and the other does not, take the one that parks; if
+both park, we need a further deciding factor. I read every city's
+definitions for this (details in the agent queue, item 5). Six cities let
+the owner choose (Gladstone, Happy Valley, Milwaukie, Troutdale, Fairview
+-- by where the main door goes -- and Gresham); five fix it as the
+**shorter** street (Portland, Oregon City, Wilsonville, Wood Village and
+the county's rural land); a few treat *both* streets as fronts. And two
+have a rule that matters more than the front: Gresham and Oregon City
+make a townhouse project on a corner lot take its driveway from the **side**
+street, and Fairview from the quieter street. So the question is only for
+the six "you choose" cities, when both ways park.
+
+The options, plainest first:
+
+- **A. Whichever way seats more cars** -- the rule the drawing already
+  uses between the two ways round the building can sit. Simplest, and
+  it is what a builder would do; no further tie-break needed except a
+  coin toss when the counts match (then the shorter street).
+- **B. The shorter street, like the five cities that fix it** -- the
+  conventional look (house faces the narrow side), consistent across
+  cities, but it can leave cars on the table on a lot where facing the
+  long street would park more.
+- **C. The quieter street for the driveway** (Fairview's logic) -- needs
+  the street classification for every lot, which we do not hold yet.
+
+**My recommendation: A**, with the shorter street as the coin toss. Say
+"A", "B" or "C" and I will write it into the drawing when item 5 is built.
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
