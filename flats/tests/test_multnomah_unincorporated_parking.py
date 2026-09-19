@@ -386,4 +386,5 @@ def test_the_chapter_refused_nearly_twice_what_it_kept() -> None:
     mine = [r for r in refusals() if r.kind == "comments" and r.where == COUNTY]
     parking = [r for r in mine if "39.6" in r.text or "39.80" in r.text]
     assert len(parking) == 11
-    assert len(load_rules()[COUNTY].defaults) == 6
+    # 6 -> 9 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
+    assert len(load_rules()[COUNTY].defaults) == 9

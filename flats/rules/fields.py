@@ -119,6 +119,9 @@ _LABELS: dict[str, str] = {
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_front_prohibited": "parking banned in front of building",
     "parking_alley_access_required": "vehicle access must be from the alley",
+    "parking_side_prohibited": "parking banned beside the building",
+    "front_lot_line_corner": "which street is the front on a corner lot",
+    "corner_access_street": "which street a corner lot's driveway uses",
     "parking_front_yard_max_pct": "max. vehicle share of front yard",
     "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
     "parking_max_per_unit": "max. parking per unit",
@@ -581,6 +584,60 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "parking_side_prohibited",
+        "bool",
+        "True where the code keeps a townhouse project's parking out of the "
+        "SIDE yard as well as the front: the model-code sentence \"Off-street "
+        "parking areas shall be accessed on the back facade or located in "
+        "the rear yard. No off-street parking shall be allowed in the front "
+        "yard or side yard of a townhouse\" -- Gresham 7.0431(B)(3)(b)(i), "
+        "Oregon City 17.16.040.B.1, Fairview 19.30(D)(2)(a), Troutdale "
+        "8.130.C.4.b.i, Wilsonville 4.113 shared-access (c)(i); Milwaukie "
+        "19.505.5.F.2.a states the rear-yard half without the side-yard "
+        "words and is read the same way, because a court that must be in "
+        "the rear yard is not in the side yard. In every one of them the "
+        "sentence sits on the branch a project reaches by NOT meeting the "
+        "front-garage conditions (a driveway and parking no more than 12 ft "
+        "wide per lot), which a shared rear court fails by construction -- "
+        "so it is this design's branch, whatever `parking_front_prohibited` "
+        "says of the per-unit one. Held apart from that field because the "
+        "two bans have different reach: a front ban leaves a court beside "
+        "the building on a wide lot, a side ban does not. Every other city "
+        "in the corpus is `exempt` on a whole-document read (Portland "
+        "33.266.120.C.1.a(1) allows stalls behind the front AND side-street "
+        "building lines; unincorporated Clackamas 845.03 keeps them 10 ft "
+        "off a side line, a setback and not a ban). Read by no screen yet: "
+        "the site plan draws one arrangement, the rear court, and this "
+        "field is what will let it try a side court where the code allows "
+        "one.",
+        None,
+    ),
+    FieldDef(
+        "corner_access_street",
+        "enum",
+        "Which street a lot with frontage on more than one takes its "
+        "driveway from. `side`: the model-code sentence \"A townhouse "
+        "project that includes a corner lot shall take access from a single "
+        "driveway approach on the side of the corner lot\" (Gresham "
+        "7.0431(B)(3)(b)(ii), Oregon City 17.16.040.B.2, Milwaukie "
+        "19.505.5.F.2.b, Fairview 19.30(D)(2)(b), Troutdale 8.130.C.4.b.ii, "
+        "Wilsonville 4.113 (c)(ii)) -- the curb cut goes on the street the "
+        "building does not face, so the court behind the building is reached "
+        "straight off the side street rather than down a lane beside the "
+        "building. `lowest_class`: access from the street with the lowest "
+        "functional classification first (Clackamas ZDO 845.03(A)(3), West "
+        "Linn 48.030(B)(5), Fairview 19.162.020(5) for double-frontage lots) "
+        "-- needs the street class per edge, which nothing measures yet, so "
+        "a drawing treats it as `any` and says so. `any`: the code names no "
+        "street (Portland, which routes to the alley first and is otherwise "
+        "silent; Happy Valley; Gladstone; Wood Village; Tualatin, whose "
+        "36.400(b) sends only a double-frontage lot -- by 31 not a corner -- "
+        "to the lowest class; unincorporated Multnomah). Not read on a lot "
+        "with one street.",
+        None,
+        choices=("any", "side", "lowest_class"),
+    ),
+    FieldDef(
         "parking_street_setback_ft",
         "length_ft",
         "How far a parking area must sit back from a street lot line. "
@@ -638,6 +695,32 @@ _F: tuple[FieldDef, ...] = (
         None,
         "building_orientation",
         choices=("none", "entrance_only", "axis_required"),
+    ),
+    FieldDef(
+        "front_lot_line_corner",
+        "enum",
+        "Which of a corner lot's street lines is the front. `shortest`: the "
+        "code fixes it as the shortest (or narrowest) street lot line -- "
+        "Portland 33.910, Oregon City 17.04.490, Wilsonville 4.001(161), West "
+        "Linn 02 (Lot line, front), Wood Village 720.030, unincorporated "
+        "Multnomah 39.2000 -- with the owner choosing only when two are of "
+        "equal length. `owner`: the owner or applicant designates it (Gladstone "
+        "17.06, Happy Valley 16.12, Milwaukie 19.200 \"the street on which the "
+        "... development will face\", Troutdale 1.020 \"may face either "
+        "street\" unless the corner is one continuous curve, Gresham 3.0100 "
+        "where lot depth is met both ways, Lake Oswego 50.04 with the Manager "
+        "deciding a dispute). `entrance`: set by where the main entrance is "
+        "(Fairview 19.13 front yard orientation; Tualatin 40-41, whose "
+        "secondary frontage follows the front door) -- the owner's choice by "
+        "another name, since the entrance goes where the plan puts it. "
+        "`both`: every street line is a front line and gets the front "
+        "setback (unincorporated Clackamas ZDO 202) -- for placing the "
+        "building, again the owner's choice. A site plan reads this to "
+        "decide whether it may try each street as the front: only `shortest` "
+        "takes the choice away. Steph's ruling of 2026-09-19 (HUMAN_TODO 21) "
+        "says how to choose where the code leaves it to us.",
+        None,
+        choices=("shortest", "owner", "entrance", "both"),
     ),
 )
 
@@ -902,6 +985,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",
+        "parking_side_prohibited",
+        "corner_access_street",
+        "front_lot_line_corner",
         "parking_street_setback_ft",
         "parking_building_buffer_ft",
         "open_space_min_pct",

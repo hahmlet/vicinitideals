@@ -1979,6 +1979,63 @@ defaults:
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.266.txt#L313-L314"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # 33.266.120.C.1.a(1): "Parking spaces located entirely behind the front and
+  # side street building lines of a primary structure are allowed" -- the
+  # interior side yard is open, so no side ban. What the sentence DOES say
+  # about a corner lot belongs to the drawing: the court must sit behind the
+  # side-street building line as well as the front one, and C.1.b caps paving
+  # between the side street lot line and that building line at 20 percent.
+  # `parking_front_prohibited` already carries the sentence; the site plan
+  # does not yet clip the court to the side-street building line on a corner
+  # lot (FOLLOWUPS 5).
+  parking_side_prohibited:
+    exempt: true
+    cite: PCC 33.266.120.C.1.a(1), parking spaces behind the front and side street building lines allowed, which leaves the interior side yard open
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L290-L293"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # C.3 sends everything to the alley where the lot abuts one, and Portland
+  # otherwise names no street (whole-document grep of the Portland folder for
+  # lowest or lower classification and for corner-lot access, 2026-09-19:
+  # nothing). `any`, read after `parking_alley_access_required`.
+  corner_access_street:
+    value: any
+    cite: PCC 33.266.120.C.3, access from the alley where the lot abuts one, and no street named otherwise
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L313-L314"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 33.910, Front Lot Line: "On a corner lot, the front lot line is the
+  # shortest of the lot lines that abut a street." The owner chooses only when
+  # two are of equal length; a through lot has two front lot lines. Fixed by
+  # the plat.
+  front_lot_line_corner:
+    value: shortest
+    cite: PCC 33.910, Front Lot Line, the shortest street lot line on a corner lot
+    url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.910.definitions.txt#L754-L758"
   #
   # NOT ENCODED: 33.266.120.C.4, parking in garages takes the garage setback
   # of the base zone. `setback_garage_entrance_ft` already carries that figure

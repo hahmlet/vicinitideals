@@ -282,4 +282,5 @@ def test_the_chapter_refused_one_standard_for_every_number_it_gave_up() -> None:
     parking = [r for r in mine if not any(x in r.text for x in elsewhere)]
     assert len(parking) == 7
     assert len(mine) == 11
-    assert len(load_rules()[GLADSTONE].defaults) == 7
+    # 7 -> 10 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
+    assert len(load_rules()[GLADSTONE].defaults) == 10

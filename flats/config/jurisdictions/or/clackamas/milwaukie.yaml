@@ -1030,6 +1030,77 @@ defaults:
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
     quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1485"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # On one lot 19.505.3.D.4.a keeps parking out of the strip "directly between
+  # the facade of a primary building(s) and an abutting street" -- a front
+  # ban, and on a corner lot a street-side one, but not an interior side-yard
+  # ban -- so the base is exempt. On four lots 19.505.5.F.2.a: "Off-street
+  # parking areas must be accessed on the back facade or located in the rear
+  # yard." Milwaukie dropped the model code's second sentence ("No off-street
+  # parking shall be allowed in the front yard or side yard"), and the first
+  # is read the same way: a court beside the building is neither accessed on
+  # the back facade nor in the rear yard, so it is banned by what the sentence
+  # allows rather than by what it forbids. The strict direction, taken on
+  # purpose.
+  parking_side_prohibited:
+    exempt: true
+    cite: MMC 19.505.3.D.4.a, parking kept from directly between a facade and an abutting street, with no side-yard ban stated
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1485"
+    variants:
+      - value: true
+        when: [unit_lots]
+        cite: MMC 19.505.5.F.2.a, off-street parking accessed on the back facade or located in the rear yard
+        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L2314"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # On one lot 12.16.040(B)(2), Double Frontage: "When a lot has frontage on
+  # two (2) or more streets, access must be provided first from the street
+  # with the lowest classification." On four lots 19.505.5.F.2.b sends a
+  # development with a corner lot to "a single driveway on the side of the
+  # corner lot", with the City Engineer able to alter it on street
+  # classification.
+  corner_access_street:
+    value: lowest_class
+    cite: MMC 12.16.040(B)(2), Double Frontage, access first from the street with the lowest classification
+    url: https://ecode360.com/print/MI4969?guid=43857228
+    retrieved: '2026-09-03'
+    quote: "or/clackamas/milwaukie/12.16.access-management.txt#L124-L126"
+    variants:
+      - value: side
+        when: [unit_lots]
+        cite: MMC 19.505.5.F.2.b, townhouse development that includes a corner lot takes access from a single driveway on the side of the corner lot
+        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L2318"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 19.201.3, Front lot line: on a corner lot "a line separating the lot from
+  # the street on which the existing or contemplated development will face" --
+  # the plan decides, so `owner`. The chapter's own definition list at 19.200
+  # (#L310) says the same in the same words.
+  front_lot_line_corner:
+    value: owner
+    cite: MMC 19.201.3, Front lot line, the street on which the contemplated development will face
+    url: https://ecode360.com/print/MI4969?guid=43860165
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.200.definitions.txt#L470"
   # 19.505.5.F, on four unit lots, and it is tighter than anything above.
   # Front-facade garages, front-yard parking and driveways in front of a
   # townhouse are prohibited outright UNLESS all four of: "development of 4

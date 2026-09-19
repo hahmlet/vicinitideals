@@ -95,75 +95,76 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    returned by the fit and stored in `checks.fit` before anything can be
    drawn. Offered 2026-09-18 with the pages.
 5. **Where parking may SIT, and which street is "the front".** Offered
-   2026-09-19 when Steph asked why the court is always behind. Today the
-   rear court is the one arrangement that survives every city's rule
-   (Gresham 7.0431 bars front/side-yard parking for townhouses; Portland
-   33.266.120.C.1.a bans a vehicle area between building and street; Happy
-   Valley 16.43.030.E.4 sets parking back by the building setback; Oregon
-   City 17.16.060.D caps parking width at 40 ft), and the county drawing
-   (`s6s_siteplan.py`) never draws a side court; the screen's fit
-   (`flats/fit/rectangle.py`) sweeps 180 angles where no
-   `orientation_constraint: axis_required` is held and charges the court as
-   depth behind the building in whatever direction it faces, so it can
-   already count a sideways placement the drawing would refuse -- the two
-   disagree on wide lots and neither asks the code. No field holds "side
-   parking allowed / forbidden" (`parking_front_prohibited` is the front
-   only). **Steph's ruling 2026-09-19 on the front:** trying each street
-   as the front applies ONLY where the lot has more than one street AND
-   the code leaves the choice to us; if one front parks and the other does
-   not, take the one that parks; if both park, HUMAN_TODO 21 DECIDED
-   2026-09-19: (1) the orientation that turns the lot green, (2) if both
-   green, the one that reaches the `preferred` band, (3) if both preferred
-   or both only `minimum`, the orientation whose COURT has the least
-   exposure to a street -- "might be rear, might be shortest street" --
-   measured as the court's frontage on street edges (s4 edge classes: a
-   court touching no street edge beats one along the shorter street beats
-   one along the longer); my reading: a higher band wins before exposure
-   decides. **More parking is not a goal** --
-   Steph: "optimize for sufficient, but minimal parking so we can fit a 2nd
-   pod" -- so s6s's "keep the orientation with the MOST stalls" rule is
-   to be revisited here (green, then band, then the least ground under
-   pavement), and a two-pod lot is a product direction to keep in view
-   (`flats/designs/`: one pod per lot today). And read every
-   city for multi-street rules even where the front is clear. Whole-corpus
-   grep 2026-09-19 (`flats/provenance/docs`, "corner lot|through lot|double
-   frontage" near "front lot line"): the CHOICE IS OURS in Gladstone
-   (17.06, owner designates), Happy Valley (16.12, applicant chooses,
-   through lots too), Milwaukie (19.200, "the street on which the
-   development will face"), Troutdale (1.020, either street unless the
-   corner is one continuous curve), Fairview (19.13, set by the main
-   entrance) and Gresham (3.0100, owner; Manager if disputed); the CODE
-   FIXES IT as the SHORTEST street line in Portland (33.910; equal ->
-   choose), Oregon City (17 "narrowest frontage"), Wilsonville (4.planning
-   "shortest"), Multnomah unincorporated (39 "narrowest") and Wood Village
-   (720.030 FRONT LOT LINES "shortest"; its FRONTAGE definition says owner
-   -- two definitions, read both); BOTH STREETS ARE FRONTS (two front
-   setbacks) in Clackamas ZDO 202 (corner and through lots; 315 [4] gives a
-   corner townhouse 10 ft from one of them), Gresham 4.0131 (double
-   frontage), Lake Oswego 50.04 (through lots) and Portland (a through lot
-   has two front lot lines); Tualatin 40-41 gives every street side the
-   front setback. Multi-street RULES beyond the front: Gresham
-   7.0431(B)(3)(b)(ii) and Oregon City 17 (L5350) -- a townhouse project on
-   a corner lot takes access from a single driveway on the SIDE street;
-   Fairview 19.162.5 -- a double-frontage lot takes access from the
-   lowest-classification street first; Wilsonville corner lots under 100
-   ft wide get a street-side yard rule. FINDING: `s4_edges.cluster_bearings`
-   orders fronts by LENGTH and s6s takes `bearings[0]`, so the drawing
-   makes the LONGER street the front -- the opposite of Portland / Oregon
-   City / Wilsonville / the county, where the front is the shortest -- and
-   puts the lane on the front street where Gresham and Oregon City send a
-   corner lot's driveway to the side street; a lot with streets at both
-   ends (bearings mod 180 = one cluster) gets its court facing the other
-   street; `frontage_ft` sums both street edges on a corner. Do in this
-   order: (i) per-line fields read per city -- `parking_side_prohibited`,
-   `front_lot_line_corner` (shortest | owner | both | entrance | curve) and
-   `corner_access_street` (side | lowest_class | any) -- whole-document
-   grep each parking and definitions chapter; (ii) s6s: the front per the
-   city's rule, our choice only where the rule leaves it, the lane from
-   the street the rule names; (iii) a named side-court arrangement in s6s
-   counted under its own `layout_method`; (iv) through lots as two fronts
-   where the code says so. Measure the affected population first (corner
-   lots by city, through lots, lots wider than deep) before any county run.
+   2026-09-19 when Steph asked why the court is always behind. **Steph's
+   ruling 2026-09-19:** trying each street as the front applies ONLY where
+   the lot has more than one street AND the code leaves the choice to us;
+   HUMAN_TODO 21 DECIDED: (1) the orientation that turns the lot green,
+   (2) if both, the one that reaches the `preferred` band, (3) if both
+   preferred or both only `minimum`, the orientation whose COURT has the
+   least exposure to a street (its frontage on street edges; a court on no
+   street beats one along the shorter street beats one along the longer);
+   a higher band wins before exposure decides. **More parking is not a
+   goal** ("sufficient, but minimal parking so we can fit a 2nd pod"), so
+   s6s's "keep the orientation with the MOST stalls" rule goes. And read
+   every city for multi-street rules even where the front is clear.
+   **Slice A DONE (this commit):** three per-line fields encoded in all 14
+   layers from the corpus and mirrored into `footprints.yaml` /
+   `DrivewayRules` -- `front_lot_line_corner` (shortest: Portland 33.910,
+   Oregon City 17.04.490, Wilsonville 4.001, West Linn 02, Multnomah 39.2000,
+   Wood Village 720.030; owner: Gladstone, Happy Valley, Milwaukie, Gresham
+   3.0100 (deeper-street condition), Troutdale; entrance: Tualatin,
+   Fairview; both: Clackamas ZDO 202), `corner_access_street` (side for a
+   unit-lot townhouse in Gresham / OC / Milwaukie / Wilsonville / Fairview /
+   Troutdale; lowest_class: Clackamas 845.02, Milwaukie 12.16, OC 16.12.035,
+   West Linn 48.025, Wilsonville PWS, Fairview 19.162; any elsewhere) and
+   `parking_side_prohibited` (true only on the unit-lot branch of Gresham /
+   OC / Milwaukie / Wilsonville / Troutdale; exempt on the one-lot fourplex
+   everywhere; Fairview 19.30(D)(2)(a) is a setback, not a ban, since its
+   side yard is the setback strip). Read by no screen yet (`SILENTLY_UNREAD`).
+   **Measured 2026-09-19 on the September tree** (`measure_corner_front.py`,
+   each street tried as the front, `/root/corner_front_measure.parquet`
+   on 137): 59,620 corner lots of 222,955 evaluated; both fronts park
+   7,491 / today's only 2,224 / the OTHER only 4,149 / neither 45,756.
+   Today's front is the LONGER street on 58,019 (97 %) -- so in the six
+   `shortest` cities (44,275 corner lots: Portland 38,455, West Linn 2,052,
+   OC 2,004, Wilsonville 867, Multnomah 759, Wood Village 138) the drawing
+   faces the wrong street by the code; Portland alone parks 3,189 lots
+   only from the shorter street and 1,260 only from the longer. In the
+   owner/entrance/both cities 705 lots park only with the other front
+   (Clackamas 336, Gresham 164, HV 86, Milwaukie 59, Troutdale 25, Fairview
+   21, Gladstone 12, Tualatin 2). Where both park, 7,294 of 7,491 seat 8
+   and 8; same band 7,387; the court is less exposed with today's front on
+   4,161, with the other on 1,360, tie 1,866; the court touches no street
+   on 852 today / 406 other. What stops the other front: court_too_shallow
+   2,300, no_side_lane 1,426, too_few_stalls 395. **Slice B BUILT (this
+   commit, `s6s_siteplan.py`)**: `_candidate_fronts` faces the shortest
+   street where the code fixes it (both when equal), each street where the
+   owner/entrance chooses, the longest where unread; the flip reads one
+   street; `townhome_rear_court_side_street` brings the lane in from the
+   side street across its strip (`_alley_mouths` + `_lane_to_alley` on the
+   side-street edges, `_street_setback_for` = s5's F cut) where
+   `corner_access_street` is any / lowest_class / side; `_plan_rank`
+   chooses green > band > least court exposure (`court_street_ft`) > own
+   aisle > least pavement -- never most stalls, so within a band a lot may
+   show fewer stalls and the same colour; new columns front_bearing_deg /
+   fronts_tried / court_street_ft; 53 siteplan tests. **NEXT: bound it on
+   137** -- s6s -> s7 on the September tree (`s6s.py` then `s7`, ~10 min
+   s6s), diff verdicts and stall counts against run 8's parquet BEFORE any
+   load; report corner-lot moves per city and the within-band stall drops
+   on interior lots separately; if a new candidate is loaded, retire run 8
+   first (one transaction, rehearse with ROLLBACK) and keep its bundle.
+   Then (iii) a named side-court arrangement; (iv) through lots as two
+   fronts. Queued behind it, each to bound first: (a) s4 measures lot
+   width/depth along the LONGEST street (`cluster_bearings` orders by
+   length) -- in the shortest cities width and depth are swapped on most
+   corner lots, which moves `lot_width_ft` facts and every width gate; (b)
+   Portland 33.266.120.C.1.b: on a corner lot the court must sit behind the
+   side-street building line and pave at most 20 % of the side-street
+   setback; (c) `lowest_class` needs a street classification per edge (s4
+   holds none; drawn as `any` and said so at runtime); (d) Fairview
+   19.30.050(D)(2)(a) side-yard parking setback -> redirect ledger; (e)
+   Gresham 3.0100: the front is fixed where the minimum lot depth is met
+   in one direction only (needs depth both ways = (a)).
 
 6. **Green and outdoor space: charge the SHAPE, not just the amount.**
    Offered 2026-09-19 when Steph asked whether we consider outdoor-space

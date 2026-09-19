@@ -831,6 +831,57 @@ defaults:
     url: https://woodvillage.municipal.codes/WVDC/350.065
     retrieved: '2026-08-30'
     quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L75"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # Table 350-2 sets parking five feet off a lot line abutting a street and
+  # states two other rows for the other lines (the note above), and 350.055(B)
+  # -- on the branch that does not reach this building -- would ban the first
+  # ten feet from a FRONT lot line. No sentence names the side yard
+  # (whole-document grep, 2026-09-19: nothing). Exempt.
+  parking_side_prohibited:
+    exempt: true
+    cite: WVDC 350.065(C), Table 350-2, parking set back from a lot line abutting a street, and no side yard named
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L75"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # Wood Village names no street (whole-document grep of the folder for lowest
+  # or lower classification and for corner-lot access, 2026-09-19: nothing).
+  # `any`.
+  corner_access_street:
+    value: any
+    cite: WVDC 350.065(C), Table 350-2, the placement rule, which names no street a corner lot must take access from
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L75"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 720.030, FRONT LOT LINES: "On a corner lot, the front line is the shortest
+  # of the lot lines which abut a street." The owner chooses only when two are
+  # of equal length; a through lot has two. Fixed by the plat.
+  front_lot_line_corner:
+    value: shortest
+    cite: WVDC 720.030, Front Lot Lines, the shortest street lot line on a corner lot
+    url: https://woodvillage.municipal.codes/WVDC/720.030
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/720.030.definitions.txt#L268"
   # NOT ENCODED: the other two rows of Table 350-2, both of which set a parking
   # area back from a side or rear lot line rather than from a street, and the
   # model holds only the street one. Against an LR or MR neighbour it is five

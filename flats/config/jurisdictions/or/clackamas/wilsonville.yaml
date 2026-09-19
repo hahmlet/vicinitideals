@@ -1237,6 +1237,72 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
     quote: "or/clackamas/wilsonville/4.planning.txt#L3556-L3559,L3835-L3838"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # On one lot 4.113(.14)D.3 caps garages and outdoor parking at half of any
+  # street frontage and states no side-yard ban, so the base is exempt for the
+  # reason `parking_front_prohibited` is. On four lots E.5.c.i, Shared Access,
+  # is the model-code sentence, on the branch a project reaches when it does
+  # not meet a. or b., and 4.001(371) makes a side yard "any yard abutting a
+  # side lot line" where a yard is the open space on the lot, so a court
+  # beside the building is in it.
+  parking_side_prohibited:
+    exempt: true
+    cite: Wilsonville Development Code 4.113(.14)D.3, which caps outdoor parking at half of any street frontage and states no side-yard ban
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+    variants:
+      - value: true
+        when: [unit_lots]
+        cite: Wilsonville Development Code 4.113(.14)E.5.c.i, no off-street parking in the front yard or side yard of a townhouse
+        quote: "or/clackamas/wilsonville/4.planning.txt#L3643-L3645"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # On one lot Public Works Standards 201.2.23(f): driveways on arterial and
+  # collector streets "shall be placed first on a lower classification
+  # street". On four lots E.5.c.ii: a townhouse project with a corner lot
+  # "shall take access from a single driveway approach on the side of the
+  # corner lot".
+  corner_access_street:
+    value: lowest_class
+    cite: Wilsonville PWS 201.2.23(f), driveways placed first on a lower classification street
+    url: https://www.wilsonvilleoregon.gov/sites/default/files/fileattachments/engineering/page/11761/public_works_construction_standards_2017.pdf
+    retrieved: '2026-09-01'
+    quote: "or/clackamas/wilsonville/pws.201.2.23.txt#L22-L23"
+    variants:
+      - value: side
+        when: [unit_lots]
+        cite: Wilsonville Development Code 4.113(.14)E.5.c.ii, a townhouse project that includes a corner lot takes access from a single driveway approach on the side of the corner lot
+        quote: "or/clackamas/wilsonville/4.planning.txt#L3646-L3648"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 4.001(161), Lot Line, Front: "In the case of a Corner Lot, the shortest
+  # lot line along a tract with a pathway, street, or private drive is the
+  # front lot line." 4.001(121), the solar-access copy, says narrowest. Fixed
+  # by the plat.
+  front_lot_line_corner:
+    value: shortest
+    cite: Wilsonville Development Code 4.001(161), Lot Line, Front, the shortest street lot line on a corner lot
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L804-L810"
   # Subsection E is "Standards applicable to Townhouses", which under state
   # law is this building on four unit lots rather than one -- the `unit_lots`
   # lever, said in Wilsonville's words. E.5.a requires access from a paved

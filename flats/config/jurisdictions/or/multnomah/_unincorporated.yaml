@@ -1812,6 +1812,56 @@ defaults:
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
     quote: "or/multnomah/_unincorporated/39.parking.txt#L191-L199"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # 39.6580(A) keeps parking, loading and manoeuvring out of a required street
+  # yard, and that is the county's placement rule; no sentence names a side
+  # yard (whole-document grep of the folder, 2026-09-19: the only hits are
+  # Portland's 33.266, held here for the Portland-administered pockets, whose
+  # C.1.a(1) leaves the interior side open). Exempt.
+  parking_side_prohibited:
+    exempt: true
+    cite: MCC 39.6580(A), no required street yard used for parking, and no side yard named
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.parking.txt#L433-L437"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # The county names no street (whole-document grep, 2026-09-19: nothing).
+  # `any`.
+  corner_access_street:
+    value: any
+    cite: MCC 39.6580(A), the placement rule, which names no street a corner lot must take access from
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.parking.txt#L433-L437"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 39.2000, Lot Line (Front): "in the case of a corner lot, a line separating
+  # the narrowest frontage of the lot from a street or accessway". Fixed by
+  # the plat.
+  front_lot_line_corner:
+    value: shortest
+    cite: MCC 39.2000, Lot Line (Front), the narrowest frontage on a corner lot
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L847-L849"
   # NO MAXIMUM, and this one is absence rather than `exempt: true`. The word
   # "maximum" does not occur once in 39.6500 through 39.6600, and the chapter
   # builds no apparatus for one: no ceiling table, no exempt space types, no

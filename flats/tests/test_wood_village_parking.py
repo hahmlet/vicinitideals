@@ -379,4 +379,5 @@ def test_three_refusals_against_seven_values(wood_village: Layer) -> None:
     assert len(parking) == 3, [r.text[:60] for r in parking]
 
     encoded = [f for f in wood_village.defaults if f.startswith("parking_")]
-    assert len(encoded) == 7
+    # 7 -> 8 on 2026-09-19: `parking_side_prohibited` (exempt; FOLLOWUPS 5).
+    assert len(encoded) == 8

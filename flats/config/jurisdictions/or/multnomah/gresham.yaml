@@ -2066,6 +2066,85 @@ defaults:
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # On one lot 7.0420(B)(5)(c) puts two spaces per unit "in a driveway, in the
+  # front or street side yard setback, or in the rear yard setback when there
+  # is an alley" and states no side-yard ban, so the base is exempt for the
+  # reason `parking_front_prohibited` is. On four lots the townhouse fallback
+  # branch, 7.0431(B)(3)(b)(i), is the sentence -- reached by a project that
+  # does not meet the five front-parking conditions at (a), and a shared rear
+  # court does not (ee06af24: that branch is the one this design is on).
+  # 3.0100 makes a side yard "a space extending from the front yard to the
+  # rear yard between a building and the nearest side lot line", the whole
+  # strip and not the setback, so a court beside the building is in it. The
+  # open card on 9.0822(A)(6) -- the shared-court branch keeps the court out
+  # of every required setback -- is unchanged by this and still owed.
+  parking_side_prohibited:
+    exempt: true
+    cite: GDC 7.0420(B)(5)(c), which puts parking in the front or street side yard setback and states no side-yard ban
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L243-L247"
+    variants:
+      - value: true
+        when: [unit_lots]
+        cite: GDC 7.0431(B)(3)(b)(i), no off-street parking in the front yard or side yard of a townhouse
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L484-L485"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # On one lot the development code names no street. Public Works Standards
+  # 6.03 says "Double frontage lots and corner lots may be limited to access
+  # from a single street, usually the lower classification street" -- may,
+  # usually, at the engineer's discretion -- which is not a rule a drawing can
+  # apply, so the base is `any` and the sentence is the note. On four lots
+  # 7.0431(B)(3)(b)(ii): "A townhouse project that includes a corner lot shall
+  # take access from a single driveway approach on the side of the corner lot"
+  # -- the same branch as the side-yard ban above.
+  corner_access_street:
+    value: any
+    cite: Gresham PWS 6.03, under which a corner lot may be limited to one street at the engineer's discretion, and GDC 7.0420, which names no street
+    url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
+    retrieved: '2026-09-01'
+    quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+    variants:
+      - value: side
+        when: [unit_lots]
+        cite: GDC 7.0431(B)(3)(b)(ii), a townhouse project with a corner lot takes access from a single driveway approach on the side of the corner lot
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L486-L487"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 3.0100, Front Lot Line: on a corner lot with no existing building "the
+  # front lot line is determined by the orientation necessary to achieve
+  # minimum required lot depth. If lot depth may be met in both directions,
+  # then the applicant may determine which lot line is the front lot line",
+  # and a dispute goes to the Manager. `owner`, with the depth condition
+  # carried here rather than in the value: a drawing that tries both streets
+  # should try only the ones along which the lot meets its minimum depth.
+  # 7.0431(A)(3)(c) agrees from the entrance side -- a townhouse on a corner
+  # lot "may be oriented to either street".
+  front_lot_line_corner:
+    value: owner
+    cite: GDC 3.0100, Front Lot Line, the applicant determines it on a corner lot where minimum lot depth is met both ways
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-3.0100.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/3.0100.definitions.txt#L1332-L1336"
   #
   # NOT ENCODED: Public Works Standards 6.03, where a driveway may meet the
   # street. Table 6.03 sets the minimum distance from a driveway centerline to

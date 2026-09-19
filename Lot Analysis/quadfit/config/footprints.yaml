@@ -109,7 +109,7 @@ siteplan:
   parking_per_unit_target: 1.5     # 6/pod  (design target)
   parking_per_unit_preferred: 2.0  # 8/pod  (preferred; legal — no LDR-5 ceiling)
   units_per_pod: 4
-  layout_methods: [townhome_rear_court, townhome_rear_court_alley, townhome_rear_court_alley_aisle]
+  layout_methods: [townhome_rear_court, townhome_rear_court_side_street, townhome_rear_court_alley, townhome_rear_court_alley_aisle]
   # Stall + aisle, per city, mirroring the FLATS corpus defaults for each
   # (flats/config/jurisdictions/or/multnomah/*.yaml). A drift test asserts they
   # still match, so change the corpus and re-run it — not this file alone.
@@ -635,12 +635,23 @@ siteplan:
     # stalls stay on the lot, off the right-of-way, as the note asks. The
     # corpus holds 7.0420(B)(1) as NOT ENCODED (gresham.yaml, driveway
     # notes) for the same reason Portland's is: FLATS has no alley fact yet.
+    # `front_lot_line_corner` and `corner_access_street` on every row (2026-09-19,
+    # FOLLOWUPS 5): which street is the front on a corner lot, and which street
+    # the driveway uses. Both mirror the FLATS enum of the same name and are
+    # pinned to it by ENUM_MIRRORED in test_parking_geometry; the ONE-LOT value
+    # is carried, so `side` -- the townhouse chapters' corner rule, a unit_lots
+    # variant in the corpus -- appears on no row. Read by s6s for the corner-lot
+    # front (slice B); `lowest_class` is drawn as `any` until an edge knows its
+    # street's class. `parking_side_prohibited` is None on every row for the
+    # same one-lot reason and so is not written.
     gresham:
       approach_min_ft: 9
       approach_max_ft: 10
       alley_access_required: true
       alley_is_aisle: true
       open_space_pct: 15
+      front_lot_line_corner: owner
+      corner_access_street: any
       cite: GDC 7.0420(B)(2)(b)(ii) approach width; PWS 6.03 approach minimum; 7.0420(B)(1) alley access; Figure 9.0825A note alley width as aisle; 7.0420(D)(1) private open space
     # Portland is the only city that bans front parking outright AND caps the
     # front yard AND sets a stall back from the street — 33.266.120.C.1.a,
@@ -731,6 +742,8 @@ siteplan:
         EX: null
         CI2: null
         IR: null
+      front_lot_line_corner: shortest
+      corner_access_street: any
       cite: PCC 33.266.120.C, .C.3 alley access; Table 110-4 outdoor area
     # FMC 19.162.020(L)(1): a residential driveway approach is 10 ft minimum
     # and 24 ft maximum. 19.30.040(F)(1)'s 32 ft is the per-frontage budget for
@@ -745,6 +758,8 @@ siteplan:
       approach_max_ft: 24
       parking_max_frontage_pct: 50
       building_buffer_ft: 4
+      front_lot_line_corner: entrance
+      corner_access_street: lowest_class
       cite: FMC 19.162.020(L)(1) approach; 19.30.040(E)(2); 19.163.030(E)(3)(b)
     # The hardest number in this family, and the only one that takes lots away.
     # LDC 16.41.030.B.1: a driveway to an off-street parking area is improved a
@@ -785,6 +800,8 @@ siteplan:
         MURA: 10
         SFA: 10
         VTH: 10
+      front_lot_line_corner: owner
+      corner_access_street: any
       cite: HV LDC 16.41.030.B.1, minimum improved driveway width; 16.43.030.E.4, parking setback
     # Table 16.12.035.D, the widest approach any city here allows this
     # building: 10 ft minimum, 36 ft maximum on the triplex/quadplex row (a
@@ -800,6 +817,8 @@ siteplan:
       approach_max_ft: 36
       parking_max_frontage_pct: 50
       parking_max_width_ft: 40
+      front_lot_line_corner: shortest
+      corner_access_street: lowest_class
       cite: OCMC Table 16.12.035.D approach sizes; 17.16.060.D.1 parking width
     # Declined for want of an aisle (see `geometry`), carried because it was
     # read. 19.505.3.D.4.a bans parking directly between the facade and the
@@ -847,6 +866,8 @@ siteplan:
       parking_front_prohibited: true
       parking_front_yard_max_pct: 50
       open_space_sqft: 384
+      front_lot_line_corner: owner
+      corner_access_street: lowest_class
       cite: MMC 12.16.040.E.3 driveway apron ceiling; 19.505.3.D.4.a; 19.607.1.D; Table 19.505.3.D.1 private open space
     # Declined for want of an aisle, carried because it was read.
     # 4.113(.14)D.4: all driveway approaches together, 32 ft per frontage. D.3:
@@ -873,6 +894,8 @@ siteplan:
       approach_max_ft: 32
       parking_max_frontage_pct: 50
       alley_access_required: true
+      front_lot_line_corner: shortest
+      corner_access_street: lowest_class
       cite: Wilsonville Development Code 4.113(.14)D.3 and D.4; 4.113(.14)(D)(4)(c)(i) alley access
     # No stall geometry read at all, so this city is not laid out; the driveway
     # half was read and is recorded so the mirror does not report it unread.
@@ -883,6 +906,8 @@ siteplan:
     clackamas_unincorporated:
       approach_max_ft: 32
       parking_max_frontage_pct: 50
+      front_lot_line_corner: both
+      corner_access_street: lowest_class
       cite: Clackamas ZDO 845.02, driveway entries and parking between building and street
     # Chapter 48, fetched with 46 because 46 dimensions a court and never the
     # drive into it. 48.030(E): a multifamily access or service drive is 24 ft
@@ -923,6 +948,8 @@ siteplan:
       drive_min_one_way_ft: 15
       drive_min_two_way_ft: 24
       alley_access_required: true
+      front_lot_line_corner: shortest
+      corner_access_street: lowest_class
       cite: West Linn CDC 48.030(E) service drive widths; 48.060(A) and (B) curb cut; 48.025(B)(3)(a) Option 1 alley access
     # Read with the geometry above, out of two chapters. TDC 9.080(A): a
     # driveway to an off-street parking area is improved at 20 feet two-way
@@ -965,6 +992,8 @@ siteplan:
         HDR: 20
         MU-2: 15
         MU-3: 20
+      front_lot_line_corner: owner
+      corner_access_street: any
       cite: TDC 9.080(A) driveway widths; 8.120.C.5.a approach; 8.120.C.4.d frontage; 9.095(D) setback
     # One rule, and the interesting part is everything absent around it. GMC
     # 17.48.040(2)(e): parking spaces along the outer boundaries of a parking
@@ -986,6 +1015,8 @@ siteplan:
     # for this building. Fifth city of eight to reserve nothing.
     gladstone:
       parking_street_setback_ft: 5
+      front_lot_line_corner: owner
+      corner_access_street: any
       cite: GMC 17.48.040(2)(e), parking spaces set back five feet from the property line
     # MCC 39.6560(A), and it is written for exactly the plat this stage draws:
     # "where a parking or loading area does not abut directly on a public
@@ -1039,6 +1070,8 @@ siteplan:
         # other district. An absence read, not a field left blank.
         MR4: null
         R5: null
+      front_lot_line_corner: shortest
+      corner_access_street: any
       cite: MCC 39.6560(A) driveway width; 39.6580(A) street setback; 39.8045(A)(2) shared outdoor recreation
     # TWO RULES, AND THE CODE SAYS WHICH IS WHICH. Figure 73-1's last two
     # rows dimension the driveway inside a parking lot -- 12 feet one way, 22
@@ -1077,6 +1110,8 @@ siteplan:
       parking_street_setback_by_zone:
         RL: null
         RML: 10
+      front_lot_line_corner: entrance
+      corner_access_street: any
       cite: TDC 73C.030(1) and Figure 73-1 driveway rows; 73C.090(1)(a) approach; TDC 41.300 parking setback
     # NO DRIVE AND NO CUT, and the code says so twice. The only sentence in
     # Section 350 about the width of an access point is 350.030(D): "Access
@@ -1103,6 +1138,8 @@ siteplan:
     # interior landscaping applies to parking areas "with more than 10 spaces".
     wood_village:
       parking_street_setback_ft: 5
+      front_lot_line_corner: shortest
+      corner_access_street: any
       cite: WVDC 350.065(C) Table 350-2, lot line abutting street, all zones except GM
   # The three engineering constants left after the law came out of this block.
   # Not one is a citation. A car needs a lane and a wall needs a standoff

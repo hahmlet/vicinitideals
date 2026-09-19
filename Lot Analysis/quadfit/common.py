@@ -1005,6 +1005,49 @@ class DrivewayRules(BaseModel):
     #: only where `alley_is_aisle` is set.
     alley_backout_ft: float | None = None
 
+    #: `parking_side_prohibited` -- True where the city keeps parking out of
+    #: the SIDE yard as well as the front: the townhouse-branch sentence "No
+    #: off-street parking shall be allowed in the front yard or side yard of a
+    #: townhouse" (Gresham 7.0431(B)(3)(b)(i), Oregon City 17.16.040.B.1,
+    #: Milwaukie 19.505.5.F.2.a, Troutdale 8.130.C.4.b.i, Wilsonville 4.113
+    #: E.5.c.i). None on every one-lot row because every quadplex chapter
+    #: either allows parking beside the building or is silent on it, and the
+    #: corpus holds `exempt: true` with the sentence that places parking in
+    #: that city as the evidence; the ban is a `unit_lots` variant there, on
+    #: the branch this stage does not draw. Read by nothing yet: this stage
+    #: draws one arrangement, the rear court, and this is what will let it try
+    #: a side court where the code allows one (FOLLOWUPS 5 (iii)). Pinned to
+    #: the corpus by `BOOL_MIRRORED`.
+    parking_side_prohibited: bool | None = None
+    #: `corner_access_street` -- which street a lot with more than one takes
+    #: its driveway from. `side`: the curb cut goes on the street the building
+    #: does not face (the six model-code townhouse chapters, on unit lots
+    #: only, so never on a one-lot row). `lowest_class`: the street with the
+    #: lowest functional classification first (unincorporated Clackamas ZDO
+    #: 845.02(C)(3), Oregon City 16.12.035.H, Milwaukie 12.16.040(B)(2),
+    #: Fairview 19.162.020(5), West Linn 48.030(B)(5), Wilsonville PWS
+    #: 201.2.23(f)) -- s4 classes an edge F/A/R/S and does not carry the
+    #: street's class, so a drawing treats this as `any` and says so. `any`:
+    #: the code names no street. Read only on a lot with two front bearings.
+    #: Pinned to the corpus by `ENUM_MIRRORED`.
+    corner_access_street: str | None = None
+    #: `front_lot_line_corner` -- which street is the front on a corner lot.
+    #: `shortest`: fixed by the code as the shortest street lot line
+    #: (Portland 33.910, Oregon City 17.04.490, Wilsonville 4.001(161), West
+    #: Linn Ch. 2, Wood Village 720.030, unincorporated Multnomah 39.2000).
+    #: `owner`: the applicant designates it (Gladstone, Happy Valley,
+    #: Milwaukie "the street the development will face", Troutdale "may face
+    #: either street", Gresham where lot depth is met both ways). `entrance`:
+    #: set by the main entrance (Fairview, Tualatin) -- the owner's choice by
+    #: another name. `both`: every street line is a front line (Clackamas ZDO
+    #: 202). s4 takes the LONGEST street cluster as the front today
+    #: (`cluster_bearings` sorts by total length); only `shortest` takes the
+    #: choice away from the drawing, and where the code leaves it Steph's
+    #: ruling of 2026-09-19 (HUMAN_TODO 21) picks: green, then the preferred
+    #: stall band, then the court least exposed to a street -- never most
+    #: stalls. Pinned to the corpus by `ENUM_MIRRORED`.
+    front_lot_line_corner: str | None = None
+
     #: `open_space_min_pct` -- private open space as a share of the gross lot.
     #: Gresham states 15 percent and is now the only city that gets it, where
     #: it used to be charged to all seven.
@@ -1103,13 +1146,18 @@ class SiteplanSpec(BaseModel):
     # `alley_access_required` and only on a lot with an alley edge;
     # `townhome_rear_court_alley_aisle` is that court with its stalls against
     # the alley and backing out into it, drawn only where the city's row adds
-    # `alley_is_aisle` and only where it seats more stalls than the court's
-    # own aisle would. Kept as a list so a future cell can add typologies
-    # without a schema change.
+    # `alley_is_aisle` and only where it reaches a higher stall band than the
+    # court's own aisle would; `townhome_rear_court_side_street` is the same
+    # court on a corner lot with its lane coming in from the SIDE street
+    # across its setback strip, drawn only where the city's
+    # `corner_access_street` allows it (FOLLOWUPS 5). Kept as a list so a
+    # future cell can add typologies without a schema change.
     layout_methods: list[Literal["townhome_rear_court",
+                                 "townhome_rear_court_side_street",
                                  "townhome_rear_court_alley",
                                  "townhome_rear_court_alley_aisle"]] = Field(
         default_factory=lambda: ["townhome_rear_court",
+                                 "townhome_rear_court_side_street",
                                  "townhome_rear_court_alley",
                                  "townhome_rear_court_alley_aisle"]
     )

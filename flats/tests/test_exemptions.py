@@ -129,7 +129,27 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 249, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 251, "numeric": 47, "marker": 0, "dash": 2, "silent": 2}
+# 249 / 37 / 0 -> 251 / 47 / 2 on 2026-09-19: `parking_side_prohibited`, a
+# bool exempt in fourteen layers (FOLLOWUPS 5 slice A). The field is the
+# townhouse-branch sentence "No off-street parking shall be allowed in the
+# front yard or side yard of a townhouse", and it is TRUE only as a
+# `unit_lots` variant in the six cities that carry the sentence (Gresham,
+# Oregon City, Milwaukie, Troutdale, Wilsonville -- Fairview's side yard is
+# its setback strip by 19.13 and so is a setback, not a ban). The base is
+# exempt everywhere because on one lot every quadplex chapter either allows
+# parking beside the building or is silent on it, and the quote is the
+# sentence that PLACES parking in that city -- the front-street rule, the
+# street setback, the frontage cap -- so that a reviewer opening it sees the
+# rule that would have named the side yard and does not. Ten of those read
+# `numeric` because a placement rule states a figure (50 percent, 5 feet, 10
+# feet). The two `silent` are Happy Valley 16.43.030.E and unincorporated
+# Multnomah 39.6580(A): prose placement rules with no figure and no exemption
+# language, which is exactly what an absence claim can cite and nothing more.
+# Silent had been pinned at zero as the least readable verdict; these two are
+# read, in the yaml comment above each, with the whole-document grep that
+# backs them. Each of the fourteen is the false-GREEN form when a side court
+# is drawn, and nothing reads the field yet.
 # 232 -> 249 stated on 2026-09-15, evening: the SIDE half of the same alley
 # sentence, seventeen times, and the third value form the one sentence has
 # taken. The garage half is a variant on the garage entrance keyed to the

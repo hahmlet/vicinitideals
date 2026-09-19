@@ -124,16 +124,21 @@ Gresham is drawn to its stall and its aisle, and to Gresham's driveway rules.
 Geometry works in the front-aligned rotated frame (front lot line along the
 grid, building/stalls axis-aligned), then rotates back to EPSG:2913 for output.
 
-`layout_method` is `townhome_rear_court` (lane from the street),
+`layout_method` is `townhome_rear_court` (lane from the front street down
+the side of the building), `townhome_rear_court_side_street` (a corner lot
+whose lane comes in from the side street, where the city allows it),
 `townhome_rear_court_alley` (reached from the alley, parked off the court's
 own aisle) or `townhome_rear_court_alley_aisle` (parked against the alley,
-backing out into it).
+backing out into it). WHICH STREET IS THE FRONT on a corner lot, and how the
+plan kept is chosen among the streets and lanes tried, is `layout_lot`'s
+docstring (FOLLOWUPS 5; Steph's ruling of 2026-09-19).
 
 Output stage `s6s_lots` carries every s6 column forward and adds:
   site_plan_ok (bool) · parking_tier · stalls_provided · layout_method ·
   layout_fail · building_name · driveway_len_ft · parking_area_sqft ·
   open_space_sqft · open_space_ok · utility_run_ft · siteplan_json
-  (role -> WKB-hex geometry).
+  (role -> WKB-hex geometry) · front_bearing_deg · fronts_tried ·
+  court_street_ft.
 
 `layout_fail` is empty where a plan was drawn and where the city was never
 evaluated, and otherwise names how far the best attempt got before it gave
@@ -157,6 +162,7 @@ TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
 from common import DATA_DIR, load_footprints, load_rules, read_stage, stage_path, write_stage
+from s4_edges import BEARING_CLUSTER_TOL_DEG, bearing_deg, bearing_delta
 from s5_envelope import lot_setbacks
 from s6_fit import _cell_grid, _integral, _placement
 
@@ -386,13 +392,125 @@ def _alley_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> fl
     return float(v or 0.0)
 
 
+def _street_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> float:
+    """How far s5 stood the envelope off EVERY street lot line, in feet.
+
+    The same question as `_alley_setback_for`, asked of the F edges: the front
+    setback on a tier A lot; on a tier B (corner) lot the larger of the front
+    and the street-side setback, because s5 cannot tell which street is the
+    legal front and cuts every street edge to the larger; the largest of all
+    four on a tier C lot. This is the strip a lane from the side street
+    crosses, and the distance that tells an envelope cell on a street from
+    one on a neighbour.
+    """
+    jr = rules.jurisdictions.get(jur)
+    zr = jr.rule_for(zone) if jr else None
+    if zr is None:
+        return 0.0
+    d = lot_setbacks(zr, area, tier)
+    v = max(d.values()) if tier == "C" else d["F"]
+    return float(v or 0.0)
+
+
+def _candidate_fronts(bearings: list[float], front_edges: list[list[float]],
+                      rule: str | None) -> list[tuple[float, list, list]]:
+    """The streets this lot may be laid out to face, one entry each.
+
+    Each entry is (bearing, that street's front edges, the other streets'
+    front edges). A lot on one street has one entry and every front edge in
+    it -- a through lot with streets at both ends is one cluster mod 180 and
+    stays one entry, the way it was drawn before. A corner lot has an entry
+    per street cluster (s4 writes at most two), and WHICH of them depends on
+    the city's own definition of the front lot line, mirrored from FLATS
+    `front_lot_line_corner` (`DrivewayRules.front_lot_line_corner`):
+
+    - `shortest` -- Portland 33.910, Oregon City 17.04.490, Wilsonville
+      4.001, West Linn 02, Multnomah 39.2000, Wood Village 720.030: the front
+      is the street with the shorter lot line. One entry, unless the two are
+      equal (within a foot, the platted "equal" of 33.910), when the
+      applicant chooses and both are tried.
+    - `owner` / `entrance` / `both` -- Gladstone, Happy Valley, Milwaukie,
+      Gresham, Troutdale; Tualatin, Fairview; Clackamas ZDO 202: the
+      choice is the applicant's (or follows the door, which the applicant
+      places), so every street is tried and `layout_lot` chooses by Steph's
+      ruling of 2026-09-19. Gresham's definition fixes the front where the
+      minimum lot depth is met in one direction only, which nothing here
+      measures yet; it is tried both ways like the others (FOLLOWUPS 5).
+    - unread (None) -- the longest street, as before this rule was read.
+
+    An edge farther than the cluster tolerance from every bearing (a curved
+    corner) belongs to no street: it is in nobody's front edges and nobody's
+    side edges, and counts only toward the court's exposure.
+    """
+    if not bearings:
+        return [(0.0, list(front_edges), [])]
+    members: list[list[list[float]]] = [[] for _ in bearings]
+    for e in front_edges:
+        d, k = min((bearing_delta(bearing_deg(*e[:4]), float(b)), k)
+                   for k, b in enumerate(bearings))
+        if d <= BEARING_CLUSTER_TOL_DEG:
+            members[k].append(e)
+    groups = [(float(b), fe, sum(math.hypot(e[2] - e[0], e[3] - e[1]) for e in fe))
+              for b, fe in zip(bearings, members) if fe]
+    if len(groups) < 2:
+        return [(float(bearings[0]), list(front_edges), [])]
+    if rule == "shortest":
+        groups.sort(key=lambda g: g[2])
+        keep = [g for g in groups if g[2] <= groups[0][2] + 1.0]
+    elif rule in ("owner", "entrance", "both"):
+        keep = groups
+    else:
+        keep = groups[:1]
+    out = []
+    for b, fe, _ in keep:
+        se = [e for g in groups if g[1] is not fe for e in g[1]]
+        out.append((b, fe, se))
+    return out
+
+
+def _street_exposure(scells, rr: int, cc: int, rh: int, rw: int, res: float) -> float:
+    """Feet of the court's edge that stand on a street strip.
+
+    The court's ring of cells, counted where `scells` -- the envelope cells
+    within the street setback of a street lot line, built the way the alley
+    strip is -- is set. A court behind the building on an interior lot
+    touches no street and scores zero; on a corner lot the side of the court
+    that runs along the side street scores its depth.
+    """
+    sub = scells[rr:rr + rh, cc:cc + rw]
+    if sub.size == 0:
+        return 0.0
+    ring = sub.copy()
+    if rh > 2 and rw > 2:
+        ring[1:-1, 1:-1] = False
+    return float(ring.sum()) * res
+
+
+def _plan_rank(ok_plan: bool, band: int, exposure_ft: float, method: str,
+               paved_sqft: float) -> tuple:
+    """Steph's ruling of 2026-09-19 (HUMAN_TODO 21) as a sort key; higher wins.
+
+    (1) a plan that turns the lot green; (2) the higher stall band --
+    minimum, target, preferred as 1, 2, 3, below the floor 0; (3) the court
+    least exposed to a street, to the foot (a fraction of a foot is the
+    raster, not a preference); (4) the court's own aisle over one that
+    trusts the alley's width, as before the ruling; (5) the least pavement,
+    to the square foot -- "sufficient, but minimal parking so we can fit a
+    2nd pod". Never the most stalls: within a band the plan with fewer
+    stalls paves less and wins.
+    """
+    return (bool(ok_plan), int(band), -round(exposure_ft),
+            method != "townhome_rear_court_alley_aisle", -round(paved_sqft))
+
+
 def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[float]],
                area_sqft: float, front_setback_ft: float,
                jurisdiction: str = "", zone: str = "",
                parking_setback_ft: float | None = None,
                alley_edges: list[list[float]] | None = None,
                alley_setback_ft: float = 0.0,
-               alley_width_ft: float | None = None) -> dict:
+               alley_width_ft: float | None = None,
+               street_setback_ft: float | None = None) -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
 
     Returns a dict of scalar results + `geoms` (role -> shapely geometry in the
@@ -425,11 +543,48 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     taxlot fabric, read only where the cell says `alley_aisle`: the
     city's back-out room (`alley_need`) less this width is paved on the lot
     behind the stalls. None -- no width on record -- is laid out as zero.
+
+    `street_setback_ft` is how far the envelope stands off EVERY street lot
+    line (`_street_setback_for`: on a corner lot s5 cuts each street edge to
+    the larger of the front and street-side setbacks). It is the strip a
+    lane from the SIDE street crosses and the reach that finds the envelope
+    cells standing on a street, for the court's exposure. None means the
+    front setback, which is right on a lot with one street.
+
+    WHICH STREET IS THE FRONT, AND WHERE THE LANE COMES FROM (FOLLOWUPS 5;
+    Steph's ruling of 2026-09-19, HUMAN_TODO 21). On a corner lot the pod is
+    laid out facing each street the city's definition of the front lot line
+    allows (`_candidate_fronts`: the shortest street where the code fixes it,
+    either where it leaves the choice to the applicant), and on each the
+    court may be reached down the side of the building from the front street
+    (`townhome_rear_court`) or straight in from the side street across its
+    setback strip (`townhome_rear_court_side_street`) where the city's
+    `corner_access_street` allows it -- `any`, or `lowest_class` (Clackamas
+    845.02, Milwaukie 12.16, Oregon City 16.12.035, West Linn 48.025,
+    Wilsonville, Fairview 19.162: the lower-classified street first, which
+    nothing measures yet, so it is drawn as `any` and FOLLOWUPS 5 says so);
+    `side` (a townhouse project on a corner lot takes its one driveway from
+    the side street -- the unit-lot branch in Gresham, Oregon City,
+    Milwaukie, Wilsonville, Fairview, Troutdale; not this design's) allows
+    only the side street. An alley-fed city keeps its alley rule and draws
+    no lane from any street.
+
+    Among every plan that reaches a lane, the one kept is chosen by Steph's
+    ruling, in this order and never by "most stalls": (1) a plan that turns
+    the lot green (enough stalls, a lane, the open-space reserve met); (2)
+    the higher stall BAND (preferred over target over minimum); (3) the court
+    LEAST EXPOSED to a street (`_street_exposure`); (4) the court's own
+    aisle over one that trusts the alley's width, as before; (5) the LEAST
+    pavement -- "sufficient, but minimal parking so we can fit a 2nd pod".
+    Ties keep the first plan found, which is the front the lot was drawn to
+    before this ruling. Before 2026-09-19 the plan with the most stalls won,
+    so within a band a lot may now show one or two fewer stalls than it did
+    and the same colour.
     """
     import numpy as np
     import shapely
     from shapely import affinity
-    from shapely.geometry import MultiPoint, box
+    from shapely.geometry import LineString, MultiLineString, MultiPoint, box
 
     res: float = _CFG["res"]
     pods: list[tuple[str, float, float]] = _CFG["pods"]
@@ -454,6 +609,14 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     # ... and where the city's row says the alley is the aisle, the row of
     # stalls along it backs straight out (THE ALLEY AS THE AISLE, above).
     alley_aisle = alley_fed and bool(cell.get("alley_aisle"))
+    # The city's words on a corner lot: which street is the front, and which
+    # street the driveway may come from (`_candidate_fronts` and the
+    # docstring above). Absent from a cell nobody has read: the longest
+    # street is the front and the lane comes from it, as before.
+    front_rule: str | None = cell.get("front_rule")
+    access_rule: str | None = cell.get("access_rule")
+    street_sb: float = (front_setback_ft if street_setback_ft is None
+                        else float(street_setback_ft))
 
     # `layout_fail` names how far the lot got before the plan gave out. A flat
     # "no layout" is the largest single reason in the whole screen -- 148,939
@@ -467,7 +630,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         "building_name": None, "driveway_len_ft": 0.0, "parking_area_sqft": 0.0,
         "open_space_sqft": 0.0, "open_space_req_sqft": 0.0,
         "open_space_ok": False, "driveway_width_ft": 0.0, "geoms": {},
-        "layout_fail": "no_envelope",
+        "layout_fail": "no_envelope", "front_bearing_deg": float("nan"),
+        "fronts_tried": 0, "court_street_ft": float("nan"),
     }
 
     env = shapely.from_wkb(env_wkb)
@@ -479,45 +643,6 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         return fail
     poly = max(parts, key=lambda p: p.area)
     origin = poly.centroid
-
-    # Rotate so the primary front bearing aligns to the grid, then pick the
-    # 180deg orientation that puts the front lot line at MIN-y (street "south").
-    b = float(bearings[0]) if bearings else 0.0
-    rot = b
-    if front_edges:
-        mids = MultiPoint([((e[0] + e[2]) / 2.0, (e[1] + e[3]) / 2.0)
-                           for e in front_edges])
-        fmid = affinity.rotate(mids, -b, origin=origin)
-        if fmid.centroid.y > origin.y:
-            rot = b + 180.0
-
-    poly_r = affinity.rotate(poly, -rot, origin=origin)
-    minx, miny, maxx, maxy = poly_r.bounds
-    ok = _cell_grid(poly_r, res)
-    if ok is None or not ok.any():
-        return fail
-    R, C = ok.shape
-    # The cells of the envelope that stand on the alley strip: on the edge of
-    # the envelope, and no farther from an alley lot line than the setback the
-    # envelope was cut to (plus the cell the raster loses at the boundary).
-    # Rotated into the same frame as the lot, so the lane search below can
-    # walk the grid. An envelope with no cell on the strip is not refused
-    # here: the ladder still has to say whether the building and the court
-    # fit before it says the alley cannot be reached, so the empty set just
-    # means no lane is ever found at the fourth rung.
-    mouths = None
-    if alley_fed:
-        from shapely.geometry import MultiLineString
-        alley_r = affinity.rotate(
-            MultiLineString([[(e[0], e[1]), (e[2], e[3])] for e in alley_edges]),
-            -rot, origin=origin)
-        mouths = _alley_mouths(
-            ok, [list(shapely.get_coordinates(g).ravel()) for g in alley_r.geoms],
-            minx, miny, res, alley_setback_ft + 2.0 * res + 0.5)
-
-    def cell_box(r0: int, c0: int, h: int, w: int):
-        return box(minx + c0 * res, miny + r0 * res,
-                   minx + (c0 + w) * res, miny + (r0 + h) * res)
 
     # Fixed-element cell dimensions.
     stall_w, stall_d = cell["stall_w"], cell["stall_d"]
@@ -553,7 +678,20 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     if parking_setback_ft is not None:
         park_c = max(0, math.ceil(
             max(0.0, parking_setback_ft - front_setback_ft) / res))
-    geoms: dict = {}
+    # The stall bands the choice below is ranked on. `target` is optional in
+    # the config a test hands in; without it the middle band is the top one.
+    min_stalls: int = _CFG["min_stalls"]
+    preferred: int = _CFG["preferred_stalls"]
+    target: int = _CFG.get("target_stalls", preferred)
+    # Concurrent claims, not alternatives: a city stating both a share and a
+    # flat area asks for the larger. A city stating neither asks for nothing,
+    # and four of the five cities laid out here are in that position — the 15
+    # percent they used to be charged was Gresham's rule, collected citywide.
+    open_req = max((open_pct / 100.0) * area_sqft, open_flat)
+    # The reach that finds an envelope cell standing on a street strip: the
+    # setback s5 cut plus the cell or two the raster loses at the boundary,
+    # the same construction as the alley strip.
+    street_reach = street_sb + 2.0 * res + 0.5
 
     # Attached-townhome layout (Gresham §7.0431): the pod sits across the front;
     # a single consolidated driveway runs down one SIDE (never across the front,
@@ -570,13 +708,33 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     # what the approach standard governs and all it governs; main() has already
     # declined any city whose cap falls below one car's width.
     #
-    # Try each pod size × orientation: place the pod frontmost, carve a rear
-    # court, and require a side lane that reaches it. A builder orients the pod
-    # to leave a driveway, so we keep the orientation with the MOST stalls rather
-    # than the first that fits (a full-width pod would otherwise block the lane).
-    Sok = _integral(ok)
-    plan = None
-    best_stalls = -1
+    # For each street the lot may face, each pod size × orientation: place the
+    # pod frontmost, carve a rear court, and require a lane that reaches it.
+    # Every plan that does is OFFERED, and the one kept is the best by the
+    # ruling in the docstring (`offer` below) -- not the first that fits and
+    # not the one with the most stalls.
+    best: list = [None, None]  # [key, plan]
+
+    def offer(plan: dict) -> None:
+        stalls = plan["stalls"]
+        parking_area = stalls * stall_w * stall_d + plan["aisle"] * plan["span_ft"]
+        # The driveway is separate pavement from the court aisle (counted in
+        # parking_area), so the two do not double-count. Zero on a lot whose
+        # court stands on the strip it is reached across: nothing to pave.
+        driveway_area = plan["driveway_len_c"] * res * drive_w
+        open_space = max(0.0, area_sqft - plan["bld"][5] - parking_area - driveway_area)
+        open_ok = open_space >= open_req
+        ok_plan = bool(stalls >= min_stalls and plan["reaches"] and open_ok)
+        band = int(stalls >= min_stalls) + int(stalls >= target) + int(stalls >= preferred)
+        exposure = _street_exposure(plan["scells"], *plan["rect"], res)
+        key = _plan_rank(ok_plan, band, exposure, plan["method"],
+                         parking_area + driveway_area)
+        if best[0] is None or key > best[0]:
+            best[0] = key
+            best[1] = {**plan, "parking_area": parking_area,
+                       "driveway_area": driveway_area, "open_space": open_space,
+                       "open_ok": open_ok, "ok": ok_plan, "exposure": exposure}
+
     # How far the best attempt got. A lot is reported on its FURTHEST attempt,
     # not its first or its last: a pod that will not fit in one orientation but
     # reaches the driveway test in the other has not been stopped by its size.
@@ -585,143 +743,202 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     # -> too shallow to park in; stalls counted -> no lane reaches them.
     reach, REACH = 0, ("no_building", "no_court", "court_too_shallow",
                        "no_alley_lane" if alley_fed else "no_side_lane")
-    for name, w_ft, d_ft in pods:
-        for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
-            bw, bh = math.ceil(ww / res), math.ceil(dd / res)
-            hit = _placement(Sok, bh, bw)
-            if hit is None:
-                continue
-            reach = max(reach, 1)
-            br, bc = hit
-            court_r0 = max(br + bh + gap_c, park_c)  # behind pod + gap, off the street
-            if court_r0 >= R:
-                continue
-            rect = _largest_rect(ok[court_r0:, :])
-            if rect is None:
-                continue
-            reach = max(reach, 2)
-            cr, cc, rh, rw = rect
-            rr = court_r0 + cr                     # court top row in full grid
-            cw_ft, cd_ft = rw * res, rh * res
-            # THE COURT IS TWO-WAY, ONE ROW OR TWO. A car reaches this court
-            # down one side lane and leaves the way it came, so the aisle in
-            # front of the stalls carries traffic both ways whether stalls
-            # stand on one side of it or both. Until 2026-09-17 a one-row
-            # court was sized to the city's ONE-way aisle, which is a figure
-            # for a court with an exit at the far end -- 23 ft in Gresham and
-            # 12 in Wood Village, where a car backing out of a 90-degree
-            # stall into 12 ft of pavement is not a drawing. The paper lot
-            # (`flats.score.paper.court_depth`) had ruled the same way all
-            # along; this is the county drawing agreeing with it.
-            rows = (2 if cd_ft >= 2 * stall_d + aisle_two
-                    else 1 if cd_ft >= stall_d + aisle_two else 0)
-            n_ct = min(cap, rows * int(cw_ft // stall_w))
-            # The alley as the aisle: the stalls that stand on the alley strip
-            # and back straight out into it, asked for a stall depth and no
-            # aisle. Counted beside the court's own aisle, never instead of it.
-            on_alley = (_alley_aisle_stalls(mouths, rr, cc, rh, rw, sw_c, sd_c, cap, sb_c)
-                        if alley_aisle else None)
-            if n_ct <= 0 and on_alley is None:
-                continue
-            reach = max(reach, 3)
-            free = ok.copy()
-            free[br:br + bh, bc:bc + bw] = False
-            # A plan on the court's own aisle beats one on the alley at equal
-            # stalls, whichever came first: it needs no alley width, and the
-            # count of plans on the alley drawing stays the count that need it.
-            trusts_alley = plan is not None and plan["method"] == "townhome_rear_court_alley_aisle"
-            if alley_fed:
-                # From the alley: a straight lane from the court to the cells
-                # on the alley strip, or none at all when the court already
-                # stands there. Nothing is drawn from the street; the city
-                # forbids it, and a lot that cannot be reached from the alley
-                # is refused rather than handed the street lane.
-                lane = (_lane_to_alley(free, mouths, rr, cc, rh, rw, drive_c)
-                        if n_ct > 0 else None)
-                if lane is not None and (n_ct > best_stalls
-                                         or (n_ct == best_stalls and trusts_alley)):
-                    best_stalls = n_ct
-                    r0, c0, h, w = lane
-                    lane_len_c = h if w == drive_c else w
-                    plan = {
-                        "rect": (rr, cc, rh, rw), "stalls": n_ct,
-                        "aisle": aisle_two,
-                        "span_ft": cw_ft, "bld": (name, br, bc, bh, bw, ww * dd),
-                        "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
-                        "driveway": lane if lane_len_c else None,
-                        "driveway_len_c": lane_len_c,
-                        "driveway_len": lane_len_c * res + alley_setback_ft,
-                        "reaches": True, "method": "townhome_rear_court_alley",
-                    }
-                if on_alley is not None and on_alley[0] > best_stalls:
-                    n_al, boxes, _edge = on_alley
-                    best_stalls = n_al
-                    plan = {
-                        "rect": (rr, cc, rh, rw), "stalls": n_al,
-                        # The aisle inside the lot is only what the alley's
-                        # width leaves short of the back-out room, along the
-                        # row; the rest of the aisle IS the alley. The
-                        # pavement past that is the setback strip, as on
-                        # the lane-less plan above.
-                        "aisle": shortfall_ft, "span_ft": n_al * stall_w,
-                        "bld": (name, br, bc, bh, bw, ww * dd),
-                        "stall_boxes": boxes,
-                        "driveway": None, "driveway_len_c": 0,
-                        "driveway_len": alley_setback_ft,
-                        "reaches": True, "method": "townhome_rear_court_alley_aisle",
-                    }
-                continue
-            # Side driveway: first clear column run (in the envelope, clear of the
-            # building) at least drive_c wide, running alongside the building from
-            # its front row down to the court, whose columns overlap the court so
-            # cars can reach it. Scanning from `br` (not row 0) skips the border-
-            # False perimeter cells in the setback strip ahead of the pod, which
-            # are always open anyway — checking them would falsely reject every
-            # column since a conservative grid leaves the envelope edge unset.
-            clear = free[br:rr, :].all(axis=0)
-            corridor_c0, run = None, 0
-            for c in range(C):
-                run = run + 1 if clear[c] else 0
-                if run >= drive_c:
-                    c0 = c - drive_c + 1
-                    if c0 < cc + rw and c0 + drive_c > cc:  # lane meets the court
-                        corridor_c0 = c0
-                        break
-            if corridor_c0 is None:
-                continue
-            if n_ct <= best_stalls:
-                continue
-            best_stalls = n_ct
-            plan = {
-                "rect": (rr, cc, rh, rw), "stalls": n_ct,
-                "aisle": aisle_two,
-                "span_ft": cw_ft, "bld": (name, br, bc, bh, bw, ww * dd),
-                "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
-                "driveway": (0, corridor_c0, rr, drive_c), "driveway_len_c": rr,
-                "driveway_len": rr * res + front_setback_ft, "reaches": True,
-                "method": "townhome_rear_court",
-            }
+    fronts = _candidate_fronts(bearings, front_edges, front_rule)
+    for b, fe, se in fronts:
+        # Rotate so this front bearing aligns to the grid, then pick the 180deg
+        # orientation that puts THIS street's lot line at MIN-y ("south") --
+        # the flip reads the street being tried, not both at once.
+        rot = b
+        if fe:
+            mids = MultiPoint([((e[0] + e[2]) / 2.0, (e[1] + e[3]) / 2.0)
+                               for e in fe])
+            fmid = affinity.rotate(mids, -b, origin=origin)
+            if fmid.centroid.y > origin.y:
+                rot = b + 180.0
 
+        poly_r = affinity.rotate(poly, -rot, origin=origin)
+        minx, miny, maxx, maxy = poly_r.bounds
+        ok = _cell_grid(poly_r, res)
+        if ok is None or not ok.any():
+            continue
+        R, C = ok.shape
+
+        def rotated(edges):
+            g = affinity.rotate(
+                MultiLineString([[(e[0], e[1]), (e[2], e[3])] for e in edges]),
+                -rot, origin=origin)
+            return [list(shapely.get_coordinates(p).ravel()) for p in g.geoms]
+
+        # The cells of the envelope that stand on the alley strip: on the edge
+        # of the envelope, and no farther from an alley lot line than the
+        # setback the envelope was cut to (plus the cell the raster loses at
+        # the boundary). Rotated into the same frame as the lot, so the lane
+        # search below can walk the grid. An envelope with no cell on the
+        # strip is not refused here: the ladder still has to say whether the
+        # building and the court fit before it says the alley cannot be
+        # reached, so the empty set just means no lane is ever found at the
+        # fourth rung.
+        mouths = None
+        if alley_fed:
+            mouths = _alley_mouths(ok, rotated(alley_edges), minx, miny, res,
+                                   alley_setback_ft + 2.0 * res + 0.5)
+        # The cells standing on ANY street strip, for the court's exposure;
+        # and, where the city lets a corner lot's driveway come from the
+        # side street, the cells on the SIDE street's strip, which the lane
+        # search treats exactly as it treats the alley's.
+        scells = (_alley_mouths(ok, rotated(front_edges), minx, miny, res, street_reach)
+                  if front_edges else np.zeros_like(ok))
+        smouths = None
+        if se and not alley_fed and access_rule in ("side", "any", "lowest_class"):
+            smouths = _alley_mouths(ok, rotated(se), minx, miny, res, street_reach)
+        # `side` is the one word that takes the front street's lane away, and
+        # only on a lot that has a side street to take it from.
+        front_lane_ok = not (access_rule == "side" and se)
+        frame = {"rot": rot, "minx": minx, "miny": miny, "scells": scells,
+                 "front_deg": float(b), "street_sb": street_sb}
+
+        Sok = _integral(ok)
+        for name, w_ft, d_ft in pods:
+            for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
+                bw, bh = math.ceil(ww / res), math.ceil(dd / res)
+                hit = _placement(Sok, bh, bw)
+                if hit is None:
+                    continue
+                reach = max(reach, 1)
+                br, bc = hit
+                court_r0 = max(br + bh + gap_c, park_c)  # behind pod + gap, off the street
+                if court_r0 >= R:
+                    continue
+                rect = _largest_rect(ok[court_r0:, :])
+                if rect is None:
+                    continue
+                reach = max(reach, 2)
+                cr, cc, rh, rw = rect
+                rr = court_r0 + cr                     # court top row in full grid
+                cw_ft, cd_ft = rw * res, rh * res
+                # THE COURT IS TWO-WAY, ONE ROW OR TWO. A car reaches this court
+                # down one side lane and leaves the way it came, so the aisle in
+                # front of the stalls carries traffic both ways whether stalls
+                # stand on one side of it or both. Until 2026-09-17 a one-row
+                # court was sized to the city's ONE-way aisle, which is a figure
+                # for a court with an exit at the far end -- 23 ft in Gresham and
+                # 12 in Wood Village, where a car backing out of a 90-degree
+                # stall into 12 ft of pavement is not a drawing. The paper lot
+                # (`flats.score.paper.court_depth`) had ruled the same way all
+                # along; this is the county drawing agreeing with it.
+                rows = (2 if cd_ft >= 2 * stall_d + aisle_two
+                        else 1 if cd_ft >= stall_d + aisle_two else 0)
+                n_ct = min(cap, rows * int(cw_ft // stall_w))
+                # The alley as the aisle: the stalls that stand on the alley strip
+                # and back straight out into it, asked for a stall depth and no
+                # aisle. Counted beside the court's own aisle, never instead of it.
+                on_alley = (_alley_aisle_stalls(mouths, rr, cc, rh, rw, sw_c, sd_c, cap, sb_c)
+                            if alley_aisle else None)
+                if n_ct <= 0 and on_alley is None:
+                    continue
+                reach = max(reach, 3)
+                free = ok.copy()
+                free[br:br + bh, bc:bc + bw] = False
+                base = {**frame, "rect": (rr, cc, rh, rw),
+                        "bld": (name, br, bc, bh, bw, ww * dd), "reaches": True}
+                if alley_fed:
+                    # From the alley: a straight lane from the court to the cells
+                    # on the alley strip, or none at all when the court already
+                    # stands there. Nothing is drawn from the street; the city
+                    # forbids it, and a lot that cannot be reached from the alley
+                    # is refused rather than handed the street lane.
+                    lane = (_lane_to_alley(free, mouths, rr, cc, rh, rw, drive_c)
+                            if n_ct > 0 else None)
+                    if lane is not None:
+                        r0, c0, h, w = lane
+                        lane_len_c = h if w == drive_c else w
+                        offer({
+                            **base, "stalls": n_ct, "aisle": aisle_two, "span_ft": cw_ft,
+                            "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
+                            "driveway": lane if lane_len_c else None,
+                            "driveway_len_c": lane_len_c,
+                            "driveway_len": lane_len_c * res + alley_setback_ft,
+                            "method": "townhome_rear_court_alley",
+                        })
+                    if on_alley is not None:
+                        n_al, boxes, _edge = on_alley
+                        offer({
+                            **base, "stalls": n_al,
+                            # The aisle inside the lot is only what the alley's
+                            # width leaves short of the back-out room, along the
+                            # row; the rest of the aisle IS the alley. The
+                            # pavement past that is the setback strip, as on
+                            # the lane-less plan above.
+                            "aisle": shortfall_ft, "span_ft": n_al * stall_w,
+                            "stall_boxes": boxes,
+                            "driveway": None, "driveway_len_c": 0,
+                            "driveway_len": alley_setback_ft,
+                            "method": "townhome_rear_court_alley_aisle",
+                        })
+                    continue
+                if smouths is not None and n_ct > 0:
+                    # From the side street: the same lane the alley gets, out
+                    # of the court's side (or its back, on a lot the street
+                    # wraps) to the cells on the side street's strip, or none
+                    # when the court already stands there; the strip itself
+                    # is the driveway's last stretch.
+                    lane = _lane_to_alley(free, smouths, rr, cc, rh, rw, drive_c)
+                    if lane is not None:
+                        r0, c0, h, w = lane
+                        lane_len_c = h if w == drive_c else w
+                        offer({
+                            **base, "stalls": n_ct, "aisle": aisle_two, "span_ft": cw_ft,
+                            "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
+                            "driveway": lane if lane_len_c else None,
+                            "driveway_len_c": lane_len_c,
+                            "driveway_len": lane_len_c * res + street_sb,
+                            "method": "townhome_rear_court_side_street",
+                        })
+                if not front_lane_ok:
+                    continue
+                # Side driveway: first clear column run (in the envelope, clear of the
+                # building) at least drive_c wide, running alongside the building from
+                # its front row down to the court, whose columns overlap the court so
+                # cars can reach it. Scanning from `br` (not row 0) skips the border-
+                # False perimeter cells in the setback strip ahead of the pod, which
+                # are always open anyway — checking them would falsely reject every
+                # column since a conservative grid leaves the envelope edge unset.
+                clear = free[br:rr, :].all(axis=0)
+                corridor_c0, run = None, 0
+                for c in range(C):
+                    run = run + 1 if clear[c] else 0
+                    if run >= drive_c:
+                        c0 = c - drive_c + 1
+                        if c0 < cc + rw and c0 + drive_c > cc:  # lane meets the court
+                            corridor_c0 = c0
+                            break
+                if corridor_c0 is None:
+                    continue
+                offer({
+                    **base, "stalls": n_ct, "aisle": aisle_two, "span_ft": cw_ft,
+                    "stall_boxes": _row_boxes(rr, cc, rh, rw, rows, n_ct, sw_c, sd_c),
+                    "driveway": (0, corridor_c0, rr, drive_c), "driveway_len_c": rr,
+                    "driveway_len": rr * res + front_setback_ft,
+                    "method": "townhome_rear_court",
+                })
+
+    plan = best[1]
     if plan is None:
-        return {**fail, "layout_fail": REACH[reach]}
+        return {**fail, "layout_fail": REACH[reach], "fronts_tried": len(fronts)}
     stalls, method = plan["stalls"], plan["method"]
 
     # --- realize the chosen plan into geometry (rotate back to CRS) --------
+    rot, minx, miny = plan["rot"], plan["minx"], plan["miny"]
     bname, br, bc, bh, bw, building_area = plan["bld"]
     rr, cc, rh, rw = plan["rect"]
-    parking_area = stalls * stall_w * stall_d + plan["aisle"] * plan["span_ft"]
+    parking_area = plan["parking_area"]
     driveway_len = plan["driveway_len"]
-    # The driveway is separate pavement from the court aisle (counted in
-    # parking_area), so the two do not double-count. Zero on an alley-fed lot
-    # whose court stands on the alley strip: there is no lane to pave.
-    driveway_area = plan["driveway_len_c"] * res * drive_w
-    open_space = max(0.0, area_sqft - building_area - parking_area - driveway_area)
-    # Concurrent claims, not alternatives: a city stating both a share and a
-    # flat area asks for the larger. A city stating neither asks for nothing,
-    # and four of the five cities laid out here are in that position — the 15
-    # percent they used to be charged was Gresham's rule, collected citywide.
-    open_req = max((open_pct / 100.0) * area_sqft, open_flat)
-    open_space_ok = open_space >= open_req
+    open_space, open_space_ok = plan["open_space"], plan["open_ok"]
+    geoms: dict = {}
+
+    def cell_box(r0: int, c0: int, h: int, w: int):
+        return box(minx + c0 * res, miny + r0 * res,
+                   minx + (c0 + w) * res, miny + (r0 + h) * res)
 
     def emit(name: str, g):
         geoms[name] = affinity.rotate(g, rot, origin=origin)
@@ -732,14 +949,12 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         dr0, dc0, dh, dwid = plan["driveway"]
         emit("driveway", cell_box(dr0, dc0, dh, dwid))
     bx_center = minx + (bc + bw / 2.0) * res
-    from shapely.geometry import LineString
     emit("utility", LineString([(bx_center, miny + br * res), (bx_center, miny)]))
 
     for i, (y0, x0, h, w) in enumerate(plan["stall_boxes"]):
         emit(f"stall_{i}", cell_box(y0, x0, h, w))
 
-    ok_plan = bool(stalls >= _CFG["min_stalls"] and plan["reaches"]
-                   and open_space_ok)
+    ok_plan = plan["ok"]
     return {
         # A drawn plan can still be rejected, and those two rejections are not
         # "no layout" -- there IS a layout, it is short of stalls or short of
@@ -747,7 +962,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         # of the geometry bucket, where they would read as land that cannot
         # hold the product.
         "layout_fail": ("" if ok_plan
-                        else "too_few_stalls" if stalls < _CFG["min_stalls"]
+                        else "too_few_stalls" if stalls < min_stalls
                         else "no_open_space"),
         "site_plan_ok": ok_plan,
         "stalls_provided": int(stalls),
@@ -759,6 +974,13 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         "open_space_req_sqft": float(round(open_req, 2)),
         "open_space_ok": bool(open_space_ok),
         "driveway_width_ft": float(cell["cut"]),
+        # Which street the plan faces (s4's bearing of its front lot line)
+        # and how many the lot was drawn to, so a run can count where the
+        # city's rule or Steph's ruling chose -- and the feet of the court's
+        # edge on a street, the number the ruling's third test read.
+        "front_bearing_deg": float(plan["front_deg"]),
+        "fronts_tried": len(fronts),
+        "court_street_ft": float(round(plan["exposure"], 1)),
         "geoms": geoms,
     }
 
@@ -767,9 +989,10 @@ def _work_chunk(chunk):
     import shapely
 
     out = []
-    for idx, env_wkb, bearings, fedges, area, fsb, jur, zone, psb, aedges, asb, aw in chunk:
+    for (idx, env_wkb, bearings, fedges, area, fsb, jur, zone, psb, aedges, asb, aw,
+         ssb) in chunk:
         r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur, zone, psb,
-                       aedges, asb, aw)
+                       aedges, asb, aw, ssb)
         r["geoms_hex"] = {role: shapely.to_wkb(g).hex() for role, g in r.pop("geoms").items()}
         out.append((idx, r))
     return out
@@ -823,11 +1046,17 @@ def main() -> None:
     open_ok = np.zeros(n, dtype=bool)
     drive_w = np.full(n, np.nan)
     sp_json = np.array([""] * n, dtype=object)
+    front_deg = np.full(n, np.nan)
+    fronts_tried = np.zeros(n, dtype=int)
+    court_street = np.full(n, np.nan)
+    extra = {"front_bearing_deg": front_deg, "fronts_tried": fronts_tried,
+             "court_street_ft": court_street}
 
     if sp is None or not sp.enabled:
         print("s6s: siteplan disabled in footprints.yaml — writing passthrough columns")
         _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
-                  drive_w, park_area, open_sqft, open_req, open_ok, sp_json)
+                  drive_w, park_area, open_sqft, open_req, open_ok, sp_json,
+                  extra=extra)
         return
 
     pod_list = [(f.name, f.width_ft, f.depth_ft) for f in fps.footprints]
@@ -849,7 +1078,8 @@ def main() -> None:
         print("s6s: no city in footprints.yaml states both a stall and an aisle; "
               "writing passthrough columns")
         _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
-                  drive_w, park_area, open_sqft, open_req, open_ok, sp_json)
+                  drive_w, park_area, open_sqft, open_req, open_ok, sp_json,
+                  extra=extra)
         return
     for j in declined:
         why = ("its code states a stall size but no aisle width"
@@ -902,6 +1132,13 @@ def main() -> None:
                        tier: str = "A") -> float:
         return _alley_setback_for(rules, jur, zone, area, tier)
 
+    # ... and off every STREET edge, which on a corner lot is the larger of
+    # the front and street-side setbacks: the strip a lane from the side
+    # street crosses. See `_street_setback_for`.
+    def _street_setback(jur: str, zone: str, area: float = 0.0,
+                        tier: str = "A") -> float:
+        return _street_setback_for(rules, jur, zone, area, tier)
+
     # Each city's own numbers, keyed by name and handed to the workers whole.
     # The ARRANGEMENT is per-corpus -- pod at the front, one side driveway, a
     # rear court, cars out forward, which every code here asks for in its own
@@ -929,7 +1166,31 @@ def main() -> None:
             "alley_need": (dw.alley_backout_ft
                            if dw and dw.alley_backout_ft is not None
                            else g.aisle_one_way_ft),
+            # Which street is the front on a corner lot, and which street its
+            # driveway may come from -- the city's own words, mirrored from
+            # FLATS (`front_lot_line_corner`, `corner_access_street`); see
+            # `_candidate_fronts` and `layout_lot`. None where unread.
+            "front_rule": dw.front_lot_line_corner if dw else None,
+            "access_rule": dw.corner_access_street if dw else None,
         }
+
+    # Said per city because the two words decide the drawing on every corner
+    # lot: which street the pod faces, and whether the lane may come in from
+    # the side street. `lowest_class` is drawn as `any` -- no stage holds a
+    # street's functional classification -- and says so.
+    for j in cities:
+        fr, ar = cells[j]["front_rule"], cells[j]["access_rule"]
+        front = {"shortest": "the SHORTER street is the front",
+                 "owner": "the owner picks the front, so both streets are tried",
+                 "entrance": "the entrance sets the front, so both streets are tried",
+                 "both": "both streets are fronts, so both are tried",
+                 None: "front rule unread: the longer street is the front"}[fr]
+        lane = {"any": "the lane may come from either street",
+                "side": "the lane comes from the SIDE street only",
+                "lowest_class": "the lane comes from the lower-classified street "
+                                "first, which nothing measures, so drawn as either",
+                None: "access rule unread: the lane comes from the front street"}[ar]
+        print(f"s6s: {j} corner lots -- {front}; {lane}")
 
     # Where a city keeps stalls off the street, say what it asks and whether
     # the envelope already answers it. Happy Valley states the standard by
@@ -967,6 +1228,7 @@ def main() -> None:
 
     cfg = {
         "res": res, "pods": pod_list, "min_stalls": sp.min_stalls(),
+        "target_stalls": sp.target_stalls(),
         "preferred_stalls": sp.preferred_stalls(),
         "cells": cells,
         "methods": list(sp.layout_methods),
@@ -1009,6 +1271,7 @@ def main() -> None:
             aedges, _alley_setback(jur, zone, float(row["area_sqft"]),
                                    str(row["tier"])),
             None if _aw is None or not np.isfinite(float(_aw)) else float(_aw),
+            _street_setback(jur, zone, float(row["area_sqft"]), str(row["tier"])),
         ))
     for j, k in alley_fed.items():
         print(f"s6s: {j} sends the driveway to the alley on a lot that has one "
@@ -1051,10 +1314,13 @@ def main() -> None:
         open_ok[idx] = r["open_space_ok"]
         drive_w[idx] = r["driveway_width_ft"]
         sp_json[idx] = json.dumps(r["geoms_hex"])
+        front_deg[idx] = r["front_bearing_deg"]
+        fronts_tried[idx] = r["fronts_tried"]
+        court_street[idx] = r["court_street_ft"]
 
     _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
               drive_w, park_area, open_sqft, open_req, open_ok, sp_json,
-              assumed_cities=assumed)
+              assumed_cities=assumed, extra=extra)
 
     ev = stalls >= 0
     print(f"s6s: evaluated {int(ev.sum()):,} lots; "
@@ -1082,6 +1348,25 @@ def main() -> None:
                 f"room on the lot"
               + (f" (p50 {np.median(_short[_short > 0]):.0f} ft)"
                  if (_short > 0).any() else ""))
+    # The corner lots: how many were drawn to more than one front, how many
+    # face a street other than s4's first (the longest) bearing, and how many
+    # take the lane in from the side street -- the three numbers FOLLOWUPS 5
+    # moves, said per city so a run can be compared with the one before.
+    two = fronts_tried >= 2
+    if two.any():
+        first = np.array([json.loads(b)[0] if b else float("nan")
+                          for b in lots["front_bearings_json"]], dtype=float)
+        other = two & np.isfinite(front_deg) & (np.abs(front_deg - first) > 1e-6)
+        side = method == "townhome_rear_court_side_street"
+        per = lots["jurisdiction"].to_numpy()
+        print(f"s6s: {int(two.sum()):,} corner lots drawn to each street the city "
+              f"allows as the front; {int(other.sum()):,} chose the street s4 did "
+              f"not list first; {int(side.sum()):,} plans take the lane in from "
+              f"the side street: "
+              + ", ".join(f"{j} {int((two & (per == j)).sum()):,}/"
+                          f"{int((other & (per == j)).sum()):,}/"
+                          f"{int((side & (per == j)).sum()):,}"
+                          for j in cities if (two & (per == j)).any()))
     # Per city, because that is the whole reason this stage stopped being one
     # cell: a city's stall and aisle are what decide its lots, and a total hides
     # which city paid for which number.
@@ -1112,7 +1397,7 @@ def main() -> None:
 
 def _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
               drive_w, park_area, open_sqft, open_req, open_ok,
-              sp_json, assumed_cities=()) -> None:
+              sp_json, assumed_cities=(), extra=None) -> None:
     import numpy as np
 
     if "env_geom" in lots.columns:
@@ -1150,6 +1435,10 @@ def _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
     else:
         lots["utility_run_ft"] = np.nan
     lots["siteplan_json"] = sp_json
+    # Which street the plan faces, how many it was drawn to, and the feet of
+    # its court on a street (FOLLOWUPS 5). NaN / 0 where nothing was drawn.
+    for col, arr in (extra or {}).items():
+        lots[col] = arr
     write_stage(lots, "s6s_lots")
 
 

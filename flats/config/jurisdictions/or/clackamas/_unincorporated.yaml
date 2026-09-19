@@ -961,6 +961,60 @@ defaults:
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-08-27'
     quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55,L121,L193-L197"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # 845.02(D) permits parking between a building and a public street where a
+  # dwelling screens it or it stays inside half the frontage, and states no
+  # side-yard ban. On four lots 845.03(E)(2) consolidates access and keeps the
+  # driveway and entry out of "the area directly between a townhouse and the
+  # front lot line" -- the county did not carry the model code's side-yard
+  # sentence, on either path. Exempt on both. (845.04's ten feet from a side
+  # line is a cottage-cluster rule and is not read here.)
+  parking_side_prohibited:
+    exempt: true
+    cite: Clackamas ZDO 845.02(D) and 845.03(E)(2), which place parking against the front and state no side-yard ban
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L51-L55,L115"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # 845.02(C)(3): "lots of record with more than one street frontage shall
+  # access only the street with the lowest functional classification from
+  # which the lot has legal access", unless the Roadway Standards allow an
+  # exception. 845.03 states no street of its own for a townhouse project.
+  corner_access_street:
+    value: lowest_class
+    cite: Clackamas ZDO 845.02(C)(3), access only from the street with the lowest functional classification
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L49"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 202, Lot Line, Front, (2): "A corner lot has at least two front lot lines"
+  # -- both streets get the front setback, and for placing the building either
+  # may be faced. `both`.
+  front_lot_line_corner:
+    value: both
+    cite: Clackamas ZDO 202, Lot Line, Front, a corner lot has at least two front lot lines
+    url: https://www.clackamas.us/planning/zdo202
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/zdo.202.definitions.txt#L287"
   # 845.03(E)(1)(c), on unit lots: "Driveways and off-street parking areas
   # shall not exceed 12 feet wide." Twelve again -- Gresham, Fairview,
   # Wilsonville and Oregon City all say twelve and Milwaukie says ten. Fail

@@ -672,6 +672,57 @@ defaults:
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
     retrieved: '2026-08-29'
     quote: "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L456,L466"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # 17.48.040(2)(e) sets every parking space five feet off the property line
+  # -- any property line -- and that is the whole of Gladstone's placement
+  # rule; no sentence names a yard (whole-document grep, 2026-09-19: nothing).
+  # Exempt.
+  parking_side_prohibited:
+    exempt: true
+    cite: GMC 17.48.040(2)(e), five feet from the property line and no yard named
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L456,L466"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # Gladstone names no street (whole-document grep of the folder for lowest or
+  # lower classification and for corner-lot access, 2026-09-19: nothing;
+  # chapter 17.48 states no driveway at all, as the note above records).
+  # `any`.
+  corner_access_street:
+    value: any
+    cite: GMC 17.48.040(2)(e), the one placement rule, which names no street a corner lot must take access from
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L456,L466"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 17.06, Front lot line: on a corner lot "either of the lot lines separating
+  # the lot from a street other than an alley may be designated by the
+  # property owner as the front lot line".
+  front_lot_line_corner:
+    value: owner
+    cite: GMC 17.06, Front lot line, either street lot line may be designated by the property owner
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1706.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/gladstone/17.06.definitions.txt#L881"
   # NO DRIVEWAY WIDTH, and read rather than unlooked-for. Chapter 17.48 states
   # every dimension of a parking space and none of a driveway: the word appears
   # five times in the chapter and each is about something else -- a half-acre

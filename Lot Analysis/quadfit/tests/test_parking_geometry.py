@@ -60,6 +60,17 @@ DRIVEWAY_MIRRORED = {
 BOOL_MIRRORED = {
     "parking_front_prohibited": "parking_front_prohibited",
     "alley_access_required": "parking_alley_access_required",
+    "parking_side_prohibited": "parking_side_prohibited",
+}
+
+#: The enum half: a word rather than a number or a bool, mirrored verbatim.
+#: Which street is the front on a corner lot, and which street the driveway
+#: uses -- the two facts s6s needs before it may try each street as the
+#: front (FOLLOWUPS 5). One-lot values, like everything else on the row: the
+#: townhouse chapters' `side` is a `unit_lots` variant and never reaches here.
+ENUM_MIRRORED = {
+    "front_lot_line_corner": "front_lot_line_corner",
+    "corner_access_street": "corner_access_street",
 }
 
 
@@ -484,6 +495,40 @@ def test_the_front_parking_ban_is_mirrored_as_a_ban_and_not_as_a_cap():
                 f"{jurisdiction}: footprints.yaml ships {mine}={shipped} where the "
                 f"corpus reads {theirs} = {stated}"
                 + (f" ({read.prov.cite})" if read is not None else " (nothing)")
+            )
+
+
+def test_the_corner_lot_words_are_the_ones_the_corpus_holds():
+    """`front_lot_line_corner` and `corner_access_street`, verbatim.
+
+    A number can be approximately equal and a bool can be None; a word is the
+    word or it is wrong. Six cities fix the front as the SHORTEST street lot
+    line and take the choice away from the drawing; the rest leave it to the
+    owner, the entrance or make both lines fronts. Six send a multi-frontage
+    lot to the lowest-class street, the rest name none. A row that disagreed
+    with the corpus would let s6s try a front the city does not allow, or
+    refuse one it does. Every city in the driveway map must carry both words:
+    an omitted one here is not "no such rule", because every corpus layer
+    with a `defaults:` block was read and states one.
+    """
+    from common import load_footprints
+    from flats.encode.port_quadfit import layer_id_for
+
+    for jurisdiction, dw in load_footprints().siteplan.driveway.items():
+        for mine, theirs in ENUM_MIRRORED.items():
+            read = _one_lot_value(layer_id_for(jurisdiction), theirs)
+            shipped = getattr(dw, mine)
+            assert read is not None, (
+                f"{jurisdiction}: the corpus does not state {theirs}; every read "
+                f"layer must"
+            )
+            assert shipped == read.value, (
+                f"{jurisdiction}: footprints.yaml ships {mine}={shipped!r} where the "
+                f"corpus reads {theirs} = {read.value!r} ({read.prov.cite})"
+            )
+            assert shipped != "side", (
+                f"{jurisdiction}: `side` is the townhouse chapters' corner rule, a "
+                f"unit_lots variant; it may not appear on a one-lot row"
             )
 
 

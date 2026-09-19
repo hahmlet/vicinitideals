@@ -745,6 +745,76 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1813
     retrieved: '2026-08-29'
     quote: "or/multnomah/troutdale/8.development-standards.txt#L501,L596,L598,L603-L604"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # On one lot 8.120.C.4.b bans parking between a building and a public street
+  # except where a dwelling screens it (c) or it stays inside half the
+  # frontage (d), and states no side-yard ban -- the same reading that keeps
+  # `parking_front_prohibited` empty above -- so the base is exempt. On four
+  # lots 8.130.C.4.b.i is the model-code sentence, on the branch a project
+  # reaches when it does not meet the standards at (a), and 1.020 makes a side
+  # yard "an open space between any building and the side lot line", the whole
+  # strip, so a court beside the building is in it.
+  parking_side_prohibited:
+    exempt: true
+    cite: TDC 8.120.C.4.b to d, parking between a building and a public street allowed where a dwelling screens it or within half the frontage, with no side-yard ban
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/8.development-standards.txt#L596-L604"
+    variants:
+      - value: true
+        when: [unit_lots]
+        cite: TDC 8.130.C.4.b.i, no off-street parking in the front yard or side yard of a townhouse
+        quote: "or/multnomah/troutdale/8.development-standards.txt#L816-L818"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # On one lot Troutdale names no street: 8.120.C.5 governs the approach width
+  # and nothing in the store sends a multi-frontage lot to one street
+  # (whole-document grep of the Troutdale folder for lowest or lower
+  # classification, 2026-09-19: nothing). On four lots 8.130.C.4.b.ii: a
+  # townhouse project with a corner lot "shall take access from a single
+  # driveway approach on the side of the corner lot".
+  corner_access_street:
+    value: any
+    cite: TDC 8.120.C.5, Driveway Approach, which sizes the approach and names no street
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/8.development-standards.txt#L606-L608"
+    variants:
+      - value: side
+        when: [unit_lots]
+        cite: TDC 8.130.C.4.b.ii, a townhouse project that includes a corner lot takes access from a single driveway approach on the side of the corner lot
+        quote: "or/multnomah/troutdale/8.development-standards.txt#L819-L821"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 1.020, Lot Line, Front: "Front lot lines on corner lots may face either
+  # street, except for corner lots that have continuously curved property
+  # lines along the streets" -- a lot whose two street lines are one
+  # continuous curve has no rear line and the curve is the front. `owner`,
+  # with the curve exception carried here; s4's front_groups already treats a
+  # continuous street curve as one front.
+  front_lot_line_corner:
+    value: owner
+    cite: TDC 1.020, Lot Line, Front, may face either street on a corner lot
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/troutdale/1.020.definitions.txt#L548-L552"
   # AND HOW FAR BACK. 9.095(D): "Parking areas shall be set back from a lot
   # line adjoining a street the same distance as required building setbacks."
   # No number of its own -- the ten feet printed in the same sentence is an

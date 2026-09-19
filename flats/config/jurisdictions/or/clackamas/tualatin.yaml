@@ -685,6 +685,60 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
     quote: "or/clackamas/tualatin/73C.parking.txt#L530,L532-L537"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # Table 41.300 sets parking and vehicle circulation areas ten feet from a
+  # lot line -- any lot line, as the zone-level note records -- and that is a
+  # setback, not a ban on the yard; no sentence names one (whole-document
+  # grep, 2026-09-19: nothing). Exempt.
+  parking_side_prohibited:
+    exempt: true
+    cite: TDC 41.300 Table, Parking and Vehicle Circulation Areas ten feet from a lot line, and no yard named
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/40-41.residential.txt#L554,L561-L563"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # 36.400(b) orients access on a DOUBLE FRONTAGE lot to the lowest
+  # classification street, and Chapter 31 defines that as "a lot having public
+  # right-of-way frontage on two sides, but is not a corner lot" -- a corner
+  # lot is defined separately, one line above, and no rule sends it anywhere.
+  # `any` on a corner lot; the double-frontage rule is for the through-lot
+  # slice (FOLLOWUPS 5 (iv)).
+  corner_access_street:
+    value: any
+    cite: TDC 31, Lot Types, a double frontage lot is not a corner lot, and 36.400(b) sends only a double frontage lot to the lowest classification street
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/tualatin/31.definitions.txt#L2-L4"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # Table 40.300 / 41.300, Secondary Frontage on Corner Lot: "The secondary
+  # frontage is determined by the orientation of the structure, based on the
+  # location of the front door." Chapter 31's flag-lot sentence is the only
+  # front-lot-line definition and does not reach a corner lot. `entrance`.
+  front_lot_line_corner:
+    value: entrance
+    cite: TDC 40.300 Table, Secondary Frontage on Corner Lot, determined by the orientation of the structure based on the front door
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/tualatin/40-41.residential.txt#L213-L218"
   #
   # NOT ENCODED: the five-foot perimeter. 73C.210(3) requires landscaping a
   # "Minimum five feet in width in all off-street parking and vehicular

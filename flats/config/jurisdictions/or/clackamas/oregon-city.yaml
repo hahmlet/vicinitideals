@@ -611,6 +611,73 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
     quote: "or/clackamas/oregon-city/17.zoning.txt#L5417-L5432"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # On one lot 17.16.060.D permits front-facade garages and front-yard parking
+  # under two width caps and states no side-yard ban, so the base is exempt
+  # for the reason `parking_front_prohibited` is. On four lots 17.16.040.B.1
+  # is the sentence, the branch a project reaches when it does not meet the
+  # four standards at 17.16.040.A -- and a shared rear court does not
+  # (ee06af24). 17.04.1525 makes a side yard the strip "along the side of the
+  # main building" as wide as the gap to the side lot line, so a court beside
+  # the building is in it.
+  parking_side_prohibited:
+    exempt: true
+    cite: OCMC 17.16.060.D, which permits front-yard parking under two width caps and states no side-yard ban
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5417-L5432"
+    variants:
+      - value: true
+        when: [unit_lots]
+        cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # On one lot 16.12.035.H: "When a property fronts multiple roads, access
+  # shall be provided from and limited to the road with the lowest
+  # classification in the transportation system plan". On four lots
+  # 17.16.040.B.2 sends a development with a corner lot to "a single driveway
+  # on the side of the corner lot", and adds that the city engineer may alter
+  # it on street classification -- the two rules meet in the engineer's
+  # office, not here.
+  corner_access_street:
+    value: lowest_class
+    cite: OCMC 16.12.035.H, access from and limited to the road with the lowest classification
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1072-L1077"
+    variants:
+      - value: side
+        when: [unit_lots]
+        cite: OCMC 17.16.040.B.2, development that includes a corner lot takes access from a single driveway on the side of the corner lot
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L5350-L5352"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 17.04.490: "For corner lots, the front lot line is that with the narrowest
+  # frontage." Fixed by the plat; no choice.
+  front_lot_line_corner:
+    value: shortest
+    cite: OCMC 17.04.490, Front lot line, the narrowest frontage on a corner lot
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L1701-L1704"
   # On four lots, OCMC 17.16.040, Townhouse driveway access and parking, and
   # it is the state model code again: front-facade garages, front-yard parking
   # and driveways in front of a townhouse are permitted only where outdoor

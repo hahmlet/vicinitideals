@@ -1111,6 +1111,75 @@ defaults:
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
     retrieved: '2026-08-27'
     quote: "or/multnomah/fairview/19.30.txt#L567-L571"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # On one lot 19.30.040(E) permits parking between the building and the
+  # street where a dwelling screens it or it stays inside half the frontage,
+  # and states no side-yard ban, so the base is exempt. On four lots
+  # 19.30.050(D)(2)(a) carries the model-code sentence -- but READ THE
+  # DEFINITION: 19.13 says "yard means the area defined by setbacks (i.e.,
+  # between the setback line and respective property line)", so Fairview's
+  # side yard is the five-foot setback strip and not the space beside the
+  # building. The sentence is therefore a parking setback from the side lot
+  # line equal to the building setback, which is a shape this model has no
+  # field for (the same refusal Gladstone and Tualatin record under
+  # `parking_street_setback_ft`: only the street half has a field), and NOT a
+  # ban on a side court that clears the setback. Exempt on both paths, and the
+  # setback is owed to the redirect ledger.
+  parking_side_prohibited:
+    exempt: true
+    cite: FMC 19.30.040(E)(1) and (E)(2), parking permitted between a building and the street under two conditions, with no side-yard ban; 19.30.050(D)(2)(a) on unit lots bans the side YARD, which 19.13 defines as the setback strip
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.30.txt#L567-L571,L671"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # On one lot 19.162.020(5), Double-Frontage Lots: "When a lot has frontage
+  # onto two or more streets, access shall be provided first from the street
+  # with the lowest classification" -- and the same paragraph's "Except for
+  # corner lots" shows the chapter counts a corner lot as one.
+  # 19.165.020(P)(5) repeats it. On four lots 19.30.050(D)(2)(b): a townhouse
+  # project with a corner lot "shall take access from a single driveway
+  # approach on the side of the corner lot".
+  corner_access_street:
+    value: lowest_class
+    cite: FMC 19.162.020(5), Double-Frontage Lots, access first from the street with the lowest classification
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19162.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.162.txt#L51"
+    variants:
+      - value: side
+        when: [unit_lots]
+        cite: FMC 19.30.050(D)(2)(b), a townhouse project that includes a corner lot takes access from a single driveway approach on the side of the corner lot
+        quote: "or/multnomah/fairview/19.30.txt#L673"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # 19.13, Front Yard Orientation: "The front yard orientation on corner lots
+  # is determined by the location of the main building entrance." The entrance
+  # goes where the plan puts it, so this is the owner's choice by another
+  # name: `entrance`.
+  front_lot_line_corner:
+    value: entrance
+    cite: FMC 19.13, Front Yard Orientation, determined on a corner lot by the location of the main building entrance
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1913.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.13.definitions.txt#L259"
   # 19.30.050(D)(1)(c), on unit lots only: front-facade garages, front-yard
   # parking and front driveways are allowed for townhouses only where every
   # lot has 15 feet of local-street frontage, there is at most one approach

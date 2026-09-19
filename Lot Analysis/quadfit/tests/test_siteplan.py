@@ -59,6 +59,8 @@ def _sp_setup(res: float = 0.5):
             "alley_aisle": bool(dw.alley_is_aisle),
             "alley_need": (dw.alley_backout_ft if dw.alley_backout_ft is not None
                            else geom.aisle_one_way_ft),
+            "front_rule": dw.front_lot_line_corner,
+            "access_rule": dw.corner_access_street,
         }},
         "methods": ["townhome_rear_court", "townhome_rear_court_alley",
                     "townhome_rear_court_alley_aisle"],
@@ -95,6 +97,8 @@ def _sp_setup_cities(res: float = 0.5):
             "alley_need": (dw.alley_backout_ft
                            if dw and dw.alley_backout_ft is not None
                            else g.aisle_one_way_ft),
+            "front_rule": dw.front_lot_line_corner if dw else None,
+            "access_rule": dw.corner_access_street if dw else None,
         }
 
     s6s_siteplan._init_worker({
@@ -121,12 +125,41 @@ def _rect_lot(W: float, D: float):
 
 def _run(s6s, env, front_edges, area, bearing=0.0, jurisdiction="gresham",
          zone="", parking_setback_ft=None, front_setback_ft=None,
-         alley_edges=None, alley_setback_ft=0.0, alley_width_ft=None):
+         alley_edges=None, alley_setback_ft=0.0, alley_width_ft=None,
+         bearings=None, street_setback_ft=None):
     return s6s.layout_lot(
-        shapely.to_wkb(env), [bearing], front_edges, area,
+        shapely.to_wkb(env), [bearing] if bearings is None else bearings,
+        front_edges, area,
         FRONT_S if front_setback_ft is None else front_setback_ft,
         jurisdiction, zone, parking_setback_ft, alley_edges, alley_setback_ft,
-        alley_width_ft)
+        alley_width_ft, street_setback_ft)
+
+
+def _corner_lot(W: float, D: float, notch=None):
+    """A rectangular corner lot: the street to the south (W ft of front lot
+    line, bearing 0) and a second street up the EAST side (D ft, bearing 90).
+    Both street edges are inset by FRONT_S, the way s5 cuts every street
+    edge of a corner lot; the west side by SIDE_S and the north by REAR_S.
+    `notch` is a box carved out of the envelope. Bearings come in s4's order,
+    the longer street first, which is the front the drawing took before
+    FOLLOWUPS 5.
+
+    Returns (envelope, front_edges, bearings, gross area)."""
+    lot = box(0.0, 0.0, W, D)
+    env = box(SIDE_S, FRONT_S, W - FRONT_S, D - REAR_S)
+    if notch is not None:
+        env = env.difference(notch)
+    fe = [[0.0, 0.0, W, 0.0], [W, 0.0, W, D]]
+    bearings = [90.0, 0.0] if D > W else [0.0, 90.0]
+    return env, fe, bearings, lot.area
+
+
+def _with_words(s6s, jurisdiction, front_rule, access_rule):
+    """The same worker with one city's two corner-lot words replaced, for a
+    test about the words rather than the city."""
+    s6s._CFG["cells"][jurisdiction]["front_rule"] = front_rule
+    s6s._CFG["cells"][jurisdiction]["access_rule"] = access_rule
+    return s6s
 
 
 def _alley_lot(W: float, D: float, where: str = "rear"):
@@ -177,8 +210,8 @@ def test_footprints_yaml_has_siteplan_block():
     assert sp.pilot_zone == "LDR-5"
     assert sp.scope == "every_city_it_can_dimension"
     assert sp.plat == "one_lot"
-    assert sp.layout_methods == ["townhome_rear_court", "townhome_rear_court_alley",
-                                 "townhome_rear_court_alley_aisle"]
+    assert sp.layout_methods == ["townhome_rear_court", "townhome_rear_court_side_street",
+                                 "townhome_rear_court_alley", "townhome_rear_court_alley_aisle"]
     assert (sp.min_stalls(), sp.target_stalls(), sp.preferred_stalls()) == (4, 6, 8)
     assert sp.tier_for(3) == "fail"
     assert sp.tier_for(4) == "minimum"
@@ -1358,3 +1391,190 @@ def test_the_alley_as_the_aisle_needs_the_court_on_the_alley():
     env, fe, ae, area = _alley_lot(100.0, 70.0, "rear")     # 15 ft behind the pod
     r = _run_pdx(s6s, env, fe, ae, area)
     assert r["layout_fail"] == "court_too_shallow"
+
+
+# ---------------------------------------------------------------------------
+# which street is the front, and where the lane comes from (FOLLOWUPS 5)
+# ---------------------------------------------------------------------------
+
+
+def test_candidate_fronts_follow_the_citys_definition():
+    """The streets a corner lot may face: the shorter one where the code
+    fixes the front there, either where it leaves the choice, the longer
+    (s4's first) where nobody has read the rule; a lot on one street is one
+    entry whatever the word; a curved corner segment near neither bearing
+    belongs to no street."""
+    s6s = _sp_setup()
+    fe = [[0.0, 0.0, 60.0, 0.0], [60.0, 0.0, 60.0, 150.0]]
+    short = fe[0]
+    long_ = fe[1]
+    got = s6s._candidate_fronts([90.0, 0.0], fe, "shortest")
+    assert [(b, f, se) for b, f, se in got] == [(0.0, [short], [long_])]
+    for word in ("owner", "entrance", "both"):
+        got = s6s._candidate_fronts([90.0, 0.0], fe, word)
+        assert [b for b, _, _ in got] == [90.0, 0.0], word
+        assert got[0][1] == [long_] and got[0][2] == [short], word
+        assert got[1][1] == [short] and got[1][2] == [long_], word
+    got = s6s._candidate_fronts([90.0, 0.0], fe, None)
+    assert [(b, f, se) for b, f, se in got] == [(90.0, [long_], [short])]
+    # equal streets under `shortest`: the applicant chooses, both are tried
+    sq = [[0.0, 0.0, 80.0, 0.0], [80.0, 0.0, 80.0, 80.0]]
+    assert [b for b, _, _ in s6s._candidate_fronts([0.0, 90.0], sq, "shortest")] == [0.0, 90.0]
+    # one street: one entry with every edge, whatever the word
+    one = [[0.0, 0.0, 60.0, 0.0]]
+    assert s6s._candidate_fronts([0.0], one, "shortest") == [(0.0, one, [])]
+    assert s6s._candidate_fronts([0.0], one, "owner") == [(0.0, one, [])]
+    # a curve at the corner, 45 degrees from both streets, is nobody's
+    curve = [55.0, 0.0, 60.0, 5.0]
+    got = s6s._candidate_fronts([90.0, 0.0], [fe[0], curve, fe[1]], "owner")
+    for _, f, se in got:
+        assert curve not in f and curve not in se
+
+
+def test_a_shortest_city_faces_the_shorter_street_where_it_used_to_face_the_longer():
+    """Portland 33.910: the front lot line is the shorter street lot line.
+    A 60 x 150 corner lot came to the drawing with the 150 ft street first
+    (s4 orders bearings by length) and was laid out facing it; the rule
+    turns the pod to the 60 ft street, and only that one is tried."""
+    s6s = _sp_setup_cities()
+    env, fe, bearings, area = _corner_lot(60.0, 150.0)
+    r = _run(s6s, env, fe, area, bearings=bearings, jurisdiction="portland",
+             zone="R5", parking_setback_ft=10.0)
+    assert r["fronts_tried"] == 1
+    assert r["front_bearing_deg"] == 0.0
+    assert r["site_plan_ok"] is True
+    b = r["geoms"]["building"].bounds
+    assert b[1] == pytest.approx(FRONT_S, abs=0.6)     # against the south front
+    # the same lot with the rule unread faces the longer street, as before --
+    # and is refused there: the lot is 45 ft deep from that street
+    r0 = _run(_with_words(s6s, "portland", None, None), env, fe, area,
+              bearings=bearings, jurisdiction="portland", zone="R5",
+              parking_setback_ft=10.0)
+    assert r0["fronts_tried"] == 1
+    assert r0["site_plan_ok"] is False
+    assert r0["layout_fail"] == "court_too_shallow"
+
+
+def test_where_the_owner_picks_the_front_the_court_least_on_a_street_wins():
+    """Gresham 3.0100: the owner designates the front. A 110 x 100 corner
+    lot parks eight stalls facing either street; facing the 110 ft street
+    the court's east side stands on the side street for its 45 ft of depth,
+    facing the 100 ft street the court's south side runs 54 ft along the
+    other -- so the plan faces south (Steph's third test, HUMAN_TODO 21),
+    the lane comes in from the side street across its setback strip
+    (Gresham lets either street serve; the strip is the whole driveway,
+    nothing else is paved), and the answer is the same when the lot is
+    turned 30 degrees."""
+    s6s = _sp_setup()
+    env, fe, bearings, area = _corner_lot(110.0, 100.0)
+    assert bearings == [0.0, 90.0]
+    r = _run(s6s, env, fe, area, bearings=bearings)
+    assert r["fronts_tried"] == 2
+    assert r["site_plan_ok"] is True and r["stalls_provided"] == 8
+    assert r["front_bearing_deg"] == 0.0
+    assert 44.0 <= r["court_street_ft"] <= 50.0          # its depth, plus the corner
+    assert r["layout_method"] == "townhome_rear_court_side_street"
+    assert "driveway" not in r["geoms"]
+    assert r["driveway_len_ft"] == pytest.approx(FRONT_S, abs=0.01)
+    court = r["geoms"]["parking_court"].bounds
+    assert court[2] >= (110.0 - FRONT_S) - 0.6          # stands on the east strip
+    # the other way round, the longer street first, the same plan
+    r2 = _run(s6s, env, fe, area, bearings=[90.0, 0.0])
+    assert (r2["front_bearing_deg"], r2["layout_method"], r2["stalls_provided"]) == \
+        (0.0, "townhome_rear_court_side_street", 8)
+    theta = 30.0
+    env_r = affinity.rotate(env, theta, origin=(0.0, 0.0))
+    fe_r = []
+    for x1, y1, x2, y2 in fe:
+        p1 = affinity.rotate(shapely.geometry.Point(x1, y1), theta, origin=(0.0, 0.0))
+        p2 = affinity.rotate(shapely.geometry.Point(x2, y2), theta, origin=(0.0, 0.0))
+        fe_r.append([p1.x, p1.y, p2.x, p2.y])
+    r_rot = _run(s6s, env_r, fe_r, area, bearings=[b + theta for b in bearings])
+    assert r_rot["front_bearing_deg"] == pytest.approx(theta)
+    assert (r_rot["layout_method"], r_rot["stalls_provided"], r_rot["site_plan_ok"]) == \
+        (r["layout_method"], r["stalls_provided"], r["site_plan_ok"])
+    assert r_rot["court_street_ft"] == pytest.approx(r["court_street_ft"], abs=4.0)
+
+
+def test_a_corner_lot_that_parks_only_facing_the_other_street_faces_it():
+    """A 60 x 150 lot in a city that leaves the front to the owner. Facing
+    the 150 ft street (s4's first) the court behind the pod is 15 ft deep
+    and parks nothing; facing the 60 ft street the narrow pod stands across
+    it, the court behind is 64 ft deep and seats two rows, and the side
+    street reaches it. The lot parks, facing the street it was refused on
+    before."""
+    s6s = _sp_setup()
+    env, fe, bearings, area = _corner_lot(60.0, 150.0)
+    assert bearings == [90.0, 0.0]
+    r = _run(s6s, env, fe, area, bearings=bearings)
+    assert r["fronts_tried"] == 2
+    assert r["site_plan_ok"] is True
+    assert r["front_bearing_deg"] == 0.0
+    assert r["layout_method"] == "townhome_rear_court_side_street"
+    assert 4 <= r["stalls_provided"] <= 8
+    # the rule unread: the longer street is the front and the lot is refused
+    r0 = _run(_with_words(s6s, "gresham", None, None), env, fe, area, bearings=bearings)
+    assert r0["site_plan_ok"] is False
+    assert r0["layout_fail"] == "court_too_shallow"
+    assert r0["fronts_tried"] == 1
+
+
+def test_the_lane_comes_from_the_street_the_city_names():
+    """`corner_access_street` decides where the lane may come from on a
+    corner lot: `any` lets the side street serve (and it wins, paving
+    nothing but the strip); `side` takes the front street's lane away;
+    unread keeps the lane from the front street as before. On a lot with
+    ONE street the word changes nothing -- there is no side street to
+    send the lane to."""
+    s6s = _sp_setup()
+    env, fe, bearings, area = _corner_lot(110.0, 100.0)
+    for word, method in (("any", "townhome_rear_court_side_street"),
+                         ("lowest_class", "townhome_rear_court_side_street"),
+                         ("side", "townhome_rear_court_side_street"),
+                         (None, "townhome_rear_court")):
+        r = _run(_with_words(s6s, "gresham", "owner", word), env, fe, area, bearings=bearings)
+        assert r["site_plan_ok"] is True, word
+        assert r["layout_method"] == method, word
+    r = _run(_with_words(s6s, "gresham", "owner", None), env, fe, area, bearings=bearings)
+    d = r["geoms"]["driveway"].bounds
+    assert d[1] <= FRONT_S + 1.0                          # from the south street
+    assert r["driveway_len_ft"] > FRONT_S
+    # one street, the word `side`: the front lane is the only lane, and stays
+    env1, fe1, area1, _ = _rect_lot(100.0, 150.0)
+    r1 = _run(_with_words(s6s, "gresham", "owner", "side"), env1, fe1, area1)
+    assert r1["site_plan_ok"] is True
+    assert r1["layout_method"] == "townhome_rear_court"
+    assert r1["fronts_tried"] == 1
+    _with_words(s6s, "gresham", "owner", "any")
+
+
+def test_more_parking_is_not_a_goal_the_plan_that_paves_least_wins_a_tie():
+    """Steph, 2026-09-19: "optimize for sufficient, but minimal parking".
+    On a 105 x 140 lot both pods seat the preferred eight; the 25 ft deep
+    pod puts the court eleven feet nearer the street, so its lane is eleven
+    feet shorter, and it is the plan kept. Before the ruling the first
+    plan with the most stalls was kept -- the 36 ft pod, first in the list."""
+    s6s = _sp_setup()
+    env, fe, area, _ = _rect_lot(105.0, 140.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is True and r["stalls_provided"] == 8
+    assert r["building_name"] == "pod80x25"
+    assert r["driveway_len_ft"] == pytest.approx(25.0 + 5.0 + FRONT_S, abs=0.6)
+    assert r["court_street_ft"] == 0.0                    # behind the building
+
+
+def test_the_plan_kept_is_chosen_by_the_ruling_in_its_order():
+    """Steph's ruling of 2026-09-19 (HUMAN_TODO 21) as the sort key every
+    plan is ranked on: green first; then the higher stall band; then the
+    court least on a street; then the court's own aisle over the alley's
+    width; then the least pavement. Never the most stalls."""
+    s6s = _sp_setup()
+    rank = s6s._plan_rank
+    own, alley = "townhome_rear_court", "townhome_rear_court_alley_aisle"
+    assert rank(True, 1, 60.0, own, 5000.0) > rank(False, 3, 0.0, own, 1000.0)   # green
+    assert rank(True, 3, 75.0, own, 5000.0) > rank(True, 1, 0.0, own, 1000.0)    # band
+    assert rank(True, 3, 40.0, own, 5000.0) > rank(True, 3, 45.0, own, 1000.0)   # exposure
+    assert rank(True, 3, 40.0, own, 5000.0) > rank(True, 3, 40.0, alley, 1000.0)  # own aisle
+    assert rank(True, 3, 40.0, own, 3000.0) > rank(True, 3, 40.0, own, 3500.0)   # pavement
+    # a foot of exposure is noise, not a preference
+    assert rank(True, 3, 40.4, own, 3000.0) == rank(True, 3, 39.6, own, 3000.0)

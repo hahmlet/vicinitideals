@@ -826,6 +826,57 @@ defaults:
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     retrieved: '2026-08-27'
     quote: "or/clackamas/west-linn/48.access.txt#L55"
+  # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
+  # townhouse-branch sentence "No off-street parking shall be allowed in the
+  # front yard or side yard of a townhouse", held apart from
+  # `parking_front_prohibited` because the two bans reach different ground: a
+  # front ban leaves a court beside the building on a wide lot, a side ban
+  # does not. Read by no screen yet -- the site plan draws one arrangement,
+  # the rear court, and this is what will let it try a side court where the
+  # code allows one (FOLLOWUPS 5).
+  #
+  # West Linn states none. Chapter 46 dimensions the space and the aisle
+  # (46.150) and 48 routes the driveway; neither names a yard parking may not
+  # sit in (whole-document grep of the West Linn folder for parking against
+  # front, side or rear yard, 2026-09-19: nothing). Exempt, citing the section
+  # that dimensions the space and is silent on where it goes.
+  parking_side_prohibited:
+    exempt: true
+    cite: West Linn CDC 46.150(A)(1), which dimensions the parking space and states no yard it may not occupy
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/46.parking.txt#L231,L376-L378,L383"
+  # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
+  # `corner_access_street` is read only on such a lot: `side` sends the curb
+  # cut to the street the building does not face, `lowest_class` to the street
+  # with the lowest functional classification (which nothing measures yet, so
+  # a drawing treats it as `any` and says so), `any` names none.
+  #
+  # 48.025(B)(5), Double-frontage lots: "When a lot or parcel has frontage
+  # onto two or more streets, access shall be provided first from the street
+  # with the lowest classification."
+  corner_access_street:
+    value: lowest_class
+    cite: West Linn CDC 48.025(B)(5), access first from the street with the lowest classification
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/48.access.txt#L61"
+  # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
+  # lets the site plan know whether it may try each street as the front: only
+  # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
+  # to the plan, and Steph's ruling of 2026-09-19 (HUMAN_TODO 21: green, then
+  # the preferred stall band, then the court least exposed to a street) says
+  # how to choose.
+  #
+  # Chapter 2, Lot line, front, (2): "For a corner lot, the shortest lot line
+  # along a street (other than an alley)"; the owner chooses only when two are
+  # of equal length. Fixed by the plat.
+  front_lot_line_corner:
+    value: shortest
+    cite: West Linn CDC Chapter 2, Lot line, front, the shortest street lot line on a corner lot
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/02.definitions.txt#L628"
   #
   # NOT ENCODED: curb cut spacing, 48.060(C) and (D). Eleven numbers between
   # them and every one is selected by a street classification -- 150 feet from

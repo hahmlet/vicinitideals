@@ -1287,7 +1287,8 @@ def main() -> None:
                         f"| {sp.stall_cap_for(c)} | {int(m.sum()):,} "
                         f"| {ok_c:,} ({_pct(ok_c, int(m.sum()))}) |")
             methods = [(meth, int((pil["layout_method"] == meth).to_numpy().sum()))
-                       for meth in ("townhome_rear_court", "townhome_rear_court_alley",
+                       for meth in ("townhome_rear_court", "townhome_rear_court_side_street",
+                                    "townhome_rear_court_alley",
                                     "townhome_rear_court_alley_aisle")]
             method_str = ", ".join(f"{meth} {n:,}" for meth, n in methods if n)
             ok_os = int(pil["open_space_ok"].to_numpy().sum())

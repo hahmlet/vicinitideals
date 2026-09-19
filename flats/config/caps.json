@@ -408,6 +408,9 @@
   },
   "or/clackamas/oregon-city": {
     "(defaults)": {
+      "front_lot_line_corner": [
+        "utility_easement"
+      ],
       "parking_area_max_frontage_pct": [
         "protected_water_feature"
       ],
@@ -418,6 +421,9 @@
         "protected_water_feature"
       ],
       "parking_maneuvering_max_width_ft": [
+        "protected_water_feature"
+      ],
+      "parking_side_prohibited": [
         "protected_water_feature"
       ]
     },

@@ -277,4 +277,5 @@ def test_four_refusals_against_ten_values(tualatin: Layer) -> None:
     """
     mine = [r for r in refusals() if r.kind == "comments" and r.where == TUALATIN]
     assert len(mine) == 4
-    assert len(tualatin.defaults) == 10
+    # 10 -> 13 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
+    assert len(tualatin.defaults) == 13
