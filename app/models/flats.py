@@ -241,7 +241,10 @@ class FlatsRun(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    #: running | complete | failed
+    #: running | complete | failed | candidate | retired. A snapshot-fed run
+    #: loads as ``candidate`` and becomes ``complete`` when its copy is promoted
+    #: (``app/services/flats_refresh.py``); pruning a retired copy's lot rows
+    #: retires its runs.
     status: Mapped[str] = mapped_column(String(20), nullable=False, default="running")
 
     #: The county copy the run read its lots from. Its lot rows are the ones
@@ -580,6 +583,15 @@ class FlatsReviewDecision(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     superseded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    #: Set by promotion (0134) when the copy promoted shows this decision's
+    #: lot split, merged, renumbered, deleted or vacated, or its zone changed:
+    #: the decision stands, but it was made about different ground. Cleared
+    #: by a person superseding or re-affirming it.
+    needs_rereview_snapshot_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="SET NULL")
+    )
+    needs_rereview_reason: Mapped[str | None] = mapped_column(Text)
 
 
 class FlatsRuleSignature(Base):

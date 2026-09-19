@@ -1924,9 +1924,10 @@ and approved; in plain terms, **how updates work**:
 - **A new zone code** the rules have never seen is never green or red; the
   lot reads UNKNOWN and the code goes on the encoding list.
 
-The runbook will live at `docs/ops/flats-county-refresh.md` once built.
+The runbook is `docs/ops/flats-county-refresh.md`.
 
-*Built so far (2026-09-19, phases 1 and 2 of 4).* The red bar and the grey
+*Built so far (2026-09-19, phases 1, 2 and 4 of 4; phase 3's first real
+re-screen is running on the analysis box and lands later today).* The red bar and the grey
 footer are live on the Lots pages; the monthly check is scheduled (the 3rd
 of each month) and can be run by hand; the copy in use has a name in the
 database (the July download the current run was read from), and the
@@ -1957,9 +1958,27 @@ will flag each one for a fresh look. Metro's own quarterly change list was
 read against ours: it agrees on 97-100 % of what it calls added and
 deleted, which is the check that the comparison is reading the map
 correctly (under 80 % would be the warning). The counts above are now the
-"normal" ranges the runbook will quote. The re-screen from the new copy and
-the promote button are the remaining two phases; nothing needs you until the
-first full report is ready.
+"normal" ranges the runbook quotes.
+
+The promote step is built and live: a new page, **County copy** (beside
+Lots in the menu), lists every dated copy, which one is in use, and for a
+waiting copy the gate -- nine rows, each ok or not: every layer downloaded
+whole, counts in range, no zone code the rules do not hold, lot count near
+the copy in use, no city mostly rezoned, Metro's list agrees, the comparison
+was run, the verdict check was run, every verdict move explained. Under it:
+what moved on the ground, the new zone codes by layer, and the verdicts
+that moved with the unexplained ones linked so you can open each on both
+copies. A clean gate shows one button, **Promote**; a warned gate shows
+**Promote over the warning** with a box for your reason, which is kept on
+the copy with your name. A promoted copy shows **Roll back**, which puts
+the previous one back the same way. Promotion also marks every review
+decision made about ground the new copy shows split, merged, renumbered,
+gone or rezoned as "look again" (the mark is stored; showing it on the lot
+page is queued). The full steps, timings, normal ranges, warnings and
+failure modes are in the runbook. The first candidate (the September copy)
+will trip "new zone codes" by design -- the July copy never counted them
+-- so it waits for you; I will tell you when its report is ready and what
+the numbers say.
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 

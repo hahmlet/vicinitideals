@@ -59,10 +59,13 @@ from app.models.flats import (
     FlatsLot,
     FlatsLotResult,
     FlatsReadingRuling,
+    FlatsReviewDecision,
     FlatsRuleSignature,
     FlatsRun,
+    FlatsSnapshot,
     FlatsWordRuling,
 )
+from app.services import flats_refresh as refresh_service
 from app.services.flats_refresh import refresh_notices
 from flats.encode import legible
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
@@ -3004,6 +3007,156 @@ def _lots_ctx(
         "verdict_words": _VERDICT_WORDS,
         "badges": _BADGE,
     }
+
+# --- the county copy: every snapshot, the gate, promote / roll back ---------------
+
+#: Badge per snapshot status on the refresh page.
+_SNAPSHOT_BADGE = {"current": "badge-green", "candidate": "badge-yellow", "retired": "badge-gray", "failed": "badge-red"}
+
+
+async def _refresh_ctx(session: DBSession) -> dict[str, Any]:
+    """One card per county copy, newest first, with what the page needs to say
+    about it: its runs, the gate (candidates only), the delta and drift
+    summaries, and how many review decisions its promotion put in doubt."""
+    snapshots = list(
+        (
+            await session.execute(
+                select(FlatsSnapshot).order_by(FlatsSnapshot.snapshot_date.desc(), FlatsSnapshot.id.desc())
+            )
+        ).scalars()
+    )
+    runs = list((await session.execute(select(FlatsRun).order_by(FlatsRun.id.desc()))).scalars())
+    flagged = dict(
+        (
+            await session.execute(
+                select(FlatsReviewDecision.needs_rereview_snapshot_id, func.count())
+                .where(FlatsReviewDecision.needs_rereview_snapshot_id.is_not(None))
+                .group_by(FlatsReviewDecision.needs_rereview_snapshot_id)
+            )
+        ).all()
+    )
+    cards = []
+    for snap in snapshots:
+        counts = snap.counts or {}
+        report = snap.report or {}
+        own = [r for r in runs if r.snapshot_id == snap.id]
+        cards.append(
+            {
+                "id": snap.id,
+                "snapshot_date": snap.snapshot_date.isoformat(),
+                "status": snap.status,
+                "badge": _SNAPSHOT_BADGE.get(snap.status, "badge-gray"),
+                "host": snap.host,
+                "rlis_release": snap.rlis_release,
+                "features": counts.get("features") or 0,
+                "datasets": len(counts.get("datasets") or {}),
+                "lots": counts.get("lots") or 0,
+                "measured": counts.get("measured") or 0,
+                "promoted_at": snap.promoted_at.strftime("%Y-%m-%d %H:%M") if snap.promoted_at else None,
+                "promoted_by": snap.promoted_by,
+                "runs": [
+                    {"id": r.id, "status": r.status, "rules_version": r.rules_version, "code_version": r.code_version}
+                    for r in own
+                ],
+                "notes": snap.notes or "",
+                "flagged": flagged.get(snap.id, 0),
+                "gate": refresh_service.gate(snap) if snap.status == "candidate" else [],
+                "blocks": refresh_service.blocks(snap) if snap.status == "candidate" else [],
+                "delta": report.get("delta") or None,
+                "new_zones": counts.get("new_zones") or None,
+                "drift": report.get("drift") or None,
+                "loaded": any(r.status == "candidate" for r in own),
+            }
+        )
+    return {"snapshots": cards}
+
+
+async def _refresh_page(
+    request: Request,
+    session: DBSession,
+    *,
+    error: str | None = None,
+    done: str | None = None,
+    override: str = "",
+    override_for: int | None = None,
+    reason: str = "",
+    status_code: int = 200,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    ctx = {
+        **_base_ctx(user, dedup_count, "flats_refresh", conflicts_count=conflicts_count),
+        **(await _refresh_ctx(session)),
+        "refresh": await _refresh(session),
+        "error": error,
+        "done": done,
+        "override": override,
+        "override_for": override_for,
+        "reason": reason,
+    }
+    return templates.TemplateResponse(request, "flats_refresh.html", ctx, status_code=status_code)
+
+
+def _who(user: Any) -> str:
+    """Who is promoting, as the row records it. A name over an address: the
+    page says "promoted by Steph", not by an email."""
+    if user is None:
+        return ""
+    return (getattr(user, "name", None) or getattr(user, "email", None) or str(getattr(user, "id", ""))).strip()
+
+
+@router.get("/flats/refresh", response_class=HTMLResponse)
+async def flats_refresh(request: Request, session: DBSession, done: str = Query("")) -> HTMLResponse:
+    return await _refresh_page(request, session, done=done or None)
+
+
+@router.post("/flats/refresh/promote", response_class=HTMLResponse)
+async def flats_refresh_promote(
+    request: Request,
+    session: DBSession,
+    snapshot: int = Form(...),
+    override: str = Form(""),
+) -> HTMLResponse:
+    """Make a candidate copy the copy in use. Steph's rule: the agent promotes
+    a clean gate on the standing word; a warned gate is promoted here, by a
+    person, with a written reason the row keeps."""
+    user = await _get_user(session, request)
+    by = _who(user)
+    try:
+        done = await refresh_service.promote(session, snapshot, by=by, override=override.strip() or None)
+    except refresh_service.PromotionBlocked as exc:
+        await session.rollback()
+        return await _refresh_page(
+            request, session, error=str(exc), override=override, override_for=snapshot, status_code=422
+        )
+    except refresh_service.PromotionError as exc:
+        await session.rollback()
+        return await _refresh_page(request, session, error=str(exc), status_code=422)
+    await session.commit()
+    said = (
+        f"Copy {done.snapshot.snapshot_date.isoformat()} is the copy in use; run {done.run.id} is the Lots pages' default"
+        + (f"; {done.flagged:,} review decisions marked look again" if done.flagged else "")
+        + (f"; promoted over {', '.join(done.blocks)}" if done.blocks else "")
+        + "."
+    )
+    return RedirectResponse(f"/flats/refresh?done={quote(said)}", status_code=303)
+
+
+@router.post("/flats/refresh/rollback", response_class=HTMLResponse)
+async def flats_refresh_rollback(request: Request, session: DBSession, reason: str = Form("")) -> HTMLResponse:
+    """Put the previous copy back in use; the demoted one becomes a candidate again."""
+    user = await _get_user(session, request)
+    try:
+        done = await refresh_service.rollback(session, by=_who(user), reason=reason.strip())
+    except refresh_service.PromotionError as exc:
+        await session.rollback()
+        return await _refresh_page(request, session, error=str(exc), reason=reason, status_code=422)
+    await session.commit()
+    said = (
+        f"Copy {done.restored.snapshot_date.isoformat()} is the copy in use again; "
+        f"copy {done.demoted.snapshot_date.isoformat()} is a candidate."
+    )
+    return RedirectResponse(f"/flats/refresh?done={quote(said)}", status_code=303)
 
 
 @router.get("/flats/lots", response_class=HTMLResponse)

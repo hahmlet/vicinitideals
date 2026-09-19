@@ -204,6 +204,14 @@
     <a href="/flats/lots" class="nav-item {% if active_nav == 'flats_lots' %}active{% endif %}">
       <span class="nav-icon">🗺</span> Lots
     </a>
+    {#
+      The dated copy of the county map the Lots pages read: which one is in
+      use, which is waiting, and the gate a refreshed copy must pass. Nothing
+      here updates on its own.
+    #}
+    <a href="/flats/refresh" class="nav-item {% if active_nav == 'flats_refresh' %}active{% endif %}">
+      <span class="nav-icon">📅</span> County copy
+    </a>
   </nav>
 
   <div class="sidebar-bottom">

@@ -56,16 +56,28 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    2026-09-19 07:23 UTC):* quadfit s1..s7 from the September tree
    (`/root/qf_sep.log`; s4 saw 290,032 lots vs July's 289,845), then the
    bridge (~7 h, `/root/bridge_sep`), then assign -> export -> scp to 114
-   -> `load --snapshot 3` (dry run first) -> VACUUM -> `?run=<id>`. When
-   it lands: HUMAN_TODO 20 "built so far" gets the numbers (the first
-   candidate WILL trip new_zones -- snapshot 1 is synthetic and knew no
-   codes -- so Steph reads it; that is the design). *Still owed:* **phase
-   4** -- migration 0134 (re-review flags on decisions), `app/services/
-   flats_refresh.py` promote / rollback / drift, `scripts/flats_promote.py`,
-   page `/flats/refresh` showing the six checks, the runbook `docs/ops/
-   flats-county-refresh.md`, `docs/ops/data-sources-active.md` RLIS section
-   marked decommissioned. Terrain (DEM tiles) stays `deferred` until the
-   slope stage exists. Two loose ends found by the September map, queued
+   -> `load --snapshot 3` (dry run first; **re-register 3 from the
+   62-dataset manifest first**) -> VACUUM -> `?run=<id>` -> `flats_promote.py
+   drift --from-run 2 --to-run <id>`. When it lands: HUMAN_TODO 20 "built
+   so far" gets the numbers (the first candidate WILL trip new_zones --
+   snapshot 1 is synthetic and knew no codes -- so Steph reads it; that is
+   the design; do not promote). *Phase 4 shipped 2026-09-19:* migration
+   0134 (`review_decisions.needs_rereview_snapshot_id` / `_reason`),
+   `app/services/flats_refresh.py` (`gate` = six loader checks + no_delta /
+   no_drift / verdict_drift; `promote` flips run -> complete, current ->
+   retired, candidate -> current, records `promoted_by` and an override
+   reason in `notes`, marks decisions on split / merge / renumbered /
+   deleted / vacated / rezoned ground; `rollback`; `drift` attributes every
+   verdict move to data / rules / code, else unexplained -> blocks; `prune`
+   keeps current + previous), `scripts/flats_promote.py` (status / drift /
+   promote / rollback / prune), page `/flats/refresh` ("County copy" in the
+   nav: every copy, the nine-row gate, delta, new zone codes, drift with
+   linked unexplained lots, Promote / Promote-over-the-warning / Roll back),
+   the runbook `docs/ops/flats-county-refresh.md`, RLIS section of
+   `data-sources-active.md` marked decommissioned. *Not yet:* the lot page
+   does not show a decision's "look again" mark (no writer for decisions in
+   `app/` yet either); Terrain (DEM tiles) stays `deferred` until the slope
+   stage exists. Two loose ends found by the September map, queued
    not fixed: Happy Valley's layer carries both `MURM2` and `MURm2` (one
    lot; the source's casing, kept as it is), and Oregon City's zoning
    layer says `County` on 14 lots inside its boundary.

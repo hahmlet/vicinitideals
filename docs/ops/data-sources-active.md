@@ -38,7 +38,13 @@ There are two fundamentally different kinds of data sources in this system:
 
 ## Parcel Universe — Seeding
 
-### Metro RLIS Taxlots — Multnomah + Clackamas
+### Metro RLIS Taxlots — Multnomah + Clackamas — **DECOMMISSIONED 2026-09-19**
+> This section describes the old `parcels` pipeline (dropped in migration 0113): `tools/gis_cache/rlis_delta.py`,
+> `rlis_quarterly_refresh_task` and the cron line below no longer exist. FLATS keeps its own dated copy of RLIS
+> and every city layer under `flats/config/pipeline.yaml` (`flats/ingest/acquire.py`), refreshed by hand each
+> quarter with a monthly warn-only probe — the process is [flats-county-refresh.md](flats-county-refresh.md).
+> Kept for the field list and the archive facts.
+
 - **Slug:** `tax_lots_metro_rlis`
 - **Source:** Metro Regional Land Information System (RLIS), Portland, OR
 - **URL:** `https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Taxlots_(Public)/FeatureServer/0`

@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block title %}County copy — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  {% include "partials/flats_refresh_banner.html" %}
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">The county map copy</h2>
+      <p class="muted" style="margin:4px 0 0">
+        Every dated download of the county map the screen has read, which one is in use, and
+        what stands between a refreshed copy and the site showing it. Nothing here updates on
+        its own: a refresh is taken by hand, lands beside the copy in use, and is shown only
+        after someone says <strong>promote</strong>. The rule since 2026-09-19: <em>the agent
+        promotes when the gate is clean; anything with a warning waits for Steph.</em>
+      </p>
+    </div>
+  </div>
+
+  {% if error %}
+    <div class="alert alert-danger" id="refresh-error">{{ error }}</div>
+  {% endif %}
+  {% if done %}
+    <div class="alert alert-muted" id="refresh-done">{{ done }}</div>
+  {% endif %}
+
+  {% if not snapshots %}
+    <div class="alert alert-warning">No county map copy has been registered.</div>
+  {% endif %}
+
+  {% for s in snapshots %}
+  <div class="card" id="snapshot-{{ s.id }}" style="padding:14px;margin-bottom:16px">
+    <div class="toolbar" style="gap:16px;flex-wrap:wrap;align-items:baseline">
+      <h3 style="margin:0">Copy taken {{ s.snapshot_date }}
+        <span class="badge {{ s.badge }}">{{ s.status }}</span>
+      </h3>
+      <span class="muted" style="font-size:12px">
+        snapshot {{ s.id }} · on {{ s.host }} · RLIS {{ s.rlis_release or "?" }}
+        {% if s.features %} · {{ "{:,}".format(s.features) }} features in {{ s.datasets }} layers{% endif %}
+        {% if s.lots %} · {{ "{:,}".format(s.lots) }} lots, {{ "{:,}".format(s.measured or 0) }} measured{% endif %}
+        {% if s.promoted_at %} · promoted {{ s.promoted_at }} by {{ s.promoted_by }}{% endif %}
+      </span>
+    </div>
+    {% if s.runs %}
+      <div class="muted" style="font-size:12px;margin:4px 0 8px">
+        {% for r in s.runs %}
+          run {{ r.id }} ({{ r.status }}{% if r.rules_version %}, rules {{ r.rules_version[:8] }}{% endif %}{% if r.code_version %}, code {{ r.code_version[:8] }}{% endif %})
+          {% if r.status in ("complete", "candidate") %}<a href="/flats/lots?run={{ r.id }}">lots</a>{% endif %}{% if not loop.last %} · {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if s.notes %}<pre class="muted" style="font-size:12px;white-space:pre-wrap;margin:0 0 8px">{{ s.notes }}</pre>{% endif %}
+    {% if s.flagged %}
+      <div class="alert alert-warning" style="font-size:12px" id="flagged-{{ s.id }}">
+        {{ "{:,}".format(s.flagged) }} review decisions were made about ground this copy shows split, merged, renumbered, gone, or rezoned; each is marked "look again".
+      </div>
+    {% endif %}
+
+    {% if s.status == "candidate" %}
+      <h4 style="margin:8px 0 4px">The gate</h4>
+      <table class="data-table" style="font-size:12px" id="gate-{{ s.id }}">
+        <tbody>
+        {% for g in s.gate %}
+          <tr data-code="{{ g.code }}" data-tripped="{{ 'yes' if g.tripped else 'no' }}">
+            <td style="width:24px">{% if g.tripped %}<span class="badge badge-red">!</span>{% else %}<span class="badge badge-green">ok</span>{% endif %}</td>
+            <td class="col-muted" style="width:160px">{{ g.words }}</td>
+            <td>{{ g.detail }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+      {% if s.delta %}
+        <h4 style="margin:12px 0 4px">What moved on the ground</h4>
+        <div style="font-size:12px" id="delta-{{ s.id }}">
+          {{ "{:,}".format(s.delta.lots_before or 0) }} lots before, {{ "{:,}".format(s.delta.lots_after or 0) }} after;
+          {{ "{:,}".format(s.delta.unchanged or 0) }} unchanged, {{ "{:,}".format(s.delta.rows or 0) }} changed
+          {% if s.delta.by_kind %}({% for k, n in s.delta.by_kind.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}){% endif %};
+          {{ "{:,}".format(s.delta.rereview or 0) }} of those put an earlier decision in doubt.
+          {% if s.delta.crosscheck %}
+            Metro's own change list {% if s.delta.crosscheck.agrees %}agrees{% else %}<strong>disagrees</strong>{% endif %}
+            (lowest recall {{ s.delta.crosscheck.min_recall }}).
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if s.new_zones %}
+        <h4 style="margin:12px 0 4px">Zone codes the rules do not hold</h4>
+        <div style="font-size:12px" id="new-zones-{{ s.id }}">
+          {% for layer, codes in s.new_zones.items() %}
+            <div><strong>{{ layer }}</strong>: {% for code, n in codes.items() %}{{ code }} ({{ "{:,}".format(n) }}){% if not loop.last %}, {% endif %}{% endfor %}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if s.drift %}
+        <h4 style="margin:12px 0 4px">Verdicts that moved</h4>
+        <div style="font-size:12px" id="drift-{{ s.id }}">
+          {{ "{:,}".format(s.drift.compared or 0) }} answers compared with run {{ s.drift.from_run }};
+          {{ "{:,}".format(s.drift.moved or 0) }} moved — explained by the ground {{ "{:,}".format(s.drift.by_cause.data or 0) }},
+          by a rules change {{ "{:,}".format(s.drift.by_cause.rules or 0) }}, by a code change {{ "{:,}".format(s.drift.by_cause.code or 0) }},
+          <strong>unexplained {{ "{:,}".format(s.drift.unexplained or 0) }}</strong>.
+          {{ "{:,}".format(s.drift.only_in_new or 0) }} answers only this run holds, {{ "{:,}".format(s.drift.only_in_old or 0) }} only the old one,
+          {{ "{:,}".format(s.drift.unscreened_side or 0) }} with no screen on one side.
+          {% if s.drift.colour_moves %}<div>Colour moves: {% for k, n in s.drift.colour_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+          {% if s.drift.tier_moves %}<div>Verdict moves: {% for k, n in s.drift.tier_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+          {% if s.drift.examples %}
+            <div>Unexplained, first few:
+              {% for e in s.drift.examples %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}?run={{ s.drift.to_run }}">{{ e.tlid }}</a> {{ e.design }} {{ e.colour[0] }}→{{ e.colour[1] }}{% if not loop.last %}; {% endif %}{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <form method="post" action="/flats/refresh/promote" style="margin-top:12px" id="promote-{{ s.id }}">
+        <input type="hidden" name="snapshot" value="{{ s.id }}">
+        {% if not s.loaded %}
+          <div class="muted" style="font-size:12px">Nothing has been loaded from this copy yet; the loader must run first.</div>
+        {% elif s.blocks %}
+          <div class="alert alert-warning" style="font-size:12px">
+            Not clean: {{ s.blocks|join(", ") }}. The agent will not promote this copy. To promote it anyway, say why below — the reason is kept on the copy.
+          </div>
+          <textarea name="override" rows="2" style="width:100%;max-width:640px" placeholder="Why this copy goes live over the warning">{{ override if override_for == s.id else "" }}</textarea>
+          <div style="margin-top:6px"><button type="submit" class="btn btn-secondary">Promote over the warning</button></div>
+        {% else %}
+          <button type="submit" class="btn btn-primary">Promote — make this the copy in use</button>
+        {% endif %}
+      </form>
+    {% endif %}
+
+    {% if s.status == "current" and s.promoted_at %}
+      <form method="post" action="/flats/refresh/rollback" style="margin-top:12px" id="rollback-{{ s.id }}">
+        <input type="text" name="reason" style="width:100%;max-width:480px" placeholder="Why the previous copy should come back" value="{{ reason or '' }}">
+        <div style="margin-top:6px"><button type="submit" class="btn btn-secondary">Roll back to the previous copy</button></div>
+      </form>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <p class="muted" style="font-size:12px">The steps, in order, are in <code>docs/ops/flats-county-refresh.md</code>.</p>
+</div>
+{% endblock %}
