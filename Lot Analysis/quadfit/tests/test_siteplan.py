@@ -1578,3 +1578,26 @@ def test_the_plan_kept_is_chosen_by_the_ruling_in_its_order():
     assert rank(True, 3, 40.0, own, 3000.0) > rank(True, 3, 40.0, own, 3500.0)   # pavement
     # a foot of exposure is noise, not a preference
     assert rank(True, 3, 40.4, own, 3000.0) == rank(True, 3, 39.6, own, 3000.0)
+
+
+def test_the_corner_summary_survives_a_lot_with_no_street_bearing():
+    """The September run crashed on its last line: `front_bearings_json` is
+    "[]" on 8,964 lots s4 found no front for -- an empty list, not an empty
+    string -- and the summary read `[0]` of it. The parquet was already
+    written; only the line was lost. Counted, not crashed."""
+    s6s = _sp_setup()
+    line = s6s._corner_summary(
+        bearings_json=["[90.0, 0.0]", "[]", "[45.0]", "[10.0, 100.0]", ""],
+        jurisdiction=["gresham", "gresham", "portland", "clackamas", "portland"],
+        fronts_tried=[2, 0, 1, 2, 0],
+        front_deg=[0.0, float("nan"), 45.0, 10.0, float("nan")],
+        method=["townhome_rear_court_side_street", "none", "townhome_rear_court",
+                "townhome_rear_court", "none"],
+        cities=["clackamas", "gresham", "portland"])
+    assert line.startswith("s6s: 2 corner lots drawn to each street")
+    assert "1 chose the street s4 did not list first" in line
+    assert "1 plans take the lane in from the side street" in line
+    assert "clackamas 1/0/0, gresham 1/1/1" in line
+    # nothing drawn to two fronts: no line at all
+    assert s6s._corner_summary(["[]"], ["portland"], [0], [float("nan")], ["none"],
+                               ["portland"]) is None

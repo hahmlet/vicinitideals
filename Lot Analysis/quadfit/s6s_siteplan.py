@@ -1348,25 +1348,11 @@ def main() -> None:
                 f"room on the lot"
               + (f" (p50 {np.median(_short[_short > 0]):.0f} ft)"
                  if (_short > 0).any() else ""))
-    # The corner lots: how many were drawn to more than one front, how many
-    # face a street other than s4's first (the longest) bearing, and how many
-    # take the lane in from the side street -- the three numbers FOLLOWUPS 5
-    # moves, said per city so a run can be compared with the one before.
-    two = fronts_tried >= 2
-    if two.any():
-        first = np.array([json.loads(b)[0] if b else float("nan")
-                          for b in lots["front_bearings_json"]], dtype=float)
-        other = two & np.isfinite(front_deg) & (np.abs(front_deg - first) > 1e-6)
-        side = method == "townhome_rear_court_side_street"
-        per = lots["jurisdiction"].to_numpy()
-        print(f"s6s: {int(two.sum()):,} corner lots drawn to each street the city "
-              f"allows as the front; {int(other.sum()):,} chose the street s4 did "
-              f"not list first; {int(side.sum()):,} plans take the lane in from "
-              f"the side street: "
-              + ", ".join(f"{j} {int((two & (per == j)).sum()):,}/"
-                          f"{int((other & (per == j)).sum()):,}/"
-                          f"{int((side & (per == j)).sum()):,}"
-                          for j in cities if (two & (per == j)).any()))
+    line = _corner_summary(lots["front_bearings_json"].to_numpy(),
+                           lots["jurisdiction"].to_numpy(), fronts_tried,
+                           front_deg, method, cities)
+    if line:
+        print(line)
     # Per city, because that is the whole reason this stage stopped being one
     # cell: a city's stall and aisle are what decide its lots, and a total hides
     # which city paid for which number.
@@ -1393,6 +1379,39 @@ def main() -> None:
               + ", ".join(f"{t}={int(((tier == t) & m).sum()):,}"
                           for t in ("preferred", "target", "minimum", "fail")))
     print("s6s done.")
+
+
+def _corner_summary(bearings_json, jurisdiction, fronts_tried, front_deg, method,
+                    cities) -> str | None:
+    """The corner lots, said per city so a run can be compared with the one
+    before: how many were drawn to more than one front, how many face a
+    street other than s4's first (the longest) bearing, and how many take the
+    lane in from the side street -- the three numbers FOLLOWUPS 5 moves.
+    None when no lot was drawn to two fronts.
+
+    `bearings_json` is s4's `front_bearings_json`: "[]" on a lot with no street
+    bearing at all -- an empty LIST, not an empty string, which is why the
+    first bearing is read through `or`."""
+    import numpy as np
+
+    fronts_tried = np.asarray(fronts_tried)
+    two = fronts_tried >= 2
+    if not two.any():
+        return None
+    first = np.array([(json.loads(b) or [float("nan")])[0] if b else float("nan")
+                      for b in bearings_json], dtype=float)
+    front_deg = np.asarray(front_deg, dtype=float)
+    other = two & np.isfinite(front_deg) & (np.abs(front_deg - first) > 1e-6)
+    side = np.asarray(method) == "townhome_rear_court_side_street"
+    per = np.asarray(jurisdiction)
+    return (f"s6s: {int(two.sum()):,} corner lots drawn to each street the city "
+            f"allows as the front; {int(other.sum()):,} chose the street s4 did "
+            f"not list first; {int(side.sum()):,} plans take the lane in from "
+            f"the side street: "
+            + ", ".join(f"{j} {int((two & (per == j)).sum()):,}/"
+                        f"{int((other & (per == j)).sum()):,}/"
+                        f"{int((side & (per == j)).sum()):,}"
+                        for j in cities if (two & (per == j)).any()))
 
 
 def _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
