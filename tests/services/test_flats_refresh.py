@@ -42,6 +42,7 @@ from app.services.flats_refresh import (
     blocks,
     drift,
     drift_markdown,
+    facts_moved,
     gate,
     promote,
     prune,
@@ -313,9 +314,31 @@ def _result(lot: FlatsLot, run: FlatsRun, design: str, tier: str, colour: str, *
     )
 
 
-async def _world(session: AsyncSession, tmp_path, *, same_rules: bool = True) -> dict:
+#: What the July measurement saw, and the same ground re-read from the
+#: September copy: the last digits differ the way a re-projected copy differs.
+FACTS_JULY = {
+    "frontage_ft": 50.0, "lot_width_ft": 50.0, "lot_depth_ft": 100.0, "zone_frac": 1.0,
+    "front_bearings_deg": [90.0], "fronts_cul_de_sac": False,
+    "observed": {"corner_lot": False, "abuts_alley": False, "in_floodplain": False},
+    "sewer": {"in_district": True, "main_dist_ft": 100.0},
+    "source": "quadfit", "quadfit": {"triage": "green", "stalls_provided": 6},
+}
+FACTS_SEPT = {
+    "frontage_ft": 50.02, "lot_width_ft": 50.0, "lot_depth_ft": 100.3, "zone_frac": 0.9999999999999999,
+    "front_bearings_deg": [90.4], "fronts_cul_de_sac": False,
+    "observed": {"corner_lot": False, "abuts_alley": False, "in_floodplain": False},
+    "sewer": {"in_district": True, "main_dist_ft": 100.00000001},
+    "source": "snapshot", "quadfit": {"triage": "yellow", "stalls_provided": 4},
+    "assessor": {"TOTALVAL": 2}, "snapshot_zone": "R5",
+}
+
+
+async def _world(session: AsyncSession, tmp_path, *, same_rules: bool = True, kept: str = "same") -> dict:
     """A copy in use (July, run 2) and a candidate (September, run 4) with the
-    delta between them, one decision on each lot, and a clean gate."""
+    delta between them, one decision on each lot, and a clean gate. The lots
+    the ground explains were re-read within float noise; the KEPT lot's
+    September reading is ``same`` to the digit, ``nudged`` within float
+    noise, or ``corner`` -- the street layer now makes it a corner."""
     pipe = _pipeline(tmp_path)
     july = await register_snapshot(session, _manifest(pipe, "2026-07-28"), host="137", status="current")
     sept = await register_snapshot(session, _manifest(pipe, "2026-09-18"), host="137", status="candidate")
@@ -340,18 +363,24 @@ async def _world(session: AsyncSession, tmp_path, *, same_rules: bool = True) ->
     session.add_all([old, new])
     await session.flush()
 
-    def lot(snap: FlatsSnapshot, tlid: str, zone: str, county: str = "multnomah") -> FlatsLot:
+    def lot(snap: FlatsSnapshot, tlid: str, zone: str, county: str = "multnomah", facts: dict | None = None) -> FlatsLot:
         return FlatsLot(
             tlid=tlid, county=county, jurisdiction=f"or/{county}/x", zone_raw=zone, zone=zone,
-            area_sqft=5000, condo_verdict="land", facts={}, snapshot_id=snap.id,
+            area_sqft=5000, condo_verdict="land", snapshot_id=snap.id,
+            facts=facts if facts is not None else (FACTS_JULY if snap is july else FACTS_SEPT),
         )
 
+    kept_sept = {
+        "same": {**FACTS_JULY, "source": "snapshot"},
+        "nudged": FACTS_SEPT,
+        "corner": {**FACTS_SEPT, "observed": {**FACTS_SEPT["observed"], "corner_lot": True}},
+    }[kept]
     lots = {
         ("july", KEPT): lot(july, KEPT, "R5"),
         ("july", REZONED): lot(july, REZONED, "R5"),
         ("july", SPLIT): lot(july, SPLIT, "R-7", "clackamas"),
         ("july", ONLY_OLD): lot(july, ONLY_OLD, "R5"),
-        ("sept", KEPT): lot(sept, KEPT, "R5"),
+        ("sept", KEPT): lot(sept, KEPT, "R5", facts=kept_sept),
         ("sept", REZONED): lot(sept, REZONED, "R2.5"),
         ("sept", SPLIT): lot(sept, SPLIT, "R-7", "clackamas"),
         ("sept", ONLY_NEW): lot(sept, ONLY_NEW, "R5"),
@@ -444,7 +473,8 @@ async def test_drift_puts_every_move_to_a_cause_and_stores_the_report(session: A
     assert doc["compared"] == 6 and doc["unchanged"] == 3 and doc["moved"] == 3
     # Code changed between the runs (aaaa -> bbbb), so nothing is unexplained yet;
     # the KEPT lot's move is put to the code, not to the ground.
-    assert doc["by_cause"] == {"data": 2, "rules": 0, "code": 1, "unexplained": 0}
+    assert doc["by_cause"] == {"data": 2, "surroundings": 0, "remeasured": 0, "rules": 0, "code": 1, "unexplained": 0}
+    assert doc["surroundings_facts"] == {} and doc["remeasured_facts"] == {}
     assert doc["unexplained"] == 0 and doc["examples"] == []
     assert doc["unscreened_side"] == 0
     assert doc["only_in_new"] == 2 and doc["only_in_old"] == 2
@@ -464,7 +494,7 @@ async def test_a_move_with_no_cause_is_unexplained_and_blocks(session: AsyncSess
     doc = await drift(session, from_run=2, to_run=4)
     await session.commit()
 
-    assert doc["by_cause"] == {"data": 2, "rules": 0, "code": 0, "unexplained": 1}
+    assert doc["by_cause"] == {"data": 2, "surroundings": 0, "remeasured": 0, "rules": 0, "code": 0, "unexplained": 1}
     assert doc["examples"] == [
         {"county": "multnomah", "tlid": KEPT, "design": DESIGNS[1], "tier": ["unknown", "unknown"], "colour": ["yellow", "red"]}
     ]
@@ -481,11 +511,91 @@ async def test_a_rules_change_explains_what_the_ground_does_not(session: AsyncSe
     w["new"].code_version = "aaaa"
     await session.commit()
     doc = await drift(session, from_run=2, to_run=4)
-    assert doc["by_cause"] == {"data": 2, "rules": 1, "code": 0, "unexplained": 0}
+    assert doc["by_cause"] == {"data": 2, "surroundings": 0, "remeasured": 0, "rules": 1, "code": 0, "unexplained": 0}
     with pytest.raises(PromotionError, match="same copy"):
         await drift(session, from_run=2, to_run=2)
     with pytest.raises(PromotionError, match="no run 99"):
         await drift(session, from_run=2, to_run=99)
+
+
+async def test_a_moved_surrounding_explains_a_move_the_ground_does_not(session: AsyncSession, tmp_path) -> None:
+    """The lot itself is unchanged on the county map, but the street layer
+    re-read around it now makes it a corner: the move belongs to the
+    surroundings and does not block, and the report says which fact moved."""
+    w = await _world(session, tmp_path, kept="corner")
+    w["new"].code_version = "aaaa"
+    await session.commit()
+
+    doc = await drift(session, from_run=2, to_run=4)
+    await session.commit()
+
+    assert doc["by_cause"] == {"data": 2, "surroundings": 1, "remeasured": 0, "rules": 0, "code": 0, "unexplained": 0}
+    assert doc["surroundings_facts"] == {"observed.corner_lot": 1}
+    assert doc["examples"] == []
+    md = drift_markdown(doc)
+    assert "by the surroundings 1" in md and "## What moved around the lots" in md and "observed.corner_lot: 1" in md
+    session.expunge_all()
+    sept = await session.get(FlatsSnapshot, w["sept"].id)
+    assert blocks(sept) == []
+
+
+async def test_a_re_measurement_within_tolerance_that_flipped_the_answer_is_named_not_blocked(
+    session: AsyncSession, tmp_path
+) -> None:
+    """Nothing around the KEPT lot moved beyond float noise, but its answer
+    sat on a line and flipped: the verdict is unstable there, which is worth
+    a line in the report and is not a bug in the screen."""
+    w = await _world(session, tmp_path, kept="nudged")
+    w["new"].code_version = "aaaa"
+    await session.commit()
+
+    doc = await drift(session, from_run=2, to_run=4)
+    await session.commit()
+
+    assert doc["by_cause"] == {"data": 2, "surroundings": 0, "remeasured": 1, "rules": 0, "code": 0, "unexplained": 0}
+    assert doc["surroundings_facts"] == {}
+    assert doc["remeasured_facts"] == {"front_bearings_deg": 1, "frontage_ft": 1, "lot_depth_ft": 1, "sewer.main_dist_ft": 1, "zone_frac": 1}
+    md = drift_markdown(doc)
+    assert "by a re-measurement 1" in md and "re-measured within tolerance" in md and "zone_frac: 1" in md
+    session.expunge_all()
+    sept = await session.get(FlatsSnapshot, w["sept"].id)
+    assert blocks(sept) == []
+
+
+async def test_two_readings_of_the_same_ground_differ_only_beyond_float_noise() -> None:
+    # The fixture's two readings are the same measurement, to a hair.
+    assert facts_moved(FACTS_JULY, FACTS_SEPT) == []
+    assert facts_moved(FACTS_JULY, FACTS_SEPT, tolerant=False) == [
+        "front_bearings_deg",
+        "frontage_ft",
+        "lot_depth_ft",
+        "sewer.main_dist_ft",
+        "zone_frac",
+    ]
+    # A flag, a line, a nested flag: each is a fact that moved, named by its path.
+    assert facts_moved({"observed": {"corner_lot": False}}, {"observed": {"corner_lot": True}}) == ["observed.corner_lot"]
+    assert facts_moved(
+        {"fronts_cul_de_sac": False, "sewer": {"in_district": True}}, {"fronts_cul_de_sac": True, "sewer": {"in_district": False}}
+    ) == ["fronts_cul_de_sac", "sewer.in_district"]
+    # Within a twentieth of a foot or two per cent is the same number; beyond either is not.
+    assert facts_moved({"lot_width_ft": 100.0}, {"lot_width_ft": 101.9}) == []
+    assert facts_moved({"lot_width_ft": 100.0}, {"lot_width_ft": 102.5}) == ["lot_width_ft"]
+    assert facts_moved({"slope": {"pct": 0.01}}, {"slope": {"pct": 0.05}}) == []
+    assert facts_moved({"slope": {"pct": 0.01}}, {"slope": {"pct": 0.10}}) == ["slope.pct"]
+    # A street gained or lost is a move; a bearing nudged is not.
+    assert facts_moved({"front_bearings_deg": [90.0]}, {"front_bearings_deg": [90.0, 180.0]}) == ["front_bearings_deg"]
+    assert facts_moved({"front_bearings_deg": [90.0]}, {"front_bearings_deg": [91.0]}) == []
+    # A fact that appears or disappears moved; a missing reading is empty.
+    assert facts_moved({}, {"observed": {"corner_lot": True}}) == ["observed.corner_lot"]
+    assert facts_moved(None, None) == []
+    # What the screen concluded, the roll, and the register's bookkeeping are not surroundings.
+    assert facts_moved(
+        {"quadfit": {"triage": "green"}, "source": "quadfit"},
+        {
+            "quadfit": {"triage": "red"}, "source": "snapshot", "assessor": {"TOTALVAL": 9},
+            "condo": {"verdict": "unit"}, "snapshot_zone": "R5", "quadfit_jurisdiction": "x",
+        },
+    ) == []
 
 
 # --- promote / rollback / prune --------------------------------------------------

@@ -101,12 +101,15 @@
         <div style="font-size:12px" id="drift-{{ s.id }}">
           {{ "{:,}".format(s.drift.compared or 0) }} answers compared with run {{ s.drift.from_run }};
           {{ "{:,}".format(s.drift.moved or 0) }} moved — explained by the ground {{ "{:,}".format(s.drift.by_cause.data or 0) }},
+          by the map around the lot {{ "{:,}".format(s.drift.by_cause.surroundings or 0) }},
+          by a re-measurement within a hair on a lot whose answer sat on a line {{ "{:,}".format(s.drift.by_cause.remeasured or 0) }},
           by a rules change {{ "{:,}".format(s.drift.by_cause.rules or 0) }}, by a code change {{ "{:,}".format(s.drift.by_cause.code or 0) }},
           <strong>unexplained {{ "{:,}".format(s.drift.unexplained or 0) }}</strong>.
           {{ "{:,}".format(s.drift.only_in_new or 0) }} answers only this run holds, {{ "{:,}".format(s.drift.only_in_old or 0) }} only the old one,
           {{ "{:,}".format(s.drift.unscreened_side or 0) }} with no screen on one side.
           {% if s.drift.colour_moves %}<div>Colour moves: {% for k, n in s.drift.colour_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
           {% if s.drift.tier_moves %}<div>Verdict moves: {% for k, n in s.drift.tier_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+          {% if s.drift.surroundings_facts %}<div id="drift-surroundings-{{ s.id }}">What moved around them: {% for k, n in s.drift.surroundings_facts.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
           {% if s.drift.examples %}
             <div>Unexplained, first few:
               {% for e in s.drift.examples %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}?run={{ s.drift.to_run }}">{{ e.tlid }}</a> {{ e.design }} {{ e.colour[0] }}→{{ e.colour[1] }}{% if not loop.last %}; {% endif %}{% endfor %}

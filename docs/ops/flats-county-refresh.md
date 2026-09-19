@@ -105,9 +105,16 @@ The candidate's card on `/flats/refresh`. Four questions, top to bottom:
    item. The first candidate trips this row by design: July's copy never
    counted them.
 4. **Did any verdict move for no reason?** — "Verdicts that moved". Every
-   move is put to the ground (a lot-change row or a zone change), a rules
-   change, or a code change; **unexplained** must be 0. Each unexplained lot
-   is linked so it can be opened on both runs.
+   move is put to one cause, tried in this order: the ground (a lot-change
+   row or a zone change), the surroundings (a measured fact that differs
+   between the two readings beyond float noise -- the streets it fronts, an
+   alley, a flood or sewer line, a zoning line; the layers the taxlot delta
+   never sees, listed under "What moved around them"), a re-measurement (a
+   fact differs only within tolerance -- 0.05 or 2 % -- yet the answer sat
+   on a line and flipped: an unstable verdict, not a wrong one), a rules
+   change, or a code change; **unexplained** must be 0. Each unexplained lot is linked so
+   it can be opened on both runs. Normal range from the first real report
+   (July -> September, 579,400 answers): 178 moves, none unexplained.
 
 Then: promote, or say what to fix.
 
@@ -179,6 +186,7 @@ rows were pruned — prune only after the next quarter has settled.
 | The wrong copy was promoted | Roll back (§6). |
 | No new RLIS release yet | Not a failure: the ArcGIS layers still refresh; RLIS keys report `present`; the footer names the release. |
 | Rules changed between the two runs | The drift report attributes moves to `rules`; take the refresh on the rules commit that is live so this is normally 0. |
+| Many moves under `code` | `code` is what is left when neither the ground nor a measured fact moved and the repo HEAD differs -- it says a commit landed between the runs, not which. Read `git log <from code_version>..<to code_version> -- flats/score flats/geom flats/ingest/quadfit.py "Lot Analysis/quadfit"`; if nothing there changed, the moves are a bug and belong under `unexplained` by hand. |
 
 ## 9. Drift audit
 

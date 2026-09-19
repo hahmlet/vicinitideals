@@ -141,6 +141,10 @@ async def test_a_clean_gate_promotes_with_no_reason_asked(client: AsyncClient, s
     assert gate.count('data-tripped="yes"') == 0
     assert f'id="drift-{w["sept"].id}"' in card
     assert "6 answers compared with run 2" in card and "unexplained 0" in card
+    # The causes are named in the order they are tried.
+    assert "by the ground 2" in card and "by the map around the lot 0" in card and "sat on a line 0" in card
+    assert "by a code change 1" in card
+    assert f'id="drift-surroundings-{w["sept"].id}"' not in card
     assert "Promote — make this the copy in use" in card
     assert 'name="override"' not in card
 

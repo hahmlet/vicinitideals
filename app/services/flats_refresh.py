@@ -428,7 +428,9 @@ def gate(snapshot: FlatsSnapshot) -> list[dict[str, Any]]:
     if drift_report:
         detail = (
             f"{drift_report.get('moved', 0):,} of {drift_report.get('compared', 0):,} verdicts moved "
-            f"(ground {drift_report.get('by_cause', {}).get('data', 0):,}, rules "
+            f"(ground {drift_report.get('by_cause', {}).get('data', 0):,}, surroundings "
+            f"{drift_report.get('by_cause', {}).get('surroundings', 0):,}, re-measured "
+            f"{drift_report.get('by_cause', {}).get('remeasured', 0):,}, rules "
             f"{drift_report.get('by_cause', {}).get('rules', 0):,}, code "
             f"{drift_report.get('by_cause', {}).get('code', 0):,}, unexplained {drift_report.get('unexplained', 0):,})"
         )
@@ -631,12 +633,15 @@ _DRIFT_MATRIX = text(
     """
 )
 
-_DRIFT_UNEXPLAINED = text(
+#: Every moved answer the ground does not explain, with the measured facts on
+#: both sides, so the cause can be read from what the measurement saw.
+_DRIFT_GROUNDLESS = text(
     """
     SELECT ln.county, ln.tlid, n.design_key,
            o.tier AS tier_from, n.tier AS tier_to,
            COALESCE(o.checks->>'if_signed', 'unknown') AS colour_from,
-           COALESCE(n.checks->>'if_signed', 'unknown') AS colour_to
+           COALESCE(n.checks->>'if_signed', 'unknown') AS colour_to,
+           lo.facts AS facts_from, ln.facts AS facts_to
     FROM flats.lot_results n
     JOIN flats.lots ln ON ln.id = n.lot_id AND ln.snapshot_id = :to_snapshot
     JOIN flats.lots lo ON lo.snapshot_id = :from_snapshot AND lo.county = ln.county AND lo.tlid = ln.tlid
@@ -652,9 +657,59 @@ _DRIFT_UNEXPLAINED = text(
             AND c.kind <> 'attr_change'
       )
     ORDER BY ln.county, ln.tlid, n.design_key
-    LIMIT :limit
     """
 )
+
+#: Facts that are not what the measurement saw: the screen's and quadfit's
+#: outputs, the assessor's roll (the screen reads nothing from it), the
+#: register's own bookkeeping.
+_NOT_SURROUNDINGS = frozenset({"source", "quadfit", "quadfit_jurisdiction", "assessor", "condo", "snapshot_zone", "unmeasured"})
+#: A number re-read from a re-projected copy of the same ground differs in
+#: the last digits (zone_frac 0.9999999999999999 vs 1.0; a sewer distance by
+#: a millionth of a foot; an envelope by a third of a percent). Within either
+#: tolerance two numbers are the same measurement.
+_SAME_ABS = 0.05
+_SAME_REL = 0.02
+
+
+def _same_number(a: float, b: float, tolerant: bool) -> bool:
+    if not tolerant:
+        return a == b
+    return abs(a - b) <= max(_SAME_ABS, _SAME_REL * max(abs(a), abs(b)))
+
+
+def _facts_differ(a: Any, b: Any, tolerant: bool) -> bool:
+    if isinstance(a, bool) or isinstance(b, bool):
+        return a != b
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return not _same_number(float(a), float(b), tolerant)
+    if isinstance(a, dict) and isinstance(b, dict):
+        return any(_facts_differ(a.get(k), b.get(k), tolerant) for k in set(a) | set(b))
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) != len(b) or any(_facts_differ(x, y, tolerant) for x, y in zip(a, b))
+    return a != b
+
+
+def facts_moved(before: dict[str, Any] | None, after: dict[str, Any] | None, *, tolerant: bool = True) -> list[str]:
+    """The measured facts that differ between two readings of the same lot, as
+    dotted paths (``observed.corner_lot``, ``sewer.in_district``,
+    ``lot_width_ft``); empty when the two readings are the same measurement
+    within tolerance -- or, with ``tolerant=False``, the same to the last
+    digit. What the screen and quadfit *concluded* is not a fact and is left
+    out, as is the roll."""
+    before = before or {}
+    after = after or {}
+    moved: list[str] = []
+    for key in sorted(set(before) | set(after)):
+        if key in _NOT_SURROUNDINGS:
+            continue
+        a, b = before.get(key), after.get(key)
+        if (isinstance(a, dict) or isinstance(b, dict)) and (a is None or isinstance(a, dict)) and (b is None or isinstance(b, dict)):
+            a, b = a or {}, b or {}
+            moved += [f"{key}.{k}" for k in sorted(set(a) | set(b)) if _facts_differ(a.get(k), b.get(k), tolerant)]
+        elif _facts_differ(a, b, tolerant):
+            moved.append(key)
+    return moved
 
 _DRIFT_ONLY = text(
     """
@@ -678,11 +733,18 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
     cause, in this order: the ground (a ``lot_changes`` row for the lot in
     the new copy other than an attribute-only change -- the screen reads
     nothing from the assessor's roll, so a new assessment explains no move
-    -- or a different zone), the rules version, the code version -- and a
-    move with none of those is ``unexplained``, which is a bug in the
-    screen and blocks an agent's promotion. A row the screen never wrote
-    on either side (an assign-stage ``unknown`` for a lot nobody measured)
-    is counted apart, not as a move; lots only one run holds are counted too.
+    -- or a different zone), the surroundings (a measured fact that differs
+    between the two readings beyond float noise: the streets it fronts, an
+    alley, a flood or sewer line, a zoning line -- layers the delta of the
+    taxlots never sees; :func:`facts_moved`), a re-measurement (a fact
+    differs only within tolerance -- a bearing by half a degree, a slope by
+    a hundredth -- yet the answer sat on a line and flipped: the verdict is
+    unstable on that lot, not wrong), the rules version, the code version
+    -- and a move with none of those is ``unexplained``, which is a bug in
+    the screen and blocks an agent's promotion. A row the screen
+    never wrote on either side (an assign-stage ``unknown`` for a lot nobody
+    measured) is counted apart, not as a move; lots only one run holds are
+    counted too.
     """
     old = await session.get(FlatsRun, from_run)
     new = await session.get(FlatsRun, to_run)
@@ -698,9 +760,10 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
     same_rules = (old.rules_version or "") == (new.rules_version or "")
     same_code = (old.code_version or "") == (new.code_version or "")
     compared = unchanged = unscreened = 0
-    by_cause = {"data": 0, "rules": 0, "code": 0, "unexplained": 0}
+    by_cause = {"data": 0, "surroundings": 0, "remeasured": 0, "rules": 0, "code": 0, "unexplained": 0}
     tier_moves: dict[str, int] = {}
     colour_moves: dict[str, int] = {}
+    groundless = 0
     for r in rows:
         n = int(r.n)
         if not (r.screened_from and r.screened_to):
@@ -712,20 +775,55 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
             unchanged += n
             continue
         if r.lot_changed or r.zone_changed:
-            cause = "data"
-        elif not same_rules:
-            cause = "rules"
-        elif not same_code:
-            cause = "code"
+            by_cause["data"] += n
         else:
-            cause = "unexplained"
-        by_cause[cause] += n
+            groundless += n
         if r.tier_from != r.tier_to:
             key = f"{r.tier_from}->{r.tier_to}"
             tier_moves[key] = tier_moves.get(key, 0) + n
         if r.colour_from != r.colour_to:
             key = f"{r.colour_from}->{r.colour_to}"
             colour_moves[key] = colour_moves.get(key, 0) + n
+
+    # The moves the ground does not explain, one row each: the measured
+    # facts say whether the map around the lot moved.
+    surroundings_facts: dict[str, int] = {}
+    remeasured_facts: dict[str, int] = {}
+    sample: list[dict[str, Any]] = []
+    if groundless:
+        seen = 0
+        for r in (await session.execute(_DRIFT_GROUNDLESS, params)).all():
+            seen += 1
+            moved_facts = facts_moved(r.facts_from, r.facts_to)
+            nudged_facts = [] if moved_facts else facts_moved(r.facts_from, r.facts_to, tolerant=False)
+            if moved_facts:
+                cause = "surroundings"
+                for path in moved_facts:
+                    surroundings_facts[path] = surroundings_facts.get(path, 0) + 1
+            elif nudged_facts:
+                cause = "remeasured"
+                for path in nudged_facts:
+                    remeasured_facts[path] = remeasured_facts.get(path, 0) + 1
+            elif not same_rules:
+                cause = "rules"
+            elif not same_code:
+                cause = "code"
+            else:
+                cause = "unexplained"
+            by_cause[cause] += 1
+            if cause == "unexplained" and len(sample) < examples:
+                sample.append(
+                    {
+                        "county": r.county,
+                        "tlid": r.tlid,
+                        "design": r.design_key,
+                        "tier": [r.tier_from, r.tier_to],
+                        "colour": [r.colour_from, r.colour_to],
+                    }
+                )
+        # The two queries share their joins; a move the matrix counted and
+        # the row query did not return would be a bug here, and is not hidden.
+        by_cause["unexplained"] += max(0, groundless - seen)
 
     only_in_new = (
         await session.execute(
@@ -740,20 +838,6 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
         )
     ).scalar_one()
 
-    sample: list[dict[str, Any]] = []
-    if by_cause["unexplained"]:
-        found = (await session.execute(_DRIFT_UNEXPLAINED, {**params, "limit": examples})).all()
-        sample = [
-            {
-                "county": r.county,
-                "tlid": r.tlid,
-                "design": r.design_key,
-                "tier": [r.tier_from, r.tier_to],
-                "colour": [r.colour_from, r.colour_to],
-            }
-            for r in found
-        ]
-
     doc = {
         "from_run": old.id,
         "to_run": new.id,
@@ -765,6 +849,8 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
         "unchanged": unchanged,
         "moved": compared - unchanged,
         "by_cause": by_cause,
+        "surroundings_facts": dict(sorted(surroundings_facts.items(), key=lambda kv: (-kv[1], kv[0]))),
+        "remeasured_facts": dict(sorted(remeasured_facts.items(), key=lambda kv: (-kv[1], kv[0]))),
         "unexplained": by_cause["unexplained"],
         "unscreened_side": unscreened,
         "only_in_new": int(only_in_new),
@@ -784,7 +870,10 @@ def drift_markdown(doc: dict[str, Any]) -> str:
         f"# Verdict drift: run {doc['from_run']} (snapshot {doc['from_snapshot']}) -> run {doc['to_run']} (snapshot {doc['to_snapshot']})",
         "",
         f"{doc['compared']:,} lot-and-design answers compared; {doc['unchanged']:,} unchanged, {doc['moved']:,} moved.",
-        f"Moves explained by the ground {doc['by_cause']['data']:,}, by the rules version {doc['by_cause']['rules']:,}, "
+        f"Moves explained by the ground {doc['by_cause']['data']:,}, by the surroundings "
+        f"{doc['by_cause'].get('surroundings', 0):,} (a measured fact that differs: the streets, an alley, a flood or "
+        f"sewer line, a zoning line), by a re-measurement {doc['by_cause'].get('remeasured', 0):,} (a fact differs "
+        f"only within tolerance and the answer sat on a line), by the rules version {doc['by_cause']['rules']:,}, "
         f"by the code version {doc['by_cause']['code']:,}; **unexplained {doc['unexplained']:,}**.",
         f"{doc['unscreened_side']:,} answers had no screen on one side (a lot the county map holds but nobody measured); "
         f"{doc['only_in_new']:,} answers only the new run holds, {doc['only_in_old']:,} only the old.",
@@ -796,6 +885,12 @@ def drift_markdown(doc: dict[str, Any]) -> str:
     lines += [f"- {k}: {v:,}" for k, v in doc["tier_moves"].items()] or ["- none"]
     lines += ["", "## Colour-if-signed moves", ""]
     lines += [f"- {k}: {v:,}" for k, v in doc["colour_moves"].items()] or ["- none"]
+    if doc.get("surroundings_facts"):
+        lines += ["", "## What moved around the lots", ""]
+        lines += [f"- {k}: {v:,}" for k, v in doc["surroundings_facts"].items()]
+    if doc.get("remeasured_facts"):
+        lines += ["", "## What was re-measured within tolerance on a lot whose answer sat on a line", ""]
+        lines += [f"- {k}: {v:,}" for k, v in doc["remeasured_facts"].items()]
     if doc["examples"]:
         lines += ["", "## Unexplained moves (first few)", ""]
         lines += [
