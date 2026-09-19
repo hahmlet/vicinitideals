@@ -173,7 +173,8 @@ rows were pruned — prune only after the next quarter has settled.
 | Failure | Handling |
 |---|---|
 | Acquire stopped half way | Re-run the same date; `present` datasets are skipped. Check disk first (a snapshot ≈ 1.6 GB). |
-| Load failed midway | The load is one transaction; nothing partial lands. Fix, re-run. |
+| Drift report fails with "could not resize shared memory segment" | Docker's default /dev/shm (64 MB) is too small for the parallel hash join across two copies; the postgres service carries `shm_size: 1g` since 02752a1f -- check `docker inspect re-modeling-postgres --format '{{.HostConfig.ShmSize}}'`. |
+| Load failed midway | The load is one transaction; nothing partial lands. Fix, re-run. The first September load stopped twice on real data, both fixed in code: a lot outline longer than the CSV reader's 128 KB default (f8d1147a) and a blank jurisdiction for the 16,963 lots in Canby, Sandy, Molalla, Estacada and Barlow -- on the roll, in no layer the rules hold -- which now carry `juris_city:<name>` and screen `JURISDICTION_NOT_ENCODED` (5512490a). |
 | Candidate loaded, measurement was wrong | Never promote; the copy in use is untouched. Leave the candidate for inspection or re-run steps 6–14 into the same snapshot. |
 | The wrong copy was promoted | Roll back (§6). |
 | No new RLIS release yet | Not a failure: the ArcGIS layers still refresh; RLIS keys report `present`; the footer names the release. |

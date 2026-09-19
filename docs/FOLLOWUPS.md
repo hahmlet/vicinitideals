@@ -4,84 +4,43 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **The county map copy, kept current (HUMAN_TODO 20 decided 2026-09-19:
-   A, in the database; the agent may promote a clean refresh, anything with
-   a warning waits for Steph).** The plan with the process, cadence, change
-   types, failure modes and drift audit is in the approved plan file (the
-   runbook `docs/ops/flats-county-refresh.md` is phase 4). *Phase 1
-   shipped 2026-09-19:* `flats.snapshots` / `flats.probes` (migration 0132;
-   every lot row now belongs to a snapshot, unique `(snapshot_id, county,
-   tlid)`; run 2 backfilled onto a synthetic 2026-07-28 snapshot), the
-   red/amber banner + always-present footer on the Lots pages
-   (`flats/ingest/status.py`, computed from rows only), the monthly
-   warn-only probe (`flats/ingest/probe.py`, Celery beat 3rd 09:00 UTC,
-   `scripts/flats_probe.py` by hand), `scripts/flats_snapshot.py register`,
-   the loader's `--snapshot`, candidate runs reachable by `?run=` and never
-   the default. *Phase 2 shipped 2026-09-19:* `flats/ingest/delta.py`
-   (lineage by geometry overlap -- attr_change / reshape / split / merge /
-   renumbered / added / deleted / vacated; an old lot >= 95 % inside a
-   neighbour that grew is a merge), `flats.lot_changes` (migration 0133,
-   loaded by `flats_load_bridge.py load-changes --from --to`), the
-   `rlis_taxlot_change` registry member, `flats_snapshot.py report` (the
-   summary on the snapshot row). *The real July-vs-September run* (137,
-   10 s): 453,264 -> 453,782 lots, 439,980 unchanged, 14,047 rows --
-   attr_change 11,395 / reshape 1,291 / split 946 / merge 356 / renumbered
-   46 / added 7 / deleted 5 / vacated 1; 1,354 rows put a decision in
-   doubt; Metro's list agrees (recall 97-100 %, precision 94-99 %; the
-   warning is < 80 %). These are the runbook's normal ranges. *Phase 3
-   shipped 2026-09-19:* the 19 Clackamas city overlays quadfit read but the
-   registry lacked (West Linn x6, Wilsonville SROZ, Happy Valley NROZ +
-   slope, Milwaukie x4, Oregon City NROD, Tualatin x5 -- 61 datasets now),
-   `scripts/flats_stage_quadfit_raw.py` (a quadfit tree per snapshot:
-   links under quadfit's names, four renames, FEMA split, DEM tiles shared
-   from July, `SOURCE.json`; refuses a snapshot that is not whole;
-   `QUADFIT_DATA_DIR` moves every quadfit stage), `flats/ingest/
-   normalize.py` (every lot from the snapshot: jurisdiction from
-   JURIS_CITY, majority-area zoning, roll values, condo, and a **gate** --
-   JURISDICTION_NOT_ENCODED / JURISDICTION_OFF / OUTSIDE_UGB / NO_ZONE /
-   ZONE_NOT_ENCODED; the September map: 400,032 lots, 311,202 screenable,
-   5,329 in 128 zone codes the rules do not hold -- commercial, industrial,
-   farm, Wilsonville PD*, Happy Valley MUR*), `flats/ingest/assign.py`
-   (the bridge's rows byte for byte + one `unknown` row per design for
-   every other lot with the reason, NOT_MEASURED carrying quadfit's s3
-   step from the new `s3_dropped.csv`), the loader (`export` takes an
-   unmeasured lot's record from the normalized table and gives every lot
-   `facts.assessor` / `facts.condo` / `facts.snapshot_zone` and a real
-   `condo_verdict`; a snapshot-fed run loads as `candidate`; `load` ends
-   by writing `flats.snapshots.checks` from `flats/ingest/checks.py` --
-   layers_incomplete, count_drift 5 % / taxlots 2 %, new_zones (codes the
-   copy in use did not have; the rest carried), lots_drift 2 %,
-   zone_changes 10 % of a city, rlis_agreement recall 80 % -- and `counts`
-   for the next refresh to compare against). *In flight on 137 (started
-   2026-09-19 07:23 UTC):* quadfit s1..s7 from the September tree
-   (`/root/qf_sep.log`; s4 saw 290,032 lots vs July's 289,845), then the
-   bridge (~7 h, `/root/bridge_sep`), then assign -> export -> scp to 114
-   -> `load --snapshot 3` (dry run first; **re-register 3 from the
-   62-dataset manifest first**) -> VACUUM -> `?run=<id>` -> `flats_promote.py
-   drift --from-run 2 --to-run <id>`. When it lands: HUMAN_TODO 20 "built
-   so far" gets the numbers (the first candidate WILL trip new_zones --
-   snapshot 1 is synthetic and knew no codes -- so Steph reads it; that is
-   the design; do not promote). *Phase 4 shipped 2026-09-19:* migration
-   0134 (`review_decisions.needs_rereview_snapshot_id` / `_reason`),
-   `app/services/flats_refresh.py` (`gate` = six loader checks + no_delta /
-   no_drift / verdict_drift; `promote` flips run -> complete, current ->
-   retired, candidate -> current, records `promoted_by` and an override
-   reason in `notes`, marks decisions on split / merge / renumbered /
-   deleted / vacated / rezoned ground; `rollback`; `drift` attributes every
-   verdict move to data / rules / code, else unexplained -> blocks; `prune`
-   keeps current + previous), `scripts/flats_promote.py` (status / drift /
-   promote / rollback / prune), page `/flats/refresh` ("County copy" in the
-   nav: every copy, the nine-row gate, delta, new zone codes, drift with
-   linked unexplained lots, Promote / Promote-over-the-warning / Roll back),
-   the runbook `docs/ops/flats-county-refresh.md`, RLIS section of
-   `data-sources-active.md` marked decommissioned. The lot page shows a
-   person's standing decisions and the "look again" mark (no writer for
-   lot decisions in `app/` yet -- they are inserted by hand or by a future
-   review page). Terrain (DEM tiles) stays `deferred` until the slope
-   stage exists. Two loose ends found by the September map, queued
-   not fixed: Happy Valley's layer carries both `MURM2` and `MURm2` (one
-   lot; the source's casing, kept as it is), and Oregon City's zoning
-   layer says `County` on 14 lots inside its boundary.
+1. **The county map copy: after the first candidate (HUMAN_TODO 20).** All
+   four phases shipped 2026-09-19 (snapshots + banner + probe 41b64c45;
+   delta dc1dbaad; every-lot normalize/assign + gate 1318db5b; promote /
+   rollback / drift / `/flats/refresh` ffe407ec; runbook
+   `docs/ops/flats-county-refresh.md`). The September copy is loaded as
+   **run 6** (`candidate`, snapshot 3: 402,033 lots = 290,032 measured +
+   112,001 unmeasured with a reason; 804,066 results; `?run=6`, default
+   still run 2), drift 2 -> 6 stored (579,400 compared, 178 moved: ground
+   39 / rules 0 / code 139 / unexplained 0), gate trips **new_zones only**
+   -- Steph reads; nobody promotes. When Steph promotes: `flats_promote.py
+   prune --dry-run` then real (keeps snapshot 1 whole), confirm the Lots
+   default is run 6 and the footer says 2026-09-18, re-run the probe.
+   **Drift attribution is too coarse** (found on the first real report):
+   `code` is the fall-through whenever the repo HEAD differs, which it does
+   on every refresh, so `unexplained` can only fire when nothing was
+   committed -- and of the 139 filed under `code`, the screen's code did
+   not change; the facts that differ are `corner_lot` 25, `fronts_cul_de_sac`
+   18, `abuts_alley`/`alley_at_*` 13, `in_floodplain` 8, `in_sewer_district`
+   8, `split_zone` 8 -- the streets, alley, FEMA, sewer and zoning layers
+   re-read around an unchanged lot. Fix in `app/services/flats_refresh.py
+   drift()`: a `surroundings` cause when any measured fact in
+   `facts.quadfit` / `facts.observed` differs between the two rows (before
+   rules/code), and `code` only when the screen's own files changed (hash
+   of `flats/score`, `flats/geom`, `flats/ingest/quadfit.py`, `Lot
+   Analysis/quadfit` between the two code versions -- `git diff --stat`),
+   else `unexplained`. Add the new words to `GATE_WORDS`/the page; test in
+   `tests/services/test_flats_refresh.py`. Loose ends the September map
+   found, queued not fixed: Happy Valley's layer carries both `MURM2` and
+   `MURm2` (one lot; the source's casing, kept), Oregon City's zoning says
+   `County` on 14 lots inside its boundary; 2,001 Multnomah unit lots
+   (`-8xxxx` / `-9xxxx` / `-6xxxx` TLIDs, ~1,000-1,800 sq ft, all red) that
+   quadfit's s1 measured but `flats/normalize/condo.py` excluded as
+   condominium records (`condo_excluded` 47,114) -- the two condo readings
+   disagree; the bundle keeps quadfit's answer for them without roll or
+   condo facts; Terrain (DEM tiles) stays
+   `deferred` until the slope stage exists; no writer for lot decisions in
+   `app/` yet (they are inserted by hand or by a future review page).
 2. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks
