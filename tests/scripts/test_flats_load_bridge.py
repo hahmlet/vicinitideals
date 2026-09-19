@@ -27,6 +27,7 @@ from scripts.flats_load_bridge import (
     RUN_FILE,
     export,
     load,
+    load_changes,
     result_binding,
     result_checks,
     rules_version,
@@ -443,3 +444,79 @@ async def test_a_second_copy_lands_beside_the_first_and_a_run_reads_one_copy(
         "SELECT count(*) FROM flats.lot_results r JOIN flats.lots l ON l.id = r.lot_id "
         "JOIN flats.runs u ON u.id = r.run_id WHERE l.snapshot_id <> u.snapshot_id",
     ) == 0
+
+
+# --- load-changes ---------------------------------------------------------------
+
+
+def _changes(tmp_path: Path) -> Path:
+    from flats.ingest.delta import Change, write_changes
+
+    path = tmp_path / "changes.csv.gz"
+    write_changes(
+        [
+            Change("multnomah", "1N1E08BD  -02500", "split", role="parent", related_tlids=["1N1E08BD  -02501", "1N1E08BD  -02502"], area_before=12_000.0, note="kept its TLID", rlis_change="CHANGE", area_after=4_000.0, iou=0.33),
+            Change("multnomah", "1N1E08BD  -02501", "split", role="child", related_tlids=["1N1E08BD  -02500"], area_after=4_000.0, rlis_change="ADDED"),
+            Change("multnomah", "1N1E08BD  -02502", "split", role="child", related_tlids=["1N1E08BD  -02500"], area_after=4_000.0, rlis_change="ADDED"),
+            Change("clackamas", "22E22B 01800", "attr_change", area_before=8_000.0, area_after=8_000.0, iou=1.0, attr_diff={"TOTALVAL": [410_000, 455_000]}),
+            Change("clackamas", "22E22B 01900", "vacated", area_before=1_500.0, rlis_change="DELETED"),
+        ],
+        path,
+    )
+    return path
+
+
+@pytest.mark.asyncio
+async def test_a_delta_lands_between_two_registered_copies_and_reloads_replace(
+    tmp_path: Path, session: AsyncSession, _test_db_url: str
+) -> None:
+    july = await _snapshot(session, taken="2026-07-28")
+    september = await _snapshot(session, taken="2026-09-18", status="candidate")
+    changes = _changes(tmp_path)
+
+    report = await load_changes(changes, _test_db_url, snapshot_from=july, snapshot_to=september)
+
+    assert report["written"] == 5 and report["replaced"] == 0 and report["verified"] is True
+    assert report["by_kind"] == {"attr_change": 1, "split": 3, "vacated": 1}
+    assert report["snapshot_from_date"] == "2026-07-28" and report["snapshot_to_date"] == "2026-09-18"
+    rows = (
+        await session.execute(
+            text(
+                "SELECT county, tlid, kind, role, related_tlids, area_before, area_after, iou, attr_diff, rlis_change, note "
+                "FROM flats.lot_changes WHERE snapshot_from = :f AND snapshot_to = :t ORDER BY county, tlid"
+            ),
+            {"f": july, "t": september},
+        )
+    ).all()
+    assert len(rows) == 5
+    parent = rows[2]
+    assert (parent.county, parent.tlid, parent.kind, parent.role) == ("multnomah", "1N1E08BD  -02500", "split", "parent")
+    assert parent.related_tlids == ["1N1E08BD  -02501", "1N1E08BD  -02502"]
+    assert float(parent.area_before) == 12_000.0 and float(parent.iou) == 0.33 and parent.note == "kept its TLID"
+    assert rows[0].attr_diff == {"TOTALVAL": [410_000, 455_000]} and rows[0].role is None
+    assert rows[1].kind == "vacated" and rows[1].area_after is None and rows[1].rlis_change == "DELETED"
+
+    # The same pair again replaces, never doubles.
+    again = await load_changes(changes, _test_db_url, snapshot_from=july, snapshot_to=september)
+    assert again["replaced"] == 5 and again["written"] == 5
+    assert await _count(session, "SELECT count(*) FROM flats.lot_changes") == 5
+
+
+@pytest.mark.asyncio
+async def test_a_delta_dry_run_leaves_nothing_and_a_bad_pair_is_refused(
+    tmp_path: Path, session: AsyncSession, _test_db_url: str
+) -> None:
+    july = await _snapshot(session, taken="2026-07-28")
+    september = await _snapshot(session, taken="2026-09-18", status="candidate")
+    changes = _changes(tmp_path)
+
+    report = await load_changes(changes, _test_db_url, snapshot_from=july, snapshot_to=september, dry_run=True)
+    assert report["written"] == 5 and report["rolled_back"] is True
+    assert await _count(session, "SELECT count(*) FROM flats.lot_changes") == 0
+
+    with pytest.raises(SystemExit, match="same snapshot"):
+        await load_changes(changes, _test_db_url, snapshot_from=july, snapshot_to=july)
+    with pytest.raises(SystemExit, match="no flats.snapshots row 999 for --to"):
+        await load_changes(changes, _test_db_url, snapshot_from=july, snapshot_to=999)
+    assert await _count(session, "SELECT count(*) FROM flats.lot_changes") == 0
+

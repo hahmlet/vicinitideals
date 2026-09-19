@@ -17,15 +17,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    warn-only probe (`flats/ingest/probe.py`, Celery beat 3rd 09:00 UTC,
    `scripts/flats_probe.py` by hand), `scripts/flats_snapshot.py register`,
    the loader's `--snapshot`, candidate runs reachable by `?run=` and never
-   the default. *Still owed, in order:* **phase 2** -- `flats/ingest/
-   delta.py` (lineage by geometry overlap: attr_change / reshape / split /
-   merge / added / deleted / vacated; TLID naming is a hint, 340 of 654
-   added lots share a section-quarter with a deleted one), `flats.lot_changes`
-   (migration 0133), the `rlis_taxlot_change` registry member
-   (`Geometry.table`, `Provides.changelog`), and the real July-vs-September
-   run on 137 (expected added >= 654, deleted >= 140, >= 80 % agreement with
-   Metro's log: ADDED M 260 / C 394, DELETED M 96 / C 44) whose numbers
-   become the runbook's normal ranges; **phase 3** -- `flats/ingest/
+   the default. *Phase 2 shipped 2026-09-19:* `flats/ingest/delta.py`
+   (lineage by geometry overlap -- attr_change / reshape / split / merge /
+   renumbered / added / deleted / vacated; an old lot >= 95 % inside a
+   neighbour that grew is a merge), `flats.lot_changes` (migration 0133,
+   loaded by `flats_load_bridge.py load-changes --from --to`), the
+   `rlis_taxlot_change` registry member, `flats_snapshot.py report` (the
+   summary on the snapshot row). *The real July-vs-September run* (137,
+   10 s): 453,264 -> 453,782 lots, 439,980 unchanged, 14,047 rows --
+   attr_change 11,395 / reshape 1,291 / split 946 / merge 356 / renumbered
+   46 / added 7 / deleted 5 / vacated 1; 1,354 rows put a decision in
+   doubt; Metro's list agrees (recall 97-100 %, precision 94-99 %; the
+   warning is < 80 %). These are the runbook's normal ranges. *Still
+   owed, in order:* **phase 3** -- `flats/ingest/
    normalize.py` (every lot from the snapshot, jurisdiction from JURIS_CITY,
    majority-area zoning, `facts.assessor` adopted, unknown zone codes KEPT
    and screened UNKNOWN / ZONE_NOT_ENCODED -- quadfit's s3 drops them

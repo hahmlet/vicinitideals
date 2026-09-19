@@ -19,7 +19,12 @@ Usage (inside the api container, where the manifest was copied to
     python scripts/flats_snapshot.py register \\
         --manifest /app/data/flats/sources/2026-09-18/manifest.json \\
         --host 137 --status candidate [--notes "..."] [--dry-run]
+    python scripts/flats_snapshot.py report --snapshot 3 --section delta         --summary /app/data/flats/deltas/2026-09-18/summary.json
     python scripts/flats_snapshot.py list
+
+``report`` stores one section of the snapshot's report -- the delta summary
+``flats.ingest.delta`` wrote (``load-changes`` in the bridge loader carries
+the rows themselves) -- on the row, where the promotion page reads it.
 """
 
 from __future__ import annotations
@@ -39,7 +44,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from app.config import settings  # noqa: E402
 from app.models.flats import FlatsSnapshot  # noqa: E402
-from app.services.flats_refresh import REGISTERABLE, RegisterError, register_snapshot  # noqa: E402
+from app.services.flats_refresh import REGISTERABLE, RegisterError, attach_report, register_snapshot  # noqa: E402
 
 
 async def _register(session: AsyncSession, args: argparse.Namespace) -> int:
@@ -56,6 +61,32 @@ async def _register(session: AsyncSession, args: argparse.Namespace) -> int:
         f"snapshot {row.id}: {row.snapshot_date.isoformat()} on {row.host}, {row.status}, "
         f"RLIS {row.rlis_release or '?'}, {row.counts.get('features', 0):,} features ({by_status})"
     )
+    if args.dry_run:
+        await session.rollback()
+        print("dry run, rolled back")
+    else:
+        await session.commit()
+    return 0
+
+
+async def _report(session: AsyncSession, args: argparse.Namespace) -> int:
+    doc = json.loads(args.summary.read_text(encoding="utf-8"))
+    try:
+        row = await attach_report(session, args.snapshot, args.section, doc)
+    except RegisterError as exc:
+        print(f"refused: {exc}")
+        return 1
+    keys = ", ".join(sorted(row.report))
+    print(f"snapshot {row.id}: {row.snapshot_date.isoformat()} on {row.host}, {row.status}; report sections: {keys}")
+    if args.section == "delta":
+        print(
+            f"  delta {doc.get('from')} -> {doc.get('to')}: {doc.get('rows', 0):,} rows, "
+            f"{doc.get('unchanged', 0):,} unchanged, {doc.get('rereview', 0):,} for re-review; "
+            f"by kind {doc.get('by_kind')}"
+        )
+        check = doc.get("crosscheck") or {}
+        if check:
+            print(f"  against Metro's list: min recall {check.get('min_recall')}, {'agree' if check.get('agrees') else 'DISAGREE'}")
     if args.dry_run:
         await session.rollback()
         print("dry run, rolled back")
@@ -92,6 +123,12 @@ async def main(argv: list[str] | None = None) -> int:
     reg.add_argument("--notes", default="")
     reg.add_argument("--dry-run", action="store_true")
 
+    rep = sub.add_parser("report", help="store one section of a snapshot's report (a delta summary.json)")
+    rep.add_argument("--snapshot", type=int, required=True, help="flats.snapshots id the report is about")
+    rep.add_argument("--section", default="delta", choices=("delta", "drift"))
+    rep.add_argument("--summary", type=Path, required=True, help="the JSON document to store under that section")
+    rep.add_argument("--dry-run", action="store_true")
+
     sub.add_parser("list", help="every registered snapshot, newest first")
     args = parser.parse_args(argv)
 
@@ -101,6 +138,8 @@ async def main(argv: list[str] | None = None) -> int:
         async with Session() as session:
             if args.command == "register":
                 return await _register(session, args)
+            if args.command == "report":
+                return await _report(session, args)
             return await _list(session)
     finally:
         await engine.dispose()

@@ -108,6 +108,8 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # monthly source check that can only warn.
         "snapshots",
         "probes",
+        # What each lot did between two copies (0133); read at promotion.
+        "lot_changes",
         "lots",
         "lot_results",
         "rules",

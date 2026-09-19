@@ -58,11 +58,16 @@ class Provides(str, enum.Enum):
     overlay = "overlay"
     utility = "utility"
     terrain = "terrain"
+    #: The county's own list of what changed since the last release -- read
+    #: to cross-check the delta, never to build the lot table.
+    changelog = "changelog"
 
 
 class Geometry(str, enum.Enum):
     polygon = "polygon"
     polyline = "polyline"
+    #: Attribute rows with no shape (a ``.dbf`` on its own).
+    table = "table"
 
 
 class Defaults(BaseModel):
@@ -112,6 +117,10 @@ class Dataset(BaseModel):
             )
         if self.kind is Kind.rlis_zip and not self.member:
             raise ValueError(f"{self.key}: an RLIS dataset must name the member to extract")
+        if self.geometry is Geometry.table and self.kind is not Kind.rlis_zip:
+            raise ValueError(f"{self.key}: only an RLIS member can be a table; a layer has shapes")
+        if self.geometry is Geometry.table and not str(self.member).lower().endswith(".dbf"):
+            raise ValueError(f"{self.key}: a table member is the .dbf itself, not {self.member!r}")
         if self.provides is Provides.zoning and not self.zone_field:
             raise ValueError(
                 f"{self.key}: a zoning dataset must name the field its zone codes live in"

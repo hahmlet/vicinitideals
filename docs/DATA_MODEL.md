@@ -68,6 +68,7 @@ ingest. See the Archive note at the bottom of this document.
 |---|---|---|---|
 | **FlatsSnapshot** | `flats.snapshots` | One dated copy of the county map (migration 0132): the acquire manifest verbatim, per-dataset counts, the RLIS release, who promoted it. Exactly one row is `current`; a refresh lands as `candidate` beside it (HUMAN_TODO 20) | `id` (bigint); unique `(snapshot_date, host)`; partial unique on `status = 'current'` |
 | **FlatsProbe** | `flats.probes` | One run of the monthly source check — the only automated connection to the county, and it can only warn. `findings` lists `{key, finding, detail}` per dataset; the Lots pages read the newest row | `id` (bigint), indexed on `ran_at` |
+| **FlatsLotChange** | `flats.lot_changes` | What one lot did between two copies (migration 0133; `flats/ingest/delta.py`): `attr_change`, `reshape`, `split` (parent / child), `merge` (parent / survivor), `renumbered` (parent / child), `added`, `deleted`, `vacated`. Lineage is read from geometry overlap, not the TLID; `related_tlids` names the lots on the other side, `attr_diff` holds `{field: [before, after]}`, `rlis_change` what Metro's own quarterly list said. Promotion (phase 4) flags review decisions on split / merged / renumbered / deleted / vacated lots for re-review | `id` (bigint); FKs `snapshot_from`, `snapshot_to` → `snapshots` (cascade); indexed `(snapshot_to, county, tlid)` and `(snapshot_to, kind)` |
 | **FlatsRun** | `flats.runs` | One pipeline execution; records code + rule versions, designs and counties in scope, and the snapshot it read | `id` (bigint); `snapshot_id` |
 | **FlatsDesign** | `flats.designs` | Immutable snapshot of a catalog pod as a run used it | `key` = `id@version` |
 | **FlatsLot** | `flats.lots` | A taxlot **as one snapshot holds it** and every **design-independent** fact about it (envelope, fit frontier, slope, sewer, economics — JSONB `facts`). Each snapshot owns its rows, so a refresh never overwrites the copy in use | `(snapshot_id, county, tlid)` unique; `(county, tlid)` indexed |
@@ -107,6 +108,8 @@ Three keying decisions, all expensive to retrofit and therefore made up front:
   on two `snapshots` rows, so it can be undone, and a lot the county deleted is simply
   absent from the next copy. The banner on the Lots pages is computed from `snapshots`
   and `probes` rows only — never from a live request — so a dead service cannot silence it.
+  `lot_changes` says what each lot did between two copies, so a decision made about
+  ground that has since been split or merged can be found and re-asked.
 
 Geometry: `SRID 2913` (NAD83(HARN) / Oregon North, **feet**) for working geometry, `4326`
 for the display centroid. Requires PostGIS (migration 0124) — the Postgres image is built

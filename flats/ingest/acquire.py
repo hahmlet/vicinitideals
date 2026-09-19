@@ -452,13 +452,22 @@ def _archive_identity(client: httpx.Client, url: str, archive: _RemoteZip) -> di
 def _fetch_rlis(
     archive: _RemoteZip, ds: Dataset, sink: _Sink, log: Callable[[str], None]
 ) -> list[str]:
-    """Every record of the member that passes the filter; returns the dbf's fields."""
+    """Every record of the member that passes the filter; returns the dbf's fields.
+
+    A ``table`` member is a ``.dbf`` with no shapes beside it (the quarterly
+    taxlot change list): its rows are written as features with no geometry.
+    """
     assert ds.member
     stem = ds.member.rsplit(".", 1)[0]
-    shp = archive.member(ds.member)
-    dbf = archive.member(f"{stem}.dbf")
-    log(f"  {len(shp) / 1e6:.0f} MB shp, {len(dbf) / 1e6:.0f} MB dbf")
-    reader = shapefile.Reader(shp=io.BytesIO(shp), dbf=io.BytesIO(dbf))
+    if ds.geometry is Geometry.table:
+        dbf = archive.member(ds.member)
+        log(f"  {len(dbf) / 1e6:.1f} MB dbf, no shapes")
+        reader = shapefile.Reader(dbf=io.BytesIO(dbf))
+    else:
+        shp = archive.member(ds.member)
+        dbf = archive.member(f"{stem}.dbf")
+        log(f"  {len(shp) / 1e6:.0f} MB shp, {len(dbf) / 1e6:.0f} MB dbf")
+        reader = shapefile.Reader(shp=io.BytesIO(shp), dbf=io.BytesIO(dbf))
     names = [f[0] for f in reader.fields[1:]]
     _check_fields(ds, names)
     keep = [i for i, n in enumerate(names) if not ds.fields or n in ds.fields]
@@ -468,6 +477,13 @@ def _fetch_rlis(
         if rule[0] not in names:
             raise Refused(f"filter field {rule[0]} is not in the dbf")
         where = (names.index(rule[0]), rule[1])
+    if ds.geometry is Geometry.table:
+        for rec in reader.iterRecords():
+            if where and str(rec[where[0]]).strip().upper() not in where[1]:
+                continue
+            props = {names[i]: (rec[i].isoformat() if hasattr(rec[i], "year") else rec[i]) for i in keep}
+            sink.add({"type": "Feature", "properties": props, "geometry": None})
+        return names
     for sr in reader.iterShapeRecords():
         rec = sr.record
         if where and str(rec[where[0]]).strip().upper() not in where[1]:

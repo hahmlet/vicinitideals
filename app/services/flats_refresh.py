@@ -8,12 +8,15 @@ the one request-making piece, the probe, in :mod:`flats.ingest.probe`. This
 module is what the scripts, the Celery task and the Lots pages all call, so
 the page and the command line can never disagree about what the copy is.
 
-Three things, and nothing that refreshes anything:
+Four things, and nothing that refreshes anything:
 
 * :func:`register_snapshot` -- a ``flats.snapshots`` row from an acquire
   manifest. Keyed on (date, host); re-registering updates the manifest. The
   copy in use is never demoted here -- that is a promotion or a rollback,
   which come with the refresh service (plan phase 4).
+* :func:`attach_report` -- one section of a snapshot's report (the delta
+  summary today; the drift matrix in phase 4), stored on the row Steph's
+  promotion decision is about.
 * :func:`run_probe` -- the monthly check against the copy in use, written as
   one ``flats.probes`` row. A probe that cannot complete is a ``failed`` row,
   never an exception: the row is the warning.
@@ -139,6 +142,21 @@ async def register_snapshot(
     row.acquired_at = acquired_at(manifest)
     if notes:
         row.notes = notes
+    session.add(row)
+    await session.flush()
+    return row
+
+
+async def attach_report(session: AsyncSession, snapshot_id: int, section: str, doc: dict[str, Any]) -> FlatsSnapshot:
+    """Store one section of a snapshot's report (``delta``, later ``drift``); flushed, not committed.
+
+    The report is what Steph reads before a promotion; each section is
+    replaced whole when its stage is re-run, the others are left as they were.
+    """
+    row = await session.get(FlatsSnapshot, snapshot_id)
+    if row is None:
+        raise RegisterError(f"no snapshot {snapshot_id}; register it first")
+    row.report = {**(row.report or {}), section: doc}
     session.add(row)
     await session.flush()
     return row

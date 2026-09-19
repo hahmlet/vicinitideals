@@ -131,9 +131,29 @@ def shapefile_zip(records: list[tuple[str, str, list[list[tuple[float, float]]]]
         z.writestr("TAXLOTS/taxlots_public.shp", shp.getvalue())
         z.writestr("TAXLOTS/taxlots_public.shx", shx.getvalue())
         z.writestr("TAXLOTS/taxlots_public.dbf", dbf.getvalue())
+        z.writestr("TAXLOTS/taxlot_change.dbf", change_table().getvalue())
         z.writestr("STREETS/streets.shp", b"not a shapefile")
         z.writestr("2026_08_RLIS_QuarterlyUpdates_ReleaseNotes.pdf", b"%PDF-1.4 release notes")
     return buf.getvalue()
+
+
+def change_table() -> io.BytesIO:
+    """Metro's quarterly taxlot change list: a .dbf with no shapes beside it."""
+    dbf = io.BytesIO()
+    w = shapefile.Writer(dbf=dbf)
+    w.field("TLID", "C", size=12)
+    w.field("PRIMACCNUM", "C", size=10)
+    w.field("ORTAXLOT", "C", size=30)
+    w.field("ADDCHANGE", "C", size=7)
+    for tlid, acct, ortaxlot, change in [
+        ("R100", "R100", "26 1N1E29DD  -05600", "CHANGE"),
+        ("R101", "R101", "26 1N1E29DD  -05601", "ADDED"),
+        ("R200", "R200", "03 22E22B 01800", "DELETED"),
+        ("R300", "R300", "34 1S1W01AA 00100", "ADDED"),
+    ]:
+        w.record(tlid, acct, ortaxlot, change)
+    w.close()
+    return dbf
 
 
 class RangeHost:
@@ -377,6 +397,52 @@ def test_an_rlis_member_is_pulled_by_range_and_filtered_to_our_counties(tmp_path
         r.method == "HEAD" or r.headers.get("range") or not r.url.path.endswith("/data")
         for r in host.requests
     ), "something asked the archive for more than a range"
+
+
+CHANGELOG_ONLY = f"""
+jurisdictions:
+  or/multnomah/portland: true
+datasets:
+  rlis_taxlot_change:
+    kind: rlis_zip
+    label: Metro RLIS taxlot changes
+    provides: changelog
+    url: {RLIS}
+    member: TAXLOTS/taxlot_change.dbf
+    geometry: table
+    fields: [TLID, ORTAXLOT, ADDCHANGE]
+    serves: [or/multnomah, or/clackamas]
+"""
+
+
+def test_a_table_member_is_rows_with_no_shapes(tmp_path: Path) -> None:
+    host = RangeHost(shapefile_zip(LOTS))
+    pipeline = load_pipeline(registry(tmp_path, CHANGELOG_ONLY))
+    out = tmp_path / "2026-09-18"
+
+    doc = acquire(pipeline, out, client=client(host), log=quiet)
+
+    entry = doc["datasets"]["rlis_taxlot_change"]
+    assert entry["status"] == "acquired", entry
+    assert entry["geometry"] == "table"
+    feats = features_of(out / "rlis_taxlot_change.geojson")
+    assert [f["geometry"] for f in feats] == [None] * 4
+    assert [f["properties"] for f in feats] == [
+        {"TLID": "R100", "ORTAXLOT": "26 1N1E29DD  -05600", "ADDCHANGE": "CHANGE"},
+        {"TLID": "R101", "ORTAXLOT": "26 1N1E29DD  -05601", "ADDCHANGE": "ADDED"},
+        {"TLID": "R200", "ORTAXLOT": "03 22E22B 01800", "ADDCHANGE": "DELETED"},
+        {"TLID": "R300", "ORTAXLOT": "34 1S1W01AA 00100", "ADDCHANGE": "ADDED"},
+    ], "Washington's rows are kept here: there is no county field to filter on"
+    assert entry["fields"]["present"] == ["TLID", "PRIMACCNUM", "ORTAXLOT", "ADDCHANGE"]
+    assert not any(r.url.path.endswith(".shp") for r in host.requests)
+
+
+def test_a_table_is_only_ever_a_dbf_in_the_archive(tmp_path: Path) -> None:
+    with pytest.raises(Exception, match="table member is the .dbf itself"):
+        load_pipeline(registry(tmp_path, CHANGELOG_ONLY.replace("taxlot_change.dbf", "taxlot_change.shp")))
+    with pytest.raises(Exception, match="only an RLIS member can be a table"):
+        as_table = ARCGIS_ONLY.replace("provides: zoning", "provides: changelog").replace("zone_field: ZONE", "geometry: table")
+        load_pipeline(registry(tmp_path, as_table))
 
 
 def test_the_manifest_says_which_release_the_archive_was(tmp_path: Path) -> None:

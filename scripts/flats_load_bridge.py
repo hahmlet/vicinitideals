@@ -27,6 +27,10 @@ neither has the other's libraries:
   county follow the real load with ``VACUUM (FULL, ANALYZE)`` on
   ``flats.lot_results`` and ``flats.lots`` (14 s on 2026-09-18, 3.0 -> 1.8 GB),
   one statement per ``psql -c``. The county load itself is about a minute.
+* ``load-changes`` (also the api container) carries a delta's
+  ``changes.csv.gz`` (``flats.ingest.delta``: what every lot did between two
+  copies) into ``flats.lot_changes`` for one ``--from`` / ``--to`` pair of
+  registered snapshots, replacing that pair's rows if they were loaded before.
 
 What lands where:
 
@@ -764,6 +768,82 @@ async def load(
     return report
 
 
+async def load_changes(
+    changes: Path, db_url: str, *, snapshot_from: int, snapshot_to: int, dry_run: bool = False, batch_size: int = 20_000
+) -> dict[str, Any]:
+    """Load a delta's ``changes.csv.gz`` into ``flats.lot_changes`` for one pair of snapshots.
+
+    Loading the same pair again replaces its rows, so a re-run delta never
+    doubles up. Both snapshots must be registered; the pair is refused when
+    it names one copy twice.
+    """
+    import asyncpg
+
+    from flats.ingest.delta import read_changes
+
+    if snapshot_from == snapshot_to:
+        raise SystemExit("a delta is between two copies; --from and --to name the same snapshot")
+    report: dict[str, Any] = {"changes": str(changes), "snapshot_from": snapshot_from, "snapshot_to": snapshot_to}
+    conn = await asyncpg.connect(_dsn(db_url))
+    try:
+        try:
+            async with conn.transaction():
+                for label, sid in (("from", snapshot_from), ("to", snapshot_to)):
+                    row = await conn.fetchrow("SELECT id, snapshot_date, status FROM flats.snapshots WHERE id = $1", sid)
+                    if row is None:
+                        raise SystemExit(f"no flats.snapshots row {sid} for --{label}; register the snapshot first")
+                    report[f"snapshot_{label}_date"] = row["snapshot_date"].isoformat()
+                replaced = await conn.fetchval(
+                    "WITH gone AS (DELETE FROM flats.lot_changes WHERE snapshot_from = $1 AND snapshot_to = $2 RETURNING 1) "
+                    "SELECT count(*) FROM gone",
+                    snapshot_from,
+                    snapshot_to,
+                )
+                report["replaced"] = replaced
+                sql = (
+                    "INSERT INTO flats.lot_changes (snapshot_from, snapshot_to, county, tlid, kind, role, related_tlids, "
+                    "area_before, area_after, iou, attr_diff, rlis_change, note) "
+                    "VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::jsonb, $12, $13)"
+                )
+                written = 0
+                batch: list[tuple[Any, ...]] = []
+                for row in read_changes(changes):
+                    batch.append(
+                        (
+                            snapshot_from, snapshot_to, row["county"], row["tlid"], row["kind"], row["role"],
+                            row["related_tlids"], row["area_before"], row["area_after"], row["iou"],
+                            json.dumps(row["attr_diff"], sort_keys=True, default=str), row["rlis_change"], row["note"],
+                        )
+                    )
+                    if len(batch) >= batch_size:
+                        await conn.executemany(sql, batch)
+                        written += len(batch)
+                        batch = []
+                if batch:
+                    await conn.executemany(sql, batch)
+                    written += len(batch)
+                report["written"] = written
+                report["by_kind"] = dict(
+                    (r["kind"], r["n"])
+                    for r in await conn.fetch(
+                        "SELECT kind, count(*) AS n FROM flats.lot_changes WHERE snapshot_from = $1 AND snapshot_to = $2 "
+                        "GROUP BY 1 ORDER BY 1",
+                        snapshot_from,
+                        snapshot_to,
+                    )
+                )
+                if sum(report["by_kind"].values()) != written:
+                    raise SystemExit(f"VERIFY FAILED: {sum(report['by_kind'].values())} rows in the table, {written} written")
+                report["verified"] = True
+                if dry_run:
+                    raise _RolledBack()
+        except _RolledBack:
+            report["rolled_back"] = True
+    finally:
+        await conn.close()
+    return report
+
+
 # --- cli ----------------------------------------------------------------------
 
 
@@ -786,6 +866,14 @@ def main(argv: list[str] | None = None) -> int:
     ld.add_argument("--dry-run", action="store_true", help="do the whole load in a transaction and roll it back")
     ld.add_argument("--batch-size", type=int, default=20_000)
 
+    lc = sub.add_parser("load-changes", help="load a delta's changes.csv.gz into flats.lot_changes (needs asyncpg)")
+    lc.add_argument("--changes", type=Path, required=True, help="changes.csv.gz written by flats.ingest.delta")
+    lc.add_argument("--from", dest="snapshot_from", type=int, required=True, help="flats.snapshots id of the older copy")
+    lc.add_argument("--to", dest="snapshot_to", type=int, required=True, help="flats.snapshots id of the newer copy")
+    lc.add_argument("--db-url", default=None, help="default: app settings' database_url")
+    lc.add_argument("--dry-run", action="store_true", help="do the whole load in a transaction and roll it back")
+    lc.add_argument("--batch-size", type=int, default=20_000)
+
     args = parser.parse_args(argv)
     if args.command == "export":
         run = export(
@@ -804,9 +892,18 @@ def main(argv: list[str] | None = None) -> int:
         from app.config import settings
 
         db_url = settings.database_url
-    report = asyncio.run(
-        load(args.bundle, db_url, snapshot_id=args.snapshot, dry_run=args.dry_run, batch_size=args.batch_size)
-    )
+    if args.command == "load-changes":
+        report = asyncio.run(
+            load_changes(
+                args.changes, db_url,
+                snapshot_from=args.snapshot_from, snapshot_to=args.snapshot_to,
+                dry_run=args.dry_run, batch_size=args.batch_size,
+            )
+        )
+    else:
+        report = asyncio.run(
+            load(args.bundle, db_url, snapshot_id=args.snapshot, dry_run=args.dry_run, batch_size=args.batch_size)
+        )
     print(json.dumps(report, indent=2, default=str))
     return 0 if report.get("verified") else 1
 

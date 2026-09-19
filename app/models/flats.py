@@ -165,6 +165,66 @@ class FlatsProbe(Base):
     seconds: Mapped[float | None] = mapped_column(Numeric(8, 1))
 
 
+#: What the delta can say a lot did between two copies of the county map.
+LOT_CHANGE_KINDS = ("attr_change", "reshape", "split", "merge", "renumbered", "added", "deleted", "vacated")
+LOT_CHANGE_ROLES = ("parent", "child", "survivor")
+
+
+class FlatsLotChange(Base):
+    """One lot's lineage between two snapshots (``flats.ingest.delta``).
+
+    Read from geometry overlap, not from the TLID: a split parent sometimes
+    keeps its number and shrinks, sometimes is renumbered; a merge survivor
+    may be one of the parents or a new number. So every row names the lot as
+    it is keyed in *one* of the two copies and lists the lots on the other
+    side it descends from or into:
+
+    * ``attr_change`` -- same ground, attributes differ (``attr_diff`` holds
+      ``{field: [before, after]}``); adopted as-is.
+    * ``reshape`` -- same TLID, boundary adjusted; re-measured.
+    * ``split`` -- ``parent`` (in the old copy; kept or lost its TLID) and each
+      ``child`` (in the new copy).
+    * ``merge`` -- each ``parent`` (old copy) and the ``survivor`` (new copy).
+    * ``renumbered`` -- one lot, new TLID: ``parent`` (old) and ``child`` (new).
+    * ``added`` -- in the new copy with no ground in the old one.
+    * ``deleted`` -- in the old copy only, its ground now under other lots.
+    * ``vacated`` -- in the old copy only, its ground under no lot at all.
+
+    ``rlis_change`` is what Metro's own quarterly change list said about the
+    TLID (ADDED / DELETED / CHANGE), the cross-check the report grades.
+    Review decisions on a split, merged, renumbered, deleted or vacated lot
+    are flagged for re-review at promotion (plan phase 4).
+    """
+
+    __tablename__ = "lot_changes"
+    __table_args__ = (
+        Index("ix_flats_lot_changes_to_county_tlid", "snapshot_to", "county", "tlid"),
+        Index("ix_flats_lot_changes_to_kind", "snapshot_to", "kind"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    snapshot_from: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="CASCADE"), nullable=False
+    )
+    snapshot_to: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="CASCADE"), nullable=False
+    )
+    county: Mapped[str] = mapped_column(String(40), nullable=False)
+    tlid: Mapped[str] = mapped_column(String(40), nullable=False)
+    kind: Mapped[str] = mapped_column(String(16), nullable=False)
+    role: Mapped[str | None] = mapped_column(String(16))
+    #: The lots on the other side of the change, as TLIDs in the same county.
+    related_tlids: Mapped[list[str]] = mapped_column(ARRAY(String(40)), nullable=False, server_default="{}")
+    area_before: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    area_after: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    #: Intersection over union of the old and new ground, where both exist.
+    iou: Mapped[float | None] = mapped_column(Numeric(6, 4))
+    attr_diff: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
+    rlis_change: Mapped[str | None] = mapped_column(String(8))
+    note: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+
+
 class FlatsRun(Base):
     """One execution of the screening pipeline.
 

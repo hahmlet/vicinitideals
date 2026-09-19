@@ -77,6 +77,23 @@ datasets:
       __geo_interface__ — the delta helper's own converter splits interior rings
       into separate polygons, which inflates lot areas.
 
+  rlis_taxlot_change:
+    kind: rlis_zip
+    label: Metro RLIS taxlot changes since the last quarterly release
+    provides: changelog
+    url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
+    member: TAXLOTS/taxlot_change.dbf
+    geometry: table
+    serves: [or/multnomah, or/clackamas]
+    fields: [TLID, ORTAXLOT, ADDCHANGE]
+    notes: >-
+      Metro's own list of lots ADDED, DELETED or CHANGED in the quarter (the
+      2026_08 release held 127,407 rows). Read by the refresh delta to check
+      our July-vs-now diff against the county's account; never used to build
+      the lot table. ORTAXLOT's first two digits name the county (03
+      Clackamas, 26 Multnomah, 34 Washington) -- there is no COUNTY field to
+      filter on, so Washington's rows come along and the delta drops them.
+
   rlis_streets:
     kind: rlis_zip
     label: Metro RLIS street centerlines

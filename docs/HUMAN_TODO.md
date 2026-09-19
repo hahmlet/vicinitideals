@@ -1926,19 +1926,40 @@ and approved; in plain terms, **how updates work**:
 
 The runbook will live at `docs/ops/flats-county-refresh.md` once built.
 
-*Built so far (2026-09-19, phase 1 of 4).* The red bar and the grey footer
-are live on the Lots pages; the monthly check is scheduled (the 3rd of each
-month) and can be run by hand; the copy in use has a name in the database
-(the July download the current run was read from), and the September
-download is registered beside it as a candidate, so the first thing the
-footer will say is "taken 2026-07-28" and the first amber line will be
-"a refreshed copy from 2026-09-18 is waiting for review" once it has waited
-two weeks -- that is the process telling the truth, not a fault. The first
-check ran by hand on 2026-09-19: every one of the 39 county sources answered
-and matched what the September download recorded, so the footer reads
-"sources checked 2026-09-19" and no bar is showing. The comparison, the
-re-screen from the new copy, and the promote button are the next three
-phases; nothing needs you until the first report is ready.
+*Built so far (2026-09-19, phases 1 and 2 of 4).* The red bar and the grey
+footer are live on the Lots pages; the monthly check is scheduled (the 3rd
+of each month) and can be run by hand; the copy in use has a name in the
+database (the July download the current run was read from), and the
+September download is registered beside it as a candidate, so the first
+thing the footer will say is "taken 2026-07-28" and the first amber line
+will be "a refreshed copy from 2026-09-18 is waiting for review" once it has
+waited two weeks -- that is the process telling the truth, not a fault. The
+first check ran by hand on 2026-09-19: every one of the 39 county sources
+answered and matched what the September download recorded, so the footer
+reads "sources checked 2026-09-19" and no bar is showing.
+
+The comparison -- your "method for delta correction" -- is built and has
+run once for real, July against September, across both counties (453,264
+lots then, 453,782 now). It reads lineage from the ground, not the number:
+a lot whose ground is now under two or more lots split (946 rows; the parent
+kept its number and shrank about half the time, the other half it was
+renumbered -- your wishful pattern holds only sometimes, so the number is
+treated as a hint and the ground as the truth); two or more lots now under
+one is a merge (356 rows, including small lots swallowed by a neighbour that
+grew); the same lot with a new number is renumbered (46); a boundary nudge
+with the same number is a reshape (1,291); a lot gone with nothing over its
+ground is vacated (1) and one whose ground went under a street or a
+neighbour that barely moved is deleted (5); everything else that changed was
+attributes only (11,395 lots -- sale dates and prices, building sizes,
+assessed values), which the next phase adopts as-is. 1,354 of those rows are
+the kind that put an earlier review decision in doubt, and the promote step
+will flag each one for a fresh look. Metro's own quarterly change list was
+read against ours: it agrees on 97-100 % of what it calls added and
+deleted, which is the check that the comparison is reading the map
+correctly (under 80 % would be the warning). The counts above are now the
+"normal" ranges the runbook will quote. The re-screen from the new copy and
+the promote button are the remaining two phases; nothing needs you until the
+first full report is ready.
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 

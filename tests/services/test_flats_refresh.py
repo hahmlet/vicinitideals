@@ -21,6 +21,7 @@ from app.models.flats import FlatsProbe, FlatsSnapshot
 from app.services import flats_refresh
 from app.services.flats_refresh import (
     RegisterError,
+    attach_report,
     refresh_notices,
     register_snapshot,
     run_probe,
@@ -149,6 +150,24 @@ async def test_the_copy_in_use_is_neither_demoted_nor_doubled_by_registering(ses
 async def test_a_manifest_without_a_date_is_refused(session: AsyncSession) -> None:
     with pytest.raises(RegisterError, match="snapshot date"):
         await register_snapshot(session, {"datasets": {}}, host="137", status="candidate")
+
+
+async def test_a_report_section_is_stored_on_the_row_and_replaced_whole(session: AsyncSession, tmp_path) -> None:
+    pipe = _pipeline(tmp_path)
+    row = await register_snapshot(session, _manifest(pipe), host="137", status="candidate")
+    await session.commit()
+
+    await attach_report(session, row.id, "delta", {"rows": 17, "by_kind": {"split": 5}})
+    await attach_report(session, row.id, "drift", {"moves": 3})
+    await attach_report(session, row.id, "delta", {"rows": 18, "by_kind": {"split": 6}})
+    await session.commit()
+    session.expunge_all()
+
+    stored = await session.get(FlatsSnapshot, row.id)
+    assert stored is not None
+    assert stored.report == {"delta": {"rows": 18, "by_kind": {"split": 6}}, "drift": {"moves": 3}}
+    with pytest.raises(RegisterError, match="no snapshot 999"):
+        await attach_report(session, 999, "delta", {})
 
 
 # --- the monthly check -------------------------------------------------------
