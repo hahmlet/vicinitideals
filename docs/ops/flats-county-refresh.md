@@ -75,7 +75,7 @@ Durations are from the first real run (2026-09-18/19, 453,782 taxlots).
 | 12 | Register the copy | 114 | `docker compose run --rm api python scripts/flats_snapshot.py register --manifest /app/data/flats/sources/<date>/manifest.json --host 137 --status candidate` | 1 s | `flats_snapshot.py list` shows it `candidate`; note its id `N` |
 | 13 | Load the delta | 114 | `docker compose run --rm api python scripts/flats_load_bridge.py load-changes --changes /app/data/flats/deltas/<date>/changes.csv.gz --from <prev id> --to N` then `flats_snapshot.py report --snapshot N --section delta --summary /app/data/flats/deltas/<date>/summary.json` | 1 min | `report.delta` on the row |
 | 14 | Load the candidate | 114 | `docker compose run --rm api python scripts/flats_load_bridge.py load --bundle /app/data/flats/bridge/<date> --snapshot N --dry-run`, then without `--dry-run` | ~10 min each | a new `flats.runs` row `candidate`; `checks` written on the snapshot |
-| 15 | Vacuum | 114 | `psql … -c "VACUUM (FULL, ANALYZE) flats.lots; VACUUM (FULL, ANALYZE) flats.lot_results;"` | ~5 min | space back (each copy ≈ 1.2 GB) |
+| 15 | Vacuum | 114 | `psql … -c "VACUUM (FULL, ANALYZE) flats.lots"` then `psql … -c "VACUUM (FULL, ANALYZE) flats.lot_results"` -- one statement per call: psql runs a multi-statement `-c` as one transaction and VACUUM refuses to run inside one | ~5 min | space back (each copy ≈ 1.2 GB) |
 | 16 | Drift | 114 | `docker compose run --rm api python scripts/flats_promote.py drift --from-run <run in use> --to-run <candidate run> --out /app/data/flats/reports/<date>/drift.md` | 1 min | `report.drift` on the row; the County copy page shows it |
 | 17 | Read the gate | 114 / browser | `flats_promote.py status`, or `/flats/refresh` | — | every row `ok` → agent promotes; any `!!` → Steph reads §5 |
 | 18 | Promote | 114 or browser | `flats_promote.py promote --snapshot N --by "agent, standing word 2026-09-19"` (clean) / the **Promote** button, or `--by Steph --override "…"` (warned) | 1 s | the Lots pages default to the new run; the previous copy is `retired` and still reachable by `?run=` |
@@ -114,7 +114,8 @@ The candidate's card on `/flats/refresh`. Four questions, top to bottom:
    on a line and flipped: an unstable verdict, not a wrong one), a rules
    change, or a code change; **unexplained** must be 0. Each unexplained lot is linked so
    it can be opened on both runs. Normal range from the first real report
-   (July -> September, 579,400 answers): 178 moves, none unexplained.
+   (July -> September, run 2 -> run 8, 575,478 answers): 178 moves --
+   ground 39, surroundings 104, re-measured 35 -- none unexplained.
 
 Then: promote, or say what to fix.
 
@@ -182,7 +183,7 @@ rows were pruned — prune only after the next quarter has settled.
 | Acquire stopped half way | Re-run the same date; `present` datasets are skipped. Check disk first (a snapshot ≈ 1.6 GB). |
 | Drift report fails with "could not resize shared memory segment" | Docker's default /dev/shm (64 MB) is too small for the parallel hash join across two copies; the postgres service carries `shm_size: 1g` since 02752a1f -- check `docker inspect re-modeling-postgres --format '{{.HostConfig.ShmSize}}'`. |
 | Load failed midway | The load is one transaction; nothing partial lands. Fix, re-run. The first September load stopped twice on real data, both fixed in code: a lot outline longer than the CSV reader's 128 KB default (f8d1147a) and a blank jurisdiction for the 16,963 lots in Canby, Sandy, Molalla, Estacada and Barlow -- on the roll, in no layer the rules hold -- which now carry `juris_city:<name>` and screen `JURISDICTION_NOT_ENCODED` (5512490a). |
-| Candidate loaded, measurement was wrong | Never promote; the copy in use is untouched. Leave the candidate for inspection or re-run steps 6–14 into the same snapshot. |
+| Candidate loaded, measurement was wrong | Never promote; the copy in use is untouched. Leave the candidate for inspection, or replace it: a re-export is a new `source_id`, so the loader makes a *second* candidate run on the same snapshot and its upsert never deletes -- a lot the re-export no longer carries would stay behind with the old run's results, `candidate_run()` would pick the newest run, and the Lots page would list both. So first retire the old run in one transaction (rehearse it with `ROLLBACK`, then `COMMIT`): `DELETE FROM flats.lot_results WHERE run_id = <old>; DELETE FROM flats.lots WHERE snapshot_id = N; DELETE FROM flats.runs WHERE id = <old>;` -- the whole lot table of the snapshot, not just the orphans, so the fresh load writes a truthful `first_seen_run_id` and computes `checks` on exactly the rows it loaded; `lot_changes` is keyed by snapshot and survives. Then steps 14–16 again (keep the old bundle beside the new one as `bridge/<date>.run<old>`). Done 2026-09-19 for run 6 -> run 8 (2,001 condominium unit records dropped, 8e596f8b). |
 | The wrong copy was promoted | Roll back (§6). |
 | No new RLIS release yet | Not a failure: the ArcGIS layers still refresh; RLIS keys report `present`; the footer names the release. |
 | Rules changed between the two runs | The drift report attributes moves to `rules`; take the refresh on the rules commit that is live so this is normally 0. |

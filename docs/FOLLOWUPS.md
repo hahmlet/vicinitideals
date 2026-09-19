@@ -9,18 +9,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    delta dc1dbaad; every-lot normalize/assign + gate 1318db5b; promote /
    rollback / drift / `/flats/refresh` ffe407ec; runbook
    `docs/ops/flats-county-refresh.md`). The September copy is loaded as
-   **run 6** (`candidate`, snapshot 3: 402,033 lots = 290,032 measured +
-   112,001 unmeasured with a reason; 804,066 results; `?run=6`, default
-   still run 2), drift 2 -> 6 stored (579,400 compared, 178 moved: ground
-   39 / rules 0 / code 139 / unexplained 0), gate trips **new_zones only**
-   -- Steph reads; nobody promotes. When Steph promotes: `flats_promote.py
-   prune --dry-run` then real (keeps snapshot 1 whole), confirm the Lots
-   default is run 6 and the footer says 2026-09-18, re-run the probe.
-   Drift 2 -> 6 re-run after 61e01c36 (causes read from the measured facts:
+   **run 8** (`candidate`, snapshot 3: 400,032 lots = 288,031 measured +
+   112,001 unmeasured with a reason; 800,064 results; `?run=8`, default
+   still run 2; run 6 -- the same snapshot with 2,001 condo unit records
+   kept as lots -- was retired by a one-shot before the re-load, 8e596f8b),
+   drift 2 -> 8 stored (575,478 compared, 178 moved: ground 39 /
+   surroundings 104 / re-measured 35 / rules 0 / code 0 / unexplained
+   0; causes read from the measured facts since 61e01c36:
    `surroundings` beyond float noise, `remeasured` within it -- 0.05 abs /
-   2 % rel -- on an answer that sat on a line): ground 39 / surroundings
-   104 / re-measured 35 / rules 0 / code 0 / unexplained 0;
-   what moved around them: front_bearings_deg 85, envelope 75, slope 62, geometry_tier 44, frontage 27, corner_lot 19, lot_depth 17, lot_width 16, cul-de-sac 10, alley 7. Still coarse at the end: `code` is the
+   2 % rel -- on an answer that sat on a line), gate trips **new_zones
+   only** -- Steph reads; nobody promotes. When Steph promotes:
+   `flats_promote.py prune --dry-run` then real (keeps snapshot 1 whole),
+   confirm the Lots default is run 8 and the footer says 2026-09-18,
+   re-run the probe. Still coarse at the end: `code` is the
    fall-through whenever the repo HEAD differs, so it says "a commit
    landed", not "the screen changed"; the api container has no git, so
    making it precise means the exporter stamping a hash of the screen's own
@@ -30,12 +31,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    loader change. Loose ends the September map
    found, queued not fixed: Happy Valley's layer carries both `MURM2` and
    `MURm2` (one lot; the source's casing, kept), Oregon City's zoning says
-   `County` on 14 lots inside its boundary; 2,001 Multnomah unit lots
-   (`-8xxxx` / `-9xxxx` / `-6xxxx` TLIDs, ~1,000-1,800 sq ft, all red) that
-   quadfit's s1 measured but `flats/normalize/condo.py` excluded as
-   condominium records (`condo_excluded` 47,114) -- the two condo readings
-   disagree; the bundle keeps quadfit's answer for them without roll or
-   condo facts; Terrain (DEM tiles) stays
+   `County` on 14 lots inside its boundary; quadfit's s1 condo test reads
+   only stacked geometry, so it measures ~2,000 Multnomah condo unit
+   records (PROP_CODE 102/132/202/122, 1,000-2,000 sq ft) every run --
+   normalize's `excluded.csv.gz` ledger now names them and assign drops
+   them (8e596f8b), but s1 itself could read the roll's property code the
+   way `flats/normalize/condo.py` does; Terrain (DEM tiles) stays
    `deferred` until the slope stage exists; no writer for lot decisions in
    `app/` yet (they are inserted by hand or by a future review page).
 2. **The court search takes the biggest rectangle, not the deepest one that

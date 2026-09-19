@@ -1978,24 +1978,26 @@ verdict. The full steps, timings, normal ranges, warnings and
 failure modes are in the runbook.
 
 **The September copy is loaded and waiting for you (2026-09-19).** Every lot
-on the county map now has an answer: 402,033 lots -- 290,032 measured and
+on the county map now has an answer: 400,032 lots -- 288,031 measured and
 screened, 112,001 not screened with the reason on each (51,914 outside
 Metro's growth boundary, 23,172 the measurement never reached -- slivers,
 under 20 ft wide, in a zone the measurement has no rules for, or a zone
 where four attached units are not allowed, 16,963 in Canby, Sandy, Molalla,
 Estacada or Barlow where nothing is encoded, 14,617 in Lake Oswego which
 you switched off, 5,328 in zone codes the rules do not hold, 7 with no
-zone), and 2,001 tiny unit lots (a thousand-odd square feet each, all red)
-that the measurement answered but the app's own reading of the map sets
-aside as condominium records -- kept with the measurement's answer, and
-noted as a disagreement to settle. The screen itself moved little: 20,119 lots green on the
+zone). The first load also carried 2,001 tiny "lots" (a thousand-odd
+square feet each) that turned out to be condominium unit records -- the
+county's property code says so on every one -- so the map's reading
+now names what it sets aside, the measurement's answers for those records
+are dropped rather than shown, and the copy was re-loaded without them.
+The screen itself moved little: 20,119 lots green on the
 September map against 20,125 on July's. The gate on the County copy page
 shows one row not ok -- **"no zone code the rules do not hold"** -- as
 designed: the July copy never counted those codes, so every one of the
 5,328 lots' codes reads as new (commercial, industrial and farm zones in
 unincorporated Clackamas; Wilsonville's planned-development codes; Happy
 Valley's mixed-use codes; Gladstone, Milwaukie, West Linn and Troutdale
-commercial codes). Of the 579,400 answers the two copies share, 178 changed colour, and the report now names the cause of every one: 39 because the lot itself moved (split, merged, reshaped or rezoned); 104 because what the map says *around* an unchanged lot moved -- the street it fronts (a corner, a cul-de-sac), an alley, the flood or sewer layers, a zoning line -- all re-read from the September layers; and 35 because the lot re-measured within a hair (a bearing by half a degree, a slope by a hundredth of a percent) and its answer sat right on the line between two colours, so it tipped -- those are lots whose answer is unstable, not wrong, and the report lists them. None is a change to the screen itself and none is unexplained. Nothing is promoted; the Lots pages still
+commercial codes). Of the 575,478 answers the two copies share, 178 changed colour, and the report now names the cause of every one: 39 because the lot itself moved (split, merged, reshaped or rezoned); 104 because what the map says *around* an unchanged lot moved -- the street it fronts (a corner, a cul-de-sac), an alley, the flood or sewer layers, a zoning line -- all re-read from the September layers; and 35 because the lot re-measured within a hair (a bearing by half a degree, a slope by a hundredth of a percent) and its answer sat right on the line between two colours, so it tipped -- those are lots whose answer is unstable, not wrong, and the report lists them. None is a change to the screen itself and none is unexplained. Nothing is promoted; the Lots pages still
 show the July copy. What I need from you: open **County copy**, read the
 four questions, and either press **Promote over the warning** with a
 reason (the warning is only because the July copy never counted those
