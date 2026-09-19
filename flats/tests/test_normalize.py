@@ -10,6 +10,8 @@ assessor columns, the condo verdicts, the stack collapse and the funnel.
 
 from __future__ import annotations
 
+import csv
+import gzip
 import json
 from pathlib import Path
 from typing import Any
@@ -216,6 +218,18 @@ def test_the_lot_universe_and_the_funnel(result, layers):
     assert rows[("multnomah", "1N1E04AA  -00100")]["area_sqft"] == 10_000
     assert rows[("multnomah", "1N1E01AA  -00700")]["stack_count"] == 3
     assert rows[("multnomah", "1N1E01AA  -00100")]["stack_count"] == 1
+    # Every record dropped by name is in the ledger with its step and reason.
+    with gzip.open(out / "excluded.csv.gz", "rt", encoding="utf-8", newline="") as fh:
+        ledger = list(csv.DictReader(fh))
+    assert [tuple(r[c] for c in ("tlid", "step", "reason", "area_sqft", "prop_code")) for r in ledger] == [
+        ("1N1E01AA  -00500", "condo_excluded", "CONDO_AIR_PARCEL", "40.0", "122"),
+        ("1N1E01AA  -00701", "condo_stack", "stacked on 1N1E01AA  -00700", "10000.0", "101"),
+        ("1N1E01AA  -00702", "condo_stack", "stacked on 1N1E01AA  -00700", "10000.0", "101"),
+        ("1N1E01AA  -00800", "no_geometry", "", "", "101"),
+        ("1N1E01AA  -STR", "not_a_taxlot", "", "", "101"),
+        ("1N1E04AA  -00100", "duplicate_tlid", "smaller copy", "2500.0", "101"),
+    ]
+    assert {r["county"] for r in ledger} == {"multnomah"}
 
 
 def test_jurisdiction_zone_and_gate(result, layers):

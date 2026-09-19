@@ -42,11 +42,16 @@ polygon; the right-of-way and water pseudo-lots (``NOT_A_TAXLOT_RE``); a
 ``(county, tlid)`` the file carries twice (the larger polygon stays); condo
 air parcels; and condo stacks -- units platted on one identical footprint
 collapse to one representative with ``stack_count``, the way quadfit's s1
-does, so the two lot universes agree on what a lot is.
+does, so the two lot universes agree on what a lot is. Every dropped record
+that has a ``(county, tlid)`` is also named in ``excluded.csv.gz`` with its
+step and reason, so a later stage that meets the TLID again (quadfit's s1
+measured 2,001 condominium unit records the September table lacked -- its
+own condo test looks for stacked geometry, not the roll's property code)
+can tell "not land" from "missing".
 
 Outputs under ``--out``: ``lots.parquet`` (a ``wkb`` column carries the full
-valid geometry, every part), ``funnel.json``, ``new_zones.json``,
-``summary.json``, ``summary.md``.
+valid geometry, every part), ``excluded.csv.gz``, ``funnel.json``,
+``new_zones.json``, ``summary.json``, ``summary.md``.
 
 Runs on the analysis host (shapely, pyarrow, pandas)::
 
@@ -56,6 +61,8 @@ Runs on the analysis host (shapely, pyarrow, pandas)::
 from __future__ import annotations
 
 import argparse
+import csv
+import gzip
 import json
 import re
 import sys
@@ -77,6 +84,9 @@ from flats.rules.model import Layer
 #: quadfit's ``common.NOT_A_TAXLOT_RE``, verbatim; a divergence here would
 #: make the two lot universes disagree on what a lot is.
 NOT_A_TAXLOT_RE = re.compile(r"(?:-STR|-RIV|-RR|ROADS|WATER)$")
+
+#: ``excluded.csv.gz``: one row per record the lot table dropped by name.
+EXCLUDED_COLUMNS = ("county", "tlid", "step", "reason", "area_sqft", "prop_code")
 
 #: RLIS roll attributes carried as columns and adopted on every refresh.
 ASSESSOR_FIELDS = (
@@ -339,6 +349,20 @@ def normalize(
     funnel: list[dict[str, Any]] = []
     counts: Counter[str] = Counter()
     rows: dict[tuple[str, str], dict[str, Any]] = {}
+    ledger: list[dict[str, Any]] = []
+
+    def drop(county: str, tlid: str, step: str, reason: str | None, area: float | None, prop_code: Any) -> None:
+        ledger.append(
+            {
+                "county": county,
+                "tlid": tlid,
+                "step": step,
+                "reason": reason or "",
+                "area_sqft": round(area, 1) if area is not None else "",
+                "prop_code": _text(prop_code) or "",
+            }
+        )
+
     for feature in iter_features(path):
         counts["features"] += 1
         props = feature.get("properties") or {}
@@ -353,16 +377,20 @@ def normalize(
             continue
         if NOT_A_TAXLOT_RE.search(tlid):
             counts["not_a_taxlot"] += 1
+            drop(county, tlid, "not_a_taxlot", None, None, props.get("PROP_CODE"))
             continue
         geom, area, parts = _clean_polygon(feature.get("geometry"))
         if geom is None:
             counts["no_geometry"] += 1
+            drop(county, tlid, "no_geometry", None, None, props.get("PROP_CODE"))
             continue
         key = (county, tlid)
         if key in rows:
             counts["duplicate_tlid"] += 1
             if rows[key]["area_sqft"] >= area:
+                drop(county, tlid, "duplicate_tlid", "smaller copy", area, props.get("PROP_CODE"))
                 continue
+            drop(county, tlid, "duplicate_tlid", "smaller copy", rows[key]["area_sqft"], rows[key].get("PROP_CODE"))
         row: dict[str, Any] = {
             "county": county,
             "tlid": tlid,
@@ -393,6 +421,7 @@ def normalize(
         row["condo_reason"] = verdict.reason or None
         if verdict.verdict is CondoVerdict.excluded:
             excluded[verdict.reason] += 1
+            drop(row["county"], row["tlid"], "condo_excluded", verdict.reason, row["area_sqft"], row["PROP_CODE"])
             continue
         kept.append(row)
     funnel.append({"step": "condo_excluded", "dropped": len(lots) - len(kept), "reasons": dict(sorted(excluded.items()))})
@@ -406,6 +435,8 @@ def normalize(
         members.sort(key=lambda r: r["tlid"])
         members[0]["stack_count"] = len(members)
         kept.append(members[0])
+        for other in members[1:]:
+            drop(other["county"], other["tlid"], "condo_stack", f"stacked on {members[0]['tlid']}", other["area_sqft"], other["PROP_CODE"])
     funnel.append({"step": "condo_stack", "dropped": len(lots) - len(kept)})
     lots = sorted(kept, key=lambda r: (r["county"], r["tlid"]))
     say(f"{len(lots):,} lots after condo ({len(rows) - len(lots):,} out)")
@@ -486,6 +517,10 @@ def normalize(
     for f in ("area_sqft", "zone_frac"):
         frame[f] = frame[f].astype("float64")
     frame.to_parquet(out / "lots.parquet", index=False)
+    with gzip.open(out / "excluded.csv.gz", "wt", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(EXCLUDED_COLUMNS))
+        w.writeheader()
+        w.writerows(sorted(ledger, key=lambda r: (r["county"], r["tlid"], r["step"])))
     by_county = Counter(r["county"] for r in lots)
     by_layer_counts = Counter(str(r["jurisdiction"]) for r in lots)
     summary = {

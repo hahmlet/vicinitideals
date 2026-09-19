@@ -8,12 +8,15 @@ step for dropping it.
 
 from __future__ import annotations
 
+import csv
+import gzip
 import json
 from pathlib import Path
 
 import pytest
 
 from flats.ingest.assign import NOT_MEASURED, ROW_COLUMNS, assign, read_dropped, synthetic_row
+from flats.ingest.normalize import EXCLUDED_COLUMNS
 
 pd = pytest.importorskip("pandas")
 pytest.importorskip("pyarrow")
@@ -24,6 +27,7 @@ GATED = "1S2E05DA -02000"
 DROPPED = "1S2E05DA -02100"
 UNCLAIMED = "1S2E05DA -02200"
 GHOST = "1N1E29DD -09999"  # measured by the bridge, absent from the lot table
+CONDO = "1N1E29DD -90001"  # measured by the bridge; the lot table dropped it as a condominium unit
 
 
 def _bridge_row(tlid: str, design: str, **over) -> dict:
@@ -68,10 +72,12 @@ def world(tmp_path: Path) -> dict[str, Path]:
         _bridge_row(MEASURED, DESIGNS[1], if_signed="yellow", fits=False, fit_slack_ft=-3.0),
         _bridge_row(GHOST, DESIGNS[0], if_signed="red"),
         _bridge_row(GHOST, DESIGNS[1], if_signed="red"),
+        _bridge_row(CONDO, DESIGNS[0], if_signed="red", lot_sqft=1200.0),
+        _bridge_row(CONDO, DESIGNS[1], if_signed="red", lot_sqft=1200.0),
     ]
     pd.DataFrame(rows).to_parquet(bridge / "lots.parquet", index=False)
     (bridge / "meta.json").write_text(
-        json.dumps({"lots": 2, "rows": 4, "step_deg": 1.0, "processes": 2, "seconds": 9.0, "s4": "/x/s4.parquet"}),
+        json.dumps({"lots": 3, "rows": 6, "step_deg": 1.0, "processes": 2, "seconds": 9.0, "s4": "/x/s4.parquet"}),
         encoding="utf-8",
     )
 
@@ -86,6 +92,11 @@ def world(tmp_path: Path) -> dict[str, Path]:
         {"county": "clackamas", "tlid": UNCLAIMED, "jurisdiction": "or/clackamas", "zone": "R-10", "zone_raw": "R-10", "area_sqft": 9000.0, "gate": None},
     ]
     pd.DataFrame(lots).to_parquet(normalized / "lots.parquet", index=False)
+    with gzip.open(normalized / "excluded.csv.gz", "wt", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(EXCLUDED_COLUMNS))
+        w.writeheader()
+        w.writerow({"county": "multnomah", "tlid": CONDO, "step": "condo_excluded", "reason": "CONDO_AIR_PARCEL", "area_sqft": "1200.0", "prop_code": "102"})
+        w.writerow({"county": "multnomah", "tlid": "1N1E29DD -STR", "step": "not_a_taxlot", "reason": "", "area_sqft": "", "prop_code": ""})
     (normalized / "summary.json").write_text(
         json.dumps({"snapshot": "2026-09-18", "new_zones": {"or/multnomah/portland": {"QQ9": 1}}, "funnel": [{"step": "features", "count": 5}]}),
         encoding="utf-8",
@@ -104,7 +115,9 @@ def test_measured_rows_pass_through_and_every_other_lot_gets_a_reason(world: dic
     assert list(frame.columns) == list(ROW_COLUMNS)
     before = pd.read_parquet(world["bridge"] / "lots.parquet")
     kept = frame[frame["TLID"].isin([MEASURED, GHOST])].reset_index(drop=True)
-    pd.testing.assert_frame_equal(kept, before[list(ROW_COLUMNS)], check_dtype=False)
+    pd.testing.assert_frame_equal(kept, before[before["TLID"] != CONDO][list(ROW_COLUMNS)].reset_index(drop=True), check_dtype=False)
+    # The condominium unit quadfit measured is not land by the lot table's reading: gone, and counted.
+    assert CONDO not in set(frame["TLID"])
 
     def rows_for(tlid: str) -> list[dict]:
         return frame[frame["TLID"] == tlid].sort_values("design").to_dict("records")
@@ -135,11 +148,23 @@ def test_measured_rows_pass_through_and_every_other_lot_gets_a_reason(world: dic
     assert a["by_reason"] == {NOT_MEASURED: 3, "ZONE_NOT_ENCODED": 1}
     assert a["not_measured_by_step"] == {"sliver_area": 1, "unknown": 2}
     assert a["measured_not_in_lots"] == 1 and a["measured_not_in_lots_examples"] == [GHOST]
+    assert a["measured_but_excluded"] == {"CONDO_AIR_PARCEL": 1}
     assert a["tlids_shared_across_counties"] == 1
     written = json.loads((world["out"] / "meta.json").read_text(encoding="utf-8"))
     assert written["assign"]["by_reason"] == a["by_reason"]
     summary = (world["out"] / "summary.md").read_text(encoding="utf-8")
     assert "ZONE_NOT_ENCODED: 1" in summary and "QQ9 (1)" in summary and "sliver_area 1" in summary
+    assert "not land by the snapshot's reading (dropped): 1 -- CONDO_AIR_PARCEL 1" in summary
+    assert "kept from quadfit's record): 1" in summary
+
+
+def test_without_the_ledger_a_measured_lot_the_table_lacks_is_kept(world: dict[str, Path]) -> None:
+    (world["normalized"] / "excluded.csv.gz").unlink()
+    meta = assign(world["normalized"], world["bridge"], world["out"], quadfit_dir=world["quadfit"])
+    a = meta["assign"]
+    assert a["measured"] == 3 and a["measured_but_excluded"] == {}
+    assert a["measured_not_in_lots"] == 2 and a["measured_not_in_lots_examples"] == sorted([GHOST, CONDO])
+    assert CONDO in set(pd.read_parquet(world["out"] / "lots.parquet")["TLID"])
 
 
 def test_without_quadfit_dir_every_unmeasured_lot_is_unclaimed(world: dict[str, Path]) -> None:

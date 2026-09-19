@@ -25,8 +25,15 @@ reason from ``checks.reasons`` the way it reads the screen's.
 Nothing here decides a verdict. The screen's rows pass through byte for byte;
 the synthetic rows say only "not answered, because". If the two universes
 disagree -- a lot the bridge measured that the snapshot's lot table lacks --
-the count is reported in ``meta.json`` and the bridge's row is kept (the
-loader takes its lot record from quadfit's stage file, as it always has).
+normalize's ``excluded.csv.gz`` is asked first: a lot it names (a
+condominium unit record, a right-of-way pseudo-lot, a stacked duplicate) is
+not land whoever measured it, so its rows are dropped and counted by reason
+in ``meta.json``; a lot it does not name is a real disagreement, reported by
+count and kept (the loader takes its lot record from quadfit's stage file,
+as it always has). The September copy's first assign found 2,001 of the
+first kind and none of the second: quadfit's s1 keeps condominium units the
+roll's property code names because its own condo test looks for stacked
+geometry.
 
 Outputs under ``--out``: ``lots.parquet`` (the bridge's columns), ``meta.json``
 (the bridge's, plus ``snapshot_date``, ``normalized``, ``new_zones``, the
@@ -42,6 +49,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import json
 import sys
 import time
@@ -49,7 +57,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Callable
 
-from flats.ingest.normalize import GATES
+from flats.ingest.normalize import GATES, EXCLUDED_COLUMNS
 
 #: The reason on a lot that passed every gate and still has no measurement.
 NOT_MEASURED = "NOT_MEASURED"
@@ -129,6 +137,18 @@ def read_dropped(path: Path | None) -> dict[str, str]:
         return {str(r["TLID"]).rstrip(): str(r["step"]) for r in csv.DictReader(fh)}
 
 
+def read_excluded(path: Path | None) -> dict[str, tuple[str, str]]:
+    """normalize's ``excluded.csv.gz`` as TLID -> (step, reason); empty when there is none."""
+    if path is None or not path.is_file():
+        return {}
+    with gzip.open(path, "rt", encoding="utf-8", newline="") as fh:
+        reader = csv.DictReader(fh)
+        missing = set(EXCLUDED_COLUMNS) - set(reader.fieldnames or ())
+        if missing:
+            raise SystemExit(f"{path} lacks {sorted(missing)}")
+        return {str(r["tlid"]).rstrip(): (str(r["step"]), str(r["reason"])) for r in reader}
+
+
 def assign(
     normalized: Path,
     bridge: Path,
@@ -183,8 +203,18 @@ def assign(
         for design in designs:
             synthetic.append(synthetic_row(row, design, reason, step))
     normalized_tlids = set(by_tlid)
+    excluded = read_excluded(normalized / "excluded.csv.gz")
+    not_land = {t for t in measured - normalized_tlids if t in excluded}
+    measured_but_excluded: Counter[str] = Counter(excluded[t][1] or excluded[t][0] for t in not_land)
+    measured -= not_land
+    if not_land:
+        frame = frame[~frame["TLID"].map(lambda t: str(t).rstrip() in not_land)].reset_index(drop=True)
     measured_not_in_lots = sorted(measured - normalized_tlids)
-    say(f"synthetic: {len(synthetic):,} rows for {sum(by_reason.values()):,} unmeasured lots; {len(measured_not_in_lots):,} measured lots not in the lot table")
+    say(
+        f"synthetic: {len(synthetic):,} rows for {sum(by_reason.values()):,} unmeasured lots; "
+        f"{len(not_land):,} measured lots the lot table excluded as not land, dropped; "
+        f"{len(measured_not_in_lots):,} measured lots not in the lot table, kept"
+    )
 
     out.mkdir(parents=True, exist_ok=True)
     extra = pd.DataFrame(synthetic, columns=list(ROW_COLUMNS))
@@ -209,6 +239,7 @@ def assign(
             "not_measured_by_step": dict(sorted(by_step.items())),
             "measured_not_in_lots": len(measured_not_in_lots),
             "measured_not_in_lots_examples": measured_not_in_lots[:20],
+            "measured_but_excluded": dict(sorted(measured_but_excluded.items())),
             "tlids_shared_across_counties": len(collisions),
             "designs": designs,
             "seconds": round(time.monotonic() - started, 1),
@@ -229,6 +260,11 @@ def describe(meta: dict[str, Any]) -> list[str]:
         out.append(f"  - {reason}: {n:,}")
     if a["not_measured_by_step"]:
         out.append("  - NOT_MEASURED, by quadfit's step: " + ", ".join(f"{k} {v:,}" for k, v in a["not_measured_by_step"].items()))
+    if a.get("measured_but_excluded"):
+        out.append(
+            f"- measured by quadfit but not land by the snapshot's reading (dropped): {sum(a['measured_but_excluded'].values()):,} -- "
+            + ", ".join(f"{k} {v:,}" for k, v in a["measured_but_excluded"].items())
+        )
     if a["measured_not_in_lots"]:
         out.append(f"- measured but not in the snapshot's lot table (kept from quadfit's record): {a['measured_not_in_lots']:,}")
     if meta.get("new_zones"):
