@@ -94,3 +94,31 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    placement (the rectangle's origin on the lot, in 2913 feet) has to be
    returned by the fit and stored in `checks.fit` before anything can be
    drawn. Offered 2026-09-18 with the pages.
+5. **Where parking may SIT, and which street is "the front".** Offered
+   2026-09-19 when Steph asked why the court is always behind. Today the
+   rear court is the one arrangement that survives every city's rule
+   (Gresham 7.0431 bars front/side-yard parking for townhouses; Portland
+   33.266.120.C.1.a bans a vehicle area between building and street; Happy
+   Valley 16.43.030.E.4 sets parking back by the building setback; Oregon
+   City 17.16.060.D caps parking width at 40 ft), and the county drawing
+   (`s6s_siteplan.py`) never draws a side court; the screen's fit
+   (`flats/fit/rectangle.py`) sweeps 180 angles where no
+   `orientation_constraint: axis_required` is held and charges the court as
+   depth behind the building in whatever direction it faces, so it can
+   already count a sideways placement the drawing would refuse -- the two
+   disagree on wide lots and neither asks the code. No field holds "side
+   parking allowed / forbidden" (`parking_front_prohibited` is the front
+   only); the drawing's docstring names it as its largest gap. Corner and
+   through lots: `s4_edges.cluster_bearings` orders fronts by length and
+   s6s takes `bearings[0]` only -- lane from the longer street, court away
+   from it, so the court can stand along the second street inset only by
+   `setback_street_side_ft`, and a lot with streets at both ends (bearings
+   mod 180 = one cluster) gets its court facing the other street, which
+   Portland's rule forbids; `frontage_ft` sums both street edges on a
+   corner. Do in this order: (i) a per-line field `parking_side_prohibited`
+   read per city (whole-document grep each parking chapter), (ii) a named
+   side-court arrangement in s6s counted under its own `layout_method` so
+   every crosstab shows how many plans rest on it, (iii) s6s tries each
+   street as the front and checks the court against every street's rule.
+   Measure the affected population first (corner lots, through lots, lots
+   wider than deep) before any county run.
