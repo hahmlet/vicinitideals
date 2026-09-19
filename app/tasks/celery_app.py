@@ -23,6 +23,7 @@ celery_app = Celery(
         "app.tasks.email_ingest",
         "app.tasks.maintenance",
         "app.tasks.document_preview",
+        "app.tasks.flats_probe",
     ],
 )
 
@@ -71,6 +72,15 @@ celery_app.conf.update(
         "purge-test-deals-daily": {
             "task": "app.tasks.maintenance.purge_test_deals_task",
             "schedule": crontab(hour=8, minute=0),
+        },
+        # FLATS county-source check: monthly on the 3rd at 09:00 UTC. Reads
+        # each county layer's metadata and count and compares them with the
+        # copy in use; writes one flats.probes row the Lots pages show as a
+        # banner. Warn-only: downloads nothing, changes no data. There is no
+        # automatic refresh (HUMAN_TODO 20, Steph 2026-09-19).
+        "flats-source-probe-monthly": {
+            "task": "app.tasks.flats_probe.flats_probe_task",
+            "schedule": crontab(day_of_month=3, hour=9, minute=0),
         },
     },
     timezone="UTC",

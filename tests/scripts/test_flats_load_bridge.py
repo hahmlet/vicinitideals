@@ -12,6 +12,7 @@ North coordinates.
 from __future__ import annotations
 
 import json
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -256,40 +257,61 @@ async def _count(session: AsyncSession, sql: str, **params) -> int:
     return (await session.execute(text(sql), params)).scalar_one()
 
 
+async def _snapshot(session: AsyncSession, taken: str = "2026-09-18", status: str = "current") -> int:
+    """A registered county copy for the bundle's lots to belong to; committed,
+    because the loader opens its own connection."""
+    row = (
+        await session.execute(
+            text(
+                "INSERT INTO flats.snapshots (snapshot_date, host, status, manifest, counts) "
+                "VALUES (:d, '137', :s, '{}'::jsonb, '{}'::jsonb) RETURNING id"
+            ),
+            {"d": date.fromisoformat(taken), "s": status},
+        )
+    ).scalar_one()
+    await session.commit()
+    return row
+
+
 @pytest.mark.asyncio
 async def test_the_load_lands_every_row_where_the_schema_keys_it(tmp_path: Path, session: AsyncSession, _test_db_url: str) -> None:
     run_dir, s4, s5o, results = _make_run(tmp_path)
     bundle = tmp_path / "bundle"
     export(run_dir, bundle, s4=s4, s5o=s5o, quadfit_results=results)
+    copy = await _snapshot(session)
 
-    report = await load(bundle, _test_db_url)
+    report = await load(bundle, _test_db_url, snapshot_id=copy)
 
     assert report["verified"] is True
     assert report["run_created"] is True
+    assert (report["snapshot_id"], report["snapshot_date"]) == (copy, "2026-09-18")
     assert (report["lots_inserted"], report["lots_updated"]) == (2, 0)
     assert (report["results_inserted"], report["results_updated"]) == (4, 0)
     assert report["tiers"] == {"unknown": 4}
     assert report["if_signed"] == {"green": 1, "red": 1, "unknown": 1, "yellow": 1}
 
     assert await _count(session, "SELECT count(*) FROM flats.designs WHERE key = ANY(:k)", k=list(DESIGNS)) == 2
-    run = (await session.execute(text("SELECT status, design_keys, counties, code_version, rules_version, params->>'source_id' FROM flats.runs"))).one()
+    run = (await session.execute(text("SELECT status, design_keys, counties, code_version, rules_version, params->>'source_id', snapshot_id FROM flats.runs"))).one()
     assert run[0] == "complete"
     assert list(run[1]) == list(DESIGNS)
     assert list(run[2]) == ["clackamas", "multnomah"]
     assert run[4] == rules_version()
     assert run[5] == json.loads((bundle / RUN_FILE).read_text())["source_id"]
+    assert run[6] == copy
 
     lot = (
         await session.execute(
             text(
                 "SELECT county, jurisdiction, zone_raw, zone, site_address, area_sqft, condo_verdict, "
                 "ST_SRID(geom), ST_GeometryType(geom), round(ST_Area(geom)), ST_SRID(centroid), "
-                "ST_X(centroid), ST_Y(centroid), facts->'quadfit'->>'triage', first_seen_run_id, updated_run_id "
+                "ST_X(centroid), ST_Y(centroid), facts->'quadfit'->>'triage', first_seen_run_id, updated_run_id, "
+                "snapshot_id "
                 "FROM flats.lots WHERE tlid = :t"
             ),
             {"t": LOT_A},
         )
     ).one()
+    assert lot[16] == copy
     assert tuple(lot)[:7] == ("multnomah", "or/multnomah/portland", "R5", "R5", "1234 SE MAIN ST", 5000, "land")
     assert (lot[7], lot[8], lot[9]) == (2913, "ST_MultiPolygon", 5000)
     assert lot[10] == 4326
@@ -321,9 +343,10 @@ async def test_loading_the_same_bundle_twice_changes_nothing(tmp_path: Path, ses
     run_dir, s4, s5o, results = _make_run(tmp_path)
     bundle = tmp_path / "bundle"
     export(run_dir, bundle, s4=s4, s5o=s5o, quadfit_results=results)
-    first = await load(bundle, _test_db_url)
+    copy = await _snapshot(session)
+    first = await load(bundle, _test_db_url, snapshot_id=copy)
 
-    second = await load(bundle, _test_db_url)
+    second = await load(bundle, _test_db_url, snapshot_id=copy)
 
     assert second["verified"] is True
     assert second["run_created"] is False
@@ -340,8 +363,9 @@ async def test_a_dry_run_verifies_and_leaves_nothing_behind(tmp_path: Path, sess
     run_dir, s4, s5o, results = _make_run(tmp_path)
     bundle = tmp_path / "bundle"
     export(run_dir, bundle, s4=s4, s5o=s5o, quadfit_results=results)
+    copy = await _snapshot(session)
 
-    report = await load(bundle, _test_db_url, dry_run=True)
+    report = await load(bundle, _test_db_url, snapshot_id=copy, dry_run=True)
 
     assert report["verified"] is True
     assert report["rolled_back"] is True
@@ -360,8 +384,62 @@ async def test_a_bundle_whose_counts_do_not_match_its_files_is_refused(tmp_path:
     run = json.loads((bundle / RUN_FILE).read_text(encoding="utf-8"))
     run["counts"]["if_signed"]["green"] = 2  # a claim the files do not support
     (bundle / RUN_FILE).write_text(json.dumps(run), encoding="utf-8")
+    copy = await _snapshot(session)
 
     with pytest.raises(SystemExit, match="VERIFY FAILED"):
-        await load(bundle, _test_db_url)
+        await load(bundle, _test_db_url, snapshot_id=copy)
 
     assert await _count(session, "SELECT count(*) FROM flats.lot_results") == 0
+
+
+@pytest.mark.asyncio
+async def test_a_bundle_needs_a_registered_copy_to_belong_to(tmp_path: Path, session: AsyncSession, _test_db_url: str) -> None:
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    bundle = tmp_path / "bundle"
+    export(run_dir, bundle, s4=s4, s5o=s5o, quadfit_results=results)
+
+    with pytest.raises(SystemExit, match="register the snapshot first"):
+        await load(bundle, _test_db_url, snapshot_id=999)
+    retired = await _snapshot(session, status="retired")
+    with pytest.raises(SystemExit, match="retired"):
+        await load(bundle, _test_db_url, snapshot_id=retired)
+
+    assert await _count(session, "SELECT count(*) FROM flats.lots") == 0
+
+
+@pytest.mark.asyncio
+async def test_a_second_copy_lands_beside_the_first_and_a_run_reads_one_copy(
+    tmp_path: Path, session: AsyncSession, _test_db_url: str
+) -> None:
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    bundle = tmp_path / "bundle"
+    export(run_dir, bundle, s4=s4, s5o=s5o, quadfit_results=results)
+    july = await _snapshot(session, taken="2026-07-28")
+    september = await _snapshot(session, taken="2026-09-18", status="candidate")
+    await load(bundle, _test_db_url, snapshot_id=july)
+
+    # The same run does not straddle two copies.
+    with pytest.raises(SystemExit, match="a run reads one copy"):
+        await load(bundle, _test_db_url, snapshot_id=september)
+
+    # A second run over the refreshed copy keeps the same lot numbers beside
+    # the first copy's rows, not on top of them.
+    later = tmp_path / "later"
+    later.mkdir()
+    for name in ("lots.parquet", "meta.json"):
+        (later / name).write_bytes((run_dir / name).read_bytes())
+    bundle2 = tmp_path / "bundle2"
+    export(later, bundle2, s4=s4, s5o=s5o, quadfit_results=results)
+    report = await load(bundle2, _test_db_url, snapshot_id=september)
+
+    assert report["run_created"] is True
+    assert (report["lots_inserted"], report["lots_updated"]) == (2, 0)
+    assert await _count(session, "SELECT count(*) FROM flats.lots") == 4
+    assert await _count(session, "SELECT count(DISTINCT (county, tlid)) FROM flats.lots") == 2
+    assert await _count(session, "SELECT count(*) FROM flats.lots WHERE snapshot_id = :s", s=september) == 2
+    # Each run's results point at the lot rows of its own copy.
+    assert await _count(
+        session,
+        "SELECT count(*) FROM flats.lot_results r JOIN flats.lots l ON l.id = r.lot_id "
+        "JOIN flats.runs u ON u.id = r.run_id WHERE l.snapshot_id <> u.snapshot_id",
+    ) == 0

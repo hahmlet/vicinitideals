@@ -1831,7 +1831,7 @@ runs on it between deploys, and the firmware fault that stopped it booting
 in June was fixed then — it is on the modern setting now. Only the analysis
 box, LXC 137, ever has long jobs of mine running, and none is running.)
 
-## 20. One decision: where the screen's own copy of the county's map data should live
+## ~~20. One decision: where the screen's own copy of the county's map data should live~~ — **DECIDED 2026-09-19: A, in the app's database, with a written update process; the agent may switch over a clean refresh, anything with a warning waits for you**
 
 The screen still reads its lots from the county map's files on the analysis
 box — the "bridge" you approved on 17 September "for now", with an offline
@@ -1876,6 +1876,66 @@ file we named; Gladstone's "zoning" was the whole region's zoning under
 Gladstone's name; and Wood Village's sewer map had moved. All four are
 fixed and the copy re-taken; a check now stops the first one from coming
 back.
+
+*Decided 2026-09-19.* You chose **A** with three conditions — clear
+instructions for updating the copy, no automated connection without a
+failure-state warning, and a way to correct for lots splitting and merging
+and to adopt updated figures such as assessments. You then asked for the
+process itself: is there human review, what is the cadence, what can go
+wrong and how do we handle it, do we audit for drift. The plan is written
+and approved; in plain terms, **how updates work**:
+
+- **Nothing updates by itself.** Every refresh is a set of commands the
+  agent runs by hand, about two weeks after each quarterly Metro release
+  (the current one is called 2026_08; the next is expected in November).
+  The only automatic piece is a once-a-month check that each county map
+  service still answers, still has the columns we expect and still has
+  roughly the same number of shapes — it downloads nothing, changes
+  nothing, and can only raise a warning.
+- **The warning is a red bar on the Lots pages**, worked out from what is
+  already in the database, so a dead service or a dead machine cannot
+  silence it: the copy is older than four months; the last download did
+  not complete; a county source moved or changed on its own side; a
+  refreshed copy has been waiting for your look for more than two weeks;
+  the monthly check has not run. A grey line at the foot always names the
+  copy in use, so "no warning" is a statement, not silence.
+- **A refresh lands beside the copy in use, not on top of it.** It is
+  compared lot by lot with the copy in use (unchanged / figures changed /
+  split / merged / boundary moved / gone / new; zone changes per city; any
+  zone code the rules have never seen), our comparison is checked against
+  Metro's own published change list for the quarter, every lot is
+  re-measured and re-screened, and a one-page report says what moved and
+  why. Until someone says "promote", the site keeps showing the old copy.
+- **Who says promote — your answer of 2026-09-19: "me when clean; you when
+  warned."** The agent switches over a refresh that came back clean (every
+  layer downloaded, counts in the normal range, Metro's change list agrees
+  with ours, no new zone codes, every changed verdict explained by a changed
+  lot) and leaves you the report. Anything that trips a warning, brings a
+  new zone code, or moves a verdict for no explained reason waits for you.
+  Who promoted, and on what grounds, is recorded every time; a promotion
+  can be undone with one command.
+- **Splits and merges** are found by overlapping the old and new lot
+  shapes, not by their numbers (the county sometimes gives the children the
+  parent's number with a suffix, sometimes a fresh series, and about half
+  the time the parent keeps its number and just shrinks). A decision you
+  made about a lot that has since been split or merged is marked "look
+  again" rather than silently carried over. Updated figures (assessments,
+  sale prices, year built) are adopted as they come.
+- **A new zone code** the rules have never seen is never green or red; the
+  lot reads UNKNOWN and the code goes on the encoding list.
+
+The runbook will live at `docs/ops/flats-county-refresh.md` once built.
+
+*Built so far (2026-09-19, phase 1 of 4).* The red bar and the grey footer
+are live on the Lots pages; the monthly check is scheduled (the 3rd of each
+month) and can be run by hand; the copy in use has a name in the database
+(the July download the current run was read from), and the September
+download is registered beside it as a candidate, so the first thing the
+footer will say is "taken 2026-07-28" and the first amber line will be
+"a refreshed copy from 2026-09-18 is waiting for review" once it has waited
+two weeks -- that is the process telling the truth, not a fault. The
+comparison, the re-screen from the new copy, and the promote button are the
+next three phases; nothing needs you until the first report is ready.
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 

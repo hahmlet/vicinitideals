@@ -14,7 +14,11 @@ neither has the other's libraries:
 * ``load`` runs inside the api container (asyncpg, no pandas) against the
   bundle at ``/app/data/...``. It writes the catalog's designs once, finds or
   creates the run row, COPYs the bundle into temp tables and upserts: lots on
-  ``(county, tlid)``, results on ``(lot_id, design_key, run_id)``. Geometry is
+  ``(snapshot_id, county, tlid)`` -- every lot row names the county copy it
+  came from (``flats.snapshots``, migration 0132), so ``--snapshot`` names the
+  registered snapshot the bundle was read from and a second copy lands beside
+  the first, never on top of it -- results on ``(lot_id, design_key,
+  run_id)``. Geometry is
   built in PostGIS (``ST_GeomFromWKB`` at SRID 2913, the centroid transformed
   to 4326), so nothing geospatial is needed on the Python side. Run twice, the
   second load changes nothing but ``updated_run_id``. ``--dry-run`` does the
@@ -51,7 +55,10 @@ Usage, on 137::
 and on 114::
 
     docker compose run --rm api python scripts/flats_load_bridge.py load \\
-        --bundle /app/data/flats/bridge/county2 [--dry-run]
+        --bundle /app/data/flats/bridge/county2 --snapshot <flats.snapshots id> [--dry-run]
+
+The snapshot row comes first (``scripts/flats_snapshot.py register``); the
+loader refuses a snapshot id it cannot find and a snapshot already retired.
 """
 
 from __future__ import annotations
@@ -540,8 +547,10 @@ class _RolledBack(Exception):
     """Raised inside the transaction on a dry run so it never commits."""
 
 
-async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: int = 20_000) -> dict[str, Any]:
-    """Load one bundle; returns the counts written and verified."""
+async def load(
+    bundle: Path, db_url: str, *, snapshot_id: int, dry_run: bool = False, batch_size: int = 20_000
+) -> dict[str, Any]:
+    """Load one bundle into the named snapshot; returns the counts written and verified."""
     import asyncpg
 
     run = json.loads((bundle / RUN_FILE).read_text(encoding="utf-8"))
@@ -551,10 +560,18 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
         catalog.get(key)  # loud if a result names a design the catalog cannot produce
 
     conn = await asyncpg.connect(_dsn(db_url))
-    report: dict[str, Any] = {"dry_run": dry_run}
+    report: dict[str, Any] = {"dry_run": dry_run, "snapshot_id": snapshot_id}
     try:
         try:
             async with conn.transaction():
+                snapshot = await conn.fetchrow(
+                    "SELECT id, snapshot_date, status FROM flats.snapshots WHERE id = $1", snapshot_id
+                )
+                if snapshot is None:
+                    raise SystemExit(f"no flats.snapshots row {snapshot_id}; register the snapshot first")
+                if snapshot["status"] in ("retired", "failed"):
+                    raise SystemExit(f"snapshot {snapshot_id} is {snapshot['status']}; a load goes into a candidate or the current copy")
+                report["snapshot_date"] = snapshot["snapshot_date"].isoformat()
                 # Designs: written once per id@version, never updated.
                 for key in run["design_keys"]:
                     await conn.execute(
@@ -577,8 +594,8 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
                         """
                         INSERT INTO flats.runs
                             (started_at, finished_at, status, code_version, rules_version,
-                             design_keys, counties, params, notes)
-                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9)
+                             design_keys, counties, params, notes, snapshot_id)
+                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10)
                         RETURNING id
                         """,
                         datetime.fromisoformat(run["started_at"]),
@@ -590,9 +607,16 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
                         list(run["counties"]),
                         json.dumps(run["params"]),
                         run.get("notes", ""),
+                        snapshot_id,
                     )
                     report["run_created"] = True
                 else:
+                    was = await conn.fetchval("SELECT snapshot_id FROM flats.runs WHERE id = $1", run_id)
+                    if was is not None and was != snapshot_id:
+                        raise SystemExit(
+                            f"run {run_id} was loaded into snapshot {was}; a run reads one copy, not two"
+                        )
+                    await conn.execute("UPDATE flats.runs SET snapshot_id = $2 WHERE id = $1", run_id, snapshot_id)
                     report["run_created"] = False
                 report["run_id"] = run_id
 
@@ -612,13 +636,13 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
                     n_lots += len(batch)
                 if n_lots != expected["lots"]:
                     raise SystemExit(f"{LOTS_FILE} has {n_lots} rows, run.json says {expected['lots']}")
-                before = await conn.fetchval("SELECT count(*) FROM flats.lots")
+                before = await conn.fetchval("SELECT count(*) FROM flats.lots WHERE snapshot_id = $1", snapshot_id)
                 await conn.execute(
                     """
                     INSERT INTO flats.lots
-                        (tlid, county, jurisdiction, zone_raw, zone, site_address, area_sqft,
+                        (snapshot_id, tlid, county, jurisdiction, zone_raw, zone, site_address, area_sqft,
                          geom, centroid, condo_verdict, facts, first_seen_run_id, updated_run_id)
-                    SELECT tlid, county, jurisdiction, NULLIF(zone_raw, ''), NULLIF(zone, ''),
+                    SELECT $2, tlid, county, jurisdiction, NULLIF(zone_raw, ''), NULLIF(zone, ''),
                            NULLIF(site_address, ''), NULLIF(area_sqft, '')::numeric,
                            CASE WHEN wkb_hex IS NULL THEN NULL ELSE
                              ST_Multi(ST_CollectionExtract(
@@ -628,7 +652,7 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
                                ST_SetSRID(ST_GeomFromWKB(decode(wkb_hex, 'hex')), 2913)), 4326) END,
                            'land', facts::jsonb, $1, $1
                     FROM tmp_lots
-                    ON CONFLICT (county, tlid) DO UPDATE SET
+                    ON CONFLICT (snapshot_id, county, tlid) DO UPDATE SET
                         jurisdiction = EXCLUDED.jurisdiction,
                         zone_raw = EXCLUDED.zone_raw,
                         zone = EXCLUDED.zone,
@@ -642,8 +666,9 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
                         updated_run_id = EXCLUDED.updated_run_id
                     """,
                     run_id,
+                    snapshot_id,
                 )
-                after = await conn.fetchval("SELECT count(*) FROM flats.lots")
+                after = await conn.fetchval("SELECT count(*) FROM flats.lots WHERE snapshot_id = $1", snapshot_id)
                 report["lots_inserted"] = after - before
                 report["lots_updated"] = n_lots - (after - before)
 
@@ -666,9 +691,11 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
                 orphans = await conn.fetchval(
                     """
                     SELECT count(*) FROM tmp_results r
-                    LEFT JOIN flats.lots l ON l.county = r.county AND l.tlid = r.tlid
+                    LEFT JOIN flats.lots l
+                      ON l.snapshot_id = $1 AND l.county = r.county AND l.tlid = r.tlid
                     WHERE l.id IS NULL
-                    """
+                    """,
+                    snapshot_id,
                 )
                 if orphans:
                     raise SystemExit(f"{orphans} result rows name a lot the bundle did not carry")
@@ -681,7 +708,7 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
                            ARRAY(SELECT jsonb_array_elements_text(r.binding::jsonb)),
                            r.checks::jsonb
                     FROM tmp_results r
-                    JOIN flats.lots l ON l.county = r.county AND l.tlid = r.tlid
+                    JOIN flats.lots l ON l.snapshot_id = $2 AND l.county = r.county AND l.tlid = r.tlid
                     ON CONFLICT (lot_id, design_key, run_id) DO UPDATE SET
                         tier = EXCLUDED.tier,
                         slack_ft = EXCLUDED.slack_ft,
@@ -689,6 +716,7 @@ async def load(bundle: Path, db_url: str, *, dry_run: bool = False, batch_size: 
                         checks = EXCLUDED.checks
                     """,
                     run_id,
+                    snapshot_id,
                 )
                 after = await conn.fetchval("SELECT count(*) FROM flats.lot_results WHERE run_id = $1", run_id)
                 report["results_inserted"] = after - before
@@ -753,6 +781,7 @@ def main(argv: list[str] | None = None) -> int:
 
     ld = sub.add_parser("load", help="load a bundle into flats.* (needs asyncpg)")
     ld.add_argument("--bundle", type=Path, required=True)
+    ld.add_argument("--snapshot", type=int, required=True, help="flats.snapshots id the bundle's lots were read from")
     ld.add_argument("--db-url", default=None, help="default: app settings' database_url")
     ld.add_argument("--dry-run", action="store_true", help="do the whole load in a transaction and roll it back")
     ld.add_argument("--batch-size", type=int, default=20_000)
@@ -775,7 +804,9 @@ def main(argv: list[str] | None = None) -> int:
         from app.config import settings
 
         db_url = settings.database_url
-    report = asyncio.run(load(args.bundle, db_url, dry_run=args.dry_run, batch_size=args.batch_size))
+    report = asyncio.run(
+        load(args.bundle, db_url, snapshot_id=args.snapshot, dry_run=args.dry_run, batch_size=args.batch_size)
+    )
     print(json.dumps(report, indent=2, default=str))
     return 0 if report.get("verified") else 1
 

@@ -4,7 +4,7 @@
 
 | Queue | Purpose | Current tasks |
 |---|---|---|
-| `default` | General-purpose background work | future housekeeping / orchestration tasks |
+| `default` | General-purpose background work | housekeeping (`app.tasks.maintenance.purge_test_deals_task`), the monthly FLATS county-source check (`app.tasks.flats_probe.flats_probe_task` -- warn-only; it downloads nothing and never refreshes the copy) |
 | `scraping` | Listing ingestion through LXC 134 Scrapling | `app.tasks.scraper.scrape_listings` |
 | `analysis` | Post-ingestion modeling and analytics | `app.tasks.scenario.run_scenario`, `app.tasks.scenario.sweep_variable` |
 
@@ -38,6 +38,14 @@ Production listing sites such as LoopNet and Crexi commonly block datacenter IPs
 
 ```bash
 celery -A app.tasks.celery_app call app.tasks.scraper.scrape_listings --args '["loopnet", {}]'
+```
+
+### FLATS county-source check (monthly, warn-only)
+
+```bash
+celery -A app.tasks.celery_app call app.tasks.flats_probe.flats_probe_task
+# or, inside the api container, the same check by hand with its output printed:
+python scripts/flats_probe.py [--dry-run]
 ```
 
 ### Scenario analysis

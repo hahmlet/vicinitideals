@@ -85,3 +85,26 @@ def test_the_city_filter_narrows_and_offers_that_city_s_zones(
     expect(page.locator("select[name=zone] option[value='R5']")).to_have_count(1)
     cities = page.locator("#lot-table tbody tr td:nth-child(3)").all_inner_texts()
     assert cities and set(cities) == {"Portland"}
+
+
+def test_the_county_copy_is_named_on_both_pages_and_a_warning_is_a_bar(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """The footer is always there, so 'no warning' is a statement; a red or
+    amber bar, when shown, sits above the page's own heading."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/lots")
+
+    footer = page.locator("#county-copy")
+    expect(footer).to_be_visible()
+    expect(footer).to_contain_text("County map copy:")
+    for bar in ("#county-copy-red", "#county-copy-amber"):
+        if page.locator(bar).count():
+            expect(page.locator(bar)).to_be_visible()
+            assert page.locator(bar).bounding_box()["y"] < page.locator("h2").first.bounding_box()["y"]
+
+    if page.get_by_text("No completed run has been loaded").count():
+        pytest.skip("no run loaded on this instance")
+    page.locator("#lot-table tbody tr td a").first.click()
+    expect(page.locator("#lot-verdict")).to_be_visible()
+    expect(page.locator("#county-copy")).to_contain_text("County map copy:")

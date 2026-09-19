@@ -10,23 +10,38 @@ ours so the two can be compared.
 
 The rows are seeded by hand. Three lots, two designs, one run -- enough for
 every colour to appear once and for "either design" to differ from one design
-alone.
+alone. Every lot row belongs to a county-copy snapshot, and the pages carry
+the copy's failure-state warning (HUMAN_TODO 20): red when the copy is stale
+or a source moved, a footer naming the copy when nothing is wrong.
 """
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 import pytest
 from httpx import AsyncClient
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.flats import FlatsDesign, FlatsLot, FlatsLotResult, FlatsRun
+from app.models.flats import (
+    FlatsDesign,
+    FlatsLot,
+    FlatsLotResult,
+    FlatsProbe,
+    FlatsRun,
+    FlatsSnapshot,
+)
 from tests.conftest import seed_org, set_client_auth
 
 pytestmark = pytest.mark.asyncio
 
 DESIGNS = ("pod56x36@2", "pod80x25@2")
+
+
+def _today() -> date:
+    """The banner's clock runs on UTC dates; so do the rows seeded here."""
+    return datetime.now(timezone.utc).date()
 
 #: A box in EPSG:2913 feet, as EWKT, so the geometry column is exercised.
 def _box(x: float, y: float, w: float, d: float) -> str:
@@ -57,19 +72,69 @@ def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str 
     }
 
 
-async def _seed(session: AsyncSession, *, run_id: int = 1, finished: str = "2026-09-18T17:51:00+00:00") -> FlatsRun:
-    """One run, two designs, three lots, six results."""
+async def _snapshot(
+    session: AsyncSession,
+    *,
+    taken: date | None = None,
+    status: str = "current",
+    manifest: dict | None = None,
+    registered: datetime | None = None,
+) -> FlatsSnapshot:
+    """A county copy for lot rows to belong to; fresh and complete unless told otherwise."""
+    snap = FlatsSnapshot(
+        snapshot_date=taken or (_today() - timedelta(days=1)),
+        host="137",
+        status=status,
+        rlis_release="2026_08",
+        manifest=manifest if manifest is not None else {"datasets": {"rlis_taxlots": {"status": "acquired"}}},
+        counts={"lots": 3},
+    )
+    if registered is not None:
+        snap.registered_at = registered
+    session.add(snap)
+    await session.flush()
+    return snap
+
+
+async def _checked(session: AsyncSession, *, ran: datetime | None = None, findings: list[dict] | None = None) -> FlatsProbe:
+    """A monthly source check that found nothing, unless told otherwise."""
+    row = FlatsProbe(
+        ran_at=ran or datetime.now(timezone.utc),
+        status="warn" if findings else "ok",
+        findings=findings or [{"key": "rlis_taxlots", "finding": "ok", "detail": "release 2026_08"}],
+        seconds=3.2,
+    )
+    session.add(row)
+    await session.flush()
+    return row
+
+
+async def _seed(
+    session: AsyncSession,
+    *,
+    run_id: int = 1,
+    finished: str = "2026-09-18T17:51:00+00:00",
+    snapshot: FlatsSnapshot | None = None,
+    status: str = "complete",
+    checked: bool = True,
+) -> FlatsRun:
+    """One run, two designs, three lots, six results -- on a fresh, checked county copy."""
+    if snapshot is None:
+        snapshot = await _snapshot(session)
+    if checked:
+        await _checked(session)
     run = FlatsRun(
         id=run_id,
         started_at=datetime(2026, 9, 18, 10, 51, tzinfo=timezone.utc),
         finished_at=datetime.fromisoformat(finished),
-        status="complete",
+        status=status,
         code_version="9b045c40deadbeef",
         rules_version="13aec434",
         design_keys=list(DESIGNS),
         counties=["multnomah", "clackamas"],
         params={"counts": {"lots": 3}},
         notes="seeded",
+        snapshot_id=snapshot.id,
     )
     session.add(run)
     for key in DESIGNS:
@@ -94,7 +159,7 @@ async def _seed(session: AsyncSession, *, run_id: int = 1, finished: str = "2026
                    "slope": {"mean_pct": 3.5, "p85_pct": 5.7, "max_pct": 16.1, "source": "dem_1m"},
                    "quadfit": {"triage": "green", "binding_constraint": None, "policy_exclusion": None,
                                "parking_tier": "preferred", "stalls_provided": 8, "layout_method": "townhome_rear_court"}},
-            first_seen_run_id=run.id, updated_run_id=run.id,
+            first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=snapshot.id,
         ),
         FlatsLot(
             tlid="1N1E29DD  -05600", county="multnomah", jurisdiction="or/multnomah/portland",
@@ -105,7 +170,7 @@ async def _seed(session: AsyncSession, *, run_id: int = 1, finished: str = "2026
                    "geometry_tier": "A", "observed": {"abuts_alley": True, "alley_at_rear": True}, "alley_width_ft": 20.0,
                    "quadfit": {"triage": "red", "binding_constraint": "siteplan_no_layout", "policy_exclusion": None,
                                "parking_tier": None, "stalls_provided": 0, "layout_method": None}},
-            first_seen_run_id=run.id, updated_run_id=run.id,
+            first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=snapshot.id,
         ),
         FlatsLot(
             tlid="11E25AB  -00300", county="clackamas", jurisdiction="or/clackamas/milwaukie",
@@ -115,7 +180,7 @@ async def _seed(session: AsyncSession, *, run_id: int = 1, finished: str = "2026
             facts={"source": "quadfit", "frontage_ft": 60.0, "geometry_tier": "B", "observed": {},
                    "quadfit": {"triage": "review", "binding_constraint": "slope", "policy_exclusion": None,
                                "parking_tier": "minimum", "stalls_provided": 4, "layout_method": "townhome_front"}},
-            first_seen_run_id=run.id, updated_run_id=run.id,
+            first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=snapshot.id,
         ),
     ]
     session.add_all(lots)
@@ -269,15 +334,16 @@ async def test_the_newest_run_is_the_default_and_an_older_one_is_reachable(
     await _login(client, session)
     await _seed(session, run_id=1, finished="2026-09-18T03:00:00+00:00")
     # A second run over the same lots, in which everything is red.
+    copy = (await session.execute(select(FlatsSnapshot))).scalar_one()
     newer = FlatsRun(
         id=2, started_at=datetime(2026, 9, 19, tzinfo=timezone.utc),
         finished_at=datetime(2026, 9, 19, 7, tzinfo=timezone.utc), status="complete",
         code_version="abcdef01", rules_version="x", design_keys=list(DESIGNS), counties=["multnomah"],
-        params={}, notes="",
+        params={}, notes="", snapshot_id=copy.id,
     )
     session.add(newer)
     await session.flush()
-    lots = (await session.execute(__import__("sqlalchemy").select(FlatsLot))).scalars().all()
+    lots = (await session.execute(select(FlatsLot))).scalars().all()
     for lot in lots:
         for key in DESIGNS:
             session.add(FlatsLotResult(lot_id=lot.id, design_key=key, run_id=2, tier="unknown",
@@ -293,6 +359,134 @@ async def test_the_newest_run_is_the_default_and_an_older_one_is_reachable(
     first = " ".join(older.text.split('id="lot-counts"', 1)[1].split('id="lot-table"', 1)[0].split())
     assert "green 1" in first
     assert "Run 1" in older.text
+
+
+# --- the county copy and its warning ----------------------------------------
+
+
+def _banner(text: str, which: str) -> str:
+    marker = f'id="county-copy-{which}"' if which != "footer" else 'id="county-copy"'
+    if marker not in text:
+        return ""
+    return " ".join(text.split(marker, 1)[1].split("</div>", 1)[0].split())
+
+
+async def test_a_fresh_checked_copy_shows_only_the_footer(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    await _seed(session)
+    taken = (_today() - timedelta(days=1)).isoformat()
+
+    for url in ("/flats/lots", "/flats/lots/multnomah/1S2E08BA%20%20-09500"):
+        page = await client.get(url)
+
+        assert page.status_code == 200
+        assert _banner(page.text, "red") == ""
+        assert _banner(page.text, "amber") == ""
+        footer = _banner(page.text, "footer")
+        assert f"County map copy: RLIS 2026_08 + ArcGIS layers, taken {taken}" in footer
+        assert f"sources checked {_today().isoformat()}" in footer
+
+
+async def test_a_stale_copy_is_a_red_bar_on_both_pages(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    old = await _snapshot(session, taken=_today() - timedelta(days=200))
+    await _seed(session, snapshot=old)
+
+    for url in ("/flats/lots", "/flats/lots/multnomah/1S2E08BA%20%20-09500"):
+        page = await client.get(url)
+
+        assert page.status_code == 200
+        red = _banner(page.text, "red")
+        assert "200 days old" in red and "A refresh is due" in red
+        assert 'data-code="stale"' in red
+        # The lots are still shown: the warning is about the copy, not a gate on it.
+        assert "2833 SE 71ST AVE" in page.text
+
+
+async def test_a_source_that_moved_is_red_and_an_unanswered_one_is_amber(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session, checked=False)
+    await _checked(
+        session,
+        findings=[
+            {"key": "util_sewer_wood_village", "finding": "moved", "detail": "Invalid URL"},
+            {"key": "zoning_portland", "finding": "unreachable", "detail": "ConnectError"},
+        ],
+    )
+    await session.commit()
+
+    page = await client.get("/flats/lots")
+
+    red = _banner(page.text, "red")
+    assert "util_sewer_wood_village" in red and "changed on its own side" in red
+    amber = _banner(page.text, "amber")
+    assert "zoning_portland" in amber and "did not answer" in amber
+
+
+async def test_no_copy_recorded_is_said_in_red(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+
+    page = await client.get("/flats/lots")
+
+    assert page.status_code == 200
+    assert "No county map copy has been recorded" in _banner(page.text, "red")
+    assert "County map copy: none recorded." in _banner(page.text, "footer")
+
+
+async def test_a_candidate_run_is_hidden_by_default_and_reachable_by_run(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session, run_id=1)
+    # A refreshed copy, registered three weeks ago and still waiting: its own
+    # lot rows under the same numbers, one address corrected, screened by a
+    # candidate run.
+    fresh = await _snapshot(
+        session,
+        taken=_today(),
+        status="candidate",
+        registered=datetime.now(timezone.utc) - timedelta(days=21),
+    )
+    candidate = FlatsRun(
+        id=3, started_at=datetime(2026, 9, 20, tzinfo=timezone.utc),
+        finished_at=datetime(2026, 9, 20, 7, tzinfo=timezone.utc), status="candidate",
+        code_version="abcdef01", rules_version="x", design_keys=list(DESIGNS), counties=["multnomah"],
+        params={"counts": {"lots": 1}}, notes="", snapshot_id=fresh.id,
+    )
+    session.add(candidate)
+    await session.flush()
+    moved = FlatsLot(
+        tlid="1S2E08BA  -09500", county="multnomah", jurisdiction="or/multnomah/portland",
+        zone_raw="R5", zone="R5", site_address="2833 SE 71ST AVE (RENUMBERED)", area_sqft=13973,
+        geom=_box(7_650_000, 680_000, 89, 157), centroid="SRID=4326;POINT(-122.5903 45.5019)",
+        condo_verdict="land", facts={"source": "snapshot"}, first_seen_run_id=1, updated_run_id=3,
+        snapshot_id=fresh.id,
+    )
+    session.add(moved)
+    await session.flush()
+    session.add(FlatsLotResult(lot_id=moved.id, design_key=DESIGNS[0], run_id=3, tier="unknown",
+                               binding=[], checks=_checks("red", head="min_lot_area_sqft")))
+    await session.commit()
+
+    default = await client.get("/flats/lots")
+    asked = await client.get("/flats/lots", params={"run": 3})
+    lot_default = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    lot_asked = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500", params={"run": 3})
+
+    # The default is the newest complete run, not the newest run.
+    assert "Run 1" in default.text and "(RENUMBERED)" not in default.text
+    assert 'href="/flats/lots?run=3">3 (2026-09-20 07:00 UTC) candidate</a>' in " ".join(default.text.split())
+    # Asked for, the candidate is shown and says what it is.
+    assert "Run 3" in asked.text and "waiting for review" in asked.text
+    assert "(RENUMBERED)" in asked.text
+    # The lot page reads the row of the copy the chosen run screened.
+    assert "(RENUMBERED)" not in lot_default.text
+    assert "(RENUMBERED)" in lot_asked.text
+    # And the banner says a refreshed copy has been waiting.
+    amber = _banner(default.text, "amber")
+    assert "waiting for review for 21 days" in amber
 
 
 # --- one lot ---------------------------------------------------------------

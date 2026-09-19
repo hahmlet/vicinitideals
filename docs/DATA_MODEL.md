@@ -66,9 +66,11 @@ ingest. See the Archive note at the bottom of this document.
 
 | Entity | Table | Purpose | Key |
 |---|---|---|---|
-| **FlatsRun** | `flats.runs` | One pipeline execution; records code + rule versions, designs and counties in scope | `id` (bigint) |
+| **FlatsSnapshot** | `flats.snapshots` | One dated copy of the county map (migration 0132): the acquire manifest verbatim, per-dataset counts, the RLIS release, who promoted it. Exactly one row is `current`; a refresh lands as `candidate` beside it (HUMAN_TODO 20) | `id` (bigint); unique `(snapshot_date, host)`; partial unique on `status = 'current'` |
+| **FlatsProbe** | `flats.probes` | One run of the monthly source check — the only automated connection to the county, and it can only warn. `findings` lists `{key, finding, detail}` per dataset; the Lots pages read the newest row | `id` (bigint), indexed on `ran_at` |
+| **FlatsRun** | `flats.runs` | One pipeline execution; records code + rule versions, designs and counties in scope, and the snapshot it read | `id` (bigint); `snapshot_id` |
 | **FlatsDesign** | `flats.designs` | Immutable snapshot of a catalog pod as a run used it | `key` = `id@version` |
-| **FlatsLot** | `flats.lots` | A taxlot and every **design-independent** fact about it (envelope, fit frontier, slope, sewer, economics — JSONB `facts`) | `(county, tlid)` unique |
+| **FlatsLot** | `flats.lots` | A taxlot **as one snapshot holds it** and every **design-independent** fact about it (envelope, fit frontier, slope, sewer, economics — JSONB `facts`). Each snapshot owns its rows, so a refresh never overwrites the copy in use | `(snapshot_id, county, tlid)` unique; `(county, tlid)` indexed |
 | **FlatsLotResult** | `flats.lot_results` | Verdict for one lot × one design × one run: tier, slack, binding constraints, site plan | `(lot_id, design_key, run_id)` |
 | **FlatsRule** | `flats.rules` | Per-run snapshot of a resolved zoning value + the citation behind it | `(run_id, jurisdiction, zone, field)` |
 | **FlatsClause** | `flats.clauses` | RASE-tagged sentence of code text; drives completeness and drift watch | `id` (clause slug) |
@@ -100,6 +102,11 @@ Three keying decisions, all expensive to retrofit and therefore made up front:
   rule-config versions behind it, so "which lots changed tier and why" is a join.
 - **Decisions key on TLID, not on a row id.** The pipeline rebuilds `flats.lots` each run;
   a decision keyed on `lots.id` would evaporate with it and the review queue would reset.
+- **Lots belong to a snapshot.** A county refresh is a new set of lot rows under a new
+  `snapshot_id`, loaded as a candidate beside the copy in use; promotion is a status flip
+  on two `snapshots` rows, so it can be undone, and a lot the county deleted is simply
+  absent from the next copy. The banner on the Lots pages is computed from `snapshots`
+  and `probes` rows only — never from a live request — so a dead service cannot silence it.
 
 Geometry: `SRID 2913` (NAD83(HARN) / Oregon North, **feet**) for working geometry, `4326`
 for the display centroid. Requires PostGIS (migration 0124) — the Postgres image is built

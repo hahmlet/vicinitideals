@@ -73,6 +73,98 @@ SRID_WORKING = 2913
 SRID_WGS84 = 4326
 
 
+class FlatsSnapshot(Base):
+    """One dated copy of the county map -- what ``flats.ingest.acquire`` took.
+
+    The screen's own copy of the county's tax lots, streets, zoning, overlays
+    and sewer lives in this database (HUMAN_TODO 20, Steph, 2026-09-19: option
+    A), one row per snapshot and one set of :class:`FlatsLot` rows per
+    snapshot. ``manifest`` is the acquire manifest verbatim -- per dataset the
+    URL, the fields the service really had, the sha256, the feature count,
+    and whether it was acquired, refused or failed -- so a lot can always be
+    traced to the copy it was read from and a hole in the copy is on record.
+
+    Exactly one row is ``current`` (the copy the Lots pages show by default).
+    A refresh lands as ``candidate`` beside it and stays there until someone
+    promotes it; the previous current becomes ``retired`` and is kept for one
+    cycle so a promotion can be undone. ``failed`` is an attempt that took
+    nothing usable. Nothing updates a snapshot by itself: the only automated
+    piece is the monthly :class:`FlatsProbe`, which can only warn.
+    """
+
+    __tablename__ = "snapshots"
+    __table_args__ = (
+        UniqueConstraint("snapshot_date", "host", name="uq_flats_snapshots_date_host"),
+        # One copy in use at a time.
+        Index(
+            "uq_flats_snapshots_current",
+            "status",
+            unique=True,
+            postgresql_where=text("status = 'current'"),
+        ),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    #: The date the copy was taken -- the snapshot directory's name.
+    snapshot_date: Mapped[date] = mapped_column(Date, nullable=False)
+    #: Where the files live (``137`` for the analysis box).
+    host: Mapped[str] = mapped_column(String(40), nullable=False)
+    #: candidate | current | retired | failed
+    status: Mapped[str] = mapped_column(String(16), nullable=False, default="candidate")
+    #: The RLIS quarterly release the lot fabric came from (``2026_08``).
+    rlis_release: Mapped[str | None] = mapped_column(String(16))
+    #: The acquire manifest, verbatim.
+    manifest: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
+    #: Per-dataset feature counts and statuses, lifted out of the manifest.
+    counts: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
+    #: The promotion-blocking checks, ``{code: {tripped, detail}}``.
+    checks: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
+    #: The delta summary and the verdict-drift report, once computed.
+    report: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
+    #: When the files were taken (the manifest's latest ``retrieved_at``).
+    acquired_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    registered_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    promoted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    #: Who promoted it and on what grounds ("Steph", "agent, standing word
+    #: 2026-09-19") -- Steph's rule is "me when clean; you when warned".
+    promoted_by: Mapped[str | None] = mapped_column(String(200))
+    notes: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+
+
+class FlatsProbe(Base):
+    """One run of the monthly source check (``flats.ingest.probe``).
+
+    The only automated connection to the county's services, and it can only
+    warn: it reads each layer's metadata and feature count and compares them
+    with the current snapshot's manifest. ``findings`` is the list of
+    ``{key, finding, detail}`` the probe returned -- ``ok`` rows included, so a
+    row says what was checked, not only what was wrong. The Lots pages read
+    the newest row or two; a missing row is itself a warning.
+    """
+
+    __tablename__ = "probes"
+    __table_args__ = (
+        Index("ix_flats_probes_ran_at", "ran_at"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    ran_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    #: The snapshot whose manifest was compared against.
+    snapshot_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="SET NULL")
+    )
+    #: ok | warn | failed -- failed means the probe itself did not complete.
+    status: Mapped[str] = mapped_column(String(16), nullable=False)
+    findings: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, nullable=False, server_default="[]")
+    seconds: Mapped[float | None] = mapped_column(Numeric(8, 1))
+
+
 class FlatsRun(Base):
     """One execution of the screening pipeline.
 
@@ -91,6 +183,12 @@ class FlatsRun(Base):
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     #: running | complete | failed
     status: Mapped[str] = mapped_column(String(20), nullable=False, default="running")
+
+    #: The county copy the run read its lots from. Its lot rows are the ones
+    #: this run's results point at.
+    snapshot_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="SET NULL")
+    )
 
     #: Git SHA of the tree that produced this run.
     code_version: Mapped[str | None] = mapped_column(String(64))
@@ -159,12 +257,17 @@ class FlatsLot(Base):
     Keyed internally by a bigint because a 300k-lot corpus times a ten-design
     catalog is three million result rows, and the foreign key is carried on all
     of them. ``(county, tlid)`` is the natural key and the one humans and
-    external systems use.
+    external systems use -- within one snapshot. Each :class:`FlatsSnapshot`
+    owns its own lot rows, so a refresh lands beside the copy in use instead
+    of on top of it, a lot the county deleted is simply absent from the next
+    snapshot's rows, and a run's results always point at the lot as it was
+    when the run read it.
     """
 
     __tablename__ = "lots"
     __table_args__ = (
-        UniqueConstraint("county", "tlid", name="uq_flats_lots_county_tlid"),
+        UniqueConstraint("snapshot_id", "county", "tlid", name="uq_flats_lots_snapshot_county_tlid"),
+        Index("ix_flats_lots_county_tlid", "county", "tlid"),
         Index("ix_flats_lots_jurisdiction_zone", "jurisdiction", "zone"),
         Index("ix_flats_lots_geom", "geom", postgresql_using="gist"),
         Index("ix_flats_lots_centroid", "centroid", postgresql_using="gist"),
@@ -173,6 +276,10 @@ class FlatsLot(Base):
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
 
+    #: The county copy this row was read from.
+    snapshot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="CASCADE"), nullable=False
+    )
     #: Metro RLIS taxlot id. Durable across pipeline re-runs, which is why review
     #: decisions key on it rather than on ``id``.
     tlid: Mapped[str] = mapped_column(String(40), nullable=False)

@@ -2,12 +2,14 @@
 
 These tests guard the decisions that are expensive to reverse: that FLATS is a
 separate namespace rather than a prefix, that results are keyed by lot *and*
-design *and* run, and that a human review decision survives the pipeline
-rebuilding the lot it was about.
+design *and* run, that a lot row belongs to one dated copy of the county map
+and is unique within it, and that a human review decision survives the
+pipeline rebuilding the lot it was about.
 """
 
 from __future__ import annotations
 
+import datetime as dt
 import uuid
 
 import pytest
@@ -25,7 +27,15 @@ from app.models.flats import (
     FlatsLotResult,
     FlatsReviewDecision,
     FlatsRun,
+    FlatsSnapshot,
 )
+
+
+async def make_snapshot(session: AsyncSession, taken: str = "2026-07-28", status: str = "current") -> FlatsSnapshot:
+    snapshot = FlatsSnapshot(snapshot_date=dt.date.fromisoformat(taken), host="137", status=status)
+    session.add(snapshot)
+    await session.flush()
+    return snapshot
 
 
 async def make_run(session: AsyncSession, **kw) -> FlatsRun:
@@ -56,11 +66,19 @@ async def make_design(session: AsyncSession, key: str = "pod56x36@1", **kw) -> F
 
 
 async def make_lot(session: AsyncSession, tlid: str = "1S2E05DA 01900", **kw) -> FlatsLot:
+    """A lot row in the copy in use (created on first call)."""
+    snapshot_id = kw.pop("snapshot_id", None)
+    if snapshot_id is None:
+        current = (
+            await session.execute(select(FlatsSnapshot).where(FlatsSnapshot.status == "current"))
+        ).scalar_one_or_none()
+        snapshot_id = (current or await make_snapshot(session)).id
     lot = FlatsLot(
         tlid=tlid,
         county=kw.pop("county", "multnomah"),
         jurisdiction=kw.pop("jurisdiction", "or/multnomah/portland"),
         zone=kw.pop("zone", "R5"),
+        snapshot_id=snapshot_id,
         **kw,
     )
     session.add(lot)
@@ -85,6 +103,11 @@ def test_flats_tables_are_in_their_own_schema() -> None:
     assert flats_tables == {
         "runs",
         "designs",
+        # The county copy (0132): one row per dated snapshot, exactly one
+        # `current`; the lots below belong to one of them. `probes` is the
+        # monthly source check that can only warn.
+        "snapshots",
+        "probes",
         "lots",
         "lot_results",
         "rules",
@@ -178,12 +201,40 @@ async def test_the_same_lot_and_design_can_differ_across_runs(session: AsyncSess
     assert count == 2
 
 
-async def test_a_lot_is_unique_per_county_and_taxlot(session: AsyncSession) -> None:
+async def test_a_lot_is_unique_per_county_and_taxlot_within_one_copy(session: AsyncSession) -> None:
     await make_lot(session, "1S2E05DA 01900")
 
     await make_lot(session, "1S2E05DA 01900", county="clackamas")  # same tlid, other county: fine
+    # The same lot in a later copy of the county map sits beside the first
+    # row, not on top of it: a refresh never overwrites the copy in use.
+    later = await make_snapshot(session, "2026-09-18", status="candidate")
+    await make_lot(session, "1S2E05DA 01900", snapshot_id=later.id)
     with pytest.raises(IntegrityError):
         await make_lot(session, "1S2E05DA 01900")
+        await session.flush()
+
+
+async def test_one_copy_of_the_county_map_is_in_use_at_a_time(session: AsyncSession) -> None:
+    await make_snapshot(session, "2026-07-28", status="current")
+    await make_snapshot(session, "2026-09-18", status="candidate")  # waiting beside it: fine
+
+    with pytest.raises(IntegrityError):
+        await make_snapshot(session, "2026-09-19", status="current")
+        await session.flush()
+
+
+async def test_a_lot_row_belongs_to_a_copy_and_goes_with_it(session: AsyncSession) -> None:
+    retired = await make_snapshot(session, "2026-04-01", status="retired")
+    lot = await make_lot(session, "1S2E05DA 01900", snapshot_id=retired.id)
+    lot_id = lot.id
+
+    await session.delete(retired)
+    await session.flush()
+    session.expunge_all()
+
+    assert await session.get(FlatsLot, lot_id) is None
+    with pytest.raises(IntegrityError):
+        session.add(FlatsLot(tlid="X", county="multnomah", jurisdiction="or/multnomah/portland"))
         await session.flush()
 
 

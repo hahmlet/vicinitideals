@@ -409,6 +409,46 @@ def parse_filter(text: str | None) -> tuple[str, frozenset[str]] | None:
     return m.group(1), values
 
 
+#: The release-notes member names the quarter: ``2026_08_RLIS_QuarterlyUpdates_
+#: ReleaseNotes.pdf``. The portal item's title does not -- it reads "RLIS Open
+#: Data Updates from Last Quarter" every quarter.
+_RELEASE_RE = re.compile(r"(\d{4}_\d{2})_RLIS_QuarterlyUpdates", re.IGNORECASE)
+
+
+def _archive_identity(client: httpx.Client, url: str, archive: _RemoteZip) -> dict[str, Any]:
+    """Which release the archive is, so a later check can tell a new one.
+
+    The size and member count come off the ZIP itself; the release name off
+    the release-notes member; the item's own name and modified date from the
+    portal (``.../items/<id>?f=json``, the URL without its ``/data``) when it
+    answers. A portal that does not answer is recorded, not fatal -- the
+    members were still read.
+    """
+    release = None
+    for name in archive.entries:
+        m = _RELEASE_RE.search(name)
+        if m:
+            release = m.group(1)
+            break
+    out: dict[str, Any] = {"size": archive.total, "members": len(archive.entries), "release": release}
+    item = re.sub(r"/data/?$", "", url)
+    if item == url:
+        return out
+    try:
+        meta = _json(client.get(item, params={"f": "json"}))
+        if "error" in meta:
+            raise AcquireError(str(meta["error"]))
+        out["name"] = meta.get("name")
+        out["title"] = meta.get("title")
+        if meta.get("modified"):
+            out["modified"] = dt.datetime.fromtimestamp(int(meta["modified"]) / 1000, tz=dt.UTC).date().isoformat()
+        if meta.get("size"):
+            out["item_size"] = int(meta["size"])
+    except Exception as exc:  # the portal, not the archive
+        out["error"] = f"{type(exc).__name__}: {exc}"
+    return out
+
+
 def _fetch_rlis(
     archive: _RemoteZip, ds: Dataset, sink: _Sink, log: Callable[[str], None]
 ) -> list[str]:
@@ -544,6 +584,7 @@ def acquire(
                     if archive is None:
                         archive = archives[ds.url] = _RemoteZip(client, ds.url)
                         log(f"  archive is {archive.total / 1e9:.2f} GB, {len(archive.entries)} members")
+                        doc.setdefault("archives", {})[ds.url] = _archive_identity(client, ds.url, archive)
                     sink = _Sink(path, pipeline.working_srid)
                     names = _fetch_rlis(archive, ds, sink, log)
                     entry["fields"] = {"declared": list(ds.fields), "present": names, "checked": True}
@@ -591,6 +632,11 @@ def acquire(
 def describe(doc: dict[str, Any]) -> list[str]:
     """One line per dataset, the way the CLI prints a manifest back."""
     out = [f"snapshot {doc.get('snapshot')} in EPSG:{doc.get('working_srid')}"]
+    for url, a in sorted((doc.get("archives") or {}).items()):
+        out.append(
+            f"archive {url}: release {a.get('release') or '?'}, modified {a.get('modified') or '?'}, "
+            f"{(a.get('size') or 0) / 1e9:.2f} GB, {a.get('members', 0)} members"
+        )
     for key, e in sorted(doc.get("datasets", {}).items()):
         status = e.get("status", "?")
         if status in ("acquired", "present"):

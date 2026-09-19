@@ -6,6 +6,7 @@
 </div>
 
 <div class="content">
+  {% include "partials/flats_refresh_banner.html" %}
   {% if missing %}
     <div class="alert alert-warning">No lot called <code>{{ missing }}</code> in the run.</div>
   {% endif %}
@@ -155,12 +156,12 @@
   </div>
 
   <p class="muted" style="font-size:12px;margin:12px 0 0">
-    Run {{ run.id }}{% if run.finished %}, finished {{ run.finished }}{% endif %}{% if run.code_version %}, code {{ run.code_version }}{% endif %}
+    Run {{ run.id }}{% if run.status == "candidate" %} <strong>(a refreshed copy waiting for review — not the default)</strong>{% endif %}{% if run.finished %}, finished {{ run.finished }}{% endif %}{% if run.code_version %}, code {{ run.code_version }}{% endif %}
     — {{ run.designs|join(" and ") }}.
     {% if runs|length > 1 %}
       Other runs:
       {% for other in runs %}{% if other.id != run.id %}
-        <a href="/flats/lots?run={{ other.id }}">{{ other.id }}{% if other.finished %} ({{ other.finished }}){% endif %}</a>
+        <a href="/flats/lots?run={{ other.id }}">{{ other.id }}{% if other.finished %} ({{ other.finished }}){% endif %}{% if other.status == "candidate" %} candidate{% endif %}</a>
       {% endif %}{% endfor %}
     {% endif %}
     <br>

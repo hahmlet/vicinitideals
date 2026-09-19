@@ -1,0 +1,21 @@
+{# The county-copy warning and footer (HUMAN_TODO 20: a failure-state warning
+   that depends on no live connection). `refresh` comes from
+   app.services.flats_refresh.refresh_notices: red first, then amber, then
+   the one line that is always shown so "no warning" is a statement. #}
+{% if refresh %}
+  {% if refresh.notices %}
+    {% set red = refresh.notices | selectattr("level", "equalto", "red") | list %}
+    {% set amber = refresh.notices | selectattr("level", "equalto", "amber") | list %}
+    {% if red %}
+      <div id="county-copy-red" class="alert alert-danger" role="alert">
+        {% for n in red %}<p data-code="{{ n.code }}">{{ n.text }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    {% if amber %}
+      <div id="county-copy-amber" class="alert alert-warning">
+        {% for n in amber %}<p data-code="{{ n.code }}">{{ n.text }}</p>{% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+  <div id="county-copy" class="alert alert-muted">{{ refresh.footer }}</div>
+{% endif %}

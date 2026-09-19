@@ -393,6 +393,26 @@ body {
 .badge-gray { background: var(--surface-raised); color: var(--text-muted); border: 1px solid var(--border); }
 .badge-purple { background: #F5F3FF; color: #7C3AED; }
 .badge-orange { background: #FFF7ED; color: #C2410C; }
+
+/* Alerts: a bar the eye cannot miss. .alert-danger is the failure-state
+   warning on the FLATS lots pages (the county map copy); it must read as
+   red without depending on anything but this stylesheet. */
+.alert {
+  padding: 10px 14px;
+  margin: 0 0 12px;
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: 6px;
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.alert-warning { background: var(--warning-light); border-color: var(--warning); }
+.alert-danger { background: var(--danger-light); border-color: var(--danger); color: #7F1D1D; font-weight: 600; }
+.alert-muted { background: transparent; border-color: var(--border); color: var(--text-muted); font-size: 12px; padding: 6px 10px; }
+.alert p { margin: 0; }
+.alert p + p { margin-top: 4px; }
 .badge-outline { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
 
 /* ── Cards ── */

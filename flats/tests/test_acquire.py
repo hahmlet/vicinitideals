@@ -132,6 +132,7 @@ def shapefile_zip(records: list[tuple[str, str, list[list[tuple[float, float]]]]
         z.writestr("TAXLOTS/taxlots_public.shx", shx.getvalue())
         z.writestr("TAXLOTS/taxlots_public.dbf", dbf.getvalue())
         z.writestr("STREETS/streets.shp", b"not a shapefile")
+        z.writestr("2026_08_RLIS_QuarterlyUpdates_ReleaseNotes.pdf", b"%PDF-1.4 release notes")
     return buf.getvalue()
 
 
@@ -145,6 +146,14 @@ class RangeHost:
 
     def __call__(self, request: httpx.Request) -> httpx.Response:
         self.requests.append(request)
+        if not request.url.path.endswith("/data"):
+            # The portal item itself (the URL without its /data): what the
+            # archive is called and when it last changed.
+            return httpx.Response(
+                200,
+                json={"title": "RLIS Open Data Updates from Last Quarter", "name": "rlis_free_quarter.zip",
+                      "modified": 1787768567000, "size": len(self.body)},
+            )
         if request.method == "HEAD":
             return httpx.Response(200, headers={"content-length": str(len(self.body))})
         rng = request.headers.get("range")
@@ -364,7 +373,48 @@ def test_an_rlis_member_is_pulled_by_range_and_filtered_to_our_counties(tmp_path
     # never the archive (which here also carries a streets member and a README
     # bigger than the tail).
     assert host.sent < len(host.body)
-    assert all(r.method == "HEAD" or r.headers.get("range") for r in host.requests)
+    assert all(
+        r.method == "HEAD" or r.headers.get("range") or not r.url.path.endswith("/data")
+        for r in host.requests
+    ), "something asked the archive for more than a range"
+
+
+def test_the_manifest_says_which_release_the_archive_was(tmp_path: Path) -> None:
+    # The portal's title is the same every quarter; the release-notes member
+    # is not. A later check reads this record to tell a new release from the
+    # one the copy was taken from.
+    host = RangeHost(shapefile_zip(LOTS))
+    pipeline = load_pipeline(registry(tmp_path, RLIS_ONLY))
+    out = tmp_path / "2026-09-18"
+
+    doc = acquire(pipeline, out, client=client(host), log=quiet)
+
+    archive = doc["archives"][RLIS]
+    assert archive["release"] == "2026_08"
+    assert archive["modified"] == "2026-08-26"
+    assert archive["size"] == len(host.body)
+    assert archive["name"] == "rlis_free_quarter.zip"
+    assert any(line.startswith(f"archive {RLIS}: release 2026_08") for line in describe(doc))
+
+
+def test_a_portal_that_will_not_say_does_not_cost_the_members(tmp_path: Path) -> None:
+    body = shapefile_zip(LOTS)
+    host = RangeHost(body)
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if not request.url.path.endswith("/data"):
+            return httpx.Response(500, text="portal down")
+        return host(request)
+
+    pipeline = load_pipeline(registry(tmp_path, RLIS_ONLY))
+    out = tmp_path / "2026-09-18"
+
+    doc = acquire(pipeline, out, client=client(handler), log=quiet)
+
+    assert doc["datasets"]["rlis_taxlots"]["status"] == "acquired"
+    archive = doc["archives"][RLIS]
+    assert archive["release"] == "2026_08" and archive["size"] == len(body)
+    assert "500" in archive["error"]
 
 
 def test_a_shapefile_hole_is_read_as_a_hole(tmp_path: Path) -> None:

@@ -63,6 +63,7 @@ from app.models.flats import (
     FlatsRun,
     FlatsWordRuling,
 )
+from app.services.flats_refresh import refresh_notices
 from flats.encode import legible
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
 from flats.encode.attribution import claimed_sections, section_at
@@ -2726,15 +2727,41 @@ def _lot_href(county: str, tlid: str) -> str:
     return f"/flats/lots/{county}/{quote(tlid, safe='')}"
 
 
+#: Runs the Lots pages will show. A candidate is a refresh loaded beside the
+#: copy in use and not yet promoted: reachable by ``?run=``, never the default.
+_SHOWN_RUN_STATUSES = ("complete", "candidate")
+
+
 async def _runs(session: DBSession) -> list[FlatsRun]:
-    """Completed runs, newest first. The list and the lot page read one run;
-    an older one is reachable by ``?run=`` so two runs can be compared."""
+    """Completed and candidate runs, newest first. The list and the lot page
+    read one run; another is reachable by ``?run=`` so two can be compared."""
     stmt = (
         select(FlatsRun)
-        .where(FlatsRun.status == "complete")
+        .where(FlatsRun.status.in_(_SHOWN_RUN_STATUSES))
         .order_by(FlatsRun.id.desc())
     )
     return list((await session.execute(stmt)).scalars())
+
+
+def _default_run(runs: list[FlatsRun]) -> FlatsRun | None:
+    """The newest complete run; a candidate is never shown unasked."""
+    return next((r for r in runs if r.status == "complete"), None)
+
+
+def _chosen_run(runs: list[FlatsRun], run: int | None) -> FlatsRun | None:
+    if run:
+        return next((r for r in runs if r.id == run), None)
+    return _default_run(runs)
+
+
+async def _refresh(session: DBSession) -> dict[str, Any]:
+    """The county-copy banner: warnings computed from rows, and the footer."""
+    found = await refresh_notices(session)
+    return {
+        "level": found.level,
+        "notices": [{"level": n.level, "code": n.code, "text": n.text} for n in found.notices],
+        "footer": found.footer,
+    }
 
 
 def _rank(column: Any) -> Any:
@@ -2886,7 +2913,8 @@ async def _lot_rows(
     return [_lot_row(lot, verdict, colour_rank, by_lot.get(lot.id, [])) for lot, verdict, colour_rank in lots]
 
 
-async def _zones_in(session: DBSession, jurisdiction: str) -> list[str]:
+async def _zones_in(session: DBSession, jurisdiction: str, snapshot_id: int | None) -> list[str]:
+    """The zone codes the chosen run's copy of the county holds for a city."""
     if not jurisdiction:
         return []
     stmt = (
@@ -2895,6 +2923,8 @@ async def _zones_in(session: DBSession, jurisdiction: str) -> list[str]:
         .distinct()
         .order_by(FlatsLot.zone)
     )
+    if snapshot_id is not None:
+        stmt = stmt.where(FlatsLot.snapshot_id == snapshot_id)
     return [z for z in (await session.execute(stmt)).scalars() if z]
 
 
@@ -2902,6 +2932,8 @@ def _run_card(run: FlatsRun) -> dict[str, Any]:
     counts = (run.params or {}).get("counts") or {}
     return {
         "id": run.id,
+        "status": run.status,
+        "snapshot_id": run.snapshot_id,
         "finished": run.finished_at.strftime("%Y-%m-%d %H:%M UTC") if run.finished_at else "",
         "code_version": (run.code_version or "")[:8],
         "designs": list(run.design_keys or []),
@@ -2958,10 +2990,11 @@ async def flats_lots(
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     runs = await _runs(session)
-    chosen = next((r for r in runs if r.id == run), None) if run else (runs[0] if runs else None)
+    chosen = _chosen_run(runs, run)
     ctx = {
         **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
         **_lots_ctx(runs, chosen, jurisdiction=jurisdiction, zone=zone, colour=colour, design=design, q=q, page=page),
+        "refresh": await _refresh(session),
         "counts": {"verdict": {}, "if_signed": {}, "lots": 0},
         "lots": [],
         "zones": [],
@@ -2980,7 +3013,7 @@ async def flats_lots(
     ctx["shown"] = shown
     ctx["pages"] = max(1, -(-shown // _LOTS_PAGE))
     ctx["lots"] = await _lot_rows(session, chosen.id, picked, conditions, colour, page)
-    ctx["zones"] = await _zones_in(session, jurisdiction)
+    ctx["zones"] = await _zones_in(session, jurisdiction, chosen.snapshot_id)
     return templates.TemplateResponse(request, "flats_lots.html", ctx)
 
 
@@ -3095,18 +3128,27 @@ async def flats_lot(
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     runs = await _runs(session)
-    chosen = next((r for r in runs if r.id == run), None) if run else (runs[0] if runs else None)
+    chosen = _chosen_run(runs, run)
+    refresh = await _refresh(session)
+    # The lot as the chosen run read it: a run's results point at the lot
+    # rows of the county copy it screened, so the row is looked up in that
+    # copy. A run that names no copy falls back to the newest row for the id.
     stmt = select(
         FlatsLot,
         func.ST_AsGeoJSON(FlatsLot.geom),
         func.ST_Y(FlatsLot.centroid),
         func.ST_X(FlatsLot.centroid),
     ).where(FlatsLot.county == county, FlatsLot.tlid == tlid)
+    if chosen is not None and chosen.snapshot_id is not None:
+        stmt = stmt.where(FlatsLot.snapshot_id == chosen.snapshot_id)
+    else:
+        stmt = stmt.order_by(FlatsLot.snapshot_id.desc()).limit(1)
     found = (await session.execute(stmt)).first()
     if found is None:
         ctx = {
             **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
             **_lots_ctx(runs, chosen),
+            "refresh": refresh,
             "counts": {"verdict": {}, "if_signed": {}, "lots": 0},
             "lots": [],
             "zones": [],
@@ -3133,6 +3175,7 @@ async def flats_lot(
         {
             **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
             **_lots_ctx(runs, chosen),
+            "refresh": refresh,
             "lot": card,
             "facts": _fact_rows(facts),
             "quadfit": facts.get("quadfit") or {},

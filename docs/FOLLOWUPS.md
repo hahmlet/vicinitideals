@@ -4,29 +4,42 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **An authoritative offline source for lots (Steph 2026-09-17: "we will
-   need an authoritative offline source").** FLATS's own durable, versioned
-   copy of the taxlots, streets and zoning it screens, replacing the
-   quadfit-parquet bridge. *Acquire is built (2026-09-18):*
-   `python -m flats.ingest.acquire` writes `data/flats/sources/<date>/`, one
-   GeoJSON per `flats/config/pipeline.yaml` dataset in EPSG:2913 plus a
-   `manifest.json` (sha256, feature count, the fields the service really
-   had, status acquired / present / refused / failed / deferred); RLIS
-   members by HTTP range out of the quarterly ZIP, ArcGIS by objectId with
-   the `where` verbatim; a missing declared field is a refusal with no
-   file. Still owed, in order: *normalize* -- one lot table from
-   `rlis_taxlots` with the registry's columns, zoning assigned by the most
-   specific source (`Pipeline.for_layer`), overlays / sewer / UGB joined,
-   and the s4-style measurements (frontage, width, depth, edges, alley
-   width, bulb) given a FLATS home under `flats/geom/`; *assign* -- the
-   normalized lots into `flats.lots` (A) or files beside the snapshot (B),
-   which is HUMAN_TODO 20 and the only part that waits on it; then
-   `screen()` reads from there and `ingest/quadfit.py` becomes the
-   comparison only. Terrain (DEM tiles) is `deferred` by acquire until the
-   slope stage exists. First snapshot on 137: `data/flats/sources/
-   2026-09-18/` (41 datasets, 1.6 GB, 453,782 taxlots); its four registry
-   fixes (FEMA both counties, UGB from Metro's service, Gladstone `where`,
-   Wood Village sewer URL) are in `pipeline.yaml` with notes.
+1. **The county map copy, kept current (HUMAN_TODO 20 decided 2026-09-19:
+   A, in the database; the agent may promote a clean refresh, anything with
+   a warning waits for Steph).** The plan with the process, cadence, change
+   types, failure modes and drift audit is in the approved plan file (the
+   runbook `docs/ops/flats-county-refresh.md` is phase 4). *Phase 1
+   shipped 2026-09-19:* `flats.snapshots` / `flats.probes` (migration 0132;
+   every lot row now belongs to a snapshot, unique `(snapshot_id, county,
+   tlid)`; run 2 backfilled onto a synthetic 2026-07-28 snapshot), the
+   red/amber banner + always-present footer on the Lots pages
+   (`flats/ingest/status.py`, computed from rows only), the monthly
+   warn-only probe (`flats/ingest/probe.py`, Celery beat 3rd 09:00 UTC,
+   `scripts/flats_probe.py` by hand), `scripts/flats_snapshot.py register`,
+   the loader's `--snapshot`, candidate runs reachable by `?run=` and never
+   the default. *Still owed, in order:* **phase 2** -- `flats/ingest/
+   delta.py` (lineage by geometry overlap: attr_change / reshape / split /
+   merge / added / deleted / vacated; TLID naming is a hint, 340 of 654
+   added lots share a section-quarter with a deleted one), `flats.lot_changes`
+   (migration 0133), the `rlis_taxlot_change` registry member
+   (`Geometry.table`, `Provides.changelog`), and the real July-vs-September
+   run on 137 (expected added >= 654, deleted >= 140, >= 80 % agreement with
+   Metro's log: ADDED M 260 / C 394, DELETED M 96 / C 44) whose numbers
+   become the runbook's normal ranges; **phase 3** -- `flats/ingest/
+   normalize.py` (every lot from the snapshot, jurisdiction from JURIS_CITY,
+   majority-area zoning, `facts.assessor` adopted, unknown zone codes KEPT
+   and screened UNKNOWN / ZONE_NOT_ENCODED -- quadfit's s3 drops them
+   today), `assign.py`, `scripts/flats_stage_quadfit_raw.py` (four key
+   renames + `derive_fema_split` + SOURCE.json), the nine overlays missing
+   from `pipeline.yaml` (Happy Valley NROZ + slope, Milwaukie greenway /
+   HCA / wetlands / WQR, Oregon City NROD, Tualatin NRPO + stream buffer;
+   URLs in `Lot Analysis/quadfit/s0_acquire.py`), loader `--delta` +
+   `snapshots.checks` (the promotion-blocking thresholds); **phase 4** --
+   migration 0134 (re-review flags on decisions), `app/services/
+   flats_refresh.py` promote / rollback / drift, `scripts/flats_promote.py`,
+   page `/flats/refresh`, the runbook, `docs/ops/data-sources-active.md`
+   RLIS section marked decommissioned. Terrain (DEM tiles) stays
+   `deferred` until the slope stage exists.
 2. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks
