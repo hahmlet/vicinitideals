@@ -1795,23 +1795,35 @@ changes; the third is a day.
 
 ---
 
-## 19. One chore for you: the app server's disk is 85% full, and the screen's results are what filled it
+## 19. One "yes" from you: the app server's disk is 85% full, and I can grow it without a reboot
 
-The app server (the virtual machine the site runs on) has a 40 GB disk.
-Loading the screen's county results into its database on 2026-09-18 used
-about 1.2 GB — the lot outlines and the verdicts for two building designs
-— and took it from 80% to 85% full, with 5.8 GB left. Each further
-county run adds roughly another 0.7 GB unless old runs are cleared out, and
-a disk that fills up stops the site, not just the screen.
+The app server is **virtual machine 114** (named `dockervm` in Proxmox — a
+VM, not one of the LXC containers). Its system disk is 40 GB on the fast
+SSD pool, and everything the site keeps — the database included — lives on
+it. Loading the screen's county results on 2026-09-18 used about 1.2 GB and
+took it from 80% to 85% full, with 5.8 GB left. Each further county run
+adds roughly another 0.7 GB unless old runs are cleared out, and a disk
+that fills up stops the site, not just the screen.
 
-**What I'd like you to do:** grow the virtual machine's disk in Proxmox
-(doubling it to 80 GB is plenty for a year of runs), then tell me and I
-will grow the filesystem inside and confirm. Until then I will not load
-another county run without clearing the previous one first. The trade-off
-if you would rather not: I can slim what each verdict stores by about half,
-which is a code change and loses some detail from old runs, or delete each
-run's results when the next one lands — cheaper but nothing to compare
-against.
+Two things I checked before asking (2026-09-19): the machine already has a
+second, empty 500 GB disk attached, but it sits on the big slow storage
+pool, so moving the database there would make every page slower — not
+worth it. And the fast pool the system disk lives on has 460 GB free, so
+growing the system disk is the clean answer.
+
+**What I'd like from you: a "yes".** With it I grow the system disk from 40
+to 80 GB myself, from the Proxmox host, while the site keeps running — no
+reboot, no downtime, and it cannot shrink back, which is the only sense in
+which it is not reversible. Until then I will not load another county run
+without clearing the previous one first. The alternatives if you would
+rather not: I can slim what each verdict stores by about half, which is a
+code change and loses some detail from old runs, or delete each run's
+results when the next one lands — cheaper but nothing to compare against.
+
+(You asked on 2026-09-19 whether you can reboot it: yes. Nothing of mine
+runs on it between deploys, and the firmware fault that stopped it booting
+in June was fixed then — it is on the modern setting now. Only the analysis
+box, LXC 137, ever has long jobs of mine running, and none is running.)
 
 ## 20. One decision: where the screen's own copy of the county's map data should live
 
