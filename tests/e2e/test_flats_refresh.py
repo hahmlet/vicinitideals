@@ -53,7 +53,10 @@ def test_a_waiting_copy_shows_its_whole_gate_and_is_not_promoted_here(logged_in_
     tripped = card.locator("table[id^='gate-'] tbody tr[data-tripped='yes']").count()
     form = card.locator("form[id^='promote-']")
     expect(form).to_be_visible()
-    if tripped:
+    if form.get_by_text("Nothing has been loaded from this copy yet").count():
+        # Registered, not yet loaded: no button of any kind until the loader runs.
+        expect(form.get_by_role("button")).to_have_count(0)
+    elif tripped:
         # Steph's rule: a warned gate waits for a person and a written reason.
         expect(form.get_by_text("Not clean:")).to_be_visible()
         expect(form.locator("textarea[name='override']")).to_be_visible()
