@@ -33,3 +33,14 @@ items live in [HUMAN_TODO.md](HUMAN_TODO.md).
    once it was given a session per request. The same pattern is unguarded at
    `models.py:722`, `models.py:918` and `app/tasks/scenario.py:321`. Left alone
    deliberately — the money-model side is not open for opportunistic fixes.
+
+6. **`tests/e2e/test_underwriting_flow.py::test_compute_on_underwriting_clears_stale_dots`
+   failed once in CI on a commit that touched no `app/` code** (9522942d,
+   2026-09-19, "Staleness dots should be cleared after compute", 1 dot
+   left; run 35471990317). The same test passed on the next two commits
+   (417d66da, fcea6d57) with identical `app/`, so it is read as a timing
+   flake in the finance stack's E2E, not a regression. Finance is off
+   limits to FLATS work; if it fails again on a commit that does not touch
+   `app/`, the E2E runbook (`docs/Troubleshooting/e2e-failed-test.md`)
+   applies -- assert on a value the old DOM cannot have, not on a count
+   that the compute may not have repainted yet.
