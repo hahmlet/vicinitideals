@@ -348,6 +348,8 @@ class FlatsLot(Base):
     tlid: Mapped[str] = mapped_column(String(40), nullable=False)
     county: Mapped[str] = mapped_column(String(40), nullable=False)
     #: Rule-layer id, e.g. ``or/multnomah/portland``. Joins to the encoded rules.
+    #: Never NULL: a lot in a city the rules do not hold carries the county
+    #: map's city name as ``juris_city:<name>`` (the loader writes it).
     jurisdiction: Mapped[str] = mapped_column(String(80), nullable=False)
     #: Zone code as the GIS layer spelled it, before normalization.
     zone_raw: Mapped[str | None] = mapped_column(String(40))

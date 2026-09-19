@@ -2749,7 +2749,13 @@ def _said_reason(code: str) -> str:
 
 def _city_label(jurisdiction: str) -> str:
     layer = _layers().get(jurisdiction)
-    return layer.label if layer is not None else jurisdiction
+    if layer is not None:
+        return layer.label
+    if jurisdiction.startswith("juris_city:"):
+        # A lot in a city the rules do not hold: the loader keeps the county
+        # map's city name behind this prefix (scripts/flats_load_bridge.py).
+        return f"{jurisdiction[len('juris_city:'):].replace('_', ' ').title()} (no rules encoded)"
+    return jurisdiction
 
 
 def _lot_href(county: str, tlid: str) -> str:

@@ -339,6 +339,19 @@ def assessor_facts(nr: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
+#: ``lots.jurisdiction`` for a lot in a city the rules do not hold (Canby,
+#: Sandy, Molalla, Estacada, Barlow -- outside Metro's boundary but on the
+#: county roll). The column is NOT NULL and the first September load stopped
+#: on a blank; the map's own city name is kept behind this prefix the way a
+#: measured lot outside ``layer_id_for`` keeps ``quadfit:<name>``.
+UNMAPPED_LAYER_PREFIX = "juris_city:"
+
+
+def unmapped_layer(juris_city: Any) -> str:
+    name = str(juris_city or "").strip().lower() or "none"
+    return f"{UNMAPPED_LAYER_PREFIX}{name}"
+
+
 def snapshot_facts(nr: dict[str, Any], row: dict[str, Any]) -> dict[str, Any]:
     """The design-independent record for a lot the snapshot holds and quadfit never measured."""
     reasons = _split(row.get("reasons"))
@@ -525,7 +538,7 @@ def export(
             else:
                 # Unmeasured: the snapshot's record, and the reason it was not measured.
                 county = str(nr.get("county"))
-                layer = str(nr.get("jurisdiction") or "")
+                layer = str(nr.get("jurisdiction") or "") or unmapped_layer(nr.get("juris_city"))
                 facts = snapshot_facts(nr, first_row[tlid])
                 zone_raw, zone, address = nr.get("zone_raw"), nr.get("zone"), nr.get("site_address")
                 wkb = nr.get("wkb")

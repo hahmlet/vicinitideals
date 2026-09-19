@@ -257,16 +257,18 @@ def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
 
 LOT_C = "1S1E01AA -00100"  # in s4 but never measured by the bridge; the snapshot answers for it
 LOT_D = "1S1E01AA -00200"  # in the snapshot only: dropped by quadfit's filter
+LOT_E = "24E01  03900"  # Canby: on the Clackamas roll, in no layer the rules hold
 
 
 def _make_snapshot_run(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
-    """The bridge run plus two ``unknown`` lots the assign stage added, and the normalized table they came from."""
+    """The bridge run plus three ``unknown`` lots the assign stage added, and the normalized table they came from."""
     run_dir, s4, s5o, results = _make_run(tmp_path)
     frame = pd.read_parquet(run_dir / "lots.parquet")
     extra = []
     for design in DESIGNS:
         extra.append(_bridge_row(LOT_C, design, jurisdiction="or/clackamas/milwaukie", zone=None, layer_id="or/clackamas/milwaukie", tier=None, rule_verdict=None, triage="unknown", if_signed="unknown", reasons="ZONE_NOT_ENCODED", if_signed_reasons="ZONE_NOT_ENCODED", head="", dominant=None, ask=None, fits=False, fit_slack_ft=None, stalls_charged=None, stalls_seated=None, parking_band=None, fit_best_depth_ft=None, fit_required_ft=None, fit_angle_deg=None, fit_across_ft=None, fit_orientation=None, lot_sqft=7000.0, frontage_ft=None, lot_width_ft=None, lot_depth_ft=None, observed="{}", assumed_leaning="", unknown_leaning="", angles=None, step_deg=None))
         extra.append(_bridge_row(LOT_D, design, jurisdiction="or/multnomah/portland", zone="R5", layer_id="or/multnomah/portland", tier=None, rule_verdict=None, triage="unknown", if_signed="unknown", reasons="NOT_MEASURED,quadfit:sliver_area", if_signed_reasons="NOT_MEASURED,quadfit:sliver_area", head="", dominant=None, ask=None, fits=False, fit_slack_ft=None, stalls_charged=None, stalls_seated=None, parking_band=None, fit_best_depth_ft=None, fit_required_ft=None, fit_angle_deg=None, fit_across_ft=None, fit_orientation=None, lot_sqft=800.0, frontage_ft=None, lot_width_ft=None, lot_depth_ft=None, observed="{}", assumed_leaning="", unknown_leaning="", angles=None, step_deg=None))
+        extra.append(_bridge_row(LOT_E, design, jurisdiction=None, zone=None, layer_id=None, tier=None, rule_verdict=None, triage="unknown", if_signed="unknown", reasons="JURISDICTION_NOT_ENCODED", if_signed_reasons="JURISDICTION_NOT_ENCODED", head="", dominant=None, ask=None, fits=False, fit_slack_ft=None, stalls_charged=None, stalls_seated=None, parking_band=None, fit_best_depth_ft=None, fit_required_ft=None, fit_angle_deg=None, fit_across_ft=None, fit_orientation=None, lot_sqft=138687.7, frontage_ft=None, lot_width_ft=None, lot_depth_ft=None, observed="{}", assumed_leaning="", unknown_leaning="", angles=None, step_deg=None))
     pd.concat([frame, pd.DataFrame(extra)], ignore_index=True).to_parquet(run_dir / "lots.parquet", index=False)
 
     normalized = tmp_path / "normalized"
@@ -278,6 +280,8 @@ def _make_snapshot_run(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
             {"county": "clackamas", "tlid": LOT_B, "juris_city": "PO", "jurisdiction": "or/multnomah/portland", "site_address": "1829 NW 25TH AVE", "area_sqft": 7200.0, "part_count": 1, "stack_count": 1, "condo_verdict": "suspect", "condo_reason": "stacked", "zone_raw": "R2.5", "zone": "R2.5", "zone_frac": 1.0, "split_zone": False, "inside_ugb": True, "gate": None, **{k: None for k in roll}, "wkb": shapely.to_wkb(POLY_B)},
             {"county": "clackamas", "tlid": LOT_C, "juris_city": "MI", "jurisdiction": "or/clackamas/milwaukie", "site_address": "9 SE HARRISON ST", "area_sqft": 7000.0, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": "QQ9", "zone": None, "zone_frac": 1.0, "split_zone": False, "inside_ugb": True, "gate": "ZONE_NOT_ENCODED", **roll, "wkb": shapely.to_wkb(POLY_A)},
             {"county": "multnomah", "tlid": LOT_D, "juris_city": "PO", "jurisdiction": "or/multnomah/portland", "site_address": None, "area_sqft": 800.0, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": "R5", "zone": "R5", "zone_frac": 0.97, "split_zone": False, "inside_ugb": True, "gate": None, **{k: None for k in roll}, "wkb": shapely.to_wkb(shapely.box(7_640_100.0, 680_000.0, 7_640_120.0, 680_040.0))},
+            # Outside Metro's boundary, in a city no layer holds: the map still names the city.
+            {"county": "clackamas", "tlid": LOT_E, "juris_city": "CANBY", "jurisdiction": None, "site_address": "14450 BAUMBACK RD", "area_sqft": 138687.7, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": None, "zone": None, "zone_frac": None, "split_zone": False, "inside_ugb": False, "gate": "JURISDICTION_NOT_ENCODED", **{k: None for k in roll}, "wkb": shapely.to_wkb(shapely.box(7_660_000.0, 600_000.0, 7_660_300.0, 600_462.3))},
         ]
     ).to_parquet(normalized / "lots.parquet", index=False)
     meta = json.loads((run_dir / "meta.json").read_text(encoding="utf-8"))
@@ -286,9 +290,9 @@ def _make_snapshot_run(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
         snapshot_date="2026-09-18",
         normalized=str(normalized),
         new_zones={"or/clackamas/milwaukie": {"QQ9": 1}},
-        lots=4,
-        rows=8,
-        assign={"measured": 2, "unmeasured": 2, "by_reason": {"NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}},
+        lots=5,
+        rows=10,
+        assign={"measured": 2, "unmeasured": 3, "by_reason": {"JURISDICTION_NOT_ENCODED": 1, "NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}},
     )
     (run_dir / "meta.json").write_text(json.dumps(meta), encoding="utf-8")
     return run_dir, s4, s5o, results, normalized
@@ -304,13 +308,13 @@ def test_a_snapshot_fed_run_exports_every_lot_as_a_candidate(tmp_path: Path) -> 
     assert run["snapshot_date"] == "2026-09-18"
     assert run["new_zones"] == {"or/clackamas/milwaukie": {"QQ9": 1}}
     assert run["params"]["caller"] == "flats.ingest.assign"
-    assert run["counts"]["lots"] == 4 and run["counts"]["results"] == 8
-    assert run["counts"]["by_source"] == {"quadfit": 3, "snapshot": 1}, "LOT_C is in s4 (measured by quadfit, screened by nobody); only LOT_D is the snapshot's"
-    assert run["counts"]["unmeasured"] == {"NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}
-    assert run["counts"]["if_signed"] == {"green": 1, "red": 1, "unknown": 5, "yellow": 1}
+    assert run["counts"]["lots"] == 5 and run["counts"]["results"] == 10
+    assert run["counts"]["by_source"] == {"quadfit": 3, "snapshot": 2}, "LOT_C is in s4 (measured by quadfit, screened by nobody); LOT_D and LOT_E are the snapshot's"
+    assert run["counts"]["unmeasured"] == {"JURISDICTION_NOT_ENCODED": 1, "NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}
+    assert run["counts"]["if_signed"] == {"green": 1, "red": 1, "unknown": 7, "yellow": 1}
 
     lots = {r["tlid"]: r for r in _read(out / LOTS_FILE)}
-    assert set(lots) == {LOT_A, LOT_B, LOT_C, LOT_D}
+    assert set(lots) == {LOT_A, LOT_B, LOT_C, LOT_D, LOT_E}
     # A measured lot keeps s4's record and gains the roll and the condo verdict.
     a = lots[LOT_A]
     assert (a["jurisdiction"], a["zone"], a["condo_verdict"]) == ("or/multnomah/portland", "R5", "land")
@@ -333,6 +337,12 @@ def test_a_snapshot_fed_run_exports_every_lot_as_a_candidate(tmp_path: Path) -> 
     assert "geometry_tier" not in df
     c = json.loads(lots[LOT_C]["facts"])
     assert c["snapshot_zone"] == {"raw": "QQ9", "zone": None, "gate": "ZONE_NOT_ENCODED"}
+    # A lot in a city no layer holds is never blank: the map's city name rides the column.
+    e = lots[LOT_E]
+    assert (e["county"], e["jurisdiction"], e["zone"], e["site_address"]) == ("clackamas", "juris_city:canby", "", "14450 BAUMBACK RD")
+    ef = json.loads(e["facts"])
+    assert ef["unmeasured"] == {"reason": "JURISDICTION_NOT_ENCODED", "quadfit_step": None} and ef["juris_city"] == "CANBY"
+    assert ef["snapshot_zone"] == {"raw": None, "zone": None, "gate": "JURISDICTION_NOT_ENCODED"}
 
     rows = _read(out / RESULTS_FILE)
     unknowns = [r for r in rows if r["tlid"] == LOT_D]
@@ -620,8 +630,8 @@ async def test_a_candidate_load_writes_the_promotion_gate_on_its_snapshot(
 
     row = (await session.execute(text("SELECT checks, counts, status FROM flats.snapshots WHERE id = :s"), {"s": september})).one()
     assert row[0] == checks
-    assert row[1]["lots"] == 4 and row[1]["measured"] == 3 and row[1]["results"] == 8
-    assert row[1]["by_reason"] == {"NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}
+    assert row[1]["lots"] == 5 and row[1]["measured"] == 3 and row[1]["results"] == 10
+    assert row[1]["by_reason"] == {"JURISDICTION_NOT_ENCODED": 1, "NOT_MEASURED": 1, "ZONE_NOT_ENCODED": 1}
     assert row[1]["new_zones"] == {"or/clackamas/milwaukie": {"QQ9": 1}}, "the next refresh reads these as already known"
     assert row[1]["baseline_snapshot_id"] == july
     assert row[1]["features"] == 1040, "the counts the register step wrote stay"
@@ -642,6 +652,13 @@ async def test_a_candidate_load_writes_the_promotion_gate_on_its_snapshot(
         )
     ).all()
     assert unmeasured and all(u[0] == "NOT_MEASURED" and u[1] == "unknown" and u[2] == ["NOT_MEASURED", "quadfit:sliver_area"] for u in unmeasured)
+    canby = (
+        await session.execute(
+            text("SELECT jurisdiction, zone, facts->>'juris_city', facts->'unmeasured'->>'reason' FROM flats.lots WHERE snapshot_id = :s AND tlid = :t"),
+            {"s": september, "t": LOT_E},
+        )
+    ).one()
+    assert tuple(canby) == ("juris_city:canby", None, "CANBY", "JURISDICTION_NOT_ENCODED"), "a city no layer holds lands with its name, never a blank"
 
 
 # --- load-changes ---------------------------------------------------------------
