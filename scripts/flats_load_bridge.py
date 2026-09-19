@@ -643,6 +643,10 @@ def _dsn(url: str) -> str:
 
 
 def _rows(path: Path) -> Iterator[list[str]]:
+    # A lot's WKB is one CSV field. The county's largest parcels (unincorporated
+    # timber and farm tracts, present since every lot rides the bundle) run past
+    # the reader's 128 KB default; the first September load stopped on one.
+    csv.field_size_limit(sys.maxsize)
     with gzip.open(path, "rt", newline="", encoding="utf-8") as fh:
         reader = csv.reader(fh)
         header = next(reader)

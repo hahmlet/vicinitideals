@@ -478,6 +478,29 @@ async def test_a_dry_run_verifies_and_leaves_nothing_behind(tmp_path: Path, sess
 
 
 @pytest.mark.asyncio
+async def test_a_lot_with_a_very_long_outline_loads(tmp_path: Path, session: AsyncSession, _test_db_url: str) -> None:
+    """The county's largest tracts have outlines whose WKB, written as one
+    CSV field, runs past the reader's 128 KB default. The first September
+    load stopped on one; every lot rides the bundle now, so the loader must
+    read a field of any length."""
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    frame = pd.read_parquet(s4)
+    long_outline = shapely.segmentize(POLY_A, 0.05)  # ~6,000 vertices on the same 50 x 100 box
+    frame.loc[frame["TLID"] == LOT_A, "wkb"] = shapely.to_wkb(long_outline)
+    frame.to_parquet(s4, index=False)
+    bundle = tmp_path / "bundle"
+    export(run_dir, bundle, s4=s4, s5o=s5o, quadfit_results=results)
+    hex_len = max(len(r["wkb_hex"]) for r in _read(bundle / LOTS_FILE))
+    assert hex_len > 131_072, hex_len
+    copy = await _snapshot(session)
+
+    report = await load(bundle, _test_db_url, snapshot_id=copy, dry_run=True)
+
+    assert report["verified"] is True
+    assert report["rolled_back"] is True
+
+
+@pytest.mark.asyncio
 async def test_a_bundle_whose_counts_do_not_match_its_files_is_refused(tmp_path: Path, session: AsyncSession, _test_db_url: str) -> None:
     run_dir, s4, s5o, results = _make_run(tmp_path)
     bundle = tmp_path / "bundle"
