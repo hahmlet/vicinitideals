@@ -1795,7 +1795,7 @@ changes; the third is a day.
 
 ---
 
-## 19. One "yes" from you: the app server's disk is 85% full, and I can grow it without a reboot
+## ~~19. One "yes" from you: the app server's disk is 85% full, and I can grow it without a reboot~~ — **DONE 2026-09-19: grown 40 → 80 GB online, 44 GB free (42%), no downtime**
 
 The app server is **virtual machine 114** (named `dockervm` in Proxmox — a
 VM, not one of the LXC containers). Its system disk is 40 GB on the fast
@@ -1819,6 +1819,12 @@ without clearing the previous one first. The alternatives if you would
 rather not: I can slim what each verdict stores by about half, which is a
 code change and loses some detail from old runs, or delete each run's
 results when the next one lands — cheaper but nothing to compare against.
+
+*Done 2026-09-19 on your "go ahead":* `qm resize 114 scsi0 +40G` on the
+Proxmox host, then inside the machine a disk rescan, `growpart /dev/sda 3`
+(installed `cloud-guest-utils` for it) and `resize2fs /dev/sda3` — the site
+stayed up throughout, health 200 before and after. The system disk is 79 GB
+with 44 GB free. The 500 GB slow disk is untouched.
 
 (You asked on 2026-09-19 whether you can reboot it: yes. Nothing of mine
 runs on it between deploys, and the firmware fault that stopped it booting
