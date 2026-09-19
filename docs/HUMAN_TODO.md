@@ -1933,9 +1933,12 @@ month) and can be run by hand; the copy in use has a name in the database
 download is registered beside it as a candidate, so the first thing the
 footer will say is "taken 2026-07-28" and the first amber line will be
 "a refreshed copy from 2026-09-18 is waiting for review" once it has waited
-two weeks -- that is the process telling the truth, not a fault. The
-comparison, the re-screen from the new copy, and the promote button are the
-next three phases; nothing needs you until the first report is ready.
+two weeks -- that is the process telling the truth, not a fault. The first
+check ran by hand on 2026-09-19: every one of the 39 county sources answered
+and matched what the September download recorded, so the footer reads
+"sources checked 2026-09-19" and no bar is showing. The comparison, the
+re-screen from the new copy, and the promote button are the next three
+phases; nothing needs you until the first report is ready.
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
