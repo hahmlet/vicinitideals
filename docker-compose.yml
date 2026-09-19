@@ -120,6 +120,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    # Docker's default /dev/shm is 64 MB; a parallel hash join across the
+    # FLATS lot tables (800k results x 580k, the county-copy drift report)
+    # ran out of it -- "could not resize shared memory segment". A limit,
+    # not a reservation.
+    shm_size: 1g
     networks:
       - vicinitideals-network
     restart: unless-stopped
