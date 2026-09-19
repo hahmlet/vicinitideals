@@ -412,6 +412,19 @@ def _street_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> f
     return float(v or 0.0)
 
 
+#: Two street bearings closer than this are ONE street that bends, not two
+#: streets meeting at a corner. s4 clusters front edges at 20 degrees, so a
+#: crescent, a cul-de-sac approach or an S-curve along one lot comes out as
+#: two bearings 20-40 degrees apart; a corner lot's streets meet at 60-120.
+#: On the September tree 15,530 of the 86,775 two-bearing lots are under 45
+#: degrees (9,166 under 30). A lot at an acute intersection -- Sandy
+#: Boulevard against Portland's grid -- is read as one bending street too,
+#: and forgoes its second front rather than have its 16 ft clip taken for
+#: one; the street's NAME per edge, which s4 does not hold, would tell the
+#: two apart (FOLLOWUPS 5 (c)).
+CORNER_MIN_DEG = 45.0
+
+
 def _extent_along(xy, bearing: float) -> float:
     """The lot's length along a bearing: the spread of its corners projected
     onto that direction. On every simple shape this is the length of the lot
@@ -457,7 +470,11 @@ def _candidate_fronts(bearings: list[float], front_edges: list[list[float]],
 
     An edge farther than the cluster tolerance from every bearing (a curved
     corner) belongs to no street: it is in nobody's front edges and nobody's
-    side edges, and counts only toward the court's exposure.
+    side edges, and counts only toward the court's exposure. Two bearings
+    closer than `CORNER_MIN_DEG` are one street that bends: one entry, every
+    front edge in it, drawn as before -- the first bound run took the 16 ft
+    clip at the bend of 1S1E07DC-04600 for the shorter of two streets and
+    refused a lot that parks eight.
     """
     if not bearings:
         return [(0.0, list(front_edges), [])]
@@ -469,7 +486,7 @@ def _candidate_fronts(bearings: list[float], front_edges: list[list[float]],
             members[k].append(e)
     groups = [(float(b), fe, sum(math.hypot(e[2] - e[0], e[3] - e[1]) for e in fe))
               for b, fe in zip(bearings, members) if fe]
-    if len(groups) < 2:
+    if len(groups) < 2 or bearing_delta(groups[0][0], groups[1][0]) < CORNER_MIN_DEG:
         return [(float(bearings[0]), list(front_edges), [])]
     if rule == "shortest":
         def line_len(g):

@@ -1636,3 +1636,29 @@ def test_the_shorter_street_is_the_shorter_lot_line_not_the_shorter_edge_sum():
     r0 = _run(s6s, env, fe, W * D, bearings=[0.0, 90.0])
     assert r0["site_plan_ok"] is False
     assert r0["layout_fail"] == "court_too_shallow"
+
+
+def test_a_street_that_bends_is_one_street_not_a_corner():
+    """s4 clusters front edges at twenty degrees, so a crescent or a
+    cul-de-sac approach comes out as two bearings 20-40 degrees apart. The
+    first bound run (2026-09-19) read those as corner lots: on 1S1E07DC-04600
+    the 16 ft clip at the bend was the "shorter street", the pod was turned
+    to face it, and a lot that parks eight was refused for want of a lane.
+    Two bearings closer than `CORNER_MIN_DEG` are one street, every front
+    edge in it, whatever the city's corner word says."""
+    s6s = _sp_setup()
+    cf = s6s._candidate_fronts
+    assert s6s.CORNER_MIN_DEG == 45.0
+    # the front runs 80 ft east, then bends 25 degrees for another 40 ft
+    fe = [[0.0, 0.0, 80.0, 0.0], [80.0, 0.0, 116.3, 16.9]]
+    xy = [(0.0, 0.0), (80.0, 0.0), (116.3, 16.9), (116.3, 120.0), (0.0, 120.0)]
+    for rule in ("shortest", "owner", "both", None):
+        kept = cf([0.0, 25.0], fe, rule, xy)
+        assert len(kept) == 1
+        assert kept[0][0] == 0.0 and len(kept[0][1]) == 2 and kept[0][2] == []
+    # at a right angle the same words see two streets
+    fe2 = [[0.0, 0.0, 80.0, 0.0], [80.0, 0.0, 80.0, 40.0]]
+    xy2 = [(0.0, 0.0), (80.0, 0.0), (80.0, 120.0), (0.0, 120.0)]
+    assert len(cf([0.0, 90.0], fe2, "owner", xy2)) == 2
+    assert len(cf([0.0, 90.0], fe2, "shortest", xy2)) == 1
+    assert cf([0.0, 90.0], fe2, "shortest", xy2)[0][0] == 0.0     # 80 ft < 120 ft
