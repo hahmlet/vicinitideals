@@ -67,3 +67,9 @@ CLAUDE.original.md
 # derived: re-fetched from the URL on the sidecar when missing, and verified
 # against the SHA-256 the page map recorded. Nothing is encoded from them.
 data/flats/books/
+
+# FLATS acquire snapshots (data/flats/sources/<date>/) and the bridge bundles
+# exported for the loader: hundreds of MB of county data, reproducible from
+# the registry, described by the manifest they carry.
+data/flats/sources/
+data/flats/bridge/

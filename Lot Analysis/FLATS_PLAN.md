@@ -1146,7 +1146,9 @@ figure — an alley is a through lane, Steph's 2026-09-13 ruling — and is unto
 `screen()` had every input built and no producer: `flats.lots` was empty because the
 acquire / normalize / assign stages in `config/pipeline.yaml` name their sources and
 nothing downloads them. Steph's ruling, verbatim: *"bridge from the county map for now,
-but we will need an authoritative offline source."* `flats/ingest/quadfit.py` is the
+but we will need an authoritative offline source."* (The acquire stage of that source
+exists since 2026-09-18 -- `flats/ingest/acquire.py`, below; normalize and assign do
+not.) `flats/ingest/quadfit.py` is the
 bridge — it reads quadfit's s4 + s5o stage files on LXC 137 (area, frontage, width,
 depth, edges and bearings, the bulb flag, the carved envelope, FEMA, the sewer main and
 district) into `LotFacts`, says each site fact quadfit measured in the registry's words
@@ -1707,7 +1709,8 @@ An earlier draft of this section said otherwise; §6 is the decision.
 | ✅ | `geom/` — edge classification and the buildable envelope |
 | ✅ | `fit/` — 0–180° rotation sweep, rasterizer, fit-with-a-margin (Phase 2 pulled forward) |
 | ✅ | `score/screen.py` — GREEN/YELLOW/RED/UNKNOWN with split attribution (tightest vs dominant) |
-| ✅ | Ingest — the bridge from quadfit's county map (`ingest/quadfit.py`, 2026-09-17): every lot × design screened, UNKNOWN pending signing with `if_signed` beside it; the acquire/normalize/assign stages of `config/pipeline.yaml` are still the offline source owed (FOLLOWUPS 2) |
+| ✅ | Ingest — the bridge from quadfit's county map (`ingest/quadfit.py`, 2026-09-17): every lot × design screened, UNKNOWN pending signing with `if_signed` beside it |
+| 🟡 | Ingest — the offline source (FOLLOWUPS 1). **Acquire built 2026-09-18** (`ingest/acquire.py`): `python -m flats.ingest.acquire` writes a dated snapshot `data/flats/sources/<YYYY-MM-DD>/` — one GeoJSON per `config/pipeline.yaml` dataset in EPSG:2913 and a `manifest.json` per dataset (url, retrieved_at, sha256, bytes, features, the fields the service really had, status `acquired` / `present` / `refused` / `failed` / `deferred`). RLIS members come out of the quarterly ZIP by HTTP range request (central directory, then the `.shp` + `.dbf` only) through pyshp's `__geo_interface__` so holes stay holes; ArcGIS layers by objectId in batches with `outSR` = the working CRS and the `where` sent verbatim; a declared field the service lacks is a **refusal with no file** (a zoning layer without its zone field would be read as zoning). Re-running touches nothing already there unless `--force` or the registry entry changed (`spec_sha256`). Terrain is `deferred`. Normalize (one lot table, zoning by `Pipeline.for_layer`, joins, the s4-style measurements under `geom/`) and assign (`flats.lots` or files — HUMAN_TODO 20) are the remainder |
 
 **On "100% blocked".** That is the correct reading of the first ledger, not a
 regression. Every ported value is `draft` by design, so no zone can produce GREEN until

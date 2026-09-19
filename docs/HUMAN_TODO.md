@@ -1857,6 +1857,15 @@ The trade-off as you would say it: A is "one copy, safer, needs the bigger
 disk"; B is "two copies, cheaper, more manual". Reply "A" or "B" (or "A once
 the disk is grown").
 
+*Update 2026-09-18, evening.* The disk is grown (item 19), so "A once the
+disk is grown" is now just "A". And the half of this that does not depend on
+your answer is built: the downloader that takes a dated, fingerprinted copy
+of every county source we use (tax lots, streets, the fourteen cities'
+zoning, overlays, sewer) and writes down, per source, when it was taken,
+what it hashed to, how many shapes it holds and whether the source still
+has the columns we expect -- refusing to keep a copy that does not. Where
+the cleaned-up copy lands is the only part still waiting on A or B.
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once

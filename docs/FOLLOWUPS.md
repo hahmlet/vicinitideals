@@ -6,13 +6,24 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
 1. **An authoritative offline source for lots (Steph 2026-09-17: "we will
    need an authoritative offline source").** FLATS's own durable, versioned
-   copy of the taxlots, streets and zoning it screens -- option (B) refined:
-   `flats/config/pipeline.yaml` already names the county GIS sources and
-   `flats/ingest/sources.py` validates them; nothing downloads, normalizes
-   or assigns. Replaces the quadfit-parquet bridge above when built. Several
-   sessions; waits on HUMAN_TODO 20 (where the copy lives -- `flats.lots`
-   in Postgres now holds every lot with its outline, which answers half of
-   it) before starting.
+   copy of the taxlots, streets and zoning it screens, replacing the
+   quadfit-parquet bridge. *Acquire is built (2026-09-18):*
+   `python -m flats.ingest.acquire` writes `data/flats/sources/<date>/`, one
+   GeoJSON per `flats/config/pipeline.yaml` dataset in EPSG:2913 plus a
+   `manifest.json` (sha256, feature count, the fields the service really
+   had, status acquired / present / refused / failed / deferred); RLIS
+   members by HTTP range out of the quarterly ZIP, ArcGIS by objectId with
+   the `where` verbatim; a missing declared field is a refusal with no
+   file. Still owed, in order: *normalize* -- one lot table from
+   `rlis_taxlots` with the registry's columns, zoning assigned by the most
+   specific source (`Pipeline.for_layer`), overlays / sewer / UGB joined,
+   and the s4-style measurements (frontage, width, depth, edges, alley
+   width, bulb) given a FLATS home under `flats/geom/`; *assign* -- the
+   normalized lots into `flats.lots` (A) or files beside the snapshot (B),
+   which is HUMAN_TODO 20 and the only part that waits on it; then
+   `screen()` reads from there and `ingest/quadfit.py` becomes the
+   comparison only. Terrain (DEM tiles) is `deferred` by acquire until the
+   slope stage exists.
 2. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks
