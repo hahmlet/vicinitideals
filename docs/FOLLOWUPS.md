@@ -111,9 +111,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    only). **Steph's ruling 2026-09-19 on the front:** trying each street
    as the front applies ONLY where the lot has more than one street AND
    the code leaves the choice to us; if one front parks and the other does
-   not, take the one that parks; if both park, a further deciding factor
-   (HUMAN_TODO 21 -- recommended: the code's own tie-break where it states
-   one, else the most stalls, else the shorter street). And read every
+   not, take the one that parks; if both park, HUMAN_TODO 21 DECIDED
+   2026-09-19: (1) the orientation that turns the lot green, (2) if both
+   green, the one that reaches the `preferred` band, (3) if both preferred
+   or both only `minimum`, the shorter street (my reading: a higher band
+   wins before the street decides). **More parking is not a goal** --
+   Steph: "optimize for sufficient, but minimal parking so we can fit a 2nd
+   pod" -- so s6s's "keep the orientation with the MOST stalls" rule is
+   to be revisited here (green, then band, then the least ground under
+   pavement), and a two-pod lot is a product direction to keep in view
+   (`flats/designs/`: one pod per lot today). And read every
    city for multi-street rules even where the front is clear. Whole-corpus
    grep 2026-09-19 (`flats/provenance/docs`, "corner lot|through lot|double
    frontage" near "front lot line"): the CHOICE IS OURS in Gladstone

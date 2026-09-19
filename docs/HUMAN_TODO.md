@@ -2006,7 +2006,7 @@ only a code appearing for the first time will) or tell me which of
 those codes to encode first, since a lot in an unencoded zone can never
 be green.
 
-## 21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?
+## ~~21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?~~ -- **DECIDED 2026-09-19: green first, then the preferred parking band, then the shorter street; more parking is not a goal**
 
 You ruled on 19 September: trying each street as the front only applies
 where the lot has more than one street *and* the city leaves the choice to
@@ -2035,8 +2035,18 @@ The options, plainest first:
 - **C. The quieter street for the driveway** (Fairview's logic) -- needs
   the street classification for every lot, which we do not hold yet.
 
-**My recommendation: A**, with the shorter street as the coin toss. Say
-"A", "B" or "C" and I will write it into the drawing when item 5 is built.
+**Your ruling (19 September), in your words:** *"In order of priority
+1) which orientation turns the lot green 2) if both green, which gets us
+to preferred parking amount 3) if both preferred parking amount OR both
+reach minimum parking amount, shortest street. 'We can fit more parking'
+isn't necessarily a good thing. We may want to optimize for sufficient,
+but minimal parking so we can fit a 2nd pod."* Recorded in the agent
+queue (item 5) as the rule the drawing will follow, and the "sufficient
+but minimal" point is kept as a standing preference: the drawing today
+keeps whichever way round seats the *most* cars, and that rule will be
+revisited when item 5 is built. One reading I have taken until you say
+otherwise: where one way reaches the middle ("target") band and the other
+only the minimum, the higher band wins before the shorter street decides.
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
