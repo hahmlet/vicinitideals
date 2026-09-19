@@ -189,12 +189,37 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    so the 288,031 FLATS verdicts read as unchanged -- only quadfit's
    badge, stalls and method on the lot page moved). Still awaits Steph's
    read (HUMAN_TODO 20: trips `new_zones` by design).
-   Then (iii) a named side-court arrangement; (iv) through lots as two
-   fronts -- 4,982 evaluated lots have ONE bearing and front edges at
-   both ends (>40 ft apart), 3,655 fail today (Portland 2,761, Clackamas
-   531, Gresham 478, HV 209, WL 208, OC 188); read each city's
-   through-lot front and access rule first (West Linn 48.025(B)(5) is a
-   double-frontage rule) -- the code may fix which end is the front.
+   Then (iii) a named side-court arrangement and (iv) through lots,
+   which turn out to be one slice. **Measured 2026-09-19 evening**
+   (`data/quadfit_2026-09-18/through_lots.csv` on 137): 6,118 lots have
+   ONE bearing and front edges at both ends more than 40 ft apart; 1,327
+   draw ok today (green 487 / review 479 / red 361), 4,791 fail
+   (court_too_shallow 2,602 -- both ends carry the front setback, which
+   the codes require: Portland 33.910 "a through lot has two front lot
+   lines", Wood Village 720.030, Gresham "each street frontage shall be
+   considered a front yard"; no_side_lane 871; no_court 176; 1,136 never
+   evaluated). Two halves. (iv-a) **Portland and Milwaukie ban the
+   drawing we make today**: the rear court sits between the building and
+   the SECOND street, and 33.266.120.C.1.a prohibits vehicle area "between
+   the primary structure and the street" unless "entirely behind the
+   front and side street building lines" (both ends are fronts), Milwaukie
+   19.505.3.D.4.a "not directly between the facade of a primary building
+   and an abutting street right-of-way" -- 826 through lots draw ok there
+   today (green 325 / review 201 / red 300), a false-GREEN direction; a
+   lane from the second street cannot cure it, only a court BESIDE the
+   building (iii) or a refusal, so (iii) comes first and is bound on
+   these 826 (expect greens lost, then some recovered by the side court
+   where the lot is wide: today's ok through lots are 90 ft wide at the
+   median). (iv-b) the other twelve cities state no ban, so the court
+   behind the building is lawful in the second front yard and the lane
+   may come in straight from the second street across its setback strip
+   (`townhome_rear_court_side_street`'s construction on the far end's F
+   edges; access rule Tualatin 36.400(b), West Linn 48.030(B)(5),
+   Fairview 19.162.020(5), Clackamas 845.03(A)(3) = lowest class, drawn
+   as `any` per (c); alley-fed cities keep the alley): at most the 380
+   no_side_lane lots outside Portland/Milwaukie (Gresham 85, Clackamas
+   83, WL 51, Multnomah 38, HV 31, OC 25, Wilsonville 24, Troutdale 13)
+   plus a few no_court. Bound each half separately, read the losses.
    Queued behind it, each to bound first: (a) s4 measures lot
    width/depth along the LONGEST street (`cluster_bearings` orders by
    length) -- in the shortest cities width and depth are swapped on most
