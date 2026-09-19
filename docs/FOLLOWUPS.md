@@ -9,18 +9,20 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    delta dc1dbaad; every-lot normalize/assign + gate 1318db5b; promote /
    rollback / drift / `/flats/refresh` ffe407ec; runbook
    `docs/ops/flats-county-refresh.md`). The September copy is loaded as
-   **run 8** (`candidate`, snapshot 3: 400,032 lots = 288,031 measured +
-   112,001 unmeasured with a reason; 800,064 results; `?run=8`, default
+   **run 10** (`candidate`, snapshot 3: 400,032 lots = 288,031 measured +
+   112,001 unmeasured with a reason; 800,064 results; `?run=10`, default
    still run 2; run 6 -- the same snapshot with 2,001 condo unit records
-   kept as lots -- was retired by a one-shot before the re-load, 8e596f8b),
-   drift 2 -> 8 stored (575,478 compared, 178 moved: ground 39 /
+   kept as lots -- was retired by a one-shot before the re-load, 8e596f8b;
+   run 8 -- the same screen with quadfit's old corner drawing -- retired
+   the same way 2026-09-19 evening, item 5), drift 2 -> 10 stored
+   (575,478 compared, 178 moved: ground 39 /
    surroundings 104 / re-measured 35 / rules 0 / code 0 / unexplained
    0; causes read from the measured facts since 61e01c36:
    `surroundings` beyond float noise, `remeasured` within it -- 0.05 abs /
    2 % rel -- on an answer that sat on a line), gate trips **new_zones
    only** -- Steph reads; nobody promotes. When Steph promotes:
    `flats_promote.py prune --dry-run` then real (keeps snapshot 1 whole),
-   confirm the Lots default is run 8 and the footer says 2026-09-18,
+   confirm the Lots default is run 10 and the footer says 2026-09-18,
    re-run the probe. Still coarse at the end: `code` is the
    fall-through whenever the repo HEAD differs, so it says "a commit
    landed", not "the screen changed"; the api container has no git, so
@@ -68,7 +70,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    is observed but no Clackamas standard turns on it) -- 84 of the 178
    screen-GREEN / quadfit-red lots in the sample; (d) the sweep -- the
    screen tries 180 angles, s6 fits at the front bearings only, and 94 of
-   those 178 are quadfit `siteplan_no_layout` lots the sweep found a fit on.
+   those 178 are quadfit `siteplan_no_layout` lots the sweep found a fit on;
+   (e) which street is the front on a corner lot, and the lane in from the
+   side street (FOLLOWUPS 5 slice B, 9522942d + fcea6d57) -- on the county
+   map only; `flats/score/paper.py` still faces s4's first bearing and
+   brings the lane down the side of the building, so the screen's stall
+   count and `fit_ft` on ~60,000 corner lots read the old drawing.
    Also owed: FLATS's own envelope from the corpus setbacks
    (`geom/envelope.buildable`) instead of quadfit's carved one, and
    `steep_slope` from s5o's DEM percentile / Gresham's hillside overlay
@@ -147,20 +154,56 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    chooses green > band > least court exposure (`court_street_ft`) > own
    aisle > least pavement -- never most stalls, so within a band a lot may
    show fewer stalls and the same colour; new columns front_bearing_deg /
-   fronts_tried / court_street_ft; 53 siteplan tests. **NEXT: bound it on
-   137** -- s6s -> s7 on the September tree (`s6s.py` then `s7`, ~10 min
-   s6s), diff verdicts and stall counts against run 8's parquet BEFORE any
-   load; report corner-lot moves per city and the within-band stall drops
-   on interior lots separately; if a new candidate is loaded, retire run 8
-   first (one transaction, rehearse with ROLLBACK) and keep its bundle.
+   fronts_tried / court_street_ft; 56 siteplan tests. **BOUND on 137
+   2026-09-19** (s6s -> s7 on the September tree; three runs, two fixes
+   found by reading the LOST lots one by one): run 1 (9522942d) faced
+   738 lots the wrong way because "shortest street" was read as the
+   shorter SUM of a street's front edges -- streets at both ends summed
+   past the side, a jogged frontage's 30 ft step "won" -- fixed fcea6d57
+   (`_extent_along`: the lot LINE, corner to corner); run 2 still lost
+   200, 117 of them lots whose two "streets" are 20-45 degrees apart --
+   one street that bends, which s4's 20-degree clustering splits (15,530
+   of 86,775 two-bearing lots) -- fixed 364c360e (`CORNER_MIN_DEG` 45:
+   one street, every front edge, drawn as before; an acute corner such as
+   Sandy Blvd forgoes its second front until s4 holds the street's name
+   per edge, (c) below). **Run 3 (364c360e), the bound:** only corner
+   lots moved, no interior lot changed colour (22 interior lots show
+   fewer stalls in the same band -- `_plan_rank`, by design);
+   site_plan_ok +7,984 / -83; verdicts green 20,119 -> 23,477 (red->green
+   3,368, green->red 10), review 13,495 -> 15,798 (red->review 2,338,
+   review->red 35), red 256,418 -> 250,757; 12,203 lots drawn to two
+   fronts, 12,986 face the street s4 did not list first, 14,778 take the
+   lane in from the side street (Portland 11,416); greens gained by city:
+   Portland 2,801, Gresham 211, Troutdale 98, Oregon City 91, Milwaukie
+   66, West Linn 53, Clackamas 28, Wood Village 14, Wilsonville 5,
+   Multnomah 1. The 83 losses (Portland 65, Multnomah 6, OC 5, WL 5,
+   Clackamas 1, Wilsonville 1; court_too_shallow 48, no_side_lane 31) are
+   the code's front -- a real corner whose shorter street is too shallow
+   to park behind -- or a flip the old drawing had wrong (12E29AB00200
+   parked in its FRONT yard). Diff `/root/corner_diff.py`, moves
+   `corner_moves.csv`, parquets `s6s_lots.{before_corner,corner_v1,
+   corner_v2}.parquet` on 137. **LOADED 2026-09-19 as the county copy's
+   candidate, run 10 replacing run 8** (run 8 retired in one transaction,
+   its bundle kept as `bridge/2026-09-18.run8`; re-export from the same
+   assign dir with `--code-version`/`--rules-version` of run 8, 6044713f,
+   so the 288,031 FLATS verdicts read as unchanged -- only quadfit's
+   badge, stalls and method on the lot page moved). Still awaits Steph's
+   read (HUMAN_TODO 20: trips `new_zones` by design).
    Then (iii) a named side-court arrangement; (iv) through lots as two
-   fronts. Queued behind it, each to bound first: (a) s4 measures lot
+   fronts -- 4,982 evaluated lots have ONE bearing and front edges at
+   both ends (>40 ft apart), 3,655 fail today (Portland 2,761, Clackamas
+   531, Gresham 478, HV 209, WL 208, OC 188); read each city's
+   through-lot front and access rule first (West Linn 48.025(B)(5) is a
+   double-frontage rule) -- the code may fix which end is the front.
+   Queued behind it, each to bound first: (a) s4 measures lot
    width/depth along the LONGEST street (`cluster_bearings` orders by
    length) -- in the shortest cities width and depth are swapped on most
    corner lots, which moves `lot_width_ft` facts and every width gate; (b)
    Portland 33.266.120.C.1.b: on a corner lot the court must sit behind the
    side-street building line and pave at most 20 % of the side-street
-   setback; (c) `lowest_class` needs a street classification per edge (s4
+   setback -- the drawn lane is consistent by construction (court inside
+   the envelope, a 12-ft lane is ~12 % of the strip), so only "behind the
+   building line" is unread; (c) `lowest_class` needs a street classification per edge (s4
    holds none; drawn as `any` and said so at runtime); (d) Fairview
    19.30.050(D)(2)(a) side-yard parking setback -> redirect ledger; (e)
    Gresham 3.0100: the front is fixed where the minimum lot depth is met

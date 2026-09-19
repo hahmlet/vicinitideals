@@ -2006,6 +2006,17 @@ only a code appearing for the first time will) or tell me which of
 those codes to encode first, since a lot in an unencoded zone can never
 be green.
 
+*Later the same day (2026-09-19 evening):* the waiting copy was replaced
+once more, this time only for the county map's own drawing on corner
+lots (your ruling in 21: the front street is the one the city's code
+names, and the parking lane may come in from the side street). On the
+county map's badge that is about 3,400 more lots green and 2,300 more
+sent to review, 10 lost -- all corner lots, no interior lot moved. The
+screen's own verdicts did not change at all, the gate shows the same one
+warning, and the comparison against July reads the same 178 moves with
+none unexplained. What I need from you is unchanged: read the County copy
+page and promote over the warning, or name the zone codes to encode first.
+
 ## ~~21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?~~ -- **DECIDED 2026-09-19: green first, then the preferred parking band, then the side with the least exposure to a street; more parking is not a goal**
 
 You ruled on 19 September: trying each street as the front only applies
