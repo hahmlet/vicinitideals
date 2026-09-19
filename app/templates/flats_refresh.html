@@ -109,7 +109,7 @@
           {{ "{:,}".format(s.drift.unscreened_side or 0) }} with no screen on one side.
           {% if s.drift.colour_moves %}<div>Colour moves: {% for k, n in s.drift.colour_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
           {% if s.drift.tier_moves %}<div>Verdict moves: {% for k, n in s.drift.tier_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
-          {% if s.drift.surroundings_facts %}<div id="drift-surroundings-{{ s.id }}">What moved around them: {% for k, n in s.drift.surroundings_facts.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+          {% if s.drift.surroundings_facts %}<div id="drift-surroundings-{{ s.id }}">What moved around them: {% for k, n in s.drift.surroundings_facts|dictsort(by='value', reverse=true) %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
           {% if s.drift.examples %}
             <div>Unexplained, first few:
               {% for e in s.drift.examples %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}?run={{ s.drift.to_run }}">{{ e.tlid }}</a> {{ e.design }} {{ e.colour[0] }}→{{ e.colour[1] }}{% if not loop.last %}; {% endif %}{% endfor %}

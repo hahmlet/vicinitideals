@@ -16,21 +16,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    -- Steph reads; nobody promotes. When Steph promotes: `flats_promote.py
    prune --dry-run` then real (keeps snapshot 1 whole), confirm the Lots
    default is run 6 and the footer says 2026-09-18, re-run the probe.
-   **Drift attribution is too coarse** (found on the first real report):
-   `code` is the fall-through whenever the repo HEAD differs, which it does
-   on every refresh, so `unexplained` can only fire when nothing was
-   committed -- and of the 139 filed under `code`, the screen's code did
-   not change; the facts that differ are `corner_lot` 25, `fronts_cul_de_sac`
-   18, `abuts_alley`/`alley_at_*` 13, `in_floodplain` 8, `in_sewer_district`
-   8, `split_zone` 8 -- the streets, alley, FEMA, sewer and zoning layers
-   re-read around an unchanged lot. Fix in `app/services/flats_refresh.py
-   drift()`: a `surroundings` cause when any measured fact in
-   `facts.quadfit` / `facts.observed` differs between the two rows (before
-   rules/code), and `code` only when the screen's own files changed (hash
-   of `flats/score`, `flats/geom`, `flats/ingest/quadfit.py`, `Lot
-   Analysis/quadfit` between the two code versions -- `git diff --stat`),
-   else `unexplained`. Add the new words to `GATE_WORDS`/the page; test in
-   `tests/services/test_flats_refresh.py`. Loose ends the September map
+   Drift 2 -> 6 re-run after 61e01c36 (causes read from the measured facts:
+   `surroundings` beyond float noise, `remeasured` within it -- 0.05 abs /
+   2 % rel -- on an answer that sat on a line): ground 39 / surroundings
+   104 / re-measured 35 / rules 0 / code 0 / unexplained 0;
+   what moved around them: front_bearings_deg 85, envelope 75, slope 62, geometry_tier 44, frontage 27, corner_lot 19, lot_depth 17, lot_width 16, cul-de-sac 10, alley 7. Still coarse at the end: `code` is the
+   fall-through whenever the repo HEAD differs, so it says "a commit
+   landed", not "the screen changed"; the api container has no git, so
+   making it precise means the exporter stamping a hash of the screen's own
+   files (`flats/score`, `flats/geom`, `flats/ingest/quadfit.py`, `Lot
+   Analysis/quadfit`) on `run.json` -> `runs.screen_version` and `drift()`
+   comparing that -- a migration + loader column; do it with the next
+   loader change. Loose ends the September map
    found, queued not fixed: Happy Valley's layer carries both `MURM2` and
    `MURm2` (one lot; the source's casing, kept), Oregon City's zoning says
    `County` on 14 lots inside its boundary; 2,001 Multnomah unit lots
