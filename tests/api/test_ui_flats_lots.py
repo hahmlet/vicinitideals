@@ -663,3 +663,51 @@ async def test_no_lot_page_prints_a_python_object(client: AsyncClient, session: 
         assert page.status_code == 200
         assert "built-in method" not in page.text
         assert "object at 0x" not in page.text
+
+
+async def test_the_lot_page_shows_a_persons_decision_and_the_look_again_mark(
+    client: AsyncClient, session: AsyncSession
+):
+    """A standing decision is printed under the verdict; one that promotion
+    marked "look again" (the ground under it split, merged, or was rezoned)
+    says so beside it; a superseded one is history and is not shown."""
+    from app.models.flats import FlatsReviewDecision
+
+    await _login(client, session)
+    run = await _seed(session)
+    snapshot_id = run.snapshot_id
+    session.add_all(
+        [
+            FlatsReviewDecision(
+                county="multnomah", tlid="1S2E08BA  -09500", design_key="", check_code="lot",
+                verdict="green", reason="walked it; the alley is paved",
+            ),
+            FlatsReviewDecision(
+                county="multnomah", tlid="1S2E08BA  -09500", design_key="pod80x25@2", check_code="fit_ft",
+                verdict="red", reason="the neighbour's garage sits on the line",
+                needs_rereview_snapshot_id=snapshot_id, needs_rereview_reason="split parent; zone R5 -> R2.5",
+            ),
+            FlatsReviewDecision(
+                county="multnomah", tlid="1S2E08BA  -09500", design_key="", check_code="lot",
+                verdict="red", reason="old and withdrawn", superseded_at=datetime.now(timezone.utc),
+            ),
+        ]
+    )
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+
+    assert page.status_code == 200
+    block = page.text.split('id="lot-decisions"', 1)[1].split('id="lot-facts"', 1)[0]
+    assert "Decided by a person" in block
+    assert "walked it; the alley is paved" in block
+    assert "either design" in block
+    assert "old and withdrawn" not in block
+    # The marked decision says why it is in doubt, and the unmarked one does not.
+    marked = block.split("the neighbour", 1)[1]
+    assert "Look again:" in marked
+    assert f"the county copy {snapshot_id} shows this ground split parent; zone R5 -&gt; R2.5" in marked
+    assert block.count("Look again:") == 1
+    # A lot with no decision shows no block at all.
+    other = await client.get("/flats/lots/clackamas/11E25AB%20%20-00300")
+    assert 'id="lot-decisions"' not in other.text

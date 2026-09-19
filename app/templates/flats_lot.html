@@ -53,6 +53,28 @@
     <div class="alert alert-warning">Run {{ run.id }} has no result for this lot.</div>
   {% endif %}
 
+  {# A person's standing decisions about this lot. A "look again" mark means a
+     later county copy showed the ground under the decision split, merged,
+     renumbered, gone or rezoned: the decision still stands, but it was made
+     about different ground (HUMAN_TODO 20, migration 0134). #}
+  {% if decisions %}
+  <div class="card" id="lot-decisions" style="padding:12px;margin:12px 0">
+    <h3 style="margin:0 0 6px">Decided by a person</h3>
+    {% for d in decisions %}
+      <div id="decision-{{ d.id }}" style="font-size:13px;margin:4px 0">
+        <span class="badge {{ d.badge }}">{{ d.verdict }}</span>
+        <span class="muted">{{ d.check }} · {{ d.design }} · {{ d.decided_at }}</span>
+        — {{ d.reason }}
+        {% if d.look_again %}
+          <div class="alert alert-warning" style="font-size:12px;margin:4px 0 0" id="look-again-{{ d.id }}">
+            <strong>Look again:</strong> the county copy {{ d.look_again_snapshot }} shows this ground {{ d.look_again_why }}. The decision stands, but it was made about different ground.
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
 
     {% for r in lot.results %}

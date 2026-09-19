@@ -1973,8 +1973,8 @@ copies. A clean gate shows one button, **Promote**; a warned gate shows
 the copy with your name. A promoted copy shows **Roll back**, which puts
 the previous one back the same way. Promotion also marks every review
 decision made about ground the new copy shows split, merged, renumbered,
-gone or rezoned as "look again" (the mark is stored; showing it on the lot
-page is queued). The full steps, timings, normal ranges, warnings and
+gone or rezoned as "look again", and the lot's page says so under the
+verdict. The full steps, timings, normal ranges, warnings and
 failure modes are in the runbook. The first candidate (the September copy)
 will trip "new zone codes" by design -- the July copy never counted them
 -- so it waits for you; I will tell you when its report is ready and what

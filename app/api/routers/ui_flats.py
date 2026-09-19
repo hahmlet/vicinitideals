@@ -3332,6 +3332,40 @@ def _roll_date(value: Any) -> str:
     return text
 
 
+async def _lot_decisions(session: DBSession, county: str, tlid: str) -> list[dict[str, Any]]:
+    """A person's standing decisions about this lot, newest first, each with
+    the "look again" mark promotion sets when the ground under it moved
+    (``review_decisions.needs_rereview_*``, migration 0134). The decision
+    stands until a person supersedes it; the mark says it was made about
+    different ground."""
+    rows = await session.execute(
+        select(FlatsReviewDecision)
+        .where(
+            FlatsReviewDecision.county == county,
+            FlatsReviewDecision.tlid == tlid,
+            FlatsReviewDecision.superseded_at.is_(None),
+        )
+        .order_by(FlatsReviewDecision.decided_at.desc(), FlatsReviewDecision.id.desc())
+    )
+    out = []
+    for d in rows.scalars():
+        out.append(
+            {
+                "id": d.id,
+                "design": d.design_key or "either design",
+                "check": d.check_code,
+                "verdict": d.verdict,
+                "badge": _BADGE.get(d.verdict, "badge-gray"),
+                "reason": d.reason,
+                "decided_at": d.decided_at.strftime("%Y-%m-%d") if d.decided_at else "",
+                "look_again": d.needs_rereview_snapshot_id is not None,
+                "look_again_why": d.needs_rereview_reason or "",
+                "look_again_snapshot": d.needs_rereview_snapshot_id,
+            }
+        )
+    return out
+
+
 @router.get("/flats/lots/{county}/{tlid:path}", response_class=HTMLResponse)
 async def flats_lot(
     request: Request,
@@ -3392,6 +3426,7 @@ async def flats_lot(
             **_lots_ctx(runs, chosen),
             "refresh": refresh,
             "lot": card,
+            "decisions": await _lot_decisions(session, county, tlid),
             "facts": _fact_rows(facts),
             "quadfit": facts.get("quadfit") or {},
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",

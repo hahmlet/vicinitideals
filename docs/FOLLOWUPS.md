@@ -74,9 +74,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    nav: every copy, the nine-row gate, delta, new zone codes, drift with
    linked unexplained lots, Promote / Promote-over-the-warning / Roll back),
    the runbook `docs/ops/flats-county-refresh.md`, RLIS section of
-   `data-sources-active.md` marked decommissioned. *Not yet:* the lot page
-   does not show a decision's "look again" mark (no writer for decisions in
-   `app/` yet either); Terrain (DEM tiles) stays `deferred` until the slope
+   `data-sources-active.md` marked decommissioned. The lot page shows a
+   person's standing decisions and the "look again" mark (no writer for
+   lot decisions in `app/` yet -- they are inserted by hand or by a future
+   review page). Terrain (DEM tiles) stays `deferred` until the slope
    stage exists. Two loose ends found by the September map, queued
    not fixed: Happy Valley's layer carries both `MURM2` and `MURm2` (one
    lot; the source's casing, kept as it is), and Oregon City's zoning
