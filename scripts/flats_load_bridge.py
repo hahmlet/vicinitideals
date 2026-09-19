@@ -442,12 +442,20 @@ def export(
     quadfit_results: Path | None = None,
     code_version: str | None = None,
     normalized: Path | None = None,
+    rules_ver: str | None = None,
 ) -> dict[str, Any]:
     """Write the bundle for one run; returns ``run.json``'s content.
 
     ``normalized`` (or ``meta.json``'s ``normalized``) is the normalize stage's
     directory; with it, a lot the run carries that s4 lacks takes its record
     from there, and every lot gains the roll values and the condo verdict.
+
+    ``code_version`` and ``rules_ver`` name the checkout the SCREEN ran on;
+    they default to this checkout's HEAD and rules hash, which is right when
+    the bundle is exported on the commit that screened it. A re-export that
+    only refreshes quadfit's columns (``lots_results.csv``) from a bridge run
+    screened earlier passes the earlier run's two versions, so the drift
+    report reads the FLATS results as what they are -- unchanged.
     """
     import pandas as pd
     import pyarrow.parquet as pq
@@ -613,7 +621,7 @@ def export(
         # bridge's July run was loaded complete because it WAS the copy in use.
         "status": "candidate" if from_snapshot else "complete",
         "code_version": code_version or _git_head(REPO_ROOT),
-        "rules_version": rules_version(),
+        "rules_version": rules_ver or rules_version(),
         "design_keys": designs,
         "counties": sorted(counties),
         "snapshot_date": meta.get("snapshot_date"),
@@ -1079,6 +1087,7 @@ def main(argv: list[str] | None = None) -> int:
     ex.add_argument("--s5o", type=Path, default=None, help="override quadfit's s5o_lots.parquet")
     ex.add_argument("--quadfit-results", type=Path, default=None, help="override quadfit's lots_results.csv")
     ex.add_argument("--code-version", default=None, help="git SHA the run was made with (default: this checkout's HEAD)")
+    ex.add_argument("--rules-version", default=None, help="rules hash the run was screened under (default: this checkout's)")
     ex.add_argument("--normalized", type=Path, default=None, help="the normalize stage's directory (default: meta.json's)")
 
     ld = sub.add_parser("load", help="load a bundle into flats.* (needs asyncpg)")
@@ -1106,6 +1115,7 @@ def main(argv: list[str] | None = None) -> int:
             quadfit_results=args.quadfit_results,
             code_version=args.code_version,
             normalized=args.normalized,
+            rules_ver=args.rules_version,
         )
         keys = ("source_id", "status", "snapshot_date", "code_version", "rules_version", "design_keys", "counties", "counts")
         print(json.dumps({k: run.get(k) for k in keys}, indent=2))

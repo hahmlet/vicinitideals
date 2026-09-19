@@ -170,6 +170,11 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
     assert run["counties"] == ["clackamas", "multnomah"]
     assert run["code_version"] == "abc1234"
     assert run["rules_version"] == rules_version()
+    # a re-export that only refreshes quadfit's columns from an earlier
+    # screen names the screen's versions, not this checkout's
+    again = export(run_dir, tmp_path / "bundle2", s4=s4, s5o=s5o, quadfit_results=results,
+                   code_version="abc1234", rules_ver="13aec434" + "0" * 56)
+    assert again["rules_version"] == "13aec434" + "0" * 56
     assert run["counts"] == {
         "lots": 2,
         "results": 4,
