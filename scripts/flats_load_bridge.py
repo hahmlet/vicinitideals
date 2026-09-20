@@ -626,6 +626,7 @@ def export(
         "counties": sorted(counties),
         "snapshot_date": meta.get("snapshot_date"),
         "new_zones": meta.get("new_zones") or {},
+        "ruled_zones": meta.get("ruled_zones") or {},
         "params": {
             **{k: v for k, v in meta.items() if k not in {"lots", "rows", "funnel"}},
             "source_id": f"{host}:{run_dir.resolve()}:{finished.isoformat()}",
@@ -986,6 +987,8 @@ async def _snapshot_checks(conn: Any, snapshot: Any, snapshot_id: int, run: dict
         "tiers": run["counts"].get("tiers", {}),
         "by_reason": run["counts"].get("unmeasured", {}),
         "new_zones": run.get("new_zones") or {},
+        "ruled_zones": run.get("ruled_zones") or {},
+        "prohibited_by_zone": ((run.get("params") or {}).get("assign") or {}).get("prohibited_by_zone") or {},
         "baseline_snapshot_id": baseline["id"] if baseline else None,
     }
     await conn.execute(

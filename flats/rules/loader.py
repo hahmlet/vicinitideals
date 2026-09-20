@@ -31,6 +31,8 @@ from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
+    ZONE_RULING_OUTCOMES,
+    ZoneRuling,
     READING_OUTCOMES,
     WORD_OUTCOMES,
     LAYER_META,
@@ -1251,6 +1253,87 @@ def _parse_crossrefs(
     return out
 
 
+def _parse_zone_rulings(
+    raw: object, zones: dict[str, Zone], *, where: str, problems: list[str]
+) -> dict[str, ZoneRuling]:
+    """Zone codes the county map carries here that are not zone blocks, ruled.
+
+    Keyed by the code as the map prints it (after the layer's own
+    normalisation -- Portland's lowercase suffix is stripped before the
+    lookup). Both halves are checked: a ruled code that is also a zone block
+    is a contradiction, an ``alias`` has to name a block this layer holds,
+    and a ``pocket`` has to say whose zoning it is::
+
+        zone_rulings:
+          MURm2:
+            outcome: alias
+            of: MURM2
+            note: >-
+              One lot on the 2026-09 map, the city's own casing ...
+          RRFF5:
+            outcome: pocket
+            of: or/clackamas/_unincorporated
+            note: >-
+              County zoning inside the city line ...
+
+    The note is required and held to the cross-reference ruling's length,
+    for the same reason: the outcome is a filter and the note is the argument.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.zone_rulings: expected a mapping of code -> ruling")
+        return {}
+    out: dict[str, ZoneRuling] = {}
+    for code, why in raw.items():
+        code = str(code).strip()
+        if not code:
+            problems.append(f"{where}.zone_rulings: a ruling needs a zone code")
+            continue
+        if code in zones:
+            problems.append(
+                f"{where}.zone_rulings.{code}: this code is a zone block here; "
+                "a code is a zone or a ruling, never both"
+            )
+            continue
+        if not isinstance(why, dict):
+            problems.append(f"{where}.zone_rulings.{code}: a ruling is an outcome, a note and, for an alias or a pocket, what it is of")
+            continue
+        outcome = str(why.get("outcome", "")).strip()
+        if outcome not in ZONE_RULING_OUTCOMES:
+            problems.append(
+                f"{where}.zone_rulings.{code}: unknown outcome {outcome!r}; "
+                f"one of {', '.join(sorted(ZONE_RULING_OUTCOMES))}"
+            )
+            continue
+        extra = set(why) - {"outcome", "note", "of"}
+        if extra:
+            problems.append(
+                f"{where}.zone_rulings.{code}: unexpected {', '.join(sorted(extra))}"
+            )
+            continue
+        note = why.get("note")
+        if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+            problems.append(
+                f"{where}.zone_rulings.{code}: a ruling says what this code is, "
+                f"in at least {MIN_RULING} characters"
+            )
+            continue
+        of = why.get("of")
+        of = str(of).strip() if of is not None else None
+        if outcome == "alias" and of not in zones:
+            problems.append(
+                f"{where}.zone_rulings.{code}: an alias names a zone block this layer holds; "
+                f"{of!r} is not one"
+            )
+            continue
+        if outcome == "pocket" and not of:
+            problems.append(f"{where}.zone_rulings.{code}: a pocket says whose zoning it is (of: <layer id>)")
+            continue
+        out[code] = ZoneRuling(outcome=outcome, note=" ".join(note.split()), of=of)
+    return out
+
+
 def _parse_readings(
     raw: object, *, where: str, problems: list[str]
 ) -> dict[str, Reading]:
@@ -1506,6 +1589,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             words=_parse_words(raw.get("words"), where=where, problems=problems),
             definitions=parse_definitions(raw.get("definitions"), where=where, problems=problems),
             definitions_from=_adoptions(raw.get("definitions_from"), where=where, problems=problems),
+            zone_rulings=_parse_zone_rulings(raw.get("zone_rulings"), zones, where=where, problems=problems),
         )
     except Exception as exc:
         problems.append(f"{where}: {_terse(exc)}")

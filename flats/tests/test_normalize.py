@@ -282,9 +282,44 @@ def test_summary_md_reads_in_plain_english(result):
     text = (out / "summary.md").read_text(encoding="utf-8")
     assert "# County map 2026-09-18: 13 lots" in text
     assert "- 1 out: not a taxlot" in text and "- 2 out: condo stack" in text
-    assert "Zone codes on the map that the rules do not hold:" in text and "- or/multnomah/portland: QQ9 (1)" in text
+    assert "Zone codes on the map nobody has ruled on -- new since the map was last read:" in text
+    assert "- or/multnomah/portland: QQ9 (1)" in text
     assert "Cities with no encoded layer: CANBY 1" in text
     assert json.loads((out / "new_zones.json").read_text()) == summary["new_zones"]
+
+
+def test_a_ruled_code_is_counted_as_ruled_never_as_new(snapshot: Path, tmp_path: Path, layers, pipeline):
+    """The same snapshot with Portland ruling QQ9 a pocket of the county's
+    zoning: the lot gates ``ZONE_POCKET``, ``new_zones`` is empty, and the
+    summary says so -- the refresh gate has nothing to flag."""
+    from flats.rules.model import ZoneRuling
+
+    pdx = layers["or/multnomah/portland"]
+    ruled = {
+        **layers,
+        "or/multnomah/portland": pdx.model_copy(
+            update={
+                "zone_rulings": {
+                    "QQ9": ZoneRuling(
+                        outcome="pocket",
+                        of="or/multnomah/_unincorporated",
+                        note="County zoning inside the city line; the county's code governs the lot until the city rezones it.",
+                    )
+                }
+            }
+        ),
+    }
+    out = tmp_path / "ruled"
+    summary = nz.normalize(snapshot, out, layers=ruled, pipeline=pipeline)
+    lots = pd.read_parquet(out / "lots.parquet")
+    row = lots[lots["zone_raw"] == "QQ9a"].iloc[0]
+    assert row["gate"] == "ZONE_POCKET" and pd.isna(row["zone"])
+    assert summary["new_zones"] == {}
+    assert summary["ruled_zones"] == {"or/multnomah/portland": {"pocket": {"QQ9": 1}}}
+    assert summary["by_gate"]["ZONE_POCKET"] == 1 and "ZONE_NOT_ENCODED" not in summary["by_gate"]
+    text = (out / "summary.md").read_text(encoding="utf-8")
+    assert "Every zone code on the map is one the rules hold or have ruled on." in text
+    assert "- or/multnomah/portland pocket: QQ9 (1)" in text
 
 
 def test_jurisdictions_from_the_real_layers(layers):

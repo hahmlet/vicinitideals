@@ -88,12 +88,31 @@
       {% endif %}
 
       {% if s.new_zones %}
-        <h4 style="margin:12px 0 4px">Zone codes the rules do not hold</h4>
+        <h4 style="margin:12px 0 4px">Zone codes nobody has ruled on</h4>
         <div style="font-size:12px" id="new-zones-{{ s.id }}">
+          <div class="text-muted" style="margin-bottom:4px">New on the map since it was last read -- a district the city created or renamed, or one never looked at. Each needs one ruling: forbids the building, allows it (rules to read), or is not this city's zoning at all. Until then its lots show as not screened.</div>
           {% for layer, codes in s.new_zones.items() %}
             <div><strong>{{ layer }}</strong>: {% for code, n in codes.items() %}{{ code }} ({{ "{:,}".format(n) }}){% if not loop.last %}, {% endif %}{% endfor %}</div>
           {% endfor %}
         </div>
+      {% endif %}
+      {% if s.ruled_zones or s.prohibited_by_zone %}
+        <details style="margin-top:8px">
+          <summary style="font-size:12px;cursor:pointer">Zone codes already ruled on
+            {%- if s.prohibited_by_zone %} · {{ s.prohibited_by_zone|length }} forbid the building ({{ "{:,}".format(s.prohibited_by_zone.values()|sum) }} lots red at the use gate){% endif -%}
+            {%- if s.ruled_zones %} · codes ruled alias, pocket, unencodable or to read in {{ s.ruled_zones|length }} layer{{ "s" if s.ruled_zones|length != 1 else "" }}{% endif -%}
+          </summary>
+          <div style="font-size:12px" id="ruled-zones-{{ s.id }}">
+            {% if s.prohibited_by_zone %}
+              <div style="margin-top:4px"><strong>Forbid the building</strong> (the zone's use line says so; every lot answers red without a measurement): {% for key, n in s.prohibited_by_zone.items() %}{{ key }} ({{ "{:,}".format(n) }}){% if not loop.last %}, {% endif %}{% endfor %}</div>
+            {% endif %}
+            {% for layer, by_outcome in (s.ruled_zones or {}).items() %}
+              {% for outcome, codes in by_outcome.items() %}
+                <div><strong>{{ layer }}</strong> {{ {"alias": "spelling of a zone the rules hold", "pocket": "another jurisdiction's zoning inside the line", "unencodable": "read; asks a measurement the screen cannot take", "to_read": "seen; use table still to read"}.get(outcome, outcome) }}: {% for code, n in codes.items() %}{{ code }} ({{ "{:,}".format(n) }}){% if not loop.last %}, {% endif %}{% endfor %}</div>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        </details>
       {% endif %}
 
       {% if s.drift %}

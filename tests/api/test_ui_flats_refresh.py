@@ -184,3 +184,41 @@ async def test_the_page_stands_with_no_copy_registered(client: AsyncClient, sess
 
     assert page.status_code == 200
     assert "No county map copy has been registered." in page.text
+
+
+async def test_new_zone_codes_are_the_warning_and_ruled_ones_fold_away(client: AsyncClient, session: AsyncSession, tmp_path) -> None:
+    """Steph 2026-09-20: a code is ruled once, with the reason written down,
+    and never shown as a question again; the page asks only about a code
+    nobody has ruled on. The ruled ones -- forbidden uses answered red at the
+    use gate, aliases, pockets, the unencodable, the still-to-read -- are
+    there to read, folded under a summary line."""
+    await _login(client, session)
+    w = await _world(session, tmp_path)
+    sept = await session.get(FlatsSnapshot, w["sept"].id)
+    sept.counts = {
+        **(sept.counts or {}),
+        "new_zones": {"or/clackamas/happy-valley": {"MURX9": 3}},
+        "ruled_zones": {
+            "or/clackamas/happy-valley": {"pocket": {"FU10": 12, "RRFF5": 95}, "to_read": {"NSA": 64}},
+            "or/clackamas/_unincorporated": {"unencodable": {"HDR": 251}},
+        },
+        "prohibited_by_zone": {"or/clackamas/_unincorporated/C3": 447, "or/clackamas/gladstone/LI": 27},
+    }
+    await session.flush()
+
+    card = _card((await client.get("/flats/refresh")).text, w["sept"].id)
+    assert "Zone codes nobody has ruled on" in card
+    assert "<strong>or/clackamas/happy-valley</strong>: MURX9 (3)" in card
+    assert "a district the city created or renamed" in card
+    assert "Zone codes already ruled on" in card
+    assert "2 forbid the building (474 lots red at the use gate)" in card
+    assert "or/clackamas/_unincorporated/C3 (447)" in card
+    assert "<strong>or/clackamas/happy-valley</strong> another jurisdiction&#39;s zoning inside the line: FU10 (12), RRFF5 (95)" in card
+    assert "<strong>or/clackamas/happy-valley</strong> seen; use table still to read: NSA (64)" in card
+    assert "<strong>or/clackamas/_unincorporated</strong> read; asks a measurement the screen cannot take: HDR (251)" in card
+
+    # With nothing new and nothing ruled, neither block renders.
+    sept.counts = {k: v for k, v in sept.counts.items() if k not in ("new_zones", "ruled_zones", "prohibited_by_zone")}
+    await session.flush()
+    card = _card((await client.get("/flats/refresh")).text, w["sept"].id)
+    assert "Zone codes nobody has ruled on" not in card and "Zone codes already ruled on" not in card

@@ -305,6 +305,47 @@ class Reading(BaseModel):
         return self.outcome in READING_CLOSED
 
 
+#: Why a zone code on the map is not a zone block in this layer, and what it
+#: is instead. The fourth ledger of the read-and-ruled shape, and the one that
+#: faces the county map rather than the code: every quarter the map is read
+#: against the rules, and a code the rules do not hold is either a zone nobody
+#: has read yet -- a city creating or renaming a district, which is the one
+#: thing worth flagging -- or one of these four, which somebody has already
+#: looked at and should not be asked about again.
+#:
+#: A zone where the building is FORBIDDEN is not ruled here: it is a zone
+#: block carrying ``quadplex_allowed: false`` with its quote, and the screen
+#: answers RED at the use gate for every lot in it without another number.
+#: A zone where the building is permitted and the dimensions are unread is a
+#: zone block too -- ``quadplex_allowed: true`` and the gaps ledger holds the
+#: rest. This ledger is for the codes that are not zones of this layer's code
+#: at all, or that the model cannot hold.
+ZONE_RULING_OUTCOMES: dict[str, str] = {
+    "alias": "The map's spelling of a zone this layer holds",
+    "pocket": "Another jurisdiction's zoning carried on this layer's map",
+    "unencodable": "Read; asks a measurement this model cannot take",
+    "to_read": "Seen; the use table has not been read yet",
+}
+
+
+class ZoneRuling(BaseModel):
+    """What a zone code on the map is, when it is not a zone block here.
+
+    ``of`` names the other thing: for ``alias`` the held code the map's
+    spelling stands for (``MURm2`` -> ``MURM2``), for ``pocket`` the layer
+    whose code it is (``RRFF5`` inside Happy Valley -> the county). The note
+    is the argument, held to the same length as a cross-reference ruling,
+    because a code closed with a tag and no reasoning tells the next reader
+    less than an open row does.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    outcome: str
+    note: str
+    of: str | None = None
+
+
 class Ruling(str):
     """Why a cross-reference does not need fetching, and which shape of why.
 
@@ -356,6 +397,11 @@ LAYER_META = frozenset(
         # still wrong if the sentence measures it in a word this city defines
         # its own way.
         "words",
+        # Zone codes on the county map that are not zone blocks here, read and
+        # ruled: an alias, another jurisdiction's pocket, an unholdable
+        # district, a use table still to read. The refresh gate flags only a
+        # code that is neither a zone nor one of these.
+        "zone_rulings",
         "kind",
         "label",
         "eligible",
@@ -2160,10 +2206,26 @@ class Layer(BaseModel):
     #: it in. An incorporated city's development code is self-contained; the
     #: county's governs unincorporated land. Silence is not adoption.
     definitions_from: list[str] = Field(default_factory=list)
+    #: Zone codes the county map carries in this jurisdiction that are not
+    #: zone blocks here, each read and ruled -- see :data:`ZONE_RULING_OUTCOMES`.
+    #: A code in neither ``zones`` nor here is new: a district the city made
+    #: or renamed since the map was last read, and the one thing the county
+    #: refresh should ask a person about.
+    zone_rulings: dict[str, ZoneRuling] = Field(default_factory=dict)
 
     @property
     def depth(self) -> int:
         return self.layer.count("/")
+
+    def holds(self, code: str) -> str | None:
+        """The zone block a map code screens under -- itself, or the code an
+        alias ruling names -- or None when this layer has no block for it."""
+        if code in self.zones:
+            return code
+        ruling = self.zone_rulings.get(code)
+        if ruling is not None and ruling.outcome == "alias" and ruling.of in self.zones:
+            return ruling.of
+        return None
 
     @property
     def doc_root(self) -> str:

@@ -19,17 +19,24 @@ This stage builds the lot table from the snapshot's taxlot file, one row per
 * **zone** -- the majority-area join against the layer's zoning dataset from
   the same snapshot (:meth:`flats.ingest.sources.Pipeline.for_layer`), the
   code normalised the way the layer's ingest hints say (whitespace; Portland's
-  lowercase suffix), and then kept only when the layer's rules hold it.
-  ``zone_raw`` always keeps what the map said; a code the rules lack is counted
-  in ``new_zones.json`` by layer -- the list the refresh report prints.
+  lowercase suffix), and then kept only when the layer's rules hold it -- as a
+  zone block, or through an ``alias`` ruling (``MURm2`` screens as ``MURM2``).
+  ``zone_raw`` always keeps what the map said. A code the rules lack is one of
+  two things: ruled (``layer.zone_rulings`` -- another jurisdiction's pocket,
+  an unholdable district, a use table still to read; counted in
+  ``ruled_zones`` by outcome) or NEW -- neither a zone nor a ruling, counted in
+  ``new_zones.json`` by layer, the one list the refresh gate flags. A zone
+  where the building is forbidden is a zone block (``quadplex_allowed:
+  false``), so it is held, and the assign stage answers RED for it.
 * **gate** -- why the screen cannot answer for this lot without a measurement
   it does not have, or ``None`` when nothing here stands in the way:
   ``JURISDICTION_NOT_ENCODED``, ``JURISDICTION_OFF`` (a layer with
   ``eligible: false`` or switched off in the registry -- Lake Oswego, HUMAN_TODO
   16), ``OUTSIDE_UGB`` (unincorporated county land beyond the Metro boundary,
   the same rule quadfit's rules apply), ``NO_ZONE`` (no zoning polygon covers
-  the lot), ``ZONE_NOT_ENCODED``. The assign stage turns a gate into an
-  ``unknown`` result with that reason.
+  the lot), ``ZONE_NOT_ENCODED`` (a code never ruled on), ``ZONE_POCKET``,
+  ``ZONE_UNENCODABLE``, ``ZONE_TO_READ`` (a ruled code, by its outcome). The
+  assign stage turns a gate into an ``unknown`` result with that reason.
 * **assessor** -- the RLIS roll values (land, building, total, assessed, year
   built, building sqft, last sale, property code, state class, land use) as
   columns, adopted on every refresh -- Steph's "updated information we need to
@@ -108,7 +115,19 @@ ASSESSOR_FIELDS = (
 SPLIT_ZONE_THRESHOLD = 0.9
 
 #: Why a lot cannot be screened without a measurement it does not have.
-GATES = ("JURISDICTION_NOT_ENCODED", "JURISDICTION_OFF", "OUTSIDE_UGB", "NO_ZONE", "ZONE_NOT_ENCODED")
+GATES = (
+    "JURISDICTION_NOT_ENCODED",
+    "JURISDICTION_OFF",
+    "OUTSIDE_UGB",
+    "NO_ZONE",
+    "ZONE_NOT_ENCODED",
+    "ZONE_POCKET",
+    "ZONE_UNENCODABLE",
+    "ZONE_TO_READ",
+)
+#: The gate a ruled zone code lands on, by the ruling's outcome. ``alias`` is
+#: absent on purpose: an alias resolves to a held zone and gates nothing.
+RULED_GATES = {"pocket": "ZONE_POCKET", "unencodable": "ZONE_UNENCODABLE", "to_read": "ZONE_TO_READ"}
 
 DEFAULT_OUT = Path(__file__).resolve().parents[2] / "data" / "flats" / "normalized"
 
@@ -187,13 +206,23 @@ def normalize_zone(raw: Any, *, strip_lowercase_suffix: bool = False) -> str | N
 
 
 def zone_for(layer: Layer | None, zone_raw: Any) -> tuple[str | None, str | None]:
-    """``(normalised code, zone)`` -- ``zone`` is the code only when the layer's rules hold it."""
+    """``(normalised code, zone)`` -- ``zone`` is the block the layer screens the
+    code under (itself, or what an alias ruling names), None when it holds none."""
     if layer is None:
         return normalize_zone(zone_raw), None
     code = normalize_zone(zone_raw, strip_lowercase_suffix=bool(layer.ingest.get("strip_lowercase_suffix")))
     if code is None:
         return None, None
-    return code, code if code in layer.zones else None
+    return code, layer.holds(code)
+
+
+def ruling_for(layer: Layer | None, code: str | None) -> str | None:
+    """The outcome of the layer's ruling on a map code the rules do not hold as a
+    zone -- ``pocket``, ``unencodable``, ``to_read`` -- or None when nothing was ruled."""
+    if layer is None or code is None:
+        return None
+    ruling = layer.zone_rulings.get(code)
+    return None if ruling is None or ruling.outcome == "alias" else ruling.outcome
 
 
 def assign_majority_zone(lot_geoms: list, zone_geoms: list, zone_codes: list) -> tuple[list, list]:
@@ -253,8 +282,20 @@ def load_zoning(path: Path, zone_field: str) -> tuple[list, list[str]]:
     return geoms, codes
 
 
-def gate_for(layer: Layer | None, *, on: bool, inside_ugb: bool, zone_raw: str | None, zone: str | None) -> str | None:
-    """Why the screen cannot answer for this lot, or None."""
+def gate_for(
+    layer: Layer | None,
+    *,
+    on: bool,
+    inside_ugb: bool,
+    zone_raw: str | None,
+    zone: str | None,
+    ruling: str | None = None,
+) -> str | None:
+    """Why the screen cannot answer for this lot, or None.
+
+    ``ruling`` is :func:`ruling_for`'s answer for the map's code: a ruled code
+    gates on its outcome, a code nobody ruled on gates ``ZONE_NOT_ENCODED``.
+    """
     if layer is None:
         return "JURISDICTION_NOT_ENCODED"
     if not layer.eligible or not on:
@@ -264,7 +305,7 @@ def gate_for(layer: Layer | None, *, on: bool, inside_ugb: bool, zone_raw: str |
     if zone_raw is None:
         return "NO_ZONE"
     if zone is None:
-        return "ZONE_NOT_ENCODED"
+        return RULED_GATES.get(ruling or "", "ZONE_NOT_ENCODED")
     return None
 
 
@@ -488,12 +529,14 @@ def normalize(
     for row, flag in zip(lots, inside):
         row["inside_ugb"] = bool(flag)
 
-    # 6. The zone the rules hold, the gate, the new codes.
+    # 6. The zone the rules hold, the gate, the new codes and the ruled ones.
     new_zones: dict[str, Counter[str]] = defaultdict(Counter)
+    ruled_zones: dict[str, dict[str, Counter[str]]] = defaultdict(lambda: defaultdict(Counter))
     gates: Counter[str] = Counter()
     for row in lots:
         layer = layers.get(row["jurisdiction"]) if row["jurisdiction"] else None
         code, zone = zone_for(layer, row["zone_raw"])
+        ruling = ruling_for(layer, code) if zone is None else None
         row["zone"] = zone
         row["split_zone"] = bool(row["zone_frac"] is not None and row["zone_frac"] < SPLIT_ZONE_THRESHOLD)
         row["gate"] = gate_for(
@@ -502,9 +545,12 @@ def normalize(
             inside_ugb=row["inside_ugb"],
             zone_raw=row["zone_raw"],
             zone=zone,
+            ruling=ruling,
         )
         if row["gate"] == "ZONE_NOT_ENCODED" and code is not None:
             new_zones[row["jurisdiction"]][code] += 1
+        elif ruling is not None and row["gate"] in RULED_GATES.values():
+            ruled_zones[row["jurisdiction"]][ruling][code] += 1
         gates[row["gate"] or "screenable"] += 1
         row.setdefault("stack_count", 1)
 
@@ -535,6 +581,9 @@ def normalize(
         "split_zone": sum(1 for r in lots if r["split_zone"]),
         "zoning": zoning_used,
         "new_zones": {k: dict(sorted(v.items())) for k, v in sorted(new_zones.items())},
+        "ruled_zones": {
+            k: {o: dict(sorted(c.items())) for o, c in sorted(v.items())} for k, v in sorted(ruled_zones.items())
+        },
         "funnel": funnel,
         "seconds": round(time.monotonic() - started, 1),
     }
@@ -570,12 +619,18 @@ def describe(summary: dict[str, Any]) -> list[str]:
         out.append("Cities with no encoded layer: " + ", ".join(f"{k} {v:,}" for k, v in unmapped["juris_city"].items()))
     if summary["new_zones"]:
         out.append("")
-        out.append("Zone codes on the map that the rules do not hold:")
+        out.append("Zone codes on the map nobody has ruled on -- new since the map was last read:")
         for layer_id, codes in summary["new_zones"].items():
             out.append(f"- {layer_id}: " + ", ".join(f"{c} ({n:,})" for c, n in codes.items()))
     else:
         out.append("")
-        out.append("Every zone code on the map is one the rules hold.")
+        out.append("Every zone code on the map is one the rules hold or have ruled on.")
+    if summary.get("ruled_zones"):
+        out.append("")
+        out.append("Zone codes ruled (not zones of this layer's code, or ones the model cannot hold):")
+        for layer_id, by_outcome in summary["ruled_zones"].items():
+            for outcome, codes in by_outcome.items():
+                out.append(f"- {layer_id} {outcome}: " + ", ".join(f"{c} ({n:,})" for c, n in codes.items()))
     out.append("")
     out.append(f"Split-zoned lots: {summary['split_zone']:,}; condo suspects kept: {summary['condo']['suspect']:,}.")
     return out

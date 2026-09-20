@@ -81,14 +81,23 @@ def test_new_zone_codes_trip_and_are_listed_by_layer() -> None:
     assert checks["new_zones"]["detail"] == "or/clackamas: XYZ (1); or/multnomah/portland: CM0 (2), RM9 (40)"
 
 
-def test_unencoded_codes_the_copy_in_use_already_had_are_carried_not_new() -> None:
+def test_an_unruled_code_the_copy_in_use_already_had_still_trips_until_ruled() -> None:
+    """Steph 2026-09-20: a code is ruled once and never asked about again --
+    so a code NOBODY ruled on is warned about every quarter until somebody
+    does, whether or not the earlier copy carried it. The detail tells the
+    two apart."""
     known = {"or/clackamas": {"C3": 447, "EFU": 149}, "or/multnomah/portland": {"CM0": 2}}
     same = _clean(new_zones={"or/clackamas": {"C3": 450, "EFU": 149}}, baseline_new_zones=known)
-    assert tripped(same) == []
-    assert same["new_zones"]["detail"] == "no new codes; 2 unencoded codes carried from the earlier copy"
+    assert tripped(same) == ["new_zones"]
+    assert same["new_zones"]["detail"] == "no new codes; still unruled from the earlier copy -- or/clackamas: C3 (450), EFU (149)"
     one_new = _clean(new_zones={"or/clackamas": {"C3": 450, "RMX": 3}}, baseline_new_zones=known)
     assert tripped(one_new) == ["new_zones"]
-    assert one_new["new_zones"]["detail"] == "or/clackamas: RMX (3) -- and 1 unencoded codes carried from the earlier copy"
+    assert one_new["new_zones"]["detail"] == (
+        "new this copy -- or/clackamas: RMX (3) -- and still unruled from the earlier copy -- or/clackamas: C3 (450)"
+    )
+    ruled = _clean(new_zones={}, baseline_new_zones=known)
+    assert tripped(ruled) == []
+    assert ruled["new_zones"]["detail"] == "every zone code on the map is in the rules or ruled"
 
 
 def test_the_measured_lot_count_moving_trips_and_no_baseline_stays_quiet() -> None:

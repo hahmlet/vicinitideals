@@ -68,7 +68,7 @@ GATE_CODES = (*CHECK_CODES, "no_delta", "no_drift", "verdict_drift")
 GATE_WORDS = {
     "layers_incomplete": "every layer downloaded whole",
     "count_drift": "layer counts in the normal range",
-    "new_zones": "no zone code the rules do not hold",
+    "new_zones": "no zone code nobody has ruled on",
     "lots_drift": "lot count near the copy in use",
     "zone_changes": "no city mostly rezoned",
     "rlis_agreement": "Metro's change list agrees with ours",

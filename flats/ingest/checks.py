@@ -16,12 +16,18 @@ can show the whole gate and not only the failures:
     when the service behind it was replaced (Gladstone came back as the
     regional fabric).
 ``new_zones``
-    Zone codes on the county map that the rules do not hold and the copy in
-    use did not have either. Those lots screen ``unknown``; encoding a code is
-    a human's work. A code already unencoded in the copy in use (the
-    commercial and farm zones the rules leave alone on purpose) is carried,
-    counted, and does not trip -- otherwise every refresh would warn forever
-    about the same 5,000 lots.
+    Zone codes on the county map that nobody has ruled on: neither a zone
+    block in the layer's rules (a forbidden use is a zone block too, with
+    ``quadplex_allowed: false``) nor a ``zone_rulings`` entry (an alias, a
+    pocket of another jurisdiction's zoning, an unholdable district, a use
+    table still to read). Those lots screen ``unknown``. Steph's rule
+    (2026-09-20): every code on the map is read and ruled once, with the
+    reason written down, and after that the only thing worth a warning is a
+    code no one has seen -- a city creating or renaming a district. So this
+    trips on ANY unruled code, carried from the earlier copy or not; a code
+    that stays unruled stays warned until somebody rules on it. The earlier
+    copy's list is still read, so the detail can say which codes are new
+    this quarter and which were already waiting.
 ``lots_drift``
     The measured lot count moved more than :data:`TAXLOT_DRIFT` against the
     run in use.
@@ -124,22 +130,24 @@ def snapshot_checks(
     )
 
     codes = []
-    carried = 0
+    waiting = []
     for layer_id, by_code in sorted((new_zones or {}).items()):
         known = set((baseline_new_zones or {}).get(layer_id) or {})
         fresh = {c: n for c, n in by_code.items() if c not in known}
-        carried += len(by_code) - len(fresh)
+        old = {c: n for c, n in by_code.items() if c in known}
         if fresh:
             codes.append(f"{layer_id}: " + ", ".join(f"{c} ({n:,})" for c, n in sorted(fresh.items())))
-    if codes:
+        if old:
+            waiting.append(f"{layer_id}: " + ", ".join(f"{c} ({n:,})" for c, n in sorted(old.items())))
+    if codes and waiting:
+        detail = "new this copy -- " + "; ".join(codes) + " -- and still unruled from the earlier copy -- " + "; ".join(waiting)
+    elif codes:
         detail = "; ".join(codes)
-        if carried:
-            detail += f" -- and {carried} unencoded codes carried from the earlier copy"
-    elif carried:
-        detail = f"no new codes; {carried} unencoded codes carried from the earlier copy"
+    elif waiting:
+        detail = "no new codes; still unruled from the earlier copy -- " + "; ".join(waiting)
     else:
-        detail = "every zone code on the map is in the rules"
-    out["new_zones"] = _check(bool(codes), detail)
+        detail = "every zone code on the map is in the rules or ruled"
+    out["new_zones"] = _check(bool(codes or waiting), detail)
 
     if baseline_measured:
         pct = _pct(measured, baseline_measured)
