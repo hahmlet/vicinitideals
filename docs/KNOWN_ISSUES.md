@@ -55,3 +55,5 @@ items live in [HUMAN_TODO.md](HUMAN_TODO.md).
    finance-E2E flake on a FLATS-only commit (see 6); it is confirmed a
    flake when the next commit's CI passes with identical `app/`, and a
    real finance item for a finance agent if it fails twice in a row.
+   **Confirmed a flake 2026-09-20:** d5181f1a (identical `app/`) passed the
+   full gate, run 35489425771.
