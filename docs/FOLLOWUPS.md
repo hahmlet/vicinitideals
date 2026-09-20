@@ -401,3 +401,31 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    population (Milwaukie ok plans with court depth within 7 ft of the
    floor; Portland ok plans with no 12 x 12 square outside the pavement)
    before any county run.
+
+7. **Write rules for the zone codes the September map found (HUMAN_TODO
+   20's second branch).** The candidate's `new_zones` row names 5,329 lots
+   under 128 codes in 12 layers -- 1.3 % of the copy, all screening
+   `unknown / ZONE_NOT_ENCODED`. Sorted by abbreviation only (NOT yet read
+   against each city's code): roughly 1,700 look residential or mixed-use,
+   where a townhome may be a permitted use and the answer matters --
+   Clackamas unincorporated HDR 251, VTH 114, RTL 59, SCMU 34, RCHDR 29,
+   R-MD/R-10/R-15 6, PMU1-3 17; Happy Valley MURM1 170, MURM2 301 (+MURm2
+   1, the map's casing), MURM3 8, MUC 33, RCMU 20, MUE 9, VC 5, VR57 1;
+   Milwaukie DMU 117, MUTSA 80, NME 57, NMU 51, GMU 45, C-CS 17, SMU 5;
+   Wilsonville FDAHR 98, FDAHV 4, FDAHP 4; Gladstone MR 80; Troutdale NSA
+   64; West Linn MU 25, OBC 15; Tualatin RMH 4; Fairview AH 3 / FLX 1;
+   Wood Village O 6; Multnomah unincorporated UPAR-10 4, GGR2 3, THR 1.
+   The other ~3,600 read as commercial (C2/C3/CG/GC/CC/OC), industrial
+   (LI/GI/M/BI/RI/PDI), farm-forest-rural (EFU/AGF/TBR/RRFF5/FF10/FU10),
+   public or open space (PF/IPU/OS/OSM/RCO) -- a townhome is generally not
+   a permitted use, so a rule would mostly say red. Oregon City `County`
+   (14) is county zoning inside the city line, not a code to encode. Order
+   of work if Steph names this branch (or after promotion, in any order --
+   a code encoded later is picked up by the next run): confirm the sort
+   against each city's use table (the reader audit that comes with every
+   district, see the encoding invariants), then encode largest-first per
+   layer: Happy Valley MURM1/2 (471), Clackamas HDR (251), Milwaukie's
+   mixed-use set (372), Wilsonville FDAHR (98), Gladstone MR (80),
+   Troutdale NSA (64). Each layer is its own bounded slice: rules.yaml +
+   citations + `flats/tests` + a re-screen on 137 + a re-export into the
+   candidate (or the current copy once promoted), read the moves.
