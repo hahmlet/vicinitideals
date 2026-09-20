@@ -2047,6 +2047,29 @@ I promote on your standing word ("me, when clean"), the first time the
 copy in use changes. If you would rather see it first, say so before
 then.
 
+*2026-09-20, 11:29 UTC -- done.* Every one of the 100 codes is written
+down, the gate came back clean on all nine rows, and I switched the site
+over to the September copy on your standing word -- the first time the
+copy in use has changed. The Lots pages now show 400,032 lots (every lot
+on the county map, with a reason on each one nobody measured); the July
+copy is still there behind it, and **Roll back to the previous copy** on
+the County copy page puts it back if you want it back. Nothing you had
+decided on a lot was disturbed (0 decisions marked "look again").
+
+Four of the hundred were judgment calls rather than plain readings, all
+four now RED on the use line. If any of them looks wrong to you, say so
+and I will re-read it:
+
+- **Milwaukie MUTSA, 80 lots** -- the Tacoma Station Area zone permits
+  housing only as part of a mixed-use building, never on its own.
+- **Wilsonville FDAHR, 98 lots** -- "Frog Pond East and South residential"
+  is a planning label, not a zone; the city sets the zoning at the master
+  plan, and until then nothing is permitted on the land.
+- **West Linn GC, 165 lots** -- General Commercial allows homes only above
+  a commercial ground floor.
+- **Happy Valley CCC and MCC, 56 lots** -- a freestanding home is allowed
+  only when a shop or office already stands on the same parcel.
+
 ## ~~21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?~~ -- **DECIDED 2026-09-19: green first, then the preferred parking band, then the side with the least exposure to a street; more parking is not a goal**
 
 You ruled on 19 September: trying each street as the front only applies

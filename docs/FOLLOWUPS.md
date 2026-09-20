@@ -4,43 +4,35 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **The county map copy: after the first candidate (HUMAN_TODO 20).** All
-   four phases shipped 2026-09-19 (snapshots + banner + probe 41b64c45;
-   delta dc1dbaad; every-lot normalize/assign + gate 1318db5b; promote /
-   rollback / drift / `/flats/refresh` ffe407ec; runbook
-   `docs/ops/flats-county-refresh.md`). The September copy is loaded as
-   **run 10** (`candidate`, snapshot 3: 400,032 lots = 288,031 measured +
-   112,001 unmeasured with a reason; 800,064 results; `?run=10`, default
-   still run 2; run 6 -- the same snapshot with 2,001 condo unit records
-   kept as lots -- was retired by a one-shot before the re-load, 8e596f8b;
-   run 8 -- the same screen with quadfit's old corner drawing -- retired
-   the same way 2026-09-19 evening, item 5), drift 2 -> 10 stored
-   (575,478 compared, 178 moved: ground 39 /
-   surroundings 104 / re-measured 35 / rules 0 / code 0 / unexplained
-   0; causes read from the measured facts since 61e01c36:
-   `surroundings` beyond float noise, `remeasured` within it -- 0.05 abs /
-   2 % rel -- on an answer that sat on a line), gate trips **new_zones
-   only** -- Steph reads; nobody promotes. When Steph promotes:
-   `flats_promote.py prune --dry-run` then real (keeps snapshot 1 whole),
-   confirm the Lots default is run 10 and the footer says 2026-09-18,
-   re-run the probe. Still coarse at the end: `code` is the
-   fall-through whenever the repo HEAD differs, so it says "a commit
-   landed", not "the screen changed"; the api container has no git, so
-   making it precise means the exporter stamping a hash of the screen's own
-   files (`flats/score`, `flats/geom`, `flats/ingest/quadfit.py`, `Lot
-   Analysis/quadfit`) on `run.json` -> `runs.screen_version` and `drift()`
-   comparing that -- a migration + loader column; do it with the next
-   loader change. Loose ends the September map
+1. **The county map copy: loose ends after the first promotion (HUMAN_TODO
+   20).** The September copy (snapshot 3, run 10: 400,032 lots = 288,031
+   measured + 112,001 unmeasured with a reason) was PROMOTED 2026-09-20
+   11:29 UTC by the agent on the standing word -- gate clean on all nine
+   rows after the 100 zone codes were ruled (637c6dca); drift 2 -> 10
+   unchanged at 178 / 0 unexplained (the 18,681 use-gate REDs sit on lots
+   run 2 never held); prune had nothing to do (snapshot 1 is the one kept
+   whole); Lots default run 10, footer 2026-09-18, probe row 3 ok. Still
+   coarse: `code` is the drift fall-through whenever the repo HEAD differs,
+   so it says "a commit landed", not "the screen changed"; the api
+   container has no git, so making it precise means the exporter stamping
+   a hash of the screen's own files (`flats/score`, `flats/geom`,
+   `flats/ingest/quadfit.py`, `Lot Analysis/quadfit`) on `run.json` ->
+   `runs.screen_version` and `drift()` comparing that -- a migration + loader
+   column; do it with the next loader change. Loose ends the September map
    found, queued not fixed: Happy Valley's layer carries both `MURM2` and
-   `MURm2` (one lot; the source's casing, kept), Oregon City's zoning says
-   `County` on 14 lots inside its boundary; quadfit's s1 condo test reads
-   only stacked geometry, so it measures ~2,000 Multnomah condo unit
-   records (PROP_CODE 102/132/202/122, 1,000-2,000 sq ft) every run --
-   normalize's `excluded.csv.gz` ledger now names them and assign drops
-   them (8e596f8b), but s1 itself could read the roll's property code the
-   way `flats/normalize/condo.py` does; Terrain (DEM tiles) stays
-   `deferred` until the slope stage exists; no writer for lot decisions in
-   `app/` yet (they are inserted by hand or by a future review page).
+   `MURm2` (one lot; the source's casing, kept, both aliased to MURM);
+   quadfit's s1 condo test reads only stacked geometry, so it measures
+   ~2,000 Multnomah condo unit records (PROP_CODE 102/132/202/122,
+   1,000-2,000 sq ft) every run -- normalize's `excluded.csv.gz` ledger
+   names them and assign drops them (8e596f8b), but s1 itself could read
+   the roll's property code the way `flats/normalize/condo.py` does;
+   Terrain (DEM tiles) stays `deferred` until the slope stage exists; no
+   writer for lot decisions in `app/` yet (they are inserted by hand or by
+   a future review page); 142 lots quadfit refused as
+   `zone_quadplex_not_allowed` sit in NOT_MEASURED while the FLATS block
+   for the same zone does not say `quadplex_allowed: false` -- two rule
+   sets disagreeing on a use, worth one read (the zone-mirror audit in
+   `flats/tests` compares lists, not this).
 2. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks
@@ -402,37 +394,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    floor; Portland ok plans with no 12 x 12 square outside the pavement)
    before any county run.
 
-7. **The September map's zone codes are all ruled -- load the answer and
-   promote (Steph 2026-09-20: "document why these zones don't work for us
-   and then they should never appear to the user again; only a zone we've
-   never seen should flag").** Mechanism 37344f91; the READING done
-   2026-09-20 for every one of the 100 codes (5,329 lots) on 12 layers --
-   52 are use-gate refusals (`quadplex_allowed: false` with a quote from the
-   fetched use table: Clackamas AGF/BP/EFU/GI/LI/OSM/RC/RI/TBR/VCS,
-   Gladstone OP/OS, Happy Valley CCC/EC/FU10/IC/IPU/MCC/MUC/MUE/RC-ME/RCMU/
-   VC/VO, Milwaukie BI/C-CS/C-G/M/MUTSA/NME/OS, Tualatin CG/CO/MC/MG/ML,
-   West Linn CI/GC/GI/NC/OBC, Wilsonville FDAHC/FDAHI/FDAHP/FDAHR/FDAHV/PDC/
-   PDI/PF, Multnomah GGR2, Fairview AH, Wood Village O) and 48 are
-   `zone_rulings` (11 unencodable: Clackamas C3/CC/HDR/OC/RCC/RCHDR/RCO/RTL/
-   SHD/VTH + Happy Valley PMU; 16 pocket: Happy Valley RRFF5/FF10/RA1/RA2/
-   RC/VR57, Oregon City County, Clackamas IPU/MG/R-10/R-15/R-MD/RC-ME,
-   Troutdale NSA, Multnomah UPAGI/UPAR-10; 16 to_read: Clackamas PMU1/2/3/
-   SCMU, Gladstone C1/C2/C3/LI/MR, Milwaukie DMU/GMU/NMU/SMU, Tualatin RMH,
-   West Linn MU, Multnomah THR; 5 alias: Happy Valley MURM1/2/3/m2 -> MURM,
-   Fairview FLX -> VC). Four readings worth Steph's eye, all RED by the use
-   table: Milwaukie MUTSA (80 lots: residential only as part of a mixed-use
-   building), Wilsonville FDAHR (98: Frog Pond East/South residential is
-   a planning designation whose zoning is set at the master plan, nothing
-   permitted until then), West Linn GC (165: housing only above a
-   commercial first floor), Happy Valley CCC/MCC (56: freestanding
-   residential only with a nonresidential use on the same parcel). What
-   remains: on 137 `git pull --ff-only`, normalize + assign (assign now
-   applies the use gate) -> export -> load into run 10 in place -> VACUUM
-   -> drift -> `flats_promote.py status`; the gate should be clean; then
-   the first-ever promotion on the standing word (HUMAN_TODO 20, "me, when
-   clean") with prune --dry-run, Lots default run 10, footer 2026-09-18,
-   probe. Item 8's 17,259 stand apart: they are zones the screen HOLDS.
-8. **17,259 lots the screen holds a zone for but quadfit's `rules.yaml`
+7. **17,259 lots the screen holds a zone for but quadfit's `rules.yaml`
    does not (`NOT_MEASURED, quadfit:zone_not_in_rules` on run 10).** The
    FLATS rules encode the zone; quadfit's structural filter drops the lot
    before measuring because its own older zone list lacks the code, so the
@@ -442,9 +404,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (mirroring the FLATS zone block -- see the zone-mirror audit in
    `flats/tests`), re-run s3 -> s7 on 137 and bound the move on the
    existing parquet first (read LOST and GAINED lot by lot). Where the
-   FLATS block says `quadplex_allowed: false`, item 7's use gate already
+   FLATS block says `quadplex_allowed: false`, the use gate (37344f91) already
    answers RED without a measurement and nothing is owed.
-9. **Screen the ~210 pocket lots under the layer their ruling names.** A
+8. **Screen the ~210 pocket lots under the layer their ruling names.** A
    `pocket` ruling (16 of them, 2026-09-20) says "this code is the other
    layer's zone carried on this map" and today gates the lot ZONE_POCKET,
    unscreened, because `like:` cannot cross into `_unincorporated` (there is
@@ -461,7 +423,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `of` layer's measurements. Mostly RED at the use gate (RRFF5/FF10/RA/RC
    are farm-forest and rural zones, NSA is Gorge); the R-10/R-15/R-MD/
    UPAR-10 lots would get a real answer.
-10. **Corpus drift found while ruling the September codes -- a
+9. **Corpus drift found while ruling the September codes -- a
    `--refresh --repoint` pass per layer.** (a) Clackamas ZDO: zdo.315/316/
    510/845/903/1005/1015 and every roadway.* doc report CHANGED (the county
    re-published the ZDO; the stored text is the old cut) and the zdo.202
@@ -478,7 +440,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    fairview.yaml, re-fetch, repoint quotes; the 19.25.ah doc already points
    at eCode360. Until (c) is done a `--refresh` of Fairview would replace
    every stored chapter with the stub -- do not run it layer-wide first.
-11. **Two loose ends from the ruling pass.** (a) Fairview FLX is the map's
+10. **Two loose ends from the ruling pass.** (a) Fairview FLX is the map's
    name for the "VC flex" area (19.135.txt L62) and is aliased to VC, whose
    `inside_mapped_use_area` variant names that same area -- the map code
    could FEED the variant (a lot zoned FLX is inside the area by
