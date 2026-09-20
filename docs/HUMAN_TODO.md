@@ -2033,6 +2033,20 @@ screen's own verdicts did not change, the gate shows the same one
 warning, and the comparison against July reads the same. What I need
 from you is unchanged.
 
+*2026-09-20, after your ruling on the zone codes (item 22 below):* the
+ask above is withdrawn. You said the warning as it stood was not useful:
+what you need to know is whether a city has CREATED a zone, and every
+code already on the map should be read once, its reason written down,
+and never shown to you again. That is now how the gate works. I am
+reading the 128 codes city by city and writing each one down -- "this
+zone forbids the building" (those lots turn red on the use line, no
+measurement needed), "this is county zoning inside the city's line",
+"this is the map's spelling of a zone we hold", or "read, cannot be
+held" -- and when the last one is written the gate comes back clean and
+I promote on your standing word ("me, when clean"), the first time the
+copy in use changes. If you would rather see it first, say so before
+then.
+
 ## ~~21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?~~ -- **DECIDED 2026-09-19: green first, then the preferred parking band, then the side with the least exposure to a street; more parking is not a goal**
 
 You ruled on 19 September: trying each street as the front only applies
@@ -2181,6 +2195,46 @@ place that looks obviously right for this product from the street — small
 attached homes, narrow lots, alleys — and the city has written a rule that
 closes it to us without lot assembly. The two-and-a-half thousand lots come off
 the list of places worth hoping about.
+
+## 22. One decision: when a city invents a zone we have never seen, does the whole copy wait, or only those lots?
+
+You ruled on 2026-09-20 that every zone code on the county map gets read
+once, its reason written down, and never shown again -- and that the only
+thing worth flagging is a code appearing for the first time, because that
+is a city creating or renaming a district and we should evaluate it. That
+is built. What is left is what the flag does.
+
+Today a never-seen code **blocks** the refresh: the whole September copy
+(400,032 lots) waited on 128 codes that turned out to be mostly commercial,
+farm and industrial zones nobody had written down. You asked whether the
+uncontroversial part could go through on its own so the update is not
+all-or-nothing. Two ways to do that:
+
+**Option A -- the new code warns but does not block (recommended).** A copy
+with a never-seen code still goes through when everything else is clean;
+the lots in that zone show "new zone, under evaluation" (grey, never green
+or red) until I have read the city's use table and written the code down,
+which is usually the same week. The rest of the county gets its fresh copy
+on time. Trade-off as you would say it: faster, and a handful of lots sit
+grey for a few days instead of the whole county sitting stale for weeks. The
+banner on the Lots pages still names the code, so nothing is invisible.
+
+**Option B -- keep blocking, promote city by city.** Each city's lots switch
+to the new copy on their own, so a new code in Milwaukie holds only
+Milwaukie back. More manual, and it leaves the county as a patchwork of
+dates -- Milwaukie's lots from July, everyone else's from September -- which
+the delta and drift reports then have to reason about per city. I advise
+against it: the grey-lot cost of A is smaller than the bookkeeping cost of
+B, and a new zone code has never yet been the thing that mattered.
+
+**Option C -- keep it as it is.** A never-seen code holds the whole copy
+until you or I have read it. Safest in the narrow sense, and the slowest;
+it is what made the September copy wait three days.
+
+Reply "A", "B" or "C". Under A the standing word in item 20 becomes: the
+agent promotes when the only warning is a never-seen zone code, writes the
+code down within the week, and anything else with a warning still waits
+for you.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 

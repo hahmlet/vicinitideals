@@ -402,30 +402,53 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    floor; Portland ok plans with no 12 x 12 square outside the pavement)
    before any county run.
 
-7. **Write rules for the zone codes the September map found (HUMAN_TODO
-   20's second branch).** The candidate's `new_zones` row names 5,329 lots
-   under 128 codes in 12 layers -- 1.3 % of the copy, all screening
-   `unknown / ZONE_NOT_ENCODED`. Sorted by abbreviation only (NOT yet read
-   against each city's code): roughly 1,700 look residential or mixed-use,
-   where a townhome may be a permitted use and the answer matters --
-   Clackamas unincorporated HDR 251, VTH 114, RTL 59, SCMU 34, RCHDR 29,
-   R-MD/R-10/R-15 6, PMU1-3 17; Happy Valley MURM1 170, MURM2 301 (+MURm2
-   1, the map's casing), MURM3 8, MUC 33, RCMU 20, MUE 9, VC 5, VR57 1;
-   Milwaukie DMU 117, MUTSA 80, NME 57, NMU 51, GMU 45, C-CS 17, SMU 5;
-   Wilsonville FDAHR 98, FDAHV 4, FDAHP 4; Gladstone MR 80; Troutdale NSA
-   64; West Linn MU 25, OBC 15; Tualatin RMH 4; Fairview AH 3 / FLX 1;
-   Wood Village O 6; Multnomah unincorporated UPAR-10 4, GGR2 3, THR 1.
-   The other ~3,600 read as commercial (C2/C3/CG/GC/CC/OC), industrial
-   (LI/GI/M/BI/RI/PDI), farm-forest-rural (EFU/AGF/TBR/RRFF5/FF10/FU10),
-   public or open space (PF/IPU/OS/OSM/RCO) -- a townhome is generally not
-   a permitted use, so a rule would mostly say red. Oregon City `County`
-   (14) is county zoning inside the city line, not a code to encode. Order
-   of work if Steph names this branch (or after promotion, in any order --
-   a code encoded later is picked up by the next run): confirm the sort
-   against each city's use table (the reader audit that comes with every
-   district, see the encoding invariants), then encode largest-first per
-   layer: Happy Valley MURM1/2 (471), Clackamas HDR (251), Milwaukie's
-   mixed-use set (372), Wilsonville FDAHR (98), Gladstone MR (80),
-   Troutdale NSA (64). Each layer is its own bounded slice: rules.yaml +
-   citations + `flats/tests` + a re-screen on 137 + a re-export into the
-   candidate (or the current copy once promoted), read the moves.
+7. **Rule on the 128 zone codes the September map found (Steph 2026-09-20:
+   "document why these zones don't work for us and then they should never
+   appear to the user again; only a zone we've never seen should flag").**
+   The mechanism shipped 37344f91: a per-layer `zone_rulings` ledger
+   (alias / pocket / unencodable / to_read, note of 40+ chars required),
+   the `new_zones` gate trips only on a code that is neither a zone block
+   nor a ruling, and an unmeasured lot in a zone with `quadplex_allowed:
+   false` gets the screen's own RED / `USE_PROHIBITED` at the use gate with
+   no measurement. What remains is the READING: for each of the 12 layers
+   fetch the use-table chapter into the provenance store (declare it under
+   the layer's `code:` block; `flats/provenance` fetch) and write every code
+   as either a zone block with a quote (`quadplex_allowed: false` where the
+   building is a forbidden use -- most of the ~3,600 commercial /
+   industrial / farm / public codes; `quadplex_allowed: true` where it is
+   permitted, dimensions then owed in the gaps ledger) or a ruling:
+   `alias` MURm2 -> MURM2 in Happy Valley; `pocket` for county codes carried
+   on a city's map (RRFF5 / FU10 / FF10 / VR57 / RA1 / RA2 / RC under Happy
+   Valley, `County` (14) in Oregon City, R-10 / R-15 / R-MD under Clackamas
+   unincorporated if they are city codes); `unencodable` for Clackamas HDR /
+   VTH / RCHDR / SHD per the county layer's existing prose (1005.02(L)
+   northern-lot-line measurement); `to_read` where a chapter cannot be
+   fetched. Counts by layer: Clackamas unincorporated 2,407 lots (HDR 251,
+   VTH 114, RTL 59, SCMU 34, RCHDR 29, PMU1-3 17, R-MD/R-10/R-15 6, the rest
+   C/I/EFU/AGF/TBR/RRFF5/FF10/FU10/OS/etc.); Happy Valley 939 (MURM2 301,
+   MURM1 170, MUC 33, RCMU 20, MUE 9, MURM3 8, VC 5, VR57 1, county codes);
+   Wilsonville 627 (FDAHR 98, FDAHV 4, FDAHP 4, PD* and C/I codes);
+   Milwaukie 554 (DMU 117, MUTSA 80, NME 57, NMU 51, GMU 45, C-CS 17, SMU 5,
+   C/M codes); Gladstone 415 (MR 80, C/I); West Linn 235 (MU 25, OBC 15,
+   C/I); Troutdale 64 (NSA); Tualatin 48 (RMH 4, C/I); Multnomah
+   unincorporated 16 (UPAR-10 4, GGR2 3, THR 1, C-3/etc.); Oregon City 14
+   (`County`); Wood Village 6 (O); Fairview 4 (AH 3, FLX 1). Check
+   `flats/tests/test_refusals.py` EXPECTED counts and the zone-mirror tests
+   after adding zones; the full flats suite before the commit. Then on 137
+   `git pull --ff-only`, normalize + assign (assign now applies the use
+   gate) -> export -> load into run 10 in place -> VACUUM -> drift ->
+   `flats_promote.py status`; the gate should be clean; then the first-ever
+   promotion on the standing word (HUMAN_TODO 20, "me, when clean") with
+   prune --dry-run, Lots default run 10, footer 2026-09-18, probe.
+8. **17,259 lots the screen holds a zone for but quadfit's `rules.yaml`
+   does not (`NOT_MEASURED, quadfit:zone_not_in_rules` on run 10).** The
+   FLATS rules encode the zone; quadfit's structural filter drops the lot
+   before measuring because its own older zone list lacks the code, so the
+   lot shows "not measured" instead of an answer. Read the 17,259 by
+   jurisdiction/zone (`checks->>'reasons'` on run 10), add the codes to
+   `Lot Analysis/quadfit/rules.yaml` where a townhome is a permitted use
+   (mirroring the FLATS zone block -- see the zone-mirror audit in
+   `flats/tests`), re-run s3 -> s7 on 137 and bound the move on the
+   existing parquet first (read LOST and GAINED lot by lot). Where the
+   FLATS block says `quadplex_allowed: false`, item 7's use gate already
+   answers RED without a measurement and nothing is owed.

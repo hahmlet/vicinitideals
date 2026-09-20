@@ -67,7 +67,7 @@ Durations are from the first real run (2026-09-18/19, 453,782 taxlots).
 | 4 | Delta | 137 | `python -m flats.ingest.delta --prev data/flats/sources/<prev>/rlis_taxlots.geojson --new data/flats/sources/<date>/rlis_taxlots.geojson --change-log data/flats/sources/<date>/rlis_taxlot_change.geojson --out data/flats/deltas/<date>` | ~10 s classify after ~5 min load | `changes.csv.gz`, `summary.json`, `report.md`; numbers in the ranges of §5 |
 | 5 | Stage quadfit's raw files from the snapshot | 137 | `python scripts/flats_stage_quadfit_raw.py --snapshot <date>` | 1 min | `data/quadfit_<date>/raw/` with `SOURCE.json` |
 | 6 | Measure (quadfit s1–s7) | 137 | `QUADFIT_DATA_DIR=data/quadfit_<date> python "Lot Analysis/quadfit/run_all.py" --force` | ~50 min | `EXIT 0`; `data/quadfit_<date>/summary.md` |
-| 7 | Normalize every lot | 137 | `python -m flats.ingest.normalize --snapshot <date>` | ~5 min | `data/flats/normalized/<date>/` with `new_zones.json` |
+| 7 | Normalize every lot | 137 | `python -m flats.ingest.normalize --snapshot <date>` | ~5 min | `data/flats/normalized/<date>/` with `new_zones.json` (unruled codes) and `summary.json` (`ruled_zones` by outcome) |
 | 8 | Screen (the bridge) | 137 | `python -m flats.ingest.quadfit --s4 data/quadfit_<date>/s4_lots.parquet --s5o data/quadfit_<date>/s5o_lots.parquet --results data/quadfit_<date>/lots_results.csv --out /root/bridge_<date> --processes 12 --chunk-size 250` | **~7 h** (290k measured lots) | `lots.parquet` + `meta.json` in the run dir |
 | 9 | Assign (measured + unmeasured → one run) | 137 | `python -m flats.ingest.assign --normalized data/flats/normalized/<date> --bridge /root/bridge_<date> --quadfit-dir data/quadfit_<date> --out /root/assign_<date>` | ~5 min | `summary.md` with the funnel; "measured by quadfit but not land" (condominium units quadfit's s1 keeps -- 2,001 in September) is normal, "measured but not in the snapshot's lot table (kept)" should be 0 -- a number there is a lot normalize lost for no named reason |
 | 10 | Export the bundle | 137 | `python scripts/flats_load_bridge.py export --run-dir /root/assign_<date> --out /root/bundle_<date>` | ~5 min | `lots.csv.gz`, `results.csv.gz`, `run.json` (`status: candidate`) |
@@ -99,11 +99,24 @@ The candidate's card on `/flats/refresh`. Four questions, top to bottom:
    agreed (lowest recall 0.969). Anything an order of magnitude off — a
    county with thousands added, a city with a fifth of its lots rezoned — is
    the source changing shape, not the ground.
-3. **Any zone code the rules do not hold?** — "Zone codes the rules do not
-   hold", per layer with lot counts. Those lots screen `unknown` with reason
-   `ZONE_NOT_ENCODED`, never green or red; encoding the code is a FOLLOWUPS
-   item. The first candidate trips this row by design: July's copy never
-   counted them.
+3. **Any zone code nobody has ruled on?** — "Zone codes nobody has ruled
+   on", per layer with lot counts. A code the map carries that is neither a
+   zone block in the layer's rules nor an entry in its `zone_rulings` ledger
+   is new since the map was last read -- a city creating or renaming a
+   district (Steph's rule, 2026-09-20: every code is ruled once with the
+   reason written down, and only a never-seen code is worth a warning).
+   Those lots screen `unknown / ZONE_NOT_ENCODED`, never green or red. Rule
+   on it before promoting: read the city's use table and write either a
+   zone block (`quadplex_allowed: false` with a quote where the building is
+   a forbidden use -- the lots turn RED at the use gate with no
+   measurement; `quadplex_allowed: true` where it is permitted, dimensions
+   then queue in the gaps ledger) or a `zone_rulings` entry (`alias` for
+   the map's spelling of a held zone, `pocket` for another jurisdiction's
+   zoning on this layer's map, `unencodable` for a district read that asks
+   a measurement the model cannot take, `to_read` when the chapter cannot
+   be fetched yet). Codes already ruled fold away under "Zone codes already
+   ruled on" and never warn again. The row trips on ANY unruled code,
+   carried from the earlier copy or not.
 4. **Did any verdict move for no reason?** — "Verdicts that moved". Every
    move is put to one cause, tried in this order: the ground (a lot-change
    row or a zone change), the surroundings (a measured fact that differs
@@ -173,7 +186,9 @@ rows were pruned — prune only after the next quarter has settled.
 | Deleted / vacated with no successor | a handful | Absent from the new copy; results kept on the old run. |
 | Added with no predecessor | a handful | Screened fresh. |
 | Rezoned | hundreds of lots a year per city; `zone_changes` trips above 10 % of a city | Re-screened; decisions marked look again. |
-| New zone code | a few a year | Screens `unknown / ZONE_NOT_ENCODED`; listed per layer; encoding is a FOLLOWUPS item; `new_zones` waits for Steph. |
+| New zone code (never ruled on) | a few a year | Screens `unknown / ZONE_NOT_ENCODED`; listed per layer; the agent reads the use table and rules on it (zone block or `zone_rulings`) before promotion; `new_zones` blocks until then (HUMAN_TODO 22 asks whether it should only warn). |
+| Zone code already ruled (alias / pocket / unencodable / to read) | steady | Screens under the alias's block, or `unknown` with `ZONE_POCKET` / `ZONE_UNENCODABLE` / `ZONE_TO_READ`; folded away on the page; never warns. |
+| Zone whose rules forbid the building (`quadplex_allowed: false`) | steady | The assign stage answers RED / `USE_PROHIBITED` at the use gate with no measurement (yellow where a conditional-use path exists); listed on the page by zone. |
 | Annexation (`JURIS_CITY` changes) | 5 this quarter | Jurisdiction reassigned → other rules → re-screened; decision marked. |
 
 **C. Our own process failed**
