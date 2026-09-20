@@ -253,7 +253,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ~3 % slower. `parking_area_sqft` / `open_space_sqft` move on every
    rear-court lot. **BOUND 2026-09-20 on the September parquet in FOUR
    runs (~14 min each, every one read lot by lot against run 10) and
-   loaded as run 11.** v1 (net +3,149 site plans) hid two lane bugs in
+   LOADED 2026-09-20 into run 10 in place (same 400,032 lots from the
+   same assign dir, so the loader's upsert refreshed the candidate rather
+   than retiring it; drift 2 -> 10 unchanged at 178 / 0 unexplained; the
+   gate still `new_zones` only, Steph reads).** v1 (net +3,149 site
+   plans) hid two lane bugs in
    its losses: the trimmed court at the room's four corners missed a
    mouth that meets a 3-acre room mid-side (`_court_places` takes the
    whole room's lane), and the front lane had to be free from the

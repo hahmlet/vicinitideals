@@ -2017,6 +2017,22 @@ warning, and the comparison against July reads the same 178 moves with
 none unexplained. What I need from you is unchanged: read the County copy
 page and promote over the warning, or name the zone codes to encode first.
 
+*And once more (2026-09-20):* the waiting copy's drawing was refreshed a
+third time, for WHERE the parking may sit -- beside the building where
+the lot is wide, behind it on a smaller court that paves only the rows it
+parks, and, on a lot with a street at both ends, never between the
+building and the second street in Portland or Milwaukie, which both
+forbid it. On the county map's badge that is about 1,650 more lots
+green and 2,770 more sent to review; about 970 lost, of which about 860
+are those Portland and Milwaukie two-street lots whose parking had been
+drawn where the code says it may not go, and the rest are odd shapes
+the old drawing had paved without checking -- a flag lot whose neck is
+narrower than a driveway, a short piece of street that does not line up
+with the building. Thousands of lots also pave less than before. The
+screen's own verdicts did not change, the gate shows the same one
+warning, and the comparison against July reads the same. What I need
+from you is unchanged.
+
 ## ~~21. One small decision: on a corner lot where the city lets us pick the front, and both ways park -- which way?~~ -- **DECIDED 2026-09-19: green first, then the preferred parking band, then the side with the least exposure to a street; more parking is not a goal**
 
 You ruled on 19 September: trying each street as the front only applies
