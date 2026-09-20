@@ -258,6 +258,11 @@ class FlatsRun(Base):
     #: Content hash of flats/config/jurisdictions. A rule edit changes results
     #: even when no code changed, so it needs its own version.
     rules_version: Mapped[str | None] = mapped_column(String(64))
+    #: Content hash of the screen's own files (``flats/`` less the tests, the
+    #: jurisdictions and the provenance store, plus quadfit), stamped by the
+    #: exporter. ``code_version`` says a commit landed; this says whether the
+    #: screen changed, which is what the drift report attributes a move to.
+    screen_version: Mapped[str | None] = mapped_column(String(64))
 
     #: Design keys (``id@version``) evaluated. Empty means design-independent
     #: stages only.

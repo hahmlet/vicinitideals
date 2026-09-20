@@ -20,7 +20,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.flats import FlatsRun, FlatsSnapshot
 from app.services.flats_refresh import drift
 from tests.conftest import seed_org, set_client_auth
-from tests.services.test_flats_refresh import _world
+from tests.services.test_flats_refresh import _clean_checks, _rescreen, _world
 
 pytestmark = pytest.mark.asyncio
 
@@ -175,6 +175,76 @@ async def test_rollback_needs_a_reason_and_puts_the_previous_copy_back(client: A
     assert "Copy 2026-07-28 is the copy in use again; copy 2026-09-18 is a candidate." in page.text
     sept = _card(page.text, w["sept"].id)
     assert ">candidate<" in sept and "rolled back" in sept
+
+
+async def test_a_re_screen_waits_on_the_copy_in_use_and_is_promoted_and_undone_from_its_card(
+    client: AsyncClient, session: AsyncSession, tmp_path
+) -> None:
+    """A re-screen (the rules or the screen changed, the map did not) is a
+    candidate run on the copy in use. Its card shows the run's own gate --
+    no delta row, the drift for that run -- refuses a plain promote while
+    the gate stands, promotes on a clean gate, leaves the run it replaced
+    reachable, and offers to put that run back."""
+    await _login(client, session)
+    w = await _world(session, tmp_path)
+    july = w["july"]
+    july.checks = _clean_checks()
+    session.add(july)
+    await session.flush()
+    await _rescreen(session, july, 2, 5)
+
+    card = _card((await client.get("/flats/refresh")).text, july.id)
+    assert 'id="rerun-5"' in card and "A re-screen is waiting: run 5" in card
+    assert "it would replace run 2 as what the Lots pages show, and run 2 stays reachable" in card
+    assert "run 5 (candidate, rules r1, code cccc)" in card and 'href="/flats/lots?run=5"' in card
+    gate = card.split('id="gate-run-5"', 1)[1].split("</table>", 1)[0]
+    assert gate.count("<tr ") == 8 and 'data-code="no_delta"' not in gate, "the delta is the copy's, not the run's"
+    assert 'data-code="no_drift" data-tripped="yes"' in gate and gate.count('data-tripped="yes"') == 1
+    assert "no drift report for run 5" in gate
+    assert "Not clean: no_drift" in card and 'id="promote-run-5"' in card and "Promote the run over the warning" in card
+    assert f'id="gate-{july.id}"' not in card, "the copy's own gate is a candidate's; this copy is in use"
+
+    refused = await client.post("/flats/refresh/promote-run", data={"run": "5", "override": ""})
+    assert refused.status_code == 422 and "the gate is not clean: no_drift" in refused.text
+    assert (await session.get(FlatsRun, 5)).status == "candidate"
+
+    await drift(session, from_run=2, to_run=5)
+    await session.commit()
+    card = _card((await client.get("/flats/refresh")).text, july.id)
+    gate = card.split('id="gate-run-5"', 1)[1].split("</table>", 1)[0]
+    assert gate.count('data-tripped="yes"') == 0
+    assert 'id="drift-run-5"' in card and "8 answers compared with run 2" in card and "by a code change 1" in card
+    assert "Both runs read the same copy of the map" in card
+    assert "Promote — make run 5 what the Lots pages show" in card and 'name="override"' not in card
+
+    answer = await client.post("/flats/refresh/promote-run", data={"run": "5"})
+
+    assert answer.status_code == 303 and answer.headers["location"].startswith("/flats/refresh?done=")
+    assert await _statuses(session, w) == ("current", "candidate", "complete", "candidate")
+    assert (await session.get(FlatsRun, 5)).status == "complete"
+    page = await client.get(answer.headers["location"])
+    assert "Run 5 is the Lots pages" in page.text and "default on copy 2026-07-28; run 2 stays reachable by ?run=." in page.text
+    card = _card(page.text, july.id)
+    assert 'id="rerun-5"' not in card
+    assert 'id="rollback-run-5"' in card and "Put run 2 back (undo the re-screen, run 5)" in card
+    assert "run 5 (complete, rules r1, code cccc)" in card and "run 2 (complete, rules r1, code aaaa)" in card
+    assert (await client.get("/flats/lots?run=2")).status_code == 200
+
+    refused = await client.post("/flats/refresh/rollback-run", data={"run": "5", "reason": "  "})
+    assert refused.status_code == 422 and 'id="refresh-error"' in refused.text
+    assert (await session.get(FlatsRun, 5)).status == "complete"
+
+    answer = await client.post("/flats/refresh/rollback-run", data={"run": "5", "reason": "the new numbers look wrong"})
+
+    assert answer.status_code == 303
+    session.expunge_all()
+    assert (await session.get(FlatsRun, 5)).status == "candidate" and (await session.get(FlatsRun, 2)).status == "complete"
+    page = await client.get(answer.headers["location"])
+    assert "Run 2 is the Lots pages" in page.text and "default again; run 5 is a candidate." in page.text
+    card = _card(page.text, july.id)
+    assert 'id="rerun-5"' in card and 'id="rollback-run-5"' not in card
+    assert "run 5 rolled back" in card and "run 2 in use again" in card
+    assert "the new numbers look wrong" in (await session.get(FlatsRun, 5)).notes
 
 
 async def test_the_page_stands_with_no_copy_registered(client: AsyncClient, session: AsyncSession) -> None:

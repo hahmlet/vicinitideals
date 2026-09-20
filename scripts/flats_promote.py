@@ -17,7 +17,9 @@ Usage (inside the api container):
     python scripts/flats_promote.py status
     python scripts/flats_promote.py drift --from-run 2 --to-run 4 [--out /app/data/flats/reports/2026-09-18/drift.md]
     python scripts/flats_promote.py promote --snapshot 3 --by "agent, standing word 2026-09-19" [--override "..."] [--dry-run]
+    python scripts/flats_promote.py promote --run 12 --by "agent, standing word 2026-09-19" [--override "..."] [--dry-run]
     python scripts/flats_promote.py rollback --by "Steph" --reason "..." [--dry-run]
+    python scripts/flats_promote.py rollback --run 12 --by "Steph" --reason "..." [--dry-run]
     python scripts/flats_promote.py prune [--keep 1] [--dry-run]
 
 ``drift`` stores its report on the candidate's snapshot (``report.drift``)
@@ -25,6 +27,13 @@ and prints it; ``promote`` refuses a standing gate unless ``--override``
 says why; ``rollback`` puts the previous copy back in use; ``prune`` drops
 the lot rows of retired copies older than the ``--keep`` most recent, so the
 database holds the copy in use, the one before it, and any candidates.
+
+A re-screen of the copy in use (the rules or the screen changed, the ground
+did not) is a candidate RUN on the current copy, not a candidate copy:
+``drift --from-run <in use> --to-run <new>`` reads it against the run in
+use, ``promote --run <new>`` makes it the Lots pages' default through the
+same gate (the run it replaces stays reachable by ``?run=``), and
+``rollback --run <new>`` puts the earlier run back.
 """
 
 from __future__ import annotations
@@ -46,12 +55,15 @@ from app.models.flats import FlatsRun, FlatsSnapshot  # noqa: E402
 from app.services.flats_refresh import (  # noqa: E402
     PromotionBlocked,
     PromotionError,
+    candidate_run,
     drift,
     drift_markdown,
     gate,
     promote,
+    promote_run,
     prune,
     rollback,
+    rollback_run,
 )
 
 
@@ -72,12 +84,25 @@ async def _status(session: AsyncSession) -> int:
         )
         for run in runs:
             if run.snapshot_id == snap.id:
-                print(f"    run {run.id:>3}  {run.status:<10} rules {run.rules_version or '?'}  code {run.code_version or '?'}")
+                print(
+                    f"    run {run.id:>3}  {run.status:<10} rules {run.rules_version or '?'}  code {run.code_version or '?'}"
+                    f"  screen {run.screen_version or '?'}  source {(run.params or {}).get('source_id') or '?'}"
+                )
         if snap.status == "candidate":
             standing = [g for g in gate(snap) if g["tripped"]]
             print("    gate: " + ("clean -- the agent may promote on the standing word" if not standing else "WARNED -- Steph reads the report"))
             for g in gate(snap):
                 print(f"      {'!!' if g['tripped'] else 'ok'} {g['code']:<18} {g['detail']}")
+        elif snap.status == "current":
+            rerun = await candidate_run(session, snap.id)
+            if rerun is not None:
+                standing = [g for g in gate(snap, rerun) if g["tripped"]]
+                print(
+                    f"    re-screen waiting: run {rerun.id}; gate "
+                    + ("clean -- the agent may promote it on the standing word" if not standing else "WARNED -- Steph reads the report")
+                )
+                for g in gate(snap, rerun):
+                    print(f"      {'!!' if g['tripped'] else 'ok'} {g['code']:<18} {g['detail']}")
     return 0
 
 
@@ -102,7 +127,40 @@ async def _drift(session: AsyncSession, args: argparse.Namespace) -> int:
     return 0
 
 
+async def _promote_run(session: AsyncSession, args: argparse.Namespace) -> int:
+    try:
+        done = await promote_run(session, args.run, by=args.by, override=args.override)
+    except PromotionBlocked as exc:
+        print(f"refused: {exc}")
+        run = await session.get(FlatsRun, args.run)
+        snap = await session.get(FlatsSnapshot, run.snapshot_id) if run is not None and run.snapshot_id else None
+        if snap is not None:
+            for g in gate(snap, run):
+                print(f"  {'!!' if g['tripped'] else 'ok'} {g['code']:<18} {g['detail']}")
+        return 3
+    except PromotionError as exc:
+        print(f"refused: {exc}")
+        return 2
+    print(
+        f"run {done.run.id} is complete and the Lots pages' default on snapshot {done.snapshot.id} "
+        f"({done.snapshot.snapshot_date.isoformat()}, the copy in use)"
+        + (f"; run {done.previous.id} stays reachable by ?run=" if done.previous else "")
+    )
+    if done.blocks:
+        print(f"promoted OVER {', '.join(done.blocks)} by {done.by}: {args.override}")
+    else:
+        print(f"gate clean; promoted by {done.by}")
+    if args.dry_run:
+        await session.rollback()
+        print("dry run, rolled back")
+    else:
+        await session.commit()
+    return 0
+
+
 async def _promote(session: AsyncSession, args: argparse.Namespace) -> int:
+    if args.run is not None:
+        return await _promote_run(session, args)
     try:
         done = await promote(session, args.snapshot, by=args.by, override=args.override)
     except PromotionBlocked as exc:
@@ -135,6 +193,22 @@ async def _promote(session: AsyncSession, args: argparse.Namespace) -> int:
 
 
 async def _rollback(session: AsyncSession, args: argparse.Namespace) -> int:
+    if args.run is not None:
+        try:
+            undone = await rollback_run(session, args.run, by=args.by, reason=args.reason)
+        except PromotionError as exc:
+            print(f"refused: {exc}")
+            return 2
+        print(
+            f"run {undone.demoted.id} is a candidate again; run {undone.restored.id} is the Lots pages' default "
+            f"on snapshot {undone.snapshot.id} ({undone.snapshot.snapshot_date.isoformat()})"
+        )
+        if args.dry_run:
+            await session.rollback()
+            print("dry run, rolled back")
+        else:
+            await session.commit()
+        return 0
     try:
         done = await rollback(session, by=args.by, reason=args.reason)
     except PromotionError as exc:
@@ -183,13 +257,16 @@ async def main(argv: list[str] | None = None) -> int:
     dr.add_argument("--out", type=Path, help="also write the report as markdown here")
     dr.add_argument("--dry-run", action="store_true")
 
-    pr = sub.add_parser("promote", help="make a candidate copy the copy in use")
-    pr.add_argument("--snapshot", type=int, required=True)
+    pr = sub.add_parser("promote", help="make a candidate copy the copy in use, or a re-screen the run in use")
+    which = pr.add_mutually_exclusive_group(required=True)
+    which.add_argument("--snapshot", type=int, help="the candidate copy")
+    which.add_argument("--run", type=int, help="a candidate run on the copy in use (a re-screen)")
     pr.add_argument("--by", required=True, help='who: "Steph" or "agent, standing word 2026-09-19"')
     pr.add_argument("--override", default=None, help="promote over a standing gate, with this reason (Steph's call)")
     pr.add_argument("--dry-run", action="store_true")
 
-    rb = sub.add_parser("rollback", help="put the previous copy back in use")
+    rb = sub.add_parser("rollback", help="put the previous copy back in use, or (--run) the run before a re-screen")
+    rb.add_argument("--run", type=int, default=None, help="undo a re-screen's promotion: this run back to candidate")
     rb.add_argument("--by", required=True)
     rb.add_argument("--reason", required=True)
     rb.add_argument("--dry-run", action="store_true")

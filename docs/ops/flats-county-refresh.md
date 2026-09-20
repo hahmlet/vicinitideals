@@ -86,6 +86,31 @@ Durations are from the first real run (2026-09-18/19, 453,782 taxlots).
 Steps 5–10 chain on 137 as one nohup script (`/root/chain_<date>.sh` ending
 in `CHAIN DONE`) so the seven-hour bridge is not babysat.
 
+### 4b. A re-screen of the copy in use
+
+When the rules or the screen changed and the ground did not -- a zone ruled,
+a use gate added, a drawing fixed in s6s -- the copy is not refreshed; it is
+screened again, and the result is a **candidate run on the current copy**
+that goes through the same gate and can be undone the same way. The run the
+Lots pages show is never overwritten in place: the loader refuses to load
+onto any run that is not a `candidate`.
+
+| # | Step | Where | Command | Done when |
+|---|---|---|---|---|
+| R1 | Re-run what changed | 137 | rules: `normalize` + `assign` (steps 7, 9) into a fresh `/root/assign_<date>_<tag>`; a quadfit drawing only: nothing -- export reads `lots_results.csv` from the quadfit dir the assign dir's `meta.json` names | a fresh assign dir, or the same one with new quadfit columns |
+| R2 | Export as a NEW run | 137 | `python scripts/flats_load_bridge.py export --run-dir /root/assign_<date>_<tag> --out /root/bundle_<date>_<tag>` -- **without** `--source-id`, so `run.json` carries a new source id, and without `--code-version` / `--rules-version` (the bundle names the checkout it was screened on; the exporter also stamps `screen_version`, a hash of the screen's own files) | `run.json` with `status: candidate` and a `screen_version` |
+| R3 | Copy to 114 | 137 | as step 11, into `data/flats/bridge/<date>_<tag>` | files under `/app/data/flats/bridge/…` |
+| R4 | Load onto the current copy | 114 | `flats_load_bridge.py load --bundle /app/data/flats/bridge/<date>_<tag> --snapshot <current id> --dry-run`, then real; VACUUM as step 15 | a new `flats.runs` row, `candidate`, on the current snapshot (`flats_promote.py status` shows "re-screen waiting: run N"); the lot rows are upserted in place -- the copy's lot table is one table, so the re-screen's facts overwrite the older measurement on each lot |
+| R5 | Drift | 114 | `flats_promote.py drift --from-run <run in use> --to-run N --out /app/data/flats/reports/<date>/drift_run<N>.md` | `report.drift` on the copy names `to_run: N` (the copy's own promotion report moves to `drift_earlier`); "Both runs read the same copy" in the report: the ground explains nothing, every move is `rules`, `code` (the screen's files changed) or `unexplained` |
+| R6 | Read the gate | 114 / browser | `flats_promote.py status`, or the "A re-screen is waiting" section on the copy's card at `/flats/refresh` | eight rows (the six loader checks, `no_drift`, `verdict_drift`; no delta row -- the delta is the copy's) all `ok` → agent promotes; any `!!` → Steph |
+| R7 | Promote the run | 114 or browser | `flats_promote.py promote --run N --by "agent, standing word 2026-09-19"` (clean) / the **Promote — make run N what the Lots pages show** button, or `--by Steph --override "…"` (warned) | run N `complete` and the Lots pages' default; the run it replaced stays `complete`, reachable by `?run=`, and the card offers **Put run M back** |
+
+A `code` move in a same-copy drift is read from `screen_version` when both
+runs carry one: the screen's own files changed between the exports. Two runs
+with the same `screen_version` and a different `code_version` that still
+move a verdict are `unexplained` -- a commit outside the screen moved an
+answer, which is a bug.
+
 ## 5. What Steph reads
 
 The candidate's card on `/flats/refresh`. Four questions, top to bottom:
@@ -149,9 +174,22 @@ stands, and the lot page says why it is in doubt.
 
 Undo: **Roll back to the previous copy** on the promoted card, with a reason,
 or `flats_promote.py rollback --by Steph --reason "…"`. The previous copy is
-`current` again, the promoted one is a `candidate` again with its run, and
-the reason is kept on both rows. Rollback refuses if the previous copy's lot
-rows were pruned — prune only after the next quarter has settled.
+`current` again, the promoted one is a `candidate` again with every run that
+was `complete` on it, and the reason is kept on both rows. Rollback refuses
+if the previous copy's lot rows were pruned — prune only after the next
+quarter has settled.
+
+**A re-screen (§4b) is promoted per run**, not per copy: `flats_promote.py
+promote --run N` (or the button on the copy's card) flips one row -- run N
+`candidate` → `complete` -- and, being the newest complete run, it is what
+the Lots pages show. The run it replaces stays `complete` and reachable by
+`?run=`; nothing on the ground moved, so no review decision is marked *look
+again* (a decision on a lot whose verdict moved in a re-screen is not
+flagged -- the drift report is where those moves are read). Undo: **Put run
+M back** on the card, or `flats_promote.py rollback --run N --by Steph
+--reason "…"` -- run N is a `candidate` again and run M the default; it
+refuses when N is not the run in use or when no earlier complete run exists
+on the copy (that is a copy rollback).
 
 ## 7. Warnings on the Lots pages
 
@@ -202,12 +240,12 @@ rows were pruned — prune only after the next quarter has settled.
 | Acquire stopped half way | Re-run the same date; `present` datasets are skipped. Check disk first (a snapshot ≈ 1.6 GB). |
 | Drift report fails with "could not resize shared memory segment" | Docker's default /dev/shm (64 MB) is too small for the parallel hash join across two copies; the postgres service carries `shm_size: 1g` since 02752a1f -- check `docker inspect re-modeling-postgres --format '{{.HostConfig.ShmSize}}'`. |
 | Load failed midway | The load is one transaction; nothing partial lands. Fix, re-run. The first September load stopped twice on real data, both fixed in code: a lot outline longer than the CSV reader's 128 KB default (f8d1147a) and a blank jurisdiction for the 16,963 lots in Canby, Sandy, Molalla, Estacada and Barlow -- on the roll, in no layer the rules hold -- which now carry `juris_city:<name>` and screen `JURISDICTION_NOT_ENCODED` (5512490a). |
-| Candidate loaded, measurement was wrong | Never promote; the copy in use is untouched. Leave the candidate for inspection, or replace it: a re-export is a new `source_id`, so the loader makes a *second* candidate run on the same snapshot and its upsert never deletes -- a lot the re-export no longer carries would stay behind with the old run's results, `candidate_run()` would pick the newest run, and the Lots page would list both. So first retire the old run in one transaction (rehearse it with `ROLLBACK`, then `COMMIT`): `DELETE FROM flats.lot_results WHERE run_id = <old>; DELETE FROM flats.lots WHERE snapshot_id = N; DELETE FROM flats.runs WHERE id = <old>;` -- the whole lot table of the snapshot, not just the orphans, so the fresh load writes a truthful `first_seen_run_id` and computes `checks` on exactly the rows it loaded; `lot_changes` is keyed by snapshot and survives. Then steps 14–16 again (keep the old bundle beside the new one as `bridge/<date>.run<old>`). Done 2026-09-19 for run 6 -> run 8 (2,001 condominium unit records dropped, 8e596f8b). When only quadfit's columns changed (a drawing fix in s6s; the badge, stalls and method on the lot page), the 7-hour screen is not re-run: re-export from the same assign dir -- its `meta.json` names the quadfit directory, whose `lots_results.csv` is read at export time -- with `--code-version` and `--rules-version` set to the run being replaced, so the bundle names the checkout the FLATS results were screened on and the drift report reads them as unchanged. Done 2026-09-19 for run 8 -> run 10 (quadfit's corner-lot drawing, 364c360e: 15,741 lots' badge moved, 0 FLATS answers, drift unchanged at 178 / 0 unexplained). And when the re-export carries the SAME lots (the same assign dir, nothing dropped), the retire step is not needed at all: the loader finds the run by its `source_id` (the assign dir and its finish time) and lands on the same row, upserting every lot and result in place -- `run_created: false`, `lots_updated` = the bundle's count, `checks` recomputed. Rehearse with `--dry-run` (it reports the same counts and rolls back), then load, VACUUM, and re-run the drift report so `report.drift` reads the new columns. Done 2026-09-20 for the side-court / through-lot drawing (d5181f1a) into run 10: 400,032 lots and 800,064 results updated, badge moved on 6,357 lots, 0 FLATS answers, drift unchanged at 178 / 0 unexplained. And when the RULES changed and the ground did not (a zone ruled, a use gate added), normalize and assign are re-run into a fresh directory and the bundle is exported with `--source-id` set to the existing run's `params->>'source_id'` (`flats_promote.py status` prints it; so does `SELECT params->>'source_id' FROM flats.runs WHERE id = <run>`), so it lands on the same run row in place; the loader then writes the bundle's `code_version` / `rules_version` on the row and appends a re-loaded line to its notes, so the row names the checkout the results were screened on. Done 2026-09-20 for the September map's 100 zone codes ruled (637c6dca) into run 10: 5,328 ZONE_NOT_ENCODED lots became USE_PROHIBITED (red at the use gate, 18,681 with the zones the screen already refused) / ZONE_POCKET 210 / ZONE_TO_READ 679 / ZONE_UNENCODABLE 1,253; the gate came back clean and the copy was promoted the same hour, the first promotion. |
+| Candidate loaded, measurement was wrong | Never promote; the copy in use is untouched. Leave the candidate for inspection, or replace it. **While the run is a candidate** a re-export from the same assign dir (the same lots, nothing dropped) lands on the same run row in place: the loader finds the run by its `source_id` (the assign dir and its finish time), upserts every lot and result -- `run_created: false`, `lots_updated` = the bundle's count, `checks` recomputed -- and, when the rules changed, `--source-id <the run's params->>'source_id'>` on export makes a fresh assign dir land there too (the row then names the new `code_version` / `rules_version` / `screen_version` and appends a re-loaded line to its notes). Rehearse with `--dry-run`, load, VACUUM, re-run the drift report. When the re-export carries FEWER lots (2,001 condominium unit records dropped, 2026-09-19, 8e596f8b) the upsert would leave the missing lots behind with the old run's results, so first retire the old run in one transaction (rehearse with `ROLLBACK`, then `COMMIT`): `DELETE FROM flats.lot_results WHERE run_id = <old>; DELETE FROM flats.lots WHERE snapshot_id = N; DELETE FROM flats.runs WHERE id = <old>;` -- the whole lot table of the snapshot, so the fresh load writes a truthful `first_seen_run_id` and computes `checks` on exactly the rows it loaded; `lot_changes` is keyed by snapshot and survives. **Once the run is `complete`** (the copy was promoted) none of this applies: the loader refuses to load onto it (`run N is complete; a re-screen of the copy in use is loaded as a NEW run`), because an in-place load would change what the site says with no gate and no way back. A re-screen of the copy in use is §4b. Done in place, while run 10 was still a candidate: quadfit's corner-lot drawing (2026-09-19, 364c360e: 15,741 lots' badge moved, 0 FLATS answers), the side-court / through-lot drawing (2026-09-20, d5181f1a: 400,032 lots updated, badge moved on 6,357, 0 FLATS answers) and the 100 zone codes ruled (2026-09-20, 637c6dca, `--source-id`: 5,328 ZONE_NOT_ENCODED lots became USE_PROHIBITED / ZONE_POCKET 210 / ZONE_TO_READ 679 / ZONE_UNENCODABLE 1,253; the gate came back clean and the copy was promoted the same hour, the first promotion). |
 | The wrong copy was promoted | Roll back (§6). |
 | No new RLIS release yet | Not a failure: the ArcGIS layers still refresh; RLIS keys report `present`; the footer names the release. |
 | Rules changed between the two runs | The drift report attributes moves to `rules`; take the refresh on the rules commit that is live so this is normally 0. |
 | "measured but not in the snapshot's lot table (kept)" is not 0 in assign's `summary.md` | quadfit measured a TLID normalize neither kept nor named in `excluded.csv.gz`. Look the TLID up in the snapshot's `rlis_taxlots.geojson`; a lot that is there and is land is a normalize bug, a lot that is not there is a stale quadfit stage file (step 5 not run). |
-| Many moves under `code` | `code` is what is left when neither the ground nor a measured fact moved and the repo HEAD differs -- it says a commit landed between the runs, not which. Read `git log <from code_version>..<to code_version> -- flats/score flats/geom flats/ingest/quadfit.py "Lot Analysis/quadfit"`; if nothing there changed, the moves are a bug and belong under `unexplained` by hand. |
+| Many moves under `code` | When both runs carry a `screen_version` (every export since 2026-09-20), `code` means the screen's own files changed between the exports (`flats/` and `Lot Analysis/quadfit/` -- the .py/.yaml/.json/.csv there, less tests, the jurisdiction rules and the provenance stores) and the drift report prints both hashes; read `git log <from code_version>..<to code_version> -- flats "Lot Analysis/quadfit"` for what. When one run lacks it (run 2 and run 10 were exported before the stamp), `code` falls back to the repo HEAD and says only that a commit landed between the runs; read the same log and, if nothing under the screen changed, the moves are a bug and belong under `unexplained` by hand. Two runs with the SAME `screen_version` that still move a verdict are counted `unexplained` by the report itself. |
 
 ## 9. Drift audit
 

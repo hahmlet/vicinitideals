@@ -3026,7 +3026,13 @@ _SNAPSHOT_BADGE = {"current": "badge-green", "candidate": "badge-yellow", "retir
 async def _refresh_ctx(session: DBSession) -> dict[str, Any]:
     """One card per county copy, newest first, with what the page needs to say
     about it: its runs, the gate (candidates only), the delta and drift
-    summaries, and how many review decisions its promotion put in doubt."""
+    summaries, and how many review decisions its promotion put in doubt.
+
+    The copy in use may carry a re-screen -- a candidate run loaded on it
+    because the rules or the screen changed and the ground did not -- and
+    then its card shows that run's gate (the loader's checks and the drift
+    against the run in use) and the promote button for the run; after a
+    run promotion the card offers to put the earlier run back."""
     snapshots = list(
         (
             await session.execute(
@@ -3049,6 +3055,9 @@ async def _refresh_ctx(session: DBSession) -> dict[str, Any]:
         counts = snap.counts or {}
         report = snap.report or {}
         own = [r for r in runs if r.snapshot_id == snap.id]
+        rerun = next((r for r in own if r.status == "candidate"), None) if snap.status == "current" else None
+        in_use = next((r for r in own if r.status == "complete"), None) if snap.status == "current" else None
+        earlier = next((r for r in own if r.status == "complete" and in_use is not None and r.id < in_use.id), None)
         cards.append(
             {
                 "id": snap.id,
@@ -3077,6 +3086,22 @@ async def _refresh_ctx(session: DBSession) -> dict[str, Any]:
                 "prohibited_by_zone": counts.get("prohibited_by_zone") or None,
                 "drift": report.get("drift") or None,
                 "loaded": any(r.status == "candidate" for r in own),
+                "rerun": (
+                    {
+                        "id": rerun.id,
+                        "rules_version": rerun.rules_version,
+                        "code_version": rerun.code_version,
+                        "gate": refresh_service.gate(snap, rerun),
+                        "blocks": refresh_service.blocks(snap, rerun),
+                        "drift": refresh_service.drift_for(snap, rerun) or None,
+                        "replaces": in_use.id if in_use is not None else None,
+                    }
+                    if rerun is not None
+                    else None
+                ),
+                "run_rollback": (
+                    {"id": in_use.id, "earlier": earlier.id} if in_use is not None and earlier is not None else None
+                ),
             }
         )
     return {"snapshots": cards}
@@ -3150,6 +3175,53 @@ async def flats_refresh_promote(
         + (f"; promoted over {', '.join(done.blocks)}" if done.blocks else "")
         + "."
     )
+    return RedirectResponse(f"/flats/refresh?done={quote(said)}", status_code=303)
+
+
+@router.post("/flats/refresh/promote-run", response_class=HTMLResponse)
+async def flats_refresh_promote_run(
+    request: Request,
+    session: DBSession,
+    run: int = Form(...),
+    override: str = Form(""),
+) -> HTMLResponse:
+    """Make a re-screen of the copy in use the run the Lots pages show. The
+    same rule as a copy: the agent on a clean gate, a person with a written
+    reason over a warning."""
+    user = await _get_user(session, request)
+    try:
+        done = await refresh_service.promote_run(session, run, by=_who(user), override=override.strip() or None)
+    except refresh_service.PromotionBlocked as exc:
+        await session.rollback()
+        return await _refresh_page(
+            request, session, error=str(exc), override=override, override_for=-run, status_code=422
+        )
+    except refresh_service.PromotionError as exc:
+        await session.rollback()
+        return await _refresh_page(request, session, error=str(exc), status_code=422)
+    await session.commit()
+    said = (
+        f"Run {done.run.id} is the Lots pages' default on copy {done.snapshot.snapshot_date.isoformat()}"
+        + (f"; run {done.previous.id} stays reachable by ?run=" if done.previous else "")
+        + (f"; promoted over {', '.join(done.blocks)}" if done.blocks else "")
+        + "."
+    )
+    return RedirectResponse(f"/flats/refresh?done={quote(said)}", status_code=303)
+
+
+@router.post("/flats/refresh/rollback-run", response_class=HTMLResponse)
+async def flats_refresh_rollback_run(
+    request: Request, session: DBSession, run: int = Form(...), reason: str = Form("")
+) -> HTMLResponse:
+    """Undo a re-screen's promotion: the run goes back to waiting, the earlier run is the default again."""
+    user = await _get_user(session, request)
+    try:
+        done = await refresh_service.rollback_run(session, run, by=_who(user), reason=reason.strip())
+    except refresh_service.PromotionError as exc:
+        await session.rollback()
+        return await _refresh_page(request, session, error=str(exc), reason=reason, status_code=422)
+    await session.commit()
+    said = f"Run {done.restored.id} is the Lots pages' default again; run {done.demoted.id} is a candidate."
     return RedirectResponse(f"/flats/refresh?done={quote(said)}", status_code=303)
 
 

@@ -12,6 +12,12 @@ row, a standing gate refuses without a written override, the flip touches
 exactly the three rows it names, a decision about ground that moved is
 marked, a rollback puts the previous copy back, drift puts every move to a
 cause, and prune never touches the copy in use or a candidate.
+
+A re-screen of the copy in use (the rules or the screen changed, the ground
+did not) is a candidate RUN on the current copy: its gate is its own drift
+against the run in use, two runs of one copy put a move to the rules or the
+screen and never to the ground, promoting it makes it the default while the
+run it replaces stays complete, and rolling it back puts that run back.
 """
 
 from __future__ import annotations
@@ -45,10 +51,13 @@ from app.services.flats_refresh import (
     facts_moved,
     gate,
     promote,
+    promote_run,
     prune,
     refresh_notices,
     register_snapshot,
     rollback,
+    rollback_run,
+    run_in_use,
     run_probe,
 )
 from flats.ingest.acquire import _spec_sha
@@ -431,6 +440,42 @@ async def _world(session: AsyncSession, tmp_path, *, same_rules: bool = True, ke
     return {"july": july, "sept": sept, "old": old, "new": new}
 
 
+async def _rescreen(
+    session: AsyncSession,
+    snap: FlatsSnapshot,
+    base_run_id: int,
+    run_id: int,
+    *,
+    code: str = "cccc",
+    rules: str = "r1",
+    screen: str | None = None,
+    moves: dict[tuple[str, str], tuple[str, str]] | None = None,
+) -> FlatsRun:
+    """A re-screen of ``snap``'s lots as candidate run ``run_id``: every
+    answer copied from ``base_run_id`` except ``moves`` {(tlid, design):
+    (tier, colour)} -- by default the KEPT lot's second design turns red."""
+    run = FlatsRun(
+        id=run_id, status="candidate", snapshot_id=snap.id, code_version=code, rules_version=rules,
+        screen_version=screen, design_keys=list(DESIGNS), counties=["multnomah", "clackamas"],
+        finished_at=dt.datetime(2026, 9, 21, tzinfo=dt.UTC),
+    )
+    session.add(run)
+    await session.flush()
+    moves = {(KEPT, DESIGNS[1]): ("unknown", "red")} if moves is None else moves
+    rows = (
+        await session.execute(
+            select(FlatsLotResult, FlatsLot)
+            .join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id)
+            .where(FlatsLotResult.run_id == base_run_id, FlatsLot.snapshot_id == snap.id)
+        )
+    ).all()
+    for res, lot in rows:
+        tier, colour = moves.get((lot.tlid, res.design_key), (res.tier, res.checks.get("if_signed")))
+        session.add(_result(lot, run, res.design_key, tier, colour, screened=res.checks.get("screened", True)))
+    await session.commit()
+    return run
+
+
 async def _decisions(session: AsyncSession) -> dict[str, tuple[int | None, str | None]]:
     rows = (
         await session.execute(select(FlatsReviewDecision).where(FlatsReviewDecision.superseded_at.is_(None)))
@@ -457,6 +502,194 @@ async def test_the_gate_reads_the_six_checks_and_the_two_reports(session: AsyncS
     assert blocks(sept) == ["new_zones", "no_delta", "verdict_drift"]
     sept.report = {"delta": {"rows": 1}, "drift": {"unexplained": 0, "moved": 5, "compared": 100, "by_cause": {"data": 5, "rules": 0, "code": 0, "unexplained": 0}}}
     assert blocks(sept) == ["new_zones"]
+
+
+async def test_a_re_screen_of_the_copy_in_use_is_gated_on_its_own_drift(session: AsyncSession, tmp_path) -> None:
+    """The delta is the copy's and is not owed twice; the drift report must
+    be about THIS run, not one left on the row from the copy's promotion."""
+    w = await _world(session, tmp_path)
+    july = w["july"]
+    july.checks = _clean_checks()
+    session.add(july)
+    await session.flush()
+    rerun = await _rescreen(session, july, 2, 5)
+
+    assert blocks(july, rerun) == ["no_drift"]
+    rows = gate(july, rerun)
+    assert [g["code"] for g in rows] == [*flats_refresh.CHECK_CODES, "no_drift", "verdict_drift"], "no delta row for a re-screen"
+    assert next(g["detail"] for g in rows if g["code"] == "no_drift") == "no drift report for run 5; run drift from the run in use to it"
+
+    # A drift report about another run does not count for this one.
+    await attach_report(session, july.id, "drift", {"from_run": 1, "to_run": 2, "unexplained": 0, "moved": 0, "compared": 4, "by_cause": {}})
+    assert blocks(july, rerun) == ["no_drift"]
+    assert blocks(july) == ["no_delta"], "the copy's own gate reads the same row and is owed its delta"
+
+    doc = await drift(session, from_run=2, to_run=5)
+    await session.commit()
+    assert doc["same_copy"] is True and doc["to_run"] == 5
+    assert blocks(july, rerun) == []
+    assert [g["code"] for g in gate(july, rerun) if g["tripped"]] == []
+    # The report the copy carried before is kept, not overwritten.
+    session.expunge_all()
+    july = await session.get(FlatsSnapshot, w["july"].id)
+    assert july.report["drift"]["to_run"] == 5
+    assert [d["to_run"] for d in july.report["drift_earlier"]] == [2]
+
+
+async def test_two_runs_of_one_copy_put_a_move_to_the_rules_or_the_screen_never_the_ground(
+    session: AsyncSession, tmp_path
+) -> None:
+    """The ground cannot have moved between two runs of one copy; a
+    lot_changes row on that copy is the previous quarter's. What is left is
+    the rules version, the screen's own version (``screen_version``, the
+    hash of the screen's files) when both runs carry one, else the repo
+    HEAD -- and a move with none of those is unexplained."""
+    w = await _world(session, tmp_path)
+    july, old = w["july"], w["old"]
+    july.checks = _clean_checks()
+    session.add(july)
+    # The previous quarter's delta named the KEPT lot as split INTO this copy: not this run's doing.
+    april = await register_snapshot(session, _manifest(_pipeline(tmp_path), "2026-04-01"), host="137", status="candidate")
+    april.status = "retired"
+    session.add(april)
+    await session.flush()
+    session.add(FlatsLotChange(snapshot_from=april.id, snapshot_to=july.id, county="multnomah", tlid=KEPT, kind="split", role="parent"))
+    await session.commit()
+
+    by_code = await _rescreen(session, july, 2, 5, code="cccc")
+    doc = await drift(session, from_run=2, to_run=5)
+    assert (doc["compared"], doc["moved"], doc["unscreened_side"], doc["only_in_new"], doc["only_in_old"]) == (8, 1, 0, 0, 0)
+    assert doc["by_cause"] == {"data": 0, "surroundings": 0, "remeasured": 0, "rules": 0, "code": 1, "unexplained": 0}
+    assert doc["colour_moves"] == {"yellow->red": 1} and doc["same_copy"] is True
+    assert "Both runs read the same copy" in drift_markdown(doc)
+    assert blocks(july, by_code) == [], "a move the screen explains does not block"
+    assert blocks(july) == ["no_delta"], "the copy's own gate still wants the delta it was promoted on"
+
+    by_rules = await _rescreen(session, july, 2, 6, code="aaaa", rules="r2")
+    doc = await drift(session, from_run=2, to_run=6)
+    assert doc["by_cause"]["rules"] == 1 and doc["unexplained"] == 0
+
+    # Both carry a screen version and it is the same: the HEAD moved, the screen did not -- a bug, and it blocks.
+    old.screen_version = "s1"
+    session.add(old)
+    await session.flush()
+    same_screen = await _rescreen(session, july, 2, 7, code="dddd", screen="s1")
+    doc = await drift(session, from_run=2, to_run=7)
+    await session.commit()
+    assert doc["screen_version"] == ["s1", "s1"] and doc["by_cause"]["code"] == 0 and doc["unexplained"] == 1
+    assert "screen s1 -> s1" in drift_markdown(doc)
+    assert blocks(july, same_screen) == ["verdict_drift"]
+    with pytest.raises(PromotionBlocked) as caught:
+        await promote_run(session, 7, by="agent, standing word 2026-09-19")
+    assert caught.value.codes == ["verdict_drift"]
+
+    # The screen changed and the HEAD did not (a re-export from the same commit with a fixed quadfit): the screen.
+    other_screen = await _rescreen(session, july, 2, 8, code="aaaa", screen="s2")
+    doc = await drift(session, from_run=2, to_run=8)
+    assert doc["by_cause"]["code"] == 1 and doc["unexplained"] == 0
+    assert blocks(july, other_screen) == []
+    assert by_rules.status == "candidate"
+
+
+async def test_a_re_screen_is_promoted_through_the_gate_and_the_run_it_replaces_stays(
+    session: AsyncSession, tmp_path
+) -> None:
+    w = await _world(session, tmp_path)
+    july = w["july"]
+    july.checks = _clean_checks()
+    session.add(july)
+    await session.flush()
+    rerun = await _rescreen(session, july, 2, 5)
+
+    with pytest.raises(PromotionBlocked) as caught:
+        await promote_run(session, 5, by="agent, standing word 2026-09-19")
+    assert caught.value.codes == ["no_drift"]
+    with pytest.raises(PromotionError, match="promoted whole"):
+        await promote_run(session, 4, by="Steph")  # run 4 is the September candidate's run: promote the copy
+    with pytest.raises(PromotionError, match="only a candidate run"):
+        await promote_run(session, 2, by="Steph")
+    with pytest.raises(PromotionError, match="no run 999"):
+        await promote_run(session, 999, by="Steph")
+    with pytest.raises(PromotionError, match="say who"):
+        await promote_run(session, 5, by="")
+
+    await drift(session, from_run=2, to_run=5)
+    done = await promote_run(session, 5, by="agent, standing word 2026-09-19", now=dt.datetime(2026, 9, 21, 9, 0, tzinfo=dt.UTC))
+    await session.commit()
+    session.expunge_all()
+
+    assert (done.run.id, done.previous.id, done.snapshot.id, done.blocks) == (5, 2, july.id, [])
+    new = await session.get(FlatsRun, 5)
+    old = await session.get(FlatsRun, 2)
+    july = await session.get(FlatsSnapshot, w["july"].id)
+    assert new.status == "complete" and old.status == "complete", "the run it replaces stays reachable by ?run="
+    assert july.status == "current" and july.promoted_at is None, "the copy did not change hands"
+    assert "promoted 2026-09-21 by agent, standing word 2026-09-19 (replaces run 2, still reachable by ?run=)" in new.notes
+    assert "re-screen: run 5 promoted 2026-09-21 by agent, standing word 2026-09-19; run 2 replaced" in july.notes
+    assert (await run_in_use(session, july.id)).id == 5
+    assert (await run_in_use(session)).id == 5, "the Lots pages' default is the newest complete run"
+    assert (await _decisions(session))[KEPT] == (None, None), "nothing on the ground moved; no decision is doubted"
+    with pytest.raises(PromotionError, match="only a candidate run"):
+        await promote_run(session, 5, by="Steph")
+
+    # Undo: the run goes back to waiting, the earlier run is the default again.
+    with pytest.raises(PromotionError, match="say why"):
+        await rollback_run(session, 5, by="Steph", reason=" ")
+    with pytest.raises(PromotionError, match="not the run in use"):
+        await rollback_run(session, 2, by="Steph", reason="the old one")
+    with pytest.raises(PromotionError, match="not on the copy in use"):
+        await rollback_run(session, 4, by="Steph", reason="the candidate's run")
+    undone = await rollback_run(session, 5, by="Steph", reason="the new numbers look wrong", now=dt.datetime(2026, 9, 22, tzinfo=dt.UTC))
+    await session.commit()
+    session.expunge_all()
+    assert (undone.restored.id, undone.demoted.id) == (2, 5)
+    new = await session.get(FlatsRun, 5)
+    assert new.status == "candidate" and "rolled back 2026-09-22 by Steph: the new numbers look wrong (run 2 is the default again)" in new.notes
+    assert (await run_in_use(session)).id == 2
+    assert "re-screen: run 5 rolled back 2026-09-22 by Steph; run 2 in use again" in (await session.get(FlatsSnapshot, w["july"].id)).notes
+    with pytest.raises(PromotionError, match="only complete run"):
+        await rollback_run(session, 2, by="Steph", reason="further back")
+
+    # Over a warning, with the reason kept on the run.
+    (await session.get(FlatsSnapshot, w["july"].id)).report = {"drift": {"from_run": 2, "to_run": 5, "unexplained": 3, "moved": 3, "compared": 8, "by_cause": {"unexplained": 3}}}
+    await session.flush()
+    with pytest.raises(PromotionBlocked):
+        await promote_run(session, 5, by="agent, standing word 2026-09-19")
+    done = await promote_run(session, 5, by="Steph", override="read the three lots myself")
+    await session.commit()
+    session.expunge_all()
+    assert done.blocks == ["verdict_drift"]
+    assert "over verdict_drift: read the three lots myself" in (await session.get(FlatsRun, 5)).notes
+    assert rerun.id == 5
+
+
+async def test_a_copy_rollback_demotes_every_complete_run_on_it(session: AsyncSession, tmp_path) -> None:
+    """After a copy promotion and a re-screen promotion on top of it, the
+    copy carries two complete runs; rolling the copy back demotes both, or
+    the newest complete run overall would sit on a candidate copy."""
+    w = await _world(session, tmp_path)
+    await drift(session, from_run=2, to_run=4)
+    await promote(session, w["sept"].id, by="Steph")
+    await session.commit()
+    sept = await session.get(FlatsSnapshot, w["sept"].id)
+    rerun = await _rescreen(session, sept, 4, 6, code="dddd")
+    await drift(session, from_run=4, to_run=6)
+    await promote_run(session, 6, by="agent, standing word 2026-09-19")
+    await session.commit()
+    session.expunge_all()
+    sept = await session.get(FlatsSnapshot, w["sept"].id)
+    assert sept.report["drift"]["to_run"] == 6 and [d["to_run"] for d in sept.report["drift_earlier"]] == [4]
+    assert (await run_in_use(session)).id == 6
+
+    done = await rollback(session, by="Steph", reason="the September copy as a whole looks wrong")
+    await session.commit()
+    session.expunge_all()
+
+    assert done.demoted_run.id == 6
+    assert [(await session.get(FlatsRun, r)).status for r in (2, 4, 6)] == ["complete", "candidate", "candidate"]
+    assert (await session.get(FlatsSnapshot, w["july"].id)).status == "current"
+    assert (await run_in_use(session)).id == 2
+    assert rerun.id == 6
 
 
 # --- drift ----------------------------------------------------------------------
@@ -512,7 +745,7 @@ async def test_a_rules_change_explains_what_the_ground_does_not(session: AsyncSe
     await session.commit()
     doc = await drift(session, from_run=2, to_run=4)
     assert doc["by_cause"] == {"data": 2, "surroundings": 0, "remeasured": 0, "rules": 1, "code": 0, "unexplained": 0}
-    with pytest.raises(PromotionError, match="same copy"):
+    with pytest.raises(PromotionError, match="against itself"):
         await drift(session, from_run=2, to_run=2)
     with pytest.raises(PromotionError, match="no run 99"):
         await drift(session, from_run=2, to_run=99)

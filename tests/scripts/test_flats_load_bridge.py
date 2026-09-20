@@ -31,6 +31,7 @@ from scripts.flats_load_bridge import (
     result_binding,
     result_checks,
     rules_version,
+    screen_version,
 )
 
 pd = pytest.importorskip("pandas")
@@ -170,6 +171,7 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
     assert run["counties"] == ["clackamas", "multnomah"]
     assert run["code_version"] == "abc1234"
     assert run["rules_version"] == rules_version()
+    assert run["screen_version"] == screen_version()
     # a re-export that only refreshes quadfit's columns from an earlier
     # screen names the screen's versions, not this checkout's
     again = export(run_dir, tmp_path / "bundle2", s4=s4, s5o=s5o, quadfit_results=results,
@@ -407,13 +409,14 @@ async def test_the_load_lands_every_row_where_the_schema_keys_it(tmp_path: Path,
     assert report["if_signed"] == {"green": 1, "red": 1, "unknown": 1, "yellow": 1}
 
     assert await _count(session, "SELECT count(*) FROM flats.designs WHERE key = ANY(:k)", k=list(DESIGNS)) == 2
-    run = (await session.execute(text("SELECT status, design_keys, counties, code_version, rules_version, params->>'source_id', snapshot_id FROM flats.runs"))).one()
+    run = (await session.execute(text("SELECT status, design_keys, counties, code_version, rules_version, params->>'source_id', snapshot_id, screen_version FROM flats.runs"))).one()
     assert run[0] == "complete"
     assert list(run[1]) == list(DESIGNS)
     assert list(run[2]) == ["clackamas", "multnomah"]
     assert run[4] == rules_version()
     assert run[5] == json.loads((bundle / RUN_FILE).read_text())["source_id"]
     assert run[6] == copy
+    assert run[7] == screen_version()
 
     lot = (
         await session.execute(
@@ -456,12 +459,24 @@ async def test_the_load_lands_every_row_where_the_schema_keys_it(tmp_path: Path,
 
 @pytest.mark.asyncio
 async def test_loading_the_same_bundle_twice_changes_nothing(tmp_path: Path, session: AsyncSession, _test_db_url: str) -> None:
+    """A bundle lands on its run row in place -- while the run is a candidate.
+    The run the Lots pages show is never overwritten in place: that would
+    change what the site says with no gate and no way back, so a re-screen
+    of the copy in use is a new run (a new source id) promoted with
+    ``flats_promote.py promote --run``."""
     run_dir, s4, s5o, results = _make_run(tmp_path)
     bundle = tmp_path / "bundle"
     export(run_dir, bundle, s4=s4, s5o=s5o, quadfit_results=results)
     copy = await _snapshot(session)
     first = await load(bundle, _test_db_url, snapshot_id=copy)
+    assert (await session.execute(text("SELECT status FROM flats.runs WHERE id = :r"), {"r": first["run_id"]})).scalar_one() == "complete"
 
+    with pytest.raises(SystemExit, match="is complete; a re-screen of the copy in use is loaded as a NEW run"):
+        await load(bundle, _test_db_url, snapshot_id=copy)
+    assert await _count(session, "SELECT count(*) FROM flats.lot_results") == 4
+
+    await session.execute(text("UPDATE flats.runs SET status = 'candidate' WHERE id = :r"), {"r": first["run_id"]})
+    await session.commit()
     second = await load(bundle, _test_db_url, snapshot_id=copy)
 
     assert second["verified"] is True
@@ -472,6 +487,68 @@ async def test_loading_the_same_bundle_twice_changes_nothing(tmp_path: Path, ses
     assert await _count(session, "SELECT count(*) FROM flats.runs") == 1
     assert await _count(session, "SELECT count(*) FROM flats.lots") == 2
     assert await _count(session, "SELECT count(*) FROM flats.lot_results") == 4
+    notes = (await session.execute(text("SELECT notes FROM flats.runs WHERE id = :r"), {"r": first["run_id"]})).scalar_one()
+    assert "re-loaded from" in notes and f"screen {screen_version()}" in notes
+
+
+def test_the_screen_version_reads_the_screens_files_and_nothing_else(tmp_path: Path) -> None:
+    """One hash over the screen's own files, so a checkout that differs only
+    outside the screen (a doc, the app, a test, a rule, the corpus) carries
+    the same version and the drift report never puts a move to "code" that
+    no screen change explains."""
+    root = tmp_path / "repo"
+    for rel in (
+        "flats/score/screen.py",
+        "flats/geom/alley.py",
+        "flats/config/relief.yaml",
+        "flats/provenance/store.py",
+        "Lot Analysis/quadfit/s6s_siteplan.py",
+        "Lot Analysis/quadfit/config/rules.yaml",
+    ):
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_text("v1\n", encoding="utf-8")
+    for rel in (
+        "flats/tests/test_screen.py",
+        "flats/config/jurisdictions/or/multnomah/portland.yaml",
+        "flats/provenance/docs/or/portland/33.110.json",
+        "Lot Analysis/quadfit/provenance/portland-33.418.txt",
+        "Lot Analysis/quadfit/README.md",
+        "app/services/flats_refresh.py",
+        "docs/FOLLOWUPS.md",
+    ):
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_text("v1\n", encoding="utf-8")
+    first = screen_version(root)
+    assert first == screen_version(root) and len(first) == 64
+
+    # Nothing outside the screen moves it.
+    for rel in (
+        "flats/tests/test_screen.py",
+        "flats/config/jurisdictions/or/multnomah/portland.yaml",
+        "flats/provenance/docs/or/portland/33.110.json",
+        "Lot Analysis/quadfit/provenance/portland-33.418.txt",
+        "Lot Analysis/quadfit/README.md",
+        "app/services/flats_refresh.py",
+        "docs/FOLLOWUPS.md",
+    ):
+        (root / rel).write_text("v2\n", encoding="utf-8")
+    assert screen_version(root) == first
+    # Line endings do not either: one version across a Windows and a Linux checkout.
+    (root / "flats/score/screen.py").write_bytes(b"v1\r\n")
+    assert screen_version(root) == first
+
+    # Every screen file does.
+    for rel in (
+        "flats/score/screen.py",
+        "flats/geom/alley.py",
+        "flats/config/relief.yaml",
+        "flats/provenance/store.py",
+        "Lot Analysis/quadfit/s6s_siteplan.py",
+        "Lot Analysis/quadfit/config/rules.yaml",
+    ):
+        before = screen_version(root)
+        (root / rel).write_text("v3\n", encoding="utf-8")
+        assert screen_version(root) != before, rel
 
 
 @pytest.mark.asyncio

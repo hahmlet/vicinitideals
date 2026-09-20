@@ -1,6 +1,42 @@
 {% extends "base.html" %}
 {% block title %}County copy — Viciniti Deals{% endblock %}
 
+{% macro drift_block(d, id) -%}
+        <div style="font-size:12px" id="drift-{{ id }}">
+          {{ "{:,}".format(d.compared or 0) }} answers compared with run {{ d.from_run }};
+          {{ "{:,}".format(d.moved or 0) }} moved — explained by the ground {{ "{:,}".format(d.by_cause.data or 0) }},
+          by the map around the lot {{ "{:,}".format(d.by_cause.surroundings or 0) }},
+          by a re-measurement within a hair on a lot whose answer sat on a line {{ "{:,}".format(d.by_cause.remeasured or 0) }},
+          by a rules change {{ "{:,}".format(d.by_cause.rules or 0) }}, by a code change {{ "{:,}".format(d.by_cause.code or 0) }},
+          <strong>unexplained {{ "{:,}".format(d.unexplained or 0) }}</strong>.
+          {{ "{:,}".format(d.only_in_new or 0) }} answers only this run holds, {{ "{:,}".format(d.only_in_old or 0) }} only the old one,
+          {{ "{:,}".format(d.unscreened_side or 0) }} with no screen on one side.
+          {% if d.same_copy %}<div>Both runs read the same copy of the map: nothing on the ground moved, so a move here is the rules' or the screen's.</div>{% endif %}
+          {% if d.colour_moves %}<div>Colour moves: {% for k, n in d.colour_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+          {% if d.tier_moves %}<div>Verdict moves: {% for k, n in d.tier_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+          {% if d.surroundings_facts %}<div id="drift-surroundings-{{ id }}">What moved around them: {% for k, n in d.surroundings_facts|dictsort(by='value', reverse=true) %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+          {% if d.examples %}
+            <div>Unexplained, first few:
+              {% for e in d.examples %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}?run={{ d.to_run }}">{{ e.tlid }}</a> {{ e.design }} {{ e.colour[0] }}→{{ e.colour[1] }}{% if not loop.last %}; {% endif %}{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+{%- endmacro %}
+
+{% macro gate_table(rows, id) -%}
+      <table class="data-table" style="font-size:12px" id="gate-{{ id }}">
+        <tbody>
+        {% for g in rows %}
+          <tr data-code="{{ g.code }}" data-tripped="{{ 'yes' if g.tripped else 'no' }}">
+            <td style="width:24px">{% if g.tripped %}<span class="badge badge-red">!</span>{% else %}<span class="badge badge-green">ok</span>{% endif %}</td>
+            <td class="col-muted" style="width:160px">{{ g.words }}</td>
+            <td>{{ g.detail }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+{%- endmacro %}
+
 {% block content %}
 <div class="topbar">
 </div>
@@ -14,7 +50,9 @@
         Every dated download of the county map the screen has read, which one is in use, and
         what stands between a refreshed copy and the site showing it. Nothing here updates on
         its own: a refresh is taken by hand, lands beside the copy in use, and is shown only
-        after someone says <strong>promote</strong>. The rule since 2026-09-19: <em>the agent
+        after someone says <strong>promote</strong>. The same goes for a re-screen of the copy
+        in use (the rules or the screen changed, the map did not): it lands as a waiting run on
+        the copy's card and is shown only when promoted. The rule since 2026-09-19: <em>the agent
         promotes when the gate is clean; anything with a warning waits for Steph.</em>
       </p>
     </div>
@@ -61,17 +99,7 @@
 
     {% if s.status == "candidate" %}
       <h4 style="margin:8px 0 4px">The gate</h4>
-      <table class="data-table" style="font-size:12px" id="gate-{{ s.id }}">
-        <tbody>
-        {% for g in s.gate %}
-          <tr data-code="{{ g.code }}" data-tripped="{{ 'yes' if g.tripped else 'no' }}">
-            <td style="width:24px">{% if g.tripped %}<span class="badge badge-red">!</span>{% else %}<span class="badge badge-green">ok</span>{% endif %}</td>
-            <td class="col-muted" style="width:160px">{{ g.words }}</td>
-            <td>{{ g.detail }}</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
+      {{ gate_table(s.gate, s.id) }}
 
       {% if s.delta %}
         <h4 style="margin:12px 0 4px">What moved on the ground</h4>
@@ -117,24 +145,7 @@
 
       {% if s.drift %}
         <h4 style="margin:12px 0 4px">Verdicts that moved</h4>
-        <div style="font-size:12px" id="drift-{{ s.id }}">
-          {{ "{:,}".format(s.drift.compared or 0) }} answers compared with run {{ s.drift.from_run }};
-          {{ "{:,}".format(s.drift.moved or 0) }} moved — explained by the ground {{ "{:,}".format(s.drift.by_cause.data or 0) }},
-          by the map around the lot {{ "{:,}".format(s.drift.by_cause.surroundings or 0) }},
-          by a re-measurement within a hair on a lot whose answer sat on a line {{ "{:,}".format(s.drift.by_cause.remeasured or 0) }},
-          by a rules change {{ "{:,}".format(s.drift.by_cause.rules or 0) }}, by a code change {{ "{:,}".format(s.drift.by_cause.code or 0) }},
-          <strong>unexplained {{ "{:,}".format(s.drift.unexplained or 0) }}</strong>.
-          {{ "{:,}".format(s.drift.only_in_new or 0) }} answers only this run holds, {{ "{:,}".format(s.drift.only_in_old or 0) }} only the old one,
-          {{ "{:,}".format(s.drift.unscreened_side or 0) }} with no screen on one side.
-          {% if s.drift.colour_moves %}<div>Colour moves: {% for k, n in s.drift.colour_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
-          {% if s.drift.tier_moves %}<div>Verdict moves: {% for k, n in s.drift.tier_moves.items() %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
-          {% if s.drift.surroundings_facts %}<div id="drift-surroundings-{{ s.id }}">What moved around them: {% for k, n in s.drift.surroundings_facts|dictsort(by='value', reverse=true) %}{{ k }} {{ "{:,}".format(n) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
-          {% if s.drift.examples %}
-            <div>Unexplained, first few:
-              {% for e in s.drift.examples %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}?run={{ s.drift.to_run }}">{{ e.tlid }}</a> {{ e.design }} {{ e.colour[0] }}→{{ e.colour[1] }}{% if not loop.last %}; {% endif %}{% endfor %}
-            </div>
-          {% endif %}
-        </div>
+        {{ drift_block(s.drift, s.id) }}
       {% endif %}
 
       <form method="post" action="/flats/refresh/promote" style="margin-top:12px" id="promote-{{ s.id }}">
@@ -150,6 +161,42 @@
         {% else %}
           <button type="submit" class="btn btn-primary">Promote — make this the copy in use</button>
         {% endif %}
+      </form>
+    {% endif %}
+
+    {% if s.rerun %}
+      <div id="rerun-{{ s.rerun.id }}" style="margin-top:12px;padding-top:8px;border-top:1px solid var(--border, #ddd)">
+        <h4 style="margin:0 0 4px">A re-screen is waiting: run {{ s.rerun.id }}</h4>
+        <p class="muted" style="font-size:12px;margin:0 0 8px">
+          The same copy of the map, screened again because the rules or the screen changed{% if s.rerun.replaces %};
+          it would replace run {{ s.rerun.replaces }} as what the Lots pages show, and run {{ s.rerun.replaces }} stays reachable{% endif %}.
+          The gate is the loader's checks and the verdicts that moved against the run in use.
+        </p>
+        {{ gate_table(s.rerun.gate, "run-" ~ s.rerun.id) }}
+        {% if s.rerun.drift %}
+          <h4 style="margin:12px 0 4px">Verdicts that moved</h4>
+          {{ drift_block(s.rerun.drift, "run-" ~ s.rerun.id) }}
+        {% endif %}
+        <form method="post" action="/flats/refresh/promote-run" style="margin-top:12px" id="promote-run-{{ s.rerun.id }}">
+          <input type="hidden" name="run" value="{{ s.rerun.id }}">
+          {% if s.rerun.blocks %}
+            <div class="alert alert-warning" style="font-size:12px">
+              Not clean: {{ s.rerun.blocks|join(", ") }}. The agent will not promote this run. To promote it anyway, say why below — the reason is kept on the run.
+            </div>
+            <textarea name="override" rows="2" style="width:100%;max-width:640px" placeholder="Why this run goes live over the warning">{{ override if override_for == -s.rerun.id else "" }}</textarea>
+            <div style="margin-top:6px"><button type="submit" class="btn btn-secondary">Promote the run over the warning</button></div>
+          {% else %}
+            <button type="submit" class="btn btn-primary">Promote — make run {{ s.rerun.id }} what the Lots pages show</button>
+          {% endif %}
+        </form>
+      </div>
+    {% endif %}
+
+    {% if s.run_rollback %}
+      <form method="post" action="/flats/refresh/rollback-run" style="margin-top:12px" id="rollback-run-{{ s.run_rollback.id }}">
+        <input type="hidden" name="run" value="{{ s.run_rollback.id }}">
+        <input type="text" name="reason" style="width:100%;max-width:480px" placeholder="Why run {{ s.run_rollback.earlier }} should be shown again" value="{{ reason or '' }}">
+        <div style="margin-top:6px"><button type="submit" class="btn btn-secondary">Put run {{ s.run_rollback.earlier }} back (undo the re-screen, run {{ s.run_rollback.id }})</button></div>
       </form>
     {% endif %}
 

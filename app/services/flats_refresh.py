@@ -34,6 +34,15 @@ Seven things, and nothing that refreshes anything:
   what grounds is written on the row. Promotion marks every active review
   decision whose lot split, merged, was renumbered, deleted, vacated or
   changed zone as "look again".
+* :func:`promote_run` / :func:`rollback_run` -- the same rule for a
+  re-screen of the copy in use (the rules or the screen changed, the ground
+  did not): the new run is loaded as a candidate on the current copy, its
+  drift against the run in use is read through the same gate, and promoting
+  it makes it the Lots pages' default while the run it replaces stays
+  reachable by ``?run=``; rolling it back puts the earlier run back. A
+  re-screen never lands on the live run in place -- the loader refuses that
+  -- so every change to what the site shows goes through the gate and can
+  be undone.
 * :func:`prune` -- the lot rows of copies older than the previous one, so
   the database holds the copy in use, the one before it, and the candidates.
 """
@@ -373,7 +382,26 @@ class Rollback:
     by: str
 
 
-def blocks(snapshot: FlatsSnapshot) -> list[str]:
+@dataclass(frozen=True)
+class RunPromotion:
+    """A re-screen made the run in use; ``previous`` is the run it replaced, still reachable."""
+
+    run: FlatsRun
+    previous: FlatsRun | None
+    snapshot: FlatsSnapshot
+    blocks: list[str]
+    by: str
+
+
+@dataclass(frozen=True)
+class RunRollback:
+    restored: FlatsRun
+    demoted: FlatsRun
+    snapshot: FlatsSnapshot
+    by: str
+
+
+def blocks(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[str]:
     """The gate codes that keep an agent from promoting this copy, in gate order.
 
     The six checks the loader wrote (:mod:`flats.ingest.checks`), then
@@ -381,12 +409,17 @@ def blocks(snapshot: FlatsSnapshot) -> list[str]:
     before a promotion are not on the row, then ``verdict_drift`` when the
     drift report found a move nothing explains. An empty list is "clean":
     the agent may promote on Steph's standing word.
+
+    Given ``run`` -- a re-screen loaded as a candidate run on the copy in
+    use -- the delta is not owed (the ground is the same copy's, compared
+    when the copy was promoted) and the drift report must be the one that
+    compared THIS run, not an earlier one left on the row.
     """
     out = tripped(snapshot.checks)
     report = snapshot.report or {}
-    if not report.get("delta"):
+    if run is None and not report.get("delta"):
         out.append("no_delta")
-    drift_report = report.get("drift") or {}
+    drift_report = drift_for(snapshot, run)
     if not drift_report:
         out.append("no_drift")
     elif drift_report.get("unexplained"):
@@ -394,11 +427,22 @@ def blocks(snapshot: FlatsSnapshot) -> list[str]:
     return out
 
 
-def gate(snapshot: FlatsSnapshot) -> list[dict[str, Any]]:
-    """Every gate code with whether it stands and why -- the page shows all of them."""
+def drift_for(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> dict[str, Any]:
+    """The drift report on the row -- only when it is about ``run``, if one is named."""
+    doc = (snapshot.report or {}).get("drift") or {}
+    if run is not None and doc.get("to_run") != run.id:
+        return {}
+    return doc
+
+
+def gate(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[dict[str, Any]]:
+    """Every gate code with whether it stands and why -- the page shows all of them.
+
+    For a re-screen (``run``) the delta row is not shown: it is the copy's,
+    not the run's."""
     checks = snapshot.checks or {}
     report = snapshot.report or {}
-    standing = set(blocks(snapshot))
+    standing = set(blocks(snapshot, run))
     rows = []
     for code in CHECK_CODES:
         found = checks.get(code) or {}
@@ -411,20 +455,21 @@ def gate(snapshot: FlatsSnapshot) -> list[dict[str, Any]]:
             }
         )
     delta = report.get("delta") or {}
-    rows.append(
-        {
-            "code": "no_delta",
-            "words": GATE_WORDS["no_delta"],
-            "tripped": "no_delta" in standing,
-            "detail": (
-                f"{delta.get('rows', 0):,} lot changes {delta.get('from')} -> {delta.get('to')}, "
-                f"{delta.get('rereview', 0):,} put a decision in doubt"
-                if delta
-                else "no delta report on this copy; run the delta and store its summary"
-            ),
-        }
-    )
-    drift_report = report.get("drift") or {}
+    if run is None:
+        rows.append(
+            {
+                "code": "no_delta",
+                "words": GATE_WORDS["no_delta"],
+                "tripped": "no_delta" in standing,
+                "detail": (
+                    f"{delta.get('rows', 0):,} lot changes {delta.get('from')} -> {delta.get('to')}, "
+                    f"{delta.get('rereview', 0):,} put a decision in doubt"
+                    if delta
+                    else "no delta report on this copy; run the delta and store its summary"
+                ),
+            }
+        )
+    drift_report = drift_for(snapshot, run)
     if drift_report:
         detail = (
             f"{drift_report.get('moved', 0):,} of {drift_report.get('compared', 0):,} verdicts moved "
@@ -434,6 +479,8 @@ def gate(snapshot: FlatsSnapshot) -> list[dict[str, Any]]:
             f"{drift_report.get('by_cause', {}).get('rules', 0):,}, code "
             f"{drift_report.get('by_cause', {}).get('code', 0):,}, unexplained {drift_report.get('unexplained', 0):,})"
         )
+    elif run is not None:
+        detail = f"no drift report for run {run.id}; run drift from the run in use to it"
     else:
         detail = "no drift report on this copy; run drift against the run in use"
     rows.append({"code": "no_drift", "words": GATE_WORDS["no_drift"], "tripped": "no_drift" in standing, "detail": detail})
@@ -594,9 +641,14 @@ async def rollback(session: AsyncSession, *, by: str, reason: str, now: dt.datet
         raise PromotionError(f"snapshot {previous.id} ({previous.snapshot_date.isoformat()}) has no lot rows left; it was pruned")
     stamp = now.date().isoformat()
     demoted_run = await run_in_use(session, current.id)
-    if demoted_run is not None:
-        demoted_run.status = "candidate"
-        session.add(demoted_run)
+    # Every complete run on the copy steps down, not just the newest: a
+    # re-screen promoted on this copy is complete too, and a complete run on
+    # a candidate copy would be the Lots pages' default.
+    for run in (
+        await session.execute(select(FlatsRun).where(FlatsRun.snapshot_id == current.id, FlatsRun.status == "complete"))
+    ).scalars():
+        run.status = "candidate"
+        session.add(run)
     current.status = "candidate"
     current.notes = _note(current.notes, f"rolled back {stamp} by {by}: {reason.strip()}")
     session.add(current)
@@ -606,6 +658,114 @@ async def rollback(session: AsyncSession, *, by: str, reason: str, now: dt.datet
     session.add(previous)
     await session.flush()
     return Rollback(restored=previous, demoted=current, demoted_run=demoted_run, by=by)
+
+
+async def promote_run(
+    session: AsyncSession,
+    run_id: int,
+    *,
+    by: str,
+    override: str | None = None,
+    now: dt.datetime | None = None,
+) -> RunPromotion:
+    """Make a re-screen of the copy in use the run the Lots pages show; flushed, not committed.
+
+    The run must be a candidate loaded on the ``current`` copy (a candidate
+    run on a candidate copy is promoted with the copy, by :func:`promote`).
+    The gate is the loader's checks and the drift report for this run
+    against the run in use -- the delta is the copy's and is not owed
+    twice. One flip: the run becomes ``complete`` and, being the newest,
+    the default; the run it replaces stays ``complete`` and reachable by
+    ``?run=``. Nothing on the ground moved, so no decision is marked.
+    """
+    if not by or not by.strip():
+        raise PromotionError("say who is promoting (--by); the row records it")
+    now = now or dt.datetime.now(dt.UTC)
+    run = await session.get(FlatsRun, run_id)
+    if run is None:
+        raise PromotionError(f"no run {run_id}")
+    if run.status != "candidate":
+        raise PromotionError(f"run {run_id} is {run.status}; only a candidate run is promoted")
+    if run.snapshot_id is None:
+        raise PromotionError(f"run {run_id} belongs to no copy")
+    snapshot = await session.get(FlatsSnapshot, run.snapshot_id)
+    if snapshot is None or snapshot.status != "current":
+        raise PromotionError(
+            f"run {run_id} reads snapshot {run.snapshot_id}, which is "
+            f"{'missing' if snapshot is None else snapshot.status}; a re-screen is promoted on the copy in use "
+            f"(a candidate copy is promoted whole, with --snapshot)"
+        )
+    previous = await run_in_use(session, snapshot.id)
+    standing = blocks(snapshot, run)
+    if standing and not (override and override.strip()):
+        raise PromotionBlocked(standing)
+
+    stamp = now.date().isoformat()
+    run.status = "complete"
+    if run.finished_at is None:
+        run.finished_at = now
+    line = f"promoted {stamp} by {by}" + (f" (replaces run {previous.id}, still reachable by ?run=)" if previous else "")
+    if standing:
+        line += f"; over {', '.join(standing)}: {override.strip()}"
+    run.notes = _note(run.notes, line)
+    session.add(run)
+    snapshot.notes = _note(
+        snapshot.notes,
+        f"re-screen: run {run.id} promoted {stamp} by {by}"
+        + (f" over {', '.join(standing)}" if standing else "")
+        + (f"; run {previous.id} replaced" if previous else ""),
+    )
+    session.add(snapshot)
+    await session.flush()
+    return RunPromotion(run=run, previous=previous, snapshot=snapshot, blocks=standing, by=by)
+
+
+async def rollback_run(
+    session: AsyncSession, run_id: int, *, by: str, reason: str, now: dt.datetime | None = None
+) -> RunRollback:
+    """Undo a re-screen's promotion; flushed, not committed.
+
+    The run goes back to ``candidate`` (the Lots pages stop showing it by
+    default) and the complete run before it on the same copy is the
+    default again. Refuses when the run is not the run in use, or when
+    there is no earlier complete run on the copy to fall back to -- that is
+    a copy rollback, :func:`rollback`.
+    """
+    if not reason or not reason.strip():
+        raise PromotionError("say why (--reason); a rollback without a reason is a promotion nobody can explain")
+    now = now or dt.datetime.now(dt.UTC)
+    run = await session.get(FlatsRun, run_id)
+    if run is None:
+        raise PromotionError(f"no run {run_id}")
+    if run.snapshot_id is None:
+        raise PromotionError(f"run {run_id} belongs to no copy")
+    snapshot = await session.get(FlatsSnapshot, run.snapshot_id)
+    if snapshot is None or snapshot.status != "current":
+        raise PromotionError(f"run {run_id} is not on the copy in use; roll the copy back instead")
+    in_use = await run_in_use(session, snapshot.id)
+    if in_use is None or in_use.id != run.id:
+        raise PromotionError(
+            f"run {run_id} is not the run in use"
+            + (f" (run {in_use.id} is)" if in_use else "")
+            + "; only the run the Lots pages show is rolled back"
+        )
+    earlier = (
+        await session.execute(
+            select(FlatsRun)
+            .where(FlatsRun.snapshot_id == snapshot.id, FlatsRun.status == "complete", FlatsRun.id < run.id)
+            .order_by(FlatsRun.id.desc())
+        )
+    ).scalars().first()
+    if earlier is None:
+        raise PromotionError(f"run {run_id} is the only complete run on the copy in use; there is no earlier run to go back to")
+    stamp = now.date().isoformat()
+    run.status = "candidate"
+    run.notes = _note(run.notes, f"rolled back {stamp} by {by}: {reason.strip()} (run {earlier.id} is the default again)")
+    session.add(run)
+    snapshot.notes = _note(snapshot.notes, f"re-screen: run {run.id} rolled back {stamp} by {by}; run {earlier.id} in use again")
+    session.add(snapshot)
+    await session.flush()
+    return RunRollback(restored=earlier, demoted=run, snapshot=snapshot, by=by)
 
 
 _DRIFT_MATRIX = text(
@@ -624,7 +784,7 @@ _DRIFT_MATRIX = text(
     JOIN flats.lot_results o ON o.lot_id = lo.id AND o.run_id = :from_run AND o.design_key = n.design_key
     LEFT JOIN LATERAL (
         SELECT c.county FROM flats.lot_changes c
-        WHERE c.snapshot_to = :to_snapshot AND c.county = ln.county AND c.tlid = ln.tlid
+        WHERE c.snapshot_to = :ground_to AND c.county = ln.county AND c.tlid = ln.tlid
           AND c.kind <> 'attr_change'
         LIMIT 1
     ) c ON true
@@ -653,7 +813,7 @@ _DRIFT_GROUNDLESS = text(
       AND ln.zone IS NOT DISTINCT FROM lo.zone
       AND NOT EXISTS (
           SELECT 1 FROM flats.lot_changes c
-          WHERE c.snapshot_to = :to_snapshot AND c.county = ln.county AND c.tlid = ln.tlid
+          WHERE c.snapshot_to = :ground_to AND c.county = ln.county AND c.tlid = ln.tlid
             AND c.kind <> 'attr_change'
       )
     ORDER BY ln.county, ln.tlid, n.design_key
@@ -745,6 +905,16 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
     never wrote on either side (an assign-stage ``unknown`` for a lot nobody
     measured) is counted apart, not as a move; lots only one run holds are
     counted too.
+
+    Two runs of the SAME copy (a re-screen: the rules or the screen changed,
+    the ground did not) compare the same lot rows, so the ground and the
+    surroundings explain nothing there by construction -- the loader wrote
+    the newer measurement over the older on the one row -- and every move is
+    the rules', the screen's, or unexplained. The screen's version is
+    ``screen_version`` (a hash of the screen's own files, stamped by the
+    exporter) when both runs carry one, else the repo HEAD, which says "a
+    commit landed", not "the screen changed". An earlier drift report on the
+    row (the one the copy was promoted on) is kept under ``drift_earlier``.
     """
     old = await session.get(FlatsRun, from_run)
     new = await session.get(FlatsRun, to_run)
@@ -752,13 +922,25 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
         raise PromotionError(f"no run {from_run if old is None else to_run}")
     if old.snapshot_id is None or new.snapshot_id is None:
         raise PromotionError("both runs must belong to a snapshot")
-    if old.snapshot_id == new.snapshot_id:
-        raise PromotionError(f"runs {from_run} and {to_run} read the same copy (snapshot {old.snapshot_id}); nothing to attribute")
-    params = {"from_run": old.id, "to_run": new.id, "from_snapshot": old.snapshot_id, "to_snapshot": new.snapshot_id}
+    if old.id == new.id:
+        raise PromotionError(f"run {from_run} against itself; nothing to compare")
+    same_copy = old.snapshot_id == new.snapshot_id
+    params = {
+        "from_run": old.id,
+        "to_run": new.id,
+        "from_snapshot": old.snapshot_id,
+        "to_snapshot": new.snapshot_id,
+        # The ground cannot have moved between two runs of one copy; a
+        # lot_changes row on that copy is the previous quarter's, not this run's.
+        "ground_to": -1 if same_copy else new.snapshot_id,
+    }
     rows = (await session.execute(_DRIFT_MATRIX, params)).all()
 
     same_rules = (old.rules_version or "") == (new.rules_version or "")
-    same_code = (old.code_version or "") == (new.code_version or "")
+    if old.screen_version and new.screen_version:
+        same_code = old.screen_version == new.screen_version
+    else:
+        same_code = (old.code_version or "") == (new.code_version or "")
     compared = unchanged = unscreened = 0
     by_cause = {"data": 0, "surroundings": 0, "remeasured": 0, "rules": 0, "code": 0, "unexplained": 0}
     tier_moves: dict[str, int] = {}
@@ -843,8 +1025,10 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
         "to_run": new.id,
         "from_snapshot": old.snapshot_id,
         "to_snapshot": new.snapshot_id,
+        "same_copy": same_copy,
         "rules_version": [old.rules_version, new.rules_version],
         "code_version": [old.code_version, new.code_version],
+        "screen_version": [old.screen_version, new.screen_version],
         "compared": compared,
         "unchanged": unchanged,
         "moved": compared - unchanged,
@@ -860,6 +1044,11 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
         "examples": sample,
         "computed_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
     }
+    snapshot = await session.get(FlatsSnapshot, new.snapshot_id)
+    earlier = (snapshot.report or {}).get("drift") if snapshot is not None else None
+    if earlier and (earlier.get("from_run"), earlier.get("to_run")) != (old.id, new.id):
+        kept = [d for d in (snapshot.report or {}).get("drift_earlier") or [] if d.get("to_run") != earlier.get("to_run")]
+        await attach_report(session, new.snapshot_id, "drift_earlier", (kept + [earlier])[-5:])
     await attach_report(session, new.snapshot_id, "drift", doc)
     return doc
 
@@ -877,7 +1066,18 @@ def drift_markdown(doc: dict[str, Any]) -> str:
         f"by the code version {doc['by_cause']['code']:,}; **unexplained {doc['unexplained']:,}**.",
         f"{doc['unscreened_side']:,} answers had no screen on one side (a lot the county map holds but nobody measured); "
         f"{doc['only_in_new']:,} answers only the new run holds, {doc['only_in_old']:,} only the old.",
-        f"Rules version {doc['rules_version'][0]} -> {doc['rules_version'][1]}; code {doc['code_version'][0]} -> {doc['code_version'][1]}.",
+        f"Rules version {doc['rules_version'][0]} -> {doc['rules_version'][1]}; code {doc['code_version'][0]} -> {doc['code_version'][1]}"
+        + (
+            f"; screen {doc['screen_version'][0]} -> {doc['screen_version'][1]}"
+            if doc.get("screen_version") and any(doc["screen_version"])
+            else ""
+        )
+        + ".",
+        *(
+            ["Both runs read the same copy: the ground did not move, so every move is the rules', the screen's, or unexplained."]
+            if doc.get("same_copy")
+            else []
+        ),
         "",
         "## Verdict moves",
         "",

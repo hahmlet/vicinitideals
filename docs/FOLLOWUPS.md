@@ -11,16 +11,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    rows after the 100 zone codes were ruled (637c6dca); drift 2 -> 10
    unchanged at 178 / 0 unexplained (the 18,681 use-gate REDs sit on lots
    run 2 never held); prune had nothing to do (snapshot 1 is the one kept
-   whole); Lots default run 10, footer 2026-09-18, probe row 3 ok. Still
-   coarse: `code` is the drift fall-through whenever the repo HEAD differs,
-   so it says "a commit landed", not "the screen changed"; the api
-   container has no git, so making it precise means the exporter stamping
-   a hash of the screen's own files (`flats/score`, `flats/geom`,
-   `flats/ingest/quadfit.py`, `Lot Analysis/quadfit`) on `run.json` ->
-   `runs.screen_version` and `drift()` comparing that -- a migration + loader
-   column; do it with the next loader change. Loose ends the September map
-   found, queued not fixed: Happy Valley's layer carries both `MURM2` and
-   `MURm2` (one lot; the source's casing, kept, both aliased to MURM);
+   whole); Lots default run 10, footer 2026-09-18, probe row 3 ok. Loose
+   ends the September map found, queued not fixed: Happy Valley's layer
+   carries both `MURM2` and `MURm2` (one lot; the source's casing, kept,
+   both aliased to MURM);
    quadfit's s1 condo test reads only stacked geometry, so it measures
    ~2,000 Multnomah condo unit records (PROP_CODE 102/132/202/122,
    1,000-2,000 sq ft) every run -- normalize's `excluded.csv.gz` ledger
@@ -28,12 +22,45 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    the roll's property code the way `flats/normalize/condo.py` does;
    Terrain (DEM tiles) stays `deferred` until the slope stage exists; no
    writer for lot decisions in `app/` yet (they are inserted by hand or by
-   a future review page); 142 lots quadfit refused as
-   `zone_quadplex_not_allowed` sit in NOT_MEASURED while the FLATS block
-   for the same zone does not say `quadplex_allowed: false` -- two rule
-   sets disagreeing on a use, worth one read (the zone-mirror audit in
-   `flats/tests` compares lists, not this).
-2. **The court search takes the biggest rectangle, not the deepest one that
+   a future review page); a decision on a lot whose verdict moved in a
+   re-screen of the same copy (`promote --run`) is not marked "look again"
+   -- only ground and zone changes are flagged, so a re-screen's moves are
+   read in its drift report and nowhere on the lot page; the 142 lots
+   quadfit refused as `zone_quadplex_not_allowed` (all Multnomah
+   `_unincorporated` RR) are NOT two rule sets disagreeing -- read
+   2026-09-20, the FLATS block also says `quadplex_allowed: false`, behind
+   a `planned_development` lever the use gate skips by design (a levered
+   value is a relief path, not a permission), so they sit NOT_MEASURED
+   rather than USE_PROHIBITED; what they want is a relief-policy line (is a
+   planned development on 20-acre rural land a path, yellow, or not, red),
+   not a re-read.
+2. **Measure what zone lies across each lot line (`abuts_residential_zone` /
+   `abuts_lower_density_zone` / `abuts_nonresidential_zone`) -- the one
+   site fact holding back ~18,000 lots.** Ahead of the court search because
+   it unlocks more lots than anything else in the queue. Two populations
+   on run 10 (read 2026-09-20): (a) 1,732 lots in the nine permit-zones
+   quadfit's `rules.yaml` lacks (quadfit's `AHEAD_OF_QUADFIT` ledger; the
+   rest of the 3,422 `zone_not_in_rules` lots sit in twenty zone/layer
+   pairs whose FLATS reading is itself ambiguous or unverified, an encoding
+   read, not a port) -- their setbacks depend on the zone next door, so the
+   FLATS resolution is `ambiguous` and there is nothing to copy into
+   quadfit's flat zone table; (b) ~16,000 lots quadfit already measured
+   (14,044 `abuts_nonresidential_zone` + 1,920 `abuts_lower_density_zone`
+   on assign_sep6) that carry the condition as `unknown_leaning` and so
+   cannot reach GREEN. The measurement is per lot LINE, the way
+   `abuts_alley` was done (flats/geom/alley.py, 2026-09-13): for each side
+   of the lot, the zone of the taxlot(s) across that line from the
+   snapshot's zoning layers (majority by shared length; a street between
+   counts as the lot across the street only where the code says so --
+   read each city's definition first, Portland 33.910 "abutting" vs
+   "across the street"), then the three booleans from the zone's class
+   (residential / lower density than the lot's own / non-residential) per
+   line, with the density order taken from the rules, not guessed. Bound
+   on 137 on the existing parquet first (read LOST and GAINED lot by lot;
+   a new fact rules BOTH ways), then export as a NEW run on snapshot 3
+   (runbook §4b), drift 10 -> N, `promote --run N` on the standing word if
+   clean.
+3. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks
    whether it is deep enough for a row of stalls (stall + two-way aisle). A
@@ -45,7 +72,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    of this kind. Measure first: re-search the failed lots for the deepest
    rectangle at least `cap x stall_w` wide and count how many would hold a
    row, before changing the search. Offered 2026-09-17.
-3. **Four places the screen and the county map disagree, found by the
+4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's
    shape -- `court_across` draws one row of stalls across the lot behind
@@ -64,7 +91,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    screen tries 180 angles, s6 fits at the front bearings only, and 94 of
    those 178 are quadfit `siteplan_no_layout` lots the sweep found a fit on;
    (e) which street is the front on a corner lot, and the lane in from the
-   side street (FOLLOWUPS 5 slice B, 9522942d + fcea6d57) -- on the county
+   side street (FOLLOWUPS 5 at the time, now 6: slice B, 9522942d + fcea6d57) -- on the county
    map only; `flats/score/paper.py` still faces s4's first bearing and
    brings the lane down the side of the building, so the screen's stall
    count and `fit_ft` on ~60,000 corner lots read the old drawing.
@@ -83,7 +110,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    row counts that s6s's rectangle does not before changing either. The
    stall count was decided 2026-09-18 (HUMAN_TODO 18) and is out of this
    item.
-4. **Draw what the screen fitted on the lot page.** `/flats/lots/{county}/
+5. **Draw what the screen fitted on the lot page.** `/flats/lots/{county}/
    {tlid}` (`app/api/routers/ui_flats.py`, the "lots" section) draws the
    outline only. Two things are missing before the building can be
    drawn on it: quadfit's carved envelope (s5o `wkb`) is not carried by
@@ -93,7 +120,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    placement (the rectangle's origin on the lot, in 2913 feet) has to be
    returned by the fit and stored in `checks.fit` before anything can be
    drawn. Offered 2026-09-18 with the pages.
-5. **Where parking may SIT, and which street is "the front".** Offered
+6. **Where parking may SIT, and which street is "the front".** Offered
    2026-09-19 when Steph asked why the court is always behind. **Steph's
    ruling 2026-09-19:** trying each street as the front applies ONLY where
    the lot has more than one street AND the code leaves the choice to us;
@@ -352,7 +379,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Gresham 3.0100: the front is fixed where the minimum lot depth is met
    in one direction only (needs depth both ways = (a)).
 
-6. **Green and outdoor space: charge the SHAPE, not just the amount.**
+7. **Green and outdoor space: charge the SHAPE, not just the amount.**
    Offered 2026-09-19 when Steph asked whether we consider outdoor-space
    rules for townhomes. What exists: the county map (s6s) subtracts
    building + court + driveway from the lot and tests the leftover against
@@ -389,23 +416,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    county map; (d) what the leftover is FOR -- sheds, garages, ADUs, a
    second pod -- is product direction, not a rule; the leftover medians
    above say a second pod is plausible on many lots and belongs with
-   FOLLOWUPS 5's "least ground under pavement". Measure the affected
+   the parking item's (now 6) "least ground under pavement". Measure the affected
    population (Milwaukie ok plans with court depth within 7 ft of the
    floor; Portland ok plans with no 12 x 12 square outside the pavement)
    before any county run.
 
-7. **17,259 lots the screen holds a zone for but quadfit's `rules.yaml`
-   does not (`NOT_MEASURED, quadfit:zone_not_in_rules` on run 10).** The
-   FLATS rules encode the zone; quadfit's structural filter drops the lot
-   before measuring because its own older zone list lacks the code, so the
-   lot shows "not measured" instead of an answer. Read the 17,259 by
-   jurisdiction/zone (`checks->>'reasons'` on run 10), add the codes to
-   `Lot Analysis/quadfit/rules.yaml` where a townhome is a permitted use
-   (mirroring the FLATS zone block -- see the zone-mirror audit in
-   `flats/tests`), re-run s3 -> s7 on 137 and bound the move on the
-   existing parquet first (read LOST and GAINED lot by lot). Where the
-   FLATS block says `quadplex_allowed: false`, the use gate (37344f91) already
-   answers RED without a measurement and nothing is owed.
 8. **Screen the ~210 pocket lots under the layer their ruling names.** A
    `pocket` ruling (16 of them, 2026-09-20) says "this code is the other
    layer's zone carried on this map" and today gates the lot ZONE_POCKET,

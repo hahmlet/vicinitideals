@@ -190,6 +190,45 @@ def rules_version(root: Path = RULES_ROOT) -> str:
     return h.hexdigest()
 
 
+#: The screen's own files: what a verdict depends on besides the rules and
+#: the ground. Everything under ``flats/`` but the tests, the jurisdictions
+#: (``rules_version``) and the provenance store (the corpus, not the
+#: screen), plus quadfit's stages and its ``rules.yaml``.
+SCREEN_ROOTS = ("flats", "Lot Analysis/quadfit")
+SCREEN_SKIP_PARTS = frozenset({"tests", "__pycache__"})
+SCREEN_SKIP_UNDER = ("flats/config/jurisdictions", "flats/provenance/docs", "Lot Analysis/quadfit/provenance")
+SCREEN_SUFFIXES = frozenset({".py", ".yaml", ".yml", ".json", ".csv"})
+
+
+def screen_version(root: Path = REPO_ROOT) -> str:
+    """Content hash of the screen's files, the run's ``screen_version``.
+
+    Path and bytes of every screen file under :data:`SCREEN_ROOTS`, in sorted
+    order, so two checkouts that differ only outside the screen (docs, the
+    app, a test) carry the same version and the drift report does not put a
+    move to "code" that no screen change explains. Full sha256 hex.
+    """
+    h = hashlib.sha256()
+    files: list[tuple[str, Path]] = []
+    for top in SCREEN_ROOTS:
+        base = root / top
+        if not base.is_dir():
+            continue
+        for path in base.rglob("*"):
+            if not path.is_file() or path.suffix not in SCREEN_SUFFIXES:
+                continue
+            rel = str(path.relative_to(root)).replace("\\", "/")
+            if SCREEN_SKIP_PARTS & set(rel.split("/")[:-1]) or rel.startswith(SCREEN_SKIP_UNDER):
+                continue
+            files.append((rel, path))
+    for rel, path in sorted(files):
+        h.update(rel.encode())
+        h.update(b"\0")
+        h.update(path.read_bytes().replace(b"\r\n", b"\n"))  # one version across a Windows and a Linux checkout
+        h.update(b"\0")
+    return h.hexdigest()
+
+
 def _clean(value: Any) -> Any:
     """A JSON-safe Python value: NaN / NaT / numpy scalars leave as None / plain."""
     if value is None:
@@ -444,6 +483,7 @@ def export(
     normalized: Path | None = None,
     rules_ver: str | None = None,
     source_id: str | None = None,
+    screen_ver: str | None = None,
 ) -> dict[str, Any]:
     """Write the bundle for one run; returns ``run.json``'s content.
 
@@ -458,12 +498,20 @@ def export(
     screened earlier passes the earlier run's two versions, so the drift
     report reads the FLATS results as what they are -- unchanged.
 
+    ``screen_ver`` is the hash of the screen's own files (:func:`screen_version`),
+    the third version beside the two above; it defaults to this checkout's.
+
     ``source_id`` is the run row the bundle lands on. The loader finds a run
-    by it, so a bundle stamped with an existing candidate run's id upserts
+    by it, so a bundle stamped with an existing CANDIDATE run's id upserts
     that run's lots and results in place instead of making a second
     candidate on the same copy -- the path for a re-screen of the SAME lots
-    from a fresh assign directory (the rules changed, the ground did not).
-    The default names this assign directory and its finish time, a new run.
+    from a fresh assign directory while the run is still a candidate. The
+    loader refuses to land on a run the Lots pages show (``complete``): a
+    re-screen of the copy in use is a NEW run (the default source id), loaded
+    as a candidate on the current copy and promoted with
+    ``flats_promote.py promote --run``, so it goes through the gate and can
+    be rolled back. The default names this assign directory and its finish
+    time, a new run.
     """
     import pandas as pd
     import pyarrow.parquet as pq
@@ -631,6 +679,7 @@ def export(
         "status": "candidate" if from_snapshot else "complete",
         "code_version": code_version or _git_head(REPO_ROOT),
         "rules_version": rules_ver or rules_version(),
+        "screen_version": screen_ver or screen_version(),
         "design_keys": designs,
         "counties": sorted(counties),
         "snapshot_date": meta.get("snapshot_date"),
@@ -766,8 +815,8 @@ async def load(
                         """
                         INSERT INTO flats.runs
                             (started_at, finished_at, status, code_version, rules_version,
-                             design_keys, counties, params, notes, snapshot_id)
-                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10)
+                             design_keys, counties, params, notes, snapshot_id, screen_version)
+                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10, $11)
                         RETURNING id
                         """,
                         datetime.fromisoformat(run["started_at"]),
@@ -780,13 +829,23 @@ async def load(
                         json.dumps(run["params"]),
                         run.get("notes", ""),
                         snapshot_id,
+                        run.get("screen_version"),
                     )
                     report["run_created"] = True
                 else:
-                    was = await conn.fetchval("SELECT snapshot_id FROM flats.runs WHERE id = $1", run_id)
-                    if was is not None and was != snapshot_id:
+                    was = await conn.fetchrow("SELECT snapshot_id, status FROM flats.runs WHERE id = $1", run_id)
+                    if was["snapshot_id"] is not None and was["snapshot_id"] != snapshot_id:
                         raise SystemExit(
-                            f"run {run_id} was loaded into snapshot {was}; a run reads one copy, not two"
+                            f"run {run_id} was loaded into snapshot {was['snapshot_id']}; a run reads one copy, not two"
+                        )
+                    if was["status"] != "candidate":
+                        # The run the Lots pages show is never overwritten in
+                        # place: that would change what the site says with no
+                        # gate and no way back. A re-screen is a new run.
+                        raise SystemExit(
+                            f"run {run_id} is {was['status']}; a re-screen of the copy in use is loaded as a NEW run "
+                            f"(export without --source-id), read with flats_promote.py drift, and promoted with "
+                            f"flats_promote.py promote --run"
                         )
                     # The row keeps its identity and takes the bundle's versions:
                     # a re-load from a fresh assign directory was screened on
@@ -798,7 +857,8 @@ async def load(
                                code_version = COALESCE($3, code_version),
                                rules_version = COALESCE($4, rules_version),
                                finished_at = $5,
-                               notes = COALESCE(notes, '') || $6
+                               notes = COALESCE(notes, '') || $6,
+                               screen_version = COALESCE($7, screen_version)
                          WHERE id = $1
                         """,
                         run_id,
@@ -808,7 +868,8 @@ async def load(
                         datetime.fromisoformat(run["finished_at"]),
                         f"\nre-loaded from {run['params'].get('run_dir')} "
                         f"(finished {run['finished_at']}, code {run.get('code_version')}, "
-                        f"rules {run.get('rules_version')})",
+                        f"rules {run.get('rules_version')}, screen {run.get('screen_version')})",
+                        run.get("screen_version"),
                     )
                     report["run_created"] = False
                 report["run_id"] = run_id
@@ -1121,6 +1182,7 @@ def main(argv: list[str] | None = None) -> int:
     ex.add_argument("--quadfit-results", type=Path, default=None, help="override quadfit's lots_results.csv")
     ex.add_argument("--code-version", default=None, help="git SHA the run was made with (default: this checkout's HEAD)")
     ex.add_argument("--rules-version", default=None, help="rules hash the run was screened under (default: this checkout's)")
+    ex.add_argument("--screen-version", default=None, help="hash of the screen's files the run was screened with (default: this checkout's)")
     ex.add_argument("--normalized", type=Path, default=None, help="the normalize stage's directory (default: meta.json's)")
     ex.add_argument(
         "--source-id",
@@ -1155,8 +1217,9 @@ def main(argv: list[str] | None = None) -> int:
             normalized=args.normalized,
             rules_ver=args.rules_version,
             source_id=args.source_id,
+            screen_ver=args.screen_version,
         )
-        keys = ("source_id", "status", "snapshot_date", "code_version", "rules_version", "design_keys", "counties", "counts")
+        keys = ("source_id", "status", "snapshot_date", "code_version", "rules_version", "screen_version", "design_keys", "counties", "counts")
         print(json.dumps({k: run.get(k) for k in keys}, indent=2))
         return 0
 
