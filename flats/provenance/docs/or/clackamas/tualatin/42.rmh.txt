@@ -1,0 +1,264 @@
+TDC 42.100. Purpose.
+TDC 42.200. Use Categories.
+TDC 42.210. Additional Limitations on Uses.
+TDC 42.220. Housing Types.
+TDC 42.310. Projections Into Required Yards.
+TDC 42.320. Density Bonus or Setback Reduction for Developments Adja cent to Greenways
+and Natural Areas.
+TDC 42.100. Purpose.
+The purpose of this zone is to provide areas of the City suitable for townhouses, garden apartments
+and condominiums.
+TDC 42.200. Use Categories.
+(1) Use Categories. T able 42-1 lists use categories Permitted Outright (P) or Conditionally
+Permitted (C) in the RMH zone. Use categories may also be designated as Limited (L) and subject
+to the limitations listed in T able 42-1 and restrictions identified in TDC 42.210. Limitations may
+restrict the specific type of use, location, size, or other characteristics of the use category. Use
+categories which are not listed are prohibited within the zone, except for uses which are found by the
+City Manager or appointee to be of a similar character and to meet the purpose of this zone, as
+provided in TDC 31.070.
+(2) Overlay Zones. Additional uses may be allowed in a particular overlay zone. See the overlay
+zone Chapters for additional uses.
+Table 42-1
+Use Categories in the RMH Zone
+USE CATEGORY STATUS LIMITATIONS AND CODE REFERENCES
+RESIDENTIAL USE CATEGORIES
+Household Living P/C Permitted housing types subject to TDC 42.220.
+Residential Accessory Uses P (L) Permitted uses limited to Family Child Care Home
+subject to ORS 329A.440.
+Group Living P/C (L) Permitted uses limited to:
+• Residential Facility.
+• Nursing Facility.
+Conditional uses limited to Congregate Care
+Facilities subject to TDC 34.400.
+TDC42:1Supp. No. 4
+USE CATEGORY STATUS LIMITATIONS AND CODE REFERENCES
+COMMERCIAL USE CATEGORIES
+Agriculture C (L) Subject to TDC 42.210(1).
+Durable Goods Sales C (L) Conditional uses limited to nurseries.
+Retail Sales and Service C (L) Conditional uses limited to Child Day Care Cen-
+ter.
+INSTITUTIONAL USE CATEGORIES
+Assembly Facilities C (L) Conditional uses limited to places of religious
+worship. See TDC 34.800 Religious uses and
+ORS 227.500 pertaining to activities customarily
+associated with the practices of religious activity.
+Community Services C —
+Medical Center C (L) Conditional uses limited to a hospital.
+Schools C —
+INFRASTRUCTURE AND UTILITIES USE CATEGORIES
+Basic Utilities P/C (L) Permitted uses limited to water or sewage pump
+stations and pressure stations.
+Conditional uses limited to water reservoirs, with
+a maximum height of 75 feet.
+Greenways and Natural Areas P —
+Parks and Open Areas P/C (L) Permitted uses limited to public park or play-
+ground.
+Conditional uses limited to golf course or country
+club with golf course.
+Public Safety Facilities C (L) Conditional uses limited to fire stations.
+Transportation Facilities P —
+Wireless Communication
+Facilities
+P/C (L) Subject to TDC 42.210(2).
+Maximum height and minimum setbacks subject
+to TDC Chapter 73F .
+TDC 42.210. Additional Limitations on Uses.
+(1) Agricultural Uses. The following agricultural uses are allowed with a conditional use permit
+within areas designated on Comprehensive Plan Map 10-6:
+(a) Conditional Use of Agricultural Animals. Raising of agricultural animals, limited to cattle,
+horses and sheep. The City Council may limit the number of animals to be allowed on a specific
+parcel of property; and
+(b) Agricultural structures such as barns, stables, sheds, but excluding feed lots. Feed lots
+are prohibited.
+TDC 42.200 TUALATIN DEVELOPMENT CODE
+TDC42:2Supp. No. 4
+(2)  Wireless Communication Facilities. Wireless Communication Facilities may be permitted uses
+or conditional uses, depending on the nature of the use.
+(a)  Permitted Uses. The following uses are permitted outright:
+(i)  Wireless Communication Facility Attached, provided the facility is not mounted on a
+single-family dwelling or its accessory structures; and
+(ii)  Wireless Communication Facility, provided the facility is located within 300 feet of
+the centerline of Interstate 5.
+(b)  Conditional Uses. All other detached wireless communication facilities may be allowed
+with a conditional use permit.
+(Ord. No. 1450-20, § 18, 12-14-20)
+TDC 42.220.  Housing Types.
+Table 42-2 lists Housing Types permitted in the RMH zone. Housing types may be Permitted Outright
+(P), Conditionally Permitted (C), or Not Permitted (N) in the RMH zone.
+Table 42-2
+Housing Types in the RMH Zone
+
+HOUSING TYPE STATUS
+LIMITATIONS AND CODE
+REFERENCES
+Single-Family Dwelling N
+Accessory Dwelling Unit N
+Townhouse (or Rowhouse) P See TDC definition in 31.060.
+Multi-Family Structure P See TDC definition in 31.060.
+Manufactured Dwelling N
+Manufactured Dwelling Park N
+Retirement Housing Facility C Subject to TDC 34.400.
+Residential Home P See TDC definition in 31.060.
+(Ord. No. 1454-25, § 1(Exhs. 2, 3), 11-24-25)
+TDC 42.300.  Development Standards.
+Development standards in the RMH zone are listed in Table 42-3. Additional standards may apply to
+some uses and situations, see TDC 42.310.
+ TDC 42.300MEDIUM HIGH DENSITY RESIDENTIAL ZONE (RMH)
+TDC42:3Supp. No. 12
+Table 42-3
+Development Standards in the RMH Zone
+
+STANDARD REQUIREMENT
+LIMITATIONS AND CODE
+REFERENCES
+MAXIMUM DENSITY
+Household Living Uses Maximum: 15 units per acre
+Minimum: 11 units per acre
+Retirement Housing Facility,
+Congregate Care Facility, or
+Nursing Facility
+22.5 units per acre
+Group Living Uses 15 units per acre Does not apply to Congregate
+Care Facility.
+MINIMUM LOT SIZE
+Townhouse (or Rowhouse) 1,400 square feet
+Multi-Family Structure and
+Duplex
+ • Development on Less than
+One Acre
+10,000 square feet For up to two units, plus an ad-
+ditional 2,581 square feet for
+each unit exceeding two.
+ • Development on More than
+One Acre
+2,904 square feet per unit
+Multi-Family Structure under
+Condominium Ownership
+20,000 square feet Limited to the primary condomin-
+ium lot.
+All Other Permitted Uses 10,000 square feet
+Conditional Uses 20,000 square feet
+Infrastructure and Utilities Uses — As determined through the Sub-
+division, Partition, or Lot Line
+Adjustment process.
+MINIMUM AVERAGE LOT WIDTH
+Townhouse (or Rowhouse) 14 feet
+Multi-Family Structure 75 feet May be 40 feet on a cul-de-sac
+street.
+Multi-Family Structure under
+Condominium Ownership
+75 feet Limited to the primary condomin-
+ium lot. Minimum lot width at
+street is 40 feet.
+All Other Permitted Uses 75 feet
+Conditional Uses 100 feet Minimum lot width at street is 40
+feet.
+Flag Lots — Must be sufficient to comply with
+minimum access requirements
+of TDC 73C.
+
+TDC 42.300 TUALATIN DEVELOPMENT CODE
+TDC42:4Supp. No. 12
+STANDARD REQUIREMENT
+LIMITATIONS AND CODE
+REFERENCES
+MINIMUM SETBACKS
+Front Setback
+(based on structure height)
+Minimum setback to a garage
+door must be 20 feet.
+ • <25 feet 10 feet
+ • 25+ feet 15 feet
+ • Townhouse (or Rowhouse) 0—10 feet As determined through Architec-
+tural Review process.
+Side and Rear Setback
+(based on structure height)
+ • <12 feet 5 feet
+ • 12—<20 feet 7 feet
+ • 20—<25 feet 10 feet
+ • 25+ feet 12 feet
+Corner Lots — On corner lots, the setback is
+the same as the front yard set-
+back on any side facing a street
+other than an alley.
+Minimum Distance Between
+Buildings within One
+Development
+10 feet For Townhouses (or Rowhouse),
+determined through the Architec-
+tural Review process.
+Parking and Vehicle Circulation
+Areas
+10 feet For Townhouses (or Rowhouse),
+determined through the Architec-
+tural Review process.
+Conditional Uses — As determined through Architec-
+tural Review process. A mini-
+mum setback must not be greater
+than 50 feet.
+Any Yard Area Adjacent to
+Basalt Creek Parkway
+50 feet
+MAXIMUM STRUCTURE HEIGHT
+All Uses 35 feet May be increased to a maxi-
+mum of 50 feet with a condi-
+tional use permit, if all setbacks
+are not less than 1½ times the
+height of the building.
+MAXIMUM LOT COVERAGE
+Townhouse (or Rowhouse) 90%
+All Other Permitted Uses 40%
+Conditional Uses 45%
+(Ord. No. 1450-20, § 19, 12-14-20; Ord. No. 1454-25, § 1(Exhs. 2, 3), 11-24-25)
+ TDC 42.300MEDIUM HIGH DENSITY RESIDENTIAL ZONE (RMH)
+TDC42:5Supp. No. 12
+TDC 42.310.  Projections Into Required Yards.
+The following architectural features may project into a required front or rear yard setback area not
+more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,
+decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-
+tal features, and other similar architectural features.
+TDC 42.320.  Density Bonus or Setback Reduction for Developments Adjacent to Greenways
+and Natural Areas.
+To preserve natural areas and habitat for fish and wildlife, the decision-making authority may provide
+a density bonus or setback reduction for developments that are adjacent to Greenways or Natural
+Areas that dedicate land for conservation or public recreational purposes, in accordance with the
+following standards:
+(1)  Density Bonus. The lot(s) may be developed to the same number of dwelling units that would
+be permitted in the RMH zone if none of the land area in the Greenway or Natural Area lots were in
+a conservation or protection area.
+(2)  Setback Reduction. All permitted uses may be allowed a reduction of up to 35% of the front,
+side or rear yard setbacks, as determined through the Architectural Review process, if as a result the
+buildings are farther away from fish and wildlife habitat areas. Setback areas that abut property lines
+in the RL zone are not eligible for the setback reduction.
+(3)  Location of Greenway or Natural Area Lot. A portion of the parcel must be located wholly in one
+of the following conservation or protection areas:
+(a)  Natural Resource Protection Overlay (NRPO) District (TDC Chapter 72); or
+(b)  Clean Water Services Vegetated Corridor.
+(4)  Ownership of Greenway or Natural Area Lot. The ownership of each Greenway or Natural Area
+Lot must be one of the following.
+(a)  Dedicated to the City at the City's option;
+(b)  Dedicated in a manner approved by the City to a non-profit conservation organization; or
+(c)  Retained in private ownership.
+(5)  Ownership Considerations. The decision-making authority must consider, but not limited to, the
+following factors when determining the appropriate ownership of the Greenway or Natural Area Lot:
+(a)  Does the Park and Recreation Master Plan designate the lot for a greenway, pedestrian
+or bike path, public park, recreation, overlook or interpretive facility, or other public facility;
+(b)  Does the lot include one or more designated Heritage Trees, or one or more significant
+trees;
+(c)  Does the lot provide a significant view or esthetic element, or does it include a unique or
+intrinsically valuable element;
+(d)  Does the lot connect publicly owned or publicly accessible properties;
+TDC 42.310 TUALATIN DEVELOPMENT CODE
+TDC42:6Supp. No. 12
+(e)  Does the lot abut an existing park, greenway, natural area or other public facility;
+(f)  Does the lot provide a public benefit or serve a public need;
+(g)  Does the lot contain environmental hazards;
+(h)  Geologic stability of the lot; and
+(i)  Future maintenance costs for the lot.
+(Ord. 1414-18, 12-10-18; Ord. 1427-19, § 20, 11-25-19)
+ TDC 42.320MEDIUM HIGH DENSITY RESIDENTIAL ZONE (RMH)
+TDC42:7Supp. No. 12
+
+CHAPTER 43
+ HIGH DENSITY RESIDENTIAL ZONE (RH)
+Sections:

@@ -1,0 +1,154 @@
+511.01 Purpose
+
+Section 511 is adopted to implement the policies of the Comprehensive Plan for Village Community Service areas.
+
+511.02 Applicability
+
+Section 511 applies to land in the Village Community Service (VCS) District.
+
+511.03 Uses Permitted
+
+Uses permitted in the VCS District are listed in Table 511-1, Permitted Uses in the VCS District. In addition, uses similar to one or more of the listed uses may be authorized pursuant to Section 106, Authorizations of Similar Uses.
+
+1 As used in Table 511-1:
+
+1 "P" means the use is a primary use.
+
+2 "A" means the use is an accessory use.
+
+3 "C" means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
+
+4 "X" means the use is prohibited.
+
+5 Numbers in superscript correspond to the notes that follow Table 511-1.
+
+2 Permitted uses are subject to the applicable provisions of Subsection 511.04, Dimensional Standards, Subsection 511.05, Development Standard, Section 1000, Development Standards, and Section 1100, Development Review Process.
+
+511.04 Dimensional Standards
+
+The following dimensional standards apply in the VCS District. Modifications to the dimensional standards are established by Sections 800, Special Use Requirements; 903, Setback Exceptions; 904, Height Exceptions; 1107, Property Line Adjustments; and 1205, Variances.
+
+1 Setback: The setback from lot lines abutting Oregon Trail Drive and Hines Drive shall be zero. The minimum setback from all other lot lines shall be five feet.
+
+2 Maximum Building Height: Maximum building height shall be 35 feet.
+
+511.05 Development Standard
+
+All primary and accessory uses, including storage of materials, products, or waste, shall be wholly contained within an approved structure.
+
+Table 511-1: Permitted Uses in the VCS District
+
+Use
+VCS
+Accessory Uses, Customarily Permitted, such as bicycle racks, cogeneration facilities, meeting facilities, property maintenance and property management offices, rainwater collection systems, satellite dishes, solar energy systems, storage of building maintenance and landscape maintenance equipment, stormwater management facilities, transit amenities, utility service equipment, and utility service lines
+A
+Assembly Facilities, including auditoriums, community centers, and senior centers
+P
+Athletic Clubs
+C
+Bus Shelters
+A
+Child Care Centers
+P
+Civic and Cultural Facilities, including art galleries and museums
+P[1],C[2]
+Community Gardens
+P
+Composting Facilities
+X
+Crisis Stabilization Centers, as defined in ORS 430.626, subject to Section 849
+P[3]
+Daycare Services, Adult
+P
+Dwellings, if developed as affordable housing, as defined in ORS 197A.445(1), subject to Section 846
+P
+Electric Vehicle Charging Stations
+A
+Emergency Shelter, subject to Section 848
+P
+Employee Amenities, including cafeterias, clinics, daycare facilities, fitness facilities, lounges, and recreational facilities
+A[4]
+Farmers' Markets, subject to Section 840
+P
+Government Uses, including fire stations, police stations, and post offices
+P
+Hospitals, Mental or Psychiatric, subject to Section 849
+P[5]
+Libraries
+P
+Marijuana Processing
+X
+Marijuana Production
+X
+Marijuana Retailing
+X
+Marijuana Wholesaling
+X
+Offices, including developer sales offices and professional offices
+C
+Offices, including government offices and utility offices
+P
+Pedestrian Amenities
+P
+Places of Worship, subject to Section 804
+P
+Public Recreation Facilities
+P
+Recyclable Drop-off Sites, subject to Section 819
+A
+Residential Treatment Facilities and Residential Treatment Homes, subject to Section 849
+P
+Roads
+P
+Schools
+P
+Signs, subject to Section 1010
+A[6]
+Telecommuting Support Services, including photocopying centers with fax and computer facilities
+P
+Temporary Buildings for Uses Incidental to Construction Work, provided that such buildings shall be removed upon completion or abandonment of the construction work
+A
+Temporary Storage within an Enclosed Structure of Source-Separated Recyclable/Reusable Materials Generated and/or Used On-Site Prior to On-Site Reuse or Removal by the Generator or Licensed or Franchised Collector to a User or Broker
+A
+Utility Carrier Cabinets, subject to Section 830
+P,C[7]
+Utility Facilities, including:
+Utility Facilities, including:
+Stormwater Management Facilities
+P,C[7]
+Utility Cabinets
+P,[8]
+Utility Facilities, except Utility Lines, in Road Rights-of-Way
+P
+Utility Lines
+P,C[9]
+Wireless Telecommunication Facilities, subject to Section 835
+See Table 835-1
+
+Notes to Table 511-1:
+
+[1]Museums are a primary use.
+
+[2]Art galleries are a conditional use.
+
+[3] A crisis stabilization center must locate on property owned by a public body, as defined in ORS 174.109, and adjacent to where a mental or psychiatric hospital licensed under ORS 441.025 is or will be located as established by a pending development application.
+
+[4]Employee amenities shall be located in the same structure as the use to which they are accessory.
+
+[5]A mental or psychiatric hospital established as a primary use must be located adjacent to where a crisis stabilization center, as defined in ORS 430.626 and licensed under ORS 430.627, is or will be located as established by a pending development application.
+
+[6]Temporary signs regulated under Subsection 1010.13(A) are a primary use.
+
+[7]Stormwater management facilities are a primary use if:
+
+1 They are underground, except for an outlet structure if applicable;
+
+2 They are vegetated, except for an outlet structure if applicable; or
+
+3 They are approved in conjunction with a development approved through another land use permit (e.g., a subdivision or design review).
+
+[8]Utility cabinets are a primary use if they comply with Section 830, Utility Cabinets, or if they are inside a road right-of-way.
+
+[9]Utility lines are a conditional use only if they are gas transmission lines or electric transmission lines.
+
+[Added by Ord. ZDO-250, 10/13/2014; Amended by Ord. ZDO-253, 06/01/2015; Amended by Ord. ZDO-254, 01/04/2016; Amended by Ord. ZDO-266, 05/23/2018; Amended by Ord. ZDO-268, 10/02/2018; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-287, 08/03/2023; Amended by Ord. ZDO-285, 09/03/2024; Amended by Ord. ZDO-288, 09/09/2024; Amended by Ord. ZDO-293, 09/08/2026]

@@ -237,13 +237,13 @@ def test_and_the_cell_that_points_at_them_is_read_as_a_row(store: ProvenanceStor
 
 
 def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
-    """Two hundred and fifteen, from thirteen blocks, and twenty-seven of them
-    left unread deliberately. The count is the point: the layer reported clean
-    at zero, at fifty-seven, at seventy-seven, at eighty-four, at eighty-nine,
-    at ninety-six, at a hundred and forty-four and now at two hundred and
-    fifteen, and only the last of those is because it is. The fifth block is
-    Table 1012-1, Bonus Density, which announces itself with nothing but a
-    weld.
+    """Three hundred, and fifty-five of them left unread deliberately. The
+    count is the point: the layer reported clean at
+    zero, at fifty-seven, at seventy-seven, at eighty-four, at eighty-nine, at
+    ninety-six, at a hundred and forty-four, at two hundred and fifteen and
+    now at three hundred, and only the last of those is because it is. The
+    fifth block is Table 1012-1, Bonus Density, which announces itself with
+    nothing but a weld.
 
     Three of the blocks arrived with ZDO 1015 on 2026-08-27, when this layer
     was read for parking. Five of the seven govern the encoded number, because
@@ -286,17 +286,36 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     an amnesty collected by whoever encodes a dimension in these districts
     tomorrow, because a dismissed note does not block and an unread one does.
     Leaving them unread is the register working, not a gap in it.
+
+    Eighty-five more arrived on 2026-09-20 with six chapters fetched to rule
+    the September map's zone codes -- 401 (EFU), 406 (TBR), 511 (VCS), 513
+    (RTC and RC), 602 (BP, LI and GI) and 604 (RI), every one a use-gate
+    refusal. Fifty-seven are ruled: the use-table notes, all on nonresidential
+    rows, on the one reason that fits them all; note 2 of Table 513-1, which
+    is quoted with the RC refusal because it narrows the only dwelling row
+    that table has; and five numbered paragraphs of 401.05 the extractor takes
+    for notes. The other twenty-eight are the dimensional tables -- 513-2,
+    513-3, 602-2 and 604-2 -- left unread for exactly the reason Tables 510-2
+    and 510-3 are: nothing is encoded from them, and most are live site
+    conditions on a setback or a height -- what the lot line abuts.
     """
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 215
-    unread = sorted(n.line for n in ruled if n.state == "unread")
-    # Every unread note in this layer is in Table 510-2 or Table 510-3 of ZDO
-    # 510, and every one of them is unread on purpose. Pinned by line rather
+    assert len(ruled) == 300
+    unread = sorted((n.doc.rsplit("/", 1)[-1], n.line) for n in ruled if n.state == "unread")
+    # Every unread note in this layer is in a dimensional table of a district
+    # that refuses the building -- Tables 510-2 and 510-3 of ZDO 510, 513-2
+    # and 513-3 of ZDO 513, 602-2 of ZDO 602, 604-2 of ZDO 604 -- and every
+    # one of them is unread on purpose. Pinned by document and line rather
     # than by count so that a note going unread ANYWHERE ELSE is a failure,
     # which is the property the old `not unread` assertion had and a bare
     # number would lose.
-    assert unread == list(range(1465, 1514, 2)) + [1543, 1545]
-    assert all(n.doc.endswith("zdo.510.txt") for n in ruled if n.state == "unread")
+    assert unread == (
+        [("zdo.510.txt", n) for n in list(range(1465, 1514, 2)) + [1543, 1545]]
+        + [("zdo.513.txt", n) for n in (334, 338, 340, 342, 344, 346, 350)]
+        + [("zdo.513.txt", n) for n in range(365, 380, 2)]
+        + [("zdo.602.txt", n) for n in range(396, 409, 2)]
+        + [("zdo.604.txt", n) for n in range(193, 204, 2)]
+    )
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
     # 74 until 2026-09-08, when Table 315-4's four districts were encoded and
     # every value in them fell under that table's sixteen notes. Asserted as a

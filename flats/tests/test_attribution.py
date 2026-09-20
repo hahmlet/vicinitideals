@@ -139,6 +139,60 @@ def test_a_row_of_a_table_is_not_a_heading():
     assert section_at(["17.16.070", "text"], 2) == "17.16.070"
 
 
+def test_a_period_tells_a_spelled_out_heading_from_a_cross_reference_cell():
+    """Milwaukie's use tables print a Standards column whose cells read
+    "Section 19.905 Conditional Uses" and start at the margin, so the indent
+    guard cannot see them; four use gates read as sections 19.508, 19.700,
+    19.905 and 19.507 through them. A heading written out in words ends its
+    number with a period and a cross-reference does not. The section-sign
+    form is the other way round: Milwaukie and Gresham write their real
+    headings "§ 19.307.1. Uses Permitted Outright." and "§ 4.1220. Uses",
+    period included, and the marker could not see them at all.
+    """
+    from flats.encode.attribution import section_at
+
+    milwaukie = [
+        "§ 19.307.1. Uses Permitted Outright.",
+        "Marijuana retailer",
+        "Section 19.905 Conditional Uses",
+        "P",
+    ]
+    assert section_at(milwaukie, 4) == "19.307.1"
+    assert section_at(["Section 19.905 Conditional Uses", "P"], 2) == ""
+    assert section_at(["§ 4.1220. Uses", "text"], 2) == "4.1220"
+    assert section_at(["Section 4.136. PF—Public Facility Zone.", "text"], 2) == "4.136"
+
+
+def test_page_furniture_that_lags_a_heading_loses_to_it():
+    """Municode's running header on the page after "Section 4.136." still
+    reads "§ 4.135.5 WILSONVILLE CODE", so the last conditional use of the PF
+    zone, printed just under that header, read as 4.135.5. A heading cannot
+    lag; furniture can. When the nearest marker is furniture and a spelled-out
+    heading above it opens a later section, the heading wins. An earlier
+    heading is the one the furniture already names, and the furniture still
+    wins -- a page can start in a section that began pages back.
+    """
+    from flats.encode.attribution import section_at
+
+    page = [
+        "Section 4.136. PF—Public Facility Zone.",
+        "G. Private or Parochial School, College or University .",
+        "§ 4.135.5 WILSONVILLE CODE",
+        "CD4:244",
+        "H. Military bases or offices, including armories.",
+    ]
+    assert section_at(page, 5) == "4.136"
+    assert section_at(page, 2) == "4.136"
+    earlier = [
+        "Section 4.135. Title.",
+        "text",
+        "§ 4.136 WILSONVILLE CODE",
+        "CD4:250",
+        "more text",
+    ]
+    assert section_at(earlier, 5) == "4.136"
+
+
 def test_a_spelled_out_heading_beats_the_page_running_header():
     """Wilsonville writes every heading as "Section 4.124. Title", and the
     pattern could not see that form at all. So the nearest marker above a

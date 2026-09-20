@@ -443,6 +443,7 @@ def export(
     code_version: str | None = None,
     normalized: Path | None = None,
     rules_ver: str | None = None,
+    source_id: str | None = None,
 ) -> dict[str, Any]:
     """Write the bundle for one run; returns ``run.json``'s content.
 
@@ -456,6 +457,13 @@ def export(
     only refreshes quadfit's columns (``lots_results.csv``) from a bridge run
     screened earlier passes the earlier run's two versions, so the drift
     report reads the FLATS results as what they are -- unchanged.
+
+    ``source_id`` is the run row the bundle lands on. The loader finds a run
+    by it, so a bundle stamped with an existing candidate run's id upserts
+    that run's lots and results in place instead of making a second
+    candidate on the same copy -- the path for a re-screen of the SAME lots
+    from a fresh assign directory (the rules changed, the ground did not).
+    The default names this assign directory and its finish time, a new run.
     """
     import pandas as pd
     import pyarrow.parquet as pq
@@ -613,8 +621,9 @@ def export(
     started = finished - timedelta(seconds=seconds)
     host = socket.gethostname()
     from_snapshot = normalized is not None
+    source_id = source_id or f"{host}:{run_dir.resolve()}:{finished.isoformat()}"
     run = {
-        "source_id": f"{host}:{run_dir.resolve()}:{finished.isoformat()}",
+        "source_id": source_id,
         "started_at": started.isoformat(),
         "finished_at": finished.isoformat(),
         # A run read from a dated snapshot is a candidate until promoted; the
@@ -629,7 +638,7 @@ def export(
         "ruled_zones": meta.get("ruled_zones") or {},
         "params": {
             **{k: v for k, v in meta.items() if k not in {"lots", "rows", "funnel"}},
-            "source_id": f"{host}:{run_dir.resolve()}:{finished.isoformat()}",
+            "source_id": source_id,
             "host": host,
             "run_dir": str(run_dir.resolve()),
             "caller": meta.get("caller") or "flats.ingest.quadfit",
@@ -779,7 +788,28 @@ async def load(
                         raise SystemExit(
                             f"run {run_id} was loaded into snapshot {was}; a run reads one copy, not two"
                         )
-                    await conn.execute("UPDATE flats.runs SET snapshot_id = $2 WHERE id = $1", run_id, snapshot_id)
+                    # The row keeps its identity and takes the bundle's versions:
+                    # a re-load from a fresh assign directory was screened on
+                    # THIS checkout, and the drift report reads the versions.
+                    await conn.execute(
+                        """
+                        UPDATE flats.runs
+                           SET snapshot_id = $2,
+                               code_version = COALESCE($3, code_version),
+                               rules_version = COALESCE($4, rules_version),
+                               finished_at = $5,
+                               notes = COALESCE(notes, '') || $6
+                         WHERE id = $1
+                        """,
+                        run_id,
+                        snapshot_id,
+                        run.get("code_version"),
+                        run.get("rules_version"),
+                        datetime.fromisoformat(run["finished_at"]),
+                        f"\nre-loaded from {run['params'].get('run_dir')} "
+                        f"(finished {run['finished_at']}, code {run.get('code_version')}, "
+                        f"rules {run.get('rules_version')})",
+                    )
                     report["run_created"] = False
                 report["run_id"] = run_id
 
@@ -1092,6 +1122,11 @@ def main(argv: list[str] | None = None) -> int:
     ex.add_argument("--code-version", default=None, help="git SHA the run was made with (default: this checkout's HEAD)")
     ex.add_argument("--rules-version", default=None, help="rules hash the run was screened under (default: this checkout's)")
     ex.add_argument("--normalized", type=Path, default=None, help="the normalize stage's directory (default: meta.json's)")
+    ex.add_argument(
+        "--source-id",
+        default=None,
+        help="land on the run row with this params->>'source_id' (a re-screen of the same lots); default: a new run",
+    )
 
     ld = sub.add_parser("load", help="load a bundle into flats.* (needs asyncpg)")
     ld.add_argument("--bundle", type=Path, required=True)
@@ -1119,6 +1154,7 @@ def main(argv: list[str] | None = None) -> int:
             code_version=args.code_version,
             normalized=args.normalized,
             rules_ver=args.rules_version,
+            source_id=args.source_id,
         )
         keys = ("source_id", "status", "snapshot_date", "code_version", "rules_version", "design_keys", "counties", "counts")
         print(json.dumps({k: run.get(k) for k in keys}, indent=2))

@@ -913,6 +913,64 @@ code:
   url: https://dochub.clackamas.us/documents/drupal/2d34b4ce-c522-41a2-96a1-e194fde00d58
   title: Clackamas County Roadway Standard Drawing P200 - Parking and Aisle Layout Details (8.5' x 16')
   allow_thin: true
+# The September 2026 county map carried thirty zone codes this layer did not
+# hold, and Steph's ruling (2026-09-20) is that every one is read once, its
+# reason written down, and never shown again. Eight sections below hold the
+# use tables of the farm, forest, rural commercial, industrial, village
+# service and open-space districts among them; each is fetched for its
+# dwelling rows and its "uses not listed are prohibited" sentence, and every
+# one of those districts is encoded as a use-gate refusal below. The same
+# shape as 316 and 510: long use tables whose use names dilute the ratio.
+- id: zdo.401
+  url: https://www.clackamas.us/planning/zdo401
+  title: Clackamas County ZDO Section 401 - Exclusive Farm Use District (EFU), Table 401-1
+  start: "401.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.406
+  url: https://www.clackamas.us/planning/zdo406
+  title: Clackamas County ZDO Section 406 - Timber District (TBR), Table 406-1
+  start: "406.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.407
+  url: https://www.clackamas.us/planning/zdo407
+  title: Clackamas County ZDO Section 407 - Ag/Forest District (AG/F)
+  # Five subsections and no table; the page has no "Return to" link, so the
+  # slice ends at the office phone number.
+  start: "407.01"
+  end: "Phone:503-742-4500"
+  allow_thin: true
+- id: zdo.511
+  url: https://www.clackamas.us/planning/zdo511
+  title: Clackamas County ZDO Section 511 - Village Community Service District (VCS), Table 511-1
+  start: "511.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.513
+  url: https://www.clackamas.us/planning/zdo513
+  title: Clackamas County ZDO Section 513 - Rural Tourist Commercial and Rural Commercial Districts (RTC, RC), Table 513-1
+  start: "513.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.602
+  url: https://www.clackamas.us/planning/zdo602
+  title: Clackamas County ZDO Section 602 - Business Park, Light Industrial and General Industrial Districts (BP, LI, GI), Table 602-1
+  start: "602.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.604
+  url: https://www.clackamas.us/planning/zdo604
+  title: Clackamas County ZDO Section 604 - Rural Industrial District (RI), Table 604-1
+  start: "604.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.702
+  url: https://www.clackamas.us/planning/zdo702
+  title: Clackamas County ZDO Section 702 - Open Space Management District (OSM)
+  start: "702.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
 defaults:
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27 out of Section 845, which
   # is the section Table 315-1's note 8 sends this building to for everything.
@@ -2898,3 +2956,379 @@ zones:
       mixed-use building", and they send the freestanding kind somewhere else
       for its standards. A code that draws that line in two other notes has
       drawn it here too.
+  # === The September 2026 map's thirty codes, ruled 2026-09-20 =============
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again; only a code nobody has seen is worth
+  # a warning. Thirty codes on this layer's map had no zone block. Ten are
+  # farm, forest, rural commercial, industrial, village service and open
+  # space districts whose use tables refuse the building -- those are the ten
+  # use-gate refusals below, each quoting its table the way RRFF-5 and NC do,
+  # and each with nothing dimensional encoded because nothing dimensional
+  # matters while the building may not be built. The other twenty are in
+  # `zone_rulings` at the foot of this file: four residential districts and
+  # six commercial ones this model cannot hold (ZDO 1005.02(L)'s bearing
+  # planes), four to read (SCMU, PMU), and six pockets of a city's zoning
+  # that Metro's fabric carries on county lots.
+  #
+  # The affordable-housing door is on four of the ten (VCS, BP, LI, GI) and
+  # is answered once, the way NC and C-2 answer Table 510-1's note 11: "if
+  # developed as affordable housing, as defined in ORS 197A.445(1)" turns on
+  # what is built rather than on the lot, and this product is market rate.
+  EFU:
+    cite_default:
+      cite: Clackamas ZDO 401.03(5) (a dwelling is a detached single-family
+        dwelling), 401.04 (uses permitted are those listed in Table 401-1) and
+        Table 401-1, Residential Uses
+      url: https://www.clackamas.us/planning/zdo401
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Exclusive Farm Use. 401.03(5): "Unless otherwise provided in Section
+      # 401, a dwelling is a detached single-family dwelling, a manufactured
+      # dwelling, or a prefabricated structure." Table 401-1's Residential
+      # Uses block is nineteen rows of farm, nonfarm, relative-help,
+      # lot-of-record and temporary dwellings, every one a single dwelling on
+      # a Type II or Type III review, and no duplex, triplex, quadplex or
+      # townhouse row. 149 lots inside the UGB carry it.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.401.txt#L27,L49,L51,L79,L92-L111"
+    notes: >-
+      Encoded 2026-09-20 from Table 401-1. Resource land: the state writes the
+      EFU use list (ORS 215.283) and the county's table transcribes it, which
+      is why 401 carries no "uses not listed are prohibited" sentence of its
+      own -- 401.04 says the permitted uses "are listed in Table 401-1" and
+      the definition at 401.03(5) closes the word "dwelling" to a detached
+      single-family one. The 149 lots are the farm parcels the Portland UGB
+      was drawn around; the middle housing mandate (ORS 197A.420) reaches
+      urban land inside a UGB that a city or county has zoned for residential
+      use, and an EFU parcel is neither.
+  TBR:
+    cite_default:
+      cite: Clackamas ZDO 406.03(5), 406.04 and Table 406-1 (Residential
+        Uses), 406.06 Prohibited Uses
+      url: https://www.clackamas.us/planning/zdo406
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Timber. The same definition as 401 -- "a dwelling is a detached
+      # single-family dwelling, a manufactured dwelling, or a prefabricated
+      # structure" -- and a Residential Uses block of forest dwellings on
+      # Type II review. 406.06 says the rest: "Uses of structures and land
+      # not specifically permitted are prohibited." 112 lots inside the UGB.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.406.txt#L21,L35,L37,L55,L92-L104,L476,L478"
+    notes: >-
+      Encoded 2026-09-20 from Table 406-1 and 406.06. Forest land inside the
+      UGB line, 112 lots; the table's dwellings are the forest lot-of-record,
+      template-test, 160-acre and 200-acre kinds, and 406.06 is the flat
+      prohibition sentence 401 does not need.
+  AGF:
+    cite_default:
+      cite: Clackamas ZDO 407.03 (uses permitted are those of the EFU and TBR
+        Districts; dwellings under Section 401 or 406 by the tract's 1993 use)
+        and 407.04 Prohibited Uses
+      url: https://www.clackamas.us/planning/zdo407
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Ag/Forest, spelled AG/F in the ordinance and AGF on the map. 407.03
+      # permits what 401 and 406 permit and nothing else; 407.03(A) sends
+      # every dwelling to one of those two sections by what the tract was
+      # doing on January 1, 1993; both refuse the building above. 407.04:
+      # "Uses of structures and land not specifically permitted are
+      # prohibited." 25 lots.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.407.txt#L9,L11,L13,L17,L19"
+    notes: >-
+      Encoded 2026-09-20. A district with no use table of its own: it borrows
+      EFU's and TBR's, and a dwelling is whichever of the two the tract's
+      1993 use points at. Either way it is a detached single-family dwelling
+      on a resource-land review, so the answer is the same as its parents'.
+  VCS:
+    cite_default:
+      cite: Clackamas ZDO 511.02 (Section 511 applies to VCS), 511.03 (uses
+        permitted are those listed in Table 511-1; "X" means prohibited) and
+        Table 511-1 (printed after 511.05), Dwellings row
+      url: https://www.clackamas.us/planning/zdo511
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Village Community Service, Sunnyside Village. Table 511-1 has one
+      # dwelling row and it is conditioned on what is built: "Dwellings, if
+      # developed as affordable housing, as defined in ORS 197A.445(1),
+      # subject to Section 846" -- P. A market-rate quadplex is the same use
+      # with its condition unmet, not an unlisted use the similar-use door of
+      # 511.03 could admit. One lot, 9.5 acres.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.511.txt#L7,L9,L11,L21,L39,L41-L42,L63-L64"
+    notes: >-
+      Encoded 2026-09-20 from Table 511-1. The affordable-housing door is
+      answered the way NC and C-2 answer Table 510-1's note 11: it turns on
+      what is built, this product is market rate, and the screen answers the
+      question it is asked.
+  RC:
+    cite_default:
+      cite: Clackamas ZDO 513.02 (Section 513 applies to RTC and RC), 513.03
+        (uses permitted are those listed in Table 513-1; "X" means
+        prohibited) and Table 513-1 (printed under 513.04), Dwellings,
+        Detached Single-Family row, RC column, with note 2
+      url: https://www.clackamas.us/planning/zdo513
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Rural Commercial, the second data column of Table 513-1. The table's
+      # one dwelling row is "Dwellings, Detached Single-Family", which reads
+      # P[2],A under RTC and A under RC -- an accessory use, and note 2
+      # confines even the primary reading to one detached dwelling on a lot
+      # of record created on or before December 7, 1983. No duplex, triplex,
+      # quadplex or townhouse row. 58 lots inside the UGB.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.513.txt#L7,L9,L11,L23,L37,L39-L41,L75-L77,L279"
+    notes: >-
+      Encoded 2026-09-20 from Table 513-1. Fifty-eight lots inside the UGB
+      line carry a rural commercial code, which is the Mount Hood Community
+      Plan's vocabulary reaching into the urban area on a few older strips;
+      whichever column is read, the only dwelling is a single detached one.
+      The same block answers RC where Happy Valley's map carries it (a pocket
+      ruling in that layer points here).
+  BP:
+    cite_default:
+      cite: Clackamas ZDO 602.02 (Section 602 applies to BP, LI and GI),
+        602.03 (uses permitted are those listed in Table 602-1; "X" means
+        prohibited) and Table 602-1, Dwellings row, printed after 602.05
+      url: https://www.clackamas.us/planning/zdo602
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Business Park, first data column of Table 602-1. The only dwelling
+      # row is "Dwellings, if developed as affordable housing, as defined in
+      # ORS 197A.445(1), and subject to Section 846" -- P in BP and LI, X in
+      # GI. Market rate is not on the row. 38 lots.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.602.txt#L7,L9,L11,L21,L99,L101-L104,L137-L140"
+    notes: >-
+      Encoded 2026-09-20 from Table 602-1, one row for three districts. The
+      row that admits a dwelling admits it on a condition about what is built
+      -- affordable housing under ORS 197A.445(1) -- and this product is
+      market rate, so the answer is the one Table 510-1's note 11 already
+      gets in NC and C-2.
+  LI:
+    cite_default:
+      cite: Clackamas ZDO 602.02, 602.03 and Table 602-1 (printed after
+        602.05), Dwellings row, LI column
+      url: https://www.clackamas.us/planning/zdo602
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Light Industrial, second data column; same row as BP, P for
+      # affordable housing only. 464 lots -- the largest of the thirty codes.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.602.txt#L7,L9,L11,L21,L99,L101-L104,L137-L140"
+    notes: >-
+      Encoded 2026-09-20 from Table 602-1. See BP; the same row and the same
+      condition. 464 lots is the largest block among the codes the September
+      map found, and every one of them is closed at the use gate.
+  GI:
+    cite_default:
+      cite: Clackamas ZDO 602.02, 602.03 and Table 602-1 (printed after
+        602.05), Dwellings row, GI column
+      url: https://www.clackamas.us/planning/zdo602
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # General Industrial, third data column; the Dwellings row reads X
+      # here even for affordable housing. 183 lots.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.602.txt#L7,L9,L11,L21,L99,L101-L104,L137-L140"
+    notes: >-
+      Encoded 2026-09-20 from Table 602-1. The one column of the three that
+      needs no argument about what is built: the cell is X.
+  RI:
+    cite_default:
+      cite: Clackamas ZDO 604.02 (Section 604 applies to RI), 604.03 (uses
+        permitted are those listed in Table 604-1; "X" means prohibited) and
+        Table 604-1 (printed under 604.04), Dwellings row
+      url: https://www.clackamas.us/planning/zdo604
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Rural Industrial. Table 604-1's Dwellings row reads A -- an accessory
+      # use, a dwelling that serves an industrial primary use on the same
+      # site. A four-unit residential building on a lot of its own is a
+      # primary use and no primary dwelling row exists. 18 lots.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.604.txt#L7,L9,L11,L21,L35,L37-L38,L53-L54"
+    notes: >-
+      Encoded 2026-09-20 from Table 604-1. Accessory is the whole answer: "A"
+      is defined at 604.03 as an accessory use, and a building that is the
+      only thing on its lot is not accessory to anything.
+  OSM:
+    cite_default:
+      cite: Clackamas ZDO 702.01 Purpose, 702.03 Primary Uses, 702.04
+        Accessory Uses (a caretaker's dwelling), 702.05 Conditional Uses
+      url: https://www.clackamas.us/planning/zdo702
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Open Space Management. Three lists -- nine primary uses (parks,
+      # recreation, cemeteries, utilities, flood storage, wetland
+      # mitigation), the accessory uses of 702.04(B), and nine conditional
+      # uses -- and the only dwelling anywhere in the section is 702.04(B)(1),
+      # "A caretaker's dwelling", accessory to a primary use. Whole-document
+      # grep for "dwelling": that line and the skirting rule for manufactured
+      # dwellings at 702.04(A)(2). 48 lots.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.702.txt#L1,L3,L19,L39,L47,L49,L81,L83"
+    notes: >-
+      Encoded 2026-09-20. Refused on silence, and the silence is safe the way
+      Oregon City's is: the section is three closed lists and its purpose
+      sentence is to "preserve and manage the County's committed open space
+      resources". A caretaker's dwelling is the one residence the district
+      admits and it is accessory to a park.
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). A ruled code gates ZONE_POCKET,
+# ZONE_UNENCODABLE or ZONE_TO_READ in the copy instead of ZONE_NOT_ENCODED,
+# and folds away on the County copy page. The refusals -- districts whose use
+# table says no -- are zone blocks above, not rulings, because a refusal is a
+# rule the screen answers RED with.
+zone_rulings:
+  # --- four residential districts read and not holdable ---------------------
+  HDR:
+    outcome: unencodable
+    note: >-
+      High Density Residential, 251 lots. Quadplexes P in Table 315-1, and
+      Table 315-4 answers rear setback, side setback and building separation
+      with "See Subsection 1005.02(L)": a separation drawn as an angle from
+      the top of the building -- 60 degrees to the north, 15 degrees east and
+      west, "Separation = b x .267 (tan 15 degrees)" -- which needs the
+      bearing of every lot line, a measurement this system does not take.
+      Not modifiable under Section 904 (1005.02(L)(4)). Expires the day
+      lot-line bearing is measured; the districts ledger holds the same
+      ruling as `encode`.
+  SHD:
+    outcome: unencodable
+    note: >-
+      Special High Density, one lot (4400 SE Naef Rd). Quadplexes P in Table
+      315-1; setbacks deferred to Subsection 1005.02(L), the same bearing
+      planes as HDR, and 1005.02(L)(4) closes Section 904 relief.
+  RCHDR:
+    outcome: unencodable
+    note: >-
+      Regional Center High Density Residential, 29 lots. Quadplexes P in
+      Table 315-1; setbacks deferred to Subsection 1005.02(L), read
+      2026-09-08 and blocked on lot-line bearings. RCC and RCO below wait on
+      it through Table 510-1 note 12.
+  VTH:
+    outcome: unencodable
+    note: >-
+      Village Townhouse, 114 lots. Quadplexes P in Table 315-1, but its
+      standards are in Table 315-3, which prints two cells under three
+      district headings in several rows: the extractor drops empty cells, so
+      lot size, coverage and rear setback are a column question before they
+      are a reading (HUMAN_TODO 15). Also blocked on 1005.02(L) with HDR.
+  # --- six commercial districts that permit the building and send it to HDR
+  # or RCHDR for its standards (Table 510-1 notes 12 and 14, "freestanding
+  # ... quadplexes (as opposed to ... quadplexes in a mixed-use building)") --
+  RTL:
+    outcome: unencodable
+    note: >-
+      Retail Commercial, 59 lots. P[14] on the Quadplexes row of Table 510-1;
+      note 14 sends a freestanding quadplex to the HDR District for its
+      development and dimensional standards, and HDR is blocked on
+      1005.02(L)'s bearing planes. Unencodable until HDR is.
+  CC:
+    outcome: unencodable
+    note: >-
+      Corridor Commercial, 128 lots. P[14] on the Quadplexes row; the same
+      referral to HDR as RTL, and the same block.
+  C3:
+    outcome: unencodable
+    note: >-
+      General Commercial, 447 lots, the largest commercial district in this
+      layer. P[14] on the Quadplexes row; note 14 sends a freestanding
+      quadplex to HDR, which 1005.02(L) blocks.
+  OC:
+    outcome: unencodable
+    note: >-
+      Office Commercial, 82 lots. P[14], the same referral to HDR. (510.02
+      misprints its abbreviation as OA; Table 510-1's column heads print OA
+      and OC as separate columns 9 and 10.)
+  RCC:
+    outcome: unencodable
+    note: >-
+      Regional Center Commercial, 103 lots. P[12] on the Quadplexes row; note
+      12 sends a freestanding quadplex to the RCHDR District for its
+      standards, and RCHDR is blocked on 1005.02(L).
+  RCO:
+    outcome: unencodable
+    note: >-
+      Regional Center Office, 37 lots. P[12], the same referral to RCHDR as
+      RCC. Table 510-2 gives it the largest minimum lot in the section at
+      2 1/2 acres, which would bind first if the district were ever held.
+  # --- four to read --------------------------------------------------------
+  SCMU:
+    outcome: to_read
+    note: >-
+      Station Community Mixed Use, 34 lots. P on the Quadplexes row with no
+      note. Table 510-2 omits SCMU from its header while every data row
+      carries eleven cells, and its cell in each setback row reads "See
+      Subsection 1005.09" -- Fuller Road Station Community standards, 365
+      lines in the store since 2026-09-08 and unread. Reading 1005.09 against
+      the SCMU column is the whole job.
+  PMU1:
+    outcome: to_read
+    note: >-
+      Planned Mixed Use site 1, 14 lots. P on the Quadplexes row, no note;
+      its dimensions are site-specific -- Table 510-2 prints six minimum lot
+      sizes under one column head (PMU1 none) and Table 510-3 states the
+      rest per site. To encode per site from Table 510-3.
+  PMU2:
+    outcome: to_read
+    note: >-
+      Planned Mixed Use site 2, 2 lots. Same shape as PMU1: Table 510-2 gives
+      it a 2-acre minimum lot and Table 510-3 the rest, per site, unread.
+  PMU3:
+    outcome: to_read
+    note: >-
+      Planned Mixed Use site 3, 1 lot. Same shape as PMU1: Table 510-2 gives
+      it a 3-acre minimum lot and Table 510-3 the rest, per site, unread.
+  # --- six pockets: a city's zoning that Metro's regional fabric carries on
+  # lots the assessor's roll still calls unincorporated. Found 2026-09-20 by
+  # intersecting each lot with the RLIS zoning layer and reading its CITY
+  # field; the city's own layer holds (or rules on) the code. ---------------
+  IPU:
+    outcome: pocket
+    of: or/clackamas/happy-valley
+    note: >-
+      One lot (22E03B 00402, no situs). Metro's zoning fabric carries it as
+      Happy Valley IPU, Institutional and Public Use; Happy Valley's layer
+      rules on IPU.
+  RC-ME:
+    outcome: pocket
+    of: or/clackamas/happy-valley
+    note: >-
+      One lot (22E12D 01400). Metro's fabric carries it as Happy Valley
+      RC-ME, the city's Regional Center Mixed Employment district; Happy
+      Valley's layer rules on RC-ME.
+  MG:
+    outcome: pocket
+    of: or/clackamas/tualatin
+    note: >-
+      One lot (21E18BB02700, 2,695 sq ft, no situs). Metro's fabric carries
+      it as Tualatin MG, General Manufacturing; Tualatin's layer rules on MG.
+  R-10:
+    outcome: pocket
+    of: or/clackamas/lake-oswego
+    note: >-
+      One lot (13520 SW Knaus Rd). Metro's fabric carries it as Lake Oswego
+      R-10 -- the hyphenated spelling is the city's; this layer's own R-10 is
+      keyed R10 the way Metro prints the county's districts. Lake Oswego is
+      switched off (HUMAN_TODO 16), so the lot waits with that city.
+  R-15:
+    outcome: pocket
+    of: or/clackamas/lake-oswego
+    note: >-
+      One lot (21E14CB00601, no situs). Metro's fabric carries it as Lake
+      Oswego R-15; the hyphen is the city's spelling, this layer's R-15 is
+      keyed R15. Waits with Lake Oswego (HUMAN_TODO 16).
+  R-MD:
+    outcome: pocket
+    of: or/clackamas/milwaukie
+    note: >-
+      Four lots on SE 55th Ave and SE 27th Ave at Milwaukie's edge. Metro's
+      fabric carries them as Milwaukie R-MD, Moderate Density Residential,
+      which Milwaukie's layer holds; the assessor's roll still calls the
+      lots unincorporated.

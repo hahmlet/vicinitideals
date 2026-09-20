@@ -415,12 +415,20 @@ def test_a_reference_can_be_settled_by_reading_it(layers: dict[str, Layer]) -> N
     neither a manufactured dwelling nor on a rented space, so reading it
     settles it, and a check built on "is the chapter in the store" can never
     see that.
+
+    Eleven since 2026-09-20, when the MR chapter came into the store for the
+    September map's zone ruling and its use list printed the same row R-5
+    does, "Manufactured dwelling park, subject to GMC Section 17.62.070". A
+    use row is not beside a number, so the binding count stays ten, and the
+    ruling names the eleventh.
     """
     ruled = {d.ref: d for d in dangling(layers[GLADSTONE]) if d.ruled}
 
     assert "17.62.070" in ruled
-    assert ruled["17.62.070"].mentions == 10
+    assert ruled["17.62.070"].mentions == 11
+    assert ruled["17.62.070"].binding == 10
     assert "mobile home park" in ruled["17.62.070"].ruling
+    assert "17.14.mr.txt#L91" in ruled["17.62.070"].ruling
 
 
 def test_a_ruled_reference_stops_leading_the_queue(layers: dict[str, Layer]) -> None:

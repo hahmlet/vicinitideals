@@ -47,7 +47,10 @@ pytestmark = pytest.mark.unit
 WILSONVILLE = "or/clackamas/wilsonville"
 
 #: Every zone this layer holds. R, OTR, the six planned-development
-#: residential zones and V permit a quadplex; RN and TC do not.
+#: residential zones and V permit a quadplex; RN and TC do not, and neither do
+#: the eight the September map put lots in (2026-09-20): the five FDA-H
+#: holding zones, PDC, PDI and PF, each a use-gate refusal off its own
+#: permitted-use list.
 ENCODED_ZONES = (
     "R",
     "OTR",
@@ -61,6 +64,8 @@ ENCODED_ZONES = (
     "V",
     "TC",
 )
+#: The eight ruled RED when the September map showed 627 lots in them.
+REFUSED_ZONES = ("FDAHR", "FDAHC", "FDAHI", "FDAHP", "FDAHV", "PDC", "PDI", "PF")
 
 #: The two that Chapter 4 stated and this layer did not hold until 2026-09-01.
 #: Kept named rather than deleted: they are the corpus's worked example of a
@@ -72,19 +77,23 @@ def test_the_layer_has_no_unread_notes_left() -> None:
     assert [n for n in notes(WILSONVILLE) if n.state == "unread"] == []
 
 
-def test_the_zone_list_is_exactly_the_eleven_this_layer_holds() -> None:
-    """A guard on the gap above, from the other side, and it did its job.
+def test_the_zone_list_is_exactly_the_nineteen_this_layer_holds() -> None:
+    """A guard on the gap above, from the other side, and it did its job twice.
 
     It used to hold nine and fail the day the Village or Town Center zone was
     encoded, which was the whole point: the failure was the message telling the
     encoder to go back to the eight Town Center notes dismissed on the zone
     being absent. That happened on 2026-09-01, the eight were re-ruled on the
-    prohibition instead, and the list is eleven.
+    prohibition instead, and the list was eleven. It failed again on
+    2026-09-20 when the September map's 627 lots in eight zones the layer had
+    never named were each ruled RED at the use gate, and the list is nineteen.
     """
     zones = load_rules()[WILSONVILLE].zones
-    assert set(zones) == set(ENCODED_ZONES)
+    assert set(zones) == set(ENCODED_ZONES) | set(REFUSED_ZONES)
     for zone in ONCE_MISSING_ZONES:
         assert zone in zones, zone
+    for zone in REFUSED_ZONES:
+        assert zones[zone].values["quadplex_allowed"].value is False, zone
 
     # The point of encoding TC was that a zone screened as RED is a decision
     # and an absent zone is not. V is the opposite: 2,508 lots that reach the

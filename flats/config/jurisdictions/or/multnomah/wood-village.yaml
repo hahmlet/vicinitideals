@@ -14,11 +14,14 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   of the city looking silent about dwellings when it is not.
 
 
-  O, the Open Space zone, is not encoded and is not a gap in the reading. WVDC 260.200 names Table
-  260-1 three times — outright uses, conditional uses, prohibited uses — and the table does not come
-  down with the page under this extractor, so nothing here can say what it permits. Six lots, and the
-  honest state is unread. The section is declared and stored anyway so the absence is checkable rather
-  than remembered.
+  O, the Open Space zone, was unread until 2026-09-20 and is now a use-gate refusal. WVDC 260.200
+  names Table 260-1 three times — outright uses, conditional uses, prohibited uses — and the table
+  never came down with that page because the publisher files it under the next leaf, 260.210
+  Accessory Uses. Fetched from there: fourteen rows of parks, sports fields, utilities, government
+  buildings, community centres, detention, mining, broadcast and rail, and no residential category
+  at all. Six lots. The 260.200 page stays declared so the sentence that makes the table the whole
+  list ("The uses allowed in the open space zone are shown in Table 260-1 by the letter Y") is on disk
+  beside the table.
 
 
   PARKING, read 2026-08-20 and encoded as a layer default. Table 350-1A is headed "Minimum Required
@@ -555,6 +558,16 @@ code:
   - id: "260.200"
     url: https://woodvillage.municipal.codes/WVDC/260.200
     title: "WVDC 260.200 - Primary Uses (Open Space Zone, Table 260-1)"
+    allow_thin: true
+  # Found 2026-09-20: the publisher files Table 260-1 under the NEXT leaf,
+  # 260.210 Accessory Uses, not under the section whose text names it three
+  # times. The table is fourteen rows -- parks, sports fields, utilities,
+  # government buildings, community centres, detention, mining, broadcast,
+  # rail -- with no residential category at all, and it is what the O zone's
+  # refusal quotes.
+  - id: "260.210"
+    url: https://woodvillage.municipal.codes/WVDC/260.210
+    title: "WVDC 260.210 - Accessory Uses (carries Table 260-1, Uses in the Open Space Zone)"
     allow_thin: true
   # The use category the non-residential tables answer in. Wood Village's
   # residential zones list housing types by name -- "Attached or Detached Tri-
@@ -1592,3 +1605,34 @@ zones:
 
       Table 220-4 does not reach MR 4 at all -- it is written for the MR2 zone and starts at five
       units. No corner-lot rows exist in the MR tables, so no street-side setback is applied.'
+  # === The September 2026 map's one code, ruled 2026-09-20 ================
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. Wood Village's own layer printed one
+  # code this file did not hold: O, six lots, read above under the header
+  # note and refused here.
+  O:
+    section: ["260.200", "260.210"]
+    cite_default:
+      cite: WVDC 260.200.A (the uses allowed in the open space zone are shown
+        in Table 260-1 by the letter Y) and Table 260-1, Uses in the Open
+        Space Zone, printed under 260.210
+      url: https://woodvillage.municipal.codes/WVDC/260.210
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # 260.200.A makes the table the list: "The uses allowed in the open
+      # space zone are shown in Table 260-1 by the letter 'Y'" (260.200.txt
+      # L60); B and C give CU and N the same way. The table has three
+      # headings -- OPEN SPACE CATEGORIES, INSTITUTIONAL CATEGORIES, OTHER
+      # CATEGORIES -- and no Household Living row, no dwelling of any kind,
+      # where every other Wood Village use table (Tables 240-1, 250-1, 235-1)
+      # prints Household Living as its first residential row. A use with no
+      # cell has no Y. Six lots: the Halsey St frontage at 24200-24300 and
+      # the NE 238th Dr parcel, city and park land.
+      value: false
+      quote: "or/multnomah/wood-village/260.210.txt#L62,L64-L81"
+    notes: >-
+      Encoded 2026-09-20 from Table 260-1. The one Wood Village zone whose
+      table has no residential heading, so the refusal is the absence of a
+      row rather than an N in one -- the reading 260.200.A licenses by
+      making Y the only door.

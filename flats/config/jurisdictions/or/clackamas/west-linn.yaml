@@ -629,6 +629,33 @@ code:
   - id: "48.access"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     title: "CDC Chapter 48 - Access, Egress and Circulation"
+  # ---- The six zone chapters the September 2026 map carried, read
+  # 2026-09-20 ----
+  #
+  # Steph's ruling: every code the county map carries is read once, its
+  # reason written down, and never shown again. West Linn's own zoning layer
+  # (DESIGNATION) carried six codes this file did not hold -- 235 lots: GC
+  # 165, GI 27, MU 25, OBC 15, CI 2, NC 1. Chapters 18-23 are the commercial
+  # and industrial zones; Chapter 59 is the MU the map prints, the Willamette
+  # Neighborhood Mixed Use Transitional Zone (Chapter 20 is not published).
+  - id: "18.nc"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC18.html
+    title: "CDC Chapter 18 - Neighborhood Commercial, NC"
+  - id: "19.gc"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC19.html
+    title: "CDC Chapter 19 - General Commercial, GC"
+  - id: "21.obc"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC21.html
+    title: "CDC Chapter 21 - Office Business Center, OBC"
+  - id: "22.ci"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC22.html
+    title: "CDC Chapter 22 - Campus Industrial, CI"
+  - id: "23.gi"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC23.html
+    title: "CDC Chapter 23 - General Industrial, GI"
+  - id: "59.mu"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC59.html
+    title: "CDC Chapter 59 - Willamette Neighborhood Mixed Use Transitional Zone, MU"
 defaults:
   # PARKING AND VEHICLE ACCESS, read 2026-08-27 out of Chapters 46 and 48,
   # which every one of the nine zone chapters lists under "OTHER APPLICABLE
@@ -2022,3 +2049,165 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L215"
+  # === The September 2026 map's six codes, ruled 2026-09-20 ================
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. West Linn's own zoning layer carried
+  # six codes this file did not hold -- 235 lots. Five refuse the building at
+  # their use lists and are the use-gate refusals below; MU permits it
+  # outright and is a `zone_rulings` entry at the foot of this file, to read.
+  #
+  # Every West Linn zone chapter is written the same way: a use permitted
+  # outright (x.030), a use permitted under prescribed conditions (x.050), a
+  # conditional use (x.060), and in x.020 the sentence "If a use is not
+  # listed as a use permitted outright, it may be held to be a similar
+  # unlisted use under the provisions of Chapter 80 CDC" -- a director's
+  # similar-use finding this screen never presumes (the Oregon City MUE/I
+  # rule). The commercial chapters do admit housing, and every time in the
+  # same words: ABOVE a permitted use, or "only above the first floor of the
+  # structure, as a mixed use in conjunction with commercial development".
+  # A four-unit residential building on its own lot has a ground floor that
+  # is all dwelling, so it never passes through that door.
+  NC:
+    section: ["18."]
+    cite_default:
+      cite: West Linn CDC 18.020(A) (a use not listed may be held a similar
+        unlisted use under Chapter 80), 18.030 (uses permitted outright),
+        18.050, 18.060
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC18.html
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Neighborhood Commercial. Six uses outright and the only housing among
+      # them is "6. Residential units above a permitted use"; the prescribed
+      # list is signs, temporary uses and wireless; the conditional list is
+      # fifteen commercial and civic uses with no dwelling. Whole-document
+      # grep of Chapter 18 for dwelling, residential, housing: L69 (above a
+      # permitted use), L141 (a rear setback where the use abuts a
+      # residential district), L155 (Chapter 34's accessory dwelling units,
+      # accessory to a dwelling the zone does not permit), L175 (design
+      # review's carve-out for existing detached houses). One lot.
+      value: false
+      quote: "or/clackamas/west-linn/18.nc.txt#L33,L55-L69,L77-L83,L87-L121"
+    notes: >-
+      Encoded 2026-09-20 from 18.030-18.060. The residential door is item 6
+      and it opens upstairs only.
+  GC:
+    section: ["19."]
+    cite_default:
+      cite: West Linn CDC 19.020(A), 19.030 (uses permitted outright, 1-30),
+        19.050(1) (residential units above a permitted use; multiple-family
+        units only above the first floor as a mixed use), 19.060
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC19.html
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # General Commercial, 165 lots -- the largest of West Linn's six and
+      # the Highway 43 strip. Thirty outright uses and none a dwelling. The
+      # one housing row is prescribed-conditions item 1: "Residential units
+      # above a permitted use or a commercial use or place of assembly
+      # authorized as a conditional use ..., and multiple-family units: as a
+      # mixed use in conjunction with commercial development, only above the
+      # first floor of the structure." A stand-alone pod has no commercial
+      # first floor to sit above. Conditional item 12 is the rebuilding of
+      # a damaged non-conforming single-family house, not a new one. Whole-
+      # document grep of Chapter 19: L125, L181, L221/L225 (setback and
+      # height near a residential district), L239 (Chapter 34), L259 (design
+      # review carve-out); nothing else.
+      value: false
+      quote: "or/clackamas/west-linn/19.gc.txt#L31,L53-L115,L123-L125,L141-L143,L181"
+    notes: >-
+      Encoded 2026-09-20 from 19.030-19.060. "Only above the first floor"
+      is the whole of housing in this zone, and it is a condition on where
+      in a commercial building the units go, not a lever a residential
+      building on its own lot could pull.
+  OBC:
+    section: ["21."]
+    cite_default:
+      cite: West Linn CDC 21.020(A), 21.030 (uses permitted outright, 1-15),
+        21.050(2) (multiple-family units only above the first floor, as a
+        mixed use with commercial development that utilizes the entire first
+        floor), 21.060
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC21.html
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Office Business Center, 15 lots. Fifteen outright uses, all office
+      # and service. Prescribed item 2 is the housing row and it is GC's
+      # made stricter: "Multiple-family units only above the first floor of
+      # the structure, as a mixed use in conjunction with commercial
+      # development that utilizes the entire first floor." Conditional item
+      # 9 is the damaged non-conforming house again. Whole-document grep of
+      # Chapter 21: L99, L131, L163 (height near a residential zone), L175
+      # (Chapter 34), L195 (design review carve-out); nothing else.
+      value: false
+      quote: "or/clackamas/west-linn/21.obc.txt#L31,L53-L85,L95-L99,L113-L131"
+    notes: >-
+      Encoded 2026-09-20 from 21.030-21.060. The entire first floor must be
+      commercial before a dwelling may exist upstairs.
+  CI:
+    section: ["22."]
+    cite_default:
+      cite: West Linn CDC 22.020(A), 22.030 (uses permitted outright, 1-8),
+        22.050 (limited and prescribed uses), 22.060 (conditional uses)
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC22.html
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Campus Industrial, two lots. Research, employee-intensive
+      # manufacturing, business support, corporate offices, recreation for
+      # the district's workers; the limited uses are the employees' bank,
+      # clinic and lunch counter capped at 10 percent of the permitted floor
+      # area; the conditional uses are transient lodging, heliports, retail
+      # and a hazardous waste depot. No dwelling on any of the four lists.
+      # Whole-document grep of Chapter 22 for dwelling, residential, housing:
+      # L245 (height within 50 feet of a residential zone), L275 (buffer
+      # storage from residential uses), L309 (Chapter 34); nothing else.
+      value: false
+      quote: "or/clackamas/west-linn/22.ci.txt#L35,L57-L81,L99-L111,L125-L133,L149-L157"
+    notes: >-
+      Encoded 2026-09-20 from 22.030-22.060. An employment campus with no
+      home in it.
+  GI:
+    section: ["23."]
+    cite_default:
+      cite: West Linn CDC 23.020(A), 23.030 (uses permitted outright, 1-15),
+        23.050, 23.060
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC23.html
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # General Industrial, 27 lots. Kennels, fleet storage, manufacturing
+      # from raw materials, scrap operations, heavy wholesale storage; the
+      # prescribed uses are signs, temporary uses, water-dependent uses and
+      # wireless; the conditional uses are a heliport, a hazardous waste
+      # depot and Type II transportation facilities. No dwelling on any
+      # list. Whole-document grep of Chapter 23: L147/L151 (setback and
+      # height near a residential zone), L163 (Chapter 34), L183 (design
+      # review carve-out); nothing else.
+      value: false
+      quote: "or/clackamas/west-linn/23.gi.txt#L31,L53-L109,L117-L125,L129-L135"
+    notes: >-
+      Encoded 2026-09-20 from 23.030-23.060. The heaviest zone in the city
+      and the shortest reading.
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). A ruled code gates ZONE_TO_READ in the
+# copy instead of ZONE_NOT_ENCODED and folds away on the County copy page.
+zone_rulings:
+  MU:
+    outcome: to_read
+    note: >-
+      Willamette Neighborhood Mixed Use Transitional Zone, CDC Chapter 59,
+      25 lots -- the map's MU (Chapter 20 is not published; the city's own
+      pages name Chapter 59 as the MU zone). Fetched 2026-09-20 as 59.mu.txt.
+      59.030 permits outright "1. Single-family attached or detached
+      dwelling; a. Duplex; b. Triplex; c. Quadplex residential units" and
+      "4. Townhouse" (L59-L65), so the building is permitted in both forms.
+      59.070 is a dimensional table in R-2.1's shape with rows this file
+      already knows how to hold (L167-L247): 4,500 sf minimum lot and a
+      10,000 sf MAXIMUM lot, 1,500 sf average per townhouse lot, 35 ft front
+      width and 50 ft average width (neither applies to townhouses), 90 ft
+      average depth, 12 ft front setback with a 20 ft MAXIMUM, 7.5 ft
+      interior side (0 for attached townhouse walls), rear per the abutting
+      residential district, 35 ft or 2 storeys, a 6,000 sf maximum building
+      size, FAR 0.30-0.40. 59.070(B)(3) puts parking behind, under or beside
+      the building and never between it and the street -- the rear court is
+      the zone's own rule. To encode from 59.070; the maximum-lot and
+      maximum-building-size rows are the two the model has not held before.

@@ -10,14 +10,18 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   NSA is read and deliberately not encoded. TDC 3.050 says Multnomah County holds zoning authority over
   certain lots inside incorporated Troutdale that fall within the Columbia River Gorge National Scenic
   Area, and that those lots keep their COUNTY zoning district designation under Chapters 38 and 39 of
-  the Multnomah County Code. The 74 lots the GIS labels NSA are therefore not governed by a Troutdale
-  district at all, and writing one here would invent a rule the city does not claim to make. They stay
-  in the coverage ledger as unencoded, which is the true answer, until the county Gorge chapters are in
-  this corpus.
+  the Multnomah County Code. The 64 lots the September 2026 layer labels NSA (74 in July) are therefore
+  not governed by a Troutdale district at all, and writing one here would invent a rule the city does
+  not claim to make. Since 2026-09-20 they are a `pocket` ruling at the foot of this file, pointing at
+  the county layer, whose Chapter 38 residential part is now in the corpus (GGR2).
 
 
-  The Troutdale zoning layer also reports one lot as UPAR-10, which is a Multnomah County label rather
-  than a city district and appears nowhere in the Development Code. Left alone for the same reason.'
+  The Troutdale zoning layer also reported one lot as UPAR-10 in July. Read properly on 2026-09-20: it
+  is a TROUTDALE label, not a county one -- TDC 3.040 says lots in the city''s Urban Planning Areas
+  "are designated with a UPA prefix in front of the corresponding zoning district", and R-10 is the
+  district 3.020 now prints as LDR-1 "(formerly R-20 & R-10)". The four UPAR-10 lots and the eight
+  UPAGI lots on the September map sit on the county layer, where they are pocket rulings pointing
+  here.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -1806,3 +1810,27 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L352"
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). A pocket gates ZONE_POCKET in the copy
+# in place of ZONE_NOT_ENCODED and folds away on the County copy page.
+zone_rulings:
+  NSA:
+    outcome: pocket
+    of: or/multnomah/_unincorporated
+    note: >-
+      National Scenic Area, 64 lots inside the city limits along the Sandy
+      River and the Historic Columbia River Highway. TDC 3.020 lists it under
+      Other Districts as "National Scenic Area -- incorporated areas with
+      county zoning" (3.zoning-districts.txt L92) and 3.050 gives the rule:
+      "Multnomah County holds zoning authority over certain lots that are
+      located within incorporated areas of the City of Troutdale that are
+      within the federally-designated Columbia River Gorge National Scenic
+      Area. These affected lots maintain County zoning district designation
+      in accordance with Chapters 38 and 39 of the Multnomah County Code and
+      the official zoning district map for Multnomah County" (L128-L136). The
+      city's layer prints the fact of county authority, not the county's
+      code; the county's map does, and MCC 38's residential districts (GGR,
+      GSR: one single-family dwelling per parcel) refuse the building where
+      they apply.

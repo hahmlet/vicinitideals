@@ -260,6 +260,39 @@ RULINGS: dict[str, dict[str, str]] = {
             "overlay: Habitat Conservation Area, the land ZDO Section 706 "
             "regulates; the same overlay as HCAD, spelled without the D."
         ),
+        # Eight more sections arrived on 2026-09-20 -- 401, 406, 407, 511,
+        # 513, 602, 604 and 702 -- fetched so that the ten farm, forest,
+        # rural commercial, industrial, village service and open space
+        # districts the September county map carries could be encoded as
+        # use-gate refusals (EFU, TBR, AGF, VCS, RC, BP, LI, GI, RI, OSM are
+        # all zone blocks now, so the ledger stops asking about them). Five
+        # designations came in with the text that are not on the map.
+        "RTC": (
+            "prohibited: Rural Tourist Commercial, the first data column of "
+            "ZDO Table 513-1. The table's only dwelling row is 'Dwellings, "
+            "Detached Single-Family', P[2],A in this column, and note 2 "
+            "confines the primary reading to one detached dwelling on a lot "
+            "of record created on or before December 7, 1983; no duplex, "
+            "triplex, quadplex or townhouse row. No lot inside the UGB "
+            "carries it, which is why it is ruled and not encoded."
+        ),
+        "HV": (
+            "not-a-zone: High Value Farmland, the first column head of ZDO "
+            "Table 401-1 (401.04(A)(9)), which prints the EFU use table twice "
+            "over, once per soil class."
+        ),
+        "LV": (
+            "not-a-zone: Low Value Farmland, the second column head of ZDO "
+            "Table 401-1 (401.04(A)(10)); the other half of the same pair."
+        ),
+        "RSCA": (
+            "overlay: River and Stream Conservation Area, ZDO Section 704, "
+            "named in 406.08(B)(2) as a siting constraint on TBR structures."
+        ),
+        "WRG": (
+            "overlay: Willamette River Greenway, ZDO Section 705, named in "
+            "the same 406.08(B)(2) sentence beside RSCA."
+        ),
         "WQRAD": (
             "overlay: Water Quality Resource Area District, ZDO Section 709."
         ),
@@ -281,13 +314,55 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
     },
     "or/clackamas/happy-valley": {
-        "FU-10": (
-            "prohibited: Table 16.22.010-1 permits 'One single-family "
-            "dwelling, modular dwelling unit, mobile or manufactured home per "
-            "lot' and carries no duplex, triplex or quadplex row; FU-10 is a "
-            "holding area for land not yet urbanised."
-        ),
+        # 2026-09-20: the September map put 23 Happy Valley codes in front of
+        # the screen and five more chapters came into the store to answer
+        # them (16.23, 16.24, 16.25, 16.31, 16.67). The FU-10 ruling that
+        # stood here from 2026-09-08 (prohibited, Table 16.22.010-1) is gone
+        # the way this file's staleness test demands: the refusal it named
+        # is now a block, keyed FU10 the way the city's layer spells it on
+        # twelve lots, and the harvest stopped printing the token. The five
+        # chapters print six tokens of their own, below.
         "NROZ": "overlay: Natural Resources Overlay Zone, HVMC 16.32.",
+        "MUR": (
+            "aliased: the family name 16.31 gives the mixed use residential "
+            "districts (16.31.rock-creek-pmu.txt L27); the city's layer "
+            "prints the four members MURS, MURA, MURM and MURX, all encoded, "
+            "and the three MURM tiers as MURM1/2/3, aliased to MURM in the "
+            "layer's zone_rulings."
+        ),
+        "MUE-NC": (
+            "not-a-zone: the neighborhood commercial subdistrict a Rock Creek "
+            "master plan may establish, named once in 16.31 (L27) as a "
+            "district the plan amendment process can create; no chapter holds "
+            "a use table for it and no lot on the September map carries it."
+        ),
+        "PMU": (
+            "conditional: the Rock Creek Planned Mixed Use District, Chapter "
+            "16.31, has no use table -- it 'allows a variety of commercial "
+            "uses and residential dwelling types and densities' (L33) and "
+            "every standard 'shall be determined through the master plan or "
+            "a design review process' (L73, L85), a master plan being "
+            "required over five acres (L23). Two lots; the layer's "
+            "zone_rulings hold it as unencodable, which is this verdict's "
+            "name in the copy: nothing is permitted until a discretionary "
+            "plan says what is."
+        ),
+        "PMU6": (
+            "not-a-zone: a Clackamas County comprehensive plan designation, "
+            "named by 16.23.010.C as the Eagle Landing Plan Area land the "
+            "RCMU district may be applied to (16.23.commercial.txt L158) and "
+            "converted to RCMU by Table 16.67.070-1 (L224). Neither map "
+            "prints it; the county's own PMU districts print PMU1-3."
+        ),
+        "RSIA": (
+            "not-a-zone: Metro's Regionally Significant Industrial Areas, "
+            "the Title 4 designation 16.25.010 cites as the purpose of the "
+            "Industrial Campus district (L690)."
+        ),
+        "TIA": (
+            "not-a-zone: traffic impact analysis, the study 16.25.005's "
+            "master plan submittal list requires (L350, L454)."
+        ),
     },
     "or/clackamas/lake-oswego": {
         # LOC 50.03.002's use table is the loosest residential permission in
@@ -323,32 +398,33 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
     },
     "or/clackamas/milwaukie": {
+        # Seven rulings left here on 2026-09-20 -- OS, MUTSA and NME as
+        # refusals read off Tables 19.304.2 and 19.312.2, and BI, M, C-CS and
+        # C-G, which the ledger never printed at all -- because all seven are
+        # zone blocks now: use-gate refusals quoting the chapter, written the
+        # day the September county map carried them onto lots. The four that
+        # stay are the ones the map carries and the city permits in some form;
+        # the layer's `zone_rulings` holds them as `to_read` so the copy stops
+        # asking, and this ledger holds them as what they are.
         "GMU": (
-            "conditional: Table 19.303.2 gives 'Duplex, Triplex, Quadplex' as "
-            "CU in all three commercial mixed-use zones."
+            "encode: Table 19.303.2 gives Townhouses P in the GMU column (note "
+            "1 lifts the four-in-a-row limit of 19.505.5 here) and 'Duplex, "
+            "Triplex, Quadplex' CU -- the building is permitted outright split "
+            "onto unit lots and conditional on one lot, the R-MD shape with a "
+            "conditional_use variant. Standards in Table 19.303.3, unread."
         ),
-        "NMU": "conditional: the same CU cell in Table 19.303.2 as GMU.",
-        "SMU": "conditional: the same CU cell in Table 19.303.2 as GMU.",
+        "NMU": (
+            "conditional: every residential row of Table 19.303.2 reads CU in "
+            "the NMU column; note 2 lifts the review only for residential uses "
+            "built as part of a vertical mixed-use building."
+        ),
+        "SMU": "conditional: the same CU column in Table 19.303.2 as NMU.",
         "DMU": (
-            "not-listed: Table 19.304.2's residential rows are Boarding "
-            "house, Townhouse, Multifamily, Live/work units, Second-story "
-            "housing and Senior and retirement housing -- there is no duplex, "
-            "triplex or quadplex row in the downtown table at all."
-        ),
-        "OS": (
-            "prohibited: Open Space, the other downtown zone, reads N against "
-            "every residential row of Table 19.304.2."
-        ),
-        "MUTSA": (
-            "not-listed: Table 19.312.2 carries Multifamily, Mixed use "
-            "residential and Live/work units and no quadplex row; MMC keeps "
-            "quadplex a use category separate from multifamily wherever it "
-            "lists both, as Table 19.303.2 does."
-        ),
-        "NME": (
-            "not-listed: the North Milwaukie Employment Zone, MMC 19.312.1.B "
-            "-- production, manufacturing and employment, N against every "
-            "residential row of Table 19.312.2."
+            "encode: Table 19.304.2 gives Townhouse P and Multifamily P and no "
+            "duplex, triplex or quadplex row, so a four-unit building on one "
+            "lot is not listed (19.304.2.D) and split onto unit lots it is "
+            "townhouses -- except on Main Street, where 19.304.3.A.1.c bars "
+            "them. Standards in Table 19.304.4 and 19.508, unread."
         ),
         "NMIA": (
             "not-a-zone: the North Milwaukie Innovation Area Plan, named at "
@@ -401,9 +477,56 @@ RULINGS: dict[str, dict[str, str]] = {
     },
     "or/clackamas/tualatin": {
         "RMH": (
-            "fetch: Medium High Density Residential, TDC Chapter 42 -- the "
-            "stored 40-41.residential.txt ends on its last line at that "
-            "chapter's heading, so the whole chapter body is missing."
+            "encode: Medium High Density Residential. TDC Chapter 42 fetched "
+            "2026-09-20 (42.rmh.txt) because the September map carried it "
+            "onto four lots; Table 42-2 reads Townhouse (or Rowhouse) P and "
+            "Multi-Family Structure P, and Table 42-3 gives the townhouse "
+            "rows (1,400 sq ft, 14 ft width, 15 du/acre) -- RL's shape. Held "
+            "as `to_read` in the layer's zone_rulings until encoded."
+        ),
+        # The six chapters fetched 2026-09-20 (42, 50, 54, 56, 60, 61) each
+        # run to the NEXT chapter's first section, so the next chapter's
+        # heading sits at the tail of the slice and the harvest prints it.
+        # Five real zones arrive that way; none carries a lot on the
+        # September county map (the refresh gate lists every code on the map
+        # that is neither held nor ruled, and these were not on it -- the
+        # Clackamas corner of Tualatin is small), so they are inventory, not
+        # a queue: nothing in FOLLOWUPS points at them.
+        "RH": (
+            "fetch: High Density Residential, TDC Chapter 43 -- its heading "
+            "is the last line of 42.rmh.txt (L263) and nothing of the "
+            "chapter follows. No Clackamas lot carries it."
+        ),
+        "CN": (
+            "fetch: Neighborhood Commercial, TDC Chapter 51 -- its heading "
+            "closes 50.co.txt (L217). No Clackamas lot carries it."
+        ),
+        "CO/MR": (
+            "fetch: Mid-Rise/Office Commercial, TDC Chapter 55 -- its "
+            "heading closes 54.cg.txt (L358). No Clackamas lot carries it."
+        ),
+        "MUC": (
+            "fetch: Mixed Use Commercial, TDC Chapter 57 -- its heading "
+            "closes 56.mc.txt (L169). No Clackamas lot carries it."
+        ),
+        "MP": (
+            "fetch: Manufacturing Park, TDC Chapter 62 -- its heading closes "
+            "61.mg.txt (L401), and 60.ml.txt names it once more as a "
+            "neighbouring district in the ML setback table (L325). No "
+            "Clackamas lot carries it."
+        ),
+        "GC": (
+            "aliased: the running page header of Chapter 54 prints 'GENERAL "
+            "COMMERCIAL ZONE (GC)' (54.cg.txt L117, L191, L266, L354) while "
+            "the chapter's own table is 'Use Categories in the CG District' "
+            "(L23) and the county parcel layer says CG on all 15 lots; the "
+            "refusal is keyed CG."
+        ),
+        "CURD": (
+            "not-a-zone: the Central Urban Renewal District, an urban renewal "
+            "area whose Blocks 11, 28 and 29 the outdoor pet day care "
+            "limitation in 54.210 keeps such uses out of (54.cg.txt L258-"
+            "L259); a boundary the chapter refers to, not a zoning district."
         ),
         "WPD": "overlay: Wetlands Protection District, TDC Chapter 71.",
         "WPA": (
@@ -449,6 +572,13 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
     },
     "or/multnomah/fairview": {
+        "F-2": (
+            "aliased: the Agricultural Holding Zone, which FMC 19.25 calls F-2 "
+            "from its heading down and the county parcel layer calls AH on the "
+            "three lots that carry it. Encoded as AH on 2026-09-20 -- a "
+            "use-gate refusal off 19.25.020's six permitted uses, whose one "
+            "dwelling is for the farm's owner, operator or help."
+        ),
         "MH": (
             "not-listed: FMC 19.30.100 permits manufactured and prefabricated "
             "homes inside a manufactured home park, one per 2,500 sq ft space "
@@ -543,6 +673,64 @@ BY_HAND: dict[str, dict[str, str]] = {
             "prohibited: OCMC 17.26.035 prohibits 'B. Triplexes and "
             "quadplexes' and 'C. Multi-family residential' outright in the "
             "historic commercial district."
+        ),
+    },
+    "or/clackamas/gladstone": {
+        # Seven chapters fetched 2026-09-20 because the September county map
+        # carried their districts onto 415 lots, and the harvest sees none of
+        # the seven: Gladstone writes "In an MR zoning district" and never
+        # parenthesises or tabulates a designation. Two of the seven are zone
+        # blocks now -- OP and OS, refusals -- and the five below are what the
+        # layer's `zone_rulings` hold as `to_read`, with the verdict this
+        # ledger uses for each.
+        "MR": (
+            "encode: GMC 17.14.020(1) allows middle housing outright and "
+            "17.14.050 is a dimensional table with a Quadplex row (5,000 sq "
+            "ft) and a Townhouse project row (1,200 sq ft average per lot), "
+            "20 ft front setback, 35 ft height -- the same shape as R5 and "
+            "R7.2. 80 lots."
+        ),
+        "C-2": (
+            "encode: GMC 17.18.020 allows outright '(11) Attached "
+            "residential dwellings (duplex, triplex, quadplex)' and '(12) "
+            "Townhouses'; 17.18.060 gives residential uses a 5 ft maximum "
+            "front setback and 15 ft rear, and sends attached dwellings to "
+            "R-5's minimum lot area. 147 lots on Portland Avenue."
+        ),
+        "C-1": (
+            "conditional: GMC 17.16.040(6), 'Dwellings subject to GMC "
+            "Sections 17.10.050(1) through (4)', is the only market-rate "
+            "housing row in the chapter and it is on the conditional list. "
+            "One lot."
+        ),
+        "C-3": (
+            "conditional: GMC 17.20.040(3), 'Dwellings, subject to GMC "
+            "Sections 17.14.050(1) through (5)', on the conditional list; "
+            "the outright list's housing rows are conversion, 60 percent AMI "
+            "and moderate-income mixed use. 125 lots."
+        ),
+        "LI": (
+            "conditional: GMC 17.24.040(2), the same 'Dwellings, subject to "
+            "GMC Section 17.14.050(1) through (5)' clause as C-3, on the "
+            "conditional list; outright the chapter allows only a caretaker's "
+            "dwelling. 27 lots."
+        ),
+    },
+    "or/clackamas/west-linn": {
+        # Chapter 59 fetched 2026-09-20 because the city's zoning layer
+        # carried MU onto 25 lots; the chapter's heading is "WILLAMETTE
+        # NEIGHBORHOOD MIXED USE TRANSITIONAL ZONE" with no designation
+        # anywhere in it, so the harvest cannot see it. The same pass fetched
+        # Chapters 18, 19, 21, 22 and 23 and wrote NC, GC, OBC, CI and GI as
+        # refusals; those five are zone blocks and need no entry.
+        "MU": (
+            "encode: CDC 59.030 permits outright '1. Single-family attached "
+            "or detached dwelling; c. Quadplex residential units' and '4. "
+            "Townhouse', and 59.070 is a dimensional table in R-2.1's shape "
+            "(4,500 sf minimum and 10,000 sf maximum lot, 12 ft front with a "
+            "20 ft maximum, 7.5 ft side, 35 ft or 2 storeys, 6,000 sf "
+            "maximum building). 25 lots; held as `to_read` in the layer's "
+            "zone_rulings until encoded."
         ),
     },
 }
@@ -653,6 +841,28 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
     Six of the eight new entries wait on RCHDR and HDR, so the queue is
     shorter than sixteen in practice: encode two residential districts and six
     commercial ones follow.
+
+    Eighteen on 2026-09-20, and the two that arrived are Milwaukie's GMU and
+    DMU, re-ruled from `conditional` and `not-listed` to `encode` on a closer
+    read of their tables: both carry a Townhouse row that reads P, which is
+    this building split onto unit lots. The same pass wrote seven Milwaukie
+    refusals as zone blocks (OS, MUTSA, NME, BI, M, C-CS, C-G) and ten
+    Clackamas ones (EFU, TBR, AGF, VCS, RC, BP, LI, GI, RI, OSM); none of
+    those was ever in this count, for the reason MUE and I were not.
+
+    Twenty later the same day: Gladstone's MR and C-2, read from chapters
+    fetched because the September map carried them, and kept BY_HAND because
+    Gladstone never prints a designation in a way the harvest can see.
+
+    Twenty-one, and fetch to six: Tualatin's RMH, whose Chapter 42 was
+    fetched the same day for the same reason and permits the building
+    outright in both forms, moved from fetch to encode; and the five fetches
+    are the next-chapter headings the six new Tualatin slices end on (RH, CN,
+    CO/MR, MUC, MP) -- real zones, no Clackamas lot under any of them, held
+    as inventory rather than queued.
+
+    Twenty-two: West Linn's MU, Chapter 59, permitted outright and BY_HAND
+    because the chapter never prints its designation.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -662,6 +872,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 16, sorted(owed["encode"])
-    assert len(owed["fetch"]) == 2, sorted(owed["fetch"])
+    assert len(owed["encode"]) == 22, sorted(owed["encode"])
+    assert len(owed["fetch"]) == 6, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])

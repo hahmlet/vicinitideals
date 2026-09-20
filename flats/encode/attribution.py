@@ -60,10 +60,23 @@ _SECTION = re.compile(r"(?<![\d.])(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)(?![\d])"
 #: starts wherever the column does. Gresham's RTC parking row prints "Section
 #: 9.0851" fifty-six columns in, followed by a capital S, and every table note
 #: below it read as section 9.0851 without this.
+#: The period is the fourth guard, and it cuts both ways. A spelled-out
+#: heading ends its number with one -- "Section 4.136. PF—Public Facility
+#: Zone." -- and a spelled-out cross-reference printed in a table cell does
+#: not: Milwaukie's use tables carry a Standards column whose cells read
+#: "Section 19.905 Conditional Uses" and start at the margin, and four use
+#: gates read as sections 19.508, 19.700, 19.905 and 19.507 through them.
+#: So the "Section" form requires its period. The section-sign form allows
+#: one, because Milwaukie and Gresham write their real headings as
+#: "§ 19.307.1. Uses Permitted Outright." and "§ 4.1220. Uses", and without
+#: it the marker above those chapters was whichever cross-reference sat
+#: nearest. Measured 2026-09-20 over the whole corpus: 30 more values
+#: resolve to a section, six disagreements gone, none added.
 _HEADING = re.compile(
     r"^[ 	]{0,8}(?:"
-    r"Section\s+(?P<s>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z—-])"
-    r"|(?:§|�)?\s*(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
+    r"Section\s+(?P<s>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.\s*(?:[A-Z—-])"
+    r"|(?:§|�)\s*(?P<m>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z§—-]|$)"
+    r"|(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
     r")"
 )
 
@@ -144,17 +157,37 @@ def _spans(quote: str) -> tuple[int, ...]:
     return tuple(out)
 
 
+def _order(section: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in section.split("."))
+
+
 def section_at(lines: Sequence[str], line: int) -> str:
     """The section the text at this line sits in, read off the document.
 
     Nearest marker above wins. A running header printed at the foot of the
     previous page is closer than the heading that opened the section twelve
-    pages back, and it says the same thing.
+    pages back, and it says the same thing -- almost always. Municode's page
+    furniture lags: the header on the page after "Section 4.136. PF—Public
+    Facility Zone." still reads "§ 4.135.5 WILSONVILLE CODE", so the last item
+    of 4.136's conditional-use list, printed just below that header, read as
+    4.135.5. A heading cannot lag, so when the nearest marker is furniture the
+    scan goes on to the nearest spelled-out heading within reach, and a
+    heading that opens a LATER section than the furniture names is the one
+    the text sits under. An earlier heading is what the furniture already
+    said, and the furniture wins as before.
     """
+    furniture = ""
     for n in range(min(line, len(lines)) - 1, max(line - _LOOK_BACK, 0) - 1, -1):
-        if found := _HEADING.match(lines[n]):
-            return found.group("s") or found.group("n")
-    return ""
+        found = _HEADING.match(lines[n])
+        if not found:
+            continue
+        if spelled := found.group("s"):
+            if furniture and _order(spelled) <= _order(furniture):
+                return furniture
+            return spelled
+        if not furniture:
+            furniture = found.group("m") or found.group("n")
+    return furniture
 
 
 def _values(layer: Layer) -> Iterable[tuple[str, str, object]]:

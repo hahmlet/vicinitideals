@@ -1701,6 +1701,18 @@ code:
   start: "39.4700  PURPOSES"
   end: "39.4735 USES"
   extraction: plain
+# Chapter 38 is the county's other zoning code: the Columbia River Gorge
+# National Scenic Area, whose districts the September 2026 map prints on
+# unincorporated lots inside the UGB at Troutdale (GGR2, three lots) and on
+# the Warrendale-Dodson cluster outside it. Part 4.4 is the residential part,
+# GGR and GSR together. The contents page prints "38.3000- Purposes" in title
+# case; the body's uppercase heading is the marker.
+- id: "38.residential"
+  url: https://multco-web7-psh-files-usw2.s3-us-west-2.amazonaws.com/s3fs-public/county-attorney/documents/ch38.pdf
+  title: MCC 38.3000-38.3095 Gorge General Residential (GGR) and Gorge Special Residential (GSR)
+  start: "38.3000- PURPOSES"
+  end: "38.3200- PURPOSES"
+  extraction: plain
 defaults:
   # MCC 39.6500 through 39.6600, the chapter every base zone in Part 4 points at
   # and none of them states. Read 2026-08-30, and it is the first parking
@@ -3617,3 +3629,86 @@ zones:
       an agricultural zone -- so the housing types a MUA-20 planned development
       may hold are unstated rather than permissive. That reading is the widest
       remaining doubt in this layer and it is a reading, not a quote.
+  # === The September 2026 map's four codes, ruled 2026-09-20 ================
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. Metro's zoning layer printed four
+  # codes on unincorporated Multnomah lots inside the UGB that this file did
+  # not hold -- 16 lots. One is the county's own (GGR2, the Gorge, refused
+  # below from Chapter 38); the other three are somebody else's code on the
+  # county's land and are `zone_rulings` at the foot of this file.
+  GGR2:
+    section: ["38.residential"]
+    cite_default:
+      cite: MCC 38.3015 (Uses), 38.3020 (Allowed Uses), 38.3025(A)(1) (Review
+        Uses), 38.3060(A) (Dimensional Requirements)
+      url: https://multco-web7-psh-files-usw2.s3-us-west-2.amazonaws.com/s3fs-public/county-attorney/documents/ch38.pdf
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Gorge General Residential, 2-acre minimum, in the Columbia River
+      # Gorge National Scenic Area. 38.3015 closes the list; 38.3020 admits
+      # without review only the 38.1005 list, which holds no dwelling (a
+      # whole-chapter grep of 38.1005-38.1010 finds only structures
+      # "accessory to an existing dwelling" and additions "less than or
+      # equal to 2 feet"); the residential entry is 38.3025(A)(1), "One
+      # single-family dwelling per legally created and existing parcel", a
+      # review use under NSA site review; the conditional list opens with a
+      # child care centre and never reaches a home. Three lots inside the
+      # UGB at Troutdale (SE Thompson Rd, the Historic Columbia River Hwy)
+      # and the Warrendale-Dodson cluster outside it, which OUTSIDE_UGB
+      # gates first.
+      value: false
+      quote: "or/multnomah/_unincorporated/38.residential.txt#L22,L24-L27,L31,L33-L34,L45,L47-L54,L511"
+    notes: >-
+      Encoded 2026-09-20 from MCC 38.3015-38.3060. One house per parcel is
+      the whole of household living in the Gorge's residential districts,
+      and the map prints the county's GGR-2 without its hyphen.
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). A pocket gates ZONE_POCKET in the copy
+# and a to-read code ZONE_TO_READ, in place of ZONE_NOT_ENCODED, and both
+# fold away on the County copy page.
+zone_rulings:
+  # Troutdale's Urban Planning Area. TDC 3.040: "The City of Troutdale holds
+  # zoning authority over certain areas that are located in unincorporated
+  # areas of Multnomah County and within the regional Urban Growth Boundary
+  # ... Lots in Urban Planning Areas have an assigned zoning district and are
+  # designated with a "UPA" prefix in front of the corresponding zoning
+  # district" (or/multnomah/troutdale/3.zoning-districts.txt L117-L126), and
+  # "most future development in the Urban Planning Areas shall require
+  # annexation into the City of Troutdale". The county's own pocket page
+  # names them: Troutdale IGA - Sundial, Troutdale IGA - Troutdale.
+  UPAGI:
+    outcome: pocket
+    of: or/multnomah/troutdale
+    note: >-
+      UPA + GI, Troutdale's General Industrial on eight county lots along NW
+      Sundial Rd (the Sundial pocket, 1N3E14/22/23B; a million square feet
+      apiece). Troutdale's GI block refuses the building at TDC 3.420 --
+      "All other residential uses N" -- and would answer here if pocket lots
+      were screened under their `of` layer.
+  UPAR-10:
+    outcome: pocket
+    of: or/multnomah/troutdale
+    note: >-
+      UPA + R-10, four county lots on SE Troutdale Rd, SE Cochran Rd and SE
+      Sweetbriar Rd (the Troutdale pocket). R-10 is a district the current
+      TDC no longer lists; 3.020 prints LDR-1 as "Low-Density Residential
+      (formerly R-20 & R-10)" (3.zoning-districts.txt L74), so LDR-1, which
+      the Troutdale layer holds, is the block that would answer. The
+      troutdale.yaml header's 2026-08 note on this code stands corrected:
+      it is a Troutdale UPA label, not a county one.
+  THR:
+    outcome: to_read
+    note: >-
+      One lot, 16047 E Burnside St (1N2E36DA-02200), an acre of apartments
+      built 1970 in the county's Gresham IGA-162nd pocket, which the
+      county's pocket page says Gresham administers under Gresham zoning.
+      Metro's layer classes it SFR3 and prints THR, a code no chapter in
+      this corpus defines: Gresham's 4.0100 lists LDR-5, LDR-7, TLDR, TR,
+      MDR-12, MDR-24 and OFR, its only THR is the Springwater THR-SW, and
+      MCC 39 has no THR at all. A legacy designation on Metro's side or a
+      pocket zone written into the IGA; to read from Gresham planning
+      (which chapter governs the 162nd pocket, and what THR stands for
+      there) before this lot is screened.

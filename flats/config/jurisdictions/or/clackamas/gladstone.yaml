@@ -355,14 +355,10 @@ definitions:
 
 crossrefs:
 
-  "17.18.020":
-    outcome: other_building
-    note: >-
-      The C-2 district''s permitted use list, reached from the mixed-use district: "Commercial uses
-      permitted in the mixed-use development include those listed as permitted in the C-2 zoning
-      district, GMC Section 17.18.020." It is cited to say which SHOPS may occupy the commercial
-      half of a mixed-use building. The residential half is permitted by its own row, and this
-      screen places a residential building on a lot of its own.
+  # 17.18.020 was ruled here (other_building) until 2026-09-20, when the C-2
+  # chapter came into the store for the C2 zone ruling below. A ruling on a
+  # reference the corpus can follow is a ruling nobody can see, so it now
+  # sits beside R-5's use gate, where 17.12.020(7) makes the reference.
   "17.38":
     outcome: other_path
     note: >-
@@ -407,6 +403,9 @@ crossrefs:
     dimensional table and spanned by rowspan over every setback row, which is why it counts ten
     times. The pod is factory-built and is neither a manufactured dwelling nor sited on a rented
     space in a park, so the standard is about somebody else's building and 17.62 is not fetched.
+    Eleven since 2026-09-20: the MR chapter fetched for the zone ruling lists "Manufactured
+    dwelling park, subject to GMC Section 17.62.070" as a use (17.14.mr.txt#L91), the same row
+    R-5 prints at 17.12.020(3), and the same answer.
   # A ruling on "17.48" used to stand here and the ledger now calls it stale, which is the right
   # answer: the chapter is fetched, so nothing points at an unfetched 17.48 any more. What it said
   # -- that the state cap on middle-housing parking disposed of the reference -- is an argument
@@ -536,6 +535,38 @@ code:
   - id: "17.29.flood"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1729.html
     title: "Chapter 17.29 - Flood Management Area District (FM)"
+  # ---- The seven zone chapters the September 2026 map carried, read
+  # 2026-09-20 ----
+  #
+  # Steph's ruling: every code the county map carries is read once, its
+  # reason written down, and never shown again. Gladstone's map carried
+  # seven codes this layer did not hold -- 415 lots. Two chapters refuse the
+  # building (OP and OS, zone blocks below); five permit it in some form and
+  # are `zone_rulings` at the foot of this file. Short chapters, fetched
+  # whole; the thinness guard is waived on the two that are lists of uses
+  # and nothing dimensional.
+  - id: "17.14.mr"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1714.html
+    title: "Chapter 17.14 - MR Multi-Household Residential District"
+  - id: "17.16.c-1"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1716.html
+    title: "Chapter 17.16 - C-1 Local Commercial District"
+  - id: "17.18.c-2"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1718.html
+    title: "Chapter 17.18 - C-2 Community Commercial District"
+  - id: "17.20.c-3"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1720.html
+    title: "Chapter 17.20 - C-3 General Commercial District"
+  - id: "17.22.op"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1722.html
+    title: "Chapter 17.22 - OP Office Park District"
+  - id: "17.24.li"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1724.html
+    title: "Chapter 17.24 - LI Light Industrial District"
+  - id: "17.26.os"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1726.html
+    title: "Chapter 17.26 - OS Open Space District"
+    allow_thin: true
 defaults:
   # ---- GMC Chapter 17.48, Off-Street Parking and Loading, read 2026-08-29 ----
   #
@@ -889,6 +920,17 @@ zones:
       # ... (2) Middle housing." Middle housing is the statutory class -- ORS
       # 197A.420 and OAR 660-046 -- and a quadplex is in it. The city states no
       # list of its own, so the class is the whole of the answer.
+      #
+      # 17.12.020(7), the seventh outright use, reaches into C-2: "Commercial uses
+      # permitted in the mixed-use development include those listed as
+      # permitted in the C-2 zoning district, GMC Section 17.18.020" (L47).
+      # It is cited to say which SHOPS may occupy the commercial half of a
+      # mixed-use building in the Town Center. The residential half is
+      # permitted by its own row, and this screen places a residential
+      # building on a lot of its own, so the reference changes nothing here.
+      # (Ruled in the crossrefs ledger as other_building until the C-2
+      # chapter was fetched on 2026-09-20; 17.18.c-2.txt#L61-L67 is now on
+      # disk and says what it says for the C2 ruling.)
       value: true
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L31-L37"
     setback_front_ft:
@@ -1044,3 +1086,139 @@ zones:
     # NOT ENCODED, following R7.2, whose numbers this placeholder zone copies:
     # the 20 ft removed there was a garage door width maximum misread as a
     # setback, and Gladstone states no garage entrance setback in Title 17.
+  # === The September 2026 map's seven codes, ruled 2026-09-20 ==============
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. Gladstone's map carried seven codes
+  # this layer did not hold. Two refuse the building -- the office park and
+  # the open space district -- and are the use-gate refusals below, quoting
+  # their chapters the way R5 quotes 17.12, with nothing dimensional encoded
+  # because nothing dimensional matters while the building may not be
+  # built. The other five permit it outright (MR, C-2) or as a conditional
+  # use (C-1, C-3, LI) and are `zone_rulings` at the foot of this file.
+  #
+  # The affordable-housing door is on four of the seven -- C-1, C-3, OP and
+  # LI's neighbour chapters all carry "Dwelling units available to
+  # households making 60 percent or less of area median income" and a
+  # mixed-use row for moderate incomes -- and is answered once, the way
+  # Clackamas answers Table 510-1's note 11: the row turns on what is built
+  # rather than on the lot, and this product is market rate.
+  OP:
+    section: ["17.22."]
+    cite_default:
+      cite: Gladstone Municipal Code 17.22.020(1) (primary uses, (a)-(g)),
+        17.22.040(2) (conditional uses) and 17.22.050(1)(a) (uses not
+        complying with 17.22.020 are prohibited), Office Park District
+      url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1722.html
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Office Park. Seven primary uses: research, offices, manufacturing,
+      # C-2's retail and service uses, conversion of a commercial building to
+      # residential, "dwelling units available to households making 60
+      # percent or less of area median income", and mixed-use with ground
+      # floor commercial for moderate incomes. The conditional list is
+      # heliports, hazardous-materials variants of the primary uses, day
+      # care, schools, utility substations and a senior housing center on a
+      # perimeter road. 17.22.050(1)(a): "Uses that do not comply with the
+      # physical and operational requirements specified under GMC Section
+      # 17.22.020 (Primary uses) shall be prohibited". A market-rate
+      # four-unit building on a bare lot converts nothing, is not
+      # income-restricted, and has no ground-floor commercial. Five lots.
+      value: false
+      quote: "or/clackamas/gladstone/17.22.op.txt#L39-L55,L173-L185,L191-L195"
+    notes: >-
+      Encoded 2026-09-20. The three residential rows are the 2024 housing
+      amendments (Ord. 1535) and every one is conditioned on what is built:
+      a conversion, an income restriction, a mixed-use ground floor.
+      Whole-document grep of 17.22 for dwelling, residential, housing: those
+      three rows, the senior housing center at L185, a warehouse rule and a
+      setback rule about abutting residential zones. Nothing else.
+  OS:
+    section: ["17.26."]
+    cite_default:
+      cite: Gladstone Municipal Code 17.26.020 (applies to all publicly owned
+        park lands), 17.26.030 (uses allowed outright) and 17.26.040
+        (conditional uses), Open Space District
+      url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1726.html
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Open Space, "all publicly owned park lands". Six uses outright --
+      # park, playground, picnic grounds, wildlife preserve, nature trail or
+      # bikeway, "other similar recreational uses" -- and seven conditional
+      # -- boat ramp, swimming facility, community garden, ball field, tennis
+      # court, similar recreational uses, public utility facilities in a
+      # Habitat Conservation Area. Whole-document grep for dwelling,
+      # residential, housing: nothing in 97 lines. Thirty lots.
+      value: false
+      quote: "or/clackamas/gladstone/17.26.os.txt#L25-L27,L33-L47,L53-L69"
+    notes: >-
+      Encoded 2026-09-20. Refused on silence, and the silence is a park's:
+      the chapter's purpose is "to provide and preserve open space areas for
+      use and enjoyment of the public" and the two lists are recreation
+      from end to end. The thirty lots are the city's parks and the
+      Clackamas River frontage.
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). A ruled code gates ZONE_TO_READ in the
+# copy instead of ZONE_NOT_ENCODED and folds away on the County copy page.
+# The refusals are zone blocks above; these five permit the building
+# outright or as a conditional use and wait on their dimensions. Keyed the
+# way the county map spells them: the fabric prints Gladstone's commercial
+# zones without the ordinance's hyphen (C1, C2, C3), the way it prints R5
+# and R7.2 for the code's R-5 and R-7.2 -- the zone blocks above are keyed
+# the same way and so are these.
+zone_rulings:
+  MR:
+    outcome: to_read
+    note: >-
+      Multi-Household Residential, 80 lots. 17.14.020(1) allows middle
+      housing outright, and 17.14.050 is a dimensional table with its own
+      Quadplex row (5,000 sq ft minimum lot) and Townhouse project row (1,200
+      sq ft average per lot), a 20 ft front setback, 35 ft height, 20 percent
+      vegetation and a minimum density of 80 percent of the maximum
+      (17.14.mr.txt#L27-L33, L111-L166). The same shape as R5 and R7.2, which
+      this layer holds; encoding it is a morning's reading, not a decision.
+      C-2's multi-household lots borrow this table's minimum lot area.
+  C2:
+    outcome: to_read
+    note: >-
+      Community Commercial (the ordinance's C-2), 147 lots, Portland Avenue. 17.18.020 allows
+      outright "(11) Attached residential dwellings (duplex, triplex,
+      quadplex)", "(12) Townhouses" and "(14) Multi-household residential
+      dwellings" (17.18.c-2.txt#L61-L67). 17.18.060 gives residential uses a
+      five-foot MAXIMUM front setback and a 15 ft minimum rear setback
+      (L137), sends attached dwellings and townhouses to R-5's minimum lot
+      area (L149), and 17.18.050 adds ground-floor window and Portland
+      Avenue frontage rules. The largest of Gladstone's seven and permitted
+      outright; to encode from 17.18.060 with R5's lot rows.
+  C1:
+    outcome: to_read
+    note: >-
+      Local Commercial (the ordinance's C-1), one lot. Outright uses are services, offices,
+      clinics, day care and the three conditioned housing rows (conversion,
+      60 percent AMI, moderate-income mixed use, 17.16.c-1.txt#L41-L45);
+      17.16.040(6) allows "Dwellings subject to GMC Sections 17.10.050(1)
+      through (4)" as a conditional use (L73). So the building is a
+      conditional use here on R-7.2's lot and setback rows: a `false` use
+      block with a `conditional_use` variant and 17.10.050's numbers, which
+      this layer already holds as R7.2. One lot; to encode when the
+      conditional-use zones are done together.
+  C3:
+    outcome: to_read
+    note: >-
+      General Commercial (the ordinance's C-3), 125 lots, the McLoughlin strip. The outright list's
+      housing rows are the three conditioned ones (17.20.c-3.txt#L69-L73);
+      17.20.040(3) allows "Dwellings, subject to GMC Sections 17.14.050(1)
+      through (5)" as a conditional use (L99) -- MR's dimensional table. A
+      `false` use block with a `conditional_use` variant and MR's numbers,
+      which wait on MR above.
+  LI:
+    outcome: to_read
+    note: >-
+      Light Industrial, 27 lots. Outright: a caretaker's or night
+      watchperson's dwelling (17.24.li.txt#L39) and nothing else
+      residential; 17.24.040(2) allows "Dwellings, subject to GMC Section
+      17.14.050(1) through (5)" as a conditional use (L85), the same clause
+      as C-3. A `false` use block with a `conditional_use` variant and MR's
+      numbers, which wait on MR above.

@@ -23,7 +23,9 @@ reads None on all three rows, and footnote (1) repeats it for residential uses
 specifically. That is an absence somebody read, which is a different thing from
 an absence nobody has looked at yet, and `exempt` is how the two stay apart.
 
-O is left unread on purpose -- see the layer notes and the last test here.
+O was left unread on purpose until 2026-09-20, when the September map put six
+lots in it and the table 260.200 names three times turned up filed under the
+next leaf, 260.210. It refuses by the absence of a row -- see the O test here.
 """
 
 from __future__ import annotations
@@ -45,8 +47,11 @@ POD = ("multi_story", "attached_wall")
 #: The four added here. Every one of them is answered by a `Household Living`
 #: row rather than by a named housing type.
 ADDED = ("NC", "TC", "C/I", "GM", "LM")
-#: Settled refusals -- one cell each, and nothing else worth reading.
-REFUSED = ("C/I", "GM", "LM")
+#: Settled refusals -- one cell each (or, for O, no cell at all), and nothing
+#: else worth reading.
+REFUSED = ("C/I", "GM", "LM", "O")
+#: Read 2026-09-20 off Table 260-1, which prints no residential heading.
+OPEN = ("O",)
 #: Ported in July, off tables that do name the housing type.
 PORTED = ("LR 7.5", "LR 12", "MR 2", "MR 4")
 
@@ -61,10 +66,8 @@ def rules() -> RuleSet:
     return RuleSet(load_rules())
 
 
-def test_the_layer_carries_nine_zones(wv: Layer) -> None:
-    assert set(wv.zones) == set(ADDED) | set(PORTED)
-    # Read and deliberately left out; see the O test below.
-    assert "O" not in wv.zones
+def test_the_layer_carries_ten_zones(wv: Layer) -> None:
+    assert set(wv.zones) == set(ADDED) | set(PORTED) | set(OPEN)
 
 
 def test_the_non_residential_zones_answer_on_a_use_category(wv: Layer) -> None:
@@ -186,20 +189,26 @@ def test_every_encoded_zone_owes_nothing_more(rules: RuleSet) -> None:
         assert rules.resolve(WV, zone).missing_required == (), zone
 
 
-def test_the_open_space_zone_is_unread_rather_than_missed(wv: Layer) -> None:
+def test_the_open_space_zone_refuses_by_the_absence_of_a_row(wv: Layer) -> None:
     """WVDC 260.200 names Table 260-1 three times and never prints it.
 
     Outright uses, conditional uses, prohibited uses -- all three point at a
-    table that does not come down with the page under this extractor. Six lots,
-    and the honest state is unread. The section is declared and the document is
-    stored anyway, so the absence is checkable by anyone who fetches it again
-    rather than remembered by whoever hit it first.
+    table that does not come down with that page, because the publisher files
+    it under the next leaf, 260.210 Accessory Uses. Until 2026-09-20 the honest
+    state was unread; then the September map put six lots in O and the table
+    was fetched from where it lives: fourteen rows of parks, utilities, civic
+    buildings, mining and rail, and no residential heading at all. 260.200.A
+    makes Y the only door ("the uses allowed in the open space zone are shown
+    in Table 260-1 by the letter Y"), so a use with no cell has no Y. Both
+    pages stay declared so the sentence and the table it points at are on disk
+    side by side rather than remembered by whoever read them.
     """
-    assert "O" not in wv.zones
-    assert "Table\n  260-1" in wv.notes or "Table 260-1" in wv.notes
-    assert "260.200" in wv.notes
+    held = wv.zones["O"]
+    assert held.values["quadplex_allowed"].value is False
+    assert set(held.section) == {"260.200", "260.210"}
+    assert "260.210" in (held.values["quadplex_allowed"].prov.quote or "")
     ids = {d.id for d in wv.code}
-    assert "260.200" in ids, "the unreadable page is stored, not skipped"
+    assert {"260.200", "260.210"} <= ids, "the sentence and the table, both stored"
 
 
 def test_the_new_citations_all_point_at_their_own_sentence(wv: Layer) -> None:

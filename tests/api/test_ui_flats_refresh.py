@@ -214,7 +214,7 @@ async def test_new_zone_codes_are_the_warning_and_ruled_ones_fold_away(client: A
     assert "2 forbid the building (474 lots red at the use gate)" in card
     assert "or/clackamas/_unincorporated/C3 (447)" in card
     assert "<strong>or/clackamas/happy-valley</strong> another jurisdiction&#39;s zoning inside the line: FU10 (12), RRFF5 (95)" in card
-    assert "<strong>or/clackamas/happy-valley</strong> seen; use table still to read: NSA (64)" in card
+    assert "<strong>or/clackamas/happy-valley</strong> seen; chapter not encoded yet (use unread, or permitted with dimensions unread): NSA (64)" in card
     assert "<strong>or/clackamas/_unincorporated</strong> read; asks a measurement the screen cannot take: HDR (251)" in card
 
     # With nothing new and nothing ruled, neither block renders.

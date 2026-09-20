@@ -1,0 +1,410 @@
+602.01 Purpose
+
+Section 602 is adopted to implement the policies of the Comprehensive Plan for Business Park, Light Industrial, and General Industrial areas.
+
+602.02 Applicability
+
+Section 602 applies to land in the Business Park (BP), Light Industrial (LI), and General Industrial (GI) Districts.
+
+602.03 Uses Permitted
+
+Uses permitted in each zoning district are listed in Table 602-1, Permitted Uses in the BP, LI, and GI Districts. In addition, uses similar to one or more of the listed uses for the applicable zoning district may be authorized pursuant to Section 106, Authorizations of Similar Uses.
+
+1 As used in Table 602-1:
+
+1 "P" means the use is a primary use.
+
+2 "A" means the use is an accessory use.
+
+3 "C" means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
+
+4 "X" means the use is prohibited.
+
+5 Numbers in superscript correspond to the notes that follow Table 602-1.
+
+2 Permitted uses are subject to the applicable provisions of Subsection 602.04, Dimensional Standards, Subsection 602.05, Development Standards, Section 1000, Development Standards, and Section 1100, Development Review Process.
+
+602.04 Dimensional Standards
+
+1 General: Dimensional standards applicable in the BP, LI, and GI Districts are listed in Table 602-2, Dimensional Standards in the BP, LI, and GI Districts. As used in Table 602-2, numbers in superscript correspond to the notes that follow Table 602-2.
+
+2 Modifications: Modifications to the standards of Table 602-2 are established by Sections 800, Special Use Requirements; 1012, Lot Size and Density; 1107, Property Line Adjustments; and 1205, Variances.
+
+602.05 Development Standards
+
+The following development standards apply in the BP, LI, and GI Districts.
+
+1 Outdoor Operations in the BP District: In the operation of a primary use in the BP District:
+
+1 All display areas shall be located within a building. No outdoor display areas shall be allowed.
+
+2 No outdoor storage of materials or products shall be allowed.
+
+3 No outdoor processes shall be employed in the operation of the business.
+
+4 Receptacles for solid waste and recyclable materials shall be maintained within an enclosed structure.
+
+2 Outdoor Operations in the LI District: In the operation of a primary use in the LI District:
+
+1 All display of products shall be located within an enclosed building. No outdoor display areas shall be allowed. Notwithstanding these limitations, outdoor display of finished products may be permitted as a conditional use, as established by Table 602-1 and provided that, at a minimum, outdoor display areas and items on display shall:
+
+1 Not block visibility to or from any road or driveway, or block visibility of signs located on adjacent lots;
+
+2 Be located a minimum of 15 feet from the front lot line(s);
+
+3 Be maintained to project an organized and neat appearance at all times; and
+
+4 Only include finished products manufactured on, or sold on a wholesale basis from, the subject property.
+
+2 Limited outdoor storage areas shall be allowed, subject to the following criteria:
+
+1 Except as permitted as a conditional use, as established by Table 602-1, outdoor storage may occupy an area no greater than the area of the ground floor of the building(s) on the same premises.
+
+2 Outdoor storage areas shall be located behind the building, to the rear of the site, and not adjacent to front lot lines.
+
+3 Outdoor storage areas shall be screened with a sight-obscuring fence a minimum of six feet in height. Fencing shall be located behind the landscaping strips required by Subsections 1009.03(B) and 1009.06.
+
+4 Equipment, vehicles, materials, and other items located within outdoor storage areas shall be maintained in an orderly fashion and, except for large industrial or commercial vehicles and equipment, shall be no higher than the height of the fence.
+
+5 Outdoor storage areas shall not be used to store waste or recyclable materials.
+
+3 No outdoor processes shall be employed in the operation of the business.
+
+4 Receptacles for solid waste and recyclable materials shall be maintained within an enclosed structure.
+
+3 Outdoor Operations in the GI District: In the operation of a primary use in the GI District:
+
+1 Outdoor display of finished products is permitted, provided that outdoor display areas and items on display shall:
+
+1 Not block visibility to or from any road or driveway, or block visibility of signs located on adjacent lots;
+
+2 Be located a minimum of 10 feet from the front lot line(s);
+
+3 Be maintained to project an organized and neat appearance at all times; and
+
+4 Only include finished products manufactured on, or sold on a wholesale basis from, the subject property.
+
+2 Outdoor storage and processing are permitted, subject to the following standards:
+
+1 Outdoor storage and processing areas shall be located a minimum of 20 feet from the front lot line(s), a minimum of 15 feet from side or rear lot lines that abut a commercial zoning district, and a minimum of 35 feet from side or rear lot lines that abut a residential or natural resource zoning district.
+
+2 Outdoor storage areas shall be screened with a sight-obscuring fence a minimum of six feet in height and a maximum of 10 feet in height. Fencing shall be located behind the landscaping strips required by Subsections 1009.03(B) and 1009.06. Outdoor processing areas shall be buffered pursuant to Subsections 1009.04(D) through (F).
+
+3 Equipment, stockpiles of materials, and other items located within outdoor storage and processing areas shall be maintained in an orderly fashion.
+
+4 Waste materials (by-products that are not further processed or recycled on-premise) shall not accumulate in outdoor storage and processing areas for more than two weeks, except that waste materials from water treatment facilities or surface water retention facilities may accumulate for such longer period as necessitated by Best Management Practices for the facility.
+
+5 It shall be demonstrated through engineering and design or monitoring that outdoor storage of waste materials will not negatively impact ground or surface waters.
+
+Table 602-1: Permitted Uses in the BP, LI, and GI Districts
+
+Use
+BP
+LI
+GI
+Accessory Uses, Customarily Permitted, such as amateur (Ham) radio antennas and towers, arbors, bicycle racks, citizen band transmitters and antennas, cogeneration facilities, courtyards, decks, decorative ponds, driveways, electric vehicle charging stations, fountains, gazebos, HVAC units, meeting facilities, parking areas, patios, pergolas, plazas, property maintenance and property management offices, rainwater collection systems, satellite dishes, solar energy systems, stormwater management facilities, television antennas and receivers, transit amenities, trellises, utility service equipment, and utility service lines
+A
+A
+A
+Accessory Uses permitted in the R-5 through R-30 Districts, except accessory dwelling units, listed in Table 315-1, Permitted Uses in the Urban Residential Zoning Districts, provided that such uses are accessory to a single-family dwelling that is a nonconforming use
+A
+A
+A
+Arenas, Exhibition Halls, and Stadiums
+C[1]
+C[1]
+C[1]
+Bus Shelters
+A
+A
+A
+Child Care Centers[2]
+P
+P
+X
+Composting Facilities, subject to Section 834
+X
+C
+C
+Construction and Maintenance Contractors, including contractors engaged in construction and maintenance of buildings and their component parts (e.g., roofing, siding, windows), fencing, decking, building systems (e.g., plumbing, electrical, mechanical), landscaping, and infrastructure (e.g., roads, utilities). Also included are excavation contractors, building movers, pest control services, and janitorial services.
+P
+P
+P
+Crisis Stabilization Centers, as defined in ORS 430.626, subject to Section 849
+P[3]
+P[3]
+P[3]
+Dwellings, if developed as affordable housing, as defined in ORS 197A.445(1), and subject to Section 846
+P
+P
+X
+Emergency Shelters, subject to Section 848
+P
+P
+P
+Employee Amenities, such as cafeterias, clinics, child care facilities, fitness facilities, lounges, and recreational facilities
+A
+A
+A
+Farmers' Markets, subject to Section 840
+P
+P
+P
+Government Uses, unless such a use is listed elsewhere in this table as a primary or accessory use
+C[4]
+C[4]
+C[4]
+Heavy Truck and Heavy Equipment Uses, including sales, rental, storage, repair, and servicing of heavy trucks such as dump trucks, moving trucks, and truck tractors; large construction equipment such as backhoes and bulldozers; large farm equipment such as tractors and combines; and large cargo trailers such as semitrailers. Sales, rental, storage, repair, and servicing of passenger vehicles, recreational vehicles, and boats are excluded.
+X
+P
+P
+Heliports
+C
+C
+C
+Hospitals, Mental or Psychiatric, subject to Section 849
+p[5]
+p[5]
+p[5]
+Industrial Trade Schools, including training facilities whose primary purpose is to provide training to meet industrial needs. These facilities also may be referred to as technical schools, vocational schools, and career schools. Industrial trade schools provide training in such occupational skills as welding, operation and repair of industrial machinery, and truck driving.
+P
+P
+P
+Information Services, including establishments engaged in producing and distributing information; providing the means to transmit or distribute these products, as well as data or communications; and processing data. Examples include publishing industries such as book, periodical, and software publishing; computer systems design; internet web search services; internet service providers; radio, television, motion picture, and recording studios; computer data storage services; optical scanning and imaging services; and financial transaction processing such as credit card transaction and payroll processing services. These businesses primarily serve other industries or deliver their products to the end user through means other than on-site pickup by the customer. Few general public customer visits per day are generated.
+P
+P
+P
+Large-Scale Laundry, Dry-Cleaning, and Carpet-Cleaning Plants
+These businesses primarily serve other industries or deliver their services to the end user through means other than on-site customer visits. Few general public customer visits per day are generated.
+P
+P
+P
+Level One Mobile Vending Units, subject to Section 837
+A
+A
+A
+Manufacturing, including establishments engaged in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, including the assembly of component parts. Examples of manufacturing include alternative energy development, biosciences, food and beverage processing, software and electronics production, and fabrication of products made from materials such as metal, glass, rubber, plastic, resin, wood, and paper.
+P
+P
+P
+Marijuana Processing
+P[6]
+P[6]
+P[6]
+Marijuana Production
+P[6]
+P[6]
+P[6]
+Marijuana Retailing
+X
+X
+X
+Marijuana Wholesaling
+P[6]
+P[6]
+P[6]
+Miscellaneous Industrial Uses, including wrecking and salvage of building materials, equipment, and vehicles; tire retreading and recapping; and petroleum, coal, or other fuel storage, refining, reclaiming, distribution, and wholesale trade. These businesses primarily serve other industries or deliver their products and services to the end user through means other than on-site customer visits. Few general public customer visits per day are generated.
+X
+X
+P
+Offices, including administrative and corporate offices and call centers. These businesses primarily serve other industries or deliver their products and services to the end user through means other than on-site customer visits. Few general public customer visits per day are generated.
+P
+P
+P
+Outdoor Display of Products, subject to Subsection 602.05(B)(1) or (C)(1), provided that such display is associated with a permitted use
+X
+C
+A
+Outdoor Entertainment Facilities, including amusement parks, circuses, carnivals, drive-in theatres, and racetracks for automobiles, dogs, horses, and motorcycles
+X
+X
+C
+Outdoor Storage Areas Larger than Allowed by Subsection 602.05(B)(2)(a), provided that such storage is associated with a permitted use
+X
+C
+A
+Parking, Storage, Repair, and Servicing of Fleet Vehicles
+A
+A
+A
+Parking Structures
+A
+A
+A
+Pedestrian Amenities
+P
+P
+P
+Radio and Television Transmission and Receiving Towers and Earth Stations, provided that the base of such towers shall not be closer to the property line than a distance equal to the height of the tower
+C
+C
+C
+Recreational Sports Facilities for such sports as basketball, dance, gymnastics, martial arts, racquetball, skating, soccer, swimming, and tennis. These facilities may be used for any of the following: instruction, practice, and competitions. Only indoor facilities are permitted. Health and fitness clubs are excluded from this category but are included in the "retail and professional services that cater to daily customers/retail commercial uses" category.
+P[1]
+P[1]
+P[1]
+Recyclable Drop-Off Sites, subject to Section 819
+A[7]
+A[7]
+A[7]
+Recycling Centers and Transfer Stations, subject to Section 819
+X
+C
+P
+Repair and Servicing Uses, including large-scale repair and servicing of equipment, machinery, and other products. Examples include authorized service centers, welding shops and machine shops. Products are received from and returned to customers primarily by shipping or pickup/delivery by employees of the business. Few general public customer visits per day are generated.
+P
+P
+P
+Research Facilities and Laboratories, including product research and development, product design and testing, medical research, and medical laboratories. Medical laboratories in this category primarily serve other industries or deliver their services to the end user through means other than on-site customer visits. Few general public customer visits per day are generated.
+P
+P
+P
+Residential Treatment Facilities and Residential Treatment Homes, subject to Section 849
+P
+P
+X
+Retail and Professional Services that Cater to Daily Customers/Retail Commercial Uses, including the sale of goods and services to the general public. Examples of retail and professional services that cater to daily customers include rental and storage of passenger vehicles, recreational vehicles, and boats; health and fitness clubs; daycare facilities; and financial, insurance, real estate, legal, medical, and dental offices. Auto repairing, overhauling, painting, washing, body and fender work, and reconditioning are excluded. Examples of retail commercial uses include sales of passenger vehicles, recreational vehicles, and boats; stores; and restaurants. Sales of motor vehicle fuels are excluded.
+P[8,9,10]
+P[8,9,10]
+A[11]
+Retail Services, including auto repairing, overhauling, painting, washing, body and fender work, and reconditioning
+X
+X
+C
+Roads
+P
+P
+P
+Signs, subject to Section 1010
+A[12]
+A[12]
+A[12]
+Surface Mining, subject to Section 818
+X
+C
+C[13]
+Temporary Buildings for Uses Incidental to Construction Work, provided that such buildings shall be removed upon completion or abandonment of the construction work
+A
+A
+A
+Temporary Storage within an Enclosed Structure of Source-Separated Recyclable/Reusable Materials Generated and/or Used Onsite Prior to Onsite Reuse or Removal by the Generator or Licensed or Franchised Collector to a User or Broker
+A
+A
+A
+Towing Establishments and Storage of Towed Vehicles
+X
+P
+P
+Transportation Uses, including the transportation of cargo using motor vehicles or rail spurs, loading docks, and parking of cargo transport vehicles. Examples include freight terminals, parcel delivery services, moving companies, and parking facilities for long-haul trucks. These uses often are associated with warehousing facilities. Also included are parking, storage, repair, and servicing of fleet vehicles used for the transport of people. Examples include ambulance services and mass transit and school bus fleet facilities. Also included are commercial motor vehicle fueling services, such as cardlock fueling stations; however, motor vehicle fueling stations that cater to the general public are excluded.
+X
+P
+P
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Stormwater Management Facilities
+P,C[14]
+P,C[14]
+P,C[14]
+Utility Cabinets
+P,C[15]
+P,C[15]
+P,C[15]
+Utility Facilities, except Utility Lines, in Road Rights-of-Way
+P
+P
+P
+Utility Facilities Not Otherwise Listed in Table 602-1
+C
+C
+C
+Utility Lines
+P,C[16]
+P,C[16]
+P,C[16]
+Warehouse Event Retail Sales
+A[17]
+A[17]
+A[17]
+Warehousing and Distribution, including establishments primarily engaged in operating warehousing and distribution facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and generally are being stored in anticipation of delivery to the final customer. A range of logistical services may be provided, including labeling, packaging, price marking and ticketing, and transportation arrangement. Mini-storage/self-storage facilities are excluded.
+A
+P
+P
+Wholesale Trade, including establishments engaged in selling and distributing goods and services to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation. Wholesalers sell goods and services to other businesses, not the general public.
+P
+P
+P
+Wireless Telecommunication Facilities, subject to Section 835
+P
+P
+P
+
+Notes to Table 602-1:
+
+[1]In Regionally Significant Industrial Areas identified on Comprehensive Plan Map IV-8, Urban Growth Concept, places of assembly shall not exceed 20,000 square feet.
+
+[2]A child care center may not be located on property designated on the Department of Environmental Quality’s statewide list of contaminated properties as having known or suspected releases of hazardous substances.
+
+3 A crisis stabilization center must locate on property owned by a public body, as defined in ORS 174.109, and adjacent to where a mental or psychiatric hospital licensed under ORS 441.025 is or will be located as established by a pending development application.
+
+[4]In Regionally Significant Industrial Areas (RSIAs) identified on Comprehensive Plan Map IV-8, parks—intended to serve people other than those working or residing in the RSIA—and schools are prohibited.
+
+[5]A mental or psychiatric hospital established as a primary use must be located adjacent to where a crisis stabilization center, as defined in ORS 430.626 and licensed under ORS 430.627, is or will be located as established by a pending development application.
+
+[6]Notwithstanding Subsection 602.05, marijuana production, marijuana processing, and marijuana wholesaling shall be located entirely within one or more completely enclosed buildings. A maximum of 20,000 square feet of building floor space may be used for all activities associated with marijuana production, marijuana processing, and marijuana wholesaling on a lot of record.
+
+[7]Recyclable drop-off sites are permitted only if accessory to an institutional use.
+
+[8]Notwithstanding other provisions of Section 602 that may permit outdoor display, storage, or processing, these uses shall be conducted entirely within a building, except the following are permitted: outdoor seating areas associated with a restaurant, outdoor play areas associated with a daycare facility, and similar outdoor amenities. Drive-thru window service facilities are prohibited.
+
+[9]In Regionally Significant Industrial Areas identified on Comprehensive Plan Map IV-8, building floor area associated with each use shall not exceed 3,000 square feet, and the total building floor area of all such uses in the same development project shall not exceed 20,000 square feet. Notwithstanding these limitations, the lawful use of any structure or land as of September 9, 2013, may continue and expand to add up to 20 percent more building floor area. Outside Regionally Significant Industrial Areas identified on Comprehensive Plan Map IV-8, the same standards shall apply, except that the single-use limit is 5,000 square feet of building floor area. However, the building floor area limitations do not apply to the following uses in the BP District: destination restaurants that comply with Subsection 1016.05(B)(4) and provide lunch service; and hotels and associated convention facilities, gift shops, and restaurants.
+
+[10]Lots of record created on or after September 9, 2013, shall be subject to Note 7 to Table 602-1 in lieu of Note 6 to Table 602-1. In Regionally Significant Industrial Areas identified on Comprehensive Plan Map IV-8, building floor area associated with each use shall not exceed 3,000 square feet. Outside Regionally Significant Industrial Areas identified on Comprehensive Plan Map IV-8, building floor area associated with each use shall not exceed 5,000 square feet. Notwithstanding these limitations, the lawful use of any structure or land as of September 9, 2013, may continue and expand to add up to 20 percent more building floor area. In all cases, the total building floor area of all such uses on the same lot of record shall not exceed 20,000 square feet or 25 percent of the building floor area on the lot of record, whichever is less. However, the building floor area limitations do not apply to the following uses in the BP District: destination restaurants that comply with Subsection 1016.05(B)(4) and provide lunch service; and hotels and associated convention facilities, gift shops, and restaurants.
+
+[11]This use is limited to indoor areas for retail display and retail sales of products manufactured by the same business occupying the premises, as well as related products. In Regionally Significant Industrial Areas identified on Comprehensive Plan Map IV-8, building floor area for such retail display and retail sales shall not exceed 3,000 square feet per business, and the total building floor area of all such retail display and retail sales areas in the same development project shall not exceed 20,000 square feet. Notwithstanding these limitations, the lawful use of any structure or land as of September 9, 2013, may continue and expand to add up to 20 percent more building floor area. Outside Regionally Significant Industrial Areas identified on Comprehensive Plan Map IV-8, the same standards shall apply, except that the single-business limit is 5,000 square feet of building floor area.
+
+[12]Temporary signs regulated under Subsection 1010.13(A) are a primary use.
+
+[13]Aggregate batch plant operations are a primary use in the GI District.
+
+[14]Stormwater management facilities are a primary use if:
+
+1 They are underground, except for an outlet structure if applicable;
+
+2 They are vegetated, except for an outlet structure if applicable; or
+
+3 They are approved in conjunction with a development approved through another land use permit (e.g., a subdivision or design review).
+
+[15]Utility cabinets are a primary use if they comply with Section 830, Utility Cabinets, or if they are inside a road right-of-way.
+
+[16]Utility lines are a conditional use only if they are gas transmission lines or electric transmission lines.
+
+[17]Warehouse event retail sales are permitted if the products being sold at the event sale are manufactured, warehoused, or distributed as a primary use on the subject property; no more than one event sale occurs each calendar month; a single event sale lasts a maximum of three consecutive days, which shall be Friday, Saturday, Sunday, or Monday; and the event sales occur indoors.
+
+Table 602-2: Dimensional Standards in the BP, LI, and GI Districts
+
+Standard               BP                                   LI                                   GI
+Minimum Lot Size1      3 acres                              1 acre2                              1 acre2
+Maximum Front Setback  See Subsections 1005.02(E) and (H).  See Subsections 1005.02(E) and (H).  See Subsections 1005.02(E) and (H).
+Minimum Front Setback  20 feet[3]                           20 feet[3]                           20 feet[3]
+Minimum Rear Setback   0[3,4,5]                             0[3,4,5]                             0[3,4,6]
+Minimum Side Setback   0[3,7]                               0[3,7]                               0[3,4,7]
+
+Notes to Table 602-2:
+
+[1]The minimum lot size standards apply as established by Sections 1012, Density, and 1107, Property Line Adjustments, except that no minimum lot size standard applies to a lot that is developed with a dwelling that is a nonconforming use. Notwithstanding the minimum lot size standard, a lot of record may be developed, except minimum lot size standards of Section 800 apply.
+
+[2]The minimum lot size may be reduced to 20,000 square feet, subject to design review approval pursuant to Section 1102, Design Review, of the overall development plan for the entire lot of record, including access, circulation, parking, landscaping, and proposed building locations.
+
+[3]The minimum setback requirements of Table 315-2, Dimensional Standards in the Urban Low Density Residential Districts, apply to dwellings that are nonconforming uses, as well as to structures that are accessory to such dwellings.
+
+[4]Except as established by Notes 3 and 6, if the rear lot line abuts a commercial zoning district, the minimum setback is 15 feet, and if the rear lot line abuts a natural resource or residential zoning district, the minimum setback is 35 feet.
+
+[5]The minimum setback for a silo, tower, or other specialized storage or processing structure (unless such structure is enclosed in a building) is 35 feet.
+
+[6]The minimum setback for a silo, tower, or other specialized storage or processing structure (unless such structure is enclosed in a building) is 35 feet for structures 35 feet or less in height. An additional five feet of setback is required for each additional 10-foot height increment, or portion thereof, for structures over 35 feet in height. These greater setback standards do not apply if the lot line abuts an LI or GI District.
+
+[7]Except as established by Notes 3 and 6, if the side lot line abuts a commercial zoning district, the minimum setback is 15 feet, and if the side lot line abuts a natural resource or residential zoning district, the minimum setback is 35 feet.
+
+[Amended by Ord. ZDO-224, 5/31/2011; Amended by Ord. ZDO-231, 1/31/2012; Amended by Ord. ZDO-235, 5/14/2012; Amended by Ord. ZDO-243, 9/9/2013; Amended by Ord. ZDO-249, 10/13/2014; Amended by Ord. ZDO-250, 10/13/2014; Amended by Ord. ZDO-253, 6/1/2015; Amended by Ord. ZDO-254, 1/4/2016; Amended by Ord. ZDO-267, 8/28/2017; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-268, 10/2/2018; Amended by automatic repeal of Ord. ZDO-267, 8/28/2019; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-283, 9/5/2023; Amended by Ord. ZDO-285, 9/3/2024; Amended by Ord. ZDO-288, 9/9/2024; Amended by Ord. ZDO-293, 09/08/2026]

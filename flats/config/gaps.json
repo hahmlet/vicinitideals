@@ -1,5 +1,5 @@
 {
-  "digest": "96f2c6d67c2afc38976cc999ab7fc5f3278f3deb1b7b8767bb416c3f2a7f08ec",
+  "digest": "10e3d43b742707a3b2cc351fa34dfd4eaf23964c596d3359e0278115aa7c2266",
   "layers": {
     "or": {
       "misattributed": [],
@@ -303,27 +303,6 @@
     },
     "or/multnomah/gresham": {
       "misattributed": [
-        {
-          "zone": "CNRM",
-          "field": "quadplex_allowed",
-          "claimed": "4.1220",
-          "found": "4.1200",
-          "quote": "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
-        },
-        {
-          "zone": "CNTH",
-          "field": "quadplex_allowed",
-          "claimed": "4.1220",
-          "found": "4.1200",
-          "quote": "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
-        },
-        {
-          "zone": "CNTM",
-          "field": "quadplex_allowed",
-          "claimed": "4.1220",
-          "found": "4.1200",
-          "quote": "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
-        },
         {
           "zone": "NC-PV",
           "field": "quadplex_allowed",

@@ -58,8 +58,21 @@ def test_every_encoded_footnote_still_finds_its_rule(rows) -> None:
 
 
 def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None:
-    """49 as of 2026-09-08. A number that moves means a footnote was ruled or
+    """56 as of 2026-09-20. A number that moves means a footnote was ruled or
     un-ruled, which is a thing to notice rather than a thing to absorb.
+
+    49 -> 56 on 2026-09-20, when the September county map's zone codes were
+    ruled and seven footnotes became part of a refusal's quote rather than a
+    qualification on one. Clackamas ZDO Table 513-1 note 2 is the whole of
+    housing in the RC district -- one detached single-family dwelling on a lot
+    of record created before December 7, 1983 -- and narrows the only dwelling
+    row that table has. Happy Valley's six are the notes that decide its
+    commercial and industrial use tables: Table 16.23.010-1 notes 2 and 3
+    (residential only on upper floors of a mixed-use building, freestanding
+    only when nonresidential uses occupy the street side) close MUC, MUE and
+    RCMU together; Table 16.23.030-1 notes 1 to 3 close CCC and MCC the same
+    way; Table 16.25.010-1 note 1 closes EC and IC. Every one reports reaching
+    exactly the zones its refusal names, and all seven confirm.
 
     45 -> 46 on 2026-09-08: Clackamas ZDO Table 316-1 note 8, the sentence the
     five rural refusals rest on. "Each lot of record may be developed with only
@@ -81,7 +94,7 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     warranted here -- the two prohibitions are decided by their `X` and do not
     care what these three sentences say.
     """
-    assert len(rows) == 49
+    assert len(rows) == 56
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

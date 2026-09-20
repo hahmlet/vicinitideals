@@ -2105,3 +2105,29 @@ zones:
       boundary for. Recorded so the form is on the record: if a district that
       permits our building ever writes "whichever is less", `min_building_height_ft`
       alone would be the wrong encoding of it. (L6694-L6697.)
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). A pocket gates ZONE_POCKET in the copy
+# in place of ZONE_NOT_ENCODED and folds away on the County copy page.
+zone_rulings:
+  County:
+    outcome: pocket
+    of: or/clackamas/_unincorporated
+    note: >-
+      The city's own zoning layer prints the word "County" on 14 lots inside
+      the city limits -- houses on Holcomb Blvd, S Leroy Ln, S Rose Rd, S
+      South End Rd, Forest Ridge Rd, Pease Rd, S Central Point Rd,
+      Beavercreek Rd and S Leland Rd, most of them half-acre to two-acre
+      parcels built between 1920 and 1987 -- and no district code at all.
+      This is the twelfth of the twelve districts the 2026-09-08 reading of
+      the mixed-use side found, "a join question rather than a reading",
+      and the code answers the join: OCMC 17.68.025 says that "Upon
+      annexation into the city, the property shall be rezoned from county
+      zoning to the corresponding city zoning designation as identified in
+      Table 17.06.030, provided the criteria for a zone change can be met"
+      (17.zoning.txt L19000-L19004), and 17.06.030 gives the table (L3980-
+      L3992). Until that rezoning is done the lot carries Clackamas County's
+      zone, which the city's layer does not name; the county layer's own map
+      does, and its block is the one that answers. A pocket, not a code: the
+      layer says WHOSE zone it is, not which.

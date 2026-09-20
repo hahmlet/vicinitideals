@@ -836,6 +836,16 @@ code:
   - id: "19.30"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
     title: Chapter 19.30 Residential Districts
+  # Fetched 2026-09-20 for the AH refusal. Fairview's code moved to General
+  # Code's eCode360 (FA4439) between August and September 2026: every
+  # codepublishing.com URL above now returns a one-paragraph "your code is
+  # hosted on eCode360" page, so this entry is the first on the new host and
+  # the rest of the layer is queued to be re-pointed (docs/FOLLOWUPS.md). The
+  # chapter numbering did not change with the move.
+  - id: "19.25.ah"
+    url: https://ecode360.com/print/FA4439?guid=50509402
+    title: Chapter 19.25 Agricultural Holding Zone (F-2)
+    allow_thin: true
   - id: "19.120"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19120.html
     title: Chapter 19.120 VTR Village Townhouse Residential
@@ -2846,3 +2856,56 @@ zones:
       quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
     notes: 'quadfit confidence: needs_verification | MH-park district; no detached SFD — no quadplex mandate
       (3 lots).'
+  # === The September 2026 map's two codes, ruled 2026-09-20 ================
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. Metro's layer printed two Fairview
+  # codes this file did not hold: AH, three lots, refused below; FLX, one
+  # lot, an alias of VC in `zone_rulings` at the foot of this file.
+  AH:
+    section: ["19.25.ah"]
+    cite_default:
+      cite: FMC 19.25.010 (Purpose), 19.25.020 (Permitted uses), 19.25.030
+        (Conditional uses), Agricultural Holding Zone (F-2)
+      url: https://ecode360.com/print/FA4439?guid=50509402
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # The map's AH is the code's F-2, "intended primarily as a holding
+      # zone to be used for agricultural uses until the land is developed
+      # for industrial purposes". Six permitted uses, and the one dwelling
+      # among them is "Dwelling or dwellings for owner, operator and/or help
+      # required to carry out grazing, agriculture, horticulture or the
+      # growing of timber" -- a farm dwelling tied to the farm use; the
+      # conditional list is schools, churches, community centres, golf,
+      # towers, parks, and "other community service uses ... similar in
+      # nature" on the planning commission's approval, which this screen
+      # never presumes. Three lots: 22600 NE Marine Dr and the NEC of 223rd
+      # and NE Sandy Blvd, 2.4 to 7 acres, vacant.
+      value: false
+      quote: "or/multnomah/fairview/19.25.ah.txt#L17,L23,L25-L47"
+    notes: >-
+      Encoded 2026-09-20 from FMC 19.25.020. Metro classes the zone FUD --
+      future urban development -- and the code says the same thing in its
+      purpose sentence: land held for industry, not for homes.
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). An alias screens under the block it
+# names.
+zone_rulings:
+  FLX:
+    outcome: alias
+    of: VC
+    note: >-
+      The "VC flex" area: FMC 19.135.030(A)(1)(e) requires every VC first
+      floor to be commercial or office "except for the special 'VC flex'
+      area located on the extreme western portion of the VC zone, as
+      depicted in Figure V-1 ... where residential uses are allowed on the
+      first floors" (19.135.txt L62). Metro's layer draws that area as its
+      own code on one lot, 1700 NE Market Dr (1N3E33AB-00500). It is the VC
+      zone with one standard lifted, so VC's block answers: multi-unit is
+      five or more units under FMC 19.13, attached single-unit dwellings are
+      a conditional use, and VC's variant already names this very area
+      (`inside_mapped_use_area`) as the place its relief applies. The map
+      now says which lot that is; feeding the code into that fact is the
+      improvement this alias leaves open.

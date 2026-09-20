@@ -492,6 +492,17 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
+    # 272 as of 2026-09-20: the September county map put 5,329 lots in 100
+    # zone codes no layer held, and every one was ruled once. Fifty-two are
+    # zone blocks carrying only `quadplex_allowed: value: false` with the
+    # quote that says so -- farm, forest, industrial, commercial, open space,
+    # holding and public-facility zones across twelve layers, Wilsonville's
+    # eight the largest block (627 lots) and Clackamas County's ten next. The
+    # other 48 are not zones: aliases, pockets of another layer's map, tables
+    # nothing can encode and chapters still to read sit in each layer's
+    # `zone_rulings` ledger, which this count does not see. So this moves by
+    # 52 and the count of codes the gate warns on moves from 100 to 0.
+    #
     # 220 as of 2026-09-08, later than the last of the day: the commercial half
     # of the same county. ZDO Section 510 covers eleven urban commercial and
     # mixed-use districts and marks the Quadplexes row P in nine of them, so
@@ -531,7 +542,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 220
+    assert sum(len(l.zones) for l in rules.layers.values()) == 272
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

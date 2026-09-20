@@ -1,0 +1,945 @@
+Close
+Print
+Resize:
+
+City of Happy Valley, OR
+
+[print date]
+
+Title 16. Land Development Code
+
+ARTICLE 16.2. LAND USE DISTRICTS
+
+Chapter 16.25. INDUSTRIAL DISTRICTS
+
+§ 16.25.005. Rock Creek Mixed Employment (RC-ME) District.
+
+A.
+
+Purpose. The Rock Creek Mixed Employment (RC-ME) District permits land uses with high job densities that provide stable, family-wage employment within the City. This district provides a mix of uses that are compatible with nearby residential, institutional and commercial uses and provides a buffer between residential and more formally "light industrial" areas to the east. Permitted uses in the Rock Creek Mixed Employment District include office, creative arts, small-scale manufacturing, research and development, and medical centers. Commercial uses are limited to those serving the primary uses of the district. A limited number of residential uses, including pre-existing dwelling units, are permitted by right.
+
+B.
+
+Permitted Uses. The following uses are permitted in the RC-ME District.
+
+Table 16.25.005-1 Rock Creek Mixed Employment (RC-ME) Permitted Uses                                                                                                    Table 16.25.005-1 Rock Creek Mixed Employment (RC-ME) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited                                                                                                                            P=Permitted; C=Conditional Use; X=Prohibited
+Land Use                                                                                                                                                                RC-ME
+Residential                                                                                                                                                             Residential
+Single-family dwellings, when pre-existing as of June 1, 2008                                                                                                           P[1]
+Home occupations in pre-existing dwellings                                                                                                                              P
+Assisted living facilities, congregate housing, continuing care retirement community and skilled nursing facilities                                                     C[2]
+Commercial—Retail                                                                                                                                                       Commercial—Retail
+Commercial day care                                                                                                                                                     C
+Indoor health and recreation facilities, such as racquetball court, gymnasiums, health and exercise spas, swimming pools, and similar uses and associated facilities    C
+Marijuana retailing                                                                                                                                                     X
+Parking lot (when not an accessory use)                                                                                                                                 X
+Psilocybin service center                                                                                                                                               X
+Restaurant—Full service                                                                                                                                                 P[3]
+Retail—Sales                                                                                                                                                            P[9]
+Retail—Personal services                                                                                                                                                P[4]
+Commercial—Office                                                                                                                                                       Commercial—Office
+Professional and administrative offices                                                                                                                                 P
+Medical office buildings                                                                                                                                                P
+Industrial                                                                                                                                                              Industrial
+Industrial services—Fully enclosed                                                                                                                                      P[5]
+Manufacturing and production—Fully enclosed                                                                                                                             P
+Marijuana processing, production and wholesaling                                                                                                                        X
+Psilocybin processing, production and wholesaling                                                                                                                       X
+Fabrication                                                                                                                                                             P
+Energy recovery systems
+Research and development facilities                                                                                                                                     P
+Laboratories                                                                                                                                                            P
+Repair, finishing, and testing                                                                                                                                          P
+Assembly                                                                                                                                                                P
+Distribution center                                                                                                                                                     P[6]
+Warehouse                                                                                                                                                               P[6]
+Institutional                                                                                                                                                           Institutional
+Basic utilities                                                                                                                                                         P
+Colleges                                                                                                                                                                P[7]
+Emergency services                                                                                                                                                      P
+Medical centers                                                                                                                                                         P
+Hospitals, including helipads[10]                                                                                                                                       P
+Postal service facilities                                                                                                                                               P[8]
+Public parks and open space—Pedestrian amenities                                                                                                                        P
+Public parks, usable open space                                                                                                                                         P
+Public schools, parks, and open space—Parks and recreation facilities                                                                                                   C
+Other                                                                                                                                                                   Other
+Agriculture—Animals/horticulture when pre-existing as of June 1, 2008                                                                                                   P
+Transportation facilities (operation, maintenance, preservation, and construction, in accordance with the City's Transportation System Plan)                            P
+Wireless telecommunication facilities. Wireless telecommunication facilities are subject to the requirements of Section 16.44.020 (Wireless communications facilities)  P/C
+Any accessory use or structure, not otherwise prohibited, that the Planning Official or designee finds to be customarily accessory and incidental to a permitted use    P
+Any use that the Planning Official or designee finds to be similar to one or more of those specified above                                                              P/C
+
+NOTES:
+[1] Pre-existing dwellings are allowed to remodel or expand.
+[2] Assisted living and senior housing may include a range of housing type including single-family detached, single-family attached, assisted-living multifamily units, and congregate care facilities permitted on a single property to provide for a variety of dwelling units and continuous care for seniors of varying levels of health and independence.
+[3] Drive-through facilities are not permitted.
+[4] Maximum building size of 20,000 gross square feet.
+[5] Outdoor storage or outdoor fleet storage not permitted.
+[6] Permitted as an accessory use—May not exceed 20% of the total site area.
+[7] Use limited to public and nonprofit institutions providing technology, health sciences or creative arts education and job training. No dormitories permitted.
+[8] Fleet parking or mail processing centers not allowed. Permitted use limited to direct consumer services.
+[9] Retail sales uses may not exceed 60,000 square feet of gross lease area in a single building; or commercial retail uses with a total of more than 60,000 square feet of retail sales area on a single lot or parcel; or, on contiguous lots or parcels, including those separated only by transportation right-of-way.
+[10] Subject to applicable FAA rules and regulations.
+
+C.
+
+Master Plan Required. Within the RC-ME District, uses will provide high densities of employment. This district encourages creative development patterns that achieve these densities in a well-planned, urban environment. Development on sites of 10 acres or larger shall require preparation of a master plan pursuant to subsection E of this section. On sites smaller than 10 acres, the preparation of a master plan shall be optional. However, if a master plan is not prepared, the development shall be subject to Chapter 16.62 (Land Use Review and Design Review). As part of the design review application, the applicant shall provide a traffic impact analysis (TIA) as required by the City Engineer. The traffic impact analysis shall be consistent with the requirements of OAR 660-012-0060(1)—(3) and the requirements of subsection E.4.b.ix of this section. Development will not be approved prior to submission and review of this analysis.
+
+D.
+
+Development Standards.
+
+1.
+
+Compliance Required. All of the applicable development standards contained in the underlying zoning district, except where the applicant has obtained variances pursuant to Chapter 16.71 (Variances), or adjustments in accordance with the RC-ME Master Plan process as contained in subsection E.
+
+2.
+
+Development Standards. Development in the RC-ME District shall comply with all of the development standards in the table below and all other applicable standards in this title, except as modified through the RC-ME Master Plan provisions in subsection E.4.b.iv.
+
+Table 16.25.005-2 Development Standards for RC-ME District  Table 16.25.005-2 Development Standards for RC-ME District
+Standard                                                    RC-ME
+Minimum lot size                                            1 acre[1]
+Minimum lot width                                           100 ft.
+Minimum lot depth                                           100 ft.
+Minimum/maximum floor area ratio (FAR)                      Maximum of 2:0 unless increased through a Master Plan
+Minimum setbacks
+Front and side facing street on corner and through lots     50 feet when abutting a major arterial, highway or expressway, otherwise, setback equals zero feet
+Side/rear yard                                              50 feet when abutting a residential zoning district, otherwise, setback equals zero feet
+Maximum building height                                     Established through Master Plan except for a maximum height of 70 ft. within 100 ft. of an abutting residential district
+
+NOTES:
+[1] Legal lots of record of less than one acre created prior to the adoption of these regulations shall be conforming for purposes of development.
+
+E.
+
+Master Plan Requirements Specific to the RC-ME District.
+
+1.
+
+Purpose. The purpose of the RC-ME Master Plan is to allow large-scale, multiphased developments to obtain approval of several projects at one time within the RC-ME District. The RC-ME Master Plan process allows the review authority to evaluate the cumulative impacts associated with the full build-out of the overall development, to ensure that the impacts of such development are mitigated to the extent practicable and to coordinate the provision of future infrastructure.
+
+2.
+
+Applicability. These provisions shall apply to all development on parcels 10 acres in size or larger within the RC-ME District and may be used voluntarily for parcels smaller than 10 acres.
+
+3.
+
+Components of RC-ME Master Plans and Detailed Phasing Plans.
+
+a.
+
+Concept Master Plan. A proposed plan for development of the site at full build-out of the concept plan that contains the approximate building envelopes by use within a conceptual framework including pedestrian, bicycle and vehicular circulation, open space/natural resource and on-site utility plans. The concept plan also includes minimum and maximum development standards; architectural, landscaping and pedestrian design standards; building and landscaping materials lists; and other information that will illustrate planned development. The plan also shall include a phasing plan and proposed schedule of development. For each phase of development and at full build-out, the applicant shall identify the total square footage by type of use; development density; parking and traffic generation; on-site utility requirements; and required off-site capital improvements for roads and other public infrastructure. A detailed traffic impact analysis (TIA) detailing traffic volumes at each phase of development and at full build-out is required.
+
+b.
+
+Detailed Phasing Plans. At the time of development of each phase of development, the applicant shall present a detailed development plan including, but not limited to, the maximum size, location and use of specific buildings; size and location of parking facilities; building and parking structure elevations; location and design of on-site pedestrian, bicycle and vehicle circulation; design and location of open space and natural resource protection; and detailed utility plan. The applicant also shall confirm traffic impacts for the phase originally identified in the overall TIA required at the time of the concept plan approval. The proposed development shall substantially conform to the architectural and site design standards approved in the Concept Master Plan.
+
+4.
+
+RC-ME Concept Master Plan Submittal Requirements.
+
+a.
+
+Existing Conditions Plan.
+
+i.
+
+Legal description of all parcels on the proposed site within the applicant's ownership or control.
+
+ii.
+
+Vicinity map that identifies abutting uses. For the purposes of these regulations, "abutting" means those properties sharing one or more property lines with the subject site.
+
+iii.
+
+Zoning map that identifies base and overlay zoning designations for the proposed site and abutting properties.
+
+iv.
+
+Site description for all property in the applicant's ownership and/or control including the following information provided in narrative, tabular and/or graphic formats:
+
+(A)
+
+Topography and natural resources including 100-year flood plain; drainage patterns and courses; wetlands, rivers, springs and other water bodies; significant stands of trees and individual trees with a caliper greater than six inches as measured four feet above grade; significant fish and wildlife habitat, and natural hazards such as steep slopes greater than 15% and unstable, impermeable or weak soils. The application must include a site plan with no greater than two-foot contours for slopes of zero to 10% and no greater than five-foot contours for slopes greater than 10%;
+
+(B)
+
+Inventory of Goal 5 resources, including natural, cultural, historic and/or archeological resources on the site, if any;
+
+(C)
+
+Existing building inventory including use, location and size, noting whether any existing buildings will be retained and incorporated into the final build-out of the site;
+
+(D)
+
+Location and size of all public and private utilities on and immediately abutting the site including water, sanitary sewer, storm water retention/treatment facilities, and electrical, telephone and data transmission lines; and
+
+(E)
+
+Location of all public and private easements.
+
+v.
+
+Detailed description of the existing roadway system within and adjacent to the site including:
+
+(A)
+
+Street classification of all internal and adjacent streets;
+
+(B)
+
+Transit service availability;
+
+(C)
+
+Baseline traffic impact study within the vicinity of the site prepared by a licensed civil engineer to include information as required by the City's Engineer.
+
+vi.
+
+Description and evaluation of capacity of existing infrastructure on and in the vicinity of the site.
+
+b.
+
+Concept Master Plan.
+
+i.
+
+A proposed plan for development of the site at full build-out at the conceptual level including:
+
+(A)
+
+Master plan boundary;
+
+(B)
+
+Approximate location and building envelopes by use;
+
+(C)
+
+Pedestrian, bicycle and vehicular circulation plan;
+
+(D)
+
+Open space/natural resource plan;
+
+(E)
+
+On-site utility plan.
+
+ii.
+
+Phasing plan and tentative schedule that establishes the likely order in which the site will develop. Such a phasing plan is presented for purposes of estimating roadway and public utility capacity, with the understanding that phases may be developed out of order and that timing is approximate.
+
+iii.
+
+Calculations for each phase and at total build-out of the following:
+
+(A)
+
+Gross and net acreage, with the latter including deductions for public streets, natural resource corridors and other non-private development activities;
+
+(B)
+
+Maximum number of employees and anticipated number of patient and related visits on typical weekday;
+
+(C)
+
+Maximum development area, as expressed in gross square feet;
+
+(D)
+
+Maximum total floor-to-area (FAR) ratio;
+
+(E)
+
+Maximum building coverage, as expressed in percentage of total net site area;
+
+(F)
+
+Minimum open space, as expressed in percentage of total net site area;
+
+(G)
+
+Total number of employee and visitor parking spaces required.
+
+iv.
+
+Minimum and maximum development standards, including, but not limited to, and as appropriate:
+
+(A)
+
+Minimum and maximum lot size;
+
+(B)
+
+Minimum and maximum setbacks;
+
+(C)
+
+Maximum height, which may vary throughout the site;
+
+(D)
+
+Maximum FAR at full build-out;
+
+(E)
+
+Maximum building coverage at full build-out;
+
+(F)
+
+Minimum open space requirements at full build-out;
+
+(G)
+
+Minimum and maximum vehicular and bicycle parking ratios by use;
+
+(H)
+
+Minimum number of loading bays.
+
+v.
+
+Design standards including, but not limited to:
+
+(A)
+
+Architectural design standards, including design illustrations and building materials boards;
+
+(B)
+
+Landscaping, including design standards and standardized plant list. Native plant materials are preferred where practicable;
+
+(C)
+
+Pedestrian facilities, including development standards, materials and street furniture;
+
+(D)
+
+Bicycle parking facilities, including specifications;
+
+(E)
+
+Signage plan including prototypical examples, color palette and materials board.
+
+vi.
+
+Graphic illustrations of proposed development at full build-out including, but not limited to:
+
+(A)
+
+Density "block" and other three-dimensional concept studies;
+
+(B)
+
+Illustrative color "typical" street perspectives that portray the proposed architectural style and urban design elements to be used throughout the development, in recognition that these are still conceptual in nature.
+
+vii.
+
+Goal 5 resource protection plan, if needed.
+
+viii.
+
+Public utility capacity analyses/infrastructure plans for each phase and total build-out, as required by the City Engineer.
+
+ix.
+
+Traffic impact analysis (TIA) for each phase and total build-out, as required by the City Engineer. The traffic impact analysis shall be sufficient to demonstrate compliance with OAR 660-012-0060(1)—(3). Development of the site will not be approved without this analysis. The traffic impacts will be reviewed against, and any mitigation must be consistent with, the function, capacity and performance standards of affected transportation facilities. The following criteria apply only when compliance with the Transportation Planning Rule is deferred to the master plan stage, in which case the TIA shall identify whether the plan or proposed development significantly affects a transportation facility by:
+
+(A)
+
+Changing the functional classification of an existing or planned transportation facility;
+
+(B)
+
+Changing the standards implementing the street classification system;
+
+(C)
+
+Allowing types or levels of development that would result in levels of travel or access that are inconsistent with the level of service of a transportation facility;
+
+(D)
+
+Reducing the performance of a transportation facility below the minimum acceptable performance standard identified in the City of Happy Valley Transportation System Plan; or
+
+(E)
+
+Reduce the performance of a transportation facility that is otherwise performing below the minimum acceptable performance standard identified in the City Transportation System Plan.
+
+x.
+
+A proposed Concept Master Plan or Detailed Phasing Plan that will significantly affect a transportation facility must ensure that the proposed uses or development are consistent with the identified function, capacity and performance standards of the transportation facility by:
+
+(A)
+
+Limiting the proposed uses or development to be consistent with the function, capacity, and performance standards of the transportation facility;
+
+(B)
+
+Altering densities or design requirements to reduce demand for automobile travel and meet travel needs through other modes; or
+
+(C)
+
+Providing or improving transportation facilities sufficient to support the proposed uses or development.
+
+5.
+
+RC-ME Detailed Phasing Plan Submittal Requirements.
+
+a.
+
+Detailed Phasing Plan of Subsequent Phases. The following information shall be required for each Detailed Phasing Plan:
+
+i.
+
+Schedule for initiating and completing construction of phase.
+
+ii.
+
+Anticipated utilization at completion of the phase, including the total number of employees, daily visitors and other indicators of full utilization of the structure(s) within the phase.
+
+iii.
+
+Detailed description of all proposed development presented in narrative, tabular and/or graphic formats as follows:
+
+(A)
+
+Description of new buildings anticipated, including size, location, approximate footprint and use;
+
+(B)
+
+All other site improvements including new surface and structured parking facilities; bicycle parking facilities; on-site pedestrian, bicycle and vehicular circulation; transit stops; pedestrian/transit amenities; and open space and landscaped areas;
+
+(C)
+
+The location of new and/or expanded existing public and private infrastructure including water, sanitary sewer, storm water retention/treatment facilities, and electrical, telephone and data transmission lines;
+
+(D)
+
+Landscaping plan;
+
+(E)
+
+Goal 5 resource protection plan, if required;
+
+(F)
+
+Sign plan;
+
+(G)
+
+Lighting plan;
+
+(H)
+
+Grading and erosion control plans.
+
+iv.
+
+Building elevations.
+
+v.
+
+Summary of development intensity at completion of the phase including average FAR and lot coverage for the development area and for the site as a whole.
+
+vi.
+
+Calculation of minimum vehicular and bicycle parking spaces based on parking ratios established in the Concept Master Plan.
+
+vii.
+
+Reconfirmation of traffic impacts associated with completion of the phase first described in the TIA prepared for the Concept Master Plan.
+
+viii.
+
+Neighborhood communication and coordination plan to ensure that the applicant implements an on-going process for communicating and problem resolution with neighbors.
+
+ix.
+
+Narrative that demonstrates how the Detailed Phasing Plan for the specific project or groups of projects within a phase are consistent with the phase as conceptually approved in the Concept Master Plan. If there is some aspect of the phase that does not comply, the applicant may request a Detailed Phasing Plan modification as described in subsection H.
+
+6.
+
+RC-ME Concept Master Plan and Detailed Phasing Plan Approval Process.
+
+a.
+
+Initial Approval. The initial application for a Concept Master Plan shall be reviewed as a Type III-PC quasi-judicial action at a public hearing before the Planning Commission and subsequently, with regard to architectural standards, by the Design Review Board, pursuant to the requirements of this section and using the approval criteria contained in subsection (E)(7). The application also may include a request for a use that is permitted conditionally in Table 16.25.005-1 subject to the requirements of Chapter 16.64 of this title. As part of the review process for the Concept Master Plan, the Design Review Board shall consider alternative design standards for institutional development in the Rock Creek Mixed Employment area in lieu of the "Happy Valley Style" design standards that govern the design of development elsewhere in the City.
+
+b.
+
+Detailed Phasing Plans. Prior to construction of one or more projects within a phase of development approved in the Concept Master Plan, the applicant shall submit a Detailed Development Plan that contains all of the information listed in the submittal requirements for review and approval by the Community Development Director or designee, using the approval criteria in subsection (E)(7). This review shall be undertaken in lieu of the City's formal design review process.
+
+c.
+
+Concurrent Review. An applicant may submit applications for initial review of the Concept Master Plan and review of the first and subsequent Detailed Phasing Plan(s) to be reviewed concurrently. In this case, the Detailed Phasing Plan for one or more phases of development shall be reviewed at the public hearing before the Planning Commission and Design Review Board at which the Concept Master Plan is reviewed. The Detailed Phasing Plan shall require no further review, providing the phase is built out in a manner that is substantially consistent with that which was approved.
+
+7.
+
+RC-ME Concept Master Plan and Detailed Phasing Plan Approval Criteria.
+
+a.
+
+Concept Master Plan. An application for a Concept Master Plan must demonstrate compliance with the following criteria:
+
+i.
+
+Content. The Concept Master Plan must contain all of the components required in subsection (E)(4).
+
+ii.
+
+Compliance With all Applicable Standards. The proposed development and uses must comply with all applicable standards of this title, except where modifications are being approved as part of the Concept Master Plan.
+
+iii.
+
+Traffic System Capacity. There is either sufficient capacity in the transportation system to safely support the development proposed in all future phases, or there will be adequate capacity by the time each phase of development is completed, as demonstrated by a TIA that conforms with the requirements of subsection (E)(4)(b).
+
+iv.
+
+Availability of Public Services. There is either sufficient capacity for public services such as water supply, police and fire services, and sanitary waste and storm water disposal, to support adequately the development proposed in all future phases, or there will be adequate capacity available by the time each phase of development is completed.
+
+v.
+
+Protection of Designated Resources. Resources such as historic landmarks, significant trees and sensitive natural resources identified on the City's Goal 5 inventories are protected and enhanced in compliance with the regulations in this and other titles of the Municipal Code.
+
+vi.
+
+Internal Design Compatibility With Adjacent Uses. The Concept Master Plan must contain building design, landscaping, parking and circulation elements that minimize conflict with adjacent uses to the greatest extent practicable.
+
+vii.
+
+Mitigation of Off-Site Impacts. All potential off-site impacts including litter, noise, shading and glare shall be identified and mitigated to the greatest extent practicable.
+
+b.
+
+Detailed Phasing Plans. To obtain an approval of one or more subsequent phases of development, the applicant shall demonstrate compliance with all of the following criteria:
+
+i.
+
+Consistency. A Detailed Phasing Plan shall be substantially consistent with the phase as approved in the Concept Master Plan.
+
+ii.
+
+Content. A Detailed Phasing Plan shall contain all of the information required in the submittal requirements in subsection (E)(5).
+
+iii.
+
+Numerical Development Standards. A Detailed Phasing Plan shall adhere to all of the numerical development standards approved in the Concept Master Plan. However, as part of the review of a Detailed Phasing Plan, the applicant may introduce modifications necessary for a specific project or projects subject to the approval criteria without the requirement for a variance, if the proposed modification is equal to or less than a 20% increase or decrease in the numerical standard. If the proposed modification involves a change in a numerical standard of greater than 20%, the review of the Detailed Phasing Plan shall be accompanied by a concurrent variance request consistent with the requirements of Chapter 16.71 of this title.
+
+iv.
+
+Design and Nonnumerical Development Standards. A Detailed Phasing Plan shall adhere to all of the design and nonnumerical development standards approved in the Concept Master Plan. However, as part of the review of a Detailed Phasing Plan, the applicant may introduce any modifications necessary to a specific project or projects subject to the approval criteria and the provisions of subsection H.
+
+8.
+
+Conditions of Approval. In approving the Concept Master Plan and subsequent Detailed Phasing Plans, the appropriate Review Authority may impose any conditions it deems necessary to mitigate potentially adverse impacts on surrounding properties to the greatest extent practicable.
+
+F.
+
+Vesting.
+
+1.
+
+Applicability. A complete application for a Concept Master Plan shall be reviewed under this Chapter and the zoning, development and other land use ordinances in the Happy Valley Municipal Code, including any uncodified ordinances modifying the same, in effect on the date the Concept Master Plan is submitted. An approved Concept Master Plan may be implemented by means of Detailed Phasing Plans for subsequent phases under the zoning, development and land use ordinances applied by the City in its review of the Concept Master Plan, provided the phases are implemented in substantial compliance with the Concept Master Plan. An approved Concept Master Plan shall govern subsequent phases for the period described in subsection G.
+
+2.
+
+Vesting of Infrastructure Capacity. An approved Concept Master Plan may include a list of on-site and off-site transportation improvements and other public infrastructure needed to support each proposed phase of development. In the event that the applicant agrees to install public improvements or infrastructure in excess of the capacity needed for a particular Detailed Phasing Plan, and in conformance with an approved Concept Master Plan, the City, through a development agreement or the formation of a reimbursement district, or both, shall accommodate future uses and building square footages based on the extent of the overbuilt infrastructure and consistent with the approved Concept Master Plan.
+
+3.
+
+Loss of Vesting. A Detailed Phasing Plan for which modification is sought under subsection (H)(4) or (H)(5) is not subject to the laws in effect when the Concept Master Plan was submitted as described in subsection (F)(1). An application for a Detailed Phasing Plan that is subject to subsection (H)(4) or (H)(5) shall comply with the land use regulations in effect at the time the Phasing Plan is submitted. Post-approval modifications that require only a minor review pursuant to subsection (H)(3) do not result in the loss of the vesting described in subsection (F)(1).
+
+G.
+
+Term.
+
+1.
+
+General. The term of a Concept Master Plan shall not exceed 15 years. An extension may be granted in accordance with the criteria and procedures provided in subsection (G)(2).
+
+2.
+
+Extension. If all phases of development in the approved Concept Master Plan are not built within the approved term, the applicant may request an extension in writing to the Community Development Director. Two one-year extension requests may be approved subject to the following criteria:
+
+a.
+
+The applicant has pursued in good faith completing the build-out of the approved Concept Master Plan;
+
+b.
+
+There have been no changes to the comprehensive plan, development code or other applicable governing documents that are inconsistent with the approved Concept Master Plan;
+
+c.
+
+There are no other significant changed conditions that would render the extension of the Concept Master Plan contrary to the public health, safety or general welfare.
+
+3.
+
+An extension request shall be filed in writing with the Community Development Director at least 60 days prior to the expiration of the initial 15 year period or any subsequently approved extensions.
+
+H.
+
+Post-Approval Modification of a Detailed Phasing Plan.
+
+1.
+
+Purpose. The purpose of this subsection is to address instances in which the applicant may not be able to construct a phase of the development exactly as approved in an approved Detailed Phasing Plan. This subsection permits the applicant to seek post-Concept Master Plan approval changes using a review process that is determined by the magnitude of the proposed change or changes. As noted in subsection F, post-approval modifications that require a quasi-judicial review by either the Community Development Director or Planning Commission or Design Review Board, procedure result in a loss of vesting in the approval criteria for that specific phase of development.
+
+2.
+
+Modifications Allowed by Right. The following modifications are permitted by right and are allowed upon issuance of a building permit, if required:
+
+a.
+
+Interior improvements;
+
+b.
+
+Exterior improvements associated with existing buildings that do not involve an expansion of floor area, subject to all applicable base zone development and design standards, as modified in the approved Concept Master Plan, and relevant conditions of approval thereto;
+
+c.
+
+Installation of new or modification of existing mechanical or electrical equipment, subject to all applicable base zone development and design standards, as modified in the approved Concept Master Plan, and relevant conditions of approval thereto;
+
+d.
+
+Maintenance of existing facilities when a building permit is required.
+
+3.
+
+Minor Decision. The following modifications shall be reviewed by the Community Development Director or designee, pursuant to the City's administrative decision-making procedure:
+
+a.
+
+Modification of the location of an approved building or building addition, providing the modification complies with the development and design standards, as approved in the Concept Master Plan and as modified in the applicable Detailed Phasing Plan, including all relevant conditions of approval thereto;
+
+b.
+
+Modification of use, design, or development standards including architecture, landscape architecture, pedestrian and bicycle facilities; signs and/or lighting elements approved in the approved Concept Master Plan as modified in the applicable Detailed Phasing Plan approval, including all relevant conditions of approval thereto;
+
+c.
+
+A new building of any size in any location that replaces a building approved but not constructed, providing there is: (i) no net increase in total building coverage, and (ii) compliance with the approved Concept Master Plan as modified in the applicable Detailed Phasing Plan approval, and all relevant conditions of approval thereto;
+
+d.
+
+New buildings or building additions up to 10,000 gross square feet (gsf) not anticipated and, therefore, not contained in the approved Concept Master Plan as modified in the applicable Detailed Phasing Plan approval. Construction of such unanticipated buildings or building additions shall not exceed 10,000 gsf in any one year, and shall not exceed 30,000 gsf in any four years. As part of this review, the applicant shall provide information on the amount of floor area built to date for the year in which the application is submitted, and the amount of floor area built within the four-year period preceding the request;
+
+e.
+
+Adjusting the sequence of buildings within a phase of development provided that there is no net increase in traffic impacts.
+
+4.
+
+Quasi-Judicial Review by the Community Development Director. The following modifications shall be reviewed by the Community Development Director or designee, pursuant to the City's quasi-judicial decision-making procedure:
+
+a.
+
+A change in the approved site boundary resulting in the exchange of properties where the total amount of land in the approved boundary remains the same or is decreased;
+
+b.
+
+A new building or building addition exceeding 10,000 gsf but less than 50,000 gsf, not anticipated and, therefore, not contained in the approved Concept Master Plan as modified in the applicable Detailed Phasing Plan approval. For new buildings or building additions exceeding 25,000 gsf under this provision, the applicant shall provide traffic and parking analyses of the proposal as part of the application;
+
+c.
+
+An increase or decrease of up to 10% in the total number of parking spaces approved in the Concept Master Plan approval as modified in the applicable Detailed Phasing Plan approval. The applicant shall provide a parking analysis related to the proposal as part of the application.
+
+5.
+
+Quasi-Judicial Review by the Planning Commission or Design Review Board. The following modifications shall be reviewed in a public hearing before the Planning Commission or Design Review Board, pursuant to the City's quasi-judicial decision-making procedure:
+
+a.
+
+Expansion of the master plan boundary beyond that contained in the approved Concept Master Plan as modified in the applicable Detailed Phasing Plan approval;
+
+b.
+
+New building or building additions of 50,000 gsf or more, not anticipated and, therefore, not contained in the initial Concept Master Plan approval as modified in the applicable Detailed Phasing Plan approval;
+
+c.
+
+Proposals that result in an increase of 10% or more of site-generated vehicular trips approved in the Concept Master Plan approval as modified in the applicable Detailed Phasing Plan approval;
+
+d.
+
+An increase or decrease greater than 10% in the total number of parking spaces approved in the Concept Master Plan approval as modified in the applicable Detailed Phasing Plan approval;
+
+e.
+
+A proposed use or development that was denied in the approved Concept Master Plan.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 395 § 2, 2009; Ord. 398 § 1, 2010; Ord. 446 § 1, 2014; Ord. 491 § 1, 2016; Ord. 503 § 1, 2016; Ord. 526 § 1, 2017; Ord. 572 § 1, 2023; Ord. 592, 6/3/2025)
+
+§ 16.25.010. Industrial districts.
+
+A.
+
+Purpose.
+
+1.
+
+Employment Center (EC). The purpose of the Employment Center (EC) District is to provide for a mix of employment opportunities, located where they are accessible by a variety of transportation modes, including transit services and safe and convenient pedestrian connections. These areas provide sites suitable for business and office parks, campus and light industrial uses, professional and corporate offices, medical offices and clinics, tech/flex businesses, creative arts and services, technical/vocational schools and other related businesses. Building types range from large single user campuses, multiple tenant business parks to multistory mixed-use buildings. Quality design and a connected and walkable character of the surrounding environment will be provided. Housing is allowed when combined in vertical mixed-use buildings.
+
+2.
+
+Industrial Campus (IC). Pursuant to Metro's Urban Growth Management Functional Plan Title 4 for Regionally Significant Industrial Areas (RSIA) the purpose of the Industrial Campus District is to provide a ready supply of developable industrial land for the City of Happy Valley and the southeast metropolitan area. It seeks to promote economic development, job creation, sustainable businesses and green building practices, jobs-housing balance, land optimization and freight mobility by preserving large contiguous areas for industrial clusters near existing and planned residential areas and transportation corridors. In order to protect the viability and integrity of industrial land, this district is not intended for residential use and shall allow only limited retail and commercial components. The Industrial Campus District is intended to be a mix of, but not limited to, the following industries:
+
+a.
+
+Green building products and design;
+
+b.
+
+Advanced materials;
+
+c.
+
+Medical devices;
+
+d.
+
+Specialized software applications;
+
+e.
+
+Forestry and agricultural biotechnology;
+
+f.
+
+Nanotechnology;
+
+g.
+
+Recreational equipment/recreation technology;
+
+h.
+
+Corporate headquarters;
+
+i.
+
+Professional services;
+
+j.
+
+Specialty food processing;
+
+k.
+
+Transportation equipment/technology;
+
+l.
+
+Logistics.
+
+B.
+
+Permitted Uses. Table 16.25.010-1 identifies the land uses that are allowed in the EC and IC Districts.
+
+Table 16.25.010-1 Industrial (EC, IC) Permitted Uses                                                                                                                    Table 16.25.010-1 Industrial (EC, IC) Permitted Uses  Table 16.25.010-1 Industrial (EC, IC) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited                                                                                                                            P=Permitted; C=Conditional Use; X=Prohibited          P=Permitted; C=Conditional Use; X=Prohibited
+Land Use                                                                                                                                                                EC                                                    IC
+Residential                                                                                                                                                             Residential                                           Residential
+Pre-existing dwellings. Preexisting dwellings may be allowed to remodel or expand and shall not be subject to the provisions of Chapter 16.72                           P                                                     P
+Home occupations in pre-existing dwellings                                                                                                                              P                                                     P
+New residential uses                                                                                                                                                    P[1]                                                  X
+Commercial—Retail                                                                                                                                                       Commercial—Retail                                     Commercial—Retail
+Commercial day care                                                                                                                                                     C                                                     C
+Entertainment, major event                                                                                                                                              X                                                     X
+Hotels                                                                                                                                                                  C                                                     X
+Indoor health and recreation facilities, such as racquetball court, gymnasiums, health and exercise spas, swimming pools, and similar uses and associated facilities    C                                                     C
+Mobile food units                                                                                                                                                       P[3,12]                                               P[3,12]
+Outdoor recreation, commercial                                                                                                                                          X/C[9]                                                X
+Parking lot (when not an accessory use)                                                                                                                                 X                                                     C/X[7]
+Quick vehicle servicing or vehicle repair                                                                                                                               C                                                     P
+Retail sales—Includes used homes, trailers, motor homes and recreational vehicles                                                                                       P[2,7]                                                P[3,7]
+Commercial service                                                                                                                                                      P[2]                                                  P[3]
+Self-service storage—Includes mini-storage and recreational vehicle storage facilities                                                                                  X                                                     P/X[7]
+Marijuana retailing                                                                                                                                                     X                                                     X
+Psilocybin service center                                                                                                                                               X                                                     X
+Commercial—Office                                                                                                                                                       Commercial—Office                                     Commercial—Office
+Offices                                                                                                                                                                 P                                                     P[4]
+Industrial[5]
+Industrial services—Fully enclosed                                                                                                                                      P                                                     P
+Industrial services—Not enclosed                                                                                                                                        C                                                     P
+Manufacturing and production and fabrication and assembly—Fully enclosed                                                                                                P                                                     P
+Research and development activities and laboratories—Fully enclosed                                                                                                     P                                                     P
+Research and development activities and laboratories—Not fully enclosed                                                                                                 C[5]                                                  P[5]
+Repair, finishing and testing—Fully enclosed                                                                                                                            P                                                     P
+Repair, finishing and testing—Not fully enclosed                                                                                                                        C[5]                                                  P[5]
+Distribution center and warehouse                                                                                                                                       P[6]                                                  P[8]
+Waste-related                                                                                                                                                           X                                                     C/X[7]
+Helipads or heliports[11]                                                                                                                                               P                                                     P
+Transfer station                                                                                                                                                        C                                                     P[7]
+Wholesale activities                                                                                                                                                    P[2]                                                  P[3]
+Institutional                                                                                                                                                           Institutional                                         Institutional
+Basic utilities                                                                                                                                                         P                                                     P
+Colleges                                                                                                                                                                C[2]                                                  X
+Institutional uses; educational institutes and trade schools; art, music, or dance studios; radio and television studios, excluding transmission towers                 C[2]                                                  C
+Public parks and open space—Pedestrian amenities                                                                                                                        P                                                     P
+Public parks and open space—Parks and recreation facilities                                                                                                             C                                                     P
+Public parks, usable open space                                                                                                                                         P                                                     P
+Churches, synagogues, temples or places of worship, library, post office, community center, etc.                                                                        C[2]                                                  X
+Public and private schools (includes commercial day care, dancing and music schools)                                                                                    X/C[2,7]                                              X
+Other                                                                                                                                                                   Other                                                 Other
+Agriculture—Animals, when an existing use as of May 5, 2009                                                                                                             P                                                     P
+Agriculture—Animals, when accessory to a permitted industrial use                                                                                                       X                                                     P
+Agriculture—Animals, when new use                                                                                                                                       X                                                     X
+Agriculture—Nurseries and similar horticulture (See also wholesale and retail uses)                                                                                     C                                                     P
+Agriculture—Vegetative processing/recycling, log processing—Not enclosed                                                                                                C                                                     C
+Buildings and structures exceeding the height limits in Table 16.25.010-2                                                                                               C                                                     C
+Marijuana processing, production and wholesaling                                                                                                                        P[10,13]                                              P[10,13]
+Psilocybin processing, production and wholesaling                                                                                                                       P[10,13]                                              P[10,13]
+Radio frequency transmission facilities—Within height limit of district                                                                                                 P                                                     P
+Radio frequency transmission facilities—Exceeds height limit (freestanding or building-mounted facilities)                                                              C                                                     C
+Rail lines and utility corridors                                                                                                                                        P                                                     P
+Temporary uses (limited to "P" and "C" uses), per Section 16.69.010                                                                                                     C                                                     C
+Transportation facilities (operation, maintenance, preservation, and construction in accordance with the City's Transportation System Plan)                             P                                                     P
+Wireless telecommunication facilities: wireless telecommunication facilities are subject to the requirements of Section 16.44.020 (Wireless Communications Facilities)  P/C                                                   P/C
+Any accessory use or structure, not otherwise prohibited, that the Planning Official or designee finds to be customarily accessory and incidental to a permitted use    P                                                     P
+Any use that the Planning Official or designee finds to be similar to one or more of those specified above                                                              P/C                                                   P/C
+
+NOTES:
+[1] Residential uses on upper floors of mixed use buildings are permitted. In the Rock Creek Employment District, the ground floor may contain a residential use (including ancillary residential uses within the same tenant space such as lobbies, day care, community rooms, exercise facilities, office, and activity spaces), provided that residential uses, accessory and ancillary uses, whether shared with commercial uses or separate occupy no more than 80% of the overall interior square footage of the site. No ground floor residential use may be within 20 feet of a transit street.
+[2] New commercial retail uses shall not exceed 60,000 square feet gross leasable area on a single lot or parcel or contiguous lots or parcels. For the purposes of this limitation, parcels or lots separated by only a transportation right-of-way are considered to be contiguous. The use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
+[3] Uses are subject to the following limitations:
+a. New uses:
+1. No single store, branch, agency or other outlet shall exceed 5,000 square feet in area (including buildings and outdoor storage and sales areas); and
+2. On sites with multiple outlets, the cumulative area dedicated to these uses shall not exceed 20,000 square feet (including buildings and outdoor storage and sales areas);
+b. Existing uses and buildings: Notwithstanding subsection (a) above, the use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
+[4] Permitted as an accessory use—Executive and administrative offices must relate to the operation of the industrial use and may not exceed 40% of the total gross floor area.
+[5] If not fully enclosed, must be located more than 200 feet from residential districts and petroleum storage and refining.
+[6] Permitted as an accessory use—May not exceed 20% of the total site area.
+[7] All uses are prohibited within the Rock Creek Employment Center Subdistrict as defined in subsection F. Specific to retail sales, prohibition is on sale of used homes, trailers, motor homes and recreational vehicles.
+[8] Within the Rock Creek Employment Center Subdistrict as defined in subsection F, use is permitted only as an accessory use—May not exceed 20% of the total site area except as noted in subsection F.3.
+[9] Outdoor recreation facilities without permanent buildings are allowed as a conditional use within the EC zone.
+[10] Use is prohibited within the Rock Creek Employment Center Subdistrict as defined in Section 16.25.010.F.
+[11] Subject to applicable FAA rules and regulations.
+[12] Pursuant to Section 16.69.030.
+[13] Pursuant to Chapter 16.49.
+
+C.
+
+Conditional Uses Approval Criteria.
+
+1.
+
+Conditional uses may be allowed subject to review pursuant to Chapter 16.64 (Conditional Use). In addition to the criteria for approval listed in that chapter, conditional uses in the EC and IC Districts shall be reviewed against the following criteria:
+
+a.
+
+If a service-related use, buildings shall have existing employment or industrial users as their primary market;
+
+b.
+
+Uses shall not undermine the ability of the district to retain and attract employment and industrial uses; and
+
+c.
+
+Uses shall not create substantial use incompatibilities or significantly alter the overall industrial campus character of the area based on the existing proportion of industrial to non-industrial uses.
+
+D.
+
+Additional General Provisions for the Employment Center and Industrial Campus Districts. The procedures and application requirements under Chapter 16.62 (Design Review) and Chapter 16.48 (Industrial Design Standards) shall apply to all development in the EC and IC Districts. If language within these sections conflicts with specific requirements and standards of the districts, the standards within the design review and general site design standards chapters shall prevail.
+
+E.
+
+Development Standards. The development standards in Table 16.25.010-2 apply to all uses, structures, buildings, and development within the EC and IC Districts.
+
+Table 16.25.010-2 Development Standards for EC and IC Districts  Table 16.25.010-2 Development Standards for EC and IC Districts  Table 16.25.010-2 Development Standards for EC and IC Districts
+Standard                                                         EC                                                               IC
+Residential density (maximum)                                    NA                                                               NA
+Lot size (minimum)                                               None                                                             None[1]
+Lot width (minimum)                                              None                                                             None
+Lot depth (minimum)                                              None                                                             None
+Lot coverage, including all impervious surfaces (maximum)        85%                                                              75%
+Open space (minimum)                                             15%                                                              15%
+Building setbacks (minimum):
+Front                                                            10 ft.                                                           10 ft.
+Rear (abutting a nonresidential district)                        10 ft.                                                           20 ft.
+Rear (abutting a residential district)                           20 ft.                                                           20 ft./50 ft.[3]
+Side                                                             0 ft./10 ft.[2]                                                  0 ft./20 ft./50 ft. [2,3]
+Building setbacks (maximum):
+Front                                                            None                                                             None
+Rear                                                             None                                                             None
+Side                                                             None                                                             None
+Building height (maximum)                                        45 ft.[4]                                                        45 ft.
+
+NOTES:
+[1] Lots or parcels larger than 50 acres may be divided into smaller lots and parcels pursuant to a master plan approved by the City so long as the resulting division yields at least one lot or parcel of at least 50 acres in size.
+[2] The minimum required side and rear building setbacks shall be increased by one-half foot for each foot by which building height exceeds 20 feet. Zero lot lines area allowed along interior side lot lines where both parcels are within the EC or IC zones subject to approval by the building official and Clackamas fire district.
+[3] The minimum setback for buildings and outdoor storage or activities within the Rock Creek Employment Center is 50 feet when abutting a residential zone. Within the 50 foot setback, parking and maneuvering of noncommercial vehicles may be allowed up to 20 feet from the property line.
+[4] In the Rock Creek Employment Center the maximum height for mixed use buildings is 55 feet.
+
+F.
+
+Rock Creek Employment Center Subdistrict.
+
+1.
+
+The boundaries of the Rock Creek Employment Center Subdistrict are shown on Figure 16.25.010-1.
+
+2.
+
+Subarea A—Trip Limitation Requirement. The standards in this subsection apply to all development proposed within Subarea A identified on Figure 16.25.010-1.
+
+a.
+
+The cumulative total p.m. peak hour trips for the subarea shall not exceed 217 trips except as permitted by subsection F.3.
+
+b.
+
+Development applications within the subarea shall include a trip generation estimate demonstrating that proposed development will not cause the subarea to exceed 217 total cumulative p.m. peak hour trips.
+
+c.
+
+The trip limitation of 217 p.m. peak hour trips may be exceeded if an applicant can demonstrate that there are funded transportation projects in the area to accommodate the additional trips or if a subsequent traffic analysis shows that additional traffic will not have a significant effect on the transportation system.
+
+3.
+
+Subarea B—Distribution Center and Warehouses. Distribution centers and warehouses are permitted as primary uses within the area identified as Subarea B on Figure 16.25.010-1 and are exempted from the provisions of Chapter 16.65 (Master Planned Developments) provided:
+
+a.
+
+At least eight percent but not more than 40% of the gross floor area square footage of the distribution center or warehouse facility is executive and/or administrative offices related to the operation of the distribution center or warehouse; or
+
+b.
+
+The distribution center or warehouse is intended and designed to accommodate at least one employee per 2,000 square feet of gross floor area.
+
+4.
+
+Development in the Industrial Campus (IC) District abutting a residential zone shall comply with the following within the setback along the adjoining property lines:
+
+a.
+
+Installation of a minimum 12 foot tall fully sight-obscured masonry wall.
+
+b.
+
+Landscaping on the either side of the wall including:
+
+i.
+
+A row of coniferous trees a minimum of six feet in height planted on average 30 feet on center; and
+
+ii.
+
+An evergreen hedge screen of 42 inches high or shrubs a minimum of two feet in height spaced no more than four feet apart on average; and
+
+iii.
+
+Ground cover plants, which includes grasses covering all landscaping areas. Mulch (as a ground cover) shall only be allowed underneath plants at full growth and within two feet of the base of a tree.
+
+c.
+
+The emission of air pollutants or odorous gasses and changes in temperature detectable by the human senses without the aid of instruments on adjacent residential property is prohibited. No maneuvering or parking of commercial vehicles is permitted within the minimum setback, except for the driveway access.
+
+Figure 16.25.010-1 Rock Creek Employment Center Subdistrict
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 443 § 1, 2013; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 491 § 1, 2016; Ord. 501 § 1, 2016; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 526 § 1, 2017; Ord. 545 § 1, 2019; Ord. 556 § 1, 2021; Ord. 572 § 1, 2023; Ord. 573 § 1, 2023; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025; Ord. 598, 10/7/2025)

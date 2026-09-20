@@ -316,15 +316,19 @@ class Reading(BaseModel):
 #: A zone where the building is FORBIDDEN is not ruled here: it is a zone
 #: block carrying ``quadplex_allowed: false`` with its quote, and the screen
 #: answers RED at the use gate for every lot in it without another number.
-#: A zone where the building is permitted and the dimensions are unread is a
-#: zone block too -- ``quadplex_allowed: true`` and the gaps ledger holds the
-#: rest. This ledger is for the codes that are not zones of this layer's code
-#: at all, or that the model cannot hold.
+#: A zone where the building is permitted and the dimensions are unread is
+#: NOT a zone block yet: a block with a use and no numbers is a gap in every
+#: coverage ledger and an unfinished rule on the lots, so it is ``to_read``
+#: here -- with the note saying what the use table said -- until its chapter
+#: is encoded, and the districts ledger (test_districts) holds it as
+#: ``encode`` or ``conditional`` meanwhile. This ledger is for the codes that
+#: are not zones of this layer's code at all, that the model cannot hold, or
+#: that nobody has encoded yet.
 ZONE_RULING_OUTCOMES: dict[str, str] = {
     "alias": "The map's spelling of a zone this layer holds",
     "pocket": "Another jurisdiction's zoning carried on this layer's map",
     "unencodable": "Read; asks a measurement this model cannot take",
-    "to_read": "Seen; the use table has not been read yet",
+    "to_read": "Seen; the chapter is not encoded yet (use table unread, or use permitted and dimensions unread)",
 }
 
 
@@ -399,7 +403,7 @@ LAYER_META = frozenset(
         "words",
         # Zone codes on the county map that are not zone blocks here, read and
         # ruled: an alias, another jurisdiction's pocket, an unholdable
-        # district, a use table still to read. The refresh gate flags only a
+        # district, a chapter not encoded yet. The refresh gate flags only a
         # code that is neither a zone nor one of these.
         "zone_rulings",
         "kind",

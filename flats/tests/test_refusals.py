@@ -345,7 +345,21 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 123, "comments": 127, "tests": 17}
+EXPECTED = {"notes": 122, "comments": 127, "tests": 17}
+#
+# 267 -> 266 on 2026-09-20: a DOCUMENT arrived. One refusal LEFT, Wood
+# Village's header paragraph on the O (Open Space) zone, which had said the
+# zone was "not encoded and is not a gap in the reading" because WVDC 260.200
+# names Table 260-1 three times and the publisher served the table as an
+# image the store could not read. The publisher files the table under the
+# next leaf, 260.210, and that page holds it as text (fetched with
+# `allow_thin`, since five of its 142 lines carry a section number). Fourteen
+# rows and no residential category, so O is now a use-gate refusal
+# (`quadplex_allowed: false` quoting 260.210.txt#L62,L64-L81) and the header
+# records the encoding where it recorded the refusal. The other 99 codes the
+# September 2026 map carried were ruled the same day without touching this
+# count: 51 more use-gate refusals are zone blocks, not NOT-ENCODED notes,
+# and the 48 `zone_rulings` entries are a ledger this census does not read.
 #
 # 268 -> 267 on 2026-09-16: a FORM arrived. One refusal LEFT, Wilsonville's
 # header paragraph "NOT ENCODED: on a lot over 10,000 sq ft the corner-lot

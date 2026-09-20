@@ -1612,3 +1612,242 @@ zones:
       so the encoded 5 is what the building needs either way. Minimum lot depth (70 ft) has no field.
       Minimum density is 25 units/acre and maximum 32, but quadplexes are exempt from the maximum
       (footnote 2).'
+  # === The September 2026 map's eleven codes, ruled 2026-09-20 =============
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. Milwaukie's map carried eleven codes
+  # this layer did not hold. Seven refuse the building at their use table or
+  # use list and are the use-gate refusals below, each quoting Chapter 19.300
+  # the way R-MD quotes its own row, and each with nothing dimensional
+  # encoded because nothing dimensional matters while the building may not
+  # be built. The other four -- the three commercial mixed-use zones and the
+  # Downtown Mixed Use zone -- permit the building in one form or another and
+  # are `zone_rulings` at the foot of this file, to read.
+  #
+  # One definition does most of the work. MMC 19.200 defines "Quadplex" as
+  # "4 dwelling units on a lot or parcel in any configuration"
+  # (19.200.definitions.txt#L731-L732) and "Multi-unit development" as "a
+  # structure that contains 5 or more dwelling units" (L723-L724); the
+  # residential tables list Quadplex and Multi-unit housing as separate rows.
+  # So a table whose only housing row is multifamily has no row a four-unit
+  # building could be, and a table with a Townhouse row admits it only split
+  # onto unit lots.
+  OS:
+    section: ["19.304"]
+    cite_default:
+      cite: MMC 19.304.2.D (uses listed with an "N," or not listed, are
+        prohibited) and Table 19.304.2, Uses Allowed in Downtown Zones, OS column
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Open Space, the second downtown zone: "generally applied to lands
+      # that are in public ownership along the Willamette River, Kellogg
+      # Creek, Spring Creek, and Johnson Creek". Every residential row of
+      # Table 19.304.2 -- Boarding house, Townhouse, Multifamily, Live/work
+      # units, Second-story housing, Senior and retirement housing -- reads N
+      # in the OS column; what reads P is Parks and open space, accessory
+      # uses and short-term rentals. 19.304.2.D: uses listed with an N, or
+      # not listed, are prohibited as new uses. 29 lots.
+      value: false
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1400,L1402,L1424-L1427,L1428-L1456,L1547-L1551,L1572-L1573"
+    notes: >-
+      Encoded 2026-09-20 from Table 19.304.2. The whole OS column is sixteen
+      Ns and four yeses, and the four are parks, community service uses,
+      accessory uses and short-term rentals. Riverfront parkland in public
+      ownership; the lots are the city's.
+  MUTSA:
+    section: ["19.312"]
+    cite_default:
+      cite: MMC 19.312.2.E (uses not listed in Table 19.312.2, and not
+        accessory or similar, are prohibited) and Table 19.312.2, Residential
+        rows, MUTSA column, with note 1; MMC 19.200 "Multi-unit development"
+        and "Quadplex"
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Tacoma Station Area Mixed Use. Three residential rows and the MUTSA
+      # column reads P on all three: Multifamily, Mixed use residential,
+      # Live/work units. No Townhouse row, no Duplex/Triplex/Quadplex row, no
+      # single detached row. Note 1: "Multifamily residential is permitted
+      # outright in a stand-alone building or in stories above a ground-floor
+      # commercial or office use." Multifamily is the name Table 19.312.2
+      # still uses for what 19.303.2 and 19.505.3 call multi-unit housing,
+      # and 19.200 defines multi-unit development as five or more units; a
+      # four-unit building on one lot is a quadplex by 19.200's own
+      # definition and the city lists the two as separate rows wherever it
+      # lists both. Not listed here, so 19.312.2.E answers. 80 lots.
+      value: false
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3502,L3504,L3534-L3560,L3809-L3811"
+    notes: >-
+      Encoded 2026-09-20 from Table 19.312.2. The closest call among the
+      seven: the zone's purpose sentence names housing as a primary use and
+      the table permits multifamily outright, so a four-unit building misses
+      the row by one unit rather than by kind. 19.312.2.H lets the Planning
+      Director find an unlisted use similar to a listed one on a Type I
+      review; that is a discretionary finding this screen never presumes,
+      the same reasoning as Oregon City MUE's "or similar as defined by the
+      community development director". Whole-section grep of 19.312 (L3460
+      to the end) for quadplex, townhouse, plex, middle housing, single
+      detached: nothing; "dwelling" appears twice, in the density row
+      (L3954) and the entrance rule (L4187). If the city ever adds a middle
+      housing row here, the standards are Table 19.312.5 and 19.312.6-7.
+  NME:
+    section: ["19.312"]
+    cite_default:
+      cite: MMC 19.312.2.E and Table 19.312.2, Residential rows, NME column
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # North Milwaukie Employment, "intended to ... retain the area as a
+      # viable industrial and employment zone". Every residential row reads
+      # N in the NME column -- Multifamily N, Mixed use residential N,
+      # Live/work units N -- and 19.312.2.E prohibits what the table lists
+      # with an N. 57 lots.
+      value: false
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3502,L3504,L3534-L3560,L3809-L3811"
+    notes: >-
+      Encoded 2026-09-20 from Table 19.312.2. The one column of the pair that
+      needs no argument about what multifamily means: the cells are N.
+  BI:
+    section: ["19.310"]
+    cite_default:
+      cite: MMC 19.310.2 (uses permitted outright), 19.310.3 (accessory
+        uses), 19.310.4 (limited uses), 19.310.5 (conditional uses), Business
+        Industrial Zone
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Business Industrial. Four closed lists -- "the following business
+      # and industrial uses are allowed outright", accessory uses, limited
+      # retail and service uses "that primarily service the needs of BI Zone
+      # clients, employees, and businesses", and the conditional list of
+      # community buildings, recreation, mini-storage and marijuana
+      # producers -- and no dwelling on any of them. Whole-section grep of
+      # 19.310 (L2876-L3147) for dwelling, residential, housing, quadplex,
+      # townhouse, apartment: the only hit is "residential and
+      # nonresidential building construction" as an example of a
+      # contractor's business (L2916). 74 lots.
+      value: false
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2884-L2892,L2958-L2962,L3008-L3012,L3032-L3048"
+    notes: >-
+      Encoded 2026-09-20. Refused on silence, and the silence is the ordinary
+      kind: an older-style zone written as lists of what is allowed, with a
+      conditional list that names its four members. Nothing on it is a
+      residence, and a building that is only a residence is not accessory to
+      a laboratory.
+  M:
+    section: ["19.309"]
+    cite_default:
+      cite: MMC 19.309.2 (permitted uses are limited to industrial uses) and
+        19.309.4.B, Specific Prohibited Uses, Manufacturing Zone
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Manufacturing. Refuses in its own words: 19.309.4 Specific Prohibited
+      # Uses, "B. New residential, religious institutions, or public
+      # schools." 19.309.2 opens "Permitted uses are limited to industrial
+      # uses meeting the following criteria". 74 lots.
+      value: false
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2624-L2626,L2688-L2696"
+    notes: >-
+      Encoded 2026-09-20. The clearest of the seven -- a flat prohibition of
+      new residential use, the shape Oregon City GI has in its caretaker
+      parenthesis. Nothing to weigh.
+  C-CS:
+    section: ["19.308"]
+    cite_default:
+      cite: MMC 19.308.1 (development shall be a community-scale shopping
+        center; its required and permitted uses) and 19.308.2 (minimum
+        200,000 gross leasable sq ft), Community Shopping Commercial Zone
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Community Shopping Commercial. "Development shall be a
+      # community-scale shopping center" that "shall include at least 3 out
+      # of the 4 following uses" -- department store, drug or variety store,
+      # supermarket, retail specialty shops -- and "may include" nine more,
+      # every one commercial, closed by "any other uses determined by the
+      # Planning Commission to be similar and compatible to the
+      # above-listed uses". 19.308.2 sets the center's minimum size at
+      # 200,000 gross leasable square feet. No dwelling anywhere in 19.308
+      # (whole-section grep, L2336-L2615). 17 lots.
+      value: false
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2342-L2348,L2366-L2368,L2404-L2408,L2410-L2412"
+    notes: >-
+      Encoded 2026-09-20. A zone for one shopping center: the use section is
+      a specification of that center and the scale section makes any project
+      under 140,000 square feet ineligible as a first phase. A four-unit
+      building is not a use the zone contemplates in any reading.
+  C-G:
+    section: ["19.307"]
+    cite_default:
+      cite: MMC 19.307.1 (uses permitted outright, A through AC), 19.307.2
+        (conditional uses permitted) and 19.307.4 (prohibited uses), General
+        Commercial Zone
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # General Commercial. Two closed lists: twenty-nine permitted uses from
+      # production-related office to indoor recreation, and a conditional
+      # list of storage yards, sheet metal shops, agriculture, drinking
+      # establishments and high-impact commercial. The only dwelling word in
+      # either is "short-term rentals when associated with a legally
+      # permitted dwelling unit" (L2196), which presupposes a dwelling
+      # permitted elsewhere rather than permitting one. Each list closes with
+      # "any other use similar to the above and not listed elsewhere"
+      # (L2200, L2236), a similar-use finding about commerce, not a
+      # residential permission. Whole-section grep of 19.307 (L2080-L2335):
+      # no other dwelling, residential, housing, quadplex or townhouse.
+      # 5 lots.
+      value: false
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2086-L2088,L2196-L2204,L2236,L2328-L2334"
+    notes: >-
+      Encoded 2026-09-20. Five lots, refused on silence the way BI is.
+      19.307.4's own prohibited list names only adult entertainment, so the
+      refusal rests on the permitted and conditional lists being closed
+      lists, which is what "the following uses ... are permitted outright"
+      means and what every other zone in this chapter says of itself.
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). A ruled code gates ZONE_TO_READ in the
+# copy instead of ZONE_NOT_ENCODED and folds away on the County copy page.
+# The refusals are zone blocks above, because a refusal is a rule the screen
+# answers RED with; these four permit the building in some form and wait on
+# their dimensions.
+zone_rulings:
+  GMU:
+    outcome: to_read
+    note: >-
+      General Mixed Use, 45 lots, central Milwaukie. Table 19.303.2:
+      Townhouses P (note 1 lifts the four-in-a-row limit of 19.505.5 in this
+      zone), "Duplex, Triplex, Quadplex" CU, Multi-unit housing P. So the
+      building is permitted outright split onto unit lots and conditional as
+      a quadplex on one lot -- a use block of `false` with a `unit_lots`
+      variant and a `conditional_use` variant, the R-MD shape. Its dimensions
+      are Table 19.303.3 and the rest of 19.303.3-4 (L942-L1359), unread.
+  NMU:
+    outcome: to_read
+    note: >-
+      Neighborhood Mixed Use, 51 lots. Every residential row of Table
+      19.303.2 reads CU in the NMU column -- single detached, townhouses,
+      duplex/triplex/quadplex, multi-unit, cottage cluster -- except mixed
+      use, P, and note 2 lifts conditional-use review for residential uses
+      built as part of a vertical mixed-use building. A `false` use block
+      with a `conditional_use` variant, and the same unread Table 19.303.3.
+  SMU:
+    outcome: to_read
+    note: >-
+      Small-Scale Mixed Use, 5 lots. The same CU column as NMU in Table
+      19.303.2 and the same unread standards.
+  DMU:
+    outcome: to_read
+    note: >-
+      Downtown Mixed Use, 117 lots. Table 19.304.2: Townhouse P, Multifamily
+      P; no duplex/triplex/quadplex row, so a four-unit building on one lot
+      is not listed (19.304.2.D) and split onto unit lots it is townhouses,
+      permitted -- except on Main Street, where 19.304.3.A.1.c bars townhouses
+      and south of Scott Street bars ground-floor dwellings altogether
+      (L1587-L1599, Figure 19.304-2). A `false` use block with a `unit_lots`
+      variant, a per-street condition this model has no field for, and
+      Table 19.304.4 plus the 19.508 downtown design standards, unread.

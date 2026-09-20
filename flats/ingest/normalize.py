@@ -23,7 +23,7 @@ This stage builds the lot table from the snapshot's taxlot file, one row per
   zone block, or through an ``alias`` ruling (``MURm2`` screens as ``MURM2``).
   ``zone_raw`` always keeps what the map said. A code the rules lack is one of
   two things: ruled (``layer.zone_rulings`` -- another jurisdiction's pocket,
-  an unholdable district, a use table still to read; counted in
+  an unholdable district, a chapter not encoded yet; counted in
   ``ruled_zones`` by outcome) or NEW -- neither a zone nor a ruling, counted in
   ``new_zones.json`` by layer, the one list the refresh gate flags. A zone
   where the building is forbidden is a zone block (``quadplex_allowed:

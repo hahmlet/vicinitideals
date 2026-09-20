@@ -142,6 +142,25 @@ _SENTENCE = re.compile(
 )
 
 
+#: "Section 19.507 Home Occupation Standards", spelled out, no period after
+#: the number, at the margin. Milwaukie's use tables carry a Standards column
+#: whose cells look exactly like that, and every one of them names a section
+#: of another chapter -- 19.507, 19.904 and 19.905 live in 19.500 and 19.900,
+#: not in the base-zones chapter that prints the cell. Read as headings, the
+#: cells moved the notes under Table 19.303.2 into "19.507", and because a
+#: use gate quoted a row below another such cell, 19.507 counted as a section
+#: this layer had read from -- so two table notes reported as redirects out
+#: of a section nobody was in (2026-09-20). Milwaukie writes its real
+#: headings "§ 19.303.2. Uses.", number closed by a period. A document that
+#: writes its headings that way does not also write them "Section N Title"
+#: without one, so in such a document the spelled, period-less form is a
+#: cell. Wilsonville and Rivergrove spell real headings "Section 4.001
+#: Definitions." and print no "§ N." heading at all, so theirs stay. The
+#: same shape :mod:`flats.encode.attribution` learned the same day.
+_CELL = re.compile(r"^\s*Section\s+\d[\d.\-]*\d\s+[A-Z]")
+_MARKED = re.compile(r"^\s*§\s*\d[\d.\-]*\d\.\s")
+
+
 def _heading_lines(text: str, owns: set[str], mine: set[str]) -> dict[int, str]:
     """Line number -> the section number that opens there.
 
@@ -154,9 +173,13 @@ def _heading_lines(text: str, owns: set[str], mine: set[str]) -> dict[int, str]:
     """
     out: dict[int, str] = {}
     prev = ""
-    for n, line in enumerate(text.splitlines(), start=1):
+    lines = text.splitlines()
+    marked = any(_MARKED.match(line) for line in lines)
+    for n, line in enumerate(lines, start=1):
         m = _HEADING.match(line)
         if m and not _SENTENCE.match(line):
+            if marked and _CELL.match(line):
+                continue
             num = m.group("num").rstrip(".")
             # A document devoted to a chapter does not restart it halfway
             # down. Every extracted code in this store prints its chapter

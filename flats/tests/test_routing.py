@@ -36,6 +36,7 @@ from flats.encode.crossrefs import dangling
 from flats.encode.routing import (
     _ROUTE,
     Routing,
+    _heading_lines,
     _is_followed,
     _spans,
     _within,
@@ -145,13 +146,50 @@ def rows() -> list[Routing]:
 #: that chapter at all. It closes the day somebody encodes a district the table
 #: permits, which is the honest shape for this ledger: a pointer nobody
 #: followed because nobody yet had a number to hang on it.
+#:
+#: *Thirteen more of that shape, 2026-09-20.* The September county map put
+#: lots in 100 zone codes no layer held, and 52 of them were read and refused
+#: at the use gate. A refusal cites the use table and nothing else, so every
+#: pointer printed beside that table is a pointer nobody had a number to hang
+#: on, and the ledger is right to list each one:
+#:
+#: Clackamas County's use-table notes -- "Permitted uses are subject to the
+#: applicable provisions of Subsection 401.07" (EFU), 406.07 and 406.08 (TBR),
+#: 511.04 (VCS), 602.04 (BP, LI and GI) -- are Section 510's note 4 five times
+#: over: the dimensional standards of zones that refuse the building. Their
+#: twins 511.05, 513.04 and 602.05 sit on FOLLOWED for the same layout reason
+#: 510.05 does. Milwaukie's three (19.309.2 and 19.310.2/.5 -> 19.509) hand
+#: marijuana production, warehousing and processing in the M and BI zones to
+#: the security and odour standards -- somebody else's use in a zone that
+#: refuses ours. Wilsonville's four are the PDI zone's sign clause (4.135 ->
+#: 4.156.01 through 4.156.11) and the PF and PF-C zones' "all principal and
+#: conditional uses shall be subject to Section 4.400 through 4.450 (Site
+#: Design Review)", a procedure; the row labelled 4.135.5 is that sentence
+#: in 4.136, filed under the previous page's running header, which this
+#: ledger's heading reader still takes for a heading. Multnomah County's
+#: 38.3060(A) -> 38.3030(A)(8) excepts community parks and playgrounds, a
+#: conditional use, from the GGR-2 minimum lot size; the zone permits one
+#: house per parcel and refuses ours.
 OPEN = {
+    "or/clackamas/_unincorporated 401.04 -> 401.07",
+    "or/clackamas/_unincorporated 406.04 -> 406.07",
+    "or/clackamas/_unincorporated 406.04 -> 406.08",
     "or/clackamas/_unincorporated 510.03 -> 510.04",
+    "or/clackamas/_unincorporated 511.03 -> 511.04",
+    "or/clackamas/_unincorporated 602.03 -> 602.04",
+    "or/clackamas/milwaukie 19.309.2 -> 19.509",
+    "or/clackamas/milwaukie 19.310.2 -> 19.509.2",
+    "or/clackamas/milwaukie 19.310.5 -> 19.509",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.4",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.5",
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
     "or/clackamas/west-linn 25.070 -> 25.020",
     "or/clackamas/wilsonville 4.001 -> 4.140",
+    "or/clackamas/wilsonville 4.135 -> 4.156.01",
+    "or/clackamas/wilsonville 4.135 -> 4.156.11",
+    "or/clackamas/wilsonville 4.135.5 -> 4.400",
+    "or/clackamas/wilsonville 4.136 -> 4.400",
+    "or/multnomah/_unincorporated 38.3060 -> 38.3030",
     "or/multnomah/_unincorporated 39.4751 -> 39.4753",
     "or/multnomah/fairview 19.162.020 -> 19.65.050",
     "or/multnomah/gresham 4.0120 -> 10.1700",
@@ -192,6 +230,19 @@ FOLLOWED = {
     # close on a citation landing inside the target, and here the citation is
     # there for layout rather than for a standard.
     "or/clackamas/_unincorporated 510.03 -> 510.05",
+    # The same layout answer three more times on 2026-09-20: the VCS, RC and
+    # BP/LI/GI refusals name 511.05, 513.04 and 602.05 in their citations
+    # because the county prints each use table under the heading after its
+    # prose, and a citation that did not say so would be unverifiable.
+    "or/clackamas/_unincorporated 511.03 -> 511.05",
+    "or/clackamas/_unincorporated 513.03 -> 513.04",
+    "or/clackamas/_unincorporated 602.03 -> 602.05",
+    # AG/F permits "the uses permitted in the EFU and TBR Districts" and
+    # 407.03(A) sends a dwelling to Section 401 or 406 by what the tract was
+    # used for on January 1, 1993. Both chapters are held and both are cited
+    # by their own refusals, so the pointer lands where a reader already is.
+    "or/clackamas/_unincorporated 407.03 -> 401",
+    "or/clackamas/_unincorporated 407.03 -> 406",
     "or/clackamas/_unincorporated 845.01 -> 845.02",
     "or/clackamas/_unincorporated 315.04 -> 845",
     # Both arrived with ZDO Section 316 on 2026-09-08 and both are followed,
@@ -215,6 +266,41 @@ FOLLOWED = {
     # and the ledger has nothing left to send anybody to.
     "or/clackamas/west-linn 48.025 -> 48.060",
 }
+
+
+def test_a_standards_column_cell_is_not_a_heading_in_a_marked_document() -> None:
+    """Milwaukie's use tables print "Section 19.507 Home Occupation Standards"
+    at the margin of a Standards column, and its real headings read
+    "§ 19.303.2. Uses." -- number closed by a period. Read as a heading, the
+    cell moved Table 19.303.2's notes into 19.507, and because a use gate
+    quoted a row below another such cell, 19.507 counted as a section this
+    layer had read from: two table notes reported as redirects out of a
+    section nobody was in. In a document that marks its headings, the spelled
+    period-less form is a cell. Wilsonville marks nothing and spells
+    "Section 4.001 Definitions." as a real heading, which stays.
+    """
+    milwaukie = "\n".join(
+        [
+            "§ 19.303.2. Uses.",
+            "Home occupation",
+            "Section 19.507 Home Occupation Standards",
+            "1.",
+            "The limit of 4 consecutive townhouses established in 19.505.5 does not apply.",
+            "§ 19.303.3. Development Standards.",
+        ]
+    )
+    heads = _heading_lines(milwaukie, {"19"}, {"19.300"})
+    assert heads == {1: "19.303.2", 6: "19.303.3"}
+
+    wilsonville = "\n".join(
+        [
+            "Section 4.001 Definitions.",
+            "text",
+            "Section 4.005 Exclusions from Development Permit Requirement.",
+        ]
+    )
+    heads = _heading_lines(wilsonville, {"4"}, {"4"})
+    assert heads == {1: "4.001", 3: "4.005"}
 
 
 def test_the_open_and_followed_rows_are_the_ones_that_have_been_read(

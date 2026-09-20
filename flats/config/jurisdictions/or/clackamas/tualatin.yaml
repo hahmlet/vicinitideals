@@ -467,6 +467,52 @@ code:
     # plain mode reads it cleanly. Tables 40-1/40-2 lose their geometry, which
     # is the declared trade until the grid matters more than the prose.
     extraction: plain
+  # ---- The six zone chapters the September 2026 map carried, read
+  # 2026-09-20 ----
+  #
+  # Steph's ruling: every code the county map carries is read once, its
+  # reason written down, and never shown again. Tualatin's map carried six
+  # codes this layer did not hold -- 48 lots. Five refuse the building at
+  # their use table (CO, CG, MC, ML, MG; zone blocks below) and RMH permits
+  # it (a `zone_rulings` entry, to read). Each chapter is one slice of the
+  # same PDF, from its own first section to the next chapter's; plain
+  # extraction for the reason 40-41 gives.
+  - id: "42.rmh"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 42 - Medium High Density Residential Zone (RMH)"
+    start: "TDC 42.100."
+    end: "TDC 43.100."
+    extraction: plain
+  - id: "50.co"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 50 - Office Commercial Zone (CO)"
+    start: "TDC 50.100."
+    end: "TDC 51.100."
+    extraction: plain
+  - id: "54.cg"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 54 - General Commercial Zone (CG)"
+    start: "TDC 54.100."
+    end: "TDC 55.100."
+    extraction: plain
+  - id: "56.mc"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 56 - Medical Center Zone (MC)"
+    start: "TDC 56.100."
+    end: "TDC 57.010."
+    extraction: plain
+  - id: "60.ml"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 60 - Light Manufacturing Zone (ML)"
+    start: "TDC 60.100."
+    end: "TDC 61.100."
+    extraction: plain
+  - id: "61.mg"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 61 - General Manufacturing Zone (MG)"
+    start: "TDC 61.100."
+    end: "TDC 62.100."
+    extraction: plain
   # The two chapters both residential tables point at. Fetched because the
   # cross-reference ledger ranked TDC 36.410 the loudest unread reference in
   # this corpus -- eighteen mentions, fifteen of them beside a number this
@@ -1030,3 +1076,143 @@ zones:
       coverage and setbacks that apply in small lot subdivisions; Ord. 1463-21 repealed that section
       and enacted a new 36.410 that states lot size and nothing else. The cross-reference points at a
       rule that no longer exists, so there is nothing behind it to encode.'
+  # === The September 2026 map's six codes, ruled 2026-09-20 ================
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. Tualatin's map carried six codes
+  # this layer did not hold -- 48 lots. Five refuse the building at their
+  # use table and are the use-gate refusals below; RMH permits it and is a
+  # `zone_rulings` entry at the foot of this file, to read.
+  #
+  # The TDC writes every zone the same way: a use-category table opened by
+  # "Use categories which are not listed are prohibited within the zone,
+  # except for uses which are found by the City Manager or appointee to be
+  # of a similar character and to meet the purpose of this zone, as provided
+  # in TDC 31.070", and a RESIDENTIAL USE CATEGORIES block whose rows are
+  # the whole answer. Household Living is the category a dwelling is
+  # (Chapter 39); where the block has no Household Living row, or has one
+  # limited to a caretaker, nothing on the lot may be a home. The
+  # similar-use finding is the City Manager's and this screen never
+  # presumes it.
+  CO:
+    section: ["50."]
+    cite_default:
+      cite: TDC 50.200(1) (use categories not listed are prohibited) and
+        Table 50-1, Residential Use Categories, Office Commercial Zone
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Office Commercial. The residential block of Table 50-1 is one row,
+      # "Residential Accessory Uses P (L) Permitted uses limited to Family
+      # Child Care Home"; no Household Living row at all. Whole-document
+      # grep of Chapter 50 for dwelling, household living, housing type:
+      # nothing. 13 lots.
+      value: false
+      quote: "or/clackamas/tualatin/50.co.txt#L17-L20,L23-L29"
+    notes: >-
+      Encoded 2026-09-20 from Table 50-1. A zone "intended to provide for
+      office development" and the table says so: the only residential row
+      is an accessory-use row for a child care home run out of a dwelling
+      that the zone does not itself permit.
+  CG:
+    section: ["54."]
+    cite_default:
+      cite: TDC 54.200(1) (use categories not listed are prohibited) and
+        Table 54-1, Residential Use Categories, General Commercial Zone
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # General Commercial. The same one-row residential block as CO --
+      # Residential Accessory Uses, limited to a family child care home --
+      # and no Household Living row. Whole-document grep of Chapter 54 for
+      # dwelling, household living, housing type: nothing. 15 lots.
+      value: false
+      quote: "or/clackamas/tualatin/54.cg.txt#L16-L19,L22-L28"
+    notes: >-
+      Encoded 2026-09-20 from Table 54-1. The largest of Tualatin's six and
+      the plainest: a commercial strip zone with no home in it.
+  MC:
+    section: ["56."]
+    cite_default:
+      cite: TDC 56.200(1) (use categories not listed are prohibited) and
+        Table 56-1, Residential Use Categories, Medical Center Zone
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Medical Center. The residential block is Group Living, limited to
+      # congregate care facilities, residential facilities and nursing
+      # facilities under TDC 56.210(3) -- licensed care, not household
+      # living. No Household Living row. Whole-document grep of Chapter 56
+      # for dwelling, household living, housing type: nothing. 5 lots.
+      value: false
+      quote: "or/clackamas/tualatin/56.mc.txt#L13-L16,L19-L29"
+    notes: >-
+      Encoded 2026-09-20 from Table 56-1. The hospital district; its one
+      residential category is the care-facility kind Chapter 39 keeps apart
+      from household living, and 56.210(3) conditions even that on state
+      licensing and a residential density floor for the care campus.
+  ML:
+    section: ["60."]
+    cite_default:
+      cite: TDC 60.200(1) (use categories not listed are prohibited) and
+        Table 60-1, Residential Use Categories, Household Living row, Light
+        Manufacturing Zone
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Light Manufacturing. Table 60-1 does carry a Household Living row,
+      # and it reads "C (L) Conditional uses limited to caretaker residence,
+      # accessory to a permitted industrial use". A four-unit residential
+      # building on its own lot is not a caretaker's residence and is
+      # accessory to nothing; the limitation names the only dwelling the
+      # zone admits. Whole-document grep of Chapter 60: this row, the sale
+      # and service of manufactured dwellings as a commercial use (L51,
+      # L202), and nothing else. 4 lots.
+      value: false
+      quote: "or/clackamas/tualatin/60.ml.txt#L20-L23,L28-L36"
+    notes: >-
+      Encoded 2026-09-20 from Table 60-1. Not a conditional-use zone for
+      this building: the C is on a row whose (L) limitation is one
+      caretaker's residence accessory to an industrial use, so the lever
+      opens nothing a quadplex could pass through. The 40-foot Limited
+      Commercial Setback rules at 60.210(4) are about which commercial uses
+      may face the CO zone.
+  MG:
+    section: ["61."]
+    cite_default:
+      cite: TDC 61.200(1) (use categories not listed are prohibited) and
+        Table 61-1, Residential Use Categories, Household Living row, General
+        Manufacturing Zone
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # General Manufacturing. Household Living "C (L) Conditional uses
+      # limited to one (1) caretaker residence per site" -- the same shape
+      # as ML with the count made explicit: one. Whole-document grep of
+      # Chapter 61: this row and the manufactured-dwelling sales sentence
+      # (L198). 7 lots, plus the one county lot at 21E18BB02700 that the
+      # county layer sends here as a pocket.
+      value: false
+      quote: "or/clackamas/tualatin/61.mg.txt#L17-L20,L25-L31"
+    notes: >-
+      Encoded 2026-09-20 from Table 61-1. See ML; "one caretaker residence
+      per site" is the whole of household living in the zone.
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). A ruled code gates ZONE_TO_READ in the
+# copy instead of ZONE_NOT_ENCODED and folds away on the County copy page.
+zone_rulings:
+  RMH:
+    outcome: to_read
+    note: >-
+      Medium High Density Residential, 4 lots. Chapter 42 was fetched
+      2026-09-20 (the districts ledger had it as `fetch` because the stored
+      40-41 slice ended on its heading). Table 42-1 gives Household Living
+      P/C by housing type, and Table 42-2 reads Townhouse (or Rowhouse) P
+      and Multi-Family Structure P with Single-Family Dwelling N
+      (42.rmh.txt#L25, L88-L97) -- so the building is permitted outright in
+      both forms and the state mandate question never arises. Table 42-3
+      (L103 on) states the townhouse rows: 1,400 sq ft lot, 14 ft width,
+      0-10 ft front setback by architectural review, 90 percent coverage, 15
+      units per acre. Four lots; to encode from Table 42-3 with RL's shape.

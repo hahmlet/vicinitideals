@@ -402,44 +402,36 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    floor; Portland ok plans with no 12 x 12 square outside the pavement)
    before any county run.
 
-7. **Rule on the 128 zone codes the September map found (Steph 2026-09-20:
-   "document why these zones don't work for us and then they should never
-   appear to the user again; only a zone we've never seen should flag").**
-   The mechanism shipped 37344f91: a per-layer `zone_rulings` ledger
-   (alias / pocket / unencodable / to_read, note of 40+ chars required),
-   the `new_zones` gate trips only on a code that is neither a zone block
-   nor a ruling, and an unmeasured lot in a zone with `quadplex_allowed:
-   false` gets the screen's own RED / `USE_PROHIBITED` at the use gate with
-   no measurement. What remains is the READING: for each of the 12 layers
-   fetch the use-table chapter into the provenance store (declare it under
-   the layer's `code:` block; `flats/provenance` fetch) and write every code
-   as either a zone block with a quote (`quadplex_allowed: false` where the
-   building is a forbidden use -- most of the ~3,600 commercial /
-   industrial / farm / public codes; `quadplex_allowed: true` where it is
-   permitted, dimensions then owed in the gaps ledger) or a ruling:
-   `alias` MURm2 -> MURM2 in Happy Valley; `pocket` for county codes carried
-   on a city's map (RRFF5 / FU10 / FF10 / VR57 / RA1 / RA2 / RC under Happy
-   Valley, `County` (14) in Oregon City, R-10 / R-15 / R-MD under Clackamas
-   unincorporated if they are city codes); `unencodable` for Clackamas HDR /
-   VTH / RCHDR / SHD per the county layer's existing prose (1005.02(L)
-   northern-lot-line measurement); `to_read` where a chapter cannot be
-   fetched. Counts by layer: Clackamas unincorporated 2,407 lots (HDR 251,
-   VTH 114, RTL 59, SCMU 34, RCHDR 29, PMU1-3 17, R-MD/R-10/R-15 6, the rest
-   C/I/EFU/AGF/TBR/RRFF5/FF10/FU10/OS/etc.); Happy Valley 939 (MURM2 301,
-   MURM1 170, MUC 33, RCMU 20, MUE 9, MURM3 8, VC 5, VR57 1, county codes);
-   Wilsonville 627 (FDAHR 98, FDAHV 4, FDAHP 4, PD* and C/I codes);
-   Milwaukie 554 (DMU 117, MUTSA 80, NME 57, NMU 51, GMU 45, C-CS 17, SMU 5,
-   C/M codes); Gladstone 415 (MR 80, C/I); West Linn 235 (MU 25, OBC 15,
-   C/I); Troutdale 64 (NSA); Tualatin 48 (RMH 4, C/I); Multnomah
-   unincorporated 16 (UPAR-10 4, GGR2 3, THR 1, C-3/etc.); Oregon City 14
-   (`County`); Wood Village 6 (O); Fairview 4 (AH 3, FLX 1). Check
-   `flats/tests/test_refusals.py` EXPECTED counts and the zone-mirror tests
-   after adding zones; the full flats suite before the commit. Then on 137
-   `git pull --ff-only`, normalize + assign (assign now applies the use
-   gate) -> export -> load into run 10 in place -> VACUUM -> drift ->
-   `flats_promote.py status`; the gate should be clean; then the first-ever
-   promotion on the standing word (HUMAN_TODO 20, "me, when clean") with
-   prune --dry-run, Lots default run 10, footer 2026-09-18, probe.
+7. **The September map's zone codes are all ruled -- load the answer and
+   promote (Steph 2026-09-20: "document why these zones don't work for us
+   and then they should never appear to the user again; only a zone we've
+   never seen should flag").** Mechanism 37344f91; the READING done
+   2026-09-20 for every one of the 100 codes (5,329 lots) on 12 layers --
+   52 are use-gate refusals (`quadplex_allowed: false` with a quote from the
+   fetched use table: Clackamas AGF/BP/EFU/GI/LI/OSM/RC/RI/TBR/VCS,
+   Gladstone OP/OS, Happy Valley CCC/EC/FU10/IC/IPU/MCC/MUC/MUE/RC-ME/RCMU/
+   VC/VO, Milwaukie BI/C-CS/C-G/M/MUTSA/NME/OS, Tualatin CG/CO/MC/MG/ML,
+   West Linn CI/GC/GI/NC/OBC, Wilsonville FDAHC/FDAHI/FDAHP/FDAHR/FDAHV/PDC/
+   PDI/PF, Multnomah GGR2, Fairview AH, Wood Village O) and 48 are
+   `zone_rulings` (11 unencodable: Clackamas C3/CC/HDR/OC/RCC/RCHDR/RCO/RTL/
+   SHD/VTH + Happy Valley PMU; 16 pocket: Happy Valley RRFF5/FF10/RA1/RA2/
+   RC/VR57, Oregon City County, Clackamas IPU/MG/R-10/R-15/R-MD/RC-ME,
+   Troutdale NSA, Multnomah UPAGI/UPAR-10; 16 to_read: Clackamas PMU1/2/3/
+   SCMU, Gladstone C1/C2/C3/LI/MR, Milwaukie DMU/GMU/NMU/SMU, Tualatin RMH,
+   West Linn MU, Multnomah THR; 5 alias: Happy Valley MURM1/2/3/m2 -> MURM,
+   Fairview FLX -> VC). Four readings worth Steph's eye, all RED by the use
+   table: Milwaukie MUTSA (80 lots: residential only as part of a mixed-use
+   building), Wilsonville FDAHR (98: Frog Pond East/South residential is
+   a planning designation whose zoning is set at the master plan, nothing
+   permitted until then), West Linn GC (165: housing only above a
+   commercial first floor), Happy Valley CCC/MCC (56: freestanding
+   residential only with a nonresidential use on the same parcel). What
+   remains: on 137 `git pull --ff-only`, normalize + assign (assign now
+   applies the use gate) -> export -> load into run 10 in place -> VACUUM
+   -> drift -> `flats_promote.py status`; the gate should be clean; then
+   the first-ever promotion on the standing word (HUMAN_TODO 20, "me, when
+   clean") with prune --dry-run, Lots default run 10, footer 2026-09-18,
+   probe. Item 8's 17,259 stand apart: they are zones the screen HOLDS.
 8. **17,259 lots the screen holds a zone for but quadfit's `rules.yaml`
    does not (`NOT_MEASURED, quadfit:zone_not_in_rules` on run 10).** The
    FLATS rules encode the zone; quadfit's structural filter drops the lot
@@ -452,3 +444,46 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    existing parquet first (read LOST and GAINED lot by lot). Where the
    FLATS block says `quadplex_allowed: false`, item 7's use gate already
    answers RED without a measurement and nothing is owed.
+9. **Screen the ~210 pocket lots under the layer their ruling names.** A
+   `pocket` ruling (16 of them, 2026-09-20) says "this code is the other
+   layer's zone carried on this map" and today gates the lot ZONE_POCKET,
+   unscreened, because `like:` cannot cross into `_unincorporated` (there is
+   no `or/clackamas.yaml` parent) and `ZoneRuling` has no field naming the
+   zone under the `of` layer -- the note names it in prose. Happy Valley
+   RRFF5 95 / FF10 5 / RA1 1 / RA2 8 / RC 1 / VR57 1 (111), Troutdale NSA
+   64 (county Gorge zoning; Chapter 38 is in the corpus now and would
+   answer RED for GGR/GSR), Oregon City `County` 14 (Clackamas zoning
+   inside the city, per OCMC 17.68.025), Multnomah UPAGI 8 / UPAR-10 4
+   (Troutdale's GI and LDR-1), Clackamas IPU/MG/R-10/R-15/R-MD/RC-ME 9
+   (city codes in county pockets). Give `ZoneRuling` a `zone:` (the code
+   under the `of` layer; default the same spelling), let `assign` resolve a
+   pocket lot through `RuleSet.resolve(of, zone)`, and screen it with the
+   `of` layer's measurements. Mostly RED at the use gate (RRFF5/FF10/RA/RC
+   are farm-forest and rural zones, NSA is Gorge); the R-10/R-15/R-MD/
+   UPAR-10 lots would get a real answer.
+10. **Corpus drift found while ruling the September codes -- a
+   `--refresh --repoint` pass per layer.** (a) Clackamas ZDO: zdo.315/316/
+   510/845/903/1005/1015 and every roadway.* doc report CHANGED (the county
+   re-published the ZDO; the stored text is the old cut) and the zdo.202
+   end marker no longer matches; every quote into those docs must be
+   re-pointed (`flats/provenance` `--repoint` follows the quoted text).
+   (b) Portland Title 33 PDFs held in the Multnomah `_unincorporated` layer
+   (33.100/33.110/33.140/33.266) CHANGED at the same length -- likely a
+   re-issued PDF with the same page count; re-fetch, diff the text, repoint.
+   (c) Fairview: every codepublishing.com URL now returns a 1.3 KB
+   "hosted on eCode360" stub -- the city moved to eCode360 (FA4439; Title
+   19 TOC guid 50509052; print view `https://ecode360.com/print/FA4439?guid=
+   <n>`; chapter numbering unchanged, 19.25 = 50509402, 19.30 = 50509420,
+   19.65 = 50509772, 19.135 = 51011016). Re-point every `code:` entry in
+   fairview.yaml, re-fetch, repoint quotes; the 19.25.ah doc already points
+   at eCode360. Until (c) is done a `--refresh` of Fairview would replace
+   every stored chapter with the stub -- do not run it layer-wide first.
+11. **Two loose ends from the ruling pass.** (a) Fairview FLX is the map's
+   name for the "VC flex" area (19.135.txt L62) and is aliased to VC, whose
+   `inside_mapped_use_area` variant names that same area -- the map code
+   could FEED the variant (a lot zoned FLX is inside the area by
+   definition) instead of leaving it unmeasured; one lot today. (b) THR is
+   one lot (1N2E36DA-02200, the Gresham IGA-162nd pocket) whose code no
+   published document defines -- not Gresham 4.0100, not MCC 39; ruled
+   `to_read` and worth one question to Gresham planning if it ever
+   matters; nothing else owed.

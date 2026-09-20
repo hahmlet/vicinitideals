@@ -2713,7 +2713,7 @@ _REASON_WORDS = {
     "ZONE_NOT_ENCODED": "the zone code on the map is one nobody has ruled on yet",
     "ZONE_POCKET": "the zone code on the map is another jurisdiction's zoning inside this one's line",
     "ZONE_UNENCODABLE": "the zone was read; it asks a measurement the screen cannot take",
-    "ZONE_TO_READ": "the zone was seen on the map; its use table has not been read yet",
+    "ZONE_TO_READ": "the zone was seen on the map; its chapter is not encoded yet (use table unread, or use permitted and dimensions unread)",
     "ZONE_REFERENCE_MISSING": "the zone points at a zone the rules do not hold",
     "ZONE_REFERENCE_CYCLE": "the zone's references loop",
     "RULE_AMBIGUOUS": "two readings of a rule this rests on disagree",

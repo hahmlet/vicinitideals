@@ -612,6 +612,38 @@ code:
   # garages in the VTH district -- so nothing in this corpus would have found
   # it. The guid came from the Title 16 print view, the same route 16.32 and
   # 16.34 came in on.
+# ---- The chapters the September 2026 map's codes live in, read 2026-09-20 ----
+#
+# Steph's ruling: every code the county map carries is read once, its reason
+# written down, and never shown again. Happy Valley's own zoning layer carried
+# 23 codes this file did not hold, 921 lots. Four are MUR-M's density tiers
+# (MURM1/2/3 and a lower-case MURm2), aliases of the held MURM; seven are
+# Clackamas County rural districts the city keeps on annexed land under
+# 16.67.070 Table 16.67.070-1 note ** (FF10, RRFF5, RA1, RA2, RC, VR57, and
+# FU10 which the city made its own at 16.22.010); the other twelve are the
+# commercial, employment, institutional, industrial and Rock Creek districts
+# in 16.23, 16.24, 16.25 and 16.31. Guids from the Title 16 print view.
+- id: 16.23.commercial
+  url: https://ecode360.com/print/HA4934?guid=43529908
+  title: HV LDC Chapter 16.23 - Commercial and Employment Districts
+- id: 16.24.institutional
+  url: https://ecode360.com/print/HA4934?guid=43529909
+  title: HV LDC Chapter 16.24 - Institutional Districts
+- id: 16.25.industrial
+  url: https://ecode360.com/print/HA4934?guid=43529910
+  title: HV LDC Chapter 16.25 - Industrial Districts
+- id: 16.31.rock-creek-pmu
+  url: https://ecode360.com/print/HA4934?guid=43525006
+  title: HV LDC Chapter 16.31 - Rock Creek Planned Mixed Use District (PMU)
+  # That guid is Article 16.3 whole -- every overlay chapter through 16.37 --
+  # so the slice stops where 16.32 begins.
+  end: "Chapter 16.32."
+- id: 16.67.plan-amendments
+  url: https://ecode360.com/print/HA4934?guid=43529981
+  title: HV LDC Chapter 16.67 - Comprehensive Plan Map, Specific Area Plans, Land Use District Map and Text Amendments
+  # Fetched for one table: 16.67.070-1, the county-to-city zone conversion on
+  # annexation, whose note ** is why county rural districts sit on the city's
+  # zoning map.
 
 defaults:
   # PARKING, read 2026-08-27. Happy Valley is the first city in this corpus to
@@ -3075,3 +3107,383 @@ zones:
       a reviewer meets it rather than dissolved into six numbers that look sourced. If CC turns out
       to modify a standard, that standard belongs here as a local value over the reference.
       quadfit confidence: needs_verification.'
+  # === The September 2026 map's 23 codes, ruled 2026-09-20 ================
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. Happy Valley's own zoning layer
+  # carried 23 codes this file did not hold -- 921 lots. Twelve refuse the
+  # building at their use tables and are the use-gate refusals below, quoting
+  # 16.22, 16.23, 16.24 and 16.25 the way MURM does; the other eleven are
+  # `zone_rulings` at the foot of this file (four aliases of MURM, six county
+  # pockets, one master-plan district).
+  #
+  # Two definitions in 16.12 decide most of these, and MURM's block already
+  # argues them: "Dwelling, multiple-family (multifamily)" is "a building on
+  # a single lot designed and used for occupancy by FIVE OR MORE families"
+  # (16.12.definitions), so a multifamily row never admits four units; and
+  # "Dwelling, four-family (quadplex)" is its own defined term, which this
+  # code prints as its own row wherever it means it (16.22.050's attached
+  # districts) and leaves out where it does not. 16.21.020 closes the lists:
+  # "The use of land is limited to the uses allowed by the applicable land
+  # use district and/or overlay zone." Where a commercial table does admit
+  # housing it is upstairs -- "residential uses on upper floors of mixed use
+  # buildings" -- or freestanding only when a nonresidential use occupies
+  # the street side of the same parcel, which a four-unit building on its
+  # own lot cannot satisfy.
+  FU10:
+    section: ['16.22.010']
+    cite_default:
+      cite: HV LDC 16.22.010 (Future Urbanization, FU-10); Table 16.22.010-1
+        permitted uses
+      url: https://ecode360.com/print/HA4934?guid=43529907
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # The city's own holding zone for land "formerly in unincorporated
+      # Clackamas County", not a pocket: 16.22.010 is a section of this code
+      # with its own use table and its own development standards (Table
+      # 16.22.010-2, ten-acre lots). The residential rows are an accessory
+      # dwelling unit, "One single-family dwelling, modular dwelling unit,
+      # mobile or manufactured home per lot", residential care facilities
+      # (C), a temporary manufactured home for an infirm relative (C) and
+      # home occupations; no duplex, triplex, quadplex, attached or
+      # multifamily row. 12 lots. The districts ledger ruled it prohibited
+      # from the same table on 2026-09-08 as FU-10; the map spells it FU10.
+      value: false
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L27,L29,L31-L45"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.22.010-1. One house per lot is the
+      whole of household living in the zone; 16.67.070 note * says an
+      annexation into it would need a new plan designation first.
+  MUC:
+    section: ['16.23.010']
+    cite_default:
+      cite: HV LDC 16.23.010 (Mixed Use Commercial, MUC); Table 16.23.010-1
+        permitted uses, Residential rows, notes 2 and 3
+      url: https://ecode360.com/print/HA4934?guid=43529908
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Table 16.23.010-1's residential rows are "Low density multifamily",
+      # "Medium density multifamily" and "High density multifamily", all
+      # P[2,3] in the MUC column, then senior housing, skilled nursing,
+      # congregate housing and home occupation. Multifamily is five or more
+      # families (16.12), so a four-unit building is on none of the rows,
+      # and there is no attached-dwelling or townhouse row to split it onto
+      # unit lots under, which is the one thing MUR-M's table has that this
+      # one lacks. Notes 2 and 3 say where the multifamily goes: upper
+      # floors of mixed use buildings, or freestanding "when nonresidential
+      # uses occupy the street side(s) of the parcel" with a footprint
+      # capped at 25 percent of the parcel. 33 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L35,L37-L39,L84-L91,L113,L115-L116"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.23.010-1. Refused on the row before
+      the note: the building is not multifamily by this code's own
+      definition, so the freestanding door in note 3 -- itself discretionary
+      ("may be permitted") and conditioned on a commercial use on the same
+      parcel's street side -- is never reached.
+  MUE:
+    section: ['16.23.010']
+    cite_default:
+      cite: HV LDC 16.23.010 (Mixed Use Employment, MUE); Table 16.23.010-1
+        permitted uses, Residential rows
+      url: https://ecode360.com/print/HA4934?guid=43529908
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # The MUE column of the same table: "Low density multifamily" P,
+      # medium and high X, senior, nursing, congregate and home occupation
+      # P. Five or more families at low density, and nothing for four. The
+      # purpose sentence says the same -- "office, employment and low
+      # density multifamily residential uses". 9 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L27,L35,L37-L39,L84-L91"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.23.010-1, MUE column. See MUC; this
+      column has no note 3 door at all.
+  RCMU:
+    section: ['16.23.010']
+    cite_default:
+      cite: HV LDC 16.23.010 (Regional Center Mixed Use, RCMU); Table
+        16.23.010-1 permitted uses, Residential rows, note 1; 16.23.010.D
+      url: https://ecode360.com/print/HA4934?guid=43529908
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # The RCMU column: low, medium and high density multifamily P, senior,
+      # nursing, congregate and home occupation P, no attached-dwelling row.
+      # Five or more families. Note 1 sends the district to 16.23.010.D's
+      # master-plan standards (16.23.010.D: "The RCMU District is a planned
+      # mixed use area and is subject to the master plan requirements of
+      # Chapter 16.65"), which is a process, not a row. 20 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L35,L37-L39,L84-L91,L113-L114"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.23.010-1, RCMU column. See MUC.
+  VC:
+    section: ['16.23.020']
+    cite_default:
+      cite: HV LDC 16.23.020 (Village Commercial, VC); Table 16.23.020-1
+        permitted uses, Residential rows
+      url: https://ecode360.com/print/HA4934?guid=43529908
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Table 16.23.020-1's residential rows are two: "Pre-existing
+      # dwellings ... may be allowed to remodel or expand" (P in both
+      # columns) and "Multifamily dwellings or residential uses on upper
+      # floors of mixed use buildings" (VO X, VC P); congregate housing sits
+      # under institutional. The VC permission is multifamily -- five or
+      # more -- or upstairs in a mixed use building; a four-unit building
+      # on its own lot is neither. 5 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L436,L438,L441,L444-L455,L693-L695"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.23.020-1, VC column. The row's two
+      halves are the two doors this code gives commercial land, and this
+      building fits through neither.
+  VO:
+    section: ['16.23.020']
+    cite_default:
+      cite: HV LDC 16.23.020 (Village Office, VO); Table 16.23.020-1
+        permitted uses, Residential rows
+      url: https://ecode360.com/print/HA4934?guid=43529908
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # The VO column of the same two rows: pre-existing dwellings P,
+      # "Multifamily dwellings or residential uses on upper floors of mixed
+      # use buildings" X -- prohibited by the legend's own word. 3 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L436,L438,L441,L444-L455"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.23.020-1, VO column. The only new
+      housing the table names is marked X here.
+  CCC:
+    section: ['16.23.030']
+    cite_default:
+      cite: HV LDC 16.23.030 (Community Commercial Center, CCC); Table
+        16.23.030-1 permitted uses, Residential rows, notes 1 and 2
+      url: https://ecode360.com/print/HA4934?guid=43529908
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Table 16.23.030-1's residential rows: pre-existing dwellings P,
+      # "Medium to high density residential" P[1,2], live-work units
+      # P[2,8], senior housing X. The one row that could reach a new
+      # dwelling is bound by its notes: [1] "Residential uses on upper
+      # floors of mixed use buildings are permitted"; [2] "Freestanding
+      # residential uses at densities greater than the minimum SFA density
+      # of 10 du/acre and not to exceed the maximum MUR-M2 density of 34
+      # du/acre (10-34 du/acre) may be permitted in the CCC zone when
+      # nonresidential uses occupy the street side(s) of the parcel. The
+      # footprint of such freestanding residential uses ... may not exceed
+      # 25% of the CCC zoned area of the parcel". A four-unit building on
+      # its own lot occupies the whole parcel and its street side, so the
+      # condition cannot be met, and "may be permitted" is a discretion this
+      # screen never presumes. 38 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L785,L787-L794,L851-L854"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.23.030-1, CCC column. The row is a
+      density band, not a building type, and every way through it needs a
+      commercial use on the same parcel.
+  MCC:
+    section: ['16.23.030']
+    cite_default:
+      cite: HV LDC 16.23.030 (Mixed Commercial Center, MCC); Table 16.23.030-1
+        permitted uses, Residential rows, notes 1 and 3
+      url: https://ecode360.com/print/HA4934?guid=43529908
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # The MCC column: pre-existing dwellings P, "Medium to high density
+      # residential" P[1,3], live-work X, senior housing P. Note [3]:
+      # "Residential uses at MUR-M2 densities (25-34 du/acre) in conjunction
+      # with nonresidential uses are permitted by this code. The footprint
+      # of such freestanding residential uses ... may not exceed 25% of the
+      # MCC zoned area of the parcel". In conjunction with a nonresidential
+      # use on the parcel, and at most a quarter of it -- a stand-alone
+      # four-unit building is neither. 18 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L785,L787-L794,L851-L852,L855"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.23.030-1, MCC column. See CCC; this
+      column's door is the same shape without the discretion.
+  IPU:
+    section: ['16.24.010']
+    cite_default:
+      cite: HV LDC 16.24.010 (Institutional and Public Use, IPU); Table
+        16.24.010-1 permitted uses
+      url: https://ecode360.com/print/HA4934?guid=43529909
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Schools, churches, service districts, parks, public buildings,
+      # utility substations, cemeteries and daycare; the only home on the
+      # table is a temporary construction trailer (C). No residential
+      # heading at all. Whole-document grep of 16.24 for dwelling,
+      # residential, housing: the trailer row's "nearby rental housing" and
+      # a tower setback from "any residential property line". 119 lots --
+      # the schools and parks of the city, and the largest of the 23.
+      value: false
+      quote: "or/clackamas/happy-valley/16.24.institutional.txt#L23,L25,L27-L69"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.24.010-1. A district for public
+      land with no dwelling in it.
+  RC-ME:
+    section: ['16.25.005']
+    cite_default:
+      cite: HV LDC 16.25.005 (Rock Creek Mixed Employment, RC-ME); Table
+        16.25.005-1 permitted uses, Residential rows, notes 1 and 2
+      url: https://ecode360.com/print/HA4934?guid=43529910
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Three residential rows: "Single-family dwellings, when pre-existing
+      # as of June 1, 2008" P[1], home occupations in pre-existing dwellings
+      # P, and "Assisted living facilities, congregate housing, continuing
+      # care retirement community and skilled nursing facilities" C[2] --
+      # note 2 lets THAT use include attached and multifamily units as part
+      # of a care community. No new market-rate dwelling of any size. 10
+      # lots on the city's layer, plus the one the county layer sends here
+      # as a pocket.
+      value: false
+      quote: "or/clackamas/happy-valley/16.25.industrial.txt#L23,L25-L31,L74-L76"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.25.005-1. The purpose is "high job
+      densities that provide stable, family-wage employment"; the only
+      housing is what stood there in 2008 or what a care campus builds.
+  EC:
+    section: ['16.25.010']
+    cite_default:
+      cite: HV LDC 16.25.010 (Employment Center, EC); Table 16.25.010-1
+        permitted uses, Residential rows, note 1
+      url: https://ecode360.com/print/HA4934?guid=43529910
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # "New residential uses P[1]" in the EC column, and note 1 says where:
+      # "Residential uses on upper floors of mixed use buildings are
+      # permitted. In the Rock Creek Employment District, the ground floor
+      # may contain a residential use ... provided that residential uses
+      # ... occupy no more than 80% of the overall interior square footage
+      # of the site." Upstairs, or at most four-fifths of a site that is
+      # otherwise employment; a building that is all dwelling is 100
+      # percent of its site. 22 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.25.industrial.txt#L742,L744,L746-L750,L807-L808"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.25.010-1, EC column. The row reads
+      P and the note takes the P back for a stand-alone residential
+      building.
+  IC:
+    section: ['16.25.010']
+    cite_default:
+      cite: HV LDC 16.25.010 (Industrial Campus, IC); Table 16.25.010-1
+        permitted uses, Residential rows
+      url: https://ecode360.com/print/HA4934?guid=43529910
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # The IC column: pre-existing dwellings P, home occupations in them P,
+      # "New residential uses X". Metro Title 4 regionally significant
+      # industrial land. 57 lots.
+      value: false
+      quote: "or/clackamas/happy-valley/16.25.industrial.txt#L742,L744,L746-L750"
+    notes: >-
+      Encoded 2026-09-20 from Table 16.25.010-1, IC column. Marked X in
+      the city's own legend.
+
+# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
+# Steph's rule: read every code, write the reason down, never show it again;
+# only a code nobody has seen warns). An alias screens under the block it
+# names; a pocket or an unencodable district gates ZONE_POCKET / ZONE_UNENCODABLE
+# in the copy instead of ZONE_NOT_ENCODED and folds away on the County copy
+# page.
+zone_rulings:
+  # MUR-M's three density tiers. Table 16.22.060-2 is headed "Development
+  # Standards for MUR-M1, MUR-M2 and MUR-M3 Districts" and the MURM block's
+  # note anticipated the map printing them; it does, on 479 lots, and the
+  # use table that decides this building (16.22.060-1) treats MUR-M as one
+  # district. The tiers differ only in density -- 24.99, 34.99 and 50 du per
+  # net acre -- which does not reach a four-unit building.
+  MURM1:
+    outcome: alias
+    of: MURM
+    note: >-
+      MUR-M1, the 15-24.99 du/acre tier of Table 16.22.060-2 (16.22.residential.txt
+      L1305-L1308); one use table with MUR-M, so one block. 170 lots.
+  MURM2:
+    outcome: alias
+    of: MURM
+    note: >-
+      MUR-M2, the 25-34.99 du/acre tier of Table 16.22.060-2; the largest
+      of the three at 301 lots.
+  MURM3:
+    outcome: alias
+    of: MURM
+    note: >-
+      MUR-M3, the 35-50 du/acre tier of Table 16.22.060-2. 8 lots.
+  MURm2:
+    outcome: alias
+    of: MURM
+    note: >-
+      The city's layer prints one lot with a lower-case m; the same MUR-M2.
+  PMU:
+    outcome: unencodable
+    note: >-
+      Rock Creek Planned Mixed Use District, Chapter 16.31, 2 lots. The
+      chapter has no use table: it "allows a variety of commercial uses and
+      residential dwelling types and densities" (16.31.rock-creek-pmu.txt
+      L33) and every standard reads "Standards are flexible and shall be
+      determined through the master plan or a design review process" (L73,
+      L85). A master plan with a Planning Commission hearing is required
+      for development over five acres (L23, L37) and design review for the
+      rest; there is no by-right list to check the use against and no
+      envelope to measure. MURM's "Variable" table is the nearer shape and
+      this is further -- not even the use is written down.
+  # Clackamas County districts on the city's own zoning map. 16.67.070 Table
+  # 16.67.070-1 note **: "Clackamas County rural residential and farm zones
+  # that are annexed within the City of Happy Valley retain these
+  # designations/districts, which are administered by the City via the
+  # applicable auspices (for example, yard setbacks) of the Clackamas County
+  # ZDO until receiving urban zoning per an adopted urban Comprehensive Plan"
+  # (16.67.plan-amendments.txt L241). The county layer holds every one of
+  # these codes under the same spelling; its answer is what applies.
+  RRFF5:
+    outcome: pocket
+    of: or/clackamas/_unincorporated
+    note: >-
+      Rural Residential Farm Forest 5-Acre, 95 lots inside the city, retained
+      under 16.67.070 note ** (Table 16.67.070-1 L211). The county layer's
+      RRFF5 block refuses the building at ZDO Table 316-1.
+  FF10:
+    outcome: pocket
+    of: or/clackamas/_unincorporated
+    note: >-
+      Farm Forest 10-Acre, 5 lots, retained under note ** (L212). The county
+      layer's FF10 block refuses the building at ZDO Table 316-1.
+  RA1:
+    outcome: pocket
+    of: or/clackamas/_unincorporated
+    note: >-
+      Rural Area Residential 1-Acre, one lot. Not a note ** district -- Table
+      16.67.070-1 carries no RA-1 row at all, and RA-2 converts to R-15 on
+      annexation (L209) -- so the city's layer is printing a county zone the
+      annexation ordinance was meant to convert. The county layer's RA1
+      block refuses the building at ZDO Table 316-1; when the city rezones
+      the lot the answer is the city's district's.
+  RA2:
+    outcome: pocket
+    of: or/clackamas/_unincorporated
+    note: >-
+      Rural Area Residential 2-Acre, 8 lots; Table 16.67.070-1 converts it
+      to R-15 on annexation (L209), which this layer holds. Printed as the
+      county zone still, so the county layer's RA2 block answers -- a
+      refusal at ZDO Table 316-1 -- until the map moves.
+  RC:
+    outcome: pocket
+    of: or/clackamas/_unincorporated
+    note: >-
+      Rural Commercial, one lot; no row in Table 16.67.070-1. The county
+      layer's RC block refuses the building at ZDO Table 511-1.
+  VR57:
+    outcome: pocket
+    of: or/clackamas/_unincorporated
+    note: >-
+      Village Residential 5/7, the Sunnyside Village district, one lot;
+      Table 16.67.070-1 converts it to R-5 on annexation (L234). The county
+      layer's VR57 block permits the building outright at ZDO Table 1015-2
+      and holds its dimensions, so this is the one pocket where the county's
+      answer could be GREEN -- and R-5, which this layer holds, is where the
+      lot lands when the city's map catches up.

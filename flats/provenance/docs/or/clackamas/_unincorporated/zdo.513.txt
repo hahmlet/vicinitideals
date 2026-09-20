@@ -1,0 +1,381 @@
+513.01 Purpose
+
+Section 513 is adopted to implement the policies of the Comprehensive Plan for Community Commercial areas regulated by the Mount Hood Community Plan and for Rural Commercial areas.
+
+513.02 Applicability
+
+1 Section 513 applies to land in the Rural Tourist Commercial (RTC) and Rural Commercial (RC) Districts.
+
+513.03 Uses Permitted
+
+1 Uses permitted in the RTC and RC Districts are listed in Table 513-1, Permitted Uses in the RTC and RC Districts. In addition, uses similar to one or more of the listed uses for the applicable zoning district may be authorized pursuant to Section 106, Authorizations of Similar Uses.
+
+2 As used in Table 513-1:
+
+1 "P" means the use is a primary use.
+
+2 "A" means the use is an accessory use.
+
+3 "C" means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
+
+4 "S" means the use may be authorized only pursuant to Section 106; however, identifying a use as "S" does not indicate that any determination has been made regarding whether the use will be authorized pursuant to Section 106.
+
+5 "X" means the use is prohibited.
+
+6 "Type II" means the use requires review of a Type II application, pursuant to Section 1307, Procedures.
+
+7 Numbers in superscript correspond to the notes that follow Table 513-1.
+
+3 Permitted uses are subject to the applicable provisions of Subsection 513.04, Dimensional Standards; Section 1000, Development Standards; and Section 1100, Development Review Process.
+
+513.04 Dimensional Standards
+
+1 General: Dimensional standards applicable in the RTC and RC Districts are listed in Tables 513-2, Dimensional Standards in the RTC and RC Districts, Except in Government Camp, and 513-3, Dimensional Standards in Government Camp. As used in Tables 513-2 and 513-3, numbers in superscript correspond to the notes that follow the tables.
+
+2 Modifications: Modifications to the standards in Tables 513-2 and 513-3 are established by Sections 800, Special Use Requirements; 903, Setback Exceptions; 904, Height Exceptions; 1107, Property Line Adjustments; and 1205, Variances.
+
+Table 513-1: Permitted Uses in the RTC and RC Districts
+
+Use
+RTC
+RC
+Accessory Uses, Customarily Permitted, such as amateur (Ham) radio antennas and towers, arbors, bicycle racks, carports, citizen band transmitters and antennas, cogeneration facilities, courtyards, decks, decorative ponds, driveways, electric vehicle charging stations, family child care homes, fountains, garages, garden sheds, gazebos, greenhouses, HVAC units, meeting facilities, outdoor kitchens, parking areas, patios, pergolas, pet enclosures, plazas, property maintenance and property management offices, recreational facilities (such as bicycle trails, children's play structures, dance studios, exercise studios, playgrounds, putting greens, recreation and activity rooms, saunas, spas, sport courts, swimming pools, and walking trails), rainwater collection systems, satellite dishes, self-service laundry facilities, shops, solar energy systems, storage buildings/rooms, stormwater management facilities, television antennas and receivers, transit amenities, trellises, utility service equipment, and utility service lines
+A
+A
+Assembly Facilities, including auditoriums, community centers, convention facilities, exhibition halls, fraternal organization lodges, senior centers, and theaters for the performing arts
+P
+P,C[1]
+Bed and Breakfast Inns, subject to Section 832
+P
+P
+Bed and Breakfast Residences, subject to Section 832
+P
+P
+Bus Shelters
+P
+P
+Child Care Facilities
+P
+P
+Civic and Cultural Facilities, including art galleries, libraries, museums, and visitor centers
+P
+P
+Composting Facilities
+X
+X
+Contractors, Logging
+P
+P
+Daycare Services, Adult
+P
+P
+Drive-Thru Window Services, subject to Section 827
+X
+A
+Dwellings, Detached Single-Family
+P[2],A
+A
+Electric Vehicle Charging Stations
+P
+P
+Employee Amenities, including cafeterias, clinics, child care facilities, fitness facilities, lounges, and recreational facilities
+A
+A
+Entertainment Facilities, including arcades, billiard halls, and movie theaters
+P
+P
+Farmers' Markets, subject to Section 840
+P
+P
+Financial Institutions, including banks, brokerages, credit unions, loan companies, and savings and loan associations
+P
+P
+Fitness Facilities, including athletic clubs, exercise studios, gymnasiums, and health clubs
+P
+P
+Government Uses, including fire stations, police stations, and post offices
+P
+P
+Government Uses, unless such a use is listed elsewhere in this table as a primary, accessory, conditional, or prohibited use in the applicable zoning district
+S
+C
+Home Occupations, including bed and breakfast homestays, subject to Section 822
+A
+A
+Hosting of Weddings, Family Reunions, Class Reunions, Company Picnics, and Similar Events
+C
+C
+Hotels
+P[3]
+S4
+Manufacturing of Edible or Drinkable Products Retailed on the Same Site, including the primary processing of raw materials (e.g., malt, milk, spices) that are ingredients in edible or drinkable products retailed on the same site, and also including the wholesale distribution of edible or drinkable products that are manufactured and retailed on the same site, but excluding the processing, production, and wholesaling of marijuana products.
+P
+S
+Marijuana Processing
+X
+X
+Marijuana Production
+X
+X
+Marijuana Retailing, subject to Section 841
+P[5]
+P[5]
+Marijuana Wholesaling
+P[6]
+P[6]
+Mobile Vending Units, subject to Section 837
+P
+P
+Motels
+P[3]
+S[4]
+Offices, including administrative, business, corporate, governmental, and professional offices. Examples include offices for the following: accounting services, architectural services, business management services, call centers, employment agencies, engineering services, governmental services, income tax services, insurance services, legal services, manufacturer's representatives, office management services, property management services, real estate agencies, and travel agencies.
+P
+P
+Offices and Outpatient Clinics—both of which may include associated pharmacies and laboratories—for healthcare services, such as acupuncture, chiropractic, counseling, dental, massage therapy, medical, naturopathic, optometric, physical therapy, psychiatric, occupational therapy, and speech therapy.
+P
+P
+Parking Structures, Community
+P[7]
+X
+Pedestrian Amenities
+P
+P
+Places of Worship, subject to Section 804
+P
+P
+Public Restrooms
+A,C
+A,C
+Radio and Television Transmission and Receiving Towers and Earth Stations
+S[8]
+C[8]
+Recreational Uses, including boat moorages, community gardens, country clubs, equine facilities, gymnastics facilities, golf courses, horse trails, pack stations, parks, playgrounds, sports courts, swimming pools, ski areas, and walking trails9
+C
+C
+Recreational Uses, Government-Owned, including amphitheaters; arboreta; arbors, decorative ponds, fountains, gazebos, pergolas, and trellises; ball fields; bicycle and walking trails; bicycle parks and skate parks; equine facilities; boat moorages and ramps; community buildings and grounds; community and ornamental gardens; courtyards and plazas; fitness and recreational facilities, such as exercise equipment, gymnasiums, and swimming pools; horse trails; miniature golf, putting greens, and sports courts; pack stations; parks; picnic areas and structures; play equipment and playgrounds; nature preserves and wildlife sanctuaries; ski areas; tables and seating; and similar recreational uses9
+P
+P
+Recreational Uses, Government-Owned Golf Courses9
+P
+P
+Recreational Vehicle Camping Facilities, subject to Section 813
+P
+X
+Recycling Centers, subject to Section 819
+C
+C
+Recyclable Drop-Off Sites, subject to Section 819
+A
+A
+Resort Accommodations
+P[10]
+S
+Retailing—whether by sale, lease, or rent—of any of the following new or used products: Class I, III, and IV all-terrain vehicles, as defined by Oregon Revised Statutes Chapter 801; motorcycles; and snowmobiles
+S
+P
+Retailing—whether by sale, lease, or rent—of any of the following new or used products: apparel, appliances, art, art supplies, beverages, bicycle supplies, bicycles, books, cameras, computers, computer supplies, cookware, cosmetics, dry goods, electrical supplies, electronic equipment, firewood, flowers, food, furniture, garden supplies, gun supplies, guns, hardware, hides, interior decorating materials, jewelry, leather, linens, medications, music (whether recorded or printed), musical instruments, nutritional supplements, office supplies, optical goods, paper goods, periodicals, pet supplies, pets, plumbing supplies, photographic supplies, signs, small power equipment, sporting goods, stationery, tableware, tobacco, toiletries, tools, toys, vehicle supplies, and videos
+P
+P
+Retailing—whether by sale, lease, or rent—of any of the following new or used products: animal feed, building materials, farm equipment, forestry equipment, and livestock supplies
+P
+P
+Roads
+P
+P
+Schools
+P
+P,C[2,11]
+Service Stations
+P
+P
+Services, Commercial—Construction and Maintenance, including contractors engaged in construction and maintenance of buildings, electrical systems, and plumbing systems
+P
+P
+Services, Commercial—Food and Beverage, including catering and eating and drinking establishments
+P[12]
+P[12]
+Services, Commercial—Maintenance and Repair of any of the following: appliances, bicycles, electronic equipment, guns, housewares, musical instruments, optical goods, signs, small power equipment, sporting goods, and tools
+P
+P
+Services, Commercial—Maintenance and Repair of any of the following: all-terrain vehicles, automobiles, light trucks, motorcycles, and snowmobiles
+P
+P
+Services, Commercial— Maintenance and Repair of any of the following: boats; heavy trucks such as dump trucks, moving trucks, and truck tractors; large cargo trailers such as semitrailers; large construction equipment such as backhoes and bulldozers; large farm equipment such as tractors and combines; large forestry equipment; large mineral extraction equipment; and recreational vehicles
+S
+P
+Services, Commercial—Miscellaneous, including food lockers, interior decorating, locksmith, upholstering, and veterinary
+P
+P
+Services, Commercial—Mini-Storage/Self-Storage Facilities
+C[13]
+C
+Services, Commercial—Personal and Convenience, including barbershops, beauty salons, dry cleaners, laundries, photo processing, seamstresses, shoe repair, tailors, and tanning salons. Also permitted are incidental retail sales of products related to the service provided.
+P
+P
+Services, Commercial—Storage of any of the following: all-terrain vehicles, automobiles, light trucks, motorcycles, and snowmobiles
+S
+C
+Services, Commercial—Storage of any of the following: boats; heavy trucks such as dump trucks, moving trucks, and truck tractors; large cargo trailers such as semitrailers; large construction equipment such as backhoes and bulldozers; large farm equipment such as tractors and combines; large forestry equipment; large mineral extraction equipment; and recreational vehicles
+S
+C
+Services, Commercial—Studios of the following types: art, craft, dance, music, and photography
+P
+P
+Short-Term Rental in a dwelling unit permitted by this table, except for a dwelling unit that is an accessory use
+P
+X
+Signs, subject to Section 1010
+A[14]
+A[14]
+Temporary Storage within an Enclosed Structure of Source-Separated Recyclable/Reusable Materials Generated and/or Used On-site Prior to On-site Reuse or Removal by the Generator or Licensed or Franchised Collector to a User or Broker
+A
+A
+Temporary Buildings for Uses Incidental to Construction Work. Such buildings shall be removed upon completion or abandonment of the construction work.
+A
+A
+Theme Parks and Amusement Parks
+C
+S
+Transfer Stations, subject to Section 819
+C
+C
+Transit Park-and-Rides
+P
+P
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Sewer System Components that Serve Lands Inside an Urban Growth Boundary, subject to OAR 660-011-0060(3)
+Type II[15]
+Type II[15]
+Sewer Systems and Extensions of Sewer Systems to Serve Land Outside an Urban Growth Boundary and Unincorporated Community, subject to OAR 660-011-0060(4)
+Type II[16]
+Type II[16]
+Stormwater Management Facilities
+P,C[17]
+P,C[17]
+Utility Cabinets
+P,C[18]
+P,C[18]
+Utility Facilities, except Utility Lines, in Road Rights-of-Way
+P
+P
+Utility Facilities Not Otherwise Listed in Table 513-1
+C,S[19]
+C
+Utility Lines
+P,C[20]
+P,C[20]
+Wholesaling—whether by sale, lease, or rent—of any of the following new or used products: animal feed, farm equipment, farm materials, farm products, fertilizer, forestry equipment, forestry materials, forestry products, mulch, nursery stock, seeds, and seedlings
+P
+P
+Wireless Telecommunication Facilities, subject to Section 835
+See Table 835-1
+See Table 835-1
+
+[1]A fraternal organization lodge or school is a conditional use if the building floor space exceeds 4,000 square feet.
+
+[2]On a lot of record created on or before December 7, 1983, one detached single-family dwelling is a primary use. Otherwise, detached-single family dwellings are permitted only as an accessory use.
+
+[3]A new hotel or motel in Rhododendron shall be limited to a maximum of 35 units. A new hotel or motel in Government Camp shall be limited to a maximum of 100 units.
+
+[4]If a hotel or motel is authorized as a similar use inside an unincorporated community, it shall be subject to Oregon Administrative Rules 660-022-0030(5).
+
+[5]Marijuana retailing is permitted only inside an unincorporated community.
+
+[6]Marijuana wholesaling shall be located entirely within one or more completely enclosed buildings. A maximum of 4,000 square feet of building floor space may be used for all activities associated with marijuana wholesaling on a lot of record.
+
+[7]Parking structures are permitted only in Government Camp and only if they are consistent with a community parking plan adopted by the Board of County Commissioners.
+
+[8]The base of such towers shall not be closer to the property line than a distance equal to the height of the tower.
+
+[9]This use may include concessions, restrooms, maintenance facilities, and similar support uses.
+
+[10]A resort accommodations development in Government Camp shall be limited to a maximum of 50 units per acre. A resort accommodations development in Rhododendron or Wemme/Welches shall be limited to a maximum number of units per acre calculated pursuant to Table 317-3, District Land Area Standards in the MRR District, but is not subject to Section 1012, Lot Size and Density.
+
+[11]Schools are prohibited within the areas identified as Employment, Industrial, and Regionally Significant Industrial on the Metropolitan Service District's 2040 Growth Concept Map.
+
+[12]Drive-in eating and drinking establishments are prohibited.
+
+[13]No outside storage shall be permitted.
+
+[14]Temporary signs regulated under Subsection 1010.13(A) are a primary use.
+
+[15]Components of a sewer system that serve land outside urban growth boundaries or unincorporated community boundaries are prohibited.
+
+[16]The use is limited to sewer systems that: are designed and constructed so that their capacity does not exceed the minimum necessary to serve the area within the boundaries described under OAR 660-011-0060(4)(b)(B), except for urban reserve areas as provided under OAR 660-021-0040(6); and do not serve any uses other than those existing or allowed in the identified service area on the date the sewer system is approved.
+
+[16]Stormwater management facilities are a primary use if:
+
+1 They are underground, except for an outlet structure if applicable;
+
+2 They are vegetated, except for an outlet structure if applicable; or
+
+3 They are approved in conjunction with a development approved through another land use permit (e.g., a subdivision or design review).
+
+[18]Utility cabinets are a primary use if they comply with Section 830, Utility Cabinets, or if they are inside a road right-of-way. Otherwise they are a conditional use.
+
+[19]Hydroelectric facilities are a conditional use. All other utility facilities not otherwise listed in Table 513-1 may be authorized only pursuant to Section 106, Authorizations of Similar Uses.
+
+[20]Utility lines are a conditional use only if they are gas transmission lines or electric transmission lines.
+
+Table 513-2: Dimensional Standards in the RTC and RC Districts, Except in Government Camp
+
+Standard                                                                             RTC                    RC
+Minimum Lot Size                                                                     None                   None[1]
+Minimum Front Setback                                                                25 feet[2]             30 feet[2]
+Minimum Rear Setback                                                                 10 feet[3,4,5]         10 feet[4,6]
+Minimum Side Setback                                                                 10 feet[3,4,5]         10 feet[4,6]
+Maximum Building Floor Space per Commercial Use in an Unincorporated Community       4,000 square feet[7]   4,000 square feet[7]
+Maximum Building Floor Space per Commercial Use outside an Unincorporated Community  Not Applicable         3,000 square feet[8]
+Maximum Building Floor Space per Industrial Use in an Unincorporated Community       40,000 square feet[9]  40,000 square feet[9]
+
+[1]The minimum lot size inside the Portland Metropolitan Urban Growth Boundary shall be 20 acres. The 20-acre minimum lot size is applicable to a subdivision or partition, but not to a property line adjustment.
+
+[2]In a planned unit development, the minimum front setback is 20 feet.
+
+[3]If the lot line abuts a national forest, there is no minimum setback. If Note 3 and Note 4 conflict, Note 3 prevails.
+
+[4]In a planned unit development, there are no minimum rear and side setbacks except from rear and side lot lines on the perimeter of the final plat.
+
+[5]If the lot line abuts an RR or HR District, the minimum is 20 feet except as established by Note 3 or 4.
+
+[6]If the lot line abuts a residential zoning district, the minimum is 20 feet except as established by Note 3 or 4.
+
+[7]No maximum applies to hotels and motels; uses authorized under Oregon Statewide Planning Goals 3 and 4; and uses intended to serve the community and surrounding rural area or the travel needs of people passing through the area.
+
+[8]A lawfully established commercial use that existed on December 20, 2001, may expand to occupy a maximum of 3,000 square feet of building floor space or 25 percent more building floor space than was occupied by the use on December 20, 2001, whichever is greater.
+
+[9]No maximum applies to uses authorized under Statewide Planning Goals 3 and 4; expansion of a use that existed on December 5, 1994; uses that require proximity to a rural resource, as defined in Oregon Administrative Rules 660-004-0022(3)(a); new uses that will not exceed the capacity of water and sewer service available to the site on December 5, 1994, or, if such services are not available to the site, the capacity of the site itself to provide water and absorb sewage; and uses sited on abandoned or diminished mill sites.
+
+Table 513-3: Dimensional Standards in Government Camp
+
+Standard                                                                    RTC
+Minimum Front Setback unless the Front Lot Line abuts Government Camp Loop  10 feet, except 20 feet to garage and carport motor vehicle entries
+Minimum Front Setback if the Front Lot Line abuts Government Camp Loop      4 feet[1]
+Maximum Front Setback if the Front Lot Line abuts Government Camp Loop      10 feet[2]
+Minimum Rear Setback                                                        10 feet[3,4,5]
+Minimum Side Setback                                                        None
+Maximum Building Height                                                     70 feet[6]
+Minimum Building Separation above 3,500 Feet in Elevation                   20 feet between buildings with contiguous snow slide areas
+Maximum Building Floor Space per Commercial Use                             8,000 square feet[7]
+Maximum Building Floor Space per Industrial Use                             60,000 square feet[8]
+
+[1]There is no minimum front setback for building cantilevers with a minimum vertical clearance of eight feet above any pedestrian pathway, sidewalk, or walkway. Structures less than 10 feet from the front lot line shall be designed to include measures to protect the public and vehicles from snow slide incidents.
+
+[2]The maximum front setback may be exceeded to the minimum extent necessary to accommodate public plaza space. Detached single-family dwellings are exempt from complying with the maximum front setback.
+
+[3]If the rear lot line abuts a national forest, there is no minimum rear setback. If Note 3 and Note 4 conflict, Note 3 prevails.
+
+[4]In a planned unit development, there is no minimum rear setback except from rear lot lines on the perimeter of the final plat.
+
+[5]If the rear lot line abuts an HR District, the minimum rear setback is 20 feet except as established by Note 3 or 4.
+
+[6]The maximum building height may be increased to 87.5 feet to accommodate understructure parking or to preserve natural features or views.
+
+[7]No maximum applies to hotels and motels; uses authorized under Oregon Statewide Planning Goals 3 and 4; and uses intended to serve the community and surrounding rural area or the travel needs of people passing through the area.
+
+[8]No maximum applies to uses authorized under Statewide Planning Goals 3 and 4; expansion of a use that existed on December 5, 1994; uses that require proximity to a rural resource, as defined in Oregon Administrative Rules 660-004-0022(3)(a); new uses that will not exceed the capacity of water and sewer service available to the site on December 5, 1994, or, if such services are not available to the site, the capacity of the site itself to provide water and absorb sewage; and uses sited on abandoned or diminished mill sites.
+
+[Added by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-253, 6/1/2015; Amended by Ord. ZDO-254, 1/4/2016; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-268, 10/2/2018; Amended by Ord. ZDO-276, 10/1/2020; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-273, on remand, 5/30/2023; Amended by Ord. ZDO-287, 8/3/2023; Amended by Ord. ZDO-283, 9/5/2023; Amended by Ord. ZDO-288, 9/9/2024]

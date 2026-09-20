@@ -2844,3 +2844,212 @@ zones:
       nothing else. If the use ever opens -- a Town Center Plan amendment, or a state rule that
       reaches a zone with no detached housing in it -- the dimensions are in 4.132(.06) and (.07)
       and would have to be read then.'
+  # === The September 2026 map's eight codes, ruled 2026-09-20 ==============
+  #
+  # Steph's rule: every code the county map carries is read once, its reason
+  # written down, and never shown again. Wilsonville's map carried eight
+  # codes this layer did not hold -- 627 lots -- and every one refuses the
+  # building at its use list, so all eight are use-gate refusals quoting
+  # Chapter 4 the way TC does, with nothing dimensional encoded because
+  # nothing dimensional matters while the building may not be built.
+  #
+  # Five are one zone. The ordinance has a single FDA-H Future Development
+  # Agricultural-Holding Zone (4.120); Metro's fabric prints it with a
+  # trailing letter -- FDAHC, FDAHI, FDAHP, FDAHR, FDAHV -- which reads as
+  # the Comprehensive Plan's future designation for the land (4.120(.03)A
+  # and D turn on "where the Comprehensive Plan calls for future
+  # non-residential zoning"). Each letter gets a block so the map's code
+  # resolves; the reading is FDAHR's.
+  FDAHR:
+    section: ["4.120"]
+    cite_default:
+      cite: Wilsonville Development Code 4.120 (FDA-H Future Development
+        Agricultural-Holding Zone) (.01) purpose, (.03) uses permitted
+        outright, A "One single-family dwelling, per lot", (.09)A prohibited
+        uses
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # A holding zone: "to serve as a holding zone to preserve the future
+      # urban level development potential as undeveloped or underdeveloped
+      # property designated for more intensive development", applied to
+      # urbanizable land that has not yet had development approval. The one
+      # dwelling on the outright list is (.03)A, "One single-family dwelling,
+      # per lot and accessory dwelling units"; (.03)B bars partitioning or
+      # subdividing ahead of a zone change; (.09)A: "Uses of structures and
+      # land not specifically listed as permitted or conditionally permitted
+      # in the zone, or substantially similar to those uses, are prohibited
+      # in all FDA-H Zones." Whole-document grep for FDA-H: six mentions,
+      # the section, the WCF height rule and the treatment plant. 98 lots
+      # under the R letter, 154 under all five.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+    notes: >-
+      Encoded 2026-09-20 from 4.120. The 30,000 sq ft minimum lot and the
+      75 ft frontage (L4335, L4346) are the holding zone's, written so the
+      land is not cut up before it is rezoned; a lot leaves FDA-H by a zone
+      change under the Comprehensive Plan, and the middle housing question
+      is asked of the zone it lands in. THE STATE MANDATE IS THE OPEN
+      QUESTION ON THIS LETTER AND NOT ON THE OTHER FOUR: FDA-H allows a
+      detached house, and ORS 197A.420 reaches land zoned for residential
+      use that allows one -- RN's shape, flagged there. FDAHR is the letter
+      whose plan designation is residential, so the argument could attach to
+      its 98 lots and nowhere else; the city's own list is what is encoded,
+      the way RN's is, and the answer is RED until the city or the state
+      says otherwise. FDAHC, FDAHI, FDAHP and FDAHV are plan-designated
+      commercial, industrial, public and village land, where the mandate has
+      nothing to reach.
+  FDAHC:
+    section: ["4.120"]
+    cite_default:
+      cite: Wilsonville Development Code 4.120 (FDA-H Future Development
+        Agricultural-Holding Zone) (.01), (.03)A and D, (.09)A
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Future Development Agricultural-Holding, plan designation commercial.
+      # The same zone as FDAHR below: the ordinance has one FDA-H zone and
+      # the map appends the plan's future designation. One lot.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+    notes: >-
+      Encoded 2026-09-20 from 4.120 with FDAHR; read that block. Plan-designated commercial land; the state middle-housing mandate does not reach it.
+  FDAHI:
+    section: ["4.120"]
+    cite_default:
+      cite: Wilsonville Development Code 4.120 (FDA-H Future Development
+        Agricultural-Holding Zone) (.01), (.03)A and D, (.09)A
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Future Development Agricultural-Holding, plan designation industrial.
+      # The same zone as FDAHR below: the ordinance has one FDA-H zone and
+      # the map appends the plan's future designation. 47 lots.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+    notes: >-
+      Encoded 2026-09-20 from 4.120 with FDAHR; read that block. Plan-designated industrial land; the state middle-housing mandate does not reach it.
+  FDAHP:
+    section: ["4.120"]
+    cite_default:
+      cite: Wilsonville Development Code 4.120 (FDA-H Future Development
+        Agricultural-Holding Zone) (.01), (.03)A and D, (.09)A
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Future Development Agricultural-Holding, plan designation public.
+      # The same zone as FDAHR below: the ordinance has one FDA-H zone and
+      # the map appends the plan's future designation. Four lots.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+    notes: >-
+      Encoded 2026-09-20 from 4.120 with FDAHR; read that block. Plan-designated public land; the state middle-housing mandate does not reach it.
+  FDAHV:
+    section: ["4.120"]
+    cite_default:
+      cite: Wilsonville Development Code 4.120 (FDA-H Future Development
+        Agricultural-Holding Zone) (.01), (.03)A and D, (.09)A
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Future Development Agricultural-Holding, plan designation village.
+      # The same zone as FDAHR below: the ordinance has one FDA-H zone and
+      # the map appends the plan's future designation. Four lots.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+    notes: >-
+      Encoded 2026-09-20 from 4.120 with FDAHR; read that block. Plan-designated village land -- the V Zone that follows it refuses the building in its own words (4.125), so the answer is the same on either side of the zone change.
+  PDC:
+    section: ["4.131"]
+    cite_default:
+      cite: Wilsonville Development Code 4.131 (PDC Planned Development
+        Commercial Zone) (.01)A, uses that are typically permitted, 5, and
+        (.03)2-3
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Planned Development Commercial. The list is retail, wholesale
+      # showrooms, offices and clinics, service establishments, churches,
+      # repair and fabrication shops -- and item 5, the only door to
+      # housing: "Any use allowed in a PDR Zone or PDI Zone, PROVIDED THE
+      # MAJORITY OF THE TOTAL GROUND FLOOR AREA IS COMMERCIAL". A four-unit
+      # residential building on its own lot has a ground floor that is all
+      # dwelling, so the residential uses of the PDR zones do not come
+      # through the door. (.03)2-3 contemplate "a residential development,
+      # or mixed-use development including residential development" in the
+      # zone -- the mixed-use case item 5 admits -- and set street spacing
+      # for it, not a use. 179 lots.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L8183-L8198,L8250-L8256"
+    notes: >-
+      Encoded 2026-09-20 from 4.131(.01). Whole-section grep of 4.131
+      (L8183-L8267) for dwelling, residential, housing: the two block-and-
+      access paragraphs at (.03) and nothing else; the section never says
+      quadplex, townhouse, duplex or middle housing. The zone is governed by
+      the Planned Development Regulations (4.140), a master-plan process
+      that adjusts dimensions and arrangement "consistent with the land use
+      designation on the Comprehensive Plan"; it does not add a use the
+      zone's list closes. A stand-alone pod fails item 5's ground-floor test
+      by construction.
+  PDI:
+    section: ["4.135"]
+    cite_default:
+      cite: Wilsonville Development Code 4.135 (PDI Planned Development
+        Industrial Zone) (.01) and (.03), uses that are typically permitted,
+        A-T, with 4.131(.01)A.5
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Planned Development Industrial. Twenty entries, A through T:
+      # warehouses, distribution, manufacturing, fabrication, technology
+      # office complexes, corporate headquarters, call centers, research,
+      # laboratories, industrial services, training facilities, public
+      # facilities, accessory and temporary structures, and O, "Any use
+      # allowed in a PDC Zone, subject to the following limitations" -- size
+      # caps on service commercial, office and retail. PDC's own housing
+      # door (4.131(.01)A.5) opens only where the majority of the ground
+      # floor is commercial, so the chain PDI -> PDC -> PDR carries no
+      # stand-alone residential building through. T, "other similar uses"
+      # in the Planning Director's judgment "consistent with the purpose of
+      # the PDI Zone", is a similar-use finding about industry. Whole-
+      # section grep of 4.135 (L10260-L10415) for dwelling, residential,
+      # housing: the performance standards' rules about NEIGHBOURING
+      # residential districts (noise, loading, lighting) and nothing else.
+      # 275 lots -- the largest code on Wilsonville's map.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L10260-L10265,L10284-L10285,L10300-L10305"
+    notes: >-
+      Encoded 2026-09-20 from 4.135(.03). Refused on silence the way PDC is,
+      and the silence is an industrial zone's: the one route to a dwelling
+      runs through PDC's mixed-use door and that door is shut to a building
+      whose ground floor is all dwelling. The Coffee Creek and Regionally
+      Significant Industrial Area overlays (4.134, 4.135.5) narrow the list
+      further and add nothing residential.
+  PF:
+    section: ["4.136"]
+    cite_default:
+      cite: Wilsonville Development Code 4.136 (PF Public Facility Zone)
+        (.01), (.02) uses permitted outright A-M, (.03) uses subject to a
+        conditional use A-H
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-09-20'
+    quadplex_allowed:
+      # Public Facility, "intended to be applied to existing public lands and
+      # facilities". Outright: municipal buildings, churches, hospital,
+      # public marina, recreation grounds, parking facilities, public
+      # utilities, library, trails, parks, public schools, day care,
+      # accessory uses. Conditional: picnic grounds, sewage and water
+      # treatment, storage yards, zoo, cemetery, private schools, military
+      # bases. No dwelling on either list; whole-section grep of 4.136
+      # (L10610-L10665) for dwelling, residential, housing: nothing. 19
+      # lots.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L10610-L10637,L10640"
+    notes: >-
+      Encoded 2026-09-20 from 4.136. Twenty-one uses on two lists and every
+      one a public or quasi-public facility; the dimensional standards at
+      (.04) -- one-acre lots, 30 ft front and rear, 35 ft height -- are a
+      civic building's and moot here. The (.08)B master plan route lets the
+      Planning Commission approve "all uses provided in the Master Plan",
+      which is a plan for a school or a hospital campus, not a door for a
+      four-unit building on a lot.

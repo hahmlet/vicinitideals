@@ -1,0 +1,205 @@
+604.01Purpose
+
+Section 604 is adopted to implement the policies of the Comprehensive Plan for Rural Industrial areas.
+
+604.02Applicability
+
+Section 604 applies to land in the Rural Industrial (RI) District.
+
+604.03Uses Permitted
+
+Uses permitted in the RI District are listed in Table 604-1, Permitted Uses in the RI District. In addition, uses similar to one or more of the listed uses may be authorized pursuant to Section 106, Authorizations of Similar Uses.
+
+1 As used in Table 604-1:
+
+1 "P" means the use is a primary use.
+
+2 "A" means the use is an accessory use.
+
+3 "C" means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
+
+4 "X" means the use is prohibited.
+
+5 "Type II" means the use requires review of a Type II application, pursuant to Section 1307, Procedures.
+
+6 Numbers in superscript correspond to the notes that follow Table 604-1.
+
+2 Permitted uses are subject to the applicable provisions of Subsection 604.04, Dimensional Standards, Section 1000, Development Standards, and Section 1100, Development Review Process.
+
+604.04 Dimensional Standards
+
+1 General: Dimensional standards applicable in the RI District are listed in Table 604-2, Dimensional Standards in the RI District. As used in Table 604-2, numbers in superscript correspond to the notes that follow Table 604-2.
+
+2 Modifications: Modifications to the standards in Table 604-2 are established by Sections 800, Special Use Requirements; 903, Setback Exceptions; 1107, Property Line Adjustments; and 1205, Variances.
+
+Table 604-1: Permitted Uses in the RI District
+
+Use
+RI
+Accessory Uses, Customarily Permitted, such as amateur (Ham) radio antennas and towers, arbors, bicycle racks, citizen band transmitters and antennas, cogeneration facilities, courtyards, decks, decorative ponds, driveways, electric vehicle charging stations, fountains, gazebos, HVAC units, meeting facilities, parking areas, patios, pergolas, plazas, property maintenance and property management offices, rainwater collection systems, satellite dishes, solar energy systems, stormwater management facilities, television antennas and receivers, transit amenities, trellises, utility service equipment, and utility service lines
+A
+Accessory Uses permitted in the RA-2 District listed in Table 316-1, Permitted Uses in the Rural Residential and Future Urban Residential Zoning Districts, provided that such uses are accessory to a single-family dwelling that is a nonconforming use
+A
+Animal Slaughtering and Rendering, Distillation of Bones, and Leather Tanning
+C
+Auto Wrecking Yards and Junkyards, subject to Section 817
+C
+Bus Shelters
+A
+Composting Facilities, subject to Section 834
+C
+Construction and Maintenance Contractors, including contractors engaged in construction and maintenance of buildings and their component parts (e.g., roofing, siding, windows), fencing, decking, building systems (e.g., plumbing, electrical, mechanical), landscaping, and infrastructure (e.g., roads, utilities). Also included are excavation contractors, building movers, pest control services, and janitorial services.
+P
+Dwellings
+A
+Employee Amenities, such as cafeterias, clinics, child care facilities, fitness facilities, lounges, and recreational facilities
+A
+Farmers' Markets, subject to Section 840
+P
+Fraternal Organization Lodges
+C
+Government Uses, unless such a use is listed elsewhere in this table as a primary or accessory use
+C
+Heliports
+C
+Hosting of Weddings, Family Reunions, Class Reunions, Company Picnics, and Similar Events
+C
+Incineration and Reduction of Offal, Dead Animals, and Solid Waste
+C
+Level One Mobile Vending Units, subject to Section 837
+A
+Light Metal and Fiberglass Fabrication
+P
+Manufacturing, including establishments engaged in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, including the assembly of component parts. Examples of manufacturing are alternative energy development, biosciences, food and beverage processing, software and electronics production, and fabrication of products made from materials such as metal, glass, rubber, plastic, resin, wood, and paper.
+P[1]
+Manufacturing, Transportation, Distribution, Warehousing, and Wholesale Trade of the Following: Explosive Materials and Devices, Fertilizer, Natural Gas, Pesticides, Petroleum, and Petroleum Products
+C
+Marijuana Processing
+P[2]
+Marijuana Production
+P[2]
+Marijuana Retailing
+X
+Marijuana Wholesaling
+P[2]
+Offices
+A
+Parking, Storage, Repair, and Servicing of Fleet Vehicles
+A
+Pedestrian Amenities
+P
+Plant Nurseries
+P
+Radio and Television Transmission and Receiving Towers and Earth Stations, provided that the base of such towers shall not be closer to the property line than a distance equal to the height of the tower
+C
+Recreational Sports Facilities for such sports as basketball, dance, gymnastics, martial arts, racquetball, skating, soccer, swimming, and tennis. These facilities may be used for any of the following: instruction, practice, and competitions. Only indoor facilities are permitted. Health and fitness clubs are excluded from this category.
+P
+Recreational Uses, including boat moorages, community gardens, country clubs, equine facilities, golf courses, gymnastics facilities, horse trails, lodges, pack stations, parks, playgrounds, sports courts, swimming pools, ski areas, and walking trails3
+C
+Recyclable Drop-Off Sites, subject to Section 819
+A
+Recycling Centers and Transfer Stations, subject to Section 819
+C
+Repair and Refinishing of Furniture and Household Goods
+P
+Repair of Motor Vehicles
+P
+Retail Sales of Lumber and Building Materials
+P
+Roads
+P
+Retail Sales of Products that are Manufactured on the Subject Property, Distributed from the Subject Property, Warehoused on the Subject Property, or Sold on a Wholesale Basis from the Subject Property
+A
+Sales, Rental, Storage, Repair, and Servicing of Equipment and Materials Associated with Farm and Forest Uses, Road Maintenance, Mineral Extraction, and Construction
+P
+Sheet Metal and Machine Shops
+P
+Signs, subject to Section 1010
+A[4]
+Surface Mining, subject to Section 818
+C
+Temporary Buildings for Uses Incidental to Construction Work, provided that such buildings shall be removed upon completion or abandonment of the construction work
+A
+Temporary Storage within an Enclosed Structure of Source-Separated Recyclable/Reusable Materials Generated and/or Used On-site Prior to On-site Reuse or Removal by the Generator or Licensed or Franchised Collector to a User or Broker
+A
+Upholstery Shops
+P
+Utility Facilities, including:
+Utility Facilities, including:
+Sewer System Components that Serve Lands Inside an Urban Growth Boundary, subject to OAR 660-011-0060(3)
+Type II[5]
+Sewer Systems and Extensions of Sewer Systems to Serve Land Outside an Urban Growth Boundary and Unincorporated Community, subject to OAR 660-011-0060(4)
+Type II[6]
+Small Power Production Facilities. A small power production facility is a facility that that produces energy primarily by use of biomass, waste, solar energy, wind power, water power, geothermal energy, or any combination thereof; is more than 50 percent owned by a person who is not an electric utility, an electric utility holding company, an affiliated interest, or any combination thereof; and has a power production capacity that, together with any other small power production facility located at the same site and owned by the same person, is not greater than 80 megawatts.
+P
+Stormwater Management Facilities
+P,C[7]
+Utility Cabinets
+P,C[8]
+Utility Facilities, except Utility Lines, in Road Rights-of-Way
+P
+Utility Facilities Not Otherwise Listed in Table 604-1
+C[9]
+Utility Lines
+P,C[10]
+Veterinary Hospitals
+P
+Warehousing and Distribution, including establishments primarily engaged in operating warehousing and distribution facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and generally are being stored in anticipation of delivery to the final customer. A range of logistical services may be provided, including labeling, packaging, price marking and ticketing, and transportation arrangement. Included are the transportation and distribution of cargo using motor vehicles or rail spurs, loading docks, and parking of cargo transport vehicles. Mini-storage facilities are not included.
+P[1]
+Wholesale Trade, including establishments engaged in selling and distributing goods and services to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation. Wholesalers sell goods and services to other businesses, not the general public.
+P[1]
+Wireless Telecommunication Facilities, subject to Section 835
+P
+
+Notes to Table 604-1:
+
+[1]Manufacturing, transportation, distribution, warehousing, and wholesale trade of certain products are conditional uses, when specifically listed as such in Table 604-1.
+
+[2]Marijuana production, marijuana processing, and marijuana wholesaling shall be located entirely within one or more completely enclosed buildings. A maximum of 20,000 square feet of building floor space may be used for all activities associated with marijuana production, marijuana processing, and marijuana wholesaling on a lot of record.
+
+[3]This use may include concessions, restrooms, maintenance facilities, and similar support uses.
+
+[4]Temporary signs regulated under Subsection 1010.13(A) are a primary use.
+
+[5]Components of a sewer system that serve land outside urban growth boundaries or unincorporated community boundaries are prohibited.
+
+[6]The use is limited to sewer systems that: are designed and constructed so that their capacity does not exceed the minimum necessary to serve the area within the boundaries described under OAR 660-011-0060(4)(b)(B), except for urban reserve areas as provided under OAR 660-021-0040(6); and do not serve any uses other than those existing or allowed in the identified service area on the date the sewer system is approved.
+
+[7]Stormwater management facilities are a primary use if:
+
+1 They are underground, except for an outlet structure if applicable;
+
+2 They are vegetated, except for an outlet structure if applicable; or
+
+3 They are approved in conjunction with a development approved through another land use permit (e.g., a subdivision or design review).
+
+[8]Utility cabinets are a primary use if they comply with Section 830, Utility Cabinets, or if they are inside a road right-of-way. Otherwise they are a conditional use.
+
+[9]Except for telephone exchanges, utility facilities shall not include shops, garages, or general administrative offices.
+
+[10]Utility lines are a conditional use only if they are gas transmission lines or electric transmission lines.
+
+Table 604-2: Dimensional Standards in the RI District
+
+Standard                                                                             RI
+Minimum Lot Size                                                                     None[1]
+Minimum Front Setback                                                                30 feet
+Minimum Rear Setback                                                                 0[2,3]
+Minimum Side Setback                                                                 0[2,3]
+Maximum Building Floor Space per Commercial Use in an Unincorporated Community       4,000 square feet[4]
+Maximum Building Floor Space per Industrial Use in an Unincorporated Community       40,000 square feet[5]
+Maximum Building Floor Space per Industrial Use outside an Unincorporated Community  39,500 square feet[6]
+
+[1]The minimum lot size inside the Portland Metropolitan Urban Growth Boundary is 20 acres. The 20-acre minimum lot size is applicable to a subdivision or partition, but not to a property line adjustment.
+
+[2]If the lot line abuts a residential zoning district, the minimum is 30 feet plus five feet for each 10-foot increase in building height over 35 feet. Height increments of less than 10 feet shall be rounded up to the nearest 10-foot increment. For example, if the building height is 49 feet, the minimum rear setback shall be 40 feet. If the lot line abuts a commercial zoning district, the minimum shall be 10 feet plus five feet for each 10-foot increase in building height over 35 feet. Height increments of less than 10 feet shall be rounded up to the nearest 10-foot increment. For example, if the building height is 49 feet, the minimum rear setback shall be 20 feet.
+
+[3]Notwithstanding Note 2, the minimum rear and side setback standards applicable in the RA-2 District apply to dwellings that are nonconforming uses, as well as to uses that are accessory to such dwellings.
+
+[4]No maximum applies to uses authorized under Oregon Statewide Planning Goals 3 and 4 and uses intended to serve the community and surrounding rural area or the travel needs of people passing through the area.
+
+[5]No maximum applies to uses authorized under Statewide Planning Goals 3 and 4; expansion of a use that existed on December 5, 1994; uses that require proximity to a rural resource, as defined in Oregon Administrative Rules 660-004-0022(3)(a); new uses that will not exceed the capacity of water and sewer service available to the site on December 5, 1994, or, if such services are not available to the site, the capacity of the site itself to provide water and absorb sewage; and uses sited on abandoned or diminished mill sites.
+
+[6]No maximum applies to the primary processing of raw material produced in rural areas, or uses sited on abandoned or diminished mill sites. Also, any lawfully established industrial use that existed on December 20, 2001, may expand to occupy a maximum of 40,000 square feet of building floor space or 25 percent more building floor space than was occupied by the use on December 20, 2001, whichever is greater.
+
+[Amended by Ord. ZDO-224, 5/31/2011; Amended by Ord. ZDO-231, 1/31/2012; Amended by Ord. ZDO-235, 5/14/2012; Amended by Ord. ZDO-243, 9/9/2013; Amended by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-253, 6/1/2015; Amended by Ord. ZDO-254, 1/4/2016; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-268, 10/2/2018; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-288, 9/9/2024]

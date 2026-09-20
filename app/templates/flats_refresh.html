@@ -108,7 +108,7 @@
             {% endif %}
             {% for layer, by_outcome in (s.ruled_zones or {}).items() %}
               {% for outcome, codes in by_outcome.items() %}
-                <div><strong>{{ layer }}</strong> {{ {"alias": "spelling of a zone the rules hold", "pocket": "another jurisdiction's zoning inside the line", "unencodable": "read; asks a measurement the screen cannot take", "to_read": "seen; use table still to read"}.get(outcome, outcome) }}: {% for code, n in codes.items() %}{{ code }} ({{ "{:,}".format(n) }}){% if not loop.last %}, {% endif %}{% endfor %}</div>
+                <div><strong>{{ layer }}</strong> {{ {"alias": "spelling of a zone the rules hold", "pocket": "another jurisdiction's zoning inside the line", "unencodable": "read; asks a measurement the screen cannot take", "to_read": "seen; chapter not encoded yet (use unread, or permitted with dimensions unread)"}.get(outcome, outcome) }}: {% for code, n in codes.items() %}{{ code }} ({{ "{:,}".format(n) }}){% if not loop.last %}, {% endif %}{% endfor %}</div>
               {% endfor %}
             {% endfor %}
           </div>

@@ -2205,8 +2205,11 @@ is a city creating or renaming a district and we should evaluate it. That
 is built. What is left is what the flag does.
 
 Today a never-seen code **blocks** the refresh: the whole September copy
-(400,032 lots) waited on 128 codes that turned out to be mostly commercial,
-farm and industrial zones nobody had written down. You asked whether the
+(400,032 lots) waited on 100 codes that turned out to be mostly commercial,
+farm and industrial zones nobody had written down (all 100 read and written
+down on 2026-09-20; 52 forbid the building outright, 48 are the other
+kinds -- a neighbour's zone carried on a city's map, a family name for
+zones we hold, a zone whose rule we cannot yet hold, or one still to read). You asked whether the
 uncontroversial part could go through on its own so the update is not
 all-or-nothing. Two ways to do that:
 
