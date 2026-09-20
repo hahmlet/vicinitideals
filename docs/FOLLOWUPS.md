@@ -219,7 +219,51 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    as `any` per (c); alley-fed cities keep the alley): at most the 380
    no_side_lane lots outside Portland/Milwaukie (Gresham 85, Clackamas
    83, WL 51, Multnomah 38, HV 31, OC 25, Wilsonville 24, Troutdale 13)
-   plus a few no_court. Bound each half separately, read the losses.
+   plus a few no_court. **(iii)+(iv) BUILT (this commit, `s6s_siteplan.py`,
+   65 siteplan tests):** `_through_ends` splits one street cluster's
+   edges into two ends where the widest gap across the bearing is >= 40
+   ft (and half the lot's extent, with the corners), and each end is
+   tried as the front under every corner word; `front_ban` (Portland,
+   Milwaukie) refuses EVERY rear court on a through lot, alley-fed
+   included, and offers `townhome_side_court` (`_side_court`: the largest
+   rectangle beside the building, stalls against the side lot line, aisle
+   along the wall -- `max(aisle_two, lane)` wide, West Linn's 24 ft lane
+   into its 23 ft aisle -- no farther back than the rear wall, the front
+   lane straight into the aisle) or `townhome_side_court_alley`; in a ban
+   city the side court is never drawn on a side whose strip holds another
+   street's cells (33.266.120.C.1.a "behind the front AND side street
+   building lines"); elsewhere `townhome_rear_court_rear_street` brings
+   the lane in from the far end where the access word is any /
+   lowest_class (the `any` cites are silence about WHICH street, read as
+   silence about the far end too -- say so if a city's through-lot rule
+   turns up). `_plan_rank` bins exposure to 5 ft (raster corner cells) and
+   ranks own-aisle rear court > side court > alley-aisle on a tie. **And
+   the rear court is TRIMMED to the rows it parks** (`_court_places`): it
+   was the whole free rectangle behind the pod -- second row at the back
+   of the lot, aisle paved across the lot's width, side along the side
+   street for the room's depth -- which is the opposite of "sufficient
+   but minimal" and made the side court win any lot wide enough to hold
+   one; now one or two rows (both tried) at any corner of the room, a
+   court that can slide off a street's strip offered at zero exposure
+   with a lane to that street; the one-row court turns its aisle toward
+   the lane. On a synthetic grid of 312 lots: no colour moved, 194
+   drawings did (68 interior lots pave less and open more, 36 corner side
+   courts / whole-room courts became hidden rear courts, 11 Gresham
+   through lots took the far-street lane, 44 alley courts shrank); s6s
+   ~3 % slower. `parking_area_sqft` / `open_space_sqft` move on every
+   rear-court lot -- lots that failed `no_open_space` may turn green; the
+   bound counts them. BOUND NEXT on 137, then loaded as run 11. Queued
+   from this slice: (f) the rear court keeps a tie with the side court;
+   Steph's "room for a 2nd pod" could read the other way (prefer the side
+   court so the rear yard is free) -- count the ties in the bound and ask;
+   (g) the two-row court's lane lands on its near row's end where a stall
+   is drawn (one-row courts turn the aisle to the lane; two-row need the
+   landing carved out of the row or the lane run to the aisle band);
+   (h) the alley-aisle court (`townhome_rear_court_alley_aisle`) still
+   scores the whole room's exposure -- trim it to its stall row + back-out
+   depth; (i) which end of a through lot is "the front" is read as the
+   applicant's choice under every corner word (Portland 33.910 makes both
+   ends front lot lines) -- read the other 13 cities' through-lot lines.
    Queued behind it, each to bound first: (a) s4 measures lot
    width/depth along the LONGEST street (`cluster_bearings` orders by
    length) -- in the shortest cities width and depth are swapped on most

@@ -1288,8 +1288,10 @@ def main() -> None:
                         f"| {ok_c:,} ({_pct(ok_c, int(m.sum()))}) |")
             methods = [(meth, int((pil["layout_method"] == meth).to_numpy().sum()))
                        for meth in ("townhome_rear_court", "townhome_rear_court_side_street",
+                                    "townhome_rear_court_rear_street",
                                     "townhome_rear_court_alley",
-                                    "townhome_rear_court_alley_aisle")]
+                                    "townhome_rear_court_alley_aisle",
+                                    "townhome_side_court", "townhome_side_court_alley")]
             method_str = ", ".join(f"{meth} {n:,}" for meth, n in methods if n)
             ok_os = int(pil["open_space_ok"].to_numpy().sum())
             L.append(f"\nLayout method used: {method_str or 'none'}. "

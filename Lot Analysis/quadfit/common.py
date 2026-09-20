@@ -1150,16 +1150,31 @@ class SiteplanSpec(BaseModel):
     # court's own aisle would; `townhome_rear_court_side_street` is the same
     # court on a corner lot with its lane coming in from the SIDE street
     # across its setback strip, drawn only where the city's
-    # `corner_access_street` allows it (FOLLOWUPS 5). Kept as a list so a
-    # future cell can add typologies without a schema change.
+    # `corner_access_street` allows it (FOLLOWUPS 5);
+    # `townhome_rear_court_rear_street` is the same lane from the street at
+    # the far end of a through lot; `townhome_side_court` is a court BESIDE
+    # the building, its stalls against the side lot line and its aisle
+    # along the wall, the lane from the front street -- the one court a
+    # through lot may hold where the city bans a vehicle area between the
+    # building and a street (`parking_front_prohibited`), and elsewhere the
+    # plan where the rear court is too shallow or stands on more street;
+    # `townhome_side_court_alley` is that court reached from the alley.
+    # Kept as a list so a future cell can add typologies without a schema
+    # change.
     layout_methods: list[Literal["townhome_rear_court",
                                  "townhome_rear_court_side_street",
+                                 "townhome_rear_court_rear_street",
                                  "townhome_rear_court_alley",
-                                 "townhome_rear_court_alley_aisle"]] = Field(
+                                 "townhome_rear_court_alley_aisle",
+                                 "townhome_side_court",
+                                 "townhome_side_court_alley"]] = Field(
         default_factory=lambda: ["townhome_rear_court",
                                  "townhome_rear_court_side_street",
+                                 "townhome_rear_court_rear_street",
                                  "townhome_rear_court_alley",
-                                 "townhome_rear_court_alley_aisle"]
+                                 "townhome_rear_court_alley_aisle",
+                                 "townhome_side_court",
+                                 "townhome_side_court_alley"]
     )
 
     # Stall + drive geometry, per jurisdiction — never one global number. See
