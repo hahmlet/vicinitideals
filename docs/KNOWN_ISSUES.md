@@ -44,3 +44,14 @@ items live in [HUMAN_TODO.md](HUMAN_TODO.md).
    `app/`, the E2E runbook (`docs/Troubleshooting/e2e-failed-test.md`)
    applies -- assert on a value the old DOM cannot have, not on a count
    that the compute may not have repainted yet.
+
+7. **`tests/e2e/test_phase_b_debt.py::test_phase_b_debt[chromium-ir_12mo]`
+   failed once in CI on a commit that touched only `Lot Analysis/` and
+   docs** (d4b9a442, 2026-09-20, "Balance check failed: P=451613 !=
+   base=600000 + amt=31612.9 (construction module persisted
+   ltv_pct=70.0)"; run 35481057327). The test's own history is timing
+   (9bab86df "pin carry-math loan LTV via API to decouple from wizard
+   timing"), and nothing in the commit reaches `app/`. Read as the second
+   finance-E2E flake on a FLATS-only commit (see 6); it is confirmed a
+   flake when the next commit's CI passes with identical `app/`, and a
+   real finance item for a finance agent if it fails twice in a row.

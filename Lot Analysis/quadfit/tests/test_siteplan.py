@@ -2005,6 +2005,71 @@ def test_a_corner_lots_court_slides_off_the_side_street():
     assert r["driveway_len_ft"] == pytest.approx(FRONT_S + (60.0 - FRONT_S - c[2]), abs=1.6)
 
 
+def test_a_court_in_a_big_room_slides_to_the_mouth_mid_side():
+    """A 300 x 400 Gresham lot with a 20 ft stub of side street meeting its
+    east side at 250-270 ft, the access word `side` (the lane must come
+    from that street): the room behind the pod is 285 x 340 and the
+    trimmed court at its four corners is nowhere near the stub, so until
+    2026-09-20 the lot drew a side court exposed for 62 ft along the front
+    instead (the bound's five non-through losses were this: a 10-acre
+    Oregon City corner lot, an alley mouth mid-side of a Portland CM3
+    room). The whole room's lane says where the mouth is and the court
+    slides under it: against the east side over the stub's rows, no lane
+    to pave, its edge on the street the stub's reach and no more."""
+    s6s = _sp_setup()
+    W, D = 300.0, 400.0
+    env = box(SIDE_S, FRONT_S, W - FRONT_S, D - REAR_S)
+    fe = [[0.0, 0.0, W, 0.0], [W, 250.0, W, 270.0]]
+    r = _run(_with_words(s6s, "gresham", None, "side"), env, fe, W * D,
+             bearings=[0.0, 90.0])
+    _with_words(s6s, "gresham", None, "any")
+    assert r["site_plan_ok"] is True and r["stalls_provided"] == 8
+    assert r["layout_method"] == "townhome_rear_court_side_street"
+    c = r["geoms"]["parking_court"].bounds
+    assert c[2] == pytest.approx(W - FRONT_S, abs=0.6)               # on the east strip
+    assert c[1] < 260.0 < c[3]                                       # over the stub
+    assert r["driveway_len_ft"] == pytest.approx(FRONT_S)            # the strip only
+    assert 0.0 < r["court_street_ft"] < 45.0                         # the stub's reach
+    # the whole room's lane names the placement: a lane up from the back
+    # puts the court under its columns, a lane out of a side over its rows
+    assert s6s._court_places(10, 20, 100, 80, 40, 30, (110, 45, 20, 4), 4) == [
+        (10, 20), (10, 70), (70, 20), (70, 70), (70, 45)]
+    assert s6s._court_places(10, 20, 100, 80, 40, 30, (50, 100, 4, 30), 4, (0, 8)) == [
+        (10, 20), (10, 70), (70, 20), (70, 70), (46, 70), (50, 70)]
+
+
+def test_a_bent_front_still_carries_the_lane_beside_the_pod():
+    """A 100 x 115 Gresham lot whose front lot line steps back 15 ft east
+    of x = 70: the pod fits only in the deeper pocket west of the step,
+    and the lane beside it runs down the ground east of the step, where
+    the envelope's edge is 15 ft behind the pod's front row. Until
+    2026-09-20 the lane had to be free from the pod's front row, so that
+    ground could carry none and the lot drew a side court exposed on the
+    front instead (283 Portland through lots lost their side courts to the
+    same test); now each column runs from its own edge on the front
+    street's strip, the rear court hides at zero exposure, and the lane is
+    drawn from the recessed edge, not across the street."""
+    s6s = _sp_setup()
+    W, D = 100.0, 115.0
+    lot = shapely.Polygon([(0, 0), (70, 0), (70, 15), (W, 15), (W, D), (0, D)])
+    env = shapely.Polygon([(SIDE_S, FRONT_S), (70, FRONT_S), (70, 15 + FRONT_S),
+                           (W - SIDE_S, 15 + FRONT_S), (W - SIDE_S, D - REAR_S),
+                           (SIDE_S, D - REAR_S)])
+    fe = [[0.0, 0.0, 70.0, 0.0], [70.0, 15.0, W, 15.0]]
+    r = _run(s6s, env, fe, lot.area)
+    assert r["site_plan_ok"] is True and r["stalls_provided"] == 8
+    assert r["layout_method"] == "townhome_rear_court"
+    assert r["court_street_ft"] == 0.0
+    b = r["geoms"]["building"].bounds
+    assert b[1] == pytest.approx(FRONT_S, abs=0.6) and b[2] <= 70.0   # in the pocket
+    d = r["geoms"]["driveway"].bounds
+    assert d[0] >= b[2] - 0.6 and d[2] > 70.0                         # beside the pod, past the step
+    assert d[1] == pytest.approx(15.0 + FRONT_S, abs=0.6)             # from the recessed edge
+    c = r["geoms"]["parking_court"].bounds
+    assert d[3] >= c[1] - 0.6                                         # to the court
+    assert r["driveway_len_ft"] == pytest.approx(FRONT_S + (c[1] - d[1]), abs=0.6)
+
+
 def test_the_side_court_keeps_off_the_side_street_in_a_ban_city():
     """Portland's exception allows only spaces "entirely behind the front
     and side street building lines": on a corner lot the side court may
@@ -2063,3 +2128,100 @@ def test_an_alley_fed_lot_reaches_its_side_court_from_the_alley():
     assert c[2] >= W - REAR_S - 0.6                              # against the alley strip
     assert "driveway" not in r["geoms"]
 
+
+
+def test_a_corner_lot_cut_to_the_deeper_street_setback_still_finds_its_front_lane():
+    """A 100 x 150 Gresham corner lot cut 15 ft from BOTH streets (s5 cuts
+    every street edge of a corner lot to the larger of the front and
+    street-side setbacks) in a city that names the front street the only
+    one the lane may come from. The lane starts on the front street's
+    strip, and until 2026-09-20 that strip was sought at the FRONT
+    setback's reach -- 10 ft, where the envelope's edge stands 15 ft off
+    the street -- so no lane could start and the lot was refused
+    `no_side_lane` (161 corner lots on the bound of 2026-09-20). The strip
+    is now found where the envelope was cut, and the lane's crossing is
+    that setback, not the front's."""
+    s6s = _sp_setup()
+    W, D, ssb = 100.0, 150.0, 15.0
+    _, fe, _, area = _corner_lot(W, D)
+    env = box(SIDE_S, ssb, W - ssb, D - REAR_S)
+    r = _run(_with_words(s6s, "gresham", None, "front"), env, fe, area,
+             bearings=[0.0, 90.0], street_setback_ft=ssb)
+    _with_words(s6s, "gresham", "owner", "any")
+    assert r["site_plan_ok"] is True and r["stalls_provided"] == 8
+    assert r["layout_method"] == "townhome_rear_court"
+    d = r["geoms"]["driveway"].bounds
+    assert d[1] == pytest.approx(ssb, abs=0.6)                        # from the envelope's edge
+    c = r["geoms"]["parking_court"].bounds
+    assert r["driveway_len_ft"] == pytest.approx(ssb + (c[1] - d[1]), abs=0.6)
+
+
+def _flag_lot(pole_w: float, sliver: bool = False):
+    """A Gresham flag lot: a pole `pole_w` ft wide and 30 ft long up the
+    west side to a 90 x 120 body. The pole is setback ground end to end
+    (the envelope starts at the body's front setback) unless `sliver`,
+    when what the side setbacks leave of the pole -- `pole_w` less twice
+    SIDE_S -- stays in the envelope; the only front edge is the pole's end
+    on the street.
+
+    Returns (envelope, front_edges, gross area)."""
+    lot = shapely.Polygon([(0, 0), (pole_w, 0), (pole_w, 30), (90, 30), (90, 150), (0, 150)])
+    env = box(SIDE_S, 30 + FRONT_S, 90 - SIDE_S, 150 - REAR_S)
+    if sliver:
+        env = env.union(box(SIDE_S, FRONT_S, pole_w - SIDE_S, 30 + FRONT_S + 1.0))
+    return env, [[0.0, 0.0, pole_w, 0.0]], lot.area
+
+
+@pytest.mark.parametrize("sliver", [False, True])
+def test_a_flag_lots_pole_is_the_lane_where_it_is_wide_enough(sliver):
+    """A flag lot whose 20-ft pole holds no envelope cell at all, or (with
+    5-ft side setbacks) a 10-ft sliver of one narrower than Gresham's 12-ft
+    lane: the lane from the front street's strip could never start there
+    (421 flag lots lost on the bound of 2026-09-20 to the fix that made
+    the lane start on the strip, and 122 more with a sliver on the next).
+    A pole at least the lane's width IS the lane; the drawn lane resumes
+    at the body's top, beside the pod, and the pole's length is not
+    counted -- it never was."""
+    s6s = _sp_setup()
+    env, fe, area = _flag_lot(20.0, sliver)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is True and r["stalls_provided"] == 8
+    assert r["layout_method"] == "townhome_rear_court"
+    b = r["geoms"]["building"].bounds
+    d = r["geoms"]["driveway"].bounds
+    assert d[1] == pytest.approx(30.0 + FRONT_S, abs=0.6)             # from the body's top
+    assert d[0] >= b[2] - 0.6 or d[2] <= b[0] + 0.6                    # beside the pod
+    c = r["geoms"]["parking_court"].bounds
+    assert d[3] >= c[1] - 0.6
+    assert r["driveway_len_ft"] == pytest.approx(FRONT_S + (c[1] - d[1]), abs=0.6)
+
+
+def test_a_flag_lots_pole_narrower_than_the_lane_refuses_the_lot():
+    """The same lot on a 10-ft pole: Gresham's lane is 12 ft, so no lane
+    reaches the body and the lot is refused `no_side_lane`. The drawing
+    before 2026-09-20 parked this lot over a pole it never measured."""
+    s6s = _sp_setup()
+    for sliver in (False, True):
+        env, fe, area = _flag_lot(10.0, sliver)
+        r = _run(s6s, env, fe, area)
+        assert r["site_plan_ok"] is False
+        assert r["layout_fail"] == "no_side_lane"
+        assert "driveway" not in r["geoms"]
+
+
+def test_a_stub_front_that_misses_the_columns_beside_the_pod_is_refused():
+    """An L-shaped lot: a 40-ft stub on the street, the 160-ft body behind
+    the neighbour. The stub's strip holds envelope cells, so it is not a
+    pole, and the lane must run straight down from that strip -- but the
+    pod stands across the stub, and no column beside the pod reaches the
+    street, so the lot is refused `no_side_lane`. The drawing before
+    2026-09-20 parked it over the neighbour's ground; a lane down the
+    stub with the pod slid east of it is FOLLOWUPS 5 (k), and this test
+    is the one to flip when it lands."""
+    s6s = _sp_setup()
+    lot = shapely.Polygon([(0, 0), (40, 0), (40, 30), (160, 30), (160, 150), (0, 150)])
+    env = shapely.Polygon([(SIDE_S, FRONT_S), (40 - SIDE_S, FRONT_S),
+                           (40 - SIDE_S, 30 + FRONT_S), (160 - SIDE_S, 30 + FRONT_S),
+                           (160 - SIDE_S, 150 - REAR_S), (SIDE_S, 150 - REAR_S)])
+    r = _run(s6s, env, [[0.0, 0.0, 40.0, 0.0]], lot.area)
+    assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"

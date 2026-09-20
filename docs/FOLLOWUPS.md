@@ -251,19 +251,97 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    courts / whole-room courts became hidden rear courts, 11 Gresham
    through lots took the far-street lane, 44 alley courts shrank); s6s
    ~3 % slower. `parking_area_sqft` / `open_space_sqft` move on every
-   rear-court lot -- lots that failed `no_open_space` may turn green; the
-   bound counts them. BOUND NEXT on 137, then loaded as run 11. Queued
-   from this slice: (f) the rear court keeps a tie with the side court;
-   Steph's "room for a 2nd pod" could read the other way (prefer the side
-   court so the rear yard is free) -- count the ties in the bound and ask;
-   (g) the two-row court's lane lands on its near row's end where a stall
-   is drawn (one-row courts turn the aisle to the lane; two-row need the
-   landing carved out of the row or the lane run to the aisle band);
-   (h) the alley-aisle court (`townhome_rear_court_alley_aisle`) still
-   scores the whole room's exposure -- trim it to its stall row + back-out
-   depth; (i) which end of a through lot is "the front" is read as the
+   rear-court lot. **BOUND 2026-09-20 on the September parquet in FOUR
+   runs (~14 min each, every one read lot by lot against run 10) and
+   loaded as run 11.** v1 (net +3,149 site plans) hid two lane bugs in
+   its losses: the trimmed court at the room's four corners missed a
+   mouth that meets a 3-acre room mid-side (`_court_places` takes the
+   whole room's lane), and the front lane had to be free from the
+   BUILDING's front row, which no column beside the pod is on a lot whose
+   front bends (`_front_runs`: from each column's own edge on the strip).
+   v2 (net +7,141) hid a bug in that fix -- the strip was sought at the
+   FRONT setback's reach where a corner lot's edge is cut to the
+   street-side one (161 lots; now `street_reach`) -- plus two honest
+   classes the OLD drawing had paved without looking: flag-lot poles and
+   partial frontages. v3 took the pole as the lane where it is at least
+   the lane's width (resumed at the body's top); v4 keyed that on the
+   strip's WIDTH, since a 16-ft pole between 5-ft side setbacks keeps a
+   6-ft sliver that is no more a lane than no sliver (127 v3 losses
+   cured, 104 Portland; 0 new). **Final (v4 vs run 10):** site plans
+   gained 7,880 / lost 1,860; green 23,477 -> 25,127, review 15,798 ->
+   18,571, red 250,757 -> 246,334 (6,357 moved: red->green 2,084,
+   red->review 3,306, green->red 434, review->red 533 -- Portland's 414 +
+   444 are the through-lot ban); through lots ok 4,243 -> 4,028 (Portland
+   2,994 -> 1,939: 1,780 side courts, 1,502 refused by the ban; Milwaukie
+   66 -> 55; every other city UP on the far-street lane, e.g. Clackamas
+   373 -> 586, Gresham 267 -> 451); corner lots ok 14,512 -> 16,229;
+   one-street 35,358 -> 39,876; on lots ok both ways the pavement median
+   fell 3456 / 3156 / 2802 -> 2160 sq ft (through / corner / one-street)
+   and the court's street exposure fell on 12,145 corner + 2,437 through
+   lots. Methods after: rear court 36,468, side court 6,579 (+18 off an
+   alley), rear court from the side street 10,627, from the far street
+   1,474, alley 1,622, alley-aisle 5,126. Lost by reason: `no_court` on
+   1,252 through lots (the ban, by design), `no_side_lane` 429 (330
+   one-front, 99 through), `court_too_shallow` 160 (through lots whose
+   trimmed court no longer reaches), `too_few_stalls` 15, `no_alley_lane`
+   4. The 429 `no_side_lane`, read via `/root/lane_diag3.py` on 137: 151
+   have no envelope cell on the street strip at all (about 120 poles and
+   stubs narrower than the lane -- the old drawing took a 5-ft pole --
+   and about 30 wide fronts whose envelope stands off the street reach:
+   tier-C round buffer, overlay carve-outs, (m)); 278 have a strip at
+   least the lane wide but no clear column that meets a court (stubs,
+   notches, bent fronts, (k)). All were ground the old drawing paved
+   without checking. Read on the gained side: the 123 pole lots v3/v4
+   restored are 106 true poles (the lot's ground at the street is the
+   street piece) and 17 lots whose street piece is shorter than the neck;
+   on 92 of them the drawn lane stands off the pole's span (median 23 ft,
+   six wide tracts 240-400 ft) -- the same lots with the same undrawn jog
+   run 10 had, queued as (n). **Divergence noted, not changed:**
+   `_front_setback` in s6s main falls back to 10 ft when the effective
+   front setback is None OR ZERO (Portland CM2/CM3 lots run with a 10-ft
+   pod setback and a 0-ft street strip, `fsb=10.0 ... ssb=0.0` in the
+   trace) -- report/queue as (o). Queued from this slice: (f) the rear
+   court keeps a tie with the side court; Steph's "room for a 2nd pod"
+   could read the other way (prefer the side court so the rear yard is
+   free) -- the ties are NOT counted: only the winning offer is in the
+   output, so counting needs both offers written out; (g) the two-row
+   court's lane lands on its near row's end where a stall is drawn
+   (one-row courts turn the aisle to the lane; two-row need the landing
+   carved out of the row or the lane run to the aisle band); (h) the
+   alley-aisle court (`townhome_rear_court_alley_aisle`) still scores the
+   whole room's exposure -- trim it to its stall row + back-out depth;
+   (i) which end of a through lot is "the front" is read as the
    applicant's choice under every corner word (Portland 33.910 makes both
-   ends front lot lines) -- read the other 13 cities' through-lot lines.
+   ends front lot lines) -- read the other 13 cities' through-lot lines;
+   (j) in a ban city the side court is drawn on ONE side of a through-lot
+   pod -- a court on both sides where one side is short of the band;
+   (k) the partial frontage / stub lane: a street piece that lines up
+   with no column beside the pod (278 lots above, e.g. Gresham
+   `1N3E30CB  -12300`) -- slide the pod onto the stub's columns, or run
+   the lane through the setback strip with a jog and charge it; needs the
+   lot polygon minus overlays, which `layout_lot` does not receive
+   (`lot_xy` is the bare corners); the test to flip is
+   `test_a_stub_front_that_misses_the_columns_beside_the_pod_is_refused`;
+   (l) `_alley_mouths` uses square caps, so at the street reach a lane may
+   start up to `street_sb` past the frontage's END (21.5 ft in Gresham;
+   the two v2-vs-v3 differences were this) -- clip the strip to the edge's
+   own extent and count the moves; (m) the ~30 wide fronts with no
+   envelope cell within the street reach: s5's tier-C envelope is
+   `buffer(-max(setbacks))`, round and uniform, not per edge, and an
+   overlay carve-out can eat the strip -- refused today, count which is
+   which; (n) the pole's lane jog: in the pole case the lane is taken at
+   any column of the body's top while `_placement` puts the pod first-fit
+   at the top-left, so a pole at the left leaves the lane to the pod's
+   right with an undrawn, uncharged run along the body's top (92 of 123
+   restored pole lots; six wide tracts with a short street piece where
+   the envelope's strip, not the lot's ground, called it a pole) -- key
+   the pole rule on the lot's ground at the street (`lot_xy` suffices)
+   and place the pod beside the pole's lane (block the lane's corridor
+   before placement), then bound: some 77-100 ft Portland bodies lose the
+   56-wide pod to the 36-wide; (o) `_front_setback`'s 10-ft fallback on a
+   ZERO front setback (above): a pod 10 ft back where the code asks
+   nothing -- decide whether 0 is the drawing or a placeholder, then fix
+   and bound.
    Queued behind it, each to bound first: (a) s4 measures lot
    width/depth along the LONGEST street (`cluster_bearings` orders by
    length) -- in the shortest cities width and depth are swapped on most

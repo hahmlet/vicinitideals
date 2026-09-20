@@ -170,7 +170,33 @@ one-row court turns its aisle toward the lane. The paper lot
 this is the drawing agreeing with it, and `parking_area_sqft` /
 `open_space_sqft` move on every rear-court lot (the bound run counts
 them). The two-row court's lane still lands on its near row's end, where
-a stall is drawn (FOLLOWUPS 5).
+a stall is drawn (FOLLOWUPS 5). The bound of 2026-09-20 read its LOST lots
+and found two more constructions that had held on small lots and gave out
+on big or bent ones: the trimmed court at the room's four corners cannot
+reach a mouth that meets a 3-acre room mid-side (the whole room's lane now
+says where, `_court_places`), and the front lane had to be free from the
+BUILDING's front row, which no column beside the pod is on a lot whose
+front bends (`_front_runs`: from each column's own edge on the front
+street's strip). That second fix, run, lost 903 lots of its own: the strip
+was sought at the FRONT setback's reach where a corner lot's is cut to the
+street-side one, and a flag lot's pole is setback ground end to end (or a
+sliver of envelope narrower than the lane), so no lane could start -- the
+strip is now found at the street setback, and a pole at least the lane's
+width is the lane, resumed at the body's top. The
+lane still runs inside the envelope: a pole narrower than the lane, and a
+street piece that does not line up with a column beside the pod (the lane
+would jog through the front yard, or run in the side setback), refuse the
+lot, which the drawing before 2026-09-20 parked over ground it never
+checked (FOLLOWUPS 5 (k)). The pole's own lane is taken at ANY column of
+the body's top: the pod is placed first-fit at the body's top-left, so
+where the pole meets the body at the left the lane stands to the pod's
+right, and the run along the body's top from the pole to it is neither
+drawn nor charged -- 92 of the 123 pole lots the bound of 2026-09-20
+restored (median 23 ft; six wide tracts with a short street piece, 240 to
+400 ft, where the lot's ground at the street, not the envelope's, would
+have told a stub from a pole). The drawing before 2026-09-20 took the same
+lots with the same jog; the pod belongs beside the pole's lane (FOLLOWUPS
+5 (n)).
 
 `layout_method` is `townhome_rear_court` (lane from the front street down
 the side of the building), `townhome_rear_court_side_street` (a corner lot
@@ -378,16 +404,68 @@ def _row_boxes(rr: int, cc: int, rh: int, rw: int, rows: int, stalls: int,
     return boxes
 
 
-def _court_places(rr: int, cc: int, rh: int, rw: int, rh_u: int, rw_u: int
-                  ) -> list[tuple[int, int]]:
+def _court_places(rr: int, cc: int, rh: int, rw: int, rh_u: int, rw_u: int,
+                  lane: tuple[int, int, int, int] | None = None, drive_c: int = 0,
+                  aisle: tuple[int, int] = (0, 0)) -> list[tuple[int, int]]:
     """Where a court `rh_u` by `rw_u` can stand in the room `rh` by `rw` at
     (rr, cc): its four corners -- against the building (the room's top) or
-    the back, the left side or the right -- each once. (r0, c0) in grid
-    cells, the near-left corner first, which is where the court stood
-    before 2026-09-19 when the room was no bigger than the court."""
+    the back, the left side or the right -- each once, the near-left corner
+    first, which is where the court stood before 2026-09-19 when the room
+    was no bigger than the court; and, given the lane the WHOLE room found
+    to a strip (`lane`, `_lane_to_alley`'s (r0, c0, h, w)), the court slid
+    under that lane -- against the room's back with the lane's columns
+    inside its width, or against the side the lane leaves from with the
+    lane's rows inside its aisle band (`aisle`, the band's (offset, depth)
+    from the court's top) -- clamped to the room. The four corners alone
+    lost five lots on the 2026-09-20 bound: a 10-acre Oregon City lot whose
+    11-ft side street meets a 600-ft room mid-side, a Portland CM3 lot
+    whose alley mouth does. (r0, c0) in grid cells."""
     rows = sorted({rr, rr + rh - rh_u})
     cols = sorted({cc, cc + rw - rw_u})
-    return [(r, c) for r in rows for c in cols]
+    out = [(r, c) for r in rows for c in cols]
+    if lane is not None:
+        r0, c0, h, w = lane
+        if w == drive_c:                                   # up from the back
+            r_u = rr + rh - rh_u
+            cands = [(r_u, c0 + drive_c - rw_u), (r_u, c0)]
+        else:                                              # out of a side
+            c_u = cc + rw - rw_u if c0 >= cc + rw else cc
+            off, dep = aisle
+            cands = [(r0 + drive_c - dep - off, c_u), (r0 - off, c_u)]
+        for r_u, c_u in cands:
+            r_u = min(max(rr, r_u), rr + rh - rh_u)
+            c_u = min(max(cc, c_u), cc + rw - rw_u)
+            if (r_u, c_u) not in out:
+                out.append((r_u, c_u))
+    return out
+
+
+def _front_runs(free, fcells, stop_r: int):
+    """Which columns a lane can run straight down from the front street to
+    row `stop_r` -- a court's top, a room's. A column carries one where its
+    first free cell stands on the front street's strip (`fcells`; on a flag
+    lot, whose pole is the lane, the body's top edge) and every cell from
+    there to `stop_r` is free. Returns (clear, start): `clear[c]`
+    and the row the lane's pavement starts, one cell ahead of the first
+    free one -- the boundary cell corner containment leaves unset, inside
+    the lot and the setback strip. Until 2026-09-20 the lane had to be free
+    from the BUILDING's front row, so on a lot whose front bends -- the
+    envelope's edge recedes behind that row beside the building -- no
+    column beside the pod could carry a lane at all: 283 Portland through
+    lots and their side courts, and every bent-front rear court, lost to a
+    lane that was refused for crossing ground outside the lot."""
+    import numpy as np
+
+    R, C = free.shape
+    has = free.any(axis=0)
+    start = np.where(has, free.argmax(axis=0), R)
+    # A court whose own top row is the column's first free cell stands on
+    # the strip itself: nothing between, and the lane is the strip.
+    rows = np.arange(R)[:, None]
+    between = (~free) & (rows >= start[None, :]) & (rows < stop_r)
+    clear = (has & (start <= stop_r) & ~between.any(axis=0)
+             & fcells[np.clip(start, 0, R - 1), np.arange(C)])
+    return clear, np.maximum(start - 1, 0)
 
 
 def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
@@ -1053,6 +1131,31 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         # search treats exactly as it treats the alley's.
         scells = (_alley_mouths(ok, rotated(front_edges), minx, miny, res, street_reach)
                   if front_edges else np.zeros_like(ok))
+        # The cells on THIS front's strip alone: where a lane from the front
+        # street may start (`_front_runs`), the envelope's edge at the street
+        # setback (`street_sb`: on a corner lot s5 cuts every street edge to
+        # the larger of the front and street-side setbacks, so the front's
+        # own setback finds nothing there -- 161 corner lots on the bound of
+        # 2026-09-20) and not an overlay's carve-out or the far end's strip.
+        # A flag lot's pole is setback ground end to end, or keeps a sliver
+        # of envelope narrower than the lane between its side setbacks (a
+        # 16-ft pole, 5-ft sides: 6 ft), and is the lane itself where the
+        # pole is at least the lane's width: the strip is then the body's
+        # top edge, each column's first envelope cell, so the lane starts
+        # there with nothing of the building above it, and the pole's
+        # length is uncounted as it always was. A pole narrower than the
+        # lane refuses the lot; the drawing before 2026-09-20 took every
+        # pole, a 5-ft one included. A front the strip misses for any
+        # other reason -- a wide one set back farther than the street
+        # setback -- stays refused, and so does a stub narrower than the
+        # lane on a wide lot.
+        fcells = (_alley_mouths(ok, rotated(fe), minx, miny, res, street_reach)
+                  if fe else np.zeros_like(ok))
+        fe_len = sum(math.hypot(e[2] - e[0], e[3] - e[1]) for e in fe)
+        strip_cols = np.flatnonzero(fcells.any(axis=0))
+        strip_w = (strip_cols.max() - strip_cols.min() + 1) * res if strip_cols.size else 0.0
+        if fe and strip_w < drive_w and drive_w <= fe_len <= 0.5 * C * res:
+            fcells = ok & (np.cumsum(ok, axis=0) == 1)
         # The cells on the OTHER streets' strips -- a side street's, a far
         # end's -- which tell a side court in a ban city which side of the
         # building faces a street, and feed the lane from that street.
@@ -1119,15 +1222,18 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                         continue
                     # The front lane runs straight into the aisle: the first
                     # clear corridor within the aisle's columns from the
-                    # building's front row to the court's.
+                    # front street's strip to the court's top (`_front_runs`).
                     a0, a1 = s_aisle
+                    clear, start = _front_runs(free, fcells, s_rr)
                     lane_c0 = next((c0 for c0 in range(a0, a1 - drive_c + 1)
-                                    if free[br:s_rr, c0:c0 + drive_c].all()), None)
+                                    if clear[c0:c0 + drive_c].all()), None)
                     if lane_c0 is None:
                         continue
-                    offer({**side, "driveway": (0, lane_c0, s_rr, drive_c),
-                           "driveway_len_c": s_rr,
-                           "driveway_len": s_rr * res + front_setback_ft,
+                    r_top = int(start[lane_c0:lane_c0 + drive_c].max())
+                    offer({**side, "driveway": ((r_top, lane_c0, s_rr - r_top, drive_c)
+                                                if s_rr > r_top else None),
+                           "driveway_len_c": s_rr - r_top,
+                           "driveway_len": (s_rr - r_top) * res + street_sb,
                            "method": "townhome_side_court"})
                 if front_ban and through:
                     # The rear court would stand between the building and the
@@ -1203,6 +1309,17 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                 # off the side street's strip is offered there, exposure
                 # zero and a lane to the street, beside the one that stands
                 # on the strip with none; the ruling chooses.
+                # The lane the WHOLE room finds to the alley or the side
+                # street says where its mouth is; the trimmed court is also
+                # placed under it (`_court_places`), which is how a court
+                # in a room far bigger than itself reaches a mouth that
+                # meets the room mid-side.
+                room_lane = None
+                if alley_fed or smouths is not None:
+                    room_lane = _lane_to_alley(free, mouths if alley_fed else smouths,
+                                               rr, cc, rh, rw, drive_c)
+                front_run = (_front_runs(free, fcells, rr)
+                             if front_lane_ok and not alley_fed else None)
                 for rows_u in ((2, 1) if rows == 2 else (1,)):
                     n_u = min(cap, rows_u * int(cw_ft // stall_w))
                     if n_u <= 0:
@@ -1229,7 +1346,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                         a0 = r_u if rows_u == 1 else r_u + sd_c
                         return (a0, a0 + aisle2_c)
 
-                    places = _court_places(rr, cc, rh, rw, rh_u, rw_u)
+                    places = _court_places(rr, cc, rh, rw, rh_u, rw_u, room_lane, drive_c,
+                                           (0 if rows_u == 1 else sd_c, aisle2_c))
                     if alley_fed:
                         # From the alley: a straight lane from the court to the
                         # cells on the alley strip, or none at all when the
@@ -1281,17 +1399,15 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                         continue
                     # Side driveway: first clear column run (in the envelope,
                     # clear of the building) at least drive_c wide, running
-                    # alongside the building from its front row down to the
-                    # room behind it, whose columns overlap that room so cars
-                    # can reach it. Scanning from `br` (not row 0) skips the
-                    # border-False perimeter cells in the setback strip ahead
-                    # of the pod, which are always open anyway -- checking them
-                    # would falsely reject every column since a conservative
-                    # grid leaves the envelope edge unset. The court stands
-                    # against the building with the lane meeting one end of
-                    # its aisle: slid to the lane's left edge or its right,
-                    # whichever the ruling prefers on this lot.
-                    clear = free[br:rr, :].all(axis=0)
+                    # alongside the building from the front street's strip
+                    # down to the room behind it (`_front_runs`: each column
+                    # from its own first free cell, so a front that bends
+                    # still carries a lane beside the pod), whose columns
+                    # overlap that room so cars can reach it. The court
+                    # stands against the building with the lane meeting one
+                    # end of its aisle: slid to the lane's left edge or its
+                    # right, whichever the ruling prefers on this lot.
+                    clear, start = front_run
                     corridor_c0, run = None, 0
                     for c in range(C):
                         run = run + 1 if clear[c] else 0
@@ -1302,12 +1418,15 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                                 break
                     if corridor_c0 is None:
                         continue
+                    r_top = int(start[corridor_c0:corridor_c0 + drive_c].max())
                     for c_u in sorted({min(max(cc, corridor_c0 + drive_c - rw_u), cc + rw - rw_u),
                                        min(max(cc, corridor_c0), cc + rw - rw_u)}):
                         offer({
                             **court(rr, c_u, aisle_first=True),
-                            "driveway": (0, corridor_c0, rr, drive_c), "driveway_len_c": rr,
-                            "driveway_len": rr * res + front_setback_ft,
+                            "driveway": ((r_top, corridor_c0, rr - r_top, drive_c)
+                                         if rr > r_top else None),
+                            "driveway_len_c": rr - r_top,
+                            "driveway_len": (rr - r_top) * res + street_sb,
                             "method": "townhome_rear_court",
                         })
 
