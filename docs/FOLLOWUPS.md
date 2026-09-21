@@ -464,3 +464,40 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    published document defines -- not Gresham 4.0100, not MCC 39; ruled
    `to_read` and worth one question to Gresham planning if it ever
    matters; nothing else owed.
+11. **Jev (TypeSafe AI) as a triage/ranking layer over the encode queues --
+   scoped, offered 2026-09-21, nothing built.** Jev is a "System One"
+   decision model: typed choice + calibrated probability, no prose
+   rationale, ~$0.042/1M input tokens and $0 output, 70-500 ms, context
+   contract 64K for state + all questions and 32K for state + the single
+   longest question -- so MANY questions against ONE loaded state cost
+   barely more than one. The corpus is 299 distinct declared documents
+   (`flats/config/jurisdictions`, 19 layer files, ~835 zone blocks), so a
+   full-corpus pass is cents, not budget. Where it fits is ranking what a
+   human reads next, never producing a value: `extract.py`'s contract
+   ("nothing here can produce a trusted number") and the quote-and-sign
+   chain must hold, and a probability with no rationale cannot be signed
+   or cited. Four candidates, in cost-of-being-wrong order (cheapest
+   first): (a) `triage.py` cards -- "does this chapter change a number we
+   screen on?", a binary over ~1,468 crossref rows, today sorted by
+   loudness; (b) `words.py` / `glossary.py` GOVERNS membership -- "does
+   this glossary entry set the meaning of a field we encode?" over 4,349
+   entries; (c) `routing.py` -- "does this sentence REPLACE a standard or
+   merely ADD a term?", today a deliberately narrow regex whose false
+   negatives are the Portland 33.266.130 aisle bug; (d) `extract.py` RASE
+   tagging, where `tag_of()` returns None on an unclear sentence and an
+   untagged line is a gap -- a wrong tag costs a review flag, not a false
+   GREEN. Do NOT point it at resolved values, footnote scope, column
+   placement (`columns.py` is positional geometry) or the readiness
+   ladder. Prerequisite before any of it: build a calibration set from
+   decisions already ruled by hand (`zone_rulings`, dispositions,
+   refusals, the 17 hand rulings in the crossref ledger), measure whether
+   the probabilities are calibrated ON THIS CORPUS, and set thresholds
+   from the cost asymmetry (a wasted read is cheap, a false GREEN is
+   not). Lower-risk place to prove the integration first, outside the
+   firewall: the pro forma import label mapper and the email-ingest
+   extractor in `app/` already do label-set-plus-confidence against a
+   local Ollama `qwen2.5:7b` (docs/DATA_MODEL.md, docs/PROJECT_OVERVIEW.md
+   §130) -- same shape, no FLATS trust chain at stake. Open decision: none
+   of this is started, and it needs a word on whether a paid external API
+   call per corpus row is acceptable at all given everything else here is
+   self-hosted.
