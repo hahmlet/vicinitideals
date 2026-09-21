@@ -464,3 +464,35 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    published document defines -- not Gresham 4.0100, not MCC 39; ruled
    `to_read` and worth one question to Gresham planning if it ever
    matters; nothing else owed.
+11. **`applied.py` checks that a footnote ruling's TOKENS exist, never that
+    the rule means what the note says -- a note stating a ceiling encoded
+    as a floor passes clean.** Found 2026-09-21 while scoping the
+    (parked) completeness work, see
+    [feature-plans/completeness-of-the-reading.md](feature-plans/completeness-of-the-reading.md).
+    `applied.py` pulls field names, registry conditions, zone codes and
+    figures out of the prose `encoded_as` sentence and looks for each in
+    the layer -- `Claim.kind` is `field` / `condition` / `number` /
+    `exempt`, and polarity is not among them. So Gresham's maximum front
+    setback of 30 ft on an arterial, encoded onto `setback_front_ft`
+    (whose encoded value is a MINIMUM, `is_maximum=False`), is
+    `confirmed`: the field exists, the figure is on the line, the zone is
+    governed. Nothing looks wrong and the screen passes lots the code
+    refuses -- the exact failure `footnotes.py` was built for, surviving
+    one layer further in. The check is mechanical and both halves are
+    already held: the note's own words (dispositions carries them, matched
+    by `digest`) give a ceiling/floor cue -- "maximum", "not exceed", "no
+    more than" against "minimum", "at least", "no less than" -- and
+    `FIELDS[name].is_maximum` on `flats/rules/fields.py:39` states which
+    the field is. Disagreement means the note wanted a variant or a
+    different field and got stapled onto this one. Add it as a fifth
+    `Claim.kind`, or a finding beside `confirmed` / `elsewhere` / `broken`
+    -- a queue for a human to re-rule, never an auto-reject, because the
+    lexical cue is not certain and `is_maximum` is `None` on every
+    non-numeric field, so coverage is partial by construction and the
+    uncovered share has to be reported rather than assumed clean.
+    Population is small -- `applied.py`'s docstring says forty-five
+    footnotes are ruled `encoded` (confirm the current count; this
+    container has no document store, so it was read from the docstring,
+    not from a run). Do it whether or not anything else in that plan ever
+    happens: it is deterministic, it needs no model, and it closes a
+    silent-wrong-answer path that is open today.
