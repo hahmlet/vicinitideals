@@ -464,119 +464,69 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    published document defines -- not Gresham 4.0100, not MCC 39; ruled
    `to_read` and worth one question to Gresham planning if it ever
    matters; nothing else owed.
-11. **Jev (TypeSafe AI) as a triage/ranking layer over the encode queues --
-   scoped, offered 2026-09-21, nothing built.** Jev is a "System One"
-   decision model: typed choice + calibrated probability, no prose
-   rationale, ~$0.042/1M input tokens and $0 output, 70-500 ms, context
-   contract 64K for state + all questions and 32K for state + the single
-   longest question -- so MANY questions against ONE loaded state cost
-   barely more than one. The corpus is 299 distinct declared documents
-   (`flats/config/jurisdictions`, 19 layer files, ~835 zone blocks), so a
-   full-corpus pass is cents, not budget. Where it fits is ranking what a
-   human reads next, never producing a value: `extract.py`'s contract
-   ("nothing here can produce a trusted number") and the quote-and-sign
-   chain must hold, and a probability with no rationale cannot be signed
-   or cited. Four candidates, in cost-of-being-wrong order (cheapest
-   first): (a) `triage.py` cards -- "does this chapter change a number we
-   screen on?", a binary over ~1,468 crossref rows, today sorted by
-   loudness; (b) `words.py` / `glossary.py` GOVERNS membership -- "does
-   this glossary entry set the meaning of a field we encode?" over 4,349
-   entries; (c) `routing.py` -- "does this sentence REPLACE a standard or
-   merely ADD a term?", today a deliberately narrow regex whose false
-   negatives are the Portland 33.266.130 aisle bug; (d) `extract.py` RASE
-   tagging, where `tag_of()` returns None on an unclear sentence and an
-   untagged line is a gap -- a wrong tag costs a review flag, not a false
-   GREEN. Do NOT point it at resolved values, footnote scope, column
-   placement (`columns.py` is positional geometry) or the readiness
-   ladder. Prerequisite before any of it: build a calibration set from
-   decisions already ruled by hand (`zone_rulings`, dispositions,
-   refusals, the 17 hand rulings in the crossref ledger), measure whether
-   the probabilities are calibrated ON THIS CORPUS, and set thresholds
-   from the cost asymmetry (a wasted read is cheap, a false GREEN is
-   not). Lower-risk place to prove the integration first, outside the
-   firewall: the pro forma import label mapper and the email-ingest
-   extractor in `app/` already do label-set-plus-confidence against a
-   local Ollama `qwen2.5:7b` (docs/DATA_MODEL.md, docs/PROJECT_OVERVIEW.md
-   §130) -- same shape, no FLATS trust chain at stake. Open decision: none
-   of this is started, and it needs a word on whether a paid external API
-   call per corpus row is acceptable at all given everything else here is
-   self-hosted.
-
-   *Addendum 2026-09-21 -- the footnote chain, walked question by question.*
-   Of the three questions asked ("does this data point have a footnote",
-   "have we encoded it", "does the encoded footnote resemble the text
-   footnote"), the first two are already deterministic and must stay that
-   way: `footnotes.py` censuses every marker and body and reconciles both
-   directions (`unmarked` / `unbodied`), `qualified.py` joins notes to
-   values by REGION on purpose ("an over-scoped footnote costs a review, an
-   under-scoped one costs a false GREEN"), and `dispositions.py` is a
-   register whose `unread` default blocks and whose rulings are matched by
-   digest. A probability can only narrow the region, which is the unsafe
-   direction. The third is a real gap and `applied.py` names it in its own
-   opening: `encoded_as` "has never been checked that the sentence is true
-   -- forty-five footnotes say they became a rule and the rule has never
-   been looked for." `applied.py` now closes the MECHANICAL half (field
-   names, registry conditions, zone codes and figures pulled out of the
-   prose and looked for in the layer -> confirmed / elsewhere / broken),
-   and leaves two halves open that a typed decision fits: (i) the
-   `unreadable` bucket -- a sentence naming nothing checkable, where the
-   question is entailment (note text + `encoded_as` + the zone's candidate
-   rules -> agrees / contradicts / partial / unrelated); (ii) POLARITY over
-   the `confirmed` ones -- a note stating a MAXIMUM front setback encoded
-   as a minimum passes every token check there is, silently. `is_maximum`
-   on `FieldDef` is ground truth for a large share of (ii), which makes it
-   a free calibration set -- build that harness before anything else. 45
-   rulings is small enough to re-run on every commit. Second recall-audit
-   candidate found while reading: the `NOTES_HEAD` / `NOTES_LEAD` /
-   `LEGEND_LINE` regex family in `footnotes.py` carries very heavy load
-   (nine notes blocks hidden in Gresham's Civic Neighborhood chapter;
-   exactly one line in the corpus matches `NOTES_LEAD` and twenty-four
-   notes sit behind it) -- a 4-way per-line classification run as a SECOND
-   OPINION against the regexes, flagging only disagreements, would test the
-   census's recall without touching what it captures. Cost note: a
-   per-case decision is genuinely a fraction of a penny; a full-corpus
-   pass over all 299 documents is on the order of a quarter, not a
-   fraction of a penny -- different numbers, both acceptable, worth not
-   conflating.
-
-   *Addendum 2026-09-21 (b) -- "we got lucky we found it", tested against
-   the modules.* The worry is accurate and the diagnosis is one level off.
-   The sweeps are not non-deterministic; each is exhaustive WITHIN its
-   class (`columns.py` checks every citation's column, `footnotes.py`
-   censuses the whole store, `corroborate.py` re-reads every value,
-   `missed.py` compares every unread number against every number the
-   jurisdiction holds). What is opportunistic is which CLASSES exist: each
-   module names the single instance that produced it -- Gresham Table
-   4.0130 G.1 for `columns.py`, Portland 33.266.130 for `routing.py`, the
-   Gresham arterial note for `footnotes.py` -- and `missed.py` says the
-   problem out loud: "Milwaukie's side yard height plane was found by hand;
-   nothing was going to find the next one." The discipline after a find is
-   already right (a city-named regression test, plus a mechanical sweep for
-   the whole class; 179 test files, many named for the lot or city that
-   produced them). The gap is DISCOVERY. Three tiers of what a classifier
-   changes: (1) recall inside classes whose sweep is exhaustive in scope
-   but narrow in MATCHER -- `routing.py` matches one sentence shape on
-   purpose, `extract.py`'s `tag_of()` returns None on an unclear sentence,
-   `footnotes.py` rests on the NOTES_HEAD/NOTES_LEAD/LEGEND_LINE family;
-   run as a second opinion flagging disagreements only, this is the
-   cheapest real win and `routing.py` is the pilot (known false negative,
-   known fix, small). (2) The interesting one -- CORPUS-RELATIVE OUTLIER
-   RANKING finds classes nobody named, because the corpus supplies the
-   expectation rather than a rule we wrote. `missed.py` already does this
-   arithmetically and `words.py` / `glossary.py` found their classes this
-   way (four cities with four incompatible corner-lot tests; seven with
-   seven net-acre subtraction lists -- nobody predicted those, the
-   comparison surfaced them). Generalised: for each encoded value, feed the
-   value, its quote, the neighbouring zones in the same layer and the same
-   zone class across other layers, and ask one typed question -- typical /
-   locally-justified / anomalous / contradicts-its-own-quote. ~1,792
-   qualified values is roughly $0.30 a full pass, re-runnable per commit.
-   It does not need to be right, it needs to float the weird forty. (3) It
-   catches NOTHING where the corpus is uniformly wrong -- the `preempts:
-   cap` misread that handed every Portland lot four stalls had no outlier
-   to find. That tier still belongs to golden results committed with every
-   rule-set change (FLATS_PLAN "how rows get made"), which is a separate,
-   non-Jev item and arguably the more important one. Build warning: an
-   exhaustive ranker nobody works becomes wallpaper -- `triage.py` exists
-   precisely because `crossrefs.py` is "a good ledger and a bad worklist",
-   so any ranker ships with a queue sorted by lots at stake, not by score.
+11. **Completeness of the reading, and where a classifier (Jev) does and
+    does not serve it.** Scoped 2026-09-21, nothing built. The goal is not
+    fewer review hours -- more hours are acceptable if the reading gets
+    more complete -- so the ordering below is by what closes a gap in
+    KNOWING, not by what saves time. Two kinds of incompleteness, and only
+    one of them is currently measured. **Known-field** incompleteness (a
+    value we have a field for and have not encoded) is measured exactly,
+    rung by rung, by `readiness.py` -- eleven stages in blocking order,
+    `eligible` carried alongside so a switched-off jurisdiction is visible
+    rather than filtered. That instrument is good and needs nothing.
+    **Unknown-field** incompleteness (a standard the code states that we
+    have no field for) is measured by nothing, by construction, and
+    `uncited.py` says why in one line: *"a coverage ledger counts fields,
+    and there is no field for the slope of a plane."* Milwaukie's side
+    yard height plane sat on the same page as an encoded number since
+    August and every ledger reported clean. `uncited.py`'s subtraction
+    (every line stating a measure, minus every line an encoded value
+    quotes) is the only instrument that can see this class, and it is only
+    as complete as its recogniser for "a line stating a measure."
+    **(a) The one high-value Jev job, therefore: recall at the reading
+    boundary.** Ask of every line of all 299 stored documents, independent
+    of whether a field exists for it -- does this sentence state a
+    dimensional requirement that could bear on placing this building? Run
+    it as a second opinion against the existing recogniser and reconcile
+    the disagreements; the output is never a decision, only an addition to
+    the pile that `uncited.py` must then deterministically account for.
+    ~$0.25 a full pass, re-runnable. Same pattern, smaller, as the
+    warm-up: `routing.py` (one sentence shape by design; known false
+    negative at Portland 33.266.130) and `footnotes.py`'s
+    NOTES_HEAD/NOTES_LEAD/LEGEND_LINE family. **(b) Reconciliation as the
+    proof, everywhere.** `footnotes.py` already has the right epistemic
+    shape -- it turns "we captured the footnotes" into "we captured them
+    or the document is on a named list (`unmarked` / `unbodied`)", which
+    is a weaker claim and a checkable one. Completeness is claimable only
+    where the residual is NAMED rather than assumed empty. Audit which
+    subsystems produce a claim of that shape (footnotes, readiness,
+    uncited, gaps do; others may not) and give the ones that do not a
+    named residual. **(c) Golden results against uniform error.**
+    Neither recall nor reconciliation catches a rule the resolver applies
+    wrongly EVERYWHERE -- the `preempts: cap` misread handed every
+    Portland lot four stalls with no outlier anywhere. Reading more does
+    not find it; only pinned expected outputs do. There are 179 test files,
+    many named for the lot or city that produced them, and no committed
+    golden result set, which FLATS_PLAN calls "the only control" on a
+    silent encoding error. Probably the largest single exposure here and
+    it is not a Jev item at all. **What drops under this goal:** the
+    corpus-relative anomaly ranker (typical / anomalous / contradicts-
+    its-own-quote over ~1,792 qualified values). It is a sequencing
+    convenience for when you cannot read everything, and the decision is
+    to read everything -- still useful, no longer a completeness
+    instrument. **Standing constraints:** nothing probabilistic may reach
+    a value, a verdict or a signature (`extract.py` "nothing here can
+    produce a trusted number"; `verify.py`'s hash over jurisdiction, zone,
+    field, value, citation and quote); a classifier may only widen a
+    candidate set that a deterministic pass then accounts for. **Honest
+    limit on "100%":** the source cannot be made deterministic -- 299
+    documents, 19 codifiers, prose and grids. What is achievable is
+    closure over a frozen corpus (same input, same reading; every reading
+    signed or named unsigned) plus drift detection when the corpus moves,
+    which the nightly re-fetch and the `stale` rung already do.
+    **Prerequisite before any of (a):** a calibration set from decisions
+    already ruled by hand -- `applied.py`'s confirmed/broken output over
+    the 45 `encoded` footnote rulings, with `FieldDef.is_maximum` as free
+    ground truth for polarity -- to find out whether the probabilities
+    mean anything on this corpus before a second opinion is trusted to
+    widen anything.
