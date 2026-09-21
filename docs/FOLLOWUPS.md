@@ -501,3 +501,40 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    of this is started, and it needs a word on whether a paid external API
    call per corpus row is acceptable at all given everything else here is
    self-hosted.
+
+   *Addendum 2026-09-21 -- the footnote chain, walked question by question.*
+   Of the three questions asked ("does this data point have a footnote",
+   "have we encoded it", "does the encoded footnote resemble the text
+   footnote"), the first two are already deterministic and must stay that
+   way: `footnotes.py` censuses every marker and body and reconciles both
+   directions (`unmarked` / `unbodied`), `qualified.py` joins notes to
+   values by REGION on purpose ("an over-scoped footnote costs a review, an
+   under-scoped one costs a false GREEN"), and `dispositions.py` is a
+   register whose `unread` default blocks and whose rulings are matched by
+   digest. A probability can only narrow the region, which is the unsafe
+   direction. The third is a real gap and `applied.py` names it in its own
+   opening: `encoded_as` "has never been checked that the sentence is true
+   -- forty-five footnotes say they became a rule and the rule has never
+   been looked for." `applied.py` now closes the MECHANICAL half (field
+   names, registry conditions, zone codes and figures pulled out of the
+   prose and looked for in the layer -> confirmed / elsewhere / broken),
+   and leaves two halves open that a typed decision fits: (i) the
+   `unreadable` bucket -- a sentence naming nothing checkable, where the
+   question is entailment (note text + `encoded_as` + the zone's candidate
+   rules -> agrees / contradicts / partial / unrelated); (ii) POLARITY over
+   the `confirmed` ones -- a note stating a MAXIMUM front setback encoded
+   as a minimum passes every token check there is, silently. `is_maximum`
+   on `FieldDef` is ground truth for a large share of (ii), which makes it
+   a free calibration set -- build that harness before anything else. 45
+   rulings is small enough to re-run on every commit. Second recall-audit
+   candidate found while reading: the `NOTES_HEAD` / `NOTES_LEAD` /
+   `LEGEND_LINE` regex family in `footnotes.py` carries very heavy load
+   (nine notes blocks hidden in Gresham's Civic Neighborhood chapter;
+   exactly one line in the corpus matches `NOTES_LEAD` and twenty-four
+   notes sit behind it) -- a 4-way per-line classification run as a SECOND
+   OPINION against the regexes, flagging only disagreements, would test the
+   census's recall without touching what it captures. Cost note: a
+   per-case decision is genuinely a fraction of a penny; a full-corpus
+   pass over all 299 documents is on the order of a quarter, not a
+   fraction of a penny -- different numbers, both acceptable, worth not
+   conflating.
