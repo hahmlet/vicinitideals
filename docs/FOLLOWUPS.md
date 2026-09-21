@@ -538,3 +538,45 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    pass over all 299 documents is on the order of a quarter, not a
    fraction of a penny -- different numbers, both acceptable, worth not
    conflating.
+
+   *Addendum 2026-09-21 (b) -- "we got lucky we found it", tested against
+   the modules.* The worry is accurate and the diagnosis is one level off.
+   The sweeps are not non-deterministic; each is exhaustive WITHIN its
+   class (`columns.py` checks every citation's column, `footnotes.py`
+   censuses the whole store, `corroborate.py` re-reads every value,
+   `missed.py` compares every unread number against every number the
+   jurisdiction holds). What is opportunistic is which CLASSES exist: each
+   module names the single instance that produced it -- Gresham Table
+   4.0130 G.1 for `columns.py`, Portland 33.266.130 for `routing.py`, the
+   Gresham arterial note for `footnotes.py` -- and `missed.py` says the
+   problem out loud: "Milwaukie's side yard height plane was found by hand;
+   nothing was going to find the next one." The discipline after a find is
+   already right (a city-named regression test, plus a mechanical sweep for
+   the whole class; 179 test files, many named for the lot or city that
+   produced them). The gap is DISCOVERY. Three tiers of what a classifier
+   changes: (1) recall inside classes whose sweep is exhaustive in scope
+   but narrow in MATCHER -- `routing.py` matches one sentence shape on
+   purpose, `extract.py`'s `tag_of()` returns None on an unclear sentence,
+   `footnotes.py` rests on the NOTES_HEAD/NOTES_LEAD/LEGEND_LINE family;
+   run as a second opinion flagging disagreements only, this is the
+   cheapest real win and `routing.py` is the pilot (known false negative,
+   known fix, small). (2) The interesting one -- CORPUS-RELATIVE OUTLIER
+   RANKING finds classes nobody named, because the corpus supplies the
+   expectation rather than a rule we wrote. `missed.py` already does this
+   arithmetically and `words.py` / `glossary.py` found their classes this
+   way (four cities with four incompatible corner-lot tests; seven with
+   seven net-acre subtraction lists -- nobody predicted those, the
+   comparison surfaced them). Generalised: for each encoded value, feed the
+   value, its quote, the neighbouring zones in the same layer and the same
+   zone class across other layers, and ask one typed question -- typical /
+   locally-justified / anomalous / contradicts-its-own-quote. ~1,792
+   qualified values is roughly $0.30 a full pass, re-runnable per commit.
+   It does not need to be right, it needs to float the weird forty. (3) It
+   catches NOTHING where the corpus is uniformly wrong -- the `preempts:
+   cap` misread that handed every Portland lot four stalls had no outlier
+   to find. That tier still belongs to golden results committed with every
+   rule-set change (FLATS_PLAN "how rows get made"), which is a separate,
+   non-Jev item and arguably the more important one. Build warning: an
+   exhaustive ranker nobody works becomes wallpaper -- `triage.py` exists
+   precisely because `crossrefs.py` is "a good ledger and a bad worklist",
+   so any ranker ships with a queue sorted by lots at stake, not by score.
