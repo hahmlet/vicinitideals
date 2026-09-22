@@ -596,6 +596,33 @@ def test_an_alley_edge_takes_the_rear_setback_in_the_envelope():
     assert env_with("F") == pytest.approx(90 * 60)
 
 
+def test_s5_writes_down_the_strip_it_cut_off_each_edge_class():
+    """``env_setbacks_json`` is what `build_envelope` really took: the class's
+    own setback on a traced A/B lot, the largest of the four on every class
+    where the inset is uniform (tier C, or nothing traced), nothing on a tier
+    D lot that keeps no envelope. FLATS charges its parking court against
+    this strip rather than against the setback its own rules resolve."""
+    from s5_envelope import build_envelope, cuts_made
+
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    setbacks = {"F": 20.0, "R": 5.0, "S": 5.0, "A": 0.0}
+    edges = [[0, 0, 100, 0, "F"], [100, 0, 100, 100, "S"],
+             [100, 100, 0, 100, "R"], [0, 100, 0, 0, "S"]]
+
+    assert cuts_made(setbacks, edges, "A") == setbacks
+    assert cuts_made(setbacks, edges, "B") == setbacks
+    uniform = {"F": 20.0, "R": 20.0, "S": 20.0, "A": 20.0}
+    assert cuts_made(setbacks, edges, "C") == uniform
+    assert cuts_made(setbacks, [], "A") == uniform
+    assert cuts_made(setbacks, edges, "D") is None
+    # And the record matches the geometry: a tier C lot really is inset by
+    # the largest number on every side.
+    env_c = build_envelope(lot, edges, setbacks, "C")
+    assert env_c.bounds == pytest.approx((20.0, 20.0, 80.0, 80.0))
+    env_a = build_envelope(lot, edges, setbacks, "A")
+    assert env_a.bounds == pytest.approx((5.0, 20.0, 95.0, 95.0))
+
+
 def test_a_zero_alley_setback_runs_the_envelope_to_the_alley_line():
     """PCC 33.110.220.D.9 / 33.120.220.B.3.g: no side or rear setback from a
     lot line abutting an alley. s5 takes the ``A`` number it is handed and

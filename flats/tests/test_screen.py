@@ -461,6 +461,37 @@ def test_a_rear_yard_deeper_than_the_court_is_not_a_credit() -> None:
     assert fits.threshold == pytest.approx(36.0)
 
 
+def test_the_court_is_charged_against_the_strip_the_envelope_really_lost() -> None:
+    # quadfit's s5 cuts ITS zone table's rear setback off the envelope; the
+    # corpus can resolve another number for the same lot. A Portland CM2 lot
+    # with a commercial neighbour: the rules say 0 ft, the envelope was cut
+    # at 10 -- that strip is there whatever the rules say, so the charge is
+    # the one a 10 ft rear yard gets, not the whole court. Charging the whole
+    # court took 10 ft off 14,782 rows the day the neighbour was read
+    # (2026-09-22) and turned every gain the reading made into a loss.
+    cut_at_ten = LotFacts(lot_sqft=6000, frontage_ft=60, lot_width_ft=60, envelope_rear_ft=10.0)
+    tight = fit(over_ft=-8.0)
+
+    assert run(rules(setback_rear_ft=0), f=tight, relief=NO_RELIEF).triage is Triage.red
+    assert run(rules(setback_rear_ft=0), lot=cut_at_ten, f=tight).triage is Triage.green
+    assert run(rules(setback_rear_ft=10), lot=cut_at_ten, f=tight).triage is Triage.green
+    # The other way round: the rules tighten past the cut (Oregon City's 20
+    # ft against a house, on an envelope cut at 0). The wall has to stand 20
+    # ft off a line the envelope runs to, and the court behind it -- so the
+    # charge is the larger of the court and the yard, less nothing.
+    cut_at_zero = LotFacts(lot_sqft=6000, frontage_ft=60, lot_width_ft=60, envelope_rear_ft=0.0)
+
+    def asked(rule_set, lot):
+        return next(c for c in run(rule_set, lot=lot, f=fit()).checks if c.check == "fit_ft").threshold
+
+    assert asked(rules(setback_rear_ft=20), cut_at_zero) == pytest.approx(36.0 + COURT_FT)
+    assert asked(rules(setback_rear_ft=60), cut_at_zero) == pytest.approx(36.0 + 60.0)
+    # A lot that says nothing about its cut was cut with the rules' number,
+    # which is the old arithmetic exactly.
+    assert asked(rules(setback_rear_ft=20), LOT) == pytest.approx(36.0 + COURT_FT - 20.0)
+    assert asked(rules(setback_rear_ft=20), LotFacts(lot_sqft=6000, frontage_ft=60, lot_width_ft=60, envelope_rear_ft=20.0)) == pytest.approx(36.0 + COURT_FT - 20.0)
+
+
 def test_a_pod_that_only_fits_end_on_is_measured_against_the_run_it_needed() -> None:
     # The flip searches the envelope at the pod's *depth* and needs its
     # *width*, so a Fit whose recorded depth_ft is the smaller dimension must
@@ -673,6 +704,19 @@ def test_the_seats_are_counted_at_the_depth_the_court_needs() -> None:
     assert with_yard.triage is Triage.green
     assert with_yard.stalls_seated == 8
     assert counted(72, 70).stalls_seated == 0
+
+
+def test_the_seat_count_parks_in_the_strip_the_envelope_lost_too() -> None:
+    # 72 x 70 seats nothing with the whole court charged and eight when 20
+    # ft of rear yard is ground the court parks on -- and the same eight
+    # when that 20 ft is what the envelope was cut with rather than what the
+    # rules resolve, since the strip is there either way.
+    fitter = Fitter(shapely.box(0, 0, 72, 70), (0.0,), res=1.0)
+
+    assert fit_for(fitter, DESIGN, rules()).stalls == 0
+    assert fit_for(fitter, DESIGN, rules(), carved_rear_ft=20.0).stalls == 8
+    assert fit_for(fitter, DESIGN, rules(setback_rear_ft=20), carved_rear_ft=20.0).stalls == 8
+    assert fit_for(fitter, DESIGN, rules(setback_rear_ft=20), carved_rear_ft=0.0).stalls == 0
 
 
 def test_a_cap_cuts_the_count_and_never_the_colour() -> None:

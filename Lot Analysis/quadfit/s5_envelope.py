@@ -20,6 +20,16 @@ the largest of the four, alley included, so an irregular lot gets no relief
 from a zero -- strict side, 228 Portland alley lots.
 
 Envelope parts smaller than MIN_PART_SQFT are dropped (nothing fits there).
+
+The stage also writes down what it cut: ``env_setbacks_json`` is the strip
+each edge class actually lost, in feet (F, R, S, A), the uniform inset on
+every class for a tier C lot, null for tier D. The numbers here are this
+table's unconditioned setbacks; a reader that resolves a different rear
+setback for the same lot -- FLATS, whose corpus says 0 ft against a
+commercial neighbour where this table cut 10, or 20 ft against a house where
+it cut 0 -- charges its parking court against the strip that is really
+there, not the one it would have cut (`flats/score/screen.py`
+``_court_beyond_rear``, 2026-09-22).
 """
 
 from __future__ import annotations
@@ -65,6 +75,21 @@ def lot_setbacks(rule, area_sqft: float, tier: str) -> dict[str, float]:
     return setbacks
 
 
+def cuts_made(setbacks: dict[str, float], edges: list, tier: str) -> dict[str, float] | None:
+    """The strip each edge class actually loses in `build_envelope`, in feet.
+
+    Tier A/B with edges: the class's own setback. Tier C, or no edges to
+    trace: the uniform inset, which is the largest of the four on every
+    class. Tier D: nothing is cut because nothing is kept -- ``None``.
+    """
+    if tier == "D":
+        return None
+    if tier == "C" or not edges:
+        inset = max(setbacks.values())
+        return {cls: round(inset, 2) for cls in setbacks}
+    return {cls: round(float(d), 2) for cls, d in setbacks.items()}
+
+
 def build_envelope(geom, edges: list, setbacks: dict[str, float], tier: str):
     """Returns MultiPolygon envelope (possibly empty)."""
     import shapely
@@ -103,6 +128,7 @@ def main() -> None:
 
     envs = []
     env_area = []
+    cuts = []
     for n, row in enumerate(lots.itertuples(index=False)):
         j = rules.jurisdictions[row.jurisdiction]
         rule = j.rule_for(row.zone_raw)
@@ -113,15 +139,19 @@ def main() -> None:
         # (Portland: none). Fairview lets a garage sit on the alley line and
         # reads an alley as a street, so it has no A edge to relieve.
         setbacks = lot_setbacks(rule, float(row.area_sqft), row.tier)
-        env = build_envelope(row.geom, json.loads(row.edges_json), setbacks, row.tier)
+        edges = json.loads(row.edges_json)
+        env = build_envelope(row.geom, edges, setbacks, row.tier)
         envs.append(env)
         env_area.append(env.area)
+        made = cuts_made(setbacks, edges, row.tier)
+        cuts.append(json.dumps(made) if made is not None else None)
         if n and n % 20000 == 0:
             print(f"  {n:,}/{len(lots):,}")
 
     out = lots.drop(columns=["geom"]).copy()
     out["geom"] = envs  # envelope becomes the stage geometry
     out["envelope_sqft"] = env_area
+    out["env_setbacks_json"] = cuts
     empty = sum(1 for e in envs if e.is_empty)
     print(f"s5: {empty:,} lots have an empty envelope (setbacks consume the lot)")
     write_stage(out, "s5_lots")

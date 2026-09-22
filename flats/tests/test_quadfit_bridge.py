@@ -27,6 +27,7 @@ from flats.ingest.quadfit import (
     S5O_COLUMNS,
     SEWER_MAIN_REACH_FT,
     TIER,
+    carved_rear_ft,
     compare,
     iter_rows,
     lot_from_row,
@@ -311,6 +312,29 @@ def test_the_lot_carries_quadfits_measurements_and_the_corpus_layer() -> None:
     assert lot.front_bearings == (0.0,)
     assert lot.envelope.equals(ENVELOPE)
     assert lot.observed["public_sewer"] is True
+
+
+def test_the_strip_s5_cut_off_the_rear_rides_along_for_the_court_charge() -> None:
+    # s5 writes down what it cut per edge class; the screen charges the court
+    # against the strip behind the building -- the rear edge's, or the
+    # alley's where the alley IS the rear lot line and took its own cut.
+    cuts = json.dumps({"F": 10.0, "R": 10.0, "S": 5.0, "A": 0.0})
+    assert lot_from_row(row(env_setbacks_json=cuts)).facts.envelope_rear_ft == 10.0
+    alley_behind = [
+        [X0, Y0, X0 + 50, Y0, "F"],
+        [X0 + 50, Y0, X0 + 50, Y0 + 100, "S"],
+        [X0 + 50, Y0 + 100, X0, Y0 + 100, "A"],
+        [X0, Y0 + 100, X0, Y0, "S"],
+    ]
+    lot = lot_from_row(row(edges_json=json.dumps(alley_behind), env_setbacks_json=cuts))
+    assert lot.observed["alley_at_rear"] is True
+    assert lot.facts.envelope_rear_ft == 0.0
+    # A stage file from before s5 recorded its cuts, or a lot s5 never
+    # traced: nothing is claimed, and the screen charges as it always did.
+    assert lot_from_row(row()).facts.envelope_rear_ft is None
+    assert lot_from_row(row(env_setbacks_json=None)).facts.envelope_rear_ft is None
+    assert carved_rear_ft({"env_setbacks_json": "null"}, {}) is None
+    assert "env_setbacks_json" in S5O_COLUMNS
 
 
 def test_a_width_nobody_measured_is_none_not_zero() -> None:

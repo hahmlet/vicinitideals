@@ -80,8 +80,9 @@ from flats.score.screen import LotFacts, Screening, fit_for, screen
 from flats.score.slack import SlackPolicy, Verdict as CheckVerdict
 
 #: quadfit's per-lot stage record after the envelope was cut and carved
-#: (s5o): the same columns as s4 plus the envelope, slope, sewer and the
-#: overlay flags. The envelope is here and nowhere else.
+#: (s5o): the same columns as s4 plus the envelope, the strips s5 cut it
+#: with (``env_setbacks_json``), slope, sewer and the overlay flags. The
+#: envelope is here and nowhere else.
 S5O_LOTS = S4_LOTS.with_name("s5o_lots.parquet")
 
 #: quadfit's own verdict per lot, for :func:`compare` only.
@@ -135,6 +136,7 @@ S5O_COLUMNS: tuple[str, ...] = (
     "sewer_main_dist_ft",
     "in_sewer_district",
     "wkb",
+    "env_setbacks_json",
 )
 
 #: The site facts this bridge can observe, in the order they are reported.
@@ -301,6 +303,28 @@ class QuadfitLot:
     envelope: Any
 
 
+def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
+    """The rear strip s5 cut off this lot's envelope, in feet.
+
+    s5 records what it cut per edge class (``env_setbacks_json``: F, R, S
+    and A, the alley). The court sits behind the building, against the
+    rear line -- an alley where the lot has one at the rear (the alley edge
+    is the rear lot line, and takes its own cut), the rear edge otherwise.
+    ``None`` from a stage file written before s5 recorded its cuts, or a
+    lot s5 never traced: the screen then charges the court as though the
+    envelope was cut with the corpus's own number, as it did before
+    2026-09-22.
+    """
+    raw = row.get("env_setbacks_json")
+    if not raw:
+        return None
+    cuts = json.loads(raw)
+    if not isinstance(cuts, dict):
+        return None
+    key = "A" if observed.get("alley_at_rear") else "R"
+    return _finite(cuts.get(key))
+
+
 def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = None) -> QuadfitLot:
     """Build the screen's inputs for one stage-file row.
 
@@ -311,12 +335,14 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
 
     tier = TIER.get(str(row.get("tier")), Tier.irregular)
     frontage = _finite(row.get("frontage_ft"))
+    observed = observed_facts(row, layers)
     facts = LotFacts(
         lot_sqft=_finite(row.get("area_sqft")) or 0.0,
         frontage_ft=frontage if frontage is not None else 0.0,
         lot_width_ft=_finite(row.get("lot_width_ft")),
         lot_depth_ft=_finite(row.get("lot_depth_ft")),
         geometry=tier,
+        envelope_rear_ft=carved_rear_ft(row, observed),
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -331,7 +357,7 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
         zone=str(row.get("zone")),
         layer_id=layer_id,
         facts=facts,
-        observed=observed_facts(row, layers),
+        observed=observed,
         front_bearings=tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]")),
         envelope=envelope,
     )
@@ -449,7 +475,9 @@ def screen_lot(
 
     out: list[Screened] = []
     for design, config, got in resolved:
-        fit = fit_for(fitter, design, got, placement=False)
+        fit = fit_for(
+            fitter, design, got, placement=False, carved_rear_ft=lot.facts.envelope_rear_ft
+        )
         result = screen(got, lot.facts, design, fit, policy=policy, relief=relief, config=config)
         shadow = _if_signed(
             got, lot.facts, design, fit, result, policy=policy, relief=relief, config=config
@@ -831,6 +859,7 @@ __all__ = [
     "TIER",
     "QuadfitLot",
     "Screened",
+    "carved_rear_ft",
     "compare",
     "iter_rows",
     "lot_from_row",

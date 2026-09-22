@@ -173,6 +173,19 @@ class LotFacts:
     #: the two rows above.
     lot_depth_ft: float | None = None
     geometry: GeometryTier = GeometryTier.clean
+    #: The rear setback the envelope was CUT with, in feet, when the envelope
+    #: came from somewhere other than these rules -- quadfit's s5 carves the
+    #: unconditioned number from its own zone table, and the screen resolves
+    #: the corpus, whose variants can say something else about the same lot
+    #: (no setback from a non-residential neighbour, none from an alley, 20
+    #: ft against a house). The court charge (:func:`_court_beyond_rear`)
+    #: needs the strip that is really there, not the one the rules would
+    #: have cut: charging the court against a 0 ft rear setback when the
+    #: envelope had already lost 10 ft to it took 10 ft off every Portland
+    #: commercial lot the moment its neighbour was read (2026-09-22, 14,782
+    #: rows). ``None`` means the envelope was cut with these rules' own
+    #: number, which is what every caller but the bridge does.
+    envelope_rear_ft: float | None = None
 
     @property
     def landlocked(self) -> bool:
@@ -337,14 +350,15 @@ def _checks(
     # building. See :attr:`flats.fit.rectangle.Fit.required_ft`.
     #
     # The court sits between the building's rear wall and the rear lot line,
-    # and the envelope has already had the rear setback taken off it -- so the
-    # setback is land the court may use, and only the excess is charged
-    # (`_court_beyond_rear`).
+    # and the envelope has already had a rear strip taken off it -- so that
+    # strip is land the court may use, and only the excess is charged
+    # (`_court_beyond_rear`), against the strip the envelope really lost
+    # where the lot says what that was.
     out.append(
         policy.evaluate(
             "fit_ft",
             fit.best_depth_ft,
-            fit.required_ft + _court_beyond_rear(design, rules),
+            fit.required_ft + _court_beyond_rear(design, rules, lot.envelope_rear_ft),
             is_maximum=False,
             jurisdiction=where,
         )
@@ -634,26 +648,48 @@ def _unencoded(field: str, rules: ZoneResolution) -> bool:
     return alternative is None or alternative not in rules.values
 
 
-def _court_beyond_rear(design: Design, rules: ZoneResolution) -> float:
-    """Depth the parking court needs past the rear setback, in feet.
+def _court_beyond_rear(
+    design: Design, rules: ZoneResolution, carved_rear_ft: float | None = None
+) -> float:
+    """Depth the parking court needs past the envelope's rear edge, in feet.
 
     The court sits between the building's rear wall and the rear lot line,
-    and the envelope has already had the rear setback taken off it -- so the
-    setback is land the court may use, and only the excess is charged. This
-    is the same overlap ``paper_fit`` states as ``max(rear, court)``; where a
+    and the envelope has already had a rear setback taken off it -- so that
+    strip is land the court may use, and only the excess is charged. This is
+    the same overlap ``paper_fit`` states as ``max(rear, court)``; where a
     jurisdiction bars parking from a required rear yard the two would stack
     instead, which is an unmeasured condition on the human list rather than a
     thing assumed away here. A zone stating no rear setback charges the whole
     court, which is both conservative and correct: no yard, no shared ground.
+
+    ``carved_rear_ft`` is the strip the envelope actually lost, when that is
+    not the number these rules resolve (:attr:`LotFacts.envelope_rear_ft`).
+    The building must stand the RESOLVED rear setback off the line and the
+    court needs its own depth behind the wall, so the ground behind the wall
+    is ``max(court, rear)`` either way; what the envelope still owes of it is
+    that less the strip already cut. With the two numbers equal this is the
+    old ``max(0, court - rear)``. With the rules relaxing the rear below the
+    cut (Portland's 0 ft against a commercial neighbour, envelope cut at 10)
+    the strip is wider than the rules ask and the court parks in it; with the
+    rules tightening above the cut (Oregon City's 20 ft against a house,
+    envelope cut at 0) the wall has to move that much deeper into the
+    envelope, and the charge says so. Never negative: a strip deeper than the
+    court hands the building back no depth.
     """
     court, _court_from_code = court_depth(design, rules)
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
-    return max(0.0, court - rear_ft)
+    carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
+    return max(0.0, max(court, rear_ft) - carved)
 
 
 def seats(
-    fitter: Fitter, design: Design, rules: ZoneResolution, *, axis_required: bool = False
+    fitter: Fitter,
+    design: Design,
+    rules: ZoneResolution,
+    *,
+    axis_required: bool = False,
+    carved_rear_ft: float | None = None,
 ) -> int | None:
     """How many stalls the lot seats -- the number beside the colour.
 
@@ -679,7 +715,7 @@ def seats(
     across = court_across(design, rules)
     if not across.stalls:
         return None
-    behind = _court_beyond_rear(design, rules)
+    behind = _court_beyond_rear(design, rules, carved_rear_ft)
     best = 0
     for _orientation, side, deep in design.oriented(axis_required=axis_required):
         depth = deep + behind
@@ -717,7 +753,12 @@ def _searched_narrower_than(fit: Fit, design: Design, rules: ZoneResolution) -> 
 
 
 def fit_for(
-    fitter: Fitter, design: Design, rules: ZoneResolution, *, placement: bool = True
+    fitter: Fitter,
+    design: Design,
+    rules: ZoneResolution,
+    *,
+    placement: bool = True,
+    carved_rear_ft: float | None = None,
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
 
@@ -727,6 +768,10 @@ def fit_for(
     them -- and the flip is forbidden where the code makes the building face
     the street. A fit built any other way is reported by the screen as
     ``COURT_WIDTH_UNMEASURED`` wherever it was searched too narrow.
+
+    ``carved_rear_ft`` is the rear strip the envelope was cut with when that
+    was not these rules' number (:attr:`LotFacts.envelope_rear_ft`); the
+    seat count charges the court against it the way the fit check does.
     """
     across = court_across(design, rules)
     axis_required = rules.get("orientation_constraint") == "axis_required"
@@ -740,7 +785,10 @@ def fit_for(
     # And how many more the lot seats, floor to preferred: the number the
     # screen reports beside the colour (:func:`seats`).
     return dataclasses.replace(
-        fit, stalls=seats(fitter, design, rules, axis_required=axis_required)
+        fit,
+        stalls=seats(
+            fitter, design, rules, axis_required=axis_required, carved_rear_ft=carved_rear_ft
+        ),
     )
 
 
