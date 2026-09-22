@@ -74,9 +74,18 @@ notes:
     digest: "07c044251881"
     state: unmeasured
     fact: abuts_lower_density_zone
+    zones: [R-2]
     reason: >-
       requires a ten-foot landscaped buffer on the side abutting R-10, R-8 or
-      R-6, which needs the zone across the shared edge
+      R-6, which needs the zone across the shared edge. Narrowed to R-2 on
+      2026-09-22: it is note 1 of Table 17.12.040, the R-2 dimensional table,
+      and speaks of nothing else; the region scope had put it over Table
+      17.10.050 (R-5 and R-3.5 minimum density, L4376-L4378) as well, three
+      hundred lines and two tables earlier. Left `unmeasured` although the
+      zone across the line is now read: 17.04.780 defines multi-family as
+      five or more units, which arguably keeps the note off a quadplex, and
+      every R-2 value stays capped on `utility_easement` by note 2 whatever
+      is decided here, so nothing is bought by ruling it either way yet
 
   - quote: "or/clackamas/oregon-city/17.zoning.txt#L12517"
     digest: "b0bfa1c611fd"

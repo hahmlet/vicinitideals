@@ -358,13 +358,14 @@ readings:
       cell, and Note 14 is the one that moves it: "If the side lot line abuts an Urban Low Density
       Residential, VR-5/7, or VR-4/5 District, the minimum side setback for a two-story building
       is 10 feet." Three feet on each side, six feet of lot width, on the two zones in this layer
-      a pod can actually be built in. It is already carried the safe way -- caps.json holds
-      setback_side_ft for both MR1 and MR2 against abuts_lower_density_zone, so no lot can go
-      green on the seven-foot figure while the neighbour's zoning is unanswered. That is why this
-      is filed as depending on the site rather than closed: the condition is real, it tightens,
-      and it is answerable by data rather than by more reading. Neighbour-zone adjacency was moved
-      onto the computable list on 2026-09-08 and this is another 959 lots' worth of reason to
-      compute it. Everything else on the card is one of four other things. Other building types:
+      a pod can actually be built in. Until 2026-09-22 it was carried the safe way -- caps.json
+      held setback_side_ft for both MR1 and MR2 against abuts_lower_density_zone, so no lot could
+      go green on the seven-foot figure while the neighbour's zoning was unanswered. It was filed
+      as depending on the site rather than closed: the condition is real, it tightens, and it is
+      answerable by data rather than by more reading. Neighbour-zone adjacency was moved onto the
+      computable list on 2026-09-08, s4 read it on 2026-09-22, and note 14 is now a variant on the
+      side setback with the ten districts named in this layer's neighbours block.
+      Everything else on the card is one of four other things. Other building types:
       the swimming pool setbacks at notes 3, 7 and 11; the accessory-building setback tables at
       lines 1275-1276, 1386-1393 and note 12, and note 24's height for accessory buildings over
       100 square feet -- this project has no accessory structure, settled on 2026-09-08; note 1's
@@ -2390,18 +2391,25 @@ zones:
       # is a fact the design catalog holds rather than one the parcel data
       # owes, so the ladder resolves here and not at screen time.
       #
-      # Note 14 is the one that can move it, and it is held rather than
-      # encoded: "If the side lot line abuts an Urban Low Density Residential,
-      # VR-5/7, or VR-4/5 District, the minimum side setback for a two-story
-      # building is 10 feet." Whether this lot's side line abuts low-density
-      # land is `abuts_lower_density_zone`, which nothing measures. The note
-      # is ruled `unmeasured` on that fact in the footnote file, which caps
-      # this value: MR-1 cannot be called GREEN on a side setback until the
-      # adjacency is known. That is the same treatment Oregon City's nearly
-      # identical note 1 gets, and it is the honest one -- encoding 7 without
-      # the cap would pass lots that owe 10.
+      # Note 14 is the one that moves it: "If the side lot line abuts an Urban
+      # Low Density Residential, VR-5/7, or VR-4/5 District, the minimum side
+      # setback for a two-story building is 10 feet." From 2026-09-08 to
+      # 2026-09-22 it was held `unmeasured` on `abuts_lower_density_zone`,
+      # which capped this value so no MR-1 lot could go GREEN on the seven
+      # while the neighbour's zoning was unanswered. quadfit's s4 now reads
+      # the zone across every lot line and this layer's `neighbours` block
+      # names the ten districts, so the note is the variant below. The fact
+      # is per lot and the note is per side line: a lot whose REAR alone
+      # abuts an R district is charged the ten on its sides too, which is the
+      # tightening way to be coarse and costs three feet of width, never a
+      # GREEN. A lot whose lines nobody could read stays UNKNOWN on the fact
+      # exactly as before.
       value: 7
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510-L1517"
+      variants:
+        - value: 10
+          when: [abuts_lower_density_zone]
+          quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510-L1511,L1566"
     min_building_separation_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-1 column ("None")
@@ -2444,8 +2452,9 @@ zones:
       dwellings), 11 (a swimming pool's side and rear), 12 (accessory
       buildings by area and height) and 15 (a townhouse with no common wall)
       are ruled in the footnote file against other buildings. Note 10 is the
-      planned unit development path. Note 14 is `unmeasured` and caps the side
-      setback, which is written out at that field.
+      planned unit development path. Note 14 was `unmeasured` and capped the
+      side setback until 2026-09-22; it is now the variant at that field,
+      answered per lot by the zone s4 read across each lot line.
   MR2:
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (Medium High Density Residential)
@@ -2529,10 +2538,15 @@ zones:
       value: 20
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1502-L1509"
     setback_side_ft:
-      # The same storey ladder as MR-1 and the same note 14, which caps this
-      # value the same way.
+      # The same storey ladder as MR-1 and the same note 14, read the same
+      # way: ten against an Urban Low Density Residential, VR-5/7 or VR-4/5
+      # neighbour, seven otherwise.
       value: 7
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510-L1517"
+      variants:
+        - value: 10
+          when: [abuts_lower_density_zone]
+          quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510-L1511,L1566"
     min_building_separation_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-2 column ("None")
@@ -3184,6 +3198,49 @@ zones:
 # and folds away on the County copy page. The refusals -- districts whose use
 # table says no -- are zone blocks above, not rulings, because a refusal is a
 # rule the screen answers RED with.
+# Which of this county's districts are the "Urban Low Density Residential,
+# VR-5/7, or VR-4/5 District" that ZDO Table 315-4 note 14 charges an MR-1 or
+# MR-2 lot ten feet of side yard against -- the fact quadfit's s4 reads off
+# the taxlot fabric across every non-street lot line (neighbour_zones_json),
+# turned into `abuts_lower_density_zone` by flats/geom/neighbour.py against
+# these lists. Only that condition is declared: `abuts_residential_zone` and
+# `abuts_nonresidential_zone` turn nothing in this layer.
+neighbours:
+  abuts_lower_density_zone:
+    true_for: [R2.5, R5, R7, R8.5, R10, R15, R20, R30, VR57, VR45]
+    false_for: [MR1, MR2, PMD, VA, HDR, SHD, RCHDR, VTH, NC, C2, C3, OA, CC, RTL,
+                RCC, RCO, OC, SCMU, PMU1, PMU2, PMU3, VCS, BP, LI, GI, RI, OSM,
+                RRFF5, FU10, RA1, RA2, FF10, AGF, EFU, TBR, RC]
+    quote: "or/clackamas/_unincorporated/zdo.315.txt#L7,L1566"
+    cite: Clackamas ZDO 315.01 (the districts Section 315 applies to, by name and
+      code); ZDO Table 315-4 note 14; ZDO 316.01 and Table 316-1 (the rural and
+      future urban residential districts); ZDO 510 Table 510-1 (the urban commercial
+      and mixed-use districts)
+    note: >-
+      The note names its own trigger and 315.01 spells the names out:
+      "Urban Low Density Residential (R-2.5, R-5, R-7, R-8.5, R-10, R-15,
+      R-20, and R-30), Village Standard Lot Residential (VR-5/7), Village
+      Small Lot Residential (VR-4/5)" -- ten districts, the true_for side,
+      spelled the way Metro's fabric prints the county's codes (R10, VR57).
+      Everything else the county zones is the false_for side because the
+      note is a closed list and a district it does not name is not on it:
+      the rest of 315.01's urban residential roster (VTH, PMD, MR-1, MR-2,
+      HDR, VA, SHD, RCHDR), the urban commercial and mixed-use districts of
+      Section 510, the industrial and open-space districts, and the rural
+      districts of Sections 316, 401, 406, 407 and 513 -- Section 316 calls
+      its own "Rural Residential and Future Urban Residential", not Urban
+      Low Density, so an MR lot at the growth boundary abutting RRFF-5 keeps
+      the seven. Codes the fabric carries as another city's pocket (R-10,
+      R-15, R-MD, IPU, MG, RC-ME) and the rural codes this layer never
+      reaches (RR, HR, MRR, RTC) are on neither list, so a line against one
+      is unresolved and the lot stays UNKNOWN on the fact. The condition is
+      true of a lot when ANY non-street line has a true_for-side lot across
+      it, which is the tightening answer (ten feet where seven was offered);
+      false needs every line fully read with nothing on the true_for side
+      across any of them. Note 14 speaks of the side lot line and the fact
+      is per lot, so a rear neighbour in R-7 charges the sides ten as well
+      -- coarse in the direction that never buys a GREEN.
+
 zone_rulings:
   # --- four residential districts read and not holdable ---------------------
   HDR:

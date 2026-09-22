@@ -2138,9 +2138,12 @@ zone_rulings:
 # across every non-street lot line (neighbour_zones_json), turned into
 # `abuts_residential_zone` by flats/geom/neighbour.py against these lists.
 # Only that condition is declared: `abuts_lower_density_zone` also caps
-# R-2, R-3.5 and R-5 in caps.json (17.20 notes about the neighbouring
-# district's density), and an observed fact lifts a cap, so that list may
-# not be written until those footnotes are encoded as variants.
+# R-2 in caps.json (Table 17.12.040 note 1, the ten-foot landscaped side
+# yard against R-10, R-8 or R-6 -- narrowed to R-2 on 2026-09-22, it had
+# reached R-3.5 and R-5's minimum density through the region scope), and an
+# observed fact lifts a cap, so that list may not be written until that
+# footnote is encoded as a variant. Nothing waits on it: every R-2 value is
+# capped on `utility_easement` by note 2 as well.
 neighbours:
   abuts_residential_zone:
     true_for: [R-10, R-8, R-6, R-5, R-3.5, R-2]

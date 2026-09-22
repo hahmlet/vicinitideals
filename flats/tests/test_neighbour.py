@@ -236,14 +236,48 @@ def declared(layers: dict) -> list[tuple[str, str, NeighbourRule]]:
     return [(lid, name, r) for lid, layer in layers.items() for name, r in layer.neighbours.items()]
 
 
-def test_the_four_layers_that_read_their_lot_lines(corpus: dict) -> None:
+def test_the_five_layers_that_read_their_lot_lines(corpus: dict) -> None:
     got = {(lid, name) for lid, name, _ in declared(corpus)}
     assert got == {
         ("or/multnomah/portland", "abuts_nonresidential_zone"),
         ("or/multnomah/troutdale", "abuts_nonresidential_zone"),
         ("or/multnomah/fairview", "abuts_nonresidential_zone"),
         ("or/clackamas/oregon-city", "abuts_residential_zone"),
+        ("or/clackamas/_unincorporated", "abuts_lower_density_zone"),
     }
+
+
+def test_clackamas_charges_ten_feet_of_side_yard_against_a_low_density_neighbour(corpus: dict) -> None:
+    """ZDO Table 315-4 note 14, the first `abuts_lower_density_zone` list in
+    the corpus (2026-09-22). The ten districts 315.01 names are the true side;
+    an MR-1 or MR-2 lot beside one owes ten feet of side yard, seven beside
+    anything else the county zones, and stays UNKNOWN on the fact where a
+    line could not be read -- the same three answers the cap gave before,
+    less the cap."""
+    lid = "or/clackamas/_unincorporated"
+    r = corpus[lid].neighbours["abuts_lower_density_zone"]
+    assert set(r.true_for) == {"R2.5", "R5", "R7", "R8.5", "R10", "R15", "R20", "R30", "VR57", "VR45"}
+    assert {"MR1", "MR2", "HDR", "RRFF5", "EFU", "C2"} <= set(r.false_for)
+    # The pockets and the rural codes this layer never reaches sit on neither
+    # side, so a line against one is unresolved rather than relaxed.
+    for code in ("R-10", "R-15", "R-MD", "RR", "HR"):
+        assert code not in r.true_for and code not in r.false_for, code
+
+    rules = RuleSet(corpus)
+    for zone in ("MR1", "MR2"):
+        side = rules.resolve(lid, zone).values["setback_side_ft"]
+        assert side.value == 7 and "abuts_lower_density_zone" in side.levers
+        assert rules.resolve(lid, zone, {"abuts_lower_density_zone"}).values["setback_side_ft"].value == 10
+        # The cap that held these lots UNKNOWN is gone with the encoding.
+        assert "abuts_lower_density_zone" not in caps_for(lid, zone).get("setback_side_ft", ())
+
+    juris = "clackamas"
+    lines_r7 = [Line(zones=((juris, "R7"),), unresolved=0), Line(zones=((juris, "MR1"),), unresolved=0)]
+    lines_mr = [Line(zones=((juris, "MR1"),), unresolved=0), Line(zones=((juris, "C2"),), unresolved=0)]
+    lines_ugb = [Line(zones=((juris, "MR1"),), unresolved=0), Line(zones=((juris, "RR"),), unresolved=0)]
+    assert observed_neighbours(lines_r7, corpus[lid].neighbours, juris) == {"abuts_lower_density_zone": True}
+    assert observed_neighbours(lines_mr, corpus[lid].neighbours, juris) == {"abuts_lower_density_zone": False}
+    assert observed_neighbours(lines_ugb, corpus[lid].neighbours, juris) == {}
 
 
 def test_every_neighbour_quote_resolves_and_every_code_is_the_layers_own(corpus: dict) -> None:

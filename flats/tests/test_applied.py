@@ -58,8 +58,16 @@ def test_every_encoded_footnote_still_finds_its_rule(rows) -> None:
 
 
 def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None:
-    """56 as of 2026-09-20. A number that moves means a footnote was ruled or
+    """57 as of 2026-09-22. A number that moves means a footnote was ruled or
     un-ruled, which is a thing to notice rather than a thing to absorb.
+
+    56 -> 57 on 2026-09-22: Clackamas ZDO Table 315-4 note 14, the ten-foot
+    side setback an MR-1 or MR-2 two-storey building owes beside an Urban Low
+    Density Residential, VR-5/7 or VR-4/5 lot. It had sat `unmeasured` on
+    `abuts_lower_density_zone` since 2026-09-08 because nothing read the zone
+    across a lot line; s4 reads it now, so the note is a variant beside the
+    storey ladder's 7 and the county declares the fact. It reaches MR1 and
+    MR2 and confirms in both.
 
     49 -> 56 on 2026-09-20, when the September county map's zone codes were
     ruled and seven footnotes became part of a refusal's quote rather than a
@@ -94,7 +102,7 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     warranted here -- the two prohibitions are decided by their `X` and do not
     care what these three sentences say.
     """
-    assert len(rows) == 56
+    assert len(rows) == 57
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

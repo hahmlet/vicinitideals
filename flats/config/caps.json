@@ -1,45 +1,5 @@
 {
   "or/clackamas/_unincorporated": {
-    "MR1": {
-      "max_height_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "min_building_separation_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "setback_front_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "setback_garage_entrance_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "setback_rear_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "setback_side_ft": [
-        "abuts_lower_density_zone"
-      ]
-    },
-    "MR2": {
-      "max_height_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "min_building_separation_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "setback_front_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "setback_garage_entrance_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "setback_rear_ft": [
-        "abuts_lower_density_zone"
-      ],
-      "setback_side_ft": [
-        "abuts_lower_density_zone"
-      ]
-    },
     "VA": {
       "max_height_ft": [
         "site_specific_limitation"
@@ -696,7 +656,6 @@
         "utility_easement"
       ],
       "min_density_du_per_acre": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_sqft": [
@@ -732,7 +691,6 @@
         "utility_easement"
       ],
       "min_density_du_per_acre": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_sqft": [
