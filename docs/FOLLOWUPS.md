@@ -34,32 +34,39 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    rather than USE_PROHIBITED; what they want is a relief-policy line (is a
    planned development on 20-acre rural land a path, yellow, or not, red),
    not a re-read.
-2. **Measure what zone lies across each lot line (`abuts_residential_zone` /
-   `abuts_lower_density_zone` / `abuts_nonresidential_zone`) -- the one
-   site fact holding back ~18,000 lots.** Ahead of the court search because
-   it unlocks more lots than anything else in the queue. Two populations
-   on run 10 (read 2026-09-20): (a) 1,732 lots in the nine permit-zones
-   quadfit's `rules.yaml` lacks (quadfit's `AHEAD_OF_QUADFIT` ledger; the
-   rest of the 3,422 `zone_not_in_rules` lots sit in twenty zone/layer
-   pairs whose FLATS reading is itself ambiguous or unverified, an encoding
-   read, not a port) -- their setbacks depend on the zone next door, so the
-   FLATS resolution is `ambiguous` and there is nothing to copy into
-   quadfit's flat zone table; (b) ~16,000 lots quadfit already measured
-   (14,044 `abuts_nonresidential_zone` + 1,920 `abuts_lower_density_zone`
-   on assign_sep6) that carry the condition as `unknown_leaning` and so
-   cannot reach GREEN. The measurement is per lot LINE, the way
-   `abuts_alley` was done (flats/geom/alley.py, 2026-09-13): for each side
-   of the lot, the zone of the taxlot(s) across that line from the
-   snapshot's zoning layers (majority by shared length; a street between
-   counts as the lot across the street only where the code says so --
-   read each city's definition first, Portland 33.910 "abutting" vs
-   "across the street"), then the three booleans from the zone's class
-   (residential / lower density than the lot's own / non-residential) per
-   line, with the density order taken from the rules, not guessed. Bound
-   on 137 on the existing parquet first (read LOST and GAINED lot by lot;
-   a new fact rules BOTH ways), then export as a NEW run on snapshot 3
-   (runbook §4b), drift 10 -> N, `promote --run N` on the standing word if
-   clean.
+2. **Neighbour zoning per lot line -- loose ends after the measurement
+   (4b25df09 + the carve fix cfc8c033; county run loading 2026-09-22).**
+   s4 reads the zone across every non-street line; FLATS answers
+   `abuts_nonresidential_zone` in Portland / Troutdale / Fairview and
+   `abuts_residential_zone` in Oregon City (ANY line tightens, EVERY line
+   relaxes; anything unresolved stays UNKNOWN). Still owed, most lots
+   first: (a) `abuts_lower_density_zone`
+   is declared NOWHERE, because an observed fact lifts a caps.json cap and
+   the base number would certify with the footnote's other number never
+   encoded (`test_no_declared_condition_caps_a_value_on_that_layer`) --
+   encode the capped footnotes as variants first: Clackamas
+   `_unincorporated` MR1/MR2 ZDO 315 notes (six fields), Oregon City R-2
+   (twelve fields incl. `quadplex_allowed`), R-3.5/R-5 `min_density` (and
+   `utility_easement`), Wood Village TC (seven fields incl. `like`) -- then
+   declare it there; ~1,920 lots leaned on it on assign_sep6. (b) Oregon
+   City C/MUC-1/MUC-2/MUD/WFDD, Clackamas MR1/MR2/PMD/VA and Fairview TCC
+   (also VC/VO) are `AHEAD_OF_QUADFIT` (`test_zone_mirror.py`): quadfit's
+   `rules.yaml` has no row, s4 never measures them, so Oregon City's
+   declared fact has no lot to answer on -- port them at conservative base
+   setbacks; the neighbour-conditioned number comes from the FLATS
+   resolution, not the table. (c) 1,938 lots in the turning zones still
+   lean on the fact: 813 a blank point across a line (park / ROW /
+   fabric gap), 802 no non-street line at all (ringed by streets and
+   alleys; the relaxing fact needs EVERY line), 272 a split-zone
+   neighbour, 46 both, 5 a neighbour in another city. The
+   blank-point class wants `abuts_park` from RLIS orca (Troutdale MU-3
+   owes 10 ft "abutting a park regardless of zoning" -- the row that kept
+   OS off both lists, troutdale.yaml L1866). (d) Portland CI1/CI2: 33.150
+   gives a CI lot 10 ft against OS, so the shared Portland list is wrong
+   for CI home lots -- safe only while CI stays capped on
+   `site_specific_limitation` (guard test); a per-zone list and the
+   across-the-street reading (33.910) when that cap lifts. (e) Troutdale's
+   5 ft side against HDR is unread.
 3. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks
@@ -464,3 +471,34 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    published document defines -- not Gresham 4.0100, not MCC 39; ruled
    `to_read` and worth one question to Gresham planning if it ever
    matters; nothing else owed.
+11. **Measure `civic_corridor` (Portland Map 130-1).** The neighbour bound
+   found the fact alone frees almost no Portland lot: nearly every unknown
+   CR/CM1/CM2/CM3 lot ALSO leans on `civic_corridor` (front setback 0 ->
+   10 ft "adjacent to a Civic Corridor shown on Map 130-1", 33.130.215.B.1.a;
+   RM2 coverage 60 -> 70), or already fails fit_ft / min_density /
+   parking_cap. ~2,900 unknown Portland commercial lots have the corridor
+   as their last lever. It is a line on an adopted map, not a fact in the
+   parcel record: acquire the Civic / Neighborhood Corridor layer (Portland
+   open data; a registry entry with a count tolerance), measure "street
+   lot line adjacent to a corridor street" in s4 as a per-LINE fact the way
+   the alley was (the front on the corridor takes 10, another front 0),
+   read it in FLATS as an observed site fact. Read what "adjacent to"
+   means in 33.910 first, and bound both ways on the subset.
+12. **The envelope is cut with quadfit's table, not the corpus's
+   resolution -- the rear is reconciled, the sides are not.** The carve
+   fix (2026-09-22: s5 `env_setbacks_json`, bridge `carved_rear_ft`,
+   `LotFacts.envelope_rear_ft`, `_court_beyond_rear`) charges the court
+   against the strip s5 really cut at the REAR. The SIDES and FRONT still
+   stand at quadfit's number: Portland CE side 10 -> 0 against a
+   non-residential neighbour resolves in FLATS while the envelope is
+   already 10 ft narrower each side, so `fit_across_ft` and the seat count
+   are conservative by up to 20 ft of width on every True lot, and the same
+   for any variant that relaxes a side or front (alley side, corner
+   street side). Two ways: (i) carry "S"/"F" from `env_setbacks_json` and
+   widen the search -- arithmetic on a shape already cut; (ii) build the
+   envelope in FLATS from the lot polygon, the edges and the RESOLVED
+   setbacks (`flats/geom/envelope.py buildable` exists for it; the bridge
+   would call it instead of reading s5o's wkb) -- the real fix, and the
+   point where quadfit's s5 stops mattering to the screen. Bound (ii) on
+   the subset first: every lot whose FLATS envelope differs from s5's must
+   be explained by a variant that fired, and the diff read both ways.
