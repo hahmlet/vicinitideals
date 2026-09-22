@@ -823,6 +823,18 @@ def close_entailed(observed: Mapping[str, bool]) -> dict[str, bool]:
 #: leaning on one of these cannot be GREEN — it is our belief, not a fact.
 ASSUMED = frozenset(c.name for c in _C if c.kind == "site_fact" and c.assume is not None)
 
+#: The three site facts about what zone lies across the lot lines, answered
+#: from quadfit's per-line reading of the fabric (`flats.geom.neighbour`)
+#: against each layer's own list of which of its codes are which
+#: (``Layer.neighbours``). Named here because the loader has to know which
+#: conditions a layer may declare a neighbour list for: any other name in
+#: that block is a typo, or a fact the fabric cannot answer.
+NEIGHBOUR_ZONE_CONDITIONS: tuple[str, ...] = (
+    "abuts_residential_zone",
+    "abuts_lower_density_zone",
+    "abuts_nonresidential_zone",
+)
+
 
 def condition(name: str) -> ConditionDef:
     """Look up a condition, refusing anything unregistered.
@@ -881,6 +893,7 @@ __all__ = [
     "ASSUMED_USE_TIER",
     "CONDITIONS",
     "ENTAILS",
+    "NEIGHBOUR_ZONE_CONDITIONS",
     "ConditionDef",
     "close_entailed",
     "Kind",

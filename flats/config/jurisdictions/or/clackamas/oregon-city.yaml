@@ -2131,3 +2131,36 @@ zone_rulings:
       zone, which the city's layer does not name; the county layer's own map
       does, and its block is the one that answers. A pocket, not a code: the
       layer says WHOSE zone it is, not which.
+
+# Which of this city's zones are a "residential zone" for the mixed-use and
+# commercial chapters' "setbacks abutting a residential zone" (17.29.050.D
+# and its twins), the fact quadfit's s4 now reads off the taxlot fabric
+# across every non-street lot line (neighbour_zones_json), turned into
+# `abuts_residential_zone` by flats/geom/neighbour.py against these lists.
+# Only that condition is declared: `abuts_lower_density_zone` also caps
+# R-2, R-3.5 and R-5 in caps.json (17.20 notes about the neighbouring
+# district's density), and an observed fact lifts a cap, so that list may
+# not be written until those footnotes are encoded as variants.
+neighbours:
+  abuts_residential_zone:
+    true_for: [R-10, R-8, R-6, R-5, R-3.5, R-2]
+    false_for: [NC, HC, C, GI, CI, MUC-1, MUC-2, MUE, MUD, I, WFDD]
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L2927-L2932,L3922-L3941"
+    cite: OCMC 17.04.1035 (Residential zone); OCMC 17.06.015 (Classification of
+      zoning districts); OCMC 17.29.050.D (MUC-1, setbacks abutting a residential zone)
+    note: >-
+      17.04.1035 is a definition, not a reading: "'Residential zone' shall
+      include any of the following zoning districts: R-10 single-family
+      dwelling district, R-8 single-family dwelling district, R-6
+      single-family dwelling district, R-5 dwelling district, R-3.5 dwelling
+      district and R-2 dwelling district." The false_for side is the rest of
+      17.06.015's list of base districts, none of which the definition
+      names; the overlay districts it goes on to list (historic, floodplain,
+      geologic hazards, ...) are not zones on the map and never appear
+      across a line. The map prints the codes as the code does (R-10, MUC-1,
+      no suffixes). The condition is true of a lot when ANY non-street line
+      has a true_for-side lot across it, which is the tightening answer (twenty
+      feet where the base offers none); false needs every line fully read
+      with nothing on the true_for side across any of them. Today the zones that
+      turn on it (C, MUC-1, MUC-2, MUD, WFDD) are ahead of quadfit's own
+      rules and unmeasured, so the list waits for that port (FOLLOWUPS).

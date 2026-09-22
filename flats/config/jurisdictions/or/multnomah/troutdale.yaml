@@ -1834,3 +1834,40 @@ zone_rulings:
       code; the county's map does, and MCC 38's residential districts (GGR,
       GSR: one single-family dwelling per parcel) refuse the building where
       they apply.
+
+# Which of this city's districts are "a non-residential zoning district" and
+# which "a residential zoning district" for the mixed-use chapter's setback
+# rows (3.230 table, 3.235.C.2 and C.5) -- the fact quadfit's s4 now reads
+# off the taxlot fabric across every non-street lot line
+# (neighbour_zones_json), turned into `abuts_nonresidential_zone` by
+# flats/geom/neighbour.py against these lists.
+neighbours:
+  abuts_nonresidential_zone:
+    true_for: [MU-1, MU-2, MU-3, CC, GC, IP, LI, GI]
+    false_for: [LDR-1, LDR-2, MDR, HDR]
+    quote: "or/multnomah/troutdale/3.zoning-districts.txt#L72-L92,L668,L672-L674,L737-L738,L749-L750"
+    cite: TDC 3.020 (Zoning District Outline); TDC 3.230 (Dimensional standards
+      table, "when abutting a non-residential zoning district" / "a residential
+      zoning district" rows); TDC 3.235.C.2.a and C.5.a
+    note: >-
+      The code sorts its own districts in 3.020: "Residential Districts"
+      are LDR-1, LDR-2, MDR and HDR (3.100); "Mixed-Use Districts" MU-1,
+      MU-2, MU-3 (3.200); "Commercial Districts" CC, GC (3.300);
+      "Industrial Districts" IP, LI, GI (3.400); "Other Districts" OS, UPA,
+      NSA (3.500). The 3.230 rows ask whether the neighbour is "a
+      residential zoning district" or "a non-residential zoning district",
+      and a district the outline files under any heading but Residential is
+      the latter -- a mixed-use lot next to another mixed-use lot owes no
+      yard, which is what a downtown row of zero-lot-line buildings is. OS
+      is left off both lists on purpose: the same table charges an MU-3 lot
+      ten feet "when abutting a park (regardless of zoning district)", and
+      an OS lot is nearly always a park, so reading it as non-residential
+      would hand an MU-3 lot next to its park a zero it does not have; a
+      park in any other zone is the residual risk, and `abuts_park` from
+      the regional parks layer is the follow-up that closes it. UPA and NSA
+      carry county zoning and are not on either list. 3.235.C.2.a also
+      gives five feet against HDR; the side variant reads only the
+      non-residential half, so an HDR neighbour keeps the larger yard,
+      which is the tightening way to be incomplete. The condition is true
+      of a lot only when EVERY non-street line is fully read and everything
+      across it is on the true_for side; one residential point settles it false.

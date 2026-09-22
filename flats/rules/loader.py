@@ -27,11 +27,13 @@ from typing import Any
 
 import yaml
 
+from flats.rules.conditions import NEIGHBOUR_ZONE_CONDITIONS
 from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
     ZONE_RULING_OUTCOMES,
+    NeighbourRule,
     ZoneRuling,
     READING_OUTCOMES,
     WORD_OUTCOMES,
@@ -1334,6 +1336,91 @@ def _parse_zone_rulings(
     return out
 
 
+def _parse_neighbours(
+    raw: object, *, where: str, problems: list[str]
+) -> dict[str, NeighbourRule]:
+    """Which zone codes across a lot line are which, per neighbour-zoning
+    condition -- the layer's reading of its own code::
+
+        neighbours:
+          abuts_nonresidential_zone:
+            true_for: [OS, RX, CR, CM1, CM2, CM3, CE, CX, EG1, EG2, EX, IG1, IG2, IH]
+            false_for: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RM3, RM4, RMP, IR]
+            quote: "or/multnomah/portland/33.130.txt#L871-L876"
+            cite: PCC 33.130.215.B.2
+            note: >-
+              "no minimum setback ... from a lot line that abuts an OS, RX,
+              C, E or CI zone"; "from a lot line that abuts an RF through
+              RM4, RMP, or IR zone is 10 feet" ...
+
+    Only the three registered neighbour-zoning conditions may appear; both
+    lists are required, are disjoint, and hold codes as strings; the quote
+    and a note of a ruling's length are required, because the list is a
+    reading and a reading without its sentence is a recollection. The lists
+    are ``true_for`` and ``false_for`` and not ``yes`` and ``no``, which
+    YAML reads as booleans before the loader sees them.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.neighbours: expected a mapping of condition -> lists")
+        return {}
+    out: dict[str, NeighbourRule] = {}
+    for name, body in raw.items():
+        name = str(name).strip()
+        at = f"{where}.neighbours.{name}"
+        if name not in NEIGHBOUR_ZONE_CONDITIONS:
+            problems.append(
+                f"{at}: not a neighbour-zoning condition; one of "
+                f"{', '.join(NEIGHBOUR_ZONE_CONDITIONS)}"
+            )
+            continue
+        if not isinstance(body, dict):
+            problems.append(f"{at}: expected true_for, false_for, quote and note")
+            continue
+        extra = set(body) - {"true_for", "false_for", "quote", "cite", "note"}
+        if extra:
+            problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
+            continue
+        lists: dict[str, tuple[str, ...]] = {}
+        bad = False
+        for side in ("true_for", "false_for"):
+            codes = body.get(side)
+            if not isinstance(codes, list) or not codes or not all(
+                isinstance(c, (str, int, float)) for c in codes
+            ):
+                problems.append(f"{at}.{side}: a non-empty list of zone codes")
+                bad = True
+                continue
+            lists[side] = tuple(dict.fromkeys(str(c).strip() for c in codes))
+        if bad:
+            continue
+        both = set(lists["true_for"]) & set(lists["false_for"])
+        if both:
+            problems.append(f"{at}: on both sides of the line: {', '.join(sorted(both))}")
+            continue
+        quote = body.get("quote")
+        if not isinstance(quote, str) or not quote.strip():
+            problems.append(f"{at}: a quote of the sentence the lists are read from")
+            continue
+        note = body.get("note")
+        if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+            problems.append(
+                f"{at}: a note saying how the code sorts its zones, in at least {MIN_RULING} characters"
+            )
+            continue
+        cite = body.get("cite")
+        out[name] = NeighbourRule(
+            condition=name,
+            true_for=lists["true_for"],
+            false_for=lists["false_for"],
+            quote=quote.strip(),
+            cite=None if cite is None else str(cite).strip(),
+            note=" ".join(note.split()),
+        )
+    return out
+
+
 def _parse_readings(
     raw: object, *, where: str, problems: list[str]
 ) -> dict[str, Reading]:
@@ -1590,6 +1677,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             definitions=parse_definitions(raw.get("definitions"), where=where, problems=problems),
             definitions_from=_adoptions(raw.get("definitions_from"), where=where, problems=problems),
             zone_rulings=_parse_zone_rulings(raw.get("zone_rulings"), zones, where=where, problems=problems),
+            neighbours=_parse_neighbours(raw.get("neighbours"), where=where, problems=problems),
         )
     except Exception as exc:
         problems.append(f"{where}: {_terse(exc)}")

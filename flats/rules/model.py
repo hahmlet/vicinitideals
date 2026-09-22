@@ -350,6 +350,38 @@ class ZoneRuling(BaseModel):
     of: str | None = None
 
 
+class NeighbourRule(BaseModel):
+    """Which zone codes across a lot line make one neighbour-zoning
+    condition true here, and which make it false, in this code's own words.
+
+    ``true_for`` are the codes on the condition's side of the line -- for
+    ``abuts_residential_zone`` the residential zones, for
+    ``abuts_nonresidential_zone`` the zones a commercial building may stand
+    on the line against, for ``abuts_lower_density_zone`` the districts the
+    footnote names. ``false_for`` are the codes that are not. (Not ``yes``
+    and ``no``: YAML reads those two words as booleans.) A code in neither
+    list is a neighbour the reading cannot place -- an institutional or
+    open-space district the section does not mention -- and a line against
+    it is left unresolved rather than guessed, which is the conservative
+    answer whichever way the condition cuts. The lists are this
+    jurisdiction's codes as the map prints them after the layer's own
+    normalisation; a neighbour across a city line is never on either list.
+
+    ``quote`` points at the sentence the lists are read from and ``note``
+    is the argument, held to a ruling's length, because which side of a
+    line "residential" falls on is the whole of the question.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    condition: str
+    true_for: tuple[str, ...]
+    false_for: tuple[str, ...]
+    quote: str
+    cite: str | None = None
+    note: str
+
+
 class Ruling(str):
     """Why a cross-reference does not need fetching, and which shape of why.
 
@@ -406,6 +438,11 @@ LAYER_META = frozenset(
         # district, a chapter not encoded yet. The refresh gate flags only a
         # code that is neither a zone nor one of these.
         "zone_rulings",
+        # Which of this jurisdiction's zone codes are the residential side,
+        # the lower-density side, the non-residential side of a lot line,
+        # for the three neighbour-zoning conditions. A reading of the code,
+        # not of the map: Portland's list is 33.130.215.B.2's.
+        "neighbours",
         "kind",
         "label",
         "eligible",
@@ -2216,6 +2253,16 @@ class Layer(BaseModel):
     #: or renamed since the map was last read, and the one thing the county
     #: refresh should ask a person about.
     zone_rulings: dict[str, ZoneRuling] = Field(default_factory=dict)
+    #: Which of this layer's zone codes are which side of a lot line, per
+    #: neighbour-zoning condition (see :class:`NeighbourRule`). Declared per
+    #: layer and never inherited: the county's residential districts are not
+    #: the city's. A layer with no entry for a condition leaves that fact
+    #: unresolved on every lot, however the fabric reads -- which is also how
+    #: a footnote capped on the fact (``caps.json``) keeps its cap until the
+    #: footnote is encoded as a variant: an observed fact lifts a cap, so the
+    #: list may only be declared once every value it would lift has its
+    #: other number written down.
+    neighbours: dict[str, "NeighbourRule"] = Field(default_factory=dict)
 
     @property
     def depth(self) -> int:

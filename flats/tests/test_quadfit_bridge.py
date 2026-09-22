@@ -185,6 +185,110 @@ def test_a_stage_file_from_before_a_column_leaves_the_fact_unasked() -> None:
     assert "split_zone" not in got and "in_floodplain" not in got
 
 
+def across(*edges: dict | None) -> str:
+    """s4's ``neighbour_zones_json`` for the four-edge fixture lot: the street
+    edge first (never asked), then east side, rear, west side."""
+    return json.dumps([None, *edges])
+
+
+def zoned(*pairs: tuple[str, str], split: int = 0, none: int = 0) -> dict:
+    return {"z": [list(p) for p in pairs], "split": split, "none": none}
+
+
+@pytest.fixture(scope="module")
+def layers():
+    return load_trusted(strict=False).rules.layers
+
+
+def test_without_the_corpus_the_neighbour_facts_are_left_unasked() -> None:
+    got = observed_facts(row(zone="CM2", neighbour_zones_json=across(zoned(("portland", "R5")))))
+    assert not any(name.startswith("abuts_") and name.endswith("_zone") for name in got)
+
+
+def test_a_commercial_lot_with_a_house_behind_it_keeps_its_ten_feet(layers) -> None:
+    # Portland 33.130.215.B.2: one R5 point on the rear line settles it.
+    got = observed_facts(
+        row(
+            zone="CM2",
+            neighbour_zones_json=across(
+                zoned(("portland", "CM2")), zoned(("portland", "R5a")), zoned(("portland", "CM2"))
+            ),
+        ),
+        layers,
+    )
+    assert got["abuts_nonresidential_zone"] is False
+    # The map's lowercase suffix was stripped before the lookup: R5a is R5.
+    assert "abuts_residential_zone" not in got, "Portland declares only the one condition"
+
+
+def test_a_commercial_lot_walled_in_by_commercial_lots_owes_no_setback(layers) -> None:
+    got = observed_facts(
+        row(
+            zone="CM2",
+            neighbour_zones_json=across(
+                zoned(("portland", "CM2")), zoned(("portland", "EG1"), ("portland", "OS")), zoned(("portland", "CX"))
+            ),
+        ),
+        layers,
+    )
+    assert got["abuts_nonresidential_zone"] is True
+
+
+def test_a_park_or_a_split_neighbour_or_another_city_leaves_the_relaxation_unstated(layers) -> None:
+    park = across(zoned(("portland", "CM2")), zoned(none=5), zoned(("portland", "CM2")))
+    split = across(zoned(("portland", "CM2")), zoned(("portland", "CM2"), split=1), zoned(("portland", "CM2")))
+    gresham = across(zoned(("portland", "CM2")), zoned(("gresham", "CC")), zoned(("portland", "CM2")))
+    for record in (park, split, gresham):
+        got = observed_facts(row(zone="CM2", neighbour_zones_json=record), layers)
+        assert "abuts_nonresidential_zone" not in got, record
+
+
+def test_a_neighbours_alias_is_spelled_as_the_block_it_screens_under(layers) -> None:
+    # Fairview's map prints FLX where the rules hold VC; VC is on the
+    # true_for side, so the alias reads as commercial.
+    got = observed_facts(
+        row(
+            jurisdiction="fairview",
+            zone="TCC",
+            neighbour_zones_json=across(
+                zoned(("fairview", "FLX")), zoned(("fairview", "CC")), zoned(("fairview", "VC"))
+            ),
+        ),
+        layers,
+    )
+    assert got["abuts_nonresidential_zone"] is True
+    # And VA, the Village apartment zone, is residential in every sense.
+    got = observed_facts(
+        row(
+            jurisdiction="fairview",
+            zone="TCC",
+            neighbour_zones_json=across(zoned(("fairview", "FLX")), zoned(("fairview", "VA")), zoned(("fairview", "VC"))),
+        ),
+        layers,
+    )
+    assert got["abuts_nonresidential_zone"] is False
+
+
+def test_a_layer_that_declares_no_list_answers_nothing_however_the_fabric_reads(layers) -> None:
+    # Gresham has the fact registered and no list: silence, as before.
+    got = observed_facts(
+        row(
+            jurisdiction="gresham",
+            zone="CC",
+            neighbour_zones_json=across(zoned(("gresham", "CC")), zoned(("gresham", "CC")), zoned(("gresham", "CC"))),
+        ),
+        layers,
+    )
+    assert not any(name.startswith("abuts_") and name.endswith("_zone") for name in got)
+
+
+def test_a_stage_file_from_before_the_neighbour_column_leaves_the_facts_unasked(layers) -> None:
+    old = row(zone="CM2")
+    assert "neighbour_zones_json" not in old
+    got = observed_facts(old, layers)
+    assert not any(name.startswith("abuts_") and name.endswith("_zone") for name in got)
+
+
 # --- the lot -----------------------------------------------------------------
 
 
@@ -232,6 +336,11 @@ def _stage_files(tmp_path: Path, rows: list[dict[str, object]]) -> tuple[Path, P
     # s4 was re-run alone after s5o was written, as it is on LXC 137.
     frame[[c for c in S5O_COLUMNS if c in frame]].to_parquet(s5o, index=False)
     return s4, s5o
+
+
+def test_s4s_columns_carry_the_neighbour_record() -> None:
+    assert "neighbour_zones_json" in S4_COLUMNS
+    assert "abuts_nonresidential_zone" in OBSERVABLE and "abuts_residential_zone" in OBSERVABLE
 
 
 def test_the_rows_join_s4s_facts_to_s5os_envelope_on_tlid(tmp_path: Path) -> None:

@@ -4588,3 +4588,43 @@ zones:
       value: 20
       quote: "or/multnomah/portland/33.150.txt#L531,L552-L553"
     notes: 'Institutional Residential. Sixty lots, and the only zone in the corpus whose setback is measured off the building instead of the lot: 1 ft for every 2 ft of height, floored at 10, which for a 26 ft pod is 13 ft. Its column of Table 150-2''s three minimum-setback rows is one merged cell, so unlike CI1 and CI2 the neighbour''s zoning changes nothing -- and the rows are headed "Lot line abutting or across the street from", so the front lot line owes the same 13. The one frontage that does not is a transit street or a street lot line in a Pedestrian District, where note [5] removes the minimum outright; neither map is read here. No minimum lot size, 75 ft of height, 70 percent coverage, 20 percent landscaped. NOT ENCODED, on purpose: Maps 150-1 through 150-5 supersede the Table 150-2 setback and height rows where they apply, and this screen does not read them; and note [1] treats an entire CI zone as one site for Colleges and Medical Centers, which is a different applicant than this one.'
+
+# Which of this city's zones lie on which side of a lot line, for the
+# commercial chapters' "abuts an OS, RX, C, E or CI zone" / "abuts an RF
+# through RM4, RMP, or IR zone" -- the fact quadfit's s4 now reads off the
+# taxlot fabric across every non-street lot line (neighbour_zones_json),
+# turned into `abuts_nonresidential_zone` by flats/geom/neighbour.py against
+# these lists. Declared here and not per zone: CR through CX, EX and the
+# CI zones all turn on the same fact. A code in neither list -- another
+# city's, a split-zone neighbour, a park drawn as right-of-way -- leaves the
+# line unresolved and the lot UNKNOWN on the fact, as before 2026-09-21.
+neighbours:
+  abuts_nonresidential_zone:
+    true_for: [OS, RX, CR, CM1, CM2, CM3, CE, CX, EG1, EG2, EX, IG1, IG2, IH, CI1, CI2]
+    false_for: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RM3, RM4, RMP, IR]
+    quote: "or/multnomah/portland/33.130.txt#L646-L650,L869-L875"
+    cite: PCC 33.130.215.B.2.a-b (Required setbacks from a lot line that is not a
+      street lot line); Table 130-2 (Min. Building Setbacks rows); PCC 33.140.215.B
+      and Table 140-2 for the E zones; PCC 33.150 Table 150-2 for the CI zones
+    note: >-
+      33.130.215.B.2.a: "no minimum setback required from a lot line that
+      abuts an OS, RX, C, E or CI zone"; B.2.b: "from a lot line that abuts
+      an RF through RM4, RMP, or IR zone is 10 feet". Table 130-2's row spells
+      the first list "OS, RX, C, E, or I Zoned Lot" -- the text names CI and
+      the table names I, and both are on the same page, so both families are
+      on the true_for side. C = CR, CM1, CM2, CM3, CE, CX; E = EG1, EG2, EX; I =
+      IG1, IG2, IH. RX is on the true_for side in both chapters: 33.140.215.B.2
+      reads "Lot line abutting R-zoned lot, except RX" and footnote [1] to
+      Table 140-2 says the R row "does not apply to lot lines that abut lots
+      in the RX zone". IR is on the false_for side because 33.130 puts it with the
+      residential zones (10 ft) and 33.140's R row does not name it either
+      way -- the tightening reading. The map's lowercase suffixes (R5a, CM2d)
+      are stripped before the lookup (ingest.strip_lowercase_suffix). The
+      one zone whose own chapter sorts differently is CI: 33.150 Table 150-2
+      gives a CI lot 10 ft against an OS lot (not none), so OS on the true_for
+      side over-relaxes a CI1/CI2 home lot next to a park; both CI zones are
+      capped on site_specific_limitation (caps.json) and never certify, and
+      the guard in flats/tests/test_neighbour.py holds that pairing until CI
+      gets its own list. The condition is true of a lot only when EVERY
+      non-street line is fully read and everything across it is on the true_for
+      side; one residential point anywhere settles it false.

@@ -70,6 +70,9 @@ from flats.fit.rectangle import Fit, Fitter
 from flats.geom.alley import ALLEY_FACTS, S4_LOTS, observed_alley
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.edges import Tier
+from flats.geom.neighbour import NEIGHBOUR_FACTS, lines_from_quadfit, observed_neighbours
+from flats.ingest.normalize import zone_for
+from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
 from flats.score.relief import ReliefPolicy
@@ -123,6 +126,7 @@ S4_COLUMNS: tuple[str, ...] = (
     "front_bearings_json",
     "fronts_cul_de_sac",
     "split_zone",
+    "neighbour_zones_json",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -139,6 +143,7 @@ S5O_COLUMNS: tuple[str, ...] = (
 OBSERVABLE: tuple[str, ...] = (
     *ALLEY_FACTS,
     *CUL_DE_SAC_FACTS,
+    *NEIGHBOUR_FACTS,
     "corner_lot",
     "split_zone",
     "in_floodplain",
@@ -172,7 +177,9 @@ def _finite(value: object) -> float | None:
     return f if math.isfinite(f) else None
 
 
-def observed_facts(row: Mapping[str, Any]) -> dict[str, bool]:
+def observed_facts(
+    row: Mapping[str, Any], layers: Mapping[str, Layer] | None = None
+) -> dict[str, bool]:
     """The site facts quadfit measured, in the registry's words.
 
     Each key is present only where quadfit took the measurement the
@@ -203,6 +210,15 @@ def observed_facts(row: Mapping[str, Any]) -> dict[str, bool]:
       reach is unconfirmed, and the registry refuses to guess sewer.
     * ``in_sewer_district`` -- the Clackamas district flag, where the layer
       answered.
+    * ``abuts_residential_zone`` / ``abuts_lower_density_zone`` /
+      ``abuts_nonresidential_zone`` -- s4's zone across each non-street
+      line (``neighbour_zones_json``), through
+      :func:`flats.geom.neighbour.observed_neighbours` against the lot's
+      layer's own lists of which codes are which (``Layer.neighbours``).
+      Only with ``layers`` in hand, only where the layer declares the
+      condition, and only where the lines settle it: a line across a park,
+      a split-zone neighbour or another city's lot leaves the permissive
+      answer unstated, and the lot screens UNKNOWN on the fact as before.
     """
     out: dict[str, bool] = {}
     edges = json.loads(row.get("edges_json") or "[]")
@@ -210,6 +226,8 @@ def observed_facts(row: Mapping[str, Any]) -> dict[str, bool]:
     if edges:
         out.update(observed_alley(edges, bearings))
         out["corner_lot"] = len(bearings) >= 2
+    if layers is not None and row.get("neighbour_zones_json"):
+        out.update(_neighbour_facts(row, layers))
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
     if _answered(row.get("split_zone")):
         out["split_zone"] = _is_true(row.get("split_zone"))
@@ -227,6 +245,40 @@ def observed_facts(row: Mapping[str, Any]) -> dict[str, bool]:
         if not in_district:
             out["public_sewer"] = False
     return out
+
+
+def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
+    """The three neighbour-zoning facts for one s4 row, or nothing.
+
+    The lot's layer supplies the lists; each neighbour's code is spelled
+    the way ITS layer screens it (`zone_for`: that layer's
+    ``strip_lowercase_suffix``, then the block an alias ruling names), so
+    a Portland ``R5a`` across the line is ``R5`` on Portland's list and
+    Fairview's ``FLX`` is ``VC``. A code the layer holds no block for keeps
+    its map spelling, so an ``OS`` that is only a zone ruling can still be
+    listed. A neighbour in a jurisdiction the corpus has no layer for
+    cannot be spelled and counts as unresolved.
+    """
+    juris = str(row.get("jurisdiction"))
+    try:
+        home = layers.get(layer_id_for(juris))
+    except KeyError:
+        home = None
+    if home is None or not home.neighbours:
+        return {}
+
+    def normalise(neighbour_juris: str, raw: str) -> str | None:
+        try:
+            layer = layers.get(layer_id_for(neighbour_juris))
+        except KeyError:
+            return None
+        if layer is None:
+            return None
+        code, held = zone_for(layer, raw)
+        return held or code
+
+    lines = lines_from_quadfit(json.loads(row["neighbour_zones_json"]), normalise)
+    return observed_neighbours(lines, home.neighbours, juris)
 
 
 @dataclass(frozen=True, slots=True)
@@ -249,8 +301,12 @@ class QuadfitLot:
     envelope: Any
 
 
-def lot_from_row(row: Mapping[str, Any]) -> QuadfitLot:
-    """Build the screen's inputs for one stage-file row."""
+def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = None) -> QuadfitLot:
+    """Build the screen's inputs for one stage-file row.
+
+    ``layers`` is the loaded corpus, for the neighbour-zoning facts; without
+    it those facts are left unasked, as they were before 2026-09-21.
+    """
     import shapely
 
     tier = TIER.get(str(row.get("tier")), Tier.irregular)
@@ -275,7 +331,7 @@ def lot_from_row(row: Mapping[str, Any]) -> QuadfitLot:
         zone=str(row.get("zone")),
         layer_id=layer_id,
         facts=facts,
-        observed=observed_facts(row),
+        observed=observed_facts(row, layers),
         front_bearings=tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]")),
         envelope=envelope,
     )
@@ -478,7 +534,7 @@ def _init_worker(step_deg: float) -> None:
 def _work_chunk(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for row in rows:
-        lot = lot_from_row(row)
+        lot = lot_from_row(row, _WORKER["rules"].layers)
         for s in screen_lot(
             lot,
             _WORKER["designs"],

@@ -2909,3 +2909,40 @@ zone_rulings:
       (`inside_mapped_use_area`) as the place its relief applies. The map
       now says which lot that is; feeding the code into that fact is the
       improvement this alias leaves open.
+
+# Which of this city's zones are "a residential district" for the commercial
+# chapters' "When a building abuts a residential district the minimum
+# rear/side setback shall be 15 feet" (19.65.040, 19.70, 19.80) -- the fact
+# quadfit's s4 now reads off the taxlot fabric across every non-street lot
+# line (neighbour_zones_json), turned into `abuts_nonresidential_zone` by
+# flats/geom/neighbour.py against these lists.
+neighbours:
+  abuts_nonresidential_zone:
+    true_for: [CC, TCC, GI, LI, VC, VO]
+    false_for: [R-6, R-7.5, R-10, RM, RM/TOZ, R/SFLD, R/CSP, R/MH, VSF, VTH, VA]
+    quote: "or/multnomah/fairview/19.65.txt#L203,L207"
+    cite: FMC 19.65.040(B)(1) and (C) (TCC rear and side setbacks); FMC 19.30.010
+      (Purpose -- "the residential districts (zones)"); FMC 19.30.030 Table A;
+      FMC 19.145.010 (VSF, VTH and VA)
+    note: >-
+      19.65.040 turns on "a residential district" and Chapter 19.30 is the
+      chapter titled Residential Districts: its purpose section opens "The
+      residential districts (zones) are intended to promote the livability
+      ... of the city's neighborhoods" (19.30.txt L29) and names R-6,
+      R-7.5, R-10, the manufactured home park (MH) zone and RM (L43-L47);
+      the map's R/SFLD, R/CSP and RM/TOZ are Metro's spellings of overlays
+      on those districts and R/MH is the MH park district. The Fairview
+      Village chapters are not in 19.30, but 19.145.010 calls VSF, VTH and
+      VA "the Village single-family (VSF), Village town house (VTH) and
+      Village apartment (VA) zones" and 19.115 sends their dimensions to
+      "the R-6 residential district" standards: residential in every sense
+      the setback could mean, and listing them on the false_for side is the
+      tightening reading. The true_for side is the commercial and industrial
+      chapters (19.65 TCC, 19.70 CC, 19.80 GI/LI) and the Village
+      commercial and office zones (19.135 VC, 19.130 VO); the map's FLX is
+      an alias of VC and is spelled VC before the lookup. VMU (residential
+      rows in its own use table) and AH (the agricultural holding zone,
+      19.25) are on neither list and leave a line unresolved. The condition
+      is true of a lot only when EVERY non-street line is fully read and
+      everything across it is on the true_for side; one residential point
+      settles it false.

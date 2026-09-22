@@ -413,6 +413,153 @@ def test_a_gap_too_wide_to_be_an_alley_is_not_one():
     assert r["alley_width_ft"] is None and r["alley_edges_demoted"] == 1
 
 
+# ---------------------------------------------------------------------------
+# s4 -- the zone across each lot line
+# ---------------------------------------------------------------------------
+
+
+def _across(lot, streets, alleys, fabric, rows=()):
+    """`classify_lot` and then `neighbour_zones` on one lot, the way s4's main
+    runs them: ``fabric`` is a list of (polygon, jurisdiction, zone_raw,
+    split_zone) for every private neighbour; ``rows`` are right-of-way
+    polygons. The lot itself is in the fabric, zoned like a Portland CM2 lot."""
+    from s4_edges import classify_lot, neighbour_zones
+
+    sg = np.array(streets, dtype=object)
+    ag = np.array(alleys, dtype=object)
+    polys = [lot, *[f[0] for f in fabric], *rows]
+    lg = np.array(polys, dtype=object)
+    private = np.array([True] * (1 + len(fabric)) + [False] * len(rows))
+    juris = np.array(["portland", *[f[1] for f in fabric], *[None] * len(rows)], dtype=object)
+    zone = np.array(["CM2", *[f[2] for f in fabric], *[None] * len(rows)], dtype=object)
+    split = np.array([False, *[f[3] for f in fabric], *[False] * len(rows)])
+    tree = STRtree(lg)
+    r = classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        alley_tree=STRtree(ag) if len(ag) else None, alley_geoms=ag if len(ag) else None,
+        lot_tree=tree, lot_geoms=lg, lot_private=private,
+    )
+    across = neighbour_zones([r], tree, lg, private, juris, zone, split)[0]
+    return r, across
+
+
+def test_the_zone_across_each_non_street_line_is_read_off_the_fabric():
+    """Portland 33.130.215.B.2 asks, of every lot line that is not a street
+    lot line, what zone the lot across it is in. A 100 x 100 CM2 lot with
+    the street south: R5 behind it, CM2 to the east, and to the west a
+    neighbour the rules have never zoned. The street edge is not asked;
+    the other three are answered per line, with what was found and what
+    was not, and this lot is nobody's own neighbour."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    behind = (shapely.box(0, 100, 100, 200), "portland", "R5", False)
+    east = (shapely.box(100, 0, 200, 100), "portland", "CM2", False)
+    west = (shapely.box(-100, 0, 0, 100), "portland", None, False)
+    r, across = _across(lot, [street], [], [behind, east, west])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert len(across) == len(r["edges"]) == 4
+    by_class = dict(zip(classes, across))
+    assert by_class["F"] is None, "the street is what is across a street edge"
+    assert by_class["R"] == {"z": [["portland", "R5"]], "split": 0, "none": 0}
+    sides = [a for cls, a in zip(classes, across) if cls == "S"]
+    assert {"z": [["portland", "CM2"]], "split": 0, "none": 0} in sides
+    assert {"z": [], "split": 5, "none": 0} in sides, "an unzoned neighbour is not a zone"
+    # Clockwise in the file, the same answers: the points are cast out of
+    # the lot whichever way the ring runs.
+    r_cw, across_cw = _across(Polygon(list(lot.exterior.coords)[::-1]), [street], [], [behind, east, west])
+    assert sorted(str(a) for a in across_cw) == sorted(str(a) for a in across)
+
+
+def test_a_zoning_line_meeting_the_rear_line_reads_as_both_zones():
+    """The rear neighbour is two lots, R5 for the western 40 ft and CM2 for
+    the rest: two of five points find R5, three find CM2, and BOTH are
+    reported. The reader decides what a line that is partly residential
+    means; s4 does not vote."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    fabric = [
+        (shapely.box(0, 100, 40, 200), "portland", "R5", False),
+        (shapely.box(40, 100, 100, 200), "portland", "CM2", False),
+        (shapely.box(100, 0, 200, 100), "portland", "CM2", False),
+        (shapely.box(-100, 0, 0, 100), "portland", "CM2", False),
+    ]
+    r, across = _across(lot, [street], [], fabric)
+    rear = [a for (*_xy, cls), a in zip(r["edges"], across) if cls == "R"][0]
+    assert rear == {"z": [["portland", "CM2"], ["portland", "R5"]], "split": 0, "none": 0}
+
+
+def test_a_split_zone_neighbour_and_public_land_are_not_answers():
+    """A neighbour whose own majority zone covers under 90 % of it says
+    nothing about the shared line, and a park drawn as right-of-way, or a
+    gap in the fabric, is no zoned lot: both are counted as what they are,
+    not read as a zone, so the reader can refuse to certify on them."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    fabric = [
+        (shapely.box(0, 100, 100, 200), "portland", "R5", True),   # split
+        (shapely.box(100, 0, 200, 100), "portland", "CM2", False),
+    ]
+    park = shapely.box(-100, 0, 0, 100)
+    r, across = _across(lot, [street], [], fabric, rows=[park])
+    by_class = {}
+    for (*_xy, cls), a in zip(r["edges"], across):
+        by_class.setdefault(cls, []).append(a)
+    assert by_class["R"] == [{"z": [], "split": 5, "none": 0}]
+    assert {"z": [], "split": 0, "none": 5} in by_class["S"], "the park"
+    assert {"z": [["portland", "CM2"]], "split": 0, "none": 0} in by_class["S"]
+    # A stacked lot on the same footprint (a condo file) is not a neighbour.
+    stacked = [(lot, "portland", "CM2", False), *fabric]
+    r2, across2 = _across(lot, [street], [], stacked, rows=[park])
+    assert sorted(str(a) for a in across2) == sorted(str(a) for a in across)
+
+
+def test_an_alley_line_is_read_across_the_alley():
+    """Portland 33.910: an alley line is not a street lot line, so
+    33.130.215.B.2 asks what it abuts. The zoning map runs to the
+    centreline, so what a lot line on an alley abuts is the far side of
+    the alley: the sample is cast the alley's measured width and two feet
+    out, into the lot beyond. R5 across a 14 ft alley reads R5; the
+    right-of-way strip in the gap, where the file draws one, is looked
+    through and not counted."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 107), (160, 107)])
+    behind = (shapely.box(0, 114, 100, 214), "portland", "R5", False)
+    flank_e = (shapely.box(100, 0, 200, 100), "portland", "CM2", False)
+    flank_w = (shapely.box(-100, 0, 0, 100), "portland", "CM2", False)
+    strip = shapely.box(-60, 100, 160, 114)
+    for rows in ([], [strip]):
+        r, across = _across(lot, [street], [alley], [behind, flank_e, flank_w], rows)
+        classes = [cls for *_xy, cls in r["edges"]]
+        assert classes.count("A") == 1 and r["alley_width_ft"] == pytest.approx(14.0, abs=0.1)
+        a = across[classes.index("A")]
+        assert a == {"z": [["portland", "R5"]], "split": 0, "none": 0}
+
+
+def test_a_neighbour_in_another_city_is_named_with_its_city():
+    """The city line runs down the rear lot line: the lot behind is
+    Gresham's, in Gresham's zone. It is reported as such, and it is the
+    reader's business that Portland's list of residential zones says
+    nothing about Gresham's codes."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    fabric = [
+        (shapely.box(0, 100, 100, 200), "gresham", "LDR-7", False),
+        (shapely.box(100, 0, 200, 100), "portland", "CM2", False),
+        (shapely.box(-100, 0, 0, 100), "portland", "CM2", False),
+    ]
+    r, across = _across(lot, [street], [], fabric)
+    rear = [a for (*_xy, cls), a in zip(r["edges"], across) if cls == "R"][0]
+    assert rear == {"z": [["gresham", "LDR-7"]], "split": 0, "none": 0}
+
+
+def test_a_landlocked_lot_has_no_lines_to_ask():
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    far_street = LineString([(-60, -500), (160, -500)])
+    r, across = _across(lot, [far_street], [], [])
+    assert r["tier"] == "D" and across == []
+
+
 def test_without_the_fabric_the_centreline_alone_decides():
     """The fabric is optional: a caller without it (the two cities whose
     code says an alley is a street never pass alleys at all, and a stage

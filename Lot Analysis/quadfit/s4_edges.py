@@ -30,8 +30,24 @@ Edge classes:
   R  rear -- not a street, roughly parallel to a front bearing
   S  side -- the rest
 
-Two more columns ride with the classes. `alley_width_ft` is described
-above. `fronts_cul_de_sac` says whether the front lot line lies on the outer
+Three more columns ride with the classes. `alley_width_ft` is described
+above. `neighbour_zones_json` says what zone lies across each lot line that
+is not a street lot line (`neighbour_zones`): five points along the edge,
+two feet out of the lot -- past the simplification tolerance, inside
+whatever is across -- looked up in the whole taxlot fabric with s2's
+jurisdiction and zone on every polygon, this lot and anything stacked on
+it excluded, the right-of-way polygons not counted as neighbours. An alley
+edge is sampled across the alley (its measured width plus the two feet),
+so the lot on the far side of the alley is what an alley line abuts. Per
+edge: every (jurisdiction, zone) seen across it, how many of the five
+points stood on a split-zone neighbour (its majority zone says nothing
+about the shared line), and how many found no zoned private land at all
+(a park, water, rail, the edge of the map, a lot in a city the rules do
+not cover). Street edges are null: what is across them is the street. The
+FLATS screen reads this into `abuts_residential_zone`,
+`abuts_lower_density_zone` and `abuts_nonresidential_zone` against each
+city's own list of which zones are which (`flats/geom/neighbour.py`); s5
+and s7 do not read it. `fronts_cul_de_sac` says whether the front lot line lies on the outer
 radius of a cul-de-sac bulb -- its chords on a circle of a turnaround's
 radius, turning toward the street, with a street centreline ending inside
 that circle (`lotdims.bulb_circles`, `dead_ends`, `fronts_cul_de_sac`).
@@ -92,6 +108,13 @@ ALLEY_CL_TOL_FT = 3.0      # the centreline may sit this far past the far side
 ALLEY_CL_ALONG_FT = 50.0   # ... and this far along the alley from the ray
 ALLEY_SAMPLES = (0.1, 0.3, 0.5, 0.7, 0.9)   # where along the edge a ray is cast
 ALLEY_SAMPLES_MIN_HIT = 3  # at least this many of the five must find the alley
+#: How far past a non-street edge the neighbour is sampled, in feet: beyond
+#: `simplify_tolerance_ft` (1.5), so the point is out of this lot's true
+#: polygon whichever way the simplification cut, and inside a neighbour
+#: that is at least that deep. The inside point, the same distance in,
+#: names this lot and anything stacked on it so neither is its own
+#: neighbour. Sampled at `ALLEY_SAMPLES` along the edge.
+NEIGHBOUR_OFFSET_FT = 2.0
 
 
 def bearing_deg(x1: float, y1: float, x2: float, y2: float) -> float:
@@ -325,7 +348,8 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
             continue
         edges.append((x1, y1, x2, y2, ln, bearing_deg(x1, y1, x2, y2)))
     none = {"tier": "D", "edges": [], "front_bearings": [], "frontage_ft": 0.0,
-            "alley_width_ft": None, "alley_edges_demoted": 0}
+            "alley_width_ft": None, "alley_edges_demoted": 0,
+            "neighbour_samples": []}
     if not edges:
         return none
 
@@ -387,6 +411,29 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
             cls = "S"
         classed.append([round(x1, 2), round(y1, 2), round(x2, 2), round(y2, 2), cls])
 
+    # Where the neighbour across each non-street edge is looked for: five
+    # points along the edge, `NEIGHBOUR_OFFSET_FT` out of the lot (across
+    # the alley, for an alley edge) and the same distance in. Resolved
+    # against the fabric in one pass by `neighbour_zones`, not here, so the
+    # lookup is one bulk query rather than a million small ones.
+    samples = []
+    for (x1, y1, x2, y2, ln, _b), c, width in zip(edges, classed, alley_widths):
+        if c[4] == "F":
+            samples.append(None)
+            continue
+        ex, ey = (x2 - x1) / ln, (y2 - y1) / ln
+        nx, ny = outward * ey, -outward * ex
+        reach = NEIGHBOUR_OFFSET_FT + (width if c[4] == "A" and width else 0.0)
+        samples.append([
+            (
+                round(x1 + t * (x2 - x1) + reach * nx, 2),
+                round(y1 + t * (y2 - y1) + reach * ny, 2),
+                round(x1 + t * (x2 - x1) - NEIGHBOUR_OFFSET_FT * nx, 2),
+                round(y1 + t * (y2 - y1) - NEIGHBOUR_OFFSET_FT * ny, 2),
+            )
+            for t in ALLEY_SAMPLES
+        ])
+
     # Tier.
     hull_area = geom.convex_hull.area
     convexity = geom.area / hull_area if hull_area > 0 else 0.0
@@ -414,7 +461,93 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
         "frontage_ft": round(frontage_ft, 1),
         "alley_width_ft": alley_width,
         "alley_edges_demoted": demoted,
+        "neighbour_samples": samples,
     }
+
+
+def neighbour_zones(results: list, lot_tree, lot_geoms, lot_private,
+                    fabric_juris, fabric_zone, fabric_split) -> list:
+    """What zone lies across each non-street edge of every lot, from the fabric.
+
+    ``results`` are `classify_lot` records in lot order; the ``fabric_*``
+    arrays run parallel to ``lot_geoms`` and carry s2's jurisdiction, raw
+    zone code and split-zone flag for EVERY polygon in the taxlot file.
+    Returns, per lot, a list parallel to its ``edges``: ``None`` for a
+    street edge, else ``{"z": [[jurisdiction, zone], ...], "split": n,
+    "none": m}`` -- every distinct (jurisdiction, zone) a sample point found
+    across the edge on a private, zoned, single-zone polygon; how many of
+    the five points stood on a split-zone neighbour instead (its majority
+    zone is not the zone at this line); how many found no such polygon at
+    all. A point inside a polygon that also holds the matching inside
+    point is on this lot or a lot stacked on it, and is nobody's neighbour.
+
+    Every zone seen is kept rather than the majority: a rear line that is
+    residential for two of five points abuts a residential zone, and the
+    reader on the FLATS side is the one that knows which way that cuts.
+    """
+    import numpy as np
+    import pandas as pd
+    import shapely
+
+    pt_lot, pt_edge, ox, oy, ix, iy = [], [], [], [], [], []
+    for li, r in enumerate(results):
+        for ei, samp in enumerate(r["neighbour_samples"]):
+            if samp is None:
+                continue
+            for a, b, c, d in samp:
+                pt_lot.append(li)
+                pt_edge.append(ei)
+                ox.append(a)
+                oy.append(b)
+                ix.append(c)
+                iy.append(d)
+    per_edge = len(ALLEY_SAMPLES)
+    out = [[None] * len(r["edges"]) for r in results]
+    for li, r in enumerate(results):
+        for ei, samp in enumerate(r["neighbour_samples"]):
+            if samp is not None:
+                out[li][ei] = {"z": [], "split": 0, "none": per_edge}
+    if not pt_lot:
+        return out
+    pt_lot = np.asarray(pt_lot)
+    pt_edge = np.asarray(pt_edge)
+    n_poly = len(lot_geoms)
+    po, go = lot_tree.query(shapely.points(np.c_[ox, oy]), predicate="within")
+    pi, gi = lot_tree.query(shapely.points(np.c_[ix, iy]), predicate="within")
+    self_keys = pi.astype(np.int64) * n_poly + gi
+    keys = po.astype(np.int64) * n_poly + go
+    keep = ~np.isin(keys, self_keys) & np.asarray(lot_private, dtype=bool)[go]
+    po, go = po[keep], go[keep]
+    if not len(po):
+        return out
+    frame = pd.DataFrame({
+        "pt": po,
+        "lot": pt_lot[po],
+        "edge": pt_edge[po],
+        "j": np.asarray(fabric_juris, dtype=object)[go],
+        "z": np.asarray(fabric_zone, dtype=object)[go],
+        "s": np.asarray(fabric_split, dtype=bool)[go],
+    })
+    frame["ok"] = frame["j"].notna() & frame["z"].notna() & ~frame["s"]
+    # A point is resolved when any polygon under it is zoned and whole;
+    # otherwise it stood on a split-zone or unzoned private lot.
+    by_pt = frame.groupby("pt", sort=False).agg(lot=("lot", "first"), edge=("edge", "first"), ok=("ok", "any"))
+    counts = by_pt.groupby(["lot", "edge"], sort=False)["ok"].agg(resolved="sum", seen="size")
+    zones: dict = {}
+    whole = (frame[frame["ok"]]
+             .drop_duplicates(["lot", "edge", "j", "z"])
+             .sort_values(["lot", "edge", "j", "z"]))
+    for li, ei, j, z in zip(whole["lot"], whole["edge"], whole["j"], whole["z"]):
+        zones.setdefault((int(li), int(ei)), []).append([str(j), str(z)])
+    for (li, ei), resolved, seen in zip(counts.index, counts["resolved"], counts["seen"]):
+        resolved = int(resolved)
+        split = int(seen) - resolved
+        out[int(li)][int(ei)] = {
+            "z": zones.get((int(li), int(ei)), []),
+            "split": split,
+            "none": per_edge - resolved - split,
+        }
+    return out
 
 
 def main() -> None:
@@ -446,12 +579,17 @@ def main() -> None:
     dead_points = dead_ends(street_geoms)
     tree_dead = STRtree(dead_points) if dead_points else None
     # The whole taxlot fabric -- every neighbour, and the right-of-way
-    # polygons s3 dropped -- read out of s1 so an alley edge can be asked
-    # whether the alley actually lies across it, and how wide it is.
-    s1 = read_stage("s1_lots")[["TLID", "geom"]]
-    lot_geoms = np.array(list(s1["geom"]), dtype=object)
-    lot_private = ~s1["TLID"].astype(str).str.contains(NOT_A_TAXLOT_RE, regex=True).to_numpy()
-    del s1
+    # polygons s3 dropped -- read out of s2 (s1's polygons with the
+    # jurisdiction and zone s2 gave each one) so an alley edge can be asked
+    # whether the alley actually lies across it, and how wide it is, and
+    # every non-street edge what zone lies across it.
+    s2 = read_stage("s2_lots", columns=["TLID", "wkb", "jurisdiction", "zone_raw", "split_zone"])
+    lot_geoms = np.array(list(s2["geom"]), dtype=object)
+    lot_private = ~s2["TLID"].astype(str).str.contains(NOT_A_TAXLOT_RE, regex=True).to_numpy()
+    fabric_juris = s2["jurisdiction"].astype(object).where(s2["jurisdiction"].notna(), None).to_numpy(dtype=object)
+    fabric_zone = s2["zone_raw"].astype(object).where(s2["zone_raw"].notna(), None).to_numpy(dtype=object)
+    fabric_split = s2["split_zone"].fillna(False).astype(bool).to_numpy()
+    del s2
     tree_lots = STRtree(lot_geoms)
     thr = rules.defaults.street_threshold_ft
     tol = rules.defaults.simplify_tolerance_ft
@@ -482,6 +620,22 @@ def main() -> None:
     lots["edges_json"] = [json.dumps(r["edges"]) for r in results]
     lots["front_bearings_json"] = [json.dumps(r["front_bearings"]) for r in results]
     lots["frontage_ft"] = [r["frontage_ft"] for r in results]
+
+    # What zone lies across each lot line that is not a street lot line,
+    # from the fabric with s2's zones on it. One bulk query for the county.
+    print("s4: reading the zone across every non-street edge ...")
+    across = neighbour_zones(results, tree_lots, lot_geoms, lot_private,
+                             fabric_juris, fabric_zone, fabric_split)
+    lots["neighbour_zones_json"] = [json.dumps(a) for a in across]
+    _asked = sum(1 for a in across if any(e is not None for e in a))
+    _whole = sum(1 for a in across if any(e is not None for e in a)
+                 and all(e is None or (e["split"] == 0 and e["none"] == 0) for e in a))
+    _edges = sum(1 for a in across for e in a if e is not None)
+    _blank = sum(1 for a in across for e in a if e is not None and not e["z"])
+    _mixed = sum(1 for a in across for e in a if e is not None and len(e["z"]) > 1)
+    print(f"s4 neighbour zones: {_asked:,} lots with a non-street edge, every edge "
+          f"resolved on {_whole:,}; {_edges:,} edges, {_blank:,} with no zoned "
+          f"neighbour at all, {_mixed:,} with more than one zone across them")
     # The alley's width, and the edges that were near an alley's centreline
     # with no alley across them. Printed per city so a city whose alleys
     # the file draws strangely would show as one that lost every alley.

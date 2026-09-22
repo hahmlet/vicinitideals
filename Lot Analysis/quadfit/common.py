@@ -1627,12 +1627,16 @@ def write_stage(df: Any, name: str) -> Path:
     return path
 
 
-def read_stage(name: str) -> Any:
-    """Read a stage Parquet; a 'wkb' column is rehydrated to shapely 'geom'."""
+def read_stage(name: str, columns: list[str] | None = None) -> Any:
+    """Read a stage Parquet; a 'wkb' column is rehydrated to shapely 'geom'.
+
+    ``columns`` reads only those (name ``wkb`` to get ``geom``): the whole
+    s2 fabric is 450k rows of assessor columns nobody downstream of s4 needs.
+    """
     import pandas as pd
     import shapely
 
-    df = pd.read_parquet(stage_path(name))
+    df = pd.read_parquet(stage_path(name), columns=columns)
     if "wkb" in df.columns:
         df["geom"] = [None if b is None else shapely.from_wkb(b) for b in df["wkb"]]
         df = df.drop(columns=["wkb"])
