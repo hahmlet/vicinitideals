@@ -35,20 +35,48 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    planned development on 20-acre rural land a path, yellow, or not, red),
    not a re-read.
 2. **Neighbour zoning per lot line -- loose ends after the measurement
-   (4b25df09 + the carve fix cfc8c033; county run loading 2026-09-22).**
+   (4b25df09 + the carve fix cfc8c033; re-screened as run 12 and PROMOTED
+   2026-09-22 10:30 UTC on the standing word -- the first §4b run: gate
+   clean on eight rows, drift 10 -> 12 = 289 of 576,062 answers moved,
+   0 unexplained, every one the carve fix read both ways: +10/+15 ft of
+   fit on tier-C lots cut uniformly at the front number (Portland
+   R5/R7/R10/R20/RM1/R2.5, Multnomah R10/R20, Wilsonville V: 283
+   yellow->unknown -- the pod fits now and the lot's unreadable width
+   shows instead of the relief it no longer needs) and -5 ft on Wood
+   Village LR 7.5 / LR 12 where quadfit cut 15 against a resolved 20 (3
+   green->yellow, 1 green->unknown, 2 unknown->yellow); the neighbour
+   fact itself moved no verdict, as the bound said; county if_signed
+   green 64,565 / yellow 475,357 / unknown 34,754 / red 1,386 rows).**
    s4 reads the zone across every non-street line; FLATS answers
    `abuts_nonresidential_zone` in Portland / Troutdale / Fairview and
    `abuts_residential_zone` in Oregon City (ANY line tightens, EVERY line
    relaxes; anything unresolved stays UNKNOWN). Still owed, most lots
-   first: (a) `abuts_lower_density_zone`
-   is declared NOWHERE, because an observed fact lifts a caps.json cap and
-   the base number would certify with the footnote's other number never
-   encoded (`test_no_declared_condition_caps_a_value_on_that_layer`) --
-   encode the capped footnotes as variants first: Clackamas
-   `_unincorporated` MR1/MR2 ZDO 315 notes (six fields), Oregon City R-2
-   (twelve fields incl. `quadplex_allowed`), R-3.5/R-5 `min_density` (and
-   `utility_easement`), Wood Village TC (seven fields incl. `like`) -- then
-   declare it there; ~1,920 lots leaned on it on assign_sep6. (b) Oregon
+   first: (a) `abuts_lower_density_zone` is declared in Clackamas
+   `_unincorporated` only (2026-09-22: ZDO Table 315-4 note 14 became the
+   10-ft variant on MR1/MR2 `setback_side_ft`, the cap lifted, the ten
+   315.01 districts are the true side -- but the 947 MR1/MR2 fabric lots
+   are `NOT_MEASURED` until (b) ports them, so no lot reads the variant
+   yet; it moved nothing on the measured county). An observed fact lifts a
+   caps.json cap and the base number would certify with the footnote's
+   other number never encoded
+   (`test_no_declared_condition_caps_a_value_on_that_layer`), so the two
+   cities still capped stay undeclared: Oregon City R-2 (twelve fields;
+   the note narrowed to `zones: [R-2]` 2026-09-22 -- R-3.5/R-5
+   `min_density` had been caught by region scope only) is a dead end until
+   `utility_easement` is read, because every OC R zone is capped on THAT
+   fact on every field too (no easement layer in RLIS -- a measurement
+   question, not an encoding one). Wood Village TC (167 lots, seven fields
+   incl. `like`): Table 235-2 note (3) is a plain 15-ft side/rear variant
+   on `abuts_residential_zone` (the disposition names the lower-density
+   fact; re-point it) with a list from sections 210/220 (LR 7.5, LR 12,
+   MR 2, MR 4 true) vs 230/235/240/250/260 (NC, TC, LM, GM, C/I, O false);
+   note (2) is a HEIGHT PLANE FROM THE LOT LINE -- 25 ft within 25 ft of a
+   light-residential line, +1 ft per 2 ft beyond (the 26-ft pod clears it
+   ~27 ft in) -- which `step_back` cannot express (it charges the whole
+   standard from the setback line), so it needs a variant-level form, and
+   it also fires ACROSS A STREET ("right-of-way adjacent to a light
+   residential zone"), which the per-line measurement does not read yet
+   (same across-the-street question as Portland 33.910 in (d)). (b) Oregon
    City C/MUC-1/MUC-2/MUD/WFDD, Clackamas MR1/MR2/PMD/VA and Fairview TCC
    (also VC/VO) are `AHEAD_OF_QUADFIT` (`test_zone_mirror.py`): quadfit's
    `rules.yaml` has no row, s4 never measures them, so Oregon City's

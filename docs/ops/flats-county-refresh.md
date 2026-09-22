@@ -105,6 +105,17 @@ onto any run that is not a `candidate`.
 | R6 | Read the gate | 114 / browser | `flats_promote.py status`, or the "A re-screen is waiting" section on the copy's card at `/flats/refresh` | eight rows (the six loader checks, `no_drift`, `verdict_drift`; no delta row -- the delta is the copy's) all `ok` → agent promotes; any `!!` → Steph |
 | R7 | Promote the run | 114 or browser | `flats_promote.py promote --run N --by "agent, standing word 2026-09-19"` (clean) / the **Promote — make run N what the Lots pages show** button, or `--by Steph --override "…"` (warned) | run N `complete` and the Lots pages' default; the run it replaced stays `complete`, reachable by `?run=`, and the card offers **Put run M back** |
 
+First run under this section: run 12, 2026-09-22 (the neighbour-zone
+measurement 4b25df09 + the envelope-carve fix cfc8c033, screened over
+seven hours on 137): gate clean on the eight rows, 289 of 576,062 answers
+moved, all attributed to `rules` (both versions changed; run 10 carried no
+`screen_version`, so the split between rules and code was read by hand
+from the lots -- every move was the carve fix, +10/+15 ft on tier-C lots
+and -5 ft on Wood Village LR), 0 unexplained; promoted by the agent on
+the standing word at 10:30 UTC. That is the normal shape of a same-copy
+drift: a few hundred moves that the commits between the two runs explain
+lot by lot, and none they do not.
+
 A `code` move in a same-copy drift is read from `screen_version` when both
 runs carry one: the screen's own files changed between the exports. Two runs
 with the same `screen_version` and a different `code_version` that still
