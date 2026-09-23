@@ -401,6 +401,10 @@ def test_a_backported_band_has_to_already_be_here() -> None:
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
+    # 137 as of 2026-09-23: the nine AHEAD_OF_QUADFIT zones ported the other
+    # way, corpus to rules.yaml -- Clackamas MR1/MR2/PMD/VA and Oregon City
+    # C/MUC-1/MUC-2/MUD/WFDD (0504ef84).
+    #
     # 128 as of 2026-09-08: Oregon City R-2, which rules.yaml had excluded on
     # the note "NOT the multi-family zone" until the city's own definitions
     # (17.04.989 quadplex = four attached units; 17.04.780 multi-family = five
@@ -411,7 +415,7 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # of, worth 76,752 lots that were dropped before anything was measured.
     # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
     # false` by owner decision, so its rows are reference rather than debt.
-    assert dry["stats"]["zones"] == 128
+    assert dry["stats"]["zones"] == 137
     assert dry["stats"]["layers"] == len(COUNTY) == 18
 
 
