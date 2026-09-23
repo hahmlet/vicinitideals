@@ -553,3 +553,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    bond / urban renewal as the Gresham file does) and its CPR row; Clackamas
    needs its own rate file and CPR table (a different county publication).
    Pending decision: which city next (the pitch is per-city).
+15. **Back-test the tax scenarios B and C against real new builds.**
+   Scenario A is verified (10 bills to 2 cents); B (one new house) and C
+   (pod as four lots) are statute-correct but unverified. Find recent
+   Gresham new single-family houses and recent partitions / townhome
+   plats (year_built 2022-24 on the roll), replay `impact.new_house` /
+   `impact.pod` from their PRE-build roll values, and compare to their
+   first full post-build bill (PortlandMaps assessor JSON has the history).
+   Also measure assessor RMV vs sale price on new Gresham townhomes, which
+   decides whether the $275k/$450k band overstates the pod's taxable value.
