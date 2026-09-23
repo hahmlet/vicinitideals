@@ -131,6 +131,21 @@ def test_a_lot_with_no_non_street_line_answers_nothing() -> None:
     assert observed_neighbours([], {**NONRES, **RES}, "portland") == {}
 
 
+def test_a_whole_block_answers_both_directions_the_way_their_words_do() -> None:
+    """Traced, and every edge a street: "every lot line that is not a
+    street lot line abuts ..." holds of a lot with none, and "abuts a
+    residential zone" does not. Only the declared conditions are answered."""
+    got = observed_neighbours([], {**NONRES, **RES}, "portland", all_street=True)
+    assert got == {"abuts_nonresidential_zone": True, "abuts_residential_zone": False}
+    assert observed_neighbours([], NONRES, "portland", all_street=True) == {
+        "abuts_nonresidential_zone": True
+    }
+    # A line to read wins over the flag: the flag is only for no lines.
+    assert observed_neighbours([line("R5")], NONRES, "portland", all_street=True) == {
+        "abuts_nonresidential_zone": False
+    }
+
+
 def test_a_condition_the_layer_did_not_declare_is_never_answered() -> None:
     lines = [line("CM2"), line("CM2")]
     assert observed_neighbours(lines, NONRES, "portland") == {"abuts_nonresidential_zone": True}

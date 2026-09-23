@@ -112,6 +112,8 @@ def observed_neighbours(
     lines: Sequence[Line],
     rules: Mapping[str, NeighbourRule],
     jurisdiction: str,
+    *,
+    all_street: bool = False,
 ) -> dict[str, bool]:
     """The neighbour-zoning facts for one lot, as ``configure`` takes them.
 
@@ -119,11 +121,25 @@ def observed_neighbours(
     layer has not declared is never answered. ``jurisdiction`` is the
     lot's, in quadfit's spelling, the same the fabric names neighbours by:
     only a neighbour in it is looked up in the lists. A key is present only
-    where the lines settle the fact; a lot with no non-street line (an
-    island, a lot s4 could not trace) answers nothing.
+    where the lines settle the fact; a lot s4 could not trace answers
+    nothing.
+
+    ``all_street`` is the other way to have no lines: s4 traced the lot and
+    classed EVERY edge a street edge -- a whole block, ringed by streets
+    (434 of Portland's commercial lots, 2026-09-23). There is then no lot
+    line for a neighbour to be across, and the two directions answer the
+    way their own words do: "every lot line that is not a street lot line
+    abuts ..." is true of a lot with none, and "abuts a residential zone" is
+    false of it. Both are the relaxing answers, and both relax a yard the
+    lot does not have; they rest on s4's street classification, which is
+    the same trust every other lot's lines already rest on.
     """
     out: dict[str, bool] = {}
     if not lines:
+        if all_street:
+            for name in rules:
+                if name in NEIGHBOUR_FACTS:
+                    out[name] = name in EVERY_LINE
         return out
     for name, rule in rules.items():
         if name not in NEIGHBOUR_FACTS:

@@ -244,6 +244,18 @@ def test_a_park_or_a_split_neighbour_or_another_city_leaves_the_relaxation_unsta
         assert "abuts_nonresidential_zone" not in got, record
 
 
+def test_a_whole_block_reads_as_walled_in_by_nothing(layers) -> None:
+    """Every edge a street edge: Portland's "every lot line that is not a
+    street lot line" holds of a lot with none (434 downtown blocks sat
+    UNKNOWN on it). An untraced lot and an irregular one stay unanswered."""
+    block = json.dumps([None, None, None, None])
+    got = observed_facts(row(zone="CX", tier="B", neighbour_zones_json=block), layers)
+    assert got["abuts_nonresidential_zone"] is True
+    for tier, record in (("B", "[]"), ("C", block)):
+        got = observed_facts(row(zone="CX", tier=tier, neighbour_zones_json=record), layers)
+        assert "abuts_nonresidential_zone" not in got, (tier, record)
+
+
 def test_a_neighbours_alias_is_spelled_as_the_block_it_screens_under(layers) -> None:
     # Fairview's map prints FLX where the rules hold VC; VC is on the
     # true_for side, so the alias reads as commercial.

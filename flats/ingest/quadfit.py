@@ -279,8 +279,18 @@ def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dic
         code, held = zone_for(layer, raw)
         return held or code
 
-    lines = lines_from_quadfit(json.loads(row["neighbour_zones_json"]), normalise)
-    return observed_neighbours(lines, home.neighbours, juris)
+    across = json.loads(row["neighbour_zones_json"])
+    lines = lines_from_quadfit(across, normalise)
+    # Traced, and every edge a street edge: a whole block. An empty list is
+    # a lot s4 never traced and stays unanswered, and so does an irregular
+    # lot, whose edge classes are the guesswork the uniform buffer exists
+    # for -- a side line misread as a street there would be read as no line.
+    all_street = (
+        bool(across)
+        and all(edge is None for edge in across)
+        and TIER.get(str(row.get("tier"))) in (Tier.clean, Tier.corner)
+    )
+    return observed_neighbours(lines, home.neighbours, juris, all_street=all_street)
 
 
 @dataclass(frozen=True, slots=True)
