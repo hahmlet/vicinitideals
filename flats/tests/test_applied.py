@@ -58,8 +58,15 @@ def test_every_encoded_footnote_still_finds_its_rule(rows) -> None:
 
 
 def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None:
-    """57 as of 2026-09-22. A number that moves means a footnote was ruled or
+    """59 as of 2026-09-23. A number that moves means a footnote was ruled or
     un-ruled, which is a thing to notice rather than a thing to absorb.
+
+    57 -> 59 on 2026-09-23: Wood Village Table 235-2 notes (2) and (3), the
+    Town Center's step-down toward a Light Residential zone and its fifteen
+    feet from any residential zone. Both sat `unmeasured` because nothing read
+    the zone across a lot line; they are variants on TC's side and rear yard
+    now (the step-down with its own step-back, 27 ft for the pod), the city
+    declares both neighbour facts, and both reach TC and confirm.
 
     56 -> 57 on 2026-09-22: Clackamas ZDO Table 315-4 note 14, the ten-foot
     side setback an MR-1 or MR-2 two-storey building owes beside an Urban Low
@@ -102,7 +109,7 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     warranted here -- the two prohibitions are decided by their `X` and do not
     care what these three sentences say.
     """
-    assert len(rows) == 57
+    assert len(rows) == 59
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

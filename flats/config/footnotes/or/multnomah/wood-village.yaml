@@ -165,13 +165,12 @@ notes:
   # --- 235.300, Table 235-2: TC ------------------------------------------
   #
   # This table has two columns and four of its five notes are marked on the
-  # nonresidential one. Two of those four are ruled `unmeasured` rather than
+  # nonresidential one. Two of those four were ruled `unmeasured` rather than
   # dismissed on that placement, and the reason is worth stating where the
   # rulings are: both would move a residential standard the pod is one foot
-  # from failing, both turn on a fact nobody here holds, and a dismissal that
-  # rests only on which cell the codifier glued the marker to is not the kind
-  # of dismissal this ledger is for. `unmeasured` costs the zone its GREEN and
-  # keeps the reading honest, which is the trade FLATS is supposed to make.
+  # from failing, and a dismissal that rests only on which cell the codifier
+  # glued the marker to is not the kind of dismissal this ledger is for. Both
+  # turned on a fact nobody held until 2026-09-21; they are variants now.
   - quote: "or/multnomah/wood-village/235.300.txt#L79"
     digest: "704dba24dc87"
     state: dismissed
@@ -186,30 +185,42 @@ notes:
 
   - quote: "or/multnomah/wood-village/235.300.txt#L81"
     digest: "26a5d3eb1a6f"
-    state: unmeasured
-    fact: abuts_lower_density_zone
+    state: encoded
+    encoded_as: >-
+      setback_side_ft and setback_rear_ft: 25 with a step-back of 25 ft of
+      height rising a foot per two feet, when abuts_residential_zone and
+      abuts_lower_density_zone, in TC -- twenty-seven feet for the pod
     reason: >-
       caps height at twenty-five feet within twenty-five feet of a lot line
-      abutting a light residential zone, and the pod is twenty-six feet tall.
-      The marker is glued to the nonresidential column's 115 feet rather than
-      to the residential column's 35, which is an argument for dismissing it
-      and not a good enough one: the step-down exists to transition to the
-      neighbours and a 35-foot residential building is no less of a transition.
-      No zoning-adjacency layer is held, so whether a TC lot abuts a light
-      residential zone is not a fact this system can answer
+      abutting a light residential zone, and the pod is twenty-six feet tall,
+      so the note is a distance: a foot for every two past twenty-five buys
+      the extra foot of roof at twenty-seven. The marker is glued to the
+      nonresidential column's 115 feet rather than to the residential
+      column's 35, which is an argument for dismissing it and not a good
+      enough one: the step-down exists to transition to the neighbours and a
+      35-foot residential building is no less of a transition. Held
+      `unmeasured` until 2026-09-21, when quadfit's s4 began reading the
+      zone across every lot line; the layer's neighbour list names Section
+      210's two Light Residential zones. The across-the-street half is inert
+      (the right-of-way counts toward the distance), and the zone file says
+      why.
 
   - quote: "or/multnomah/wood-village/235.300.txt#L83"
     digest: "81586d1cfd5e"
-    state: unmeasured
-    fact: abuts_lower_density_zone
+    state: encoded
+    encoded_as: >-
+      setback_side_ft: 15 when abuts_residential_zone, in TC; the rear is
+      fifteen already
     reason: >-
       asks fifteen feet of side or rear setback from an abutting residential
       zone, against the five feet the residential column states for the side
       yard. Marked on the nonresidential column's "None" cells, which is the
       same weak argument for dismissal as the height step-down above and is
-      declined for the same reason. No zoning-adjacency layer is held, so
-      whether a TC lot abuts a residential zone is not a fact this system can
-      answer
+      declined for the same reason. Held `unmeasured` until the fabric could
+      say what is across each line (2026-09-21); the layer's neighbour list
+      names the four zones of Sections 210 and 220, and the note was keyed
+      to `abuts_lower_density_zone` before that, which was the wrong fact --
+      its words are "a residential zone", Light or Multi.
 
   - quote: "or/multnomah/wood-village/235.300.txt#L85"
     digest: "126089798f44"

@@ -1298,7 +1298,14 @@ jurisdictions:
       - zone: TC
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 5
+        # WVDC Table 235-2: 5 ft, or 15 from a residential zone (note 3), or
+        # 25 ft of roof within 25 ft of a Light Residential line rising a foot
+        # per two (note 2) -- 27 ft for a 26 ft pod. s5 carves the sides with
+        # this figure and nothing widens them afterwards, so the port carries
+        # the larger limb (as Oregon City's commercial side and Clackamas MR-1
+        # / MR-2 do); FLATS resolves the neighbour per lot.
+        #   or/multnomah/wood-village/235.300.txt#L75,L81,L83
+        setback_side_ft: 27
         setback_rear_ft: 15
         min_lot_sqft: 7500
         min_lot_depth_ft: 80

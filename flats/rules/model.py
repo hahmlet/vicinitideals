@@ -823,6 +823,18 @@ class Variant(BaseModel):
     #: the citation check compares the 8 the table prints against the table's
     #: own quote, exactly as `before_step_back` does for the base.
     before_step_back: float | None = None
+    #: A step-back that belongs to THIS exception rather than to the standard.
+    #: Wood Village Table 235-2 note (2): "the maximum height is twenty-five
+    #: (25) feet within the first twenty-five (25) feet from the lot line
+    #: abutting the light residential zone. One (1) additional foot in height
+    #: is permitted above twenty-five (25) feet for each two (2) feet in
+    #: lateral distance" -- a plane that exists only where a light
+    #: residential zone is across the line, so it cannot hang off the base the
+    #: way Gresham's does. Same arithmetic, same meaning as the base value's
+    #: two fields; the variant's own quote is the citation for both halves,
+    #: because the exception and its plane are one sentence.
+    step_back_at_ft: float | None = None
+    step_back_rise: float | None = None
     #: Registered condition names, all of which must hold. Empty is allowed
     #: only alongside a band: a variant with neither is the base value written
     #: twice, and two bases cannot be told apart.
@@ -1472,6 +1484,13 @@ class Value(BaseModel):
 
     @model_validator(mode="after")
     def _a_step_back_states_both_halves_and_cites_them(self) -> Value:
+        if self.name not in STEP_BACK_FIELDS and any(
+            v.step_back_at_ft is not None for v in self.variants
+        ):
+            raise ValueError(
+                f"{self.name}: 'step_back' states a height limit near a lot "
+                f"line, and applies to {', '.join(sorted(STEP_BACK_FIELDS))}"
+            )
         if self.step_back_at_ft is None:
             if self.step_back_rise is None and not (
                 self.step_back_cite or self.step_back_quote

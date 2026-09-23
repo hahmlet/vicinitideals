@@ -449,6 +449,16 @@ def _parse_values(
             variants = _parse_variants(
                 raw_variants, prov_src, f"{where}.{key}", problems, base=value
             )
+            if before_step_back is not None and any(
+                v.step_back_at_ft is not None for v in variants
+            ):
+                # Two planes on one number would compound, and no code in
+                # the corpus writes one plane on top of another.
+                problems.append(
+                    f"{where}.{key}: a step-back on the standard and another on "
+                    f"one of its variants — state the plane once"
+                )
+                continue
             if before_step_back is not None:
                 # 21 ft of roof at the rear setback line, rising one foot per
                 # foot further back, and a 26 ft box. Five more feet, and 20 is
@@ -816,6 +826,28 @@ def _parse_variants(
             except (TypeError, ValueError) as exc:
                 problems.append(f"{at}.reduce_pct: {exc}")
                 continue
+        own_step_back = _parse_step_back(body.pop("step_back", None), at, problems)
+        before_step_back = None
+        if own_step_back is not None:
+            if not isinstance(value, (int, float)) or isinstance(value, bool):
+                problems.append(
+                    f"{at}: a step-back is added to the variant's own setback, "
+                    f"and there is no distance here to add it to"
+                )
+                continue
+            if own_step_back.rise is None or own_step_back.rise <= 0:
+                problems.append(
+                    f"{at}: a step-back rises at a rate the code prints — "
+                    f"state it as 'rise_per_ft'"
+                )
+                continue
+            # Wood Village 235-2 note (2): twenty-five feet out, twenty-five
+            # feet of roof, a foot for every two after. A 26 ft box stands 27
+            # feet off that line, which the note prints nowhere.
+            before_step_back = float(value)
+            value = _stepped_back(
+                float(value), float(own_step_back.at_ft), float(own_step_back.rise)
+            )
         when = body.pop("when", None)
         if isinstance(when, str):
             when = [when]
@@ -885,6 +917,13 @@ def _parse_variants(
                     ),
                     spaces_total=(
                         None if spaces_total is None else float(spaces_total)
+                    ),
+                    before_step_back=before_step_back,
+                    step_back_at_ft=(
+                        None if own_step_back is None else float(own_step_back.at_ft)
+                    ),
+                    step_back_rise=(
+                        None if own_step_back is None else float(own_step_back.rise)
                     ),
                     when=tuple(str(c) for c in when),
                     bands=tuple(bands),

@@ -259,6 +259,25 @@ def derived(layers=None) -> list[Derived]:
                         ),
                     )
                 )
+            # A plane that belongs to one exception rather than the standard:
+            # Wood Village TC's step-down toward a light residential zone.
+            for field, value in sorted(zone.values.items()):
+                for variant in getattr(value, "variants", ()) or ():
+                    at = getattr(variant, "step_back_at_ft", None)
+                    if at is None:
+                        continue
+                    out.append(
+                        Derived(
+                            layer=name,
+                            zone=code,
+                            field=f"{field} when {'+'.join(variant.when)}",
+                            lots=lots.get((name, code), 0),
+                            encoded_ft=float(variant.value),
+                            base_ft=float(variant.before_step_back),
+                            at_ft=float(at),
+                            rise=float(variant.step_back_rise),
+                        )
+                    )
     return out
 
 

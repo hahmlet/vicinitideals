@@ -1129,12 +1129,56 @@ zones:
     # single building on a single lot -- the four units share walls inside one
     # 56-foot structure -- and it is what would bind if the same four units
     # were ever divided onto unit lots.
+    #
+    # Notes (2) and (3) are marked on the nonresidential column and read here
+    # anyway (the footnote ledger says why: both exist to buffer the
+    # neighbours, and a 35-foot residential building is no less in need of
+    # one). Since 2026-09-21 the fabric says what is across each lot line, so
+    # both are variants rather than caps.
+    #
+    # (3): fifteen feet of side or rear yard from a residential zone -- the
+    # Light Residential (Section 210) and Multi-Residential (Section 220)
+    # zones. The rear already is fifteen, so only the side moves.
+    #
+    # (2): twenty-five feet of roof within twenty-five feet of a line abutting
+    # a LIGHT residential zone, a foot more for every two feet after it. The
+    # pod is twenty-six feet, so it stands twenty-seven feet off that line --
+    # the variant's own step-back, since the plane exists only on these lots.
+    # A building of twenty-five feet or less would owe only note (3)'s
+    # fifteen and the file would still charge it twenty-five: the one height
+    # at which this reading overstates, and it is below the design range.
+    # Named on both variants because a light residential zone is a
+    # residential zone, so the plane is the more specific of the two.
+    #
+    # The note's other half -- a light residential zone across a street --
+    # is inert at any height the zone allows: lateral distance "may include
+    # the right-of-way", and the ten-foot front yard plus any street at least
+    # seventeen feet wide already puts a 26-foot roof twenty-seven feet from
+    # the light residential line. A thirty-five-foot roof needs forty-five,
+    # which a forty-foot street and the ten-foot yard reach too.
     setback_side_ft:
       value: 5
       quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L75"
+      variants:
+        - value: 15
+          when: [abuts_residential_zone]
+          quote: "or/multnomah/wood-village/235.300.txt#L83"
+        - value: 25
+          when: [abuts_residential_zone, abuts_lower_density_zone]
+          quote: "or/multnomah/wood-village/235.300.txt#L81"
+          step_back:
+            height_ft: 25
+            rise_per_ft: 0.5
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L76"
+      variants:
+        - value: 25
+          when: [abuts_residential_zone, abuts_lower_density_zone]
+          quote: "or/multnomah/wood-village/235.300.txt#L81"
+          step_back:
+            height_ft: 25
+            rise_per_ft: 0.5
     # 235.465, and it is a Development Plan standard rather than a lot one:
     # twenty percent of the plan area, which may be satisfied on land the
     # applicant holds elsewhere and need not be contiguous. Encoded because a
@@ -1636,3 +1680,46 @@ zones:
       table has no residential heading, so the refusal is the absence of a
       row rather than an N in one -- the reading 260.200.A licenses by
       making Y the only door.
+
+# Which of this city's zones are a "residential zone" (Table 235-2 note (3))
+# and a "light residential zone" (note (2)) -- the facts quadfit's s4 reads
+# off the taxlot fabric across every non-street lot line
+# (neighbour_zones_json), turned into `abuts_residential_zone` and
+# `abuts_lower_density_zone` by flats/geom/neighbour.py against these lists.
+# Only the Town Center turns on either.
+neighbours:
+  abuts_residential_zone:
+    true_for: [LR 7.5, LR 12, MR 2, MR 4]
+    false_for: [TC, NC, C/I, GM, LM, O]
+    quote: "or/multnomah/wood-village/235.300.txt#L83"
+    cite: WVDC 235.300 Table 235-2 note (3); WVDC Chapter 200, Section 210
+      (Light Residential Zones) and Section 220 (Multi-Residential Zones)
+    note: >-
+      The code defines neither phrase; it names its own zones by chapter.
+      Section 210 is titled "Light Residential Zones" and holds LR 7.5 and
+      LR 12; Section 220 is titled "Multi-Residential Zones" and holds MR 2
+      and MR 4. Those four are the residential zones. The rest of Chapter
+      200 is the Town Center (235), the commercial zones NC (230), the
+      manufacturing zones GM and LM (240), the commercial/industrial mixed
+      use zone C/I (250) and the open space zone O (260) -- none of them
+      titled residential, and the Town Center, which allows housing, is the
+      zone the note is written FROM. The condition is true of a lot when ANY
+      non-street line has a true_for-side lot across it, which is the
+      tightening answer (fifteen feet where five was offered); false needs
+      every line fully read with nothing residential across any of them. A
+      neighbour in Fairview or Gresham is another city's code and is left
+      unresolved.
+  abuts_lower_density_zone:
+    true_for: [LR 7.5, LR 12]
+    false_for: [MR 2, MR 4, TC, NC, C/I, GM, LM, O]
+    quote: "or/multnomah/wood-village/235.300.txt#L81"
+    cite: WVDC 235.300 Table 235-2 note (2); WVDC Chapter 200, Section 210
+      (Light Residential Zones)
+    note: >-
+      "Light residential zone" is Section 210's own title, and 210 holds
+      exactly two zones, LR 7.5 and LR 12. The Multi-Residential zones of
+      Section 220 are residential and not light, so they turn note (3) and
+      not note (2). The condition is true of a lot when ANY non-street line
+      has an LR lot across it, which is the tightening answer (twenty-seven
+      feet for a twenty-six-foot roof); false needs every line read with no
+      LR lot across any of them.

@@ -338,25 +338,32 @@ def test_the_two_columns_of_the_town_centre_table(wv: Layer) -> None:
     assert held["setback_rear_ft"].value == 15
 
 
-def test_the_step_down_the_pod_is_one_foot_from_failing_caps_the_zone() -> None:
+def test_the_step_down_the_pod_is_one_foot_from_failing_is_charged_per_lot(
+    wv: Layer,
+) -> None:
     """Note (2) puts 25 feet within 25 feet of a light residential zone.
 
     The pod is 26. The marker is glued to the nonresidential column's 115 feet
     rather than the residential column's 35, which is an argument for
     dismissing it and not a good enough one -- a step-down exists to transition
     to the neighbours and a 35-foot residential building is no less of a
-    transition. So it is ruled `unmeasured` on a fact nobody holds, which costs
-    the zone its GREEN and keeps the reading honest.
+    transition. It was ruled `unmeasured` while nothing read the zone across a
+    lot line, which capped the whole zone; since 2026-09-21 s4 reads it, so
+    the note is a 27-foot side and rear yard where a Light Residential lot is
+    across the line, note (3) is fifteen feet of side yard where any
+    residential lot is, and the cap is gone.
     """
     from flats.encode.dispositions import notes
 
-    capped = [
-        n
-        for n in notes()
-        if n.layer == WV and n.state == "unmeasured"
-    ]
-    assert len(capped) == 2
-    assert {n.fact for n in capped} == {"abuts_lower_density_zone"}
+    assert [n for n in notes() if n.layer == WV and n.state == "unmeasured"] == []
+    assert set(wv.neighbours) == {"abuts_residential_zone", "abuts_lower_density_zone"}
+    assert set(wv.neighbours["abuts_lower_density_zone"].true_for) == {"LR 7.5", "LR 12"}
+    assert set(wv.neighbours["abuts_residential_zone"].true_for) == {
+        "LR 7.5", "LR 12", "MR 2", "MR 4",
+    }
+    side = wv.zones["TC"].values["setback_side_ft"]
+    light = ("abuts_residential_zone", "abuts_lower_density_zone")
+    assert (side.under(()).value, side.under(light[:1]).value, side.under(light).value) == (5, 15, 27)
     assert conditions.condition("abuts_lower_density_zone").assume is None
 
 

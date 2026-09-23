@@ -303,3 +303,70 @@ def test_a_building_under_the_allowance_is_pushed_nowhere(tmp_path: Path) -> Non
     held = layers["or/multnomah/somewhere"].zones["R-6"].values["setback_rear_ft"]
     assert held.value == 15
     assert held.before_step_back == 15
+
+
+WOOD_VILLAGE = "or/multnomah/wood-village"
+
+
+def test_a_plane_that_belongs_to_one_exception_moves_only_that_exception() -> None:
+    """Wood Village Table 235-2 note (2): twenty-five feet of roof within
+    twenty-five feet of a Light Residential line, a foot more per two feet
+    after it. A 26 ft pod owes 27 there and nothing extra anywhere else, so
+    the plane hangs off the variant and the base and the note (3) limb keep
+    their printed figures."""
+    tc = load_rules()[WOOD_VILLAGE].zones["TC"]
+    side = tc.values["setback_side_ft"]
+    assert side.value == 5
+    assert side.under(()).value == 5
+    assert side.under(("abuts_residential_zone",)).value == 15
+    light = ("abuts_residential_zone", "abuts_lower_density_zone")
+    assert side.under(light).value == 25 + (DESIGN_HEIGHT_FT - 25) / 0.5 == 27
+    stepped = [v for v in side.variants if v.step_back_at_ft is not None]
+    assert [v.before_step_back for v in stepped] == [25]
+    assert tc.values["setback_rear_ft"].under(light).value == 27
+    assert tc.values["setback_rear_ft"].under(("abuts_residential_zone",)).value == 15
+
+
+def test_a_variant_plane_is_refused_on_top_of_a_standard_plane(tmp_path: Path) -> None:
+    with pytest.raises(RuleLoadError, match="state the plane once"):
+        load_rules(
+            _somewhere(
+                tmp_path,
+                "    setback_rear_ft:\n"
+                "      value: 15\n"
+                "      quote: 'or/multnomah/somewhere/7.txt#L1'\n"
+                "      step_back:\n"
+                "        height_ft: 21\n"
+                "        rise_per_ft: 1\n"
+                "        cite: GDC 7.0420(G)(1)\n"
+                "        quote: 'or/multnomah/somewhere/7.txt#L2'\n"
+                "      variants:\n"
+                "        - value: 25\n"
+                "          when: [abuts_lower_density_zone]\n"
+                "          quote: 'or/multnomah/somewhere/7.txt#L3'\n"
+                "          step_back:\n"
+                "            height_ft: 25\n"
+                "            rise_per_ft: 0.5\n",
+            ),
+            strict=True,
+        )
+
+
+def test_a_variant_plane_only_applies_to_a_yard(tmp_path: Path) -> None:
+    with pytest.raises(RuleLoadError, match="applies to"):
+        load_rules(
+            _somewhere(
+                tmp_path,
+                "    max_height_ft:\n"
+                "      value: 35\n"
+                "      quote: 'or/multnomah/somewhere/7.txt#L1'\n"
+                "      variants:\n"
+                "        - value: 25\n"
+                "          when: [abuts_lower_density_zone]\n"
+                "          quote: 'or/multnomah/somewhere/7.txt#L3'\n"
+                "          step_back:\n"
+                "            height_ft: 25\n"
+                "            rise_per_ft: 0.5\n",
+            ),
+            strict=True,
+        )
