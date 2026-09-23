@@ -949,7 +949,9 @@ class FlatsTaxImpactLot(Base):
 
     Scenario A is the lot today, B one new single-family house (no partition),
     C the pod partitioned into four fee-simple lots, at the low and the high
-    end of the per-unit value band -- C's figures are the four lots summed.
+    end of the per-unit value band and at the middle (``c_mid_``, migration
+    0137: what the assessor values the jurisdiction's new small-lot houses
+    at) -- C's figures are the four lots summed.
     For each: ``*_total``, the year-one headline bill -- permanent rates (with
     the urban renewal divided from them) plus bonds, after Measure 5, local
     options EXCLUDED -- and ``*_local_option`` beside it (the full bill is the
@@ -997,6 +999,13 @@ class FlatsTaxImpactLot(Base):
     c_low_city: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
     c_low_city_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
     c_low_ten_year: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+
+    c_mid_av: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_mid_total: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_mid_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_mid_city: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_mid_city_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_mid_ten_year: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
 
     c_high_av: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
     c_high_total: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))

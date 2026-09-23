@@ -183,12 +183,13 @@ def test_green_source_names_which_screen_said_green():
 
 def test_price_lot_prices_all_four_and_skips_what_it_cannot_price():
     roll = impact.Roll(D("200000"), D("150000"), D("350000"), D("175000"))
-    kw = dict(city="city_of_gresham", cpr=D("0.540"), house_rmv=D("500000"), band=(D("275000"), D("450000")))
+    kw = dict(city="city_of_gresham", cpr=D("0.540"), house_rmv=D("500000"), band=(D("275000"), D("390000"), D("450000")))
     row, notes = snapshot.price_lot(roll, GRESHAM.levies("026"), **kw)
     assert all(row[c] is not None for c in snapshot.COLUMNS)
     # the pod at the high end: 4 x 450,000 x .54 = 972,000 of AV
     assert row["c_high_av"] == D("972000")
-    assert row["c_high_total"] > row["b_total"] > row["a_total"]
+    assert row["c_mid_av"] == D("842400")  # 4 x 390,000 x .54
+    assert row["c_high_total"] > row["c_mid_total"] > row["c_low_total"] > row["b_total"] > row["a_total"]
     _, notes = snapshot.price_lot(roll, None, **kw)
     assert notes == {"skipped": "taxcode_not_in_rate_file"}
     _, notes = snapshot.price_lot(None, GRESHAM.levies("026"), **kw)
@@ -197,7 +198,7 @@ def test_price_lot_prices_all_four_and_skips_what_it_cannot_price():
 
 def test_summary_names_both_sets_and_the_multiples():
     roll = impact.Roll(D("200000"), D("150000"), D("350000"), D("175000"))
-    kw = dict(city="city_of_gresham", cpr=D("0.540"), house_rmv=D("500000"), band=(D("275000"), D("450000")))
+    kw = dict(city="city_of_gresham", cpr=D("0.540"), house_rmv=D("500000"), band=(D("275000"), D("390000"), D("450000")))
     row, notes = snapshot.price_lot(roll, GRESHAM.levies("026"), **kw)
     rows = [
         {"green_source": "both", **row, "notes": notes},
@@ -205,12 +206,31 @@ def test_summary_names_both_sets_and_the_multiples():
     ]
     params = {
         "jurisdiction": "or/multnomah/gresham", "tax_year": "2025-26", "created": "2026-09-23", "run_id": 12,
-        "units": 4, "band": {"low": 275000, "high": 450000}, "cpr": "0.540",
+        "units": 4, "band": {"low": 275000, "mid": 390000, "high": 450000, "mid_derivation": "test"}, "cpr": "0.540",
         "house": {"rmv": 500000, "derivation": "test"},
     }
     text = snapshot.summarize(rows, params)
     assert "## FLATS if-signed green: 1 lots, 1 priced" in text
     assert "## quadfit green: 2 lots, 1 priced" in text
-    assert "Pod high / today" in text and "Pod low / new house" in text
+    assert "Pod high / today" in text and "Pod low / new house" in text and "Pod mid / today" in text
+    assert "pod mid (C)" in text
     assert "ILLUSTRATIVE" in text
     assert "- no_av: 1" in text
+
+
+def test_townhome_value_is_the_median_small_lot_rmv():
+    assert snapshot.townhome_value([D("360000"), D("413090"), D("389830"), D("0")]) == (D("389830"), 3)
+    with pytest.raises(ValueError):
+        snapshot.townhome_value([])
+
+
+def test_gresham_cpr_history_is_carried_and_the_summary_quotes_its_range():
+    assert GRESHAM.cpr_history["2025-26"] == GRESHAM.cpr_residential
+    assert min(GRESHAM.cpr_history.values()) == D("0.525")
+    params = {
+        "jurisdiction": "j", "tax_year": "2025-26", "created": "d", "run_id": 1, "units": 4, "cpr": "0.540",
+        "band": {"low": 1, "mid": 2, "high": 3, "mid_derivation": "t"}, "house": {"rmv": 1, "derivation": "t"},
+        "cpr_range": "0.525-0.629", "cpr_since": "2018-19",
+    }
+    assert "run 0.525-0.629 since 2018-19" in snapshot.summarize([], params)
+

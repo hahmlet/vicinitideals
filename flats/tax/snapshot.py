@@ -17,7 +17,9 @@ from flats.tax import impact
 from flats.tax.oregon import Levy, dollars
 
 #: Scenario prefixes, in the order the row and the CSV carry them.
-SCENARIOS = ("a", "b", "c_low", "c_high")
+SCENARIOS = ("a", "b", "c_low", "c_mid", "c_high")
+#: The pod's three unit values, in the order ``band`` carries them.
+BAND_ENDS = ("low", "mid", "high")
 FIGURES = ("av", "total", "local_option", "city", "city_local_option", "ten_year")
 COLUMNS = tuple(f"{s}_{f}" for s in SCENARIOS for f in FIGURES)
 
@@ -59,6 +61,16 @@ def house_value(records: Iterable[tuple[Decimal, Decimal]]) -> HouseValue:
     return HouseValue(rmv=dollars(per_sqft * sqft), per_sqft=per_sqft, sqft=sqft, sample=len(pairs))
 
 
+def townhome_value(values: Iterable[Decimal]) -> tuple[Decimal, int]:
+    """The pod's middle unit value: the median assessor RMV (land + house)
+    of recent single-family houses on small lots -- the nearest thing on the
+    roll to a new fee-simple townhome. Zero or missing values are dropped."""
+    vals = [v for v in values if v and v > 0]
+    if not vals:
+        raise ValueError("no small-lot new builds to value a townhome from")
+    return dollars(Decimal(median(vals))), len(vals)
+
+
 def _put(row: dict[str, Any], prefix: str, out: impact.Outcome) -> None:
     row[f"{prefix}_av"] = out.av
     row[f"{prefix}_total"] = out.headline
@@ -75,7 +87,7 @@ def price_lot(
     city: str,
     cpr: Decimal,
     house_rmv: Decimal,
-    band: tuple[Decimal, Decimal],
+    band: tuple[Decimal, Decimal, Decimal],
     units: int = 4,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """The figures of one lot, and its notes. A lot that cannot be priced
@@ -96,8 +108,10 @@ def price_lot(
     outcomes = {
         "a": impact.current(roll, levies, city),
         "b": impact.new_house(roll, levies, city, cpr, house_rmv),
-        "c_low": impact.pod(roll, levies, city, cpr, band[0], units=units),
-        "c_high": impact.pod(roll, levies, city, cpr, band[1], units=units),
+        **{
+            f"c_{end}": impact.pod(roll, levies, city, cpr, value, units=units)
+            for end, value in zip(BAND_ENDS, band, strict=True)
+        },
     }
     for prefix, out in outcomes.items():
         _put(row, prefix, out)
@@ -131,10 +145,20 @@ def summarize(rows: Sequence[dict[str, Any]], params: dict[str, Any]) -> str:
         f"Snapshot of {params['created']}, run {params['run_id']}. "
         f"Headline = permanent rates (with the urban renewal divided from them) + bonds, "
         f"after Measure 5; local option levies are a separate column. Pod = {params['units']} "
-        f"fee-simple lots at ${params['band']['low']:,} (low) and ${params['band']['high']:,} (high) "
-        f"a unit -- a band, not a base case. New house RMV ${params['house']['rmv']:,} "
+        f"fee-simple lots at ${params['band']['low']:,} (low), ${params['band']['mid']:,} (mid: "
+        f"{params['band']['mid_derivation']}) and ${params['band']['high']:,} (high) a unit. New house RMV ${params['house']['rmv']:,} "
         f"({params['house']['derivation']}). Residential CPR {params['cpr']}.",
         "",
+        *(
+            [
+                f"The pod is valued at this year's ratio; it will get the ratio of the year it reaches "
+                f"the roll, which has run {params['cpr_range']} since {params['cpr_since']} -- the pod's "
+                f"tax moves with it one for one.",
+                "",
+            ]
+            if params.get("cpr_range")
+            else []
+        ),
         "Ten-year figures are ILLUSTRATIVE: rates and market values held flat, "
         "assessed value growing 3% a year to its market-value cap.",
         "",
@@ -147,8 +171,8 @@ def summarize(rows: Sequence[dict[str, Any]], params: dict[str, Any]) -> str:
             lines += ["Nothing to price.", ""]
             continue
         lines += [
-            "| | today (A) | new house (B) | pod low (C) | pod high (C) |",
-            "|---|---:|---:|---:|---:|",
+            "| | today (A) | new house (B) | pod low (C) | pod mid (C) | pod high (C) |",
+            "|---|---:|---:|---:|---:|---:|",
         ]
         for title, fig in (
             ("headline, year 1, total", "total"),
@@ -165,7 +189,7 @@ def summarize(rows: Sequence[dict[str, Any]], params: dict[str, Any]) -> str:
         lines.append("")
         a = sum(_col(priced, "a_total"), Decimal("0"))
         b = sum(_col(priced, "b_total"), Decimal("0"))
-        for end in ("low", "high"):
+        for end in BAND_ENDS:
             c = sum(_col(priced, f"c_{end}_total"), Decimal("0"))
             per_lot = [r[f"c_{end}_total"] / r["a_total"] for r in priced if r["a_total"]]
             typical = f", median lot {Decimal(median(per_lot)):.2f}x" if per_lot else ""

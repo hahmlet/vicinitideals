@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -23,6 +23,8 @@ class Rates:
     code_areas: dict[str, tuple[Levy, ...]]
     sources: dict[str, str]
     path: Path
+    #: Past residential ratios by tax year, when the county publishes them.
+    cpr_history: dict[str, Decimal] = field(default_factory=dict)
 
     def levies(self, code: str | None) -> tuple[Levy, ...] | None:
         """The levies of one code area, or None for a code the file does not hold."""
@@ -57,6 +59,9 @@ def load(path: Path) -> Rates:
         code_areas=areas,
         sources=dict(doc.get("sources") or {}),
         path=path,
+        cpr_history={
+            str(y): Decimal(str(v)) for y, v in (doc["cpr"].get("residential_history") or {}).items()
+        },
     )
 
 

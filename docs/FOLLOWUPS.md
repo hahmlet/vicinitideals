@@ -553,17 +553,3 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    bond / urban renewal as the Gresham file does) and its CPR row; Clackamas
    needs its own rate file and CPR table (a different county publication).
    Pending decision: which city next (the pitch is per-city).
-15. **Tax snapshot: a middle pod price, and a per-lot back-test.**
-   Checked 2026-09-23 on the Jan 2025 roll (snapshot 3, Gresham, SFR 101
-   built 2019-24): B's modelled AV median $291,298 vs $288,220 actual on
-   1,022 new builds. For C, new small-lot homes (lot < 2,500 sf, ~1,450 sf
-   house -- townhome-like) carry assessor RMV $360-413k at 0.93-0.97x their
-   sale price, and the 2024 builds sit at AV/RMV 0.510 vs the model's
-   0.540 -- the pod's year-1 tax is ~5% high (land reset in an earlier
-   year, house partly added at an earlier CPR). Options offered: (a) add a
-   middle pod price at the assessor's own new-townhome value (~$390k/unit)
-   to the snapshot beside the $275k/$450k band -- Steph's call, the plan
-   said no base case; (b) per-lot back-test: pull ~20 recent Gresham
-   partitions' pre-split roll history from the PortlandMaps assessor JSON
-   and replay `impact.pod` against their actual first full post-build bill,
-   which would also say whether to model the ~5% lag.

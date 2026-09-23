@@ -127,6 +127,13 @@ def pod(
     units: int = 4,
     years: int = YEARS,
 ) -> Outcome:
+    # Back-tested 2026-09-23 on real Gresham partitions (PortlandMaps
+    # assessor history, 2019-2025): where the new lots and their houses land
+    # on the same roll, AV = unit RMV x that year's CPR to the $10 (6 of 6);
+    # a house finished a year or two after the reset lands within ~3%. Two
+    # ways a real pod departs from this: a lot that KEEPS an existing house
+    # does not reset (it carries the parent's MAV), and the ratio is the one
+    # of the year the pod reaches the roll, not this year's.
     notes = []
     land_share = roll.land_value / units
     if unit_rmv < land_share:

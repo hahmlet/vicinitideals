@@ -57,11 +57,24 @@ from app.models.flats import (  # noqa: E402
     FlatsTaxSnapshot,
 )
 from flats.tax import impact, rates  # noqa: E402
-from flats.tax.snapshot import COLUMNS, green_source, house_value, price_lot, summarize  # noqa: E402
+from flats.tax.oregon import dollars  # noqa: E402
+from flats.tax.snapshot import (  # noqa: E402
+    COLUMNS,
+    green_source,
+    house_value,
+    price_lot,
+    summarize,
+    townhome_value,
+)
 
-#: The pod's per-unit market value band. No base case: the resale terms that
-#: would pick one are undecided.
+#: The pod's per-unit market value band. The middle is read off the roll
+#: (``TOWNHOME_LOT_SQFT``), not fixed here.
 BAND = (Decimal("275000"), Decimal("450000"))
+#: The middle unit value is the median assessor RMV of the jurisdiction's
+#: single-family houses built in ``HOUSE_YEARS`` on lots under this size --
+#: in Gresham, ~1,450 sq ft houses on ~1,700 sq ft lots, which the assessor
+#: values at 0.93-0.97x their sale price (checked 2026-09-23).
+TOWNHOME_LOT_SQFT = 2500
 UNITS = 4
 #: New single-family houses the new-house value is read from: residential
 #: property class, land use SFR, built in these years. The roll's year is
@@ -179,11 +192,24 @@ async def _house_records(session: AsyncSession, run: FlatsRun, jurisdiction: str
     return out
 
 
+async def _townhome_records(session: AsyncSession, run: FlatsRun, jurisdiction: str) -> list[Decimal]:
+    a = FlatsLot.facts["assessor"]
+    stmt = select(a["total_value"].astext).where(
+        FlatsLot.snapshot_id == run.snapshot_id,
+        FlatsLot.jurisdiction == jurisdiction,
+        FlatsLot.area_sqft < TOWNHOME_LOT_SQFT,
+        a["prop_code"].astext.like("1%"),
+        a["land_use"].astext == "SFR",
+        a["year_built"].astext.cast(Integer).between(*HOUSE_YEARS),
+    )
+    return [v for (raw,) in (await session.execute(stmt)).all() if (v := _dec(raw)) is not None]
+
+
 def _roll(assessor: dict[str, Any]) -> impact.Roll | None:
     vals = [_dec(assessor.get(k)) for k in ("land_value", "building_value", "total_value", "assessed_value")]
     if any(v is None for v in vals):
         return None
-    return impact.Roll(*vals)  # type: ignore[arg-type]
+    return impact.Roll(*(dollars(v) for v in vals))  # type: ignore[arg-type]
 
 
 async def _run(session: AsyncSession, args: argparse.Namespace) -> int:
@@ -194,6 +220,12 @@ async def _run(session: AsyncSession, args: argparse.Namespace) -> int:
         return 2
     lots = await _green_lots(session, run, args.jurisdiction)
     house = house_value(await _house_records(session, run, args.jurisdiction))
+    mid, mid_sample = townhome_value(await _townhome_records(session, run, args.jurisdiction))
+    band = (BAND[0], mid, BAND[1])
+    mid_derivation = (
+        f"median assessor RMV of {mid_sample:,} {args.jurisdiction} single-family houses built "
+        f"{HOUSE_YEARS[0]}-{HOUSE_YEARS[1]} on lots under {TOWNHOME_LOT_SQFT:,} sq ft"
+    )
     codes, taxcode_source = read_taxcodes(args.taxcodes)
     today = dt.date.today().isoformat()
 
@@ -212,7 +244,7 @@ async def _run(session: AsyncSession, args: argparse.Namespace) -> int:
             city=rate_file.city,
             cpr=rate_file.cpr_residential,
             house_rmv=house.rmv,
-            band=BAND,
+            band=band,
             units=UNITS,
         )
         if code_row is None:
@@ -236,7 +268,22 @@ async def _run(session: AsyncSession, args: argparse.Namespace) -> int:
         "snapshot_id": run.snapshot_id,
         "units": UNITS,
         "cpr": str(rate_file.cpr_residential),
-        "band": {"low": int(BAND[0]), "high": int(BAND[1])},
+        "cpr_history": {y: str(v) for y, v in rate_file.cpr_history.items()},
+        **(
+            {
+                "cpr_range": f"{min(rate_file.cpr_history.values())}-{max(rate_file.cpr_history.values())}",
+                "cpr_since": min(rate_file.cpr_history),
+            }
+            if rate_file.cpr_history
+            else {}
+        ),
+        "band": {
+            "low": int(BAND[0]),
+            "mid": int(mid),
+            "high": int(BAND[1]),
+            "mid_sample": mid_sample,
+            "mid_derivation": mid_derivation,
+        },
         "house": {
             "rmv": int(house.rmv),
             "per_sqft": str(house.per_sqft.quantize(Decimal("0.01"))),
@@ -258,7 +305,7 @@ async def _run(session: AsyncSession, args: argparse.Namespace) -> int:
     }
     print(
         f"run {run.id}: {len(rows):,} green lots in {args.jurisdiction} {params['counts']}; "
-        f"house RMV ${house.rmv:,} ({house.sample} builds); "
+        f"house RMV ${house.rmv:,} ({house.sample} builds); pod mid ${mid:,} ({mid_sample} small-lot builds); "
         f"AV matches the taxcode file on {av_same:,} of {av_checked:,}"
     )
 
