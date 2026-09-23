@@ -553,15 +553,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    bond / urban renewal as the Gresham file does) and its CPR row; Clackamas
    needs its own rate file and CPR table (a different county publication).
    Pending decision: which city next (the pitch is per-city).
-15. **Back-test the tax scenarios B and C against real new builds.**
-   Scenario A is verified (10 bills to 2 cents). B is checked at the
-   median only (2026-09-23): modelled new-house AV median $291,298 vs
-   $288,220 actual on the 1,022 Gresham SFRs built 2020-24; their assessor
-   total ($549,930) sits at 1.01x their sale price (396 sold 2023+), so
-   RMV ~= price for new SFRs. C is statute-correct but unverified. Find recent
-   Gresham new single-family houses and recent partitions / townhome
-   plats (year_built 2022-24 on the roll), replay `impact.new_house` /
-   `impact.pod` from their PRE-build roll values, and compare to their
-   first full post-build bill (PortlandMaps assessor JSON has the history).
-   Also measure assessor RMV vs sale price on new Gresham townhomes, which
-   decides whether the $275k/$450k band overstates the pod's taxable value.
+15. **Tax snapshot: a middle pod price, and a per-lot back-test.**
+   Checked 2026-09-23 on the Jan 2025 roll (snapshot 3, Gresham, SFR 101
+   built 2019-24): B's modelled AV median $291,298 vs $288,220 actual on
+   1,022 new builds. For C, new small-lot homes (lot < 2,500 sf, ~1,450 sf
+   house -- townhome-like) carry assessor RMV $360-413k at 0.93-0.97x their
+   sale price, and the 2024 builds sit at AV/RMV 0.510 vs the model's
+   0.540 -- the pod's year-1 tax is ~5% high (land reset in an earlier
+   year, house partly added at an earlier CPR). Options offered: (a) add a
+   middle pod price at the assessor's own new-townhome value (~$390k/unit)
+   to the snapshot beside the $275k/$450k band -- Steph's call, the plan
+   said no base case; (b) per-lot back-test: pull ~20 recent Gresham
+   partitions' pre-split roll history from the PortlandMaps assessor JSON
+   and replay `impact.pod` against their actual first full post-build bill,
+   which would also say whether to model the ~5% lag.
