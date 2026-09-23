@@ -70,7 +70,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    across-the-street half is inert -- the ROW counts toward the distance),
    both facts declared, TC cap gone, quadfit TC side 27 (larger limb);
    RE-SCREEN IN FLIGHT (quadfit tree `data/quadfit_2026-09-24` on 137,
-   then bound, bridge chain, a new run, drift, promote on the standing word).
+   then bound, bridge chain, a new run, drift, promote on the standing word;
+   the chain also carries 86b06340 below).
    (b) DONE 2026-09-23 -- the nine `AHEAD_OF_QUADFIT`
    zones ported (0504ef84, larger neighbour limb, `needs_verification`),
    re-screened as run 14 and PROMOTED 18:43 UTC on the standing word
@@ -79,8 +80,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    rows, the note-14 fact read; Oregon City commercial 0 green -- see 12).
    (c) 1,938 lots in the turning zones still
    lean on the fact: 813 a blank point across a line (park / ROW /
-   fabric gap), 802 no non-street line at all (ringed by streets and
-   alleys; the relaxing fact needs EVERY line), 272 a split-zone
+   fabric gap), 802 no non-street line at all -- ANSWERED 86b06340 where s4 traced
+   the lot and it is not irregular (a whole block: EVERY-line True,
+   ANY-line False; 1,565 lots county-wide, ~370 of them Portland
+   commercial; the tier-C and untraced ones stay unanswered), 272 a split-zone
    neighbour, 46 both, 5 a neighbour in another city. The
    blank-point class wants `abuts_park` from RLIS orca (Troutdale MU-3
    owes 10 ft "abutting a park regardless of zoning" -- the row that kept
@@ -89,7 +92,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    for CI home lots -- safe only while CI stays capped on
    `site_specific_limitation` (guard test); a per-zone list and the
    across-the-street reading (33.910) when that cap lifts. (e) Troutdale's
-   5 ft side against HDR is unread.
+   5 ft side against HDR is unread -- SIZED 2026-09-23: at most 13 MU
+   lots see an HDR neighbour, the unread half only relaxes (7.5/15 ->
+   5), and reading it needs a fourth neighbour fact ("every line
+   non-residential OR HDR"); recommend leaving it unless those lots
+   come up.
 3. **The court search takes the biggest rectangle, not the deepest one that
    holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
    the maximum-AREA all-clear rectangle behind the building and then asks
