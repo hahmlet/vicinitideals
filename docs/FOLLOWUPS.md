@@ -54,9 +54,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    first: (a) `abuts_lower_density_zone` is declared in Clackamas
    `_unincorporated` only (2026-09-22: ZDO Table 315-4 note 14 became the
    10-ft variant on MR1/MR2 `setback_side_ft`, the cap lifted, the ten
-   315.01 districts are the true side -- but the 947 MR1/MR2 fabric lots
-   are `NOT_MEASURED` until (b) ports them, so no lot reads the variant
-   yet; it moved nothing on the measured county). An observed fact lifts a
+   315.01 districts are the true side; read on the MR1/MR2 lots since run
+   14, see (b)). An observed fact lifts a
    caps.json cap and the base number would certify with the footnote's
    other number never encoded
    (`test_no_declared_condition_caps_a_value_on_that_layer`), so the two
@@ -76,23 +75,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    standard from the setback line), so it needs a variant-level form, and
    it also fires ACROSS A STREET ("right-of-way adjacent to a light
    residential zone"), which the per-line measurement does not read yet
-   (same across-the-street question as Portland 33.910 in (d)). (b) IN FLIGHT 2026-09-23: the nine
-   `AHEAD_OF_QUADFIT` zones (Oregon City C/MUC-1/MUC-2/MUD/WFDD, Clackamas
-   MR1/MR2/PMD/VA) PORTED to `rules.yaml` in 0504ef84 at the LARGER
-   neighbour limb (OC 20 side/rear, MR 10 side -- the envelope's sides are
-   never widened after s5), all `needs_verification`. quadfit s3->s7 re-run
-   into `data/quadfit_2026-09-23` on 137: 1,557 new lots measured, 0 of
-   290,032 existing lots changed a single column, 0 lost; new lots 208
-   review / 1,349 red (no greens by design; reds mostly existing
-   commercial/multifamily and the 7,000 sq ft floor). Full bridge chain
-   `/root/chain_port.sh` (log `/root/chain_port.log`, started 08:15 UTC,
-   ~7 h) -> bundle `2026-09-23_port` scp'd to 114 -> runbook §4b R4-R7
-   (load as candidate on snapshot 3, drift from run 12, promote on the
-   standing word if clean). Then size what the 20-ft carve costs on OC
-   lots FLATS resolves as NOT abutting a residential zone (~140 OC
-   `pod_no_fit`) -- that is FOLLOWUPS 12's side-widening question. Fairview
-   TCC/VC/VO are NOT unscreened: each is `quadplex_allowed: false` behind a
-   lever, so they were never on the list. (c) 1,938 lots in the turning zones still
+   (same across-the-street question as Portland 33.910 in (d)). (b) DONE 2026-09-23 -- the nine `AHEAD_OF_QUADFIT`
+   zones ported (0504ef84, larger neighbour limb, `needs_verification`),
+   re-screened as run 14 and PROMOTED 18:43 UTC on the standing word
+   (gate clean on eight rows; 0 of 576,062 earlier answers moved; the
+   1,557 new lots answer for the first time: MR1/MR2 338 green-if-signed
+   rows, the note-14 fact read; Oregon City commercial 0 green -- see 12).
+   (c) 1,938 lots in the turning zones still
    lean on the fact: 813 a blank point across a line (park / ROW /
    fabric gap), 802 no non-street line at all (ringed by streets and
    alleys; the relaxing fact needs EVERY line), 272 a split-zone
@@ -540,6 +529,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    point where quadfit's s5 stops mattering to the screen. Bound (ii) on
    the subset first: every lot whose FLATS envelope differs from s5's must
    be explained by a variant that fired, and the diff read both ways.
+   SIZED 2026-09-23 on run 14: Oregon City C/MUC-1/MUC-2/MUD are carved at
+   20 ft side/rear everywhere (the port's larger limb); on lots FLATS reads
+   as NOT abutting a residential zone -- where the code says "None" -- 456
+   lot-and-design answers are yellow on `fit` alone, and no Oregon City
+   commercial lot is green. That is the biggest single pool this item
+   would unlock.
 13. **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
    (`scripts/flats_tax_snapshot.py`, migration 0136) needs each lot's tax
    code area (RLIS `TAXCODE`), which acquire drops because it is not a
