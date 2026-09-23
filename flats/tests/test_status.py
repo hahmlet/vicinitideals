@@ -16,6 +16,7 @@ from flats.ingest.status import (
     Probe,
     Snapshot,
     assess,
+    city_name,
     footer,
     holes,
 )
@@ -30,6 +31,7 @@ def snap(
     registered: dt.date | None = None,
     manifest: dict | None = None,
     release: str | None = "2026_08",
+    new_zones: dict | None = None,
 ) -> Snapshot:
     return Snapshot(
         id=id,
@@ -38,6 +40,7 @@ def snap(
         registered_at=registered or date,
         rlis_release=release,
         manifest=manifest if manifest is not None else {"datasets": {"rlis_taxlots": {"status": "acquired"}}},
+        new_zones=new_zones or {},
     )
 
 
@@ -175,6 +178,40 @@ def test_a_candidate_waiting_too_long_is_amber() -> None:
 
     fresh = snap(id=2, date=dt.date(2026, 9, 28), status="candidate", registered=TODAY)
     assert assess(current=current, latest=fresh, candidates=[fresh], probes=[probe(TODAY)], today=TODAY) == []
+
+
+def test_a_zone_code_nobody_ruled_on_is_amber_and_names_the_code_the_city_and_the_lots() -> None:
+    """Steph 2026-09-22: such a code no longer holds the refresh back, so the
+    banner is the only thing that keeps it visible. It says which code, where,
+    how many lots wait on it, and that those lots are the only ones sitting."""
+    current = snap(new_zones={"or/multnomah/gresham": {"CX": 312}})
+    out = assess(current=current, latest=current, candidates=[], probes=[probe()], today=TODAY)
+    assert codes(out) == [("amber", "unruled_zones")]
+    assert "CX in Gresham (312 lots)" in out[0].text
+    assert "never green" in out[0].text and "The rest of the county is screened as usual." in out[0].text
+
+    many = snap(
+        new_zones={
+            "or/multnomah/wood-village": {"TC2": 1},
+            "or/clackamas/_unincorporated": {"MR3": 40, "VA2": 7},
+        }
+    )
+    out = assess(current=many, latest=many, candidates=[], probes=[probe()], today=TODAY)
+    assert codes(out) == [("amber", "unruled_zones")]
+    assert "3 zone codes" in out[0].text and "48 lots" in out[0].text
+    assert "MR3 in unincorporated Clackamas (40 lots)" in out[0].text
+    assert "TC2 in Wood Village (1 lot)" in out[0].text
+
+    # A candidate's unruled codes are the candidate's problem; the banner is
+    # about the copy the pages are reading.
+    cand = snap(id=2, date=dt.date(2026, 9, 28), status="candidate", registered=TODAY, new_zones={"or/x": {"Q": 1}})
+    assert assess(current=snap(), latest=cand, candidates=[cand], probes=[probe()], today=TODAY) == []
+
+
+def test_city_name_says_the_place_the_way_a_person_does() -> None:
+    assert city_name("or/multnomah/wood-village") == "Wood Village"
+    assert city_name("or/clackamas/_unincorporated") == "unincorporated Clackamas"
+    assert city_name("") == ""
 
 
 def test_a_check_that_has_not_run_lately_is_amber() -> None:

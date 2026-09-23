@@ -22,6 +22,11 @@ refresh will fail; amber means something is waiting or unchecked. The rules:
 * red/amber ``unreachable`` -- a layer did not answer the probe: amber once,
   red when the probe before it could not reach the same layer either. A site
   being down is not evidence its data changed.
+* amber ``unruled_zones`` -- the copy in use holds a zone code nobody has
+  ruled on. Since Steph's decision of 2026-09-22 (HUMAN_TODO 22) such a code
+  no longer holds a refresh back: the county goes live and only that code's
+  lots sit, shown as a new zone under evaluation. The banner is what keeps it
+  visible, so it names the code, the city and how many lots wait on it.
 * amber ``new_release`` -- the probe saw a new RLIS archive on the portal and
   no snapshot has been taken since.
 * amber ``waiting``  -- a candidate has sat unreviewed for more than
@@ -57,6 +62,9 @@ class Snapshot:
     rlis_release: str | None = None
     manifest: dict[str, Any] = field(default_factory=dict)
     notes: str = ""
+    #: ``counts["new_zones"]``: ``{layer_id: {code: lots}}`` -- the codes on
+    #: this copy of the map that nobody has ruled on yet.
+    new_zones: dict[str, dict[str, int]] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -83,6 +91,28 @@ def holes(manifest: dict[str, Any]) -> list[str]:
         elif entry.get("unfetched_ids"):
             out.append(f"{key} ({len(entry['unfetched_ids'])} features unfetched)")
     return out
+
+
+def city_name(layer_id: str) -> str:
+    """A layer id as a person names the place: ``or/clackamas/_unincorporated``
+    -> "unincorporated Clackamas", ``or/multnomah/wood-village`` -> "Wood Village"."""
+    parts = [p for p in str(layer_id).split("/") if p]
+    if not parts:
+        return str(layer_id)
+    last = parts[-1]
+    if last.startswith("_"):
+        county = parts[-2].replace("-", " ").title() if len(parts) > 1 else "the county"
+        return f"unincorporated {county}"
+    return last.replace("-", " ").title()
+
+
+def unruled(snapshot: Snapshot | None) -> list[tuple[str, str, int]]:
+    """``(city, code, lots)`` for every zone code on this copy nobody has ruled on."""
+    rows: list[tuple[str, str, int]] = []
+    for layer_id, by_code in sorted(((snapshot.new_zones if snapshot else None) or {}).items()):
+        for code, lots in sorted((by_code or {}).items()):
+            rows.append((city_name(layer_id), str(code), int(lots or 0)))
+    return rows
 
 
 def assess(
@@ -213,6 +243,27 @@ def assess(
             )
     else:
         amber.append(Notice("amber", "unchecked", "The monthly source check has not run yet."))
+
+    # A zone code nobody has ruled on no longer holds a refresh back (Steph,
+    # 2026-09-22): the county goes live and those lots sit. The banner is
+    # what keeps them from sitting unseen, so it names every one of them.
+    waiting_codes = unruled(current)
+    if waiting_codes:
+        shown = ", ".join(f"{code} in {city} ({lots:,} lot{'' if lots == 1 else 's'})" for city, code, lots in waiting_codes[:4])
+        if len(waiting_codes) > 4:
+            shown += f" and {len(waiting_codes) - 4} more"
+        lots_total = sum(lots for _city, _code, lots in waiting_codes)
+        amber.append(
+            Notice(
+                "amber",
+                "unruled_zones",
+                f"{'A zone code' if len(waiting_codes) == 1 else f'{len(waiting_codes)} zone codes'} on the county map "
+                f"{'has' if len(waiting_codes) == 1 else 'have'} not been ruled on yet: {shown}. "
+                f"{lots_total:,} lot{'' if lots_total == 1 else 's'} in "
+                f"{'it' if len(waiting_codes) == 1 else 'them'} show as a new zone under evaluation -- never green, "
+                "never red -- until the code is read. The rest of the county is screened as usual.",
+            )
+        )
 
     for cand in sorted(candidates, key=lambda s: s.registered_at):
         waited = (today - cand.registered_at).days

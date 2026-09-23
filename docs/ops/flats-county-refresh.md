@@ -45,7 +45,21 @@ agent, recorded as `promoted_by = "agent, standing word 2026-09-19"`. Anything
 with a warning waits for Steph, who promotes it from the page with a written
 reason that the row keeps, or asks for the cause to be fixed first. The first
 promotion under this word was the September copy, 2026-09-20 11:29 UTC (snapshot
-3, run 10), once every zone code on the map had been ruled. Registry
+3, run 10), once every zone code on the map had been ruled.
+
+**Amended 2026-09-22 (HUMAN_TODO 22, Steph: _"when a city invents a zone code,
+only those lots sit while the rest go live"_).** One row warns without holding
+the copy back: `new_zones`, a zone code nobody has ruled on. The gate reads
+clean with it standing, the agent promotes on the standing word and rules on
+the code within the week; only that code's lots sit meanwhile, screening
+`unknown / ZONE_NOT_ENCODED` — "a new zone code, under evaluation", never green
+and never red — and the Lots-page banner names the code, its city and its lot
+count in amber until it is ruled. The page prints such a row amber with **warn**
+instead of red with **!**; `flats_promote.py status` prints `??` instead of
+`!!`; the loader's gate line says `clean (warned, not held: new_zones)`. In
+code: `flats.ingest.checks.WARN_ONLY`; `tripped()` reports every finding,
+`blocking()` is what the promotion reads. Every other row still waits for
+Steph. Registry
 fixes (a moved service, a renamed field) are the agent's job; the *meaning* of
 a change the agent cannot tell from the data goes to `docs/HUMAN_TODO.md`.
 
@@ -79,7 +93,7 @@ Durations are from the first real run (2026-09-18/19, 453,782 taxlots).
 | 14 | Load the candidate | 114 | `docker compose run --rm api python scripts/flats_load_bridge.py load --bundle /app/data/flats/bridge/<date> --snapshot N --dry-run`, then without `--dry-run` | ~10 min each | a new `flats.runs` row `candidate`; `checks` written on the snapshot |
 | 15 | Vacuum | 114 | `psql … -c "VACUUM (FULL, ANALYZE) flats.lots"` then `psql … -c "VACUUM (FULL, ANALYZE) flats.lot_results"` -- one statement per call: psql runs a multi-statement `-c` as one transaction and VACUUM refuses to run inside one | ~5 min | space back (each copy ≈ 1.2 GB) |
 | 16 | Drift | 114 | `docker compose run --rm api python scripts/flats_promote.py drift --from-run <run in use> --to-run <candidate run> --out /app/data/flats/reports/<date>/drift.md` | 1 min | `report.drift` on the row; the County copy page shows it |
-| 17 | Read the gate | 114 / browser | `flats_promote.py status`, or `/flats/refresh` | — | every row `ok` → agent promotes; any `!!` → Steph reads §5 |
+| 17 | Read the gate | 114 / browser | `flats_promote.py status`, or `/flats/refresh` | — | every row `ok` or `??` (warn only: a zone code nobody has ruled on) → agent promotes; any `!!` → Steph reads §5 |
 | 18 | Promote | 114 or browser | `flats_promote.py promote --snapshot N --by "agent, standing word 2026-09-19"` (clean) / the **Promote** button, or `--by Steph --override "…"` (warned) | 1 s | the Lots pages default to the new run; the previous copy is `retired` and still reachable by `?run=` |
 | 19 | Prune, next quarter | 114 | `flats_promote.py prune --dry-run`, then real, then step 15 again | ~5 min | the database holds the copy in use, the one before it, and any candidates |
 
@@ -102,7 +116,7 @@ onto any run that is not a `candidate`.
 | R3 | Copy to 114 | 137 | as step 11, into `data/flats/bridge/<date>_<tag>` | files under `/app/data/flats/bridge/…` |
 | R4 | Load onto the current copy | 114 | `flats_load_bridge.py load --bundle /app/data/flats/bridge/<date>_<tag> --snapshot <current id> --dry-run`, then real; VACUUM as step 15 | a new `flats.runs` row, `candidate`, on the current snapshot (`flats_promote.py status` shows "re-screen waiting: run N"); the lot rows are upserted in place -- the copy's lot table is one table, so the re-screen's facts overwrite the older measurement on each lot |
 | R5 | Drift | 114 | `flats_promote.py drift --from-run <run in use> --to-run N --out /app/data/flats/reports/<date>/drift_run<N>.md` | `report.drift` on the copy names `to_run: N` (the copy's own promotion report moves to `drift_earlier`); "Both runs read the same copy" in the report: the ground explains nothing, every move is `rules`, `code` (the screen's files changed) or `unexplained` |
-| R6 | Read the gate | 114 / browser | `flats_promote.py status`, or the "A re-screen is waiting" section on the copy's card at `/flats/refresh` | eight rows (the six loader checks, `no_drift`, `verdict_drift`; no delta row -- the delta is the copy's) all `ok` → agent promotes; any `!!` → Steph |
+| R6 | Read the gate | 114 / browser | `flats_promote.py status`, or the "A re-screen is waiting" section on the copy's card at `/flats/refresh` | eight rows (the six loader checks, `no_drift`, `verdict_drift`; no delta row -- the delta is the copy's) all `ok` → agent promotes; a `??` (warn only, a zone code nobody has ruled on) still lets the agent promote; any `!!` → Steph |
 | R7 | Promote the run | 114 or browser | `flats_promote.py promote --run N --by "agent, standing word 2026-09-19"` (clean) / the **Promote — make run N what the Lots pages show** button, or `--by Steph --override "…"` (warned) | run N `complete` and the Lots pages' default; the run it replaced stays `complete`, reachable by `?run=`, and the card offers **Put run M back** |
 
 First run under this section: run 12, 2026-09-22 (the neighbour-zone
@@ -156,7 +170,11 @@ The candidate's card on `/flats/refresh`. Four questions, top to bottom:
    encoded, because a block with a use and no numbers is a gap in every
    coverage ledger). Codes already ruled fold away under "Zone codes already
    ruled on" and never warn again. The row trips on ANY unruled code,
-   carried from the earlier copy or not.
+   carried from the earlier copy or not. **It no longer holds the copy back**
+   (Steph, 2026-09-22): the copy may be promoted with this row standing and
+   the code ruled within the week, because those lots are already safe —
+   grey, never green and never red — and the rest of the county is not
+   waiting on them. The banner names the code until it is ruled.
 4. **Did any verdict move for no reason?** — "Verdicts that moved". Every
    move is put to one cause, tried in this order: the ground (a lot-change
    row or a zone change), the surroundings (a measured fact that differs
@@ -210,6 +228,7 @@ on the copy (that is a copy rollback).
 | red — "The last county download did not complete: N layers failed" | a snapshot with `refused` / `failed` / unfetched | §8-A, then re-acquire those keys |
 | red — "A county source changed on its own side (layer X)" | probe found `moved` / `fields_missing` / `count_drift` / `registry_changed` | §8-A; the copy in use is unaffected |
 | amber — "Layer X did not answer this month's check" | probe `unreachable` (a site down is not evidence the data changed); two months in a row turns red | nothing yet; check next month or run `scripts/flats_probe.py` by hand |
+| amber — "N zone codes on the county map have not been ruled on yet: CX in Gresham (312 lots)…" | the copy in use holds a code nobody has ruled on; those lots screen grey while the rest of the county is live (Steph, 2026-09-22) | read the city's use table, rule on the code (§5 question 3), re-screen under §4b — within the week |
 | amber — "A refreshed copy from D is waiting for review" | a candidate older than 14 days | §5 |
 | amber — "The monthly source check has not run since D" | no probe row in 45 days | check Celery beat; `docker compose run --rm api python scripts/flats_probe.py` |
 | grey footer only | nothing wrong | — |
@@ -239,7 +258,7 @@ on the copy (that is a copy rollback).
 | Deleted / vacated with no successor | a handful | Absent from the new copy; results kept on the old run. |
 | Added with no predecessor | a handful | Screened fresh. |
 | Rezoned | hundreds of lots a year per city; `zone_changes` trips above 10 % of a city | Re-screened; decisions marked look again. |
-| New zone code (never ruled on) | a few a year | Screens `unknown / ZONE_NOT_ENCODED`; listed per layer; the agent reads the use table and rules on it (zone block or `zone_rulings`) before promotion; `new_zones` blocks until then (HUMAN_TODO 22 asks whether it should only warn). |
+| New zone code (never ruled on) | a few a year | Screens `unknown / ZONE_NOT_ENCODED` ("a new zone code, under evaluation"); listed per layer on the card and named on the Lots banner in amber; `new_zones` warns and does **not** block (Steph, 2026-09-22 — HUMAN_TODO 22 A): promote, then read the city's use table and rule on it (zone block or `zone_rulings`) within the week, and re-screen the copy in use under §4b so those lots get their answer. |
 | Zone code already ruled (alias / pocket / unencodable / to read) | steady | Screens under the alias's block, or `unknown` with `ZONE_POCKET` / `ZONE_UNENCODABLE` / `ZONE_TO_READ`; folded away on the page; never warns. |
 | Zone whose rules forbid the building (`quadplex_allowed: false`) | steady | The assign stage answers RED / `USE_PROHIBITED` at the use gate with no measurement (yellow where a conditional-use path exists); listed on the page by zone. |
 | Annexation (`JURIS_CITY` changes) | 5 this quarter | Jurisdiction reassigned → other rules → re-screened; decision marked. |

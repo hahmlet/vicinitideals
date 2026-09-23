@@ -12,6 +12,12 @@ verdict move -- may be promoted by the agent on that standing word. A gate
 with anything standing waits for Steph, or is promoted over with a written
 reason that the row keeps.
 
+One row warns without standing in the way (Steph, 2026-09-22): a zone code
+nobody has ruled on. It prints ``??`` instead of ``!!``, the gate still reads
+clean, and the agent promotes and writes the code down within the week --
+only that code's lots sit, as a new zone under evaluation, while the rest of
+the county goes live.
+
 Usage (inside the api container):
 
     python scripts/flats_promote.py status
@@ -67,6 +73,27 @@ from app.services.flats_refresh import (  # noqa: E402
 )
 
 
+def _mark(row: dict) -> str:
+    """Two characters per gate row: it blocks, it only warns, or it is quiet."""
+    if row["blocking"]:
+        return "!!"
+    return "??" if row["tripped"] else "ok"
+
+
+def _verdict(rows: list[dict], *, it: bool = False) -> str:
+    """The one line above the gate: what the agent may do with it.
+
+    A warn-only row (a zone code nobody has ruled on) is said out loud and
+    still leaves the gate clean -- Steph, 2026-09-22.
+    """
+    standing = [g["code"] for g in rows if g["blocking"]]
+    warned = [g["code"] for g in rows if g["tripped"] and not g["blocking"]]
+    if standing:
+        return "WARNED -- " + ", ".join(standing) + "; Steph reads the report"
+    clean = f"clean -- the agent may promote {'it ' if it else ''}on the standing word"
+    return clean + (f" (warned, not held: {', '.join(warned)})" if warned else "")
+
+
 async def _status(session: AsyncSession) -> int:
     snapshots = (
         await session.execute(select(FlatsSnapshot).order_by(FlatsSnapshot.snapshot_date.desc(), FlatsSnapshot.id.desc()))
@@ -89,20 +116,15 @@ async def _status(session: AsyncSession) -> int:
                     f"  screen {run.screen_version or '?'}  source {(run.params or {}).get('source_id') or '?'}"
                 )
         if snap.status == "candidate":
-            standing = [g for g in gate(snap) if g["tripped"]]
-            print("    gate: " + ("clean -- the agent may promote on the standing word" if not standing else "WARNED -- Steph reads the report"))
+            print("    gate: " + _verdict(gate(snap)))
             for g in gate(snap):
-                print(f"      {'!!' if g['tripped'] else 'ok'} {g['code']:<18} {g['detail']}")
+                print(f"      {_mark(g)} {g['code']:<18} {g['detail']}")
         elif snap.status == "current":
             rerun = await candidate_run(session, snap.id)
             if rerun is not None:
-                standing = [g for g in gate(snap, rerun) if g["tripped"]]
-                print(
-                    f"    re-screen waiting: run {rerun.id}; gate "
-                    + ("clean -- the agent may promote it on the standing word" if not standing else "WARNED -- Steph reads the report")
-                )
+                print(f"    re-screen waiting: run {rerun.id}; gate " + _verdict(gate(snap, rerun), it=True))
                 for g in gate(snap, rerun):
-                    print(f"      {'!!' if g['tripped'] else 'ok'} {g['code']:<18} {g['detail']}")
+                    print(f"      {_mark(g)} {g['code']:<18} {g['detail']}")
     return 0
 
 
@@ -136,7 +158,7 @@ async def _promote_run(session: AsyncSession, args: argparse.Namespace) -> int:
         snap = await session.get(FlatsSnapshot, run.snapshot_id) if run is not None and run.snapshot_id else None
         if snap is not None:
             for g in gate(snap, run):
-                print(f"  {'!!' if g['tripped'] else 'ok'} {g['code']:<18} {g['detail']}")
+                print(f"  {_mark(g)} {g['code']:<18} {g['detail']}")
         return 3
     except PromotionError as exc:
         print(f"refused: {exc}")
@@ -168,7 +190,7 @@ async def _promote(session: AsyncSession, args: argparse.Namespace) -> int:
         snap = await session.get(FlatsSnapshot, args.snapshot)
         if snap is not None:
             for g in gate(snap):
-                print(f"  {'!!' if g['tripped'] else 'ok'} {g['code']:<18} {g['detail']}")
+                print(f"  {_mark(g)} {g['code']:<18} {g['detail']}")
         return 3
     except PromotionError as exc:
         print(f"refused: {exc}")

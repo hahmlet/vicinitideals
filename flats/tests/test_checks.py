@@ -7,7 +7,7 @@ page can show a clean gate as six named passes rather than an empty list.
 
 from __future__ import annotations
 
-from flats.ingest.checks import CODES, snapshot_checks, tripped
+from flats.ingest.checks import CODES, WARN_ONLY, blocking, snapshot_checks, tripped, warnings
 
 DATASETS = {
     "rlis_taxlots": {"status": "acquired", "features": 453_000, "unfetched": 0},
@@ -128,6 +128,22 @@ def test_metro_disagreeing_with_our_delta_trips_on_recall_not_precision() -> Non
     assert _clean(crosscheck=None)["rlis_agreement"] == {"tripped": False, "detail": "no delta cross-check stored for this copy"}
 
 
+def test_a_zone_code_nobody_ruled_on_warns_and_the_rest_of_the_county_goes_live() -> None:
+    """Steph 2026-09-22 (HUMAN_TODO 22): "when a city invents a zone code, only
+    those lots sit while the rest go live." The check still trips, is still
+    listed by layer and lot count, and is the one code the gate lets past."""
+    checks = _clean(new_zones={"or/multnomah/gresham": {"CX": 312}})
+    assert tripped(checks) == ["new_zones"], "still found, still named on the page and the banner"
+    assert blocking(checks) == [], "and it does not hold the copy back"
+    assert warnings(checks) == ["new_zones"]
+    assert WARN_ONLY == ("new_zones",), "it is the only one -- everything else still waits for Steph"
+
+    also_broken = _clean(new_zones={"or/multnomah/gresham": {"CX": 312}}, measured=280_000)
+    assert tripped(also_broken) == ["new_zones", "lots_drift"]
+    assert blocking(also_broken) == ["lots_drift"], "a second finding still stops it"
+
+
 def test_tripped_reads_a_missing_or_partial_gate_as_open() -> None:
     assert tripped(None) == []
     assert tripped({"new_zones": {"tripped": True, "detail": "x"}, "junk": {"tripped": True}}) == ["new_zones"]
+    assert blocking(None) == [] and warnings(None) == []

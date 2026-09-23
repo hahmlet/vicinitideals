@@ -59,6 +59,7 @@ from app.services.flats_refresh import (
     rollback_run,
     run_in_use,
     run_probe,
+    warns,
 )
 from flats.ingest.acquire import _spec_sha
 from flats.ingest.sources import load_pipeline
@@ -497,11 +498,51 @@ async def test_the_gate_reads_the_six_checks_and_the_two_reports(session: AsyncS
     assert [g["code"] for g in gate(sept) if g["tripped"]] == ["no_drift"]
     assert "3 lot changes 2026-07-28 -> 2026-09-18" in next(g["detail"] for g in gate(sept) if g["code"] == "no_delta")
 
-    sept.checks = {**sept.checks, "new_zones": {"tripped": True, "detail": "or/clackamas: XYZ (1)"}}
+    sept.checks = {**sept.checks, "lots_drift": {"tripped": True, "detail": "289,845 -> 280,000 measured lots (-3.4%)"}}
     sept.report = {"drift": {"unexplained": 2, "moved": 5, "compared": 100, "by_cause": {"data": 3, "rules": 0, "code": 0, "unexplained": 2}}}
-    assert blocks(sept) == ["new_zones", "no_delta", "verdict_drift"]
+    assert blocks(sept) == ["lots_drift", "no_delta", "verdict_drift"]
     sept.report = {"delta": {"rows": 1}, "drift": {"unexplained": 0, "moved": 5, "compared": 100, "by_cause": {"data": 5, "rules": 0, "code": 0, "unexplained": 0}}}
-    assert blocks(sept) == ["new_zones"]
+    assert blocks(sept) == ["lots_drift"]
+
+
+async def test_a_zone_code_nobody_ruled_on_is_shown_warned_and_let_through(session: AsyncSession, tmp_path) -> None:
+    """Steph 2026-09-22 (HUMAN_TODO 22): "when a city invents a zone code, only
+    those lots sit while the rest go live." The gate row is still there and
+    still tripped -- the page shows it and the banner names the code -- but it
+    is not what the promotion reads, so the agent promotes on the standing
+    word and the county gets its fresh copy on time."""
+    w = await _world(session, tmp_path)
+    sept = w["sept"]
+    await drift(session, from_run=2, to_run=4)
+    await session.commit()
+    sept = await session.get(FlatsSnapshot, sept.id)
+    sept.checks = {**sept.checks, "new_zones": {"tripped": True, "detail": "or/multnomah/gresham: CX (312)"}}
+    session.add(sept)
+    await session.flush()
+
+    assert blocks(sept) == [], "the rest of the county is not held back"
+    assert warns(sept) == ["new_zones"]
+    row = next(g for g in gate(sept) if g["code"] == "new_zones")
+    assert (row["tripped"], row["blocking"], row["warn_only"]) == (True, False, True)
+    assert row["detail"] == "or/multnomah/gresham: CX (312)", "the page still names the code and its lots"
+
+    done = await promote(session, sept.id, by="agent, standing word 2026-09-19")
+    await session.commit()
+    assert done.blocks == [] and done.snapshot.status == "current"
+    assert "over" not in (done.snapshot.notes or ""), "no override was needed"
+
+    # Anything else standing beside it still waits for Steph.
+    session.expunge_all()
+    july = await session.get(FlatsSnapshot, w["july"].id)
+    july.status = "candidate"
+    july.checks = {
+        **_clean_checks(),
+        "new_zones": {"tripped": True, "detail": "or/multnomah/gresham: CX (312)"},
+        "layers_incomplete": {"tripped": True, "detail": "zoning_gresham: failed"},
+    }
+    session.add(july)
+    await session.flush()
+    assert blocks(july) == ["layers_incomplete", "no_delta", "no_drift"]
 
 
 async def test_a_re_screen_of_the_copy_in_use_is_gated_on_its_own_drift(session: AsyncSession, tmp_path) -> None:

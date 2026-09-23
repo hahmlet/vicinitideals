@@ -31,7 +31,10 @@ Seven things, and nothing that refreshes anything:
 * :func:`promote` / :func:`rollback` -- the status flip Steph's rule governs
   ("me, when clean; you, when warned"): :func:`blocks` says which gate codes
   stand; a blocked promotion needs a written override; who promoted and on
-  what grounds is written on the row. Promotion marks every active review
+  what grounds is written on the row. Since 2026-09-22 one code warns without
+  holding the copy back -- a zone code nobody has ruled on (:func:`warns`):
+  its own lots sit as "a new zone, under evaluation" while the rest of the
+  county goes live. Promotion marks every active review
   decision whose lot split, merged, was renumbered, deleted, vacated or
   changed zone as "look again".
 * :func:`promote_run` / :func:`rollback_run` -- the same rule for a
@@ -61,7 +64,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.flats import FlatsLot, FlatsProbe, FlatsRun, FlatsSnapshot
 from flats.ingest import status as rules
 from flats.ingest.checks import CODES as CHECK_CODES
-from flats.ingest.checks import tripped
+from flats.ingest.checks import WARN_ONLY, blocking, tripped
+from flats.ingest.checks import warnings as warn_only_codes
 from flats.ingest.probe import Finding, probe, summarize
 from flats.ingest.sources import Pipeline, load_pipeline
 
@@ -306,6 +310,7 @@ def _as_rule_snapshot(row: FlatsSnapshot) -> rules.Snapshot:
         rlis_release=row.rlis_release,
         manifest=row.manifest or {},
         notes=row.notes or "",
+        new_zones=(row.counts or {}).get("new_zones") or {},
     )
 
 
@@ -404,18 +409,20 @@ class RunRollback:
 def blocks(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[str]:
     """The gate codes that keep an agent from promoting this copy, in gate order.
 
-    The six checks the loader wrote (:mod:`flats.ingest.checks`), then
-    ``no_delta`` / ``no_drift`` when the two reports the runbook produces
-    before a promotion are not on the row, then ``verdict_drift`` when the
-    drift report found a move nothing explains. An empty list is "clean":
-    the agent may promote on Steph's standing word.
+    The checks the loader wrote (:mod:`flats.ingest.checks`) less the
+    warn-only ones, then ``no_delta`` / ``no_drift`` when the two reports the
+    runbook produces before a promotion are not on the row, then
+    ``verdict_drift`` when the drift report found a move nothing explains. An
+    empty list is "clean": the agent may promote on Steph's standing word --
+    which since 2026-09-22 includes a copy whose only standing row is a zone
+    code nobody has ruled on (:func:`warns`).
 
     Given ``run`` -- a re-screen loaded as a candidate run on the copy in
     use -- the delta is not owed (the ground is the same copy's, compared
     when the copy was promoted) and the drift report must be the one that
     compared THIS run, not an earlier one left on the row.
     """
-    out = tripped(snapshot.checks)
+    out = blocking(snapshot.checks)
     report = snapshot.report or {}
     if run is None and not report.get("delta"):
         out.append("no_delta")
@@ -427,6 +434,18 @@ def blocks(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[str]:
     return out
 
 
+def warns(snapshot: FlatsSnapshot) -> list[str]:
+    """The gate codes that stand but do not hold the copy back.
+
+    Steph, 2026-09-22 (HUMAN_TODO 22): a zone code nobody has ruled on warns,
+    the copy goes live, and only that code's own lots sit -- shown as a new
+    zone under evaluation, never green and never red -- until the code is
+    read and written down, which is the same week. The page and the banner
+    name the code either way, so nothing about it is invisible.
+    """
+    return warn_only_codes(snapshot.checks)
+
+
 def drift_for(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> dict[str, Any]:
     """The drift report on the row -- only when it is about ``run``, if one is named."""
     doc = (snapshot.report or {}).get("drift") or {}
@@ -436,13 +455,17 @@ def drift_for(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> dict[str,
 
 
 def gate(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[dict[str, Any]]:
-    """Every gate code with whether it stands and why -- the page shows all of them.
+    """Every gate code with whether it stands, whether it blocks, and why.
 
-    For a re-screen (``run``) the delta row is not shown: it is the copy's,
-    not the run's."""
+    ``tripped`` is "this check found something" and ``blocking`` is "this
+    stops the agent promoting"; they are the same row except for a warn-only
+    code (:data:`flats.ingest.checks.WARN_ONLY`), which the page shows amber
+    and the gate lets through. For a re-screen (``run``) the delta row is not
+    shown: it is the copy's, not the run's."""
     checks = snapshot.checks or {}
     report = snapshot.report or {}
     standing = set(blocks(snapshot, run))
+    found_codes = set(tripped(checks))
     rows = []
     for code in CHECK_CODES:
         found = checks.get(code) or {}
@@ -450,7 +473,9 @@ def gate(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[dict[str,
             {
                 "code": code,
                 "words": GATE_WORDS[code],
-                "tripped": code in standing,
+                "tripped": code in found_codes,
+                "blocking": code in standing,
+                "warn_only": code in WARN_ONLY,
                 "detail": found.get("detail") or "not written yet -- the loader writes it at the end of a candidate load",
             }
         )
@@ -461,6 +486,8 @@ def gate(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[dict[str,
                 "code": "no_delta",
                 "words": GATE_WORDS["no_delta"],
                 "tripped": "no_delta" in standing,
+                "blocking": "no_delta" in standing,
+                "warn_only": False,
                 "detail": (
                     f"{delta.get('rows', 0):,} lot changes {delta.get('from')} -> {delta.get('to')}, "
                     f"{delta.get('rereview', 0):,} put a decision in doubt"
@@ -483,12 +510,23 @@ def gate(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[dict[str,
         detail = f"no drift report for run {run.id}; run drift from the run in use to it"
     else:
         detail = "no drift report on this copy; run drift against the run in use"
-    rows.append({"code": "no_drift", "words": GATE_WORDS["no_drift"], "tripped": "no_drift" in standing, "detail": detail})
+    rows.append(
+        {
+            "code": "no_drift",
+            "words": GATE_WORDS["no_drift"],
+            "tripped": "no_drift" in standing,
+            "blocking": "no_drift" in standing,
+            "warn_only": False,
+            "detail": detail,
+        }
+    )
     rows.append(
         {
             "code": "verdict_drift",
             "words": GATE_WORDS["verdict_drift"],
             "tripped": "verdict_drift" in standing,
+            "blocking": "verdict_drift" in standing,
+            "warn_only": False,
             "detail": (
                 f"{drift_report.get('unexplained', 0):,} moves nothing explains"
                 if drift_report

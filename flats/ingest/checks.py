@@ -27,7 +27,8 @@ can show the whole gate and not only the failures:
     trips on ANY unruled code, carried from the earlier copy or not; a code
     that stays unruled stays warned until somebody rules on it. The earlier
     copy's list is still read, so the detail can say which codes are new
-    this quarter and which were already waiting.
+    this quarter and which were already waiting. **It warns; it does not
+    block** -- see :data:`WARN_ONLY`.
 ``lots_drift``
     The measured lot count moved more than :data:`TAXLOT_DRIFT` against the
     run in use.
@@ -40,6 +41,15 @@ can show the whole gate and not only the failures:
 
 A threshold is a warning, never a verdict on the data: a tripped check means
 a person reads the report before the copy is promoted.
+
+One check warns without holding the copy back. Steph, 2026-09-22 (HUMAN_TODO
+22): *"when a city invents a zone code, only those lots sit while the rest go
+live."* A code nobody has ruled on says nothing about the rest of the county,
+and its own lots are already safe -- they screen ``unknown`` with the reason
+``ZONE_NOT_ENCODED``, never green and never red, until the code is read. So
+:data:`WARN_ONLY` names it: :func:`tripped` still reports it, the page and the
+banner still name the code and count its lots, and :func:`blocking` -- what
+the promotion gate reads -- leaves it out.
 """
 
 from __future__ import annotations
@@ -64,6 +74,8 @@ WHOLE = ("acquired", "present", "deferred", "retired")
 FETCHED = ("acquired", "present")
 
 CODES = ("layers_incomplete", "count_drift", "new_zones", "lots_drift", "zone_changes", "rlis_agreement")
+#: Codes that are shown and counted but never hold a copy back (Steph, 2026-09-22).
+WARN_ONLY = ("new_zones",)
 
 
 def _pct(new: float, old: float) -> float:
@@ -194,6 +206,16 @@ def snapshot_checks(
 
 
 def tripped(checks: dict[str, dict[str, Any]] | None) -> list[str]:
-    """The codes that block an agent's promotion, in the gate's order."""
+    """Every check that found something, in the gate's order -- warn-only ones included."""
     checks = checks or {}
     return [c for c in CODES if (checks.get(c) or {}).get("tripped")]
+
+
+def blocking(checks: dict[str, dict[str, Any]] | None) -> list[str]:
+    """The codes that keep an agent from promoting: :func:`tripped` less :data:`WARN_ONLY`."""
+    return [c for c in tripped(checks) if c not in WARN_ONLY]
+
+
+def warnings(checks: dict[str, dict[str, Any]] | None) -> list[str]:
+    """The warn-only codes that stand: worth saying, never worth waiting on."""
+    return [c for c in tripped(checks) if c in WARN_ONLY]

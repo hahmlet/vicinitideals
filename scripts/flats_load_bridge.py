@@ -40,9 +40,11 @@ jurisdiction, zone, the assessor's roll values, the condo verdict) and for a
 measured lot adds the same roll values and verdict beside s4's facts. Such a
 run is loaded with ``status: candidate`` -- reachable with ``?run=``, never
 the default until promoted -- and the load ends by writing the snapshot's
-``checks``: the promotion-blocking thresholds (a layer not whole, a feature
-count that moved, a zone code the rules lack, a city whose zones moved, a
-county change list that disagrees with ours), each ``{tripped, detail}``.
+``checks``: the gate's thresholds (a layer not whole, a feature count that
+moved, a zone code the rules lack, a city whose zones moved, a county change
+list that disagrees with ours), each ``{tripped, detail}``. All of them are
+reported; all but the unruled zone code hold the copy back (Steph 2026-09-22:
+a code nobody has ruled on warns, and only its own lots sit).
 
 What lands where:
 
@@ -100,7 +102,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from flats.designs.model import Design, load_catalog  # noqa: E402
 from flats.encode.port_quadfit import COUNTY, layer_id_for  # noqa: E402
-from flats.ingest.checks import snapshot_checks, tripped  # noqa: E402
+from flats.ingest.checks import blocking, snapshot_checks, warnings  # noqa: E402
 from flats.rules.loader import CONFIG_ROOT as RULES_ROOT  # noqa: E402
 
 #: The files a bundle is made of.
@@ -1015,7 +1017,8 @@ async def load(
                 # its checks beside it.
                 checks = await _snapshot_checks(conn, snapshot, snapshot_id, run, n_lots)
                 report["checks"] = checks
-                report["blocks"] = tripped(checks)
+                report["blocks"] = blocking(checks)
+                report["warnings"] = warnings(checks)
                 if dry_run:
                     raise _RolledBack()
         except _RolledBack:
@@ -1243,10 +1246,11 @@ def main(argv: list[str] | None = None) -> int:
     print(json.dumps(report, indent=2, default=str))
     if report.get("verified") and "checks" in report:
         blocks = report["blocks"]
-        print(
-            f"promotion gate: {'WARNED -- ' + ', '.join(blocks) + '; Steph reads the report' if blocks else 'clean'}",
-            file=sys.stderr,
-        )
+        warned = report.get("warnings") or []
+        line = "WARNED -- " + ", ".join(blocks) + "; Steph reads the report" if blocks else "clean"
+        if warned:
+            line += f" (warned, not held: {', '.join(warned)})"
+        print(f"promotion gate: {line}", file=sys.stderr)
     return 0 if report.get("verified") else 1
 
 

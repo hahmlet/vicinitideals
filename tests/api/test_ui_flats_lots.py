@@ -79,6 +79,7 @@ async def _snapshot(
     status: str = "current",
     manifest: dict | None = None,
     registered: datetime | None = None,
+    new_zones: dict | None = None,
 ) -> FlatsSnapshot:
     """A county copy for lot rows to belong to; fresh and complete unless told otherwise."""
     snap = FlatsSnapshot(
@@ -87,7 +88,7 @@ async def _snapshot(
         status=status,
         rlis_release="2026_08",
         manifest=manifest if manifest is not None else {"datasets": {"rlis_taxlots": {"status": "acquired"}}},
-        counts={"lots": 3},
+        counts={"lots": 3, **({"new_zones": new_zones} if new_zones else {})},
     )
     if registered is not None:
         snap.registered_at = registered
@@ -423,6 +424,27 @@ async def test_a_source_that_moved_is_red_and_an_unanswered_one_is_amber(
     assert "util_sewer_wood_village" in red and "changed on its own side" in red
     amber = _banner(page.text, "amber")
     assert "zoning_portland" in amber and "did not answer" in amber
+
+
+async def test_a_zone_code_nobody_ruled_on_is_named_in_amber_on_both_pages(
+    client: AsyncClient, session: AsyncSession
+):
+    """Steph 2026-09-22: a code nobody has ruled on no longer holds the refresh
+    back, so the banner is what keeps it from going unseen. It names the code,
+    the city and the lots waiting, and the county is shown as usual."""
+    await _login(client, session)
+    snap = await _snapshot(session, new_zones={"or/multnomah/gresham": {"CX": 312}})
+    await _seed(session, snapshot=snap)
+
+    for url in ("/flats/lots", "/flats/lots/multnomah/1S2E08BA%20%20-09500"):
+        page = await client.get(url)
+
+        assert page.status_code == 200
+        amber = _banner(page.text, "amber")
+        assert 'data-code="unruled_zones"' in amber
+        assert "CX in Gresham (312 lots)" in amber and "never green, never red" in amber
+        assert _banner(page.text, "red") == ""
+    assert "2833 SE 71ST AVE" in (await client.get("/flats/lots")).text, "the rest of the county is shown"
 
 
 async def test_no_copy_recorded_is_said_in_red(client: AsyncClient, session: AsyncSession):

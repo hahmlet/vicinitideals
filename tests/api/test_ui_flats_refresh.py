@@ -156,6 +156,37 @@ async def test_a_clean_gate_promotes_with_no_reason_asked(client: AsyncClient, s
     assert "over" not in sept.notes
 
 
+async def test_a_zone_code_nobody_ruled_on_is_amber_on_the_gate_and_promotes_without_a_reason(
+    client: AsyncClient, session: AsyncSession, tmp_path
+) -> None:
+    """Steph 2026-09-22 (HUMAN_TODO 22): "when a city invents a zone code, only
+    those lots sit while the rest go live." The row is still on the gate and
+    still says which code and how many lots, in amber rather than red, and the
+    copy promotes on the standing word with nothing typed."""
+    await _login(client, session)
+    w = await _world(session, tmp_path)
+    await drift(session, from_run=2, to_run=4)
+    sept = await session.get(FlatsSnapshot, w["sept"].id)
+    sept.checks = {**sept.checks, "new_zones": {"tripped": True, "detail": "or/multnomah/gresham: CX (312)"}}
+    session.add(sept)
+    await session.commit()
+
+    card = _card((await client.get("/flats/refresh")).text, w["sept"].id)
+    gate = card.split(f'id="gate-{w["sept"].id}"', 1)[1].split("</table>", 1)[0]
+    assert 'data-code="new_zones" data-tripped="yes" data-blocking="no"' in gate
+    assert gate.count('data-blocking="yes"') == 0
+    assert "or/multnomah/gresham: CX (312)" in gate and "warn" in gate
+    assert f'id="warn-only-{w["sept"].id}"' in card and "Warned, not held: new_zones" in card
+    assert "Promote — make this the copy in use" in card and 'name="override"' not in card
+
+    answer = await client.post("/flats/refresh/promote", data={"snapshot": str(w["sept"].id)})
+
+    assert answer.status_code == 303
+    assert await _statuses(session, w) == ("retired", "current", "complete", "complete")
+    session.expunge_all()
+    assert "over" not in (await session.get(FlatsSnapshot, w["sept"].id)).notes
+
+
 async def test_rollback_needs_a_reason_and_puts_the_previous_copy_back(client: AsyncClient, session: AsyncSession, tmp_path) -> None:
     await _login(client, session)
     w = await _world(session, tmp_path)

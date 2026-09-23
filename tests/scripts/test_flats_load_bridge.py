@@ -701,7 +701,8 @@ async def test_a_candidate_load_writes_the_promotion_gate_on_its_snapshot(
 
     assert report["verified"] is True
     assert set(report["checks"]) == {"layers_incomplete", "count_drift", "new_zones", "lots_drift", "zone_changes", "rlis_agreement"}
-    assert report["blocks"] == ["layers_incomplete", "count_drift", "new_zones", "lots_drift"]
+    assert report["blocks"] == ["layers_incomplete", "count_drift", "lots_drift"]
+    assert report["warnings"] == ["new_zones"], "a code nobody ruled on is reported, not held against the copy"
     checks = report["checks"]
     assert checks["layers_incomplete"]["detail"] == "zoning_portland: 2 features never fetched"
     assert checks["count_drift"]["detail"] == "rlis_taxlots: 1,000 -> 1,040 (+4.0%)"

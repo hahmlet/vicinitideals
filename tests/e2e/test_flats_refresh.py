@@ -50,13 +50,15 @@ def test_a_waiting_copy_shows_its_whole_gate_and_is_not_promoted_here(logged_in_
     card = candidates.first
     gate = card.locator("table[id^='gate-'] tbody tr")
     expect(gate).to_have_count(GATE_ROWS)
-    tripped = card.locator("table[id^='gate-'] tbody tr[data-tripped='yes']").count()
+    # A tripped row that does not block (a zone code nobody has ruled on,
+    # Steph 2026-09-22) leaves the copy promotable: read what BLOCKS.
+    standing = card.locator("table[id^='gate-'] tbody tr[data-blocking='yes']").count()
     form = card.locator("form[id^='promote-']")
     expect(form).to_be_visible()
     if form.get_by_text("Nothing has been loaded from this copy yet").count():
         # Registered, not yet loaded: no button of any kind until the loader runs.
         expect(form.get_by_role("button")).to_have_count(0)
-    elif tripped:
+    elif standing:
         # Steph's rule: a warned gate waits for a person and a written reason.
         expect(form.get_by_text("Not clean:")).to_be_visible()
         expect(form.locator("textarea[name='override']")).to_be_visible()

@@ -1831,7 +1831,7 @@ runs on it between deploys, and the firmware fault that stopped it booting
 in June was fixed then — it is on the modern setting now. Only the analysis
 box, LXC 137, ever has long jobs of mine running, and none is running.)
 
-## ~~20. One decision: where the screen's own copy of the county's map data should live~~ — **DECIDED 2026-09-19: A, in the app's database, with a written update process; the agent may switch over a clean refresh, anything with a warning waits for you**
+## ~~20. One decision: where the screen's own copy of the county's map data should live~~ — **DECIDED 2026-09-19: A, in the app's database, with a written update process; the agent may switch over a clean refresh, anything with a warning waits for you — amended 2026-09-22 (item 22): a never-seen zone code warns without waiting, and the agent writes the code down within the week**
 
 The screen still reads its lots from the county map's files on the analysis
 box — the "bridge" you approved on 17 September "for now", with an offline
@@ -1909,11 +1909,14 @@ and approved; in plain terms, **how updates work**:
 - **Who says promote — your answer of 2026-09-19: "me when clean; you when
   warned."** The agent switches over a refresh that came back clean (every
   layer downloaded, counts in the normal range, Metro's change list agrees
-  with ours, no new zone codes, every changed verdict explained by a changed
-  lot) and leaves you the report. Anything that trips a warning, brings a
-  new zone code, or moves a verdict for no explained reason waits for you.
-  Who promoted, and on what grounds, is recorded every time; a promotion
-  can be undone with one command.
+  with ours, every changed verdict explained by a changed lot) and leaves
+  you the report. Anything that trips a warning or moves a verdict for no
+  explained reason waits for you. Who promoted, and on what grounds, is
+  recorded every time; a promotion can be undone with one command.
+  **Amended 2026-09-22 (item 22):** a zone code nobody has ruled on is the
+  one warning that does not wait — the agent promotes, writes the code down
+  within the week, and only the lots in that code sit meanwhile, named on
+  the banner in amber. Everything else with a warning still waits for you.
 - **Splits and merges** are found by overlapping the old and new lot
   shapes, not by their numbers (the county sometimes gives the children the
   parent's number with a suffix, sometimes a fresh series, and about half
@@ -2210,7 +2213,7 @@ attached homes, narrow lots, alleys — and the city has written a rule that
 closes it to us without lot assembly. The two-and-a-half thousand lots come off
 the list of places worth hoping about.
 
-## 22. One decision: when a city invents a zone we have never seen, does the whole copy wait, or only those lots?
+## ~~22. One decision: when a city invents a zone we have never seen, does the whole copy wait, or only those lots?~~ — **DECIDED 2026-09-22: A, the new code warns but does not block — only those lots sit while the rest of the county goes live; built and live the same day**
 
 You ruled on 2026-09-20 that every zone code on the county map gets read
 once, its reason written down, and never shown again -- and that the only
@@ -2248,10 +2251,31 @@ B, and a new zone code has never yet been the thing that mattered.
 until you or I have read it. Safest in the narrow sense, and the slowest;
 it is what made the September copy wait three days.
 
-Reply "A", "B" or "C". Under A the standing word in item 20 becomes: the
-agent promotes when the only warning is a never-seen zone code, writes the
-code down within the week, and anything else with a warning still waits
-for you.
+**Your answer, 2026-09-22: A** — *"when a city invents a zone code, only
+those lots sit while the rest go live."*
+
+Built and live the same day. What changed, in your words:
+
+- A copy of the county map with a zone code nobody has ruled on now goes
+  live when everything else is clean. I promote it on the standing word and
+  write the code down within the week.
+- The lots in that code sit: they read *"a new zone code, under evaluation:
+  nobody has ruled on it yet, so this lot is neither green nor red"*. They
+  were never green or red before either — this is the same grey as today,
+  just no longer holding the rest of the county behind it.
+- The banner on the Lots pages names every such code, the city it is in and
+  how many lots are waiting on it, so it cannot go unseen while it waits.
+  It is amber, not red: nothing is wrong, something is pending.
+- The county-copy page still shows the row on the gate — in amber with
+  "warn" rather than red with "!" — with the code and its lot count.
+- Everything else on the gate is unchanged. A layer that did not download,
+  a lot count that moved, a city mostly rezoned, a change list that
+  disagrees with Metro's, a verdict that moved for no reason any of the
+  reports can name: each of those still waits for you.
+
+The standing word in item 20 is now: **the agent promotes when the only
+warning is a never-seen zone code, writes the code down within the week, and
+anything else with a warning still waits for you.**
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 

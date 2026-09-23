@@ -27,8 +27,12 @@
       <table class="data-table" style="font-size:12px" id="gate-{{ id }}">
         <tbody>
         {% for g in rows %}
-          <tr data-code="{{ g.code }}" data-tripped="{{ 'yes' if g.tripped else 'no' }}">
-            <td style="width:24px">{% if g.tripped %}<span class="badge badge-red">!</span>{% else %}<span class="badge badge-green">ok</span>{% endif %}</td>
+          <tr data-code="{{ g.code }}" data-tripped="{{ 'yes' if g.tripped else 'no' }}" data-blocking="{{ 'yes' if g.blocking else 'no' }}">
+            <td style="width:24px">
+              {%- if g.blocking %}<span class="badge badge-red">!</span>
+              {%- elif g.tripped %}<span class="badge badge-yellow" title="a warning, not a hold: the copy may still go live">warn</span>
+              {%- else %}<span class="badge badge-green">ok</span>{% endif -%}
+            </td>
             <td class="col-muted" style="width:160px">{{ g.words }}</td>
             <td>{{ g.detail }}</td>
           </tr>
@@ -54,6 +58,9 @@
         in use (the rules or the screen changed, the map did not): it lands as a waiting run on
         the copy's card and is shown only when promoted. The rule since 2026-09-19: <em>the agent
         promotes when the gate is clean; anything with a warning waits for Steph.</em>
+        Since 2026-09-22 one warning does not wait: a zone code nobody has ruled on. The copy goes
+        live, the code is written down within the week, and until then only the lots in that code
+        sit — shown as a new zone under evaluation, never green and never red.
       </p>
     </div>
   </div>
@@ -159,6 +166,13 @@
           <textarea name="override" rows="2" style="width:100%;max-width:640px" placeholder="Why this copy goes live over the warning">{{ override if override_for == s.id else "" }}</textarea>
           <div style="margin-top:6px"><button type="submit" class="btn btn-secondary">Promote over the warning</button></div>
         {% else %}
+          {% if s.warns %}
+            <div class="alert alert-muted" style="font-size:12px" id="warn-only-{{ s.id }}">
+              Warned, not held: {{ s.warns|join(", ") }}. A zone code nobody has ruled on does not keep the rest of the
+              county waiting — this copy may go live, and only the lots in that code sit, shown as a new zone under
+              evaluation until the code is read (Steph, 2026-09-22).
+            </div>
+          {% endif %}
           <button type="submit" class="btn btn-primary">Promote — make this the copy in use</button>
         {% endif %}
       </form>
@@ -186,6 +200,12 @@
             <textarea name="override" rows="2" style="width:100%;max-width:640px" placeholder="Why this run goes live over the warning">{{ override if override_for == -s.rerun.id else "" }}</textarea>
             <div style="margin-top:6px"><button type="submit" class="btn btn-secondary">Promote the run over the warning</button></div>
           {% else %}
+            {% if s.rerun.warns %}
+              <div class="alert alert-muted" style="font-size:12px" id="warn-only-run-{{ s.rerun.id }}">
+                Warned, not held: {{ s.rerun.warns|join(", ") }}. A zone code nobody has ruled on does not keep the
+                re-screen waiting; only the lots in that code sit until the code is read.
+              </div>
+            {% endif %}
             <button type="submit" class="btn btn-primary">Promote — make run {{ s.rerun.id }} what the Lots pages show</button>
           {% endif %}
         </form>
