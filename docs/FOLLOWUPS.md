@@ -64,18 +64,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `min_density` had been caught by region scope only) is a dead end until
    `utility_easement` is read, because every OC R zone is capped on THAT
    fact on every field too (no easement layer in RLIS -- a measurement
-   question, not an encoding one). Wood Village TC (167 lots, seven fields
-   incl. `like`): Table 235-2 note (3) is a plain 15-ft side/rear variant
-   on `abuts_residential_zone` (the disposition names the lower-density
-   fact; re-point it) with a list from sections 210/220 (LR 7.5, LR 12,
-   MR 2, MR 4 true) vs 230/235/240/250/260 (NC, TC, LM, GM, C/I, O false);
-   note (2) is a HEIGHT PLANE FROM THE LOT LINE -- 25 ft within 25 ft of a
-   light-residential line, +1 ft per 2 ft beyond (the 26-ft pod clears it
-   ~27 ft in) -- which `step_back` cannot express (it charges the whole
-   standard from the setback line), so it needs a variant-level form, and
-   it also fires ACROSS A STREET ("right-of-way adjacent to a light
-   residential zone"), which the per-line measurement does not read yet
-   (same across-the-street question as Portland 33.910 in (d)). (b) DONE 2026-09-23 -- the nine `AHEAD_OF_QUADFIT`
+   question, not an encoding one). Wood Village TC ENCODED 2026-09-23 (28850154): note (3) = side 15
+   on `abuts_residential_zone`, note (2) = a VARIANT-level `step_back`
+   (27 ft side+rear for the 26-ft pod on `abuts_lower_density_zone`; the
+   across-the-street half is inert -- the ROW counts toward the distance),
+   both facts declared, TC cap gone, quadfit TC side 27 (larger limb);
+   RE-SCREEN IN FLIGHT (quadfit tree `data/quadfit_2026-09-24` on 137,
+   then bound, bridge chain, a new run, drift, promote on the standing word).
+   (b) DONE 2026-09-23 -- the nine `AHEAD_OF_QUADFIT`
    zones ported (0504ef84, larger neighbour limb, `needs_verification`),
    re-screened as run 14 and PROMOTED 18:43 UTC on the standing word
    (gate clean on eight rows; 0 of 576,062 earlier answers moved; the
