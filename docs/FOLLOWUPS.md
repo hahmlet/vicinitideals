@@ -553,3 +553,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    bond / urban renewal as the Gresham file does) and its CPR row; Clackamas
    needs its own rate file and CPR table (a different county publication).
    Pending decision: which city next (the pitch is per-city).
+15. **Ship and run the Gresham tax snapshot.** Branch
+   `claude/property-tax-impact-abvn5c` (e9eb7d77 fixes main's red CI count,
+   b27846fb the tax work) is pushed but not on main -- the push to main was
+   blocked pending Steph's go-ahead. Then: deploy (migration 0136), and in
+   the api container `python scripts/flats_tax_snapshot.py taxcodes --county M
+   --out /app/data/flats/tax/rlis_taxcodes_multnomah.csv`, `run --taxcodes
+   ... --dry-run`, the real run; read the AV vintage check (RLIS ASSESSVAL
+   should be the Jan 1 2025 roll) and spot-check ~10 scenario-A bills
+   against Multnomah's 2025-26 statements (within ~1%).
