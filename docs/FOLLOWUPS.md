@@ -554,8 +554,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    needs its own rate file and CPR table (a different county publication).
    Pending decision: which city next (the pitch is per-city).
 15. **Back-test the tax scenarios B and C against real new builds.**
-   Scenario A is verified (10 bills to 2 cents); B (one new house) and C
-   (pod as four lots) are statute-correct but unverified. Find recent
+   Scenario A is verified (10 bills to 2 cents). B is checked at the
+   median only (2026-09-23): modelled new-house AV median $291,298 vs
+   $288,220 actual on the 1,022 Gresham SFRs built 2020-24; their assessor
+   total ($549,930) sits at 1.01x their sale price (396 sold 2023+), so
+   RMV ~= price for new SFRs. C is statute-correct but unverified. Find recent
    Gresham new single-family houses and recent partitions / townhome
    plats (year_built 2022-24 on the roll), replay `impact.new_house` /
    `impact.pod` from their PRE-build roll values, and compare to their
