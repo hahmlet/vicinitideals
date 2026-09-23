@@ -76,13 +76,23 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    standard from the setback line), so it needs a variant-level form, and
    it also fires ACROSS A STREET ("right-of-way adjacent to a light
    residential zone"), which the per-line measurement does not read yet
-   (same across-the-street question as Portland 33.910 in (d)). (b) Oregon
-   City C/MUC-1/MUC-2/MUD/WFDD, Clackamas MR1/MR2/PMD/VA and Fairview TCC
-   (also VC/VO) are `AHEAD_OF_QUADFIT` (`test_zone_mirror.py`): quadfit's
-   `rules.yaml` has no row, s4 never measures them, so Oregon City's
-   declared fact has no lot to answer on -- port them at conservative base
-   setbacks; the neighbour-conditioned number comes from the FLATS
-   resolution, not the table. (c) 1,938 lots in the turning zones still
+   (same across-the-street question as Portland 33.910 in (d)). (b) IN FLIGHT 2026-09-23: the nine
+   `AHEAD_OF_QUADFIT` zones (Oregon City C/MUC-1/MUC-2/MUD/WFDD, Clackamas
+   MR1/MR2/PMD/VA) PORTED to `rules.yaml` in 0504ef84 at the LARGER
+   neighbour limb (OC 20 side/rear, MR 10 side -- the envelope's sides are
+   never widened after s5), all `needs_verification`. quadfit s3->s7 re-run
+   into `data/quadfit_2026-09-23` on 137: 1,557 new lots measured, 0 of
+   290,032 existing lots changed a single column, 0 lost; new lots 208
+   review / 1,349 red (no greens by design; reds mostly existing
+   commercial/multifamily and the 7,000 sq ft floor). Full bridge chain
+   `/root/chain_port.sh` (log `/root/chain_port.log`, started 08:15 UTC,
+   ~7 h) -> bundle `2026-09-23_port` scp'd to 114 -> runbook §4b R4-R7
+   (load as candidate on snapshot 3, drift from run 12, promote on the
+   standing word if clean). Then size what the 20-ft carve costs on OC
+   lots FLATS resolves as NOT abutting a residential zone (~140 OC
+   `pod_no_fit`) -- that is FOLLOWUPS 12's side-widening question. Fairview
+   TCC/VC/VO are NOT unscreened: each is `quadplex_allowed: false` behind a
+   lever, so they were never on the list. (c) 1,938 lots in the turning zones still
    lean on the fact: 813 a blank point across a line (park / ROW /
    fabric gap), 802 no non-street line at all (ringed by streets and
    alleys; the relaxing fact needs EVERY line), 272 a split-zone
