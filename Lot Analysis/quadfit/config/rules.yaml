@@ -1591,9 +1591,11 @@ jurisdictions:
     alley_is_street: true
     # Metro regional-zoning ZONE literals verified against the downloaded layer
     # (CITY='Clackamas Co.'): R5 R7 R8.5 R10 R15 R20 R30 VR57 VR45 — the nine
-    # ZDO-282 quadplex-eligible urban residential districts. Multi-family
-    # (MR1/MR2/HDR) and rural/resource (RRFF5/EFU/FF10/FU10/AGF/RA1/RA2/RR/etc.)
-    # are out of scope by convention and by the UGB gate.
+    # ZDO-282 quadplex-eligible urban residential districts. Rural/resource
+    # (RRFF5/EFU/FF10/FU10/AGF/RA1/RA2/RR/etc.) are out of scope by the UGB
+    # gate. The multi-family districts were left out here "by convention"
+    # until 2026-09-23; Table 315-1 permits a quadplex in MR-1, MR-2, PMD and
+    # VA, and they are ported at the foot of this list.
     # Setbacks/coverage are the ADOPTED figures from ZDO Section 315 Tables
     # 315-2 (R districts) and 315-3 (VR districts), "Last Amended 9/9/2024"
     # (extracted from the source PDF via pdftotext). Front is the dwelling
@@ -1719,6 +1721,71 @@ jurisdictions:
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
         notes: "Adopted ZDO 315 Table 315-3 dimensions verified (layer literal 'VR45' = ZDO 'VR-4/5'; front 10/max 18, side 0/5, rear 15, coverage 50%). The quadplex-by-right ALLOWANCE in VR-4/5 is needs_verification — county Middle Housing FAQ listed VR-5/7 but omitted VR-4/5, though Section 845 + Table 315-3 fn 23 contemplate quadplexes in both. Base SFD min lot 4,000 (max 5,000); waived for land division."
+      # The four Table 315-4 districts, ported 2026-09-23 from the FLATS
+      # corpus (flats/config/jurisdictions/or/clackamas/_unincorporated.yaml),
+      # where they were encoded 2026-09-08 and had sat as AHEAD_OF_QUADFIT in
+      # tests/test_zone_mirror.py since. Until this row existed s3 dropped
+      # their lots at `zone_not_in_rules`, so the county measured none of them.
+      #
+      # MR1 and MR2 carry the side setback at its LARGER limb on purpose.
+      # Table 315-4 note 14 makes the side yard 10 ft where the lot abuts a
+      # lower-density district and 7 ft otherwise; FLATS holds that as a base
+      # and a variant and answers it per lot from the zone s4 reads across each
+      # line. This file holds one number, and s5 carves the envelope's SIDES
+      # with it and nothing downstream widens them again -- so carving 7 would
+      # hand FLATS a building placed 3 ft too close on every lot where the 10
+      # is the rule, and carving 10 only costs fit on the lots where it is not.
+      # The neighbour-conditioned answer is FLATS's; this is the conservative
+      # envelope it is read against. The mirror audit counts a variant limb as
+      # agreement, so 10 is not drift.
+      #
+      # Every row is needs_verification, the treatment the 2026-09-02 ports got:
+      # the corpus values are unsigned drafts, and a zone nobody has counter-read
+      # routes its lots to REVIEW rather than GREEN. No coverage is stated for
+      # any of the four in Table 315-4, so none is carried. Height is "None" in
+      # MR-1, MR-2 and PMD and 45 ft in VA. Density (district land area per
+      # unit) is not a standard OAR 660-046-0220(2)(b) lets the county apply to
+      # a quadplex, and the corpus refuses it; so does this file.
+      - zone: MR1
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 10  # note 14's larger limb; 7 where no lower-density district abuts -- see above
+        setback_rear_ft: 20
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO Section 315 Table 315-4 (Medium Density Residential MR-1: front 15, garage 20, side 7 / 10 per note 14, rear 20, height none); quadplex ZDO 315 Table 315-1; min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. 839 lots. Side 10 is the note-14 limb (abutting a lower-density district), carried everywhere because the envelope's sides are carved with this number; FLATS answers 7 or 10 per lot. Garage-entrance 20 not carried: the pod has no garage. Max front setback is ZDO 1005.02(E) frontage occupancy, held in the corpus as orientation axis_required. Density 3,630 sf/unit not applied (OAR 660-046-0220(2)(b))."
+      - zone: MR2
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 10  # note 14's larger limb, as MR1
+        setback_rear_ft: 20
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO Section 315 Table 315-4 (Medium High Density Residential MR-2: front 15, side 7 / 10 per note 14, rear 20, height none); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. 120 lots. Reads as MR1 throughout; side 10 is the note-14 limb for the same reason. Density 2,420 sf/unit not applied (OAR 660-046-0220(2)(b))."
+      - zone: PMD
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 30
+        setback_rear_ft: 30
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO Section 315 Table 315-4 (Planned Medium Density Residential: front 15, side 30, rear 30, height none); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. Nine lots. No conditioned limb on any setback: note 10 (a planned unit development has no interior side or rear setback) is another application path, ruled as such in the corpus. Density 3,630 sf/unit not applied (OAR 660-046-0220(2)(b))."
+      - zone: VA
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 0  # Table 315-4 prints "None"; held in the corpus as exempt
+        setback_rear_ft: 0  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO Section 315 Table 315-4 (Village Apartment: front 10, max front 18, side none, rear none, height 45); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. One lot. A street-wall district: the 18 ft maximum front setback has no column here, and note 6 (Sunnyside Road frontage measured from the centerline) is ruled unmeasured in the corpus."
 
   happy_valley:
     eligible: true
@@ -2217,6 +2284,87 @@ jurisdictions:
         # the corpus signatures land.
         confidence: needs_verification
         notes: "Added 2026-09-08. R-2 had been excluded from this file and from the FLATS corpus as 'the multi-family zone'; Oregon City's own definitions say otherwise -- 17.04.989 a quadplex is four attached units on a lot, 17.04.780 multi-family is FIVE or more -- and 17.12.020 lists quadplexes as a PERMITTED use. Height 35 ft (the table's 45 ft is the multi-family exception and 25 ft the cottage-cluster one; neither is this building). Min lot depth 70 ft is stated and not carried here. Landscaping minimum 15 percent, the only one in Oregon City's residential tables. Density: 17.12.050 states a 21.8 du/acre MAXIMUM and, unlike 17.08.050.B.2 and 17.10.050.B.2, no exception letting a quadplex count as one unit -- but OAR 660-046-0220(2)(b) bars a Large City from applying a density maximum to a quadplex, so only the 17.4 floor binds. That floor cuts the other way from every other zone here: four units at 17.4 du/acre wants NET area at or under about 10,000 sq ft, so an R-2 lot can be too large. Garage setback row (20 ft ROW / 5 ft alley) not carried: the pod has no garage."
+      # The commercial and mixed-use side, ported 2026-09-23 from the FLATS
+      # corpus (flats/config/jurisdictions/or/clackamas/oregon-city.yaml,
+      # encoded 2026-09-08; AHEAD_OF_QUADFIT in tests/test_zone_mirror.py
+      # until today). The five districts that permit a quadplex; MUE, I, GI,
+      # CI, HC and NC forbid it and are not here.
+      #
+      # FOUR OF THE FIVE STATE THEIR SIDE AND REAR YARDS TWICE: "None" if the
+      # site does not abut a residential zone, twenty feet where it does
+      # (17.29.050.C-D, 17.29.060, 17.32.050, 17.34.060/070; the per-foot
+      # escalator over 35 ft adds nothing to a 26-ft building). This file holds
+      # one number per field, and it holds the TWENTY. s5 carves the envelope
+      # with it; FLATS resolves `abuts_residential_zone` per lot from the zone
+      # s4 reads across each line and charges the rear the difference, but the
+      # sides are never widened again -- so a zero here would place the
+      # building on the side line of every lot that backs onto a house. Twenty
+      # is wrong only in the direction of lost fit on lots with no residential
+      # neighbour. The mirror audit counts the variant limb as agreement.
+      #
+      # Front setback is zero in all five and takes no neighbour limb.
+      # Coverage is the code's "building AND parking lot" figure, which FLATS
+      # carries as building coverage (a weaker claim, and a true one). Minimum
+      # net density 17.4 binds in MUC-2, MUD and C; MUC-1's 17.29.050.I
+      # exempts a building of fewer than five units from it, and WFDD states
+      # none. The five-to-ten-foot MAXIMUM front setbacks (MUC-2, C, WFDD) and
+      # the 25-ft minimum building height (MUC-2, MUD, WFDD) have no column
+      # here; FLATS reads them. There is no minimum lot size in any of the five
+      # ("None", held exempt in the corpus). WFDD is the county parcel layer's
+      # spelling of the ordinance's WFD. All needs_verification, as R-2.
+      - zone: MUC-1
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 20  # abutting a residential zone; "None" otherwise -- see above
+        setback_rear_ft: 20  # the same
+        max_coverage_pct: 80
+        source: "OCMC 17.29.020.M (quadplex permitted) & 17.29.050 (MUC-1 dimensional standards); middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. Height 40 ft or three stories. Side/rear 20 is the abutting-residential limb (17.29.050.D), carried everywhere. Max front 5 ft and min density 17.4 both exempted for a standalone residential development of fewer than five units (17.29.050.I). Coverage 80 is building plus parking. Landscaping 20 percent. Parking may not sit in front of the building (17.16.060.E)."
+      - zone: MUC-2
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 20  # abutting a residential zone; "None" otherwise
+        setback_rear_ft: 20
+        max_coverage_pct: 90
+        min_density_du_per_acre: 17.4  # per NET developable area; the lot's gross area bounds it
+        source: "OCMC 17.29.020 (quadplex permitted, MUC-1 and MUC-2) & 17.29.060 (MUC-2 dimensional standards); middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. Height 60 ft; MINIMUM 25 ft or two stories (17.29.060.C). Side/rear 20 is the abutting-residential limb (17.29.060.F). Max front 5 ft binds: MUC-1's four-unit exemption is not in this section. Coverage 90 is building plus parking. Landscaping 10 percent. Min FAR 0.25 reaches nonresidential and mixed-use development only (17.29.070.A)."
+      - zone: MUD
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 20  # abutting a residential zone: 15 outside the downtown design district, 20 within
+        setback_rear_ft: 20
+        max_coverage_pct: 90
+        min_density_du_per_acre: 17.4  # per NET developable area; the lot's gross area bounds it
+        source: "OCMC 17.34.020.L (quadplex permitted) & 17.34.060 / 17.34.070 (MUD dimensional standards outside / within the downtown design district); middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. The district states its dimensions twice, outside (17.34.060) and within (17.34.070) the downtown design district, and nothing here holds that boundary; the corpus takes the tighter of each pair and so does this row (abutting setback 20 not 15, coverage 90 not 95). Height 58/75; minimum 25 ft or two stories. Max front setback exempted below five units (paragraph K). Townhouses prohibited (17.34.040.D): four units on one lot only."
+      - zone: C
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 20  # abutting a residential zone; "None" otherwise
+        setback_rear_ft: 20
+        max_coverage_pct: 85
+        min_density_du_per_acre: 17.4  # per NET developable area; the lot's gross area bounds it
+        source: "OCMC 17.32.020.S (quadplex permitted) & 17.32.050 (general commercial dimensional standards); middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. Height 60 ft. Side/rear 20 is the abutting-residential limb (17.32.050.D). Max front 5 ft binds, with no four-unit relief. Coverage 85 is building plus parking. Landscaping 15 percent."
+      - zone: WFDD
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        max_coverage_pct: 100
+        source: "OCMC 17.35.020.R (quadplex permitted) & 17.35.060 (Willamette Falls Downtown District dimensional standards); middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO"
+        confidence: needs_verification
+        notes: "Ported from the FLATS corpus 2026-09-23. Four lots. The layer spells the district WFDD; Title 17 calls it WFD. Setbacks 'None', stated once, with no abutting-residential limb -- the only district of the five without one. Max front 10 ft. Minimum height two entire stories AND 25 ft. Min FAR 1.0 (17.35.060.B) is not held anywhere and would bite: read plainly, a two-storey building must cover half its lot."
 
   gladstone:
     eligible: true

@@ -537,17 +537,19 @@ UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
 #: corpus is meant to; what it may not do is grow SILENTLY, which is the whole
 #: property this test defends. Every entry names the zone, and the assertion
 #: below fails the moment one appears that nobody has written a line for.
-AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {
-    # Encoded 2026-09-08 off the top of the rebuilt two-county coverage
-    # ledger. R-2.5 was encoded in the same pass and is absent here because it
-    # is a prohibition -- `unscreened_zones` counts only zones that permit the
-    # pod, and a zone that forbids it costs the pipeline nothing to not know.
-    "clackamas_unincorporated": ("MR1", "MR2", "PMD", "VA"),
-    # Oregon City's commercial and mixed-use side, encoded 2026-09-08. The
-    # five that permit a quadplex; MUE, I, GI, CI, HC and NC were encoded in
-    # the same pass as refusals and so are not here.
-    "oregon_city": ("C", "MUC-1", "MUC-2", "MUD", "WFDD"),
-}
+#:
+#: EMPTIED 2026-09-23, and the answer to the problem above turned out to be
+#: the envelope, not the table. The nine were ported with each conditioned
+#: setback at its LARGER limb -- twenty in Oregon City, note 14's ten on MR-1
+#: and MR-2 -- because s5 carves the envelope's sides with the rules.yaml
+#: number and nothing downstream widens them, so the smaller limb is the one
+#: that could manufacture a green. FLATS answers the condition per lot from the
+#: zone s4 reads across each line; this file supplies the conservative
+#: envelope it is read against. And the drift worry was unfounded: `scan()`
+#: counts a rules.yaml figure matching ANY limb of a corpus value as
+#: agreement, so the twenty is not reported. See the comment above the rows in
+#: rules.yaml, and `test_a_conditioned_port_carries_its_larger_limb` below.
+AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {}
 
 
 def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> None:
@@ -587,6 +589,48 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
         f"and per-jurisdiction "
         f"{ {j: sorted(set(found.get(j, ())) ^ set(expected.get(j, ()))) for j in set(found) | set(expected)} }"
     )
+
+
+#: The site facts about the zone ACROSS a lot line. FLATS answers each per lot
+#: from s4's per-line reading; rules.yaml cannot, and carries one number.
+NEIGHBOUR_FACTS: frozenset[str] = frozenset({
+    "abuts_residential_zone",
+    "abuts_lower_density_zone",
+    "abuts_nonresidential_zone",
+})
+
+
+def test_a_conditioned_port_carries_its_larger_limb() -> None:
+    """A side yard that turns on the neighbouring zone is carved at its widest.
+
+    s5 cuts the envelope's SIDES with the rules.yaml figure and nothing after
+    it widens them: FLATS reconciles the rear (`behind`) and never the sides.
+    So where the corpus says "0, or 20 if a residential zone abuts", a rules.yaml
+    zero builds the envelope a house-backing lot is not allowed, and the screen
+    reads its fit off that envelope. The larger limb costs fit on the lots
+    where the condition is false and can never buy a green; that is the
+    direction the port took on 2026-09-23 for Oregon City's commercial side
+    and Clackamas MR-1 / MR-2, and this holds every row to it.
+
+    Only the side is held. The rear's difference is charged back per lot, and
+    a zone's other limbs (a band, a lot-type) are not neighbour facts.
+    """
+    audit = _audit()
+    top, corpus = audit._load()
+    short: list[str] = []
+    for juris, z, zl, layer in audit._pairs(top, corpus):
+        shipped = z.get("setback_side_ft")
+        value = zl.values.get("setback_side_ft")
+        if shipped is None or value is None:
+            continue
+        limbs = [
+            float(v.value)
+            for v in value.variants or ()
+            if v.value is not None and NEIGHBOUR_FACTS & set(v.when)
+        ]
+        if limbs and float(shipped) < max(limbs):
+            short.append(f"{juris}/{z['zone']}: {shipped} < {max(limbs)}")
+    assert short == [], short
 
 
 #: Standards the corpus reads, cites and holds on a zone BOTH files carry, that
@@ -648,8 +692,8 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #:     5,000/10,000/14,000 sq ft, and unincorporated Multnomah's two copies of
 #:     the same Portland sections. Four clears two on any lot.
 #:   * `min_building_separation_ft`: 10 ft between buildings, Fairview and
-#:     Happy Valley. The pod is ONE building. There is nothing to separate it
-#:     from.
+#:     Happy Valley (and since 2026-09-23 Clackamas PMD's 10 and VA's 20). The
+#:     pod is ONE building. There is nothing to separate it from.
 #:
 #: ZERO GREENS TODAY -- a fact about the corpus, not about the rule, and it can
 #: change the moment one of those zones is verified:
@@ -786,19 +830,26 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #:             terms. It is a follow-on, not a rider -- a ratio of two
 #:             measurements is a new comparison, and this commit is already
 #:             moving verdicts in eleven cities.
+#: Grew 2026-09-23 by the nine AHEAD_OF_QUADFIT ports, every one of them
+#: `needs_verification` so its lots reach REVIEW here: MR-1 / MR-2 / PMD
+#: garage entrance, PMD / VA building separation, VA / MUC-2 / C / WFDD
+#: maximum front, the four Oregon City landscaping minimums, MUC-1's storeys,
+#: and the MUC-2 / MUD / WFDD minimum height (WFDD's storeys as well). FLATS
+#: reads every one of them from the corpus; this pipeline does not.
 UNEXPRESSIBLE: dict[str, int] = {
-    "setback_garage_entrance_ft": 64,
-    "min_landscaped_pct": 34,
-    "setback_front_max_ft": 27,
+    "setback_garage_entrance_ft": 67,
+    "min_landscaped_pct": 38,
+    "setback_front_max_ft": 31,
     "max_density_du_per_acre": 21,
-    "min_building_separation_ft": 9,
+    "min_building_separation_ft": 11,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
     "max_lot_depth_ratio": 4,
     "max_units": 2,
-    "max_height_stories": 2,
+    "max_height_stories": 3,
     "setback_side_total_ft": 1,
-    "min_building_height_ft": 1,
+    "min_building_height_ft": 4,
+    "min_building_height_stories": 1,
 }
 
 
@@ -826,13 +877,17 @@ def test_a_standard_with_no_column_is_a_standard_nobody_applies() -> None:
 #: The three entries on UNEXPRESSIBLE whose reason is the pod's own arithmetic
 #: rather than the state of the corpus, and the value each has to keep for that
 #: reason to hold. See the ledger note above.
-INERT_BY_ARITHMETIC: dict[str, float] = {
+INERT_BY_ARITHMETIC: dict[str, float | None] = {
     #: A cap of four on a four-unit building is met exactly, not breached.
     "max_units": 4,
     #: A floor of two units is cleared by four on any lot, at any trigger size.
     "min_units_at_trigger": 2,
-    #: Ten feet between buildings, and the pod is one building.
-    "min_building_separation_ft": 10,
+    #: Distance between buildings, and the pod is one building. None because the
+    #: reason is the COUNT of buildings, not the figure: it held at Fairview's
+    #: and Happy Valley's ten, and holds at the twenty Clackamas VA states
+    #: (ported 2026-09-23). Asserting ten here broke on a number that was
+    #: never the argument.
+    "min_building_separation_ft": None,
 }
 
 
@@ -867,7 +922,9 @@ def test_the_inert_standards_are_inert_because_of_their_values() -> None:
             # R-6's block, which is the encoding rather than a gap in it.
             effective = audit._effective(layer, layer.zones[zone])
             value = effective.get(field) or layer.defaults.get(field)
-            assert value is not None and float(value.value) == expected, (
+            assert value is not None and (
+                expected is None or float(value.value) == expected
+            ), (
                 f"{key}.{field} reads {value and value.value}, not {expected} "
                 f"-- the reason it is inert no longer holds"
             )
