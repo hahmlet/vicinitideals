@@ -540,3 +540,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    point where quadfit's s5 stops mattering to the screen. Bound (ii) on
    the subset first: every lot whose FLATS envelope differs from s5's must
    be explained by a variant that fired, and the diff read both ways.
+13. **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
+   (`scripts/flats_tax_snapshot.py`, migration 0136) needs each lot's tax
+   code area (RLIS `TAXCODE`), which acquire drops because it is not a
+   declared field; the script's `taxcodes` step pulls it separately out of
+   the quarterly ZIP. Declare `TAXCODE` in the RLIS fields and carry it into
+   `facts["assessor"]` so the next snapshot joins on the lot row and the
+   county copy and the code areas are guaranteed the same release.
+14. **Tax impact beyond Gresham.** `flats/config/tax/or/multnomah/2025-26.yaml`
+   holds Gresham's eleven code areas only. Another city needs its code
+   areas' rates (Multnomah's levy-code-rates PDF, split local option /
+   bond / urban renewal as the Gresham file does) and its CPR row; Clackamas
+   needs its own rate file and CPR table (a different county publication).
+   Pending decision: which city next (the pitch is per-city).

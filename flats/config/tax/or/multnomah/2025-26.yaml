@@ -1,0 +1,297 @@
+# Multnomah County property-tax rates, tax year 2025-26 -- the City of Gresham's
+# tax code areas only. Read by flats/tax/rates.py for the tax-impact snapshot
+# (scripts/flats_tax_snapshot.py). Rates are dollars per $1,000 of assessed value.
+#
+# Where each number comes from:
+#   * levies per code area: Multnomah A&T, "Table of Consolidated Tax Rates for
+#     Levy Code Areas 2025-2026" -- the billing rate of every district in each
+#     code area, "limited" (inside the Measure 5 limit) and "bond" columns. Every
+#     code area below reconciles to the table's own education / general
+#     government / total columns to the ten-thousandth.
+#   * the permanent vs local-option split inside a "limited" column: Multnomah
+#     A&T, "Summary of Assessments and Taxes 2025-2026" (certified 10/03/25):
+#     City of Gresham LOC OPT 1.3500, Metro LOC OPT 0.0960, Multnomah County Hist
+#     Soc LOC OPT 0.0500. All three were approved after 2001-10-06, so urban
+#     renewal division of tax never reduces them (the table's reduced Gresham,
+#     Metro and County columns in the renewal-affected code areas are the
+#     permanent rate x the same division factor plus these unreduced options --
+#     checked for every code area below).
+#   * urban renewal: the table carries Gresham's division of tax as one
+#     general-government "URBAN RENEWAL" column. It is split here by the
+#     category of the levy it was divided from (published permanent rate minus
+#     the billed rate, per levy), so Measure 5 limits each category's real
+#     amount. The two parts sum to the table's column exactly in every code area.
+#   * residential CPR: Multnomah A&T, "Changed Property Ratios by Property
+#     Class", 2025-2026, GRESHAM, (1XX) Residential = 0.540. Gresham defines
+#     "area" as the city under ORS 308.151, so it has its own ratios.
+#
+# Only permanent rates, local options, bonds and urban renewal are here: no
+# special assessments, exemptions, or partial-exemption programmes.
+
+tax_year: "2025-26"
+county: multnomah
+assessment_date: "2025-01-01"
+retrieved: "2026-09-23"
+cpr:
+  residential: "0.540"
+sources:
+  levy_code_rates: https://multco.us/file/2025-2026-levy-code-rates/download
+  summary_of_assessments_and_taxes: https://multco.us/file/2025-2026-summary-of-assessments-and-taxes/download
+  sal_4a: https://multco.us/file/2025-2026_sal_4a/download
+  changed_property_ratios: https://multco.us/file/2025-2026_change_property_ratios/download
+  reports_page: https://multco.us/info/reports-and-data
+
+#: district key -> the name on the county's tables. ``city`` is the district a
+#: "city share" figure sums.
+city: city_of_gresham
+districts:
+  multnomah_esd: MULTNOMAH ESD
+  gresham_barlow_sd10: GRESHAM-BARLOW SCH DIST #10
+  reynolds_sd7: REYNOLDS SCHOOL DIST #7
+  centennial_sd28j: CENTENNIAL SCHOOL DIST #28
+  mt_hood_cc: MT HOOD COMM COLLEGE
+  port_of_portland: PORT OF PORTLAND
+  city_of_gresham: CITY OF GRESHAM
+  lusted_water: LUSTED WATER DIST
+  rockwood_pud: ROCKWOOD P.U.D.
+  east_mult_swcd: EAST MULT. SOIL & WATER - GOV
+  urban_flood_safety_wq: URB FLOOD SAFE & WATER QUAL DIST BONDS
+  metro: METRO
+  multnomah_county: MULTNOMAH COUNTY (incl. LIBRARY 1.2200, HIST SOC LOC OPT)
+  trimet: TRI-MET TRANSPORTATION BONDS
+  urban_renewal_gresham: URBAN RENEWAL - GRESHAM (division of tax)
+
+code_areas:
+  "026":
+    total_rate: "20.3496"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: gresham_barlow_sd10, kind: permanent, category: education, rate: "4.5268"}
+      - {district: gresham_barlow_sd10, kind: bond, category: education, rate: "2.7207"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.0516"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "047":
+    total_rate: "19.1893"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: reynolds_sd7, kind: permanent, category: education, rate: "3.6316"}
+      - {district: reynolds_sd7, kind: bond, category: education, rate: "1.6246"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.8826"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "137":
+    total_rate: "20.3496"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: gresham_barlow_sd10, kind: permanent, category: education, rate: "4.5268"}
+      - {district: gresham_barlow_sd10, kind: bond, category: education, rate: "2.7207"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.0516"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "383":
+    total_rate: "18.9371"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: centennial_sd28j, kind: permanent, category: education, rate: "4.7373"}
+      - {district: centennial_sd28j, kind: bond, category: education, rate: "1.0902"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.0591"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "386":
+    total_rate: "18.9371"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: centennial_sd28j, kind: permanent, category: education, rate: "4.7373"}
+      - {district: centennial_sd28j, kind: bond, category: education, rate: "1.0902"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.0591"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "394":
+    total_rate: "21.1296"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: gresham_barlow_sd10, kind: permanent, category: education, rate: "4.5268"}
+      - {district: gresham_barlow_sd10, kind: bond, category: education, rate: "2.7207"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: lusted_water, kind: permanent, category: general_government, rate: "0.2423"}
+      - {district: lusted_water, kind: bond, category: general_government, rate: "0.5377"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.0516"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "402":
+    total_rate: "19.1893"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: reynolds_sd7, kind: permanent, category: education, rate: "3.6316"}
+      - {district: reynolds_sd7, kind: bond, category: education, rate: "1.6246"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.8826"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "901":
+    total_rate: "19.1893"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: reynolds_sd7, kind: permanent, category: education, rate: "3.6316"}
+      - {district: reynolds_sd7, kind: bond, category: education, rate: "1.6246"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.8826"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "902":
+    total_rate: "19.1893"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: reynolds_sd7, kind: permanent, category: education, rate: "3.6316"}
+      - {district: reynolds_sd7, kind: bond, category: education, rate: "1.6246"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.8826"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "903":
+    total_rate: "20.3496"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: gresham_barlow_sd10, kind: permanent, category: education, rate: "4.5268"}
+      - {district: gresham_barlow_sd10, kind: bond, category: education, rate: "2.7207"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.0516"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}
+  "904":
+    total_rate: "18.9371"
+    levies:
+      - {district: multnomah_esd, kind: permanent, category: education, rate: "0.4327"}
+      - {district: centennial_sd28j, kind: permanent, category: education, rate: "4.7373"}
+      - {district: centennial_sd28j, kind: bond, category: education, rate: "1.0902"}
+      - {district: mt_hood_cc, kind: permanent, category: education, rate: "0.4650"}
+      - {district: mt_hood_cc, kind: bond, category: education, rate: "0.2513"}
+      - {district: port_of_portland, kind: permanent, category: general_government, rate: "0.0663"}
+      - {district: city_of_gresham, kind: permanent, category: general_government, rate: "3.4163"}
+      - {district: city_of_gresham, kind: local_option, category: general_government, rate: "1.3500"}
+      - {district: east_mult_swcd, kind: permanent, category: general_government, rate: "0.0946"}
+      - {district: urban_flood_safety_wq, kind: bond, category: general_government, rate: "0.0135"}
+      - {district: metro, kind: permanent, category: general_government, rate: "0.0914"}
+      - {district: metro, kind: local_option, category: general_government, rate: "0.0960"}
+      - {district: metro, kind: bond, category: general_government, rate: "0.3829"}
+      - {district: multnomah_county, kind: permanent, category: general_government, rate: "5.2608"}
+      - {district: multnomah_county, kind: local_option, category: general_government, rate: "0.0500"}
+      - {district: multnomah_county, kind: bond, category: general_government, rate: "0.5661"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: education, rate: "0.0591"}
+      - {district: urban_renewal_gresham, kind: urban_renewal, category: general_government, rate: "0.5136"}

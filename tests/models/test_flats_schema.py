@@ -122,6 +122,10 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         "crossref_rulings",
         "reading_rulings",
         "word_rulings",
+        # A one-off property-tax impact snapshot (0136): what each green lot
+        # of one jurisdiction pays today, as one new house, and as the pod.
+        "tax_snapshots",
+        "tax_impact_lots",
     }
 
 

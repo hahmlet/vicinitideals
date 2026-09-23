@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import date, datetime
+from decimal import Decimal
 from typing import Any
 
 from geoalchemy2 import Geometry
@@ -907,3 +908,104 @@ class FlatsWordRuling(Base):
     #: When the drain wrote this into the repository. NULL means pending, and
     #: pending is visible in the queue rather than silent.
     exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class FlatsTaxSnapshot(Base):
+    """One property-tax impact snapshot: what a set of green lots pays today,
+    and would pay as a new house or as the pod split four ways.
+
+    A one-off, not a pipeline stage -- nothing recomputes it when lots are
+    re-screened; a new snapshot is a new row. ``params`` holds every input the
+    figures depend on (the CPR, the pod's value band, the new house's value and
+    how it was derived, the rate file and its sources, the run and the
+    code-area file read), so a figure can be traced without re-running it.
+    The arithmetic is ``flats/tax/``.
+    """
+
+    __tablename__ = "tax_snapshots"
+    __table_args__ = {"schema": SCHEMA}
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    #: Rule-layer id of the lots priced, e.g. ``or/multnomah/gresham``.
+    jurisdiction: Mapped[str] = mapped_column(String(80), nullable=False)
+    #: The certified tax year of the rates, e.g. ``2025-26``.
+    tax_year: Mapped[str] = mapped_column(String(16), nullable=False)
+    #: The screening run the green lots were read from.
+    run_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.runs.id", ondelete="SET NULL")
+    )
+    params: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
+
+    lots: Mapped[list["FlatsTaxImpactLot"]] = relationship(
+        back_populates="snapshot", cascade="all, delete-orphan"
+    )
+
+
+class FlatsTaxImpactLot(Base):
+    """One green lot's tax figures in one snapshot.
+
+    Scenario A is the lot today, B one new single-family house (no partition),
+    C the pod partitioned into four fee-simple lots, at the low and the high
+    end of the per-unit value band -- C's figures are the four lots summed.
+    For each: ``*_total``, the year-one headline bill -- permanent rates (with
+    the urban renewal divided from them) plus bonds, after Measure 5, local
+    options EXCLUDED -- and ``*_local_option`` beside it (the full bill is the
+    two added); the
+    city's own share (its permanent + bond tax) and its local option; the
+    assessed value; and a ten-year cumulative headline, illustrative (RMV and
+    rates flat, AV growing 3% a year to RMV). Money is NUMERIC(14, 2).
+    """
+
+    __tablename__ = "tax_impact_lots"
+    __table_args__ = (
+        Index("ix_flats_tax_impact_lots_lot", "lot_id"),
+        {"schema": SCHEMA},
+    )
+
+    tax_snapshot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.tax_snapshots.id", ondelete="CASCADE"), primary_key=True
+    )
+    lot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.lots.id", ondelete="CASCADE"), primary_key=True
+    )
+    tlid: Mapped[str] = mapped_column(String(40), nullable=False)
+    #: both | quadfit_only | flats_only -- which screen called the lot green.
+    green_source: Mapped[str] = mapped_column(String(16), nullable=False)
+    #: The county's tax code area (RLIS TAXCODE); NULL when the roll had none.
+    taxcode: Mapped[str | None] = mapped_column(String(8))
+
+    a_av: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    a_total: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    a_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    a_city: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    a_city_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    a_ten_year: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+
+    b_av: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    b_total: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    b_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    b_city: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    b_city_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    b_ten_year: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+
+    c_low_av: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_low_total: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_low_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_low_city: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_low_city_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_low_ten_year: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+
+    c_high_av: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_high_total: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_high_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_high_city: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_high_city_local_option: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+    c_high_ten_year: Mapped[Decimal | None] = mapped_column(Numeric(14, 2))
+
+    #: Approximation flags and anything the figures should be read with.
+    notes: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
+
+    snapshot: Mapped["FlatsTaxSnapshot"] = relationship(back_populates="lots")
