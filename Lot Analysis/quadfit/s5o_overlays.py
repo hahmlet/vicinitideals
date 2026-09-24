@@ -155,6 +155,43 @@ def carve_envelopes(lots, carve_specs, layer_geoms):
     return carved
 
 
+def carve_regions(lots, carve_specs, layer_geoms):
+    """The ground each lot loses to carve overlays, clipped to the lot.
+
+    What `carve_envelopes` subtracts, recorded on its own so a caller that
+    cuts its own setback envelope (FLATS, FOLLOWUPS 12) can take the same
+    overlays off it: ``(lot - strips) - region`` is s5o's envelope whenever
+    the strips are s5's. Measured against the whole lot, not the envelope,
+    because a looser setback leaves ground the carve must still reach.
+    ``None`` where no carve overlay touches the lot.
+    """
+    import numpy as np
+    import shapely
+    from shapely.strtree import STRtree
+
+    trees = []
+    for spec in carve_specs:
+        geoms = layer_geoms[spec.key]
+        if spec.buffer_ft > 0:
+            geoms = [shapely.buffer(g, spec.buffer_ft) for g in geoms]
+        trees.append((spec, STRtree(geoms), np.array(geoms, dtype=object)))
+
+    regions = []
+    for jur, lot in zip(lots["jurisdiction"], lots["lot_geom"]):
+        hits = []
+        if lot is not None and not lot.is_empty:
+            for spec, tree, garr in trees:
+                if not spec.applies_to(jur):
+                    continue
+                hits.extend(garr[tree.query(lot, predicate="intersects")])
+        if not hits:
+            regions.append(None)
+            continue
+        region = shapely.intersection(lot, shapely.union_all(hits))
+        regions.append(None if region.is_empty else region)
+    return regions
+
+
 class DemIndex:
     """Window-read slope stats from 3DEP 1 m tiles (slope computed per tile
     lazily via elevation gradient, cached in memory as float16 arrays)."""
@@ -397,6 +434,12 @@ def main() -> None:
                       < lots["envelope_setback_sqft"] - 1.0).sum())
         emptied = int((lots["envelope_sqft"] <= 0).sum())
         print(f"  carve shrank {shrunk:,} envelopes ({emptied:,} to empty)")
+        lots["carve_wkb"] = [
+            None if g is None else shapely.to_wkb(g)
+            for g in carve_regions(lots, carve_specs, layer_geoms)
+        ]
+    else:
+        lots["carve_wkb"] = None
     lots["envelope_carved_sqft"] = lots["envelope_sqft"]
 
     # Slope stats over the (carved) envelope; lot as fallback.

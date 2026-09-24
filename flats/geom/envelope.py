@@ -100,18 +100,29 @@ def _clean(env: BaseGeometry, min_part_sqft: float) -> MultiPolygon:
     return MultiPolygon(parts)
 
 
+def _less(env: BaseGeometry, less: BaseGeometry | None) -> BaseGeometry:
+    if less is None or less.is_empty or env.is_empty:
+        return env
+    return env.difference(less)
+
+
 def buildable(
     lot: BaseGeometry,
     edges: LotEdges,
     setbacks: Setbacks,
     *,
     min_part_sqft: float = MIN_PART_SQFT,
+    less: BaseGeometry | None = None,
 ) -> MultiPolygon:
     """The area of ``lot`` a building may occupy. May be empty.
 
     An empty envelope is a real answer — on a small lot deep setbacks can
     consume everything — and it flows through to a fit of zero rather than an
     error.
+
+    ``less`` is ground taken off after the setbacks and before fragments are
+    dropped: the overlays a city keeps building out of (a greenway, a
+    wetland buffer), as quadfit's s5o records them per lot.
     """
     if lot is None or lot.is_empty:
         return MultiPolygon([])
@@ -124,7 +135,7 @@ def buildable(
         # Irregular, flag, or unclassifiable: shrink uniformly by the worst
         # setback. Conservative on purpose — see the module docstring.
         env = lot.buffer(-setbacks.largest_ft) if setbacks.largest_ft > 0 else lot
-        return _clean(env, min_part_sqft)
+        return _clean(_less(env, less), min_part_sqft)
 
     strips = []
     for edge in edges.edges:
@@ -137,4 +148,4 @@ def buildable(
             )
         )
     env = lot.difference(shapely.union_all(strips)) if strips else lot
-    return _clean(env, min_part_sqft)
+    return _clean(_less(env, less), min_part_sqft)

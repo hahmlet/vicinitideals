@@ -417,7 +417,7 @@ def snapshot_facts(nr: dict[str, Any], row: dict[str, Any]) -> dict[str, Any]:
 
 def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     """What one lot x design row becomes in ``lot_results.checks``."""
-    return _clean(
+    checks = _clean(
         {
             "verdict": row.get("triage"),
             "if_signed": row.get("if_signed"),
@@ -450,6 +450,13 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
             "search": {"angles": _int(row.get("angles")), "step_deg": _num(row.get("step_deg"))},
         }
     )
+    # The ground this design was fitted on: cut by FLATS from the yards it
+    # resolved, or quadfit's where FLATS could not cut one. Absent from a
+    # bridge run written before the bridge cut its own (FOLLOWUPS 12).
+    source = _clean(row.get("envelope_source"))
+    if isinstance(source, str) and source:
+        checks["envelope"] = {"sqft": _num(row.get("envelope_sqft")), "source": source}
+    return checks
 
 
 def result_binding(row: dict[str, Any]) -> list[str]:

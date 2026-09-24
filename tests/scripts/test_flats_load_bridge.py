@@ -251,6 +251,13 @@ def test_the_checks_record_keeps_the_signed_colour_beside_the_verdict_never_in_i
     assert checks["verdict"] == "unknown"
     assert checks["if_signed"] == "green"
     assert checks["fits"] is True
+    # A row from before the bridge cut its own envelope says nothing about it.
+    assert "envelope" not in checks
+
+
+def test_the_checks_record_names_the_ground_the_design_was_fitted_on() -> None:
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "envelope_sqft": 2700.0, "envelope_source": "flats"}
+    assert result_checks(row)["envelope"] == {"sqft": 2700.0, "source": "flats"}
 
 
 def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
