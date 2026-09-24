@@ -25,12 +25,13 @@ see :func:`observed_facts`, which names each one and refuses the rest; a
 :class:`~flats.rules.resolver.ZoneResolution` from the corpus under
 :func:`~flats.score.configure.configure`; and a
 :class:`~flats.fit.rectangle.Fit` searched by :func:`~flats.score.screen.fit_for`
-at the width the zone's parking asks. The envelope is quadfit's carved one,
-on purpose: fitting on the same ground quadfit fitted on is what lets a
-disagreement between the two products be read as a difference in the
-rules and the parking, not in the setbacks. FLATS cutting its own envelope
-from the corpus setbacks (:func:`flats.geom.envelope.buildable`) is the
-next step, not this one.
+at the width the zone's parking asks. The envelope is FLATS's own
+(:func:`envelope_for`): the taxlot cut at the setbacks the corpus resolved
+for that lot and design -- the variant a commercial neighbour, an alley or
+a corner fired -- less the ground s5o's carve overlays took. quadfit's
+carved envelope is used only where FLATS cannot cut one (no taxlot, no
+street, a yard with no number, an exempt rear on a lot whose rear line is
+not all alley), and each row says which (``envelope_source``).
 
 **What the verdict is today.** Every value in the corpus is ``draft`` --
 no ``flats/config/verifications.jsonl`` exists -- so the screen answers
