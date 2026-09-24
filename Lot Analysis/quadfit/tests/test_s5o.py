@@ -102,6 +102,39 @@ def test_carve_envelopes_subtracts_buffered_overlay():
     assert carved[1].area == pytest.approx(100 * 100, rel=1e-9)
 
 
+def test_the_carve_region_takes_off_what_the_carve_took():
+    """(lot - strips) - region is s5o's envelope, and reaches past it.
+
+    FLATS cuts its own setback strips and takes the recorded region off
+    them; the region is measured against the lot so ground a looser
+    setback leaves is still carved.
+    """
+    import pandas as pd
+    from shapely.geometry import box
+
+    from s5o_overlays import carve_envelopes, carve_regions
+
+    lot = box(0, 0, 100, 100)
+    env = box(10, 10, 90, 90)
+    lots = pd.DataFrame(
+        [
+            {"jurisdiction": "gresham", "geom": env, "lot_geom": lot},
+            {"jurisdiction": "portland", "geom": env, "lot_geom": lot},
+            {"jurisdiction": "gresham", "geom": env, "lot_geom": box(500, 500, 600, 600)},
+        ]
+    )
+    spec = _spec(buffer_ft=10)
+    layer = {"t": [box(95, -10, 200, 110)]}
+    carved = carve_envelopes(lots, [spec], layer)
+    region = carve_regions(lots, [spec], layer)
+    assert region[0].equals(box(85, 0, 100, 100))
+    assert env.difference(region[0]).equals(carved[0])
+    # A looser strip leaves ground behind x=85 the carve still takes.
+    assert lot.difference(region[0]).area == pytest.approx(85 * 100)
+    assert region[1] is None  # the layer does not apply here
+    assert region[2] is None  # nothing touches this lot
+
+
 def test_carve_can_empty_an_envelope():
     from shapely.geometry import box
 

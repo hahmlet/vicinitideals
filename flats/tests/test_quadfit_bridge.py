@@ -20,7 +20,7 @@ import yaml
 from flats.designs.model import Design
 from flats.encode.load import load_trusted
 from flats.fit.angles import sweep
-from flats.geom.edges import Tier
+from flats.geom.edges import EdgeClass, Tier
 from flats.ingest.quadfit import (
     OBSERVABLE,
     S4_COLUMNS,
@@ -29,13 +29,16 @@ from flats.ingest.quadfit import (
     TIER,
     carved_rear_ft,
     compare,
+    envelope_for,
     iter_rows,
+    lot_edges,
     lot_from_row,
     observed_facts,
     per_lot,
     row_for,
     run,
     screen_lot,
+    setbacks_for,
 )
 from flats.rules.conditions import CONDITIONS
 from flats.score import relief, slack
@@ -555,3 +558,148 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
         older, index=False
     )
     assert "Stalls seated, where both are green" in compare(frame, older)
+
+
+# --- the envelope FLATS cuts (FOLLOWUPS 12) ----------------------------------
+
+LOT = shapely.box(X0, Y0, X0 + 50, Y0 + 100)
+
+
+def cut_row(**over: object) -> dict[str, object]:
+    """A row with the taxlot on it, so the bridge cuts its own envelope."""
+    return row(lot_wkb=shapely.to_wkb(LOT), **over)
+
+
+class Rules:
+    """A resolution stub: the numbers, and the yards the code exempts."""
+
+    def __init__(self, *exempted: str, **values: object) -> None:
+        self.values = values
+        self.exempted = exempted
+
+    def get(self, name: str) -> object:
+        return self.values.get(name)
+
+
+def walled(*rear: tuple[str, str]) -> str:
+    """Commercial neighbours both sides, ``rear`` behind."""
+    return across(zoned(("portland", "CM2")), zoned(*rear), zoned(("portland", "CM2")))
+
+
+def test_the_envelope_is_cut_with_the_yards_the_corpus_resolved(corpus, policies) -> None:
+    # Portland CM2 owes 10 ft side and rear against a house and nothing
+    # walled in by commercial lots. quadfit cuts one figure for both; the
+    # bridge cuts the one this lot resolves.
+    layers = corpus.layers
+    house = lot_from_row(cut_row(zone="CM2", neighbour_zones_json=walled(("portland", "R5"))), layers)
+    shops = lot_from_row(cut_row(zone="CM2", neighbour_zones_json=walled(("portland", "CX"))), layers)
+    (h,) = screen_lot(house, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (s,) = screen_lot(shops, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert h.envelope.source == s.envelope.source == "flats"
+    # The side edge takes 10 on both lines (the R5 is on the rear line only,
+    # and the ANY-line fact tightens every yard it governs).
+    assert h.envelope.sqft == pytest.approx(30 * 90)
+    assert s.envelope.sqft == pytest.approx(50 * 100)
+    # The resolved rear IS the strip cut, so the court is charged against
+    # the rules' own number.
+    assert h.envelope.rear_cut_ft is None
+    assert row_for(s)["envelope_source"] == "flats"
+    assert row_for(s)["envelope_sqft"] == pytest.approx(5000)
+
+
+def test_without_the_taxlot_or_a_street_the_envelope_stays_quadfits(corpus, policies) -> None:
+    for lot in (
+        lot_from_row(row()),  # a stage file from before the lot polygon rode along
+        lot_from_row(cut_row(tier="D", edges_json="[]", front_bearings_json="[]")),
+    ):
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        assert s.envelope.source == "quadfit"
+        assert s.envelope.geom is lot.envelope
+
+
+def test_a_yard_the_rules_leave_without_a_number_keeps_quadfits_envelope(corpus) -> None:
+    lot = lot_from_row(cut_row(zone="NOT-A-ZONE"))
+    got = corpus.resolve("or/multnomah/portland", "NOT-A-ZONE", frozenset())
+    assert envelope_for(lot, got).source == "quadfit"
+
+
+def test_the_carve_overlays_come_off_the_envelope_flats_cuts(corpus, policies) -> None:
+    greenway = shapely.box(X0, Y0 + 70, X0 + 50, Y0 + 100)
+    lot = lot_from_row(
+        cut_row(zone="CM2", neighbour_zones_json=walled(("portland", "CX")), carve_wkb=shapely.to_wkb(greenway)),
+        corpus.layers,
+    )
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.envelope.source == "flats"
+    assert s.envelope.sqft == pytest.approx(50 * 70)
+
+
+def test_an_irregular_lot_is_inset_at_its_largest_yard_and_charged_so() -> None:
+    lot = lot_from_row(cut_row(tier="C"))
+    got = Rules(setback_front_ft=10, setback_side_ft=5, setback_rear_ft=15)
+    env = envelope_for(lot, got)  # type: ignore[arg-type]
+    assert env.source == "flats"
+    assert env.sqft == pytest.approx(20 * 70)
+    assert env.rear_cut_ft == 15
+
+
+def test_an_alley_edge_is_named_rear_or_side_by_its_bearing() -> None:
+    behind = [*EDGES[:2], [X0 + 50, Y0 + 100, X0, Y0 + 100, "A"], EDGES[3]]
+    beside = [EDGES[0], [X0 + 50, Y0, X0 + 50, Y0 + 100, "A"], *EDGES[2:]]
+    rear = lot_edges(cut_row(edges_json=json.dumps(behind)), LOT)
+    side = lot_edges(cut_row(edges_json=json.dumps(beside)), LOT)
+    assert [(e.cls, e.alley) for e in rear.edges][2] == (EdgeClass.rear, True)
+    assert [(e.cls, e.alley) for e in side.edges][1] == (EdgeClass.side, True)
+    assert not any(e.alley for e in lot_edges(cut_row(), LOT).edges)
+    assert lot_edges(cut_row(edges_json="[]")) is None
+
+
+def test_a_combined_side_yard_is_split_evenly_between_the_two_sides() -> None:
+    got = setbacks_for(Rules(setback_front_ft=10, setback_side_ft=5, setback_rear_ft=10, setback_side_total_ft=15))  # type: ignore[arg-type]
+    assert got is not None and got.side_ft == 7.5
+    assert setbacks_for(Rules(setback_front_ft=10, setback_rear_ft=10)) is None  # type: ignore[arg-type]
+
+
+def test_the_rows_carry_the_taxlot_under_its_own_name(tmp_path: Path) -> None:
+    frame = pd.DataFrame([row()])
+    s4 = tmp_path / "s4_lots.parquet"
+    s5o = tmp_path / "s5o_lots.parquet"
+    s4_frame = frame[[c for c in S4_COLUMNS if c in frame]].assign(wkb=[shapely.to_wkb(LOT)])
+    s4_frame.to_parquet(s4, index=False)
+    frame[[c for c in S5O_COLUMNS if c in frame]].to_parquet(s5o, index=False)
+    (got,) = iter_rows(s4, s5o)
+    assert shapely.from_wkb(got["lot_wkb"]).equals(LOT)
+    assert shapely.from_wkb(got["wkb"]).equals(ENVELOPE)
+
+
+BEHIND = [*EDGES[:2], [X0 + 50, Y0 + 100, X0, Y0 + 100, "A"], EDGES[3]]
+BESIDE = [EDGES[0], [X0 + 50, Y0, X0 + 50, Y0 + 100, "A"], *EDGES[2:]]
+
+
+def test_a_rear_yard_the_alley_waives_is_cut_at_zero(corpus, policies) -> None:
+    # Portland R5: no rear setback where the rear line is an alley. The
+    # waiver resolves as an exemption, not a number; it is a yard of zero,
+    # not a reason to fall back to quadfit's figure.
+    lot = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND)), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.envelope.source == "flats"
+    assert s.envelope.setbacks.rear_ft == 0
+    assert s.envelope.sqft == pytest.approx((50 - 2 * 5) * (100 - 10))
+
+
+def test_an_exempt_rear_with_a_rear_line_off_the_alley_keeps_quadfits_envelope() -> None:
+    got = Rules("setback_rear_ft", setback_front_ft=10, setback_side_ft=5)
+    both = [*EDGES[:3], [X0, Y0 + 100, X0 + 20, Y0 + 100, "A"]]
+    assert envelope_for(lot_from_row(cut_row(edges_json=json.dumps(BEHIND))), got).source == "flats"  # type: ignore[arg-type]
+    assert envelope_for(lot_from_row(cut_row(edges_json=json.dumps(both))), got).source == "quadfit"  # type: ignore[arg-type]
+
+
+def test_a_side_line_on_an_alley_takes_the_rear_unless_the_code_says_otherwise() -> None:
+    # Gresham, Oregon City and Wilsonville call the alley line a rear lot line.
+    lot = lot_from_row(cut_row(edges_json=json.dumps(BESIDE)))
+    got = Rules(setback_front_ft=10, setback_side_ft=0, setback_rear_ft=15)
+    env = envelope_for(lot, got)  # type: ignore[arg-type]
+    assert env.setbacks.alley_side_ft == 15
+    assert env.sqft == pytest.approx((50 - 15) * (100 - 10 - 15))
+    waived = Rules(setback_front_ft=10, setback_side_ft=0, setback_rear_ft=15, setback_alley_side_ft=0)
+    assert envelope_for(lot, waived).sqft == pytest.approx(50 * 75)  # type: ignore[arg-type]

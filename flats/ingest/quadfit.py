@@ -25,12 +25,13 @@ see :func:`observed_facts`, which names each one and refuses the rest; a
 :class:`~flats.rules.resolver.ZoneResolution` from the corpus under
 :func:`~flats.score.configure.configure`; and a
 :class:`~flats.fit.rectangle.Fit` searched by :func:`~flats.score.screen.fit_for`
-at the width the zone's parking asks. The envelope is quadfit's carved one,
-on purpose: fitting on the same ground quadfit fitted on is what lets a
-disagreement between the two products be read as a difference in the
-rules and the parking, not in the setbacks. FLATS cutting its own envelope
-from the corpus setbacks (:func:`flats.geom.envelope.buildable`) is the
-next step, not this one.
+at the width the zone's parking asks. The envelope is FLATS's own
+(:func:`envelope_for`): the taxlot cut at the setbacks the corpus resolved
+for that lot and design -- the variant a commercial neighbour, an alley or
+a corner fired -- less the ground s5o's carve overlays took. quadfit's
+carved envelope is used only where FLATS cannot cut one (no taxlot, no
+street, a yard with no number, an exempt rear on a lot whose rear line is
+not all alley), and each row says which (``envelope_source``).
 
 **What the verdict is today.** Every value in the corpus is ``draft`` --
 no ``flats/config/verifications.jsonl`` exists -- so the screen answers
@@ -67,9 +68,10 @@ from flats.designs.model import Design
 from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for
 from flats.fit.rectangle import Fit, Fitter
-from flats.geom.alley import ALLEY_FACTS, S4_LOTS, observed_alley
+from flats.geom.alley import ALLEY_CLASS, ALLEY_FACTS, S4_LOTS, alley_lines, observed_alley
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
-from flats.geom.edges import Tier
+from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
+from flats.geom.envelope import Setbacks, buildable
 from flats.geom.neighbour import NEIGHBOUR_FACTS, lines_from_quadfit, observed_neighbours
 from flats.ingest.normalize import zone_for
 from flats.rules.model import Layer
@@ -137,6 +139,7 @@ S5O_COLUMNS: tuple[str, ...] = (
     "in_sewer_district",
     "wkb",
     "env_setbacks_json",
+    "carve_wkb",
 )
 
 #: The site facts this bridge can observe, in the order they are reported.
@@ -309,8 +312,17 @@ class QuadfitLot:
     #: s4's clustered street directions, the angles an ``axis_required``
     #: zone confines the search to.
     front_bearings: tuple[float, ...]
-    #: quadfit's carved envelope; None where s5o left none.
+    #: quadfit's carved envelope; None where s5o left none. What the lot is
+    #: fitted on only where FLATS cannot cut its own (:func:`envelope_for`).
     envelope: Any
+    #: The taxlot polygon (s4's ``wkb``); None from a row that lacks it.
+    lot_geom: Any = None
+    #: s4's edges, classed the way :mod:`flats.geom.envelope` cuts them;
+    #: None where s4 traced none.
+    edges: LotEdges | None = None
+    #: The ground s5o's carve overlays take off the lot (``carve_wkb``);
+    #: None where none touches it.
+    carve: Any = None
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -333,6 +345,158 @@ def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> floa
         return None
     key = "A" if observed.get("alley_at_rear") else "R"
     return _finite(cuts.get(key))
+
+
+#: s4's edge class letter -> the class :mod:`flats.geom.envelope` cuts by.
+#: ``A`` is absent: an alley edge is rear or side by its bearing
+#: (:func:`flats.geom.alley.alley_lines`), with the alley flag set.
+_EDGE_CLASS: dict[str, EdgeClass] = {
+    "F": EdgeClass.front,
+    "R": EdgeClass.rear,
+    "S": EdgeClass.side,
+}
+
+
+def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
+    """s4's edge record as the envelope reads it, or None where s4 traced none.
+
+    The class letters map one to one, but for the alley: s4 records it as
+    ``A`` whatever side of the lot it runs along, and the corpus holds the
+    alley rules per line (``alley_at_rear`` on the rear setback,
+    ``setback_alley_side_ft`` for the side), so the edge is named rear or
+    side by the same bearing test the alley facts use and carries the flag.
+    """
+    raw = json.loads(row.get("edges_json") or "[]")
+    if not raw:
+        return None
+    bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
+    named = iter(alley_lines(raw, bearings))
+    edges: list[Edge] = []
+    for x1, y1, x2, y2, letter in raw:
+        x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
+        if letter == ALLEY_CLASS:
+            cls = EdgeClass.rear if next(named) == "rear" else EdgeClass.side
+        else:
+            cls = _EDGE_CLASS[str(letter)]
+        edges.append(
+            Edge(
+                x1,
+                y1,
+                x2,
+                y2,
+                length_ft=math.hypot(x2 - x1, y2 - y1),
+                bearing_deg=bearing_deg(x1, y1, x2, y2),
+                cls=cls,
+                alley=letter == ALLEY_CLASS,
+            )
+        )
+    hull = geom.convex_hull.area if geom is not None else 0.0
+    return LotEdges(
+        tier=TIER.get(str(row.get("tier")), Tier.irregular),
+        edges=tuple(edges),
+        front_bearings=bearings,
+        frontage_ft=_finite(row.get("frontage_ft")) or 0.0,
+        convexity=geom.area / hull if hull else 1.0,
+    )
+
+
+def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
+    """The yards these rules resolve, as the envelope cuts them.
+
+    None where the front, side or rear is not a number: the screen reports
+    that lot UNKNOWN on the missing yard anyway, and the envelope it is
+    fitted on stays quadfit's rather than one cut with a guess. A yard the
+    code EXEMPTS is a number -- zero: the standard does not exist here
+    (Portland's rear setback where the rear line is an alley). A combined
+    side-yard minimum wider than two single sides is split evenly between
+    them -- the fit measures the width between the two, and that width is
+    the same however the total is divided.
+
+    A side line on an alley, where the code states no alley-side setback,
+    takes the larger of the side and the rear: Gresham, Oregon City and
+    Wilsonville define the alley line as a rear lot line, and s5 cuts it at
+    the rear for that reason. A city that waives it says so in
+    ``setback_alley_side_ft``.
+    """
+    exempted = set(rules.exempted)
+
+    def number(name: str) -> float | None:
+        if name in exempted:
+            return 0.0
+        got = rules.get(name)
+        if isinstance(got, bool) or not isinstance(got, (int, float)):
+            return None
+        return float(got)
+
+    front, side, rear = (number(f"setback_{c}_ft") for c in ("front", "side", "rear"))
+    if front is None or side is None or rear is None:
+        return None
+    total = number("setback_side_total_ft")
+    if total is not None:
+        side = max(side, total / 2)
+    alley_side = number("setback_alley_side_ft")
+    return Setbacks(
+        front_ft=front,
+        side_ft=side,
+        rear_ft=rear,
+        street_side_ft=number("setback_street_side_ft"),
+        alley_side_ft=max(side, rear) if alley_side is None else alley_side,
+    )
+
+
+@dataclass(frozen=True, slots=True)
+class Envelope:
+    """The ground one design is fitted on, and where it came from."""
+
+    geom: Any
+    #: The rear strip this envelope lost when that is not the resolved rear
+    #: setback (:attr:`LotFacts.envelope_rear_ft`); None when it is.
+    rear_cut_ft: float | None
+    #: ``flats`` -- cut here from the corpus's resolved setbacks;
+    #: ``quadfit`` -- s5o's, where FLATS could not cut its own.
+    source: str
+    setbacks: Setbacks | None = None
+
+    @property
+    def sqft(self) -> float:
+        return 0.0 if self.geom is None or self.geom.is_empty else float(self.geom.area)
+
+
+def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
+    """The envelope this lot offers under these rules (FOLLOWUPS 12).
+
+    Cut from the taxlot with :func:`flats.geom.envelope.buildable` at the
+    setbacks the corpus RESOLVED for this lot and design -- the variant a
+    commercial neighbour, an alley or a corner fired, not quadfit's one
+    figure per zone, which is ported at its largest limb precisely because
+    s5 cannot tell the limbs apart -- and then s5o's carve overlays taken
+    off, the same ground s5o took off its own.
+
+    Falls back to s5o's envelope, and says so, where there is nothing to
+    cut from (a stage file without the taxlot polygon or the edges), where
+    the lot is tier D (s5 keeps nothing on a lot no street reaches, and
+    the screen names it ``NO_FRONTAGE``), and where the rules leave a yard
+    without a number.
+
+    Tier C is cut uniformly at the largest yard, the same conservative
+    shape s5 cuts, so its rear strip is that largest yard and is reported
+    as the cut the court is charged against.
+    """
+    quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit")
+    if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
+        return quadfit
+    setbacks = setbacks_for(rules)
+    if setbacks is None:
+        return quadfit
+    strips = lot.edges.tier in (Tier.clean, Tier.corner)
+    if strips and "setback_rear_ft" in rules.exempted and any(
+        e.cls is EdgeClass.rear and not e.alley for e in lot.edges.edges
+    ):
+        # The exemption is about the rear line on the alley; a rear line that
+        # is not on it has a setback this resolution does not carry.
+        return quadfit
+    geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
+    return Envelope(geom, None if strips else setbacks.largest_ft, "flats", setbacks)
 
 
 def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = None) -> QuadfitLot:
@@ -361,6 +525,9 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
         layer_id = None
     wkb = row.get("wkb")
     envelope = shapely.from_wkb(wkb) if wkb else None
+    lot_wkb = row.get("lot_wkb")
+    lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
+    carve_wkb = row.get("carve_wkb")
     return QuadfitLot(
         tlid=str(row["TLID"]),
         jurisdiction=juris,
@@ -370,6 +537,9 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
         observed=observed,
         front_bearings=tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]")),
         envelope=envelope,
+        lot_geom=lot_geom,
+        edges=lot_edges(row, lot_geom),
+        carve=shapely.from_wkb(carve_wkb) if carve_wkb else None,
     )
 
 
@@ -394,7 +564,10 @@ def iter_rows(
 
     have4 = set(pq.read_schema(s4).names)
     have5 = set(pq.read_schema(s5o).names)
-    left = pd.read_parquet(s4, columns=[c for c in S4_COLUMNS if c in have4])
+    # s4's ``wkb`` is the taxlot, s5o's the envelope: the lot's is renamed.
+    lot_wkb = ["wkb"] if "wkb" in have4 else []
+    left = pd.read_parquet(s4, columns=[c for c in S4_COLUMNS if c in have4] + lot_wkb)
+    left = left.rename(columns={"wkb": "lot_wkb"})
     right = pd.read_parquet(s5o, columns=[c for c in S5O_COLUMNS if c in have5])
     frame = left.merge(right, on="TLID", how="left")
     if jurisdictions:
@@ -428,6 +601,8 @@ class Screened:
     #: How many angles the envelope was searched at, and the sweep step.
     angles: int
     step_deg: float
+    #: The ground this design was fitted on (:func:`envelope_for`).
+    envelope: Envelope | None = None
 
 
 def _if_signed(
@@ -481,16 +656,21 @@ def screen_lot(
         axis_required=axis_required and bool(lot.front_bearings),
         step_deg=step_deg,
     )
-    fitter = Fitter(lot.envelope, angles)
+    # One search per distinct envelope: the designs usually resolve the
+    # same yards, and a Fitter is the expensive part.
+    fitters: dict[Any, Fitter] = {}
 
     out: list[Screened] = []
     for design, config, got in resolved:
-        fit = fit_for(
-            fitter, design, got, placement=False, carved_rear_ft=lot.facts.envelope_rear_ft
-        )
-        result = screen(got, lot.facts, design, fit, policy=policy, relief=relief, config=config)
+        env = envelope_for(lot, got)
+        key = (env.source, env.setbacks)
+        if key not in fitters:
+            fitters[key] = Fitter(env.geom, angles)
+        facts = dataclasses.replace(lot.facts, envelope_rear_ft=env.rear_cut_ft)
+        fit = fit_for(fitters[key], design, got, placement=False, carved_rear_ft=env.rear_cut_ft)
+        result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
         shadow = _if_signed(
-            got, lot.facts, design, fit, result, policy=policy, relief=relief, config=config
+            got, facts, design, fit, result, policy=policy, relief=relief, config=config
         )
         out.append(
             Screened(
@@ -503,6 +683,7 @@ def screen_lot(
                 signed=shadow,
                 angles=len(angles),
                 step_deg=step_deg,
+                envelope=env,
             )
         )
     return out
@@ -548,6 +729,8 @@ def row_for(s: Screened) -> dict[str, Any]:
         "unknown_leaning": ",".join(n for n in leaning if n in s.config.unknown),
         "angles": s.angles,
         "step_deg": s.step_deg,
+        "envelope_sqft": s.envelope.sqft if s.envelope else None,
+        "envelope_source": s.envelope.source if s.envelope else None,
     }
 
 
@@ -867,17 +1050,21 @@ __all__ = [
     "S5O_LOTS",
     "SEWER_MAIN_REACH_FT",
     "TIER",
+    "Envelope",
     "QuadfitLot",
     "Screened",
     "carved_rear_ft",
+    "envelope_for",
     "compare",
     "iter_rows",
+    "lot_edges",
     "lot_from_row",
     "observed_facts",
     "per_lot",
     "row_for",
     "run",
     "screen_lot",
+    "setbacks_for",
 ]
 
 
