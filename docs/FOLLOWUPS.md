@@ -69,9 +69,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (27 ft side+rear for the 26-ft pod on `abuts_lower_density_zone`; the
    across-the-street half is inert -- the ROW counts toward the distance),
    both facts declared, TC cap gone, quadfit TC side 27 (larger limb);
-   RE-SCREEN IN FLIGHT (quadfit tree `data/quadfit_2026-09-24` on 137,
-   then bound, bridge chain, a new run, drift, promote on the standing word;
-   the chain also carries 86b06340 below).
+   Re-screened with 86b06340 below as run 16 and PROMOTED 2026-09-24 on
+   the standing word (gate clean, no warnings; drift 14 -> 16: 22 of
+   579,176 answers moved, all rules, 0 unexplained -- every one a Wood
+   Village TC lot whose neighbour fact is now read: 21 unknown->green,
+   1 unknown->yellow; the rest of TC moved slack inside yellow).
    (b) DONE 2026-09-23 -- the nine `AHEAD_OF_QUADFIT`
    zones ported (0504ef84, larger neighbour limb, `needs_verification`),
    re-screened as run 14 and PROMOTED 18:43 UTC on the standing word
@@ -551,3 +553,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    bond / urban renewal as the Gresham file does) and its CPR row; Clackamas
    needs its own rate file and CPR table (a different county publication).
    Pending decision: which city next (the pitch is per-city).
+15. **Edgemont (P7) bond-model update -- waiting on Steph's answers.**
+    `docs/models/Edgemont_Model_Update_Instructions.md` (another agent's plan:
+    60% AMI rent plan for the Portland nonprofit tax exemption, P7 property
+    tax, RAMP credit, $500 concession policy, OpEx cuts, asset-mgmt fee, and
+    rebuilding the typed-in cash-flow rows on every property tab) was
+    reviewed 2026-09-23; the basis `CDC_of_Oregon_Bond_1_-_Investor_Pro_Forma.xlsx`
+    is byte-identical to `... (no debt pricing) rev12.xlsx`. Its per-unit
+    math re-checks exactly (84 units, 33/31/20, GPR $1,278,984). Open before
+    any edit: does the exemption require passing the tax savings to tenants;
+    who takes title (nonprofit?); do other properties rely on the same
+    exemption; AM fee rate; update the Separate Projects rev12 twin too?;
+    bond re-sizing (-$275K to -$435K par at 1.20x). Traps: the Pro Forma
+    page recomputes OpEx and revenue itself (section K + per-category rows),
+    so a change made only to the P7 roll-up leaves the portfolio pages
+    stale; keep P7 units split Studio/1BR/2BR. Deliver as rev13 via Excel COM.
