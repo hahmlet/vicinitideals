@@ -404,13 +404,24 @@ def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
 
     None where the front, side or rear is not a number: the screen reports
     that lot UNKNOWN on the missing yard anyway, and the envelope it is
-    fitted on stays quadfit's rather than one cut with a guess. A combined
+    fitted on stays quadfit's rather than one cut with a guess. A yard the
+    code EXEMPTS is a number -- zero: the standard does not exist here
+    (Portland's rear setback where the rear line is an alley). A combined
     side-yard minimum wider than two single sides is split evenly between
     them -- the fit measures the width between the two, and that width is
     the same however the total is divided.
+
+    A side line on an alley, where the code states no alley-side setback,
+    takes the larger of the side and the rear: Gresham, Oregon City and
+    Wilsonville define the alley line as a rear lot line, and s5 cuts it at
+    the rear for that reason. A city that waives it says so in
+    ``setback_alley_side_ft``.
     """
+    exempted = set(rules.exempted)
 
     def number(name: str) -> float | None:
+        if name in exempted:
+            return 0.0
         got = rules.get(name)
         if isinstance(got, bool) or not isinstance(got, (int, float)):
             return None
@@ -422,12 +433,13 @@ def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
     total = number("setback_side_total_ft")
     if total is not None:
         side = max(side, total / 2)
+    alley_side = number("setback_alley_side_ft")
     return Setbacks(
         front_ft=front,
         side_ft=side,
         rear_ft=rear,
         street_side_ft=number("setback_street_side_ft"),
-        alley_side_ft=number("setback_alley_side_ft"),
+        alley_side_ft=max(side, rear) if alley_side is None else alley_side,
     )
 
 
@@ -475,8 +487,14 @@ def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
     setbacks = setbacks_for(rules)
     if setbacks is None:
         return quadfit
-    geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
     strips = lot.edges.tier in (Tier.clean, Tier.corner)
+    if strips and "setback_rear_ft" in rules.exempted and any(
+        e.cls is EdgeClass.rear and not e.alley for e in lot.edges.edges
+    ):
+        # The exemption is about the rear line on the alley; a rear line that
+        # is not on it has a setback this resolution does not carry.
+        return quadfit
+    geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
     return Envelope(geom, None if strips else setbacks.largest_ft, "flats", setbacks)
 
 
