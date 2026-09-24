@@ -516,30 +516,25 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    the alley was (the front on the corridor takes 10, another front 0),
    read it in FLATS as an observed site fact. Read what "adjacent to"
    means in 33.910 first, and bound both ways on the subset.
-12. **The envelope is cut with quadfit's table, not the corpus's
-   resolution -- the rear is reconciled, the sides are not.** The carve
-   fix (2026-09-22: s5 `env_setbacks_json`, bridge `carved_rear_ft`,
-   `LotFacts.envelope_rear_ft`, `_court_beyond_rear`) charges the court
-   against the strip s5 really cut at the REAR. The SIDES and FRONT still
-   stand at quadfit's number: Portland CE side 10 -> 0 against a
-   non-residential neighbour resolves in FLATS while the envelope is
-   already 10 ft narrower each side, so `fit_across_ft` and the seat count
-   are conservative by up to 20 ft of width on every True lot, and the same
-   for any variant that relaxes a side or front (alley side, corner
-   street side). Two ways: (i) carry "S"/"F" from `env_setbacks_json` and
-   widen the search -- arithmetic on a shape already cut; (ii) build the
-   envelope in FLATS from the lot polygon, the edges and the RESOLVED
-   setbacks (`flats/geom/envelope.py buildable` exists for it; the bridge
-   would call it instead of reading s5o's wkb) -- the real fix, and the
-   point where quadfit's s5 stops mattering to the screen. Bound (ii) on
-   the subset first: every lot whose FLATS envelope differs from s5's must
-   be explained by a variant that fired, and the diff read both ways.
-   SIZED 2026-09-23 on run 14: Oregon City C/MUC-1/MUC-2/MUD are carved at
-   20 ft side/rear everywhere (the port's larger limb); on lots FLATS reads
-   as NOT abutting a residential zone -- where the code says "None" -- 456
-   lot-and-design answers are yellow on `fit` alone, and no Oregon City
-   commercial lot is green. That is the biggest single pool this item
-   would unlock.
+12. **FLATS cuts its own envelope -- MERGED b5303d01 2026-09-24, full
+   re-screen `/root/chain_env.sh` on 137 in flight (bundle
+   `2026-09-24_env`, ~7.5 h from 23:14 UTC).** The bridge cuts each lot's
+   envelope from the taxlot at the setbacks the corpus RESOLVED
+   (`envelope_for`, `buildable`), less s5o's carve (`carve_wkb`, read from
+   `data/quadfit_env/s5o_full.parquet` = the 09-24 s5o + carve column).
+   Bound on all 291,589 lots: every larger envelope is a variant that fired
+   (Portland commercial vs non-residential neighbours, Oregon City
+   commercial, alley rears, Milwaukie small-lot rear, Clackamas MR1/MR2);
+   every smaller one is stricter; 622 carved lots lose sub-200 sq ft scraps.
+   Sample re-screen 20,000 lots: 55 moves, all on FLATS's envelope, none
+   worse (54 yellow -> unknown now wait on an unmeasured fact, not the fit;
+   1 yellow -> green). Next: load, drift, promote on the standing word.
+   Leftovers the bound found, all stricter than quadfit (no false GREEN):
+   (a) Wilsonville RN front/rear 20 in the corpus vs quadfit's 15 -- read
+   the code; (b) Portland R5/R2.5/RM* lots with an alley rear AND a rear
+   line off it (~2,700 rows) stay on quadfit's envelope -- the waiver is
+   per line; (c) Portland has no `setback_alley_side_ft`, so a side alley
+   takes the side yard.
 13. **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
    (`scripts/flats_tax_snapshot.py`, migration 0136) needs each lot's tax
    code area (RLIS `TAXCODE`), which acquire drops because it is not a
