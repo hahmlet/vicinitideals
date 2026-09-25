@@ -252,11 +252,13 @@ def _init_worker(cfg: dict) -> None:
     _CFG = cfg
 
 
-def _largest_rect(ok):
+def _largest_rect(ok, min_h: int = 1):
     """Largest all-True axis-aligned rectangle in a boolean grid.
 
     Returns (r0, c0, h, w) in cells (rows [r0,r0+h), cols [c0,c0+w)) of maximum
-    area, or None. Standard histogram sweep, O(rows x cols).
+    area among those at least `min_h` rows tall, or None. Standard histogram
+    sweep, O(rows x cols): every popped bar is a maximal rectangle, and any
+    rectangle `min_h` tall sits inside a maximal one at least as tall.
     """
     import numpy as np
 
@@ -275,7 +277,7 @@ def _largest_rect(ok):
             while stack and stack[-1][1] > cur_h:
                 s_col, s_h = stack.pop()
                 area = s_h * (c - s_col)
-                if area > best[0]:
+                if area > best[0] and s_h >= min_h:
                     best = (area, r - s_h + 1, s_col, s_h, c - s_col)
                 start = s_col
             stack.append((start, cur_h))
@@ -1243,6 +1245,13 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                 if court_r0 >= R:
                     continue
                 rect = _largest_rect(ok[court_r0:, :])
+                # THE BIGGEST ROOM IS NOT ALWAYS THE ONE A ROW FITS IN. A wide,
+                # shallow strip can out-area a narrower room one cell over that
+                # is deep enough for a stall and the two-way aisle; ask for
+                # that depth before giving the court up as too shallow.
+                row_c = math.ceil((stall_d + aisle_two) / res - 1e-9)
+                if rect is not None and rect[2] < row_c:
+                    rect = _largest_rect(ok[court_r0:, :], min_h=row_c) or rect
                 if rect is None:
                     continue
                 reach = max(reach, 2)

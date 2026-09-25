@@ -248,6 +248,21 @@ def test_largest_rect_basics():
     assert _largest_rect(np.zeros((4, 4), dtype=bool)) is None
 
 
+def test_largest_rect_can_insist_on_a_depth():
+    """A wide shallow strip out-areas a narrow deep room; asked for a depth,
+    the search finds the room (FOLLOWUPS 3)."""
+    import numpy as np
+
+    from s6s_siteplan import _largest_rect
+
+    ok = np.zeros((10, 20), dtype=bool)
+    ok[0:3, :] = True       # 3 x 20 = 60 cells, too shallow for a row
+    ok[0:10, 0:4] = True    # 10 x 4 = 40 cells, deep enough
+    assert _largest_rect(ok)[2:] == (3, 20)
+    assert _largest_rect(ok, min_h=8) == (0, 0, 10, 4)
+    assert _largest_rect(ok, min_h=11) is None
+
+
 # ---------------------------------------------------------------------------
 # layout — tiers + tightening
 # ---------------------------------------------------------------------------
