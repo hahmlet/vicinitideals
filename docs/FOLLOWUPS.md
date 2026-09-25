@@ -565,6 +565,5 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    descends from full run 18's `/root/bridge_env_full`). Full re-screen due
    after 5 partials or 30 days (2026-10-25); run `splice audit` against it
    before promoting -- out-of-scope moves are accepted known unknowns.
-   Left: the audit's result is not yet shown on /flats/refresh (it lives in
-   `audit.md` on 137); add it to the run's report if Steph wants to read it
-   there.
+   (Showing the audit on /flats/refresh: Steph 2026-09-25 "an enhancement
+   for later" -- not queued.)
