@@ -25,15 +25,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    a future review page); a decision on a lot whose verdict moved in a
    re-screen of the same copy (`promote --run`) is not marked "look again"
    -- only ground and zone changes are flagged, so a re-screen's moves are
-   read in its drift report and nowhere on the lot page; the 142 lots
-   quadfit refused as `zone_quadplex_not_allowed` (all Multnomah
-   `_unincorporated` RR) are NOT two rule sets disagreeing -- read
-   2026-09-20, the FLATS block also says `quadplex_allowed: false`, behind
-   a `planned_development` lever the use gate skips by design (a levered
-   value is a relief path, not a permission), so they sit NOT_MEASURED
-   rather than USE_PROHIBITED; what they want is a relief-policy line (is a
-   planned development on 20-acre rural land a path, yellow, or not, red),
-   not a re-read.
+   read in its drift report and nowhere on the lot page; the 142 Multnomah `_unincorporated` RR lots behind a
+   `planned_development` lever are a relief-policy question -- HUMAN_TODO 23
+   (2026-09-25). No lot decisions exist yet (0 rows 2026-09-25), so the
+   "look again" flag has nothing to mark until a review page writes some.
 2. **Neighbour zoning per lot line -- loose ends after the measurement
    (4b25df09 + the carve fix cfc8c033; re-screened as run 12 and PROMOTED
    2026-09-22 10:30 UTC on the standing word -- the first §4b run: gate
@@ -99,18 +94,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    5), and reading it needs a fourth neighbour fact ("every line
    non-residential OR HDR"); recommend leaving it unless those lots
    come up.
-3. **The court search takes the biggest rectangle, not the deepest one that
-   holds a row.** `s6s_siteplan.py` `_largest_rect(ok[court_r0:, :])` returns
-   the maximum-AREA all-clear rectangle behind the building and then asks
-   whether it is deep enough for a row of stalls (stall + two-way aisle). A
-   wide, shallow rectangle can win that contest on an irregular lot while a
-   narrower rectangle one cell over is deep enough for a row -- a lot refused
-   `court_too_shallow` that has a court. Conservative direction (a lost
-   GREEN, never a false one), so it has waited; the 2026-09-17 aisle run
-   turned 113 plans into `court_too_shallow` / `no_side_lane` and some may be
-   of this kind. Measure first: re-search the failed lots for the deepest
-   rectangle at least `cap x stall_w` wide and count how many would hold a
-   row, before changing the search. Offered 2026-09-17.
+3. **The court search -- FIXED f87e9331 2026-09-25.** When the biggest room
+   behind the building is too shallow for a row, s6s asks again for a room
+   a stall + two-way aisle deep. Probe (5,000 of 123,207 court_too_shallow
+   lots): 24 draw a plan, 4,764 now fail one step later at no_side_lane.
+   County drawing / badge only (no FLATS answer). Re-drawn on
+   `data/quadfit_2026-09-25` (09-24 stages, hardlinked -- s7's text outputs
+   copied first so they don't write through) and re-exported onto run 20's
+   assign dir with run 20's versions pinned; load + drift + promote pending.
 4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's

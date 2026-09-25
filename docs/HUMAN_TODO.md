@@ -2277,6 +2277,31 @@ The standing word in item 20 is now: **the agent promotes when the only
 warning is a never-seen zone code, writes the code down within the week, and
 anything else with a warning still waits for you.**
 
+## 23. One small decision: 142 big rural lots where the only way in is a "planned development" — a maybe, or a no?
+
+All 142 are in unincorporated Multnomah County's rural residential zone
+(RR, roughly 20-acre lots on the edge of the county). The county's code
+says our building is **not allowed** there — except as part of a
+"planned development," a special approval where the owner proposes a whole
+site plan and the county can grant exceptions.
+
+Today these lots sit grey ("not measured"), because the screen never treats
+a special-approval path as a yes on its own. That is on purpose: a special
+approval is a hope, not a permission. The question is only which colour a
+lot with a hope should show.
+
+**Option A — a no (red), recommended.** A planned development on a 20-acre
+rural lot is a large, slow, discretionary application for a four-home
+building; nobody would buy a rural lot on that bet. Simple and honest:
+these lots drop out of the list.
+
+**Option B — a maybe (yellow).** The lots show up as "possible with a
+special approval," the same way we treat a conditional-use path elsewhere.
+More lots on the list, most of which you would skip anyway.
+
+**Option C — leave them grey.** Nothing changes; they stay out of both the
+green and the red counts, listed as unanswered.
+
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
 - **The lot ledger could not see Clackamas County, and it nearly hid item 15's
