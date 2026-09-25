@@ -563,3 +563,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
     page recomputes OpEx and revenue itself (section K + per-category rows),
     so a change made only to the P7 roll-up leaves the portfolio pages
     stale; keep P7 units split Studio/1BR/2BR. Deliver as rev13 via Excel COM.
+16. **Partial re-screen: re-run only the lots a change can move, splice
+   into the live run.** Steph 2026-09-25: a 7-hour full re-screen per
+   change is too much. Most changes touch one city or a few zones (Wood
+   Village TC moved 22 lots and took 7 h). The bridge already takes
+   `--jurisdiction`; missing: a zone filter, and an assign/export/load path
+   that copies every untouched lot's results from the previous run and
+   replaces only the re-screened ones, with drift read on the touched set.
+   Scope rule the change must declare: which jurisdictions/zones (or "all"
+   for a geometry/engine change, which still batches into one full run).
+   Meanwhile: keep coding while 137 runs; batch merged changes into one
+   full re-screen. Pending: Steph's go (a feature -> worktree).
