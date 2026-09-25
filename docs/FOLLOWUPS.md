@@ -557,19 +557,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
     page recomputes OpEx and revenue itself (section K + per-category rows),
     so a change made only to the P7 roll-up leaves the portfolio pages
     stale; keep P7 units split Studio/1BR/2BR. Deliver as rev13 via Excel COM.
-16. **Partial re-screen: re-run only the lots a change can move, splice
-   into the live run -- APPROVED by Steph 2026-09-25, with conditions.**
-   A 7-hour full re-screen per change is too much. The bridge takes
-   `--jurisdiction`; missing: a zone filter, and an assign/export/load path
-   that copies every untouched lot's results from the previous run and
-   replaces only the re-screened ones. Each change declares its scope
-   (jurisdictions/zones, or "all" for a geometry/engine change, which
-   batches into the next full run). Steph's conditions: (1) it is an avenue
-   for drift -- a change "only in Wood Village" also moved a Troutdale lot
-   -- so PERIODIC FULL re-screens stay, and each one is diffed against the
-   spliced run; (2) a process for moves nobody can explain: the full run
-   attributes such a move to the batch of changes since the last full run
-   and it is ACCEPTED as a known unknown and recorded, not a reason to
-   reject. Needs: cadence for the full run (e.g. every N partials or
-   monthly), and the drift report's "unattributed since full run N" line.
-   Build in a worktree.
+16. **Partial re-screen -- SHIPPED 50a0ecc2 2026-09-25 (runbook §4c).**
+   Bridge `--zone "<city>:<zone>"` / `--tlid`; `python -m flats.ingest.splice
+   splice|audit`. First use: the two Oregon City farm lots (f0418b49) in
+   2 minutes, run 20, drift 4 moved / 0 unexplained, promoted. The NEXT
+   splice's `--base` is `/root/bridge_spliced_2026-09-25_oc` on 137 (it
+   descends from full run 18's `/root/bridge_env_full`). Full re-screen due
+   after 5 partials or 30 days (2026-10-25); run `splice audit` against it
+   before promoting -- out-of-scope moves are accepted known unknowns.
+   Left: the audit's result is not yet shown on /flats/refresh (it lives in
+   `audit.md` on 137); add it to the run's report if Steph wants to read it
+   there.
