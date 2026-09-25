@@ -19,6 +19,7 @@ route it to REVIEW instead of RED.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from typing import Iterable, Sequence
 
@@ -26,7 +27,7 @@ from shapely.geometry.base import BaseGeometry
 
 from flats.designs.model import Design, Orientation
 from flats.fit.angles import angles_for
-from flats.fit.raster import GRID_FT, Grid, cells_for, rasterize
+from flats.fit.raster import GRID_FT, MAX_CELLS, Grid, cells_for, rasterize
 
 
 @dataclass(frozen=True, slots=True)
@@ -85,6 +86,24 @@ class Fit:
         return self.best_depth_ft - self.slack_ft
 
 
+def res_for(envelope: BaseGeometry, res: float = GRID_FT) -> float:
+    """The finest grid, in steps of ``res``, that keeps every rotation of the
+    envelope under :data:`~flats.fit.raster.MAX_CELLS`.
+
+    Past the cap a part rasterizes to nothing, and a farm-sized lot would
+    read as fitting nothing at all -- a big lot measured as an empty one. A
+    coarser grid answers it instead, and a coarser grid only ever shrinks
+    the lot (every cell a boundary crosses is dropped), so the answer stays
+    a lower bound. Every lot an infill pod is screened on stays at ``res``.
+    """
+    minx, miny, maxx, maxy = envelope.bounds
+    # Any rotation's bounding box fits inside the square on the diagonal.
+    diagonal = math.hypot(maxx - minx, maxy - miny) + 2 * res
+    if (diagonal / res) ** 2 <= MAX_CELLS:
+        return res
+    return math.ceil(diagonal / math.sqrt(MAX_CELLS) / res) * res
+
+
 class Fitter:
     """An envelope rasterized at every candidate angle, queryable by design.
 
@@ -100,17 +119,18 @@ class Fitter:
         *,
         res: float = GRID_FT,
     ) -> None:
-        self.res = res
         self.angles: tuple[float, ...] = tuple(angles) if angles is not None else angles_for()
         self.grids: list[Grid] = []
+        self.res = res
         if envelope is None or envelope.is_empty:
             return
+        self.res = res_for(envelope, res)
         # One rotation origin for the whole lot, so placements from different
         # angles are expressed in the same frame.
         c = envelope.centroid
         origin = (c.x, c.y)
         for angle in self.angles:
-            self.grids.extend(rasterize(envelope, angle, res=res, origin=origin))
+            self.grids.extend(rasterize(envelope, angle, res=self.res, origin=origin))
 
     @property
     def empty(self) -> bool:

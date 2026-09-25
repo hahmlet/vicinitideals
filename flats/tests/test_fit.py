@@ -286,6 +286,21 @@ def test_an_empty_envelope_fits_nothing() -> None:
     assert not f.fit(56, 36).fits
 
 
+def test_a_farm_sized_envelope_is_searched_on_a_coarser_grid_not_skipped() -> None:
+    # Oregon City 32E05D 01204: an 18-acre commercial lot with no setback
+    # rasterized past the cell cap at half a foot and read as fitting nothing.
+    farm = shapely.box(0, 0, 1500, 1000)
+    f = Fitter(farm, (0.0, 30.0))
+
+    assert f.res > 0.5 and f.res % 0.5 == 0
+    assert all(g.integral.size <= 4_000_000 * 1.1 for g in f.grids)
+    assert f.fit(56, 36).fits
+    # A coarser grid only ever shrinks the lot.
+    assert 990 <= Fitter(farm, (0.0,)).fit(56, 36).best_depth_ft <= 1000
+    # An infill lot keeps the fine grid.
+    assert Fitter(LOT, (0.0,)).res == 0.5
+
+
 # --- what the parking asks across the lot ------------------------------
 #
 # Since 2026-09-17 a search can be asked for more than the building: the
