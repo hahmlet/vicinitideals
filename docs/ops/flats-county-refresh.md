@@ -130,6 +130,41 @@ the standing word at 10:30 UTC. That is the normal shape of a same-copy
 drift: a few hundred moves that the commits between the two runs explain
 lot by lot, and none they do not.
 
+### 4c. A partial re-screen (only the lots a change can move)
+
+A full re-screen takes about seven hours. A change that can only move some
+lots -- one city, a few zones, a named list of lots -- declares that
+**scope** and re-screens only those, spliced into the last run
+(`flats/ingest/splice.py`; Steph, 2026-09-25). Everything from assign on is
+§4b unchanged: the spliced directory is a whole county.
+
+| # | Step | Where | Command | Done when |
+|---|---|---|---|---|
+| P1 | Screen the scope | 137 | the bridge line from the last full run with `--out /root/bridge_<tag>` plus the scope: `--jurisdiction "Wood Village"`, `--zone "Wood Village:TC"` (the city is part of the name), `--tlid 32E05D  01204` or `--tlid-file lots.txt`, repeatable | `meta.json` names the scope; minutes, not hours |
+| P2 | Splice | 137 | `python -m flats.ingest.splice splice --base <bridge of the run in use> --partial /root/bridge_<tag> --out /root/bridge_spliced_<tag> --change "<commit>: <what, and its scope>"` | "spliced N lots into M"; a `FULL RE-SCREEN DUE` line means the next re-screen is a full one |
+| P3 | assign → promote | 137 / 114 | §4b R1–R7 with `--bridge /root/bridge_spliced_<tag>` | the drift reads only lots inside the scope |
+
+The spliced directory is the next splice's `--base` (they chain; the
+lineage in `meta.json`, carried into the run's `params`, lists every change
+since the last full run). The splice refuses a sampled run, a base that is
+itself a partial run, or two runs measured from different quadfit files.
+
+**A scope is a claim, so full re-screens stay.** A full re-screen is due
+after 5 partial runs or 30 days since the last full one, whichever comes
+first, and every batch of merged changes that says "all" (geometry, the fit,
+the engine) goes into one. When it has run, before promoting it:
+
+`python -m flats.ingest.splice audit --spliced <the spliced bridge in use> --full /root/bridge_<full tag> --out /root/audit_<tag>`
+
+`audit.md` splits every move into **in scope** (a lot a partial run
+re-screened: the full run disagrees with it, which only a later change or a
+bug explains -- read each) and **out of scope** (a lot no partial run
+touched: some change in the batch reached further than it said, e.g. a
+Troutdale lot moved by a "Wood Village only" change). Out-of-scope moves are
+**accepted as known unknowns**, attributed to the batch of changes the
+report lists, and recorded with the promotion -- they do not block it, and
+nobody has to name the one change that caused each (Steph, 2026-09-25).
+
 A `code` move in a same-copy drift is read from `screen_version` when both
 runs carry one: the screen's own files changed between the exports. Two runs
 with the same `screen_version` and a different `code_version` that still

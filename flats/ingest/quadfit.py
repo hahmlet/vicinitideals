@@ -61,6 +61,7 @@ import json
 import math
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -551,6 +552,8 @@ def iter_rows(
     sample: int | None = None,
     seed: int = 0,
     jurisdictions: Iterable[str] = (),
+    zones: Iterable[str] = (),
+    tlids: Iterable[str] = (),
 ) -> Iterator[dict[str, Any]]:
     """Every lot's bridge row, s4 facts joined to s5o's envelope on TLID.
 
@@ -558,6 +561,10 @@ def iter_rows(
     or alley refresh) and s5o then predates its newest columns -- s7 joins
     them the same way. A column either file lacks is simply absent from the
     row, and :func:`observed_facts` leaves that fact unasked.
+
+    ``jurisdictions``, ``zones`` (``"<jurisdiction>:<zone>"``) and ``tlids``
+    select the lots a partial re-screen covers (:mod:`flats.ingest.splice`);
+    a lot matching ANY of them is kept, and none given keeps every lot.
     """
     import pandas as pd
     import pyarrow.parquet as pq
@@ -570,8 +577,9 @@ def iter_rows(
     left = left.rename(columns={"wkb": "lot_wkb"})
     right = pd.read_parquet(s5o, columns=[c for c in S5O_COLUMNS if c in have5])
     frame = left.merge(right, on="TLID", how="left")
-    if jurisdictions:
-        frame = frame[frame["jurisdiction"].isin(set(jurisdictions))]
+    keep = scope_mask(frame, jurisdictions, zones, tlids)
+    if keep is not None:
+        frame = frame[keep]
     if sample is not None and sample < len(frame):
         frame = frame.sample(n=sample, random_state=seed)
     if limit is not None:
@@ -580,6 +588,24 @@ def iter_rows(
     # above see one shape of "no answer" whatever dtype the column arrived in.
     frame = frame.astype(object).where(frame.notna(), None)
     yield from frame.to_dict("records")
+
+
+def scope_mask(frame: Any, jurisdictions: Iterable[str] = (), zones: Iterable[str] = (), tlids: Iterable[str] = ()) -> Any:
+    """The rows of ``frame`` inside a declared scope, or None for no scope.
+
+    A zone is named with its jurisdiction (``"Wood Village:TC"``) because the
+    same code means different districts in different cities.
+    """
+    juris, pairs, ids = set(jurisdictions), set(zones), set(tlids)
+    for z in pairs:
+        if ":" not in z:
+            raise ValueError(f"zone {z!r}: name it as <jurisdiction>:<zone>")
+    if not (juris or pairs or ids):
+        return None
+    keep = frame["jurisdiction"].isin(juris) | frame["TLID"].isin(ids)
+    if pairs:
+        keep |= (frame["jurisdiction"].astype(str) + ":" + frame["zone"].astype(str)).isin(pairs)
+    return keep
 
 
 @dataclass(frozen=True, slots=True)
@@ -936,6 +962,8 @@ def run(
     sample: int | None = None,
     seed: int = 0,
     jurisdictions: Iterable[str] = (),
+    zones: Iterable[str] = (),
+    tlids: Iterable[str] = (),
     step_deg: float = DEFAULT_STEP_DEG,
     chunk_size: int = 500,
     log: Any = print,
@@ -957,8 +985,12 @@ def run(
     for old in parts_dir.glob("*.parquet"):
         old.unlink()
 
+    zones, tlids = sorted(zones), sorted(tlids)
     rows = list(
-        iter_rows(s4, s5o, limit=limit, sample=sample, seed=seed, jurisdictions=jurisdictions)
+        iter_rows(
+            s4, s5o, limit=limit, sample=sample, seed=seed,
+            jurisdictions=jurisdictions, zones=zones, tlids=tlids,
+        )
     )
     chunks = [rows[i : i + chunk_size] for i in range(0, len(rows), chunk_size)]
     log(f"bridge: {len(rows):,} lots in {len(chunks)} chunks, {processes} processes, "
@@ -1001,12 +1033,19 @@ def run(
         "sample": sample,
         "limit": limit,
         "jurisdictions": sorted(jurisdictions),
+        "zones": zones,
+        "tlids": tlids,
+        "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     if results is not None and results.exists() and len(frame):
         (out / "summary.md").write_text(compare(frame, results), encoding="utf-8")
     log(f"bridge: wrote {len(frame):,} rows to {out / 'lots.parquet'} in {meta['seconds']}s")
     return out / "lots.parquet"
+
+
+def _read_tlids(path: Path) -> list[str]:
+    return [t.strip() for t in path.read_text(encoding="utf-8").splitlines() if t.strip()]
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -1022,6 +1061,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--sample", type=int)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--jurisdiction", action="append", default=[])
+    ap.add_argument("--zone", action="append", default=[], help="<jurisdiction>:<zone>, repeatable")
+    ap.add_argument("--tlid", action="append", default=[])
+    ap.add_argument("--tlid-file", type=Path, help="one TLID per line")
     ap.add_argument("--step-deg", type=float, default=DEFAULT_STEP_DEG)
     ap.add_argument("--chunk-size", type=int, default=500)
     args = ap.parse_args(argv)
@@ -1035,6 +1077,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         sample=args.sample,
         seed=args.seed,
         jurisdictions=args.jurisdiction,
+        zones=args.zone,
+        tlids=[*args.tlid, *(_read_tlids(args.tlid_file) if args.tlid_file else [])],
         step_deg=args.step_deg,
         chunk_size=args.chunk_size,
     )
@@ -1057,6 +1101,7 @@ __all__ = [
     "envelope_for",
     "compare",
     "iter_rows",
+    "scope_mask",
     "lot_edges",
     "lot_from_row",
     "observed_facts",
