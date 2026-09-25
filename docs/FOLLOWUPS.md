@@ -527,8 +527,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Portland R5/R2.5/RM* lots with an alley rear AND a rear line off it
    (~2,700 rows) stay on quadfit's envelope -- the waiver is per line; (c)
    Portland has no `setback_alley_side_ft`, so a side alley takes the side
-   yard; (d) `checks.envelope` (source, sq ft) is missing from the DB rows
-   -- find where assign/export drops `envelope_source`.
+   yard. (`checks.envelope` was dropped by assign's column list -- fixed
+   a883f439, present from the next run.)
 13. **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
    (`scripts/flats_tax_snapshot.py`, migration 0136) needs each lot's tax
    code area (RLIS `TAXCODE`), which acquire drops because it is not a
