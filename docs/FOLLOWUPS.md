@@ -94,14 +94,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    5), and reading it needs a fourth neighbour fact ("every line
    non-residential OR HDR"); recommend leaving it unless those lots
    come up.
-3. **The court search -- FIXED f87e9331 2026-09-25.** When the biggest room
-   behind the building is too shallow for a row, s6s asks again for a room
-   a stall + two-way aisle deep. Probe (5,000 of 123,207 court_too_shallow
-   lots): 24 draw a plan, 4,764 now fail one step later at no_side_lane.
-   County drawing / badge only (no FLATS answer). Re-drawn on
-   `data/quadfit_2026-09-25` (09-24 stages, hardlinked -- s7's text outputs
-   copied first so they don't write through) and re-exported onto run 20's
-   assign dir with run 20's versions pinned; load + drift + promote pending.
+3. **Alley-as-aisle leftovers (4(b) SHIPPED caad6f3f, run 24 promoted
+   2026-09-25).** Bound on all 11,341 alley lots: 4,803 Portland lots
+   yellow->green if signed (5,398 answers), 331 yellow->unknown (the fit
+   was their only miss; an unmeasured fact is left), nothing worse. Left:
+   (a) 36 of the 4,803 quadfit cannot draw -- ~17 knife-edge (slack
+   under 0.5 ft on a 1-ft raster), the rest a slanted or wrap-around alley
+   where s6s asks every stall to stand on the alley strip and the screen's
+   rectangle does not; read, accepted. (b) An alley at the SIDE only is not
+   read (the lot keeps its street lane -- conservative). (c) Gresham's 200
+   alley lots gained ~22 ft and moved nothing: they fail lot area/frontage.
 4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's
@@ -139,18 +141,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    row counts that s6s's rectangle does not before changing either. The
    stall count was decided 2026-09-18 (HUMAN_TODO 18) and is out of this
    item.
-   **(b) scoped 2026-09-25, offered to Steph (a worktree; moves FLATS
-   verdicts, ~3,000 yellow->green):** FLATS has `alley_at_rear` /
-   `alley_at_side` (flats/geom/alley.py) but not `alley_width_ft` (s4 has
-   it); nothing in score/ reads an alley. Port: carry `alley_width_ft`
-   through `observed_facts`/`LotFacts`; a per-city alley-is-aisle flag +
-   back-out room (Portland 20, Gresham 23 = one-way aisle; Wilsonville and
-   West Linn require alley access but do not let it be the aisle) -- a rules
-   field or a design siteplan table, cited; `parking_alley_access_required`
-   exists and is read by nobody; then in `_court_beyond_rear`, `seats`,
-   `fit_for` on an alley-rear lot: depth = gap + stall + max(0, back-out -
-   alley width), lane 0 where alley access is required. Bound it before a
-   targeted re-screen of the alley lots.
+   **(b) DONE caad6f3f** (`parking_alley_backout_ft`; leftovers item 3).
 5. **Draw what the screen fitted on the lot page.** `/flats/lots/{county}/
    {tlid}` (`app/api/routers/ui_flats.py`, the "lots" section) draws the
    outline only. Two things are missing before the building can be
