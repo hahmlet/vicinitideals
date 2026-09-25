@@ -125,8 +125,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    map only; `flats/score/paper.py` still faces s4's first bearing and
    brings the lane down the side of the building, so the screen's stall
    count and `fit_ft` on ~60,000 corner lots read the old drawing.
-   Also owed: FLATS's own envelope from the corpus setbacks
-   (`geom/envelope.buildable`) instead of quadfit's carved one, and
+   (FLATS's own envelope: DONE, item 12.) Also owed:
    `steep_slope` from s5o's DEM percentile / Gresham's hillside overlay
    (assumed False today, named on every lot it leans on). County-scale
    sizes from the four-stall county run (2026-09-18, `/root/bridge_county2`),
@@ -140,6 +139,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    row counts that s6s's rectangle does not before changing either. The
    stall count was decided 2026-09-18 (HUMAN_TODO 18) and is out of this
    item.
+   **(b) scoped 2026-09-25, offered to Steph (a worktree; moves FLATS
+   verdicts, ~3,000 yellow->green):** FLATS has `alley_at_rear` /
+   `alley_at_side` (flats/geom/alley.py) but not `alley_width_ft` (s4 has
+   it); nothing in score/ reads an alley. Port: carry `alley_width_ft`
+   through `observed_facts`/`LotFacts`; a per-city alley-is-aisle flag +
+   back-out room (Portland 20, Gresham 23 = one-way aisle; Wilsonville and
+   West Linn require alley access but do not let it be the aisle) -- a rules
+   field or a design siteplan table, cited; `parking_alley_access_required`
+   exists and is read by nobody; then in `_court_beyond_rear`, `seats`,
+   `fit_for` on an alley-rear lot: depth = gap + stall + max(0, back-out -
+   alley width), lane 0 where alley access is required. Bound it before a
+   targeted re-screen of the alley lots.
 5. **Draw what the screen fitted on the lot page.** `/flats/lots/{county}/
    {tlid}` (`app/api/routers/ui_flats.py`, the "lots" section) draws the
    outline only. Two things are missing before the building can be
