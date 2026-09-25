@@ -118,6 +118,8 @@ ROW_COLUMNS = (
     "unknown_leaning",
     "angles",
     "step_deg",
+    "envelope_sqft",
+    "envelope_source",
 )
 
 

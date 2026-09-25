@@ -20,6 +20,7 @@ import yaml
 from flats.designs.model import Design
 from flats.encode.load import load_trusted
 from flats.fit.angles import sweep
+from flats.ingest.assign import ROW_COLUMNS
 from flats.geom.edges import EdgeClass, Tier
 from flats.ingest.quadfit import (
     OBSERVABLE,
@@ -605,6 +606,9 @@ def test_the_envelope_is_cut_with_the_yards_the_corpus_resolved(corpus, policies
     assert h.envelope.rear_cut_ft is None
     assert row_for(s)["envelope_source"] == "flats"
     assert row_for(s)["envelope_sqft"] == pytest.approx(5000)
+    # assign trims a bridge frame to ROW_COLUMNS; a column row_for writes and
+    # the list lacks never reaches the database (run 18 lost the envelope).
+    assert list(row_for(s)) == list(ROW_COLUMNS)
 
 
 def test_without_the_taxlot_or_a_street_the_envelope_stays_quadfits(corpus, policies) -> None:
