@@ -1979,6 +1979,24 @@ defaults:
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.266.txt#L313-L314"
+  # THE ALLEY AS THE AISLE. On a lot C.3 sends to the alley, the cars in the
+  # row of stalls along it back straight out into it, so the court is a stall
+  # depth plus whatever the alley's MEASURED width leaves short of the room a
+  # car needs, not a stall and a 24 ft aisle. 33.266.120 gives the fourplex a
+  # 9 x 18 stall and states no aisle and no forward-motion rule; the nearest
+  # sentence is the all-other-development chapter's 33.266.130.F.1.b(2): 20
+  # ft of manoeuvring "between the end of each parking space and the opposite
+  # side of the alley", some of it on-site where the alley is narrower. This
+  # value is STEPH'S RULING of 2026-09-13 applying that sentence to the pod,
+  # the same ruling quadfit's s6s has drawn since that day (`alley_is_aisle`,
+  # `alley_backout_ft: 20` on the Portland footprints row, pinned by
+  # test_parking_geometry).
+  parking_alley_backout_ft:
+    value: 20
+    cite: PCC 33.266.130.F.1.b(2), 20 ft of maneuvering from the end of each space to the opposite side of the alley, applied to the fourplex by Steph's ruling 2026-09-13
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L485-L488"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from

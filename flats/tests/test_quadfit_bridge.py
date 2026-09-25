@@ -707,3 +707,23 @@ def test_a_side_line_on_an_alley_takes_the_rear_unless_the_code_says_otherwise()
     assert env.sqft == pytest.approx((50 - 15) * (100 - 10 - 15))
     waived = Rules(setback_front_ft=10, setback_side_ft=0, setback_rear_ft=15, setback_alley_side_ft=0)
     assert envelope_for(lot, waived).sqft == pytest.approx(50 * 75)  # type: ignore[arg-type]
+
+
+def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpus, policies) -> None:
+    # FOLLOWUPS 4(b). s4's alley width rides into the lot's facts beside the
+    # rear alley, and Portland's court behind the pod is charged as a stall
+    # and the back-out room the alley's width leaves short -- not a stall and
+    # a two-way aisle -- where the lot has the alley at the rear.
+    fed = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0), corpus.layers)
+    assert fed.facts.alley_at_rear is True and fed.facts.alley_width_ft == 14.0
+    beside = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0), corpus.layers)
+    assert beside.facts.rear_alley is None
+    assert lot_from_row(cut_row(zone="R5")).facts.alley_width_ft is None
+
+    def asked(lot) -> float:
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        return next(c for c in s.screening.checks if c.check == "fit_ft").threshold
+
+    wide = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=20.0), corpus.layers)
+    # Six feet of back-out paving on a 14 ft alley, none on a 20 ft one.
+    assert asked(fed) - asked(wide) == pytest.approx(6.0)

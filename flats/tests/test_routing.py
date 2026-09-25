@@ -125,6 +125,14 @@ def rows() -> list[Routing]:
 #: holds it open now that following it produced an exception rather than a
 #: number.
 #:
+#: And back to FOLLOWED on 2026-09-25, by a citation that is not the tract's.
+#: `parking_alley_backout_ft` quotes 33.266.130.F.1.b(2) -- 20 ft from the end
+#: of a stall to the far side of the alley -- in the base case, applied to the
+#: pod by Steph's ruling of 2026-09-13 (the alley is the aisle). The tract
+#: redirect still reaches nothing on a one-lot plat; what closed the row is
+#: that 130 has now been read for a sentence the base case uses, which is the
+#: only thing this ledger asks.
+#:
 #: A row that is not on this list is the thing to look at. It means a number
 #: in use sits beside a sentence handing its standard to a section nobody
 #: opened.
@@ -201,7 +209,6 @@ OPEN = {
     "or/multnomah/gresham 4.1415 -> 10.1700",
     "or/multnomah/gresham 4.1508 -> 10.1700",
     "or/multnomah/portland 33.140.210 -> 33.140.215",
-    "or/multnomah/portland 33.266.120 -> 33.266.130",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
@@ -265,6 +272,9 @@ FOLLOWED = {
     # (48.access.txt#L55), so both ends of the pointer are read by this layer
     # and the ledger has nothing left to send anybody to.
     "or/clackamas/west-linn 48.025 -> 48.060",
+    # 2026-09-25: the alley back-out room, quoted from inside 130 (see the
+    # note on OPEN).
+    "or/multnomah/portland 33.266.120 -> 33.266.130",
 }
 
 
@@ -332,7 +342,7 @@ def test_the_ledger_speaks_on_the_state_the_corpus_was_actually_in() -> None:
     layer = load_rules()["or/multnomah/portland"]
     stall = layer.defaults["parking_stall_width_ft"]
     for field in ("parking_stall_depth_ft", "parking_aisle_one_way_ft",
-                  "parking_aisle_two_way_ft"):
+                  "parking_aisle_two_way_ft", "parking_alley_backout_ft"):
         layer.defaults.pop(field, None)
     layer.defaults["parking_stall_width_ft"] = stall.model_copy(
         update={
@@ -443,11 +453,11 @@ def test_the_ledger_writes_one_row_per_redirect(tmp_path, rows: list[Routing]) -
 
     assert len(got) == len(rows)
     assert {r["followed"] for r in got} <= {"yes", ""}
-    # The row this ledger was built around, and it writes as open again: the
-    # pointer was followed to the end and 33.266.130.B handed the building
-    # back, so nothing in the base case cites inside the target. See OPEN.
+    # The row this ledger was built around. Open from 2026-09-01, when
+    # 33.266.130.B handed the building back; closed again 2026-09-25 by the
+    # alley back-out room the base case quotes from inside 130. See OPEN.
     portland = next(r for r in got if r["ref"] == "33.266.130")
-    assert portland["followed"] == ""
+    assert portland["followed"] == "yes"
     assert portland["section"] == "33.266.120"
     # Something has to still write "yes", or this assertion would pass on a
     # ledger that had quietly stopped closing rows at all.

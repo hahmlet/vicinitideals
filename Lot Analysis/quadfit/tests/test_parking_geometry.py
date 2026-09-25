@@ -831,3 +831,37 @@ def test_an_opening_may_be_wider_than_the_lane_behind_it():
     assert sp.curb_cut_ft_for("milwaukie") == 16
     assert sp.lane_ft_for("milwaukie") == 12
 
+
+
+def test_the_alley_as_the_aisle_is_the_back_out_room_the_corpus_holds():
+    """`alley_is_aisle` + `alley_backout_ft` against `parking_alley_backout_ft`.
+
+    FLATS took the alley as the aisle on 2026-09-25 (FOLLOWUPS 4(b)) as one
+    number: the room a car backing out of its stall needs, the alley's width
+    counting toward it. A row that says the alley is the aisle has to have
+    that number in the corpus, and it has to be the one s6s draws with --
+    the row's own `alley_backout_ft`, or the city's one-way aisle where the
+    row leaves it empty (Gresham's A1, as Figure 9.0825A's note says). A row
+    that does not say it has no number in the corpus: a screen that shrank
+    the court where the drawing does not would be a false GREEN.
+    """
+    from common import load_footprints
+    from flats.encode.port_quadfit import layer_id_for
+
+    fp = load_footprints()
+    for jurisdiction, dw in fp.siteplan.driveway.items():
+        read = _one_lot_value(layer_id_for(jurisdiction), "parking_alley_backout_ft")
+        if not dw.alley_is_aisle:
+            assert read is None, (
+                f"{jurisdiction}: the corpus states a back-out room "
+                f"({read.prov.cite}) the drawing does not take"
+            )
+            continue
+        drawn = dw.alley_backout_ft
+        if drawn is None:
+            drawn = fp.siteplan.geometry[jurisdiction].aisle_one_way_ft
+        assert read is not None, f"{jurisdiction}: alley_is_aisle with no corpus number"
+        assert float(read.value) == pytest.approx(drawn), (
+            f"{jurisdiction}: s6s backs out into {drawn} ft, the corpus says "
+            f"{read.value} ({read.prov.cite})"
+        )

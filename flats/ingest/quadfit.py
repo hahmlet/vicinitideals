@@ -131,6 +131,7 @@ S4_COLUMNS: tuple[str, ...] = (
     "fronts_cul_de_sac",
     "split_zone",
     "neighbour_zones_json",
+    "alley_width_ft",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -518,6 +519,10 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
         lot_depth_ft=_finite(row.get("lot_depth_ft")),
         geometry=tier,
         envelope_rear_ft=carved_rear_ft(row, observed),
+        # The alley behind the lot and how wide s4 measured it: the court it
+        # feeds (FOLLOWUPS 4(b), :func:`flats.score.paper.court_depth`).
+        alley_at_rear=bool(observed.get("alley_at_rear")),
+        alley_width_ft=_finite(row.get("alley_width_ft")),
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -693,7 +698,14 @@ def screen_lot(
         if key not in fitters:
             fitters[key] = Fitter(env.geom, angles)
         facts = dataclasses.replace(lot.facts, envelope_rear_ft=env.rear_cut_ft)
-        fit = fit_for(fitters[key], design, got, placement=False, carved_rear_ft=env.rear_cut_ft)
+        fit = fit_for(
+            fitters[key],
+            design,
+            got,
+            placement=False,
+            carved_rear_ft=env.rear_cut_ft,
+            alley=facts.rear_alley,
+        )
         result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
         shadow = _if_signed(
             got, facts, design, fit, result, policy=policy, relief=relief, config=config

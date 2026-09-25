@@ -56,7 +56,7 @@ from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
-from flats.score.paper import court_across, court_depth, lot_standard
+from flats.score.paper import RearAlley, court_across, court_depth, lot_standard
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
     ReliefOutcome,
@@ -186,10 +186,22 @@ class LotFacts:
     #: rows). ``None`` means the envelope was cut with these rules' own
     #: number, which is what every caller but the bridge does.
     envelope_rear_ft: float | None = None
+    #: An alley along the rear lot line (s4's alley edge, named rear by
+    #: bearing -- :func:`flats.geom.alley.observed_alley`), and its measured
+    #: width. Read by the court only where the code sends the driveway to
+    #: the alley and, for the depth, where it lets the alley be the aisle
+    #: (:func:`flats.score.paper.court_depth`). False and None where nothing
+    #: measured the lot, which leaves the court as the street-fed one.
+    alley_at_rear: bool = False
+    alley_width_ft: float | None = None
 
     @property
     def landlocked(self) -> bool:
         return self.geometry is GeometryTier.landlocked
+
+    @property
+    def rear_alley(self) -> RearAlley | None:
+        return RearAlley(self.alley_width_ft) if self.alley_at_rear else None
 
 
 @dataclass(frozen=True, slots=True)
@@ -358,7 +370,8 @@ def _checks(
         policy.evaluate(
             "fit_ft",
             fit.best_depth_ft,
-            fit.required_ft + _court_beyond_rear(design, rules, lot.envelope_rear_ft),
+            fit.required_ft
+            + _court_beyond_rear(design, rules, lot.envelope_rear_ft, lot.rear_alley),
             is_maximum=False,
             jurisdiction=where,
         )
@@ -370,7 +383,7 @@ def _checks(
     # measured a rectangle this zone does not accept, so the depth it found is
     # no evidence either way. That is a hole in the measurement, not a miss
     # on the lot, and it is reported as one rather than scored.
-    if _searched_narrower_than(fit, design, rules):
+    if _searched_narrower_than(fit, design, rules, lot.rear_alley):
         unchecked.append("fit_across_ft")
 
     # Lot area and lot width are the two standards the plat path changes, and
@@ -649,7 +662,10 @@ def _unencoded(field: str, rules: ZoneResolution) -> bool:
 
 
 def _court_beyond_rear(
-    design: Design, rules: ZoneResolution, carved_rear_ft: float | None = None
+    design: Design,
+    rules: ZoneResolution,
+    carved_rear_ft: float | None = None,
+    alley: RearAlley | None = None,
 ) -> float:
     """Depth the parking court needs past the envelope's rear edge, in feet.
 
@@ -675,8 +691,12 @@ def _court_beyond_rear(
     envelope cut at 0) the wall has to move that much deeper into the
     envelope, and the charge says so. Never negative: a strip deeper than the
     court hands the building back no depth.
+
+    ``alley`` is the lot's rear alley, where it has one: the court it feeds
+    may be a stall and a back-out shortfall rather than a stall and an aisle
+    (:func:`flats.score.paper.court_depth`).
     """
-    court, _court_from_code = court_depth(design, rules)
+    court, _court_from_code = court_depth(design, rules, alley)
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
@@ -690,6 +710,7 @@ def seats(
     *,
     axis_required: bool = False,
     carved_rear_ft: float | None = None,
+    alley: RearAlley | None = None,
 ) -> int | None:
     """How many stalls the lot seats -- the number beside the colour.
 
@@ -712,10 +733,10 @@ def seats(
     Returns 0 where not even the floor holds at that depth, and ``None``
     for a design with no court to count.
     """
-    across = court_across(design, rules)
+    across = court_across(design, rules, alley)
     if not across.stalls:
         return None
-    behind = _court_beyond_rear(design, rules, carved_rear_ft)
+    behind = _court_beyond_rear(design, rules, carved_rear_ft, alley)
     best = 0
     for _orientation, side, deep in design.oriented(axis_required=axis_required):
         depth = deep + behind
@@ -731,7 +752,9 @@ def seats(
     return best
 
 
-def _searched_narrower_than(fit: Fit, design: Design, rules: ZoneResolution) -> bool:
+def _searched_narrower_than(
+    fit: Fit, design: Design, rules: ZoneResolution, alley: RearAlley | None = None
+) -> bool:
     """Whether the fit's search was narrower than this zone's parking asks.
 
     The width asked is the paper lot's (:func:`flats.score.paper.court_across`):
@@ -740,7 +763,7 @@ def _searched_narrower_than(fit: Fit, design: Design, rules: ZoneResolution) -> 
     (``across_ft`` is None) was built around the bare footprint, and reads as
     searched at the building's own side.
     """
-    across = court_across(design, rules)
+    across = court_across(design, rules, alley)
     facing = fit.orientation or Orientation.width_facing
     side = (
         design.footprint.width_ft
@@ -759,6 +782,7 @@ def fit_for(
     *,
     placement: bool = True,
     carved_rear_ft: float | None = None,
+    alley: RearAlley | None = None,
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
 
@@ -772,8 +796,12 @@ def fit_for(
     ``carved_rear_ft`` is the rear strip the envelope was cut with when that
     was not these rules' number (:attr:`LotFacts.envelope_rear_ft`); the
     seat count charges the court against it the way the fit check does.
+
+    ``alley`` is the lot's rear alley (:attr:`LotFacts.rear_alley`): where
+    the code sends the driveway to it there is no lane beside the building
+    to search for, and where the alley is the aisle the court is shallower.
     """
-    across = court_across(design, rules)
+    across = court_across(design, rules, alley)
     axis_required = rules.get("orientation_constraint") == "axis_required"
     fit = fitter.fit_design(
         design,
@@ -787,7 +815,12 @@ def fit_for(
     return dataclasses.replace(
         fit,
         stalls=seats(
-            fitter, design, rules, axis_required=axis_required, carved_rear_ft=carved_rear_ft
+            fitter,
+            design,
+            rules,
+            axis_required=axis_required,
+            carved_rear_ft=carved_rear_ft,
+            alley=alley,
         ),
     )
 
@@ -818,7 +851,7 @@ def screen(
         return Screening(triage=Triage.unknown, reasons=(GEOMETRY_UNREADABLE,))
 
     where = rules.jurisdiction
-    across = court_across(design, rules)
+    across = court_across(design, rules, lot.rear_alley)
     checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))

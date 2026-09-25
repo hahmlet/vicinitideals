@@ -228,7 +228,37 @@ def lot_standard(
 _COURT_CONFIGS = frozenset({ParkingConfig.rear_court})
 
 
-def court_depth(design: Design, rules: "ZoneResolution") -> tuple[float, tuple[str, ...]]:
+@dataclass(frozen=True, slots=True)
+class RearAlley:
+    """An alley along the lot's rear line, as quadfit's s4 measured it.
+
+    Handed to :func:`court_depth` and :func:`court_across` only for a lot
+    with an alley edge at the rear (``alley_at_rear``); the paper lot, which
+    has no lot, never passes one.
+    """
+
+    #: The alley's width in feet -- s4's gap in the taxlot fabric from this
+    #: lot to the first private lot across the alley. ``None`` where nothing
+    #: is on record, which counts as no width at all: the strict reading,
+    #: the one s6s draws.
+    width_ft: float | None = None
+
+
+def alley_fed(rules: "ZoneResolution", alley: RearAlley | None) -> bool:
+    """Whether this lot's parking is reached from its rear alley.
+
+    Only where the code sends the driveway there
+    (``parking_alley_access_required``) and only on a lot with the alley at
+    the rear. An alley at the side is not read: the lane from it would run
+    across the lot to the court, which is a drawing this lot does not make,
+    so such a lot keeps its street lane -- the conservative side.
+    """
+    return alley is not None and rules.get("parking_alley_access_required") is True
+
+
+def court_depth(
+    design: Design, rules: "ZoneResolution", alley: RearAlley | None = None
+) -> tuple[float, tuple[str, ...]]:
     """How much depth this design's own parking needs behind the building.
 
     A rear court is a row of stalls plus the aisle that serves them, and until
@@ -281,6 +311,19 @@ def court_depth(design: Design, rules: "ZoneResolution") -> tuple[float, tuple[s
     if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
         used.append("parking_aisle_two_way_ft")
         aisle = max(aisle, stated)
+    # THE ALLEY AS THE AISLE (FOLLOWUPS 4(b)). On a lot the code sends to its
+    # rear alley, where the code also lets the alley serve as the aisle
+    # (``parking_alley_backout_ft``), the row of stalls along the alley backs
+    # straight out into it: the court is the stall plus whatever the alley's
+    # measured width leaves short of the room a car needs, paved on the lot.
+    # Taken only where it is shallower, as s6s takes it only where it buys a
+    # stall -- a lot deep enough for the court's own aisle keeps it.
+    backout = _number(rules, "parking_alley_backout_ft")
+    if backout is not None and alley is not None and alley_fed(rules, alley):
+        shortfall = max(0.0, backout - (alley.width_ft or 0.0))
+        if gap + stall + shortfall < gap + stall + aisle:
+            used += ["parking_alley_access_required", "parking_alley_backout_ft"]
+            return gap + stall + shortfall, tuple(used)
     return gap + stall + aisle, tuple(used)
 
 
@@ -306,7 +349,9 @@ class Across:
     from_code: tuple[str, ...] = ()
 
 
-def court_across(design: Design, rules: "ZoneResolution") -> Across:
+def court_across(
+    design: Design, rules: "ZoneResolution", alley: RearAlley | None = None
+) -> Across:
     """How much width this design's own parking needs, and where.
 
     A rear court is one row of stalls side by side behind the building, and a
@@ -382,7 +427,13 @@ def court_across(design: Design, rules: "ZoneResolution") -> Across:
         used.append("parking_stall_width_ft")
         stall = max(stall, stated)
     lane = design.parking.lane_width_ft
-    if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
+    if alley_fed(rules, alley):
+        # The court is reached from the alley behind it, and the code forbids
+        # the street lane besides (Portland 33.266.120.C.3, Gresham
+        # 7.0420(B)(1), Wilsonville, West Linn): no lane beside the building.
+        used.append("parking_alley_access_required")
+        lane = 0.0
+    elif (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
         used.append("driveway_min_width_two_way_ft")
         lane = max(lane, stated)
     return Across(

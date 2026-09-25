@@ -988,8 +988,10 @@ class DrivewayRules(BaseModel):
     #: the plan trusts nothing. A lot whose alley has no width on record is
     #: laid out as if it were zero, the strict way. s6s names such plans
     #: `townhome_rear_court_alley_aisle` so the number is always countable.
-    #: Meaningless without `alley_access_required`; not a FLATS field (the
-    #: corpus has no alley fact), so the drift test does not check it.
+    #: Meaningless without `alley_access_required`. Mirrored in FLATS since
+    #: 2026-09-25 as `parking_alley_backout_ft` (this row's
+    #: `alley_backout_ft`, or the one-way aisle where it is empty), pinned by
+    #: test_the_alley_as_the_aisle_is_the_back_out_room_the_corpus_holds.
     alley_is_aisle: bool | None = None
     #: The clear room a car backing out of its stall must have, from the end
     #: of the stall to the far side of the alley, in feet; the alley's own

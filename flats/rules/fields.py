@@ -119,6 +119,7 @@ _LABELS: dict[str, str] = {
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_front_prohibited": "parking banned in front of building",
     "parking_alley_access_required": "vehicle access must be from the alley",
+    "parking_alley_backout_ft": "room to back out into the alley",
     "parking_side_prohibited": "parking banned beside the building",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "corner_access_street": "which street a corner lot's driveway uses",
@@ -584,6 +585,30 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "parking_alley_backout_ft",
+        "length_ft",
+        "The room a car backing out of a stall along the alley must have, "
+        "from the end of the stall to the far side of the alley, where the "
+        "code lets the alley serve as the court's aisle. The alley's own "
+        "width counts toward it and only the rest is paved on the lot, so "
+        "on an alley-fed lot the court is a stall depth plus that shortfall "
+        "instead of a stall and a two-way aisle. Gresham states it, Figure "
+        "9.0825A's note (\"Public alley width may be included as part of "
+        "aisle width (A1 or A2) dimension, but all stalls must be on "
+        "private property\"), which makes the room its one-way aisle, 23 "
+        "ft. Portland states 20 ft for every OTHER building at "
+        "33.266.130.F.1.b(2) and nothing for this one; the value on its "
+        "file is Steph's ruling of 2026-09-13 applying that sentence. Read "
+        "only on a lot with an alley at the rear where "
+        "`parking_alley_access_required` sends the driveway there, against "
+        "the alley's MEASURED width (quadfit s4's gap in the taxlot "
+        "fabric); an alley with no width on record counts for nothing. "
+        "Absent means the court keeps its own aisle, the conservative "
+        "reading. Mirrors `alley_is_aisle` / `alley_backout_ft` on the "
+        "footprints.yaml row, pinned by test_parking_geometry.",
+        False,
+    ),
+    FieldDef(
         "parking_side_prohibited",
         "bool",
         "True where the code keeps a townhouse project's parking out of the "
@@ -985,6 +1010,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",
+        "parking_alley_backout_ft",
         "parking_side_prohibited",
         "corner_access_street",
         "front_lot_line_corner",

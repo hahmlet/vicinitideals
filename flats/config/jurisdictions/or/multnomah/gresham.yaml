@@ -2066,6 +2066,21 @@ defaults:
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+  # THE ALLEY AS THE AISLE. Figure 9.0825A's note: "Public alley width may be
+  # included as part of aisle width (A1 or A2) dimension, but all stalls must
+  # be on private property, off the public right-of-way." One row of stalls
+  # along the alley backs out into it, so the room it needs is the one-way
+  # aisle A1, 23 ft (parking_aisle_one_way_ft above, same table), of which
+  # the alley's MEASURED width is part and the rest is paved on the lot.
+  # quadfit's s6s has drawn it since 2026-09-13 (`alley_is_aisle` on the
+  # Gresham footprints row, no `alley_backout_ft` = A1), pinned by
+  # test_parking_geometry.
+  parking_alley_backout_ft:
+    value: 23
+    cite: GDC Figure 9.0825A notes, public alley width included in aisle width A1; Table 9.0825A A1 at 90 degrees 23 ft
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
+    retrieved: '2026-08-24'
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343,L355-L357"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from

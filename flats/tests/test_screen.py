@@ -492,6 +492,82 @@ def test_the_court_is_charged_against_the_strip_the_envelope_really_lost() -> No
     assert asked(rules(setback_rear_ft=20), LotFacts(lot_sqft=6000, frontage_ft=60, lot_width_ft=60, envelope_rear_ft=20.0)) == pytest.approx(36.0 + COURT_FT - 20.0)
 
 
+#: A lot with the alley along its rear line, 14 ft wide as s4 measured it
+#: (the typical Portland alley), and the two sentences that make the alley
+#: the court's way in and its aisle: Portland's C.3 and the 20 ft back-out
+#: room of 33.266.130.F.1.b(2) (Steph's ruling, 2026-09-13).
+ALLEY_LOT = LotFacts(
+    lot_sqft=6000, frontage_ft=60, lot_width_ft=60, alley_at_rear=True, alley_width_ft=14.0
+)
+ALLEY_FED = {"parking_alley_access_required": True, "parking_alley_backout_ft": 20}
+
+
+def test_an_alley_fed_court_backs_out_into_the_alley() -> None:
+    # FOLLOWUPS 4(b): the row of stalls along the alley backs straight out
+    # into it, so the court is the standoff, a stall, and whatever the
+    # alley's width leaves short of the back-out room -- 5 + 18 + 6 on a 14
+    # ft alley, where the street-fed court is 5 + 18 + 24. No lane down the
+    # building's flank either: the court is reached from behind.
+    gap, stall = DESIGN.parking.building_gap_ft, DESIGN.parking.stall_depth_ft
+    at_building = fit(across_ft=56.0)
+
+    def fit_check(rule_set, lot):
+        got = run(rule_set, lot=lot, f=at_building)
+        return got, next(c for c in got.checks if c.check == "fit_ft")
+
+    got, asked = fit_check(rules(**ALLEY_FED), ALLEY_LOT)
+    assert asked.threshold == pytest.approx(36.0 + gap + stall + 6.0)
+    assert "fit_across_ft" not in got.unchecked
+
+    # An alley with no width on record counts for nothing: the whole 20 ft
+    # is paved on the lot. Still shallower than the court's own 24 ft aisle.
+    unmeasured = replace(ALLEY_LOT, alley_width_ft=None)
+    assert fit_check(rules(**ALLEY_FED), unmeasured)[1].threshold == pytest.approx(
+        36.0 + gap + stall + 20.0
+    )
+    # Back-out room deeper than the court's own aisle is never taken: the
+    # court keeps its aisle, as s6s keeps it where the alley buys nothing.
+    deep = rules(parking_alley_access_required=True, parking_alley_backout_ft=40)
+    assert fit_check(deep, unmeasured)[1].threshold == pytest.approx(36.0 + COURT_FT)
+    # Access from the alley and no word that the alley is the aisle
+    # (Wilsonville, West Linn): the whole court, and still no street lane.
+    got, asked = fit_check(rules(parking_alley_access_required=True), ALLEY_LOT)
+    assert asked.threshold == pytest.approx(36.0 + COURT_FT)
+    assert "fit_across_ft" not in got.unchecked
+
+
+def test_an_alley_the_code_does_not_route_to_changes_nothing() -> None:
+    # The alley counts only where the code sends the driveway to it; a lot
+    # with no alley at the rear is the street-fed court whatever the city
+    # says; and on either, a search at the building's width alone is the
+    # hole in the measurement it always was.
+    at_building = fit(across_ft=56.0)
+    for rule_set, lot in (
+        (rules(parking_alley_backout_ft=20), ALLEY_LOT),
+        (rules(**ALLEY_FED), LOT),
+        (rules(**ALLEY_FED), replace(ALLEY_LOT, alley_at_rear=False)),
+    ):
+        got = run(rule_set, lot=lot, f=at_building)
+        asked = next(c for c in got.checks if c.check == "fit_ft")
+        assert asked.threshold == pytest.approx(36.0 + COURT_FT)
+        assert "fit_across_ft" in got.unchecked
+
+
+def test_an_alley_fed_lot_seats_its_stalls_without_a_lane_or_an_aisle() -> None:
+    # 56 x 65: the building and a court of standoff, stall and 6 ft of
+    # back-out paving, no wider than the building. Street-fed it seats
+    # nothing -- it needs 83 deep and 68 across; fed from a 14 ft alley it
+    # seats six, the most 56 ft holds at 9 ft a stall.
+    fitter = Fitter(shapely.box(0, 0, 56, 65), (0.0,), res=1.0)
+    alley = ALLEY_LOT.rear_alley
+
+    assert alley is not None and alley.width_ft == 14.0
+    assert fit_for(fitter, DESIGN, rules()).stalls == 0
+    assert fit_for(fitter, DESIGN, rules(**ALLEY_FED)).stalls == 0
+    assert fit_for(fitter, DESIGN, rules(**ALLEY_FED), alley=alley).stalls == 6
+    assert LOT.rear_alley is None
+
+
 def test_a_pod_that_only_fits_end_on_is_measured_against_the_run_it_needed() -> None:
     # The flip searches the envelope at the pod's *depth* and needs its
     # *width*, so a Fit whose recorded depth_ft is the smaller dimension must

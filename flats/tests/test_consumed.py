@@ -53,6 +53,10 @@ from flats.rules.fields import FIELDS
 #: on the footprints row, pinned to this field by `BOOL_MIRRORED`), and no
 #: FLATS screen lays out a driveway yet. Declared unread, not forgotten -- the
 #: screen that takes it is the one that takes the whole driveway block.
+#: READ since 2026-09-25 (FOLLOWUPS 4(b)): on a lot with an alley at the
+#: rear the paper court drops the lane beside the building
+#: (`paper.court_across`), and where `parking_alley_backout_ft` lets the alley
+#: be the aisle the court is a stall plus the back-out shortfall.
 #:
 #: Six left on 2026-09-17, when the paper lot started charging the court's
 #: WIDTH (`paper.court_across`). Three by the first route: `parking_stall_width_ft`
@@ -76,7 +80,6 @@ SILENTLY_UNREAD = frozenset(
         "driveway_approach_max_width_ft",
         "min_building_separation_ft",
         "parking_front_prohibited",
-        "parking_alley_access_required",
         "driveway_approach_min_width_ft",
         "parking_area_max_frontage_pct",
         "max_building_width_ft",
