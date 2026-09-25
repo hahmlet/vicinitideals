@@ -1,5 +1,5 @@
 {
-  "digest": "67fd44d5fb9c4d0cd644e7fb18a85cff197f975308fde3425bcece496ee0e518",
+  "digest": "a26aa77fa49cb723329c4796104aac511eb4b08eeb4314e0f6b79207f2872f8c",
   "layers": {
     "or": {
       "misattributed": [],
@@ -303,6 +303,13 @@
     },
     "or/multnomah/gresham": {
       "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "parking_alley_backout_ft",
+          "claimed": "9.0825 9.0825",
+          "found": "9.0802 9.0825",
+          "quote": "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343,L355-L357"
+        },
         {
           "zone": "NC-PV",
           "field": "quadplex_allowed",
