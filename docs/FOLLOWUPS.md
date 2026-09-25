@@ -516,25 +516,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    the alley was (the front on the corridor takes 10, another front 0),
    read it in FLATS as an observed site fact. Read what "adjacent to"
    means in 33.910 first, and bound both ways on the subset.
-12. **FLATS cuts its own envelope -- MERGED b5303d01 2026-09-24, full
-   re-screen `/root/chain_env.sh` on 137 in flight (bundle
-   `2026-09-24_env`, ~7.5 h from 23:14 UTC).** The bridge cuts each lot's
-   envelope from the taxlot at the setbacks the corpus RESOLVED
-   (`envelope_for`, `buildable`), less s5o's carve (`carve_wkb`, read from
-   `data/quadfit_env/s5o_full.parquet` = the 09-24 s5o + carve column).
-   Bound on all 291,589 lots: every larger envelope is a variant that fired
-   (Portland commercial vs non-residential neighbours, Oregon City
-   commercial, alley rears, Milwaukie small-lot rear, Clackamas MR1/MR2);
-   every smaller one is stricter; 622 carved lots lose sub-200 sq ft scraps.
-   Sample re-screen 20,000 lots: 55 moves, all on FLATS's envelope, none
-   worse (54 yellow -> unknown now wait on an unmeasured fact, not the fit;
-   1 yellow -> green). Next: load, drift, promote on the standing word.
-   Leftovers the bound found, all stricter than quadfit (no false GREEN):
-   (a) Wilsonville RN front/rear 20 in the corpus vs quadfit's 15 -- read
-   the code; (b) Portland R5/R2.5/RM* lots with an alley rear AND a rear
-   line off it (~2,700 rows) stay on quadfit's envelope -- the waiver is
-   per line; (c) Portland has no `setback_alley_side_ft`, so a side alley
-   takes the side yard.
+12. **FLATS's own envelope -- loose ends (merged b5303d01, PROMOTED run 18
+   2026-09-25).** Run 18 drift 879 moved / 0 unexplained: the old quadfit
+   court credit was false on all-front lots and orientation-blind (now
+   charged), Wood Village LR rear resolves to 20, Gresham MDR-24 corner
+   street side 20. Found reading the losses: an 18-acre Oregon City C lot
+   (32E05D 01204, 01211) blew the fit's cell cap and fit nothing -- fixed
+   f0418b49 (coarser grid), rides the next batch. Left: (a) Wilsonville RN
+   front/rear 20 in the corpus vs quadfit's 15 -- read the code; (b)
+   Portland R5/R2.5/RM* lots with an alley rear AND a rear line off it
+   (~2,700 rows) stay on quadfit's envelope -- the waiver is per line; (c)
+   Portland has no `setback_alley_side_ft`, so a side alley takes the side
+   yard; (d) `checks.envelope` (source, sq ft) is missing from the DB rows
+   -- find where assign/export drops `envelope_source`.
 13. **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
    (`scripts/flats_tax_snapshot.py`, migration 0136) needs each lot's tax
    code area (RLIS `TAXCODE`), which acquire drops because it is not a
@@ -564,13 +558,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
     so a change made only to the P7 roll-up leaves the portfolio pages
     stale; keep P7 units split Studio/1BR/2BR. Deliver as rev13 via Excel COM.
 16. **Partial re-screen: re-run only the lots a change can move, splice
-   into the live run.** Steph 2026-09-25: a 7-hour full re-screen per
-   change is too much. Most changes touch one city or a few zones (Wood
-   Village TC moved 22 lots and took 7 h). The bridge already takes
+   into the live run -- APPROVED by Steph 2026-09-25, with conditions.**
+   A 7-hour full re-screen per change is too much. The bridge takes
    `--jurisdiction`; missing: a zone filter, and an assign/export/load path
    that copies every untouched lot's results from the previous run and
-   replaces only the re-screened ones, with drift read on the touched set.
-   Scope rule the change must declare: which jurisdictions/zones (or "all"
-   for a geometry/engine change, which still batches into one full run).
-   Meanwhile: keep coding while 137 runs; batch merged changes into one
-   full re-screen. Pending: Steph's go (a feature -> worktree).
+   replaces only the re-screened ones. Each change declares its scope
+   (jurisdictions/zones, or "all" for a geometry/engine change, which
+   batches into the next full run). Steph's conditions: (1) it is an avenue
+   for drift -- a change "only in Wood Village" also moved a Troutdale lot
+   -- so PERIODIC FULL re-screens stay, and each one is diffed against the
+   spliced run; (2) a process for moves nobody can explain: the full run
+   attributes such a move to the batch of changes since the last full run
+   and it is ACCEPTED as a known unknown and recorded, not a reason to
+   reject. Needs: cadence for the full run (e.g. every N partials or
+   monthly), and the drift report's "unattributed since full run N" line.
+   Build in a worktree.
