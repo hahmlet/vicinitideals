@@ -14,7 +14,8 @@ costs, and it is why :class:`Fitter` is an object rather than a function.
 The margin is a lower bound — see :mod:`flats.fit.raster` for why every rounding
 here shrinks the lot rather than the pod. A miss inside one cell is a
 measurement artifact, and the ``fit_ft`` tolerance in the slack policy exists to
-route it to REVIEW instead of RED.
+keep it from reading as RED -- since Steph's 2026-09-25 ruling the screen calls
+a fit inside it, either way, GREEN with a ``tight_fit`` flag.
 """
 
 from __future__ import annotations
@@ -64,6 +65,12 @@ class Fit:
     #: not even the floor holds. ``None`` on a fit built without the search
     #: -- not looked for, which is not the same as none.
     stalls: int | None = None
+    #: The parking the depth was charged for is a column of stalls along a
+    #: side alley, backing out into it (:func:`flats.score.paper.side_column`),
+    #: not a row behind the building with its own aisle. Set by
+    #: :func:`flats.score.screen.fit_for` on the fit it took for that plan:
+    #: searched at the building's own side, since the column stands inside it.
+    column: bool = False
 
     @property
     def required_ft(self) -> float:

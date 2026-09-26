@@ -108,3 +108,29 @@ def test_the_county_copy_is_named_on_both_pages_and_a_warning_is_a_bar(
     page.locator("#lot-table tbody tr td a").first.click()
     expect(page.locator("#lot-verdict")).to_be_visible()
     expect(page.locator("#county-copy")).to_contain_text("County map copy:")
+
+
+def test_a_tight_fit_is_a_filter_on_the_list_and_a_row_on_the_lot_page(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Steph 2026-09-25: a fit within 6 inches either way is green with a
+    flag the acquisition review sees -- a box on the list that shows only
+    those lots, and a line on the lot page that says the survey decides."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/lots?colour=green")
+
+    if page.get_by_text("No completed run has been loaded").count():
+        pytest.skip("no run loaded on this instance")
+    page.get_by_label("Only tight fits").check()
+    page.get_by_role("button", name="Show").click()
+    expect(page.get_by_label("Only tight fits")).to_be_checked()
+    if page.get_by_text("No lots match.").count():
+        pytest.skip("no tight fit in this run")
+
+    row = page.locator("#lot-table tbody tr").first
+    expect(row.get_by_text("tight fit").first).to_be_visible()
+    row.locator("td a").first.click()
+    expect(page.locator("#lot-verdict")).to_be_visible()
+    flagged = page.locator("tr[id^='tight-']").first
+    expect(flagged).to_be_visible()
+    expect(flagged).to_contain_text("survey")

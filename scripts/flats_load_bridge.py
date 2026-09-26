@@ -278,6 +278,13 @@ def _int(value: Any) -> int | None:
     return None if v is None else int(round(v))
 
 
+def _flag(value: Any) -> bool:
+    """A yes/no column: True only where the row says so. Absent from a bundle
+    written before the column existed, which reads as no."""
+    v = _clean(value)
+    return v is True or v == 1 or (isinstance(v, str) and v.strip().lower() == "true")
+
+
 #: RLIS's county letter on the taxlot record.
 COUNTY_LETTER = {"M": "multnomah", "C": "clackamas", "W": "washington"}
 
@@ -440,6 +447,11 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
                 "across_ft": _num(row.get("fit_across_ft")),
                 "angle_deg": _num(row.get("fit_angle_deg")),
                 "orientation": row.get("fit_orientation") or None,
+                # Inside the fit's tolerance either way: GREEN with a flag for
+                # the acquisition review (Steph 2026-09-25).
+                "tight": _flag(row.get("tight_fit")),
+                # The stalls stand in a column along a side alley.
+                "column": _flag(row.get("fit_column")),
             },
             "stalls": {
                 "charged": _int(row.get("stalls_charged")),

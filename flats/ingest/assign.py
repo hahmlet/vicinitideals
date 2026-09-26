@@ -104,6 +104,8 @@ ROW_COLUMNS = (
     "stalls_charged",
     "stalls_seated",
     "parking_band",
+    "tight_fit",
+    "fit_column",
     "fit_best_depth_ft",
     "fit_required_ft",
     "fit_across_ft",

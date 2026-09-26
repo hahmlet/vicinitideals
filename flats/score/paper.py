@@ -229,35 +229,117 @@ _COURT_CONFIGS = frozenset({ParkingConfig.rear_court})
 
 
 @dataclass(frozen=True, slots=True)
-class RearAlley:
-    """An alley along the lot's rear line, as quadfit's s4 measured it.
+class Alley:
+    """An alley along the lot, as quadfit's s4 measured it, and which line it is.
 
     Handed to :func:`court_depth` and :func:`court_across` only for a lot
-    with an alley edge at the rear (``alley_at_rear``); the paper lot, which
-    has no lot, never passes one.
+    with an alley edge (``alley_at_rear`` / ``alley_at_side``); the paper
+    lot, which has no lot, never passes one.
     """
 
     #: The alley's width in feet -- s4's gap in the taxlot fabric from this
-    #: lot to the first private lot across the alley. ``None`` where nothing
-    #: is on record, which counts as no width at all: the strict reading,
-    #: the one s6s draws.
+    #: lot to the first private lot across the alley, the narrowest where
+    #: the lot has two. ``None`` where nothing is on record, which counts as
+    #: no width at all: the strict reading, the one s6s draws.
     width_ft: float | None = None
+    #: The alley runs along the rear lot line, behind the court.
+    at_rear: bool = True
+    #: The alley runs along a side lot line, beside the court.
+    at_side: bool = False
 
 
-def alley_fed(rules: "ZoneResolution", alley: RearAlley | None) -> bool:
-    """Whether this lot's parking is reached from its rear alley.
+def alley_fed(rules: "ZoneResolution", alley: Alley | None) -> bool:
+    """Whether this lot's parking is reached from its alley.
 
     Only where the code sends the driveway there
-    (``parking_alley_access_required``) and only on a lot with the alley at
-    the rear. An alley at the side is not read: the lane from it would run
-    across the lot to the court, which is a drawing this lot does not make,
-    so such a lot keeps its street lane -- the conservative side.
+    (``parking_alley_access_required``), from an alley at the rear or at a
+    side. The court spans the lot behind the building, so an alley along
+    either line meets it: from the rear the stalls face it, from a side the
+    court's own aisle runs out into it at its end. Neither needs a lane down
+    the building's flank from the street -- which the code forbids besides.
+    Steph, 2026-09-25: *"Alleys along side yards is important."* Until then
+    a side alley was not read and the lot kept its street lane.
     """
-    return alley is not None and rules.get("parking_alley_access_required") is True
+    return (
+        alley is not None
+        and (alley.at_rear or alley.at_side)
+        and rules.get("parking_alley_access_required") is True
+    )
+
+
+def _backout_shortfall(rules: "ZoneResolution", alley: Alley | None) -> float | None:
+    """What the alley leaves short of the room a car needs to back out.
+
+    ``None`` where the alley is not the aisle here: no alley, a code that
+    does not send the driveway to it, or one that states no back-out room
+    (``parking_alley_backout_ft`` -- Portland by Steph's ruling, Gresham by
+    Figure 9.0825A). Paved on the lot, between the stall and the alley line.
+    """
+    backout = _number(rules, "parking_alley_backout_ft")
+    if backout is None or not alley_fed(rules, alley):
+        return None
+    assert alley is not None
+    return max(0.0, backout - (alley.width_ft or 0.0))
+
+
+def side_column(
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None,
+    stalls: int | None = None,
+) -> tuple[float, tuple[str, ...]] | None:
+    """The court's depth when its stalls stand in a column along a side alley.
+
+    THE ALLEY IS THE AISLE, from the side (Steph 2026-09-25). A row of stalls
+    behind the building needs its own aisle; beside a side alley the stalls
+    can instead stand nose-in to the building's side of the court, one behind
+    another along the alley line, and back straight out into the alley --
+    s6s's ``townhome_rear_court_alley_aisle`` turns its boxes the same way on
+    a side alley. The column is the stalls' WIDTHS deep (four at 9 ft are
+    36), plus the gap off the rear wall; across the lot it is one stall's
+    depth plus the back-out room the alley leaves short.
+
+    Returned only where that crossing fits inside the building's NARROWER
+    side, so it stands inside the fit rectangle in either orientation
+    without the rectangle being searched wider; a narrow alley whose
+    shortfall pushes the column wider than that is not offered it -- the
+    conservative side. ``None`` where the alley is not at a side, is not the
+    aisle here, or the design has no court.
+
+    ``stalls`` is the count to stand in the column; the charged floor
+    (:func:`court_across`) when omitted.
+    """
+    if (
+        alley is None
+        or not alley.at_side
+        or not design.parking.court_depth_ft
+        or design.parking.config not in _COURT_CONFIGS
+    ):
+        return None
+    shortfall = _backout_shortfall(rules, alley)
+    if shortfall is None:
+        return None
+    used = ["parking_alley_access_required", "parking_alley_backout_ft"]
+    gap = design.parking.building_gap_ft
+    stall = design.parking.stall_depth_ft
+    if (stated := _number(rules, "parking_building_buffer_ft")) is not None:
+        used.append("parking_building_buffer_ft")
+        gap = max(gap, stated)
+    if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
+        used.append("parking_stall_depth_ft")
+        stall = max(stall, stated)
+    narrow = min(design.footprint.width_ft, design.footprint.depth_ft)
+    if stall + shortfall > narrow:
+        return None
+    across = court_across(design, rules, alley)
+    count = across.stalls if stalls is None else stalls
+    if not count:
+        return None
+    return gap + count * across.stall_ft, tuple(used + list(across.from_code))
 
 
 def court_depth(
-    design: Design, rules: "ZoneResolution", alley: RearAlley | None = None
+    design: Design, rules: "ZoneResolution", alley: Alley | None = None
 ) -> tuple[float, tuple[str, ...]]:
     """How much depth this design's own parking needs behind the building.
 
@@ -318,9 +400,10 @@ def court_depth(
     # measured width leaves short of the room a car needs, paved on the lot.
     # Taken only where it is shallower, as s6s takes it only where it buys a
     # stall -- a lot deep enough for the court's own aisle keeps it.
-    backout = _number(rules, "parking_alley_backout_ft")
-    if backout is not None and alley is not None and alley_fed(rules, alley):
-        shortfall = max(0.0, backout - (alley.width_ft or 0.0))
+    # The alley at a side is not this: its column is
+    # :func:`side_column`, charged on its own fit.
+    shortfall = _backout_shortfall(rules, alley) if alley is not None and alley.at_rear else None
+    if shortfall is not None:
         if gap + stall + shortfall < gap + stall + aisle:
             used += ["parking_alley_access_required", "parking_alley_backout_ft"]
             return gap + stall + shortfall, tuple(used)
@@ -350,7 +433,7 @@ class Across:
 
 
 def court_across(
-    design: Design, rules: "ZoneResolution", alley: RearAlley | None = None
+    design: Design, rules: "ZoneResolution", alley: Alley | None = None
 ) -> Across:
     """How much width this design's own parking needs, and where.
 
@@ -428,9 +511,10 @@ def court_across(
         stall = max(stall, stated)
     lane = design.parking.lane_width_ft
     if alley_fed(rules, alley):
-        # The court is reached from the alley behind it, and the code forbids
-        # the street lane besides (Portland 33.266.120.C.3, Gresham
-        # 7.0420(B)(1), Wilsonville, West Linn): no lane beside the building.
+        # The court is reached from the alley behind it or beside it, and the
+        # code forbids the street lane besides (Portland 33.266.120.C.3,
+        # Gresham 7.0420(B)(1), Wilsonville, West Linn): no lane beside the
+        # building.
         used.append("parking_alley_access_required")
         lane = 0.0
     elif (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:

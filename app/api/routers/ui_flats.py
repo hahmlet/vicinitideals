@@ -2868,6 +2868,7 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
     # nobody measured) has no checks to call failing and no fit to call
     # missing; the older bridge rows predate the flag and were all screened.
     screened = checks.get("screened", True)
+    fit = (checks.get("fit") or {}) if screened else {}
     return {
         "design": row.design_key,
         "screened": screened,
@@ -2884,7 +2885,12 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "binding": list(row.binding or []),
         "slack_ft": float(row.slack_ft) if row.slack_ft is not None else None,
         "fits": checks.get("fits") if screened else None,
-        "fit": (checks.get("fit") or {}) if screened else {},
+        "fit": fit,
+        # Fits or misses by no more than 6 inches: green, and flagged for the
+        # acquisition review -- the survey settles it (Steph 2026-09-25).
+        "tight": bool(fit.get("tight")),
+        # The stalls stand in a column along a side alley and back out into it.
+        "column": bool(fit.get("column")),
         "stalls_charged": stalls.get("charged"),
         "stalls_seated": stalls.get("seated"),
         "band": stalls.get("band"),
@@ -2995,6 +3001,7 @@ def _lots_ctx(
     colour: str = "",
     design: str = "",
     q: str = "",
+    tight: bool = False,
     page: int = 1,
 ) -> dict[str, Any]:
     cities = sorted(
@@ -3009,6 +3016,7 @@ def _lots_ctx(
         "colour": colour if colour in _COLOURS else "",
         "design": design,
         "q": q,
+        "tight": tight,
         "page": page,
         "per_page": _LOTS_PAGE,
         "colours": _COLOURS,
@@ -3253,6 +3261,7 @@ async def flats_lots(
     colour: str = Query(""),
     design: str = Query(""),
     q: str = Query(""),
+    tight: str = Query(""),
     run: int | None = Query(None),
     page: int = Query(1, ge=1),
 ) -> HTMLResponse:
@@ -3260,9 +3269,13 @@ async def flats_lots(
     dedup_count, conflicts_count = await _get_counts(session)
     runs = await _runs(session)
     chosen = _chosen_run(runs, run)
+    tight_only = tight == "1"
     ctx = {
         **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
-        **_lots_ctx(runs, chosen, jurisdiction=jurisdiction, zone=zone, colour=colour, design=design, q=q, page=page),
+        **_lots_ctx(
+            runs, chosen, jurisdiction=jurisdiction, zone=zone, colour=colour, design=design, q=q,
+            tight=tight_only, page=page,
+        ),
         "refresh": await _refresh(session),
         "counts": {"verdict": {}, "if_signed": {}, "lots": 0},
         "lots": [],
@@ -3276,6 +3289,16 @@ async def flats_lots(
     ctx["design"] = picked or ""
     ctx["designs"] = designs
     conditions = _lot_conditions(jurisdiction, zone, q)
+    if tight_only:
+        # Lots with a fit inside 6 inches either way (Steph 2026-09-25): the
+        # ones the acquisition review looks at twice.
+        flagged = select(FlatsLotResult.lot_id).where(
+            FlatsLotResult.run_id == chosen.id,
+            FlatsLotResult.checks["fit"]["tight"].astext == "true",
+        )
+        if picked:
+            flagged = flagged.where(FlatsLotResult.design_key == picked)
+        conditions.append(FlatsLot.id.in_(flagged))
     counts = await _lot_counts(session, chosen.id, picked, conditions)
     shown = counts["if_signed"].get(colour, counts["lots"]) if colour in _COLOURS else counts["lots"]
     ctx["counts"] = counts

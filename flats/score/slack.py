@@ -14,8 +14,10 @@ The two are kept apart because conflating them is how a screen starts lying: a
 tolerance baked into the measurement makes the recorded margin wrong for every
 downstream consumer, including the design sweep.
 
-**Tolerance never manufactures a GREEN.** A check inside tolerance moves from RED
-to REVIEW, never to PASS. This is the recall bias the whole project runs on: a
+**Tolerance never manufactures a PASS.** A check inside tolerance moves from RED
+to REVIEW, never to PASS. (The screen makes one exception at the lot level, not
+here: a fit inside its tolerance is GREEN with a ``tight_fit`` flag -- Steph,
+2026-09-25 -- see :attr:`flats.score.screen.Screening.tight_fit`.) This is the recall bias the whole project runs on: a
 false red silently deletes an acquisition target and nobody ever learns it
 existed, while a false green costs one review. Exclusion has to be unambiguous;
 inclusion only has to be plausible.

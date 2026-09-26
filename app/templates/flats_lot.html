@@ -117,7 +117,12 @@
                   {% if r.fit.best_depth_ft is not none %}· {{ "{:,.1f}".format(r.fit.best_depth_ft) }} ft found where {{ "{:,.0f}".format(r.fit.required_ft or 0) }} ft is needed{% endif %}
                   {% if r.fit.across_ft is not none %}· {{ "{:,.0f}".format(r.fit.across_ft) }} ft across{% endif %}
                   {% if r.fit.orientation %}· {{ r.fit.orientation|replace('_', ' ') }}{% endif %}
-                  {% if r.fit.angle_deg is not none %}· facing {{ "{:.0f}".format(r.fit.angle_deg) }}°{% endif %}</td></tr>
+                  {% if r.fit.angle_deg is not none %}· facing {{ "{:.0f}".format(r.fit.angle_deg) }}°{% endif %}
+                  {% if r.column %}· cars park in a line along the side alley and back out into it{% endif %}</td></tr>
+          {% endif %}
+          {% if r.tight %}
+          <tr id="tight-{{ r.design|replace('@', '-') }}"><td class="col-muted">Tight fit</td>
+              <td><span class="badge badge-orange">tight fit</span> The building fits, or misses, by 6 inches or less. County lot lines are only good to about a foot, so this counts as green; the survey before an offer decides it.</td></tr>
           {% endif %}
           {% if r.ask %}
           <tr><td class="col-muted">Path</td><td>{{ r.ask|replace('_', ' ') }}</td></tr>

@@ -17,6 +17,7 @@ or a source moved, a footer naming the copy when nothing is wrong.
 
 from __future__ import annotations
 
+import re
 from datetime import date, datetime, timedelta, timezone
 
 import pytest
@@ -52,7 +53,8 @@ def _box(x: float, y: float, w: float, d: float) -> str:
 
 
 def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str = "preferred",
-            colour_reasons: list[str] | None = None, unknown: list[str] | None = None) -> dict:
+            colour_reasons: list[str] | None = None, unknown: list[str] | None = None,
+            tight: bool = False) -> dict:
     return {
         "verdict": "unknown",
         "if_signed": colour,
@@ -64,7 +66,7 @@ def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str 
         "ask": "as_of_right" if colour == "green" else "adjustment",
         "fits": colour != "red",
         "fit": {"slack_ft": 12.5, "best_depth_ft": 48.5, "required_ft": 36.0, "across_ft": 68.0,
-                "angle_deg": 88.0, "orientation": "width_facing"},
+                "angle_deg": 88.0, "orientation": "width_facing", "tight": tight},
         "stalls": {"charged": 4, "seated": seated, "band": band},
         "leaning": {"assumed": [], "unknown": unknown or []},
         "search": {"angles": 181, "step_deg": 1.0},
@@ -189,7 +191,7 @@ async def _seed(
     a, b, c = lots
 
     answers = [
-        (a, DESIGNS[0], _checks("green")),
+        (a, DESIGNS[0], _checks("green", tight=True)),
         (a, DESIGNS[1], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
         (b, DESIGNS[0], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
         (b, DESIGNS[1], _checks("yellow", head="coverage_pct", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
@@ -544,6 +546,38 @@ async def test_the_lot_page_puts_the_verdict_first_and_the_colour_beside_it(
     assert "green" in pod56
     assert "4 cars charged, 8 seated" in pod56
     assert "a rule this rests on has not been signed" in pod56
+
+
+async def test_a_tight_fit_is_flagged_on_the_list_and_explained_on_the_lot_page(
+    client: AsyncClient, session: AsyncSession
+):
+    # Steph 2026-09-25: a fit within 6 inches either way is green, with a
+    # flag the acquisition review sees. Lot A's pod56x36 is one; its pod80x25
+    # and every other answer are not.
+    await _login(client, session)
+    await _seed(session)
+
+    listed = await client.get("/flats/lots?colour=green")
+    row = listed.text.split("1S2E08BA  -09500", 1)[1].split("</tr>", 1)[0]
+    assert row.count("tight fit") >= 1
+    assert "tight fit" not in (await client.get("/flats/lots?colour=unknown")).text.split('id="lot-table"', 1)[1]
+
+    page = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    assert 'id="tight-pod56x36-2"' in page.text
+    assert 'id="tight-pod80x25-2"' not in page.text
+    tight = page.text.split('id="tight-pod56x36-2"', 1)[1].split("</tr>", 1)[0]
+    assert "6 inches or less" in tight and "survey" in tight
+
+    # "Only tight fits" narrows the list, the counts with it, and survives
+    # the colour buttons; one design alone is asked of that design.
+    only = await client.get("/flats/lots?tight=1")
+    table = only.text.split('id="lot-table"', 1)[1]
+    assert "1S2E08BA  -09500" in table
+    assert "1N1E29DD  -05600" not in table and "11E25AB  -00300" not in table
+    assert "green 1" in " ".join(only.text.split('id="lot-counts"', 1)[1].split('id="lot-table"', 1)[0].split())
+    assert re.search(r"tight=1(&amp;|&)colour=green", only.text)
+    other = await client.get("/flats/lots?tight=1&design=pod80x25@2")
+    assert "1S2E08BA  -09500" not in other.text.split('id="lot-table"', 1)[1]
 
 
 async def test_the_county_map_colour_sits_beside_ours_not_in_its_place(

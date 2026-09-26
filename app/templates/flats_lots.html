@@ -60,14 +60,18 @@
     <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted">Address or lot number
       <input type="text" name="q" value="{{ q }}" placeholder="2833 SE 71ST or 1S2E08BA" style="width:220px">
     </label>
+    <label style="display:flex;align-items:center;gap:4px;font-size:12px" class="muted"
+           title="Fits or misses by 6 inches or less. Green, but the survey decides.">
+      <input type="checkbox" name="tight" value="1" {% if tight %}checked{% endif %}> Only tight fits
+    </label>
     <input type="hidden" name="colour" value="{{ colour }}">
     <button class="btn btn-sm btn-primary" type="submit">Show</button>
-    {% if jurisdiction or zone or q or colour or design %}
+    {% if jurisdiction or zone or q or colour or design or tight %}
       <a class="btn btn-sm btn-secondary" href="/flats/lots?run={{ run.id }}">Clear</a>
     {% endif %}
   </form>
 
-  {% set base_query = "run=" ~ run.id ~ "&jurisdiction=" ~ (jurisdiction|urlencode) ~ "&zone=" ~ (zone|urlencode) ~ "&design=" ~ (design|urlencode) ~ "&q=" ~ (q|urlencode) %}
+  {% set base_query = "run=" ~ run.id ~ "&jurisdiction=" ~ (jurisdiction|urlencode) ~ "&zone=" ~ (zone|urlencode) ~ "&design=" ~ (design|urlencode) ~ "&q=" ~ (q|urlencode) ~ ("&tight=1" if tight else "") %}
 
   <div id="lot-counts" class="toolbar" style="gap:18px;flex-wrap:wrap;align-items:baseline">
     <div>
@@ -122,6 +126,7 @@
             {% for r in lot.results %}
               <div><span class="muted">{{ r.design }}</span>
                 <span class="badge {{ r.badge }}">{{ r.colour }}</span>
+                {% if r.tight %}<span class="badge badge-orange" title="Fits or misses by 6 inches or less. The survey decides.">tight fit</span>{% endif %}
                 {% if r.stalls_seated is not none %}<span class="muted">{{ r.stalls_seated }} cars</span>{% endif %}
                 {% if r.head %}<span class="muted">· {{ r.head }}</span>{% endif %}
               </div>

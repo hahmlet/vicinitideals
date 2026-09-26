@@ -4,7 +4,9 @@ Four asymmetries define this module and every test here defends one of them:
 
 * an unverified rule set can never produce RED — a bad number in a YAML file
   must not delete an acquisition target;
-* tolerance rescues a lot into UNKNOWN and never certifies one into GREEN;
+* tolerance rescues a lot into UNKNOWN and never certifies one into GREEN --
+  except the fit, which inside its tolerance either way is GREEN with a
+  ``tight_fit`` flag (Steph 2026-09-25: every acquisition is surveyed);
 * a required standard nobody encoded blocks GREEN rather than being assumed
   satisfied;
 * a miss the code offers a path around is YELLOW, not RED. A pod one foot over
@@ -385,20 +387,44 @@ def test_a_pod_too_big_for_the_envelope_still_reports_its_shortfall() -> None:
     assert result.triage is Triage.yellow
 
 
-def test_a_miss_inside_measurement_noise_is_unknown_not_red() -> None:
-    # One raster cell of shortfall. That is our instrument, not the lot: we do
-    # not know whether it misses at all, which is a different thing from
-    # knowing it misses and needing permission.
-    result = run(f=fit(over_ft=-0.3))
+def test_a_fit_inside_its_tolerance_either_way_is_green_and_flagged_tight() -> None:
+    # One raster cell of shortfall is our instrument, not the lot, and the
+    # county's lot lines are coarser still. Steph, 2026-09-25: "plus or minus
+    # 6 in it goes into the green category. Every acquisition is going to
+    # have a survey anyways. However, some sort of flag to be brought to the
+    # human's attention" -- so a fit within the tolerance EITHER WAY is
+    # green, and says it is tight. The edge counts: -0.5 and +0.5 are in.
+    for over in (-0.5, -0.3, 0.0, 0.3, 0.5):
+        result = run(f=fit(over_ft=over))
+        assert result.triage is Triage.green, over
+        assert result.tight_fit is True, over
+        assert result.reasons == (), over
+    # The miss is still recorded as the tightest check, not hidden.
+    assert run(f=fit(over_ft=-0.3)).head == "fit_ft"
+    # Past the tolerance on the pass side: green, not tight.
+    clear = run(f=fit(over_ft=1.0))
+    assert clear.triage is Triage.green and clear.tight_fit is False
+    # Past it on the miss side: a definite miss, never green, not tight.
+    short = run(f=fit(over_ft=-0.6))
+    assert short.triage is not Triage.green and short.tight_fit is False
 
+
+def test_tolerance_on_any_other_check_never_manufactures_a_green() -> None:
+    # The fit's exception is the fit's alone: a stall count a quarter short
+    # (parking_stalls tolerance 0.25) still holds the lot out of GREEN.
+    policy = SlackPolicy(tolerance={"fit_ft": 0.5, "coverage_pct": 1.0})
+    result = screen(
+        rules(max_coverage_pct=33.0), LOT, DESIGN, fit(), policy=policy, relief=None
+    )
+    coverage = next(c for c in result.checks if c.check == "coverage_pct")
+    assert coverage.verdict is Verdict.tolerated
     assert result.triage is Triage.unknown
-    assert result.head == "fit_ft"
+    assert result.tight_fit is False
 
 
-def test_tolerance_never_manufactures_a_green() -> None:
-    result = run(f=fit(over_ft=-0.3))
-
-    assert result.triage is not Triage.green
+def test_a_policy_with_no_fit_tolerance_flags_nothing_tight() -> None:
+    result = screen(rules(), LOT, DESIGN, fit(over_ft=0.0), policy=SlackPolicy(), relief=None)
+    assert result.triage is Triage.green and result.tight_fit is False
 
 
 def test_a_definite_miss_outranks_a_fuzzy_one() -> None:
@@ -559,13 +585,69 @@ def test_an_alley_fed_lot_seats_its_stalls_without_a_lane_or_an_aisle() -> None:
     # nothing -- it needs 83 deep and 68 across; fed from a 14 ft alley it
     # seats six, the most 56 ft holds at 9 ft a stall.
     fitter = Fitter(shapely.box(0, 0, 56, 65), (0.0,), res=1.0)
-    alley = ALLEY_LOT.rear_alley
+    alley = ALLEY_LOT.alley
 
     assert alley is not None and alley.width_ft == 14.0
     assert fit_for(fitter, DESIGN, rules()).stalls == 0
     assert fit_for(fitter, DESIGN, rules(**ALLEY_FED)).stalls == 0
     assert fit_for(fitter, DESIGN, rules(**ALLEY_FED), alley=alley).stalls == 6
-    assert LOT.rear_alley is None
+    assert LOT.alley is None
+
+
+#: The same alley along a SIDE lot line (s4's alley edge named side by
+#: bearing). Steph, 2026-09-25: "Alleys along side yards is important."
+SIDE_ALLEY_LOT = replace(ALLEY_LOT, alley_at_rear=False, alley_at_side=True)
+
+
+def test_a_side_alley_feeds_the_court_without_a_street_lane() -> None:
+    # The court spans the lot behind the building and its end meets the side
+    # alley, so a code that sends the driveway to the alley asks no lane down
+    # the building's flank -- a search at the building's own width is the
+    # whole question, as it is for a rear alley.
+    at_building = fit(across_ft=56.0)
+    for rule_set in (rules(**ALLEY_FED), rules(parking_alley_access_required=True)):
+        got = run(rule_set, lot=SIDE_ALLEY_LOT, f=at_building)
+        assert "fit_across_ft" not in got.unchecked
+        # The rear-alley back-out court is not a side alley's: the row
+        # behind the building still needs its own aisle.
+        asked = next(c for c in got.checks if c.check == "fit_ft")
+        assert asked.threshold == pytest.approx(36.0 + COURT_FT)
+    # A code that does not send the driveway to the alley keeps the lane.
+    got = run(rules(parking_alley_backout_ft=20), lot=SIDE_ALLEY_LOT, f=at_building)
+    assert "fit_across_ft" in got.unchecked
+
+
+def test_a_side_alley_stands_the_stalls_in_a_column_that_backs_out_into_it() -> None:
+    # 56 x 78: the building (36 deep broadside) and 42 ft behind it. The row
+    # court needs 5 + 18 + 24 = 47 behind the building; street-fed it also
+    # needs 68 across. Four stalls standing along a 14 ft side alley, nose
+    # to the court's far side and backing out into the alley, need 5 + 4 x 9
+    # = 41 deep and 18 + 6 across -- inside the building's 36 ft side.
+    fitter = Fitter(shapely.box(0, 0, 56, 78), (0.0,), res=1.0)
+    side = SIDE_ALLEY_LOT.alley
+    assert side is not None and side.at_side and not side.at_rear
+
+    assert fit_for(fitter, DESIGN, rules(**ALLEY_FED)).stalls == 0
+    rear = fit_for(fitter, DESIGN, rules(**ALLEY_FED), alley=ALLEY_LOT.alley)
+    assert rear.column is False
+    got = fit_for(fitter, DESIGN, rules(**ALLEY_FED), alley=side)
+    assert got.column is True
+    assert got.stalls == 4, "a fifth stall is 9 ft deeper: 86 > 78"
+    result = screen(rules(**ALLEY_FED), SIDE_ALLEY_LOT, DESIGN, got, policy=POLICY, relief=None)
+    check = next(c for c in result.checks if c.check == "fit_ft")
+    assert check.threshold == pytest.approx(36.0 + 5.0 + 36.0)
+    assert check.slack == pytest.approx(1.0)
+    assert "fit_across_ft" not in result.unchecked
+    assert result.triage is Triage.green
+
+    # No back-out room stated (Wilsonville, West Linn): no column, the row
+    # court with its own aisle -- 83 deep, which 78 does not hold.
+    plain = fit_for(fitter, DESIGN, rules(parking_alley_access_required=True), alley=side)
+    assert plain.column is False and plain.stalls == 0
+    # An alley with no width on record leaves 20 ft to pave; 18 + 20 = 38
+    # is wider than the building's narrow side, so the column is not offered.
+    unmeasured = replace(SIDE_ALLEY_LOT, alley_width_ft=None).alley
+    assert fit_for(fitter, DESIGN, rules(**ALLEY_FED), alley=unmeasured).column is False
 
 
 def test_a_pod_that_only_fits_end_on_is_measured_against_the_run_it_needed() -> None:

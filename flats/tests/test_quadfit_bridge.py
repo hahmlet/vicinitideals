@@ -17,7 +17,7 @@ import pytest
 import shapely
 import yaml
 
-from flats.designs.model import Design
+from flats.designs.model import Design, Orientation
 from flats.encode.load import load_trusted
 from flats.fit.angles import sweep
 from flats.ingest.assign import ROW_COLUMNS
@@ -717,7 +717,7 @@ def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpu
     fed = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0), corpus.layers)
     assert fed.facts.alley_at_rear is True and fed.facts.alley_width_ft == 14.0
     beside = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0), corpus.layers)
-    assert beside.facts.rear_alley is None
+    assert beside.facts.alley_at_rear is False and beside.facts.alley_at_side is True
     assert lot_from_row(cut_row(zone="R5")).facts.alley_width_ft is None
 
     def asked(lot) -> float:
@@ -727,3 +727,26 @@ def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpu
     wide = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=20.0), corpus.layers)
     # Six feet of back-out paving on a 14 ft alley, none on a 20 ft one.
     assert asked(fed) - asked(wide) == pytest.approx(6.0)
+
+
+def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None:
+    # Steph, 2026-09-25: "Alleys along side yards is important." Portland R5,
+    # the 50 x 100 lot with its alley along a side line: the code sends the
+    # driveway to the alley (33.266.120.C.3), and the court behind the pod
+    # meets that alley at its end, so the envelope is searched at the pod's
+    # own side in whichever orientation won -- not that side plus a 12 ft
+    # lane, as it is with no alley.
+    def screened(lot):
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        return s
+
+    street = screened(lot_from_row(cut_row(zone="R5"), corpus.layers))
+    beside = screened(
+        lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0), corpus.layers)
+    )
+    def side(s) -> float:
+        return 56.0 if s.fit.orientation is Orientation.width_facing else 36.0
+
+    assert street.fit.across_ft - side(street) == pytest.approx(12.0)
+    assert beside.fit.across_ft == pytest.approx(side(beside))
+    assert "fit_across_ft" not in beside.screening.unchecked

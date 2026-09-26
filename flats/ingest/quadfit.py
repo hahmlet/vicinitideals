@@ -519,9 +519,11 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
         lot_depth_ft=_finite(row.get("lot_depth_ft")),
         geometry=tier,
         envelope_rear_ft=carved_rear_ft(row, observed),
-        # The alley behind the lot and how wide s4 measured it: the court it
-        # feeds (FOLLOWUPS 4(b), :func:`flats.score.paper.court_depth`).
+        # The alley behind or beside the lot and how wide s4 measured it: the
+        # court it feeds (FOLLOWUPS 4(b), :func:`flats.score.paper.court_depth`,
+        # :func:`flats.score.paper.side_column`).
         alley_at_rear=bool(observed.get("alley_at_rear")),
+        alley_at_side=bool(observed.get("alley_at_side")),
         alley_width_ft=_finite(row.get("alley_width_ft")),
     )
     juris = str(row.get("jurisdiction"))
@@ -704,7 +706,7 @@ def screen_lot(
             got,
             placement=False,
             carved_rear_ft=env.rear_cut_ft,
-            alley=facts.rear_alley,
+            alley=facts.alley,
         )
         result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
         shadow = _if_signed(
@@ -753,6 +755,8 @@ def row_for(s: Screened) -> dict[str, Any]:
         "stalls_charged": s.screening.stalls_charged,
         "stalls_seated": s.screening.stalls_seated,
         "parking_band": s.screening.parking_band,
+        "tight_fit": s.screening.tight_fit,
+        "fit_column": s.fit.column,
         "fit_best_depth_ft": s.fit.best_depth_ft,
         "fit_required_ft": s.fit.required_ft,
         "fit_across_ft": s.fit.across_ft,

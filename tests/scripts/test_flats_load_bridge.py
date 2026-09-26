@@ -260,6 +260,20 @@ def test_the_checks_record_names_the_ground_the_design_was_fitted_on() -> None:
     assert result_checks(row)["envelope"] == {"sqft": 2700.0, "source": "flats"}
 
 
+def test_the_checks_record_carries_the_tight_fit_and_side_column_flags() -> None:
+    # Steph 2026-09-25: a fit within 6 inches either way is green with a flag
+    # the acquisition review reads; and a court whose stalls stand along a
+    # side alley. A bundle written before either column says no to both.
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "tight_fit": True, "fit_column": "True"}
+    assert result_checks(row)["fit"]["tight"] is True
+    assert result_checks(row)["fit"]["column"] is True
+    old = result_checks(_bridge_row(LOT_A, DESIGNS[0]))
+    assert old["fit"]["tight"] is False and old["fit"]["column"] is False
+    nan = {**_bridge_row(LOT_A, DESIGNS[0]), "tight_fit": float("nan"), "fit_column": False}
+    assert result_checks(nan)["fit"]["tight"] is False
+    assert result_checks(nan)["fit"]["column"] is False
+
+
 def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
     run_dir, s4, s5o, results = _make_run(tmp_path)
     short = tmp_path / "s4_short.parquet"

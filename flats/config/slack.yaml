@@ -10,7 +10,10 @@
 #   Tolerance — how much shortfall is forgiven before a check is treated as a
 #   hard failure. A policy knob, not a measurement.
 #
-# Tolerance never manufactures a GREEN. A check inside tolerance moves from RED
+# Tolerance never manufactures a PASS. (One lot-level exception: a fit inside
+# its tolerance EITHER WAY is GREEN with a "tight fit" flag -- Steph's ruling
+# 2026-09-25, every acquisition is surveyed. flats/score/screen.py tight_fit.)
+# A check inside tolerance moves from RED
 # to REVIEW, which is the whole point: a false red silently deletes an
 # acquisition target, while a false green costs one review. Exclusion has to be
 # unambiguous; inclusion only has to be plausible.

@@ -29,7 +29,11 @@ lifecycle, not the geometry, that decides whether a number can be believed.
 *Tolerance and relief are different uncertainties.* A miss inside tolerance is
 epistemic — the raster is conservative to about half a foot — so it lands in
 UNKNOWN. A miss the code offers a path around is legal, and lands in YELLOW.
-Neither ever produces a GREEN.
+The one exception is the fit itself: Steph ruled 2026-09-25 that a fit within
+its tolerance either way is GREEN with a ``tight_fit`` flag, because every
+acquisition is surveyed and the county's lot lines are coarser than the
+tolerance (:attr:`Screening.tight_fit`). Every other tolerated check still
+holds the lot out of GREEN.
 
 *A standard nobody encoded is not a standard that passes.* Skipping a check the
 code plainly imposes would manufacture GREENs. Any skipped check drops the lot
@@ -56,7 +60,7 @@ from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
-from flats.score.paper import RearAlley, court_across, court_depth, lot_standard
+from flats.score.paper import Alley, court_across, court_depth, lot_standard, side_column
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
     ReliefOutcome,
@@ -186,13 +190,16 @@ class LotFacts:
     #: rows). ``None`` means the envelope was cut with these rules' own
     #: number, which is what every caller but the bridge does.
     envelope_rear_ft: float | None = None
-    #: An alley along the rear lot line (s4's alley edge, named rear by
-    #: bearing -- :func:`flats.geom.alley.observed_alley`), and its measured
-    #: width. Read by the court only where the code sends the driveway to
-    #: the alley and, for the depth, where it lets the alley be the aisle
-    #: (:func:`flats.score.paper.court_depth`). False and None where nothing
+    #: An alley along the rear lot line and one along a side (s4's alley
+    #: edges, named by bearing -- :func:`flats.geom.alley.observed_alley`),
+    #: and the measured width, the narrowest where there are two. Read by
+    #: the court only where the code sends the driveway to the alley and,
+    #: for the depth, where it lets the alley be the aisle
+    #: (:func:`flats.score.paper.court_depth`,
+    #: :func:`flats.score.paper.side_column`). False and None where nothing
     #: measured the lot, which leaves the court as the street-fed one.
     alley_at_rear: bool = False
+    alley_at_side: bool = False
     alley_width_ft: float | None = None
 
     @property
@@ -200,8 +207,10 @@ class LotFacts:
         return self.geometry is GeometryTier.landlocked
 
     @property
-    def rear_alley(self) -> RearAlley | None:
-        return RearAlley(self.alley_width_ft) if self.alley_at_rear else None
+    def alley(self) -> Alley | None:
+        if not (self.alley_at_rear or self.alley_at_side):
+            return None
+        return Alley(self.alley_width_ft, at_rear=self.alley_at_rear, at_side=self.alley_at_side)
 
 
 @dataclass(frozen=True, slots=True)
@@ -242,6 +251,17 @@ class Screening:
     #: ``None`` where there is no count to band or the count is under the
     #: design's floor (a cap cut it, and ``parking_cap`` says so).
     parking_band: str | None = None
+    #: The fit is inside the measurement's own step either way: it clears by
+    #: no more than the ``fit_ft`` tolerance, or misses by no more than it.
+    #: Steph, 2026-09-25: *"plus or minus 6 in it goes into the green
+    #: category. Every acquisition is going to have a survey anyways.
+    #: However, some sort of flag to be brought to the human's attention
+    #: when they're reviewing green lots for acquisition."* A miss inside the
+    #: tolerance therefore no longer holds a lot out of GREEN on its own; it
+    #: carries this flag instead, and so does a pass as thin. The county's
+    #: lot lines are good to about a foot, so the lot's survey decides it,
+    #: and a colour that flipped on the next map's redraw would be noise.
+    tight_fit: bool = False
 
     #: The blocker that most explains the outcome — largest proportional
     #: shortfall, not the tightest. This is what the rule-cost ledger counts;
@@ -371,7 +391,9 @@ def _checks(
             "fit_ft",
             fit.best_depth_ft,
             fit.required_ft
-            + _court_beyond_rear(design, rules, lot.envelope_rear_ft, lot.rear_alley),
+            + _court_beyond_rear(
+                design, rules, lot.envelope_rear_ft, lot.alley, column=fit.column
+            ),
             is_maximum=False,
             jurisdiction=where,
         )
@@ -383,7 +405,7 @@ def _checks(
     # measured a rectangle this zone does not accept, so the depth it found is
     # no evidence either way. That is a hole in the measurement, not a miss
     # on the lot, and it is reported as one rather than scored.
-    if _searched_narrower_than(fit, design, rules, lot.rear_alley):
+    if _searched_narrower_than(fit, design, rules, lot.alley):
         unchecked.append("fit_across_ft")
 
     # Lot area and lot width are the two standards the plat path changes, and
@@ -665,7 +687,10 @@ def _court_beyond_rear(
     design: Design,
     rules: ZoneResolution,
     carved_rear_ft: float | None = None,
-    alley: RearAlley | None = None,
+    alley: Alley | None = None,
+    *,
+    column: bool = False,
+    stalls: int | None = None,
 ) -> float:
     """Depth the parking court needs past the envelope's rear edge, in feet.
 
@@ -692,11 +717,19 @@ def _court_beyond_rear(
     envelope, and the charge says so. Never negative: a strip deeper than the
     court hands the building back no depth.
 
-    ``alley`` is the lot's rear alley, where it has one: the court it feeds
-    may be a stall and a back-out shortfall rather than a stall and an aisle
-    (:func:`flats.score.paper.court_depth`).
+    ``alley`` is the lot's alley, where it has one: the court it feeds from
+    the rear may be a stall and a back-out shortfall rather than a stall and
+    an aisle (:func:`flats.score.paper.court_depth`). ``column`` charges the
+    other plan a side alley allows, ``stalls`` of them standing along it
+    (:func:`flats.score.paper.side_column`); the caller asks for it only
+    where that plan exists.
     """
-    court, _court_from_code = court_depth(design, rules, alley)
+    if column:
+        got = side_column(design, rules, alley, stalls)
+        assert got is not None, "a column court was charged where no side alley offers one"
+        court = got[0]
+    else:
+        court, _court_from_code = court_depth(design, rules, alley)
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
@@ -710,7 +743,7 @@ def seats(
     *,
     axis_required: bool = False,
     carved_rear_ft: float | None = None,
-    alley: RearAlley | None = None,
+    alley: Alley | None = None,
 ) -> int | None:
     """How many stalls the lot seats -- the number beside the colour.
 
@@ -730,6 +763,11 @@ def seats(
     The pod's 56 ft side and 12 ft lane are 68 ft across, which seats seven
     at 9 ft for free; only the eighth is a question.
 
+    Beside a side alley the stalls may stand in a column along it instead
+    (:func:`flats.score.paper.side_column`): no wider than the building, one
+    stall's width deeper per car. Each count is asked of both plans and the
+    lot seats the most either holds.
+
     Returns 0 where not even the floor holds at that depth, and ``None``
     for a design with no court to count.
     """
@@ -737,6 +775,7 @@ def seats(
     if not across.stalls:
         return None
     behind = _court_beyond_rear(design, rules, carved_rear_ft, alley)
+    column = side_column(design, rules, alley) is not None
     best = 0
     for _orientation, side, deep in design.oriented(axis_required=axis_required):
         depth = deep + behind
@@ -748,12 +787,20 @@ def seats(
                 break
             held = width
             seated = n
+        if column:
+            for n in range(max(seated + 1, across.stalls), across.most + 1):
+                along = deep + _court_beyond_rear(
+                    design, rules, carved_rear_ft, alley, column=True, stalls=n
+                )
+                if not fitter.holds(side + across.lane_ft, along):
+                    break
+                seated = n
         best = max(best, seated)
     return best
 
 
 def _searched_narrower_than(
-    fit: Fit, design: Design, rules: ZoneResolution, alley: RearAlley | None = None
+    fit: Fit, design: Design, rules: ZoneResolution, alley: Alley | None = None
 ) -> bool:
     """Whether the fit's search was narrower than this zone's parking asks.
 
@@ -770,7 +817,9 @@ def _searched_narrower_than(
         if facing is Orientation.width_facing
         else design.footprint.depth_ft
     )
-    asked = max(side + across.lane_ft, across.width_ft)
+    # A column along a side alley stands inside the building's side
+    # (:func:`flats.score.paper.side_column`), so that plan asks no more.
+    asked = side + across.lane_ft if fit.column else max(side + across.lane_ft, across.width_ft)
     searched = side if fit.across_ft is None else fit.across_ft
     return searched + 1e-9 < asked
 
@@ -782,7 +831,7 @@ def fit_for(
     *,
     placement: bool = True,
     carved_rear_ft: float | None = None,
-    alley: RearAlley | None = None,
+    alley: Alley | None = None,
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
 
@@ -797,9 +846,14 @@ def fit_for(
     was not these rules' number (:attr:`LotFacts.envelope_rear_ft`); the
     seat count charges the court against it the way the fit check does.
 
-    ``alley`` is the lot's rear alley (:attr:`LotFacts.rear_alley`): where
-    the code sends the driveway to it there is no lane beside the building
-    to search for, and where the alley is the aisle the court is shallower.
+    ``alley`` is the lot's alley (:attr:`LotFacts.alley`): where the code
+    sends the driveway to it there is no lane beside the building to search
+    for, and where the alley is the aisle the court is shallower. Beside a
+    side alley that lets the stalls stand in a column along it
+    (:func:`flats.score.paper.side_column`) the lot is searched a second
+    time for that plan, at the building's own side, and the fit with more
+    room to spare past its court is the one the screen reads
+    (:attr:`flats.fit.rectangle.Fit.column` says which).
     """
     across = court_across(design, rules, alley)
     axis_required = rules.get("orientation_constraint") == "axis_required"
@@ -810,6 +864,20 @@ def fit_for(
         lane_ft=across.lane_ft,
         court_width_ft=across.width_ft,
     )
+    if side_column(design, rules, alley) is not None:
+        beside = fitter.fit_design(
+            design,
+            axis_required=axis_required,
+            placement=placement,
+            lane_ft=across.lane_ft,
+            court_width_ft=0.0,
+        )
+        row_room = fit.slack_ft - _court_beyond_rear(design, rules, carved_rear_ft, alley)
+        column_room = beside.slack_ft - _court_beyond_rear(
+            design, rules, carved_rear_ft, alley, column=True
+        )
+        if column_room > row_room:
+            fit = dataclasses.replace(beside, column=True)
     # And how many more the lot seats, floor to preferred: the number the
     # screen reports beside the colour (:func:`seats`).
     return dataclasses.replace(
@@ -851,7 +919,7 @@ def screen(
         return Screening(triage=Triage.unknown, reasons=(GEOMETRY_UNREADABLE,))
 
     where = rules.jurisdiction
-    across = court_across(design, rules, lot.rear_alley)
+    across = court_across(design, rules, lot.alley)
     checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
@@ -901,6 +969,10 @@ def screen(
         ),
         "ask": hardest.tier if hardest else Tier.as_of_right,
         "relief": tuple(outcomes),
+        "tight_fit": any(
+            c.check == "fit_ft" and c.tolerance > 0 and abs(c.slack) <= c.tolerance
+            for c in checks
+        ),
     }
 
     if use_blocked:
@@ -961,7 +1033,11 @@ def screen(
             triage=Triage.yellow, reasons=(*reasons, *_unconfirmed(outcomes)), **common
         )
 
-    if reasons or any(c.verdict is Verdict.tolerated for c in checks):
+    # A fit inside its tolerance is GREEN with the flag (``tight_fit``, Steph
+    # 2026-09-25); any other check inside its tolerance still holds the lot.
+    if reasons or any(
+        c.verdict is Verdict.tolerated and c.check != "fit_ft" for c in checks
+    ):
         # Nothing definitely failed, and nothing can be certified either.
         return Screening(triage=Triage.unknown, reasons=tuple(reasons), **common)
 
