@@ -72,6 +72,11 @@ class EdgeClass(str, enum.Enum):
     front = "front"
     rear = "rear"
     side = "side"
+    #: The second street on a corner lot whose front the code has named
+    #: (:func:`flats.geom.corner.name_front`). Takes the street-side setback,
+    #: or the front setback where the code states none. Never produced by
+    #: geometry alone: until a front is named every street edge is a front.
+    street_side = "street_side"
 
 
 class Tier(str, enum.Enum):

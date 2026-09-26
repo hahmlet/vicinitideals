@@ -85,16 +85,14 @@ SILENTLY_UNREAD = frozenset(
         "max_building_width_ft",
         "parking_front_yard_max_pct",
         "parking_area_max_width_ft",
-        # 2026-09-19, FOLLOWUPS 5 slice A: the three corner-lot placement
-        # fields, encoded in every read layer and read by no screen yet.
-        # `front_lot_line_corner` and `corner_access_street` are for s6s's
-        # corner-lot front (slice B: try each street where the code leaves
-        # the choice, take the lane from the street the code names);
-        # `parking_side_prohibited` is for the side-court arrangement (iii).
-        # Mirrored into quadfit's footprints.yaml and pinned there; the
-        # screen's paper lot stays a rear court and reads none of them.
-        "front_lot_line_corner",
-        "corner_access_street",
+        # 2026-09-19, FOLLOWUPS 5 slice A: the corner-lot placement fields.
+        # `parking_side_prohibited` is for the side-court arrangement (iii)
+        # and stays unread: the screen's paper lot is a rear court.
+        # `front_lot_line_corner` and `corner_access_street` left this set
+        # 2026-09-26 (FOLLOWUPS 4(e)): the screen names a corner lot's front
+        # as its code does (`paper.front_lot_line_rule`,
+        # `flats.geom.corner`) and takes the driveway off the side street
+        # where the code allows (`paper.side_street_fed`).
         "parking_side_prohibited",
     }
 )

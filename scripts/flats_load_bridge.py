@@ -452,6 +452,10 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
                 "tight": _flag(row.get("tight_fit")),
                 # The stalls stand in a column along a side alley.
                 "column": _flag(row.get("fit_column")),
+                # The corner lot's front, where its code named one (the
+                # street's bearing), and a driveway in off the side street.
+                "front_deg": _num(row.get("front_deg")),
+                "side_street": _flag(row.get("side_street_lane")),
             },
             "stalls": {
                 "charged": _int(row.get("stalls_charged")),

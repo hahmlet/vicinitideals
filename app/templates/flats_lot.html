@@ -118,7 +118,9 @@
                   {% if r.fit.across_ft is not none %}· {{ "{:,.0f}".format(r.fit.across_ft) }} ft across{% endif %}
                   {% if r.fit.orientation %}· {{ r.fit.orientation|replace('_', ' ') }}{% endif %}
                   {% if r.fit.angle_deg is not none %}· facing {{ "{:.0f}".format(r.fit.angle_deg) }}°{% endif %}
-                  {% if r.column %}· cars park in a line along the side alley and back out into it{% endif %}</td></tr>
+                  {% if r.column %}· cars park in a line along the side alley and back out into it{% endif %}
+                  {% if r.front_deg is not none %}· <span class="corner-front">corner lot: laid out fronting the street at {{ "{:.0f}".format(r.front_deg) }}°</span>{% endif %}
+                  {% if r.side_street %}· <span class="side-street">the driveway comes in from the side street</span>{% endif %}</td></tr>
           {% endif %}
           {% if r.tight %}
           <tr id="tight-{{ r.design|replace('@', '-') }}"><td class="col-muted">Tight fit</td>

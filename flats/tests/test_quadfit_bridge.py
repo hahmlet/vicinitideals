@@ -750,3 +750,70 @@ def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None
     assert street.fit.across_ft - side(street) == pytest.approx(12.0)
     assert beside.fit.across_ft == pytest.approx(side(beside))
     assert "fit_across_ft" not in beside.screening.unchecked
+
+
+# --- which street is the front of a corner lot (FOLLOWUPS 4(e)) ----------------
+
+#: The 50 x 100 lot with a second street along its west line: s4 names both
+#: street lines F and both interior lines R.
+CORNER = [
+    [X0, Y0, X0 + 50, Y0, "F"],
+    [X0 + 50, Y0, X0 + 50, Y0 + 100, "R"],
+    [X0 + 50, Y0 + 100, X0, Y0 + 100, "R"],
+    [X0, Y0 + 100, X0, Y0, "F"],
+]
+
+
+def corner_row(**over: object) -> dict[str, object]:
+    base: dict[str, object] = {
+        "tier": "B",
+        "edges_json": json.dumps(CORNER),
+        "front_bearings_json": "[90.0, 0.0]",
+        "frontage_ft": 150.0,
+    }
+    return cut_row(**{**base, **over})
+
+
+def test_a_portland_corner_lot_fronts_its_shorter_street_and_parks_off_the_other(
+    corpus, policies
+) -> None:
+    # Steph, 2026-09-26: "we need to abide if Portland has guidance on which
+    # is front and which is side." 33.910: the 50 ft south line is the
+    # front, though s4 listed the 100 ft west street first; the west street
+    # takes the street-side yard and the east line, beside the front, the
+    # side yard -- not the front and the rear yards both took before.
+    # Portland names no street for the driveway (33.266.120.C.3), so the
+    # court is reached off the west street and no lane runs beside the pod.
+    lot = lot_from_row(corner_row(zone="R5"), corpus.layers)
+    assert lot.facts.corner is True
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.front_deg == 0.0
+    classes = [e.cls for e in s.lot.edges.edges]
+    assert classes == [EdgeClass.front, EdgeClass.side, EdgeClass.rear, EdgeClass.street_side]
+    yards = s.envelope.setbacks
+    street_side = yards.front_ft if yards.street_side_ft is None else yards.street_side_ft
+    assert s.envelope.sqft == pytest.approx(
+        (50 - street_side - yards.side_ft) * (100 - yards.front_ft - yards.rear_ft)
+    )
+    side = 56.0 if s.fit.orientation is Orientation.width_facing else 36.0
+    assert s.fit.across_ft == pytest.approx(max(side, s.screening.stalls_charged * 9.0))
+    got = row_for(s)
+    assert got["front_deg"] == 0.0 and got["side_street_lane"] is True
+    assert list(got) == list(ROW_COLUMNS)
+
+
+def test_an_owners_choice_city_keeps_the_better_front(corpus, policies) -> None:
+    # Gresham 3.0100 leaves the front to the owner: both streets are tried
+    # and the answer kept is one of them.
+    lot = lot_from_row(corner_row(jurisdiction="gresham", zone="LDR-7"), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.rules.get("front_lot_line_corner") == "owner"
+    assert s.front_deg in (0.0, 90.0)
+
+
+def test_a_street_that_bends_is_not_a_corner(corpus, policies) -> None:
+    lot = lot_from_row(corner_row(zone="R5", front_bearings_json="[0.0, 30.0]"), corpus.layers)
+    assert lot.facts.corner is False
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.front_deg is None
+    assert row_for(s)["side_street_lane"] is False

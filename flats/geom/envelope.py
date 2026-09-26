@@ -15,7 +15,10 @@ that might be too big would produce false GREENs on the least reviewable lots.
 
 Corner lots take the stricter of the front and street-side setback on every
 street edge, because geometry cannot say which street line is legally the
-front. Fragments too small to hold anything are dropped — a pod does not fit in
+front -- unless the code has said it and the edges carry the answer
+(:func:`flats.geom.corner.name_front`): then the named front takes the front
+setback, the other street the street-side one, and nothing is doubled.
+Fragments too small to hold anything are dropped — a pod does not fit in
 a forty-square-foot wedge, and carrying it costs a raster.
 
 *The alley line.* Portland (and the county's copy of its chapter) requires no
@@ -66,6 +69,9 @@ class Setbacks:
             EdgeClass.front: self.front_ft,
             EdgeClass.rear: self.rear_ft,
             EdgeClass.side: self.side_ft,
+            EdgeClass.street_side: (
+                self.front_ft if self.street_side_ft is None else self.street_side_ft
+            ),
         }[cls]
 
     def for_edge(self, edge: Edge) -> float:
@@ -127,7 +133,10 @@ def buildable(
     if lot is None or lot.is_empty:
         return MultiPolygon([])
 
-    if edges.tier is Tier.corner:
+    if edges.tier is Tier.corner and not any(
+        e.cls is EdgeClass.street_side for e in edges.edges
+    ):
+        # No front named: every street edge takes the stricter standard.
         setbacks = setbacks.on_a_corner()
 
     use_strips = edges.tier in (Tier.clean, Tier.corner) and bool(edges.edges)

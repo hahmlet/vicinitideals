@@ -201,6 +201,12 @@ class LotFacts:
     alley_at_rear: bool = False
     alley_at_side: bool = False
     alley_width_ft: float | None = None
+    #: Two streets on the lot that really are two (bearings 45 degrees or
+    #: more apart, :func:`flats.geom.corner.is_corner`). Read by the court
+    #: where the code lets a corner lot's driveway use the side street
+    #: (:func:`flats.score.paper.side_street_fed`). False where nothing
+    #: measured the lot, which keeps the lane beside the building.
+    corner: bool = False
 
     @property
     def landlocked(self) -> bool:
@@ -405,7 +411,7 @@ def _checks(
     # measured a rectangle this zone does not accept, so the depth it found is
     # no evidence either way. That is a hole in the measurement, not a miss
     # on the lot, and it is reported as one rather than scored.
-    if _searched_narrower_than(fit, design, rules, lot.alley):
+    if _searched_narrower_than(fit, design, rules, lot.alley, corner=lot.corner):
         unchecked.append("fit_across_ft")
 
     # Lot area and lot width are the two standards the plat path changes, and
@@ -744,6 +750,7 @@ def seats(
     axis_required: bool = False,
     carved_rear_ft: float | None = None,
     alley: Alley | None = None,
+    corner: bool = False,
 ) -> int | None:
     """How many stalls the lot seats -- the number beside the colour.
 
@@ -771,7 +778,7 @@ def seats(
     Returns 0 where not even the floor holds at that depth, and ``None``
     for a design with no court to count.
     """
-    across = court_across(design, rules, alley)
+    across = court_across(design, rules, alley, corner=corner)
     if not across.stalls:
         return None
     behind = _court_beyond_rear(design, rules, carved_rear_ft, alley)
@@ -800,7 +807,12 @@ def seats(
 
 
 def _searched_narrower_than(
-    fit: Fit, design: Design, rules: ZoneResolution, alley: Alley | None = None
+    fit: Fit,
+    design: Design,
+    rules: ZoneResolution,
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
 ) -> bool:
     """Whether the fit's search was narrower than this zone's parking asks.
 
@@ -810,7 +822,7 @@ def _searched_narrower_than(
     (``across_ft`` is None) was built around the bare footprint, and reads as
     searched at the building's own side.
     """
-    across = court_across(design, rules, alley)
+    across = court_across(design, rules, alley, corner=corner)
     facing = fit.orientation or Orientation.width_facing
     side = (
         design.footprint.width_ft
@@ -832,6 +844,7 @@ def fit_for(
     placement: bool = True,
     carved_rear_ft: float | None = None,
     alley: Alley | None = None,
+    corner: bool = False,
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
 
@@ -854,8 +867,12 @@ def fit_for(
     time for that plan, at the building's own side, and the fit with more
     room to spare past its court is the one the screen reads
     (:attr:`flats.fit.rectangle.Fit.column` says which).
+
+    ``corner`` is :attr:`LotFacts.corner`: where the code lets a corner
+    lot's driveway use the side street there is no lane to search for
+    either (:func:`flats.score.paper.side_street_fed`).
     """
-    across = court_across(design, rules, alley)
+    across = court_across(design, rules, alley, corner=corner)
     axis_required = rules.get("orientation_constraint") == "axis_required"
     fit = fitter.fit_design(
         design,
@@ -889,6 +906,7 @@ def fit_for(
             axis_required=axis_required,
             carved_rear_ft=carved_rear_ft,
             alley=alley,
+            corner=corner,
         ),
     )
 
@@ -919,7 +937,7 @@ def screen(
         return Screening(triage=Triage.unknown, reasons=(GEOMETRY_UNREADABLE,))
 
     where = rules.jurisdiction
-    across = court_across(design, rules, lot.alley)
+    across = court_across(design, rules, lot.alley, corner=lot.corner)
     checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))

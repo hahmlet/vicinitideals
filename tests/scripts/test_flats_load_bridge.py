@@ -274,6 +274,20 @@ def test_the_checks_record_carries_the_tight_fit_and_side_column_flags() -> None
     assert result_checks(nan)["fit"]["column"] is False
 
 
+def test_the_checks_record_carries_the_corner_front_and_the_side_street_driveway() -> None:
+    # FOLLOWUPS 4(e), Steph 2026-09-26: the street the code names the front
+    # of a corner lot, and a court reached off the other street. A bundle
+    # written before either column names no front and no side street.
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "front_deg": 90.0, "side_street_lane": True}
+    assert result_checks(row)["fit"]["front_deg"] == 90.0
+    assert result_checks(row)["fit"]["side_street"] is True
+    old = result_checks(_bridge_row(LOT_A, DESIGNS[0]))
+    assert old["fit"]["front_deg"] is None and old["fit"]["side_street"] is False
+    nan = {**_bridge_row(LOT_A, DESIGNS[0]), "front_deg": float("nan"), "side_street_lane": float("nan")}
+    assert result_checks(nan)["fit"]["front_deg"] is None
+    assert result_checks(nan)["fit"]["side_street"] is False
+
+
 def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
     run_dir, s4, s5o, results = _make_run(tmp_path)
     short = tmp_path / "s4_short.parquet"

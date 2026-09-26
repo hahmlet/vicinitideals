@@ -2891,6 +2891,10 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "tight": bool(fit.get("tight")),
         # The stalls stand in a column along a side alley and back out into it.
         "column": bool(fit.get("column")),
+        # A corner lot screened with the front its code names, and whether
+        # the driveway comes in off the side street (FOLLOWUPS 4(e)).
+        "front_deg": fit.get("front_deg"),
+        "side_street": bool(fit.get("side_street")),
         "stalls_charged": stalls.get("charged"),
         "stalls_seated": stalls.get("seated"),
         "band": stalls.get("band"),

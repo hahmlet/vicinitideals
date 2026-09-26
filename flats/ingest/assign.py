@@ -106,6 +106,8 @@ ROW_COLUMNS = (
     "parking_band",
     "tight_fit",
     "fit_column",
+    "front_deg",
+    "side_street_lane",
     "fit_best_depth_ft",
     "fit_required_ft",
     "fit_across_ft",

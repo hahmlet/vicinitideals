@@ -70,6 +70,7 @@ from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for
 from flats.fit.rectangle import Fit, Fitter
 from flats.geom.alley import ALLEY_CLASS, ALLEY_FACTS, S4_LOTS, alley_lines, observed_alley
+from flats.geom.corner import front_bearings as corner_fronts, is_corner, name_front
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
@@ -79,6 +80,7 @@ from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
 from flats.score.relief import ReliefPolicy
+from flats.score.paper import front_lot_line_rule, side_street_fed
 from flats.score.screen import LotFacts, Screening, fit_for, screen
 from flats.score.slack import SlackPolicy, Verdict as CheckVerdict
 
@@ -512,6 +514,9 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
     tier = TIER.get(str(row.get("tier")), Tier.irregular)
     frontage = _finite(row.get("frontage_ft"))
     observed = observed_facts(row, layers)
+    lot_wkb = row.get("lot_wkb")
+    lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
+    edges = lot_edges(row, lot_geom)
     facts = LotFacts(
         lot_sqft=_finite(row.get("area_sqft")) or 0.0,
         frontage_ft=frontage if frontage is not None else 0.0,
@@ -525,6 +530,9 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
         alley_at_rear=bool(observed.get("alley_at_rear")),
         alley_at_side=bool(observed.get("alley_at_side")),
         alley_width_ft=_finite(row.get("alley_width_ft")),
+        # Two streets that really are two: the side street may take the
+        # driveway (:func:`flats.score.paper.side_street_fed`).
+        corner=is_corner(edges),
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -533,8 +541,6 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
         layer_id = None
     wkb = row.get("wkb")
     envelope = shapely.from_wkb(wkb) if wkb else None
-    lot_wkb = row.get("lot_wkb")
-    lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
     carve_wkb = row.get("carve_wkb")
     return QuadfitLot(
         tlid=str(row["TLID"]),
@@ -546,7 +552,7 @@ def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = No
         front_bearings=tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]")),
         envelope=envelope,
         lot_geom=lot_geom,
-        edges=lot_edges(row, lot_geom),
+        edges=edges,
         carve=shapely.from_wkb(carve_wkb) if carve_wkb else None,
     )
 
@@ -636,6 +642,10 @@ class Screened:
     step_deg: float
     #: The ground this design was fitted on (:func:`envelope_for`).
     envelope: Envelope | None = None
+    #: The street this corner lot was screened as fronting, where the code
+    #: named one (:func:`flats.geom.corner.front_bearings`); None where no
+    #: front was named and every street edge is a front.
+    front_deg: float | None = None
 
 
 def _if_signed(
@@ -673,6 +683,12 @@ def screen_lot(
     zone gets the sweep with those directions folded in. A lot with no
     street direction is swept either way -- not knowing the front is not a
     reason to search nothing, and ``NO_FRONTAGE`` already names the lot.
+
+    On a corner lot the code's ``front_lot_line_corner`` names the front
+    (:mod:`flats.geom.corner`): the shorter street where the code fixes it,
+    both streets tried and the better answer kept where the owner chooses.
+    ``Screened.front_deg`` records the street taken; ``None`` is the old
+    reading, every street a front.
     """
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
     resolved: list[tuple[Design, Configuration, ZoneResolution]] = []
@@ -695,38 +711,76 @@ def screen_lot(
 
     out: list[Screened] = []
     for design, config, got in resolved:
-        env = envelope_for(lot, got)
-        key = (env.source, env.setbacks)
-        if key not in fitters:
-            fitters[key] = Fitter(env.geom, angles)
-        facts = dataclasses.replace(lot.facts, envelope_rear_ft=env.rear_cut_ft)
-        fit = fit_for(
-            fitters[key],
-            design,
-            got,
-            placement=False,
-            carved_rear_ft=env.rear_cut_ft,
-            alley=facts.alley,
-        )
-        result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
-        shadow = _if_signed(
-            got, facts, design, fit, result, policy=policy, relief=relief, config=config
-        )
-        out.append(
-            Screened(
-                lot=lot,
-                design=design,
-                rules=got,
-                config=config,
-                fit=fit,
-                screening=result,
-                signed=shadow,
-                angles=len(angles),
-                step_deg=step_deg,
-                envelope=env,
+        # WHICH STREET IS THE FRONT (FOLLOWUPS 4(e)): where the code names it
+        # the lot is cut with that front; where it leaves it to the applicant
+        # each street is tried and the better answer kept. None: no front is
+        # named and every street edge is a front, as before 2026-09-26.
+        fronts: tuple[float | None, ...] = corner_fronts(
+            lot.edges, front_lot_line_rule(got)
+        ) or (None,)
+        tried: list[Screened] = []
+        for front in fronts:
+            here = lot
+            if front is not None and lot.edges is not None:
+                here = dataclasses.replace(lot, edges=name_front(lot.edges, front))
+            env = envelope_for(here, got)
+            key = (env.source, env.setbacks, front)
+            if key not in fitters:
+                fitters[key] = Fitter(env.geom, angles)
+            facts = dataclasses.replace(lot.facts, envelope_rear_ft=env.rear_cut_ft)
+            fit = fit_for(
+                fitters[key],
+                design,
+                got,
+                placement=False,
+                carved_rear_ft=env.rear_cut_ft,
+                alley=facts.alley,
+                corner=facts.corner,
             )
-        )
+            result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
+            shadow = _if_signed(
+                got, facts, design, fit, result, policy=policy, relief=relief, config=config
+            )
+            tried.append(
+                Screened(
+                    lot=here,
+                    design=design,
+                    rules=got,
+                    config=config,
+                    fit=fit,
+                    screening=result,
+                    signed=shadow,
+                    angles=len(angles),
+                    step_deg=step_deg,
+                    envelope=env,
+                    front_deg=front,
+                )
+            )
+        out.append(min(tried, key=_front_rank))
     return out
+
+
+#: A stall band's standing in the choice of front: Steph's ruling of
+#: 2026-09-19 (HUMAN_TODO 21) prefers the ``preferred`` band.
+_BAND_RANK: dict[str | None, int] = {"preferred": 0, "target": 1, "minimum": 2}
+
+
+def _front_rank(s: Screened) -> tuple[int, int, int, float]:
+    """Which of a corner lot's fronts the applicant would choose.
+
+    Steph's ruling of 2026-09-19 (HUMAN_TODO 21): the front that turns the
+    lot green, then the one reaching the preferred stall band, then -- where
+    quadfit compares the court's exposure to the streets, which the screen
+    does not draw -- the one with more room to spare. The colour once signed
+    first, as the Lots pages show it; the colour today breaks a tie.
+    """
+    slack = s.screening.fit_slack_ft
+    return (
+        _RANK[s.signed.triage.value],
+        _RANK[s.screening.triage.value],
+        _BAND_RANK.get(s.screening.parking_band, 3),
+        -(slack if slack is not None else -math.inf),
+    )
 
 
 def row_for(s: Screened) -> dict[str, Any]:
@@ -757,6 +811,8 @@ def row_for(s: Screened) -> dict[str, Any]:
         "parking_band": s.screening.parking_band,
         "tight_fit": s.screening.tight_fit,
         "fit_column": s.fit.column,
+        "front_deg": s.front_deg,
+        "side_street_lane": side_street_fed(s.rules, s.lot.facts.alley, s.lot.facts.corner),
         "fit_best_depth_ft": s.fit.best_depth_ft,
         "fit_required_ft": s.fit.required_ft,
         "fit_across_ft": s.fit.across_ft,

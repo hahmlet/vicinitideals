@@ -54,7 +54,7 @@ def _box(x: float, y: float, w: float, d: float) -> str:
 
 def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str = "preferred",
             colour_reasons: list[str] | None = None, unknown: list[str] | None = None,
-            tight: bool = False) -> dict:
+            tight: bool = False, front_deg: float | None = None, side_street: bool = False) -> dict:
     return {
         "verdict": "unknown",
         "if_signed": colour,
@@ -66,7 +66,8 @@ def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str 
         "ask": "as_of_right" if colour == "green" else "adjustment",
         "fits": colour != "red",
         "fit": {"slack_ft": 12.5, "best_depth_ft": 48.5, "required_ft": 36.0, "across_ft": 68.0,
-                "angle_deg": 88.0, "orientation": "width_facing", "tight": tight},
+                "angle_deg": 88.0, "orientation": "width_facing", "tight": tight,
+                "front_deg": front_deg, "side_street": side_street},
         "stalls": {"charged": 4, "seated": seated, "band": band},
         "leaning": {"assumed": [], "unknown": unknown or []},
         "search": {"angles": 181, "step_deg": 1.0},
@@ -193,7 +194,8 @@ async def _seed(
     answers = [
         (a, DESIGNS[0], _checks("green", tight=True)),
         (a, DESIGNS[1], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
-        (b, DESIGNS[0], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
+        (b, DESIGNS[0], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"],
+                                front_deg=90.0, side_street=True)),
         (b, DESIGNS[1], _checks("yellow", head="coverage_pct", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
         (c, DESIGNS[0], _checks("unknown", colour_reasons=["FACT_UNOBSERVED"], unknown=["local_street"])),
         (c, DESIGNS[1], _checks("unknown", colour_reasons=["FACT_UNOBSERVED"], unknown=["local_street"])),
@@ -824,3 +826,23 @@ async def test_the_lot_page_shows_a_persons_decision_and_the_look_again_mark(
     # A lot with no decision shows no block at all.
     other = await client.get("/flats/lots/clackamas/11E25AB%20%20-00300")
     assert 'id="lot-decisions"' not in other.text
+
+
+async def test_a_corner_lot_page_names_its_front_street_and_the_side_street_driveway(
+    client: AsyncClient, session: AsyncSession
+):
+    # FOLLOWUPS 4(e), Steph 2026-09-26: "we need to abide if Portland has
+    # guidance on which is front and which is side." Lot B (a corner) is
+    # laid out fronting one street and parks off the other; lot A names
+    # neither.
+    await _login(client, session)
+    await _seed(session)
+    page = await client.get("/flats/lots/multnomah/1N1E29DD%20%20-05600")
+    assert page.status_code == 200
+    card = page.text.split('id="design-pod56x36-2"', 1)[1].split('id="design-pod80x25-2"', 1)[0]
+    assert "laid out fronting the street at 90°" in card
+    assert "the driveway comes in from the side street" in card
+    other = page.text.split('id="design-pod80x25-2"', 1)[1]
+    assert "corner-front" not in other and "side-street" not in other
+    a = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    assert 'class="corner-front"' not in a.text and 'class="side-street"' not in a.text

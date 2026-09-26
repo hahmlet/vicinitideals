@@ -267,6 +267,44 @@ def alley_fed(rules: "ZoneResolution", alley: Alley | None) -> bool:
     )
 
 
+#: ``corner_access_street`` values that let a corner lot's driveway come in
+#: from the side street: ``any`` names no street, ``side`` names that one.
+#: ``lowest_class`` asks for the street of the lowest functional class, which
+#: nothing measures yet, so it keeps the lane beside the building -- the
+#: conservative reading, where quadfit's drawing treats it as ``any``.
+SIDE_STREET_ACCESS = frozenset({"any", "side"})
+
+
+def front_lot_line_rule(rules: "ZoneResolution") -> str | None:
+    """How this code names a corner lot's front (``front_lot_line_corner``).
+
+    ``shortest``, ``owner``, ``entrance`` or ``both``; None where unread.
+    :func:`flats.geom.corner.front_bearings` turns it into the streets a
+    corner lot is screened as fronting.
+    """
+    got = rules.get("front_lot_line_corner")
+    return got if isinstance(got, str) else None
+
+
+def side_street_fed(rules: "ZoneResolution", alley: Alley | None, corner: bool) -> bool:
+    """Whether this corner lot's court is reached straight off the side street.
+
+    The court spans the lot behind the building and its end meets the second
+    street, as a side alley's does (:func:`alley_fed`): a curb cut there and
+    a short drive across the street-side yard reach it, and no lane runs
+    down the building's flank. Quadfit's s6s draws that plan
+    (``townhome_rear_court_side_street``, 9522942d) on 14,778 corner lots.
+    Only on a real corner (:func:`flats.geom.corner.is_corner`), only where
+    the code lets the driveway use that street, and never where it sends the
+    driveway to the alley instead -- the alley answer comes first.
+    """
+    return (
+        corner
+        and not alley_fed(rules, alley)
+        and rules.get("corner_access_street") in SIDE_STREET_ACCESS
+    )
+
+
 def _backout_shortfall(rules: "ZoneResolution", alley: Alley | None) -> float | None:
     """What the alley leaves short of the room a car needs to back out.
 
@@ -433,7 +471,11 @@ class Across:
 
 
 def court_across(
-    design: Design, rules: "ZoneResolution", alley: Alley | None = None
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
 ) -> Across:
     """How much width this design's own parking needs, and where.
 
@@ -473,6 +515,10 @@ def court_across(
     The two-way figure, as with the aisle: the court is entered and left
     forward. The lane runs beside the building, so it is charged with the
     building's width, not with the court's — the court is behind both.
+
+    On a corner lot whose code lets the driveway use the side street
+    (:func:`side_street_fed`) there is no lane beside the building either:
+    the court is reached from the street along its end.
 
     What this does not read, and why: ``parking_maneuvering_max_width_ft``,
     the 10 or 12 ft six cities state for townhouse lots. Until 2026-09-17 this
@@ -516,6 +562,9 @@ def court_across(
         # Gresham 7.0420(B)(1), Wilsonville, West Linn): no lane beside the
         # building.
         used.append("parking_alley_access_required")
+        lane = 0.0
+    elif side_street_fed(rules, alley, corner):
+        used.append("corner_access_street")
         lane = 0.0
     elif (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
         used.append("driveway_min_width_two_way_ft")
