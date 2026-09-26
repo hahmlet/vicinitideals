@@ -94,16 +94,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    5), and reading it needs a fourth neighbour fact ("every line
    non-residential OR HDR"); recommend leaving it unless those lots
    come up.
-3. **Alley-as-aisle leftovers (4(b) SHIPPED caad6f3f, run 24 promoted
-   2026-09-25).** Bound on all 11,341 alley lots: 4,803 Portland lots
-   yellow->green if signed (5,398 answers), 331 yellow->unknown (the fit
-   was their only miss; an unmeasured fact is left), nothing worse. Left:
-   (a) 36 of the 4,803 quadfit cannot draw -- ~17 knife-edge (slack
-   under 0.5 ft on a 1-ft raster), the rest a slanted or wrap-around alley
-   where s6s asks every stall to stand on the alley strip and the screen's
-   rectangle does not; read, accepted. (b) An alley at the SIDE only is not
-   read (the lot keeps its street lane -- conservative). (c) Gresham's 200
-   alley lots gained ~22 ft and moved nothing: they fail lot area/frontage.
+3. **Alley leftovers (rear alley caad6f3f run 24; side alleys + the
+   6-inch tight-fit rule 82d4c7de, run 26 PROMOTED 2026-09-26 on the
+   standing word: 730 answers moved, 0 unexplained -- 669 unknown->green
+   and 52 yellow->green if signed, 9 yellow->unknown where the fit was the
+   only miss and an unmeasured fact is left; 3,848 lots carry the "tight
+   fit" flag, 744 park in a column along a side alley).** Left: (a) 36 of
+   run 24's 4,803 quadfit cannot draw (knife-edge or a slanted alley),
+   read and accepted. (b) Of the 55 side-alley lots gained, quadfit draws
+   no pod on 23 -- 15 because quadfit keeps the pod across the front while
+   FLATS turns it (a wide shallow lot, court at the alley end), 3 an
+   irregular block, the rest overlays; read, accepted; if Steph wants the
+   drawing to agree, quadfit's s6s needs the turned pod. (c) FLATS assumes
+   a side alley runs along the court's stretch of the side line; a short
+   alley stub would be over-read. (d) Gresham's 200 alley lots fail lot
+   area/frontage regardless.
 4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's
