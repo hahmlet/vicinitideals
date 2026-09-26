@@ -129,9 +129,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    those 178 are quadfit `siteplan_no_layout` lots the sweep found a fit on;
    (e) which street is the front on a corner lot, and the lane in from the
    side street (FOLLOWUPS 5 at the time, now 6: slice B, 9522942d + fcea6d57) -- on the county
-   map only; `flats/score/paper.py` still faces s4's first bearing and
-   brings the lane down the side of the building, so the screen's stall
-   count and `fit_ft` on ~60,000 corner lots read the old drawing.
+   map only. RE-READ 2026-09-26: FLATS faces NO street -- every street
+   edge is a front (envelope `max(front, street_side)` on both, both
+   interior lines take the rear setback, 180-angle sweep), and the lane is
+   always charged beside the building. Conservative both ways (a missed
+   green, never a false one). Owed: one front per `front_lot_line_corner`
+   (shortest / owner / entrance / both, HUMAN_TODO 21 ranking), the other
+   street `street_side`, the interior line parallel to it `side`; and the
+   lane from the side street where `corner_access_street` allows it (lane
+   0, as a side alley). Run 26: 62,944 corner lots (bearings >= 45 deg
+   apart), 7,610 green, 56,565 yellow with the fit dominant (Portland
+   36,057). Both fields are in `SILENTLY_UNREAD` (test_consumed.py).
    (FLATS's own envelope: DONE, item 12.) Also owed:
    `steep_slope` from s5o's DEM percentile / Gresham's hillside overlay
    (assumed False today, named on every lot it leans on). County-scale
