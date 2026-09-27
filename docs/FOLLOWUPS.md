@@ -468,23 +468,23 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    floor; Portland ok plans with no 12 x 12 square outside the pavement)
    before any county run.
 
-8. **Screen the ~210 pocket lots under the layer their ruling names.** A
-   `pocket` ruling (16 of them, 2026-09-20) says "this code is the other
-   layer's zone carried on this map" and today gates the lot ZONE_POCKET,
-   unscreened, because `like:` cannot cross into `_unincorporated` (there is
-   no `or/clackamas.yaml` parent) and `ZoneRuling` has no field naming the
-   zone under the `of` layer -- the note names it in prose. Happy Valley
-   RRFF5 95 / FF10 5 / RA1 1 / RA2 8 / RC 1 / VR57 1 (111), Troutdale NSA
-   64 (county Gorge zoning; Chapter 38 is in the corpus now and would
-   answer RED for GGR/GSR), Oregon City `County` 14 (Clackamas zoning
-   inside the city, per OCMC 17.68.025), Multnomah UPAGI 8 / UPAR-10 4
-   (Troutdale's GI and LDR-1), Clackamas IPU/MG/R-10/R-15/R-MD/RC-ME 9
-   (city codes in county pockets). Give `ZoneRuling` a `zone:` (the code
-   under the `of` layer; default the same spelling), let `assign` resolve a
-   pocket lot through `RuleSet.resolve(of, zone)`, and screen it with the
-   `of` layer's measurements. Mostly RED at the use gate (RRFF5/FF10/RA/RC
-   are farm-forest and rural zones, NSA is Gorge); the R-10/R-15/R-MD/
-   UPAR-10 lots would get a real answer.
+8. **Pockets + corridors -- BUILT (4597d30d, deployed 2026-09-27), the
+   batched full re-screen is running** (137 `/root/chain_pc.sh`, bundle
+   `2026-09-27_pc`, base becomes `/root/bridge_pc_full`). When it lands:
+   load `--snapshot 3` (dry-run first) -> VACUUM -> drift vs run 31 ->
+   promote if clean -> E2E (lot page + a pocket lot's "under X zoning").
+   Expect: ~185 pocket lots screened under their `of` layer (mostly RED at
+   the use gate), ~4,100 Portland commercial/RM2 lots unknown -> green/yellow
+   if-signed (the corridor was their only unknown; bound 2026-09-27). Then
+   remove this item and add what is left: (a) 9 pocket lots in permitted
+   zones (Clackamas R-MD, Multnomah LDR-1, Happy Valley VR57) stay
+   NOT_MEASURED because quadfit s3 drops a zone its rules do not hold --
+   teach s3 the pocket rulings; (b) 25 lots stay ZONE_POCKET: Troutdale NSA
+   GGC/GSO and Oregon City `County` read against a map that answers no code
+   the of-layer holds; (c) Map 130-1 also carries a MAXIMUM setback of 20 ft
+   on those stretches -- not encoded (a max read wrong is a false GREEN);
+   (d) the corridor facts are per lot (ANY street line), a per-LINE field
+   would let the one line on Division take 10 ft and the side street 0.
 9. **Corpus drift found while ruling the September codes -- a
    `--refresh --repoint` pass per layer.** (a) Clackamas ZDO: zdo.315/316/
    510/845/903/1005/1015 and every roadway.* doc report CHANGED (the county
@@ -511,19 +511,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    published document defines -- not Gresham 4.0100, not MCC 39; ruled
    `to_read` and worth one question to Gresham planning if it ever
    matters; nothing else owed.
-11. **Measure `civic_corridor` (Portland Map 130-1).** The neighbour bound
-   found the fact alone frees almost no Portland lot: nearly every unknown
-   CR/CM1/CM2/CM3 lot ALSO leans on `civic_corridor` (front setback 0 ->
-   10 ft "adjacent to a Civic Corridor shown on Map 130-1", 33.130.215.B.1.a;
-   RM2 coverage 60 -> 70), or already fails fit_ft / min_density /
-   parking_cap. ~2,900 unknown Portland commercial lots have the corridor
-   as their last lever. It is a line on an adopted map, not a fact in the
-   parcel record: acquire the Civic / Neighborhood Corridor layer (Portland
-   open data; a registry entry with a count tolerance), measure "street
-   lot line adjacent to a corridor street" in s4 as a per-LINE fact the way
-   the alley was (the front on the corridor takes 10, another front 0),
-   read it in FLATS as an observed site fact. Read what "adjacent to"
-   means in 33.910 first, and bound both ways on the subset.
+11. **(merged into 8 -- corridors built with the pockets, 2026-09-27.)**
 12. **FLATS's own envelope -- loose ends (merged b5303d01, PROMOTED run 18
    2026-09-25).** Run 18 drift 879 moved / 0 unexplained: the old quadfit
    court credit was false on all-front lots and orientation-blind (now
