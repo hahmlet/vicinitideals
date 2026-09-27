@@ -12,8 +12,8 @@ from flats.fit.rectangle import Fitter
 
 #: A 60 ft x 120 ft envelope with the street along its south edge (y = 0).
 ENVELOPE = shapely.box(0, 0, 60, 120)
-SOUTH = ((30.0, -10.0),)
-NORTH = ((30.0, 130.0),)
+SOUTH = ((0.0, -10.0, 60.0, -10.0),)
+NORTH = ((0.0, 130.0, 60.0, 130.0),)
 
 
 def _drawn(envelope=ENVELOPE, street=SOUTH, *, width=36.0, depth=40.0, lane=12.0,
@@ -82,7 +82,8 @@ def test_rotated_lot_draws_inside_the_envelope() -> None:
     from shapely import affinity
 
     turned = affinity.rotate(ENVELOPE, 30, origin=(0, 0))
-    street = [tuple(affinity.rotate(shapely.Point(30, -10), 30, origin=(0, 0)).coords[0])]
+    line = affinity.rotate(shapely.LineString([(0, -10), (60, -10)]), 30, origin=(0, 0))
+    street = [(*line.coords[0], *line.coords[1])]
     fitter = Fitter(turned, angles=(0.0, 30.0))
     fit = fitter.fit(36.0, 40.0, allow_flip=False, placement=False, lane_ft=12.0)
     got = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=30.0,
@@ -104,3 +105,19 @@ def test_json_is_rounded_rings_and_carries_the_envelope() -> None:
     assert all(round(v, 1) == v for xy in out["building"] for v in xy)
     assert len(out["envelope"]) == 1
     assert len(json.dumps(out)) < 1000
+
+
+def test_the_street_along_the_long_side_puts_the_building_against_it() -> None:
+    # A 120 x 60 lot fronting its long north side, searched at the angle
+    # that runs the plan east-west: building and court both reach the
+    # street, and the drawing puts the building, not the court, at it --
+    # the way round that the street end alone could not tell.
+    wide = shapely.box(0, 0, 120, 60)
+    fitter = Fitter(wide, angles=(90.0,))
+    fit = fitter.fit(36.0, 40.0, allow_flip=False, placement=False, lane_ft=12.0)
+    got = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=30.0,
+               court_beyond_ft=10.0, street=((0.0, 70.0, 120.0, 70.0),))
+    assert got is not None and got.fits
+    north = shapely.LineString([(0, 60), (120, 60)])
+    assert got.building.distance(north) < 0.6
+    assert got.building.distance(north) <= got.court.distance(north)

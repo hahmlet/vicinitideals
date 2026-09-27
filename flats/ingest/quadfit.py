@@ -781,9 +781,9 @@ def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     building at the street end, its lane beside it, the court behind it at
     the depth :func:`flats.score.paper.court_depth` charges (or the column
     along a side alley, :func:`flats.score.paper.side_column`), and the room
-    the search found around them. Changes no verdict. The street end is the
-    one nearer the lot's front lines as named for this screen -- on a corner
-    lot, the street it was laid out fronting.
+    the search found around them. Changes no verdict. The building stands
+    as near the lot's front lines as named for this screen as the room
+    allows -- on a corner lot, the street it was laid out fronting.
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
     rear = s.envelope.rear_cut_ft if s.envelope else None
@@ -795,9 +795,7 @@ def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     beyond = _court_beyond_rear(s.design, s.rules, rear, alley, column=s.fit.column and court > 0)
     street = ()
     if s.lot.edges is not None:
-        street = tuple(
-            ((e.x1 + e.x2) / 2, (e.y1 + e.y2) / 2) for e in s.lot.edges.of_class(EdgeClass.front)
-        )
+        street = tuple((e.x1, e.y1, e.x2, e.y2) for e in s.lot.edges.of_class(EdgeClass.front))
     got = draw(
         fitter,
         s.fit,

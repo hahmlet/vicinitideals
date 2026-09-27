@@ -33,7 +33,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Sequence
 
 import numpy as np
 import shapely
@@ -48,6 +48,12 @@ from flats.fit.rectangle import Fit, Fitter
 #: is good to, coarse enough to keep a lot's drawing a few hundred bytes.
 #: The envelope is simplified to this before it is stored.
 SIMPLIFY_FT = 0.5
+#: The front lines are sampled this often to find the street end.
+STREET_STEP_FT = 2.0
+#: Windows compared per grid, evenly spaced over every one that fits: a
+#: big lot has hundreds of thousands, and the one nearest the street is
+#: found about as well among a few thousand.
+MAX_CANDIDATES = 4000
 
 
 @dataclass(frozen=True, slots=True)
@@ -95,44 +101,97 @@ def _grids_at(fitter: Fitter, angle_deg: float | None) -> list[Grid]:
     return [g for g in fitter.grids if math.isclose(g.angle_deg, angle_deg, abs_tol=1e-6)]
 
 
-def _local(points: Iterable[tuple[float, float]], grid: Grid) -> np.ndarray:
+def _local(points: np.ndarray, grid: Grid) -> np.ndarray:
     """World points into the grid's unrotated frame."""
     t = math.radians(-grid.angle_deg)
     ox, oy = grid.origin
-    pts = np.asarray(list(points), dtype=float).reshape(-1, 2)
-    dx, dy = pts[:, 0] - ox, pts[:, 1] - oy
+    dx, dy = points[:, 0] - ox, points[:, 1] - oy
     return np.column_stack(
         (ox + dx * math.cos(t) - dy * math.sin(t), oy + dx * math.sin(t) + dy * math.cos(t))
     )
 
 
-def _window(
-    grid: Grid, d_cells: int, w_cells: int, street: np.ndarray | None
-) -> tuple[int, int, bool] | None:
-    """The window of this size nearest the street, and which end faces it.
+def _along(lines: Iterable[tuple[float, float, float, float]]) -> np.ndarray:
+    """Points every :data:`STREET_STEP_FT` along the front lines, ends included."""
+    out: list[np.ndarray] = []
+    for x1, y1, x2, y2 in lines:
+        n = max(1, math.ceil(math.hypot(x2 - x1, y2 - y1) / STREET_STEP_FT))
+        t = np.linspace(0.0, 1.0, n + 1)
+        out.append(np.column_stack((x1 + (x2 - x1) * t, y1 + (y2 - y1) * t)))
+    return np.concatenate(out) if out else np.empty((0, 2))
 
-    ``street`` is the front lines' midpoints in the grid's frame. The street
-    end is the window's low-``y`` end when the street lies below the grid's
-    middle, else its high end; among windows the one whose street end is
-    nearest the street is taken, then the one nearest it across.
+
+def _box_distance(
+    x0: np.ndarray, y0: np.ndarray, x1: np.ndarray, y1: np.ndarray, pts: np.ndarray
+) -> np.ndarray:
+    """Distance from each box to the nearest of ``pts`` (0 where one is inside)."""
+    px, py = pts[None, :, 0], pts[None, :, 1]
+    dx = np.maximum(np.maximum(x0[:, None] - px, 0.0), px - x1[:, None])
+    dy = np.maximum(np.maximum(y0[:, None] - py, 0.0), py - y1[:, None])
+    return np.hypot(dx, dy).min(axis=1)
+
+
+@dataclass(frozen=True, slots=True)
+class _Placed:
+    grid: Grid
+    row: int
+    col: int
+    d_cells: int
+    #: The street is at the window's low-``y`` end.
+    low: bool
+    #: The building stands at the window's low-``x`` side, the lane beyond it.
+    left: bool
+
+
+def _place(
+    grids: Sequence[Grid],
+    d_cells: int,
+    w_cells: int,
+    *,
+    across_b: float,
+    deep_b: float,
+    street: np.ndarray,
+) -> _Placed | None:
+    """The window of this size, and the way round, that puts the building
+    nearest the street.
+
+    Every window that fits is a candidate, each four ways (street at either
+    end, lane on either side); the one whose building is nearest the front
+    lines wins, the court's distance from them breaking a tie the other way
+    -- the parking stands behind, not in front. Without front lines, the
+    first window, street at its low end.
     """
-    w = grid._windows(d_cells, w_cells)
-    if w is None:
-        return None
-    hits = np.argwhere(w == d_cells * w_cells)
-    if not len(hits):
-        return None
-    if street is None or not len(street):
-        return int(hits[0][0]), int(hits[0][1]), True
-    mid_y = grid.miny + grid.rows * grid.res / 2
-    sy, sx = float(street[:, 1].mean()), float(street[:, 0].mean())
-    low = sy <= mid_y
-    rows, cols = hits[:, 0], hits[:, 1]
-    end_y = grid.miny + (rows if low else rows + d_cells) * grid.res
-    centre_x = grid.minx + (cols + w_cells / 2) * grid.res
-    order = np.lexsort((np.abs(centre_x - sx), np.abs(end_y - sy)))
-    best = hits[order[0]]
-    return int(best[0]), int(best[1]), low
+    best: tuple[float, float, _Placed] | None = None
+    for grid in grids:
+        w = grid._windows(d_cells, w_cells)
+        if w is None:
+            continue
+        hits = np.argwhere(w == d_cells * w_cells)
+        if not len(hits):
+            continue
+        if not len(street):
+            return _Placed(grid, int(hits[0][0]), int(hits[0][1]), d_cells, True, True)
+        if len(hits) > MAX_CANDIDATES:
+            hits = hits[np.linspace(0, len(hits) - 1, MAX_CANDIDATES).astype(int)]
+        pts = _local(street, grid)
+        res = grid.res
+        wx0 = grid.minx + hits[:, 1] * res
+        wy0 = grid.miny + hits[:, 0] * res
+        wx1 = wx0 + w_cells * res
+        wy1 = wy0 + d_cells * res
+        for low in (True, False):
+            by0, by1 = (wy0, wy0 + deep_b) if low else (wy1 - deep_b, wy1)
+            cy0, cy1 = (by1, wy1) if low else (wy0, by0)
+            court = _box_distance(wx0, cy0, wx1, cy1, pts)
+            for left in (True, False):
+                bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
+                building = _box_distance(bx0, by0, bx1, by1, pts)
+                i = int(np.lexsort((-court, building))[0])
+                key = (float(building[i]), -float(court[i]))
+                if best is None or key < best[:2]:
+                    hit = hits[i]
+                    best = (*key, _Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left))
+    return None if best is None else best[2]
 
 
 def draw(
@@ -144,7 +203,7 @@ def draw(
     lane_ft: float,
     court_depth_ft: float,
     court_beyond_ft: float,
-    street: Iterable[tuple[float, float]] = (),
+    street: Iterable[tuple[float, float, float, float]] = (),
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -152,8 +211,8 @@ def draw(
     ``fit.orientation`` says which stands across. ``court_depth_ft`` is the
     whole court behind the wall (gap, stalls, aisle), ``court_beyond_ft`` the
     part of it the envelope has to hold (the rest stands in the rear yard).
-    ``street`` is the midpoints of the lot's front lines. ``None`` where the
-    search found no room at the fit's width at all.
+    ``street`` is the lot's front lines, ``(x1, y1, x2, y2)``. ``None`` where
+    the search found no room at the fit's width at all.
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -167,46 +226,46 @@ def draw(
     res = grids[0].res
     w_cells = cells_for(fit.across_ft, res)
     need = cells_for(deep_b + max(court_beyond_ft, 0.0), res)
-    street_pts = list(street)
+    pts = _along(street)
 
     # The room: the window the fit needs where one exists; otherwise the
     # deepest the lot holds at that width.
-    chosen: tuple[Grid, int, int, int, bool] | None = None
-    fits = False
-    for grid in grids:
-        s = _local(street_pts, grid) if street_pts else None
-        got = _window(grid, need, w_cells, s)
-        if got is not None:
-            chosen, fits = (grid, got[0], got[1], need, got[2]), True
-            break
-    if chosen is None:
-        deepest = max(grids, key=lambda g: g.max_depth_cells(w_cells))
-        d_cells = deepest.max_depth_cells(w_cells)
+    placed = _place(grids, need, w_cells, across_b=across_b, deep_b=deep_b, street=pts)
+    fits = placed is not None
+    if placed is None:
+        d_cells = max(g.max_depth_cells(w_cells) for g in grids)
         if d_cells < 1:
             return None
-        s = _local(street_pts, deepest) if street_pts else None
-        got = _window(deepest, d_cells, w_cells, s)
-        if got is None:
+        placed = _place(
+            grids,
+            d_cells,
+            w_cells,
+            across_b=across_b,
+            deep_b=min(deep_b, d_cells * res),
+            street=pts,
+        )
+        if placed is None:
             return None
-        chosen = (deepest, got[0], got[1], d_cells, got[2])
 
-    grid, row, col, d_cells, low = chosen
-    x0 = grid.minx + col * grid.res
-    y0 = grid.miny + row * grid.res
-    room_deep = d_cells * grid.res
+    grid = placed.grid
+    x0 = grid.minx + placed.col * grid.res
+    y0 = grid.miny + placed.row * grid.res
+    across = fit.across_ft
+    room_deep = placed.d_cells * grid.res
     # The street end, and the direction into the lot from it.
-    face, sign = (y0, 1.0) if low else (y0 + room_deep, -1.0)
+    face, sign = (y0, 1.0) if placed.low else (y0 + room_deep, -1.0)
+    # The building's side of the room, and the lane beyond it.
+    bx0 = x0 if placed.left else x0 + across - across_b
+    lx0 = bx0 + across_b if placed.left else bx0 - lane_ft
 
     def band(a: float, b: float, left: float, right: float) -> BaseGeometry:
         y1, y2 = face + sign * a, face + sign * b
         return shapely.box(left, min(y1, y2), right, max(y1, y2))
 
-    room = shapely.box(x0, y0, x0 + fit.across_ft, y0 + room_deep)
-    building = band(0.0, deep_b, x0, x0 + across_b)
-    lane = band(0.0, deep_b, x0 + across_b, x0 + across_b + lane_ft) if lane_ft > 0 else None
-    court = (
-        band(deep_b, deep_b + court_depth_ft, x0, x0 + fit.across_ft) if court_depth_ft > 0 else None
-    )
+    room = shapely.box(x0, y0, x0 + across, y0 + room_deep)
+    building = band(0.0, deep_b, bx0, bx0 + across_b)
+    lane = band(0.0, deep_b, lx0, lx0 + lane_ft) if lane_ft > 0 else None
+    court = band(deep_b, deep_b + court_depth_ft, x0, x0 + across) if court_depth_ft > 0 else None
 
     def world(g: BaseGeometry | None) -> BaseGeometry | None:
         return None if g is None else affinity.rotate(g, grid.angle_deg, origin=grid.origin)
