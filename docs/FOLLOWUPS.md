@@ -518,8 +518,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    charged), Wood Village LR rear resolves to 20, Gresham MDR-24 corner
    street side 20. Found reading the losses: an 18-acre Oregon City C lot
    (32E05D 01204, 01211) blew the fit's cell cap and fit nothing -- fixed
-   f0418b49 (coarser grid), rides the next batch. Left: (a) Wilsonville RN
-   front/rear 20 in the corpus vs quadfit's 15 -- read the code; (b)
+   f0418b49 (coarser grid), rides the next batch. Left: (a -- settled
+   2026-09-27: Table 8A's R-10 row is 20/20, R-7/R-5 are 15; FLATS holds
+   the binding R-10 row and quadfit the loosest on purpose, per its own
+   note; FLATS's own envelope charges 20 and RN is RED on use anyway) (b)
    Portland R5/R2.5/RM* lots with an alley rear AND a rear line off it
    (~2,700 rows) stay on quadfit's envelope -- the waiver is per line; (c)
    Portland has no `setback_alley_side_ft`, so a side alley takes the side
@@ -532,6 +534,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    the quarterly ZIP. Declare `TAXCODE` in the RLIS fields and carry it into
    `facts["assessor"]` so the next snapshot joins on the lot row and the
    county copy and the code areas are guaranteed the same release.
+   TIMING TRAP: editing the `rlis_taxlots` registry entry makes the monthly
+   probe report `registry_changed` and turns the Lots banner red until a
+   new copy is taken -- make the edit as the first step of the November
+   RLIS refresh, not before.
 14. **Tax impact beyond Gresham.** `flats/config/tax/or/multnomah/2025-26.yaml`
    holds Gresham's eleven code areas only. Another city needs its code
    areas' rates (Multnomah's levy-code-rates PDF, split local option /
