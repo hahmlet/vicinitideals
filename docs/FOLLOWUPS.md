@@ -127,19 +127,25 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    screen-GREEN / quadfit-red lots in the sample; (d) the sweep -- the
    screen tries 180 angles, s6 fits at the front bearings only, and 94 of
    those 178 are quadfit `siteplan_no_layout` lots the sweep found a fit on;
-   (e) which street is the front on a corner lot, and the lane in from the
-   side street (FOLLOWUPS 5 at the time, now 6: slice B, 9522942d + fcea6d57) -- on the county
-   map only. RE-READ 2026-09-26: FLATS faces NO street -- every street
-   edge is a front (envelope `max(front, street_side)` on both, both
-   interior lines take the rear setback, 180-angle sweep), and the lane is
-   always charged beside the building. Conservative both ways (a missed
-   green, never a false one). Owed: one front per `front_lot_line_corner`
-   (shortest / owner / entrance / both, HUMAN_TODO 21 ranking), the other
-   street `street_side`, the interior line parallel to it `side`; and the
-   lane from the side street where `corner_access_street` allows it (lane
-   0, as a side alley). Run 26: 62,944 corner lots (bearings >= 45 deg
-   apart), 7,610 green, 56,565 yellow with the fit dominant (Portland
-   36,057). Both fields are in `SILENTLY_UNREAD` (test_consumed.py).
+   **(e) DONE ca52f76a, run 28 PROMOTED 2026-09-27** (4th splice, 66,443
+   corner lots with bearings >= 45 deg apart; 4,854 answers yellow->green,
+   2,755 yellow->unknown (the fit now passes; the same unobserved fact the
+   lot already leaned on decides it), 1 green->yellow; drift 7,610 / 0
+   unexplained, matching the bound). `front_lot_line_corner` is followed:
+   shortest line fronts (both within 1 ft), owner/entrance tries both and
+   keeps the better, `both`/unread keeps every street a front; the other
+   street is `street_side`, the interior line beside the front a `side`;
+   `corner_access_street` any/side drops the lane. Leftovers: (i)
+   `lowest_class` keeps the lane -- nothing measures street class;
+   (ii) corner lots with an alley are left unnamed (the alley's name is
+   resolved against either frontage); (iii) the court's end is assumed to
+   reach the side street, as for a side alley; (iv) Wilsonville V: 25
+   answers lose slack because the long interior lines are now SIDE lines
+   (7.5 ft) not rear (5 ft) -- correct by the code, never changed a
+   colour; (v) three Clackamas-unincorporated unnamed lots moved on input
+   vintage (s4 2026-09-24 vs the base's), replayed identical on main and
+   the branch; (vi) the `corner_lot` observed fact still uses
+   `len(bearings) >= 2`, not the 45 deg test.
    (FLATS's own envelope: DONE, item 12.) Also owed:
    `steep_slope` from s5o's DEM percentile / Gresham's hillside overlay
    (assumed False today, named on every lot it leans on). County-scale
