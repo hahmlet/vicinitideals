@@ -162,16 +162,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    stall count was decided 2026-09-18 (HUMAN_TODO 18) and is out of this
    item.
    **(b) DONE caad6f3f** (`parking_alley_backout_ft`; leftovers item 3).
-5. **Draw what the screen fitted on the lot page.** `/flats/lots/{county}/
-   {tlid}` (`app/api/routers/ui_flats.py`, the "lots" section) draws the
-   outline only. Two things are missing before the building can be
-   drawn on it: quadfit's carved envelope (s5o `wkb`) is not carried by
-   `scripts/flats_load_bridge.py` -- a geometry column on `flats.lots`
-   (migration) and one more `export` column; and the screen's `fit_for`
-   reports depth / across / angle / orientation but no *position*, so a
-   placement (the rectangle's origin on the lot, in 2913 feet) has to be
-   returned by the fit and stored in `checks.fit` before anything can be
-   drawn. Offered 2026-09-18 with the pages.
+5. **Draw what the screen fitted -- BUILT 666c6837, deployed; waiting on the
+   full re-screen (137 /root/chain_draw.sh, bundle 2026-09-27_draw) to load,
+   drift (expect 0 moves), promote, then run the E2E
+   `test_a_lot_page_draws_where_the_building_and_parking_stand`.** Each
+   design card draws building / driveway / court / room over the lot and
+   the envelope (`flats/fit/draw.py`, `checks.drawing`). Leftovers: the
+   drawing uses the verdict's angle, so on a wide shallow lot the plan can
+   run along the street; a side-alley column is drawn as a row behind.
 6. **Where parking may SIT, and which street is "the front".** Offered
    2026-09-19 when Steph asked why the court is always behind. **Steph's
    ruling 2026-09-19:** trying each street as the front applies ONLY where
