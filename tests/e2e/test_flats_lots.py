@@ -134,3 +134,22 @@ def test_a_tight_fit_is_a_filter_on_the_list_and_a_row_on_the_lot_page(
     flagged = page.locator("tr[id^='tight-']").first
     expect(flagged).to_be_visible()
     expect(flagged).to_contain_text("survey")
+
+
+#: A Portland R5 corner lot the corner-front re-screen (FOLLOWUPS 4(e))
+#: turned green: fronted on its shorter street, parked off the other.
+CORNER_LOT = "/flats/lots/multnomah/1S2E20BA%20%20-15600"
+
+
+def test_a_corner_lot_page_names_its_front_street_and_the_side_street_driveway(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Steph 2026-09-26: "we need to abide if Portland has guidance on which
+    is front and which is side." The lot page says which street the screen
+    took as the front and that the driveway comes in off the other."""
+    page = logged_in_page
+    page.goto(f"{base_url}{CORNER_LOT}")
+    if page.locator("#lot-verdict").count() == 0:
+        pytest.skip("the corner lot is not in this run")
+    expect(page.locator(".corner-front").first).to_contain_text("corner lot: laid out fronting the street at")
+    expect(page.locator(".side-street").first).to_contain_text("the driveway comes in from the side street")
