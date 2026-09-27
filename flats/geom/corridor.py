@@ -101,6 +101,14 @@ CORRIDOR_MAPS: dict[str, str] = {
     "corridors_pdx": "civic_corridor",
 }
 
+#: The conditions whose answer True TIGHTENS a standard (Map 130-1's 10 ft
+#: setback, where elsewhere there is none). For these a line is on the
+#: corridor when either reading says so -- the street it abuts, or the drawn
+#: line within :data:`REACH_FT` -- because a miss is a false GREEN. For the
+#: rest (Map 120-1 lifts RM2 coverage) only the street reading counts,
+#: because a false hit is.
+TIGHTENS: frozenset[str] = frozenset({"civic_corridor_setback"})
+
 #: The street network the lot lines are read against.
 STREETS_KEY = "rlis_streets"
 
@@ -264,13 +272,14 @@ def _fronted(point: Any, own: float, streets: Lines) -> int | None:
 def _on_at(point: Any, own: float, cmap: CorridorMap, near: list[int]) -> bool:
     """Whether the street a lot line abuts at ``point`` is the corridor."""
     corridor = cmap.corridor
-    if cmap.streets is None:
-        return any(_abreast(corridor.lines[i], point, own, REACH_FT) for i in near)
+    drawn = any(_abreast(corridor.lines[i], point, own, REACH_FT) for i in near)
+    if cmap.streets is None or (drawn and cmap.condition in TIGHTENS):
+        return drawn
     s = _fronted(point, own, cmap.streets)
     if s is None:
-        # No centreline beside the line here (a curve, a gap in the network,
-        # a transit-centre loop): the drawn line decides, as with no network.
-        return any(_abreast(corridor.lines[i], point, own, REACH_FT) for i in near)
+        # No centreline beside the line here (a curve, a gap in the network):
+        # the drawn line decides, as with no network.
+        return drawn
     street, name = cmap.streets.lines[s], cmap.streets.names[s]
     foot = street.interpolate(street.project(point))
     for i in near:

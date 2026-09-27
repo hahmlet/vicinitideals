@@ -242,3 +242,16 @@ def test_a_street_further_out_than_s4_reaches_is_not_the_one_the_line_abuts() ->
     net = streets((drawn, "SE BELMONT ST"))
     off = CorridorMap.from_lines("civic_corridor", [PDX], [drawn], ["SE BELMONT ST"], net)
     assert not on_corridor(FRONT, off)
+
+
+def test_the_setback_map_takes_either_reading_the_coverage_map_only_the_street() -> None:
+    # The line abuts a transit-centre loop 12 ft out; Barbur's drawn line is
+    # 48 ft out. The street reading says the loop, not Barbur. For the
+    # setback a miss is a false GREEN, so the drawn line within reach still
+    # counts; for RM2 coverage a false hit is, so it does not.
+    drawn = LineString([(X0 - 500, Y0 - 48), (X0 + 500, Y0 - 48)])
+    loop = LineString([(X0 - 500, Y0 - 12), (X0 + 500, Y0 - 12)])
+    net = streets((loop, "BARBUR TC"))
+    names = ["SW BARBUR BLVD"]
+    assert on_corridor(FRONT, CorridorMap.from_lines("civic_corridor_setback", [PDX], [drawn], names, net))
+    assert not on_corridor(FRONT, CorridorMap.from_lines("civic_corridor", [PDX], [drawn], names, net))
