@@ -2907,6 +2907,16 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
     }
 
 
+def _pocket_of(facts: dict[str, Any]) -> str | None:
+    """The layer a pocket lot is screened under, from ``facts.snapshot_zone.of``.
+
+    Older loads (and fixtures) stored ``snapshot_zone`` as the bare zone
+    string; those name no other layer.
+    """
+    zone = facts.get("snapshot_zone")
+    return zone.get("of") if isinstance(zone, dict) else None
+
+
 def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, Any]]) -> dict[str, Any]:
     facts = lot.facts or {}
     best_colour = _COLOURS[colour] if 0 <= colour < len(_COLOURS) else "unknown"
@@ -2921,7 +2931,7 @@ def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, A
         "zone_raw": lot.zone_raw,
         # A pocket: another jurisdiction's zoning inside this one's line,
         # screened under that jurisdiction's rules (flats.ingest.normalize).
-        "zoned_by": _city_label(of) if (of := (facts.get("snapshot_zone") or {}).get("of")) else None,
+        "zoned_by": _city_label(of) if (of := _pocket_of(facts)) else None,
         "address": lot.site_address or "",
         "area": float(lot.area_sqft) if lot.area_sqft is not None else None,
         "verdict": best_verdict,

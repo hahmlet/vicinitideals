@@ -799,6 +799,16 @@ async def test_a_pocket_lot_says_whose_zoning_it_is_under(client: AsyncClient, s
     assert "under Clackamas" in zoned_by and "zoning" in zoned_by
     assert 'href="/flats/or/clackamas/happy-valley"' in page.text
 
+    # A lot loaded before the zone was a record still carries it as a bare
+    # string: it names no other layer, and the page still renders.
+    lot.facts = {**lot.facts, "snapshot_zone": "RRFF5"}
+    await session.commit()
+    page = await client.get("/flats/lots/clackamas/23E07%20%2000100")
+    assert page.status_code == 200
+    assert 'id="lot-zoned-by"' not in page.text
+    listing = await client.get("/flats/lots")
+    assert listing.status_code == 200
+
 
 async def test_a_lot_nobody_loaded_says_so(client: AsyncClient, session: AsyncSession):
     await _login(client, session)
