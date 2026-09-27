@@ -1,0 +1,169 @@
+"""Which street lot lines run along a mapped corridor (flats/geom/corridor.py).
+
+Portland's Map 130-1 puts a 10 ft setback on a street lot line adjacent to
+one of five Civic Corridors; Map 120-1 lets RM2 cover 70 percent on a site
+that abuts a corridor. These tests pin what "adjacent" is -- along the
+line, across the right-of-way, parallel -- and where the fact is answered.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pytest
+import shapely
+from shapely.geometry import LineString, mapping
+
+from flats.geom.corridor import (
+    CORRIDOR_FACTS,
+    REACH_FT,
+    CorridorMap,
+    load_maps,
+    observed_corridors,
+    on_corridor,
+)
+from flats.ingest.quadfit import OBSERVABLE, lot_from_row, observed_facts
+from flats.rules.conditions import CONDITIONS
+
+pytestmark = pytest.mark.unit
+
+PDX = "or/multnomah/portland"
+X0, Y0 = 7_650_000.0, 680_000.0
+
+# A 50 x 100 lot, street along the south edge. The street's centreline --
+# the line the corridor map draws -- runs 30 ft south of the lot line, the
+# middle of a 60 ft right-of-way, and on past both corners.
+FRONT = [X0, Y0, X0 + 50, Y0, "F"]
+EDGES = [
+    FRONT,
+    [X0 + 50, Y0, X0 + 50, Y0 + 100, "S"],
+    [X0 + 50, Y0 + 100, X0, Y0 + 100, "R"],
+    [X0, Y0 + 100, X0, Y0, "S"],
+]
+ALONG = LineString([(X0 - 500, Y0 - 30), (X0 + 500, Y0 - 30)])
+
+
+def cmap(*lines: LineString, condition: str = "civic_corridor_setback") -> CorridorMap:
+    return CorridorMap.from_lines(condition, [PDX], lines)
+
+
+def test_both_facts_are_registered_site_facts_the_bridge_observes() -> None:
+    assert CORRIDOR_FACTS == ("civic_corridor", "civic_corridor_setback")
+    for name in CORRIDOR_FACTS:
+        assert CONDITIONS[name].kind == "site_fact"
+        assert name in OBSERVABLE
+
+
+def test_a_street_line_across_the_right_of_way_from_the_corridor_is_on_it() -> None:
+    assert on_corridor(FRONT, cmap(ALONG))
+
+
+def test_a_corridor_one_block_over_is_not() -> None:
+    far = LineString([(X0 - 500, Y0 - 30 - REACH_FT - 200), (X0 + 500, Y0 - 30 - REACH_FT - 200)])
+    assert not on_corridor(FRONT, cmap(far))
+
+
+def test_the_cross_street_at_the_corner_is_not() -> None:
+    # A corridor running north-south past the lot's west corner touches the
+    # front line's end within reach but crosses it: the parallel test keeps
+    # the corner from counting.
+    cross = LineString([(X0 - 30, Y0 - 500), (X0 - 30, Y0 + 500)])
+    assert not on_corridor(FRONT, cmap(cross))
+
+
+def test_a_corridor_that_ends_part_way_along_the_line() -> None:
+    # Drawn to the line's midpoint and a little beyond: still on it.
+    past_half = LineString([(X0 - 500, Y0 - 30), (X0 + 30, Y0 - 30)])
+    assert on_corridor(FRONT, cmap(past_half))
+    # Drawn only to its first tenth: not.
+    stub = LineString([(X0 - 500, Y0 - 30), (X0 + 5, Y0 - 30)])
+    assert not on_corridor(FRONT, cmap(stub))
+
+
+def test_only_street_lines_count() -> None:
+    # A corridor behind the lot, 30 ft past the rear line: the rear line is
+    # not a street line, so it never asks.
+    behind = LineString([(X0 - 500, Y0 + 130), (X0 + 500, Y0 + 130)])
+    assert observed_corridors(EDGES, PDX, [cmap(behind)]) == {"civic_corridor_setback": False}
+
+
+def test_answered_only_where_the_map_serves_and_only_with_edges() -> None:
+    maps = [cmap(ALONG), cmap(ALONG, condition="civic_corridor")]
+    assert observed_corridors(EDGES, PDX, maps) == {
+        "civic_corridor_setback": True,
+        "civic_corridor": True,
+    }
+    # Gresham's civic_corridor is Gresham's own map: never answered from Portland's.
+    assert observed_corridors(EDGES, "or/multnomah/gresham", maps) == {}
+    assert observed_corridors([], PDX, maps) == {}
+
+
+def test_load_maps_reads_the_snapshot_and_skips_what_is_missing(tmp_path: Path) -> None:
+    fc = {
+        "type": "FeatureCollection",
+        "features": [{"type": "Feature", "properties": {}, "geometry": mapping(ALONG)}],
+    }
+    (tmp_path / "corridor_setbacks_pdx.geojson").write_text(json.dumps(fc), encoding="utf-8")
+    maps = load_maps(tmp_path)
+    assert [m.condition for m in maps] == ["civic_corridor_setback"]
+    assert maps[0].covers(PDX) and not maps[0].covers("or/multnomah/gresham")
+    assert on_corridor(FRONT, maps[0])
+
+
+def _row(**over: object) -> dict[str, object]:
+    base: dict[str, object] = {
+        "TLID": "1S2E20AA  -15100",
+        "jurisdiction": "portland",
+        "zone": "CM2",
+        "tier": "A",
+        "area_sqft": 5000.0,
+        "frontage_ft": 50.0,
+        "lot_width_ft": 50.0,
+        "lot_depth_ft": 100.0,
+        "edges_json": json.dumps(EDGES),
+        "front_bearings_json": "[0.0]",
+        "fronts_cul_de_sac": False,
+        "split_zone": False,
+        "ovl_fema_sfha": False,
+        "ovl_fema_floodway": False,
+        "sewer_main_dist_ft": 12.0,
+        "in_sewer_district": None,
+        "wkb": shapely.to_wkb(shapely.box(X0 + 5, Y0 + 10, X0 + 45, Y0 + 95)),
+    }
+    base.update(over)
+    return base
+
+
+def test_the_bridge_asks_only_with_the_maps_in_hand() -> None:
+    assert "civic_corridor_setback" not in observed_facts(_row())
+    got = observed_facts(_row(), corridors=[cmap(ALONG)])
+    assert got["civic_corridor_setback"] is True
+    lot = lot_from_row(_row(), corridors=[cmap(ALONG)])
+    assert lot.observed["civic_corridor_setback"] is True
+    # A Gresham lot on the same line: unasked.
+    assert "civic_corridor_setback" not in observed_facts(
+        _row(jurisdiction="gresham"), corridors=[cmap(ALONG)]
+    )
+
+
+@pytest.fixture(scope="module")
+def pdx_rules():
+    from flats.rules.loader import load_rules
+    from flats.rules.resolver import RuleSet
+
+    return RuleSet(load_rules())
+
+
+@pytest.mark.parametrize("zone", ["CM1", "CM2", "CM3", "CE", "CX", "CR"])
+def test_the_ten_foot_setback_follows_map_130_1_not_map_120_1(pdx_rules, zone: str) -> None:
+    """33.130.215.B.1.a: 10 ft from a street lot line adjacent to a Civic
+    Corridor shown on Map 130-1; none elsewhere. A lot on one of Map 120-1's
+    158 corridors that is not one of 130-1's five stretches keeps zero."""
+
+    def front(*conditions: str) -> object:
+        return pdx_rules.resolve(PDX, zone, conditions=list(conditions)).values["setback_front_ft"].value
+
+    assert front() == 0
+    assert front("civic_corridor") == 0
+    assert front("civic_corridor_setback") == 10

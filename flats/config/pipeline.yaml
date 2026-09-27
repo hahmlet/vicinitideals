@@ -284,6 +284,34 @@ datasets:
     fields: [OVRLY, ZONE, PLDIST]
     serves: [or/multnomah/portland]
 
+  # --- mapped corridors (flats/geom/corridor.py) ----------------------------
+
+  corridors_pdx:
+    kind: arcgis
+    label: Portland Civic and Neighborhood Corridors (Map 120-1 / 130-3)
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/24
+    geometry: polyline
+    fields: [StreetName, MapLabel]
+    serves: [or/multnomah/portland]
+    notes: >-
+      Street centerlines, 158 segments. Answers civic_corridor -- RM2 coverage
+      70 percent on a site that abuts one (33.120.225.B).
+
+  corridor_setbacks_pdx:
+    kind: arcgis
+    label: Portland Civic Corridors with Required Setbacks (Map 130-1)
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/78
+    geometry: polyline
+    fields: [STREETNAME, SETBACK, SETBACK_DESC, ORDINANCE]
+    serves: [or/multnomah/portland]
+    notes: >-
+      Five stretches (Barbur, Division, 122nd x2, Stark). Answers
+      civic_corridor_setback -- the 10 ft minimum from a street lot line on
+      one in the commercial zones (33.130.215.B.1.a). A different map from
+      corridors_pdx; the code names them separately.
+
   overlay_gresham_wetlands:
     kind: arcgis
     label: Gresham wetlands

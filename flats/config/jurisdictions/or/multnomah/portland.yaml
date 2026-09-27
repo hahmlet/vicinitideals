@@ -2866,7 +2866,7 @@ zones:
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
-    notes: 'Table 120-4 prints coverage as "60/70%". 33.120.225.B splits it: 70 percent on a site abutting a Civic or Neighborhood Corridor shown on Map 120-1, 60 on every other RM2 site. 60 is the base because we do not hold the corridor map, and the half that cannot turn a lot green by mistake is the half that binds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    notes: 'Table 120-4 prints coverage as "60/70%". 33.120.225.B splits it: 70 percent on a site abutting a Civic or Neighborhood Corridor shown on Map 120-1, 60 on every other RM2 site. 60 is the base and 70 the civic_corridor variant, answered from the city''s corridor layer by flats/geom/corridor.py; a lot the map cannot answer keeps 60, the half that cannot turn a lot green by mistake. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
   RM3:
     cite_default:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
@@ -3456,13 +3456,14 @@ zones:
       # from the usual one -- the corridor makes the standard TIGHTER, not
       # looser -- so it is worth saying plainly that the base here is the
       # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1, and this screen
-      # does not hold that map.
+      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
+      # map from Map 120-1's corridors, so its own condition, read by
+      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640"
       variants:
         - value: 10
-          when: [civic_corridor]
+          when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
@@ -3605,13 +3606,14 @@ zones:
       # from the usual one -- the corridor makes the standard TIGHTER, not
       # looser -- so it is worth saying plainly that the base here is the
       # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1, and this screen
-      # does not hold that map.
+      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
+      # map from Map 120-1's corridors, so its own condition, read by
+      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640"
       variants:
         - value: 10
-          when: [civic_corridor]
+          when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
@@ -3744,13 +3746,14 @@ zones:
       # from the usual one -- the corridor makes the standard TIGHTER, not
       # looser -- so it is worth saying plainly that the base here is the
       # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1, and this screen
-      # does not hold that map.
+      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
+      # map from Map 120-1's corridors, so its own condition, read by
+      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640"
       variants:
         - value: 10
-          when: [civic_corridor]
+          when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
@@ -3892,13 +3895,14 @@ zones:
       # from the usual one -- the corridor makes the standard TIGHTER, not
       # looser -- so it is worth saying plainly that the base here is the
       # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1, and this screen
-      # does not hold that map.
+      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
+      # map from Map 120-1's corridors, so its own condition, read by
+      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640"
       variants:
         - value: 10
-          when: [civic_corridor]
+          when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
@@ -4040,13 +4044,14 @@ zones:
       # from the usual one -- the corridor makes the standard TIGHTER, not
       # looser -- so it is worth saying plainly that the base here is the
       # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1, and this screen
-      # does not hold that map.
+      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
+      # map from Map 120-1's corridors, so its own condition, read by
+      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640"
       variants:
         - value: 10
-          when: [civic_corridor]
+          when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
@@ -4170,13 +4175,14 @@ zones:
       # from the usual one -- the corridor makes the standard TIGHTER, not
       # looser -- so it is worth saying plainly that the base here is the
       # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1, and this screen
-      # does not hold that map.
+      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
+      # map from Map 120-1's corridors, so its own condition, read by
+      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640"
       variants:
         - value: 10
-          when: [civic_corridor]
+          when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the

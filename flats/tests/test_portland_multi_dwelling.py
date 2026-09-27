@@ -87,12 +87,16 @@ def test_rm2_coverage_takes_the_sixty_until_the_corridor_map_says_otherwise(
     rules: RuleSet,
 ) -> None:
     """Table 120-4 prints "60/70%". 33.120.225.B gives 70 percent to sites on a
-    Civic or Neighborhood Corridor. We do not hold Map 120-1, so 60 binds — the
-    ten points of coverage are real buildable area and claiming them on a site
-    that has not earned them is a false GREEN."""
+    Civic or Neighborhood Corridor. Where Map 120-1 has not answered, 60 binds —
+    the ten points of coverage are real buildable area and claiming them on a
+    site that has not earned them is a false GREEN. The bridge answers it from
+    the city's corridor layer (flats/geom/corridor.py); Map 130-1's setback
+    corridors are a different map and do not lift it."""
     assert rules.resolve(PDX, "RM2").values["max_coverage_pct"].value == 60
     on_a_corridor = rules.resolve(PDX, "RM2", conditions=["civic_corridor"])
     assert on_a_corridor.values["max_coverage_pct"].value == 70
+    setback_map = rules.resolve(PDX, "RM2", conditions=["civic_corridor_setback"])
+    assert setback_map.values["max_coverage_pct"].value == 60
 
 
 def test_rm4_takes_the_tighter_half_of_both_its_split_cells(rules: RuleSet) -> None:

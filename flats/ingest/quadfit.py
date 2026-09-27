@@ -71,6 +71,8 @@ from flats.fit.angles import DEFAULT_STEP_DEG, angles_for
 from flats.fit.draw import draw
 from flats.fit.rectangle import Fit, Fitter
 from flats.geom.alley import ALLEY_CLASS, ALLEY_FACTS, S4_LOTS, alley_lines, observed_alley
+from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors
+from flats.geom.corridor import load_maps as load_corridor_maps
 from flats.geom.corner import front_bearings as corner_fronts, is_corner, name_front
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
@@ -160,6 +162,7 @@ OBSERVABLE: tuple[str, ...] = (
     *ALLEY_FACTS,
     *CUL_DE_SAC_FACTS,
     *NEIGHBOUR_FACTS,
+    *CORRIDOR_FACTS,
     "corner_lot",
     "split_zone",
     "in_floodplain",
@@ -194,7 +197,9 @@ def _finite(value: object) -> float | None:
 
 
 def observed_facts(
-    row: Mapping[str, Any], layers: Mapping[str, Layer] | None = None
+    row: Mapping[str, Any],
+    layers: Mapping[str, Layer] | None = None,
+    corridors: Sequence[CorridorMap] = (),
 ) -> dict[str, bool]:
     """The site facts quadfit measured, in the registry's words.
 
@@ -235,6 +240,11 @@ def observed_facts(
       condition, and only where the lines settle it: a line across a park,
       a split-zone neighbour or another city's lot leaves the permissive
       answer unstated, and the lot screens UNKNOWN on the fact as before.
+    * ``civic_corridor`` / ``civic_corridor_setback`` -- a street line
+      running along a line of Portland's corridor maps, through
+      :func:`flats.geom.corridor.observed_corridors`. Only with the maps in
+      hand (the bridge's ``--sources``), only on lots of the layers a map
+      serves, and only with edges.
     """
     out: dict[str, bool] = {}
     edges = json.loads(row.get("edges_json") or "[]")
@@ -242,6 +252,8 @@ def observed_facts(
     if edges:
         out.update(observed_alley(edges, bearings))
         out["corner_lot"] = len(bearings) >= 2
+        if corridors:
+            out.update(observed_corridors(edges, _layer_id(row), corridors))
     if layers is not None and row.get("neighbour_zones_json"):
         out.update(_neighbour_facts(row, layers))
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
@@ -261,6 +273,13 @@ def observed_facts(
         if not in_district:
             out["public_sewer"] = False
     return out
+
+
+def _layer_id(row: Mapping[str, Any]) -> str | None:
+    try:
+        return layer_id_for(str(row.get("jurisdiction")))
+    except KeyError:
+        return None
 
 
 def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
@@ -510,17 +529,22 @@ def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
     return Envelope(geom, None if strips else setbacks.largest_ft, "flats", setbacks)
 
 
-def lot_from_row(row: Mapping[str, Any], layers: Mapping[str, Layer] | None = None) -> QuadfitLot:
+def lot_from_row(
+    row: Mapping[str, Any],
+    layers: Mapping[str, Layer] | None = None,
+    corridors: Sequence[CorridorMap] = (),
+) -> QuadfitLot:
     """Build the screen's inputs for one stage-file row.
 
     ``layers`` is the loaded corpus, for the neighbour-zoning facts; without
     it those facts are left unasked, as they were before 2026-09-21.
+    ``corridors`` likewise for the corridor facts (before 2026-09-27).
     """
     import shapely
 
     tier = TIER.get(str(row.get("tier")), Tier.irregular)
     frontage = _finite(row.get("frontage_ft"))
-    observed = observed_facts(row, layers)
+    observed = observed_facts(row, layers, corridors)
     lot_wkb = row.get("lot_wkb")
     lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
     edges = lot_edges(row, lot_geom)
@@ -889,8 +913,8 @@ def row_for(s: Screened) -> dict[str, Any]:
 _WORKER: dict[str, Any] = {}
 
 
-def _init_worker(step_deg: float) -> None:
-    """Load the corpus, catalog and policies once per process."""
+def _init_worker(step_deg: float, sources: Path | None = None) -> None:
+    """Load the corpus, catalog, policies and corridor maps once per process."""
     from flats.designs.model import load_catalog
     from flats.encode.load import load_trusted
     from flats.score import relief as relief_mod, slack as slack_mod
@@ -900,12 +924,13 @@ def _init_worker(step_deg: float) -> None:
     _WORKER["policy"] = slack_mod.load_policy()
     _WORKER["relief"] = relief_mod.load_policy()
     _WORKER["step_deg"] = step_deg
+    _WORKER["corridors"] = load_corridor_maps(sources) if sources is not None else ()
 
 
 def _work_chunk(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for row in rows:
-        lot = lot_from_row(row, _WORKER["rules"].layers)
+        lot = lot_from_row(row, _WORKER["rules"].layers, _WORKER["corridors"])
         for s in screen_lot(
             lot,
             _WORKER["designs"],
@@ -1090,6 +1115,7 @@ def run(
     tlids: Iterable[str] = (),
     step_deg: float = DEFAULT_STEP_DEG,
     chunk_size: int = 500,
+    sources: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -1097,6 +1123,8 @@ def run(
     Parts are written as they finish (``parts/NNNNN.parquet``) and
     concatenated at the end, so a run that dies at hour three keeps its
     first three hours. Re-running with the same ``out`` starts over.
+    ``sources`` is a snapshot directory (``data/flats/sources/<date>``) whose
+    corridor maps answer the corridor facts; without it they stay unasked.
     """
     import time
     from multiprocessing import Pool
@@ -1126,13 +1154,13 @@ def run(
         pd.DataFrame.from_records(records).to_parquet(parts_dir / f"{i:05d}.parquet", index=False)
 
     if processes <= 1:
-        _init_worker(step_deg)
+        _init_worker(step_deg, sources)
         for i, chunk in enumerate(chunks):
             _write(i, _work_chunk(chunk))
             done += len(chunk)
             log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
     else:
-        with Pool(processes, initializer=_init_worker, initargs=(step_deg,)) as pool:
+        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources)) as pool:
             for i, records in enumerate(pool.imap(_work_chunk, chunks)):
                 _write(i, records)
                 done += len(chunks[i])
@@ -1159,6 +1187,7 @@ def run(
         "jurisdictions": sorted(jurisdictions),
         "zones": zones,
         "tlids": tlids,
+        "sources": str(sources) if sources is not None else None,
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -1190,6 +1219,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--tlid-file", type=Path, help="one TLID per line")
     ap.add_argument("--step-deg", type=float, default=DEFAULT_STEP_DEG)
     ap.add_argument("--chunk-size", type=int, default=500)
+    ap.add_argument("--sources", type=Path, help="snapshot dir holding the corridor maps")
     args = ap.parse_args(argv)
     run(
         args.out,
@@ -1205,6 +1235,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         tlids=[*args.tlid, *(_read_tlids(args.tlid_file) if args.tlid_file else [])],
         step_deg=args.step_deg,
         chunk_size=args.chunk_size,
+        sources=args.sources,
     )
     return 0
 

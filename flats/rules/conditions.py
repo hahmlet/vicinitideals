@@ -329,11 +329,29 @@ _C: tuple[ConditionDef, ...] = (
         "site_fact",
         "The site abuts a corridor the jurisdiction has mapped for more "
         "intensity. Portland raises RM2 building coverage from 60 percent to "
-        "70 for sites on a Civic or Neighborhood Corridor and drops a setback "
-        "there too, so the same zone screens two ways depending on a line on "
-        "a map rather than on anything visible in the parcel record. Assumed "
-        "unknown, which leaves the tighter number binding.",
+        "70 for sites on a Civic or Neighborhood Corridor shown on Map 120-1, "
+        "so the same zone screens two ways depending on a line on a map "
+        "rather than on anything visible in the parcel record. Measured for "
+        "Portland lots from the city's corridor layer (flats/geom/corridor.py: "
+        "any street lot line running along a corridor); elsewhere -- Gresham's "
+        "corridors are its own map, not held -- assumed unknown, which leaves "
+        "the tighter number binding.",
         evidence="the jurisdiction corridor map -- Portland Map 120-1",
+        assume=None,
+    ),
+    ConditionDef(
+        "civic_corridor_setback",
+        "site_fact",
+        "A street lot line of the site is adjacent to a Civic Corridor shown "
+        "on Portland Map 130-1, where 33.130.215.B.1.a requires a 10 ft "
+        "setback in the commercial zones that otherwise require none. Map "
+        "130-1 is not Map 120-1: it draws five stretches (Barbur, Division, "
+        "122nd twice, Stark), and a lot on a Civic Corridor that is not one "
+        "of them keeps a zero setback. Measured from the city's Civic "
+        "Corridor Setbacks layer; answered per lot, true when ANY street line "
+        "is on one, which applies 10 ft to every street line -- the tighter "
+        "reading of a per-line rule.",
+        evidence="Portland Map 130-1, Civic Corridors with Required Setbacks",
         assume=None,
     ),
     ConditionDef(
