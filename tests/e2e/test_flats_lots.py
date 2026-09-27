@@ -153,3 +153,20 @@ def test_a_corner_lot_page_names_its_front_street_and_the_side_street_driveway(
         pytest.skip("the corner lot is not in this run")
     expect(page.locator(".corner-front").first).to_contain_text("corner lot: laid out fronting the street at")
     expect(page.locator(".side-street").first).to_contain_text("the driveway comes in from the side street")
+
+
+def test_a_lot_page_draws_where_the_building_and_parking_stand(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """FOLLOWUPS 5: each design card draws the fit on the lot -- the
+    building, its driveway and its parking court over the ground the rules
+    leave -- and says in words what the dashed box means."""
+    page = logged_in_page
+    page.goto(f"{base_url}{CORNER_LOT}")
+    if page.locator("#lot-verdict").count() == 0:
+        pytest.skip("the corner lot is not in this run")
+    plan = page.locator(".fit-plan").first
+    expect(plan).to_be_visible()
+    for layer in ("plan-lot", "plan-envelope", "plan-room", "plan-building", "plan-court"):
+        expect(plan.locator(f"polygon.{layer}").first).to_be_attached()
+    expect(plan).to_contain_text("One way it could stand, not a site plan.")
