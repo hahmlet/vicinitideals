@@ -3682,15 +3682,17 @@ zone_rulings:
   UPAGI:
     outcome: pocket
     of: or/multnomah/troutdale
+    zone: GI
     note: >-
       UPA + GI, Troutdale's General Industrial on eight county lots along NW
       Sundial Rd (the Sundial pocket, 1N3E14/22/23B; a million square feet
       apiece). Troutdale's GI block refuses the building at TDC 3.420 --
-      "All other residential uses N" -- and would answer here if pocket lots
-      were screened under their `of` layer.
+      "All other residential uses N" -- and answers here: the lot is screened
+      under the `of` layer's `zone`.
   UPAR-10:
     outcome: pocket
     of: or/multnomah/troutdale
+    zone: LDR-1
     note: >-
       UPA + R-10, four county lots on SE Troutdale Rd, SE Cochran Rd and SE
       Sweetbriar Rd (the Troutdale pocket). R-10 is a district the current

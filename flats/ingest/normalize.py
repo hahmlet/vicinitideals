@@ -37,6 +37,15 @@ This stage builds the lot table from the snapshot's taxlot file, one row per
   the lot), ``ZONE_NOT_ENCODED`` (a code never ruled on), ``ZONE_POCKET``,
   ``ZONE_UNENCODABLE``, ``ZONE_TO_READ`` (a ruled code, by its outcome). The
   assign stage turns a gate into an ``unknown`` result with that reason.
+* **pocket** -- a code ruled ``pocket`` is another layer's zoning carried on
+  this layer's map (county zoning inside a city line, a city's code on the
+  county's fabric). The lot keeps its jurisdiction and is screened under the
+  other layer: ``rules_layer`` names it and ``zone`` is its block there --
+  the ruling's ``zone``, the map's own spelling, or, for a label that names no
+  district (Troutdale's ``NSA``), the other layer's zoning map read for the
+  lot. The other layer's gates apply (switched off, outside the boundary). A
+  pocket the other layer holds no block for stays ``ZONE_POCKET``; both are
+  counted in the summary's ``pockets``.
 * **assessor** -- the RLIS roll values (land, building, total, assessed, year
   built, building sqft, last sale, property code, state class, land use) as
   columns, adopted on every refresh -- Steph's "updated information we need to
@@ -84,7 +93,7 @@ from flats.ingest.delta import COUNTY_NAMES, DEFAULT_COUNTIES, iter_features
 from flats.ingest.sources import Pipeline, Provides, load_pipeline
 from flats.normalize.condo import CondoVerdict, check_condo
 from flats.rules.loader import load_rules
-from flats.rules.model import Layer
+from flats.rules.model import POCKET_ZONE_FROM_MAP, Layer, ZoneRuling
 
 #: The right-of-way and the water, which RLIS holds as polygons of their own
 #: (Multnomah ``-STR`` / ``-RIV`` / ``-RR``, Clackamas ``ROADS`` / ``WATER``).
@@ -113,6 +122,10 @@ ASSESSOR_FIELDS = (
 #: Below this share of the lot's area under its majority zone, the lot is
 #: split-zoned (quadfit's ``s2_assign.SPLIT_ZONE_THRESHOLD``).
 SPLIT_ZONE_THRESHOLD = 0.9
+
+#: The share of a pocket lot the other layer's zoning map has to cover with
+#: one code before that code is the lot's (:func:`normalize` step 5b).
+POCKET_MAP_SHARE = 0.5
 
 #: Why a lot cannot be screened without a measurement it does not have.
 GATES = (
@@ -146,6 +159,7 @@ LOT_COLUMNS = (
     "condo_reason",
     "zone_raw",
     "zone",
+    "rules_layer",
     "zone_frac",
     "split_zone",
     "inside_ugb",
@@ -223,6 +237,28 @@ def ruling_for(layer: Layer | None, code: str | None) -> str | None:
         return None
     ruling = layer.zone_rulings.get(code)
     return None if ruling is None or ruling.outcome == "alias" else ruling.outcome
+
+
+def pocket_of(layer: Layer | None, code: str | None) -> ZoneRuling | None:
+    """The layer's ``pocket`` ruling on a map code, or None."""
+    if layer is None or code is None:
+        return None
+    ruling = layer.zone_rulings.get(code)
+    return ruling if ruling is not None and ruling.outcome == "pocket" else None
+
+
+def pocket_zone(
+    ruling: ZoneRuling, code: str, layers: dict[str, Layer], map_raw: Any = None
+) -> tuple[Layer | None, str | None]:
+    """``(the other layer, its block)`` a pocket lot screens under; the block is
+    None when that layer holds none for the code (or its map read nothing)."""
+    other = layers.get(ruling.of or "")
+    if other is None:
+        return None, None
+    wanted = ruling.pocket_code(code)
+    if wanted is None:
+        wanted = normalize_zone(map_raw, strip_lowercase_suffix=bool(other.ingest.get("strip_lowercase_suffix")))
+    return other, (other.holds(wanted) if wanted else None)
 
 
 def assign_majority_zone(lot_geoms: list, zone_geoms: list, zone_codes: list) -> tuple[list, list]:
@@ -529,15 +565,41 @@ def normalize(
     for row, flag in zip(lots, inside):
         row["inside_ugb"] = bool(flag)
 
+    # 5b. A pocket whose label names no district: the other layer's map says.
+    from_map: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in lots:
+        layer = layers.get(row["jurisdiction"]) if row["jurisdiction"] else None
+        code, zone = zone_for(layer, row["zone_raw"])
+        ruling = pocket_of(layer, code) if zone is None else None
+        if ruling is not None and ruling.zone == POCKET_ZONE_FROM_MAP and ruling.of:
+            from_map[ruling.of].append(row)
+    for other_id, members in sorted(from_map.items()):
+        datasets = pipeline.for_layer(other_id, Provides.zoning)
+        zpath = dataset_file(datasets[0].key) if datasets else None
+        if zpath is None or not zpath.is_file() or not datasets[0].zone_field:
+            say(f"{other_id}: no zoning map to read {len(members):,} pocket lots against")
+            continue
+        zgeoms, zcodes = load_zoning(zpath, datasets[0].zone_field)
+        read, share = assign_majority_zone([r["geom"] for r in members], zgeoms, zcodes)
+        for row, zr, zf in zip(members, read, share):
+            # The label says the lot is the other layer's; a code that covers
+            # less than half of it is the neighbour's polygon reaching across
+            # a misaligned line (Oregon City's R-8 on a "County" lot), not
+            # the other layer's district.
+            row["pocket_raw"] = _text(zr) if zf is not None and zf >= POCKET_MAP_SHARE else None
+        say(f"{other_id}: {len(members):,} pocket lots read against its own map ({datasets[0].key})")
+
     # 6. The zone the rules hold, the gate, the new codes and the ruled ones.
     new_zones: dict[str, Counter[str]] = defaultdict(Counter)
     ruled_zones: dict[str, dict[str, Counter[str]]] = defaultdict(lambda: defaultdict(Counter))
     gates: Counter[str] = Counter()
+    pockets: dict[str, Counter[str]] = defaultdict(Counter)
     for row in lots:
         layer = layers.get(row["jurisdiction"]) if row["jurisdiction"] else None
         code, zone = zone_for(layer, row["zone_raw"])
         ruling = ruling_for(layer, code) if zone is None else None
         row["zone"] = zone
+        row["rules_layer"] = None
         row["split_zone"] = bool(row["zone_frac"] is not None and row["zone_frac"] < SPLIT_ZONE_THRESHOLD)
         row["gate"] = gate_for(
             layer,
@@ -547,6 +609,21 @@ def normalize(
             zone=zone,
             ruling=ruling,
         )
+        pocket = pocket_of(layer, code) if row["gate"] == "ZONE_POCKET" else None
+        if pocket is not None:
+            other, held = pocket_zone(pocket, code, layers, row.get("pocket_raw"))
+            pockets[row["jurisdiction"]][f"{code} -> {pocket.of} {held or '(none held)'}"] += 1
+            if other is not None and held is not None:
+                row["zone"] = held
+                row["rules_layer"] = pocket.of
+                row["gate"] = gate_for(
+                    other,
+                    on=pipeline.enabled(pocket.of),
+                    inside_ugb=row["inside_ugb"],
+                    zone_raw=row["zone_raw"],
+                    zone=held,
+                )
+                ruling = None
         if row["gate"] == "ZONE_NOT_ENCODED" and code is not None:
             new_zones[row["jurisdiction"]][code] += 1
         elif ruling is not None and row["gate"] in RULED_GATES.values():
@@ -584,6 +661,7 @@ def normalize(
         "ruled_zones": {
             k: {o: dict(sorted(c.items())) for o, c in sorted(v.items())} for k, v in sorted(ruled_zones.items())
         },
+        "pockets": {k: dict(sorted(v.items())) for k, v in sorted(pockets.items())},
         "funnel": funnel,
         "seconds": round(time.monotonic() - started, 1),
     }
@@ -631,6 +709,11 @@ def describe(summary: dict[str, Any]) -> list[str]:
         for layer_id, by_outcome in summary["ruled_zones"].items():
             for outcome, codes in by_outcome.items():
                 out.append(f"- {layer_id} {outcome}: " + ", ".join(f"{c} ({n:,})" for c, n in codes.items()))
+    if summary.get("pockets"):
+        out.append("")
+        out.append("Pockets -- another layer's zoning on this map, screened under that layer:")
+        for layer_id, codes in summary["pockets"].items():
+            out.append(f"- {layer_id}: " + ", ".join(f"{c} ({n:,})" for c, n in codes.items()))
     out.append("")
     out.append(f"Split-zoned lots: {summary['split_zone']:,}; condo suspects kept: {summary['condo']['suspect']:,}.")
     return out

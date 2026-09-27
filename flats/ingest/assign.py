@@ -22,6 +22,9 @@ for each lot it cannot colour, why:
   before it reads a setback (:func:`flats.score.screen.screen`), so a
   measurement would have changed nothing; and quadfit's filter drops these
   lots before measuring them for the same reason;
+* a **pocket** lot (normalize's ``rules_layer``: another layer's zoning on
+  this layer's map) goes through the same two lines under that layer -- its
+  use gate, its layer id on the row -- and keeps its own jurisdiction;
 * a lot with no gate that quadfit still did not measure gets ``NOT_MEASURED``
   plus the step of quadfit's structural filter that dropped it
   (``s3_dropped.csv``: ``sliver_area``, ``too_narrow_20ft``,
@@ -136,7 +139,8 @@ def synthetic_row(lot: dict[str, Any], design: str, reason: str, step: str | Non
         "TLID": lot["tlid"],
         "jurisdiction": lot.get("jurisdiction"),
         "zone": lot.get("zone"),
-        "layer_id": lot.get("jurisdiction"),
+        # A pocket lot is screened under the layer whose zoning it carries.
+        "layer_id": lot.get("rules_layer") or lot.get("jurisdiction"),
         "design": design,
         "triage": "unknown",
         "if_signed": "unknown",
@@ -258,8 +262,13 @@ def assign(
     measured = {str(t).rstrip() for t in frame["TLID"]}
     say(f"bridge: {len(frame):,} rows, {len(measured):,} lots, designs {designs}")
 
-    columns = ["county", "tlid", "jurisdiction", "zone", "zone_raw", "area_sqft", "gate"]
-    lots = pd.read_parquet(normalized / "lots.parquet", columns=columns)
+    columns = ["county", "tlid", "jurisdiction", "zone", "zone_raw", "area_sqft", "gate", "rules_layer"]
+    import pyarrow.parquet as pq
+
+    present = set(pq.read_schema(normalized / "lots.parquet").names)
+    lots = pd.read_parquet(normalized / "lots.parquet", columns=[c for c in columns if c in present])
+    if "rules_layer" not in lots.columns:
+        lots["rules_layer"] = None
     lots = lots.astype(object).where(lots.notna(), None)
     lot_rows = lots.to_dict("records")
     by_tlid: dict[str, list[dict[str, Any]]] = {}
@@ -283,10 +292,11 @@ def assign(
             continue
         reason = row.get("gate") or NOT_MEASURED
         if use_gate is not None and reason == NOT_MEASURED and row.get("jurisdiction") and row.get("zone"):
-            answer = use_gate(str(row["jurisdiction"]), str(row["zone"]))
+            rules_layer = str(row.get("rules_layer") or row["jurisdiction"])
+            answer = use_gate(rules_layer, str(row["zone"]))
             if answer is not None:
                 by_reason[USE_PROHIBITED] += 1
-                prohibited_zones[f"{row['jurisdiction']}/{row['zone']}"] += 1
+                prohibited_zones[f"{rules_layer}/{row['zone']}"] += 1
                 for design in designs:
                     synthetic.append(prohibited_row(row, design, answer))
                 continue

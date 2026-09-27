@@ -324,6 +324,10 @@ class Reading(BaseModel):
 #: ``encode`` or ``conditional`` meanwhile. This ledger is for the codes that
 #: are not zones of this layer's code at all, that the model cannot hold, or
 #: that nobody has encoded yet.
+#: A pocket ruling's ``zone`` when the map's label names no district and the
+#: ``of`` layer's own zoning map says which one each lot is in.
+POCKET_ZONE_FROM_MAP = "map"
+
 ZONE_RULING_OUTCOMES: dict[str, str] = {
     "alias": "The map's spelling of a zone this layer holds",
     "pocket": "Another jurisdiction's zoning carried on this layer's map",
@@ -341,6 +345,14 @@ class ZoneRuling(BaseModel):
     is the argument, held to the same length as a cross-reference ruling,
     because a code closed with a tag and no reasoning tells the next reader
     less than an open row does.
+
+    ``zone`` is, for a ``pocket``, the code the lot screens under in the
+    ``of`` layer: absent when the map's spelling is the other layer's own
+    (``RRFF5`` is the county's ``RRFF5``), a code when the map prints a label
+    the other layer spells differently (Multnomah's ``UPAR-10`` is
+    Troutdale's ``LDR-1``), or :data:`POCKET_ZONE_FROM_MAP` when the label
+    names no district at all (Troutdale's ``NSA``, Oregon City's ``County``)
+    and the ``of`` layer's own zoning map has to be read for each lot.
     """
 
     model_config = ConfigDict(frozen=True)
@@ -348,6 +360,14 @@ class ZoneRuling(BaseModel):
     outcome: str
     note: str
     of: str | None = None
+    zone: str | None = None
+
+    def pocket_code(self, code: str) -> str | None:
+        """The code a pocket lot screens under in the ``of`` layer; None when
+        it has to be read off that layer's map, lot by lot."""
+        if self.zone == POCKET_ZONE_FROM_MAP:
+            return None
+        return self.zone or code
 
 
 class NeighbourRule(BaseModel):

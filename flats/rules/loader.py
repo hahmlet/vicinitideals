@@ -32,6 +32,7 @@ from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
+    POCKET_ZONE_FROM_MAP,
     ZONE_RULING_OUTCOMES,
     NeighbourRule,
     ZoneRuling,
@@ -1347,7 +1348,7 @@ def _parse_zone_rulings(
                 f"one of {', '.join(sorted(ZONE_RULING_OUTCOMES))}"
             )
             continue
-        extra = set(why) - {"outcome", "note", "of"}
+        extra = set(why) - {"outcome", "note", "of", "zone"}
         if extra:
             problems.append(
                 f"{where}.zone_rulings.{code}: unexpected {', '.join(sorted(extra))}"
@@ -1371,7 +1372,15 @@ def _parse_zone_rulings(
         if outcome == "pocket" and not of:
             problems.append(f"{where}.zone_rulings.{code}: a pocket says whose zoning it is (of: <layer id>)")
             continue
-        out[code] = ZoneRuling(outcome=outcome, note=" ".join(note.split()), of=of)
+        zone = why.get("zone")
+        zone = str(zone).strip() if zone is not None else None
+        if zone is not None and (outcome != "pocket" or not zone):
+            problems.append(
+                f"{where}.zone_rulings.{code}: only a pocket names the zone it screens under "
+                f"in the other layer (zone: <code> or {POCKET_ZONE_FROM_MAP})"
+            )
+            continue
+        out[code] = ZoneRuling(outcome=outcome, note=" ".join(note.split()), of=of, zone=zone)
     return out
 
 

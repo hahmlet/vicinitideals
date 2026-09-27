@@ -377,7 +377,7 @@ def test_a_snapshot_fed_run_exports_every_lot_as_a_candidate(tmp_path: Path) -> 
     assert facts["quadfit_jurisdiction"] == "portland" and facts["geometry_tier"] == "A"
     assert facts["assessor"] == {"land_value": 250000.0, "building_value": 180000.0, "total_value": 430000.0, "assessed_value": 310500.0, "year_built": 1948, "building_sqft": 1250.0, "sale_date": "20210615", "sale_price": 415000.0, "prop_code": "101", "state_class": "101", "land_use": "SFR"}
     assert facts["condo"] == {"verdict": "land", "reason": None}
-    assert facts["snapshot_zone"] == {"raw": "R5", "zone": "R5", "gate": None}
+    assert facts["snapshot_zone"] == {"raw": "R5", "zone": "R5", "gate": None, "of": None}
     b = lots[LOT_B]
     assert b["condo_verdict"] == "suspect" and json.loads(b["facts"])["condo"] == {"verdict": "suspect", "reason": "stacked"}
     assert json.loads(b["facts"])["assessor"]["total_value"] is None
@@ -391,13 +391,13 @@ def test_a_snapshot_fed_run_exports_every_lot_as_a_candidate(tmp_path: Path) -> 
     assert df["zone_frac"] == 0.97 and df["juris_city"] == "PO" and df["observed"] == {}
     assert "geometry_tier" not in df
     c = json.loads(lots[LOT_C]["facts"])
-    assert c["snapshot_zone"] == {"raw": "QQ9", "zone": None, "gate": "ZONE_NOT_ENCODED"}
+    assert c["snapshot_zone"] == {"raw": "QQ9", "zone": None, "gate": "ZONE_NOT_ENCODED", "of": None}
     # A lot in a city no layer holds is never blank: the map's city name rides the column.
     e = lots[LOT_E]
     assert (e["county"], e["jurisdiction"], e["zone"], e["site_address"]) == ("clackamas", "juris_city:canby", "", "14450 BAUMBACK RD")
     ef = json.loads(e["facts"])
     assert ef["unmeasured"] == {"reason": "JURISDICTION_NOT_ENCODED", "quadfit_step": None} and ef["juris_city"] == "CANBY"
-    assert ef["snapshot_zone"] == {"raw": None, "zone": None, "gate": "JURISDICTION_NOT_ENCODED"}
+    assert ef["snapshot_zone"] == {"raw": None, "zone": None, "gate": "JURISDICTION_NOT_ENCODED", "of": None}
 
     rows = _read(out / RESULTS_FILE)
     unknowns = [r for r in rows if r["tlid"] == LOT_D]
