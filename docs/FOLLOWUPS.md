@@ -146,9 +146,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    vintage (s4 2026-09-24 vs the base's), replayed identical on main and
    the branch; (vi) the `corner_lot` observed fact still uses
    `len(bearings) >= 2`, not the 45 deg test.
-   (FLATS's own envelope: DONE, item 12.) Also owed:
-   `steep_slope` from s5o's DEM percentile / Gresham's hillside overlay
-   (assumed False today, named on every lot it leans on). County-scale
+   (FLATS's own envelope: DONE, item 12.) (`steep_slope` struck
+   2026-09-27: no standard in the corpus is conditioned on it, so its
+   False assumption leans on no lot; the hillside rules ride the overlay
+   layers.) County-scale
    sizes from the four-stall county run (2026-09-18, `/root/bridge_county2`),
    on the 4,024 quadfit-green / FLATS-yellow lots (all `fit_ft`): (b) 3,507
    on the alley (2,976 seating four there), (a) 517 off their own lane, 268
@@ -416,10 +417,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ZERO front setback (above): a pod 10 ft back where the code asks
    nothing -- decide whether 0 is the drawing or a placeholder, then fix
    and bound.
-   Queued behind it, each to bound first: (a) s4 measures lot
-   width/depth along the LONGEST street (`cluster_bearings` orders by
-   length) -- in the shortest cities width and depth are swapped on most
-   corner lots, which moves `lot_width_ft` facts and every width gate; (b)
+   Queued behind it, each to bound first: (a) struck 2026-09-27 -- s4's
+   width/depth come from `lotdims.dimensions` + `pick`, which already takes
+   the narrowest front where the city fixes it and the pair that conforms
+   where the applicant chooses (2026-09-11), not `cluster_bearings`; (b)
    Portland 33.266.120.C.1.b: on a corner lot the court must sit behind the
    side-street building line and pave at most 20 % of the side-street
    setback -- the drawn lane is consistent by construction (court inside
