@@ -322,6 +322,74 @@ def test_a_ruled_code_is_counted_as_ruled_never_as_new(snapshot: Path, tmp_path:
     assert "- or/multnomah/portland pocket: QQ9 (1)" in text
 
 
+def _pocket(layers, **ruling: Any) -> dict:
+    """The real layers, with Portland ruling QQ9 a pocket of the county's zoning."""
+    from flats.rules.model import ZoneRuling
+
+    pdx = layers["or/multnomah/portland"]
+    note = "County zoning inside the city line; the county's code governs the lot until the city rezones it."
+    return {
+        **layers,
+        "or/multnomah/portland": pdx.model_copy(
+            update={"zone_rulings": {"QQ9": ZoneRuling(outcome="pocket", of="or/multnomah/_unincorporated", note=note, **ruling)}}
+        ),
+    }
+
+
+def test_a_pocket_is_screened_under_the_zone_its_ruling_names(snapshot: Path, tmp_path: Path, layers, pipeline):
+    """A pocket whose ruling names a block the other layer holds: the lot keeps
+    Portland as its jurisdiction and screens under the county's block; no
+    gate, nothing ruled, the summary lists it under ``pockets``."""
+    county = layers["or/multnomah/_unincorporated"]
+    held = next(iter(county.zones))
+    out = tmp_path / "named"
+    summary = nz.normalize(snapshot, out, layers=_pocket(layers, zone=held), pipeline=pipeline)
+    row = pd.read_parquet(out / "lots.parquet").set_index("tlid").loc["1N1E01AA  -00300"]
+    assert (row["jurisdiction"], row["rules_layer"], row["zone"], row["zone_raw"]) == (
+        "or/multnomah/portland", "or/multnomah/_unincorporated", held, "QQ9a"
+    )
+    assert pd.isna(row["gate"])
+    assert summary["ruled_zones"] == {} and "ZONE_POCKET" not in summary["by_gate"]
+    assert summary["pockets"] == {"or/multnomah/portland": {f"QQ9 -> or/multnomah/_unincorporated {held}": 1}}
+    assert "Pockets -- another layer's zoning on this map" in (out / "summary.md").read_text(encoding="utf-8")
+    # Every other lot is untouched: no rules layer of its own.
+    others = pd.read_parquet(out / "lots.parquet")
+    assert others["rules_layer"].notna().sum() == 1
+
+
+def test_a_pocket_with_no_district_in_its_label_reads_the_other_layers_map(snapshot: Path, tmp_path: Path, layers, pipeline):
+    """``zone: map``: the county's own map is read for the lot. A county
+    polygon covering the lot names its block; one reaching over less than half
+    of it (a misaligned neighbour) names nothing, and the lot stays a pocket."""
+    m_zone = next(iter(layers["or/multnomah/_unincorporated"].zones))
+    metro = snapshot / "rlis_zoning_metro.geojson"
+    base = json.loads(metro.read_text(encoding="utf-8"))["features"]
+    ruled = _pocket(layers, zone="map")
+
+    write(metro, [*base, feature("m4", square(400, 0), ZONE=m_zone)])
+    summary = nz.normalize(snapshot, tmp_path / "covered", layers=ruled, pipeline=pipeline)
+    row = pd.read_parquet(tmp_path / "covered" / "lots.parquet").set_index("tlid").loc["1N1E01AA  -00300"]
+    assert (row["rules_layer"], row["zone"]) == ("or/multnomah/_unincorporated", m_zone) and pd.isna(row["gate"])
+    assert summary["pockets"] == {"or/multnomah/portland": {f"QQ9 -> or/multnomah/_unincorporated {m_zone}": 1}}
+
+    write(metro, [*base, feature("m4", square(400, 0, w=40), ZONE=m_zone)])
+    summary = nz.normalize(snapshot, tmp_path / "sliver", layers=ruled, pipeline=pipeline)
+    row = pd.read_parquet(tmp_path / "sliver" / "lots.parquet").set_index("tlid").loc["1N1E01AA  -00300"]
+    assert pd.isna(row["rules_layer"]) and pd.isna(row["zone"]) and row["gate"] == "ZONE_POCKET"
+    assert summary["pockets"] == {"or/multnomah/portland": {"QQ9 -> or/multnomah/_unincorporated (none held)": 1}}
+    assert summary["ruled_zones"] == {"or/multnomah/portland": {"pocket": {"QQ9": 1}}}
+
+
+def test_a_pocket_takes_the_other_layers_gates(snapshot: Path, tmp_path: Path, layers, pipeline):
+    """A pocket of a layer switched off in the registry is switched off too
+    (the Lake Oswego codes on the Clackamas fabric wait with the city)."""
+    off = pipeline.model_copy(update={"jurisdictions": {**pipeline.jurisdictions, "or/multnomah/_unincorporated": False}})
+    held = next(iter(layers["or/multnomah/_unincorporated"].zones))
+    nz.normalize(snapshot, tmp_path / "off", layers=_pocket(layers, zone=held), pipeline=off)
+    row = pd.read_parquet(tmp_path / "off" / "lots.parquet").set_index("tlid").loc["1N1E01AA  -00300"]
+    assert row["gate"] == "JURISDICTION_OFF" and row["rules_layer"] == "or/multnomah/_unincorporated"
+
+
 def test_jurisdictions_from_the_real_layers(layers):
     j = nz.Jurisdictions.from_layers(layers)
     assert j.layer_for("PORTLAND", "multnomah") == "or/multnomah/portland"

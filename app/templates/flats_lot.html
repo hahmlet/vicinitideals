@@ -14,7 +14,7 @@
         <a href="/flats/lots{% if run %}?run={{ run.id }}&jurisdiction={{ lot.jurisdiction|urlencode }}{% endif %}">All lots</a> ·
         lot number <span class="col-mono">{{ lot.tlid }}</span> · {{ lot.county }} county ·
         <a href="/flats/{{ lot.jurisdiction }}">{{ lot.city }}</a> ·
-        zone {{ lot.zone or "—" }}{% if lot.zone_raw and lot.zone_raw != lot.zone %} (mapped as {{ lot.zone_raw }}){% endif %}
+        zone {{ lot.zone or "—" }}{% if lot.zone_raw and lot.zone_raw != lot.zone %} (mapped as {{ lot.zone_raw }}){% endif %}{% if lot.zoned_by %} <span id="lot-zoned-by">under {{ lot.zoned_by }} zoning</span>{% endif %}
         {% if lot.area %} · {{ "{:,.0f}".format(lot.area) }} sf{% endif %}
         {% if lat and lon %} · <a href="https://www.google.com/maps?q={{ '%.6f'|format(lat) }},{{ '%.6f'|format(lon) }}" target="_blank" rel="noopener">map</a>{% endif %}
       </div>

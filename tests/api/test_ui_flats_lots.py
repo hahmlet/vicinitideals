@@ -770,6 +770,36 @@ async def test_a_lot_in_a_city_no_layer_holds_names_the_city_and_says_why(
     assert "14450 BAUMBACK RD" in listing.text and "Canby (no rules encoded)" in listing.text
 
 
+async def test_a_pocket_lot_says_whose_zoning_it_is_under(client: AsyncClient, session: AsyncSession):
+    """Happy Valley's map prints the county's RRFF5 on 95 lots inside the city
+    line; they are screened under the county's rules, and the page says so
+    beside the zone -- the city link stays the city."""
+    await _login(client, session)
+    run = await _seed(session)
+    lot = FlatsLot(
+        tlid="23E07  00100", county="clackamas", jurisdiction="or/clackamas/happy-valley",
+        zone_raw="RRFF5", zone="RRFF5", site_address="15000 SE RURAL RD", area_sqft=217800.0,
+        geom=_box(7_700_000, 640_000, 400, 540), centroid="SRID=4326;POINT(-122.49 45.43)",
+        condo_verdict="land",
+        facts={
+            "source": "snapshot",
+            "unmeasured": {"reason": "USE_PROHIBITED", "quadfit_step": None},
+            "observed": {}, "condo": {"verdict": "land", "reason": None},
+            "snapshot_zone": {"raw": "RRFF5", "zone": "RRFF5", "gate": None, "of": "or/clackamas/_unincorporated"},
+        },
+        first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=run.snapshot_id,
+    )
+    session.add(lot)
+    await session.commit()
+
+    page = await client.get("/flats/lots/clackamas/23E07%20%2000100")
+
+    assert page.status_code == 200
+    zoned_by = page.text.split('id="lot-zoned-by"', 1)[1].split("</span>", 1)[0]
+    assert "under Clackamas" in zoned_by and "zoning" in zoned_by
+    assert 'href="/flats/or/clackamas/happy-valley"' in page.text
+
+
 async def test_a_lot_nobody_loaded_says_so(client: AsyncClient, session: AsyncSession):
     await _login(client, session)
     await _seed(session)

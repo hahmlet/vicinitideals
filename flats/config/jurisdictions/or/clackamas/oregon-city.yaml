@@ -2114,6 +2114,7 @@ zone_rulings:
   County:
     outcome: pocket
     of: or/clackamas/_unincorporated
+    zone: map
     note: >-
       The city's own zoning layer prints the word "County" on 14 lots inside
       the city limits -- houses on Holcomb Blvd, S Leroy Ln, S Rose Rd, S
@@ -2130,7 +2131,10 @@ zone_rulings:
       L3992). Until that rezoning is done the lot carries Clackamas County's
       zone, which the city's layer does not name; the county layer's own map
       does, and its block is the one that answers. A pocket, not a code: the
-      layer says WHOSE zone it is, not which.
+      layer says WHOSE zone it is, not which -- so the county's map is read
+      lot by lot, and a lot where no one county district covers half the
+      lot (most of the 14 on the 2026-09 fabric, which has a hole there or
+      only the city's polygons reaching over the line) stays a pocket.
 
 # Which of this city's zones are a "residential zone" for the mixed-use and
 # commercial chapters' "setbacks abutting a residential zone" (17.29.050.D

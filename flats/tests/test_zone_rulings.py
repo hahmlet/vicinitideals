@@ -25,7 +25,7 @@ import pytest
 from flats.ingest import assign as az
 from flats.ingest import normalize as nz
 from flats.rules.loader import RuleLoadError, load_rules
-from flats.rules.model import ZONE_RULING_OUTCOMES, ZoneRuling
+from flats.rules.model import POCKET_ZONE_FROM_MAP, ZONE_RULING_OUTCOMES, ZoneRuling
 
 NOTE = "One lot on the 2026-09 map carries the city's own casing of a code the rules hold."
 
@@ -87,6 +87,35 @@ def test_the_four_outcomes_and_a_parsed_ledger(tmp_path: Path) -> None:
     assert layer.holds("RRFF5") is None and layer.holds("HDR") is None and layer.holds("QQ9") is None
 
 
+def test_a_pocket_names_the_zone_it_screens_under_in_the_other_layer(tmp_path: Path) -> None:
+    """Absent: the map's own spelling. A code: the other layer's spelling of
+    the label. ``map``: the label names no district, the other layer's map
+    is read lot by lot (:meth:`ZoneRuling.pocket_code` answers None)."""
+    block = f"""zone_rulings:
+  RRFF5:
+    outcome: pocket
+    of: or/clackamas/_unincorporated
+    note: >-
+      {NOTE}
+  UPAR-10:
+    outcome: pocket
+    of: or/multnomah/troutdale
+    zone: LDR-1
+    note: >-
+      {NOTE}
+  NSA:
+    outcome: pocket
+    of: or/multnomah/_unincorporated
+    zone: map
+    note: >-
+      {NOTE}
+"""
+    rulings = load_rules(_corpus(tmp_path, block, R5), strict=True)["or/clackamas/somewhere"].zone_rulings
+    assert rulings["RRFF5"].zone is None and rulings["RRFF5"].pocket_code("RRFF5") == "RRFF5"
+    assert rulings["UPAR-10"].pocket_code("UPAR-10") == "LDR-1"
+    assert rulings["NSA"].zone == POCKET_ZONE_FROM_MAP and rulings["NSA"].pocket_code("NSA") is None
+
+
 @pytest.mark.parametrize(
     "block, complaint",
     [
@@ -97,6 +126,8 @@ def test_the_four_outcomes_and_a_parsed_ledger(tmp_path: Path) -> None:
         ("zone_rulings:\n  QQ:\n    outcome: forbidden\n    note: " + NOTE + "\n", "unknown outcome"),
         ("zone_rulings:\n  QQ:\n    outcome: to_read\n    cite: x\n    note: " + NOTE + "\n", "unexpected cite"),
         ("zone_rulings:\n  QQ: just a string\n", "an outcome, a note"),
+        ("zone_rulings:\n  QQ:\n    outcome: to_read\n    zone: R5\n    note: " + NOTE + "\n", "only a pocket names the zone"),
+        ("zone_rulings:\n  QQ:\n    outcome: pocket\n    of: or/x\n    zone: ''\n    note: " + NOTE + "\n", "only a pocket names the zone"),
     ],
 )
 def test_a_ruling_that_does_not_hold_together_is_refused(tmp_path: Path, block: str, complaint: str) -> None:
@@ -262,6 +293,41 @@ def test_assign_answers_a_forbidden_zone_without_a_measurement(tmp_path: Path) -
     assert "USE_PROHIBITED, by zone (red at the use gate, no measurement needed): or/a/C3 1" in text
     assert "Zone codes ruled:" in text and "- or/a pocket: RRFF5 (1)" in text
     assert "nobody has ruled on" not in text
+
+
+def test_a_pocket_lot_is_answered_under_the_layer_whose_zoning_it_carries(tmp_path: Path) -> None:
+    """Normalize resolved the pocket (``rules_layer``): the use gate is asked
+    of the other layer, the row names that layer, the lot keeps its own
+    jurisdiction -- and a pocket the other layer permits waits for a
+    measurement like any lot there."""
+    bridge = tmp_path / "bridge"
+    bridge.mkdir()
+    pd.DataFrame([{**{c: None for c in az.ROW_COLUMNS}, "TLID": "M1", "design": "d1", "triage": "unknown", "if_signed": "green"}]).to_parquet(
+        bridge / "lots.parquet", index=False
+    )
+    (bridge / "meta.json").write_text(json.dumps({}), encoding="utf-8")
+    normalized = tmp_path / "normalized"
+    normalized.mkdir()
+    pd.DataFrame(
+        [
+            {"county": "clackamas", "tlid": "M1", "jurisdiction": "or/a", "zone": "R5", "zone_raw": "R5", "area_sqft": 5000.0, "gate": None, "rules_layer": None},
+            {"county": "clackamas", "tlid": "P1", "jurisdiction": "or/a", "zone": "RRFF5", "zone_raw": "RRFF5", "area_sqft": 5000.0, "gate": None, "rules_layer": "or/b"},
+            {"county": "clackamas", "tlid": "P2", "jurisdiction": "or/a", "zone": "R5", "zone_raw": "UPR5", "area_sqft": 5000.0, "gate": None, "rules_layer": "or/b"},
+            {"county": "clackamas", "tlid": "O1", "jurisdiction": "or/a", "zone": "RRFF5", "zone_raw": "RRFF5", "area_sqft": 5000.0, "gate": None, "rules_layer": None},
+        ]
+    ).to_parquet(normalized / "lots.parquet", index=False)
+    rules = _Rules({("or/b", "RRFF5"): _Resolution(False, trusted=True), ("or/b", "R5"): _Resolution(True, trusted=True)})
+    meta = az.assign(normalized, bridge, tmp_path / "out", use_gate=az.use_gate_for(rules, _Relief(set())))
+
+    frame = pd.read_parquet(tmp_path / "out" / "lots.parquet").set_index("TLID")
+    red = frame.loc["P1"]
+    assert (red["triage"], red["if_signed"], red["if_signed_reasons"]) == ("red", "red", "USE_PROHIBITED")
+    assert (red["jurisdiction"], red["layer_id"], red["zone"]) == ("or/a", "or/b", "RRFF5")
+    waits = frame.loc["P2"]
+    assert (waits["if_signed"], waits["reasons"], waits["layer_id"]) == ("unknown", "NOT_MEASURED,quadfit:unknown", "or/b")
+    # The same code on a lot that is not a pocket is its own layer's question.
+    assert frame.loc["O1"]["layer_id"] == "or/a" and frame.loc["O1"]["reasons"] == "NOT_MEASURED,quadfit:unknown"
+    assert meta["assign"]["prohibited_by_zone"] == {"or/b/RRFF5": 1}
 
 
 def test_without_a_use_gate_the_stage_is_the_pure_join(tmp_path: Path) -> None:

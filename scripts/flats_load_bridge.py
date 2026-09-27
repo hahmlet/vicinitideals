@@ -648,6 +648,8 @@ def export(
                     "raw": _clean(nr.get("zone_raw")),
                     "zone": _clean(nr.get("zone")),
                     "gate": _clean(nr.get("gate")),
+                    # A pocket: the layer whose zoning the lot carries.
+                    "of": _clean(nr.get("rules_layer")),
                 }
             county_of[tlid] = county
             counties[county] += 1

@@ -2919,6 +2919,9 @@ def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, A
         "city": _city_label(lot.jurisdiction),
         "zone": lot.zone,
         "zone_raw": lot.zone_raw,
+        # A pocket: another jurisdiction's zoning inside this one's line,
+        # screened under that jurisdiction's rules (flats.ingest.normalize).
+        "zoned_by": _city_label(of) if (of := (facts.get("snapshot_zone") or {}).get("of")) else None,
         "address": lot.site_address or "",
         "area": float(lot.area_sqft) if lot.area_sqft is not None else None,
         "verdict": best_verdict,

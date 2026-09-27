@@ -1819,6 +1819,7 @@ zone_rulings:
   NSA:
     outcome: pocket
     of: or/multnomah/_unincorporated
+    zone: map
     note: >-
       National Scenic Area, 64 lots inside the city limits along the Sandy
       River and the Historic Columbia River Highway. TDC 3.020 lists it under
@@ -1833,7 +1834,10 @@ zone_rulings:
       city's layer prints the fact of county authority, not the county's
       code; the county's map does, and MCC 38's residential districts (GGR,
       GSR: one single-family dwelling per parcel) refuse the building where
-      they apply.
+      they apply. So the lot is screened under the county's block for the
+      code the county's map (Metro's fabric, "Multnomah Co.") prints on it --
+      GGR2 on most, GGC and GSO on a dozen, which the county layer holds no
+      block for and which stay pockets.
 
 # Which of this city's districts are "a non-residential zoning district" and
 # which "a residential zoning district" for the mixed-use chapter's setback
