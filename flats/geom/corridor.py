@@ -37,8 +37,8 @@ setback stretches between 50 and 60 ft that a 50 ft reach called off the
 corridor, each a false GREEN on the 10 ft setback. Asking which street the
 line abuts is what separates the wide street from the next block: the next
 block's line abuts its own street first. Without a street network (a
-snapshot with no ``rlis_streets``) the test falls back to the drawn line
-within :data:`REACH_FT`.
+snapshot with no ``rlis_streets``), or where no centreline runs beside the
+line, the test falls back to the drawn line within :data:`REACH_FT`.
 
 **Per line, answered per lot.** Both rules are about one street lot line,
 and the rule layer holds a lot-level fact. The lot answers True when ANY of
@@ -72,9 +72,12 @@ STREET_CLASS = "F"
 #: the corridor's drawn line is on it -- quadfit's ``street_threshold_ft``.
 REACH_FT = 50.0
 
-#: How far out from a street lot line to look for the street it abuts: a
-#: half right-of-way, generously -- Barbur's is wider than most.
-FRONT_REACH_FT = 120.0
+#: How far out from a street lot line to look for the street it abuts --
+#: s4's own reach for calling a lot line a street line (50 ft to a
+#: centreline), with slack for asking at points along the line rather than
+#: of the whole line. The first cut looked 120 ft out and found Division and
+#: Belmont 105-118 ft beyond lot lines that abut no street there at all.
+FRONT_REACH_FT = 60.0
 
 #: How far a corridor's drawn line may sit from the lot line and still be
 #: the street the line abuts, once the street is named. Wide enough for
@@ -265,7 +268,9 @@ def _on_at(point: Any, own: float, cmap: CorridorMap, near: list[int]) -> bool:
         return any(_abreast(corridor.lines[i], point, own, REACH_FT) for i in near)
     s = _fronted(point, own, cmap.streets)
     if s is None:
-        return False
+        # No centreline beside the line here (a curve, a gap in the network,
+        # a transit-centre loop): the drawn line decides, as with no network.
+        return any(_abreast(corridor.lines[i], point, own, REACH_FT) for i in near)
     street, name = cmap.streets.lines[s], cmap.streets.names[s]
     foot = street.interpolate(street.project(point))
     for i in near:

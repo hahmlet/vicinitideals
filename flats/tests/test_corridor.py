@@ -230,6 +230,15 @@ def test_a_centreline_on_the_drawn_line_is_the_corridor_whatever_its_name() -> N
     net = streets((ramp, "SW CAPITOL HWY-BARBUR BLVD RAMP"))
     on = CorridorMap.from_lines("civic_corridor", [PDX], [drawn], ["SW BARBUR BLVD"], net)
     assert on_corridor(FRONT, on)
-    # With no centreline beside it the line abuts nothing the network names.
-    lost = CorridorMap.from_lines("civic_corridor", [PDX], [drawn], ["SW BARBUR BLVD"], streets())
-    assert not on_corridor(FRONT, lost)
+    # With no centreline beside it, the drawn line decides as with no network.
+    bare = CorridorMap.from_lines("civic_corridor", [PDX], [drawn], ["SW BARBUR BLVD"], streets())
+    assert on_corridor(FRONT, bare)
+
+
+def test_a_street_further_out_than_s4_reaches_is_not_the_one_the_line_abuts() -> None:
+    # Belmont's centreline and drawn line both 110 ft out, nothing nearer:
+    # the lot line abuts no street there, so it is not on Belmont.
+    drawn = LineString([(X0 - 500, Y0 - 110), (X0 + 500, Y0 - 110)])
+    net = streets((drawn, "SE BELMONT ST"))
+    off = CorridorMap.from_lines("civic_corridor", [PDX], [drawn], ["SE BELMONT ST"], net)
+    assert not on_corridor(FRONT, off)
