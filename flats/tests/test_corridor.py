@@ -19,9 +19,11 @@ from flats.geom.corridor import (
     CORRIDOR_FACTS,
     REACH_FT,
     CorridorMap,
+    Lines,
     load_maps,
     observed_corridors,
     on_corridor,
+    street_name,
 )
 from flats.ingest.quadfit import OBSERVABLE, lot_from_row, observed_facts
 from flats.rules.conditions import CONDITIONS
@@ -108,7 +110,23 @@ def test_load_maps_reads_the_snapshot_and_skips_what_is_missing(tmp_path: Path) 
     maps = load_maps(tmp_path)
     assert [m.condition for m in maps] == ["civic_corridor_setback"]
     assert maps[0].covers(PDX) and not maps[0].covers("or/multnomah/gresham")
+    assert maps[0].streets is None
     assert on_corridor(FRONT, maps[0])
+    # With the snapshot's streets: only those near a corridor are kept.
+    far = LineString([(X0 + 90_000, Y0), (X0 + 91_000, Y0)])
+    net = {
+        "type": "FeatureCollection",
+        "features": [
+            {"type": "Feature", "properties": {"PREFIX": "SE", "STREETNAME": "DIVISION", "FTYPE": "ST"},
+             "geometry": mapping(ALONG)},
+            {"type": "Feature", "properties": {"STREETNAME": "ELSEWHERE"}, "geometry": mapping(far)},
+        ],
+    }
+    (tmp_path / "rlis_streets.geojson").write_text(json.dumps(net), encoding="utf-8")
+    (with_streets,) = load_maps(tmp_path)
+    assert with_streets.streets is not None
+    assert with_streets.streets.names == ("SE DIVISION ST",)
+    assert on_corridor(FRONT, with_streets)
 
 
 def _row(**over: object) -> dict[str, object]:
@@ -167,3 +185,51 @@ def test_the_ten_foot_setback_follows_map_130_1_not_map_120_1(pdx_rules, zone: s
     assert front() == 0
     assert front("civic_corridor") == 0
     assert front("civic_corridor_setback") == 10
+
+
+# --- with the street network: which street does the line abut? --------------
+
+
+def streets(*named: tuple[LineString, str]) -> Lines:
+    return Lines.build([g for g, _ in named], [n for _, n in named])
+
+
+def test_street_names_are_spelled_one_way() -> None:
+    assert street_name("SE 122nd AVENUE - CIVIC CORRIDOR") == "SE 122ND AVE"
+    assert street_name("SW BARBUR BLVD- CIVIC CORRIDOR") == "SW BARBUR BLVD"
+    assert street_name("SE  DIVISION ST ") == "SE DIVISION ST"
+    assert street_name(None) == ""
+
+
+def test_a_wide_street_is_the_corridor_when_the_line_abuts_it_by_name() -> None:
+    # Barbur: the corridor's line drawn 90 ft out, past a 50 ft reach; the
+    # near carriageway's centreline 40 ft out carries the corridor's name.
+    drawn = LineString([(X0 - 500, Y0 - 90), (X0 + 500, Y0 - 90)])
+    near_lane = LineString([(X0 - 500, Y0 - 40), (X0 + 500, Y0 - 40)])
+    net = streets((near_lane, "SW BARBUR BLVD"))
+    on = CorridorMap.from_lines("civic_corridor_setback", [PDX], [drawn], ["SW BARBUR BLVD- CIVIC CORRIDOR"], net)
+    assert on_corridor(FRONT, on)
+    # The same geometry without the network: the fallback misses it.
+    assert not on_corridor(FRONT, cmap(drawn))
+
+
+def test_the_next_block_abuts_its_own_street_first() -> None:
+    # The lot line is 130 ft from Division's drawn line, but the street 30 ft
+    # out is SE Clinton: the lot is a block back.
+    drawn = LineString([(X0 - 500, Y0 - 130), (X0 + 500, Y0 - 130)])
+    clinton = LineString([(X0 - 500, Y0 - 30), (X0 + 500, Y0 - 30)])
+    division = LineString([(X0 - 500, Y0 - 130), (X0 + 500, Y0 - 130)])
+    net = streets((clinton, "SE CLINTON ST"), (division, "SE DIVISION ST"))
+    off = CorridorMap.from_lines("civic_corridor_setback", [PDX], [drawn], ["SE DIVISION ST - CIVIC CORRIDOR"], net)
+    assert not on_corridor(FRONT, off)
+
+
+def test_a_centreline_on_the_drawn_line_is_the_corridor_whatever_its_name() -> None:
+    drawn = LineString([(X0 - 500, Y0 - 32), (X0 + 500, Y0 - 32)])
+    ramp = LineString([(X0 - 500, Y0 - 30), (X0 + 500, Y0 - 30)])
+    net = streets((ramp, "SW CAPITOL HWY-BARBUR BLVD RAMP"))
+    on = CorridorMap.from_lines("civic_corridor", [PDX], [drawn], ["SW BARBUR BLVD"], net)
+    assert on_corridor(FRONT, on)
+    # With no centreline beside it the line abuts nothing the network names.
+    lost = CorridorMap.from_lines("civic_corridor", [PDX], [drawn], ["SW BARBUR BLVD"], streets())
+    assert not on_corridor(FRONT, lost)

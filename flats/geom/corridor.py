@@ -19,13 +19,26 @@ parcel record, and the two are different maps:
 **What "adjacent" is.** 33.910 does not define it; it defines a street lot
 line ("a lot line, or segment of a lot line, that abuts a street ... can
 include front lot lines and side lot lines"). The corridor maps draw the
-street, so a street lot line is adjacent to a corridor when it runs along the
-corridor's line across the right-of-way: most of the line within
-:data:`REACH_FT` of the corridor (the same reach quadfit's s4 uses to call a
-lot line a street line at all) and parallel to it within
-:data:`PARALLEL_TOL_DEG`. The parallel test is what keeps the side-street
-line of a corner lot, which also touches the corridor's line at the corner,
-from counting.
+street, so a street lot line is adjacent to a corridor when the street it
+abuts IS the corridor. Asked at points along the line: the street it abuts
+is the nearest parallel RLIS centreline within :data:`FRONT_REACH_FT`; that
+street is the corridor when a corridor line runs abreast of the point
+within :data:`CORRIDOR_REACH_FT` and either carries the same street name or
+runs within :data:`COINCIDE_FT` of that centreline. Most of the line's
+points have to agree (:data:`MIN_SHARE`). The parallel test keeps the
+side-street line of a corner lot from counting.
+
+A fixed distance from the corridor's drawn line does not work, and the
+first cut used one: a lot line on SE Division sits 25-55 ft from the drawn
+line, one on SW Barbur -- a divided highway -- up to 100 ft, and the lots
+one block back start not much further out. The bound on Portland's
+commercial and RM2 lots (2026-09-27) found 49 street lines on the five
+setback stretches between 50 and 60 ft that a 50 ft reach called off the
+corridor, each a false GREEN on the 10 ft setback. Asking which street the
+line abuts is what separates the wide street from the next block: the next
+block's line abuts its own street first. Without a street network (a
+snapshot with no ``rlis_streets``) the test falls back to the drawn line
+within :data:`REACH_FT`.
 
 **Per line, answered per lot.** Both rules are about one street lot line,
 and the rule layer holds a lot-level fact. The lot answers True when ANY of
@@ -45,6 +58,7 @@ with no traced edges (quadfit tier ``D``) is left unasked as well.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Sequence
@@ -54,12 +68,24 @@ from flats.geom.edges import PARALLEL_TOL_DEG, bearing_deg, bearing_delta
 #: s4's class letter for a street edge.
 STREET_CLASS = "F"
 
-#: How far a street lot line may sit from the corridor's drawn line and still
-#: be on it -- quadfit's ``street_threshold_ft`` (rules.yaml ``defaults``),
-#: the reach within which s4 calls a lot line a street line at all.
+#: The fallback with no street network: a street lot line within this of
+#: the corridor's drawn line is on it -- quadfit's ``street_threshold_ft``.
 REACH_FT = 50.0
 
-#: The share of a street lot line's samples that have to be within reach.
+#: How far out from a street lot line to look for the street it abuts: a
+#: half right-of-way, generously -- Barbur's is wider than most.
+FRONT_REACH_FT = 120.0
+
+#: How far a corridor's drawn line may sit from the lot line and still be
+#: the street the line abuts, once the street is named. Wide enough for
+#: Barbur's divided lanes; the name or the coincidence test does the rest.
+CORRIDOR_REACH_FT = 150.0
+
+#: A street centreline within this of the corridor's drawn line is the
+#: corridor, whatever it is called (ramps, couplets, a renamed segment).
+COINCIDE_FT = 30.0
+
+#: The share of a street lot line's sample points that have to agree.
 #: Half: a line the corridor's drawn end stops part way along still fronts it.
 MIN_SHARE = 0.5
 
@@ -72,37 +98,91 @@ CORRIDOR_MAPS: dict[str, str] = {
     "corridors_pdx": "civic_corridor",
 }
 
+#: The street network the lot lines are read against.
+STREETS_KEY = "rlis_streets"
+
+#: Only streets this near a corridor are kept in memory.
+_STREET_KEEP_FT = CORRIDOR_REACH_FT + FRONT_REACH_FT
+
 #: The facts, in the order they are reported.
 CORRIDOR_FACTS: tuple[str, ...] = tuple(sorted(set(CORRIDOR_MAPS.values())))
+
+_WORDS = {"AVENUE": "AVE", "STREET": "ST", "BOULEVARD": "BLVD", "ROAD": "RD", "DRIVE": "DR"}
+
+
+def street_name(name: object) -> str:
+    """A street name spelled one way: upper case, the map's " - CIVIC CORRIDOR"
+    tag dropped, long street types shortened. ``""`` for no name."""
+    text = str(name or "").upper()
+    text = re.split(r"\s*-\s*CIVIC CORRIDOR", text)[0]
+    return " ".join(_WORDS.get(w, w) for w in text.split())
+
+
+@dataclass(frozen=True)
+class Lines:
+    """Named polylines and their index."""
+
+    lines: tuple[Any, ...]
+    names: tuple[str, ...]
+    tree: Any
+
+    @classmethod
+    def build(cls, lines: Iterable[Any], names: Iterable[object] | None = None) -> Lines:
+        from shapely.strtree import STRtree
+
+        geoms = list(lines)
+        labels = list(names) if names is not None else [""] * len(geoms)
+        kept = [(g, street_name(n)) for g, n in zip(geoms, labels) if g is not None and not g.is_empty]
+        return cls(tuple(g for g, _ in kept), tuple(n for _, n in kept), STRtree([g for g, _ in kept]))
+
+    def near(self, geom: Any, distance: float) -> list[int]:
+        return [int(i) for i in self.tree.query(geom, predicate="dwithin", distance=distance)]
 
 
 @dataclass(frozen=True)
 class CorridorMap:
-    """One corridor map: the condition it answers, where, and its lines."""
+    """One corridor map: the condition it answers, where, its lines, and the
+    street network its lot lines are read against (``None``: the fallback)."""
 
     condition: str
     serves: tuple[str, ...]
-    lines: tuple[Any, ...]
-    tree: Any
+    corridor: Lines
+    streets: Lines | None = None
 
     def covers(self, layer_id: str | None) -> bool:
         return bool(layer_id) and any(layer_id == s or layer_id.startswith(f"{s}/") for s in self.serves)
 
     @classmethod
-    def from_lines(cls, condition: str, serves: Iterable[str], lines: Iterable[Any]) -> CorridorMap:
-        from shapely.strtree import STRtree
+    def from_lines(
+        cls,
+        condition: str,
+        serves: Iterable[str],
+        lines: Iterable[Any],
+        names: Iterable[object] | None = None,
+        streets: Lines | None = None,
+    ) -> CorridorMap:
+        return cls(condition, tuple(serves), Lines.build(lines, names), streets)
 
-        kept = tuple(g for g in lines if g is not None and not g.is_empty)
-        return cls(condition, tuple(serves), kept, STRtree(list(kept)))
+
+def _dataset_path(sources: Path, manifest: dict[str, Any], key: str) -> Path:
+    entry = (manifest.get("datasets") or {}).get(key) or {}
+    return sources / str(entry.get("file") or f"{key}.geojson")
+
+
+def _name_of(props: dict[str, Any]) -> str:
+    """A corridor feature's street name (the two maps spell the field two ways)."""
+    return str(props.get("StreetName") or props.get("STREETNAME") or "")
 
 
 def load_maps(sources: Path, pipeline: Any | None = None) -> tuple[CorridorMap, ...]:
     """Every corridor map the snapshot at ``sources`` holds, per the registry.
 
     A dataset missing from the snapshot is skipped: its condition stays
-    unasked, as it was before the map was acquired.
+    unasked, as it was before the map was acquired. The snapshot's RLIS
+    streets near any corridor are loaded once and shared.
     """
     from shapely.geometry import shape
+    from shapely.ops import unary_union
 
     from flats.ingest.delta import iter_features
     from flats.ingest.sources import load_pipeline
@@ -110,22 +190,41 @@ def load_maps(sources: Path, pipeline: Any | None = None) -> tuple[CorridorMap, 
     pipeline = pipeline or load_pipeline()
     manifest_path = sources / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.is_file() else {}
-    out: list[CorridorMap] = []
+    found: list[tuple[str, tuple[str, ...], list[Any], list[str]]] = []
     for key, condition in CORRIDOR_MAPS.items():
         ds = pipeline.datasets.get(key)
-        if ds is None:
+        path = _dataset_path(sources, manifest, key)
+        if ds is None or not path.is_file():
             continue
-        entry = (manifest.get("datasets") or {}).get(key) or {}
-        path = sources / str(entry.get("file") or f"{key}.geojson")
-        if not path.is_file():
-            continue
-        lines = [shape(f["geometry"]) for f in iter_features(path) if f.get("geometry")]
-        out.append(CorridorMap.from_lines(condition, ds.serves, lines))
-    return tuple(out)
+        feats = [f for f in iter_features(path) if f.get("geometry")]
+        geoms = [shape(f["geometry"]) for f in feats]
+        names = [_name_of(f.get("properties") or {}) for f in feats]
+        found.append((condition, tuple(ds.serves), geoms, names))
+    if not found:
+        return ()
+    streets: Lines | None = None
+    path = _dataset_path(sources, manifest, STREETS_KEY)
+    if path.is_file():
+        zone = unary_union([g for _, _, geoms, _ in found for g in geoms]).buffer(_STREET_KEEP_FT)
+        kept: list[Any] = []
+        labels: list[str] = []
+        for f in iter_features(path):
+            if not f.get("geometry"):
+                continue
+            g = shape(f["geometry"])
+            if not g.intersects(zone):
+                continue
+            p = f.get("properties") or {}
+            kept.append(g)
+            labels.append(" ".join(str(p.get(k) or "") for k in ("PREFIX", "STREETNAME", "FTYPE")))
+        streets = Lines.build(kept, labels)
+    return tuple(
+        CorridorMap.from_lines(c, serves, geoms, names, streets) for c, serves, geoms, names in found
+    )
 
 
 def _along(line: Any, point: Any) -> float:
-    """The corridor's bearing where it passes nearest ``point``."""
+    """A line's bearing where it passes nearest ``point``."""
     d = line.project(point)
     a = line.interpolate(max(0.0, d - 5.0))
     b = line.interpolate(min(line.length, d + 5.0))
@@ -134,26 +233,56 @@ def _along(line: Any, point: Any) -> float:
     return bearing_deg(a.x, a.y, b.x, b.y)
 
 
-def _abreast(line: Any, point: Any, own: float) -> bool:
-    """Whether ``point`` sits across the street from ``line`` and parallel to it.
+def _abreast(line: Any, point: Any, own: float, reach: float) -> bool:
+    """Whether ``point`` sits beside ``line``, within ``reach`` and parallel.
 
-    Within :data:`REACH_FT`, with its nearest point strictly inside the line
-    rather than at a drawn end -- a point past the end is not beside it --
-    and the line's bearing there within :data:`PARALLEL_TOL_DEG` of ``own``.
+    The nearest point has to be strictly inside the line rather than at a
+    drawn end -- a point past the end is not beside it -- and the line's
+    bearing there within :data:`PARALLEL_TOL_DEG` of ``own``.
     """
     d = line.project(point)
     if d <= 0.0 or d >= line.length:
         return False
-    return line.distance(point) <= REACH_FT and bearing_delta(own, _along(line, point)) <= PARALLEL_TOL_DEG
+    return line.distance(point) <= reach and bearing_delta(own, _along(line, point)) <= PARALLEL_TOL_DEG
+
+
+def _fronted(point: Any, own: float, streets: Lines) -> int | None:
+    """The street a lot line abuts at ``point``: the nearest parallel centreline."""
+    best: tuple[float, int] | None = None
+    for i in streets.near(point, FRONT_REACH_FT):
+        line = streets.lines[i]
+        if _abreast(line, point, own, FRONT_REACH_FT):
+            d = line.distance(point)
+            if best is None or d < best[0]:
+                best = (d, i)
+    return None if best is None else best[1]
+
+
+def _on_at(point: Any, own: float, cmap: CorridorMap, near: list[int]) -> bool:
+    """Whether the street a lot line abuts at ``point`` is the corridor."""
+    corridor = cmap.corridor
+    if cmap.streets is None:
+        return any(_abreast(corridor.lines[i], point, own, REACH_FT) for i in near)
+    s = _fronted(point, own, cmap.streets)
+    if s is None:
+        return False
+    street, name = cmap.streets.lines[s], cmap.streets.names[s]
+    foot = street.interpolate(street.project(point))
+    for i in near:
+        line = corridor.lines[i]
+        if not _abreast(line, point, own, CORRIDOR_REACH_FT):
+            continue
+        if (name and name == corridor.names[i]) or line.distance(foot) <= COINCIDE_FT:
+            return True
+    return False
 
 
 def on_corridor(edge: Sequence[float], cmap: CorridorMap) -> bool:
-    """Whether one street lot line ``(x1, y1, x2, y2)`` runs along a corridor.
+    """Whether one street lot line ``(x1, y1, x2, y2)`` abuts a corridor.
 
-    At least :data:`MIN_SHARE` of the line's sample points have to sit
-    abreast of some corridor line. A sample may be abreast of a different
-    line than its neighbour: a corridor is drawn as many segments, and a lot
-    line can span the join.
+    At least :data:`MIN_SHARE` of the line's sample points have to agree. A
+    sample may agree with a different corridor line than its neighbour: a
+    corridor is drawn as many segments, and a lot line can span the join.
     """
     from shapely.geometry import LineString, Point
 
@@ -161,14 +290,15 @@ def on_corridor(edge: Sequence[float], cmap: CorridorMap) -> bool:
     seg = LineString([(x1, y1), (x2, y2)])
     if seg.length <= 0:
         return False
-    near = [cmap.lines[int(i)] for i in cmap.tree.query(seg, predicate="dwithin", distance=REACH_FT)]
+    reach = REACH_FT if cmap.streets is None else CORRIDOR_REACH_FT
+    near = cmap.corridor.near(seg, reach)
     if not near:
         return False
     own = bearing_deg(x1, y1, x2, y2)
     hits = 0
     for k in range(1, SAMPLES + 1):
         p = Point(x1 + (x2 - x1) * k / (SAMPLES + 1), y1 + (y2 - y1) * k / (SAMPLES + 1))
-        if any(_abreast(line, p, own) for line in near):
+        if _on_at(p, own, cmap, near):
             hits += 1
     return hits / SAMPLES >= MIN_SHARE
 
