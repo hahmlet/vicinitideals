@@ -140,6 +140,29 @@
           {% endif %}
         </tbody>
       </table>
+      {% if r.plan %}
+      {% set p = r.plan %}
+      <div class="fit-plan" id="plan-{{ r.design|replace('@', '-') }}" style="margin-top:10px">
+        <svg width="{{ p.width }}" height="{{ p.height }}" viewBox="0 0 {{ p.width }} {{ p.height }}"
+             style="display:block;border:1px solid #d5dbe3;background:#fff" role="img" aria-label="where the building and parking stand">
+          {% for pts in p.lot %}<polygon class="plan-lot" points="{{ pts }}" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"></polygon>{% endfor %}
+          {% for pts in p.envelope %}<polygon class="plan-envelope" points="{{ pts }}" fill="#e8f0fe" stroke="#93c5fd" stroke-width="1" stroke-dasharray="3 2"></polygon>{% endfor %}
+          {% for pts in p.court %}<polygon class="plan-court" points="{{ pts }}" fill="#fde68a" fill-opacity="0.7" stroke="#b45309" stroke-width="1"></polygon>{% endfor %}
+          {% for pts in p.lane %}<polygon class="plan-lane" points="{{ pts }}" fill="#e5e7eb" stroke="#6b7280" stroke-width="1"></polygon>{% endfor %}
+          {% for pts in p.room %}<polygon class="plan-room" points="{{ pts }}" fill="none" stroke="{{ '#16a34a' if p.fits else '#dc2626' }}" stroke-width="1.5" stroke-dasharray="5 3"></polygon>{% endfor %}
+          {% for pts in p.building %}<polygon class="plan-building" points="{{ pts }}" fill="#2563EB" fill-opacity="0.85" stroke="#1e3a8a" stroke-width="1"></polygon>{% endfor %}
+          <text x="6" y="14" font-size="10" fill="#64748b">N ↑</text>
+        </svg>
+        <div class="muted" style="font-size:11px;margin-top:4px;max-width:260px">
+          <span style="color:#2563EB">■</span> building
+          · <span style="color:#6b7280">■</span> driveway
+          · <span style="color:#b45309">■</span> parking
+          · <span style="color:#93c5fd">▭</span> where the rules let it stand.
+          {% if p.fits %}<span class="plan-fits">The dashed green box is room the screen found for all of it.</span>{% else %}<span class="plan-short">The dashed red box is the most room the lot has at this width; the parking runs past it.</span>{% endif %}
+          One way it could stand, not a site plan.
+        </div>
+      </div>
+      {% endif %}
       {% endif %}
     </div>
     {% endfor %}

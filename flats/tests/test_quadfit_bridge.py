@@ -817,3 +817,33 @@ def test_a_street_that_bends_is_not_a_corner(corpus, policies) -> None:
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert s.front_deg is None
     assert row_for(s)["side_street_lane"] is False
+
+
+# --- the drawing (FOLLOWUPS 5) -------------------------------------------------
+
+
+def test_the_winner_is_drawn_on_the_lot_with_the_building_at_the_street(corpus, policies) -> None:
+    # Walled in by commercial lots, CM2 owes no yard: the 50 x 100 lot is the
+    # envelope, the street along its south edge.
+    lot = lot_from_row(cut_row(zone="CM2", neighbour_zones_json=walled(("portland", "CX"))), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    drawn = s.drawing
+    assert drawn is not None
+    assert {"fits", "room", "building", "lane", "court", "envelope"} <= set(drawn)
+    # "Fits" is the building AND the court, as the fit check charges them --
+    # not the bare footprint (which clears this lot by 44 ft).
+    check = next(c for c in s.screening.checks if c.check == "fit_ft")
+    assert drawn["fits"] == (check.slack >= 0)
+    building = shapely.Polygon(drawn["building"])
+    assert LOT.buffer(0.1).contains(building)
+    # The pod stands at the street end: its nearest point is on the south line.
+    assert building.bounds[1] == pytest.approx(Y0, abs=0.6)
+    # The flat row carries it as JSON, the same shapes.
+    assert json.loads(row_for(s)["drawing"])["building"] == drawn["building"]
+
+
+def test_a_lot_the_search_found_no_room_on_draws_nothing(corpus, policies) -> None:
+    lot = lot_from_row(row(wkb=None), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.drawing is None
+    assert row_for(s)["drawing"] is None

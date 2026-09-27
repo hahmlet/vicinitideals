@@ -472,6 +472,11 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     source = _clean(row.get("envelope_source"))
     if isinstance(source, str) and source:
         checks["envelope"] = {"sqft": _num(row.get("envelope_sqft")), "source": source}
+    # Where the fit stood the building, for the lot page (FOLLOWUPS 5).
+    # Absent from a bridge run written before the bridge drew it.
+    drawn = _clean(row.get("drawing"))
+    if isinstance(drawn, str) and drawn:
+        checks["drawing"] = json.loads(drawn)
     return checks
 
 

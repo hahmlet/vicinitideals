@@ -54,8 +54,9 @@ def _box(x: float, y: float, w: float, d: float) -> str:
 
 def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str = "preferred",
             colour_reasons: list[str] | None = None, unknown: list[str] | None = None,
-            tight: bool = False, front_deg: float | None = None, side_street: bool = False) -> dict:
-    return {
+            tight: bool = False, front_deg: float | None = None, side_street: bool = False,
+            drawing: dict | None = None) -> dict:
+    out = {
         "verdict": "unknown",
         "if_signed": colour,
         "reasons": ["RULE_UNVERIFIED"],
@@ -73,6 +74,25 @@ def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str 
         "search": {"angles": 181, "step_deg": 1.0},
         "rule_verdict": "unverified",
     }
+    if drawing is not None:
+        out["drawing"] = drawing
+    return out
+
+
+def _ring(x: float, y: float, w: float, d: float) -> list[list[float]]:
+    return [[x, y], [x + w, y], [x + w, y + d], [x, y + d], [x, y]]
+
+
+#: Lot B's plan (FOLLOWUPS 5): a 50 x 100 lot, the pod at the street end,
+#: its court running 3 ft past the rear line -- the room is short.
+LOT_B_DRAWING = {
+    "fits": False,
+    "envelope": [_ring(7_640_000, 690_000, 50, 100)],
+    "room": _ring(7_640_000, 690_000, 48, 100),
+    "building": _ring(7_640_000, 690_000, 36, 56),
+    "lane": _ring(7_640_036, 690_000, 12, 56),
+    "court": _ring(7_640_000, 690_056, 48, 47),
+}
 
 
 async def _snapshot(
@@ -195,7 +215,7 @@ async def _seed(
         (a, DESIGNS[0], _checks("green", tight=True)),
         (a, DESIGNS[1], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
         (b, DESIGNS[0], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"],
-                                front_deg=90.0, side_street=True)),
+                                front_deg=90.0, side_street=True, drawing=LOT_B_DRAWING)),
         (b, DESIGNS[1], _checks("yellow", head="coverage_pct", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
         (c, DESIGNS[0], _checks("unknown", colour_reasons=["FACT_UNOBSERVED"], unknown=["local_street"])),
         (c, DESIGNS[1], _checks("unknown", colour_reasons=["FACT_UNOBSERVED"], unknown=["local_street"])),
@@ -846,3 +866,27 @@ async def test_a_corner_lot_page_names_its_front_street_and_the_side_street_driv
     assert "corner-front" not in other and "side-street" not in other
     a = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
     assert 'class="corner-front"' not in a.text and 'class="side-street"' not in a.text
+
+
+async def test_the_lot_page_draws_where_the_building_and_parking_stand(
+    client: AsyncClient, session: AsyncSession
+):
+    # FOLLOWUPS 5: each design's card draws the fit on the lot -- building,
+    # driveway, parking court, the ground the rules leave -- and says when
+    # the room found is short. A design with no drawing shows none.
+    await _login(client, session)
+    await _seed(session)
+    page = await client.get("/flats/lots/multnomah/1N1E29DD%20%20-05600")
+    assert page.status_code == 200
+    card = page.text.split('id="design-pod56x36-2"', 1)[1].split('id="design-pod80x25-2"', 1)[0]
+    assert 'id="plan-pod56x36-2"' in card
+    for layer in ("plan-lot", "plan-envelope", "plan-court", "plan-lane", "plan-room", "plan-building"):
+        assert f'class="{layer}"' in card, layer
+    assert 'class="plan-short"' in card and 'class="plan-fits"' not in card
+    # The court runs 3 ft past the lot line and stays inside the drawing.
+    svg = card.split('class="fit-plan"', 1)[1].split("</svg>", 1)[0]
+    height = int(svg.split('height="', 1)[1].split('"', 1)[0])
+    court = svg.split('class="plan-court" points="', 1)[1].split('"', 1)[0]
+    assert all(0 <= float(pt.split(",")[1]) <= height for pt in court.split())
+    other = page.text.split('id="design-pod80x25-2"', 1)[1]
+    assert "fit-plan" not in other

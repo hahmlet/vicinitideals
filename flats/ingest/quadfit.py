@@ -68,6 +68,7 @@ from typing import Any
 from flats.designs.model import Design
 from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for
+from flats.fit.draw import draw
 from flats.fit.rectangle import Fit, Fitter
 from flats.geom.alley import ALLEY_CLASS, ALLEY_FACTS, S4_LOTS, alley_lines, observed_alley
 from flats.geom.corner import front_bearings as corner_fronts, is_corner, name_front
@@ -80,8 +81,14 @@ from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
 from flats.score.relief import ReliefPolicy
-from flats.score.paper import front_lot_line_rule, side_street_fed
-from flats.score.screen import LotFacts, Screening, fit_for, screen
+from flats.score.paper import (
+    court_across,
+    court_depth,
+    front_lot_line_rule,
+    side_column,
+    side_street_fed,
+)
+from flats.score.screen import LotFacts, Screening, _court_beyond_rear, fit_for, screen
 from flats.score.slack import SlackPolicy, Verdict as CheckVerdict
 
 #: quadfit's per-lot stage record after the envelope was cut and carved
@@ -646,6 +653,10 @@ class Screened:
     #: named one (:func:`flats.geom.corner.front_bearings`); None where no
     #: front was named and every street edge is a front.
     front_deg: float | None = None
+    #: Where the fit stood the building and its parking, as the lot page
+    #: draws it (:func:`drawing_for`); None where the search found no room
+    #: at the parking's width at all.
+    drawing: dict[str, Any] | None = None
 
 
 def _if_signed(
@@ -718,7 +729,7 @@ def screen_lot(
         fronts: tuple[float | None, ...] = corner_fronts(
             lot.edges, front_lot_line_rule(got)
         ) or (None,)
-        tried: list[Screened] = []
+        tried: list[tuple[Screened, Fitter]] = []
         for front in fronts:
             here = lot
             if front is not None and lot.edges is not None:
@@ -741,7 +752,7 @@ def screen_lot(
             shadow = _if_signed(
                 got, facts, design, fit, result, policy=policy, relief=relief, config=config
             )
-            tried.append(
+            tried.append((
                 Screened(
                     lot=here,
                     design=design,
@@ -754,10 +765,52 @@ def screen_lot(
                     step_deg=step_deg,
                     envelope=env,
                     front_deg=front,
-                )
-            )
-        out.append(min(tried, key=_front_rank))
+                ),
+                fitters[key],
+            ))
+        # Drawn for the winner only: one more window search per design.
+        won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        out.append(dataclasses.replace(won, drawing=drawing_for(won, fitter)))
     return out
+
+
+def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
+    """Where the fit stood this design, for the lot page (FOLLOWUPS 5).
+
+    The same search the verdict read, asked once more for a window: the
+    building at the street end, its lane beside it, the court behind it at
+    the depth :func:`flats.score.paper.court_depth` charges (or the column
+    along a side alley, :func:`flats.score.paper.side_column`), and the room
+    the search found around them. Changes no verdict. The street end is the
+    one nearer the lot's front lines as named for this screen -- on a corner
+    lot, the street it was laid out fronting.
+    """
+    alley, corner = s.lot.facts.alley, s.lot.facts.corner
+    rear = s.envelope.rear_cut_ft if s.envelope else None
+    if s.fit.column:
+        got = side_column(s.design, s.rules, alley)
+        court = got[0] if got is not None else 0.0
+    else:
+        court = court_depth(s.design, s.rules, alley)[0]
+    beyond = _court_beyond_rear(s.design, s.rules, rear, alley, column=s.fit.column and court > 0)
+    street = ()
+    if s.lot.edges is not None:
+        street = tuple(
+            ((e.x1 + e.x2) / 2, (e.y1 + e.y2) / 2) for e in s.lot.edges.of_class(EdgeClass.front)
+        )
+    got = draw(
+        fitter,
+        s.fit,
+        width_ft=s.design.footprint.width_ft,
+        depth_ft=s.design.footprint.depth_ft,
+        lane_ft=court_across(s.design, s.rules, alley, corner=corner).lane_ft,
+        court_depth_ft=court,
+        court_beyond_ft=beyond,
+        street=street,
+    )
+    if got is None:
+        return None
+    return got.to_json(s.envelope.geom if s.envelope else None)
 
 
 #: A stall band's standing in the choice of front: Steph's ruling of
@@ -829,6 +882,7 @@ def row_for(s: Screened) -> dict[str, Any]:
         "step_deg": s.step_deg,
         "envelope_sqft": s.envelope.sqft if s.envelope else None,
         "envelope_source": s.envelope.source if s.envelope else None,
+        "drawing": json.dumps(s.drawing, separators=(",", ":")) if s.drawing else None,
     }
 
 

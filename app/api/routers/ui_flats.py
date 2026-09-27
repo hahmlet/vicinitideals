@@ -2895,6 +2895,9 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         # the driveway comes in off the side street (FOLLOWUPS 4(e)).
         "front_deg": fit.get("front_deg"),
         "side_street": bool(fit.get("side_street")),
+        # Where the fit stood the building and its parking (FOLLOWUPS 5);
+        # absent from a run screened before the bridge drew it.
+        "drawing": (checks.get("drawing") or None) if screened else None,
         "stalls_charged": stalls.get("charged"),
         "stalls_seated": stalls.get("seated"),
         "band": stalls.get("band"),
@@ -3355,6 +3358,59 @@ def _outline(geojson: str | None) -> dict[str, Any] | None:
     }
 
 
+#: The layers of a design's plan, drawn in this order (last on top).
+_PLAN_LAYERS = ("envelope", "court", "lane", "room", "building")
+
+
+def _plan(geojson: str | None, drawing: dict[str, Any] | None) -> dict[str, Any] | None:
+    """One design's plan over the lot: the lot, the ground searched, and
+    where the fit stood the building, its lane and its court (FOLLOWUPS 5).
+
+    The same flip-and-scale as :func:`_outline`, fitted to the lot and the
+    plan together -- a court that runs past the lot line on a lot too
+    shallow for it is the point of the drawing, so it is kept in the box.
+    """
+    if not drawing or not geojson:
+        return None
+    try:
+        shape = json.loads(geojson)
+    except ValueError:
+        return None
+    polygons = shape.get("coordinates") or []
+    if shape.get("type") == "Polygon":
+        polygons = [polygons]
+    lot = [ring for polygon in polygons for ring in polygon if len(ring) >= 3]
+    layers: dict[str, list[list[list[float]]]] = {"envelope": [r for r in drawing.get("envelope") or [] if len(r) >= 3]}
+    for name in ("court", "lane", "room", "building"):
+        ring = drawing.get(name)
+        layers[name] = [ring] if ring and len(ring) >= 3 else []
+    every = lot + [r for rings in layers.values() for r in rings]
+    if not lot or not layers["building"]:
+        return None
+    xs = [float(x) for ring in every for x, _y in ring]
+    ys = [float(y) for ring in every for _x, y in ring]
+    span = max(max(xs) - min(xs), max(ys) - min(ys)) or 1.0
+    pad = 8
+    scale = (_OUTLINE_PX - 2 * pad) / span
+    x0, y0 = min(xs), min(ys)
+    width_px = (max(xs) - x0) * scale + 2 * pad
+    height_px = (max(ys) - y0) * scale + 2 * pad
+
+    def points(ring: list[list[float]]) -> str:
+        return " ".join(
+            f"{pad + (float(x) - x0) * scale:.1f},{height_px - pad - (float(y) - y0) * scale:.1f}"
+            for x, y in ring
+        )
+
+    return {
+        "lot": [points(r) for r in lot],
+        **{name: [points(r) for r in layers[name]] for name in _PLAN_LAYERS},
+        "fits": bool(drawing.get("fits")),
+        "width": round(width_px),
+        "height": round(height_px),
+    }
+
+
 def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
     """The facts the screen read, as label / value pairs a person can scan.
     Only what is present is listed; a missing fact is left out rather than
@@ -3526,6 +3582,8 @@ async def flats_lot(
             .order_by(FlatsLotResult.design_key)
         )
         results = [_result_card(r) for r in rows.scalars()]
+        for r in results:
+            r["plan"] = _plan(geojson, r["drawing"])
     ranks = [_COLOURS.index(r["colour"]) if r["colour"] in _COLOURS else len(_COLOURS) for r in results]
     verdicts = [_COLOURS.index(r["verdict"]) if r["verdict"] in _COLOURS else len(_COLOURS) for r in results]
     card = _lot_row(lot, min(verdicts) if verdicts else 2, min(ranks) if ranks else 2, results)

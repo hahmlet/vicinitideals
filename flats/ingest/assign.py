@@ -124,6 +124,7 @@ ROW_COLUMNS = (
     "step_deg",
     "envelope_sqft",
     "envelope_source",
+    "drawing",
 )
 
 

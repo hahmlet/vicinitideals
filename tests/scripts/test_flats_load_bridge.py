@@ -288,6 +288,19 @@ def test_the_checks_record_carries_the_corner_front_and_the_side_street_driveway
     assert result_checks(nan)["fit"]["side_street"] is False
 
 
+def test_the_checks_record_carries_the_drawing_of_the_fit() -> None:
+    # FOLLOWUPS 5: where the fit stood the building, parsed from the row's
+    # JSON so the lot page reads rings, not a string. A bundle written
+    # before the bridge drew it, or a row with nothing drawn, carries none.
+    drawn = {"fits": True, "room": [[0, 0], [1, 0], [1, 1], [0, 0]], "building": [[0, 0], [1, 0], [1, 1], [0, 0]],
+             "lane": None, "court": None, "envelope": []}
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "drawing": json.dumps(drawn)}
+    assert result_checks(row)["drawing"] == drawn
+    assert "drawing" not in result_checks(_bridge_row(LOT_A, DESIGNS[0]))
+    for empty in (None, float("nan"), ""):
+        assert "drawing" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "drawing": empty})
+
+
 def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
     run_dir, s4, s5o, results = _make_run(tmp_path)
     short = tmp_path / "s4_short.parquet"
