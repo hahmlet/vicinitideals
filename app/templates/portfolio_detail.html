@@ -201,10 +201,10 @@
                  hx-get="/ui/deals/search"
                  hx-trigger="keyup changed delay:250ms"
                  hx-target="#deal-search-results"
-                 hx-include="[name='q_deal']"
-                 oninput="this.form.querySelector('[name=q_deal]').value=this.value"
+                 hx-include="[name='q']"
+                 oninput="this.form.querySelector('[name=q]').value=this.value"
                  >
-          <input type="hidden" name="q_deal" value="">
+          <input type="hidden" name="q" value="">
           <ul id="deal-search-results"
               style="position:absolute;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:6px;width:100%;list-style:none;padding:0;margin:2px 0;max-height:220px;overflow-y:auto;box-shadow:0 4px 16px rgba(0,0,0,.12)">
           </ul>
