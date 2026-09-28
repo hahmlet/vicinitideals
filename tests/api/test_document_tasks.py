@@ -218,3 +218,33 @@ async def test_cross_org_task_access_404(client: AsyncClient, session: AsyncSess
     await _auth(client, intruder.id)
     assert (await client.get(f"/ui/tasks/{task.id}/edit")).status_code == 404
     assert (await client.get(f"/ui/tasks/{task.id}/download")).status_code == 404
+
+
+async def test_due_milestone_must_belong_to_the_task_project(
+    client: AsyncClient, session: AsyncSession
+):
+    """An unknown milestone id used to 500 (foreign-key failure); another
+    project's milestone was stored as the due anchor and never resolved."""
+    project, user, org = await _seed_project(session)
+    other_project, _u2, _o2 = await _seed_project(session)
+    foreign_ms = Milestone(
+        id=uuid.uuid4(), project_id=other_project.id, milestone_type=MilestoneType.close,
+        target_date=date(2026, 1, 1), duration_days=10, sequence_order=1,
+    )
+    task = DocumentTask(org_id=org.id, project_id=project.id, title="Closing docs")
+    session.add_all([foreign_ms, task])
+    await session.commit()
+    await _auth(client, user.id)
+
+    for ms_id in (uuid.uuid4(), foreign_ms.id):
+        resp = await client.post(
+            f"/ui/tasks/{task.id}",
+            data={"due_kind": "milestone", "due_milestone_id": str(ms_id), "due_offset_days": "2"},
+        )
+        assert resp.status_code == 200, resp.text
+        await session.refresh(task)
+        assert task.due_milestone_id is None
+
+    # A non-numeric offset is a 422, not a 500.
+    resp = await client.post(f"/ui/tasks/{task.id}", data={"due_offset_days": "soon"})
+    assert resp.status_code == 422

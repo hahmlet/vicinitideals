@@ -1351,11 +1351,17 @@ async def task_update(
     # Due date: explicit kind switch (hard-coded vs relative-to-milestone).
     if due_kind == "milestone" and due_milestone_id:
         try:
-            task.due_milestone_id = UUID(due_milestone_id)
+            ms_id = UUID(due_milestone_id)
+        except ValueError:
+            ms_id = None
+        # Only a milestone of this task's own project may anchor its due date;
+        # an unknown id would break the foreign key, another project's would
+        # silently never resolve.
+        ms = await session.get(Milestone, ms_id) if ms_id else None
+        if ms is not None and ms.project_id == task.project_id:
+            task.due_milestone_id = ms.id
             task.due_offset_days = int(due_offset_days or 0)
             task.due_date = None
-        except ValueError:
-            pass
     elif due_kind == "date":
         task.due_date = _parse_due_date(due_date)
         task.due_milestone_id = None
