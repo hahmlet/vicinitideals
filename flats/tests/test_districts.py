@@ -590,10 +590,6 @@ RULINGS: dict[str, dict[str, str]] = {
             "design table, printed at the end of a row beside cells reading "
             "'X' and 'X - 60%'."
         ),
-        "B6": (
-            "not-a-zone: the same kind of FMC 19.65 row identifier as R2, "
-            "beside cells reading 'None / 20% / 10%'."
-        ),
         "V1-30": (
             "not-a-zone: a FEMA flood insurance zone label, quoted in FMC "
             "19.105's definition of area of special flood hazard."

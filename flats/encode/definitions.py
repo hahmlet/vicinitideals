@@ -133,6 +133,26 @@ MIN_BODY = 40
 #: frame verb has to have appeared. Three covers the wrapped ones.
 LOOKAHEAD = 3
 
+#: A list label printed on a line of its own: "B.", "(2)", "iv.". eCode360 sets
+#: every label that way, where Code Publishing printed it at the head of its
+#: item's line.
+_LONE_LABEL = re.compile(r"^\(?[A-Za-z0-9]{1,4}[.)]$")
+
+
+def lettered_heading(lines: list[str], i: int, defined: re.Pattern[str]) -> bool:
+    """Whether line ``i`` only opens a definition because its label moved off it.
+
+    The list-marker prefix accepts numbers and roman numerals, never a letter,
+    so Fairview's "B. Corner Lots. Buildings on corner lots shall have their
+    primary entrance oriented to the street corner" is a titled subsection
+    and not a definition. eCode360 prints the "B." on the line above, and the
+    bare "Corner Lots. Buildings ..." then opens like one. Put the label back
+    and ask again, so the codifier's layout cannot change the answer.
+    """
+    prev = next((ln.strip() for ln in reversed(lines[:i]) if ln.strip()), "")
+    return bool(_LONE_LABEL.match(prev)) and defined.match(f"{prev} {lines[i]}") is None
+
+
 #: What a declared document has to look like to be the place definitions live.
 #: Matched against the document id and title as declared, not against its text,
 #: because the question this answers is "did anybody go looking for one".
@@ -223,7 +243,7 @@ def _find(layer_id: str, term: str) -> str:
         lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
         for i, line in enumerate(lines):
             opening = defined.match(line)
-            if opening is None:
+            if opening is None or lettered_heading(lines, i, defined):
                 continue
             head = line[opening.end() :].strip()
             if not head:

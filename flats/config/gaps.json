@@ -1,5 +1,5 @@
 {
-  "digest": "4daf9ead6a9d2a022b9473543cb95559ff5278f13df82dccc2f0f56fcb77b707",
+  "digest": "20a71e479e7f672e31d03b9915d4f7ca18cd074f163df6681c127e9af2154fe1",
   "layers": {
     "or": {
       "misattributed": [],
@@ -198,84 +198,84 @@
           "field": "orientation_constraint",
           "claimed": "19.30.020 19.30.030",
           "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
+          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
         },
         {
           "zone": "R-6",
           "field": "orientation_constraint",
           "claimed": "19.30.020 19.30.030",
           "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
+          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
         },
         {
           "zone": "R-7.5",
           "field": "orientation_constraint",
           "claimed": "19.30.020 19.30.030",
           "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
+          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
         },
         {
           "zone": "RM",
           "field": "orientation_constraint",
           "claimed": "19.30.010 19.30.020 19.30.030",
           "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
+          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
         },
         {
           "zone": "TCC",
           "field": "min_lot_sqft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.100",
-          "quote": "or/multnomah/fairview/19.65.txt#L699,L701"
+          "quote": "or/multnomah/fairview/19.65.txt#L972-L974,L976-L978"
         },
         {
           "zone": "TCC",
           "field": "setback_front_ft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L155,L161,L163"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L290-L292,L294-L296"
         },
         {
           "zone": "TCC",
           "field": "setback_front_max_ft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L155,L165,L177,L179"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L298-L300,L322-L324,L326-L328"
         },
         {
           "zone": "TCC",
           "field": "setback_rear_ft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
         },
         {
           "zone": "TCC",
           "field": "setback_rear_ft [abuts_nonresidential_zone]",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
         },
         {
           "zone": "TCC",
           "field": "setback_rear_ft [abuts_nonresidential_zone+alley_at_rear]",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
         },
         {
           "zone": "TCC",
           "field": "setback_side_ft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L155,L207"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382"
         },
         {
           "zone": "TCC",
           "field": "setback_side_ft [abuts_nonresidential_zone]",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L155,L207"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382"
         }
       ],
       "label": "Fairview",

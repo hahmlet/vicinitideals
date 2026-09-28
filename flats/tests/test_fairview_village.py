@@ -66,7 +66,7 @@ def test_the_permission_row_counts_to_five_and_the_pod_is_four(
     the mark would open all three.
     """
     text = ProvenanceStore().quote(
-        "or/multnomah/fairview/19.13.definitions.txt#L383,L465,L515"
+        "or/multnomah/fairview/19.13.definitions.txt#L518-L519,L647-L648,L724-L725"
     )
     assert "five or more dwelling units" in text
     assert "four dwelling units on a lot or parcel" in text

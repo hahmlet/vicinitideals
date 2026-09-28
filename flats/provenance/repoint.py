@@ -57,9 +57,11 @@ from flats.rules.model import LIKE, Layer
 #: never a YAML round-trip. Comments, ordering and block style survive untouched.
 CONFIG_DIRS = ("jurisdictions", "footnotes")
 
-#: A line number map: old line (1-based) -> new line. A line absent from this
-#: map is one whose words did not survive.
-LineMap = dict[int, int]
+#: A line number map: old line (1-based) -> new line, or the first and last new
+#: line when one old line's words now span several (a host that prints a
+#: list label on a line of its own). A line absent from this map is one whose
+#: words did not survive.
+LineMap = dict[int, int | tuple[int, int]]
 
 
 def line_map(old: Sequence[str], new: Sequence[str]) -> LineMap:
@@ -75,6 +77,137 @@ def line_map(old: Sequence[str], new: Sequence[str]) -> LineMap:
         if tag == "equal":
             for offset in range(i2 - i1):
                 mapping[i1 + offset + 1] = j1 + offset + 1
+    return mapping
+
+
+#: A list label printed alone on its line: ``A.``, ``1.``, ``(a)``, ``iv.``.
+_LABEL = re.compile(r"^\(?[A-Za-z0-9]{1,4}[.)]$")
+#: A section number followed by its own full stop, ``19.30.010.`` -- one host
+#: prints it, another does not.
+_SECTION_STOP = re.compile(r"^(\d+(?:\.\d+)+)\.(?=\s|$)")
+#: The most new lines one old line may be found broken across.
+JOIN_LIMIT = 6
+_TYPOGRAPHY = str.maketrans(
+    {
+        "\u2018": "'",
+        "\u2019": "'",
+        "\u201c": '"',
+        "\u201d": '"',
+        "\u2013": "-",
+        "\u2014": "-",
+        "\u00a0": " ",
+        "\u00a7": " ",
+    }
+)
+#: The amendment history a code prints after a section, ``(Ord. 6-2001 [section] 1;
+#: Ord. 1-2024 [section] 1 (Att. A))``. It records when the words were adopted, not
+#: what they say, and one host prints it after the sentence and oldest first
+#: while another prints it on its own line newest first.
+_HISTORY = re.compile(r"\s*\((?:Ord|Res)\.[^()]*(?:\([^()]*\)[^()]*)*\)\s*$")
+
+
+def _plain(line: str) -> str:
+    """One line's words with the typography a publisher chooses taken out."""
+    text = " ".join(line.translate(_TYPOGRAPHY).split())
+    return _HISTORY.sub("", _SECTION_STOP.sub(r"\1", text))
+
+
+def _units(lines: Sequence[str]) -> list[tuple[str, int, int]]:
+    """Lines as a reader sees them: a label alone on its line joins the
+    sentence it labels. Each unit is ``(plain text, first line, last line)``."""
+    units: list[tuple[str, int, int]] = []
+    index = 0
+    while index < len(lines):
+        text = _plain(lines[index])
+        if _LABEL.match(text):
+            follow = index + 1
+            while follow < len(lines) and not lines[follow].strip():
+                follow += 1
+            if follow < len(lines) and not _LABEL.match(_plain(lines[follow])):
+                units.append((f"{text} {_plain(lines[follow])}", index + 1, follow + 1))
+                index = follow + 1
+                continue
+        units.append((text, index + 1, index + 1))
+        index += 1
+    return units
+
+
+def loose_line_map(old: Sequence[str], new: Sequence[str]) -> LineMap:
+    """``line_map`` for a document that changed publisher, not words.
+
+    When a city moves its code to another host, the sentences come back with
+    different typography -- curly quotes straightened, a section sign and a
+    full stop added to every heading, each list label on a line of its own --
+    and not one line survives byte for byte, so ``line_map`` strands every
+    quote. This aligns the words instead: typography is taken out and a lone
+    label is joined to its sentence on both sides, and a line maps only when
+    those words are equal. A changed word still strands its quote.
+
+    The price of the looseness is paid by the caller: a review is not spared
+    on this map (``fetch_one`` withdraws them), because "the same words" is a
+    reading, and a signature was made against bytes.
+    """
+    old_units, new_units = _units(old), _units(new)
+    matcher = difflib.SequenceMatcher(
+        None, [u[0] for u in old_units], [u[0] for u in new_units], autojunk=False
+    )
+    mapping: LineMap = {}
+    def land(unit: tuple[str, int, int], to_first: int, to_last: int) -> None:
+        landed: int | tuple[int, int] = to_first if to_first == to_last else (to_first, to_last)
+        for line in range(unit[1], unit[2] + 1):
+            mapping[line] = landed
+
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
+            for offset in range(i2 - i1):
+                new_unit = new_units[j1 + offset]
+                land(old_units[i1 + offset], new_unit[1], new_unit[2])
+            continue
+        # One sentence the new host breaks over several lines -- a defined
+        # term on its own line above "means ...", a table's number above its
+        # title, a history note under the sentence it closes. The old line
+        # maps when its words are exactly the next few new lines' words, in
+        # order, with nothing left over.
+        words = [u for u in new_units[j1:j2] if u[0]]
+        at = 0
+        for unit in old_units[i1:i2]:
+            if not unit[0]:
+                continue
+            for start in range(at, len(words)):
+                joined = ""
+                for end in range(start, min(start + JOIN_LIMIT, len(words))):
+                    joined = f"{joined} {words[end][0]}".strip()
+                    if joined == unit[0]:
+                        land(unit, words[start][1], words[end][2])
+                        at = end + 1
+                        break
+                    if not unit[0].startswith(joined):
+                        break
+                else:
+                    continue
+                if at > start:
+                    break
+    # A block one host printed once and the other printed several times (a
+    # table's notes repeated under every page of the table) leaves the extra
+    # copies with no partner in order. Their words are still in the new text;
+    # when they are there exactly once, that is where they went.
+    once: dict[str, list[tuple[str, int, int]]] = {}
+    for unit in new_units:
+        if unit[0]:
+            once.setdefault(unit[0], []).append(unit)
+    for unit in old_units:
+        if unit[0] and unit[1] not in mapping and len(once.get(unit[0], ())) == 1:
+            target = once[unit[0]][0]
+            land(unit, target[1], target[2])
+    # A blank line carries no words, so it cannot have lost any. Hosts disagree
+    # about blank lines more than about anything else; one inside a cited span
+    # lands beside the words before it rather than stranding the quote.
+    previous: int | tuple[int, int] | None = None
+    for line in range(1, len(old) + 1):
+        if line in mapping:
+            previous = mapping[line]
+        elif not old[line - 1].strip() and previous is not None:
+            mapping[line] = previous
     return mapping
 
 
@@ -98,20 +231,30 @@ def move_quote(quote: str, mapping: LineMap) -> tuple[str, tuple[int, ...]]:
     moved: list[tuple[int, int]] = []
     lost: list[int] = []
     for first, last in ref.spans:
-        landed = [mapping[n] for n in range(first, last + 1) if n in mapping]
+        landed = [
+            end
+            for n in range(first, last + 1)
+            if n in mapping
+            for end in (mapping[n] if isinstance(mapping[n], tuple) else (mapping[n],))
+        ]
         lost.extend(n for n in range(first, last + 1) if n not in mapping)
         if landed:
             moved.append((min(landed), max(landed)))
     if lost:
         return "", tuple(lost)
 
-    # Spans cannot collide, and the reason is worth writing down because the
-    # obvious defensive merge here would be dead code. The map is built from
-    # difflib's equal blocks, which are strictly increasing, so a later span's
-    # first line always lands after an earlier span's last. `parse_quote` will
-    # read back what comes out of here. What CAN happen is that a line inserted
-    # between two spans belongs to neither — correctly, since the citation named
-    # neither of the sentences it now sits between.
+    # On `line_map` spans cannot collide: the map is built from difflib's equal
+    # blocks, which are strictly increasing, so a later span's first line
+    # always lands after an earlier span's last. What CAN happen is that a line
+    # inserted between two spans belongs to neither -- correctly, since the
+    # citation named neither of the sentences it now sits between.
+    # `loose_line_map` can send a repeated block's copy to the one place its
+    # words still stand, which may be above a span that came before it. A quote
+    # whose spans no longer read in order is stranded, not merged: which of
+    # two overlapping spans the citation meant is a reading, not arithmetic.
+    for (_, before_last), (after_first, _) in zip(moved, moved[1:]):
+        if after_first <= before_last:
+            return "", tuple(range(ref.spans[0][0], ref.spans[-1][1] + 1))
     return _format(ref.path, moved), ()
 
 

@@ -55,6 +55,7 @@ from flats.provenance.sources import (
 from flats.provenance.repoint import (
     config_files,
     line_map,
+    loose_line_map,
     mentions,
     readdress,
     repoint_files,
@@ -637,7 +638,10 @@ def implausible(text: str) -> str | None:
         return "the response was empty"
     if len(stripped) < MIN_CHARS:
         return f"only {len(stripped)} characters — a landing page, not a chapter"
-    lines = stripped.splitlines()
+    # Blank lines are not text. eCode360 prints every list label on a line of
+    # its own with a blank after it, which halves the ratio of a chapter that
+    # Code Publishing's layout of the same words passed comfortably.
+    lines = [line for line in stripped.splitlines() if line.strip()]
     coded = sum(1 for line in lines if _SECTION_NO.search(line) or _STANDARD.search(line))
     ratio = coded / len(lines)
     if coded < MIN_CODE_LINES or ratio < MIN_CODE_RATIO:
@@ -765,6 +769,7 @@ def fetch_one(
     extraction: str = "layout",
     refresh: bool = False,
     repoint: bool = False,
+    loose: bool = False,
     check: bool = False,
     allow_thin: bool = False,
     retrieved: date | None = None,
@@ -892,18 +897,24 @@ def fetch_one(
         # Aligned against the text still in the store and applied before it is
         # overwritten. Once the new bytes are written there is nothing left to
         # align the old line numbers against, and the citations are simply wrong.
-        mapping = line_map(stored.text.splitlines(), text.splitlines())
-        spare = survivors(layers, path, mapping)
-        # Before the quotes are rewritten: a signature hashes the quote string,
-        # so a spared review needs its address moved too or it orphans itself.
-        moved_on = readdress(
-            layers,
-            path,
-            mapping,
-            log_path=log or LOG_PATH,
-            note=f"citation repointed after {path} was renumbered "
-            f"{retrieved.isoformat()}; cited text unchanged",
-        )
+        mapper = loose_line_map if loose else line_map
+        mapping = mapper(stored.text.splitlines(), text.splitlines())
+        if not loose:
+            # A loose map matches words, not bytes, and a signature was made
+            # against bytes: after a change of host every review is withdrawn
+            # and read again, and only the citations follow.
+            spare = survivors(layers, path, mapping)
+            # Before the quotes are rewritten: a signature hashes the quote
+            # string, so a spared review needs its address moved too or it
+            # orphans itself.
+            moved_on = readdress(
+                layers,
+                path,
+                mapping,
+                log_path=log or LOG_PATH,
+                note=f"citation repointed after {path} was renumbered "
+                f"{retrieved.isoformat()}; cited text unchanged",
+            )
         moves, stranded = repoint_files(
             path, mapping, config_files(rules or CONFIG_ROOT), write=True
         )
@@ -1180,6 +1191,13 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str]
         help="with --refresh, move every citation to where its own words went; "
         "a quote whose words changed is reported and left alone",
     )
+    parser.add_argument(
+        "--loose",
+        action="store_true",
+        help="with --repoint, match words rather than bytes -- for a code that "
+        "moved to another publisher (typography, list labels and amendment "
+        "notes differ); every review on the document is withdrawn",
+    )
     parser.add_argument("--retrieved", default="", help="ISO date, defaults to today")
     parser.add_argument(
         "--allow-thin",
@@ -1214,6 +1232,7 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str]
         extraction=args.extraction,
         refresh=args.refresh,
         repoint=args.repoint,
+        loose=args.loose,
         check=args.check,
         allow_thin=args.allow_thin,
         retrieved=retrieved,
@@ -1249,6 +1268,7 @@ def _fetch_declared(args, *, store: ProvenanceStore, retrieved: date, get) -> in
             extraction=doc.extraction,
             refresh=args.refresh,
             repoint=args.repoint,
+            loose=args.loose,
             check=args.check,
             allow_thin=doc.allow_thin or args.allow_thin,
             retrieved=retrieved,

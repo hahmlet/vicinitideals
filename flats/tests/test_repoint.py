@@ -40,6 +40,7 @@ from flats.encode.verify import (
 from flats.provenance.repoint import (
     config_files,
     line_map,
+    loose_line_map,
     mentions,
     move_quote,
     readdress,
@@ -83,6 +84,86 @@ def test_a_line_whose_words_changed_has_no_counterpart() -> None:
     mapping = line_map(OLD, new)
     assert 7 not in mapping
     assert mapping[6] == 6 and mapping[8] == 8
+
+
+# --- a change of publisher (loose) -----------------------------------
+#
+# Fairview moved its code from Code Publishing to eCode360 in 2026-09. Not a
+# word of the law changed, and not one line survived byte for byte: curly
+# quotes came back straight, every heading grew a section sign and a full
+# stop, list labels and defined terms moved onto lines of their own, and the
+# amendment history moved under its sentence in the other order. These are
+# those shapes, taken from the two stored copies of FMC 19.30 and 19.13.
+
+HOST_OLD = [
+    "19.30.030 Dimensional standards.",
+    "",
+    "A. Dimensional Standards. The standards in Table 19.30.030-A apply.",
+    "“Net density” means lots per acre based on net site area.",
+    "G. Telecommunications facilities where permitted. (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)",
+    "Table 19.30.030.A Dimensional Standards for Residential Districts",
+    "R-6",
+]
+HOST_NEW = [
+    "City of Fairview, OR",
+    "",
+    "§ 19.30.030. Dimensional standards.",
+    "",
+    "A.",
+    "",
+    "Dimensional Standards. The standards in Table 19.30.030-A apply.",
+    '"Net density"',
+    "means lots per acre based on net site area.",
+    "G.",
+    "",
+    "Telecommunications facilities where permitted.",
+    "",
+    "(Ord. 6-2001 § 1; Ord. 1-2024 § 1 (Att. A))",
+    "Table 19.30.030.A",
+    "Dimensional Standards for Residential Districts",
+    "R-6",
+]
+
+
+def test_byte_matching_strands_a_change_of_publisher() -> None:
+    """The reason the loose map exists: on the exact map only a blank line and
+    the table cell survive the move."""
+    assert set(line_map(HOST_OLD, HOST_NEW)) == {2, 7}
+
+
+def test_a_change_of_publisher_keeps_every_line_whose_words_survived() -> None:
+    mapping = loose_line_map(HOST_OLD, HOST_NEW)
+    assert mapping[1] == 3  # the heading's section sign and full stop
+    assert mapping[3] == (5, 7)  # the label on its own line, with the sentence
+    assert mapping[4] == (8, 9)  # the defined term above its definition
+    assert mapping[5] == (10, 12)  # the history note is not the rule's words
+    assert mapping[6] == (15, 16)  # the table number above its title
+    assert mapping[7] == 17
+
+
+def test_a_loose_quote_widens_over_the_lines_its_words_now_span() -> None:
+    after, lost = move_quote(f"{PORTLAND}#L3-L4", loose_line_map(HOST_OLD, HOST_NEW))
+    assert (after, lost) == (f"{PORTLAND}#L5-L9", ())
+
+
+def test_a_changed_word_still_strands_on_the_loose_map() -> None:
+    """Loose about typography, never about words: "10" to "12" is a reading."""
+    new = [line.replace("net site area", "gross site area") for line in HOST_NEW]
+    mapping = loose_line_map(HOST_OLD, new)
+    assert 4 not in mapping
+    assert move_quote(f"{PORTLAND}#L4", mapping)[1] == (4,)
+
+
+def test_a_repeated_block_lands_on_its_one_copy_and_order_still_holds() -> None:
+    """One host printed a table's notes under every page of it, the other once.
+    Each old copy lands on the one new copy -- and a quote naming two copies
+    can no longer read in order, so it is stranded rather than merged."""
+    old = ["(1) Subject to FMC 19.30.080.", "(1) Subject to FMC 19.30.080.", "tail"]
+    new = ["Notes:", "(1) Subject to FMC 19.30.080.", "tail"]
+    mapping = loose_line_map(old, new)
+    assert mapping[1] == 2 and mapping[2] == 2
+    assert move_quote(f"{PORTLAND}#L1", mapping) == (f"{PORTLAND}#L2", ())
+    assert move_quote(f"{PORTLAND}#L1,L2", mapping)[0] == ""
 
 
 # --- moving one quote -------------------------------------------------

@@ -490,14 +490,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (b) Portland Title 33 PDFs held in the Multnomah `_unincorporated` layer
    (33.100/33.110/33.140/33.266) CHANGED at the same length -- likely a
    re-issued PDF with the same page count; re-fetch, diff the text, repoint.
-   (c) Fairview: every codepublishing.com URL now returns a 1.3 KB
-   "hosted on eCode360" stub -- the city moved to eCode360 (FA4439; Title
-   19 TOC guid 50509052; print view `https://ecode360.com/print/FA4439?guid=
-   <n>`; chapter numbering unchanged, 19.25 = 50509402, 19.30 = 50509420,
-   19.65 = 50509772, 19.135 = 51011016). Re-point every `code:` entry in
-   fairview.yaml, re-fetch, repoint quotes; the 19.25.ah doc already points
-   at eCode360. Until (c) is done a `--refresh` of Fairview would replace
-   every stored chapter with the stub -- do not run it layer-wide first.
+   (Fairview's move to eCode360 was (c), done 2026-09-27. If either of
+   these turns out to be a re-layout rather than a word change,
+   `flats-fetch --refresh --repoint --loose` is the tool it was built with.)
 10. **Two loose ends from the ruling pass.** (a) Fairview FLX is the map's
    name for the "VC flex" area (19.135.txt L62) and is aliased to VC, whose
    `inside_mapped_use_area` variant names that same area -- the map code

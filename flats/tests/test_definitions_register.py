@@ -20,6 +20,7 @@ from flats.encode.definitions import (
     STATUSES,
     coverage,
     coverage_for,
+    lettered_heading,
 )
 from flats.rules.definitions import TERMS, Abuts, Definition, Side
 from flats.rules.loader import load_rules
@@ -323,6 +324,15 @@ def test_the_matcher_does_not_read_prose_as_a_definition() -> None:
 
     # A cross-reference is an opening with a body that defines nothing.
     assert NOT_A_DEFINITION.match("See Lot, types of.")
+
+    # A lettered subsection heading is not a definition, whether its label
+    # sits at the head of the line or, as eCode360 prints it, on the line
+    # above. A numbered one still opens.
+    heading = "Corner Lots. Buildings on corner lots shall have their primary entrance"
+    assert defined.match(f"B. {heading}") is None
+    assert lettered_heading(["B.", "", heading], 2, defined)
+    assert not lettered_heading(["(2)", heading], 1, defined)
+    assert not lettered_heading(["Lot types.", heading], 1, defined)
 
     # And the count has to see the plural the standards are headlined with.
     assert re.search(PHRASE["corner_lot"], "Corner Lots", re.I)
