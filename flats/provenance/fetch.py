@@ -52,6 +52,7 @@ from flats.provenance.sources import (
     authority_for,
     fetch as fetch_source,
 )
+from flats.provenance.pdf_hold import held_extraction
 from flats.provenance.repoint import (
     config_files,
     line_map,
@@ -564,16 +565,19 @@ def pdf_to_text(
     dropped = _Dropped()
     logger = logging.getLogger("pypdf")
     logger.addHandler(dropped)
-    for page in reader.pages:
-        if "/Contents" not in page:
-            # A page with no content stream is a legal, genuinely blank page —
-            # Tualatin's Development Code carries one. pypdf's layout mode
-            # raises KeyError on it, which reads as a broken document when
-            # nothing is actually missing. Only this measured case is skipped;
-            # any other extraction failure still fails loud.
-            pages.append("")
-            continue
-        pages.append((page.extract_text(**mode) or "").replace("\r\n", "\n"))
+    # Read as pypdf 6.15 read, the rules every stored PDF was extracted under
+    # (see pdf_hold): a newer pypdf re-spaces words and re-breaks lines.
+    with held_extraction():
+        for page in reader.pages:
+            if "/Contents" not in page:
+                # A page with no content stream is a legal, genuinely blank page —
+                # Tualatin's Development Code carries one. pypdf's layout mode
+                # raises KeyError on it, which reads as a broken document when
+                # nothing is actually missing. Only this measured case is skipped;
+                # any other extraction failure still fails loud.
+                pages.append("")
+                continue
+            pages.append((page.extract_text(**mode) or "").replace("\r\n", "\n"))
     logger.removeHandler(dropped)
     if lost is not None and dropped.rotated:
         lost.append(

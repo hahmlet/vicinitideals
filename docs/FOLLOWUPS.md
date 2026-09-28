@@ -481,13 +481,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    false GREEN); (d) the corridor facts are per lot (ANY street line), a
    per-LINE field would let the one line on Division take 10 ft and the side
    street 0.
-9. **Corpus drift: Portland Title 33 PDFs.** Held in the Multnomah
-   `_unincorporated` layer (33.100/33.110/33.140/33.266), they report CHANGED
-   at the same length -- likely a re-issued PDF with the same page count;
-   re-fetch, diff the text, repoint. (Clackamas ZDO, Ord. ZDO-293, was (a),
-   done 2026-09-27; Fairview's move to eCode360 was (c). If this turns out
-   to be a re-layout rather than a word change, `flats-fetch --refresh
-   --repoint --loose` is the tool.)
+9. **Wilsonville's Public Works Standards PDF moved.** The corpus watch
+   gets a 404 for `pws.201.2.23` (the 2017 construction standards at
+   wilsonvilleoregon.gov/.../public_works_construction_standards_2017.pdf).
+   The stored text is intact and still cited; only the watch is blind to it.
+   Find the city's current URL, check it is the same edition (or read what
+   changed), and re-point the `code:` entry in wilsonville.yaml.
 10. **Two loose ends from the ruling pass.** (a) Fairview FLX is the map's
    name for the "VC flex" area (19.135.txt L62) and is aliased to VC, whose
    `inside_mapped_use_area` variant names that same area -- the map code

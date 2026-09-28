@@ -334,6 +334,94 @@ def test_a_pdf_page_with_no_content_stream_is_a_blank_page_not_a_broken_document
     assert pdf_to_text(buf.getvalue()).strip() == ""
 
 
+def _two_runs(gap_in_spaces: float) -> bytes:
+    """One Helvetica line, "regulatio" then "ns", the gap between them a
+    fraction of a space: the kerning slack Portland's and Gresham's PDFs
+    leave inside a word."""
+    from io import BytesIO
+
+    from pypdf import PdfWriter
+    from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
+
+    writer = PdfWriter()
+    page = writer.add_blank_page(width=300, height=200)
+    font = DictionaryObject(
+        {
+            NameObject("/Type"): NameObject("/Font"),
+            NameObject("/Subtype"): NameObject("/Type1"),
+            NameObject("/BaseFont"): NameObject("/Helvetica"),
+        }
+    )
+    page[NameObject("/Resources")] = DictionaryObject(
+        {NameObject("/Font"): DictionaryObject({NameObject("/F1"): writer._add_object(font)})}
+    )
+    # "regulatio" at 12 pt is 46.02 units wide; a Helvetica space is 3.336.
+    content = DecodedStreamObject()
+    content.set_data(
+        f"BT /F1 12 Tf 10 100 Td (regulatio) Tj {46.02 + gap_in_spaces * 3.336:.3f} 0 Td "
+        f"(ns) Tj ET".encode()
+    )
+    page[NameObject("/Contents")] = writer._add_object(content)
+    buf = BytesIO()
+    writer.write(buf)
+    return buf.getvalue()
+
+
+def test_half_a_space_inside_a_word_is_not_a_space() -> None:
+    # pypdf 6.16.2 began rounding the gap between two runs to whole spaces
+    # (py-pdf/pypdf#3992), so the corpus watch reported Portland's Title 33
+    # and sixteen Gresham chapters as amended when only the library had
+    # changed: "regulations" came back "regulatio ns", "9.0801" as "9 .0 801".
+    # The store holds what 6.15 read; pdf_hold keeps reading it that way.
+    from flats.provenance.fetch import pdf_to_text
+
+    assert pdf_to_text(_two_runs(0.6)).strip() == "regulations"
+    assert pdf_to_text(_two_runs(1.2)).strip() == "regulatio ns"
+
+
+def test_the_hold_is_scoped_to_the_extraction() -> None:
+    # The patches are module attributes of pypdf; outside the block pypdf is
+    # its own shipped self, so nothing else in the process inherits the hold.
+    from io import BytesIO
+
+    from pypdf import PdfReader
+
+    from flats.provenance.pdf_hold import held_extraction
+
+    def read() -> str:
+        page = PdfReader(BytesIO(_two_runs(0.6))).pages[0]
+        return page.extract_text(extraction_mode="layout").strip()
+
+    with held_extraction():
+        assert read() == "regulations"
+    assert read() == "regulatio ns"
+
+
+def test_a_pypdf_that_moved_the_held_line_fails_loud(monkeypatch: pytest.MonkeyPatch) -> None:
+    # A later pypdf that rewrites one of the held lines must stop extraction,
+    # not quietly read the corpus under a third rule.
+    from flats.provenance import pdf_hold
+
+    monkeypatch.setattr(
+        pdf_hold,
+        "_HELD",
+        (
+            (
+                "pypdf._text_extraction._layout_mode._fixed_width_page",
+                "recurse_to_target_op",
+                "a line pypdf never shipped",
+                "anything",
+                (),
+            ),
+        ),
+    )
+    monkeypatch.setattr(pdf_hold, "_compiled", None)
+
+    with pytest.raises(RuntimeError, match="re-verify the stored corpus"):
+        with pdf_hold.held_extraction():
+            pass
+
+
 def test_a_fused_extraction_is_measured_not_mistaken_for_an_empty_code() -> None:
     # Tualatin's layout-mode text reads "areasintheCitythatareappropriate..."
     # — section numbers survive, so scope works and candidates simply never
