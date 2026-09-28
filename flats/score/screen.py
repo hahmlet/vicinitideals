@@ -221,6 +221,11 @@ class LotFacts:
     #: (:func:`flats.score.paper.court_depth`,
     #: :func:`flats.score.paper.side_column`). False and None where nothing
     #: measured the lot, which leaves the court as the street-fed one.
+    #: ``alley_at_side`` is stricter than the registry fact of that name:
+    #: the bridge sets it only where the alley runs the side line end to
+    #: end (:func:`flats.geom.alley.side_alley_along`, FOLLOWUPS 3(c)),
+    #: because the court stands somewhere along that line and the fit does
+    #: not say where.
     alley_at_rear: bool = False
     alley_at_side: bool = False
     alley_width_ft: float | None = None

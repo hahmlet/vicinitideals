@@ -27,6 +27,20 @@ setback to the alley and the waiver does not reach it, so False is the
 conservative answer; the count is small (the alley-only lots of a city are
 its landlocked-but-for-the-alley remainder) and named here so nobody reads
 ``abuts_alley: False`` on one as a measurement.
+
+**A line on the alley is not a line the alley runs the length of.** s4
+classes an edge ``A`` where three of five rays across it find the alley, so
+an alley that runs along half a side line and dead-ends there -- or turns
+away behind the neighbour -- makes the whole line an alley line. That is the
+right reading for "a lot line abutting an alley", and the wrong one for the
+court that parks along a side alley and backs out into it (FOLLOWUPS 3(c)):
+the court stands behind the building, wherever the fit put it, and a stub
+along the front half of the line leaves it backing into a fence. So s4 also
+measures how much of each alley edge the alley runs along (``alley_cover_json``,
+one ray every five feet) and :func:`side_alley_along` hands the court a side
+alley only where one side line is on the alley end to end. Where s4 predates
+that column nothing measured the stretch, and the answer is False: the court
+keeps its street lane, which is the answer it had before side alleys were read.
 """
 
 from __future__ import annotations
@@ -86,6 +100,72 @@ def observed_alley(
     return {"abuts_alley": rear or side, "alley_at_rear": rear, "alley_at_side": side}
 
 
+def side_alley_along(
+    edges: Sequence[Sequence[object]],
+    front_bearings: Sequence[float],
+    cover: Sequence[str | None] | None,
+) -> bool:
+    """Whether one side lot line is on the alley from end to end.
+
+    ``edges`` and ``front_bearings`` as :func:`alley_lines` takes them;
+    ``cover`` is s4's ``alley_cover_json`` decoded, parallel to ``edges``: per
+    alley edge a string of ``1`` and ``0``, one per ray along it (the alley
+    found or not), ``None`` on every other edge.
+
+    A side line is a run of consecutive side edges -- s4's ``S``, and the
+    ``A`` edges :func:`alley_lines` names ``side`` -- that keep one
+    direction: a bend of more than :data:`~flats.geom.edges.PARALLEL_TOL_DEG`
+    starts another line (the two legs of a triangular lot are two lines),
+    and a jog across the lot is parallel to the frontage, so s4 calls it a
+    rear edge and it ends the run. A line qualifies only where every edge of
+    it is an alley edge and every ray along every one found the alley: a
+    line whose front half is a neighbour's fence and rear half the alley is
+    not on the alley, because which half the court would stand in the fit
+    does not say.
+
+    ``cover`` of None, or not one entry per edge, is a record that predates
+    the measurement: False, the court's street-fed answer.
+    """
+    if cover is None or len(cover) != len(edges):
+        return False
+    named = iter(alley_lines(edges, front_bearings))
+    side: list[bool] = []
+    for edge in edges:
+        if edge[4] == ALLEY_CLASS:
+            side.append(next(named) == "side")
+        else:
+            side.append(edge[4] == "S")
+    if all(side):
+        return False  # no frontage and no rear: nothing to call a side line
+
+    def bearing(i: int) -> float:
+        e = edges[i]
+        return bearing_deg(float(e[0]), float(e[1]), float(e[2]), float(e[3]))  # type: ignore[arg-type]
+
+    def on_alley(i: int) -> bool:
+        c = cover[i]
+        return edges[i][4] == ALLEY_CLASS and isinstance(c, str) and bool(c) and set(c) == {"1"}
+
+    # Walk the ring from just after a non-side edge so no line wraps round.
+    start = side.index(False) + 1
+    n = len(edges)
+    line: list[int] = []
+    for k in range(n + 1):
+        i = (start + k) % n
+        same = (
+            k < n
+            and side[i]
+            and (not line or bearing_delta(bearing(line[-1]), bearing(i)) <= PARALLEL_TOL_DEG)
+        )
+        if same:
+            line.append(i)
+            continue
+        if line and all(on_alley(j) for j in line):
+            return True
+        line = [i] if k < n and side[i] else []
+    return False
+
+
 def alley_facts_from_quadfit(path: Path = S4_LOTS) -> dict[str, dict[str, bool]]:
     """Every lot's alley facts, keyed by TLID, from s4's parquet.
 
@@ -127,4 +207,5 @@ __all__ = [
     "alley_lines",
     "entailed",
     "observed_alley",
+    "side_alley_along",
 ]

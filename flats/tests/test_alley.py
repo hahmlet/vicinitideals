@@ -34,6 +34,7 @@ from flats.geom.alley import (
     alley_lines,
     entailed,
     observed_alley,
+    side_alley_along,
 )
 from flats.rules.conditions import CONDITIONS, ENTAILS, close_entailed
 from flats.rules.resolver import RuleSet
@@ -153,6 +154,81 @@ def test_the_bridge_reads_s4s_own_record(tmp_path) -> None:
     assert got["1N1E27AB  100"] == {"abuts_alley": True, "alley_at_rear": True, "alley_at_side": False}
     assert got["1N1E27AB  200"] == {"abuts_alley": True, "alley_at_rear": False, "alley_at_side": True}
     assert got["1N1E27AB  300"] == {"abuts_alley": False, "alley_at_rear": False, "alley_at_side": False}
+
+
+# --- how much of the side line the alley runs ------------------------------
+#
+# FOLLOWUPS 3(c). s4 classes a line A when three of five rays find the
+# alley, so a line can be A with the alley along 40% of it. The court the
+# screen parks beside a side alley can sit anywhere along the side line
+# (the fit is placed at any angle, not at a spot), so the screen parks
+# there only when s4's cover says the alley runs the WHOLE line.
+#
+# 1N1E25DD -09400, NE Portland, s4's own record (EPSG:2913, feet): the
+# alley behind the lot turns north about 8 ft short of the lot's NE corner, so
+# the last two of twenty rays leave it. Its front bearings are two
+# (a through lot), so the A line is named a side.
+REAL_EDGES = [
+    [7658563.26, 688589.09, 7658560.87, 688500.08, "R"],
+    [7658560.87, 688500.08, 7658459.35, 688443.93, "F"],
+    [7658459.35, 688443.93, 7658463.31, 688591.76, "F"],
+    [7658463.31, 688591.76, 7658563.26, 688589.09, "A"],
+]
+REAL_FB = [88.47, 28.94]
+
+
+def test_the_real_alley_that_turns_away_is_not_a_side_court_alley() -> None:
+    assert alley_lines(REAL_EDGES, REAL_FB) == ("side",)
+    assert observed_alley(REAL_EDGES, REAL_FB)["alley_at_side"] is True
+    # s4's measured cover, west to east: the last two rays off the alley.
+    assert side_alley_along(REAL_EDGES, REAL_FB, [None, None, None, "1" * 18 + "0" * 2]) is False
+    # The same line with the alley along all of it parks the court there.
+    assert side_alley_along(REAL_EDGES, REAL_FB, [None, None, None, "1" * 20]) is True
+
+
+def test_no_cover_measured_is_no_side_alley_court() -> None:
+    whole = [None, None, None, "1" * 20]
+    assert side_alley_along(REAL_EDGES, REAL_FB, None) is False
+    assert side_alley_along(REAL_EDGES, REAL_FB, whole[:3]) is False  # wrong length
+    assert side_alley_along(REAL_EDGES, REAL_FB, [None, None, None, None]) is False
+    assert side_alley_along(REAL_EDGES, REAL_FB, [None, None, None, ""]) is False
+
+
+def test_a_rear_alley_is_not_a_side_one_however_well_covered() -> None:
+    assert side_alley_along(REAR_ALLEY, FRONT_EW, [None, None, "1" * 20, None]) is False
+    assert side_alley_along(SIDE_ALLEY, FRONT_EW, [None, "1" * 20, None, None]) is True
+
+
+def test_a_side_line_half_street_half_alley_is_not_on_the_alley() -> None:
+    # The east line split in two collinear pieces: the south half S, the
+    # north half A. Whole cover on the A half is still half the line.
+    split = [
+        [0, 0, 50, 0, "F"],
+        [50, 0, 50, 50, "S"],
+        [50, 50, 50, 100, "A"],
+        [50, 100, 0, 100, "R"],
+        [0, 100, 0, 0, "S"],
+    ]
+    assert side_alley_along(split, FRONT_EW, [None, None, "1" * 10, None, None]) is False
+    # Two A pieces on one line, both whole: the line is on the alley.
+    both = [e[:4] + ["A"] if i in (1, 2) else e for i, e in enumerate(split)]
+    assert side_alley_along(both, FRONT_EW, [None, "1" * 10, "1" * 10, None, None]) is True
+    assert side_alley_along(both, FRONT_EW, [None, "1" * 10, "1" * 9 + "0", None, None]) is False
+
+
+def test_a_bend_in_the_side_starts_a_new_line() -> None:
+    # A wedge: frontage south, then a side leg S running north-east, then an
+    # A leg bending 45 degrees back north-west to the rear point. The legs
+    # are two lines, and the A leg covered end to end is a side alley on
+    # its own.
+    wedge = [
+        [0, 0, 60, 0, "F"],
+        [60, 0, 80, 50, "S"],
+        [80, 50, 40, 100, "A"],
+        [40, 100, 0, 0, "S"],
+    ]
+    assert alley_lines(wedge, FRONT_EW) == ("side",)
+    assert side_alley_along(wedge, FRONT_EW, [None, None, "1" * 13, None]) is True
 
 
 # --- the registry ---------------------------------------------------------

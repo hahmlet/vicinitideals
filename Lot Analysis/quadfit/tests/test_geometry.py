@@ -413,6 +413,74 @@ def test_a_gap_too_wide_to_be_an_alley_is_not_one():
     assert r["alley_width_ft"] is None and r["alley_edges_demoted"] == 1
 
 
+def test_the_cover_is_a_ray_every_five_feet_and_all_of_them_on_a_whole_alley():
+    """`alley_cover` is parallel to `edges`: None off the alley, and on the
+    alley edge one character per ray, 2.5 ft in from each corner and no
+    more than 5 ft apart -- twenty on a 100 ft line, every one finding the
+    14 ft alley behind the ordinary Portland lot."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 107), (160, 107)])
+    behind = shapely.box(-60, 114, 160, 214)
+    r = _classify_with_fabric(lot, [street], [alley], [behind])
+    cover = dict(zip((e[4] for e in r["edges"]), r["alley_cover"]))
+    assert cover["A"] == "1" * 20
+    assert [c for c, e in zip(r["alley_cover"], r["edges"]) if e[4] != "A"] == [None] * 3
+    # Without the fabric nothing measured the stretch, which is not a no.
+    r = _classify_with_alleys(lot, [street], [alley])
+    assert all(c is None for c in r["alley_cover"])
+
+
+def test_a_stub_along_half_the_line_classes_it_A_and_the_cover_says_which_half():
+    """FOLLOWUPS 3(c). The alley runs behind the western 55 ft of a 100 ft
+    rear line and dead-ends there; the neighbour's lot is across the rest.
+    Three of the five rays find it (10, 30 and 50 %), so the line is an
+    alley line -- right for "a lot line abutting an alley" -- and only the
+    cover says the eastern 45 ft face a fence."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    alley = LineString([(-60, 107), (55, 107)])
+    strip = shapely.box(-60, 100, 55, 114)
+    across = [shapely.box(-60, 114, 160, 214), shapely.box(55, 100, 160, 114)]
+    r = _classify_with_fabric(lot, [street], [alley], across, [strip])
+    (edge, cover), = [(e, c) for e, c in zip(r["edges"], r["alley_cover"]) if e[4] == "A"]
+    assert r["alley_width_ft"] == pytest.approx(14.0, abs=0.1)
+    # The ring runs east to west along the rear line (counter-clockwise).
+    assert edge[0] > edge[2]
+    assert cover == "0" * 9 + "1" * 11
+
+
+def test_a_real_alley_that_turns_away_leaves_the_end_of_the_line_uncovered():
+    """1N1E25DD -09400, NE Portland, at real coordinates (EPSG:2913, the
+    2026-09-24 s4 fabric within 60 ft). The 18 ft alley runs west to east
+    behind the lot and turns north about 8 ft short of its north-east corner,
+    where the lot beside it begins; the north line classes A on three rays
+    of five, and was screened as a side alley on run 33. Eighteen of the
+    twenty rays find the alley and the last two, at the east end, do not.
+    """
+    import json
+    from pathlib import Path
+
+    d = json.loads((Path(__file__).parent / "fixtures" / "alley_turns_away_1N1E25DD_09400.json").read_text())
+    from s4_edges import classify_lot
+
+    lot = shapely.from_wkt(d["lot"])
+    sg = np.array([shapely.from_wkt(w) for w in d["streets"]], dtype=object)
+    ag = np.array([shapely.from_wkt(w) for w in d["alleys"]], dtype=object)
+    lg = np.array([lot] + [shapely.from_wkt(f["wkt"]) for f in d["fabric"]], dtype=object)
+    private = np.array([True] + [f["private"] for f in d["fabric"]])
+    r = classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        alley_tree=STRtree(ag), alley_geoms=ag,
+        lot_tree=STRtree(lg), lot_geoms=lg, lot_private=private,
+    )
+    assert sorted(e[4] for e in r["edges"]) == sorted(e[4] for e in d["edges"]), "s4's own classes"
+    assert r["alley_width_ft"] == pytest.approx(d["width"], abs=0.1)
+    ((edge, cover),) = [(e, c) for e, c in zip(r["edges"], r["alley_cover"]) if c is not None]
+    west_to_east = cover if edge[0] < edge[2] else cover[::-1]
+    assert west_to_east == "1" * 18 + "0" * 2
+
+
 # ---------------------------------------------------------------------------
 # s4 -- the zone across each lot line
 # ---------------------------------------------------------------------------

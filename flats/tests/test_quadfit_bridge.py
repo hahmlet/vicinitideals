@@ -773,6 +773,11 @@ def test_the_rows_carry_the_taxlot_under_its_own_name(tmp_path: Path) -> None:
 
 BEHIND = [*EDGES[:2], [X0 + 50, Y0 + 100, X0, Y0 + 100, "A"], EDGES[3]]
 BESIDE = [EDGES[0], [X0 + 50, Y0, X0 + 50, Y0 + 100, "A"], *EDGES[2:]]
+#: s4's ``alley_cover_json`` for BESIDE: twenty rays along the 100 ft side
+#: line, every one finding the alley -- or only the front ten, the alley a
+#: stub that dead-ends halfway along the line (FOLLOWUPS 3(c)).
+BESIDE_WHOLE = json.dumps([None, "1" * 20, None, None])
+BESIDE_STUB = json.dumps([None, "1" * 10 + "0" * 10, None, None])
 
 
 def test_a_rear_yard_the_alley_waives_is_cut_at_zero(corpus, policies) -> None:
@@ -811,7 +816,10 @@ def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpu
     # a two-way aisle -- where the lot has the alley at the rear.
     fed = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0), corpus.layers)
     assert fed.facts.alley_at_rear is True and fed.facts.alley_width_ft == 14.0
-    beside = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0), corpus.layers)
+    beside = lot_from_row(
+        cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0, alley_cover_json=BESIDE_WHOLE),
+        corpus.layers,
+    )
     assert beside.facts.alley_at_rear is False and beside.facts.alley_at_side is True
     assert lot_from_row(cut_row(zone="R5")).facts.alley_width_ft is None
 
@@ -837,7 +845,10 @@ def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None
 
     street = screened(lot_from_row(cut_row(zone="R5"), corpus.layers))
     beside = screened(
-        lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0), corpus.layers)
+        lot_from_row(
+            cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0, alley_cover_json=BESIDE_WHOLE),
+            corpus.layers,
+        )
     )
     def side(s) -> float:
         return 56.0 if s.fit.orientation is Orientation.width_facing else 36.0
@@ -845,6 +856,34 @@ def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None
     assert street.fit.across_ft - side(street) == pytest.approx(12.0)
     assert beside.fit.across_ft == pytest.approx(side(beside))
     assert "fit_across_ft" not in beside.screening.unchecked
+
+
+def test_a_side_alley_that_stops_halfway_along_the_line_keeps_the_street_lane(corpus, policies) -> None:
+    # FOLLOWUPS 3(c). s4 names the line an alley line on three rays of five,
+    # so a stub along the front half of it classes the whole line A. The
+    # court stands behind the pod, somewhere along that line, and the fit
+    # does not say where: only a line the alley runs end to end feeds it.
+    # A record with no ``alley_cover_json`` (s4 before the column) measured
+    # nothing, and is read the same way.
+    def screened(lot):
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        return s
+
+    def side(s) -> float:
+        return 56.0 if s.fit.orientation is Orientation.width_facing else 36.0
+
+    for cover in (BESIDE_STUB, None):
+        lot = lot_from_row(
+            cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0, alley_cover_json=cover),
+            corpus.layers,
+        )
+        # The line still abuts an alley -- the registry's fact, which the
+        # setbacks read, is s4's -- but the court is not handed the alley.
+        assert lot.observed["alley_at_side"] is True
+        assert lot.facts.alley_at_side is False and lot.facts.alley is None
+        s = screened(lot)
+        assert s.fit.column is False
+        assert s.fit.across_ft - side(s) == pytest.approx(12.0), "the lane down the flank is back"
 
 
 # --- which street is the front of a corner lot (FOLLOWUPS 4(e)) ----------------

@@ -70,7 +70,14 @@ from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for
 from flats.fit.draw import draw
 from flats.fit.rectangle import Fit, Fitter
-from flats.geom.alley import ALLEY_CLASS, ALLEY_FACTS, S4_LOTS, alley_lines, observed_alley
+from flats.geom.alley import (
+    ALLEY_CLASS,
+    ALLEY_FACTS,
+    S4_LOTS,
+    alley_lines,
+    observed_alley,
+    side_alley_along,
+)
 from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors
 from flats.geom.corridor import load_maps as load_corridor_maps
 from flats.geom.corner import (
@@ -149,6 +156,7 @@ S4_COLUMNS: tuple[str, ...] = (
     "split_zone",
     "neighbour_zones_json",
     "alley_width_ft",
+    "alley_cover_json",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -611,6 +619,19 @@ def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
     return Envelope(geom, None if strips else setbacks.largest_ft, "flats", setbacks)
 
 
+def _side_alley_along(row: Mapping[str, Any]) -> bool:
+    """:func:`flats.geom.alley.side_alley_along` on one stage-file row; False
+    where s4 predates ``alley_cover_json`` (nothing measured the stretch)."""
+    raw = row.get("alley_cover_json")
+    if not raw:
+        return False
+    return side_alley_along(
+        json.loads(row.get("edges_json") or "[]"),
+        json.loads(row.get("front_bearings_json") or "[]"),
+        json.loads(raw),
+    )
+
+
 def lot_from_row(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer] | None = None,
@@ -641,7 +662,12 @@ def lot_from_row(
         # court it feeds (FOLLOWUPS 4(b), :func:`flats.score.paper.court_depth`,
         # :func:`flats.score.paper.side_column`).
         alley_at_rear=bool(observed.get("alley_at_rear")),
-        alley_at_side=bool(observed.get("alley_at_side")),
+        # A side alley feeds the court only where it runs the whole side
+        # line (FOLLOWUPS 3(c)): s4 names a line an alley line on three rays
+        # of five, and a stub along half of it would park the court against
+        # a fence. The registry's ``alley_at_side`` -- the line abuts an
+        # alley, for its setback -- is left as s4 read it.
+        alley_at_side=bool(observed.get("alley_at_side")) and _side_alley_along(row),
         alley_width_ft=_finite(row.get("alley_width_ft")),
         # Two streets that really are two: the side street may take the
         # driveway (:func:`flats.score.paper.side_street_fed`).

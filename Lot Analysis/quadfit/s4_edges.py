@@ -27,6 +27,9 @@ Edge classes:
      city -- see the same field for why. The width of the gap is written
      to `alley_width_ft` (the narrowest, where a lot has more than one
      alley edge), and the site plan asks the city's back-out room of it.
+     How much of each A edge the alley really runs along -- three rays of
+     five class it, so a stub along 40 % of the line is enough -- is
+     written to `alley_cover_json` (`_alley_cover`, one ray every 5 ft).
   R  rear -- not a street, roughly parallel to a front bearing
   S  side -- the rest
 
@@ -108,6 +111,12 @@ ALLEY_CL_TOL_FT = 3.0      # the centreline may sit this far past the far side
 ALLEY_CL_ALONG_FT = 50.0   # ... and this far along the alley from the ray
 ALLEY_SAMPLES = (0.1, 0.3, 0.5, 0.7, 0.9)   # where along the edge a ray is cast
 ALLEY_SAMPLES_MIN_HIT = 3  # at least this many of the five must find the alley
+# How much of an alley edge the alley really runs along (`_alley_cover`):
+# the same ray, cast every `ALLEY_COVER_STEP_FT` from `ALLEY_COVER_INSET_FT`
+# in from each end. Five rays decide whether a line is on the alley; three of
+# them are enough, so a stub along 40 % of a line classes the whole line A.
+ALLEY_COVER_STEP_FT = 5.0
+ALLEY_COVER_INSET_FT = 2.5
 #: How far past a non-street edge the neighbour is sampled, in feet: beyond
 #: `simplify_tolerance_ft` (1.5), so the point is out of this lot's true
 #: polygon whichever way the simplification cut, and inside a neighbour
@@ -197,57 +206,104 @@ def _alley_width(x1: float, y1: float, x2: float, y2: float, outward: float,
     the five find it, so the lot at an alley's dead end, whose rear line
     touches it for fourteen feet of fifty, does not park four cars in the
     neighbour's yard. `outward` is +1 or -1 and turns the edge's
-    right-hand normal to point out of the lot.
+    right-hand normal to point out of the lot. Three of five says the line
+    is on the alley, not how much of it: that stretch is `_alley_cover`.
     """
+    ln = math.hypot(x2 - x1, y2 - y1)
+    widths = []
+    for t in ALLEY_SAMPLES:
+        far = _alley_ray(x1, y1, x2, y2, t * ln, outward, lot_tree, lot_geoms,
+                         lot_private, alley_tree, alley_geoms)
+        if far is not None:
+            widths.append(far)
+    if len(widths) < ALLEY_SAMPLES_MIN_HIT:
+        return None
+    return round(min(widths), 1)
+
+
+def _alley_ray(x1: float, y1: float, x2: float, y2: float, at_ft: float,
+               outward: float, lot_tree, lot_geoms, lot_private, alley_tree,
+               alley_geoms) -> float | None:
+    """One ray of `_alley_width`: cast out of the lot from ``at_ft`` along
+    the edge (from its first point), the alley's width there, or None where
+    no alley is across the edge at that point."""
     from shapely.geometry import LineString, Point, Polygon
 
     ln = math.hypot(x2 - x1, y2 - y1)
     ex, ey = (x2 - x1) / ln, (y2 - y1) / ln       # along the edge
     nx, ny = outward * ey, -outward * ex           # out of the lot
-    widths = []
-    for t in ALLEY_SAMPLES:
-        px, py = x1 + t * (x2 - x1), y1 + t * (y2 - y1)
-        p = Point(px, py)
-        inside = Point(px - 0.5 * nx, py - 0.5 * ny)    # half a foot into this lot
-        outside = Point(px + 0.5 * nx, py + 0.5 * ny)   # ... and half a foot out of it
-        ray = LineString([(px, py), (px + ALLEY_RAY_FT * nx, py + ALLEY_RAY_FT * ny)])
-        # The far side: where private land begins again along the ray.
-        far, on_public = None, False
-        for j in lot_tree.query(ray):
-            g = lot_geoms[j]
-            if not lot_private[j]:
-                on_public = on_public or g.intersects(outside)
-                continue
-            if g.intersects(inside) or not ray.intersects(g):
-                continue
-            d = ray.intersection(g).distance(p)
-            far = d if far is None else min(far, d)
-        if far is None and on_public:
-            # Public land as far as the ray reaches (a freeway, a rail
-            # cut): the centreline's crossing is the alley's middle.
-            d_cl = None
-            for j in alley_tree.query(ray):
-                xx = ray.intersection(alley_geoms[j])
-                if not xx.is_empty:
-                    d = xx.distance(p)
-                    d_cl = d if d_cl is None else min(d_cl, d)
-            far = None if d_cl is None else 2.0 * d_cl
-        if far is None or not ALLEY_WIDTH_MIN_FT <= round(far, 1) <= ALLEY_WIDTH_MAX_FT:
+    px, py = x1 + at_ft * ex, y1 + at_ft * ey
+    p = Point(px, py)
+    inside = Point(px - 0.5 * nx, py - 0.5 * ny)    # half a foot into this lot
+    outside = Point(px + 0.5 * nx, py + 0.5 * ny)   # ... and half a foot out of it
+    ray = LineString([(px, py), (px + ALLEY_RAY_FT * nx, py + ALLEY_RAY_FT * ny)])
+    # The far side: where private land begins again along the ray.
+    far, on_public = None, False
+    for j in lot_tree.query(ray):
+        g = lot_geoms[j]
+        if not lot_private[j]:
+            on_public = on_public or g.intersects(outside)
             continue
-        # The centreline must run in the gap, or the gap is not this alley:
-        # the band is the gap's depth (a foot into the lot, the tolerance
-        # past the far side) for `ALLEY_CL_ALONG_FT` either way along it.
-        a, b = ALLEY_CL_ALONG_FT, far + ALLEY_CL_TOL_FT
-        band = Polygon([(px - a * ex - nx, py - a * ey - ny),
-                        (px + a * ex - nx, py + a * ey - ny),
-                        (px + a * ex + b * nx, py + a * ey + b * ny),
-                        (px - a * ex + b * nx, py - a * ey + b * ny)])
-        if not any(band.intersects(alley_geoms[j]) for j in alley_tree.query(band)):
+        if g.intersects(inside) or not ray.intersects(g):
             continue
-        widths.append(far)
-    if len(widths) < ALLEY_SAMPLES_MIN_HIT:
+        d = ray.intersection(g).distance(p)
+        far = d if far is None else min(far, d)
+    if far is None and on_public:
+        # Public land as far as the ray reaches (a freeway, a rail
+        # cut): the centreline's crossing is the alley's middle.
+        d_cl = None
+        for j in alley_tree.query(ray):
+            xx = ray.intersection(alley_geoms[j])
+            if not xx.is_empty:
+                d = xx.distance(p)
+                d_cl = d if d_cl is None else min(d_cl, d)
+        far = None if d_cl is None else 2.0 * d_cl
+    if far is None or not ALLEY_WIDTH_MIN_FT <= round(far, 1) <= ALLEY_WIDTH_MAX_FT:
         return None
-    return round(min(widths), 1)
+    # The centreline must run in the gap, or the gap is not this alley:
+    # the band is the gap's depth (a foot into the lot, the tolerance
+    # past the far side) for `ALLEY_CL_ALONG_FT` either way along it.
+    a, b = ALLEY_CL_ALONG_FT, far + ALLEY_CL_TOL_FT
+    band = Polygon([(px - a * ex - nx, py - a * ey - ny),
+                    (px + a * ex - nx, py + a * ey - ny),
+                    (px + a * ex + b * nx, py + a * ey + b * ny),
+                    (px - a * ex + b * nx, py - a * ey + b * ny)])
+    if not any(band.intersects(alley_geoms[j]) for j in alley_tree.query(band)):
+        return None
+    return far
+
+
+def _alley_cover(x1: float, y1: float, x2: float, y2: float, outward: float,
+                 lot_tree, lot_geoms, lot_private, alley_tree, alley_geoms,
+                 ) -> str:
+    """Where along an alley edge the alley really runs: one character per
+    ray, ``1`` where it finds the alley and ``0`` where not, in order from
+    the edge's first point.
+
+    `_alley_width` decides an edge is ON the alley when three of its five
+    rays find it, and that is the right test for "does this line abut an
+    alley"; it is not a measurement of how much of the line does. An alley
+    that runs along half of a side line and dead-ends there -- or turns away
+    behind the neighbour -- finds three of five and classes the whole line
+    A. The FLATS court, which parks along a side alley and backs out into
+    it, needs the alley where the court stands, so the stretch is measured
+    here with the same ray every `ALLEY_COVER_STEP_FT`, the first and last
+    `ALLEY_COVER_INSET_FT` in from the corners (a ray on the corner itself
+    stands on the neighbour's line). An edge too short for two rays gets
+    one, at its middle.
+    """
+    ln = math.hypot(x2 - x1, y2 - y1)
+    span = ln - 2 * ALLEY_COVER_INSET_FT
+    if span <= 0:
+        stations = [ln / 2]
+    else:
+        n = max(1, math.ceil(span / ALLEY_COVER_STEP_FT))
+        stations = [ALLEY_COVER_INSET_FT + span * i / n for i in range(n + 1)]
+    return "".join(
+        "0" if _alley_ray(x1, y1, x2, y2, at, outward, lot_tree, lot_geoms,
+                          lot_private, alley_tree, alley_geoms) is None else "1"
+        for at in stations
+    )
 
 
 def dead_ends(street_geoms) -> list:
@@ -349,7 +405,7 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
         edges.append((x1, y1, x2, y2, ln, bearing_deg(x1, y1, x2, y2)))
     none = {"tier": "D", "edges": [], "front_bearings": [], "frontage_ft": 0.0,
             "alley_width_ft": None, "alley_edges_demoted": 0,
-            "neighbour_samples": []}
+            "neighbour_samples": [], "alley_cover": []}
     if not edges:
         return none
 
@@ -411,6 +467,16 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
             cls = "S"
         classed.append([round(x1, 2), round(y1, 2), round(x2, 2), round(y2, 2), cls])
 
+    # How much of each alley edge the alley runs along (`_alley_cover`);
+    # None on every other edge, and on every edge where the fabric was not
+    # given -- nothing measured it, which is not the same as no alley.
+    cover = [
+        _alley_cover(c[0], c[1], c[2], c[3], outward, lot_tree, lot_geoms,
+                     lot_private, alley_tree, alley_geoms)
+        if c[4] == "A" and lot_tree is not None else None
+        for c in classed
+    ]
+
     # Where the neighbour across each non-street edge is looked for: five
     # points along the edge, `NEIGHBOUR_OFFSET_FT` out of the lot (across
     # the alley, for an alley edge) and the same distance in. Resolved
@@ -462,6 +528,7 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
         "alley_width_ft": alley_width,
         "alley_edges_demoted": demoted,
         "neighbour_samples": samples,
+        "alley_cover": cover,
     }
 
 
@@ -620,6 +687,9 @@ def main() -> None:
     lots["edges_json"] = [json.dumps(r["edges"]) for r in results]
     lots["front_bearings_json"] = [json.dumps(r["front_bearings"]) for r in results]
     lots["frontage_ft"] = [r["frontage_ft"] for r in results]
+    # Parallel to edges_json: per alley edge, a ray every few feet along it
+    # that found the alley (1) or did not (0); null on every other edge.
+    lots["alley_cover_json"] = [json.dumps(r["alley_cover"]) for r in results]
 
     # What zone lies across each lot line that is not a street lot line,
     # from the fabric with s2's zones on it. One bulk query for the county.
