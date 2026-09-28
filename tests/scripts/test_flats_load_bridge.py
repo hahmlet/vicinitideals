@@ -310,6 +310,33 @@ def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
         export(run_dir, tmp_path / "bundle", s4=short, s5o=s5o, quadfit_results=results)
 
 
+def test_a_measured_pocket_lot_stays_in_its_own_jurisdiction(tmp_path: Path) -> None:
+    """quadfit s3 measures a pocket under the jurisdiction whose zone its map
+    prints (FOLLOWUPS 8(a)); the lot row keeps the map's jurisdiction and code,
+    as an unmeasured pocket's snapshot record does, and quadfit's rules layer
+    rides in the facts."""
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    frame = pd.read_parquet(s4)
+    at = frame["TLID"] == LOT_B
+    frame["home_jurisdiction"] = frame["jurisdiction"]
+    frame["home_zone_raw"] = frame["zone_raw"]
+    frame["pocket_of"] = None
+    frame.loc[at, ["jurisdiction", "zone_raw", "zone"]] = ["milwaukie", "R-MD", "R-MD"]
+    frame.loc[at, ["home_jurisdiction", "home_zone_raw", "pocket_of"]] = [
+        "clackamas_unincorporated", "R-MD", "or/clackamas/milwaukie",
+    ]
+    frame.to_parquet(s4, index=False)
+
+    export(run_dir, tmp_path / "bundle", s4=s4, s5o=s5o, quadfit_results=results)
+
+    lots = {r["tlid"]: r for r in _read(tmp_path / "bundle" / LOTS_FILE)}
+    b = lots[LOT_B]
+    assert (b["jurisdiction"], b["zone_raw"], b["zone"]) == ("or/clackamas/_unincorporated", "R-MD", "R-MD")
+    assert json.loads(b["facts"])["quadfit_jurisdiction"] == "milwaukie"
+    a = lots[LOT_A]
+    assert (a["jurisdiction"], a["zone_raw"]) == ("or/multnomah/portland", "R5"), "an ordinary lot is untouched"
+
+
 LOT_C = "1S1E01AA -00100"  # in s4 but never measured by the bridge; the snapshot answers for it
 LOT_D = "1S1E01AA -00200"  # in the snapshot only: dropped by quadfit's filter
 LOT_E = "24E01  03900"  # Canby: on the Clackamas roll, in no layer the rules hold

@@ -146,6 +146,11 @@ S4_WANTED = (
     "zone_frac",
     "stack_count",
     "wkb",
+    # quadfit s3's pockets (2026-09-28): the map's own jurisdiction and code
+    # where the lot was measured under another jurisdiction's rules.
+    "home_jurisdiction",
+    "home_zone_raw",
+    "pocket_of",
 )
 S5O_WANTED = (
     "envelope_sqft",
@@ -618,14 +623,19 @@ def export(
             if tlid in s4_rows:
                 # Measured: s4's record, as the bridge always exported it.
                 s4r = s4_rows[tlid]
-                juris = str(s4r.get("jurisdiction"))
+                # A pocket (quadfit s3 measured it under the jurisdiction whose
+                # zone its map prints) stays in its own jurisdiction, as the
+                # snapshot's record of it does; the layer that screened it is
+                # `facts.snapshot_zone.of` and `facts.quadfit_jurisdiction`.
+                juris = str(s4r.get("home_jurisdiction") or s4r.get("jurisdiction"))
                 county = lot_county(s4r)
                 try:
                     layer = layer_id_for(juris)
                 except KeyError:
                     layer = f"quadfit:{juris}"
                 facts = lot_facts(s4r, s5o_rows.get(tlid, {}), observed, q_rows.get(tlid, {}))
-                zone_raw, zone, address = s4r.get("zone_raw"), s4r.get("zone"), s4r.get("SITEADDR")
+                zone_raw = s4r.get("home_zone_raw") or s4r.get("zone_raw")
+                zone, address = s4r.get("zone"), s4r.get("SITEADDR")
                 wkb = s4r.get("wkb")
                 area = _num(s4r.get("area_sqft"))
                 sources["quadfit"] += 1

@@ -92,6 +92,25 @@ def _load_layer_geoms(key: str, fill_holes: bool = False):
     return geoms
 
 
+def overlay_reach(lots) -> list[tuple[str, ...]]:
+    """The jurisdictions whose overlays reach each lot.
+
+    Its own, and for a pocket (s3 measures a lot whose map prints another
+    jurisdiction's zone under that jurisdiction's rules, `home_jurisdiction`
+    keeping the map's) the home one as well. The zone's standards travel
+    with the ruling; the ground's constraints are mapped by whoever mapped
+    that ground, and which of the two published the layer that covers a lot
+    at a city's edge is not something the ruling says. Carving under both is
+    the conservative reading -- an overlay missed is a false green, one
+    applied twice only asks.
+    """
+    home = lots["home_jurisdiction"] if "home_jurisdiction" in lots.columns else lots["jurisdiction"]
+    return [
+        (j,) if not isinstance(h, str) or h == j else (j, h)
+        for j, h in zip(lots["jurisdiction"], home)
+    ]
+
+
 def overlay_columns(lots, spec, geoms):
     """(flags, sqft) per lot for one overlay layer via STRtree."""
     import numpy as np
@@ -103,8 +122,8 @@ def overlay_columns(lots, spec, geoms):
     sqft = np.zeros(n)
     tree = STRtree(geoms)
     garr = np.array(geoms, dtype=object)
-    for i, (jur, geom) in enumerate(zip(lots["jurisdiction"], lots["lot_geom"])):
-        if not spec.applies_to(jur):
+    for i, (jur, geom) in enumerate(zip(overlay_reach(lots), lots["lot_geom"])):
+        if not any(spec.applies_to(j) for j in jur):
             continue
         shrunk = shapely.buffer(geom, -SHRINK_FT)
         if shrunk.is_empty:
@@ -138,11 +157,11 @@ def carve_envelopes(lots, carve_specs, layer_geoms):
         trees.append((spec, STRtree(geoms), np.array(geoms, dtype=object)))
 
     carved = []
-    for jur, env in zip(lots["jurisdiction"], lots["geom"]):
+    for jur, env in zip(overlay_reach(lots), lots["geom"]):
         out = env
         if out is not None and not out.is_empty:
             for spec, tree, garr in trees:
-                if not spec.applies_to(jur):
+                if not any(spec.applies_to(j) for j in jur):
                     continue
                 idx = tree.query(out, predicate="intersects")
                 for g in garr[idx]:
@@ -177,11 +196,11 @@ def carve_regions(lots, carve_specs, layer_geoms):
         trees.append((spec, STRtree(geoms), np.array(geoms, dtype=object)))
 
     regions = []
-    for jur, lot in zip(lots["jurisdiction"], lots["lot_geom"]):
+    for jur, lot in zip(overlay_reach(lots), lots["lot_geom"]):
         hits = []
         if lot is not None and not lot.is_empty:
             for spec, tree, garr in trees:
-                if not spec.applies_to(jur):
+                if not any(spec.applies_to(j) for j in jur):
                     continue
                 hits.extend(garr[tree.query(lot, predicate="intersects")])
         if not hits:

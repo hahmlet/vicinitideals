@@ -1,8 +1,12 @@
 """s1 — normalize raw downloads into canonical Parquet stages.
 
 - Taxlots: validity repair, drop empty/degenerate geometry, explode
-  multipolygons keeping the largest part, condo-stack dedupe (many TLIDs
-  sharing one footprint collapse to a representative row with stack_count).
+  multipolygons keeping the largest part, condominium verdict per record
+  (`condo_verdict` / `condo_reason`, read off the assessor's property code
+  and the lot's size by `flats.normalize.condo.check_condo` -- the same test
+  FLATS's normalize stage runs; s3 drops the `excluded` ones by name),
+  condo-stack dedupe (many TLIDs sharing one footprint collapse to a
+  representative row with stack_count).
 - Streets: geometry, name, RLIS TYPE/FTYPE and an `alley` flag (TYPE 1600).
 - Zoning layers (every layer referenced by rules.yaml): validity repair +
   zone_raw column extracted from the configured zone_field.
@@ -25,6 +29,17 @@ sys.path.insert(0, str(TOOL_DIR))
 
 from common import load_rules, write_stage
 from s0_acquire import raw_path
+
+#: The condominium test is FLATS's, imported rather than mirrored: the lot
+#: table FLATS answers for (flats.ingest.normalize) and the universe quadfit
+#: measures have to agree on which records are land, and one implementation is
+#: the only way two stages cannot drift. `flats.normalize.condo` imports
+#: nothing but the standard library. (quadfit's own condo test, the stack
+#: dedupe below, only sees units platted on one identical footprint; the
+#: ~2,000 Multnomah unit records drawn separately -- PROP_CODE 102/132/202/122,
+#: 1,000-2,000 sq ft -- were measured every run until 2026-09-28 and dropped
+#: again by FLATS's assign stage.)
+from flats.normalize.condo import check_condo  # noqa: E402
 
 TAXLOT_PROP_COLUMNS = [
     "TLID", "SITEADDR", "SITECITY", "SITEZIP", "JURIS_CITY", "COUNTY",
@@ -59,6 +74,25 @@ def _clean_polygon(geom: Any) -> tuple[Any | None, float, int]:
     return largest, full_area, len(parts)
 
 
+def condo_columns(row: dict[str, Any]) -> dict[str, Any]:
+    """``condo_verdict`` / ``condo_reason`` for one taxlot record.
+
+    Read off the raw RLIS properties (``PROP_CODE``, ``COUNTY``, ``BLDGSQFT``)
+    and the full valid area, exactly the four fields FLATS's normalize hands
+    :func:`check_condo`, before the stack dedupe -- normalize tests every
+    record before it collapses a stack, too. The row is kept either way: s2
+    still zones it and s4 still sees it in the fabric; s3 drops the
+    ``excluded`` ones with the reason, so no record leaves unnamed.
+    """
+    verdict = check_condo({
+        "area_sqft": row.get("area_sqft"),
+        "BLDGSQFT": row.get("BLDGSQFT"),
+        "PROP_CODE": row.get("PROP_CODE"),
+        "COUNTY": row.get("COUNTY"),
+    })
+    return {"condo_verdict": verdict.verdict.value, "condo_reason": verdict.reason or None}
+
+
 def normalize_taxlots() -> None:
     import pandas as pd
     from shapely.geometry import shape
@@ -80,10 +114,15 @@ def normalize_taxlots() -> None:
         row["area_sqft"] = full_area
         row["part_count"] = n_parts
         row["geom"] = largest
+        row.update(condo_columns(row))
         rows.append(row)
     print(f"taxlots: dropped {dropped_geom:,} with no usable polygon geometry")
 
     df = pd.DataFrame(rows)
+    excluded = df.loc[df["condo_verdict"] == "excluded", "condo_reason"].value_counts()
+    print(f"taxlots: condominium test -- {int(excluded.sum()):,} records are not land "
+          f"({', '.join(f'{r} {n:,}' for r, n in excluded.items()) or 'none'}); "
+          "kept here, dropped by name at s3")
 
     # Condo-stack dedupe: units platted as identical/near-identical footprints.
     # Key on rounded representative point + rounded area.
