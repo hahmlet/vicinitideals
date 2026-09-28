@@ -1731,8 +1731,9 @@ async def test_a_flattened_row_is_shown_with_the_cells_under_it(
     # permission somebody has to know to un-weld and "P" with footnotes 7 and 8
     # is what the table prints. The corpus was re-extracted under it on
     # 2026-08-26 and this assertion did not learn, because CI's light gate was
-    # dark from 08-14 to 09-03 and nothing ran it.
-    assert candidates[0]["after"][:3] == ["P[7,8]", "P[7,8]", "X"]
+    # dark from 08-14 to 09-03 and nothing ran it. Notes 8 and 9 since Ord.
+    # ZDO-293 (2026-09-08) renumbered Table 315-1.
+    assert candidates[0]["after"][:3] == ["P[8,9]", "P[8,9]", "X"]
 
 
 
