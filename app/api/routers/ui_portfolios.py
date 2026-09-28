@@ -243,6 +243,15 @@ async def portfolio_detail(
     )
 
 
+def _in_users_org(user, org_id) -> bool:
+    """True when a row owned by *org_id* belongs to the current user's org
+    (always True with org isolation switched off)."""
+    if not settings.org_isolation_enabled:
+        return True
+    user_org_id = getattr(user, "org_id", None) if user is not None else None
+    return user_org_id is not None and org_id == user_org_id
+
+
 @router.post("/ui/portfolios/{portfolio_id}/add-deal", response_class=HTMLResponse)
 async def portfolio_add_deal(
     request: Request,
@@ -264,7 +273,11 @@ async def portfolio_add_deal(
             selectinload(Deal.scenarios).selectinload(Scenario.projects),
         ],
     )
-    if deal is None:
+    user = await _get_user(session, request)
+    portfolio = await session.get(Portfolio, portfolio_id)
+    if portfolio is None or not _in_users_org(user, portfolio.org_id):
+        return HTMLResponse("<p class='text-muted'>Portfolio not found.</p>", status_code=404)
+    if deal is None or not _in_users_org(user, deal.org_id):
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
 
     active_scenario = _primary_scenario(deal)
@@ -305,6 +318,11 @@ async def portfolio_remove_deal(
         opp_id = UUID(opp_id_raw)
     except ValueError:
         return HTMLResponse("<p class='text-muted'>Invalid opportunity ID.</p>", status_code=400)
+
+    user = await _get_user(session, request)
+    portfolio = await session.get(Portfolio, portfolio_id)
+    if portfolio is None or not _in_users_org(user, portfolio.org_id):
+        return HTMLResponse("<p class='text-muted'>Portfolio not found.</p>", status_code=404)
 
     await session.execute(
         sa_delete(PortfolioProject).where(
