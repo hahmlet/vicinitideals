@@ -20,6 +20,7 @@ pinned to the site plan's own switch.
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import pytest
 import yaml
@@ -360,3 +361,66 @@ def test_four_cities_send_the_driveway_to_the_alley_in_the_corpus(layers) -> Non
     # and the lot-level fact is the one the screen reads it under
     res = rules.resolve(layer_id_for("portland"), "R5", conditions=("abuts_alley", "multi_story"))
     assert res.values["parking_alley_access_required"].value is True
+
+
+def _portland_doc(name: str) -> list[str]:
+    root = Path(__file__).resolve().parents[1] / "provenance/docs/or/multnomah/portland"
+    return (root / name).read_text(encoding="utf-8").splitlines()
+
+
+def _yard(block, field: str):
+    held = block.values.get(field)
+    if held is None:
+        return None
+    return (
+        held.exempt,
+        held.value,
+        sorted((v.exempt, str(v.value), tuple(sorted(v.when or ()))) for v in held.variants),
+    )
+
+
+def test_a_portland_side_alley_without_its_own_field_takes_the_one_number_the_code_sets() -> None:
+    """FOLLOWUPS 12(c). Portland's commercial, employment and industrial
+    chapters state no alley setback; an alley line there is "a lot line
+    that is not a street lot line" and 33.130.215.B.2 sets it by the zone
+    abutted -- the side/rear pair, one number. The screen cuts a side alley
+    at max(side, rear), which is that number only while the two agree. So
+    wherever a pod can be allowed and the field is absent, side and rear
+    must resolve alike, variants and all; a zone that splits them needs
+    the field (or a fresh reading) before the max() stands."""
+    from flats.rules.loader import load_rules
+
+    portland = load_rules()["or/multnomah/portland"]
+    unheld, split = [], []
+    for name, block in sorted(portland.zones.items()):
+        if "setback_alley_side_ft" in block.values:
+            continue
+        use = block.values.get("quadplex_allowed")
+        if use is None or (use.value is False and not use.variants):
+            continue
+        unheld.append(name)
+        if _yard(block, "setback_side_ft") != _yard(block, "setback_rear_ft"):
+            split.append(name)
+    assert unheld, "the mechanism has no zone to hold"
+    assert split == []
+
+
+def test_the_portland_side_alley_ruling_quotes_lines_that_say_what_it_says() -> None:
+    """The ruling rests on three readings: an alley is not a street, an
+    alley line is not a street lot line, and the commercial chapter names
+    the alley only in its step-down HEIGHT rule; EX, CI2/IR and OS never
+    name it at all."""
+    defs = _portland_doc("33.910.definitions.txt")
+    assert "Street lot line does" in defs[765]
+    assert "not include lot lines that abut an alley" in defs[766]
+    assert "street does not include alleys" in defs[1374]
+    c130 = _portland_doc("33.130.txt")
+    assert "alley from" in c130[551] and "residential zone" in c130[551]
+    assert sum("alley" in ln.lower() for ln in c130) == 2
+    for chapter in ("33.140.txt", "33.150.txt", "33.100.txt"):
+        assert not any("alley" in ln.lower() for ln in _portland_doc(chapter)), chapter
+    yaml_text = (
+        Path(__file__).resolve().parents[1] / "config/jurisdictions/or/multnomah/portland.yaml"
+    ).read_text(encoding="utf-8")
+    assert "33.910.definitions.txt#L766-L767" in yaml_text
+    assert "33.130.txt#L552-L556" in yaml_text
