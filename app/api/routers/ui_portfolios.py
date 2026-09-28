@@ -5,6 +5,8 @@ Routes: /portfolios, /portfolios/{id}, /ui/portfolios/*, /ui/deals/search,
 """
 from __future__ import annotations
 
+import html
+import json
 from datetime import UTC, datetime
 from uuid import UUID
 
@@ -108,15 +110,20 @@ async def deals_search(
     results = list((await session.execute(stmt)).scalars())
     if not results:
         return HTMLResponse('<li style="padding:8px 12px;color:var(--text-muted);font-size:13px">No deals found</li>')
-    items = "".join(
-        f'<li style="padding:8px 12px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border)" '
-        f'onclick="document.getElementById(\'deal-id-input\').value=\'{deal.id}\'; '
-        f'document.getElementById(\'deal-search-display\').value=\'{deal.name.replace(chr(39), chr(39)+chr(39))}\'; '
-        f'document.getElementById(\'deal-search-results\').innerHTML=\'\'">'
-        f'{deal.name}</li>'
-        for deal in results
-    )
-    return HTMLResponse(items)
+    def _item(deal: Deal) -> str:
+        # json.dumps makes a valid JS string of any name (an apostrophe used
+        # to end it early); html.escape makes that safe inside the attribute.
+        pick = (
+            f"document.getElementById('deal-id-input').value={json.dumps(str(deal.id))}; "
+            f"document.getElementById('deal-search-display').value={json.dumps(deal.name)}; "
+            "document.getElementById('deal-search-results').innerHTML=''"
+        )
+        return (
+            '<li style="padding:8px 12px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border)" '
+            f'onclick="{html.escape(pick)}">{html.escape(deal.name)}</li>'
+        )
+
+    return HTMLResponse("".join(_item(deal) for deal in results))
 
 
 @router.post("/ui/portfolios/create", response_class=HTMLResponse)
