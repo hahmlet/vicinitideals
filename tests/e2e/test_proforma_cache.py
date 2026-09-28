@@ -78,26 +78,6 @@ def _upload(page, xlsx_bytes: bytes) -> None:
             "buffer": xlsx_bytes,
         }],
     )
-    # PRE-DEPLOY BRIDGE: production's onProformaFile drained the FileList
-    # before submit (shared-FileList bug — fixed in
-    # app/templates/partials/deal_setup_wizard.html, pending deploy). When the
-    # input comes back empty after the change event, re-populate it exactly as
-    # the fixed handler leaves it. Self-disabling: once the fix is live,
-    # input.files.length > 0 and this is a no-op. Safe to delete after deploy.
-    import base64
-    page.evaluate(
-        """(b64) => {
-            const input = document.getElementById('proforma-file');
-            if (!input || input.files.length > 0) return;
-            const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-            const dt = new DataTransfer();
-            dt.items.add(new File([bytes], 'p.xlsx', {
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            }));
-            input.files = dt.files;
-        }""",
-        base64.b64encode(xlsx_bytes).decode(),
-    )
     # File selection triggers onProformaFile → _pfRebuildPills → button "Import →"
     page.click("#step1-submit")
     wait_for_htmx(page)
