@@ -154,21 +154,39 @@ async def test_patch_model_updates_name_in_db(
     assert row.name == "Renamed Case"
 
 
-async def test_patch_model_name_only_requires_project_type(
+async def test_patch_model_name_only_updates_just_the_name(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    """Documents CURRENT behavior: DealModelPatchRequest inherits ScenarioBase,
-    where project_type is a required field — so a partial PATCH sending only
-    {"name": ...} is rejected with 422 even though the route applies
-    exclude_unset semantics. A true partial-update schema would accept it.
-    """
+    """A PATCH carries only what it changes. DealModelPatchRequest once
+    inherited ScenarioBase's required project_type, so this was a 422."""
+    org, user = await seed_org(session)
+    opp = await seed_opportunity(session, org, user)
+    deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
+    model_id = deal_model.id
+    project_type_before = deal_model.project_type
+    version_before = deal_model.version
+
+    resp = await client.patch(f"/api/models/{model_id}", json={"name": "Only Name"})
+    assert resp.status_code == 200, resp.text
+    assert resp.json()["name"] == "Only Name"
+
+    session.expire_all()
+    row = await session.get(Scenario, model_id)
+    assert row.name == "Only Name"
+    assert row.project_type == project_type_before
+    assert row.version == version_before
+
+
+async def test_patch_model_null_for_not_null_field_is_422(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    """Optional on PATCH means "may be left out", not "may be set to NULL":
+    an explicit null for a NOT NULL column is refused, not a 500."""
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
     deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
 
-    resp = await client.patch(
-        f"/api/models/{deal_model.id}", json={"name": "Only Name"}
-    )
+    resp = await client.patch(f"/api/models/{deal_model.id}", json={"project_type": None})
     assert resp.status_code == 422, resp.text
 
 

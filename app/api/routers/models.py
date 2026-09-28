@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import logging
 from decimal import Decimal
-from typing import Any
+from typing import Any, get_args
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import Response
+from pydantic import BaseModel, create_model, model_validator
 from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError
 
@@ -251,8 +252,45 @@ async def create_project_model(
     )
 
 
-class DealModelPatchRequest(ScenarioBase):
-    name: str | None = None
+def _allows_none(annotation: Any) -> bool:
+    return annotation is None or type(None) in get_args(annotation)
+
+
+# ScenarioBase fields that the Scenario row cannot hold as NULL.
+_PATCH_NOT_NULL = frozenset(
+    name for name, field in ScenarioBase.model_fields.items()
+    if not _allows_none(field.annotation)
+)
+
+
+class _DealModelPatchBase(BaseModel):
+    @model_validator(mode="after")
+    def _reject_null_for_not_null_fields(self) -> _DealModelPatchBase:
+        nulled = sorted(
+            name for name in self.model_fields_set
+            if name in _PATCH_NOT_NULL and getattr(self, name) is None
+        )
+        if nulled:
+            raise ValueError(f"may not be null: {', '.join(nulled)}")
+        return self
+
+
+# Every ScenarioBase field, each optional with no default: a PATCH sends only
+# what it changes and the route applies exclude_unset. Inheriting ScenarioBase
+# directly kept its required fields (project_type), so a name-only PATCH was
+# rejected 422. Derived rather than restated so a new ScenarioBase field is
+# patchable without touching this.
+DealModelPatchRequest = create_model(
+    "DealModelPatchRequest",
+    __base__=_DealModelPatchBase,
+    **{
+        name: (
+            field.annotation if _allows_none(field.annotation) else field.annotation | None,
+            None,
+        )
+        for name, field in ScenarioBase.model_fields.items()
+    },
+)
 
 
 @router.patch("/models/{model_id}", response_model=ScenarioRead)
