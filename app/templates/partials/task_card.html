@@ -18,6 +18,9 @@
               hx-target="#task-list" hx-swap="outerHTML">🗑</button>
     </div>
   </div>
+  {% if upload_errors %}
+  <div class="doc-errors">{% for e in upload_errors %}<div>⚠ {{ e }}</div>{% endfor %}</div>
+  {% endif %}
   <div class="task-meta">
     Due: {{ t.due_fmt }}{% if t.due_is_relative %} <span title="Relative to timeline milestone">⛓</span>{% endif %}
     · {{ t.doc_count }} file{{ "" if t.doc_count == 1 else "s" }}

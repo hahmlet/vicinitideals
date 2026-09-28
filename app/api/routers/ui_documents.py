@@ -1261,7 +1261,8 @@ async def _tasks_list_response(
 
 
 async def _task_card_response(
-    request: Request, session: DBSession, org_id: UUID, project_id: UUID, task: DocumentTask
+    request: Request, session: DBSession, org_id: UUID, project_id: UUID, task: DocumentTask,
+    errors: list[str] | None = None,
 ):
     mm = await _milestone_map(session, project_id)
     docs = await _task_docs(session, org_id, project_id, task.id)
@@ -1270,7 +1271,11 @@ async def _task_card_response(
     return templates.TemplateResponse(
         request,
         "partials/task_card.html",
-        {"project_id": str(project_id), "t": _task_vm(task, docs, mm, pname)},
+        {
+            "project_id": str(project_id),
+            "t": _task_vm(task, docs, mm, pname),
+            "upload_errors": errors or [],
+        },
     )
 
 
@@ -1431,7 +1436,9 @@ async def task_upload(
     )
     await session.commit()
     _enqueue_previews(created_for_preview)
-    return await _task_card_response(request, session, task.org_id, task.project_id, task)
+    return await _task_card_response(
+        request, session, task.org_id, task.project_id, task, errors
+    )
 
 
 @router.get("/ui/tasks/{task_id}/download")
@@ -1899,7 +1906,7 @@ async def _do_guest_task_upload(
     return templates.TemplateResponse(
         request,
         "partials/share_task_card.html",
-        {"base": base, "t": _task_vm(task, docs, mm, project.name)},
+        {"base": base, "t": _task_vm(task, docs, mm, project.name), "upload_errors": errors},
     )
 
 

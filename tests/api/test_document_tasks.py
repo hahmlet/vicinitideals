@@ -220,6 +220,33 @@ async def test_cross_org_task_access_404(client: AsyncClient, session: AsyncSess
     assert (await client.get(f"/ui/tasks/{task.id}/download")).status_code == 404
 
 
+async def test_task_upload_says_why_a_file_was_refused(
+    client: AsyncClient, session: AsyncSession
+):
+    """The task card's picker accepts any file; a refused one used to vanish
+    silently (the card re-rendered as if the upload had worked)."""
+    project, user, org = await _seed_project(session)
+    await _auth(client, user.id)
+    task = DocumentTask(org_id=org.id, project_id=project.id, title="Leases")
+    session.add(task)
+    await session.commit()
+
+    resp = await client.post(
+        f"/ui/tasks/{task.id}/upload",
+        files=[
+            ("files", ("notes.csv", b"a,b", "text/csv")),
+            ("files", ("blank.pdf", b"", "application/pdf")),
+        ],
+    )
+    assert resp.status_code == 200
+    assert "notes.csv: file type not allowed" in resp.text
+    assert "blank.pdf: empty file skipped" in resp.text
+    rows = (
+        await session.execute(select(Document).where(Document.project_id == project.id))
+    ).scalars().all()
+    assert rows == []
+
+
 async def test_due_milestone_must_belong_to_the_task_project(
     client: AsyncClient, session: AsyncSession
 ):
