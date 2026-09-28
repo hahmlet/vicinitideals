@@ -49,6 +49,7 @@ would cut an envelope the resolution did not describe.
 from __future__ import annotations
 
 import dataclasses
+from typing import Sequence
 
 from flats.geom.edges import (
     BEARING_CLUSTER_TOL_DEG,
@@ -71,13 +72,29 @@ EQUAL_LINE_FT = 1.0
 CHOICE = frozenset({"owner", "entrance"})
 
 
+def two_streets(bearings: Sequence[float]) -> bool:
+    """Whether the lot's two street directions are two streets, not one bending.
+
+    ``bearings`` are s4's clustered street directions, longest frontage
+    first. s4 splits a street at 20 degrees, so two directions between 20
+    and :data:`CORNER_MIN_DEG` apart are either one street that bends or two
+    that meet at a shallow angle, and geometry cannot say which. This is the
+    ONE test for "two streets": naming a corner lot's front
+    (:func:`is_corner`) and the ``corner_lot`` site fact
+    (:func:`flats.ingest.quadfit.observed_facts`) both ask it.
+    """
+    return (
+        len(bearings) >= 2
+        and bearing_delta(float(bearings[0]), float(bearings[1])) >= CORNER_MIN_DEG
+    )
+
+
 def is_corner(edges: LotEdges | None) -> bool:
     """Two streets on the lot that really are two: a corner, not a bend."""
     return (
         edges is not None
         and edges.tier is Tier.corner
-        and len(edges.front_bearings) >= 2
-        and bearing_delta(edges.front_bearings[0], edges.front_bearings[1]) >= CORNER_MIN_DEG
+        and two_streets(edges.front_bearings)
     )
 
 

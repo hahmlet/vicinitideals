@@ -148,6 +148,41 @@ def test_an_alley_behind_a_corner_lot_on_a_bulb_in_the_floodplain() -> None:
     assert got["in_floodplain"] is True
 
 
+def test_a_corner_is_two_streets_at_least_45_degrees_apart_as_when_its_front_is_named() -> None:
+    """FOLLOWUPS 4(e)(vi): the fact asks the same question as the naming
+    (:func:`flats.geom.corner.two_streets`), not "two clustered directions"."""
+    for bearings, fact in (("[0.0]", False), ("[0.0, 45.0]", True), ("[10.0, 100.0]", True)):
+        assert observed_facts(row(front_bearings_json=bearings))["corner_lot"] is fact, bearings
+
+
+def test_two_street_directions_closer_than_45_degrees_leave_the_corner_fact_unasked() -> None:
+    """s4 splits a street at 20 degrees, so 20 to 45 is a bend OR a shallow
+    corner. A corner variant tightens some standards and relaxes others, so
+    neither answer is safe: the registry's assumption is named instead."""
+    for bearings in ("[0.0, 21.0]", "[0.0, 44.9]", "[170.0, 15.0]"):
+        got = observed_facts(row(front_bearings_json=bearings))
+        assert "corner_lot" not in got, bearings
+        assert got["abuts_alley"] is False  # the other facts still answer
+
+
+def test_a_gresham_lot_on_a_bend_leans_on_the_corner_assumption_it_used_to_answer(
+    corpus, policies
+) -> None:
+    """Gresham LDR-7 states a corner lot width; a lot whose street bends is
+    no longer certified on either reading of it."""
+    bend = lot_from_row(row(jurisdiction="gresham", zone="LDR-7", front_bearings_json="[0.0, 30.0]"))
+    (s,) = screen_lot(bend, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert "corner_lot" in s.rules.levers
+    assert "corner_lot" in s.config.leans_on(s.rules.levers)
+    assert "corner_lot" in s.config.assumed and "corner_lot" not in s.config.conditions
+    assert "FACT_ASSUMED" in s.signed.reasons
+
+    corner = lot_from_row(row(jurisdiction="gresham", zone="LDR-7", front_bearings_json="[0.0, 90.0]"))
+    (s,) = screen_lot(corner, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert "corner_lot" in s.config.conditions
+    assert "corner_lot" not in s.config.leans_on(s.rules.levers)
+
+
 def test_a_lot_s4_could_not_trace_answers_no_alley_and_no_corner() -> None:
     """Tier D has no edges. The registry's assumption is named on those
     facts rather than a False that reads as a measurement; the bulb flag

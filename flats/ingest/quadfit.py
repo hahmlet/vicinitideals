@@ -73,7 +73,12 @@ from flats.fit.rectangle import Fit, Fitter
 from flats.geom.alley import ALLEY_CLASS, ALLEY_FACTS, S4_LOTS, alley_lines, observed_alley
 from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors
 from flats.geom.corridor import load_maps as load_corridor_maps
-from flats.geom.corner import front_bearings as corner_fronts, is_corner, name_front
+from flats.geom.corner import (
+    front_bearings as corner_fronts,
+    is_corner,
+    name_front,
+    two_streets,
+)
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
@@ -215,9 +220,18 @@ def observed_facts(
       reads as a measurement.
     * ``fronts_cul_de_sac`` -- s4's bulb test; False is the conservative
       row and so is answered on every lot.
-    * ``corner_lot`` -- two or more clustered street directions on the
-      frontage, which is s4's tier ``B`` and the registry's "abuts a street
-      on two or more sides". Same caveat as the alley: only with edges.
+    * ``corner_lot`` -- True where the frontage runs in two directions at
+      least :data:`~flats.geom.corner.CORNER_MIN_DEG` apart, the test that
+      names a corner lot's front (:func:`flats.geom.corner.two_streets`);
+      False on a lot with one street direction. Two directions closer than
+      that (s4 splits a street at 20 degrees) are a street that bends OR two
+      streets meeting at a shallow angle, and the fact is left UNASKED there:
+      a corner variant tightens some standards (Gresham's corner lot width,
+      Wood Village's corner side and rear yard) and relaxes others (Gresham's
+      unit-lot corner frontage, Multnomah LR-5's conditional use), so
+      neither answer is the safe one, and the registry's assumption is named
+      wherever a standard turns on it. Same caveat as the alley: only with
+      edges.
     * ``split_zone`` -- s2's majority rule: the winning zone covers under
       90 % of the lot. A sliver under that is read by quadfit as zoning-map
       noise against the taxlot fabric, and the bridge carries that reading
@@ -251,7 +265,8 @@ def observed_facts(
     bearings = json.loads(row.get("front_bearings_json") or "[]")
     if edges:
         out.update(observed_alley(edges, bearings))
-        out["corner_lot"] = len(bearings) >= 2
+        if len(bearings) < 2 or two_streets(bearings):
+            out["corner_lot"] = len(bearings) >= 2
         if corridors:
             out.update(observed_corridors(edges, _layer_id(row), corridors))
     if layers is not None and row.get("neighbour_zones_json"):

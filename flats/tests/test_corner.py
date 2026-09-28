@@ -14,7 +14,7 @@ import shapely
 import pytest
 
 from flats.designs.model import load_catalog
-from flats.geom.corner import front_bearings, is_corner, line_length, name_front
+from flats.geom.corner import front_bearings, is_corner, line_length, name_front, two_streets
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
 from flats.score.paper import Alley, court_across, front_lot_line_rule, side_street_fed
@@ -89,6 +89,18 @@ def test_nothing_is_named_where_the_code_or_the_lot_does_not_settle_it() -> None
     # resolved on that name; the front is left alone rather than renamed
     # under the resolution.
     assert front_bearings(corner_lot(north_alley=True), "shortest") == ()
+
+
+def test_two_streets_is_the_one_test_and_it_measures_the_angle_both_ways_round() -> None:
+    assert two_streets((0.0, 90.0)) and two_streets((0.0, 45.0))
+    assert two_streets((170.0, 35.0))  # 45 degrees across the 180 wrap
+    assert not two_streets((0.0, 44.9)) and not two_streets((170.0, 20.0))
+    assert not two_streets((0.0,)) and not two_streets(())
+    # is_corner is this test on a lot s4 read as tier corner, nothing more.
+    lot = corner_lot()
+    for bearings in ((0.0, 90.0), (0.0, 30.0)):
+        edges = LotEdges(Tier.corner, lot.edges, bearings, 150.0, 1.0)
+        assert is_corner(edges) is two_streets(bearings)
 
 
 def test_naming_the_front_makes_the_other_street_a_street_side_and_its_neighbour_a_side() -> None:
