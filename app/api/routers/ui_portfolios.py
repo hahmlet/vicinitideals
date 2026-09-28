@@ -23,6 +23,7 @@ from app.api.routers.ui_helpers import (
     _base_ctx,
     _build_portfolio_gantt,
     _first_opportunity,
+    _fmt_day,
     _get_counts,
     _get_user,
     _primary_scenario,
@@ -75,7 +76,7 @@ async def portfolios_page(
             "name": p.name,
             "deal_count": deal_count,
             "avg_irr": avg_irr,
-            "created_at_fmt": p.created_at.strftime("%b %-d, %Y") if p.created_at else None,
+            "created_at_fmt": _fmt_day(p.created_at) if p.created_at else None,
         })
 
     return templates.TemplateResponse(

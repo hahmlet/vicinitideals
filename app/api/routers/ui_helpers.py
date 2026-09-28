@@ -30,6 +30,12 @@ from app.models.scraped_listing import ScrapedListing
 # Formatting
 # ---------------------------------------------------------------------------
 
+def _fmt_day(d: object) -> str:
+    """'Sep 8, 2026' — what strftime('%b %-d, %Y') prints on Linux, but
+    portable: '%-d' raises ValueError on Windows, where tests also run."""
+    return f"{d:%b} {d.day}, {d.year}"  # type: ignore[attr-defined]
+
+
 def _fmt_currency(value: object) -> str:
     if value is None:
         return "—"
