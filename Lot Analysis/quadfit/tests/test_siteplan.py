@@ -2240,3 +2240,139 @@ def test_a_stub_front_that_misses_the_columns_beside_the_pod_is_refused():
                            (160 - SIDE_S, 150 - REAR_S), (SIDE_S, 150 - REAR_S)])
     r = _run(s6s, env, [[0.0, 0.0, 40.0, 0.0]], lot.area)
     assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
+
+
+# ---------------------------------------------------------------------------
+# FOLLOWUPS 5 (l): the street strip stops where the street does
+# ---------------------------------------------------------------------------
+
+#: A point in east Gresham, EPSG:2913 feet, and a street bearing off the grid:
+#: the lot is built square and moved there, so the strip is drawn at the
+#: magnitudes and the rotation s6s meets on the county tree.
+_GRESHAM_XY = (7_690_412.3, 683_951.7)
+_GRESHAM_BEARING = 7.5
+
+
+def _to_county(geom_or_edges, xy=_GRESHAM_XY, bearing=_GRESHAM_BEARING):
+    """Rotate by `bearing` about the lot's own origin and move it to `xy` --
+    a shapely geometry, or a list of [x0, y0, x1, y1, ...] edges (anything
+    after the four coordinates rides along)."""
+    x0, y0 = xy
+
+    def pt(x, y):
+        p = affinity.rotate(shapely.Point(x, y), bearing, origin=(0, 0))
+        return p.x + x0, p.y + y0
+
+    if isinstance(geom_or_edges, list):
+        return [[*pt(e[0], e[1]), *pt(e[2], e[3]), *e[4:]] for e in geom_or_edges]
+    g = affinity.rotate(geom_or_edges, bearing, origin=(0, 0))
+    return affinity.translate(g, x0, y0)
+
+
+def _from_county(g, xy=_GRESHAM_XY, bearing=_GRESHAM_BEARING):
+    """`_to_county` undone, for asserting in the lot's own frame."""
+    g = affinity.translate(g, -xy[0], -xy[1])
+    return affinity.rotate(g, -bearing, origin=(0, 0))
+
+
+_PF_W, _PF_F = 80.0, 35.0
+
+
+def _partial_frontage_lot(front_sb: float = 20.0):
+    """A 98 x 150 Gresham lot whose south line touches the street for its
+    west 40 ft only; the other 58 ft of it abut the neighbour's lot (a
+    remnant parcel on the corner), so s4 calls that piece a SIDE edge. The
+    envelope is s5's own (`build_envelope`, square caps): the front yard
+    runs `front_sb` deep and `front_sb` past the frontage's east end, then
+    the side yard's 5 ft takes over.
+
+    Returns (lot, edges with classes, envelope), all at county coordinates."""
+    from s5_envelope import build_envelope
+
+    W, D, F = _PF_W, 150.0, _PF_F
+    lot = shapely.Polygon([(0, 0), (F, 0), (W, 0), (W, D), (0, D)])
+    edges = [[0.0, 0.0, F, 0.0, "F"], [F, 0.0, W, 0.0, "S"],
+             [W, 0.0, W, D, "S"], [W, D, 0.0, D, "R"], [0.0, D, 0.0, 0.0, "S"]]
+    lot, edges = _to_county(lot), _to_county(edges)
+    env = build_envelope(lot, edges, {"F": front_sb, "S": SIDE_S, "R": REAR_S,
+                                      "A": REAR_S}, "A")
+    return lot, edges, env
+
+
+def test_a_lane_does_not_start_past_the_end_of_the_frontage():
+    """FOLLOWUPS 5 (l). The street strip a lane must start on was drawn the
+    way s5 draws its cut -- square caps -- so it ran `street_sb` plus the
+    raster's cell and a half past the END of the street edge: 21.5 ft on a
+    Gresham lot cut 20 ft from the street. On this lot the pod stands
+    across the whole 35 ft of frontage, and the only columns beside it
+    that reach the front of the envelope lie east of the frontage's end,
+    in front of the NEIGHBOUR's lot line, not the street's. The drawing
+    before the fix started the lane there -- a driveway out through the
+    side yard onto somebody else's lot, 41.5 to 53.5 ft along a street
+    edge that stops at 35 -- and called the lot green. The
+    strip now stops where the street edge stops, so the lot is refused
+    `no_side_lane`, like the stub front above it (sliding the pod off the
+    frontage's columns is FOLLOWUPS 5 (k))."""
+    s6s = _sp_setup()
+    sb = 20.0
+    lot, edges, env = _partial_frontage_lot(sb)
+    fe = [e[:4] for e in edges if e[4] == "F"]
+    r = _run(s6s, env, fe, lot.area, bearing=_GRESHAM_BEARING,
+             front_setback_ft=sb, street_setback_ft=sb,
+             lot_xy=[(e[0], e[1]) for e in edges])
+    if "driveway" in r["geoms"]:
+        # Whatever else is drawn, the lane's mouth is on the street's own
+        # stretch of the lot line, not beyond its end.
+        d = _from_county(r["geoms"]["driveway"])
+        assert d.bounds[2] <= _PF_F + 0.6, d.bounds
+    assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
+    assert "driveway" not in r["geoms"]
+
+
+def test_the_street_strip_is_clipped_at_a_free_end_and_kept_at_a_joint():
+    """The construction itself, on the same lot, in the frame s6s draws in.
+    Past the frontage's free end no envelope cell is on the strip, however
+    close to the lot line; along the frontage every column's front cell
+    is. And where a street edge meets ANOTHER street edge -- here a second
+    street piece carrying on along the same line -- the square extension
+    s5 cut with is kept, so the bend of a street chain (a concave corner, a
+    corner clip) is on the strip as before; only an end that no street
+    edge continues from is cut."""
+    import numpy as np
+    from s6_fit import _cell_grid
+
+    s6s = _sp_setup()
+    res = s6s._CFG["res"]
+    sb = 20.0
+    lot, edges, env = _partial_frontage_lot(sb)
+    origin = _GRESHAM_XY
+    env_r = affinity.rotate(env, -_GRESHAM_BEARING, origin=origin)
+    ok = _cell_grid(env_r, res)
+    minx, miny = env_r.bounds[:2]
+
+    def rot(es):
+        out = []
+        for e in es:
+            a = affinity.rotate(shapely.Point(e[0], e[1]), -_GRESHAM_BEARING, origin=origin)
+            b = affinity.rotate(shapely.Point(e[2], e[3]), -_GRESHAM_BEARING, origin=origin)
+            out.append([a.x, a.y, b.x, b.y])
+        return out
+
+    fe = rot([e for e in edges if e[4] == "F"])
+    reach = sb + 2.0 * res + 0.5
+    clipped = s6s._alley_mouths(ok, fe, minx, miny, res, reach, joins=fe)
+    square = s6s._alley_mouths(ok, fe, minx, miny, res, reach)
+
+    def east_ft(cells):
+        return minx + (np.flatnonzero(cells.any(axis=0)).max() + 1) * res - origin[0]
+
+    assert east_ft(clipped) <= _PF_F + res              # stops at the frontage's end
+    assert east_ft(square) > _PF_F + 15.0               # the cap ran 20-odd ft on
+    front_cols = [c for c in range(ok.shape[1])
+                  if ok[:, c].any() and minx + (c + 1) * res - origin[0] <= _PF_F - res]
+    assert front_cols and all(clipped[:, c].any() for c in front_cols)
+    # A second street edge carrying on from the end: the joint keeps the cap.
+    x1, y1 = fe[0][2], fe[0][3]
+    joined = s6s._alley_mouths(ok, fe, minx, miny, res, reach,
+                               joins=fe + [[x1, y1, x1 + 20.0, y1]])
+    assert (joined == square).all()

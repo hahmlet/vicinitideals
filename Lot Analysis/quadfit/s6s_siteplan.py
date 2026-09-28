@@ -286,8 +286,15 @@ def _largest_rect(ok, min_h: int = 1):
     return best[1], best[2], best[3], best[4]
 
 
+#: How close two edge ends must be to count as one vertex of the lot line
+#: (`_alley_mouths`, `joins`). s4's edges are one ring's segments, so a
+#: shared vertex is the same coordinate; this only absorbs the rotation's
+#: last bits at county magnitudes.
+JOIN_TOL_FT = 0.01
+
+
 def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
-                  reach_ft: float):
+                  reach_ft: float, joins=None):
     """Cells of the envelope grid that stand on the alley strip.
 
     The strip is drawn the way s5 drew the cut it made for the alley: each
@@ -311,6 +318,24 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
     setback * sqrt(2) from the alley, farther than a round reach, so the
     lane had a gap at every bend. Same construction as the cut, and the
     question answers itself.
+
+    THE STREET STRIP STOPS WHERE THE STREET DOES (FOLLOWUPS 5 (l),
+    2026-09-28). A square cap carries the strip `reach_ft` past each END
+    of an edge, and where the lot line runs on past that end along a
+    NEIGHBOUR -- a frontage that covers part of the south line, the rest
+    abutting a remnant lot -- the envelope there was cut by s5 to the same
+    depth for the same distance, so its cells answered "on the street" and
+    a lane could start up to the street setback plus a cell and a half past
+    the frontage (21.5 ft on a Gresham lot cut 20 ft from the street), out
+    through the side yard onto the neighbour's lot. `joins`, where the
+    caller passes it, is every edge of that kind -- the street edges, for
+    a street strip -- and an end of an edge keeps its square cap only where
+    it meets another edge of `joins`: the bend of a street chain, a corner
+    clip, the corner where the front street meets the side street, all as
+    before. An end that nothing in `joins` continues from is cut flat at
+    the edge's own extent. None (the alley) keeps every cap square, as it
+    was bound on 2026-09-12; an alley that stops mid-lot is the same
+    question and was not asked of it here.
     """
     import numpy as np
     import shapely
@@ -320,10 +345,43 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
     out = np.zeros_like(ok)
     if not len(rows) or not alley_edges:
         return out
-    strip = shapely.union_all([
-        LineString([(e[0], e[1]), (e[2], e[3])]).buffer(
-            reach_ft, cap_style="square", join_style="mitre")
-        for e in alley_edges])
+
+    def piece(e):
+        (x0, y0), (x1, y1) = (e[0], e[1]), (e[2], e[3])
+        if joins is None:
+            return LineString([(x0, y0), (x1, y1)]).buffer(
+                reach_ft, cap_style="square", join_style="mitre")
+        n = math.hypot(x1 - x0, y1 - y0)
+        if n <= 0.0:
+            return None
+
+        def met(px, py):
+            # Another edge of `joins` has an end at this one -- the edge
+            # itself, listed there too, is not "another".
+            for j in joins:
+                a, b = (j[0], j[1]), (j[2], j[3])
+                if (math.dist(a, (x0, y0)) <= JOIN_TOL_FT
+                        and math.dist(b, (x1, y1)) <= JOIN_TOL_FT) or (
+                        math.dist(a, (x1, y1)) <= JOIN_TOL_FT
+                        and math.dist(b, (x0, y0)) <= JOIN_TOL_FT):
+                    continue
+                if (math.dist(a, (px, py)) <= JOIN_TOL_FT
+                        or math.dist(b, (px, py)) <= JOIN_TOL_FT):
+                    return True
+            return False
+
+        # A square cap is the edge carried `reach_ft` on and cut flat.
+        ux, uy = (x1 - x0) / n, (y1 - y0) / n
+        s0 = reach_ft if met(x0, y0) else 0.0
+        s1 = reach_ft if met(x1, y1) else 0.0
+        return LineString([(x0 - ux * s0, y0 - uy * s0),
+                           (x1 + ux * s1, y1 + uy * s1)]).buffer(
+            reach_ft, cap_style="flat", join_style="mitre")
+
+    pieces = [p for p in (piece(e) for e in alley_edges) if p is not None]
+    if not pieces:
+        return out
+    strip = shapely.union_all(pieces)
     shapely.prepare(strip)
     near = shapely.contains_xy(strip, minx + (cols + 0.5) * res,
                                miny + (rows + 0.5) * res)
@@ -1130,8 +1188,12 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         # The cells standing on ANY street strip, for the court's exposure;
         # and, where the city lets a corner lot's driveway come from the
         # side street, the cells on the SIDE street's strip, which the lane
-        # search treats exactly as it treats the alley's.
-        scells = (_alley_mouths(ok, rotated(front_edges), minx, miny, res, street_reach)
+        # search treats exactly as it treats the alley's. Every street strip
+        # stops at the street edge's own end unless another street edge
+        # carries on from it (`_alley_mouths`, `joins`; FOLLOWUPS 5 (l)).
+        streets = rotated(front_edges) if front_edges else []
+        scells = (_alley_mouths(ok, streets, minx, miny, res, street_reach,
+                                joins=streets)
                   if front_edges else np.zeros_like(ok))
         # The cells on THIS front's strip alone: where a lane from the front
         # street may start (`_front_runs`), the envelope's edge at the street
@@ -1151,7 +1213,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         # other reason -- a wide one set back farther than the street
         # setback -- stays refused, and so does a stub narrower than the
         # lane on a wide lot.
-        fcells = (_alley_mouths(ok, rotated(fe), minx, miny, res, street_reach)
+        fcells = (_alley_mouths(ok, rotated(fe), minx, miny, res, street_reach,
+                                joins=streets)
                   if fe else np.zeros_like(ok))
         fe_len = sum(math.hypot(e[2] - e[0], e[3] - e[1]) for e in fe)
         strip_cols = np.flatnonzero(fcells.any(axis=0))
@@ -1161,7 +1224,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         # The cells on the OTHER streets' strips -- a side street's, a far
         # end's -- which tell a side court in a ban city which side of the
         # building faces a street, and feed the lane from that street.
-        ocells = (_alley_mouths(ok, rotated(se), minx, miny, res, street_reach)
+        ocells = (_alley_mouths(ok, rotated(se), minx, miny, res, street_reach,
+                                joins=streets)
                   if se else None)
         smouths = None
         if se and not alley_fed and access_rule in ("side", "any", "lowest_class"):
