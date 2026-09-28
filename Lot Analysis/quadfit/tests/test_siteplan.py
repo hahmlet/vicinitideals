@@ -2279,8 +2279,8 @@ _PF_W, _PF_F = 80.0, 35.0
 
 
 def _partial_frontage_lot(front_sb: float = 20.0):
-    """A 98 x 150 Gresham lot whose south line touches the street for its
-    west 40 ft only; the other 58 ft of it abut the neighbour's lot (a
+    """An 80 x 150 Gresham lot whose south line touches the street for its
+    west 35 ft only; the other 45 ft of it abut the neighbour's lot (a
     remnant parcel on the corner), so s4 calls that piece a SIDE edge. The
     envelope is s5's own (`build_envelope`, square caps): the front yard
     runs `front_sb` deep and `front_sb` past the frontage's east end, then
