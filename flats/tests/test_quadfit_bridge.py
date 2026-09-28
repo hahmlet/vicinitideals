@@ -183,6 +183,49 @@ def test_a_gresham_lot_on_a_bend_leans_on_the_corner_assumption_it_used_to_answe
     assert "corner_lot" not in s.config.leans_on(s.rules.levers)
 
 
+#: A 50 x 100 lot with a street across each end: s4 clusters the two ends
+#: mod 180 into ONE street direction.
+THROUGH = json.dumps(
+    [
+        [X0, Y0, X0 + 50, Y0, "F"],
+        [X0 + 50, Y0, X0 + 50, Y0 + 100, "S"],
+        [X0 + 50, Y0 + 100, X0, Y0 + 100, "F"],
+        [X0, Y0 + 100, X0, Y0, "S"],
+    ]
+)
+
+
+def test_a_through_lot_is_a_corner_where_the_code_counts_streets_and_nowhere_else(layers) -> None:
+    """Gresham 3.0100: "Corner Lot. A lot that has frontage on two or more
+    streets" -- nothing about the streets meeting, so a through lot is one.
+    Portland 33.910 asks for frontages that intersect, which a street front
+    and back do not; the 45-degree reading stands there."""
+    gresham = row(jurisdiction="gresham", zone="LDR-5", edges_json=THROUGH)
+    assert observed_facts(gresham, layers)["corner_lot"] is True
+    # The question is the layer's: without the corpus it is not asked.
+    assert observed_facts(gresham)["corner_lot"] is False
+    for other in ("portland", "troutdale", "wood-village"):
+        got = observed_facts(row(jurisdiction=other, edges_json=THROUGH), layers)
+        assert got["corner_lot"] is False, other
+    # A plain interior lot is no corner in Gresham either.
+    assert observed_facts(row(jurisdiction="gresham", zone="LDR-5"), layers)["corner_lot"] is False
+    # A through lot in the 20-45 degree band is two streets whichever way it bends.
+    bent = row(jurisdiction="gresham", zone="LDR-5", edges_json=THROUGH, front_bearings_json="[0.0, 30.0]")
+    assert observed_facts(bent, layers)["corner_lot"] is True
+
+
+def test_a_gresham_through_lot_is_measured_against_the_corner_row(corpus, policies) -> None:
+    """Table 4.0130 E.2: 40 ft of width on a corner lot in LDR-5 where the
+    interior row asks 35. Read as an interior lot, the through lot was
+    certified against the number the code does not state for it."""
+    lot = lot_from_row(row(jurisdiction="gresham", zone="LDR-5", edges_json=THROUGH), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert "corner_lot" in s.config.conditions
+    assert "corner_lot" not in s.config.leans_on(s.rules.levers)
+    assert s.rules.get("min_lot_width_ft") == 40
+    assert s.rules.get("min_frontage_ft") == 40
+
+
 def test_a_lot_mapped_flx_screens_as_vc_inside_the_vc_flex_area(corpus, policies) -> None:
     """FOLLOWUPS 10(a): the map code feeds the variant VC's use line names."""
     flx = lot_from_row(row(jurisdiction="fairview", zone="FLX"), corpus.layers)

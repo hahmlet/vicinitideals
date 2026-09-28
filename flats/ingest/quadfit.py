@@ -77,6 +77,7 @@ from flats.geom.corner import (
     front_bearings as corner_fronts,
     is_corner,
     name_front,
+    through_lot,
     two_streets,
 )
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
@@ -232,8 +233,13 @@ def observed_facts(
       Wood Village's corner side and rear yard) and relaxes others (Gresham's
       unit-lot corner frontage, Multnomah LR-5's conditional use), so
       neither answer is the safe one, and the registry's assumption is named
-      wherever a standard turns on it. Same caveat as the alley: only with
-      edges.
+      wherever a standard turns on it. Where the lot's own code counts
+      streets rather than asking them to meet (Gresham 3.0100: "a lot that
+      has frontage on two or more streets"; :func:`_counts_streets`), a
+      through lot -- street along two opposite lines,
+      :func:`flats.geom.corner.through_lot` -- is True as well: s4 clusters
+      the two ends into one direction, and the 45-degree test alone read
+      them False. Same caveat as the alley: only with edges.
     * ``split_zone`` -- s2's majority rule: the winning zone covers under
       90 % of the lot. A sliver under that is read by quadfit as zoning-map
       noise against the taxlot fabric, and the bridge carries that reading
@@ -270,7 +276,9 @@ def observed_facts(
     bearings = json.loads(row.get("front_bearings_json") or "[]")
     if edges:
         out.update(observed_alley(edges, bearings))
-        if len(bearings) < 2 or two_streets(bearings):
+        if _counts_streets(row, layers) and through_lot(edges, bearings):
+            out["corner_lot"] = True
+        elif len(bearings) < 2 or two_streets(bearings):
             out["corner_lot"] = len(bearings) >= 2
         if corridors:
             out.update(observed_corridors(edges, _layer_id(row), corridors))
@@ -307,6 +315,34 @@ def _layer_id(row: Mapping[str, Any]) -> str | None:
 def _home_layer(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> Layer | None:
     layer_id = _layer_id(row)
     return layers.get(layer_id) if layer_id is not None else None
+
+
+def _counts_streets(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> bool:
+    """Whether the lot's own code makes a corner of ANY two street frontages.
+
+    True where the jurisdiction's ``corner_lot`` definition is the
+    ``frontage_count`` test (:mod:`flats.rules.definitions`) -- Gresham's
+    "a lot that has frontage on two or more streets", which asks nothing
+    about the streets meeting, so a through lot is a corner there. Every
+    other code read asks for intersecting or adjacent frontages, which a
+    through lot does not have. Definitions are the layer's own or adopted by
+    ``definitions_from``, as :meth:`~flats.rules.resolver.RuleSet.definitions_for`
+    walks them; without ``layers`` the question is not asked.
+    """
+    if layers is None:
+        return False
+    queue = [_layer_id(row)]
+    seen: set[str] = set()
+    while queue:
+        current = queue.pop(0)
+        if current is None or current in seen or current not in layers:
+            continue
+        seen.add(current)
+        defn = layers[current].definitions.get("corner_lot")
+        if defn is not None:
+            return getattr(defn, "test", None) == "frontage_count"
+        queue.extend(layers[current].definitions_from)
+    return False
 
 
 def _map_code_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:

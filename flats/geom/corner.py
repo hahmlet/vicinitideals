@@ -49,6 +49,7 @@ would cut an envelope the resolution did not describe.
 from __future__ import annotations
 
 import dataclasses
+import math
 from typing import Sequence
 
 from flats.geom.edges import (
@@ -58,6 +59,7 @@ from flats.geom.edges import (
     EdgeClass,
     LotEdges,
     Tier,
+    bearing_deg,
     bearing_delta,
 )
 
@@ -89,6 +91,56 @@ def two_streets(bearings: Sequence[float]) -> bool:
     )
 
 
+#: Two groups of one street direction's front edges farther apart than this,
+#: measured across the bearing, are the two ENDS of a through lot rather than
+#: a jog in one frontage (quadfit s6s ``THROUGH_MIN_FT``: the 30 ft step of
+#: 1S2E15BB-02800 is a jog; a lot is deeper).
+THROUGH_MIN_FT = 40.0
+
+#: s4's class letter for a street (frontage) edge in ``edges_json``.
+STREET_CLASS = "F"
+
+
+def through_lot(edges: Sequence[Sequence[object]], bearings: Sequence[float]) -> bool:
+    """Whether a street runs along two opposite lines of the lot.
+
+    ``edges`` is s4's ``edges_json`` decoded (``[x1, y1, x2, y2, cls]``) and
+    ``bearings`` its clustered street directions. s4 clusters bearings mod
+    180, so the two ends of a through lot are ONE direction and
+    :func:`two_streets` cannot see them. The test is quadfit's
+    (s6s ``_through_ends``): a direction's street edges, their midpoints
+    projected across the bearing, split by a gap of at least
+    :data:`THROUGH_MIN_FT` AND at least half the lot's extent across the
+    bearing -- so a jog in one frontage, or a long edge on a street that
+    bends, is never taken for a far end. Alley edges are not street edges
+    (class ``A``): every code read says an alley is not frontage.
+    """
+    streets = [
+        (float(e[0]), float(e[1]), float(e[2]), float(e[3]))
+        for e in edges
+        if e[4] == STREET_CLASS
+    ]
+    if len(streets) < 2:
+        return False
+    ends = [(float(e[0]), float(e[1]), float(e[2]), float(e[3])) for e in edges]
+    corners = [pt for x1, y1, x2, y2 in ends for pt in ((x1, y1), (x2, y2))]
+    for b in bearings:
+        group = [
+            s for s in streets
+            if bearing_delta(bearing_deg(*s), float(b)) <= BEARING_CLUSTER_TOL_DEG
+        ]
+        if len(group) < 2:
+            continue
+        t = math.radians(float(b))
+        nx, ny = -math.sin(t), math.cos(t)
+        across = sorted((x1 + x2) / 2.0 * nx + (y1 + y2) / 2.0 * ny for x1, y1, x2, y2 in group)
+        gap = max(hi - lo for lo, hi in zip(across, across[1:]))
+        proj = [x * nx + y * ny for x, y in corners]
+        if gap >= max(THROUGH_MIN_FT, 0.5 * (max(proj) - min(proj))):
+            return True
+    return False
+
+
 def is_corner(edges: LotEdges | None) -> bool:
     """Two streets on the lot that really are two: a corner, not a bend."""
     return (
@@ -105,9 +157,7 @@ def line_length(edges: LotEdges, bearing: float) -> float:
     shape, the line that runs that way, corner to corner, whether or not a
     street abuts all of it.
     """
-    import math
-
-    t = math.radians(bearing)
+    t =math.radians(bearing)
     proj = [
         x * math.cos(t) + y * math.sin(t)
         for e in edges.edges
