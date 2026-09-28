@@ -3,6 +3,8 @@
 For a cloud session (claude.ai/code) asked to draft a new county's FLATS
 layers. Read [ENCODING_RULEBOOK.md](ENCODING_RULEBOOK.md) first; this file
 only says what is different when you run away from the home network.
+The county's scope (which governments to encode, and the traps found in
+research) is in `docs/flats/counties/<county>.md`; read it next.
 
 ## What you cannot reach
 
