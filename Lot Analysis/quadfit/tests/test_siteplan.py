@@ -2376,3 +2376,84 @@ def test_the_street_strip_is_clipped_at_a_free_end_and_kept_at_a_joint():
     joined = s6s._alley_mouths(ok, fe, minx, miny, res, reach,
                                joins=fe + [[x1, y1, x1 + 20.0, y1]])
     assert (joined == square).all()
+
+
+# ---------------------------------------------------------------------------
+# FOLLOWUPS 5 (o): a front setback of zero is the code's answer, not a gap
+# ---------------------------------------------------------------------------
+
+#: Hollywood, Portland, EPSG:2913 feet; the street grid there runs true.
+_PDX_XY = (7_658_431.6, 688_702.4)
+
+
+def test_a_zero_front_setback_is_read_as_zero_and_only_an_absent_one_is_not():
+    """The zones that print a zero minimum front setback print it as the
+    answer: Portland Table 130-2 "Min. Building Setbacks - Street Lot
+    Line" is none in all six commercial/mixed-use zones (the corpus says
+    `value: 0` with the quote), Oregon City 17.35.060.E "Minimum required
+    setbacks: None." -- and `ZoneRule` refuses a quadplex zone with no
+    front setback at all, so a zero in rules.yaml never stands in for
+    "unread". s6s main() used to send zero to its 10 ft fallback
+    (`float(v) if v else 10.0`). The only thing the number buys in the
+    drawing is the part of a city's parking setback the envelope already
+    answers, so the fallback forgave ten feet of Portland's 10 ft parking
+    setback on every lot in those zones."""
+    from common import load_rules
+
+    s6s = _sp_setup_cities()
+    rules = load_rules()
+    for jur, zone in (("portland", "CM2"), ("portland", "CM3"), ("portland", "RX"),
+                      ("oregon_city", "MUC-1"), ("oregon_city", "WFDD")):
+        assert rules.jurisdictions[jur].rule_for(zone).setback_front_ft == 0
+        assert s6s._front_setback_for(rules, jur, zone, 6_000.0) == 0.0
+    # A real number is the number, banded where the city bands it.
+    r5 = rules.jurisdictions["portland"].rule_for("R5").setback_front_ft
+    assert r5 and s6s._front_setback_for(rules, "portland", "R5", 5_000.0) == float(r5)
+    # And nothing known is drawn as nothing asked of the parking setback's
+    # remainder -- the strict end, since a larger number forgives more.
+    assert s6s._front_setback_for(rules, "portland", "NO-SUCH-ZONE") == 0.0
+    assert s6s._front_setback_for(rules, "no_such_city", "R5") == 0.0
+
+
+def test_a_portland_side_court_keeps_ten_feet_off_the_street_in_a_zero_setback_zone():
+    """A 150 x 70 Portland CM2 lot at county coordinates: no front setback
+    (the envelope stands on the street lot line), 10 ft sides and rear.
+    The room behind the pod is too shallow for a court, so the plan is the
+    court BESIDE the building -- and Portland keeps a stall 10 ft off a
+    street lot line (`parking_street_setback_ft`). With the front setback
+    read as 10 the envelope was taken to answer that already, and the side
+    court's first stalls stood on the lot line; read as the zero it is,
+    the court starts 10 ft back."""
+    from common import load_footprints, load_rules
+    from s5_envelope import build_envelope
+
+    s6s = _sp_setup_cities()
+    rules, sp = load_rules(), load_footprints().siteplan
+    W, D = 150.0, 70.0
+    lot = _to_county(shapely.Polygon([(0, 0), (W, 0), (W, D), (0, D)]), _PDX_XY, 0.0)
+    edges = _to_county([[0.0, 0.0, W, 0.0, "F"], [W, 0.0, W, D, "S"],
+                        [W, D, 0.0, D, "R"], [0.0, D, 0.0, 0.0, "S"]], _PDX_XY, 0.0)
+    zr = rules.jurisdictions["portland"].rule_for("CM2")
+    env = build_envelope(lot, edges, {"F": zr.setback_front_ft, "S": zr.setback_side_ft,
+                                      "R": zr.setback_rear_ft,
+                                      "A": zr.setback_rear_ft}, "A")
+    fsb = s6s._front_setback_for(rules, "portland", "CM2", lot.area)
+    psb = sp.parking_street_setback_for("portland", "CM2")
+    assert fsb == 0.0 and psb == 10.0
+    fe = [e[:4] for e in edges if e[4] == "F"]
+    r = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM2",
+             parking_setback_ft=psb, front_setback_ft=fsb, street_setback_ft=fsb,
+             lot_xy=[(e[0], e[1]) for e in edges])
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    assert r["layout_method"] == "townhome_side_court"
+    stalls = [_from_county(g, _PDX_XY, 0.0) for k, g in r["geoms"].items()
+              if k.startswith("stall_")]
+    assert stalls
+    assert min(s.bounds[1] for s in stalls) >= psb - 0.6
+    # ... and what the 10 ft fallback drew: the same court on the lot line.
+    old = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM2",
+               parking_setback_ft=psb, front_setback_ft=10.0, street_setback_ft=fsb,
+               lot_xy=[(e[0], e[1]) for e in edges])
+    old_stalls = [_from_county(g, _PDX_XY, 0.0) for k, g in old["geoms"].items()
+                  if k.startswith("stall_")]
+    assert min(s.bounds[1] for s in old_stalls) < 1.0

@@ -605,6 +605,35 @@ def _alley_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> fl
     return float(v or 0.0)
 
 
+def _front_setback_for(rules, jur: str, zone: str, area: float = 0.0) -> float:
+    """The zone's minimum front setback for a lot of this size, in feet.
+
+    A ZERO IS THE CODE'S ANSWER (FOLLOWUPS 5 (o), 2026-09-28). Thirteen
+    quadplex zones print a zero -- Portland CE, CM1, CM2, CM3, CR, CX, EX
+    and RX (Table 130-2, "Min. Building Setbacks - Street Lot Line": none;
+    the corpus holds `value: 0` with the quote), Oregon City MUC-1, MUC-2,
+    MUD, C and WFDD (17.35.060.E: "Minimum required setbacks: None.") --
+    and none of them means "unread": `ZoneRule` refuses a quadplex zone
+    with no front setback at all, and s3 drops a zone rules.yaml does not
+    hold, so the unknown never reaches this stage as a zero. main() used
+    to read the zero with `float(v) if v else 10.0`, the fallback meant for
+    a missing number, and that is the lenient direction here, not the
+    safe one: the drawing's envelope comes from s5, cut to the real zero,
+    and this number is used only for how much of a city's parking setback
+    the envelope already answers (`layout_lot`, `park_c`). Portland keeps
+    a stall 10 ft off a street lot line, so ten feet of fallback forgave
+    all ten on every lot in its eight zero-setback zones, and a side court
+    stood on the lot line. A zero is drawn as zero -- the build-to line --
+    and a number that is genuinely absent (no such city or zone; a rules
+    file whose validator was bypassed) is read as zero too, since the less
+    this number says, the more of the parking setback is enforced.
+    """
+    jr = rules.jurisdictions.get(jur)
+    zr = jr.rule_for(zone) if jr else None
+    v = zr.effective_setback_front_ft(area) if zr else None
+    return 0.0 if v is None else float(v)
+
+
 def _street_setback_for(rules, jur: str, zone: str, area: float, tier: str) -> float:
     """How far s5 stood the envelope off EVERY street lot line, in feet.
 
@@ -1685,9 +1714,11 @@ def main() -> None:
     if sp.scope == "pilot_cell":
         in_scope &= (lots["zone"] == sp.pilot_zone).to_numpy()
 
-    # Per-CELL front setback from the verified zone rule (fallback 10 ft). One
-    # lookup per (jurisdiction, zone) rather than per lot: there are a few dozen
-    # cells and a quarter of a million lots.
+    # Per-CELL front setback from the zone rule (`_front_setback_for`: a zero
+    # is the code's answer and is drawn as one; until 2026-09-28 it fell to a
+    # 10 ft fallback, FOLLOWUPS 5 (o)). One lookup per (jurisdiction, zone)
+    # rather than per lot: there are a few dozen cells and a quarter of a
+    # million lots.
     #
     # Wilsonville states its front setback per lot size, so the cell is really
     # (jurisdiction, zone, which band the lot falls in). The band index is one
@@ -1703,8 +1734,7 @@ def main() -> None:
         band = sum(1 for at_least, _ in rows if area >= at_least) if rows else 0
         key = (jur, zone, band)
         if key not in setbacks:
-            v = zr.effective_setback_front_ft(area) if zr else None
-            setbacks[key] = float(v) if v else 10.0
+            setbacks[key] = _front_setback_for(rules, jur, zone, area)
         return setbacks[key]
 
     # The alley edge stands off by the setback s5 cut the envelope to along
