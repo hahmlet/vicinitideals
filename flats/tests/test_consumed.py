@@ -7,11 +7,13 @@ we_signed_up_for`. Everything else checks the reading is honest.
 from __future__ import annotations
 
 import textwrap
+from pathlib import Path
 
 import pytest
 
 from flats.encode.consumed import Reach, reach, readers_by_field, render
 from flats.rules.fields import FIELDS
+from flats.score import paper
 
 #: Every field the corpus encodes that no scoring module names, as of
 #: 2026-09-08. This is not a wish list -- it is the record of what a reviewer's
@@ -32,9 +34,12 @@ from flats.rules.fields import FIELDS
 #: What is left of the parking-geometry block is the part about a lot's
 #: EDGES -- the approach at the curb, the share of the frontage a court may
 #: take, the setback from the street -- which the paper lot has none of.
-#: `open_space_min_sqft` is the other kind -- it already holds numbers the
-#: 2026-09-07 blind reading found misquoted, and nobody noticed because
-#: nothing reads it.
+#: `open_space_min_sqft` was the other kind -- it held numbers the 2026-09-07
+#: blind reading found misquoted, and nobody noticed because nothing read it.
+#: READ since 2026-09-28 (FOLLOWUPS 7(a)), by the first route: `screen.py`
+#: measures it against the lot less the building and the parking's pavement
+#: (`paper.paved`), the same leftover the two percentage checks beside it now
+#: read.
 #:
 #: Two more left on 2026-09-10, by the first route: `screen.py` now reads
 #: `min_lot_depth_ft` and `max_lot_depth_ratio`. Thirty-eight zones in eight
@@ -76,7 +81,6 @@ SILENTLY_UNREAD = frozenset(
     {
         "parking_street_setback_ft",
         "setback_front_max_ft",
-        "open_space_min_sqft",
         "driveway_approach_max_width_ft",
         "min_building_separation_ft",
         "parking_front_prohibited",
@@ -121,12 +125,23 @@ def test_the_registry_and_the_report_hold_the_same_fields(rows):
     assert {r.field for r in rows} == set(FIELDS)
 
 
-def test_street_side_setback_is_excluded_on_the_record_not_forgotten(rows):
-    """95 values across 15 jurisdictions, and `paper.py` says why in the fit."""
+def test_street_side_setback_is_read_on_corners_and_excluded_from_the_paper_width(rows):
+    """95 values across 15 jurisdictions, and `paper.py` says why in the fit.
+
+    Two things at once since 2026-09-28, and they agree. The paper lot's
+    WIDTH still leaves it out on the record -- it binds corner lots only, and
+    the paper lot has no corner. And `paper.paved` now READS it on a corner
+    lot whose court is reached off the side street: the drive crosses that
+    yard, and its pavement comes off the open space (FOLLOWUPS 7(a)). Both
+    are "corner lots only", which is what the exclusion always said.
+    """
     row = next(r for r in rows if r.field == "setback_street_side_ft")
-    assert not row.reached
-    assert not row.silent
-    assert "flats/score/paper.py" in row.declared
+    assert row.reached
+    assert "flats/score/paper.py" in row.readers
+    # The ledger files a module that both reads and declares a field as a
+    # reader only, so the exclusion is looked for where it is written.
+    source = Path(paper.__file__).read_text(encoding="utf-8")
+    assert '"setback_street_side_ft (corner lots only)"' in source
 
 
 def test_the_parking_minimum_and_the_maximum_are_both_read(rows):

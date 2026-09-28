@@ -1157,12 +1157,15 @@ def test_only_a_cap_below_the_minimum_fails_the_stall_count() -> None:
     assert at_war.stalls_charged == 4
 
 
-def test_open_space_is_flagged_as_a_favourable_approximation() -> None:
-    # Leftover area is an upper bound on qualifying open space — real codes
-    # impose dimensions and location. The check runs, and says so.
-    result = run(rules(open_space_min_pct=20))
+def test_open_space_is_measured_past_the_pavement_and_labelled_nothing() -> None:
+    # Until 2026-09-28 the leftover was the lot less the building, and the
+    # check said it was a favourable approximation. It is now the lot less the
+    # building and its court and lane (flats/tests/test_open_space_leftover.py),
+    # which is the amount the code asks about, so there is nothing to flag.
+    # The lane crosses the front yard, so the front setback has to be stated.
+    result = run(rules(open_space_min_pct=20, setback_front_ft=10))
 
-    assert result.optimistic == ("open_space_pct",)
+    assert result.optimistic == ()
     assert result.triage is Triage.green
 
 
@@ -1170,19 +1173,12 @@ def test_landscaping_is_a_check_and_not_a_comment() -> None:
     # Four jurisdictions encoded min_landscaped_pct and the screen read none of
     # them. Portland asks 30 percent in RM1; a pod leaving twenty screened
     # GREEN on a standard it missed by a third.
-    ok = run(rules(min_landscaped_pct=20))
-    short = run(rules(min_landscaped_pct=70), relief=NO_RELIEF)
+    ok = run(rules(min_landscaped_pct=20, setback_front_ft=10))
+    short = run(rules(min_landscaped_pct=70, setback_front_ft=10), relief=NO_RELIEF)
 
     assert ok.triage is Triage.green
     assert short.triage is Triage.red
     assert short.head == "landscaped_pct"
-
-
-def test_landscaping_says_it_is_a_favourable_approximation() -> None:
-    # Optimistic twice over: leftover area is an upper bound on what could be
-    # landscaped, and every code that asks for landscaping also says driveways
-    # and parking do not count towards it.
-    assert run(rules(min_landscaped_pct=20)).optimistic == ("landscaped_pct",)
 
 
 # --- the rule-cost ledger ---------------------------------------------

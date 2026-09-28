@@ -579,6 +579,138 @@ def court_across(
     )
 
 
+def _yard(rules: "ZoneResolution", name: str) -> float | None:
+    """A setback's depth in feet: 0 where the code waives it, None where unread."""
+    if name in rules.exempted:
+        return 0.0
+    return _number(rules, name)
+
+
+def paved(
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
+    column: bool = False,
+    deep_ft: float,
+) -> float | None:
+    """Square feet this design's parking paves on the lot, or None if unknown.
+
+    Every code that asks for open space or landscaping says the ground a car
+    stands or drives on does not count towards it -- Portland 33.110.240's
+    outdoor area may not be "vehicle area", Happy Valley 16.42.030(A)(8)
+    names driveways and parking outright -- and until item 7(a) of the
+    follow-up queue the screen measured both against the lot less the
+    building alone, which credited the court and its lane as garden. This is
+    what that leftover has to lose.
+
+    It is the pavement of the plan the paper lot already charges the fit for,
+    and it is counted the way quadfit's s6s counts it (``parking_area`` and
+    ``driveway_area`` in ``offer``), so the two layers subtract the same
+    ground:
+
+    * **the court** -- the row of stalls at the charged count, each the
+      zone's cell (:func:`court_across`, :func:`court_depth`), and the aisle
+      serving them, paved across the row or across the lane that reaches
+      it, whichever is wider. The standoff between the rear wall and the
+      first stall is NOT pavement: it is the walk, the downspouts and the
+      doors, and Fairview makes it a landscape strip in as many words. s6s
+      leaves it in the leftover too.
+    * **where the alley is the aisle**, the stalls and the back-out room the
+      alley leaves short, paved between them and the alley line; no aisle of
+      the lot's own. The same from a side alley, where the stalls stand in a
+      column along it (:func:`side_column`).
+    * **the way in** -- the lane beside the building from the street, the
+      front setback plus the building's depth in the orientation that won
+      (``deep_ft``) plus the standoff it runs past before it meets the aisle;
+      or, where the code lets a corner lot's court be reached off the side
+      street, a drive across the street-side yard; or, from a side alley that
+      is not the aisle, the aisle carried on across the alley-side yard to the
+      alley. From a rear alley the court meets the alley line and there is
+      nothing to cross.
+
+    Every figure is the least a legal plan could pave, which is the right
+    quantity: the question is whether ANY plan leaves the amount, and the
+    plan that paves least leaves most. The one way the real figure is larger
+    is a building that cannot stand at the front setback line -- the lane
+    then runs further -- and the fit does not record where the building
+    stood. That is a strip of lane at most, against leftovers the county map
+    measures in thousands of square feet; recorded here rather than assumed
+    away.
+
+    None -- unknown, never zero -- for a design parked in a way nothing here
+    draws (``side_drive``, ``tuck_under``: a tuck-under's driveway still
+    crosses the front yard, and nobody has drawn it), and for a way in whose
+    yard the code does not state as a number. The screen then refuses to
+    certify on the leftover rather than guessing it. A design that parks
+    nothing on the lot paves nothing: 0.0.
+    """
+    parking = design.parking
+    if not parking.parks or parking.config is ParkingConfig.street_only:
+        return 0.0
+    if parking.config not in _COURT_CONFIGS:
+        return None
+    across = court_across(design, rules, alley, corner=corner)
+    if not across.stalls:
+        # A cap of nothing: no row is drawn and nothing is paved for it. The
+        # parking checks already say this design cannot be built here.
+        return 0.0
+    gap = parking.building_gap_ft
+    if (stated := _number(rules, "parking_building_buffer_ft")) is not None:
+        gap = max(gap, stated)
+    stall = parking.stall_depth_ft
+    if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
+        stall = max(stall, stated)
+    aisle = parking.aisle_ft
+    if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
+        aisle = max(aisle, stated)
+    row = across.width_ft
+    shortfall = _backout_shortfall(rules, alley)
+    if column:
+        # The column stands along the side alley: each stall one cell of the
+        # row turned end-on, plus the back-out room paved beside it.
+        assert shortfall is not None, "a column court was paved where no side alley offers one"
+        return row * (stall + shortfall)
+    if alley is not None and alley.at_rear and shortfall is not None and shortfall < aisle:
+        # The same choice `court_depth` makes: the alley is the aisle.
+        return row * (stall + shortfall)
+    court = row * stall + aisle * max(row, across.lane_ft)
+    if across.lane_ft:
+        front = _yard(rules, "setback_front_ft")
+        if front is None:
+            return None
+        return court + across.lane_ft * (front + deep_ft + gap)
+    if alley_fed(rules, alley):
+        assert alley is not None
+        if alley.at_rear:
+            return court
+        # A side alley: the aisle runs on across the yard on that line. The
+        # line's own setback where the code states one (Portland waives it);
+        # otherwise the deeper of side and rear, the bridge's reading of a
+        # city that calls the alley line a rear lot line.
+        yard = _yard(rules, "setback_alley_side_ft")
+        if yard is None:
+            side, rear = _yard(rules, "setback_side_ft"), _yard(rules, "setback_rear_ft")
+            if side is None or rear is None:
+                return None
+            yard = max(side, rear)
+        return court + aisle * yard
+    if side_street_fed(rules, alley, corner):
+        yard = _yard(rules, "setback_street_side_ft")
+        if yard is None:
+            yard = _yard(rules, "setback_side_ft")
+        if yard is None:
+            return None
+        drive = parking.lane_ft
+        if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
+            drive = max(drive, stated)
+        return court + drive * yard
+    # A court with no lane and no alley or side street to reach it from:
+    # not a plan anything here draws.
+    return None
+
+
 def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     """The lot this design needs in this zone, on paper.
 

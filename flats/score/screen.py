@@ -39,10 +39,13 @@ holds the lot out of GREEN.
 code plainly imposes would manufacture GREENs. Any skipped check drops the lot
 out of GREEN and names itself, which is how the coverage ledger gets its work.
 
-Some checks are honest approximations rather than measurements — leftover lot
-area is an upper bound on qualifying open space, not the open space itself.
-Those are listed in :attr:`Screening.optimistic` so a reviewer can see which
-numbers were assumed in the lot's favour.
+A check computed from a proxy that runs in the lot's favour is listed in
+:attr:`Screening.optimistic` so a reviewer can see which numbers were assumed
+in the lot's favour. Open space and landscaping were the two until
+2026-09-28, read against the lot less the building with the parking left in;
+they now come off the lot less the building and its pavement, and where the
+pavement cannot be drawn the lot less the building is used only as the upper
+bound it is -- enough to fail a lot, never to pass one.
 """
 
 from __future__ import annotations
@@ -60,7 +63,14 @@ from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
-from flats.score.paper import Alley, court_across, court_depth, lot_standard, side_column
+from flats.score.paper import (
+    Alley,
+    court_across,
+    court_depth,
+    lot_standard,
+    paved,
+    side_column,
+)
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
     ReliefOutcome,
@@ -113,8 +123,20 @@ USE_PROHIBITED = "USE_PROHIBITED"
 #: backlog: the caller has to search again at the width `fit_for` asks.
 COURT_WIDTH_UNMEASURED = "COURT_WIDTH_UNMEASURED"
 
-#: Checks computed from a proxy that runs in the lot's favour.
-OPTIMISTIC_CHECKS = frozenset({"open_space_pct", "landscaped_pct"})
+#: Checks computed from a proxy that runs in the lot's favour. Empty since
+#: 2026-09-28 (FOLLOWUPS 7(a)): the two it held, open space and landscaping
+#: as a share of the lot, were read against the lot less the building alone,
+#: and now come off the lot less the building and its pavement
+#: (:func:`flats.score.paper.paved`) -- the amount the code asks about. Kept,
+#: and kept empty, so the next check that has to lean on a favourable proxy
+#: has somewhere to say so; a proxy nobody labels is a false GREEN nobody sees.
+OPTIMISTIC_CHECKS: frozenset[str] = frozenset()
+
+#: The quantity a leftover check is stated net of when the design's pavement
+#: could not be drawn (:func:`flats.score.paper.paved` returned None). Joins
+#: the ``measured_on`` denominators in ``_checks``'s ``unmeasured``, and so
+#: reports as ``FACT_UNOBSERVED``: the code names ground nobody measured.
+UNPAVED = "parking_pavement"
 
 #: Which rule field each check reads. A check with no value goes unrun, but only
 #: an unrun check backed by a *required* field means the encoding is incomplete
@@ -141,6 +163,7 @@ CHECK_FIELD: dict[str, str] = {
     "parking_stalls": "parking_min_per_unit",
     "parking_cap": "parking_max_per_unit",
     "open_space_pct": "open_space_min_pct",
+    "open_space_sqft": "open_space_min_sqft",
     "landscaped_pct": "min_landscaped_pct",
 }
 
@@ -620,41 +643,77 @@ def _checks(
             )
         )
 
-    landscaped = rules.get("min_landscaped_pct")
-    if landscaped is not None:
-        # The same leftover proxy as open space, and more optimistic still:
-        # every code that asks for landscaping also says driveways and parking
-        # do not count towards it (Happy Valley 16.42.030(A)(8) is the plain
-        # form), and nothing here knows how much of the leftover the parking
-        # takes. So this can only ever fail a lot that has no room by the
-        # building alone -- which is exactly the lot worth failing, and why an
-        # optimistic check still beats no check.
-        #
-        # Encoded in four jurisdictions and read by nobody until now: Portland
-        # asks 30 percent in RM1, and a pod that left 20 screened GREEN.
-        out.append(
-            policy.evaluate(
-                "landscaped_pct",
-                (lot.lot_sqft - design.ground_sqft) / lot.lot_sqft * 100.0,
-                float(landscaped),
-                is_maximum=False,
-                jurisdiction=where,
-            )
-        )
+    # What the lot has left over for the open space and landscaping a code
+    # asks of it: the lot less the building AND less the pavement its parking
+    # takes -- the court, the way in to it, the back-out room an alley leaves
+    # short (:func:`flats.score.paper.paved`). Every code that asks for either
+    # says pavement does not count towards it: Portland 33.110.240's outdoor
+    # area may not be vehicle area, Happy Valley 16.42.030(A)(8) names
+    # driveways and parking outright. Until 2026-09-28 (FOLLOWUPS 7(a)) this
+    # was the lot less the building alone, and labelled optimistic for it: on
+    # the pod's court and lane that credited some 2,500 sq ft of asphalt as
+    # garden on every lot, so the check could only ever fail a lot with no
+    # room by the building alone. The county map has always subtracted the
+    # pavement (s6s ``offer``) and found none of its 46,212 drawn plans short
+    # on amount, so this is expected to move few colours or none -- but a
+    # screen answering a looser question than the code's is the false-GREEN
+    # shape, whatever it happens to cost today.
+    #
+    # Where the pavement is unknown -- a design parked in a way nothing draws,
+    # or a way in whose yard the code does not state -- the lot less the
+    # building is still an UPPER bound on the leftover, and a bound settles
+    # half the question, as it does for a density on a net acre (`rate`): a
+    # standard missed with nothing paved is missed with anything paved, so a
+    # failure stands; a pass is not evidence, so the check goes unrun and the
+    # lot is held out of GREEN on the fact nobody measured. Never a pass on a
+    # leftover larger than the one a plan could leave.
+    #
+    # What this still does not hold is the SHAPE: Portland's 12 by 12 square
+    # outside the front setback, Milwaukie's 96 sq ft patio behind each
+    # ground-floor home. That is FOLLOWUPS 7(b), a test on the drawing, and a
+    # different question from the amount answered here.
+    pavement = paved(
+        design,
+        rules,
+        lot.alley,
+        corner=lot.corner,
+        column=fit.column,
+        deep_ft=fit.required_ft,
+    )
+    bound_sqft = lot.lot_sqft - design.ground_sqft
 
-    open_space = rules.get("open_space_min_pct")
-    if open_space is not None:
-        # Leftover area is an upper bound on qualifying open space — real codes
-        # impose dimensions and location. Flagged as optimistic, never silent.
-        out.append(
-            policy.evaluate(
-                "open_space_pct",
-                (lot.lot_sqft - design.ground_sqft) / lot.lot_sqft * 100.0,
-                float(open_space),
-                is_maximum=False,
-                jurisdiction=where,
-            )
+    def leftover(name: str, field: str, *, share: bool) -> None:
+        threshold = rules.get(field)
+        if threshold is None:
+            return
+        room = bound_sqft if pavement is None else bound_sqft - pavement
+        result = policy.evaluate(
+            name,
+            room / lot.lot_sqft * 100.0 if share else room,
+            float(threshold),
+            is_maximum=False,
+            jurisdiction=where,
         )
+        if pavement is None and result.verdict is not Verdict.fails:
+            unchecked.append(name)
+            unmeasured.add(UNPAVED)
+            return
+        out.append(result)
+
+    # Landscaping is distinct from open space -- nobody has to be able to sit
+    # in it, and it is written against the whole site -- but it is the same
+    # ground, and the same pavement comes off it. Portland asks 30 percent in
+    # RM1; Happy Valley, Oregon City, Fairview and Wilsonville state it too.
+    leftover("landscaped_pct", "min_landscaped_pct", share=True)
+    leftover("open_space_pct", "open_space_min_pct", share=True)
+    # And open space stated as an area rather than a share: Portland asks 250
+    # sq ft whatever the lot (200 in R2.5, 48 a home in RM1), Milwaukie 96 per
+    # ground-floor home, Multnomah LR-7 300 a home. A city stating both means
+    # both. Encoded, cited, and read by nothing until 2026-09-28 -- the reach
+    # ledger carried it in `SILENTLY_UNREAD` from the day that set was
+    # written. A per-dwelling figure arrives multiplied out by the loader, so
+    # the threshold is what the four homes owe together.
+    leftover("open_space_sqft", "open_space_min_sqft", share=False)
 
     return out, unchecked, unmeasured
 
