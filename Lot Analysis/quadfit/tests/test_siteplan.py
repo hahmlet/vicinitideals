@@ -2195,8 +2195,9 @@ def test_a_flag_lots_pole_is_the_lane_where_it_is_wide_enough(sliver):
     (421 flag lots lost on the bound of 2026-09-20 to the fix that made
     the lane start on the strip, and 122 more with a sliver on the next).
     A pole at least the lane's width IS the lane; the drawn lane resumes
-    at the body's top, beside the pod, and the pole's length is not
-    counted -- it never was."""
+    at the body's top, in the pole's own columns, beside the pod. Since
+    FOLLOWUPS 5 (n) the lane's length runs from the street, the pole
+    included (until then the pole's 30 ft went uncounted)."""
     s6s = _sp_setup()
     env, fe, area = _flag_lot(20.0, sliver)
     r = _run(s6s, env, fe, area)
@@ -2205,10 +2206,11 @@ def test_a_flag_lots_pole_is_the_lane_where_it_is_wide_enough(sliver):
     b = r["geoms"]["building"].bounds
     d = r["geoms"]["driveway"].bounds
     assert d[1] == pytest.approx(30.0 + FRONT_S, abs=0.6)             # from the body's top
+    assert d[0] >= -0.6 and d[2] <= 20.0 + 0.6                         # under the pole
     assert d[0] >= b[2] - 0.6 or d[2] <= b[0] + 0.6                    # beside the pod
     c = r["geoms"]["parking_court"].bounds
     assert d[3] >= c[1] - 0.6
-    assert r["driveway_len_ft"] == pytest.approx(FRONT_S + (c[1] - d[1]), abs=0.6)
+    assert r["driveway_len_ft"] == pytest.approx(c[1], abs=0.6)        # street to court
 
 
 def test_a_flag_lots_pole_narrower_than_the_lane_refuses_the_lot():
@@ -2457,3 +2459,153 @@ def test_a_portland_side_court_keeps_ten_feet_off_the_street_in_a_zero_setback_z
     old_stalls = [_from_county(g, _PDX_XY, 0.0) for k, g in old["geoms"].items()
                   if k.startswith("stall_")]
     assert min(s.bounds[1] for s in old_stalls) < 1.0
+
+
+# ---------------------------------------------------------------------------
+# FOLLOWUPS 5 (n): the pole's lane comes straight out of the pole
+# ---------------------------------------------------------------------------
+
+def _pdx_flag_lot(pole_x0: float = 0.0, pole_w: float = 20.0, pole_l: float = 60.0,
+                  body_w: float = 90.0, body_d: float = 120.0, bearing: float = 0.0,
+                  tier: str = "A"):
+    """A Portland R5 flag lot at county coordinates (Hollywood, turned by
+    `bearing`): a pole `pole_w` ft wide and `pole_l` ft long from the street
+    (the south line, starting `pole_x0` ft from the body's west line) up to
+    a `body_w` x `body_d` body. The pole's end is the one front edge; its
+    sides and the body's front line (the neighbours' back yards) are side
+    lines, the body's back the rear. The envelope is s5's own at R5's 10 /
+    5 / 5 ft, tier A by default (tier C: 10 ft all round, s5's inset of an
+    irregular lot -- every pole under 15 ft is one).
+
+    Returns (lot, edges with classes, envelope), all at county coordinates,
+    and the R5 rule."""
+    from common import load_rules
+    from s5_envelope import build_envelope
+
+    x0, P, L, W, D = pole_x0, pole_w, pole_l, body_w, body_d
+    ring = [(x0, 0.0), (x0 + P, 0.0), (x0 + P, L), (W, L), (W, L + D), (0.0, L + D)]
+    if x0 > 0:
+        ring += [(0.0, L), (x0, L)]
+    classes = ["S"] * len(ring)
+    classes[0] = "F"
+    classes[ring.index((W, L + D))] = "R"
+    edges = [[*ring[i], *ring[(i + 1) % len(ring)], classes[i]] for i in range(len(ring))]
+    lot = _to_county(shapely.Polygon(ring), _PDX_XY, bearing)
+    edges = _to_county(edges, _PDX_XY, bearing)
+    zr = load_rules().jurisdictions["portland"].rule_for("R5")
+    env = build_envelope(lot, edges, {"F": zr.setback_front_ft, "S": zr.setback_side_ft,
+                                      "R": zr.setback_rear_ft,
+                                      "A": zr.setback_rear_ft}, tier)
+    return lot, edges, env, zr
+
+
+def _run_pdx_flag(s6s, lot, edges, env, zr, bearing):
+    fe = [e[:4] for e in edges if e[4] == "F"]
+    return _run(s6s, env, fe, lot.area, bearing=bearing, jurisdiction="portland",
+                zone="R5", front_setback_ft=zr.setback_front_ft,
+                street_setback_ft=zr.setback_front_ft,
+                lot_xy=[(e[0], e[1]) for e in edges])
+
+
+@pytest.mark.parametrize("bearing", [0.0, 7.5])
+def test_a_flag_lots_lane_runs_down_its_pole_not_across_the_front_of_the_pod(bearing):
+    """FOLLOWUPS 5 (n). A Portland flag lot: a 20-ft pole up the west side
+    to a 90 x 120 body. The pole is the lane, and until this fix the lane
+    was taken at ANY column of the body's top while the pod went first-fit
+    to the body's top-left -- over the pole's mouth -- so the drawn lane
+    stood to the pod's right, x 61-73, and the run along the body's top
+    from the pole to it, across the front of the building, was neither
+    drawn nor charged (92 of the 123 pole lots restored on 2026-09-20).
+    Now the lane is taken in the pole's own columns, closed to the pod
+    before it is placed, so the lane runs straight from the pole down
+    beside the pod to the court, and its length runs from the street."""
+    s6s = _sp_setup_cities()
+    lot, edges, env, zr = _pdx_flag_lot(bearing=bearing)
+    r = _run_pdx_flag(s6s, lot, edges, env, zr, bearing)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    assert r["layout_method"] == "townhome_rear_court"
+    b = _from_county(r["geoms"]["building"], _PDX_XY, bearing).bounds
+    d = _from_county(r["geoms"]["driveway"], _PDX_XY, bearing).bounds
+    c = _from_county(r["geoms"]["parking_court"], _PDX_XY, bearing).bounds
+    assert d[0] >= -0.6 and d[2] <= 20.0 + 0.6, d                      # under the pole
+    assert d[2] <= b[0] + 0.6                                          # beside the pod
+    assert d[1] == pytest.approx(60.0 + zr.setback_side_ft, abs=0.6)   # from the body's top
+    assert d[3] >= c[1] - 0.6                                          # to the court
+    assert r["driveway_len_ft"] == pytest.approx(c[1], abs=0.6)        # street to court
+
+
+def test_a_pole_mid_front_leaves_the_pod_one_side_of_its_lane():
+    """The same body with the pole 35 ft in from its west line. The old
+    drawing stood the 56-ft pod across the pole's mouth and took a lane at
+    its right, the jog again; with the lane in the pole's columns the pod
+    must stand wholly to one side of it, where 30 or 38 ft is all the
+    body leaves -- the 56-wide pod gives way to the 36-wide (the bound's
+    expected loss on 77-100 ft Portland bodies) and the lot still parks."""
+    s6s = _sp_setup_cities()
+    lot, edges, env, zr = _pdx_flag_lot(pole_x0=35.0)
+    r = _run_pdx_flag(s6s, lot, edges, env, zr, 0.0)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    b = _from_county(r["geoms"]["building"], _PDX_XY, 0.0).bounds
+    d = _from_county(r["geoms"]["driveway"], _PDX_XY, 0.0).bounds
+    assert b[2] - b[0] == pytest.approx(36.0, abs=0.6)
+    assert d[0] >= 35.0 - 0.6 and d[2] <= 55.0 + 0.6, d
+    assert d[2] <= b[0] + 0.6 or d[0] >= b[2] - 0.6
+
+
+def test_a_tier_c_pole_steps_at_most_half_a_lane_off_its_line():
+    """s5 insets an irregular (tier C) lot by its largest setback all round,
+    so a Portland flag lot's body envelope starts 10 ft in from the side
+    line its pole is flush with. Under a 20-ft pole that leaves 10 ft of
+    envelope, less than the 12-ft lane: the lane leaving the pole steps
+    2 ft sideways across the body's front setback and runs down x 10-22,
+    its centre still over the pole. Under a 14-ft pole the lane's centre
+    would be 2 ft past the pole's side, the lane in the body's side yard:
+    refused. The drawing before took both, lane wherever the pod left
+    room."""
+    s6s = _sp_setup_cities()
+    lot, edges, env, zr = _pdx_flag_lot(tier="C")
+    r = _run_pdx_flag(s6s, lot, edges, env, zr, 0.0)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    d = _from_county(r["geoms"]["driveway"], _PDX_XY, 0.0).bounds
+    assert d[0] == pytest.approx(10.0, abs=0.6) and d[2] == pytest.approx(22.0, abs=0.6)
+    lot, edges, env, zr = _pdx_flag_lot(pole_w=14.0, tier="C")
+    r = _run_pdx_flag(s6s, lot, edges, env, zr, 0.0)
+    assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
+
+
+def test_a_wide_tract_with_a_short_street_piece_is_not_a_pole():
+    """A 300 x 150 Portland tract whose south line meets the street for its
+    west 30 ft only, the rest abutting neighbours, with an overlay carved
+    out of the envelope behind the east part of the street piece: the
+    envelope's strip on the street is 10 ft, narrower than the lane, and
+    the street piece is short against the lot -- which is what the rule of
+    2026-09-20 took for a pole, making every column of the body's top a
+    lane start (six such tracts, 240-400 ft). The lot's own ground at the
+    street is 300 ft wide, so this is a stub, and a stub narrower than the
+    lane is refused like any other. Without the lot's corners (a caller
+    that has only the envelope) the street piece stands in for the pole."""
+    from common import load_rules
+    from s5_envelope import build_envelope
+
+    s6s = _sp_setup_cities()
+    W, D, F = 300.0, 150.0, 30.0
+    ring = [(0.0, 0.0), (F, 0.0), (W, 0.0), (W, D), (0.0, D)]
+    cls = ["F", "S", "S", "R", "S"]
+    edges = _to_county([[*ring[i], *ring[(i + 1) % 5], cls[i]] for i in range(5)],
+                       _PDX_XY, 0.0)
+    lot = _to_county(shapely.Polygon(ring), _PDX_XY, 0.0)
+    zr = load_rules().jurisdictions["portland"].rule_for("R5")
+    env = build_envelope(lot, edges, {"F": zr.setback_front_ft, "S": zr.setback_side_ft,
+                                      "R": zr.setback_rear_ft,
+                                      "A": zr.setback_rear_ft}, "A")
+    env = env.difference(_to_county(box(15.0, 0.0, 45.0, 35.0), _PDX_XY, 0.0))
+    fe = [e[:4] for e in edges if e[4] == "F"]
+    kw = dict(bearing=0.0, jurisdiction="portland", zone="R5",
+              front_setback_ft=zr.setback_front_ft, street_setback_ft=zr.setback_front_ft)
+    r = _run(s6s, env, fe, lot.area, lot_xy=[(e[0], e[1]) for e in edges], **kw)
+    assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
+    assert "driveway" not in r["geoms"]
+    blind = _run(s6s, env, fe, lot.area, **kw)
+    assert blind["site_plan_ok"] is True
+    d = _from_county(blind["geoms"]["driveway"], _PDX_XY, 0.0).bounds
+    assert d[2] <= F + 0.6                                  # still under its street piece

@@ -187,16 +187,21 @@ lane still runs inside the envelope: a pole narrower than the lane, and a
 street piece that does not line up with a column beside the pod (the lane
 would jog through the front yard, or run in the side setback), refuse the
 lot, which the drawing before 2026-09-20 parked over ground it never
-checked (FOLLOWUPS 5 (k)). The pole's own lane is taken at ANY column of
-the body's top: the pod is placed first-fit at the body's top-left, so
-where the pole meets the body at the left the lane stands to the pod's
-right, and the run along the body's top from the pole to it is neither
-drawn nor charged -- 92 of the 123 pole lots the bound of 2026-09-20
-restored (median 23 ft; six wide tracts with a short street piece, 240 to
-400 ft, where the lot's ground at the street, not the envelope's, would
-have told a stub from a pole). The drawing before 2026-09-20 took the same
-lots with the same jog; the pod belongs beside the pole's lane (FOLLOWUPS
-5 (n)).
+checked (FOLLOWUPS 5 (k)). Until 2026-09-28 the pole's own lane was taken
+at ANY column of the body's top while the pod was placed first-fit at the
+body's top-left, so where the pole met the body at the left the lane
+stood to the pod's right and the run along the body's top from the pole
+to it -- across the front of the building -- was neither drawn nor
+charged: 92 of the 123 pole lots the bound of 2026-09-20 restored (median
+23 ft; six wide tracts with a short street piece, 240 to 400 ft, where the
+envelope's strip, not the lot's ground, had called it a pole). Now a pole
+is read off the lot's ground at the street (`_pole_span`), its lane is
+taken in the pole's own columns (`_pole_lanes`) and closed to the pod
+before the pod is placed, so the lane runs straight out of the pole
+beside the building to the court (stepping sideways by at most half its
+width where a tier-C inset leaves less than a lane of envelope under the
+pole); a pole with less than that is refused, and the lane's length runs
+from the street (FOLLOWUPS 5 (n)).
 
 `layout_method` is `townhome_rear_court` (lane from the front street down
 the side of the building), `townhome_rear_court_side_street` (a corner lot
@@ -230,6 +235,7 @@ verdict, it says why the verdict is what it is.
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import math
 import sys
@@ -526,6 +532,95 @@ def _front_runs(free, fcells, stop_r: int):
     clear = (has & (start <= stop_r) & ~between.any(axis=0)
              & fcells[np.clip(start, 0, R - 1), np.arange(C)])
     return clear, np.maximum(start - 1, 0)
+
+
+#: How far past each end of the street piece, and into the lot, the lot's
+#: ground is looked for by `_pole_span`.
+POLE_PROBE_FT = 3.0
+#: How much of that the lot may hold past the street piece's two ends and
+#: still be a pole: pole sides up to about 20 degrees off square. A lot line
+#: that carries on along the street, or turns less than about 60 degrees
+#: from it, fills the probe's three feet at that end.
+POLE_GROUND_TOL_FT = 2.5
+
+
+def _pole_span(fe_r: list[list[float]], lot_r=None) -> tuple[float, float] | None:
+    """The pole's span across the street, (x0, x1) in the rotated frame, or
+    None where the lot's ground at the street is not a pole.
+
+    `fe_r` is the front street's edges and `lot_r` the lot polygon, both in
+    the frame the envelope grid is cut in (front along x). A flag lot's
+    pole meets the street and its two side lines turn straight back from
+    it, so the lot holds no ground past the ends of the street piece: the
+    lot within `POLE_PROBE_FT` of the street piece -- a square-capped
+    buffer, which reaches that far past each end -- is no wider along the
+    street than the piece itself (plus `POLE_GROUND_TOL_FT`). A partial
+    frontage, whose lot line runs on past a short street piece along a
+    neighbour, and a bulb front whose next chord s4 did not call a front,
+    carry the lot's ground on past the end and are stubs, not poles,
+    whatever the envelope's strip there looks like (FOLLOWUPS 5 (n): six
+    tracts 240 to 400 ft wide were drawn as poles on 2026-09-20 because an
+    overlay or the square cap had thinned their strip). The strip beside
+    the piece is asked, not a band across the lot, because a street piece
+    may stand recessed behind the rest of the lot. Without the lot
+    (`lot_r` None, a test) the street piece's own span is taken.
+    """
+    xs = [v for e in fe_r for v in (e[0], e[2])]
+    if not xs:
+        return None
+    x0, x1 = min(xs), max(xs)
+    if lot_r is None:
+        return x0, x1
+    import shapely
+    from shapely.geometry import LineString
+
+    near = shapely.union_all([
+        LineString([(e[0], e[1]), (e[2], e[3])]).buffer(
+            POLE_PROBE_FT, cap_style="square", join_style="mitre") for e in fe_r])
+    ground = lot_r.intersection(near)
+    if ground.is_empty:
+        return None
+    gx0, _, gx1, _ = ground.bounds
+    if gx1 - gx0 > x1 - x0 + POLE_GROUND_TOL_FT:
+        return None
+    return max(x0, gx0), min(x1, gx1)
+
+
+def _pole_lanes(ok, span: tuple[float, float], minx: float, res: float,
+                drive_c: int) -> list[int]:
+    """The first columns of the lanes that come straight out of a pole.
+
+    A lane `drive_c` cells wide, every column of it holding envelope and
+    inside the pole's span (`_pole_span`): the leftmost and the rightmost
+    such lane, so the pod can stand beside it on either hand. Where none
+    fits, the lane whose CENTRE line lies inside the span, leftmost and
+    rightmost. The centre, not the whole width: s5 insets a tier-C lot (every
+    flag lot whose pole is under 15 ft, s4's pole test) by its LARGEST
+    setback all round, so a 20-ft pole flush with the body's side meets an
+    envelope that starts 10 ft in, and the lane leaving the pole steps
+    sideways by up to half its width as it crosses the body's front
+    setback strip -- setback ground a lane crosses, drawn and charged no
+    more than any lane's crossing of its strip. Empty where no such lane
+    holds -- a pole whose mouth the inset leaves less than half a lane of
+    envelope -- and the pole is then no lane at all: the lane from it would
+    run in the body's side yard, which this drawing refuses (FOLLOWUPS 5
+    (n))."""
+    import numpy as np
+
+    C = ok.shape[1]
+    if C < drive_c:
+        return []
+    has = ok.any(axis=0)
+    left = minx + np.arange(C - drive_c + 1) * res
+    right = left + drive_c * res
+    mid = (left + right) / 2.0
+    run = np.convolve(has.astype(int), np.ones(drive_c, dtype=int), "valid") == drive_c
+    # Half a cell of slack at each side: the span is the lot line's, the
+    # grid's columns are wherever the envelope's corner put them.
+    inside = run & (left >= span[0] - 0.5 * res) & (right <= span[1] + 0.5 * res)
+    c0s = np.flatnonzero(inside if inside.any()
+                         else run & (mid >= span[0]) & (mid <= span[1]))
+    return sorted({int(c0s.min()), int(c0s.max())}) if c0s.size else []
 
 
 def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
@@ -1167,6 +1262,14 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     reach, REACH = 0, ("no_building", "no_court", "court_too_shallow",
                        "no_alley_lane" if alley_fed else "no_side_lane")
     fronts = _candidate_fronts(bearings, front_edges, front_rule, lot_xy)
+    # The lot itself, for telling a flag lot's pole from a stub by its
+    # ground at the street (`_pole_span`); None in a test that hands in
+    # only the envelope, or where the corners make no polygon.
+    lot_poly = None
+    if lot_xy and len(lot_xy) >= 3:
+        lot_poly = shapely.make_valid(shapely.Polygon(lot_xy))
+        if lot_poly.is_empty or lot_poly.area <= 0:
+            lot_poly = None
     any_through = False
     for b, fe, se in fronts:
         # The other streets' edges that run WITH this front are the far end
@@ -1233,23 +1336,39 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         # A flag lot's pole is setback ground end to end, or keeps a sliver
         # of envelope narrower than the lane between its side setbacks (a
         # 16-ft pole, 5-ft sides: 6 ft), and is the lane itself where the
-        # pole is at least the lane's width: the strip is then the body's
-        # top edge, each column's first envelope cell, so the lane starts
-        # there with nothing of the building above it, and the pole's
-        # length is uncounted as it always was. A pole narrower than the
-        # lane refuses the lot; the drawing before 2026-09-20 took every
-        # pole, a 5-ft one included. A front the strip misses for any
-        # other reason -- a wide one set back farther than the street
-        # setback -- stays refused, and so does a stub narrower than the
-        # lane on a wide lot.
+        # pole is at least the lane's width. A pole narrower than the lane
+        # refuses the lot; the drawing before 2026-09-20 took every pole, a
+        # 5-ft one included. A front the strip misses for any other reason
+        # -- a wide one set back farther than the street setback -- stays
+        # refused, and so does a stub narrower than the lane on a wide lot.
+        #
+        # THE POLE'S LANE COMES STRAIGHT OUT OF THE POLE (FOLLOWUPS 5 (n),
+        # 2026-09-28). A pole is told from a stub by the LOT's ground at the
+        # street (`_pole_span`, from `lot_xy`), not by the envelope's strip,
+        # which an overlay or a square cap can thin on a 400-ft tract with
+        # a short street piece. The lane is then taken in the pole's own
+        # columns (`_pole_lanes`: hard against either side of it, or, where
+        # a tier-C inset leaves less than a lane of envelope under the
+        # pole, stepping sideways by at most half its width as it crosses
+        # the body's front setback), those
+        # columns are closed to the pod before it is placed, and the lane
+        # runs straight from the body's top down beside the pod to the
+        # court. From 2026-09-20 to this date the strip was the WHOLE
+        # body's top edge: the pod went first-fit to the top-left, the lane
+        # to wherever a column beside it was clear, and on a pole at the
+        # left that was the pod's right -- a run along the body's top from
+        # the pole to the lane, across the front of the building, neither
+        # drawn nor charged (92 of the 123 pole lots the bound of
+        # 2026-09-20 restored, median 23 ft, six tracts 240 to 400 ft). The
+        # lane's length now runs from the street, the pole included (the
+        # pole is setback ground, crossed like any strip, and is paved in
+        # length, not in area, as every lane's crossing is).
         fcells = (_alley_mouths(ok, rotated(fe), minx, miny, res, street_reach,
                                 joins=streets)
                   if fe else np.zeros_like(ok))
         fe_len = sum(math.hypot(e[2] - e[0], e[3] - e[1]) for e in fe)
         strip_cols = np.flatnonzero(fcells.any(axis=0))
         strip_w = (strip_cols.max() - strip_cols.min() + 1) * res if strip_cols.size else 0.0
-        if fe and strip_w < drive_w and drive_w <= fe_len <= 0.5 * C * res:
-            fcells = ok & (np.cumsum(ok, axis=0) == 1)
         # The cells on the OTHER streets' strips -- a side street's, a far
         # end's -- which tell a side court in a ban city which side of the
         # building faces a street, and feed the lane from that street.
@@ -1265,16 +1384,49 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         frame = {"rot": rot, "minx": minx, "miny": miny, "scells": scells,
                  "front_deg": float(b), "street_sb": street_sb}
 
+        # (fcells, the placement grid's integral, the street's y where the
+        # lane's length is measured from a pole -- None: the street setback
+        # -- and the grid the pod and the lane stand in -- None: `ok`)
+        lanes = [(fcells, None, None, None)]
+        if (fe and not alley_fed and front_lane_ok
+                and strip_w < drive_w and drive_w <= fe_len <= 0.5 * C * res):
+            fe_r = rotated(fe)
+            span = _pole_span(fe_r, None if lot_poly is None else
+                              affinity.rotate(lot_poly, -rot, origin=origin))
+            if span is not None:
+                y_street = float(np.mean([v for e in fe_r for v in (e[1], e[3])]))
+                # The body starts at the first row the envelope reaches
+                # past the pole's columns; a sliver of envelope up the
+                # pole is setback ground the lane crosses, and is dropped
+                # from the grid, so the raster's stray cells where the
+                # sliver meets the body's cut cannot break the lane.
+                centres = minx + (np.arange(C) + 0.5) * res
+                beyond = ok[:, (centres < span[0]) | (centres > span[1])].any(axis=1)
+                body_top = int(beyond.argmax()) if beyond.any() else 0
+                ok_p = ok.copy()
+                ok_p[:body_top, :] = False
+                top = ok_p & (np.cumsum(ok_p, axis=0) == 1)
+                lanes = []
+                for c0 in _pole_lanes(ok_p, span, minx, res, drive_c):
+                    f_p = np.zeros_like(ok)
+                    f_p[:, c0:c0 + drive_c] = top[:, c0:c0 + drive_c]
+                    shut = ok_p.copy()
+                    shut[:, c0:c0 + drive_c] = False
+                    lanes.append((f_p, _integral(shut), y_street, ok_p))
+                if smouths is not None or not lanes:
+                    # The side street's lane (or none) still has the pod
+                    # where it always stood.
+                    lanes.append((np.zeros_like(ok), None, None, None))
         Sok = _integral(ok)
-        for name, w_ft, d_ft in pods:
+        for (fcells, Sok_l, pole_y, ok_l), (name, w_ft, d_ft) in itertools.product(lanes, pods):
             for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
                 bw, bh = math.ceil(ww / res), math.ceil(dd / res)
-                hit = _placement(Sok, bh, bw)
+                hit = _placement(Sok if Sok_l is None else Sok_l, bh, bw)
                 if hit is None:
                     continue
                 reach = max(reach, 1)
                 br, bc = hit
-                free = ok.copy()
+                free = (ok if ok_l is None else ok_l).copy()
                 free[br:br + bh, bc:bc + bw] = False
                 bld = {**frame, "bld": (name, br, bc, bh, bw, ww * dd), "reaches": True}
                 # THE SIDE COURT: beside the building on either side, off the
@@ -1328,7 +1480,9 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                     offer({**side, "driveway": ((r_top, lane_c0, s_rr - r_top, drive_c)
                                                 if s_rr > r_top else None),
                            "driveway_len_c": s_rr - r_top,
-                           "driveway_len": (s_rr - r_top) * res + street_sb,
+                           "driveway_len": (s_rr - r_top) * res + (
+                               street_sb if pole_y is None
+                               else miny + r_top * res - pole_y),
                            "method": "townhome_side_court"})
                 if front_ban and through:
                     # The rear court would stand between the building and the
@@ -1528,7 +1682,9 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                             "driveway": ((r_top, corridor_c0, rr - r_top, drive_c)
                                          if rr > r_top else None),
                             "driveway_len_c": rr - r_top,
-                            "driveway_len": (rr - r_top) * res + street_sb,
+                            "driveway_len": (rr - r_top) * res + (
+                                street_sb if pole_y is None
+                                else miny + r_top * res - pole_y),
                             "method": "townhome_rear_court",
                         })
 
