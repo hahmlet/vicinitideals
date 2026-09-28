@@ -4,6 +4,7 @@
 **Status:** planning · supersedes the "Pod Screen" spec and the `quadfit/` prototype
 **Home:** inside `vicinitideals` — shared database, separate service
 **Last updated:** 2026-08-12
+**Encoding a new county?** Start with [docs/flats/ENCODING_RULEBOOK.md](../docs/flats/ENCODING_RULEBOOK.md) — the standing rules and owner rulings, condensed.
 
 ---
 
