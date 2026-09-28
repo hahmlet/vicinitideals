@@ -903,12 +903,20 @@ async def document_move(
 # File streams (download / view / zip)
 # ---------------------------------------------------------------------------
 
+def _read_or_404(storage_key: str) -> bytes:
+    """Read a stored file; a metadata row whose file is gone is a 404, not a 500."""
+    try:
+        return open_document(storage_key)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="File missing")
+
+
 @router.get("/ui/documents/{document_id}/download")
 async def document_download(
     request: Request, document_id: UUID, session: DBSession
 ) -> StreamingResponse:
     user, doc = await _require_document(session, request, document_id)
-    content = open_document(doc.storage_key)
+    content = _read_or_404(doc.storage_key)
     dl_name = await _doc_download_name(session, doc)
     return StreamingResponse(
         iter([content]),
@@ -924,7 +932,7 @@ async def document_view(request: Request, document_id: UUID, session: DBSession)
     user, doc = await _require_document(session, request, document_id)
     # Converted Office preview (Phase 1b) takes precedence when ready.
     if doc.preview_status == DocumentPreviewStatus.ready and doc.preview_key:
-        content = open_document(doc.preview_key)
+        content = _read_or_404(doc.preview_key)
         return StreamingResponse(
             iter([content]),
             media_type="application/pdf",
@@ -932,7 +940,7 @@ async def document_view(request: Request, document_id: UUID, session: DBSession)
         )
     ext = _ext(doc.filename)
     if ext in _INLINE_MEDIA:
-        content = open_document(doc.storage_key)
+        content = _read_or_404(doc.storage_key)
         return StreamingResponse(
             iter([content]),
             media_type=_INLINE_MEDIA[ext],

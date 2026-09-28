@@ -307,3 +307,24 @@ async def test_page_renders_for_owner(client: AsyncClient, session: AsyncSession
     assert resp.status_code == 200, resp.text
     assert "Documents" in resp.text
     assert "Main Project" in resp.text
+
+
+async def test_file_missing_on_disk_is_404_not_500(
+    client: AsyncClient, session: AsyncSession, tmp_path
+):
+    """The metadata row outlived its file (a DB-only restore, a hand-cleaned
+    volume). Download and view must answer 404, not crash with a 500."""
+    project, user, _org = await _seed_project(session)
+    await _auth(client, user.id)
+    await client.post(
+        f"/ui/projects/{project.id}/documents/upload",
+        files=_upload("Lost.pdf", b"%PDF lost"),
+        data={"show": "active"},
+    )
+    doc = (
+        await session.execute(select(Document).where(Document.project_id == project.id))
+    ).scalar_one()
+    (tmp_path / doc.storage_key).unlink()
+
+    assert (await client.get(f"/ui/documents/{doc.id}/download")).status_code == 404
+    assert (await client.get(f"/ui/documents/{doc.id}/view")).status_code == 404
