@@ -186,7 +186,7 @@ async def portfolio_detail(
 
     # Build Gantt — find Deals whose scenarios/projects reference these opportunity IDs
     opp_ids = [pp.project_id for pp in portfolio.portfolio_projects if pp.project_id]
-    gantt_rows: list[dict] = []
+    gantt_data = None  # an empty portfolio has no timeline to draw
     if opp_ids:
         deals_stmt = (
             select(Deal)
