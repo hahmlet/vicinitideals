@@ -15,11 +15,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ends the September map found, queued not fixed: Happy Valley's layer
    carries both `MURM2` and `MURm2` (one lot; the source's casing, kept,
    both aliased to MURM);
-   quadfit's s1 condo test reads only stacked geometry, so it measures
-   ~2,000 Multnomah condo unit records (PROP_CODE 102/132/202/122,
-   1,000-2,000 sq ft) every run -- normalize's `excluded.csv.gz` ledger
-   names them and assign drops them (8e596f8b), but s1 itself could read
-   the roll's property code the way `flats/normalize/condo.py` does;
+   quadfit s1 now reads the roll's property code with FLATS's own
+   `check_condo` and s3 drops the excluded records as `condo_excluded`
+   with the reason in `s3_dropped.csv` (e7217598, rides the next s1->s7
+   run; expect assign's measured-but-excluded ~2,001 -> ~0, no verdict
+   moves);
    Terrain (DEM tiles) stays `deferred` until the slope stage exists; no
    writer for lot decisions in `app/` yet (they are inserted by hand or by
    a future review page); a decision on a lot whose verdict moved in a
@@ -144,8 +144,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (7.5 ft) not rear (5 ft) -- correct by the code, never changed a
    colour; (v) three Clackamas-unincorporated unnamed lots moved on input
    vintage (s4 2026-09-24 vs the base's), replayed identical on main and
-   the branch; (vi) the `corner_lot` observed fact still uses
-   `len(bearings) >= 2`, not the 45 deg test.
+   the branch; (vi) DONE b440fc67 -- `corner_lot` asks the corner-front 45 deg
+   question through `flats.geom.corner.two_streets` (one street direction
+   False, two >= 45 deg apart True, 20-45 deg left unasked); rides the next
+   re-screen, expect some green->yellow in Gresham, Wood Village LR,
+   Wilsonville, Multnomah MR4/LR5. Open: Gresham's corner is two or more
+   streets at any angle incl. through lots -- a through lot with parallel
+   streets still answers False (possible false GREEN on Gresham's
+   tightening corner variants).
    (FLATS's own envelope: DONE, item 12.) (`steep_slope` struck
    2026-09-27: no standard in the corpus is conditioned on it, so its
    False assumption leans on no lot; the hillside rules ride the overlay
@@ -392,10 +398,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    lot polygon minus overlays, which `layout_lot` does not receive
    (`lot_xy` is the bare corners); the test to flip is
    `test_a_stub_front_that_misses_the_columns_beside_the_pod_is_refused`;
-   (l) `_alley_mouths` uses square caps, so at the street reach a lane may
-   start up to `street_sb` past the frontage's END (21.5 ft in Gresham;
-   the two v2-vs-v3 differences were this) -- clip the strip to the edge's
-   own extent and count the moves; (m) the ~30 wide fronts with no
+   (l) BUILT 5cb2bd75 -- the street strip is cut flat at a free end and
+   keeps its square extension only where another street edge carries on
+   (bend, corner clip, front meeting side street); the alley strip is
+   unchanged (whether an alley that stops mid-lot needs the same is open).
+   Bound: `bound_street_strip_zero_front.py` (0ec8575c) on 137 -- read the
+   LOST lots; (m) the ~30 wide fronts with no
    envelope cell within the street reach: s5's tier-C envelope is
    `buffer(-max(setbacks))`, round and uniform, not per edge, and an
    overlay carve-out can eat the strip -- refused today, count which is
@@ -408,10 +416,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    the pole rule on the lot's ground at the street (`lot_xy` suffices)
    and place the pod beside the pole's lane (block the lane's corridor
    before placement), then bound: some 77-100 ft Portland bodies lose the
-   56-wide pod to the 36-wide; (o) `_front_setback`'s 10-ft fallback on a
-   ZERO front setback (above): a pod 10 ft back where the code asks
-   nothing -- decide whether 0 is the drawing or a placeholder, then fix
-   and bound.
+   56-wide pod to the 36-wide; (o) BUILT 38932a24 -- a zero front
+   setback is the code's answer (Portland Table 130-2 "none", Oregon City
+   17.35.060.E), never an unknown; the 10 ft fallback never moved the pod,
+   it only forgave Portland's 10 ft parking setback for side courts in its
+   eight zero-setback zones; now 0 (a missing number also 0, the strict
+   end). Same bound as (l).
    Queued behind it, each to bound first: (a) struck 2026-09-27 -- s4's
    width/depth come from `lotdims.dimensions` + `pick`, which already takes
    the narrowest front where the city fixes it and the pair that conforms
@@ -426,66 +436,53 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Gresham 3.0100: the front is fixed where the minimum lot depth is met
    in one direction only (needs depth both ways = (a)).
 
-7. **Green and outdoor space: charge the SHAPE, not just the amount.**
-   Offered 2026-09-19 when Steph asked whether we consider outdoor-space
-   rules for townhomes. What exists: the county map (s6s) subtracts
-   building + court + driveway from the lot and tests the leftover against
-   the city's stated AMOUNT (Gresham 15 %, Portland 250/200 per lot and 192
-   in RM, Milwaukie 384 = 96 x 4, Multnomah county by zone; 0 of 46,212
-   drawn plans on the September map fall short, Portland's tightest has 848
-   sq ft to spare, median leftover 49-77 % of the lot -- as an amount it
-   never decides a colour); the app screen reads `open_space_min_pct` and
-   `min_landscaped_pct` as lot MINUS BUILDING only (parking never
-   subtracted though every code excludes pavement -- `OPTIMISTIC_CHECKS`)
-   and never reads `open_space_min_sqft` at all (encoded in Portland x18,
-   Milwaukie, Multnomah LR7; the reach ledger should already list it).
-   What no layer holds: Portland 33.110.240 -- a contiguous 250 sq ft in
-   which a 12 x 12 square fits, outside the front setback, not vehicle
-   area; Milwaukie Table 19.505.3.D.1 -- a 96 sq ft patio per GROUND-FLOOR
-   UNIT, 5 ft minimum dimension, opening from inside the unit, fenced from
-   the neighbour (not on unit lots) -- on a rear-court plan those four
-   patios sit between the back wall and the court, i.e. inside the depth
-   `court_too_shallow` (140,472 lots) already fights over; Happy Valley
-   16.42.030(B)(1) 20 % landscaping named for fourplexes, Portland RM
-   15-30 %, Oregon City R-2 15 %, Fairview 20-25 %, Wilsonville 15 % -- no
-   landscaping reserve on the county map at all. Ruled and NOT owed:
-   Troutdale 8.120.B.1.b voids open space for quadplexes (its 60 sq ft/unit
-   is a balcony); Oregon City 17.62.057 is multi-family, the quadplex
-   chapter states none; Wilsonville's 25 % is Villebois, delivered
-   communally; Gladstone / Tualatin / West Linn / Clackamas county state
-   none for this building. Options: (a) honest leftover in the screen --
-   subtract court + lane (the fit knows both), read the sqft field, drop
-   the optimistic label; cheap, few or no moves expected; (b) the shape on
-   the drawing -- Milwaukie: `gap` behind the wall becomes max(gap, patio
-   depth = 96 / unit width) on 916 ok plans; Portland: place a 12 x 12
-   square in the leftover outside the front setback and off the pavement
-   (`no_open_space` then means something); (c) landscaping share on the
-   county map; (d) what the leftover is FOR -- sheds, garages, ADUs, a
-   second pod -- is product direction, not a rule; the leftover medians
-   above say a second pod is plausible on many lots and belongs with
-   the parking item's (now 6) "least ground under pavement". Measure the affected
-   population (Milwaukie ok plans with court depth within 7 ft of the
-   floor; Portland ok plans with no 12 x 12 square outside the pavement)
-   before any county run.
+7. **Green and outdoor space: charge the SHAPE, not just the amount.** (a)
+   DONE 2026-09-28 (open-space commit): the screen's open space /
+   landscaping checks now read lot - building - pavement (`paper.paved`:
+   court, alley back-out, lane/side-street drive/alley-side aisle, counted
+   as s6s counts it), `open_space_min_sqft` is read (Portland x18,
+   Milwaukie, Multnomah LR7), `OPTIMISTIC_CHECKS` is empty; unknown
+   pavement fails what the upper bound proves and otherwise holds the lot
+   UNKNOWN (FACT_UNOBSERVED). Paper-lot census: moves possible only in
+   Gresham CC/MC (15 % open space), Oregon City C/MUC-1 (15/20 %
+   landscaping), Fairview VA (25 %; its paper minimum 3,102 sq ft looks
+   odd), GREEN->YELLOW, on lots within a few hundred sq ft of the smallest
+   fitting lot. The lane is priced at its shortest legal length. Left: (b)
+   the shape on the drawing -- Milwaukie Table 19.505.3.D.1's 96 sq ft
+   patio per ground-floor unit, 5 ft minimum, between the back wall and the
+   court (`gap` becomes max(gap, 96 / unit width) on 916 ok plans, inside
+   the depth `court_too_shallow` already fights over); Portland 33.110.240:
+   a 12 x 12 square in the leftover outside the front setback and off the
+   pavement (the screen's leftover still includes the front yard). Measure
+   first. (c) landscaping share on the county map (Happy Valley 20 %,
+   Portland RM 15-30 %, Oregon City R-2 15 %, Fairview 20-25 %, Wilsonville
+   15 %) -- s6s holds no landscaping reserve. (d) what the leftover is FOR
+   (sheds, ADUs, a second pod) is product direction, belongs with item 6's
+   "least ground under pavement". Ruled NOT owed: Troutdale 8.120.B.1.b
+   (balcony), Oregon City 17.62.057 (multi-family), Wilsonville Villebois
+   25 % (communal), Gladstone / Tualatin / West Linn / Clackamas county
+   state none.
 
 8. **Pockets + corridors -- leftovers (PROMOTED run 33 2026-09-27, drift
    vs 31: 4,140 moved unknown -> green 4,112 / yellow 28 if signed, all
    rules, 0 unexplained; pocket lots 210 -> 25 still ZONE_POCKET, 174 now
-   screened under their `of` layer, red at the use gate).** (a) 9 pocket
-   lots in permitted zones (Clackamas R-MD, Multnomah LDR-1, Happy Valley
-   VR57) stay NOT_MEASURED because quadfit s3 drops a zone its rules do not
-   hold -- teach s3 the pocket rulings; (b) 25 lots stay ZONE_POCKET:
+   screened under their `of` layer, red at the use gate).** (a) DONE in code
+   e7217598 -- s3 follows FLATS's pocket rulings (Clackamas R-MD ->
+   Milwaukie, Happy Valley VR57 -> county, UPAR-10 -> Troutdale LDR-1); s5o
+   carves them with both jurisdictions' overlays; export keeps them in
+   their home jurisdiction. Rides the next s3->s7 run: expect NOT_MEASURED
+   -9 (check by the pocket_of TLIDs; drift skips pocket lots); (b) 25 lots stay ZONE_POCKET:
    Troutdale NSA GGC/GSO and Oregon City `County` read against a map that
    answers no code the of-layer holds; (c) Map 130-1 also carries a MAXIMUM
    setback of 20 ft on those stretches -- not encoded (a max read wrong is a
    false GREEN); (d) the corridor facts are per lot (ANY street line), a
    per-LINE field would let the one line on Division take 10 ft and the side
    street 0.
-10. **Two loose ends from the ruling pass.** (a) Fairview FLX is the map's
-   name for the "VC flex" area (19.135.txt L62) and is aliased to VC, whose
-   `inside_mapped_use_area` variant names that same area -- the map code
-   could FEED the variant (a lot zoned FLX is inside the area by
-   definition) instead of leaving it unmeasured; one lot today. (b) THR is
+10. **Two loose ends from the ruling pass.** (a) DONE 4b725b6a -- alias
+   rulings can `observes:` a site fact; FLX->VC observes
+   `inside_mapped_use_area`; the bridge applies aliases. Moves 0: the one
+   FLX lot (1N3E33AB-00500) is dropped by quadfit s3 (zone_not_in_rules);
+   to make it count, add a VC/FLX rule to quadfit's rules.yaml. (b) THR is
    one lot (1N2E36DA-02200, the Gresham IGA-162nd pocket) whose code no
    published document defines -- not Gresham 4.0100, not MCC 39; ruled
    `to_read` and worth one question to Gresham planning if it ever
@@ -502,8 +499,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    note; FLATS's own envelope charges 20 and RN is RED on use anyway) (b)
    Portland R5/R2.5/RM* lots with an alley rear AND a rear line off it
    (~2,700 rows) stay on quadfit's envelope -- the waiver is per line; (c)
-   Portland has no `setback_alley_side_ft`, so a side alley takes the side
-   yard. (`checks.envelope` was dropped by assign's column list -- fixed
+   RULED b1d46053 -- Portland's commercial/employment/industrial chapters
+   state no alley setback; under 33.910 an alley line is a non-street line
+   and 33.130.215.B.2 sets it by the abutted zone; max(side, rear) already
+   equals that number. 0 moves; plan districts not searched. (`checks.envelope` was dropped by assign's column list -- fixed
    a883f439, present from the next run.)
 13. **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
    (`scripts/flats_tax_snapshot.py`, migration 0136) needs each lot's tax
