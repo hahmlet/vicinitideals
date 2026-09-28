@@ -12,7 +12,7 @@ from fastapi.responses import Response
 from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError
 
-from app.api.deps import CurrentUserId, DBSession
+from app.api.deps import DBSession, VerifiedUserId
 from app.engines.cashflow import compute_cash_flows
 from app.schemas.gap_adjustment import SliderRequest, SliderResponse
 from app.schemas.gap_adjustment_names import (
@@ -944,7 +944,7 @@ async def import_project_model(
     project_id: UUID,
     payload: dict[str, Any],
     session: DBSession,
-    current_user_id: CurrentUserId,
+    current_user_id: VerifiedUserId,
 ) -> DealImportResult:
     """Backward-compat: project_id here is an Opportunity ID."""
     opp = await session.get(Opportunity, project_id)

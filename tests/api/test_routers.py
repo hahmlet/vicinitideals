@@ -530,7 +530,7 @@ async def test_post_project_scenarios_rejects_invalid_input(
     payload_overrides: dict[str, str | int],
     expected_detail: str,
 ) -> None:
-    _, _, opportunity, model, _dev_project = await _seed_stack(
+    _, user, opportunity, model, _dev_project = await _seed_stack(
         session,
         opp_name="Scenario Guard Project",
         deal_name="Scenario Guard Deal",
@@ -547,10 +547,12 @@ async def test_post_project_scenarios_rejects_invalid_input(
     }
     payload.update(payload_overrides)
 
+    # created_by_user_id is an FK to users -- an unknown caller is refused
+    # (401) before the payload is judged, so the caller must be real.
     response = await client.post(
         f"/api/projects/{opportunity.id}/scenarios",
         json=payload,
-        headers=auth_headers,
+        headers=_as_user(auth_headers, user),
     )
 
     assert response.status_code == 400

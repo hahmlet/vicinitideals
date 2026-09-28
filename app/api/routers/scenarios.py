@@ -16,7 +16,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from app.api.deps import CurrentUserId, DBSession
+from app.api.deps import CurrentUserId, DBSession, VerifiedUserId
 from app.models.deal import Deal, Scenario as FinancialScenario  # financial plan
 from app.models.org import User
 from app.models.project import Opportunity, Project
@@ -75,7 +75,7 @@ async def create_project_scenario(
     payload: ScenarioCreateRequest,
     request: Request,
     session: DBSession,
-    current_user_id: CurrentUserId,
+    current_user_id: VerifiedUserId,
 ) -> dict[str, str]:
     opportunity = await session.get(Opportunity, project_id)
     if opportunity is None:

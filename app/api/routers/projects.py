@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from sqlalchemy import and_, func, or_, select
 from sqlalchemy.orm import selectinload
 
-from app.api.deps import CurrentUserId, DBSession
+from app.api.deps import CurrentUserId, DBSession, VerifiedUserId
 from app.models.capital import CapitalModule
 from app.models.cashflow import OperationalOutputs
 from app.models.deal import Scenario, IncomeStream, OperatingExpenseLine
@@ -211,7 +211,7 @@ async def update_project_visibility(
     project_id: UUID,
     payload: ProjectVisibilityUpdate,
     session: DBSession,
-    current_user_id: CurrentUserId,
+    current_user_id: VerifiedUserId,
 ) -> ProjectVisibility:
     project = await session.get(Opportunity, project_id)
     if project is None:

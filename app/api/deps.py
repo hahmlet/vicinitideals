@@ -10,6 +10,7 @@ from fastapi import Depends, Header, HTTPException, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db as db_get_db
+from app.models.org import User
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
@@ -44,4 +45,38 @@ async def get_current_user_id(
 DBSession = Annotated[AsyncSession, Depends(get_db)]
 CurrentUserId = Annotated[UUID, Depends(get_current_user_id)]
 
-__all__ = ["CurrentUserId", "DBSession", "get_current_user_id", "get_db"]
+
+async def get_current_user(user_id: CurrentUserId, session: DBSession) -> User:
+    """Resolve the caller's identity to a ``User`` row that exists, or 401.
+
+    ``get_current_user_id`` only checks that the X-User-ID header (or session
+    cookie) is shaped like a UUID. A route that writes that id into a column
+    with a foreign key to ``users`` must depend on this instead: an unknown id
+    otherwise reaches the INSERT/UPDATE and surfaces as an unhandled 500. 401
+    matches ``get_current_user_id`` (no identity) and the settings router's
+    ``_get_user_or_401`` (identity that names no user).
+    """
+    user = await session.get(User, user_id)
+    if user is None:
+        raise HTTPException(status_code=401, detail="User not found")
+    return user
+
+
+async def get_verified_user_id(user: Annotated[User, Depends(get_current_user)]) -> UUID:
+    """The caller's user id, guaranteed to name an existing ``users`` row."""
+    return user.id
+
+
+CurrentUser = Annotated[User, Depends(get_current_user)]
+VerifiedUserId = Annotated[UUID, Depends(get_verified_user_id)]
+
+__all__ = [
+    "CurrentUser",
+    "CurrentUserId",
+    "DBSession",
+    "VerifiedUserId",
+    "get_current_user",
+    "get_current_user_id",
+    "get_db",
+    "get_verified_user_id",
+]

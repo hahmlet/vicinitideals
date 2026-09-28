@@ -9,7 +9,7 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import select
 
-from app.api.deps import CurrentUserId, DBSession
+from app.api.deps import DBSession, VerifiedUserId
 from app.models.ingestion import DedupCandidate, DedupStatus, RecordType
 from app.models.scraped_listing import ScrapedListing
 from app.schemas.ingestion import DedupCandidateRead
@@ -65,7 +65,7 @@ async def preview_dedup_candidate(
 async def merge_dedup_candidate(
     candidate_id: UUID,
     session: DBSession,
-    current_user_id: CurrentUserId,
+    current_user_id: VerifiedUserId,
 ) -> DedupCandidate:
     candidate = await session.get(DedupCandidate, candidate_id)
     if candidate is None:
@@ -98,7 +98,7 @@ async def merge_dedup_candidate(
 async def keep_dedup_candidate_separate(
     candidate_id: UUID,
     session: DBSession,
-    current_user_id: CurrentUserId,
+    current_user_id: VerifiedUserId,
 ) -> DedupCandidate:
     candidate = await session.get(DedupCandidate, candidate_id)
     if candidate is None:
@@ -115,7 +115,7 @@ async def keep_dedup_candidate_separate(
 async def swap_dedup_candidate(
     candidate_id: UUID,
     session: DBSession,
-    current_user_id: CurrentUserId,
+    current_user_id: VerifiedUserId,
 ) -> DedupCandidate:
     candidate = await session.get(DedupCandidate, candidate_id)
     if candidate is None:
