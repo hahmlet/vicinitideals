@@ -108,8 +108,15 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     line inside it. Narrowing that would take a `zones:` key, which is not
     warranted here -- the two prohibitions are decided by their `X` and do not
     care what these three sentences say.
+
+    59 -> 60 on 2026-09-27, re-reading Ord. ZDO-293 (in force 2026-09-08).
+    Table 1015-2 now requires zero parking in every urban district inside the
+    Metro UGB, and its new note 2 -- which says which districts are "urban" --
+    is what puts the quadplex in that column, so it is encoded beside note 1.
+    Both now reach the layer default alone: PMD, MR-1, MR-2 and VA no longer
+    carry a minimum of their own.
     """
-    assert len(rows) == 59
+    assert len(rows) == 60
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

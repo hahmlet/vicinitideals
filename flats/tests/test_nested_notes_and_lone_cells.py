@@ -220,20 +220,21 @@ def test_a_lone_cell_with_one_note_stands_only_where_a_note_answers_it() -> None
 def test_the_use_table_block_reaches_the_notes_on_the_cell(store: ProvenanceStore) -> None:
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     first = got.blocks[0]
-    assert first.head == 1040
+    assert first.head == 1064
     # Twenty-three when a block was capped at eighty lines from its head:
     # note 23 carries five lettered criteria of its own and spent what was
-    # left. See test_block_limit.py.
-    assert [b.mark for b in first.bodies] == [str(n) for n in range(1, 31)]
-    seven, eight = (b for b in first.bodies if b.mark in ("7", "8"))
-    assert "each lot of record may be developed with only one" in seven.text
-    assert eight.text.startswith("The development of a triplex, quadplex, townhouse")
+    # left. See test_block_limit.py. Thirty until Ord. ZDO-293 (2026-09-08)
+    # added two and renumbered the quadplex cell's notes 7 and 8 to 8 and 9.
+    assert [b.mark for b in first.bodies] == [str(n) for n in range(1, 33)]
+    eight, nine = (b for b in first.bodies if b.mark in ("8", "9"))
+    assert "each lot of record may be developed with only one" in eight.text
+    assert nine.text.startswith("The development of a triplex, quadplex, townhouse")
 
 
 def test_and_the_cell_that_points_at_them_is_read_as_a_row(store: ProvenanceStore) -> None:
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     on_the_cell = {m.mark for m in got.markers if m.line in (296, 297)}
-    assert on_the_cell == {"7", "8"}
+    assert on_the_cell == {"8", "9"}
 
 
 def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
@@ -298,9 +299,17 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     513-3, 602-2 and 604-2 -- left unread for exactly the reason Tables 510-2
     and 510-3 are: nothing is encoded from them, and most are live site
     conditions on a setback or a height -- what the lot line abuts.
+
+    Fourteen more, net, on 2026-09-27, when Ord. ZDO-293 (in force
+    2026-09-08) was re-read: the notes the ordinance added (child care,
+    Section 849, design standards), and ten in 510, 511, 513 and 602 the
+    census had never seen because the county welds the bracket to the first
+    word ("[14]A congregate"); less five paragraphs of 401.05 the rewritten
+    chapter no longer prints like notes. One of the ten, 513's note 8, sits
+    in a dimensional table and joins the unread.
     """
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 300
+    assert len(ruled) == 314
     unread = sorted((n.doc.rsplit("/", 1)[-1], n.line) for n in ruled if n.state == "unread")
     # Every unread note in this layer is in a dimensional table of a district
     # that refuses the building -- Tables 510-2 and 510-3 of ZDO 510, 513-2
@@ -310,8 +319,8 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     # which is the property the old `not unread` assertion had and a bare
     # number would lose.
     assert unread == (
-        [("zdo.510.txt", n) for n in list(range(1465, 1514, 2)) + [1543, 1545]]
-        + [("zdo.513.txt", n) for n in (334, 338, 340, 342, 344, 346, 350)]
+        [("zdo.510.txt", n) for n in list(range(1531, 1580, 2)) + [1609, 1611]]
+        + [("zdo.513.txt", n) for n in (334, 338, 340, 342, 344, 346, 348, 350)]
         + [("zdo.513.txt", n) for n in range(365, 380, 2)]
         + [("zdo.602.txt", n) for n in range(396, 409, 2)]
         + [("zdo.604.txt", n) for n in range(193, 204, 2)]

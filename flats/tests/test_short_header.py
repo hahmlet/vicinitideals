@@ -123,7 +123,7 @@ def test_the_district_the_header_dropped_is_named_by_the_applicability_clause(
     text = store.text_path(ZDO_510).read_text(encoding="utf-8")
     applies = next(line for line in text.splitlines() if line.startswith("Section 510 applies"))
     assert "Station Community Mixed Use (SCMU)" in applies
-    header = text.splitlines()[1314:1324]
+    header = text.splitlines()[1380:1390]
     assert header == ["NC", "C-2", "RCC", "RTL", "CC", "C-3", "PMU", "OA", "OC", "RCO"]
 
 
@@ -142,4 +142,4 @@ def test_va_keeps_its_height_now_that_the_column_beside_it_is_countable(
     """Table 315-4 is seven wide; six of the seven cells are "None"."""
     out = read(store, ZDO_315)
     heights = [(c.value, c.line) for c in out.get("VA", []) if c.field == "max_height_ft"]
-    assert heights == [(45, 1523)]
+    assert heights == [(45, 1609)]

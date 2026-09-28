@@ -199,7 +199,8 @@ def test_the_worst_document_in_the_corpus_now_has_bodies(store: ProvenanceStore)
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     assert len(got.markers) > 400
     assert len(got.blocks) == 4
-    assert len(got.bodies) == 84
+    # 84 until Ord. ZDO-293 (2026-09-08) added a net four notes.
+    assert len(got.bodies) == 88
     assert len(got.unbodied) < len(got.markers) / 4
 
 
@@ -209,12 +210,13 @@ def test_each_table_answers_its_own_markers(store: ProvenanceStore) -> None:
     Table 315-3's notes reached back over the low-density districts."""
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     heads = [b.head for b in got.blocks]
-    assert heads == [1040, 1249, 1398, 1535]
+    assert heads == [1064, 1277, 1482, 1621]
     # Table 315-2's grid sits inside the second block's region, so the R zones
-    # read the ten notes printed under their own table.
+    # read the notes printed under their own table -- eleven until Ord.
+    # ZDO-293 (2026-09-08) added a twelfth.
     second = got.blocks[1]
-    assert second.region[0] < 1169 < second.region[1]
-    assert len(second.bodies) == 11
+    assert second.region[0] < 1197 < second.region[1]
+    assert len(second.bodies) == 12
 
 
 # --- the gate, awake --------------------------------------------------
@@ -272,14 +274,14 @@ def test_the_note_that_reads_as_a_relief_and_is_a_section_title(
     lines = store.load(ZDO).text.splitlines()
     title = "Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters"
     printed = [i + 1 for i, line in enumerate(lines) if title in line]
-    assert printed == [1078, 1080, 1082, 1253, 1255, 1400, 1414, 1420, 1442]
+    assert printed == [1104, 1106, 1108, 1281, 1283, 1484, 1498, 1504, 1526]
     # The two that can only be a title: one names the section as a thing you
     # are subject to, the other states a rule for townhouses alone.
-    assert lines[1077].endswith(f"is subject to {title}.")
-    assert lines[1252].startswith(f"3 For townhouses developed pursuant to {title},")
+    assert lines[1103].endswith(f"is subject to {title}.")
+    assert lines[1280].startswith(f"[3] For townhouses developed pursuant to {title},")
 
     ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
-    note = ruled[1420]
+    note = ruled[1504]
     assert "maximum setback standards do not apply to cottage clusters" in note.text
     assert note.state == "dismissed"
     assert "TITLE of Section 845" in note.reason
@@ -293,7 +295,7 @@ def test_and_the_three_reliefs_that_hang_off_that_maximum_stand_on_their_own() -
     on its own merit -- a relief this screen does not take can refuse a lot the
     county would pass and can never pass one it would refuse."""
     ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
-    for line in (1432, 1434, 1436):
+    for line in (1516, 1518, 1520):
         assert ruled[line].state == "dismissed", line
         assert "relief" in ruled[line].reason.lower(), line
 
@@ -305,7 +307,7 @@ def test_and_the_one_that_rests_on_a_lot_fact_nobody_holds_is_not_dismissed() ->
     ``unmeasured``, against a condition registered for it -- the alternative is
     a dismissal that quietly assumes the lot has no accessway."""
     ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
-    note = ruled[1426]
+    note = ruled[1510]
     assert note.text.startswith("Frontage on an accessway shall be considered a front lot line")
     assert note.state == "unmeasured"
     assert note.fact == "abuts_accessway"
@@ -320,7 +322,7 @@ def test_the_two_that_only_ever_loosen_are_dismissed_as_such() -> None:
     value, so neither is unmeasured -- capping a verdict on a fact that cannot
     change the answer is how an honest signal turns into noise."""
     ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
-    for line in (1440, 1448):
+    for line in (1524, 1534):
         assert ruled[line].state == "dismissed", line
         assert "side lot line" in ruled[line].text, line
 

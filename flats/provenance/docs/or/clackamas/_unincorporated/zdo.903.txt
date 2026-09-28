@@ -14,15 +14,9 @@ Section 903 applies in all zoning districts except that only the minimum setback
 
 2 If both adjoining lots qualify under Subsection 903.02(A), then the minimum front setback for the subject lot is the average of the setbacks on the two adjoining lots. (See Figure 903-1.)
 
-3 If only one adjoining lot qualifies under Subsection 903.02(A), then the minimum front setback for the subject lot is the average of the setback that would be required without an exception and the setback on the adjoining lot with the nonconforming setback.
+1 If only one adjoining lot qualifies under Subsection 903.02(A), then the minimum front setback for the subject lot is the average of the setback that would be required without an exception and the setback on the adjoining lot with the nonconforming setback.
 
-2 The minimum front setback standard is reduced for additions to an existing structure if the existing structure has a lawfully nonconforming front setback, subject to the following criteria. For the purpose of Subsection 903.02(B), lawfully nonconforming does not include a structure whose front setback was reduced through approval of a front setback variance.
-
-1 The minimum front setback for the addition is equal to the front setback of the existing structure; and
-
-2 The total floor area of all additions made pursuant to this provision shall not exceed 40 percent of the ground floor area of the original lawfully nonconforming structure. Only the floor area of the portion of the addition that is located closer to the front lot line than the current minimum setback standard counts toward the 40-percent maximum.
-
-3 Bus shelters are exempt from minimum front setback standards.
+2 Bus shelters are exempt from minimum front setback standards.
 
 903.03 Public Dedications
 
@@ -62,10 +56,20 @@ Minimum setback standards do not apply to fences or walls unless the standard ex
 
 903.08 Flag Lots
 
-On flag lots, the location of side, rear, and front lot lines may be modified, for the purpose of determining the minimum setbacks, if:
+A. On flag lots, Tthe location of front, side, and rear, and front lot lines of a flag lot may be modified, for the purpose of determining the minimum setbacks, if:
 
-1 It is not possible to extend a motor vehicle access easement to serve additional properties due to physical conditions such as topographic barriers or existing structures; or
+1 The subject property does not have more than one front lot line; and
 
-2 It is not necessary to extend a motor vehicle access easement to serve additional properties because such properties are already fully developed or have access from other existing roads or easements.
+2 One of the following applies:
 
-[Amended by Ord. ZDO-224, 5/31/2011; Amended by Ord. ZDO-249, 10/13/2014; Amended by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-268, 10/2/2018; Amended by Ord. ZDO-285, 9/3/2024]
+1 The flagpole through which the property takes motor vehicle access does not enter the property parallel to any lot line that intersects the lot line at which the flagpole terminates;
+
+2 Properties located adjacent to the subject property and further from the road from which the subject property takes motor vehicle access are developed at the maximum density feasible under the current zoning designation as calculated pursuant to Section 1012, Lot Size and Density, and have lawful motor vehicle access from other than the same access as the flag lot;
+
+3 A natural feature (being a slope regulated pursuant to Section 1002, Protection of Natural Features; a mass movement hazard area regulated pursuant to Section 1003, Hazards to Safety; a river, stream, wetland, or other water body as mapped by the Department of State Lands; a Special Flood Hazard Area pursuant to Section 703, Floodplain Management District; a Habitat Conservation Area pursuant to Section 706, Habitat Conservation Area District; or mapped Open Space, as identified on any Comprehensive Plan Map) exists on the subject property and would preclude access being extended across the subject property to serve an adjacent lot or lots.
+
+B. For a flag lot eligible for setback modification pursuant to Subsection 903.08(A), the property owner can choose which lot line is to be the front lot line, so long as it is one of the lot lines that makes up the flag portion of the lot. The rear lot line is the lot line most distant from, and opposite from, the chosen front lot line. See Figure 903-2.
+
+Figure 903-2
+
+[Amended by Ord. ZDO-224, 05/31/2011; Amended by Ord. ZDO-249, 10/13/2014; Amended by Ord. ZDO-252, 06/01/2015; Amended by Ord. ZDO-266, 05/23/2018; Amended by Ord. ZDO-268, 10/02/2018; Amended by Ord. ZDO-285, 09/03/2024; Amended by Ord. ZDO-293, 09/08/2026]

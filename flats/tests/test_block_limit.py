@@ -76,16 +76,22 @@ def test_but_a_stretch_with_no_note_in_it_still_ends_the_block() -> None:
 
 
 def test_the_county_use_table_answers_all_thirty(zdo315) -> None:
-    block = next(b for b in zdo315.blocks if b.head == 1040)
-    assert [b.mark for b in block.bodies] == [str(n) for n in range(1, 31)]
+    """Thirty-two since Ord. ZDO-293 (2026-09-08) added two."""
+    block = next(b for b in zdo315.blocks if b.head == 1064)
+    assert [b.mark for b in block.bodies] == [str(n) for n in range(1, 33)]
 
 
 def test_the_orphans_the_cap_was_making(zdo315) -> None:
     """Forty-five markers with no body in their region, forty-four of them
     notes 24 to 30 on Table 315-1. One is left, and it is a different
     question: a label marker on Table 315-2 whose note the census has not
-    found."""
-    assert [m.line for m in zdo315.unbodied] == [1222]
+    found.
+
+    It was not there to find. The county printed the marker, "Building
+    Design Standards ... Single Room Occupancies[12]", and no note 12 under
+    the table; Ord. ZDO-293 (2026-09-08) printed the note, and the last orphan
+    went with it."""
+    assert [m.line for m in zdo315.unbodied] == []
 
 
 def test_a_height_rule_that_used_to_stop_mid_sentence(store) -> None:
@@ -99,6 +105,6 @@ def test_a_height_rule_that_used_to_stop_mid_sentence(store) -> None:
 
 def test_every_new_note_is_ruled_and_none_blocks() -> None:
     ruled = {row.quote: row for row in dispositions(CLACKAMAS)}
-    for line in (1120, 1122, 1124, 1126, 1134, 1136, 1138):
+    for line in (1148, 1150, 1152, 1154, 1162, 1164, 1166):
         assert ruled[f"{ZDO}#L{line}"].state == "dismissed"
     assert not [row for row in qualified() if row.blocking]

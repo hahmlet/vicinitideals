@@ -197,7 +197,15 @@ GLUED_PAREN_NOTE = re.compile(r"^\((?P<n>\d{1,2})\)(?!\s)(?P<text>\S.*)$")
 #: "[2]. Retail plant nurseries are a conditional use", and a rule that took
 #: everything after the bracket would steal that line from `BLOCK_NOTE` and
 #: store a note body that begins with a full stop.
-GLUED_BRACKET_NOTE = re.compile(r"^\[(?P<n>\d{1,2})\](?P<text>[A-Z][a-z].*)$")
+#:
+#: Or a one-letter word and a space before the lowercase: "[14]A congregate
+#: housing facility shall have a minimum of four dwelling units." Without it
+#: that note, and nine more across ZDO 510, 511, 513 and 602 that open on a
+#: one-letter word, were continuation lines of the note above them -- read, but
+#: under the wrong number. Found re-reading Ord. ZDO-293 on 2026-09-27.
+GLUED_BRACKET_NOTE = re.compile(
+    r"^\[(?P<n>\d{1,2})\](?P<text>[A-Z](?:[a-z]| [a-z]).*)$"
+)
 
 #: The same run with no gap, no bracket and no weld: the number, one space, the
 #: text. Clackamas County prints every table's notes this way -- "9 Except for

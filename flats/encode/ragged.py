@@ -51,7 +51,20 @@ DOCS = Path(__file__).resolve().parents[1] / "provenance" / "docs"
 #: Multnomah's definitions, surrounded by prose, so it can never reach the
 #: three-line minimum a run needs.
 _VERDICT = r"(?:P|C|A|N|S|X|L|CU|NP|SUR|L/SUR|CPUD)(?:/(?:P|C|A|N|S|X|L|CU|NP))*"
-_MARKS = r"(?:\s*\[[0-9,\s]+\])*"
+
+#: Footnote markers on a cell: bracketed, the way the extractor writes a
+#: superscript it could read as a marker, or bare digits, the way it leaves
+#: one it could not. Ord. ZDO-293 (2026-09-08) republished Clackamas ZDO 510
+#: with two superscripts the extractor rightly refuses to bracket --
+#: ``P<sup>275</sup>`` (note 25 renumbered to 27 with the old 5 left behind)
+#: and ``P<sup>23, C</sup>`` (a verdict typed inside the superscript) -- and
+#: each one cut an eleven-cell row in two.
+_MARKS = r"(?:\s*\[[0-9,\s]+\]|\d{1,3}(?:\s*,\s*\d{1,3})*)*"
+
+#: What joins two verdicts in one cell. A comma, or nothing at all after a
+#: bracketed marker: ZDO 315's Child Care Centers row prints
+#: ``P<sup>4</sup>C`` -- permitted under note 4, otherwise conditional.
+_JOIN = r"(?:\s*,\s*|(?<=\]))"
 
 #: A cell that answers with a pointer instead of a letter. Clackamas writes
 #: "See Table 835-1" where a wireless facility's permission lives in another
@@ -63,7 +76,7 @@ _MARKS = r"(?:\s*\[[0-9,\s]+\])*"
 _XREF = r"See Table [0-9A-Za-z][0-9A-Za-z.\-]*(?:,[^.]*)?\.?"
 
 CELL = re.compile(
-    rf"^(?:{_XREF}|{_VERDICT}{_MARKS}(?:\s*,\s*{_VERDICT}{_MARKS})*)$"
+    rf"^(?:{_XREF}|{_VERDICT}{_MARKS}(?:{_JOIN}{_VERDICT}{_MARKS})*)$"
 )
 
 #: Shorter than this and a run is as likely to be prose as a table row.

@@ -78,7 +78,7 @@ Townhouses shall comply with the following standards:
 
 2 ii. Either has at least one entrance facing the street or has a roof.
 
-3 Unit Definition: Each townhouse shall include at least one of the following on at least one street-facing facade (see Figure 845-8, Townhouse Unit Definition):
+3 Unit Definition: Each townhouse shall include at least one of the following on at least one street-facing facade (see Figure 845-8, Townhouse Unit Definition). A townhouse development with 20 or more dwelling units is exempt from these design standards.
 
 1 A roof dormer a minimum of four feet in width;
 
@@ -215,3 +215,25 @@ Cottage clusters shall comply with the following standards:
 3 The existing dwelling shall be excluded from the calculation of orientation toward the common courtyard in Subsection 845.04(J).
 
 [Added by Ord. ZDO-282, 7/1/22; Amended by Ord. ZDO-283, 9/5/23]
+
+Figure 845-1: Window Coverage
+
+Figure 845-2: Entrance Facing the Street
+
+Figure 845-3: Entrance at 45-Degree Angle from the Street
+
+Figure 845-4: Entrance Facing Common Outdoor Area
+
+Figure 845-5: Entrance Opening onto a Porch
+
+Figure 845-6: Driveway Entry Width and Separation on Local Street
+
+Figure 845-7: Width of Garages and Parking Areas
+
+Figure 845-8: Townhouse Unit Definition
+
+Figure 845-9: Townhouses on Corner Lot with Consolidated Access
+
+Figure 845-10: Townhouses with Consolidated Access
+
+Figure 845-11: Cottage Cluster Orientation and Courtyard Standards

@@ -26,10 +26,6 @@ Our County
 
 I want to...
 
-Alert
-
-Evacuation notices have been issued for the areas around the Austin fire READ MORE
-
 Planning and Zoning
 
 ZDO 202: Definitions
@@ -40,7 +36,7 @@ ACCESSORY BUILDING OR USE: A subordinate building or use, the function of which 
 
 ACCESSWAY: A public right-of-way, a portion of which is hard surfaced, for use by pedestrians and bicyclists providing a direct route where public roads require significant out of direction travel.
 
-ACCESS DRIVE: A private way, with a travel surface generally no more than 12 feet in width, created by deed or easement to provide vehicular ingress to, or egress from not more than two lots or parcels.
+ACCESS DRIVE: A private way created by deed or easement to provide vehicular ingress to, or egress from two lots or parcels.
 
 ACTIVE RECREATIONAL AREA: An area such as a park, sports field, or golf course, where turf lawn provides a playing surface that is dedicated to active play.
 
@@ -96,29 +92,31 @@ BLANKETING: The visual blocking of one sign by another as seen by a motorist tra
 
 BLOCK: A parcel of land bounded by streets, railroad rights-of-way, waterways, parks, unsubdivided acreage, or a combination thereof.
 
+BOUNDARY LINE: A separation that delineates the confines of a property for development purposes, such as from another property, or from an easement granted for right-of-way or private motor vehicle access.
+
 BUILDING: Any structure used or intended for supporting or sheltering any use or occupancy.
 
 BUILDING ENVELOPE: The three dimensional space which is to be occupied by a building.
 
-BUILDING LINE: A straight line that is parallel and adjacent to the front side of the main building and parallel to the front lot line.
+BUILDING LINE: A straight line that is parallel and adjacent to the plane of the primary building façade (exclusive of architectural features, arcades, bay or bow windows, porches, patios, stairs, or ramps) that is most close to parallel to the front lot line. A lot with more than one front lot line will have multiple building lines. If a property has more than one primary building, the building line is established based on the façade plane of the primary building nearest to the front lot line.
 
 BUILDING OR STRUCTURE HEIGHT: The term "height of building" shall be calculated by the methods identified in the State of Oregon Structural Specialty Code or the State of Oregon One and the Two Family Dwelling Specialty Code, as applicable.
 
-BULK PLANT: Hazardous substances at the bulk plant level are manufactured, collected, repackaged, stored, or distributed, but are generally not used on the site. The primary emphasis of uses at the bulk plant level is on hazardous substances. Materials are stored in large permanent tanks. Bulk plant quantities are larger than amounts transported in or out in any single shipment. Processors of hazardous substances will generally be at this level. Uses which produce hazardous substances as a by-product or accessory to another product are not in this category.
-
 CANNABINOID: Any of the chemical compounds that are the active constituents of marijuana.
 
-CANNABINOID CONCENTRATE: A substance obtained by separating cannabinoids from marijuana by a mechanical extraction process; a chemical extraction process using a nonhydrocarbon-based or other solvent, such as water, vegetable glycerin, vegetable oils, animal fats, isopropyl alcohol, or ethanol; a chemical extraction process using the solvent carbon dioxide, provided that the process does not involve the use of high heat or pressure; or any other process identified by the Oregon Liquor Control Commission, in consultation with the Oregon Health Authority, by rule.
+CANNABINOID CONCENTRATE: A substance obtained by separating cannabinoids from marijuana by a mechanical extraction process; a chemical extraction process using a nonhydrocarbon-based or other solvent, such as water, vegetable glycerin, vegetable oils, animal fats, isopropyl alcohol, or ethanol; a chemical extraction process using the solvent carbon dioxide, provided that the process does not involve the use of high heat or pressure; or any other process identified by the Oregon Liquor and Cannabis Commission, in consultation with the Oregon Health Authority, by rule.
 
 CANNABINOID EDIBLE: Food or potable liquid into which a cannabinoid concentrate, cannabinoid extract, or dried marijuana leaves or flowers have been incorporated.
 
-CANNABINOID EXTRACT: A substance obtained by separating cannabinoids from marijuana by a chemical extraction process using a hydrocarbon-based solvent, such as butane, hexane or propane; a chemical extraction process using the solvent carbon dioxide, if the process uses high heat or pressure; or any other process identified by the Oregon Liquor Control Commission, in consultation with the Oregon Health Authority, by rule.
+CANNABINOID EXTRACT: A substance obtained by separating cannabinoids from marijuana by a chemical extraction process using a hydrocarbon-based solvent, such as butane, hexane or propane; a chemical extraction process using the solvent carbon dioxide, if the process uses high heat or pressure; or any other process identified by the Oregon Liquor and Cannabis Commission, in consultation with the Oregon Health Authority, by rule.
 
-CANNABINOID PRODUCT: A cannabinoid edible and any other product intended for human consumption or use, including a product intended to be applied to the skin or hair, that contains cannabinoids or dried marijuana leaves or flowers. Cannabinoid product does not include usable marijuana by itself, a cannabinoid concentrate by itself, a cannabinoid extract by itself, or industrial hemp as defined in Oregon Revised Statutes (ORS) 571.300.
+CANNABINOID PRODUCT: A cannabinoid edible and any other product intended for human consumption or use, including a product intended to be applied to the skin or hair, that contains cannabinoids or dried marijuana leaves or flowers. Cannabinoid product includes usable marijuana, cannabinoid extracts, or cannabinoid concentrates that have been combined with an added substance; or any combination of usable marijuana, cannabinoid extracts, or cannabinoid concentrates. Cannabinoid product does not include usable marijuana by itself, a cannabinoid concentrate by itself, a cannabinoid extract by itself, or industrial hemp as defined in ORS 571.269.
 
 CARE: The provision of room and board and other services as needed to assist in activities of daily living, such as assistance with bathing, grooming, eating, medication management, money management, or recreation.
 
-CHILD CARE FACILITY: As defined in ORS 329A.250 but excluding a family child care home.
+CHILD CARE CENTER: As defined in ORS 329A.244(1)(a). Includes child care facility, excluding family child care home; preschool or school-age recorded program; and parent cooperative, as defined in ORS 329A.250.
+
+CHILD CARE FACILITY: As defined in ORS 329A.250.
 
 CLACKAMAS REGIONAL CENTER: The regional center identified on Comprehensive Plan Map 10-CRC-1, Regional Center, Corridors, and Station Community, excluding the portion in the City of Happy Valley.
 
@@ -126,7 +124,7 @@ CLACKAMAS REGIONAL CENTER AREA: The Clackamas Regional Center Area identified on
 
 COGENERATION FACILITY: A facility that produces, through the sequential use of energy, electric energy and useful thermal energy including but not limited to heat or steam, used for industrial, commercial, heating, or cooling purposes; and is more than 50 percent owned by a person who is not an electric utility, an electric holding company, an affiliated interest, or any combination thereof.
 
-COMMERCIAL USE: The use of land and/or structures for the conduct of retail, service, office, artisan, restaurant, lodging, child care, adult daycare, entertainment, private recreational, professional, and similar uses.
+COMMERCIAL USE: The use of land and/or structures for the conduct of retail, service, office, artisan, restaurant, lodging, entertainment, private recreational, professional, and similar uses.
 
 COMMON OWNERSHIP: Land commonly owned to include open space lands dedicated in planned unit developments and lands dedicated for open space which are owned by homeowners associations.
 
@@ -142,7 +140,7 @@ COTTAGE CLUSTER: A group of four or more detached dwelling units with a common c
 
 COTTAGE CLUSTER DEVELOPMENT: A development site with one or more cottage clusters.
 
-CULTURAL RESOURCE: Improvements, buildings, structures, signs, fea­tures, sites, places, areas or other objects of scientific, aesthetic, educational, cultural, architectural, or historical significance to the community members of the county.
+CULTURAL RESOURCE: Improvements, buildings, structures, signs, features, sites, places, areas or other objects of scientific, aesthetic, educational, cultural, architectural, or historical significance to the community members of the county.
 
 CULTURAL RESOURCE INVENTORY: The official list of designated cultural features, sites, districts subject to the provisions of Section 707, Historic Landmark (HL), Historic District (HD), and Historic Corridor (HC).
 
@@ -161,6 +159,10 @@ DIRECT ROUTE: The shortest reasonable route between two points. A route is consi
 DISTINCTIVE URBAN FOREST: Forested or woodland areas which are visually prominent or contain unique or rare tree and plant communities. These areas are usually found in association with other open space resources within the urban area.
 
 DRIP LINE, TREE: The outermost edge of a tree's canopy; when delineating the tree drip line on the ground, it will appear as an irregularly shaped circle defining the canopy's perimeter.
+
+DRIVE AISLE: A drive aisle is the portion of a motor vehicle parking area provided for the purpose of ingress and egress to individual parking spaces within the parking area. A drive aisle is different from an internal or private street in that an internal or private street does not provide direct access to parking spaces, except for parallel spaces.
+
+DRIVEWAY: The area of a property that is located between a road and a motor vehicle parking area. A driveway includes the location of any apron or motor vehicle entrance onto the lot but does not include any parking spaces, internal streets, or private streets provided as a part of the motor vehicle parking area. A driveway may also contain or be crossed by walkways provided for pedestrians.
 
 DROUGHT-TOLERANT PLANTS: Plants that will survive in the typical or somewhat less than typical amount of rainfall in the Willamette Valley, and therefore require very little or no supplemental water once established.
 
@@ -186,7 +188,7 @@ EQUINE FACILITY: Premises that are used for the stabling or training of equines,
 
 FAMILY: Any individual or group of persons, regardless of relationship but not exceeding 15 persons, living together as a single housekeeping unit within a dwelling unit.
 
-FAMILY CHILD CARE HOME: A child care provider who provides child care to 16 or fewer children, including children of the provider, regardless of full-time or part-time status, in the home of the provider. Child and child care are as defined in ORS 329A.250.
+FAMILY CHILD CARE HOME: A child care facility that provides child care to 16 or fewer children, including children of the provider, regardless of full-time or part-time status, in the home of the provider. Child and child care are as defined in ORS 329A.250.
 
 FARMERS' MARKET: An organized seasonal outdoor market dedicated to the direct sales by growers of agricultural goods, including plants, produce, meats, and other animal products (e.g., eggs, cheese, honey), but excluding marijuana.
 
@@ -212,15 +214,15 @@ HARDSCAPES: In the practice of landscaping, refers to the inanimate, manmade, no
 
 HAZARDOUS SUBSTANCE, MATERIAL, OR WASTE: Any hazardous substance, material, or waste listed in the following federal regulations:
 
-1 Superfund Amendments and Reauthorization Act (SARA) of 1986, Section 302 Extremely Hazardous Substances List (40 C.F.R 355, App. A and B);
+1. Superfund Amendments and Reauthorization Act (SARA) of 1986, Section 302 Extremely Hazardous Substances List (40 C.F.R 355, App. A and B);
 
-2 Comprehensive Environmental Response Compensation & Liability Act Superfund (CERCLA) of 1980, Hazardous Substances List (40 C.F.R 302, Table 302.4);
+2. Comprehensive Environmental Response Compensation & Liability Act Superfund (CERCLA) of 1980, Hazardous Substances List (40 C.F.R 302, Table 302.4);
 
-3 SARA of 1986, Section 313, Toxic Chemicals List (40 C.F.R Section 372.65);
+3. SARA of 1986, Section 313, Toxic Chemicals List (40 C.F.R Section 372.65);
 
-4 Resource Conservation and Recovery Act (RCRA) of 1976 and 1984 Amendments, Hazardous Wastes List (P & U Categories) (40 C.F.R Section 261.33(e) and (f)); and
+4. Resource Conservation and Recovery Act (RCRA) of 1976 and 1984 Amendments, Hazardous Wastes List (P & U Categories) (40 C.F.R Section 261.33(e) and (f)); and
 
-5 DOT Hazardous Materials Table (49 C.F.R Part 172.101).
+5. DOT Hazardous Materials Table (49 C.F.R Part 172.101).
 
 HISTORIC AREA: Any area containing improvements which have a special character, historical interest or aesthetic value or which represent one or more architectural periods or styles typical of the history of the County and which improvements constitute a distinct section of the County that has been designated a cultural resource district pursuant to this ordinance.
 
@@ -230,7 +232,7 @@ HOME OCCUPATION: An occupation or business activity that results in a product or
 
 HOMEOWNERS ASSOCIATION: The grouping or uniting of persons residing within a defined area, such as a subdivision, into an incorporated entity for the prosecution of a common enterprise.
 
-HOSPITAL, ANIMAL: A building or premises for the medical or surgical treatment of domestic animals or pets, including dog, cat, and veteri­nary hospitals.
+HOSPITAL, ANIMAL: A building or premises for the medical or surgical treatment of domestic animals or pets, including dog, cat, and veterinary hospitals.
 
 HOTEL: A building which is designed or used to offer short-term lodging for compensation, with or without meals, for six or more people. A facility that is operated for the purpose of providing care beyond that of room and board is not a "hotel".
 
@@ -244,7 +246,7 @@ INDIRECT ILLUMINATION: A nonelectric sign illuminated by an indirect or separate
 
 INDUSTRIAL USE: The use of land and/or structures for the manufacturing or processing of primary, secondary, or recycled materials into a product; warehousing and associated trucking operations; wholesale trade; and related development.
 
-INSTITUTIONAL USE: The use of land and/or structures for activities such as child care, adult daycare and pre-school facilities, public and private schools, colleges, universities, art, music, trade and other educational and training facilities, convalescent care facilities, nursing homes, hospitals, places of worship, fraternal lodges, municipal and civic buildings, transit centers and park-and-ride facilities, parks, swimming pools and other recreational facilities open to the public or a membership group, senior and community centers, libraries, museums, cemeteries and mausoleums, utility facilities, and similar public and private uses.
+INSTITUTIONAL USE: The use of land and/or structures for activities such as child care centers, adult daycare and pre-school facilities, public and private schools, colleges, universities, art, music, trade and other educational and training facilities, convalescent care facilities, nursing homes, hospitals, places of worship, fraternal lodges, municipal and civic buildings, transit centers and park-and-ride facilities, parks, swimming pools and other recreational facilities open to the public or a membership group, senior and community centers, libraries, museums, cemeteries and mausoleums, utility facilities, and similar public and private uses.
 
 INVASIVE NON-NATIVE OR NOXIOUS VEGETATION: Plant species that are listed in the Oregon Department of Agriculture's Noxious Weed Policy and Classification System.
 
@@ -254,13 +256,13 @@ KIOSK: A small structure used as a newsstand, information booth, refreshment sta
 
 KITCHEN, ACCESSORY: A kitchen that complies with all of the following standards:
 
-1 It shall be incidental to a primary dwelling.
+1. It shall be incidental to a primary dwelling.
 
-2 It shall be located in a room that is approved for residential occupancy and used for a purpose in addition to that of a kitchen (e.g., a recreation room, a bedroom).
+2. It shall be located in a room that is approved for residential occupancy and used for a purpose in addition to that of a kitchen (e.g., a recreation room, a bedroom).
 
-3 It shall not be located in a detached accessory building.
+3. It shall not be located in a detached accessory building.
 
-4 Any of the following features shall be located within a contiguous area that is no more than 30 inches deep and 10 feet long: cooking appliances, sinks, refrigerators, dishwashers, counters, and cabinets.
+4. Any of the following features shall be located within a contiguous area that is no more than 30 inches deep and 10 feet long: cooking appliances, sinks, refrigerators, dishwashers, counters, and cabinets.
 
 LANDSCAPING: Areas of land planted with groundcover, grasses, shrubs, annuals, perennials, or trees.
 
@@ -270,41 +272,51 @@ LIVESTOCK: One or more domesticated animals raised to produce commodities, such 
 
 LOT: A single unit of land that is created by a subdivision of land. For the purposes of this Ordinance, lot includes parcel and lot of record unless otherwise specified in the context of the specific provisions.
 
-LOT AREA OR LOT SIZE: The total surface area (measured horizontally) within the lot lines of a lot.
+LOT AREA OR LOT SIZE: The total surface area (measured horizontally) within the lot lines of a lot. For property with a Comprehensive Plan designation of Rural, Agriculture, or Forest, lots with street frontage on County or public road rights-of-way may include the land area between the front lot line and the centerline of the County or public road rights-of-way. This allowance does not apply to land area within a state or federal highway right-of-way.
 
-LOT, CORNER: A lot with street frontage on two streets intersecting at a corner of the lot. A lot within the radius curve of a single street is not a corner lot. A lot may be both a corner lot and a through lot.
+LOT, CORNER: A lot with more than one front lot line, where at least two front lot lines intersect. A lot within the radius curve or curves of a single street is not a corner lot and the collective boundary line or lines that separate the lot from the adjacent street shall be viewed as one lot line. A lot may be both a corner lot and a through lot.
 
 LOT COVERAGE: The area of a lot covered by a building or buildings, exclusive of architectural features and swimming pools, expressed as a percentage of the total lot area.
 
 LOT DEPTH: The mean horizontal distance between the front lot line and the rear lot line of a lot.
 
-LOT, FLAG: A lot that has access to a road by means of a narrow strip of lot or easement.
+LOT, FLAG: A lot that has access to a road by means of a strip of lot or easement no greater than 25 feet in width.
 
-LOT LINE, FRONT: Any boundary line separating a lot from a County, public, state, or private road, or from an access drive. Exceptions are:
+LOT LINE, FRONT: Any boundary line separating a lot from a County, public, state, or private road, or from an access drive or a private street. Exceptions are:
 
-1 Except as otherwise provided in Subsection 903.08, the front lot line of a flag lot shall be within the boundaries of the lot by a distance equal to the width of the narrow strip of lot or easement providing access to the lot. The front lot line shall be parallel to the lot line extending from the road to the lot line opposite and most distant from the road. (See Figure 202-1.)
+1. Except as otherwise provided in Subsection 903.08, the front lot line of a flag lot shall be within the boundaries of the lot by a distance equal to the width of the narrow strip of lot or easement providing access to the lot. The front lot line shall be parallel to the lot line extending from the road to the lot line opposite and most distant from the road. (See Figure 202-1.)
 
-2 A corner lot has at least two front lot lines, except where one of the lot lines that would otherwise be a front lot line abuts a private road or access drive and motor vehicle access from the lot is not taken to that private road or access drive. In that case, the lot line where motor vehicle access is not taken is a side lot line.
+2. A corner lot may have more than one front lot line. Each lot line established by a County or public road is a front lot line. Each lot line established by a private road or access drive from which motor vehicle access is taken is a front lot line. Unless the lot is a through lot, all other lot lines that would be front lot lines are side lot lines if those lines separate the lot from a private road or access drive
 
-3 A through lot has at least two front lot lines except where one of the lot lines that would otherwise be a front lot line abuts a collector, arterial, expressway, interstate, or other feature that precludes motor vehicle access. In that case, the lot line where access is precluded is the rear lot line.
+3. A through lot has at least two front lot lines except where one of the lot lines that would otherwise be a front lot line abuts a collector, arterial, expressway, interstate, or other feature that precludes motor vehicle access. In that case, the lot line where access is precluded is the rear lot line.
 
-LOT LINE, REAR: Any boundary line opposite and most distant from the front lot line and not intersecting a front lot line. Exceptions are:
+4. Any portion of a boundary line that separates a lot from an area of a private road or access drive may be a side lot line if:
 
-1 For a corner lot, the rear lot line is any one of the boundary lines opposite the front lot lines. Any other opposite boundary line is a side lot line. (See Figure 202-2.)
+a. The boundary line delineates an area outside of the primary travel or parking areas of the private road or access drive;
 
-2 A triangular-shaped lot has no rear lot line.
+b. This area is provided for the maneuvering of emergency vehicles as required by the Roadway Standards, Comprehensive Plan, or this Ordinance;
 
-3 A through lot has no rear lot line except where one of the lot lines that would otherwise be a front lot line abuts a collector, arterial, expressway, interstate, or other feature that precludes motor vehicle access. In that case, the lot line where access is precluded is a rear lot line.
+c. No motor vehicle access serving the lot makes use of the emergency vehicle maneuvering area; and
+
+d. Any garage or carport motor vehicle entry oriented towards the boundary line complies with the minimum front setback applicable to such entries.
+
+LOT LINE, REAR: The whole length of any boundary line opposite and most distant from the front lot line and not intersecting a front lot line. Exceptions are:
+
+1. For a corner lot, the rear lot line is any one of the boundary lines opposite the front lot lines. Any other opposite boundary line is a side lot line. (See Figure 202-2.)
+
+2. A triangular-shaped lot has no rear lot line. A triangular-shaped lot is one whose lot lines only intersect at three points.
+
+3. A through lot has no rear lot line except where one of the lot lines that would otherwise be a front lot line abuts a collector, arterial, expressway, interstate, or other feature that precludes motor vehicle access. In that case, the lot line where access is precluded is a rear lot line.
 
 LOT LINE, SIDE: Any boundary line that is not a front or rear lot line.
 
 LOT OF RECORD:
 
-A lot or parcel created by a subdivision or partition plat, as defined in ORS chapter 92, filed with the Clackamas County Surveyor and recorded with the Clackamas County Clerk;
+1. A lot or parcel created by a subdivision or partition plat, as defined in ORS chapter 92, filed with the Clackamas County Surveyor and recorded with the Clackamas County Clerk;
 
-A unit of land created by a recorded deed or recorded land sales contract and in compliance with all applicable planning, zoning, and subdivision or partition ordinances and regulations, if any, in effect on the date the deed or land sales contract was signed by the parties to the deed or contract; or
+2. A unit of land created by a recorded deed or recorded land sales contract and in compliance with all applicable planning, zoning, and subdivision or partition ordinances and regulations, if any, in effect on the date the deed or land sales contract was signed by the parties to the deed or contract; or
 
-A unit of land created solely to establish a separate tax account or for mortgage purposes; that did not conform to all planning, zoning, or subdivision or partition ordinances or regulations in effect on the date it was created; and that was sold prior to September 5, 2023, under the foreclosure provisions of ORS chapter 88.
+3. A unit of land created solely to establish a separate tax account or for mortgage purposes; that did not conform to all planning, zoning, or subdivision or partition ordinances or regulations in effect on the date it was created; and that was sold prior to September 5, 2023, under the foreclosure provisions of ORS chapter 88.
 
 LOT, THROUGH: A lot that has street frontage on two or more non-intersecting streets. A lot may be both a corner lot and a through lot.
 
@@ -324,23 +336,23 @@ MANUFACTURED DWELLING PARK: Any place where four or more manufactured dwellings 
 
 MANUFACTURED HOME: A structure constructed on or after June 15, 1976, for movement on the public highways that has sleeping, cooking, and plumbing facilities, that is intended for human occupancy by one family, that is being used for residential purposes, and that was constructed in accordance with federal manufactured housing construction and safety standards and regulations in effect at the time of construction.
 
-MARIJUANA: The plant Cannabis family Cannabaceae, any part of the plant Cannabis family Cannabaceae, and the seeds of the plant Cannabis family Cannabaceae. Marijuana does not include industrial hemp as defined in ORS 571.300.
+MARIJUANA: The plant Cannabis family Cannabaceae, any part of the plant Cannabis family Cannabaceae, and the seeds of the plant Cannabis family Cannabaceae. Marijuana does not include industrial hemp as defined in ORS 571.269 or prescription drugs, as that term is defined in ORS 689.005, including those containing one or more cannabinoids, that are approved by the United States Food and Drug Administration and dispensed by a pharmacy, as defined in ORS 689.005.
 
 MARIJUANA ITEMS: Marijuana, cannabinoid products, cannabinoid concentrates, and cannabinoid extracts.
 
-MARIJUANA PROCESSING: The processing, compounding, or conversion of marijuana into cannabinoid products, cannabinoid concentrates, or cannabinoid extracts, provided thatis licensed by the Oregon Liquor Control Commission (OLCC), a holder of a research certificate issued by the OLCC, or registered with the Oregon Health Authority.
+MARIJUANA PROCESSING: The processing, compounding, or conversion of marijuana into cannabinoid products, cannabinoid concentrates, or cannabinoid extracts, provided that the marijuana processor is licensed by the Oregon Liquor and Cannabis Commission (OLCC), a holder of a research certificate issued by the OLCC, or registered with the Oregon Health Authority.
 
-MARIJUANA PRODUCTION: The manufacture, planting, cultivation, growing, trimming, harvesting, or drying of marijuana, provided that the marijuana producer is licensed by the Oregon Liquor Control Commission (OLCC), a holder of a research certificate issued by the OLCC, or registered with the Oregon Health Authority and a "person designated to produce marijuana by a registry identification cardholder."
+MARIJUANA PRODUCTION: The manufacture, planting, propagation, cultivation, growing, or harvesting of marijuana, provided that the marijuana producer is licensed by the Oregon Liquor and Cannabis Commission (OLCC), a holder of a research certificate issued by the OLCC, or registered with the Oregon Health Authority and a "person designated to produce marijuana by a registry identification cardholder." Marijuana production does not include the drying of marijuana by a marijuana processor if the marijuana processor is not otherwise producing marijuana; or the cultivation and growing of an immature marijuana plant by a marijuana wholesaler or marijuana retailer if the marijuana wholesaler or marijuana retailer purchased or otherwise received the plant from a licensed marijuana producer.
 
-MARIJUANA RETAILINGis licensed by the Oregon Liquor Control Commission or registered with the Oregon Health Authority
+MARIJUANA RETAILING: The sale of marijuana items to a consumer, provided that the marijuana retailer is licensed by the Oregon Liquor and Cannabis Commission or registered with the Oregon Health Authority.
 
-MARIJUANA WHOLESALING: The purchase of marijuana items for resale to a person other than a consumer, provided that the marijuana wholesaler is licensed by the Oregon Liquor Control Commission.
+MARIJUANA WHOLESALING: The purchase of marijuana items for resale to a person other than a consumer, provided that the marijuana wholesaler is licensed by the Oregon Liquor and Cannabis Commission.
 
 MASTER PLAN: A sketch or other presentation showing the ultimate development layout of a parcel of property that is to be developed in successive stages or subdivisions. The plan need not be completely engineered but shall be of sufficient detail to illustrate the property's inherent features and probable development pattern.
 
 MIDDLE HOUSING: A duplex, triplex, quadplex, townhouse, or cottage cluster.
 
-MIDDLE HOUSING LAND DIVISION: A partition or subdivision of a lot of record that is developed, or proposed to be developed, with more than one middle housing dwelling unit. The type of middle housing developed on the original lot of record is not altered by a middle housing land division.
+MIDDLE HOUSING LAND DIVISION: A partition or subdivision of a lot of record that is developed, or proposed to be developed, with more than one middle housing dwelling unit. The type of middle housing developed on the original lot of record is not altered by a middle housing land division. Notwithstanding the definition of partition or subdivision, within the same calendar year as an original partition that was not a middle housing land division, the County may allow one or more of the resulting vacant parcels to be further partitioned into not more than three parcels through a middle housing land division.
 
 MIDDLE HOUSING LOT: A lot or parcel created through a middle housing land division. A middle housing lot is a separate lot of record; however, development on a middle housing lot is limited by conditions imposed at the time of the middle housing land division. Middle housing lots are not divisible.
 
@@ -362,11 +374,15 @@ NONCONFORMING DEVELOPMENT: An element of development, such as landscaping, parki
 
 NONCONFORMING USE: A use of any building, structure or land allowed by right when established or that obtained a required land use approval when established but, due to a change in the zone or zoning regulations, is now prohibited in the zone.
 
-NURSERY: The propagation of trees, shrubs, vines or flowering plants for transplanting, sale, or for grafting or budding; planting of seeds or cuttings; grafting and budding one variety on another; spraying and dusting of plants to control insects and diseases, and buying and selling the above plant stock at wholesale or retail. Help and season­al labor may be employed. The term "nursery" contemplates the sale of a product of such nursery. The conduct of a nursery business presumes parking places for customers, the keeping of sales records, and quarters for these functions. However, the use does not include the business of reselling goods purchased off the premises, except plant stock, or the establishment of a roadside stand.
+NURSERY: The propagation of trees, shrubs, vines or flowering plants for transplanting, sale, or for grafting or budding; planting of seeds or cuttings; grafting and budding one variety on another; spraying and dusting of plants to control insects and diseases, and buying and selling the above plant stock at wholesale or retail. Help and seasonal labor may be employed. The term "nursery" contemplates the sale of a product of such nursery. The conduct of a nursery business presumes parking places for customers, the keeping of sales records, and quarters for these functions. However, the use does not include the business of reselling goods purchased off the premises, except plant stock, or the establishment of a roadside stand.
 
 NURSING HOME: A nursing, convalescent, or rest home facility licensed by the State under ORS chapters 441 and 442, or an assisting living facility licensed under ORS 443, which provides, for a period exceeding 24 hours, the continuous services of licensed nursing personnel to care for chronically ill or infirm patients, exclusive of those patients related to the owner or facility administrator by blood or marriage. Such nursing, convalescent, or rest home must provide nursing services to those patients who, in the judgment of a physician, registered nurse, or facility administrator, require remedial, restorative, supportive, or preventive nursing measures.
 
+OAR: Oregon Administrative Rules
+
 OPEN SPACE: Land within a development which has been dedicated in common to the ownership within the development or to the public specifically for the purpose of providing places for recreational uses or for scenic purposes. Open space shall be used as such in perpetuity.
+
+ORS: Oregon Revised Statutes
 
 OVERBURDEN: Earth that lies above a natural deposit of a mineral.
 
@@ -375,6 +391,10 @@ OVERHEAD SPRINKLER IRRIGATION: The application of irrigation water from spray he
 OWNER: Person or persons holding fee title to a parcel, lot or tract of land, except in those instances when the land is being sold on contract, the contract purchaser shall be deemed the owner.
 
 PARCEL: A single unit of land that is created by a partition of land. For the purposes of this Ordinance, parcel includes lot and lot of record unless otherwise specified in the context of the specific provisions.
+
+PARKING AREA, MOTOR VEHICLE: A defined portion of a property provided for the parking and maneuvering of motor vehicles. A parking area may be located within an easement and shared between multiple lots without being considered a private road or access drive for the purpose of assigning lot lines.
+
+A motor vehicle parking area may contain drive aisles but does not have additional driveways providing access to further lots or parking areas – see "road, private," "access drive," "street, internal," and "street, private" where this is the case.
 
 PARKING STRUCTURE: A building having at least two levels that are designed and used for parking vehicles, or a building having one level of covered parking area under an open space or recreational use. A one-level surface parking area, garage, or carport is not a parking structure.
 
@@ -388,7 +408,7 @@ PEDESTRIAN-SCALE LIGHTING: Street lights designed to illuminate sidewalks to pro
 
 PENNANT: Any lightweight plastic, fabric, or other material, whether or not containing a message of any kind, suspended, usually in series, from a rope, wire, or string, and designed to move in the wind.
 
-PERSON DESIGNATED TO PRODUCE MARIJUANA BY A REGISTRY IDENTIFICATION CARDHOLDER: A person designated to produce marijuana by a registry identification cardholder under ORS 475B.420 who produces marijuana for a registry identification cardholder at an address other than the address where the registry identification cardholder resides or at an address where more than 12 mature marijuana plants are produced.
+PERSON DESIGNATED TO PRODUCE MARIJUANA BY A REGISTRY IDENTIFICATION CARDHOLDER: A person designated to produce marijuana by a registry identification cardholder under ORS 475C.792 who produces marijuana for a registry identification cardholder at an address other than the address where the registry identification cardholder resides or at an address where more than 12 mature marijuana plants are produced.
 
 PERVIOUS: Any surface or material that allows the passage of water through the material and into the underlying soil.
 
@@ -402,7 +422,7 @@ PREFABRICATED STRUCTURE: A building or subassembly that has been in whole or sub
 
 PREMISES: A lot, building, or portion of a lot or building, occupied by a use with its appurtenances.
 
-PRESERVATION, CULTURAL RESOURCES: The identification, study, protec­tion, restoration, rehabilitation or enhancement of cultural resources.
+PRESERVATION, CULTURAL RESOURCES: The identification, study, protection, restoration, rehabilitation or enhancement of cultural resources.
 
 PRIMARY BUILDING WALL: Exterior building wall which contains a public entrance to the occupant's premises and faces either a street or a parking area.
 
@@ -410,7 +430,7 @@ PRODUCE STAND: A table, bench, cart, or structure, any of which may be covered, 
 
 PROFESSIONAL SERVICES: Activities such as those offered by a physician, surgeon, dentist, lawyer, architect, engineer, accountant, artist, teacher, real estate agent, and insurance agent.
 
-PROPERTY LINE ADJUSTMENT: A relocation or elimination of all or a portion of the common property line between two abutting lots of record that does not create an additional lot of record. As used in this definition, a property line is the division line between two abutting lots of record.
+PROPERTY LINE ADJUSTMENT: A relocation or elimination of all or a portion of the common property line between two abutting lots of record that does not create an additional lot of record. As used in this definition, a property line is the entirety of the boundary line between two abutting lots of record.
 
 PUBLIC OWNERSHIP: Land owned by federal, state, regional, or local government, or governmental agency.
 
@@ -436,17 +456,21 @@ RESERVE STRIP: A strip of land, usually one foot in width, across the end of a s
 
 RESIDENTIAL TRAILER: A structure constructed for movement on the public highways that has sleeping, cooking, and plumbing facilities, that is intended for human occupancy by one family, that is being used for residential purposes, and that was constructed before January 1, 1962.
 
+RESIDENTIAL TREATMENT FACILITY: A facility that provides, for six or more individuals with mental, emotional or behavioral disturbances or alcohol or drug dependence, residential care and treatment in one or more buildings on contiguous properties. For the purposes of a residential treatment facility or residential treatment home, "treatment" means the systematic, planned maintenance, development or enhancement of self-care skills, social skills or independent living skills, or the planned sequence of systematic interactions, activities or structured learning situations designed to meet each resident's specified needs in the areas of physical, social, emotional and intellectual growth.
+
+RESIDENTIAL TREATMENT HOME: A facility that provides for five or fewer individuals with mental, emotional or behavioral disturbances or alcohol or drug dependence, residential care and treatment in one or more buildings on contiguous properties.
+
 RESOURCE RECOVERY FACILITY: Any facility at which solid waste is processed for the purpose of extracting, converting to energy, or otherwise separating and preparing solid waste for reuse, but not a salvage or junkyard.
 
 RHODODENDRON: The unincorporated community of Rhododendron, as identified on Comprehensive Plan Map 4-7, Non-Urban Area Land Use Plan, Mt. Hood Corridor Land Use Plan.
 
 RIGHT-OF-WAY: The legal right, established by usage or grant, to pass through property owned by another, or the strip of land subject to a nonowner's right to pass through.
 
-ROAD: A public or private way created to provide ingress to, or egress from, one or more lots, parcels, areas or tracts of land, or that provides for travel between places by vehicles. A private way created exclusively to provide ingress and egress to land in conjunction with a forest, farm or mining use is not a "road". The terms "street", "access drive" and "highway" for the purposes of this Ordinance shall be synonymous with the term "road".
+ROAD: A public or private way created to provide ingress to, or egress from, one or more lots, parcels, areas or tracts of land, or that provides for travel between places by vehicles. A private way created exclusively to provide ingress and egress to land in conjunction with a forest, farm or mining use is not a "road". The terms "street," "access drive," and "highway" for the purposes of this Ordinance shall be synonymous with the term "road," except "street, internal" and "street, private" shall have the meanings provided elsewhere in this Ordinance.
 
 ROAD, COUNTY: A public way under County jurisdiction which has been accepted into the County road maintenance system by order of the Board of County Commissioners.
 
-ROAD, PRIVATE: A private way created by deed or easement to provide vehicular ingress to, or egress from, three or more lots or parcels.
+ROAD, PRIVATE: A private way created by deed or easement to provide vehicular ingress to, or egress from, three or more lots or parcels. When a private way is located integrally within a motor vehicle parking area, refer to "street, internal" and "street, private."
 
 ROAD, PUBLIC: A public way dedicated or deeded for public use but not accepted into the County road maintenance system, intended primarily for vehicular circulation and access to abutting properties.
 
@@ -540,9 +564,9 @@ SOIL MOISTURE SENSOR: A device that measures the amount of water in the soil. Th
 
 SOLAR ENERGY SYSTEM: Any solar collector, or other solar energy device, the primary purpose of which is to provide for the collection, storage, and distribution of solar energy for space heating or cooling, water heating, or electricity.
 
-1 The power generating capacity of a roof-mounted solar energy system that is located on a primary use, conditional use, or limited use structure is limited only by the size of the system that can fit within the confines of the roof surface to which it is mounted.
+1. The power generating capacity of a roof-mounted solar energy system that is located on a primary use, conditional use, or limited use structure is limited only by the size of the system that can fit within the confines of the roof surface to which it is mounted.
 
-2 The power generating capacity of a ground-mounted solar energy system, or of a roof-mounted solar energy system that is located on an accessory structure, is limited to power consumed by the development to which the system is accessory, or—if the system feeds power into the grid of a public utility company—to an amount equivalent to no more than the annual usage of the development to which the system is accessory.
+2. The power generating capacity of a ground-mounted solar energy system, or of a roof-mounted solar energy system that is located on an accessory structure, is limited to power consumed by the development to which the system is accessory, or—if the system feeds power into the grid of a public utility company—to an amount equivalent to no more than the annual usage of the development to which the system is accessory.
 
 SOLID WASTE: As defined in Chapter 10.03, Solid Waste and Wastes Management, of the Clackamas County Code.
 
@@ -556,7 +580,11 @@ STREAM CORRIDOR AREA: An area including the streambed and a required strip or bu
 
 STREET FRONTAGE: The entire linear distance of a lot abutting a street. Toe strips or flair strips shall not be used to satisfy the minimum street frontage requirements of the Ordinance.
 
-STREET: See "ROAD".
+STREET: See "ROAD", except that "street, internal" and "street, private" shall have the definitions provided elsewhere in this Ordinance.
+
+STREET, INTERNAL: A way located outside of a road that is provided for motor vehicle circulation within a commercial, industrial, institutional, or mixed-use development or between multiple such developments. An internal street may also be located within a residential development that consists of housing other than detached single family dwelling(s), temporary dwelling(s), accessory dwelling units, or middle housing.
+
+STREET, PRIVATE: An internal street that has been improved with curbs, sidewalks or pedestrian paths, street trees, and pedestrian-scale lighting.
 
 STREET FURNITURE: Any structural element other than residential, industrial or commercial buildings, streets, sidewalks and curbs shall be considered street furniture including, but not limited to, benches, bus shelters, newsstands, bulletin boards, kiosks, drinking fountains, bicycle stalls, etc.
 
@@ -600,7 +628,7 @@ TURF LAWN: A ground-cover surface made up of thick, closely mowed, cultivated gr
 
 UNDERGROUND STRUCTURE: A structure in which more than 50 percent of the cubic footage of the enclosed, covered space is (1) constructed below the highest elevation of the ground adjoining the structure site prior to excavation; and (2) covered over by ground materials, such as soil, sod, sand or exterior paving, which are continuous on at least one side of the structure with contiguous surface ground materials. Conventional roofing materials may be used to cover any portion of the structure which extends above ground elevation.
 
-UNINCORPORATED COMMUNITY: A settlement that conforms to the definition set forth in chapter 660, division 22 of the Oregon Administrative Rules. The County's unincorporated communities are identified in Chapter 4 of the Comprehensive Plan and shown on Map 4-7 of the Comprehensive Plan.
+UNINCORPORATED COMMUNITY: A settlement that conforms to the definition set forth in OAR chapter 660, division 22. The County's unincorporated communities are identified in Chapter 4 of the Comprehensive Plan and shown on Map 4-7 of the Comprehensive Plan.
 
 USE: The purpose for which land or a building is arranged, designed or intended, or for which either land or a building is or may be occupied.
 
@@ -638,4 +666,4 @@ ZONING DISTRICT, NATURAL RESOURCE: A zoning district regulated by Section 400, N
 
 ZONING DISTRICT, RESIDENTIAL: A zoning district regulated by Section 300, Urban and Rural Residential Districts.
 
-[Amended by Ord. ZDO-224, 5/31/2011; Amended by Ord. ZDO-231, 1/31/2012; Amended by Ord. ZDO-232, 3/12/2012; Amended by Ord. ZDO-234, 6/7/2012; Amended by Ord. ZDO-243, 9/9/2013; Amended by Ord. ZDO-246, 3/1/2014; Amended by Ord. ZDO-249, 10/13/2014; Amended by Ord. ZDO-248, 10/13/2014; Amended by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-253, 6/1/2015; Amended by Ord. ZDO-254, 1/4/2016 and 3/1/2016; Amended by Ord. ZDO-258, 1/18/2017; Amended by Ord. ZDO-263, 5/23/2017; Amended by Ord. ZDO-267, 8/28/2017; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-269, 9/6/2018; Amended by Ord. ZDO-268, 10/2/2018; Amended by automatic repeal of Ord. ZDO-267, 8/28/2019; Amended by Ord. ZDO-273, 1/17/2021; Amended by Ord. ZDO-280, 10/23/2021; Amended by Land Use Board of Appeals Remand of Ord. ZDO-273, 1/24/2022; Amended by Ord. ZDO-282, 7/1/2022; Amended by Ord. ZDO-273, on remand, 5/30/2023; Amended by Ord. ZDO-283, 9/5/2023; Amended by Ord. ZDO-285, 9/3/2024; Amended by Ord. ZDO-288, 9/9/2024]
+[Amended by Ord. ZDO-224, 05/31/2011; Amended by Ord. ZDO-231, 01/31/2012; Amended by Ord. ZDO-232, 03/12/2012; Amended by Ord. ZDO-234, 06/07/2012; Amended by Ord. ZDO-243, 09/09/2013; Amended by Ord. ZDO-246, 03/01/2014; Amended by Ord. ZDO-249, 10/13/2014; Amended by Ord. ZDO-248, 10/13/2014; Amended by Ord. ZDO-252, 06/01/2015; Amended by Ord. ZDO-253, 06/01/2015; Amended by Ord. ZDO-254, 01/04/2016 and 03/01/2016; Amended by Ord. ZDO-258, 01/18/2017; Amended by Ord. ZDO-263, 05/23/2017; Amended by Ord. ZDO-267, 08/28/2017; Amended by Ord. ZDO-266, 05/23/2018; Amended by Ord. ZDO-269, 09/06/2018; Amended by Ord. ZDO-268, 10/02/2018; Amended by automatic repeal of Ord. ZDO-267, 08/28/2019; Amended by Ord. ZDO-273, 01/17/2021; Amended by Ord. ZDO-280, 10/23/2021; Amended by Land Use Board of Appeals Remand of Ord. ZDO-273, 01/24/2022; Amended by Ord. ZDO-282, 07/01/2022; Amended by Ord. ZDO-273, on remand, 05/30/2023; Amended by Ord. ZDO-283, 09/05/2023; Amended by Ord. ZDO-285, 09/03/2024; Amended by Ord. ZDO-288, 09/09/2024; Amended by 09/08/2026]

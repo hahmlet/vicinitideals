@@ -46,13 +46,13 @@ ZDO = f"{CLACKAMAS}/zdo.315.txt"
 #: Table 315-2, transposed one cell per line, two cells per district in header
 #: order. The second of each pair is the one that reaches this building.
 LOW_DENSITY = {
-    "R5": 1173,
-    "R7": 1175,
-    "R8.5": 1177,
-    "R10": 1179,
-    "R15": 1181,
-    "R20": 1183,
-    "R30": 1185,
+    "R5": 1201,
+    "R7": 1203,
+    "R8.5": 1205,
+    "R10": 1207,
+    "R15": 1209,
+    "R20": 1211,
+    "R30": 1213,
 }
 
 #: Table 315-3, three values under three headers.
@@ -88,7 +88,7 @@ def test_each_low_density_district_takes_its_own_cell(
     for zone, line in LOW_DENSITY.items():
         held = clackamas.zones[zone].values["max_height_ft"]
         assert held.value == 35, zone
-        assert held.prov.quote == f"{ZDO}#L1169,L{line}", zone
+        assert held.prov.quote == f"{ZDO}#L1197,L{line}", zone
         quoted = store.quote(held.prov.quote)
         assert "Maximum Building Height" in quoted, zone
         assert "All other buildings, including accessory dwelling units: 35 feet" in quoted
@@ -102,7 +102,7 @@ def test_the_row_prints_two_cells_and_the_first_is_not_this_building(
     accessory building, so the pod is measured against the second line -- which
     is why the quote carries the row label, so a reviewer can see there were
     two lines to choose between."""
-    assert lines[1168] == "Maximum Building Height"
+    assert lines[1196] == "Maximum Building Height"
     for zone, line in LOW_DENSITY.items():
         accessory = lines[line - 2]
         assert accessory.startswith("Accessory buildings larger than 500 square feet"), zone
@@ -116,13 +116,13 @@ def test_the_eight_districts_print_the_same_sentence_so_position_names_the_colum
     than an exception to it. Sixteen cells, eight districts, every "all other
     buildings" line word-for-word identical: nothing in the text distinguishes
     R-5's cell from R-30's, so the only thing that can is where it sits."""
-    cells = lines[1169:1185]
+    cells = lines[1197:1213]
     assert len(cells) == 16
     ours = cells[1::2]
     assert len(set(ours)) == 1
     assert ours[0] == "All other buildings, including accessory dwelling units: 35 feet"
     # Eight columns in the header, in the order the cells follow.
-    assert lines[1142:1150] == ["R-2.5", "R-5", "R-7", "R-8.5", "R-10", "R-15", "R-20", "R-30"]
+    assert lines[1170:1178] == ["R-2.5", "R-5", "R-7", "R-8.5", "R-10", "R-15", "R-20", "R-30"]
     # And the first pair is still skipped, for a better reason than when this
     # was written. It used to be skipped because FLATS held no R-2.5 at all,
     # which made the skip a gap rather than a decision. R-2.5 was encoded on
@@ -138,7 +138,7 @@ def test_the_eight_districts_print_the_same_sentence_so_position_names_the_colum
 def test_the_low_density_height_row_carries_no_footnote_marker(lines: list[str]) -> None:
     """Unlike the coverage row directly above it, which is marked 5,6. Worth
     asserting because the gate cannot check it here -- see below."""
-    assert lines[1167] == "50 percent[5,6]"
+    assert lines[1195] == "50 percent[5,6]"
     for line in LOW_DENSITY.values():
         assert not lines[line - 1].rstrip().endswith("]")
 
@@ -151,16 +151,20 @@ def test_the_village_zones_read_a_three_value_row_positionally(
 ) -> None:
     """The rule this layer already states for front, maximum front and side: a
     three-value row under three headers is positional and nothing is merged.
-    Here the three agree anyway, so the merge question cannot change it."""
-    assert lines[1315:1319] == ["Standard", "VR-5/7", "VR-4/5", "VTH"]
-    assert lines[1319] == "Maximum Building Height"
-    assert lines[1320:1323] == ["35 feet[9]"] * 3
+    Here the three agree anyway, so the merge question cannot change it.
+
+    Ord. ZDO-293 (2026-09-08) republished the table with spanned columns, so
+    the page now prints one cell per sub-column -- five heights under a header
+    that repeats VR-5/7 three times -- and every one of them still says 35."""
+    assert lines[1357:1362] == ["Standard", "VR-5/7", "VR-5/7", "VR-5/7", "VR-4/5"]
+    assert lines[1362] == "Maximum Building Height"
+    assert lines[1363:1368] == ["35 feet[9]"] * 5
 
     for zone in VILLAGE:
         held = clackamas.zones[zone].values["max_height_ft"]
         assert held.value == 35, zone
-        assert held.prov.quote == f"{ZDO}#L1320-L1323", zone
-        assert store.quote(held.prov.quote).count("35 feet[9]") == 3, zone
+        assert held.prov.quote == f"{ZDO}#L1363-L1368", zone
+        assert store.quote(held.prov.quote).count("35 feet[9]") == 5, zone
 
 
 def test_note_nine_cannot_loosen_this_ceiling_because_it_excludes_middle_housing(
@@ -171,7 +175,7 @@ def test_note_nine_cannot_loosen_this_ceiling_because_it_excludes_middle_housing
     reach. A quadplex is exactly that, so the standard stands unconditionally
     for this building -- the note reads in the direction that keeps the
     ceiling, not the one that lifts it."""
-    note = lines[1413]
+    note = lines[1497]
     assert note.startswith("[9] Except for middle housing developed pursuant to Section 845")
     assert "Triplexes, Quadplexes, Townhouses, and Cottage Clusters" in note
     assert "Sieben Creek Estates" in note
@@ -198,7 +202,9 @@ def test_the_document_behind_this_whole_layer_had_no_readable_footnotes(
     which is the ledger being honest rather than a claim of completeness."""
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     assert len(got.markers) > 400
-    assert len(got.bodies) == 84
+    # 84 until Ord. ZDO-293 (2026-09-08), which added a net four notes to
+    # the chapter's tables.
+    assert len(got.bodies) == 88
     assert len(got.unbodied) < len(got.markers) / 4
     assert not got.reconciled
 
@@ -261,7 +267,7 @@ def test_and_the_cause_was_the_spelling_not_the_absence_of_notes(
         NOTES_HEAD,
     )
 
-    first = lines[1397]
+    first = lines[1481]
     assert first.startswith("[1]The minimum and maximum lot size standards apply")
     assert not any(NOTES_HEAD.match(line.strip()) for line in lines)
     assert HEADLESS_NOTE.match(first) is None  # no column gap, and none needed now
@@ -271,7 +277,33 @@ def test_and_the_cause_was_the_spelling_not_the_absence_of_notes(
     # into five and loses the five.
     assert BRACKET_NOTE.match(first) is None
     assert GLUED_BRACKET_NOTE.match(first) is not None
-    assert BRACKET_NOTE.match(lines[1399]) is not None
+    assert BRACKET_NOTE.match(lines[1483]) is not None
+
+
+def test_a_weld_onto_a_one_letter_word_is_still_a_note() -> None:
+    """ "[14]A congregate housing facility shall have a minimum of four
+    dwelling units." -- ZDO 510, and nine more like it in 511, 513 and 602.
+    Capital-then-lowercase could not see a note whose first word is "A", so
+    each one read as the tail of the note above it. The Portland guard the
+    discriminator exists for still holds."""
+    from flats.encode.footnotes import GLUED_BRACKET_NOTE, census
+
+    note = GLUED_BRACKET_NOTE.match("[14]A congregate housing facility shall have four.")
+    assert note is not None and note["n"] == "14"
+    assert GLUED_BRACKET_NOTE.match("[2]. Retail plant nurseries are a conditional use") is None
+    assert GLUED_BRACKET_NOTE.match("[3]AB 1234 applies") is None
+
+    text = "\n".join(
+        [
+            "Use P[13] P[14]",
+            "",
+            "[13]Freestanding congregate housing is subject to Section 845.",
+            "",
+            "[14]A congregate housing facility shall have a minimum of four dwelling units.",
+        ]
+    )
+    got = census(text, doc="d.txt")
+    assert [(b.mark, b.text[:6]) for b in got.bodies] == [("13", "Freest"), ("14", "A cong")]
 
 
 def test_which_is_why_the_reading_is_written_into_the_layer_rather_than_left_to_it() -> None:

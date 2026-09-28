@@ -79,10 +79,13 @@ def test_the_four_bands_are_read_as_the_rule_bands_them() -> None:
 def test_the_cap_a_lot_carries_moves_with_the_lot() -> None:
     """A hundred zones inherit this cap and nothing else states one. Before the
     bands they all carried band (iv) whatever the lot measured."""
+    # Unincorporated Clackamas R-7 until 2026-09-27, when Ord. ZDO-293 took
+    # the county's own minimum to zero inside the UGB and the cap stopped
+    # binding there. Gladstone's R-7.2 still resolves to the cap.
     rules = RuleSet(load_rules())
     at = {
         sqft: rules.resolve(
-            "or/clackamas/_unincorporated", "R7", lot={"lot_sqft": sqft}
+            "or/clackamas/gladstone", "R7.2", lot={"lot_sqft": sqft}
         ).values["parking_min_per_unit"]
         for sqft in (2500, 3000, 4999, 5000, 6999, 7000, 12000)
     }
@@ -100,7 +103,7 @@ def test_a_lot_nobody_measured_is_assumed_into_the_widest_band() -> None:
     loosest cap: this is a ceiling on what a city may DEMAND, so assuming a
     small lot would quietly forgive a requirement that really applies."""
     rules = RuleSet(load_rules())
-    unmeasured = rules.resolve("or/clackamas/_unincorporated", "R7")
+    unmeasured = rules.resolve("or/clackamas/gladstone", "R7.2")
 
     assert unmeasured.values["parking_min_per_unit"].value == 4 / DWELLINGS
 
