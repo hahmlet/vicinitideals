@@ -183,6 +183,23 @@ def test_a_gresham_lot_on_a_bend_leans_on_the_corner_assumption_it_used_to_answe
     assert "corner_lot" not in s.config.leans_on(s.rules.levers)
 
 
+def test_a_lot_mapped_flx_screens_as_vc_inside_the_vc_flex_area(corpus, policies) -> None:
+    """FOLLOWUPS 10(a): the map code feeds the variant VC's use line names."""
+    flx = lot_from_row(row(jurisdiction="fairview", zone="FLX"), corpus.layers)
+    assert flx.zone == "VC"
+    assert flx.observed["inside_mapped_use_area"] is True
+    (s,) = screen_lot(flx, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.rules.verdict.value != "zone_not_encoded"
+    assert "inside_mapped_use_area" in s.config.conditions
+    assert "inside_mapped_use_area" not in s.config.unknown
+
+    # A VC lot is not thereby outside the area: the fact stays unasked.
+    vc = lot_from_row(row(jurisdiction="fairview", zone="VC"), corpus.layers)
+    assert vc.zone == "VC" and "inside_mapped_use_area" not in vc.observed
+    # And without the corpus nothing is read off the map code at all.
+    assert "inside_mapped_use_area" not in lot_from_row(row(jurisdiction="fairview", zone="FLX")).observed
+
+
 def test_a_lot_s4_could_not_trace_answers_no_alley_and_no_corner() -> None:
     """Tier D has no edges. The registry's assumption is named on those
     facts rather than a False that reads as a measurement; the bulb flag

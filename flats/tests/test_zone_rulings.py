@@ -135,6 +135,73 @@ def test_a_ruling_that_does_not_hold_together_is_refused(tmp_path: Path, block: 
         load_rules(_corpus(tmp_path, block, R5), strict=True)
 
 
+R5_AREA = """zones:
+  R5:
+    quadplex_allowed:
+      value: false
+      cite: "1.2.3"
+      url: https://example.test/code
+      retrieved: '2026-09-20'
+      quote: "or/clackamas/somewhere/1.txt#L1"
+      variants:
+        - value: true
+          when: [inside_mapped_use_area]
+          quote: "or/clackamas/somewhere/1.txt#L2"
+"""
+
+
+def test_an_alias_whose_map_code_draws_the_area_observes_the_fact(tmp_path: Path) -> None:
+    """FOLLOWUPS 10(a): Fairview's FLX IS the VC flex area, so the code
+    feeds the fact VC's variant turns on; the block's own code feeds nothing."""
+    block = f"""zone_rulings:
+  R5X:
+    outcome: alias
+    of: R5
+    observes: [inside_mapped_use_area]
+    note: >-
+      {NOTE}
+"""
+    layer = load_rules(_corpus(tmp_path, block, R5_AREA), strict=True)["or/clackamas/somewhere"]
+    assert layer.holds("R5X") == "R5"
+    assert layer.observed_by_code("R5X") == ("inside_mapped_use_area",)
+    assert layer.observed_by_code("R5") == () and layer.observed_by_code("QQ9") == ()
+
+
+@pytest.mark.parametrize(
+    "ruling, complaint",
+    [
+        # A pocket screens under another layer, whose variants this one does not write.
+        ("outcome: pocket\n    of: or/x\n    observes: [inside_mapped_use_area]", "only an alias"),
+        # The developer elects; the map never does.
+        ("outcome: alias\n    of: R5\n    observes: [conditional_use]", "not a registered site fact"),
+        ("outcome: alias\n    of: R5\n    observes: [no_such_fact]", "not a registered site fact"),
+        # A fact fed to nothing is a claim nobody sees acted on.
+        ("outcome: alias\n    of: R5\n    observes: [corner_lot]", "no variant of the aliased block"),
+        ("outcome: alias\n    of: R5\n    observes: inside_mapped_use_area", "a list of site-fact names"),
+    ],
+)
+def test_a_fact_an_alias_cannot_vouch_for_is_refused(tmp_path: Path, ruling: str, complaint: str) -> None:
+    block = f"zone_rulings:\n  R5X:\n    {ruling}\n    note: {NOTE}\n"
+    with pytest.raises(RuleLoadError, match=complaint):
+        load_rules(_corpus(tmp_path, block, R5_AREA), strict=True)
+
+
+def test_fairviews_flx_is_inside_the_vc_flex_area_by_its_own_code() -> None:
+    """The ruling's citation reads as the note says: 19.135.030(A)(1)(e)
+    names the "VC flex" area inside the VC zone, and VC's use variant is
+    the one the fact switches."""
+    fairview = load_rules()["or/multnomah/fairview"]
+    assert fairview.holds("FLX") == "VC"
+    assert fairview.observed_by_code("FLX") == ("inside_mapped_use_area",)
+    assert fairview.observed_by_code("VC") == ()
+    assert "19.135.txt L78-L80" in fairview.zone_rulings["FLX"].note
+    doc = Path(__file__).resolve().parents[1] / "provenance/docs/or/multnomah/fairview/19.135.txt"
+    lines = doc.read_text(encoding="utf-8").splitlines()
+    assert '"VC flex" area' in lines[79] and "residential uses are allowed on the first floors" in lines[79]
+    (variant,) = fairview.zones["VC"].values["quadplex_allowed"].variants
+    assert "inside_mapped_use_area" in variant.when
+
+
 # -- normalize -----------------------------------------------------------------
 
 

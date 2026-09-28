@@ -171,6 +171,8 @@ OBSERVABLE: tuple[str, ...] = (
     "corner_lot",
     "split_zone",
     "in_floodplain",
+    # Only where a map code settles it (an alias ruling's ``observes``).
+    "inside_mapped_use_area",
     "public_sewer",
     "in_sewer_district",
 )
@@ -259,6 +261,9 @@ def observed_facts(
       :func:`flats.geom.corridor.observed_corridors`. Only with the maps in
       hand (the bridge's ``--sources``), only on lots of the layers a map
       serves, and only with edges.
+    * a fact the lot's own map code settles -- an alias ruling's
+      ``observes`` (Fairview's ``FLX`` is the VC flex area, so
+      ``inside_mapped_use_area``). True only, and only with ``layers``.
     """
     out: dict[str, bool] = {}
     edges = json.loads(row.get("edges_json") or "[]")
@@ -271,6 +276,8 @@ def observed_facts(
             out.update(observed_corridors(edges, _layer_id(row), corridors))
     if layers is not None and row.get("neighbour_zones_json"):
         out.update(_neighbour_facts(row, layers))
+    if layers is not None:
+        out.update(_map_code_facts(row, layers))
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
     if _answered(row.get("split_zone")):
         out["split_zone"] = _is_true(row.get("split_zone"))
@@ -295,6 +302,30 @@ def _layer_id(row: Mapping[str, Any]) -> str | None:
         return layer_id_for(str(row.get("jurisdiction")))
     except KeyError:
         return None
+
+
+def _home_layer(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> Layer | None:
+    layer_id = _layer_id(row)
+    return layers.get(layer_id) if layer_id is not None else None
+
+
+def _map_code_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
+    """The site facts the lot's own map code settles (an alias ruling's
+    ``observes``): Fairview's ``FLX`` IS the VC flex area, so a lot mapped
+    with it holds ``inside_mapped_use_area``. True only -- the aliased
+    block's own code says nothing about where the area stops."""
+    home = _home_layer(row, layers)
+    if home is None or row.get("zone") is None:
+        return {}
+    return {name: True for name in home.observed_by_code(str(row.get("zone")))}
+
+
+def screened_zone(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> str:
+    """The zone block the lot screens under: its map code, or the block an
+    alias ruling names (``FLX`` -> ``VC``), as normalize assigns it."""
+    code = str(row.get("zone"))
+    home = _home_layer(row, layers) if layers is not None else None
+    return (home.holds(code) or code) if home is not None else code
 
 
 def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
@@ -591,7 +622,7 @@ def lot_from_row(
     return QuadfitLot(
         tlid=str(row["TLID"]),
         jurisdiction=juris,
-        zone=str(row.get("zone")),
+        zone=screened_zone(row, layers),
         layer_id=layer_id,
         facts=facts,
         observed=observed,

@@ -27,7 +27,7 @@ from typing import Any
 
 import yaml
 
-from flats.rules.conditions import NEIGHBOUR_ZONE_CONDITIONS
+from flats.rules.conditions import CONDITIONS, NEIGHBOUR_ZONE_CONDITIONS
 from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
@@ -1348,7 +1348,7 @@ def _parse_zone_rulings(
                 f"one of {', '.join(sorted(ZONE_RULING_OUTCOMES))}"
             )
             continue
-        extra = set(why) - {"outcome", "note", "of", "zone"}
+        extra = set(why) - {"outcome", "note", "of", "zone", "observes"}
         if extra:
             problems.append(
                 f"{where}.zone_rulings.{code}: unexpected {', '.join(sorted(extra))}"
@@ -1380,8 +1380,53 @@ def _parse_zone_rulings(
                 f"in the other layer (zone: <code> or {POCKET_ZONE_FROM_MAP})"
             )
             continue
-        out[code] = ZoneRuling(outcome=outcome, note=" ".join(note.split()), of=of, zone=zone)
+        observes = _parse_observes(why.get("observes"), outcome, zones.get(of or ""), where=f"{where}.zone_rulings.{code}", problems=problems)
+        if observes is None:
+            continue
+        out[code] = ZoneRuling(
+            outcome=outcome, note=" ".join(note.split()), of=of, zone=zone, observes=observes
+        )
     return out
+
+
+def _parse_observes(
+    raw: object, outcome: str, block: Zone | None, *, where: str, problems: list[str]
+) -> tuple[str, ...] | None:
+    """An alias ruling's ``observes``: the site facts its map code settles.
+
+    Three checks, each a way the list could lie: only an alias may carry one
+    (a pocket screens under another layer, whose variants this layer does
+    not write); every name is a registered SITE FACT (an elective is the
+    developer's to take, never the map's to give); and every name is one a
+    variant of the aliased block turns on -- a fact fed to nothing is a
+    claim nobody can see acted on. None where a check failed.
+    """
+    if raw is None:
+        return ()
+    if outcome != "alias":
+        problems.append(f"{where}.observes: only an alias ruling observes a fact")
+        return None
+    if not isinstance(raw, list) or not all(isinstance(n, str) for n in raw) or not raw:
+        problems.append(f"{where}.observes: expected a list of site-fact names")
+        return None
+    names = tuple(n.strip() for n in raw)
+    turned_on = {
+        name
+        for value in (block.values.values() if block is not None else ())
+        for variant in value.variants
+        for name in variant.when
+    }
+    for name in names:
+        defn = CONDITIONS.get(name)
+        if defn is None or defn.kind != "site_fact":
+            problems.append(f"{where}.observes: {name!r} is not a registered site fact")
+            return None
+        if name not in turned_on:
+            problems.append(
+                f"{where}.observes: no variant of the aliased block turns on {name!r}"
+            )
+            return None
+    return names
 
 
 def _parse_neighbours(

@@ -361,6 +361,13 @@ class ZoneRuling(BaseModel):
     note: str
     of: str | None = None
     zone: str | None = None
+    #: For an ``alias`` only: site facts a lot holds BY BEING MAPPED with this
+    #: code. Fairview's map prints ``FLX`` for the "VC flex" area that FMC
+    #: 19.135.030(A)(1)(e) draws inside the VC zone, and VC's use variant is
+    #: switched by ``inside_mapped_use_area`` -- the map has already drawn the
+    #: boundary the fact asks about. Each name is a registered site fact that
+    #: a variant of the aliased block turns on; the note carries the citation.
+    observes: tuple[str, ...] = ()
 
     def pocket_code(self, code: str) -> str | None:
         """The code a pocket lot screens under in the ``of`` layer; None when
@@ -2316,6 +2323,14 @@ class Layer(BaseModel):
         if ruling is not None and ruling.outcome == "alias" and ruling.of in self.zones:
             return ruling.of
         return None
+
+    def observed_by_code(self, code: str) -> tuple[str, ...]:
+        """Site facts a lot holds because the map prints ``code`` on it --
+        an alias ruling's ``observes`` -- and nothing for any other code."""
+        ruling = self.zone_rulings.get(code)
+        if ruling is None or ruling.outcome != "alias":
+            return ()
+        return ruling.observes
 
     @property
     def doc_root(self) -> str:

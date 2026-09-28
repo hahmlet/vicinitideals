@@ -2917,8 +2917,12 @@ zone_rulings:
       five or more units under FMC 19.13, attached single-unit dwellings are
       a conditional use, and VC's variant already names this very area
       (`inside_mapped_use_area`) as the place its relief applies. The map
-      now says which lot that is; feeding the code into that fact is the
-      improvement this alias leaves open.
+      says which lot that is, so the code FEEDS the fact (`observes`,
+      2026-09-28, FOLLOWUPS 10(a)): a lot mapped FLX is inside the VC flex
+      area by definition. Only True is fed, and only here -- a VC lot is
+      not thereby outside the area (Figure V-1 is a drawing, not a layer),
+      so VC keeps the fact unobserved.
+    observes: [inside_mapped_use_area]
 
 # Which of this city's zones are "a residential district" for the commercial
 # chapters' "When a building abuts a residential district the minimum
