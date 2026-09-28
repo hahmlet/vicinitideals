@@ -1015,7 +1015,7 @@ code:
   # a lot. `nth: 2` skips the table of contents, which lists every section
   # number before the standards start.
   - id: "pws.201.2.23"
-    url: https://www.wilsonvilleoregon.gov/sites/default/files/fileattachments/engineering/page/11761/public_works_construction_standards_2017.pdf
+    url: https://wilsonvilleoregon.gov/DocumentCenter/View/8275/Public-Works-Construction-Standards-2017-PDF
     title: "Public Works Standards (2017) 201.2.23, Driveways"
     start: "201.2.23 Driveways"
     end: "201.2.24 Curbs and Grading"
@@ -1278,7 +1278,7 @@ defaults:
   corner_access_street:
     value: lowest_class
     cite: Wilsonville PWS 201.2.23(f), driveways placed first on a lower classification street
-    url: https://www.wilsonvilleoregon.gov/sites/default/files/fileattachments/engineering/page/11761/public_works_construction_standards_2017.pdf
+    url: https://wilsonvilleoregon.gov/DocumentCenter/View/8275/Public-Works-Construction-Standards-2017-PDF
     retrieved: '2026-09-01'
     quote: "or/clackamas/wilsonville/pws.201.2.23.txt#L22-L23"
     variants:
