@@ -170,3 +170,21 @@ def test_a_lot_page_draws_where_the_building_and_parking_stand(
     for layer in ("plan-lot", "plan-envelope", "plan-room", "plan-building", "plan-court"):
         expect(plan.locator(f"polygon.{layer}").first).to_be_attached()
     expect(plan).to_contain_text("One way it could stand, not a site plan.")
+
+
+#: a county-zoned island inside Happy Valley's line (FOLLOWUPS 8, run 33):
+#: RRFF5 is Clackamas County's code, so it is screened under the county's rules.
+POCKET_LOT = "/flats/lots/clackamas/12E35D%2000900"
+
+
+def test_a_pocket_lot_page_says_whose_zoning_it_was_screened_under(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """FOLLOWUPS 8: a lot whose zone code belongs to a neighbouring map is
+    screened under that map's rules, and the page says so beside the zone."""
+    page = logged_in_page
+    page.goto(f"{base_url}{POCKET_LOT}")
+    if page.locator("#lot-verdict").count() == 0:
+        pytest.skip("the pocket lot is not in this run")
+    expect(page.locator("#lot-zoned-by")).to_contain_text("under ")
+    expect(page.locator("#lot-zoned-by")).to_contain_text(" zoning")

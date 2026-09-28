@@ -468,23 +468,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    floor; Portland ok plans with no 12 x 12 square outside the pavement)
    before any county run.
 
-8. **Pockets + corridors -- BUILT (4597d30d, deployed 2026-09-27), the
-   batched full re-screen is running** (137 `/root/chain_pc.sh`, bundle
-   `2026-09-27_pc`, base becomes `/root/bridge_pc_full`). When it lands:
-   load `--snapshot 3` (dry-run first) -> VACUUM -> drift vs run 31 ->
-   promote if clean -> E2E (lot page + a pocket lot's "under X zoning").
-   Expect: ~185 pocket lots screened under their `of` layer (mostly RED at
-   the use gate), ~4,100 Portland commercial/RM2 lots unknown -> green/yellow
-   if-signed (the corridor was their only unknown; bound 2026-09-27). Then
-   remove this item and add what is left: (a) 9 pocket lots in permitted
-   zones (Clackamas R-MD, Multnomah LDR-1, Happy Valley VR57) stay
-   NOT_MEASURED because quadfit s3 drops a zone its rules do not hold --
-   teach s3 the pocket rulings; (b) 25 lots stay ZONE_POCKET: Troutdale NSA
-   GGC/GSO and Oregon City `County` read against a map that answers no code
-   the of-layer holds; (c) Map 130-1 also carries a MAXIMUM setback of 20 ft
-   on those stretches -- not encoded (a max read wrong is a false GREEN);
-   (d) the corridor facts are per lot (ANY street line), a per-LINE field
-   would let the one line on Division take 10 ft and the side street 0.
+8. **Pockets + corridors -- leftovers (PROMOTED run 33 2026-09-27, drift
+   vs 31: 4,140 moved unknown -> green 4,112 / yellow 28 if signed, all
+   rules, 0 unexplained; pocket lots 210 -> 25 still ZONE_POCKET, 174 now
+   screened under their `of` layer, red at the use gate).** (a) 9 pocket
+   lots in permitted zones (Clackamas R-MD, Multnomah LDR-1, Happy Valley
+   VR57) stay NOT_MEASURED because quadfit s3 drops a zone its rules do not
+   hold -- teach s3 the pocket rulings; (b) 25 lots stay ZONE_POCKET:
+   Troutdale NSA GGC/GSO and Oregon City `County` read against a map that
+   answers no code the of-layer holds; (c) Map 130-1 also carries a MAXIMUM
+   setback of 20 ft on those stretches -- not encoded (a max read wrong is a
+   false GREEN); (d) the corridor facts are per lot (ANY street line), a
+   per-LINE field would let the one line on Division take 10 ft and the side
+   street 0.
 9. **Corpus drift found while ruling the September codes -- a
    `--refresh --repoint` pass per layer.** (a) Clackamas ZDO: zdo.315/316/
    510/845/903/1005/1015 and every roadway.* doc report CHANGED (the county
@@ -511,7 +507,6 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    published document defines -- not Gresham 4.0100, not MCC 39; ruled
    `to_read` and worth one question to Gresham planning if it ever
    matters; nothing else owed.
-11. **(merged into 8 -- corridors built with the pockets, 2026-09-27.)**
 12. **FLATS's own envelope -- loose ends (merged b5303d01, PROMOTED run 18
    2026-09-25).** Run 18 drift 879 moved / 0 unexplained: the old quadfit
    court credit was false on all-front lots and orientation-blind (now
@@ -563,9 +558,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Bridge `--zone "<city>:<zone>"` / `--tlid`; `python -m flats.ingest.splice
    splice|audit`. First use: the two Oregon City farm lots (f0418b49) in
    2 minutes, run 20, drift 4 moved / 0 unexplained, promoted. The NEXT
-   splice's `--base` is `/root/bridge_spliced_2026-09-25_oc` on 137 (it
-   descends from full run 18's `/root/bridge_env_full`). Full re-screen due
-   after 5 partials or 30 days (2026-10-25); run `splice audit` against it
+   splice's `--base` is `/root/bridge_pc_full` on 137 (full run 33,
+   2026-09-27; 0 splices since). Full re-screen due
+   after 5 partials or 30 days (2026-10-27); run `splice audit` against it
    before promoting -- out-of-scope moves are accepted known unknowns.
    (Showing the audit on /flats/refresh: Steph 2026-09-25 "an enhancement
    for later" -- not queued.)
