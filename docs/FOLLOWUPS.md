@@ -425,13 +425,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ends front lot lines) -- read the other 13 cities' through-lot lines;
    (j) in a ban city the side court is drawn on ONE side of a through-lot
    pod -- a court on both sides where one side is short of the band;
-   (k) the partial frontage / stub lane: a street piece that lines up
-   with no column beside the pod (278 lots above, e.g. Gresham
-   `1N3E30CB  -12300`) -- slide the pod onto the stub's columns, or run
-   the lane through the setback strip with a jog and charge it; needs the
-   lot polygon minus overlays, which `layout_lot` does not receive
-   (`lot_xy` is the bare corners); the test to flip is
-   `test_a_stub_front_that_misses_the_columns_beside_the_pod_is_refused`;
+   (k) DONE 4a3cc09c -- s6s reserves a lane's
+   width on the street strip before placing the pod beside it (court
+   searched near the lane, straight lane charged as pavement; runs only
+   after every front failed "no side lane", never on alley lots). Replay
+   on 137 (09-29 data): +890 plans of 20,949 no-side-lane lots, 0 lost, 0
+   other moves; rides the next s6s->s7->bridge run. Left: bent fronts whose
+   body swings off the strip (Gresham 1N3E30CB -12300, ~238 of the 286
+   targeted) need an angled/jog lane;
    (l) BUILT 5cb2bd75 -- the street strip is cut flat at a free end and
    keeps its square extension only where another street edge carries on
    (bend, corner clip, front meeting side street); the alley strip is
@@ -446,11 +447,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    replay of the 88 moved lots: 36 lost -> 31 (29 no lane, 2 few stalls),
    0 regressions (137 /root/strip_chains/v2/replay2.csv). 32E07DC03600:
    the curved line past the lane may be a street s4 does not label --
-   worth a look; (m) the ~30 wide fronts with no
-   envelope cell within the street reach: s5's tier-C envelope is
-   `buffer(-max(setbacks))`, round and uniform, not per edge, and an
-   overlay carve-out can eat the strip -- refused today, count which is
-   which; (n) BUILT 91840447 (lane out of the pole, pod
+   worth a look; (m) COUNTED 2026-09-29 on 09-18 data: 32 wide
+   fronts with no envelope cell in street reach = 7 overlay carve-outs, 6
+   round tier-C insets, 3 tier B with no strip, 16 with a strip in both
+   envelopes (an older s6s refused them -- re-check on the current run);
+   (n) BUILT 91840447 (lane out of the pole, pod
    beside it, charged from the street; local trial 65 lost / 51 redrawn /
    884 same -- read the 15 cul-de-sac/angled "not a pole" losses on the
    county run) -- was: the pole's lane jog: in the pole case the lane is taken at
