@@ -815,9 +815,13 @@ def _outdoor_shape(
     window is PROVEN and the check passes; a shape not found there may still
     exist beside it, and the honest answer is that nobody measured it -- the
     lot is held out of GREEN on the fact (``UNSHAPED``), never failed on it.
-    Measured on run 0928, that holds some 4,200 Portland single-dwelling
-    greens (a pod turned end-on on a 50 ft lot, where the court fills the
-    window) and no Milwaukie lot, where nothing is green today.
+    The bridge then measures the square on the lot's own ground
+    (``LotFacts.outdoor_square_ft``, ``flats.fit.outdoor``) and it decides
+    both ways. On run 0928 inputs, of 6,085 Portland single-dwelling plans
+    green before this check, 5,516 stay green, 569
+    are a real miss (mostly a pod turned end-on on a 50 ft lot, a strip of
+    6-10 ft beside it) and none stay unmeasured; no Milwaukie lot moves,
+    where nothing is green today.
     """
     where = rules.jurisdiction
     parks = design.parking.parks

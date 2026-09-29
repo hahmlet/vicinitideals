@@ -1500,11 +1500,12 @@ def outdoor_square(
     The plan is drawn the way the lot page draws it -- building at the street
     end, lane beside it, the court's stalls and aisle behind the standoff --
     and the ground left is the lot less the front setback, those shapes and
-    every overlay carve. None, leaving the shape unobserved, where there is no
-    lot polygon or front line, the front setback is unstated, the drawing
-    finds no room for the plan, or the pavement runs where the drawing does
-    not show it: a court reached across a side yard (a side alley or a side
-    street), whose drive the drawing does not place.
+    every overlay carve. A court reached across a side yard (a side street or
+    a side alley) has a drive the drawing does not place, so its whole depth
+    band is taken, lot line to lot line. None, leaving the shape unobserved,
+    where there is no lot polygon or front line, the front setback is
+    unstated, the drawing finds no room for the plan, or a side-fed court
+    stands as a column.
     """
     side = got.get("open_space_min_dimension_ft")
     if side is None or here.lot_geom is None or here.edges is None:
@@ -1516,7 +1517,14 @@ def outdoor_square(
     facts = here.facts
     alley, corner = facts.alley, facts.corner
     across = court_across(design, got, alley, corner=corner)
-    if design.parking.parks and across.stalls and not across.lane_ft and not facts.alley_at_rear:
+    # A court reached across a side yard (a side street or a side alley):
+    # the drive's line is not drawn, so the court's whole depth band is
+    # paved from lot line to lot line. A column along a side alley is its
+    # own drive and stays unmeasured.
+    side_drive = bool(
+        design.parking.parks and across.stalls and not across.lane_ft and not facts.alley_at_rear
+    )
+    if side_drive and fit.column:
         return None
     if fit.column:
         column = side_column(design, got, alley)
@@ -1539,9 +1547,13 @@ def outdoor_square(
         street=street,
         paved_across_ft=None if fit.column else max(across.width_ft, across.lane_ft),
         gap_ft=gap,
+        side_drive=side_drive,
     )
-    if drawn is None or not drawn.fits:
+    if drawn is None:
         return None
+    # A plan the fit passed only on the tolerance draws a room a cell or so
+    # short (``drawn.fits`` False): its shapes still stand where the plan
+    # does, and whatever they overhang is taken off the ground all the same.
     # The column's side of the room is not drawn: the whole court band goes.
     plans = [(drawn.building, p) for p in drawn.paved] or [
         (drawn.building, drawn.lane, drawn.court)
