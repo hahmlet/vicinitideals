@@ -103,6 +103,19 @@ def _patch_celery(monkeypatch):
     return mock
 
 
+@pytest.fixture(autouse=True)
+def _pass_org_guard(monkeypatch):
+    """These tests use random model ids and no DB rows; the org guard these
+    routes gained (3d8565d7) is covered by test_model_routes_cross_org.py,
+    so here it always passes."""
+    from app.api.routers import ui_model_outputs
+
+    async def _ok(*_a, **_kw):
+        return True
+
+    monkeypatch.setattr(ui_model_outputs, "_model_in_user_org", _ok)
+
+
 # ---------------------------------------------------------------------------
 # Local ASGI client — does NOT create DB tables (the routes under test
 # don't touch the DB, and the conftest-provided client fixture is currently
