@@ -299,6 +299,101 @@ def _largest_rect(ok, min_h: int = 1):
 JOIN_TOL_FT = 0.01
 
 
+def _street_strip_pieces(edges, joins, reach_ft: float) -> list:
+    """The street strip of `_alley_mouths`, one geometry per chain of edges.
+
+    A chain is a run of `edges` that meet end to end. Each edge is
+    buffered `reach_ft` with flat caps, carried `reach_ft` on (a square
+    cap) at every end another edge of `joins` meets. A FREE end -- one
+    nothing in `joins` meets -- is cut along the grid axis across the
+    chain's run (see `_alley_mouths`): its edge is carried on too, and
+    the whole chain is trimmed to the side of that line the chain lies
+    on. Where the chain does not lie wholly on one side (it doubles back,
+    or has no two clear ends), that end is cut square to its own edge.
+    """
+    import shapely
+    from shapely.geometry import LineString, box
+
+    def same(p, q):
+        return math.dist(p, q) <= JOIN_TOL_FT
+
+    E = [((e[0], e[1]), (e[2], e[3])) for e in edges
+         if math.hypot(e[2] - e[0], e[3] - e[1]) > 0.0]
+    J = [((j[0], j[1]), (j[2], j[3])) for j in joins]
+
+    def met(p, q, end) -> bool:
+        # Another edge of `joins` has an end at `end` -- the edge (p, q)
+        # itself, listed there too, is not "another".
+        for a, b in J:
+            if (same(a, p) and same(b, q)) or (same(a, q) and same(b, p)):
+                continue
+            if same(a, end) or same(b, end):
+                return True
+        return False
+
+    # Chains: edges of `edges` that share an end, by union-find.
+    parent = list(range(len(E)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    for i in range(len(E)):
+        for k in range(i + 1, len(E)):
+            if any(same(x, y) for x in E[i] for y in E[k]):
+                parent[find(i)] = find(k)
+    chains: dict[int, list[int]] = {}
+    for i in range(len(E)):
+        chains.setdefault(find(i), []).append(i)
+
+    out = []
+    for comp in chains.values():
+        verts = [p for i in comp for p in E[i]]
+        # The chain's two ends: the vertices only one of its edges reaches.
+        ends = [p for p in verts if sum(same(p, v) for v in verts) == 1]
+        cuts = []  # (axis, sign, coordinate) half-planes the chain is kept on
+        pieces = []
+        for i in comp:
+            p, q = E[i]
+            n = math.dist(p, q)
+            ux, uy = (q[0] - p[0]) / n, (q[1] - p[1]) / n
+            ext = []
+            for end in (p, q):
+                if met(p, q, end):
+                    ext.append(reach_ft)
+                    continue
+                cut = None
+                if len(ends) == 2 and any(same(end, x) for x in ends):
+                    far = ends[1] if same(end, ends[0]) else ends[0]
+                    dx, dy = far[0] - end[0], far[1] - end[1]
+                    ax = 0 if abs(dx) >= abs(dy) else 1
+                    sg = 1.0 if (dx, dy)[ax] >= 0 else -1.0
+                    if all(sg * (v[ax] - end[ax]) >= -JOIN_TOL_FT for v in verts):
+                        cut = (ax, sg, end[ax])
+                if cut is None:
+                    ext.append(0.0)
+                else:
+                    cuts.append(cut)
+                    ext.append(reach_ft)
+            s0, s1 = ext
+            pieces.append(LineString([(p[0] - ux * s0, p[1] - uy * s0),
+                                      (q[0] + ux * s1, q[1] + uy * s1)]).buffer(
+                reach_ft, cap_style="flat", join_style="mitre"))
+        chain = shapely.union_all(pieces)
+        if cuts:
+            x0, y0, x1, y1 = chain.bounds
+            for ax, sg, c in cuts:
+                if ax == 0:
+                    keep = box(c, y0, x1, y1) if sg > 0 else box(x0, y0, c, y1)
+                else:
+                    keep = box(x0, c, x1, y1) if sg > 0 else box(x0, y0, x1, c)
+                chain = chain.intersection(keep)
+        out.append(chain)
+    return out
+
+
 def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
                   reach_ft: float, joins=None):
     """Cells of the envelope grid that stand on the alley strip.
@@ -338,10 +433,29 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
     a street strip -- and an end of an edge keeps its square cap only where
     it meets another edge of `joins`: the bend of a street chain, a corner
     clip, the corner where the front street meets the side street, all as
-    before. An end that nothing in `joins` continues from is cut flat at
-    the edge's own extent. None (the alley) keeps every cap square, as it
-    was bound on 2026-09-12; an alley that stops mid-lot is the same
-    question and was not asked of it here.
+    before. An end that nothing in `joins` continues from is a FREE end.
+    None (the alley) keeps every cap square, as it was bound on
+    2026-09-12; an alley that stops mid-lot is the same question and was
+    not asked of it here.
+
+    WHERE A FREE END IS CUT (2026-09-29). The first draft cut it square
+    to the edge it ends -- right on the partial frontage above, whose last
+    edge runs along the grid, and wrong on a frontage that ends in a short
+    angled piece: a corner clip or a curve's last chord running 30 to 65
+    degrees off the front (1N2E25AA -02700: 62 ft of Portland frontage,
+    then 13 ft and 10 ft of clip down to the side line). A cut square to
+    that last piece leans back over the frontage, and the county run of
+    2026-09-28 refused 18 lots whose lane ran straight to the street
+    under the clip. Every lane this stage draws runs along a grid axis
+    (`_front_runs`, `_lane_to_alley`), so the question a free end has to
+    answer is whether a lane running straight from a cell toward the
+    street meets it. The cut is therefore along the grid axis a lane to
+    this chain of street edges travels -- across the chain's run, the
+    axis its end-to-end chord runs less along -- through the free end,
+    and it trims every piece of the chain, including the square cap that
+    a joint inside the chain carries past that line. A chain that doubles
+    back past its own free end (a cul-de-sac bulb) is not cut by a line
+    it crosses; its free end keeps the cut square to its last edge.
     """
     import numpy as np
     import shapely
@@ -352,39 +466,11 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
     if not len(rows) or not alley_edges:
         return out
 
-    def piece(e):
-        (x0, y0), (x1, y1) = (e[0], e[1]), (e[2], e[3])
-        if joins is None:
-            return LineString([(x0, y0), (x1, y1)]).buffer(
-                reach_ft, cap_style="square", join_style="mitre")
-        n = math.hypot(x1 - x0, y1 - y0)
-        if n <= 0.0:
-            return None
-
-        def met(px, py):
-            # Another edge of `joins` has an end at this one -- the edge
-            # itself, listed there too, is not "another".
-            for j in joins:
-                a, b = (j[0], j[1]), (j[2], j[3])
-                if (math.dist(a, (x0, y0)) <= JOIN_TOL_FT
-                        and math.dist(b, (x1, y1)) <= JOIN_TOL_FT) or (
-                        math.dist(a, (x1, y1)) <= JOIN_TOL_FT
-                        and math.dist(b, (x0, y0)) <= JOIN_TOL_FT):
-                    continue
-                if (math.dist(a, (px, py)) <= JOIN_TOL_FT
-                        or math.dist(b, (px, py)) <= JOIN_TOL_FT):
-                    return True
-            return False
-
-        # A square cap is the edge carried `reach_ft` on and cut flat.
-        ux, uy = (x1 - x0) / n, (y1 - y0) / n
-        s0 = reach_ft if met(x0, y0) else 0.0
-        s1 = reach_ft if met(x1, y1) else 0.0
-        return LineString([(x0 - ux * s0, y0 - uy * s0),
-                           (x1 + ux * s1, y1 + uy * s1)]).buffer(
-            reach_ft, cap_style="flat", join_style="mitre")
-
-    pieces = [p for p in (piece(e) for e in alley_edges) if p is not None]
+    if joins is None:
+        pieces = [LineString([(e[0], e[1]), (e[2], e[3])]).buffer(
+            reach_ft, cap_style="square", join_style="mitre") for e in alley_edges]
+    else:
+        pieces = _street_strip_pieces(alley_edges, joins, reach_ft)
     if not pieces:
         return out
     strip = shapely.union_all(pieces)

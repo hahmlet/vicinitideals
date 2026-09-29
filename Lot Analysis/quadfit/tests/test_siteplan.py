@@ -2380,6 +2380,72 @@ def test_the_street_strip_is_clipped_at_a_free_end_and_kept_at_a_joint():
     assert (joined == square).all()
 
 
+# 1N2E25AA -02700, Portland R7, exactly as the county run of 2026-09-28 held
+# it (s6_lots edges_json, s5o envelope): 62 ft of frontage, then a 13 ft and a
+# 10 ft piece of corner clip angling down to the east side line, where the
+# street ends. The F chain is the lot's only street.
+_CLIP_EDGES = [
+    [7690762.05, 691278.85, 7690772.35, 691172.4, "R"],
+    [7690772.35, 691172.4, 7690696.58, 691165.56, "R"],
+    [7690696.58, 691165.56, 7690684.74, 691296.75, "R"],
+    [7690684.74, 691296.75, 7690746.95, 691294.51, "F"],
+    [7690746.95, 691294.51, 7690757.91, 691287.69, "F"],
+    [7690757.91, 691287.69, 7690762.05, 691278.85, "F"],
+]
+_CLIP_ENV = [(7690691.14, 691281.51), (7690742.42, 691279.66), (7690746.21, 691277.3),
+             (7690754.83, 691258.9), (7690758.78, 691260.75), (7690766.89, 691176.93),
+             (7690701.11, 691170.99)]
+
+
+def test_a_lane_under_a_corner_clip_reaches_the_street():
+    """The free end of a frontage is cut where a STRAIGHT lane stops meeting
+    the street, not square to whatever short piece the frontage happens to
+    end on. This lot's frontage ends in 10 ft of clip running 65 degrees
+    off the front; the cut square to that piece leaned back over the clip,
+    and the plan the run before had drawn -- a 12 ft lane at x 745-759,
+    straight under the clip -- was refused `no_side_lane`, one of 18 such
+    lots on the county run of 2026-09-28. Every lane in this stage runs
+    along the grid, so the cut is along the grid too: the lane stands, and
+    it still stops at the chain's end (the partial frontage above)."""
+    s6s = _sp_setup_cities()
+    env = shapely.Polygon(_CLIP_ENV)
+    lot = shapely.Polygon([(e[0], e[1]) for e in _CLIP_EDGES])
+    fe = [e[:4] for e in _CLIP_EDGES if e[4] == "F"]
+    r = _run(s6s, env, fe, lot.area, bearings=[177.94, 148.08], jurisdiction="portland",
+             zone="R7", parking_setback_ft=10.0, front_setback_ft=15.0,
+             street_setback_ft=15.0, lot_xy=[(e[0], e[1]) for e in _CLIP_EDGES])
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    d = r["geoms"]["driveway"]
+    # The lane runs straight up to the street: its columns lie under the F
+    # chain (x 7690684.74 - 7690762.05), not past the chain's east end.
+    assert 7690684.74 - 0.6 <= d.bounds[0] and d.bounds[2] <= 7690762.05 + 0.6, d.bounds
+    assert d.bounds[3] > 691255.0  # it reaches the front of the envelope
+
+
+def test_the_free_end_cut_follows_the_lane_not_the_last_clip_piece():
+    """The construction on the same lot: with the frontage ending in a steep
+    clip, every envelope column straight below the clip keeps a cell on the
+    strip -- the cut square to the last clip piece dropped the ones whose
+    foot on that piece falls past its end -- and nothing past the chain's
+    east end is on it."""
+    import numpy as np
+    from s6_fit import _cell_grid
+
+    s6s = _sp_setup_cities()
+    res = s6s._CFG["res"]
+    env = shapely.Polygon(_CLIP_ENV)
+    fe = [e[:4] for e in _CLIP_EDGES if e[4] == "F"]
+    ok = _cell_grid(env, res)
+    minx, miny = env.bounds[:2]
+    reach = 15.0 + 2.0 * res + 0.5
+    cells = s6s._alley_mouths(ok, fe, minx, miny, res, reach, joins=fe)
+    xs = minx + (np.arange(ok.shape[1]) + 0.5) * res
+    under_clip = (xs > 7690747.5) & (xs < 7690758.5)   # below the clip, in the envelope
+    past_end = xs > 7690762.05 + res
+    assert all(cells[:, c].any() for c in np.flatnonzero(under_clip & ok.any(axis=0)))
+    assert not cells[:, past_end].any()
+
+
 # ---------------------------------------------------------------------------
 # FOLLOWUPS 5 (o): a front setback of zero is the code's answer, not a gap
 # ---------------------------------------------------------------------------
