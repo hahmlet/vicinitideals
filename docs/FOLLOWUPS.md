@@ -122,10 +122,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    side moves. Left: quadfit s6s still reads the alley as the aisle on
    3-of-5 (FIXED 10f193ea, rides the next s6s run); Gresham's
    rear-with-alley number on a second rear line FIXED 09171698 (14 rows /
-   7 lots shrink, 0 colour moves); a rear alley along PART of its line
-   still gives the whole line the ordinary rear -- conservative, but Steph's
-   ruling says the covered stretch is waived, so it could be cut per
-   stretch as side lines are (not built); whether a
+   7 lots shrink, 0 colour moves); a rear alley along PART of its line:
+   BUILT c089acea -- the covered stretch takes the alley's rear, the rest
+   the ordinary rear, cut per stretch as side lines are; both cuts are
+   screened and the better kept (the court is charged against the smaller
+   strip). Probe on 09-29 s4: 53 part-covered rear lines (52 Portland, 1
+   Gresham), 48 cuttable; 0 colour moves, 4 lots gain room (+0.5 to +32
+   ft), nothing worse -- rides the next re-screen; whether a
    line an alley runs PART of is "a lot line abutting an alley": RULED by
    Steph 2026-09-28 -- careful reading (covered stretch only), and the
    covered stretch is the travel lane only if long enough: BUILT 288f0daa
