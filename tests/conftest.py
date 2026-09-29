@@ -30,6 +30,8 @@ seed_org()                  → Organization + User tuple
 seed_opportunity()          → Opportunity (requires org)
 seed_deal_model()           → Deal + Scenario linked to an Opportunity
 seed_deal_model_with_financials()  → Scenario + OperationalInputs + IncomeStream + OpEx line
+                                     (stream + line active in lease-up + stabilized,
+                                     like production; active_in_phases=[] opts out)
 """
 
 from __future__ import annotations
@@ -507,15 +509,37 @@ async def seed_deal_model(
     return deal_model
 
 
+# The phases the production create paths stamp on a new income stream or
+# expense line (POST /api/models/{id}/expense-lines, the unit-mix stream
+# generator, the wizard). The model column defaults to ``[]``, which the engine
+# reads as "active in no phase" -- a stream seeded without it earns $0 in every
+# period.
+PRODUCTION_ACTIVE_PHASES: tuple[str, ...] = ("lease_up", "stabilized")
+
+
 async def seed_deal_model_with_financials(
     session: AsyncSession,
     opportunity: Opportunity,
     user: User,
+    *,
+    active_in_phases: list[str] | tuple[str, ...] | None = None,
 ) -> tuple[Scenario, OperationalInputs, IncomeStream, OperatingExpenseLine]:
     """Create a Scenario with OperationalInputs, one IncomeStream, and one OpEx line.
 
+    The stream and the OpEx line are active in ``PRODUCTION_ACTIVE_PHASES``
+    (lease-up + stabilized, and so exit) -- the same phases a deal built in
+    the app gets -- so a computed seeded deal earns rent and pays the line.
+    Pass ``active_in_phases=[]`` only for a test that genuinely needs a deal
+    with no revenue and no itemised OpEx.
+
+    Seeded rent: 8 units x $1,450/mo = $11,600/mo gross, 95% occupied at
+    stabilization = $11,020/mo EGI before escalation.
+
     Returns (deal_model, inputs, income_stream, opex_line).
     """
+    phases = list(
+        PRODUCTION_ACTIVE_PHASES if active_in_phases is None else active_in_phases
+    )
     from app.models.project import Project
 
     deal_model = await seed_deal_model(session, opportunity, user)
@@ -551,6 +575,7 @@ async def seed_deal_model_with_financials(
         amount_per_unit_monthly=Decimal("1450"),
         stabilized_occupancy_pct=Decimal("95"),
         escalation_rate_pct_annual=Decimal("3.0"),
+        active_in_phases=list(phases),
     )
     opex = OperatingExpenseLine(
         id=uuid.uuid4(),
@@ -558,6 +583,7 @@ async def seed_deal_model_with_financials(
         label="Property Management",
         annual_amount=Decimal("8640"),
         escalation_rate_pct_annual=Decimal("3.0"),
+        active_in_phases=list(phases),
     )
     session.add_all([inputs, income, opex])
     await session.flush()

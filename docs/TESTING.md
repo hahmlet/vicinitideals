@@ -15,7 +15,11 @@
   when test code calls `session.commit()`
 - `httpx.AsyncClient` + `ASGITransport` for API integration tests
 - Seed helpers in `tests/conftest.py`: `seed_org()`, `seed_deal_model()`,
-  `seed_deal_model_with_financials()`
+  `seed_deal_model_with_financials()`. The last one's income stream and OpEx
+  line are active in lease-up + stabilized, as production creates them, so a
+  computed seeded deal earns rent (hand-derived figures pinned in
+  `tests/engines/test_seeded_deal_revenue.py`). Pass `active_in_phases=[]`
+  only when a test truly needs a no-revenue deal.
 - Markers are auto-assigned at collection: e2e by path, integration when DB
   fixtures are present, else unit.
 - A handful of legacy test files still spin up their own in-memory SQLite engine
