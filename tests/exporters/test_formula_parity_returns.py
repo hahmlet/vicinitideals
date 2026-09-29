@@ -264,7 +264,9 @@ async def test_combined_irr_evaluates_close_to_engine_value(
     # excel_value is a fraction (0.085 for 8.5%); engine stores percent
     # magnitude (8.5 for 8.5%). Compare in matching units.
     if excel_value is None:
-        pytest.skip("Excel returned None for Combined Levered IRR cell")
+        pytest.fail(
+            "Combined Levered IRR cell empty after recalc -- not evaluated"
+        )
 
     if engine_irr_pct in (None, 0, 0.0):
         # Engine didn't run the waterfall rollup, but Excel's IRR formula

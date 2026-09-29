@@ -51,10 +51,23 @@ pytestmark = pytest.mark.asyncio
 
 
 def _find_row(ws, label_text: str) -> int | None:
+    """Row whose line-item label matches. The Pro Forma puts the project
+    name in column A and the line item in column B."""
     for r in range(1, ws.max_row + 1):
-        v = ws.cell(row=r, column=1).value
-        if isinstance(v, str) and v.strip() == label_text:
-            return r
+        for c in (1, 2):
+            v = ws.cell(row=r, column=c).value
+            if isinstance(v, str) and v.strip() == label_text:
+                return r
+    return None
+
+
+def _find_year_col(ws, header: str) -> int | None:
+    """Column whose header cell (first 5 rows) reads ``header`` (e.g. "Y1")."""
+    for r in range(1, 6):
+        for c in range(1, ws.max_column + 1):
+            v = ws.cell(row=r, column=c).value
+            if isinstance(v, str) and v.strip() == header:
+                return c
     return None
 
 
@@ -143,7 +156,9 @@ async def test_y1_gross_revenue_excel_matches_stabilized_annualized(
     ws = wb["Underwriting Pro Forma"]
     gr_row = _find_row(ws, "Gross Revenue")
     assert gr_row is not None
-    excel_y1 = ws.cell(row=gr_row, column=3).value
+    y1_col = _find_year_col(ws, "Y1")
+    assert y1_col is not None, "Pro Forma has no Y1 column header"
+    excel_y1 = ws.cell(row=gr_row, column=y1_col).value
     assert isinstance(excel_y1, (int, float)), (
         f"Excel Y1 Gross Revenue not numeric after recalc: {excel_y1!r}"
     )

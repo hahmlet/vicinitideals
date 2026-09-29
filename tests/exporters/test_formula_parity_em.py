@@ -126,7 +126,10 @@ async def test_combined_em_evaluates_in_sane_range(
         assert r is not None, f"{sheet}: row missing"
         val = ws.cell(row=r, column=2).value
         if val is None:
-            pytest.skip(f"{sheet}: Excel returned None for EM cell")
+            pytest.fail(
+                f"{sheet}: EM cell empty after recalc -- the recalc "
+                f"engine did not evaluate it"
+            )
         assert isinstance(val, (int, float)), (
             f"{sheet}: EM not numeric post-recalc; got {val!r}"
         )
@@ -198,7 +201,7 @@ async def test_em_parity_within_band(
     if engine_em in (None, 0, 0.0):
         pytest.skip("engine produced no EM (no waterfall rollup)")
     if excel_em is None:
-        pytest.skip("Excel returned None for EM")
+        pytest.fail("EM cell empty after recalc -- not evaluated")
 
     diff = abs(float(excel_em) - float(engine_em))
     assert diff < 0.5, (
