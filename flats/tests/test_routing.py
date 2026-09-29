@@ -214,6 +214,17 @@ def rows() -> list[Routing]:
 #: zone's figures, the density they would move is exempt for a quadplex
 #: (16.12.010 F.1), and every PUD block's use is qualified on the approved
 #: plan -- so the row stays open.
+#:
+#: *Two from King City, 2026-09-29*, the same cloud session. Table 16.114-2
+#: note 2 sends cottage clusters to "the development and design standards in
+#: 16.84.060, Cottage clusters" (kcc.16.114.kingston-terrace L173). 16.84.060
+#: is stored with 16.84, and nothing quotes it: the pod is a fourplex, not a
+#: cottage cluster. And 16.114.130 B says the Parking and Loading standards
+#: of Chapter 16.132 "do not apply to new development in the Kingston Terrace
+#: District" (L2536-L2539) -- a pointer that shuts a chapter out rather than
+#: sending a reader to it. 16.132 is stored and read for the layer's parking
+#: comment, and no value quotes it, because the Kingston Terrace zones take
+#: their parking from 16.114.130. Both rows stay open.
 OPEN = {
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",
@@ -250,6 +261,8 @@ OPEN = {
     "or/washington/beaverton 20.05.15 -> 20.25.05",
     "or/washington/beaverton 20.15.15 -> 60.50.05",
     "or/washington/sherwood 16.40.050 -> 16.40.040",
+    "or/washington/king-city 16.114.040 -> 16.84.060",
+    "or/washington/king-city 16.114.130 -> 16.132",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth

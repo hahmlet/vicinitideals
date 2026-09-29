@@ -1,0 +1,3284 @@
+KINGSTON TERRACE DISTRICT CODE
+Sections:
+16.114.010  Purpose and Intent.
+16.114.020  Applicability.
+16.114.030  Neighborhood Zones.
+16.114.040  Uses.
+16.114.050  Density and Dimensional
+Standards.
+16.114.060  Design Purpose, Applicability,
+and Standards.
+16.114.070  The Regulating Plan.
+16.114.080  Kingston Terrace District Goal
+5 Safe Harbor Review.
+16.114.090  Upland Wildlife Habitat
+Conservation Areas.
+16.114.100  Neighborhood Locations and
+Primary Land Uses.
+16.114.110  Parks, Open Space and Trails.
+16.114.120  Neighborhood Circulation.
+16.114.130  Parking and Loading.
+16.114.140  Provision of Adequate Public
+Facilities.
+16.114.150  Development Plan Review
+Process.
+16.114.010 Purpose and Intent.
+A. The Kingston Terrace District develop-
+ment and design standards reflect the City's goals,
+policies, and implementation measures in the
+Kingston Terrace Master Plan; specifically:
+1. Support development of a vibrant and dy-
+namic residential community that includes oppor-
+tunities for retail, neighborhood servicing commer-
+cial, and municipal uses;
+2. Provide a wide range of housing types that
+are attainable to a diversity of households;
+3. Facilitate connectivity for all modes of travel
+throughout the community;
+4. Integrate and connect open spaces and nat-
+ural areas with built spaces;
+5. Support environmental sustainability and
+climate resiliency approaches;
+6. Provide for orderly and efficient extension
+of public services, facilities, and utilities; and
+7. Provide a clear and objective permitting
+path for development to occur.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.020 Applicability.
+A. The standards of this section apply only
+to properties within the Kingston Terrace Plan
+District boundary as shown on Figure 16.114-1.
+16.114.010
+174.78(King City Supp. No. 14, 12-23)
+B. The design standards of this chapter do not apply to existing uses and buildings within the
+Kingston Terrace Plan District.
+C. All other standards and requirements in this title apply to development within the Kingston
+Terrace District except as modified or exempted as noted in Table 16.114-1:
+Table 16.114-1 Applicable Title 16—Community Development & Zoning Code
+ Standard Code Section
+ Introduction and General Provisions Article I. Applies.
+ Procedures Article II. Modified by Section 16.114.150
+ Land Use Districts Article III. Only Sections 16.80, 16.82, 16.84.060, and 16.114
+apply.
+ Development Standards Article IV .
+Solar Balance Point Standards 16.116 Exempt.
+Manufactured/Mobile Home Regulations 16.120 Applies.
+Landscaping and Beautification 16.124 Applies.
+Tree Removal 16.128 Applies.
+Parking and Loading 16.132 Exempt. Superseded by Section 16.114.130
+ Circulation and Access 16.136 Applies except for 16.136.030, 16.136.040, and
+16.136.050.C.6
+Access standards - Residential 16.136.030 Exempt. Superseded by Section 16.114.120
+Access standards - Non-residential 16.136.040 Exempt. Superseded by Section 16.114.120
+Design standards 16.136.050.C.6. Exempt. Superseded by Section 16.114.060
+Floodplain and Drainage Hazard Area 16.140 Applies.
+Goal 5 Safe Harbor Review 16.142 Exempt. Superseded by Section 16.114.080
+Vision Clearance 16.144 Applies.
+Residential Density Calculation 16.146 Exempt. Superseded by Section 16.114.050
+Signs 16.148 Applies.
+ Figure 16.114-1 Kingston Terrace Plan District
+ 16.114.020
+174.79 (King City Supp. No. 14, 12-23)
+Standard Code Section
+Planned Development 16.150 Exempt. Superseded by Section 16.114.150
+ Development Review Article V .
+Site Plan Review 16.152 Exempt. Superseded by Section 16.114.150
+Conditional Uses 16.156 Applies.
+Nonconforming Situations 16.160 Applies.
+Variance 16.164 Applies.
+Temporary Uses 16.168 Applies.
+Home Occupations 16.172 Applies.
+Accessory Structures 16.176 Applies.
+Accessory Dwelling Units 16.178 Applies.
+Communication Facilities and Structures 16.179 Applies.
+Fences and Walls 16.180 Applies.
+Patio Covers and Patio Enclosures 16.184 Exempt.
+Decks/Spas and Hot Tubs 16.188 Exempt.
+Annexation 16.192 Applies.
+ Land Division Article VI.
+Subdivision 16.196 Applies.
+Major and Minor Land Partitions and Lot Line
+Adjustments 16.200 Applies.
+Solar Access Standards for New Development 16.204 Exempt.
+ Public Facilities and Services Article VII.
+Improvements 16.208 Exempt. Superseded by Section 16.114.140
+Neighborhood Circulation 16.212 Applies as modified by Section 16.114.120
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.030 Neighborhood Zones.
+A. Figure 16.114-2 illustrates the general boundaries of the Kingston Terrace Town Center (KTTC),
+Beef Bend Neighborhood (KTBB), Central Neighborhood (KTC), Rural Character Neighborhood
+(KTRC), and Natural Resource Area Overlay district boundaries.
+16.114.020
+174.80(King City Supp. No. 14, 12-23)
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.040 Uses.
+A. Uses Allowed Outright (Y). Allowed uses in the Kingston Terrace District are shown in Table
+16.114-2. A permitted use is a use which is allowed outright but is subject to all applicable provisions of
+this title. If a use is not listed as a permitted use, as shown in Table 16.114-2, it may be held to a similar
+unlisted use under the provisions of Chapter 16.82.
+B. Conditional Uses (CU). Conditional uses in the Kingston Terrace District are shown in Table
+16.114-2. Conditional uses are uses which are subject to a discretionary decision by the Planning
+Commission. The approval criteria are set forth in Chapter 16.156. If a use is not listed as a conditional
+use, it may be held to be a similar unlisted use under the provisions of Chapter 16.82.
+C. Prohibited Uses (N). Prohibited uses in the Kingston Terrace District are shown in Table 16.114-2.
+Legally established uses and development which existed at the time these requirements were adopted and
+would otherwise be prohibited, are subject to additional regulations in Chapter 16.160, Nonconforming
+Situations.
+Table 16.114-2 Uses in Kingston Terrace District
+ Uses  Town Center
+Neighborhood
+ Beef Bend
+Neighborhood
+ Central
+Neighborhood
+ Rural Character
+Neighborhood
+Dwelling, single-family detached1 Y Y Y Y
+Dwelling unit, accessory1 Y Y Y Y
+Dwelling, single-family attached1 Y Y Y Y
+ Figure 16.114-2 Neighborhood Zones
+ 16.114.040
+174.81 (King City Supp. No. 14, 12-23)
+Uses  Town Center
+Neighborhood
+ Beef Bend
+Neighborhood
+ Central
+Neighborhood
+ Rural Character
+Neighborhood
+Duplex, Triplex, Fourplex1 Y Y Y Y
+Cottage cluster1, 2 Y Y Y Y
+Dwelling, multi1 Y Y Y CU
+Manufactured home1 Y Y Y Y
+Retail sales and service excluding
+drive-through facilities
+3 Y Y N N
+Office Y Y N N
+Motel4 Y CU N N
+Quick vehicle servicing5 Y N N N
+Live-work unit6 Y Y Y Y
+Family care Y Y Y Y
+Residential facility Y Y Y Y
+Adult day care (family care) Y Y Y Y
+Religious assembly
+7 Y Y CU CU
+Schools8 Y CU CU CU
+Community services9 CU CU CU CU
+Public safety facility10 Y Y CU CU
+Hospital11 Y Y CU CU
+Utilities12 CU CU CU CU
+Parks and open space13 Y Y Y Y
+1 As defined by 16.24.030.C
+2 Cottage clusters are subject to the development and design standards in 16.84.060, Cottage clusters.
+3 Retail sales and service uses are subject to Additional Requirements of Section 16.114.040.D and liquor license review
+according to Chapter 5.05 of this Title.
+4 Subject to approval standards of Section 16.156.060.E.
+5 Subject to approval standards of Section 16.156.060.I.
+6 Subject to Chapter 16.172 approval criteria and standards.
+7 Subject to approval standards of Section 16.156.060.J.
+8 Subject to approval standards of Section 16.156.060.L.
+9 Subject to approval standards of Section 16.156.060.A.
+10 Subject to approval standards of Section 16.156.060.H.
+11 Subject to approval standards of Section 16.156.060.C.
+12 Subject to approval standards of Section 16.156.060.N.
+13 Subject to approval standards of Section 16.114.110.
+D. Outdoor activities, storage, and display associated with an approved retail and service use may be
+permitted when the retail and service uses comply with:
+1. Pedestrian, bicycle, wheelchair, and motor vehicle access to and within the site is not impeded in
+any way;
+2. The outdoor storage and display is in conformity with any conditions of development permit or
+building permit approval;
+3. The outdoor storage and display satisfied all relevant provisions of this title and other applicable
+requirements of this code; and
+4. Outdoor speakers (i.e., audio speakers, amplified sound, etc.) may be used provided sound levels
+comply with Section 8.04.130 of the King City Municipal Code.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.050 Density and Dimensional Standards.
+A. The minimum net density for development in the Kingston Terrace District is noted in Table
+16.114-3.
+16.114.040
+174.82(King City Supp. No. 14, 12-23)
+B. Net Density is defined as gross area less streets (public and private), parks and open space, storm
+facilities, natural resources, and uses that are not residential (i.e., Clean Water Services (CWS) pump
+station and area designated for municipal uses). It is represented as numbers of dwelling units per net acre.
+Table 16.114-3 Density Requirements Per Neighborhood
+   Town Center  Beef Bend
+Neighborhood
+ Central
+Neighborhood
+ Rural Character
+Neighborhood
+Minimum net density assigned to
+each development (dwelling units per
+net acre)
+22 18 10 8
+Minimum number of units that must
+be accommodated by each neighbor-
+hood
+1,870 1,260 350 320
+C. The dimensional standards for residential use type development in the Kingston Terrace District
+is noted in Table 16.114-4.
+Table 16.114-4 Dimensional Standards
+14
+
+ Dimensional Standards  Town Center  Beef Bend
+Neighborhood
+ Central
+Neighborhood
+ Rural Character
+Neighborhood
+ Residential Use Types
+Minimum lot size, in square feet
+15 1,50016 1,50016 2,400 2,400
+Minimum lot width, in feet 20 17 2017 2017 2017
+Minimum lot depth, in feet 45 45 60 60
+Front yard setback, front yard to resi-
+dential building, minimum/maxi-
+mum, in feet
+10/26 10/26 10/26 10/26
+Front yard setback, to porch, mini-
+mum/maximum, in feet 5/15 5/15 6/15 6/15
+Front yard setback, to garage, mini-
+mum, in feet 18 18 18 18
+Corner lot setback—front yard/side
+yard, minimum, in feet 8 8 8 8
+Corner lot setback—garage, mini-
+mum, in feet 18 18 18 18
+Side yard, interior—minimum, in feet
+18 0 or 3 0 or 3 0 or 3 5 19
+Side yard—to public street, mini-
+mum, in feet 5 5 5 5
+Rear yard—to residential building,
+minimum, in feet
+20 10 10 10 10
+Rear yard—to garage entry on alley,
+minimum, in feet
+21 0-6 0-6 0-6 0-6
+Rear yard—to residential building or
+covered patio on alley, minimum in
+feet
+3 3 3 3
+ Dwelling, multi, Mixed-Use, and Commercial Use Types
+Minimum lot size, in square feet None None N/A N/A
+Minimum lot width, in feet None None N/A N/A
+Minimum lot depth, in feet None None N/A N/A
+Front setback, minimum/maximum,
+in feet 0/20 0/20 0/20
+22 N/A
+Side yard, interior—minimum, in feet 0 23 023 022,23 N/A
+Rear setback, minimum, in feet 0 23 023 022,23 N/A
+ 16.114.050
+174.83 (King City Supp. No. 15, 9-25)
+Dimensional Standards  Town Center  Beef Bend
+Neighborhood
+ Central
+Neighborhood
+ Rural Character
+Neighborhood
+ All Use Types
+Maximum building height, in feet N/A 45 35 35
+Maximum height, accessory struc-
+tures and detached accessory dwell-
+ings, in feet
+25 25 25 25
+Maximum coverage of buildings and
+impervious surfaces
+24 90% 90% 90% 80%
+14 In addition to the setback standards of Table 16.114-4, building setbacks for each type of structure must comply with the
+current Oregon Building Code.
+15 Minimum lot size for residential land use types.
+16 The minimum lot size for "Dwelling, single-family attached, Duplex, Triplex, and Fourplex" land use types may be
+reduced to 1,000 square feet.
+17 The minimum lot width for "Dwelling, single-family attached, Duplex, Triplex, and Fourplex" land use types may be
+reduced to 15 feet.
+18 There is no minimum setback for zero foot setback buildings. In all cases, zero foot setback buildings shall either: (1) be
+attached at the property line; or (2) have a total minimum separation of 6 feet between buildings.
+19 Side yard of 5 feet for a single-story structure, and 10 feet for two-story structures.
+20 Zero feet for a detached accessory dwelling unit or building less than or equal to 18 feet in height.
+21 Zero to 6 feet or greater than 18 feet to a garage entrance to an alley.
+22 Applicable to Dwelling, multi in Central Neighborhood. Mixed-use and commercial not permitted in Central Neighbor-
+hood.
+23 Minimum 20 foot setback when abuts residential use.
+24 Maximum coverage dimensional standards do not apply to Cottage Clusters.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.060 Design Purpose, Applicability, and Standards.
+A. Design purpose. Site design standards are intended to facilitate the development of attractive
+buildings that encourage multimodal transportation. They encourage good site design, which contributes
+to livability, safety, and sustainability; helps create a stronger community; and fosters a quality environ-
+ment for residents and neighbors. Site design shall meet the following objectives:
+1. Livability. Development should contribute to a livable neighborhood by incorporating visually
+pleasing design, minimizing the impact of vehicles, emphasizing pedestrian and bicycle connections, and
+providing public and private open spaces for outdoor use.
+2. Compatibility. Development should have a scale that is appropriate for the surrounding neighbor-
+hood and maintains the overall character of the neighborhood.
+3. Safety and Functionality. Development should be safe and functional, by providing visibility into
+and within a mixed-use or residential development and by creating a circulation system that prioritizes
+bicycle and pedestrian safety.
+4. Sustainability. Development should incorporate sustainable design and building practices, such as
+energy conservation, preservation of trees and open space, quality building materials, and alternative
+transportation modes.
+B. Development in the Kingston Terrace District requires a minimum level of design. These design
+standards are intended to promote attention to detail, human-scale design, street visibility, and privacy of
+adjacent properties, while affording flexibility to use a variety of architectural styles. Development in
+Kingston Terrace District should integrate the following design objectives:
+1. Articulation. Buildings shall incorporate horizontal and/ or vertical design elements that break up
+façades into smaller planes.
+16.114.050
+174.84(King City Supp. No. 15, 9-25)
+2. Eyes on the street/transparency. A certain percentage of the area of each facade shall be windows
+or entrance doors to promote pedestrian safety and use.
+3. Main entrance. Buildings shall include a primary entrance that complies with the standards for
+location, orientation, and visibility.
+4. Detailed design. Buildings shall include design features that enhance the visual character of the
+community and take into account the surrounding neighborhoods, provide permanence, and create a
+sense of place.
+5. Transitional Space. Ground floor residential dwellings shall include an area of transition between
+the public realm of the right-of-way (or tract or easement) and the front door or porch.
+6. Private and common open space. Developments shall ensure opportunities for relaxation or active
+recreation.
+C. Applicability.
+1. The following set of "fundamental" design standards are applicable to development within the
+Kingston Terrace District:
+a. Articulation,
+b. Eyes on the street or transparency,
+c. Main entrance,
+d. Detailed design,
+e. Transitional space,
+f. Private open space, and
+g. Common open space.
+2. Applicability concept. The design standards apply to building types as noted in Table 16.114-5.
+Buildings that meet the applicability provisions in Table 16.114-5 shall incorporate the following design
+standards. The graphics provided are intended to illustrate how development could comply with these
+standards and should not be interpreted as requiring a specific architectural style. An architectural feature
+may be used to comply with more than one standard.
+3. Table 16.114-5 identifies where building design standards apply to development in the Kingston
+Terrace District. These design standards shall be applied in addition to the dimensional requirements in
+Section 16.114.050.
+[1] Applicable to the entire site.
+[2] Applicable to building elevations facing public rights-of-way. Development with multiple street
+frontages must comply with the design standard requirements along the higher street classification; except
+for, the main entrance design standards may apply to the elevation fronting a lower street classification if
+on-street parking is not available on the higher classification street. In this case, one additional detailed
+design element will be provided on the building elevation fronting the higher street classification.
+i. Dwelling, multi, mixed-use, and commercial developments shall comply with the on-site bicycle
+and pedestrian neighborhood circulation standards of Section 16.114.120.H.
+[3] Applicable to building elevations containing a primary entrance.
+[4] Applicable to building elevations facing public parks and open spaces.
+[5] Applicable to dwellings in a cluster or grouping, either facing a shared open space (e.g., a common
+courtyard) or a pedestrian path.
+[6] Applicable to ground floor dwellings with a primary entrance with access from the street or shared
+open space (e.g., a common courtyard), when the primary entrance is located:
+i. Within ten feet of the street-facing property line, or
+ii. Within the front yard setback, or
+ 16.114.060
+174.85 (King City Supp. No. 14, 12-23)
+iii. Within ten feet of a shared open space common tractor easement.
+Table 16.114-5 Applicable Building Design Standards
+
+Design Standard
+ Applicability
+ Dwelling, single-
+family detached
+ Dwelling, single-
+family attached,
+Duplex, Triplex,
+Fourplex
+ Dwelling, multi
+ Mixed-use
+Building or
+Development
+ Commercial
+Building or
+Development
+ Municipal
+Building or
+Development
+Articulation [2][3][4] [2][3][4] [2][3][4] [2][3][4] [2][3][4] [2][3][4]
+Eyes on the
+street/
+Transparency
+[2][3][4] [2][3][4] [2][3][4] [2][3][4] [2][3][4] [2][3][4]
+Main entrance [2][3][4] [2][3][4] [2][3] [2][3] [2][3] [2][3]
+Detailed design [2][3][4] [2][3][4] [2][3] [2][3] [2][3] [2][3]
+Transitional
+space [2][3][4][5][6] [2][3][4][5][6] [2][3][4][5][6] NA NA NA
+Private open
+space NA NA [1] [1] NA NA
+Common open
+space NA NA [1] [1] NA NA
+D. Design Standards:
+1. Articulation. Buildings shall incorporate design elements that break up façades into smaller
+planes. See Figure 16.114-3 for illustration of articulation elements:
+
+(A) A gabled dormer.
+(B) Balcony that is at least two feet deep and accessible from an interior room.
+(C) Bay window that extends at least two feet from façade.
+(D) A façade offset that is recessed by at least two feet deep and six feet long.
+(E) Recessed entryway that is a minimum of four feet deep.
+(F) A covered entryway that is a minimum of four feet deep.
+(G) A porch that is at least five ft deep.
+a. For buildings with sixty feet of street frontage or less, a minimum of one design element shall be
+provided along the street-facing façades.
+ Figure 16.114-3 Building Articulation Elements
+16.114.060
+174.86(King City Supp. No. 14, 12-23)
+b. For buildings with over sixty feet of street frontage, at least one design element shall be provided for
+every thirty feet of street frontage.
+c. Design elements shall be distributed along the length of the façade so that there are no more than
+thirty feet between two elements.
+d. For buildings with less than thirty feet of street frontage, the building articulation standard is not
+applicable.
+2. Eyes on the street. At least twenty square feet of facades fronting a public street, or public park or
+open space shall include windows or entrance doors on Dwelling, single-family detached and attached,
+Duplex, Triplex, Fourplex, and Dwelling, multi. See Figure 16.114-4 for illustration of eyes on the street.
+
+a. Windows used to meet this standard shall have a maximum windowsill height of four feet above
+finished floor elevation.
+b. Windows used to meet this standard shall be transparent and allow views from the building to the
+street or open space. Glass blocks and privacy windows in bathrooms do not meet this standard.
+c. Window area is considered the entire area within the outer window frame, including any interior
+window grid.
+d. Doors used to meet this standard shall face the street or be at an angle of no greater than forty-five
+degrees from the street.
+e. Door area is considered the portion of the door that moves. Door frames do not count toward this
+standard.
+3. Transparency.
+a. On mixed-use, commercial, and municipal buildings with ground floor commercial, at least
+thirty-five percent of the ground floor elevation must be permanently treated with windows, display areas,
+or glass doorway openings. See Figure 16.114-5 for illustration of transparency.
+ Figure 16.114-4 Eyes on the Street
+ 16.114.060
+174.86.1 (King City Supp. No. 14, 12-23)
+i. For the purpose of this standard, window(s) necessary to meet this standard shall be measured
+from the minimum sill height above finished first floor elevation which is two feet for non-residential uses
+and four feet for residential uses.
+b. Design of Dwelling, multi, mixed-use, and commercial buildings shall comply with the building
+frontage, ground floor height, and weather protection standards of Table 16.114-6 to support a pedestrian-
+friendly environment.
+Table 16.114-6 Dwelling-multi, Mixed-use, and Commercial Building Design Standards
+
+Design Standard
+ Primary Entrance Location
+ River Terrace Boulevard Extension  Fischer Road
+Extension
+ New East/West
+Neighborhood Route
+Building Frontage Minimum 60% 60% 40%
+Minimum Ground Floor Height
+25 14 ft. 14 ft. 14 ft.
+Weather Protection
+20 sf. Minimum Protected Area Min.
+4 ft. Horizontal Dimension and Min.
+9 ft. Vertical Clearance
+No requirement No requirement
+25 Minimum ground floor height standard shall be limited to commercial uses on the ground floor.
+i. Lot frontages that contain dwelling-multi, mixed-use, and commercial development shall locate the
+buildings so that at least sixty percent is occupied by the building as illustrated in Figure 16.114-6.
+ii. Weather protection shall be provided with a recessed entryway, an awning or other projected
+element, or a combination of those methods.
+ Figure 16.114-5 Transparency
+16.114.060
+174.86.2(King City Supp. No. 14, 12-23)
+4. Main entrance.
+a. Elevation(s) of dwelling-multi, mixed-use, or commercial buildings that contain a primary build-
+ing entrance or multiple tenant entrance shall be designed to comply with the standards of Table 16.114-6.
+b. Residential dwellings shall have at least one primary entrance that meets both of the following
+standards. See Figure 16.114-7 for illustration of main entrances.
+
+ Figure 16.114-6 Building Frontage Minimum
+ Figure 16.114-7 Main Entrances
+ 16.114.060
+174.86.3 (King City Supp. No. 16, 8-26)
+c. Be no further than eight feet behind the
+longest street-facing wall of the building.
+d. Face the street, be at an angle of up to
+forty-five degrees from the street, or open onto a
+porch. If the entrance opens onto a porch, the
+porch shall meet all of the following additional
+standards:
+i. Be at least twenty-five square feet in area
+with a minimum four-foot depth,
+ii. Have at least one porch entry facing the
+street,
+iii. Have a roof that is no more than twelve
+feet above the floor of the porch, and
+iv. Have a roof that covers at least thirty per-
+cent of the porch area.
+5. Detailed design. Buildings shall include at
+least five of the following features. See Figure
+16.114-8 for illustration of detailed design ele-
+ments.
+
+a. Covered porch with an area of at least
+twenty-five square feet with a minimum dimen-
+sion of four feet.
+b. Recessed entry area at least two feet deep,
+as measured horizontally from the face of the
+main building façade, and at least five feet wide.
+c. Offset on the building face of at least six-
+teen inches from one exterior wall surface to the
+other.
+d. Dormer that is at least four feet wide and
+integrated into the roof form.
+e. Roof eaves with a minimum projection of
+twelve inches from the intersection of the roof and
+the exterior walls.
+f. Gable roof, hip roof, or gambrel roof de-
+sign.
+g. One roof pitch of at least five hundred
+square feet in area that is sloped to face the south-
+ern sky and has its eave line oriented within thirty
+degrees of the true north/south axis.
+h. Roof line offsets of at least two feet from
+the top surface of one roof to the top surface of
+the other.
+i. Tile or wood shingle roofs.
+j. Horizontal lap siding between three to seven
+inches wide (the visible portion once installed).
+The siding material may be wood, fiber-cement, or
+vinyl.
+k. Brick, cedar shingles, stucco, or other sim-
+ilar decorative materials covering at least forty
+percent of the street-facing façade.
+l. Window trim around all windows at least
+three inches wide and five-eigths inches deep.
+m. Window recesses, in all windows, of at
+least three inches as measured horizontally from
+the face of the building façade.
+n. Balcony that is at least three feet deep, five
+feet wide, and accessible from an interior room.
+o. Bay window at least two feet deep and five
+feet wide.
+p. Attached garage width, as measured be-
+tween the inside of the garage door frame, of
+thirty-five percent or less of the length of the
+street-facing façade.
+6. Transitional space. Ground floor dwellings
+shall include an area of transition between the
+public realm of the right-of-way (or tract or ease-
+ment) and the front door or porch. The transi-
+tional space design standard may be met either
+vertically, in accordance with Section
+16.114.060.C.6.a, or horizontally, in accordance
+with Section 16.114.060.C.6.b.
+a. A vertical transition shall be an uncovered
+flight of stairs that leads to the front door or front
+porch of the dwelling. The stairs shall rise at least
+eighteen inches, and not more than eight feet,
+ Figure 16.114-8 Detailed Design
+16.114.060
+174.86.4(King City Supp. No. 16, 8-26)
+from grade. The flight of stairs may encroach into
+the required front yard, and the bottom step shall
+be at least four feet from the front lot line.
+b. A horizontal transition shall be a covered
+porch with a depth of at least six feet. The porch
+may encroach into the required front yard, but it
+shall be at least four feet from the front lot line.
+7. Private open space. All dwelling, multi and
+mixed-use buildings shall provide private open
+space for each residential dwelling, such as a bal-
+cony or patio, that meets the following standards:
+a. Each space shall be attached to and di-
+rectly accessible from an individual residential unit;
+and
+b. Each private open space must be a mini-
+mum of forty-eight square feet in area and a min-
+imum of five feet in width and depth; and
+c. Additional common open space above the
+required minimum may substitute for some or all
+of the required private open space at a 1:1 ratio.
+8. Common open space. All dwelling, multi
+and mixed-use buildings shall provide common
+open space area as follows:
+a. Buildings shall provide at least two hun-
+dred square feet of common open space per resi-
+dential dwelling unit.
+b. Common open space shall be no smaller
+than six hundred forty square feet in area, shall
+not be divided into areas smaller than six hundred
+forty square feet, and shall have minimum length
+and width dimensions of twenty feet.
+c. The area is open and available to the public
+or for the common use of residents and/or build-
+ing tenants.
+d. The area contains seating and/or recre-
+ation facilities.
+e. Landscaping is provided consistent with
+the character and function of the space.
+f. For the purposes of this Section, vehicular
+circulation areas and parking areas, unless pro-
+vided as part of a shared courtyard, shall not be
+considered common open space.
+g. Units located within one-quarter-mile from
+a public park or linear green open space provided
+as part of the development are exempt from this
+requirement.
+h. Common open space standards do not ap-
+ply to dwelling, single-family attached or de-
+tached, duplex, triplex, fourplex, or cottage clus-
+ters.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023; Ord.
+No. O-2025-02, § 1(Exh. A), 8-21-2025)
+16.114.070 The Regulating Plan.
+A. Purpose and description.
+1. The Regulating Plan ensures consistency
+with goals and requirements of the Kingston Ter-
+race Master Plan and King City's Transportation
+System Plan.
+2. The Regulating Plan, Figure 16.114-9, di-
+rects development in Kingston Terrace providing
+an illustrative bridge between King City's Trans-
+portation System Plan, the Kingston Terrace Mas-
+ter Plan, and applicable regulations of the Com-
+munity Development and Zoning Code (CDC).
+The Regulating Plan identifies:
+a. Location of Natural Resource Area Over-
+lay (Habitat Conservation Area);
+b. The location of Neighborhood Zones; and
+c. Location of all Backbone Streets, identifi-
+cation of street classifications, and type of inter-
+sections.
+ 16.114.070
+174.86.5 (King City Supp. No. 16, 8-26)
+Figure 16.114-9 Kingston Terrace Regulating Plan
+16.114.070
+174.86.6(King City Supp. No. 16, 8-26)
+B. Table 16.114-7 identifies the applicable sections of this title that implement each of the four
+planning frameworks identified through the Kingston Terrace master planning process.
+Table 16.114-7 Implementation of Kingston Terrace Master Plan Frameworks
+ Planning Framework Applicable Section of CDC
+Natural Systems
+16.114.080 - Kingston Terrace District Goal 5 Safe Harbor Review
+16.114.090 - Upland Wildlife Habitat Conservation Areas
+16.140 - Floodplain and Drainage Hazard Areas
+Land Use
+16.114.030 - Neighborhood Zones
+16.114.050 - Density and Dimensional Standards
+16.114.060 - Design Standards
+16.114.100 - Neighborhood Locations and Primary Land Uses
+16.114.110 - Parks, Open Space and Trails
+Mobility 16.114.120 - Neighborhood Circulation
+Public Utilities and Services 16.114.130 - Provision of Adequate Public Facilities
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+
+174.86.7 (King City Supp. No. 15, 9-25)
+16.114.080 Kingston Terrace District Goal 5 Safe Harbor Review.
+
+[Note: placeholder only; to be replaced by the LWI for the Kingston Terrace District upon LWI adoption by the city. Only a property
+indicated on Figure 16.114-10 as a "Property Included in LWI" shall be reviewed for development.]
+
+ Figure 16.114-10 Kingston Terrace District Locally Significant Wetland Resource Map
+16.114.080
+174.86.8(King City Supp. No. 15, 9-25)
+A. Purpose. The purpose of Section
+16.114.080 is to establish wetland protections for
+properties within the Kingston Terrace District
+consistent with OAR 660-023-0100 and for the
+implementation a safe harbor ordinance to pro-
+tect significant wetlands identified in the City's
+adopted Local Wetlands Inventory (LWI).
+The regulations of this section are intended to
+implement the goals and policies of the compre-
+hensive plan and the Statewide Planning Goal 5
+Safe Harbor protection standards (Oregon Admin-
+istrative Rules, Division 23) for wetlands on prop-
+erties included within the Kingston Terrace Dis-
+trict; to protect King City's wetland areas, thereby
+protecting the hydrologic and ecologic functions
+these areas provide for the community; to protect
+fish and wildlife habitat; to protect water quality
+and natural hydrology; to control erosion and
+sedimentation, and to reduce the adverse effects of
+flooding; to protect the amenity values and edu-
+cational opportunities of King City's wetlands as
+community assets; and to improve and promote
+coordination among local, state, and federal agen-
+cies regarding development activities near wet-
+lands. These regulations supplement other require-
+ments enforced by Clean Water Services (CWS)
+and Oregon Department of State Lands (DSL).
+Please note that compliance with state and
+federal wetland regulations for all wetlands, mapped
+or unmapped, remains the legal responsibility of
+the landowner.
+B. Applicability. The regulations of this chap-
+ter shall be applicable to all properties included
+within the Kingston Terrace District and identi-
+fied on Figure 16.114-1 as a Property Included in
+LWI. This area contains approximately five hun-
+dred twenty-eight-acres, located south of Beef Bend
+Road, east of Roy Rogers Road, and north of the
+Tualatin River between 137
+th Avenue and Roy
+Rogers Road. This area is shown on the compre-
+hensive plan and zoning maps.
+Any development proposed to be located on a
+property identified on Figure 16.114-10 as a Prop-
+erty Included in LWI and that contains all or part
+of a locally significant wetland, or is within one
+hundred feet of such a wetland, must comply with
+these regulations. Where the provisions of this
+section conflict with any other provisions of this
+title, local standards, or state and federal require-
+ments, the more restrictive requirements shall ap-
+ply. A property within the Kingston Terrace Dis-
+trict that is not identified on Figure 16.114-10 as a
+Property Included in LWI may not apply for re-
+view under this section until such time as the City
+has adopted the LWI for the property.
+C. Locally Significant Wetlands. The areas
+identified on Figure 16.114-10 have been desig-
+nated as "locally significant wetlands" pursuant to
+OAR 141-086-0350 and are subject to the Kings-
+ton Terrace Wetland Safe Harbor provisions in
+Section 16.114.080.D.
+The provisions of this section shall be used to
+determine whether applications for development
+permits may be approved, approved with condi-
+tions, or denied. The map entitled Kingston Ter-
+race Locally Significant Wetland Inventory (Fig-
+ure 16.114-10) shall be consulted to determine site
+locations of locally significant wetlands. When
+development is proposed in close proximity to a
+wetland, including wetlands that are not identified
+as locally significant, a delineation is required in
+accordance with Section 16.114.080.F .1.e.
+D. Administration.
+1. Goal 5 Safe Harbor review shall be con-
+ducted concurrently with any other related land
+use application required by the city for the pro-
+posed development.
+2. Unless otherwise stated, King City shall
+apply the provisions of Section 16.114.080 in con-
+junction and concurrently with the requirements
+of any other development permit being sought by
+an applicant. If no other permit is being sought,
+the city manager shall serve as the approving au-
+thority.
+3. Variance applications described in Chap-
+ter 16.164 shall be administered and reviewed as a
+planning commission decision in accordance with
+Article II of this title using the applicable approval
+criteria in Section 16.164.050.
+ 16.114.080
+174.86.9 (King City Supp. No. 15, 9-25)
+E. Determination of Locally Significant Wet-
+lands. King City has identified locally significant
+wetlands in accordance with rules adopted by Or-
+egon Department of State Lands (OAR 141-086-
+0210). Locally significant wetlands are identified
+on the map entitled Kingston Terrace Locally Sig-
+nificant Wetland Inventory, Figure 16.114-10.
+F . Submittal requirements. As part of the de-
+velopment permit for any use or activity that is
+located on a property identified as a Property
+Included in LWI, and that includes or is within
+one hundred feet of a locally significant wetland
+identified in Figure 16.114-10, an application for a
+Goal 5 safe harbor review must be prepared and
+submitted in compliance with this section. An
+application for a Goal 5 Safe Harbor review shall
+be submitted on forms prepared by the City.
+In addition to the form and information re-
+quired in Section 16.44.030, an applicant shall
+submit the following:
+1. Copies of the site plan, number to be de-
+termined at the pre-application conference, and
+necessary data or narrative, which explains how
+the development conforms to the applicable crite-
+ria, and:
+a. The scale for the site plan shall be an engi-
+neering scale;
+b. All drawings of structures elevations, pre-
+pared by a registered civil engineer or architect,
+shall be a standard architectural scale;
+c. A scale drawing that clearly depicts the
+wetland boundary, the surface water source, exist-
+ing trees and vegetation, property boundaries, and
+proposed site alterations including proposed exca-
+vation, fill, structures, and paved areas.
+d. Existing and proposed topography within
+the property boundaries using the following con-
+tour intervals:
+i. For slopes of five percent or less, contour
+intervals not more than one foot;
+ii. For slopes greater than five percent and up
+to and including ten percent, contour intervals not
+more two feet; and
+iii. For slopes greater than ten percent, con-
+tour intervals not more than five feet.
+e. A delineation of the wetland boundary com-
+pleted in accordance with Oregon Department of
+State Lands rules. If the proposed project is de-
+signed to avoid wetlands, or if the subject property
+is within one hundred feet of a wetland that is
+located exclusively on an adjacent property, a wet-
+land determination report may be provided in
+place of the delineation. No delineation is re-
+quired if the proposed development is located
+twenty-five feet or more from a wetland identified
+on the LWI map or a determination. [Note: This is
+not a buffer or setback, it is an allowance for LWI
+map inaccuracy when the expense of a precise
+delineation may not be warranted.]
+f. Current photos of site conditions shall be
+provided to supplement the above information.
+g. Verification that the application packet has
+been submitted to the Oregon Department of Fish
+and Wildlife for review and comment if mitigation
+is being proposed with development.
+2. This information may be submitted with
+or made part of a site plan or grading plan for the
+proposed development; and
+3. The required fee.
+G. Permitted uses and activities. The follow-
+ing uses and activities are permitted within the
+locally significant wetland protection areas iden-
+tified in Figure 16.114-10:
+1. Any use, sign, or structure, and the main-
+tenance thereof, that was lawfully existing on the
+date of adoption of this ordinance [October 18,
+2023], is allowed to continue within a wetland
+protection area. Such use, sign, or structure may
+continue at a similar level and manner as existed
+on the date of adoption of this chapter. The main-
+tenance and alteration of pre-existing ornamental
+landscaping is permitted within a wetland protec-
+tion area so long as no additional native vegeta-
+tion is disturbed. The provisions of this section
+shall not be affected by any change in ownership
+of properties containing a wetland protection area.
+16.114.080
+174.86.10(King City Supp. No. 15, 9-25)
+2. The following activities and maintenance
+thereof are allowed within a wetland protection
+area, provided that any applicable local, state, or
+federal permits are secured:
+a. Wetland restoration and rehabilitation ac-
+tivities;
+b. Restoration and enhancement of native veg-
+etation;
+c. Cutting and removal of trees which pose a
+hazard to life or property due to threat of falling;
+d. Removal of non-native vegetation, if re-
+placed with native plant species at similar cover-
+age or density, so that native species are dominant;
+and
+e. Normal farm practices such as grazing,
+plowing, planting, cultivating, and harvesting, that
+meet the following criteria and limitations:
+i. The farm practices were in existence or oc-
+curring on the property on the date of adoption of
+the provisions herein.
+ii. The farm practices are of no greater scope
+or intensity than the operations that were in exis-
+tence on the date of adoption of the provisions
+herein.
+iii. Normal farm practices do not include new
+or expanded structures, roads, or other facilities
+involving placement of fill material, excavation, or
+new drainage measures.
+f. Maintenance of existing drainage ways,
+ditches, or other structures, to maintain flow at
+original design capacity and mitigate upstream
+flooding, provided that management practices avoid
+sedimentation and impact to native vegetation,
+and any spoils are placed in uplands.
+g. Replacement of a permanent, legal, non-
+conforming structure in existence on the date of
+adoption of this chapter with a structure on the
+same building footprint, if it does not disturb
+additional area, and in accordance with the provi-
+sions of Chapter 16.160, Nonconforming Situa-
+tions.
+h. Expansion of a permanent, legal, noncon-
+forming structure in existence on the date of adop-
+tion of this chapter, if the expansion area is not
+within and does not disturb the wetland protec-
+tion area, and in accordance with the provisions of
+Chapter 16.160, Nonconforming Situations.
+i. Emergency stream bank stabilization to rem-
+edy immediate threats to life or property.
+j. Maintenance and repair of existing roads
+and streets, including repaving and repair of exist-
+ing bridges, and culverts, provided that such prac-
+tices avoid sedimentation and other discharges
+into the wetland or waterway.
+k. New fencing in compliance with Clean Wa-
+ter Services Design and Construction Standards.
+H. Except as allowed in Section 16.114.080.G,
+the following activities are prohibited within a
+wetland protection area:
+1. Placement of new structures or impervious
+surfaces;
+2. Excavation, drainage, grading, fill or re-
+moval of vegetation;
+3. Expansion of area of landscaping with non-
+native species, such as a lawn or garden, into the
+wetland protection area;
+4. Disposal or temporary storage of refuse,
+yard debris, or other material;
+5. Discharge or direct runoff of untreated
+stormwater;
+6. Uses not allowed in the list of permitted
+uses of the underlying zone; and
+7. Any use not specifically allowed in Section
+16.114.080.G;
+8. Streets, roads and paths; and
+9. Drainage facilities, utilities and irrigation
+pumps.
+10. Other wetlands within the Kingston Ter-
+race District determined to not be locally signifi-
+cant may still be regulated by local, state, or fed-
+eral agencies which require local, state, or federal
+permits before such alterations occur.
+I. Approval criteria. The approving authority
+shall base its decision on the following criteria in
+addition to the required criteria for any other
+ 16.114.080
+174.86.11 (King City Supp. No. 15, 9-25)
+permit or approval that is being sought. Approvals
+shall be based on compliance with all of the fol-
+lowing criteria:
+1. The proposed project complies with the
+provisions of this section.
+2. Except as otherwise allowed in this section,
+the proposed project will not result in excavation
+or filling of a wetland or reduction of wetland
+area on a parcel that has been identified as con-
+taining a wetland.
+3. Except as otherwise allowed in this section,
+the proposed project will not result in develop-
+ment or filling of land within twenty-five feet of
+the boundary of wetland that has been identified
+only on the Kingston Terrace District Locally
+Significant Wetland Resource Map or by a deter-
+mination, but not an approved delineation; and
+4. The applicable provisions of Chapter
+16.140, Floodplain and Drainage Hazard Areas
+are satisfied.
+J. Conservation and maintenance of wetland
+protection areas. When approving applications for
+Land Divisions, Conditional Use Permits, or for
+Development Plan Review for properties contain-
+ing a wetland protection area or portion thereof,
+the approving authority shall assure long term
+conservation and maintenance of the wetland pro-
+tection be provided to comply with Clean Water
+Services Design and Construction Standards.
+K. Notification and coordination with state
+agencies.
+1. King City shall notify the Oregon Depart-
+ment of State Lands (DSL) of all applications to
+King City for development activities, including
+development applications, building permits, and
+other development proposals, that may affect wet-
+lands or waters identified in the Kingston Terrace
+District Locally Significant Wetland Resource Map.
+This applies for both significant and non-signifi-
+cant wetlands. DSL provides a Wetland Land Use
+Notification form for this purpose. [See OAR 660-
+23-100(7); ORS 227.350 for cities.]
+2. King City shall notify the Oregon Depart-
+ment of Fish and Wildlife regarding OAR 635-415
+"Fish and Wildlife Habitat Mitigation Policy."
+[Note: Recommendations from ODFW are advi-
+sory only.]
+L. Variances. The Planning Commission shall
+be the approving authority for variance applica-
+tions to the Wetland Protection Area provisions.
+The procedures of Chapter 16.164 shall be fol-
+lowed for approval of a variance except that the
+variance criteria of this section shall apply.
+1. Hardship Variances. If through applica-
+tion of this chapter, the property has been ren-
+dered not buildable, the applicant may request
+Hardship Variance. A Hardship Variance may be
+granted only when the applicant has shown that
+all of the following conditions exist:
+a. The applicant has exhausted all other op-
+tions available under this chapter to relieve the
+hardship;
+b. The variance is the minimum necessary to
+afford relief;
+c. No significant adverse impacts on water
+quality, erosion, or slope stability will result from
+approval of this hardship variance, or these im-
+pacts have been mitigated to the greatest extent
+possible; and
+d. Loss of vegetative cover shall be mini-
+mized.
+2. Mapping Error Variances and Corrections.
+The city manager, may correct the location of the
+wetland protection overlay zone when the appli-
+cant has shown that a mapping error has occurred,
+and the error has been verified by the Department
+of State Land (DSL). Delineations approved by
+DSL shall be used to automatically update the
+wetland protection overlay zone. No formal vari-
+ance application or plan amendment is needed for
+map corrections where approved delineations are
+provided.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023; Ord.
+No. 2023-07, §§ 2(Exh. B), 3(Exh. C), 1-17-2024)
+16.114.090 Upland Wildlife Habitat
+Conservation Areas.
+A. Purpose. The purpose of this section is to
+establish procedures and criteria for protection of
+16.114.080
+174.86.12(King City Supp. No. 15, 9-25)
+Habitat Conservation Areas (HCA) in a manner
+that complies with Section 4 of Title 13 of Metro's
+Urban Growth Management Functional Plan on
+properties located within the Kingston Terrace
+District. The HCAs regulated by this chapter are
+limited to Class A and B Upland Wildlife Habitat
+Conservation Areas (Upland HCAs). These regu-
+lations are intended to supplement, but not dupli-
+cate, other requirements enforced by Clean Water
+Services (CWS), Oregon Division of State Lands,
+and federal agencies that may have jurisdiction
+over natural resources within these HCAs.
+B. Metro upland resource areas. The provi-
+sions of this section shall be used to determine
+whether applications for development permits may
+be approved, approved with conditions, or denied.
+The Metro Upland HCAs within the Kingston
+Terrace District are shown in Figure 16.114-11. A
+more detailed map entitled Kingston Terrace Class
+A and B Upland HCAs, which is available at City
+Hall, shall be consulted to determine site locations
+of these upland wildlife habitat resources and buf-
+fers, which lie outside the purview of CWS, state,
+and/or federal agencies.
+1. Class A Upland HCA. These areas are
+adjacent to Class I Riparian Corridors as shown
+in Figure 16.114-11.
+2. Class B Upland HCA. These areas are
+generally adjacent to Class II Riparian Corridors
+as shown in Figure 16.114-11.
+ 16.114.090
+174.86.12.1 (King City Supp. No. 15, 9-25)
+
+Figure 16.114-11 Class A and B Upland HCAs
+ 16.114.090
+174.86.13 (King City Supp. No. 14, 12-23)
+C. Applicability of provisions. All develop-
+ment that exceeds the extent and scope of activi-
+ties and improvements identified in Section
+16.114.090.C.1. shall be regulated by this section
+(Section 16.114.090).
+1. Development on properties that contain a
+mapped Upland HCA identified in the Metro Ti-
+tle 13 Inventory as described in Section
+16.114.090.B., must comply with these regula-
+tions, except they shall not apply to:
+a. HCA Class I and II Riparian Corridors
+that are subject to CWS regulatory authority.
+b. Metro HCA Class III Riparian Corridors
+and Metro Class C Upland Wildlife Habitat areas,
+which are not regulated by this title. In addition, if
+an on-site assessment results in riparian corridors
+(i.e., CWS Vegetated Corridor) being mapped
+within Metro Title 13 Upland HCA, these areas
+will be regulated per CWS authority.
+c. Development that is proposed to be greater
+than one hundred feet from an Upland HCA
+boundary.
+d. Change of ownership.
+e. Where a property has received previous
+approval according to this title, which has not
+expired, and the development proposed was part
+of, or contemplated by, the original development
+application approval, such as a phased develop-
+ment project or subdivision.
+f. Limited types of development, redevelop-
+ment, operations, improvements, and mainte-
+nance that are otherwise permitted by this title
+including the following:
+i. The alteration, expansion, or replacement
+of existing structures or related impervious sur-
+faces including, but not limited to, accessory build-
+ings, eave overhangs, exterior building improve-
+ment for access and exiting requirements, parking,
+and outdoor storage provided they will not in-
+trude by more than one thousand square feet into
+the Upland HCA in addition to the existing build-
+ing and impervious surface footprint.
+ii. Removal of up to ten percent, but no more
+than twenty thousand square feet of native vege-
+tative cover on a lot or parcel within the mapped
+Upland HCA, not including trees measuring six-
+inch diameter at breast height (DBH) or larger.
+Removed vegetation shall be replaced as required
+by Section 16.114.090.1.
+iii. Maintenance of existing gardens, pas-
+tures, lawns, and landscape perimeters, including
+installation of new irrigation systems within them.
+Removed vegetation shall be replaced as required
+by Section 16.114.090.1.
+iv. Removal of nuisance or prohibited plants
+as identified on the Metro Native Plant List (Metro
+Resolution No. 98-2708) and the planting or prop-
+agation of plants identified as native plants on the
+Metro Native Plant List. After such removal, all
+open soil areas greater than one thousand square
+feet must be replanted with native plants on the
+Metro Native Plan List.
+v. Maintenance, alteration, repair, and replace-
+ment of roads and utilities provided that addi-
+tional permanent and impervious improvements
+within an Upland HCA, such as pavement or
+structures, do not exceed one thousand square feet
+in area.
+vi. Operation, maintenance, and repair of ex-
+isting manmade water control facilities such as
+irrigation and drainage ditches, constructed ponds
+or lakes, wastewater facilities, and stormwater pre-
+treatment facilities.
+vii. Projects with the sole purpose of restor-
+ing or enhancing wetlands, streams, or fish and
+wildlife habitat areas, provided that the project is
+part of an approved local, state, or federal resto-
+ration or enhancement plan.
+viii. Removal of dead or diseased trees or
+trees that pose an imminent hazard to persons or
+property, provided that a consulting arborist re-
+port, or other credible evidence, is provided by the
+property owner to verify the need for removal.
+ix. Low-impact outdoor recreation facilities
+for public use including, but not limited to, multi-
+use paths, access ways, trails, picnic areas, or inter-
+pretive and educational displays and overlooks
+that include benches and outdoor furniture, pro-
+vided that the facility meets the following require-
+ments:
+(a) It contains less than one thousand square
+feet of new impervious surface; and
+16.114.090
+174.86.14(King City Supp. No. 14, 12-23)
+(b) Its trails shall be designed to avoid dam-
+age to tree roots and constructed using non-
+hazardous, pervious materials, with a maximum
+width of six feet.
+x. Emergency procedures or activities under-
+taken, which are necessary to remove or abate
+hazards and nuisances or for the protection of
+public health, safety, and welfare; provided that
+such remedial or preventative action must take
+place within a timeframe too short to allow for
+compliance with the requirements of this chapter.
+After the emergency, the person or agency under-
+taking the action shall fully restore any impacts to
+the Upland HCA resulting from the emergency
+action consistent with the mitigation require-
+ments in Section 16.114.090.I. Hazards that may
+be removed or abated include those required to
+maintain aircraft safety.
+g. Street trees that are approved by the city
+manager.
+2. Where the provisions of this chapter con-
+flict with any other provisions of this title, CWS
+standards, or state and federal requirements, the
+more restrictive requirements shall apply.
+3. Development within an Upland HCA in
+accordance with the provisions of this title shall
+not result in removal of such developed areas from
+the Upland HCA and shall not change the appli-
+cable Upland HCA category.
+D. Prohibitions.
+1. The planting of any nuisance or prohibited
+vegetation identified in the Metro Native Plant
+List is prohibited within an Upland HCA. New
+plantings shall either be from the Metro Native
+Plant List or selected by a qualified professional,
+including, but not limited to, an arborist, land-
+scape architect, or biologist.
+2. Outside storage of materials exceeding one
+thousand square feet is prohibited within an Up-
+land HCA, unless such storage began before the
+effective date of this ordinance; or, unless such
+storage is approved during development review in
+accordance with this title.
+E. Administration.
+1. Development applications within an Up-
+land HCA that exceed the thresholds in Section
+16.114.090.C.1.f shall be administered and re-
+viewed as a Type II City Manager decision in
+accordance with Article II of this title.
+2. Development applications proposed to oc-
+cur outside of an Upland HCA but within one
+hundred feet of one shall be administered and
+reviewed as a Type I Administrative decision in
+accordance with Article II of this title.
+3. Upland HCA applications that require re-
+lated development applications according to this
+title shall be reviewed in combination. This com-
+bined review shall follow either the Type II process
+per Section 16.114.090.E.1, or the Type III process
+when the associated application is subject to Plan-
+ning Commission review as provided in Article II
+of this title.
+4. Adjustments described in Section
+16.114.090.J. shall be administered and reviewed
+in combination with the related development ap-
+plication according to the review procedure re-
+quired for that application.
+F . Submittal requirements. As part of the de-
+velopment permit for any use or activity, which is
+located on a lot that includes or is within one
+hundred feet of an Upland HCA in Section
+16.114.090.B., an application for an Upland HCA
+review must be prepared and submitted on forms
+provided by the city. When a companion develop-
+ment plan review is required, the requirements of
+Section 16.114.150 shall be satisfied.
+1. In addition to the form and information
+required in Section 16.44.030, an applicant shall
+submit the following:
+a. Copies of the site plan or subdivision or
+partition plat, number to be determined by the
+city manager, and necessary data or narrative,
+which explains how the development conforms to
+the applicable criteria;
+b. Site plans, preliminary plat, grading plan,
+and required drawings, prepared by a registered
+civil engineer;
+c. Site plans shall identify the following:
+i. Location and type of existing develop-
+ment, including, but not limited to, building foot-
+prints, roads, driveways, parking areas, utilities,
+ 16.114.090
+174.86.15 (King City Supp. No. 14, 12-23)
+onsite sewage disposal systems, wells, landscap-
+ing, and filling or grading in an amount greater
+than ten cubic yards;
+ii. Location and width of existing adjacent
+roads and road rights-of-way;
+iii. The location of the Upland HCA bound-
+ary, the area of the subject property within one
+hundred feet of an Upland HCA boundary, and
+the location of any other protected natural or
+resource areas including, but not limited to, one
+hundred-year floodplain, riparian areas, wetlands,
+and slopes that are twenty-five percent or greater;
+iv. The location, species, height, and size of
+all trees that are six inches dbh or greater or tree
+groves on the property that are within an Upland
+HCA, Class I or II riparian area, or their respec-
+tive one hundred-foot buffer areas;
+v. Density of grove of trees, as measured by
+overlapping canopy cover or canopy closure;
+vi. The location and description of all other
+vegetation that is either within the Upland HCA
+or within one hundred feet of its boundary;
+vii. Location of agricultural areas (e.g., pas-
+tures, orchards);
+viii. Location of naturalized areas (e.g., mead-
+ows, woods);
+ix. Location of rivers, streams, wetlands, and
+flood areas;
+x. Distance between naturalized areas, water
+bodies, and trees.
+d. Landscape plan and mitigation plan for
+disturbance in the Class A or B Upland HCA as
+shown in Figure 16.114-9;
+e. The scale for the site plan or preliminary
+plat shall be an engineering scale of not less than
+one-inch equals fifty feet;
+f. All drawings of structures elevations, pre-
+pared by a registered civil engineer or architect,
+shall be a standard architectural scale;
+g. In addition to the requirements of Article
+VI of this title, partitions and subdivisions shall
+identify proposed building envelopes, streets, and
+driveways necessary to serve the development that
+will follow the land division;
+h. Topographic map illustrating the existing
+and proposed topography of the subject property,
+drawn to scale. On properties that are two acres or
+larger, such a contour map is required only for the
+portion of the property to be developed. The top-
+ographic map shall be prepared using the follow-
+ing contour intervals:
+i. For slopes of five percent or less, contour
+intervals not more than one foot;
+ii. For slopes greater than five percent and up
+to and including ten percent, contour intervals not
+more than two feet; and
+iii. For slopes greater than ten percent, con-
+tour intervals not more than five feet.
+i. Current photos of site conditions;
+j. Construction management plan per Sec-
+tion 16.114.090.G; and
+k. Verification of any other permits required
+by other local, state, or federal agencies and the
+status of those permit applications.
+2. The information in Section 16.114.090.F .1
+shall be submitted with or made part of a related
+development application, including, but not lim-
+ited to, a building permit, development plan, or
+land division;
+3. Data and narrative for any related develop-
+ment applications as provided in this title;
+4. A list of names and addresses of all per-
+sons who are property owners of record within
+two hundred fifty feet of the subject property;
+5. The required fee;
+6. The city manager may require information
+in addition to that required by this chapter when it
+is found that certain information is necessary to
+properly evaluate the application; and
+7. The city manager may waive a specific re-
+quirement for information when it is found that
+such information is not necessary to properly eval-
+uate the application.
+G. Construction management plans. A con-
+struction management plan shall be provided for
+16.114.090
+174.86.16(King City Supp. No. 14, 12-23)
+non-exempt development within an Upland HCA
+or within one hundred feet of an Upland HCA
+including the following information:
+1. Demarcation of work areas to reduce po-
+tential damage to existing native vegetation within
+the Upland HCA;
+2. A tree protection plan prepared by a pro-
+fessional arborist shall demonstrate how existing
+trees six-inch dbh or greater will be appropriately
+protected with fencing and other techniques when
+construction is proposed to be within fifty feet of
+the tree drip line;
+3. A plan for conserving native soils dis-
+turbed during development;
+4. Location of site access and egress that con-
+struction equipment will use;
+5. Equipment and material staging and stock-
+pile areas;
+6. Erosion and sediment control measures;
+7. Measures to protect trees and other vege-
+tation located within the Upland HCA and within
+one hundred feet of an Upland HCA boundary,
+but outside of the disturbance area of a develop-
+ment approved under the provisions of this title;
+and
+8. Methods to ensure compliance with a de-
+velopment permit approved under this title.
+H. Approval standards.
+1. As part of the development permit for any
+use or activity, which is located on a lot that
+includes an Upland HCA, or area within one
+hundred feet of one, an application for an HCA
+review must be prepared and submitted in compli-
+ance with Section 16.114.090.F . The applicant shall
+demonstrate how the proposed development will
+satisfy the applicable criteria in Subsections
+16.114.090.H.2. through H.4.
+2. For development on a lot that is proposed
+to only occur within one hundred feet of a Class A
+or B Upland HCA, the following requirements
+apply:
+a. The proposed development shall avoid any
+intrusion into the Upland HCA where native trees,
+as identified in the Metro Native Plant List are
+present. For land divisions, this will include a
+building footprint area for each developable lot in
+addition to grading, streets, and utilities.
+b. Appropriate protection for the Upland
+HCA shall be provided during construction to
+avoid any encroachment into the Upland HCA
+where native trees, as identified in the Metro Na-
+tive Plant List are present, by providing protective
+fencing along the Upland HCA boundary and
+other methods approved by the city manager.
+3. For development on a lot that is proposed
+to occur within a Class A or B Upland HCA, the
+following requirements apply:
+a. Development shall avoid slopes of twenty-
+five percent or greater.
+b. Unless precluded by physical constraints,
+including, but not limited to, location of existing
+or planned vehicular access, existing improve-
+ments and intervening natural barriers, develop-
+ment shall first utilize any portions of the lot
+where native trees as identified in the Metro Na-
+tive Plan List, are not present.
+c. Native trees, which are six inches dbh or
+greater and have a drip line that is contiguous to
+the drip line of a tree canopy on the lot or an
+adjoining Upland HCA or Class I or II Riparian
+Corridor, shall be retained unless the applicant
+can provide evidence from a qualified arborist that
+the tree is diseased or poses a safety risk.
+d. Singular, isolated native or non-native trees
+of any size and without contiguous drip lines may
+be removed subject to compliance with the mitiga-
+tion requirements in Section 16.114.090.J.
+e. All nuisance or prohibited plants identified
+in the Metro Native Plan List shall be removed in
+any areas being developed or disturbed.
+f. To the extent practicable, when develop-
+ment within an Upland HCA is permitted, the
+proposed development shall be located, designed,
+and constructed to employ the techniques de-
+scribed in Part (c) of Table 16.114-8 to further
+minimize the impact of development in the Up-
+land HCA.
+g. Notwithstanding the requirements in Sec-
+tion 16.114.090.1.3.a. through f., a minimum de-
+ 16.114.090
+174.86.17 (King City Supp. No. 14, 12-23)
+velopment disturbance area shall be permitted
+within a Class A or B Upland Habitat Conserva-
+tion Area on a lot according to Table 16.114-9.
+4. For linear development where the project
+is within a public easement or right-of-way, the
+following requirements apply:
+a. The linear improvements, including, but
+not limited to, streets, sidewalks, pathways, and
+utilities, shall be designed to minimize grading,
+removal of native vegetation, removal of trees
+with a six-inch dbh or greater, and disturbance or
+removal of native soils by using the approaches
+described in Table 16.114-8;
+b. All nuisance or prohibited vegetation iden-
+tified in the Metro Native Plant List within the
+easement or right-of-way shall be removed;
+c. Portions of the easement or right-of-way
+that is not permanently developed with impervi-
+ous surfaces shall be restored using the approaches
+described in Table 16.114-8; and
+d. Removed trees shall be mitigated with new
+plantings as provided in Table 16.114-10 except
+for the allowance of street trees approved by the
+city manager.
+5. The following dimensional standards in Ta-
+ble 16.114-4 may be modified to reduce the land
+area converted to impervious surfaces:
+a. Minimum lot size may be reduced up to
+one thousand square feet.
+b. Except for the garage, required yard build-
+ing setbacks may be reduced by up to fifty percent.
+i. Building height may be increased by ten
+feet in exchange for reducing building footprints
+by at least five hundred square feet.
+Table 16.114-8
+  Part (a): Design and Construction Practices to Minimize Hydrologic Impacts
+1. Amend disturbed soils to original or higher level of porosity to regain infiltration and stormwater
+storage capacity.
+2. Use pervious paving materials for residential driveways, parking lots, walkways, and within cen-
+ters of cul-de-sacs.
+3. Incorporate stormwater management in road rights-of-way.
+4. Landscape with rain gardens to provide on-lot detention, filtering of rainwater, and groundwater
+recharge.
+5. Use green roofs for runoff reduction, energy savings, improved air quality, and enhanced aesthet-
+ics.
+6. Disconnect downspouts from roofs and direct the flow to vegetated infiltration/filtration areas
+such as rain gardens.
+7. Retain rooftop runoff in a rain barrel for later on-lot use in lawn and garden watering.
+8. Use multi-functional open drainage systems in lieu of more conventional curb-and-gutter systems.
+9. Use bioretention cells as rain gardens in landscaped parking lot islands to reduce runoff volume
+and filter pollutants.
+10. Apply a treatment train approach to provide multiple opportunities for storm water treatment and
+reduce the possibility of system failure.
+11. Reduce sidewalk width and grade them such that they drain to the front yard of a residential lot
+or retention area.
+12. Reduce impervious impacts of residential driveways by narrowing widths and moving access to
+the rear of the site.
+13. Use shared driveways.
+14. Reduce width of residential streets, depending on traffic and parking needs.
+15. Reduce street length, primarily in residential areas, by encouraging clustering and using curvilin-
+ear designs.
+16.114.090
+174.86.18(King City Supp. No. 14, 12-23)
+16. Reduce cul-de-sac radii and use pervious vegetated islands in center to minimize impervious ef-
+fects, and allow them to be utilized for truck maneuvering/loading to reduce need for wide loading
+areas on-site.
+17. Eliminate redundant non-ADA sidewalks within a site (i.e., sidewalk to all entryways and/or to
+truck loading areas may be unnecessary for industrial developments).
+18. Minimize car spaces and stall dimensions, reduce parking ratios, and use shared parking facilities
+and structured parking.
+19. Minimize the number of stream crossings and place crossing perpendicular to stream channel if
+possible.
+20. Allow narrow street rights-of-way through stream corridors whenever possible to reduce adverse
+impacts of transportation corridors.
+Part (b): Design and Construction Practices to Minimize Impacts on
+Wildlife Corridors and Fish Passage
+1. Carefully integrate fencing into the landscape to guide animals toward animal crossings under,
+over, or around transportation corridors.
+2. Use bridge crossings rather than culverts wherever possible.
+3. If culverts are utilized, install slab, arch or box type culverts, preferably using bottomless designs
+that more closely mimic stream bottom habitat.
+4. Design stream crossings for fish passage with shelves and other design features to facilitate terres-
+trial wildlife passage.
+5. Extend vegetative cover through the wildlife crossing in the migratory route, along with sheltering
+areas.
+ Part (c): Miscellaneous Other Habitat-Friendly Design and Construction Practices
+1. Use native plants throughout the development (not just in HCA).
+2. Locate landscaping (required by other sections of the code) adjacent to HCA.
+3. Reduce light spill-off into HCAs from development.
+4. Preserve and maintain existing trees and tree canopy coverage, and plant trees, where appropriate,
+to maximize future tree canopy coverage.
+Table 16.114-9 Maximum Development or Disturbance Area in Upland HCA
+  Maximum Development or Disturbance Area Permitted
+within the Upland HCA portion of a Lot26
+ HCA Class
+ A  B
+Area developed with permanent improvements including, but not limited to, streets and
+driveways, parking, buildings, and other impervious areas that will not be revegetated.
+20% 35%
+Area that is temporarily disturbed for improvements such as grading and underground
+utilities and will be revegetated according to mitigation requirements Section 16.114.080.J.
+30% 50%
+Total combined area of permanent improvements and temporary disturbance. 50% 85%
+26 For land divisions, the total development or disturbance area calculation shall include footprints for future building
+construction and related improvements such as driveways and patios. Maximums do not apply to linear development
+per Section 16.114.090.H.4.
+6. A construction management plan as spec-
+ified in Section 16.114.090.G.
+7. Development permits shall comply with
+the applicable requirements of this title in addi-
+tion to Section 16.114.150.
+8. Partition and subdivision applications shall
+demonstrate how the land division improvements
+and the subsequent development on the proposed
+lots will comply with the provisions of this title.
+Provided that development following the record-
+ing of the final plat is consistent with what was
+approved as part of the land division, a subse-
+quent Upland HCA review will not be required.
+ 16.114.090
+174.86.19 (King City Supp. No. 16, 8-26)
+I. Mitigation requirement for disturbance in
+Upland HCAs.
+1. When intrusion into an Upland HCA sat-
+isfies the approval criteria in Section 16.114.090.H.,
+mitigation shall be provided. Mitigation plans shall
+satisfy the following:
+a. Mitigation shall occur on the site of the
+disturbance, to the extent practicable. Off-site mit-
+igation shall be approved if the applicant has dem-
+onstrated that it is not practicable to complete the
+mitigation on-site and has provided documented
+the ability to ensure the success of off-site mitiga-
+tion. Mitigation shall occur within the Kingston
+Terrace District. When an alternative location
+and/or watershed is proposed, the applicant shall
+demonstrate why mitigation in the same water-
+shed is not practicable.
+b. Nuisance or prohibited vegetation item-
+ized in the Metro Native Plant List shall be re-
+moved within the mitigation area.
+c. Selection of all revegetation plantings shall
+be from the Metro Native Plant List.
+2. An applicant must meet Mitigation Op-
+tion 1 or 2, whichever results in more tree plant-
+ings; except that where the disturbance area is one
+acre or more, the applicant shall comply with
+Mitigation Option 2:
+a. Mitigation Option 1. In this option, the
+mitigation requirement is calculated based on the
+number and size of trees that are removed from
+the site. Trees that are removed from the site must
+be replaced as shown in Table 16-114.10. Conifers
+must be replaced with conifers. Bare ground must
+be planted or seeded with native grasses or herbs.
+Non-native sterile wheat grass may also be planted
+or seeded, in equal or lesser proportion to the
+native grasses or herbs.
+Table 16.114-10 Mitigation Option 1 - Tree
+Replacement
+ Size of tree to be removed
+(inches in diameter)
+ Number of trees and shrubs to
+be planted
+6 to 12 2 trees and 3 shrubs
+13 to 18 3 trees and 6 shrubs
+19 to 24 5 trees and 12 shrubs
+25 to 30 7 trees and 18 shrubs
+ Size of tree to be removed
+(inches in diameter)
+ Number of trees and shrubs to
+be planted
+Over 30 10 trees and 30 shrubs
+b. Mitigation Option 2. In this option, the
+mitigation requirement is based on the size of the
+disturbance area within a HCA. Native trees and
+shrubs are required to be planted at a rate of five
+trees and twenty-five shrubs for every five hundred
+square feet of disturbance area (calculated by di-
+viding the number of square feet of disturbance
+area by five hundred, then multiplying that result
+times five trees and twenty-five shrubs and round-
+ing all fractions to the nearest whole number of
+trees and shrubs). Bare ground must be planted or
+seeded with native grasses or herbs. Non-native
+sterile wheat grass may also be planted or seeded,
+in equal or lesser proportion to the native grasses
+or herbs.
+3. Plant size. The minimum size for replace-
+ment trees shall be one-half-inch caliper measured
+six inches above ground level, and the minimum
+size for replacement shrubs shall be one gallon.
+4. Plant spacing. Accepted landscaping prac-
+tices, such as plant spacing, mulching, watering,
+and weed control shall be employed for planting
+and maintenance.
+5. Plant diversity. When more than ten trees
+or shrubs are planted, at least two different species
+shall be used.
+6. Maintenance. A mitigation maintenance
+plan shall be provided to demonstrate how a suc-
+cessful outcome will be achieved. A minimum of
+eighty percent of the plantings must survive, and
+removed nuisance or prohibited vegetation re-
+moved shall not reappear, for five years. The re-
+sponsibility of monitoring, maintenance, and re-
+placement shall rest with the property owner.
+J. Adjustments. The purpose of this section is
+to ensure that compliance with Section 16.114.090
+does not cause unreasonable hardship. To avoid
+such instances, the requirements of Section
+16.114.090 may be adjusted. Adjustments shall be
+considered in conjunction with a development ap-
+16.114.090
+174.86.20(King City Supp. No. 16, 8-26)
+plication within an Upland HCA, and they shall
+be reviewed as a Type II City Manager decision in
+accordance with this title.
+1. To receive an adjustment to the Upland
+HCA requirements in this section, the applicant
+must demonstrate the following:
+a. The proposed adjustment does not repre-
+sent a deviation from the applicable standard by
+more than 20 percent.
+b. The mitigation requirements in Section
+16.114.090.1. will be satisfied. If the adjustment is
+related to these requirements, the applicant shall
+provide evidence from a qualified professional,
+including, but not limited to, an arborist, land-
+scape architect, or biologist to demonstrate that
+the proposed alternative mitigation techniques will
+provide environmental and ecological benefits,
+which are equally effective mitigation for intru-
+sions into the Upland HCA.
+2. Conditions may be imposed by the ap-
+proval authority to limit and adverse impacts that
+may result from granting an adjustment.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023; Ord.
+No. O-2026-01, § 4(Exh. I), 4-15-2026)
+16.114.100 Neighborhood Locations and
+Primary Land Uses.
+A. The Regulating Plan locates each of the
+four neighborhoods within the Kingston Terrace
+Master Plan area. The neighborhood zones are
+generally located, and their boundaries shall be
+definitively established by the Backbone Streets,
+as follows:
+1. The Kingston Terrace Town Center is
+bounded by Beef Bend Road in the north, Roy
+Rogers Road on the west, and Elsner Road to the
+east and south.
+2. The Beef Bend Neighborhood is bounded
+by Beef Bend Road to the north, Elsner Road to
+the west, the new extension of Fischer Road on the
+south, and 137th Avenue on the east.
+3. The Central Neighborhood is bounded by
+the new extension of Fischer Road on the north
+(to 150th Avenue) and new east/west Neighbor-
+hood Route (identified in King City's Transporta-
+tion System Plan Table 13 as Project ID 16), Elsner
+Road to the west, the Tualatin River on the south,
+and to the east, the extension of 147th Avenue,
+and the Natural Resource Area Overlay bound-
+ary.
+4. The Rural Character Neighborhood is
+bounded by a new east/west neighborhood route
+((identified in King City's Transportation System
+Plan Table 13 as Project ID 16) on the north, the
+Natural Resource Area Overlay boundary to the
+west, 137th Avenue to the east, and the Tualatin
+River to the south.
+5. The Natural Resource Area Overlay bound-
+ary will generally define the extent of develop-
+ment, but the neighborhood zone boundaries shall
+generally coincide with street locations.
+B. Town Center Uses. The primary uses al-
+lowed outright within the Town Center neighbor-
+hood are listed in Table 16.114-2.
+1. Residential development in the Town Cen-
+ter shall comply with density requirements of Ta-
+ble 16.114-3, dimensional standards of Table
+16.114-4, and design standards of Table 16.114-5.
+2. The Regulating Plan, Figure 16.114-9, iden-
+tifies the location of a Municipal Zone at the
+intersection of River Terrace Boulevard and Fischer
+Road extension. In accordance with the Kingston
+Terrace Master Plan, future municipal buildings
+on this site may house a City Hall, library, and
+other public facilities. The site of Clean Water
+Services' pump station, located south of the inter-
+section of Roy Rogers Road and Fischer Road
+extension, is also identified as Municipal Zone.
+3. The Regulating Plan, Figure 16.114-9, iden-
+tifies the location of the Mixed-Use Zone within
+the Town Center located along River Terrace Bou-
+levard and north of the Fischer Road extension.
+Mixed-use buildings shall contain both residential
+and commercial uses, stacked vertically side-by-
+side or standalone. The commercial business may
+include retail, offices, and restaurants.
+4. The Regulating Plan, Figure 16.114-9, il-
+lustrates the location of public parks and open
+space within the Town Center neighborhood in
+relation to the Mixed-Use and Municipal Use
+ 16.114.100
+174.86.21 (King City Supp. No. 16, 8-26)
+Zones. Development and design of public parks
+and open space in the Town Center shall comply
+with the standards of Section 16.114.110.
+C. Residential Neighborhood Uses. The pri-
+mary uses allowed outright within the Beef Bend,
+Central, and Rural Character residential neighbor-
+hoods are listed in Table 16.114-2.
+1. Residential development in the Town Cen-
+ter shall comply with density requirements of Ta-
+ble 16.114-3, dimensional standards of Table
+16.114-4, and design standards of Table 16.114-5.
+2. The Beef Bend Neighborhood may in-
+clude neighborhood-scale commercial uses in con-
+junction with residential uses. Neighborhood-
+scale commercial may include multi-family dwelling
+units including live-work units with small-scale
+commercial development or residential over small-
+scale commercial.
+3. Development and design of public parks
+and open space in the Town Center shall comply
+with the standards of Section 16.114.110.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.110 Parks, Open Space and Trails.
+A. Developers shall pay Park System Devel-
+opment Charges (SDCs) in accordance with King
+City's Park SDC schedule or provide improve-
+ments per the Kingston Terrace Master Plan as
+agreed upon through the Annexation and Devel-
+opment Agreement process detailed in Sections
+16.114.140.C and D.
+B. Developments in the Kingston Terrace Dis-
+trict shall provide parks, open space areas, and
+trails in substantial compliance with the overall
+development vision as described in the Kingston
+Terrace Master Plan.
+1. A development shall provide parks, trails,
+or open space:
+a. As identified in the Kingston Terrace Mas-
+ter Plan Figure 3.4 Parks and Open Space System
+Diagram;
+b. Conform to the Kingston Terrace Master
+Plan Table 3.1 Parks and Open Spaces: Types,
+Guideline, Location with respect to both size; and
+c. Will be dedicated to the public if the pro-
+posal is for a public park or open space.
+2. Parks and open spaces shall be designed to
+enhance the public pedestrian environment and be
+consistent to the applicable "General Characteris-
+tics" of the Land Use: Parks and Open Space
+section of the Master Plan.
+3. Parks and open spaces shall be designed to
+include amenities and improvements as detailed in
+the "Key Features" in the Land Use: Parks and
+Open Space section of the Master Plan.
+4. Improvements may include, but are not
+limited to, the following:
+a. Landscaped or hardscaped courtyards and
+plazas;
+b. Play structures;
+c. Weather canopies or sunshades;
+d. Seating areas;
+e. Free-standing planters and/or raised plant-
+ing beds;
+f. Drinking fountains;
+g. Public art or sculpture;
+h. Water features;
+i. Sports courts, fields, or tracts; or
+j. Other pedestrian space or design feature as
+approved by the reviewing authority.
+5. Passive recreation open spaces areas may
+be provided within identified natural resource or
+hazard areas including, but not limited to, 100-
+year floodplain, delineated wetlands and wetlands
+buffers, Class I and II Riparian Corridors, and
+Class A and B Upland Wildlife Habitat Conserva-
+tion Areas if present on-site. Improvements to
+such areas may include the following, provided all
+necessary development approvals and permits are
+obtained:
+a. Public accessways and trails;
+b. Wildlife viewing areas; and
+c. Improvements must comply with applica-
+ble requirements and approval criteria of Chapter
+16.140, Floodplain and Drainage Hazard Areas
+and Sections 16.114.080, Kingston terrace Dis-
+trict Goal 5 Safe Harbor Review and 16.114.090,
+Upland Wildlife Habitat Conservation Areas.
+16.114.100
+174.86.22(King City Supp. No. 16, 8-26)
+6. Trails and paths shall be located and de-
+signed to:
+a. Augment the public sidewalk system and
+facilitate access to parks, schools, trails, open spaces,
+commercial areas, and similar destinations.
+b. Trails and paths must meet all applicable
+federal and state accessibility standards where fea-
+sible. Soft surface trails and paths in or adjacent to
+natural areas are allowable.
+c. Be dedicated to the public or placed in a
+public access easement.
+C. The Town Center will include the follow-
+ing public parks and opens spaces:
+1. Park Blocks: An area of four to seven acres
+located in the Town Center neighborhood shall
+provide both active and passive recreation and
+may include: sport fields, dog park, fitness sta-
+tions, shelters, and open lawn seating.
+2. Urban Park: An area of one to five acres
+located to the south of the park blocks near the
+civic center. The urban park shall include space
+and be designed to accommodate community gath-
+erings and events.
+3. Urban plazas: Areas of approximately one
+thousand square feet to five thousand square feet
+shall be located at the intersections of River Ter-
+race Boulevard at the new east-west Neighbor-
+hood Route, and at River Terrace Boulevard at the
+Fischer Road extension. Urban plazas will be
+hardscaped with seating and ornamental landscap-
+ing.
+4. Neighborhood Park: An area of approxi-
+mately three-fourths-acres, shall be located in the
+southern portion of the Town Center neighbor-
+hood. The park will provide an open lawn area,
+shaded seating, and a play area.
+5. Linear Greens: Linear greens, located ad-
+jacent to the new east-west neighborhood route
+extending west from Elsner Road to Roy Rogers
+Road, shall provide a hard surface path and street
+furnishings such as benches, trash receptacles, and
+lighting.
+6. Natural Open Space: A natural open space
+area, spanning from Roy Rogers Road to Elsner
+Road, shall be located in the southern portion of
+the Town Center neighborhood. The ten- to twenty-
+acre area shall provide connections to the natural
+resources with pedestrian trails, overlooks, nature
+play areas, and seating.
+D. The Beef Bend, Central, and Rural Char-
+acter residential neighborhoods will include the
+following public parks and open spaces:
+1. Community Park: Two community parks
+about fifteen to thirty acres in size shall be located
+within the residential neighborhoods. One com-
+munity park shall be located in the Central Neigh-
+borhood and the second park is proposed to be
+located in the Rural Character Neighborhood.
+Community parks are proposed to be located near
+a collector or neighborhood route and adjacent to
+or near the Tualatin River. The exact location of
+the community parks may vary by up to a one-
+quarter-mile radial distance as shown on in Figure
+3.4 Parks and Open Space System Diagram of the
+Kingston Terrace Master Plan.
+2. Neighborhood Park: Three neighborhood
+parks, about three acres in size, are proposed within
+the Beef Bend, Central, and Rural Character res-
+idential neighborhoods. Each park shall serve a
+one-quarter to one-half mile radius of residential
+areas and be designed to include amenities such as
+lawn area, small playground, seating area, etc. The
+exact location of the neighborhood park may vary
+by up to a one-quarter-mile radial distance as
+shown in Figure 3.4 Parks and Open Space System
+Diagram of the Kingston Terrace Master Plan.
+3. Linear Park: A multi-use path shall be in-
+tegrated into the electric transmission tower corri-
+dor on the eastern edge of the residential neigh-
+borhoods as shown in Figure 3.4 Parks and Open
+Space System Diagram of the Kingston Terrace
+Master Plan.
+4. Open Space/Natural Area: Open space and
+natural areas shall be provided generally along the
+north/south stream corridors, steep terrain, wet-
+lands, and adjacent to the Tualatin River. The
+open space shall offer recreational amenities with
+minimal impact on the natural resources. The open
+space/natural areas shall be located as shown in
+Figure 3.4 Parks and Open Space System Dia-
+ 16.114.110
+174.86.23 (King City Supp. No. 14, 12-23)
+gram of the Kingston Terrace Master Plan; how-
+ever, locations shall be field verified to determine
+the exact location of natural resources within the
+Beef Bend, Central, and Rural Character residen-
+tial neighborhoods.
+E. Land use approvals for developments con-
+taining parks, open space, and trails shall assign
+maintenance responsibility if the area is not pro-
+posed and accepted as a public park.
+F . Development along Habitat Conservation
+Areas (HCA) and Class I and II Riparian Corri-
+dors.
+1. Adjacent to HCA and Class I and II Ri-
+parian Corridors, fencing along a lot line perime-
+ter cannot exceed sixty percent, shall not exceed
+three feet in height, and chain-link fences are pro-
+hibited. This standard may apply to the perimeter
+of lots measured collectively or measured individ-
+ually, provided that it applies to sixty percent of
+the total lineal dimension.
+2. For lots adjacent to HCA and Class I and
+II Riparian Corridors, which have their front lot
+line facing the resource, the resource-facing fa-
+çades of buildings must meet the design require-
+ments in Section 16.114.060, human-scale design:
+articulation, eyes on the street/transparency, main
+entrance, and detailed design.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.120 Neighborhood Circulation.
+A. The neighborhood circulation require-
+ments and approval standards of Chapter 16.212
+apply to development in the Kingston Terrace
+District, except for the street, sidewalk, accessway,
+and trail circulation standards as modified in this
+Section.
+B. Backbone Street Network. The Regulat-
+ing Plan, Figure 16.114-9, illustrates the location
+of existing and future Backbone Street Network
+consistent with King City's Transportation Sys-
+tem Plan and the Kingston Terrace Master Plan.
+Following is a list of the existing and future streets,
+the functional classification, and corresponding
+Project Identification (ID) number identified in
+Table 13 in Chapter 5 of the Transportation Sys-
+tem Plan (TSP):
+1. North-south streets (listed west to the east):
+a. Roy Rogers Road - Arterial - TSP Project
+ID 1.
+b. River Terrace Boulevard Extension - Col-
+lector - TSP Project ID 3.
+c. New Neighborhood Route west of Elsner
+Road between Beef Bend Road and Fischer Road
+- TSP Project ID 4.
+d. Elsner Road - Collector - TSP Project ID 5
+and 6.
+e. New Neighborhood Route east of Elsner
+Road and west of 155
+th Avenue extension between
+Beef Bend Road and Ficher Road - TSP Project
+ID 10.
+f. 155
+th Avenue Extension - Collector - TSP
+Project ID 11.
+g. New Neighborhood Route east of 155 th
+Avenue extension and west of 150 th Avenue be-
+tween Beef Bend Road and south of Fischer Road
+- TSP Project ID 12.
+h. 150
+th Avenue - Collector - TSP Project ID
+13.
+i. 147 th Avenue - Neighborhood Route - TSP
+Project ID 14.
+j. Myrtle Avenue - Neighborhood Route -
+TSP Project ID 15.
+k. 137 th Avenue - Collector - TSP Project ID
+18.
+2. East-west streets (north to south):
+a. Beef Bend Road - Arterial - TSP Project
+ID 8.
+b. New Neighborhood Route south of Beef
+Bend Road between 137
+th Avenue and new neigh-
+borhood route - TSP Project ID 9.
+c. New Neighborhood Route north of Fischer
+Road extension between 137 th Avenue and 150th
+Avenue - TSP Project ID 16.
+d. Fischer Road Extension - Collector - TSP
+Project ID 7.
+3. Local Streets. Within the areas bounded by
+Backbone Streets a finer-grained network of local
+streets will be built.
+16.114.110
+174.86.24(King City Supp. No. 14, 12-23)
+4. Location of connecting street segment. To
+minimize impact to natural resources and accom-
+modate topography, alignment of segments of Col-
+lector and Neighborhood Routes may vary up to
+one hundred feet from the locations identified on
+the Regulating Plan, Figure 16.114-9, provided
+they fully connect/intersect with each of the streets
+and intersections as shown on the Regulating Plan.
+C. Backbone Street intersections. The Regu-
+lating Plan, Figure 16.114-9, identifies the types of
+intersections of Backbone Streets and classifies
+them as follows:
+1. Type A Intersections. The following inter-
+sections already exist and/or will be extended into
+the Kingston Terrace District Plan. The location
+of these intersections may be adjusted by one
+hundred feet in any direction to accommodate
+topography, desired connection points, and con-
+struction feasibility. Type A intersections include:
+a. Beef Bend Road at Roy Rogers Road;
+b. Fischer Road Extension at Roy Rogers
+Road;
+c. Elsner Road at Roy Rogers Road;
+d. River Terrace Boulevard Extension at Beef
+Bend Road;
+e. Elsner Road at Beef Bend Road;
+f. 150th Avenue at Beef Bend Road;
+g. 137th Avenue at Beef Bend Road;
+h. Fischer Road at 137
+th Avenue; and
+i. Fischer Road at 150 th Avenue.
+2. Type B Intersections. The remaining inter-
+sections identified on the Regulating Plan, Figure
+16.114-9, are Type B. The location of these inter-
+sections may be adjusted by two hundred feet in
+any direction to accommodate topography, de-
+sired connection points, and construction feasibil-
+ity.
+3. The Regulating Plan, Figure 16.114-9, in-
+cludes unidentified intersections of Backbone
+Streets with Beef Bend Road. Location of the
+unidentified intersections is dependent upon Wash-
+ington County's intersection spacing standards,
+the timing of development, property ownership,
+topography, and minimization of impact to natu-
+ral resources.
+D. Street circulation standards. The follow-
+ing criteria apply to the street network within the
+Kingston Terrace District:
+1. Block length of collectors, neighborhood
+routes, and local streets shall not exceed five hun-
+dred thirty feet measured between intersections
+with public streets.
+2. Exceptions to the block size may be ap-
+proved by the City Engineer where a street loca-
+tion is precluded by natural topography, wetlands,
+significant habitat areas, bodies of water, pre-
+existing development, or intersection spacing re-
+quirements for arterial or collector streets. An
+exception to the block length may also be ap-
+proved to support the urban design goals of the
+neighborhood including, but not limited to, devel-
+opment of an urban neighborhood that includes
+plazas and active frontages, and creation of public
+parks and open spaces such as park blocks or
+linear greens that support multi-modal transpor-
+tation.
+3. Mid-block pedestrian and bicycle ac-
+cessways on public easements or rights-of-way must
+be provided at spacing of no more than three
+hundred thirty feet if full-street connections can-
+not be provided, unless the connection is imprac-
+ticable due to topography, natural areas, inade-
+quate sight distance, lack of supporting land use
+or other factors that may prevent safe connection,
+as determined by the City Engineer.
+4. The Regulating Plan, Figure 16.114-9, does
+not limit the ability of a developer to add addi-
+tional streets or intersections.
+E. Design Standards: Table 16.114-11 details
+the street dimension and design characteristics for
+streets in the Kingston Terrace District.
+ 16.114.120
+174.86.25 (King City Supp. No. 14, 12-23)
+Table 16.114-11 Street Dimensional and Design Standards
+
+Street Type  Right-of-way or
+easement width27
+ Pedestrian Walkway:
+Sidewalk, and Furnishings/
+Landscape Zone  Parking Lane
+width, max.  Bike Facility
+ Vehicular travel lanes
+ Applicability
+ Pedestrian
+Throughway, min.28
+ Pedestrian
+Walkway, min.  Number  Width, max.
+Median Street A
+[
+29]
+Planted Median
+Figure 16.114-12
+102 feet,
+typical
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 11 feet
+Collector,
+Neighborhood
+Route,
+or Local
+Median Street B
+[
+29]
+Center Plaza [30]
+Figure 16.114-13
+100 feet,
+typical
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 11 feet
+Collector,
+Neighborhood
+Route,
+or Local
+Main Street A
+Parallel Parking
+[
+30]
+Figure 16.114-14
+60 feet,
+max.
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 11 feet
+Collector,
+Neighborhood
+Route,
+or Local
+Main Street B
+Diagonal Parking
+[
+30]
+Figure 16.114-15
+90 feet,
+max.
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 12 feet
+Collector,
+Neighborhood
+Route,
+or Local
+Neighborhood
+Street
+Figure 16.114-16
+60 feet,
+max.
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 10 feet
+Collector,
+Neighborhood
+Route,
+or Local
+Biking Street A
+Parking-Buffered
+Bike Lane
+Figure 16.114-17
+78 feet,
+max.
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Protected 2 10 feet
+Collector,
+Neighborhood
+Route,
+or Local
+Biking Street B
+Buffered Bike Lane
+Figure 16.114-18
+62 feet
+6 feet
+5 feet
+(Local)
+12 feet 8 feet Protected 2 10 feet Local
+Biking Street C
+Separated Bike
+Lane
+Figure 16.114-19
+66 feet
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Separated 2 10 feet
+Collector,
+Neighborhood
+Route,
+or Local
+Rural Character
+Neighborhood
+Street
+Figure 16.114-20
+50—60 feet 5 feet 15—20 feet [
+31] [ 32] 2 10 feet
+Collector,
+Neighborhood
+Route,
+or Local [
+32]
+Narrow Street
+A[
+33][34]
+Parking One-Side
+Figure 16.114-21
+46 feet 5 feet 10.5 feet 1 lane at 7 feet
+35 Shared 1+ 14 feet Local
+Narrow Street
+B[
+33][34]
+Parking Both Sides
+Figure 16.114-22
+50 feet 5 feet 10.5 feet 2 lanes at
+7 feet each Shared 1+ 14 feet Local
+16.114.120
+174.86.26(King City Supp. No. 14, 12-23)
+Street Type  Right-of-way or
+easement width27
+ Pedestrian Walkway:
+Sidewalk, and Furnishings/
+Landscape Zone  Parking Lane
+width, max.  Bike Facility
+ Vehicular travel lanes
+ Applicability
+ Pedestrian
+Throughway, min.28
+ Pedestrian
+Walkway, min.  Number  Width, max.
+Narrow Street
+C[
+33][34] No Park-
+ing Figure
+16.114-23
+42 feet 10.5 feet 5 feet None Shared 1+ 20 feet Local
+Alley[
+36]
+Figure 16.114-24 20.0—34.5 feet NA NA NA NA 1+ 14—20 feet
+May be used along
+natural resource
+edge
+27 The combined required dimensions of each component (i.e., Plant Strip, Sidewalk) may be accommodated within the right-of-way, an easement or a combination of
+the two.
+28 Per the City of King City Transportation System Plan, Figure 29: Sidewalk Zones, the Pedestrian Walkway Zone includes both the Pedestrian Throughway and
+Furnishing/Landscape Zone. The Pedestrian Throughway Zone is the accessible zone in which pedestrians travel. The Furnishings/Landscape Zone is located between
+the pedestrian throughway and the curb and includes street furnishings and/or landscaping (e.g., benches, lighting, bicycle parking, tree wells, and/or other plantings).
+29 Left turn lane is optional in median streets; median may be a combination of planted, paved, and/or parked; median may be 20 to 40 feet wide.
+30 Parallel or diagonal parking area may be partially planted, and/or used for permanent or temporary outdoor seating or other public uses instead of parking.
+31 Parking is accommodated within the Pedestrian Walkway zone.
+32 On a collector street the bicycle facility may be accommodated on a multi-use path.
+33 Lots with front lot lines adjacent to or within ¼­mile distance from a Habitat Conservation Area (HCA) may be served by a narrow street or alley to minimize impact
+to the resource.
+34 Narrow Street design alternatives A, B, and C must meet the applicable criteria of Section 16.114.120.F .1.
+35 The parking zone may shift from side to side of the vehicular travel lane as long as the minimum width of the vehicular is maintained. The curbside parking area may
+be partially planted, and/or used for permanent or temporary outdoor seating or other public uses instead of parking.
+36 Development sites that have public street frontage on an arterial street, collector, neighborhood route or local street, upon which they cannot take direct vehicle access
+may choose to provide vehicle access through an alley.
+ 16.114.120
+174.86.27 (King City Supp. No. 14, 12-23)
+F . Typical street sections:
+
+ Figure 16.114.12 Median Street A (Planted Median)
+16.114.120
+174.86.28(King City Supp. No. 14, 12-23)
+Figure 16.114.13 Median Street B (Center Plaza)
+ 16.114.120
+174.86.29 (King City Supp. No. 14, 12-23)
+Figure 16.114.14 Main Street A (Parallel Parking)
+16.114.120
+174.86.30(King City Supp. No. 14, 12-23)
+Figure 16.114.15 Main Street B (Diagonal Parking)
+ 16.114.120
+174.86.31 (King City Supp. No. 14, 12-23)
+Figure 16.114.16 Neighborhood Street
+16.114.120
+174.86.32(King City Supp. No. 14, 12-23)
+Figure 16.114.17 Biking Street A (Parking-Buffered Bike Lane)
+ 16.114.120
+174.86.33 (King City Supp. No. 14, 12-23)
+37 Optional Biking Street B (Buffered Bike Lane) design may include parking lane as noted in Table 16.114-11, Street
+Dimensional and Design Standards.
+ Figure 16.114.18 Biking Street B (Buffered Bike Lane)
+37
+16.114.120
+174.86.34(King City Supp. No. 14, 12-23)
+38 Optional Biking Street C (Separated Bike Lane) design may include parking lane as noted
+in Table 16.114-11 - Street Dimensional and Design Standards.
+ Figure 16.114.19 Biking Street C (Separated Bike Lane)
+38
+ 16.114.120
+174.86.35 (King City Supp. No. 14, 12-23)
+1. Narrow Streets. Three alternative cross-sections for local residential narrow streets are illustrated
+in the following Figures 16.114-21, 16.114-22, and 16.114-23. Each Narrow Street alternative is tied to a
+specific set of criteria that must be met when adopting the alternative.
+a. Criteria for Narrow Street A:
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative.
+ii. Not appropriate for streets serving more than five hundred vehicle trips per day.
+iii. On-street parking is permitted on one side only.
+iv. No on-street parking is permitted within thirty feet of an intersection.
+b. Criteria for Narrow Street B:
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative.
+ii. Not appropriate for streets serving more than one thousand vehicle trips per day.
+iii. On-street parking is permitted on both sides.
+iv. No on-street parking is permitted within 30 feet of an intersection.
+ Figure 16.114.20 Rural Character Neighborhood Street
+16.114.120
+174.86.36(King City Supp. No. 14, 12-23)
+c. Criteria for Narrow Street C:
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative.
+ii. Not appropriate for streets serving more than two hundred vehicle trips per day.
+iii. No on-street parking is permitted on either side.
+
+ Figure 16.114.21 Narrow Street A (Parking One-Side)
+ 16.114.120
+174.86.37 (King City Supp. No. 14, 12-23)
+Figure 16.114.22 Narrow Street B (Parking Both Sides)
+16.114.120
+174.86.38(King City Supp. No. 14, 12-23)
+Figure 16.114.23 Narrow Street C (No Parking)
+ 16.114.120
+174.86.39 (King City Supp. No. 14, 12-23)
+G. Adjustments to the street dimension and
+design characteristics. Adjustments to the street
+dimension and design characteristics of Section
+16.114.120.E may be approved by the City Engi-
+neer through a Development Plan Review with
+consideration made to the following:
+1. The functional street classification.
+2. Anticipated traffic volume.
+3. Sidewalk and bikeway requirements.
+4. On-street parking needs.
+5. Requirements for placement of utilities.
+6. Street lighting.
+7. Drainage and slope impacts.
+8. Protection of inventoried Goal 5 natural
+resources including Class A and B Upland Wild-
+life Habitat Conservations Areas and Class I and
+II Riparian Habitat Conservation Areas.
+9. Street location.
+10. Planting and landscape areas.
+11. Safety and comfort for motorists, bicy-
+clists, and pedestrians.
+12. Access needs for emergency and service
+vehicles and transit.
+13. Guidance provided in Table 5: Minimum
+Bicycle Facilities, Table 7: Process for Determin-
+ing Street Cross-Sections in Constrained Condi-
+tions, and Table 8: Constrained Acceptable Side-
+walk Configuration of the City's Transportation
+System Plan.
+ Figure 16.114.24 Alley
+16.114.120
+174.86.40(King City Supp. No. 14, 12-23)
+H. On-Site bicycle and pedestrian circula-
+tion. Development within Kingston Terrace shall
+provide an on-site bicycle and pedestrian circula-
+tion system which includes the following:
+1. Private development shall provide contin-
+uous connections between the primary buildings,
+ground level entrances, common buildings, com-
+mon open space, and vehicle and bicycle parking
+areas.
+2. Pedestrian walkways shall be separated
+from vehicle parking and maneuvering areas by
+physical barriers such as planter strips, raised curbs,
+or bollards.
+3. Walkways shall be constructed with a hard
+surface material and shall be no less than five feet
+wide. If adjacent to a parking area where vehicles
+will overhang the walkway, it shall have a mini-
+mum width of seven feet. The walkways shall be
+separated from parking areas and internal drive-
+ways using curbing, bollards, landscaping, or dis-
+tinctive paving materials.
+4. Dwelling, multi, mixed-use, and commer-
+cial developments shall provide on-site bicycle and
+pedestrian connections every three hundred thirty
+feet of block length where block lengths exceed
+five hundred thirty feet, except where precluded by
+natural topography, wetlands, significant habitat
+areas, bodies of water, or pre-existing develop-
+ment.
+I. Public bicycle and pedestrian circulation
+and facilities. The bicycle and pedestrian circula-
+tion system in the Kingston Terrace District shall
+include the following:
+1. Location of pedestrian and bicycle routes
+shall substantially conform to Figure 26: Pedes-
+trian Route Designations and Figure 27: Bicycle
+Route Designations of the King City Transporta-
+tion System Plan, except as altered by traffic or
+engineer analysis.
+2. Size and location of pedestrian and bicycle
+facilities along public streets shall conform to the
+Street Dimensional and Design Standards of Ta-
+ble 16.114-11.
+3. Where bicycle routes are parallel and adja-
+cent to an auto travel lane, the connection must be
+clearly marked and safely separated from the auto
+travel lane.
+J. Future transit. Developers shall coordinate
+with transit providers on design and location of
+transit infrastructure for development along tran-
+sit routes identified in King City's Transportation
+System Plan Figure 28: Transit Route Designa-
+tions.
+K. Circulation and Access. Development in
+the Kingston Terrace District shall comply with
+the minimum driveway, access width, and pave-
+ment width standards of Table 16.114-12.
+Table 16.114-12 Minimum Vehicle Access Standards
+ Uses  Number of
+Driveways  Access Width  Pavement Width
+Dwelling, single detached or attached 1 10 ft. 10 ft.
+Dwellings, multi 1 30 ft. 15 ft. for 1-way 20 ft. for 2-way
+Curbs and 5 ft. Walkway Required
+Mixed-Use and Non-Residential Uses
+(0-99 Parking Spaces) 1 30 ft. 24 ft. Curbs Required
+Mixed-Use and Non-Residential Uses
+(100+ Parking Spaces) 1 30 ft. Without Parking 24 ft. Curbs Required
+50 ft. With Parking 40 ft. Curbs Required
+1. Private residential access drives shall be
+provided and maintained in accordance with the
+applicable provisions of the Uniform Fire Code.
+2. Access drives from the street to off-street
+parking or loading areas shall be designed and
+constructed to facilitate the flow of traffic and
+provide maximum safety for pedestrian and vehic-
+ular traffic on the site.
+3. Parking spaces on access driveways shall
+be designed to reduce or eliminate backing move-
+ments and other conflicts with the driveway traffic
+and pedestrian routes and crosswalks.
+ 16.114.120
+174.86.41 (King City Supp. No. 14, 12-23)
+4. To slow traffic speeds on access drives,
+speed bumps, speed limit signs, and similar tech-
+niques may be required by the approval authority
+to enhance safety for pedestrians, bicyclists, and
+motorists on the site.
+5. To improve traffic flow, the city engineer
+may require directional signs on the site to guide
+pedestrians, bicyclists, or motorists.
+6. Where a proposed parking facility is served
+by one-way traffic flow on the site, it shall be
+accommodated by a driveway system approved by
+the city, and the entrance drive shall be situated
+closest to oncoming traffic and the exit drive shall
+be situated farthest from oncoming traffic.
+7. The direction of traffic flow shall be clearly
+marked for motorists on the property and the
+adjoining public street.
+8. Excluding dwelling, single-family attached
+or detached, groups of more than two parking
+spaces and all loading areas shall be served by a
+service drive so that no backing movements or
+other maneuvering within a street or other public
+right-of-way is required.
+9. All driveways shall be paved and designed
+in a manner approved by the City Engineer.
+10. Where pedestrian or bicycle routes cross
+driveways, parking area or loading areas, the con-
+nection must be clearly identifiable through the
+use of striping, elevation changes, speed bumps, a
+different paving material, or other similar method.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.130 Parking and Loading.
+A. Purpose. The purpose of this chapter is to
+provide basic and flexible standards for the devel-
+opment of vehicle parking, loading and bicycle
+parking. The design of parking and loading areas
+is critically important to the viability of commer-
+cial areas, pedestrian and driver safety, the effi-
+cient and safe operation of adjoining streets, and
+community image and livability. Because vehicle-
+parking facilities can occupy large amounts of
+land, they must be planned and designed carefully
+to use the land efficiently while maintaining the
+visual character of the community.
+B. Applicability. The Parking and Loading
+standards of Chapter 16.132 do not apply to new
+development in the Kingston Terrace District. They
+are superseded by the standards of Section
+16.114.130.
+C. Vehicle parking standards.
+1. Minimum number of vehicle parking
+spaces. There are no minimum vehicle parking
+requirements in the Kingston Terrace District.
+2. Maximum number of vehicle parking
+spaces.
+a. The number of parking spaces provided by
+any particular use in ground surface parking lots
+must not exceed the number of parking spaces
+provided in Table 16.114-13, Maximum Off-Street
+Vehicle Parking Spaces. Spaces provided on-street,
+or within the building footprint of structures, such
+as in rooftop parking, tuck-under parking or under-
+structure parking, or in multi-level parking above
+or below surface lots, do not apply toward the
+maximum number of allowable spaces. Where a
+fractional number of spaces results, the maximum
+number of spaces is rounded down to the nearest
+whole number. This section does not apply to
+single-family residential dwellings.
+16.114.120
+174.86.42(King City Supp. No. 14, 12-23)
+Table 16.114-13 Maximum Vehicle Parking Spaces
+  Maximum Off-Street Parking Requirements
+ Use Categories  Specific Uses  Maximum Vehicle Parking
+ A. Residential Categories
+1. Single-Family Single-family Attached/Detached Not Applicable
+Duplex, Triplex, Fourplex Not Applicable
+Residential Care Not Applicable
+Manufactured Home Not Applicable
+Mobile Home Not Applicable
+2. Multi-dwelling/Group Living Studio/1 Bedroom 1.5 spaces per unit.
+2 or more Bedrooms 2.25 spaces per unit.
+ B. Commercial Categories:
+1. Retail Sales and Service Retail, Personal Service, Repair 1 space per 200 square feet.
+Retail, Repair Large Merchandise such as
+Home Appliances, Furniture
+1 space per 600 square feet of gross floor
+area.
+Restaurants, Health clubs, meeting rooms 1 space per 133 square feet of gross leas-
+able floor area.
+Motel 1.5 spaces per guest room, plus 1 space for
+the manager.
+Theater 1 space per 2.66 seats.
+2. Office Professional Government 1 space per 200 square feet.
+Medical, Dental 1 space per 200 square feet.
+3. Automotive Vehicle Repair 1 space per 6,000 square feet, or 2 mini-
+mum.
+Quick Vehicle Service, Car Wash 1 space per 6,000 square feet, or 2 mini-
+mum.
+ C. Institutional Categories:
+1. Public Safety Facilities Number determined as part of conditional
+use.
+2. Community Parks and Open Space, Meeting Recre-
+ation Halls, Recreation Buildings
+1 space per 7,000 square feet of gross area,
+or 1 space per 700 square feet of building
+floor area, whichever is greater.
+3. Schools Grades K—12 0.3 per staff and students
+4. Religious assembly 1 space per 2.66 seats in the main worship
+area.
+5. Utilities
+1 space per 1.5 employees on the largest
+shift, or 1 space for each 350 square feet of
+gross floor area, plus 1 space per fleet vehi-
+cle.
+3. Availability. Parking spaces may not be
+used for the parking of equipment or storage of
+goods or inoperable vehicles. Parking spaces may
+not be assigned in any way to a use on another site,
+except for shared parking situations.
+4. Location.
+a. Vehicle parking is allowed only on ap-
+proved streets, within garages, carports, and other
+structures, or on driveways or parking lots that
+have been developed in conformance with this
+code. Vehicle parking must not be located in a
+vehicle travel lane (including emergency or fire
+access lanes).
+b. Surface parking areas shall be located on
+the site to serve the intended users of the develop-
+ment safely and conveniently, without precluding
+future site intensification.
+c. Surface parking areas shall occur to the
+side or rear of buildings.
+d. Off-street surface vehicle parking areas, de-
+tached garages, and attached or detached carports
+associated with mixed-use, multi-family dwelling,
+or commercial buildings may not be located closer
+to a street property line than the building closest
+to that street property line.
+ 16.114.130
+174.86.43 (King City Supp. No. 15, 9-25)
+e. Parking spaces shall be so located and served
+by an access that their use will require no backing
+movements or other maneuvering within a street
+or right-of-way.
+5. ADA accessible parking spaces.
+a. When parking is provided on-site, accessi-
+ble parking must be provided for disabled persons,
+in conformance with the Federal Americans with
+Disabilities Act (ADA). On-site accessible park-
+ing facilities must comply with the design require-
+ments of the current building code as adopted by
+the State of Oregon.
+6. Shared Parking. Shared parking between
+two or more uses is permitted when all the follow-
+ing criteria are satisfied:
+a. Satisfactory legal evidence is presented to
+the city manager in the form of deeds, leases or
+contracts to establish the shared use; and
+b. The other applicable standards of this title
+can be met.
+7. Electrical service capacity. Electrical ser-
+vice capacity, as defined by ORS 455.417, must be
+provided to new off-street parking spaces in com-
+pliance with the standards of this subsection. Ad-
+justments to the standards of this subsection are
+prohibited.
+a. Non-residential development and residen-
+tial or mixed-use developments with less than five
+dwelling units must provide electrical service ca-
+pacity to a minimum of twenty percent of all
+off-street vehicle parking spaces on the site.
+b. Residential or mixed-use developments with
+five or more dwelling units must provide electrical
+service capacity to a minimum of forty percent of
+all off-street vehicle parking spaces on the site.
+c. Dwelling units in townhouses are not in-
+cluded for the purposes of determining the appli-
+cability of this regulation.
+8. Maintenance.
+a. When provided, parking spaces shall be
+designed and maintained by the owner of the
+property.
+b. All off-street vehicle parking spaces and
+maneuvering areas must have a durable and paved
+surface and shall be maintained for all-weather
+use. The use of pervious concrete, pervious pav-
+ing, driveway strips, or an in-ground grid or lattice
+surface is encouraged to reduce stormwater run-
+off.
+9. Parking stall standard dimensions and com-
+pact car parking.
+a. All off-street parking stalls must be im-
+proved to conform to City standards for surfac-
+ing, stormwater management and striping, and
+provide dimensions in accordance with Table
+16.114-14 Parking Stall Dimensions and Figure
+16.114-25 Parking Area Dimensions.
+b. No more than fifty percent of the parking
+stalls provided on-site can be compact spaces.
+c. The stopping edge of any curb or wheel
+stop must be placed no less than two feet from the
+end of the parking stall.
+d. Where a curb or wheel stop is provided, the
+overhang of a vehicle past the curb or wheel stop
+may be counted as part of the required parking
+stall depth, up to a maximum of two feet.
+e. Parking spaces along the boundaries of a
+parking lot or adjacent to interior landscaped ar-
+eas or sidewalks shall be provided with a wheel
+stop that is at least four inches high located three
+feet back from the front of the parking space. The
+front three feet of the parking stall may be con-
+crete, asphalt or low-lying landscape material that
+does not exceed the height of the wheel stop. This
+area cannot be calculated to meet landscaping or
+sidewalk requirement.
+16.114.130
+174.86.44(King City Supp. No. 15, 9-25)
+Table 16.114-14 Minimum Parking Dimensions
+
+ Parking
+Angle (A)
+ Parking Stall
+Type  Stall Width (B)  Curb Length (C)
+ 1-Way Aisle
+Width (D)
+ 2-Way Aisle
+Width (D)
+ Stall Depth
+(Includes bumper
+overhang) (E)
+ 0°  Standard  8.0 ft.  22.5 ft.  12 ft.  20 ft.  8.0 ft.
+ Compact  8.0 ft.  22.5 ft.  12 ft.  20 ft.  8.0 ft.
+30 ° Standard 9.0 ft. 9.0 ft. 12 ft. 20 ft. 16.0 ft.
+Compact 8.0 ft. 8.0 ft. 12 ft. 20 ft. 15.0 ft.
+ 45 °  Standard  9.0 ft.  9.0 ft.  12 ft.  20 ft.  16.0 ft.
+ Compact  8.0 ft.  8.0 ft.  12 ft.  20 ft.  15.0 ft.
+60 ° Standard 9.0 ft. 9.0 ft. 16.0 ft. 20.0 ft. 16.0 ft.
+Compact 8.0 ft. 8.0 ft. 16.0 ft. 20.0 ft. 15.0 ft.
+ 90 °  Standard  9.0 ft.  8.5 ft.  16.0 ft.  20.0 ft.  16.0 ft.
+ Compact  8.0 ft.  8.5 ft.  16.0 ft.  20.0 ft.  15.0 ft.
+
+D. Loading area requirements. All off-street vehicle loading areas for passengers or goods must:
+1. Include sufficient area for turning and maneuvering of vehicles on-site.
+2. Be designed such that vehicle stacking does not impact any public right-of-way, vehicle travel lane,
+or emergency or fire access lanes.
+E. Bicycle parking requirements: Bicycle parking shall be provided in conjunction with all new
+mixed-use, dwelling, multi, commercial, and municipal developments in Kingston Terrace District. This
+section does not apply to single-family, residential dwellings.
+1. Number of bicycle parking spaces. Table 16.114-15 lists applicable standards.
+ Figure 16.114-25 Parking Area Dimensions
+ 16.114.130
+174.86.45 (King City Supp. No. 14, 12-23)
+Table 16.114-15 Minimum Bicycle Parking Requirements
+  Minimum Bicycle Parking Requirements
+ Use Categories  Specific Uses  Minimum Bicycle Parking
+ A. Residential Categories
+ 1. Single-Family Dwelling Single-family Detached/Attached
+Not Applicable
+Duplex, Triplex, Fourplex
+Residential Care
+Manufactured Home
+Mobile Home
+ 2. Dwelling, multi/Group Living Studio/1 Bedroom 1 space per unit.
+2 or more Bedrooms 1 space per unit.
+ B. Commercial Categories:
+ 1. Retail Sales and Service Retail, Personal Service, Repair
+1 space per 2,500 square feet of floor area,
+or 2 spaces minimum.
+Retail, Repair Large Merchandise such as
+Home Appliances, Furniture
+Restaurants, Health clubs, meeting rooms
+Motel 1 space per 10 rooms, or 2 spaces minimum
+Theater
+1 covered space for every 20 seats, or 1
+space per 20 persons allowed by Building
+Code.
+ 2. Office Professional Government 1 space per 2,500 square feet of floor area,
+or 2 spaces minimum Medical, Dental
+ 3. Automotive Vehicle Repair 2 covered spaces. Quick Vehicle Service, Car Wash
+ C. Institutional Categories:
+ 1. Public Safety Facilities 1 space per 4,000 sq. ft., or 2 spaces mini-
+mum.
+ 2. Community Parks and Open Space, Meeting Recre-
+ation Halls, Recreation Buildings
+2 spaces within 50 feet of each developed
+playground, ball field, and shelter; or a
+minimum of 8 spaces per park.
+ 3. Schools Grades K-12 4 per classroom for grades 4—12.
+ 4. Religious assembly
+1 covered space for every 20 seats, or 1
+space per 20 persons allowed by Building
+Code in the main assembly room.
+ 5. Utilities 1 space per 4,000 sq. ft., or 2 spaces mini-
+mum.
+2. Bicycle parking shall be located no more
+than fifty feet from a primary entrance in the
+closest available area to the primary entrance as
+determined by the decision-making authority.
+3. Bicycle parking facility design.
+a. Bicycle parking facilities shall either be lock-
+able enclosures in which the bicycle is stored, or
+secure stationary rack which supports the frame
+so the bicycle cannot easily be pushed or fall to
+one side. Racks that require a user-supplied lock
+shall accommodate locking the frame and both
+wheels using either a cable or U-shaped lock.
+b. Bicycle parking spaces shall be at least six
+feet long and two and one-half feet wide, and
+overhead clearance in covered spaces shall be a
+minimum of seven feet.
+c. A five-foot aisle for bicycle maneuvering
+shall be provided and maintained beside or be-
+tween each row of bicycle parking.
+d. Bicycle racks or lockers shall be securely
+anchored.
+e. Required bicycle parking shall be located
+in a well-lit secure location within fifty feet of an
+entrance to the building, but not farther from the
+entrance of the building than the closest standard
+or compact vehicle parking space.
+f. Bicycle parking shall not obstruct walk-
+ways. A minimum five-foot-wide aisle shall remain
+clear.
+g. If ten or more bicycle spaces are required
+for commercial or institutional developments, then
+at least fifty percent of the bicycle spaces must be
+16.114.130
+174.86.46(King City Supp. No. 14, 12-23)
+sheltered under an eave, overhang, independent
+structure, or similar cover. A lockable enclosure
+shall be considered as a covered parking space.
+h. All of the required bicycle parking for res-
+idential uses shall be covered. This may include
+space provided in a carport or garage.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023; Ord.
+No. O-2024-01, § 1(Exh. A), 12-18-2024)
+16.114.140 Provision of Adequate Public
+Facilities.
+A. Purpose. The purpose of this section is to
+address the provision of the infrastructure sys-
+tems necessary to benefit and serve all property in
+the Kingston Terrace District as provided for in
+the Kingston Terrace Master Plan and King City's
+Transportation System Plan.
+B. Public improvements. Public infrastruc-
+ture, mobility, development, and natural system
+improvements include, but are not limited to the
+following:
+1. Sanitary sewer infrastructure,
+2. Water infrastructure,
+3. Stormwater management infrastructure,
+4. Arterial street improvements,
+5. Collector streets,
+6. Neighborhood routes,
+7. Bicycle and pedestrian facilities,
+8. Public parks and open spaces, and
+9. Community recreation facility.
+C. Annexation agreement.
+1. Purpose. The annexation agreement is in-
+tended to ensure awareness of the annexation pro-
+cess as well as reasonable certainty to the property
+owner, the City, and the public that the scope and
+timing of subsequent development of the prop-
+erty will occur in a manner that facilitates the
+timely and equitable construction of necessary
+infrastructure improvements. The agreement is in-
+tended to describe the proposed use of the prop-
+erty following annexation, the process for devel-
+opment, the parties' commitments regarding the
+subsequent development, and the infrastructure
+anticipated to be necessary to support develop-
+ment.
+2. Applicability. Unless waived by the City,
+an annexation agreement consistent with this sec-
+tion shall be executed concurrently with any owner-
+initiated annexation application.
+3. Contents. Unless otherwise agreed by the
+City, an annexation agreement must include the
+following information and, at a minimum, address
+the following elements to the City's satisfaction:
+a. A legal description of the property;
+b. The current zoning;
+c. The proposed zoning consistent with Sec-
+tion 16.114.030;
+d. The owner's intended urban use of the
+property, including type, size, and density, in suf-
+ficient detail to allow the City to determine im-
+pacts to existing natural resources, land use, trans-
+portation network, and public infrastructure to
+identify improvements and permitting necessary
+to support the intended use and demonstrate con-
+formance with the Kingston Terrace Master Plan,
+King City's Transportation System Plan, Compre-
+hensive Plan, and applicable state and Metro re-
+quirements.
+4. General provisions.
+a. An annexation agreement expires two years
+from the last date it is signed by the parties unless
+the City has received a development plan review
+application for the property and deemed the ap-
+plication complete prior to the two-year expira-
+tion date.
+b. The provisions of an annexation agree-
+ment may be included in and made part of a
+subsequent land use decision, in which case the
+provisions of the land use decision supersede any
+conflicting provisions in the annexation agree-
+ment.
+c. An annexation agreement is not effective
+and binding on the parties until the annexation
+application is approved by the City Council in
+accordance with Chapter 16.192, Annexation.
+D. Development agreement.
+1. Purpose. A development agreement is in-
+tended to provide reasonable certainty to the prop-
+erty owner, the City, and the public that the scope
+and timing of development of the property will
+ 16.114.140
+174.86.47 (King City Supp. No. 15, 9-25)
+occur in a manner that facilitates the timely and
+equitable construction of necessary infrastruc-
+ture, mobility, development, and natural system
+public improvements. The development agree-
+ment shall describe in greater detail the owner's
+intended use of the property, the parties' commit-
+ments regarding subsequent development of the
+property, in public improvements determined to
+be necessary to support development, and the
+parties' obligations with respect to financing and
+constructing the improvements.
+2. Applicability. A development agreement
+consistent with this Section may be required as a
+condition of approval of a development plan re-
+view application.
+3. Contents. Unless otherwise agreed by the
+City, the development agreement must include the
+following information and, at a minimum, address
+the following elements to the City's satisfaction:
+a. A description of the anticipated type and
+scope of residential or commercial development,
+including the number of housing units, consistent
+with the Kingston Terrace Master Plan;
+b. The proposed timing and any phasing of
+the development as it relates to available or planned
+infrastructure capacity;
+c. The financing and development obliga-
+tions for any required or necessary infrastructure;
+d. The owner's commitment to design and
+construct amenities that further the goals and ob-
+jectives of the Kingston Terrace Master Plan;
+e. A detailed plan for financing and construct-
+ing complete and connected arterial and/or collec-
+tor or neighborhood route planned streets where
+the full right-of-way is under the control of the
+owner or developer, such that a new collector or
+arterial street is not terminated without connect-
+ing to another improved street. A "complete street
+includes both adjacent and opposite side full street
+improvements, including public and private utili-
+ties, where required;
+f. A detailed plan for financing and construc-
+tion of public parks, trails, and open spaces on
+properties where a public park, trail, or open space
+is identified on the property according to Figure
+3.4 Parks and Open Space System Diagram of the
+Kingston Terrace Master Plan; and
+g. A detailed plan for financing and construc-
+tion of water, sanitary sewer, and stormwater man-
+agement public facilities identified to serve the
+property as identified in the Kingston Terrace
+Master plan.
+4. General provisions. The provisions of a
+development agreement may be included in and
+made part of a subsequent land use decision, in
+which case the provisions of the land use decision
+supersede any conflicting provisions in the devel-
+opment agreement.
+5. Unless expressly authorized in a develop-
+ment approval, the imposition of private fees or
+any charge whatsoever that prohibits, restricts, or
+impairs adjacent or surrounding properties from
+accessing a public easement, facility, or service is
+prohibited.
+E. Exceptions permitted.
+1. An exception to one or more of the require-
+ments of this Section may be obtained through a
+development plan review administered and re-
+viewed in accordance to Section 16.114.140.
+2. An exception will be granted only if the
+applicant:
+a. Demonstrates that the exception will not
+materially impact implementation of the Kings-
+ton Terrace Master Plan and King City's Trans-
+portation System Plan;
+b. Has proposed alternatives that ensure the
+applicant will provide its proportional share of the
+funding and construction of the facilities in a
+timely manner as identified in the Kingston Ter-
+race Master Plan and King City Transportation
+System Plan.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.150 Development Plan Review Process.
+A. Purpose. The purpose of development plan
+review is to establish a process and standards for
+development within the Kingston Terrace District
+that is consistent with the Kingston Terrace Mas-
+ter Plan, the comprehensive plan, and this title to
+16.114.140
+174.86.48(King City Supp. No. 15, 9-25)
+ensure that transportation, public infrastructure,
+and other facilities are provided to support the
+anticipated development.
+B. Applicability. Development plan review
+shall be applicable to all new development and
+major modifications of approved development
+plans in the Kingston Terrace District, except it
+shall not apply to:
+1. New construction or additions to existing
+single-family detached or attached dwellings, du-
+plexes, quadplexes, triplexes, cottage clusters, or
+accessory dwelling units on existing lots.
+2. Middle housing development on an exist-
+ing lot is allowed outright subject to design and
+dimensional standards and HCA standards but
+exempt from development plan review.
+3. A change in the type and location of ac-
+cessways and parking areas where off-site circula-
+tion would not be potentially affected.
+4. Minor modifications as provided in Sec-
+tion 16.114.150.Q.
+C. Administration.
+1. Development plan applications and major
+modifications to approved development plans shall
+be administered and reviewed as a Type III plan-
+ning commission review in accordance with Arti-
+cle II of this title.
+2. Minor modifications to a development plan
+as described in Section 16.114.150.Q, shall be ad-
+ministered as a Type II city manager decision in
+accordance with Article II of this title.
+3. Permits for residential construction as iden-
+tified in Section 16.114.150.B.2. shall be adminis-
+tered and reviewed as a Type I administrative
+decision in accordance with Article II of this title.
+D. Submittal requirements.
+1. In addition to the application form and
+information required in Section 16.44.030, the ap-
+plicant shall submit each of the following:
+a. A site plan, with the number of copies to
+be determined at the preapplication conference,
+and necessary data or narrative which explains
+how the development conforms to the standards,
+and:
+i. The scale for site plan shall be an engineer-
+ing scale; and
+ii. All drawings of structure elevations or floor
+plans shall be a standard architectural scale, being
+one-fourth inch or one-eighth inch.
+b. The site plan, data, narrative, and reports
+shall include the following:
+i. An existing site conditions analysis as de-
+scribed in Section 16.114.150.E;
+ii. A site plan, as detailed in Section
+16.114.150.F;
+iii. A grading plan as detailed in Section
+16.114.150.G;
+iv. Architectural elevations of all structures
+as detailed in Section 16.114.150.I;
+v. A landscape plan as detailed in Section
+16.114.150.J;
+vi. A preliminary subdivision, partition, or
+lot line adjustment as detailed in Section
+16.114.150.K, if applicable;
+vii. A traffic impact analysis based on the
+type and intensity of the proposed land use change
+or development and its estimated level of impact
+to the existing and future local and regional trans-
+portation systems;
+viii. Service provider letters from Clean Wa-
+ter Services and Tigard Water Department docu-
+menting capacity available to serve proposed land
+use change or development;
+ix. A phasing plan that depicts phased con-
+struction of development area including public
+transportation and utility improvements as needed;
+and
+x. A copy of all existing and proposed restric-
+tions or covenants.
+2. The manager may require information in
+addition to that required by this chapter when it is
+found that certain information is necessary to prop-
+erly evaluate the application.
+3. The manager may waive a specific require-
+ment for information when it is found that such
+information is not necessary to properly evaluate
+the application.
+E. Site analysis drawings shall include:
+1. A vicinity map showing streets and access
+points, pedestrian and bicycle pathways, transit
+stops and utility locations.
+ 16.114.150
+174.86.49 (King City Supp. No. 14, 12-23)
+2. The site size and its dimensions.
+3. Contour lines at two-foot contour inter-
+vals for grades zero to ten percent and five-foot
+intervals for grades over ten percent.
+4. The location of drainage patterns and drain-
+age courses.
+5. The location of natural hazard areas in-
+cluding:
+a. The one hundred-year floodplain;
+b. Slopes in excess of twenty-five percent;
+c. Unstable ground (areas subject to slump-
+ing, earth slides or movement);
+d. Areas having a severe soil erosion poten-
+tial; and
+e. Areas having severe weak foundation soils.
+6. The location of resource areas including
+those identified in the Natural Systems section of
+the Kingston Terrace Master Plan:
+a. Class A and B Upland Wildlife Habitat
+Conservation Areas;
+b. Class I and II riparian areas;
+c. Wetlands;
+d. Trees with six inches diameter or greater
+measured four feet from ground level; and
+e. Streams and drainageways.
+7. The location of existing structures on the
+site and proposed use of those structures.
+8. The locations and types of noise sources
+on the site or on adjoining property such as traffic
+ways, mechanical equipment or noise producing
+land uses if requested by the city manager. See
+Section 8.04.130 for noise provisions.
+F . The proposed site plan shall be at the same
+scale as the site analysis and shall include the
+following information:
+1. The proposed site and surrounding prop-
+erties.
+2. Contour line intervals as required by Sec-
+tion 16.114.150.E.
+3. The location, dimensions, and names of
+all:
+a. Existing and platted streets and other pub-
+lic ways and easements on the site and on adjoin-
+ing properties, and
+b. Proposed streets or other public ways and
+easements on the site.
+4. The location and dimensions of:
+a. Entrances and exits on the site;
+b. Parking and circulation areas;
+c. Loading and service areas;
+d. Pedestrian and bicycle circulation;
+e. Outdoor common areas; and
+f. Above ground utilities.
+5. The location, dimensions and setback dis-
+tances of all:
+a. Existing structures, improvements and util-
+ities on the site or which are located on adjacent
+property within twenty-five feet of the site and are
+permanent in nature; and
+b. Proposed structures, improvements and util-
+ities on the site.
+6. The location of all areas to be landscaped.
+7. The location and type of outdoor lighting,
+considering crime prevention techniques.
+8. The location of proposed utility lines.
+9. The location of all structures and their
+orientation.
+10. The size and location of mixed solid waste
+and recyclables storage areas.
+G. The site plan shall include a grading plan
+at the same scale as the site analysis drawings and
+shall contain the following information:
+1. Requirements in Sections 16.114.150.E. and
+16.114.150.F .
+2. The location and extent to which grading
+will take place indicating general contour lines,
+slope ratios and slope stabilization proposals.
+3. A statement from a registered engineer sup-
+ported by factual data substantiating:
+a. That any increase in intensity of the runoff
+caused by development must be facilitated on the
+site and the intensity of runoff leaving the site in
+its developed state shall not exceed that in its
+undeveloped state. The statement shall include as
+a minimum a storm frequency of occurrence of
+ten years or greater, depending upon evaluation of
+potential for damage when a storm of higher fre-
+quency occurs.
+16.114.150
+174.86.50(King City Supp. No. 14, 12-23)
+b. When on-site detention of an increased
+volume of water caused by development is not
+feasible or acceptable, a plan which identifies and
+mitigates any off-site adverse effects resulting from
+increased runoff shall be prepared by a registered
+civil engineer.
+c. Compliance with Clean Water Services re-
+quirements for erosion control during construc-
+tion.
+H. Geotechnical report prepared by a certi-
+fied geotechnical engineer that addresses:
+1. Existing soil conditions,
+2. Recommended erosion control and slope
+stabilization measures, and
+3. Recommended plan for soil treatment, such
+as stockpiling of topsoil.
+I. The application shall include architectural
+drawings providing:
+1. Floor plans indicating the square footage
+of all structures proposed for use on-site.
+2. Typical elevation and section drawings of
+each structure, including exterior finish materials.
+3. Exterior mechanical equipment.
+J. The landscape plan shall be drawn at the
+same scale as the site analysis plan, or a larger
+scale if necessary, and shall indicate:
+1. Location of underground irrigation sys-
+tem sprinkler heads where applicable.
+2. Location and height of fences, buffers and
+screening.
+3. Location of terraces, decks, shelters, play
+areas and common open spaces.
+4. Location, type, size and species of existing
+and proposed plant materials.
+K. Any proposed land divisions or lot line
+adjustments shall provide the applicable submittal
+requirements in Chapters 16.196 Subdivision, or
+16.200 Major and Minor Land Partitions and Lot
+Line Adjustments.
+L. Drawings for any proposed signs includ-
+ing:
+1. Location of any freestanding, wall or build-
+ing signs.
+2. Scaled sign plans showing the dimensions,
+height, color, material, and means of illumination.
+M. Approval standards. The decision-mak-
+ing authority shall approve a Development Plan
+Review application when the following standards
+are demonstrated to be met in the Plan:
+1. The Development Plan complies with the
+applicable standards of this title;
+2. The location and alignment of streets, paths
+and trails, parks and open spaces and uses in
+proposed in the Development Plan are consistent
+with the Regulating Plan;
+3. Public infrastructure improvements will be
+designed and located to adequately serve the pro-
+posed development and not unduly or unnecessar-
+ily restrict the ability of any other property to
+develop; and
+4. If the Development Plan is phased, the
+phasing sequence is reasonable.
+N. Adjustments. The decision making-author-
+ity may approve a Development Plan Review ap-
+plication that proposes an adjustment provided
+that:
+1. The adjustment does not result in more
+than a twenty percent change in applicable dimen-
+sional or design standards;
+2. The Development Plan Review proposal
+complies with all other applicable requirements of
+this chapter; and
+3. The proposed adjustment does not materi-
+ally alter compliance with the Regulating Plan.
+O. Minor Modification. Modification to an
+approved development plan may be approved pro-
+vided it satisfies the following standards:
+1. Does not change the originally approved
+development plan boundary.
+2. Does not result in a density decrease of
+greater than ten percent from what was specified
+in the approved development plan.
+3. Does not change the amount of land area
+devoted to residential, mixed-use, or municipal
+land uses by greater than ten percent from what
+was specified in the approved development plan.
+4. Modifications to the location or alignment
+of streets or pedestrian paths, plazas, or parks as
+ 16.114.150
+174.86.51 (King City Supp. No. 14, 12-23)
+approved in the development plan, provided their
+functionality and performance is consistent with
+the approved development plan.
+(Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
+16.114.150
+174.86.52(King City Supp. No. 14, 12-23)
+Article IV .  Development Standards
+ Chapter 16.116

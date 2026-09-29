@@ -108,6 +108,12 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
         # corners. Unincorporated Washington County, drafted the same day,
         # holds no corner definition and is not here.
         "or/washington/hillsboro",
+        # 2026-09-29: King City, the same cloud session. KCMC 16.24.020 "Lot,
+        # corner": at the intersection of two or more public street
+        # rights-of-way. Public, so a private drive does not count, and the
+        # code names an alley apart from a street, so an alley does not
+        # either. No angle test.
+        "or/washington/king-city",
         # 2026-09-29: Sherwood, the same cloud session. 16.10.020 "Lot,
         # Corner: A lot situated at the intersection of two or more streets,
         # other than an alley", and "Street" includes a private road or

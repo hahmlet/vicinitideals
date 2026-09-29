@@ -4,7 +4,7 @@ Branch `flats/washington-draft`. Written for the local agent, who has not
 seen the cloud session. Scope and traps: [counties/washington.md](../counties/washington.md).
 Rules: [ENCODING_RULEBOOK.md](../ENCODING_RULEBOOK.md), [CLOUD_COUNTY_BRIEF.md](../CLOUD_COUNTY_BRIEF.md).
 
-Last updated: 2026-09-29, checkpoint 7. Four layers are finished as
+Last updated: 2026-09-29, checkpoint 8. Five layers are finished as
 drafts, with rulebook steps 1-10 and 12 done for each:
 
 - the unincorporated county (all 42 codes on the county's zoning map);
@@ -13,10 +13,12 @@ drafts, with rulebook steps 1-10 and 12 done for each:
 - Beaverton (all 28 districts of BDC 10.25, plus two rulings for the map's
   other codes);
 - Sherwood (21 zones, the codes on the city's zoning map that the code sets
-  standards for, plus 14 rulings for the map's other codes).
+  standards for, plus 14 rulings for the map's other codes);
+- King City (all 14 districts of KCMC 16.80.020, plus 12 rulings for the
+  map's other spellings and the county codes it keeps).
 
-The other five cities have not been started; section 1 says what the scout
-found for each. Every value is `draft`; nothing is `verified`.
+Durham is next. Tigard, Forest Grove and Cornelius refused the fetch and
+are recorded, not drafted; section 1 says what the scout found for each. Every value is `draft`; nothing is `verified`.
 
 **Read this first about Beaverton.** No Beaverton lot can come back GREEN
 as drafted. The county brief asks for the annexation condition (UPAA §V.D)
@@ -40,6 +42,25 @@ lots, and both are the strict one:
 
 See Doubts and Questions for Steph.
 
+**Read this first about King City.** Only the four Kingston Terrace
+zones (KTTC, KTBB, KTC, KTRC) admit the pod. The six older residential
+districts refuse it: their shared housing-type table (16.84.010) has no
+triplex or fourplex row. King City is a Large City under the state's
+middle housing rule, so that refusal is a question for Steph, not a
+settled answer. Two more things decide lots:
+
+- **No Kingston Terrace lot reaches the screen yet.** The city's zoning
+  layer 1 paints the older districts; the Kingston Terrace neighbourhoods
+  are on layer 4 of the same service, by name. The names are aliased in
+  the layer, but a lot only arrives once layer 4 is ingested (Owed
+  locally). About 404 King City taxlots and 98 unincorporated ones touch
+  a Kingston Terrace polygon.
+- **The minimum density is a lot-size ceiling.** Table 16.114-3 asks 22,
+  18, 10 and 8 homes a net acre. Four homes at 22 an acre cap a Town
+  Center lot near 7,900 sq ft; a larger lot fails the floor. The draft
+  reads "each development" as reaching one fourplex on an existing lot,
+  the stricter way.
+
 ## 1. Cities
 
 | Jurisdiction | State |
@@ -51,10 +72,11 @@ See Doubts and Questions for Steph.
 | Forest Grove | Not started. **Refused:** the code is only on American Legal (`https://codelibrary.amlegal.com/codes/forestgrove/latest/forestgrovedev_or/0-0-0-4`), which answered 403 to curl and WebFetch; there is no whole-code PDF. City zoning layer reachable (`maps.forestgrove-or.gov/server/rest/services/ForestGrove/Zoning/FeatureServer/16`, field `zoning_code`) |
 | Sherwood | Draft done, steps 1-10 and 12. 18 documents (15 slices of the Zoning and Community Development Code, Municode publication 3865, Supplement 24, through Ord. 2026-001; 3 slices of Ordinance 2022-004, for pages the Municode PDF drops), 21 zones, 14 map codes ruled (Old Town, OS, UGA, Unannex and ten county or neighbouring-city codes on unannexed land). City zoning layer `services5.arcgis.com/ikEzR7lqVIlrcVFn/.../Planning/FeatureServer/2`, field `CODE`. Nothing refused |
 | Cornelius | Not started. **Refused:** Code Publishing now points to eCode360 (`https://ecode360.com/CO4396`), which answered 403 (Cloudflare); `www.ci.cornelius.or.us` failed TLS. No city zoning layer; Metro's is stale (no R-10). The city's Zoning Map 2025 PDF is reachable. The AGOL "Cornelius Zoning Map" is Cornelius, North Carolina |
-| King City | Not started. Code found: Municode publication 3913, Supplement 16, August 2026 (742 pages). City zoning layer on AGOL (`King_City_Current_and_Future_Zoning_Map_WFL1/FeatureServer/1`, field `ZONECLASS`); the `(WC)` codes are county zoning kept. The single-use residential table (16.84.010) has no triplex or fourplex row; Kingston Terrace (16.114) does |
+| King City | Draft done, steps 1-10 and 12. 12 documents (slices of the Community Development and Zoning Code, Municipal Code Title 16, Municode publication 3913, Supplement 16, August 2026, through Ord. O-2025-02), 14 zones (4 admit the pod, 10 refuse), 12 map codes ruled (6 aliases, 5 county pockets, 1 unencodable). City zoning layer on AGOL (`King_City_Current_and_Future_Zoning_Map_WFL1/FeatureServer/1`, field `ZONECLASS`; Kingston Terrace on layer 4, field `Zoning_Designations`). `www.kingcityoregon.gov` refused (CONNECT 502); `www.ci.king-city.or.us` answered, and nothing needed was only on the first |
 | Durham | Not started. Code found: Development Code revised 2025-11-13, a 137-page PDF (`https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf`). No city GIS; Metro has five codes. Middle housing is permitted in SDR with no quadplex rows |
 
-The five "not started" rows come from a scout run on 2026-09-29 that
+The "not started" rows, and the first facts in the Sherwood and King
+City rows, come from a scout run on 2026-09-29 that
 looked for each city's code and zoning map. It committed nothing. The
 copies it downloaded were in the cloud session's scratchpad and are not on
 the branch. The refusals in the table were recorded, not worked around.
@@ -417,6 +439,108 @@ the pod:
 - two labels of the 16.14.030 driveway figure read as markers.
 
 Failed fetches for Sherwood: none.
+
+### King City
+
+Twelve documents, stored under
+`flats/provenance/docs/or/washington/king-city/`, all `extraction: plain`,
+all retrieved 2026-09-29. All twelve are slices of the King City
+Community Development and Zoning Code (Municipal Code Title 16), Municode
+publication 3913 (`https://api.municode.com/PublicationPdfDownload/3913`),
+Supplement No. 16, August 2026, through Ordinance O-2025-02. The PDF is the
+whole municipal code (742 pages); Title 16 starts near page 270. Slices
+held:
+
+- 16.24 (definitions: 16.24.020 the glossary, 16.24.030 the land use
+  types, 16.24.040 the solar figures);
+- 16.80 (the district list at 16.80.020, annexed areas at 16.80.050, yards
+  on short rights-of-way and projections at 16.80.060) and 16.82 (unlisted
+  uses);
+- 16.84 (R-9, and the housing-type table 16.84.010 that all six older
+  residential districts share), and 16.88 to 16.100 in one slice (SF, AT,
+  R-12, R-15, R-24);
+- 16.102 (NMU), and 16.104 to 16.112 in one slice (LC, CF, ROS);
+- 16.114, the Kingston Terrace District Code (Ordinance 2023-04, amended
+  through O-2025-02), 3,284 lines: the use table 16.114-2, the density
+  table 16.114-3, the dimensional table 16.114-4, the design standards, the
+  Habitat Conservation Area standards, streets, parking (16.114.130) and
+  procedure (16.114.150);
+- 16.132 (the citywide parking chapter, which Kingston Terrace is exempt
+  from), 16.136 (circulation and access, which applies there except
+  16.136.030, .040 and .050 C.6), 16.144 (vision clearance, which applies)
+  and 16.146 (density calculation, which Kingston Terrace replaces).
+
+How the slices are cut:
+
+- Plain chapter numbers are not unique in this PDF: the definitions cite
+  "Chapter 16.114" before the chapter prints, and 16.114 cites 16.132. So
+  the later slices start and end on a chapter's title line in capitals
+  ("KINGSTON TERRACE DISTRICT CODE", "PARKING AND LOADING").
+- `allow_thin: true` on four slices, each read whole before the flag went
+  on: 16.24 (a glossary, few section numbers), 16.80 (a list of districts
+  and two short sections), 16.82 (56 lines) and 16.144 (70 lines).
+- `glued_markers: true` on 16.114. Table 16.114-4 glues its note markers to
+  the figures: "1,50016" is 1,500 with note 16, "2017" is 20 with note 17.
+- `definitions_at: L20-L1117` on 16.24, so the glossary reader takes
+  16.24.020 alone. See Tests and Reader changes for why, and for what it
+  costs.
+
+Warnings from the fetcher: none. `api.municode.com` is in `OFFICIAL`.
+`www.kingcityoregon.gov` refused (CONNECT 502); the city's older domain
+`www.ci.king-city.or.us` answered and was used only to confirm the
+Municode publication is the current code (its municipal code page links
+to it). Nothing stored comes from either city domain.
+
+Not stored:
+
+- the Article IV and V chapters Table 16.114-1 applies in Kingston
+  Terrace but that set no figure the pod is screened on: 16.120
+  (manufactured homes), 16.124 (landscaping), 16.128 (tree removal), 16.140
+  (floodplain, which can only narrow a lot), 16.148 (signs), 16.156
+  (conditional uses), 16.160 (nonconforming situations), 16.164
+  (variances), 16.168 (temporary uses), 16.172 (home occupations), 16.176
+  (accessory structures), 16.178 (accessory dwellings), 16.179
+  (communication facilities) and 16.180 (fences). The ones the binding
+  ledger stood beside a value (16.156, 16.160, 16.172) are ruled in the
+  layer's `crossrefs:` block, with 5.05 (liquor licences) and 8.04.130
+  (noise);
+- the King City Transportation System Plan, which sets the street classes
+  and right-of-way widths 16.80.060 A and 16.114.120 lean on;
+- the unlisted-use list 16.82.030 A tells the city manager to keep (not
+  published with the code, and not found; Doubts).
+
+Figures the layer cannot read:
+
+- Figure 16.114-1, the Kingston Terrace Plan District map, and the
+  16.114.070 Regulating Plan;
+- the Habitat Conservation Area maps (16.114.080);
+- the street section drawings of Table 16.114-11;
+- the solar-access figures at the end of 16.24 (their OCR text is noise,
+  which is part of why the glossary is bounded).
+
+**The footnote census.** It found 6 notes in the King City documents, all
+in one block: the applicability notes "[1]" to "[6]" of Table 16.114-5,
+the Kingston Terrace design standards (L358-L370). Every one is ruled
+`dismissed` in `flats/config/footnotes/or/washington/king-city.yaml`,
+because each says which elevation a design standard reaches and the layer
+holds no design standard. None encoded, none unmeasured, so King City adds
+nothing to `caps.json`. Until the file existed, every Kingston Terrace
+value quoted above L358 read "6 unread of 6" in `qualified`.
+
+**What the census misses**, read by eye and written in the file's header
+so the next reader need not repeat it: the dimensional table's notes 14 to
+24 and the use table's notes 1 to 13 print with no period after the number
+("16 The minimum lot size ...") and their markers are glued to the
+figures, so the census sees neither block. Each is ruled in the header.
+The ones that move a value: note 16 (lot size "may be reduced to 1,000"),
+read the stricter way, 1,500 held; note 17 (width "may be reduced to 15"),
+20 held; note 18 (zero side yard only if attached or six feet from a
+neighbour), 3 held; note 19 (Rural Character, 10 feet for two stories),
+10 held. Notes 25 to 38 (commercial ground floors, the Upland HCA and the
+street sections) do not reach the pod.
+
+Failed fetches for King City: none. The whole Municode PDF fetched first
+time.
 
 ## 3. Zones
 
@@ -828,6 +952,142 @@ The code's other district-like tokens are ruled in `test_districts.py`
 and TEA (the Tonquin Employment Area, a plan area named in an industrial
 note).
 
+### King City
+
+The zone keys are the district designations of KCMC 16.80.020, as the
+code spells them (`R-9`, `KTTC`). Two maps paint the city, both on one
+AGOL service (`services8.arcgis.com/NsUn9YuPFCjrkDe3`,
+`King_City_Current_and_Future_Zoning_Map_WFL1`):
+
+- layer 1, field `ZONECLASS`, carries the older districts (AT, R12, R9,
+  R-24, SF, NMU, LC, CF, ROS) and five county codes marked "(WC)";
+- layer 4, field `Zoning_Designations`, carries the Kingston Terrace
+  neighbourhoods by name ("Town Center", "Beef Bend Neighborhood",
+  "Central Neighborhood", "Rural Character Neighborhood") and one
+  "Neighborhood Mixed Use" polygon (11 polygons in all).
+
+Lots reach the layer by the taxlots' `JURIS_CITY` = `KING CITY`.
+
+What the pod is here. 16.24.030 C defines a Fourplex as "a structure that
+contains four primary dwelling units on one lot. The units may share
+common walls, floors or ceilings". "Dwelling, multi" starts at five units,
+and a single-family attached dwelling is "located on its own lot". The
+Kingston Terrace use table points its housing rows at these words (note 1,
+"As defined by 16.24.030.C").
+
+Layer-wide values (`defaults`). Every one is Kingston Terrace's, because
+only Kingston Terrace admits the pod, and Table 16.114-1 exempts Kingston
+Terrace from the citywide parking chapter (16.132, "Superseded by Section
+16.114.130"):
+
+- no parking minimum: 16.114.130 C.1, "There are no minimum vehicle
+  parking requirements in the Kingston Terrace District". Held as 0,
+  because the code says none;
+- no parking maximum: Table 16.114-13 prints "Duplex, Triplex, Fourplex
+  Not Applicable". Held `exempt`;
+- no surface parking in front: C.4.c, "Surface parking areas shall occur to
+  the side or rear of buildings";
+- the 90-degree Standard stall row of Table 16.114-14: 9 ft wide, 16 ft
+  deep (including bumper overhang), 16 ft one-way aisle, 20 ft two-way;
+- a corner lot has a front lot line on every street: "A 'front lot line'
+  is a lot line that abuts a street", with no corner exception. Held as
+  `front_lot_line_corner: both`.
+
+A corner lot is defined (16.24.020 "Lot, corner": "located at the
+intersection of two or more public street rights-of-way"). A private drive
+does not count, nor does an alley; no angle test. `test: intersecting_frontages`,
+`drives_count: false`, `alleys_count: false`.
+
+**The pod on one lot (4).** `quadplex_allowed: true`, with no variants and
+no qualifier, in the four Kingston Terrace zones. Table 16.114-2 prints
+"Duplex, Triplex, Fourplex1 Y Y Y Y", Y meaning allowed outright, and
+16.114.150 B.2 says middle housing on an existing lot is "exempt from
+development plan review" (a building permit). Table 16.114-4, the
+"Residential Use Types" block, column order Town Center, Beef Bend,
+Central, Rural Character:
+
+| Zone | Min lot (sq ft) | Width / depth (ft) | Front min / max (ft) | Side / street side / rear / garage (ft) | Height | Coverage | Min density (units a net acre) |
+|---|---|---|---|---|---|---|---|
+| KTTC | 1,500 | 20 / 45 | 10 / 26 | 3 / 8 / 10 / 18 | none (N/A) | 90% | 22 |
+| KTBB | 1,500 | 20 / 45 | 10 / 26 | 3 / 8 / 10 / 18 | 45 ft | 90% | 18 |
+| KTC | 2,400 | 20 / 60 | 10 / 26 | 3 / 8 / 10 / 18 | 35 ft | 90% | 10 |
+| KTRC | 2,400 | 20 / 60 | 10 / 26 | 10 / 8 / 10 / 18 | 35 ft | 80% | 8 |
+
+- **Lot size and width are the printed figures.** Notes 16 and 17 say the
+  lot size and width for these housing types "may be reduced" to 1,000 sq
+  ft and 15 ft. Held at the printed figures, the stricter reading. Neither
+  can bind a pod whose footprint is 2,000 sq ft and whose narrow side is 25
+  ft or more.
+- **The front yard is a range**, 10 minimum and 26 maximum ("10/26"), both
+  held (`setback_front_max_ft`).
+- **The interior side is 3** in three zones ("0 or 3"; note 18 allows zero
+  only for a building attached at the line or six feet from its
+  neighbour). **Rural Character prints 5 and holds 10:** note 19, "10 feet
+  for two-story structures", and the pod is two stories.
+- **The street side is 8**, from the "Corner lot setback -- front yard/side
+  yard, minimum 8" row, the stricter of the two rows that reach a street
+  side yard (the other prints 5). The same row would let a corner lot's
+  front come in to 8; that relief is not encoded.
+- **Town Center's height is "N/A"**, held `exempt`. Height is measured to
+  the highest point (16.24.020), so the pod's 26 ft is its ridge.
+- **Coverage is held as building coverage, which is looser than the code.**
+  The row is "Maximum coverage of buildings and impervious surfaces", and
+  the pod's court, drive and walks count against it too. No field holds an
+  impervious share. Every value's cite says "looser than the code". A
+  doubt, and a proposed field (Owed locally).
+- **The minimum density is a ceiling on lot size.** Four homes at 22 a net
+  acre need a lot of at most about 7,900 sq ft in Town Center (Beef Bend
+  9,680, Central 17,424, Rural Character 21,780). The screen fails a larger
+  lot on the floor. Read the stricter way ("each development" reaching one
+  fourplex); a doubt. No maximum is printed, and the neighbourhood-wide
+  unit targets (1,870 / 1,260 / 350 / 320) bind no lot.
+
+**Refused (10).** `quadplex_allowed: false` with the use table's cite and
+no dimensions:
+
+- the six older residential districts, R-9, R-12, R-15, R-24, SF and AT.
+  16.84.010, the housing-type table all six share, prints "R-9 R-12 R-15
+  R-24 SF AT" with rows for single dwellings, accessory dwellings, duplexes
+  ("Duplex P P P P P P"), manufactured homes and "Multi-dwelling N P P P N
+  P" (five or more units). There is no triplex and no fourplex row, and
+  each district's own permitted-use list names none. **King City is a
+  Large City under OAR 660-046, so whether the state's rule reaches these
+  districts is a question for Steph** (Questions). The conservative reading
+  is the city's printed table. R-15 is held although the city's map shows
+  it only as "R-15 (WC)", because 16.80.020 lists the district and it has a
+  chapter;
+- NMU: permitted uses name a duplex and multi-family dwellings (five or
+  more), no fourplex;
+- LC: multi-family dwellings only; CF and ROS: community services, parks
+  and open space only.
+
+**Ruled, not encoded (12)**, under `zone_rulings`:
+
+- **Aliases (6):** `R9` and `R12` (layer 1's spellings of R-9 and R-12),
+  and the four Kingston Terrace names of layer 4 ("Town Center" to KTTC,
+  "Beef Bend Neighborhood" to KTBB, "Central Neighborhood" to KTC, "Rural
+  Character Neighborhood" to KTRC).
+- **County pockets (5):** "R-6 (WC)", "R-9 (WC)", "R-15 (WC)", "CBD (WC)"
+  and "INST (WC)", each a `pocket` of `or/washington/_unincorporated` with
+  the county zone named (R-6, R-9, R-15, CBD, INST). 16.80.050 A: the
+  zoning that applied before annexation "shall continue to apply and shall
+  be enforced by the city until a zone change for the area has been
+  adopted by the city council". So a lot under one of these codes is
+  screened under the county's rules. This answers, for King City, the county brief's
+  unverified item about annexed land keeping county zoning. Map counts
+  (layer 1): R-6 (WC) 1 polygon, R-9 (WC) 5, R-15 (WC) 1, CBD (WC) 1,
+  INST (WC) 2.
+- **Unencodable (1):** "Neighborhood Mixed Use", the one layer-4 polygon
+  that is not a Kingston Terrace neighbourhood. Table 16.114-1 leaves only
+  16.80, 16.82, 16.84.060 and 16.114 of Article III in force inside
+  Kingston Terrace, and 16.114 has no Neighborhood Mixed Use zone, so
+  which district governs the polygon cannot be read. The city's NMU
+  district (16.102) has the same name, but reading the polygon as NMU would
+  apply a chapter Kingston Terrace exempts. Question for Steph.
+
+Layer 1's own polygon counts on 2026-09-29: AT 24, SF 23, R9 25, R12 14,
+ROS 6, LC 4, R-24 1, NMU 1, CF 1.
+
 ## 4. Refusals and absences
 
 Layer-wide NOT ENCODED entries in `_unincorporated.yaml`, each with its quote
@@ -1090,6 +1350,92 @@ industrial and IP chapters never name it; their refusal is the closing
   held `exempt`.
 - No parking maximum for a quadplex ("None"). Held `exempt`.
 - No floor area ratio in VLDR or VLDR_PUD (16.68.030 A lists LDR to HDR).
+
+### King City
+
+Layer-wide NOT ENCODED entries in `king-city.yaml`, each quoted in a
+comment beside `defaults` or between `defaults` and `zones`:
+
+- **No backing into the street** (16.114.130 C.4.e). A rear court served
+  by a drive does not back into the street; nothing measures a design that
+  would.
+- **Compact stalls** (C.9.b, up to half the stalls at 8.0 by 15.0). The
+  standard stall is held, the stricter reading, as in the other layers.
+- **The curb length** of Table 16.114-14's 90-degree row (8.5 ft under a
+  9.0 ft stall). It cannot be a side of the same rectangle; the width is
+  held (Doubts).
+- **Vehicle access** (Table 16.114-12). It prints rows for "Dwelling,
+  single detached or attached" (one 10 ft driveway) and "Dwellings, multi"
+  (30 ft of access, 15 or 20 ft paved, curbs and a walkway), and none for
+  a duplex, triplex or fourplex. Neither row names the pod (Doubts).
+- **Vision clearance** (16.144.030 A.2): 20 ft on each side of every
+  intersection in Kingston Terrace, measured from the curb line or
+  pavement edge, clear between 3 and 8 ft. Only driveways serving two homes
+  or fewer are excepted, and the pod's serves four. Where the triangle
+  lands on the lot depends on the planting strip and sidewalk, which
+  nothing holds (Doubts).
+- **Yards on a short right-of-way** (16.80.060 A). The yard grows by the
+  right-of-way still owed: 33 ft from the centreline on Beef Bend Road,
+  131st Avenue and Fischer Road, 25 ft on other city streets. Nothing
+  measures the existing width. The same kind of rule as in the county and
+  Sherwood layers.
+- **Projections into yards** (16.80.060 B). An allowance; nothing reads
+  one.
+- **The unlisted-use list** (16.82.030 A). The city manager keeps a list
+  of unlisted uses the planning commission has approved, with the force of
+  a use-table amendment. It is not published with the code and was not
+  found (Doubts).
+- **Rows of Table 16.114-4 the pod does not use:** the porch row ("5/15",
+  "6/15"; the catalog pod has no porch), the alley rows (3 ft to a
+  building, "0-6" or more than 18 ft to a garage entry; the envelope reads
+  an alley line as a rear or side line and holds the 10), the corner lot's
+  front relief to 8 ft, and note 14 (the Oregon Building Code's own
+  separations).
+- **The neighbourhood-wide unit targets** of Table 16.114-3 (1,870 /
+  1,260 / 350 / 320). They bind no lot.
+- **The design standards** (16.114.060, Table 16.114-5): articulation,
+  eyes on the street, a main entrance facing the street within 8 ft of the
+  longest street-facing wall, detailed design, transitional space. Design,
+  not placement.
+- **The Habitat Conservation Area standards** (16.114.080 to .090). A
+  mapped overlay nothing measures; its own relief (lot size down 1,000 sq
+  ft, yards by half, height up 10 ft) is looser and not encoded either.
+- **Streets and dedication** (16.114.120). They take ground from a lot by
+  a width nothing measures.
+
+Held, the strict readings: the printed lot size and width under notes 16
+and 17's "may be reduced"; the minimum density on one fourplex; coverage
+held as building coverage, which is the one place the layer is looser
+than the code (Doubts).
+
+Step 10, the prohibition grep for "quadplex", "fourplex", "plex" and
+"middle housing" over all 12 documents. The hits are:
+
+- 16.114: the use table row (L150), notes 16 and 17 (L291-L294),
+  the design standards' applicability (L386, L434), the common open space
+  exemption (L620), the parking maximum (L2568) and bicycle parking
+  (L2753), and 16.114.150 B.1 and B.2 (L3014-L3016, middle housing exempt
+  from development plan review);
+- 16.132: the citywide parking maximum, "Middle Housing" and
+  "Triplex/Quadplex Not applicable" (L221-L222);
+- 16.146: "Density maximums may not apply to duplexes, quadplexes,
+  triplexes, or cottage clusters" (L30-L31);
+- 16.24: the Duplex, Fourplex and Triplex definitions;
+- the rest are "Duplex" lines, which the "plex" pattern also catches: the
+  duplex rows of 16.84, 16.88-16.100 and 16.102, duplex access in 16.136
+  (16.136.030, exempt in Kingston Terrace) and a 16.132 bicycle row.
+
+None prohibits the pod in a zone this layer admits it in. None admits it
+in a zone the layer refuses: 16.132 and 16.146 name quadplexes, but only
+to relieve a parking maximum and a density maximum, and no use table
+outside Kingston Terrace lists one (Questions).
+
+"The code states nothing":
+
+- No parking minimum in Kingston Terrace (stated, held 0) and no parking
+  maximum for a fourplex ("Not Applicable", held `exempt`).
+- No maximum density in Kingston Terrace.
+- No maximum height in Town Center ("N/A", held `exempt`).
 
 ## 5. Doubts
 
@@ -1516,6 +1862,125 @@ Ledgers and readers:
   The `missed` ledger reads the second as a 2 ft height. Neither is a
   figure the layer holds.
 
+### King City
+
+Reading the code:
+
+- **The older districts refuse on a table with no fourplex row.** 16.84.010
+  lists housing types for all six older residential districts and stops at
+  duplexes and "Multi-dwelling" (five or more). King City is inside Metro
+  and over a thousand people, a Large City under OAR 660-046, and every
+  one of the six permits a detached house. The code names quadplexes twice
+  outside Kingston Terrace (16.146.030 A relieves their density maximum,
+  16.132.040 their parking maximum) and never admits one in a use table.
+  Whether the state rule applies directly where the city's own table is
+  silent is a legal question. The draft refuses (the city's printed table)
+  and asks Steph. If the answer is that the state rule governs, the six
+  districts need dimensions read from 16.84.040 and the district chapters,
+  and the older parking chapter (16.132) read for them.
+- **Coverage is looser than the code.** Table 16.114-4 caps "buildings and
+  impervious surfaces" together (90, 90, 90 and 80 percent), and 16.24.020
+  counts "buildings, driveways, sidewalks and parking areas". The layer
+  holds the figure as `max_coverage_pct`, which the screen compares with
+  the building footprint alone. The pod's rear court, drive and walks
+  count against the same cap, so the screen will pass lots the code may
+  not. It is the one place the layer errs toward GREEN. Each value's cite
+  says so, and Owed locally proposes an impervious-share field.
+- **The minimum density on one fourplex.** Table 16.114-3 prints "Minimum
+  net density assigned to each development". 16.114.150 B.2 sends middle
+  housing on an existing lot straight to a building permit, with no
+  development plan review, so "each development" may mean a plan-reviewed
+  development, not one fourplex. The draft applies the floor to every lot,
+  the stricter reading. Under it a Town Center lot over about 7,900 sq ft
+  fails (four homes at 22 a net acre), and the others at 9,680, 17,424 and
+  21,780 sq ft. Net acres exclude streets, parks, storm facilities and
+  natural resources, so a lot with a mapped resource has a smaller net
+  area and a looser ceiling than the screen computes.
+- **Notes 16 and 17.** The lot size and width "may be reduced" to 1,000 sq
+  ft and 15 ft for these housing types. Held at 1,500 and 20. Neither
+  figure can bind the pod, so this moves no lot.
+- **The curb length.** Table 16.114-14's 90-degree Standard row prints
+  "9.0 ft. 8.5 ft." for stall width and curb length. At 90 degrees the two
+  should be equal. The 9 is held as the width; if the 8.5 is the true
+  width and the 9 a misprint, the layer is 0.5 ft strict per stall.
+- **Vehicle access.** Table 16.114-12 has a row for single dwellings (one
+  10 ft driveway) and one for multi-dwellings (30 ft of access, 20 ft paved
+  two-way, curbs, a walkway), and none for a fourplex. If the city applies
+  the multi-dwelling row to a fourplex's four-home drive, the access width
+  is 30 ft, which the screen does not hold.
+- **Vision clearance at the pod's own driveway.** 16.144.030 excepts only
+  driveways serving two homes or fewer, so the pod's drive gets a 20 ft
+  triangle each side, measured from the curb. Where the lot line is within
+  10 ft of the curb the triangle reaches the building face. At a street
+  corner, the 10 ft front and 8 ft street side put the building's corner
+  18 ft along each line, inside a 20 ft triangle drawn at the lot lines.
+  Not encoded; the curb position is unknown.
+- **The unlisted-use list.** 16.82.030 A gives the city manager's list of
+  approved unlisted uses the force of a use-table amendment. It was not
+  found. If it names a fourplex in an older district, that refusal is
+  wrong. A new request could not add one: 16.82.040 A requires a use "not
+  specifically listed in another zone", and Kingston Terrace lists it.
+- **The street side yard.** Two rows reach it: "Corner lot setback -- front
+  yard/side yard, minimum 8" and "Side yard -- to public street, minimum
+  5". The 8 is held. If the city reads the 5 as the street side and the 8
+  as a corner front, the layer is 3 ft strict on a corner.
+
+Slips in the source, recorded so a reader does not stop on them:
+
+- 16.96.020 (R-15) and 16.100.020 (R-24) both open "Permitted uses in the
+  AT zone are", under their own chapter headings. Read as their own
+  districts.
+- 16.132.050's stall table lost its foot and inch marks in the Municode
+  PDF (ten replacement characters, `kcc.16.132.parking.txt` L268-L277).
+  Kingston Terrace is exempt from 16.132, so no value reads it; it matters
+  only if an older district is opened to the pod.
+- 16.102.060 A.3.a (NMU) reads "A maximum depth between the clear zone and
+  building façade of 20 width of feet;". The 20 is there and the words
+  around it are out of order; plain extraction of the PDF page agrees.
+  Pinned in `test_orphaned.py` (Tests). NMU refuses the pod.
+
+The map:
+
+- **Kingston Terrace is on a second map layer.** Layer 1 of the city's
+  service paints the older districts; the four neighbourhoods are only on
+  layer 4, by name. Until layer 4 is ingested no lot reaches a zone that
+  admits the pod. About 404 King City taxlots and 98 unincorporated ones
+  touch a Kingston Terrace polygon (a spatial count on 2026-09-29, not a
+  screen run). Some of the 98 may be land Kingston Terrace plans for but
+  the city has not annexed; the county layer screens those.
+- **"Neighborhood Mixed Use" on layer 4.** One small polygon carries a name
+  that is not a Kingston Terrace neighbourhood. Left `unencodable`
+  (Zones), and asked.
+- **The county pockets.** "(WC)" codes are sent to the county layer under
+  16.80.050 A. The county blocks they name (R-6, R-9, R-15, CBD, INST) are
+  the county's current districts; whether the county zoning a parcel had
+  at annexation is the county's zoning today was not checked.
+- **Habitat Conservation Areas** (16.114.080). A mapped overlay inside
+  Kingston Terrace that limits disturbance. Not encoded, and no screen
+  layer has it.
+
+Ledgers and readers:
+
+- **The glossary is bounded, and four use words read "silent".**
+  `definitions_at: L20-L1117` makes the glossary reader take 16.24.020
+  alone. Read whole, the chapter showed 15 of 199 entries out of order,
+  because 16.24.030 sorts use types by category, not by letter, and the
+  chapter ends in OCR noise from the solar figures; it read as skimmed and
+  failed `test_glossary`. Bounded, it reads 154 entries, 1 out of order,
+  whole. The cost: the words ledger now reads multifamily, quadplex,
+  duplex and triplex as `silent`, where unbounded they were `defined` at
+  16.24.030 (L1204, L1268, L1229, L1348). The code defines them; the span
+  cannot say so, because `definitions_at` holds one range. Proposal under
+  Owed locally.
+- **Attribution.** 1 of 70 values cites a section its text is not in:
+  `parking_front_prohibited`, cited 16.114.130 and read as 16.114.120.
+  Checked by hand: 16.114.130's heading prints at L2523 and no other
+  section heading falls between it and the quoted L2612. The cite is
+  right.
+- **The exemptions** are both `stated` on their own sentence: Table
+  16.114-13's "Not Applicable" parking maximum, and Town Center's "N/A"
+  height.
+
 ## 6. Questions for Steph
 
 - **North Bethany R-25+.** The county's densest North Bethany district allows
@@ -1675,15 +2140,55 @@ Ledgers and readers:
   lots are left unscreened for now. Does the city have a map of the zones
   under Old Town?
 
+### King City
+
+- **The older neighbourhoods.** King City's code has two halves. The new
+  Kingston Terrace area allows fourplexes outright. The older residential
+  zones share one table of housing types that stops at duplexes and
+  apartment buildings of five or more homes; it has no triplex or fourplex
+  line at all. King City is big enough that the state's middle housing
+  rule applies to it, and the code mentions fourplexes twice elsewhere
+  (to excuse them from a density cap and a parking cap), but never allows
+  one in those zones. The draft follows the city's table and says no in
+  all six older residential zones. Should it, or does the state rule allow
+  a fourplex anywhere a house is allowed, whatever the city's table says?
+- **Does the minimum density apply to one fourplex?** Kingston Terrace
+  sets a minimum number of homes per acre for "each development": 22 in
+  the Town Center, down to 8 in the Rural Character area. The draft
+  applies it to a single fourplex on an existing lot, so four homes can
+  only go on a Town Center lot up to about 7,900 sq ft (Beef Bend about
+  9,700, Central about 17,400, Rural Character about 21,800); a bigger lot
+  fails. The same code sends a fourplex on an existing lot straight to a
+  building permit, with no development review, which suggests the minimum
+  may be meant for larger developments. Which reading does the city use?
+- **Paved area counts against coverage.** Kingston Terrace caps buildings
+  and paved surfaces together (90 percent, 80 in Rural Character). The
+  screen can only compare the building, so it will pass some lots where
+  the building plus its parking court, drive and walks go over. Is that
+  acceptable for a first pass, or is it worth measuring paved area?
+- **A small "Neighborhood Mixed Use" patch on the Kingston Terrace map.**
+  The Kingston Terrace map shows one small area with that name, which is
+  not one of the area's four zones. The older part of the city has a zone
+  with the same name, but its rules do not apply inside Kingston Terrace.
+  The draft leaves the patch unscreened. Does the city say what it is?
+- **The city's list of approved "similar uses".** King City's code tells
+  the city manager to keep a list of uses the planning commission has
+  approved in zones that do not list them. It was not found online. If it
+  exists and names a fourplex in an older zone, that zone's "no" is wrong.
+  Is it worth asking the city for it?
+
 ## 7. Tests
 
-Last full run before the Sherwood commit (`uv run pytest flats/tests -q
--n auto`, all four layers, 2026-09-29):
+Last full run before the King City commit (`uv run pytest flats/tests -q
+-n auto`, all five layers, 2026-09-29):
 
-**1 failed, 3668 passed, 5 skipped in 405 s.** `uv run ruff check flats/
-scripts/`: all checks passed. (Before the Beaverton commit it was 1 failed,
-3641 passed, 5 skipped; before the Hillsboro commit 1 failed, 3620 passed,
-5 skipped.)
+**1 failed, 3683 passed, 5 skipped in 394 s.** `uv run ruff check flats/
+scripts/`: all checks passed. (Before the Sherwood commit it was 1 failed,
+3668 passed, 5 skipped; before the Beaverton commit 1 failed, 3641 passed,
+5 skipped; before the Hillsboro commit 1 failed, 3620 passed, 5 skipped.)
+The King City run came after the pins and the reader change below were in
+place; the failures they closed are described under Pinned counts and
+Reader changes.
 
 The first Sherwood run had 4 failed, 3663 passed: the expected one below,
 the alley pin (Sherwood is a sixth city that sends the drive to an alley),
@@ -1696,7 +2201,8 @@ The one failure is expected and is not fixed here:
 
 - `test_unweighed_layers.py::test_no_encoded_layer_is_outside_the_corpus_that_ranks_the_work`
   lists `or/washington/_unincorporated`, `or/washington/hillsboro`,
-  `or/washington/beaverton` and `or/washington/sherwood`. The
+  `or/washington/beaverton`, `or/washington/sherwood` and
+  `or/washington/king-city`. The
   coverage ledger that ranks the work has no Washington County lots, because
   building it needs the county map and quadfit, which are local work (Owed
   locally). It will fail for every Washington layer this branch adds, until
@@ -1740,17 +2246,28 @@ Re-run on the Sherwood tree (2026-09-29): **4 failed, 312 passed in 247 s.**
 The same four tests, failing on the same Hillsboro rows. Sherwood holds no
 corner variant (its corner lot changes no figure) and adds no failure.
 
+Re-run on the King City tree (2026-09-29): **4 failed, 312 passed in 240 s.**
+The same four tests, failing on the same Hillsboro rows (still 14 reachable
+rules, not 12). King City holds no variant of any kind: its street-side
+yard is held as a single figure and its corner lot changes no other number,
+so it adds no failure.
+
 ### Pinned counts and sets moved on this branch
 
-- `test_port.py`: 23 layers (22 jurisdictions and the state layer), 400
+- `test_port.py`: 24 layers (23 jurisdictions and the state layer), 414
   zones. Unincorporated took it to 20 and 314; Hillsboro to 21 and 351;
-  Beaverton to 22 and 379; Sherwood to 23 and 400.
-- `test_refusals.py`: notes 134, comments 227, tests 18 (unincorporated
+  Beaverton to 22 and 379; Sherwood to 23 and 400; King City to 24 and
+  414.
+- `test_refusals.py`: notes 134, comments 241, tests 18 (unincorporated
   had taken comments from 127 to 148 and notes to 122; Hillsboro to 194
-  and 129; Beaverton added 21 comments and 5 notes; Sherwood 12 comments,
-  each listed in the test).
-- `test_exemptions.py`: stated 375, numeric 63, marker 0, dash 2, silent 2
-  (272 after unincorporated, 338 after Hillsboro). Beaverton's 32 are all
+  and 129; Beaverton added 21 comments and 5 notes; Sherwood 12 comments;
+  King City 14 comments, each listed in the test. King City's projections
+  paragraph runs on into the unlisted-use one, so that one is counted
+  twice).
+- `test_exemptions.py`: stated 377, numeric 63, marker 0, dash 2, silent 2
+  (272 after unincorporated, 338 after Hillsboro, 375 after Sherwood). King
+  City's 2 are both `stated`: Table 16.114-13's parking maximum and Town
+  Center's "N/A" height. Beaverton's 32 are all
   `stated`: 18 minimum lot areas, 10 maximum heights, 4 parking maximums.
   Sherwood's 13 are 12 densities and the quadplex parking maximum. The 8
   `numeric` are the six density maximums and VLDR's and VLDR_PUD's
@@ -1783,6 +2300,11 @@ corner variant (its corner lot changes no figure) and adds no failure.
   density may be pooled across the zones it spans (16.40.040 D). The PUD
   blocks take the base zone's figures, a quadplex's density is exempt, and
   every PUD lot is qualified on its plan, so no value quotes it.
+  King City adds two `OPEN` rows: 16.114.040 to 16.84.060 (note 2 sends
+  cottage clusters to 16.84.060; the pod is not one) and 16.114.130 to
+  16.132 (16.114.130 B says 16.132 does "not apply" in Kingston Terrace, a
+  pointer that shuts a chapter out; 16.132 is stored and read, and no value
+  quotes it).
 - `test_height.py`: `STOREY_FLOOR_ABOVE_TWO` = Hillsboro MU-VTC (3 stories
   inside a Center Core, held everywhere).
 - `test_min_height.py`: `FLOORS_ABOVE_THE_POD` pins the five Hillsboro
@@ -1796,21 +2318,33 @@ corner variant (its corner lot changes no figure) and adds no failure.
   a corner lot (12.01.500, not greater than 135 degrees), then Beaverton
   (Chapter 90, "less than 135 degrees"; the one-degree gap is a doubt),
   then Sherwood (16.10.020, two or more streets "other than an alley"; no
-  angle test).
+  angle test), then King City (16.24.020, two or more public street
+  rights-of-way; no angle test).
 - `test_gresham_last_notes.py`: the parking-ceiling layers are now four,
   with Hillsboro (Table 12.50.320-1, "Quadplex 2" in Zone A). The test was
   renamed from "the three" to "the four", and to "the five" with
   Beaverton (Table 60.30.10.5.A, 1.8 a unit on the "Other Zone" row).
   (Checkpoint 5 of this note named these two files the wrong way round;
   corrected at checkpoint 6.)
-- `test_readiness.py`: 44 tests, with the new
+- `test_readiness.py`: 45 tests, with the new
   `test_a_city_that_has_no_standards_requiring_parking_states_zero`
   (Hillsboro), `test_a_two_digit_marker_is_cut_only_where_its_note_is_quoted`
-  (Beaverton) and `test_a_ratio_printed_as_a_percent_still_reads`
-  (Sherwood). See Reader changes.
+  (Beaverton), `test_a_ratio_printed_as_a_percent_still_reads`
+  (Sherwood) and `test_a_marker_glued_to_a_thousands_group_is_read_by_the_grouping`
+  (King City). See Reader changes.
 - `test_orphaned.py`: 5 tests, with the new
-  `test_a_comparison_is_not_a_measurement` (Sherwood). The pinned orphan is
-  still Happy Valley's line alone. See Reader changes.
+  `test_a_comparison_is_not_a_measurement` (Sherwood). The scan now finds
+  two lines and both are pinned: Happy Valley's (`KNOWN_ORPHAN`, a lost
+  numeral) and King City's NMU frontage sentence (`KNOWN_MISPLACED`,
+  16.102.060 A.3.a, "of 20 width of feet": the numeral is on the line, the
+  words around it are out of order). Pinned rather than excused, because a
+  rule that let any number on the line clear the hole would also clear the
+  next real one. The module docstring says so. A test change, not a reader
+  change.
+- `test_glossary.py` was not edited for King City. Its
+  `test_no_chapter_in_the_corpus_is_only_skimmed` failed on the first King
+  City run (199 entries, 15 out of order); the layer's `definitions_at`
+  span closed it (Doubts, Reader changes).
 - `test_footnotes.py`: five new tests for the Beaverton reader changes:
   `test_footnotes_is_a_notes_heading`,
   `test_the_beaverton_page_footer_does_not_end_a_notes_list`,
@@ -1851,6 +2385,16 @@ corner variant (its corner lot changes no figure) and adds no failure.
   The cite is right. Most of the Sherwood rows are this running head or a
   quote that joins a table row to a note in 16.68 or 16.94; the rest are
   unread.
+- King City commit (2026-09-29): `gaps.json` and `exemptions.csv`
+  regenerated again, `caps.json` rewritten and unchanged. `gaps.json` gains
+  a King City section with 1 `misattributed` row and no gaps (corpus total
+  290 to 291); nothing else in the file moved but the digest. The run
+  still reports 3 gaps across 24 layers, all `unmapped`, all from before
+  this branch. The one row (`parking_front_prohibited`, cited 16.114.130,
+  "found" 16.114.120) was checked by hand and the cite is right (Doubts).
+  `exemptions.csv` gains King City's two `stated` rows. The whole-corpus
+  gaps run took about 40 minutes this time, sharing the machine with the
+  quadfit tests; King City alone takes 22 s.
 - `data/flats/crossrefs.csv` regenerated over the whole corpus (`python -m
   flats.encode.crossrefs --binding`). Besides the Washington rows it
   rewrites some Clackamas, Fairview and Portland rows. Those come from
@@ -1887,6 +2431,17 @@ corner variant (its corner lot changes no figure) and adds no failure.
   floor area ratios, MDRH holding feet only, the quadplex parking minimum
   and exempt maximum, the corner lot, no map code sent to the county, and
   nothing `verified`.
+- `test_washington_king_city.py` (14 tests): the 14 districts and 12
+  rulings the maps need; only the four Kingston Terrace zones admit the
+  pod, on the use table row and the B.2 exemption from plan review; the
+  six older districts refuse on the 16.84.010 table ("Multi-dwelling N P P
+  P N P", no triplex or fourplex); the other four refuse on their
+  permitted uses; the glued lot size is the printed 1,500 with note 16's
+  "may be" quoted beside it; Rural Character's side yard is 10; the front
+  yard is a 10/26 range; density and height; coverage held as building
+  coverage with "looser than the code" in the cite; no parking minimum or
+  maximum; the 90-degree stall row; the corner lot; the five county pockets
+  name county zones the county layer holds; and nothing `verified`.
 
 ### Ledgers (step 9)
 
@@ -2020,6 +2575,44 @@ Sherwood (all run on 2026-09-29):
   `driveway_approach_max_width_ft` (16.14.030's 20 ft approach), and the
   six residential zones' 20 ft garage entrance setbacks are in a field the
   screen declares it leaves out. None of them can change an answer today.
+
+King City (all run on 2026-09-29, on the final layer):
+
+- `crossrefs --binding`: none open. The first run found 9 beside a number
+  the screen uses; all 9 are closed in the layer's `crossrefs` block:
+  - 4 are not references: Municode page footers ("174.86.42" to
+    "174.86.48", page numbers of Supplements 14 and 15);
+  - 16.156 (conditional uses) and 16.160 (nonconforming situations) are
+    `other_path`: the pod is allowed outright and is new construction;
+  - 16.172 (home occupations), 5.05 (liquor licences) and 8.04.130 (noise)
+    are `other_building`.
+  Unfiltered, 104 stay open (corpus-wide), none beside a figure the screen
+  uses.
+- `uncited`: 28 statements of 192 measured lines not quoted by any value.
+  Mostly NMU's own frontage and height rows (16.102.040 and .050), which
+  refuse the pod, and 16.84.050's garage door width.
+- `missed`: 28 statements naming a screened field; 8 state a figure the
+  layer holds nowhere, all in sections nothing has been quoted from (NMU
+  16.102.040 and .050, and 16.84.050), none on the pod's path. 4 are
+  figures the corpus has never held (a 4 ft window sill, an 18 ft
+  accessory height, a 10 ft garage door, a 6 ft alley garage entry).
+- `applied`: encoded 0. No King City note is ruled `encoded`; the six
+  census notes are dismissed and the dimensional table's notes are read in
+  the footnote file's header (Documents).
+- `qualified`: every Kingston Terrace row "0 unread of 6". The first run
+  showed "6 unread of 6" until the footnote file was written.
+  `qualified --write-caps` left King City out of `caps.json`: no note is
+  ruled `unmeasured`.
+- `attribution`: 1 of 70 values cites a section its text is not in,
+  checked by hand; the cite is right (Doubts).
+- `stale`, `travelled`, `unheld`: no King City rows.
+- `consumed`: no King City rows.
+- `words` (not a step-9 ledger, checked because of the glossary span): 29
+  cards; 18 `defined`, 11 `silent`. Four of the silent ones (multifamily,
+  quadplex, duplex, triplex) are defined in 16.24.030, outside the span
+  (Doubts). The other seven (net acre, story, middle housing, townhouse,
+  apartment, attached dwelling, alley) are silent with or without the
+  span.
 
 ## 8. Owed locally
 
@@ -2224,6 +2817,54 @@ Sherwood (all run on 2026-09-29):
 - **The blind second reading, re-screen and promotion**, including the 5
   Sherwood `waved` cards.
 
+### King City
+
+- **Map ingest for layer 4.** The Kingston Terrace neighbourhoods are on
+  layer 4 of the city's service (`Zoning_Designations`), not on layer 1
+  (`ZONECLASS`). The layer's aliases take layer 4's names, but the ingest
+  has to read both layers, and layer 4 must win where they overlap. Until
+  then no lot reaches a zone that admits the pod. About 404 King City and
+  98 unincorporated taxlots touch a Kingston Terrace polygon.
+- **The county pockets.** Five "(WC)" codes send their lots to the county
+  layer's R-6, R-9, R-15, CBD and INST. Check that a taxlot under one keeps
+  `JURIS_CITY` = `KING CITY` and reaches this layer first, so the pocket is
+  followed.
+- **`DECLARED_OWING`: nothing expected.** The four Kingston Terrace zones
+  hold every field the screen reads that the code states. The resolver was
+  not run against a King City lot, because none is ingested; run it once
+  layer 4 is in.
+- **The coverage ledger with King City lots**, which
+  `test_unweighed_layers` waits on (Tests).
+- **Registry and model changes the layer had to approximate** (a
+  `flats/rules/` change, not made):
+  - an impervious-surface share field, or a coverage kind, so Kingston
+    Terrace's "buildings and impervious surfaces" cap can be held as
+    written. Today it is held as building coverage, which is looser;
+  - `definitions_at` taking more than one span, so 16.24.030's use-type
+    definitions can be declared beside 16.24.020 without the chapter
+    reading as skimmed (Doubts). The residential use types are
+    `L1184-L1350` ("C. Residential Use Types." to the line before "D.
+    Commercial Use Types."), and all four `silent` words are in it. That
+    alone is not enough: measured with the glossary's own reader, that span
+    holds 20 entries with 2 out of order (the code files Duplex after the
+    Dwelling entries, and Manufactured/mobile home park after Mobile home),
+    and one is the most 20 entries may have, so the second span would read
+    as skimmed too. The change also needs a way to say a chapter is ordered
+    by the code's own grouping rather than by letter. (16.24.020 alone,
+    `L20-L1117`, is 154 entries with 1 out of order, and reads whole.)
+  - if Steph's answer on the density floor is that it does not reach one
+    fourplex on an existing lot, a condition for "subject to development
+    plan review" to gate it.
+- **The older districts, if Steph's answer opens them.** Their dimensions
+  (16.84.040 and the district chapters) and the citywide parking chapter
+  (16.132, whose stall table lost its foot and inch marks in the PDF) would
+  have to be read and encoded. Nothing is drafted for that case.
+- **Documents not stored** (Documents). The Transportation System Plan
+  matters most, for 16.80.060 A's right-of-way and 16.114.120's streets.
+  The Habitat Conservation Area maps and the Regulating Plan are unread.
+- **The unlisted-use list** (16.82.030 A), from the city (Questions).
+- **The blind second reading, re-screen and promotion.**
+
 ## Reader changes (before and after)
 
 - `flats/encode/glossary.py` learned the CDC's hyphenated section numbers
@@ -2322,3 +2963,31 @@ layers):
 - Not a reader change: `test_glossary.py`'s comma-separated quote is a
   test change (Tests); the glossary reader already read Sherwood's
   definitions.
+
+King City (all figures from 2026-09-29, over the whole corpus of 24
+layers):
+
+- `flats/encode/readiness.py`: a new `_regrouped`, tried under
+  `glued_markers` after `_unmarked` and `_unmarked_by_notes`. King City's
+  Table 16.114-4 glues note 16 to Town Center's and Beef Bend's 1,500:
+  "1,50016". Both earlier readers skip any token with a comma in it, so the
+  figure was printed and read as absent. Here the grouping settles what the
+  quoted note line has to settle for a bare token: a group after a
+  thousands comma holds exactly three digits, so a fourth or fifth can only
+  be a marker, and cutting it leaves the printed number. More than two
+  trailing digits is left alone. Before: King City at the `misquoted`
+  rung, with KTTC and KTBB `min_lot_sqft`; every other layer's rung and
+  misquote list as it is after. After: King City `unsigned`, misquotes
+  none; no other layer moved (a per-layer diff of all 24 before and after).
+  New test `test_a_marker_glued_to_a_thousands_group_is_read_by_the_grouping`,
+  which also checks that "7,500" is not read as 750 or 75, that a
+  three-digit tail ("1,500165") is not cut, and that the cut happens only
+  under `glued_markers`.
+- Not a reader change: King City's 16.24 slice declares `definitions_at:
+  L20-L1117`, so the glossary reads 16.24.020 alone. Before: 199 entries,
+  15 out of order, read as skimmed (`test_glossary` failed). After: 154
+  entries, 1 out of order, read whole. `glossary.py` itself is unchanged.
+  The words ledger's cost is under Doubts.
+- Not a reader change: `test_orphaned.py` pins King City's NMU sentence as
+  `KNOWN_MISPLACED`. `orphaned.py` is unchanged; before and after, the scan
+  finds the same two lines.

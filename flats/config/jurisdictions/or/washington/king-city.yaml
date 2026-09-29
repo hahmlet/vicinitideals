@@ -1,0 +1,1023 @@
+label: King City
+kind: city
+eligible: true
+notes: >-
+  DRAFT, cloud session 2026-09-29. Read from the King City Community
+  Development and Zoning Code (Municipal Code Title 16) as Municode
+  publishes it, publication 3913, Supplement No. 16 (August 2026, through
+  Ordinance O-2025-02). Every value is draft. Two maps paint the city. The
+  city's zoning layer (services8.arcgis.com/NsUn9YuPFCjrkDe3,
+  King_City_Current_and_Future_Zoning_Map_WFL1 FeatureServer layer 1, field
+  ZONECLASS) carries the older districts and five county codes marked
+  "(WC)"; the Kingston Terrace neighbourhoods are on layer 4 of the same
+  service (field Zoning_Designations), under their names, not their codes.
+  The zone keys are the district designations of 16.80.020; the layer-1
+  spellings R9 and R12 and the four layer-4 names are aliases, and the (WC)
+  codes are county pockets under 16.80.050 A. Lots reach this layer by the
+  taxlots' JURIS_CITY KING CITY. Only the four Kingston Terrace zones
+  admit the pod: the older districts' housing-type table (16.84.010) has no
+  triplex or fourplex row, which is a question for the owner.
+ingest:
+  geoid: null
+  juris_city_codes:
+  - KING CITY
+# The references the binding ledger stood beside an encoded value, read
+# 2026-09-29. Four are Municode page footers, and the rest name chapters
+# the pod's path does not reach.
+crossrefs:
+  "174.86.42":
+    outcome: misread
+    note: >-
+      Not a reference: the Municode page footer "174.86.42(King City Supp.
+      No. 14, 12-23)" (kcc.16.114.kingston-terrace.txt L2562), a page
+      number, printed between the parking count and the parking maximum.
+  "174.86.43":
+    outcome: misread
+    note: >-
+      Not a reference: the Municode page footer "174.86.43 (King City Supp.
+      No. 15, 9-25)" (kcc.16.114.kingston-terrace.txt L2633), a page number,
+      printed beside the surface-parking placement rule.
+  "174.86.44":
+    outcome: misread
+    note: >-
+      Not a reference: the Municode page footer "174.86.44(King City Supp.
+      No. 15, 9-25)" (kcc.16.114.kingston-terrace.txt L2711), a page number,
+      printed above Table 16.114-14's stall and aisle rows.
+  "174.86.48":
+    outcome: misread
+    note: >-
+      Not a reference: the Municode page footer "174.86.48(King City Supp.
+      No. 15, 9-25)" (kcc.16.114.kingston-terrace.txt L3003), a page number,
+      printed inside 16.114.150 A, above the B.2 exemption the fourplex
+      rows quote.
+  "8.04.130":
+    outcome: other_building
+    note: >-
+      The municipal noise section. 16.114.040 D.4 holds outdoor speakers at
+      a retail or service use's outdoor display to it
+      (kcc.16.114.kingston-terrace.txt L186-L195), and 16.114.150 E.8 asks a
+      development plan's site analysis to show noise sources "See Section
+      8.04.130 for noise provisions" (L3124-L3128). A shop's speakers and a
+      plan-review exhibit; the pod is a fourplex exempt from plan review
+      (16.114.150 B.2). It ranked beside the density table only because
+      D.4 prints just above 16.114.050.
+  "16.160":
+    outcome: other_path
+    note: >-
+      Nonconforming Situations. Table 16.114-1 applies it (L87), 16.114.040
+      C sends existing uses the district would prohibit to it (L123-L126),
+      and the Habitat Conservation Area exemptions let a nonconforming
+      structure be replaced or expanded under it (L889-L901). The pod is new
+      construction of a use Table 16.114-2 allows outright; nothing it does
+      is nonconforming.
+  "16.172":
+    outcome: other_building
+    note: >-
+      Home Occupations. Table 16.114-2 note 6 (kcc.16.114.kingston-terrace
+      L178) and 16.102.020 G and 16.102.030 A, the NMU live-work units
+      (kcc.16.102.nmu.txt L41-L42, L58-L60). A business in a home, not the
+      placement of one; NMU refuses the pod.
+  "5.05":
+    outcome: other_building
+    note: >-
+      Liquor license review, for retail sales and service: Table 16.114-2
+      note 3 (kcc.16.114.kingston-terrace.txt L174-L175) and 16.102.020 F and
+      16.102.030 B in NMU (kcc.16.102.nmu.txt L34-L37, L61-L64). A shop, not
+      a dwelling.
+  "16.156":
+    outcome: other_path
+    note: >-
+      Conditional Uses. 16.114.040 B sets the approval criteria for a
+      conditional use in Kingston Terrace there (L119-L122), and Table
+      16.114-2's notes 4 to 12 send individual non-dwelling uses to
+      16.156.060 (L176-L184). The fourplex row is Y, allowed outright, in
+      all four zones; the conditional path is not the pod's. (KTRC's
+      conditional row is "Dwelling, multi", five or more units.)
+code:
+# Municode client King City, publication 3913 (the King City Municipal
+# Code, Title 16 the Community Development and Zoning Code), Supplement 16.
+# The unsigned publication endpoint, per flats/provenance/municode.py.
+# Plain extraction throughout. The PDF prints the whole municipal code;
+# Title 16 starts near page 270. Plain chapter numbers are not unique --
+# the definitions cite "Chapter 16.114" before the chapter prints and the
+# Kingston Terrace chapter cites 16.132 -- so several slices start and end
+# on a chapter's title line, which is printed once.
+- id: "kcc.16.24.definitions"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.24 - Definitions"
+  start: "Chapter 16.24"
+  end: "Chapter 16.28"
+  extraction: plain
+  # A glossary: 1,602 lines of quoted terms and few section numbers, which
+  # the thin-text check reads as a landing page. Read whole on 2026-09-29.
+  allow_thin: true
+  # The alphabetical glossary is 16.24.020 alone, from the line after its
+  # heading to its closing ordinance history. 16.24.030 (L1118 on) sorts
+  # the land use types into categories -- accessory, residential,
+  # commercial, community -- in the codifier's order, not the alphabet's,
+  # and the chapter ends in the OCR text of a solar-access figure. Read as
+  # one alphabet the three made 15 of 199 entries "out of order" and the
+  # chapter read as skimmed. Every word the layer's fields are measured in
+  # (lot, lot line, lot width and depth, setback, height, coverage,
+  # density) is in 16.24.020; the use-type nouns the layer quotes (Fourplex,
+  # Dwelling multi, Triplex) are cited in the definitions comment below.
+  # The cost, measured: the words ledger now reads multifamily, quadplex,
+  # duplex and triplex as "silent" (unbounded, they were "defined" at
+  # L1204, L1268, L1229 and L1348). The code defines them; the span cannot
+  # say so, because definitions_at holds one range. Handed on, not hidden.
+  definitions_at: L20-L1117
+- id: "kcc.16.80.general"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.80 - Land Use Districts, General Provisions (districts 16.80.020, annexed areas 16.80.050, yards 16.80.060)"
+  start: "Chapter 16.80"
+  end: "Chapter 16.82"
+  extraction: plain
+  allow_thin: true
+- id: "kcc.16.82.unlisted"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.82 - Unlisted Use: Authorization of Similar Use"
+  start: "Chapter 16.82"
+  end: "Chapter 16.84"
+  extraction: plain
+  allow_thin: true
+- id: "kcc.16.84.single-use-residential"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.84 - Single Use Residential Zones (housing types 16.84.010, dimensions 16.84.040, cottage clusters 16.84.060)"
+  start: "Chapter 16.84"
+  end: "Chapter 16.88"
+  extraction: plain
+- id: "kcc.16.88-16.100.residential-zones"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapters 16.88 (SF), 16.92 (AT), 16.94 (R-12), 16.96 (R-15) and 16.100 (R-24)"
+  start: "Chapter 16.88"
+  end: "Chapter 16.102"
+  extraction: plain
+- id: "kcc.16.102.nmu"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.102 - Neighborhood Mixed-Use Zone (NMU)"
+  start: "Chapter 16.102"
+  end: "Chapter 16.104"
+  extraction: plain
+- id: "kcc.16.104-16.112.commercial-civic"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapters 16.104 (LC), 16.108 (CF) and 16.112 (ROS)"
+  start: "Chapter 16.104"
+  end: "KINGSTON TERRACE DISTRICT CODE"
+  extraction: plain
+- id: "kcc.16.114.kingston-terrace"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.114 - Kingston Terrace District Code"
+  start: "KINGSTON TERRACE DISTRICT CODE"
+  end: "SOLAR BALANCE POINT STANDARDS"
+  extraction: plain
+  # Table 16.114-4 glues its note markers to the figures: "1,50016" is
+  # 1,500 with note 16, "2017" is 20 with note 17 (L233-L234).
+  glued_markers: true
+- id: "kcc.16.132.parking"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.132 - Parking and Loading"
+  start: "PARKING AND LOADING"
+  end: "CIRCULATION AND ACCESS"
+  extraction: plain
+- id: "kcc.16.136.circulation"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.136 - Circulation and Access"
+  start: "CIRCULATION AND ACCESS"
+  end: "Chapter 16.140"
+  extraction: plain
+- id: "kcc.16.144.vision-clearance"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.144 - Vision Clearance"
+  start: "VISION CLEARANCE"
+  end: "RESIDENTIAL DENSITY CALCULATION"
+  extraction: plain
+  allow_thin: true
+- id: "kcc.16.146.density"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.146 - Residential Density Calculation"
+  start: "RESIDENTIAL DENSITY CALCULATION"
+  end: "SIGNS"
+  extraction: plain
+  allow_thin: true
+definitions:
+  # Read 2026-09-29 from KCMC 16.24.020 and 16.24.030, which are on disk
+  # whole (kcc.16.24.definitions.txt runs from the Chapter 16.24 heading to
+  # the Chapter 16.28 heading).
+  #
+  # THE NOUN. 16.24.030 C, Residential Use Types: "Fourplex" means "a
+  # structure that contains four primary dwelling units on one lot. The
+  # units may share common walls, floors or ceilings" (L1268-L1270). The pod
+  # is a Fourplex. "Dwelling, multi" starts at "five or more dwelling units"
+  # (L1204-L1208), so a use row that says multi-dwelling or multi-family is
+  # not the pod's row; a single-family attached dwelling is "located on its
+  # own lot" (L1209-L1214), the unit-lot path. Triplex at L1348-L1350,
+  # duplex at L1229-L1231. Kingston Terrace's use table points its housing
+  # rows at these words ("As defined by 16.24.030.C",
+  # kcc.16.114.kingston-terrace.txt#L172).
+  #
+  # FRONT LOT LINE. "A 'front lot line' is a lot line that abuts a street"
+  # (L464-L465), with no exception for a corner, so a corner lot has as many
+  # front lines as streets; the rear "shall only correspond with one of the
+  # front lot lines" (L466-L472). Encoded as front_lot_line_corner: both
+  # under defaults.
+  #
+  # SETBACK. "the shortest horizontal distance between the wall or
+  # foundation of a building and property line"; the garage setback runs
+  # "from a street lot line to the entrance to a garage or carport,
+  # following the center of the driveway" (L595-L603).
+  #
+  # HEIGHT. "the vertical distance between the highest point of a structure
+  # and the average grade along the front foundation" (L67-L69). To the
+  # ridge, not the midpoint of a gable: stricter than most codes read here.
+  #
+  # LOT COVERAGE. "the percentage of a lot that may be covered by impervious
+  # surface including buildings, driveways, sidewalks and parking areas"
+  # (L453-L456). See the coverage comment in the Kingston Terrace zones.
+  #
+  # DENSITY. "dwelling units per gross acre" (L108-L110) -- but Kingston
+  # Terrace defines its own net density (16.114.050 B) and exempts itself
+  # from 16.146 (Table 16.114-1), so the gross figure reaches only the
+  # older districts, which refuse the pod anyway.
+  #
+  # LOT WIDTH AND DEPTH. Only averages are defined: width "measured from the
+  # midpoint of the front and rear lot lines" (L479-L481), depth "from the
+  # midpoint of the opposing side lot lines" (L457-L459). Kingston Terrace's
+  # table prints "Minimum lot width" without saying which, and 20 feet
+  # cannot bind a lot that holds a 56-foot pod, so it is held as the plain
+  # min_lot_width_ft.
+  corner_lot:
+    # "A lot that is located at the intersection of two or more public
+    # street rights-of-way." Public, so a private drive does not make a
+    # corner (drives_count stays false). The code names an alley apart from
+    # a street ("the end or side of a street or alley", Reserve strip,
+    # L575-L577), and Kingston Terrace draws the alley as its own street
+    # section (Figure 16.114.24), so an alley is left out: the default
+    # alleys_count: false.
+    test: intersecting_frontages
+    quote: "or/washington/king-city/kcc.16.24.definitions.txt#L448-L450,L575-L577"
+    cite: "King City KCMC 16.24.020, Lot, corner; Reserve strip"
+
+defaults:
+  # EVERY VALUE BELOW IS KINGSTON TERRACE'S. Only the four Kingston Terrace
+  # zones admit the pod, and Table 16.114-1 sends new development there to
+  # 16.114.130 instead of the citywide parking chapter: "Parking and Loading
+  # 16.132 Exempt. Superseded by Section 16.114.130"
+  # (kcc.16.114.kingston-terrace.txt#L68). If an older district is ever
+  # opened to the pod, 16.132 (kcc.16.132.parking.txt) has to be read for
+  # it and these values moved into the Kingston Terrace zones. The count
+  # would not change -- 16.132 has no minimum since Ordinance O-2024-01
+  # deleted the old 16.132.030 (L201-L207), and 16.132.040 prints
+  # "Triplex/Quadplex Not applicable" as the maximum (L219-L222) -- but the
+  # stall table would: 16.132.050's figures lost their foot and inch marks
+  # in the Municode PDF (ten replacement characters, L268-L277).
+  #
+  # PARKING COUNT. 16.114.130 C.1: "There are no minimum vehicle parking
+  # requirements in the Kingston Terrace District." Table 16.114-13 prints
+  # "Duplex, Triplex, Fourplex Not Applicable" as the maximum. Zero is
+  # encoded because the code says none, not because it is silent.
+  parking_min_per_unit:
+    value: 0
+    cite: King City KCMC 16.114.130 C.1, no minimum vehicle parking in the Kingston Terrace District
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2536-L2544"
+  parking_max_per_unit:
+    exempt: true
+    cite: King City KCMC 16.114.130 C.2 and Table 16.114-13, Duplex, Triplex, Fourplex (Not Applicable)
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2563-L2568"
+  # PLACEMENT. C.4.c: "Surface parking areas shall occur to the side or rear
+  # of buildings." Every surface stall, not only a lot of them; the pod's
+  # rear court is the rear. C.4.d (surface parking no closer to the street
+  # than the building) names mixed-use, multi-family and commercial
+  # buildings, not a fourplex, and says the same thing less strictly.
+  #
+  # NOT ENCODED: C.4.e, "no backing movements or other maneuvering within a
+  # street or right-of-way". A rear court served by a drive does not back
+  # into the street; nothing measures a design that would.
+  parking_front_prohibited:
+    value: true
+    cite: King City KCMC 16.114.130 C.4.c, surface parking to the side or rear of buildings
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2612,L2624-L2625"
+  # STALLS AND AISLES. C.9.a sends every off-street stall to Table
+  # 16.114-14; the 90-degree Standard row reads "9.0 ft. 8.5 ft. 16.0 ft.
+  # 20.0 ft. 16.0 ft." -- stall width, curb length, one-way aisle, two-way
+  # aisle, and a stall depth the header says "Includes bumper overhang".
+  # C.9.d lets a curb or wheel stop count up to two feet of overhang toward
+  # that depth; 16 is the depth with no allowance taken, as the field asks.
+  # A curb length of 8.5 under a 9.0 stall at 90 degrees cannot be a
+  # dimension of the same rectangle; the width row is held and the curb
+  # length is not encoded (a doubt). C.9.b allows up to half the stalls
+  # compact (8.0 by 15.0); the standard stall is held, the stricter reading,
+  # as in the other layers.
+  parking_stall_width_ft:
+    value: 9
+    cite: King City KCMC 16.114.130 C.9.a and Table 16.114-14, 90 degrees, Standard
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2683-L2690,L2712-L2724,L2733"
+  parking_stall_depth_ft:
+    value: 16
+    cite: King City KCMC 16.114.130 C.9.a and Table 16.114-14, 90 degrees, Standard (stall depth including bumper overhang)
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2683-L2690,L2696-L2699,L2712-L2724,L2733"
+  parking_aisle_one_way_ft:
+    value: 16
+    cite: King City KCMC 16.114.130 C.9.a and Table 16.114-14, 90 degrees, 1-Way Aisle Width
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2712-L2724,L2733"
+  parking_aisle_two_way_ft:
+    value: 20
+    cite: King City KCMC 16.114.130 C.9.a and Table 16.114-14, 90 degrees, 2-Way Aisle Width
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2712-L2724,L2733"
+  # NOT ENCODED: Table 16.114-12, Minimum Vehicle Access Standards
+  # (kcc.16.114.kingston-terrace.txt#L2467-L2472). It prints a row for
+  # "Dwelling, single detached or attached" (one driveway, 10 feet) and one
+  # for "Dwellings, multi" (one driveway, 30 feet of access, 15 feet paved
+  # one-way or 20 two-way, curbs and a five-foot walkway) and none for a
+  # duplex, triplex or fourplex. Neither row names the pod; a doubt.
+  front_lot_line_corner:
+    value: both
+    cite: King City KCMC 16.24.020, Lot line (a front lot line is a lot line that abuts a street)
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.24.definitions.txt#L462-L465"
+
+# THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29.
+#
+# NOT ENCODED: 16.144.030 A.2, "all intersections within the Kingston
+# Terrace District shall have a visual clearance area of not less than
+# twenty feet on each side of the intersection", excepting only "driveways
+# serving no more than two residences"; B keeps it clear of any "permanent
+# obstruction which is between three feet and eight feet in height"
+# (kcc.16.144.vision-clearance.txt#L21-L28,L44-L46,L52-L58). The triangle
+# is measured from "the curb line or pavement edge", not the lot line, so
+# how much of it falls on the lot depends on the width of the planting
+# strip and sidewalk, which nothing holds. At a street corner the smallest
+# street yards (10 front, 8 street side) put the building corner 18 feet
+# along each line from the lot corner, inside a 20-foot triangle drawn at
+# the lot lines; at the pod's own driveway, which serves four homes, the
+# triangle reaches the building face wherever the lot line sits within ten
+# feet of the curb. A doubt; the handoff has it.
+#
+# NOT ENCODED: 16.80.060 A, "Where a yard or setback abuts a street having
+# insufficient right-of-way width, the minimum yard or setback requirement
+# shall be increased" by the right-of-way needed -- 33 feet from the
+# centerline on Beef Bend Road, 131st Avenue and Fischer Road, 25 on "All
+# other city streets" (kcc.16.80.general.txt#L105-L129). It pushes a yard
+# back by a width nothing measures. The same kind of rule as in the county
+# and Sherwood layers.
+#
+# NOT ENCODED: 16.80.060 B, projections into yards (L130-L149). An
+# allowance; nothing here reads one in any zone.
+#
+# NOT ENCODED: Chapter 16.82, the unlisted-use procedure. 16.82.030 A: "The
+# city manager shall maintain a list by zoning district of unlisted uses
+# approved by the planning commission and the list shall have the same
+# effect as an amendment to the use provisions of the applicable zone"
+# (kcc.16.82.unlisted.txt#L26-L31). The list is not published with the code
+# and was not found; if it names a fourplex in an older district, that
+# district's refusal below is wrong. A doubt. A new request could not
+# succeed: 16.82.040 A requires that "The use is not specifically listed in
+# another zone as either a permitted use or a conditional use" (L36-L41),
+# and Table 16.114-2 lists the fourplex in all four Kingston Terrace zones.
+zones:
+  # ------------------------------------------------------------------
+  # THE OLDER RESIDENTIAL DISTRICTS, 16.84 to 16.100. 16.84.010 is the
+  # housing-type table for all six: "R-9 R-12 R-15 R-24 SF AT", with rows for
+  # single dwelling detached and attached, accessory dwelling, duplex,
+  # manufactured home and "Multi-dwelling N P P P N P"
+  # (kcc.16.84.single-use-residential.txt#L12-L31). There is no triplex and
+  # no fourplex row, and multi-dwelling is five or more units by definition.
+  # Each district's own permitted-use list (16.84.020 for R-9; 16.88.020 SF,
+  # 16.92.020 AT, 16.94.020 R-12, 16.96.020 R-15, 16.100.020 R-24) names
+  # residential homes, manufactured home parks, family care, residential
+  # facilities, duplexes (AT) and accessory dwellings, and no fourplex
+  # (kcc.16.88-16.100.residential-zones.txt#L13-L23,L61-L75,L112-L126,
+  # L250-L265,L302-L317). Their conditional-use lists name no dwelling of
+  # three or four units either. Refused.
+  #
+  # QUESTION FOR THE OWNER, not answered here. King City is inside Metro
+  # and over a thousand people, a Large City under OAR 660-046-0020 (see
+  # or/_state.yaml), and every one of these six districts permits a
+  # detached single dwelling. The code itself names quadplexes three times
+  # outside Kingston Terrace -- "Density maximums may not apply to
+  # duplexes, quadplexes, triplexes, or cottage clusters" (16.146.030 A,
+  # kcc.16.146.density.txt#L22-L31) and "Triplex/Quadplex Not applicable" as
+  # a parking maximum (16.132.040, kcc.16.132.parking.txt#L214-L222) -- and
+  # never admits one in a use table. Whether the state's model code applies
+  # directly where a Large City's own table is silent is a legal question.
+  # The conservative reading is the city's printed table: refused, and put
+  # to Steph in the handoff. The state layer cannot overturn it today; it
+  # carries no quadplex_allowed, and quadplex_allowed: false is not how a
+  # zone says "not residential" (or/_state.yaml, the -0010(2) comment).
+  #
+  # Two copying slips in the source, recorded so a reader does not stop on
+  # them: 16.96.020 (R-15) and 16.100.020 (R-24) both open "Permitted uses in
+  # the AT zone are" (residential-zones.txt L255-L256, L307-L308), under
+  # their own chapter headings. Read as their own districts.
+  # ------------------------------------------------------------------
+  R-9:
+    cite_default:
+      cite: King City KCMC Chapter 16.84 (R-9 Small Lot and Attached Residential), 16.84.010 and 16.84.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling N in R-9) and 16.84.020 permitted uses
+      quote: "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31,L37-L50"
+    notes: >-
+      DRAFT. Refuses: the housing-type table has no triplex or fourplex
+      row, and the district's permitted uses name none. A question for the
+      owner: see the comment above.
+  R-12:
+    cite_default:
+      cite: King City KCMC Chapter 16.94 (R-12 Attached Residential), 16.84.010 and 16.94.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.94.020 permitted uses
+      quote: "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31"
+    notes: >-
+      DRAFT. Refuses: the housing-type table has no triplex or fourplex
+      row, and 16.94.020 names none. A question for the owner.
+  R-15:
+    # Not on the city's map on 2026-09-29 except as "R-15 (WC)", the
+    # county's R-15 kept under 16.80.050 A (a pocket, below). The district
+    # is in 16.80.020 and has a chapter, so it is held.
+    cite_default:
+      cite: King City KCMC Chapter 16.96 (R-15 Multi-family Residential), 16.84.010 and 16.96.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.96.020 permitted uses
+      quote: "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31"
+    notes: >-
+      DRAFT. Refuses: the housing-type table has no triplex or fourplex
+      row, and 16.96.020 names none. A question for the owner.
+  R-24:
+    cite_default:
+      cite: King City KCMC Chapter 16.100 (R-24 Multi-family Residential), 16.84.010 and 16.100.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.100.020 permitted uses
+      quote: "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31"
+    notes: >-
+      DRAFT. Refuses: the housing-type table has no triplex or fourplex
+      row, and 16.100.020 names none. A question for the owner.
+  SF:
+    cite_default:
+      cite: King City KCMC Chapter 16.88 (SF Single-family Residential), 16.84.010 and 16.88.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling N in SF) and 16.88.020 permitted uses (residential home only)
+      quote: "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31"
+    notes: >-
+      DRAFT. Refuses: the housing-type table has no triplex or fourplex
+      row, and 16.88.020 permits a residential home only. A question for
+      the owner.
+  AT:
+    cite_default:
+      cite: King City KCMC Chapter 16.92 (AT Apartments and Townhouses), 16.84.010 and 16.92.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.92.020 permitted uses
+      quote: "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31"
+    notes: >-
+      DRAFT. Refuses: the housing-type table has no triplex or fourplex
+      row, and 16.92.020 names a duplex and nothing larger. A question for
+      the owner.
+  # ------------------------------------------------------------------
+  # THE MIXED-USE, COMMERCIAL AND CIVIC DISTRICTS. Each permitted-use list
+  # is its own section and none names a triplex or fourplex; NMU and LC name
+  # "Dwelling, multi-family", five or more units. Refused on the list.
+  # ------------------------------------------------------------------
+  NMU:
+    cite_default:
+      cite: King City KCMC Chapter 16.102 (NMU Neighborhood Mixed-Use), 16.102.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.102.020 permitted uses (single-family attached and detached, multi-family, duplex; no triplex or fourplex)
+      quote: "or/washington/king-city/kcc.16.102.nmu.txt#L21-L47"
+    notes: >-
+      DRAFT. Refuses: the permitted uses name a duplex and multi-family
+      dwellings of five or more units, and no fourplex.
+  LC:
+    cite_default:
+      cite: King City KCMC Chapter 16.104 (LC Limited Commercial), 16.104.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.104.020 permitted uses (multi-family dwelling; no triplex or fourplex)
+      quote: "or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt#L19-L36"
+    notes: >-
+      DRAFT. Refuses: multi-family dwellings of five or more units only.
+  CF:
+    cite_default:
+      cite: King City KCMC Chapter 16.108 (CF Community Facilities), 16.108.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.108.020 permitted uses (community services only)
+      quote: "or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt#L254-L261"
+    notes: >-
+      DRAFT. Refuses: community services only.
+  ROS:
+    cite_default:
+      cite: King City KCMC Chapter 16.112 (ROS Recreation Open Space), 16.112.020
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: King City KCMC 16.112.020 permitted uses (community services and parks only)
+      quote: "or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt#L327-L337"
+    notes: >-
+      DRAFT. Refuses: community services and parks and open space only.
+  # ------------------------------------------------------------------
+  # KINGSTON TERRACE, Chapter 16.114 (Ordinance 2023-04). Four
+  # neighbourhood zones in 16.80.020: KTTC Town Center, KTBB Beef Bend,
+  # KTC Central, KTRC Rural Character. Table 16.114-2 prints "Duplex,
+  # Triplex, Fourplex1 Y Y Y Y", Y meaning "Uses Allowed Outright"
+  # (16.114.040 A), and 16.114.150 B.2: "Middle housing development on an
+  # existing lot is allowed outright subject to design and dimensional
+  # standards and HCA standards but exempt from development plan review",
+  # a Type I decision (C.3). Table 16.114-1 leaves only 16.80, 16.82,
+  # 16.84.060 and 16.114 of Article III in force here, so the older
+  # districts' tables do not reach these zones.
+  #
+  # THE DIMENSIONAL TABLE, 16.114-4, "Residential Use Types" block. Column
+  # order "Town Center, Beef Bend, Central, Rural Character" on both pages.
+  # Footnote markers are glued to the figures: "1,50016" is 1,500 with note
+  # 16, "2017" is 20 with note 17. The notes print without a period
+  # ("16 The minimum lot size...").
+  #
+  # - LOT AREA. 1,500 / 1,500 / 2,400 / 2,400. Note 16 (Town Center and
+  #   Beef Bend): the minimum for "Dwelling, single-family attached,
+  #   Duplex, Triplex, and Fourplex ... may be reduced to 1,000 square
+  #   feet". Held at the printed figure, the stricter reading of "may be";
+  #   the pod's own footprint is 2,000 square feet, so neither can bind.
+  # - LOT WIDTH 20, note 17 (15 for the same types), all four; DEPTH 45 /
+  #   45 / 60 / 60.
+  # - FRONT "10/26", a minimum and a maximum, both held
+  #   (setback_front_max_ft). NOT ENCODED: the porch row, "5/15" and
+  #   "6/15"; the pod carries no porch in the catalog, and the minimum is
+  #   looser than the building's.
+  # - GARAGE 18 from the front and 18 on a corner.
+  # - CORNER. "Corner lot setback -- front yard/side yard, minimum 8" and
+  #   "Side yard -- to public street, minimum 5". The 8 is held as the street
+  #   side (the stricter of the two rows that reach a street side yard). It
+  #   would also let a corner lot's front come in to 8; that relief is NOT
+  #   ENCODED, and with front_lot_line_corner: both the envelope gives each
+  #   street line the stricter of the front (10) and the street side (8).
+  # - INTERIOR SIDE "0 or 3" (Town Center, Beef Bend, Central). Note 18:
+  #   "There is no minimum setback for zero foot setback buildings. In all
+  #   cases, zero foot setback buildings shall either: (1) be attached at the
+  #   property line; or (2) have a total minimum separation of 6 feet
+  #   between buildings." The pod is attached to nothing across its lot
+  #   line, and the separation turns on a neighbour's building, which
+  #   nothing holds; 3 is held. Rural Character prints "5" with note 19:
+  #   "Side yard of 5 feet for a single-story structure, and 10 feet for
+  #   two-story structures." The pod is two stories: 10.
+  # - REAR 10 (note 20 is an accessory building's). NOT ENCODED: the alley
+  #   rows, 3 feet to a building on an alley and "0-6" to a garage entry
+  #   (note 21, "or greater than 18"); the envelope reads an alley line as
+  #   a rear or side line and holds the 10.
+  # - HEIGHT N/A / 45 / 35 / 35; Town Center's N/A is held as an exemption.
+  #   Measured to the highest point (16.24.020), so the pod's 26 feet is its
+  #   ridge.
+  # - COVERAGE. "Maximum coverage of buildings and impervious surfaces 90%
+  #   90% 90% 80%", note 24 (not cottage clusters), and 16.24.020 counts
+  #   "buildings, driveways, sidewalks and parking areas". max_coverage_pct
+  #   is building coverage, so holding the figure there is LOOSER than the
+  #   code: the pod's court, drive and walks count against the same cap. No
+  #   field holds an impervious share; the handoff proposes one and lists it
+  #   as a doubt.
+  # - NOT ENCODED: note 14, "building setbacks for each type of structure
+  #   must comply with the current Oregon Building Code". A building-code
+  #   separation, not a zoning yard.
+  #
+  # DENSITY. Table 16.114-3, "Minimum net density assigned to each
+  # development (dwelling units per net acre) 22 18 10 8", with net density
+  # "gross area less streets (public and private), parks and open space,
+  # storm facilities, natural resources, and uses that are not residential"
+  # (16.114.050 B). Held as min_density_du_per_acre. The state layer
+  # relieves maximums only ("Minimum density is untouched", or/_state.yaml).
+  # Four homes at 22 an acre cap a Town Center lot near 7,900 square feet
+  # (18: 9,680; 10: 17,424; 8: 21,780), before any natural-resource area is
+  # netted out, which would shrink the net acre and loosen the cap. Whether
+  # "each development" reaches a single fourplex on an existing lot, which
+  # B.2 sends straight to a building permit, is read the stricter way; a
+  # doubt. NOT ENCODED: the second row, the neighbourhood-wide unit
+  # targets (1,870 / 1,260 / 350 / 320), which bind no lot. No maximum is
+  # printed.
+  #
+  # NOT ENCODED, all four zones: 16.114.060, the design standards (Table
+  # 16.114-5 applies articulation, eyes on the street, main entrance,
+  # detailed design and transitional space to a fourplex's street-facing
+  # elevations; the main entrance must face the street within eight feet
+  # of the longest street-facing wall). Design, not placement.
+  # 16.114.080-16.114.090, the Habitat Conservation Area standards: a
+  # per-area overlay nothing measures (the handoff has it); 16.114.090's
+  # own relief (lot size down by up to 1,000 square feet, yards by up to
+  # half, height up ten feet for a smaller footprint) is looser and is not
+  # encoded either. 16.114.120 streets and dedication, which take ground
+  # from a lot nothing measures.
+  # ------------------------------------------------------------------
+  KTTC:
+    cite_default:
+      cite: King City KCMC Chapter 16.114 (KTTC Kingston Terrace Town Center), 16.114.040 and 16.114.050
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
+    min_lot_sqft:
+      value: 1500
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size (note 16 read the stricter way)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L233,L290-L292"
+    min_lot_width_ft:
+      value: 20
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot width (note 17 read the stricter way)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L234,L293-L294"
+    min_lot_depth_ft:
+      value: 45
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot depth
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L235"
+    min_density_du_per_acre:
+      value: 22
+      cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215"
+    setback_front_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239"
+    setback_front_max_ft:
+      value: 26
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239"
+    setback_garage_entrance_ft:
+      value: 18
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to garage and corner lot garage setback
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L242-L243,L246-L247"
+    setback_side_ft:
+      value: 3
+      cite: King City KCMC 16.114.050 Table 16.114-4, Side yard interior (0 or 3; note 18, zero only where attached at the line)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L248-L249,L295-L296"
+    setback_street_side_ft:
+      value: 8
+      cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard (8; side yard to public street 5)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L244-L245,L250-L251"
+    setback_rear_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Rear yard to residential building
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L252-L254"
+    max_height_ft:
+      exempt: true
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height (N/A in Town Center)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280"
+    max_coverage_pct:
+      value: 90
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces (held as building coverage, looser than the code)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
+    notes: >-
+      DRAFT. Fourplex allowed outright. 1,500 sq ft lot, 20 wide, 45 deep;
+      at least 22 units per net acre; front 10 to 26, garage 18, side 3,
+      street side 8, rear 10; no height limit; coverage 90 percent of
+      buildings and paving, held as building coverage only.
+  KTBB:
+    cite_default:
+      cite: King City KCMC Chapter 16.114 (KTBB Kingston Terrace Beef Bend Neighborhood), 16.114.040 and 16.114.050
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
+    min_lot_sqft:
+      value: 1500
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size (note 16 read the stricter way)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L233,L290-L292"
+    min_lot_width_ft:
+      value: 20
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot width (note 17 read the stricter way)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L234,L293-L294"
+    min_lot_depth_ft:
+      value: 45
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot depth
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L235"
+    min_density_du_per_acre:
+      value: 18
+      cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215"
+    setback_front_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239"
+    setback_front_max_ft:
+      value: 26
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239"
+    setback_garage_entrance_ft:
+      value: 18
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to garage and corner lot garage setback
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L242-L243,L246-L247"
+    setback_side_ft:
+      value: 3
+      cite: King City KCMC 16.114.050 Table 16.114-4, Side yard interior (0 or 3; note 18, zero only where attached at the line)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L248-L249,L295-L296"
+    setback_street_side_ft:
+      value: 8
+      cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard (8; side yard to public street 5)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L244-L245,L250-L251"
+    setback_rear_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Rear yard to residential building
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L252-L254"
+    max_height_ft:
+      value: 45
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280"
+    max_coverage_pct:
+      value: 90
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces (held as building coverage, looser than the code)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
+    notes: >-
+      DRAFT. Fourplex allowed outright. 1,500 sq ft lot, 20 wide, 45 deep;
+      at least 18 units per net acre; front 10 to 26, garage 18, side 3,
+      street side 8, rear 10; 45 ft; coverage 90 percent of buildings and
+      paving, held as building coverage only.
+  KTC:
+    cite_default:
+      cite: King City KCMC Chapter 16.114 (KTC Kingston Terrace Central Neighborhood), 16.114.040 and 16.114.050
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
+    min_lot_sqft:
+      value: 2400
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L233,L290"
+    min_lot_width_ft:
+      value: 20
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot width (note 17 read the stricter way)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L234,L293-L294"
+    min_lot_depth_ft:
+      value: 60
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot depth
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L235"
+    min_density_du_per_acre:
+      value: 10
+      cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215"
+    setback_front_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239"
+    setback_front_max_ft:
+      value: 26
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239"
+    setback_garage_entrance_ft:
+      value: 18
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to garage and corner lot garage setback
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L242-L243,L246-L247"
+    setback_side_ft:
+      value: 3
+      cite: King City KCMC 16.114.050 Table 16.114-4, Side yard interior (0 or 3; note 18, zero only where attached at the line)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L248-L249,L295-L296"
+    setback_street_side_ft:
+      value: 8
+      cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard (8; side yard to public street 5)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L244-L245,L250-L251"
+    setback_rear_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Rear yard to residential building
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L252-L254"
+    max_height_ft:
+      value: 35
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280"
+    max_coverage_pct:
+      value: 90
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces (held as building coverage, looser than the code)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
+    notes: >-
+      DRAFT. Fourplex allowed outright. 2,400 sq ft lot, 20 wide, 60 deep;
+      at least 10 units per net acre; front 10 to 26, garage 18, side 3,
+      street side 8, rear 10; 35 ft; coverage 90 percent of buildings and
+      paving, held as building coverage only.
+  KTRC:
+    cite_default:
+      cite: King City KCMC Chapter 16.114 (KTRC Kingston Terrace Rural Character Neighborhood), 16.114.040 and 16.114.050
+      url: https://api.municode.com/PublicationPdfDownload/3913
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
+    min_lot_sqft:
+      value: 2400
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L233,L290"
+    min_lot_width_ft:
+      value: 20
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot width (note 17 read the stricter way)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L234,L293-L294"
+    min_lot_depth_ft:
+      value: 60
+      cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot depth
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L235"
+    min_density_du_per_acre:
+      value: 8
+      cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215"
+    setback_front_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239"
+    setback_front_max_ft:
+      value: 26
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239"
+    setback_garage_entrance_ft:
+      value: 18
+      cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to garage and corner lot garage setback
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L242-L243,L246-L247"
+    setback_side_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Side yard interior (5; note 19, 10 feet for two-story structures)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L248-L249,L297"
+    setback_street_side_ft:
+      value: 8
+      cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard (8; side yard to public street 5)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L244-L245,L250-L251"
+    setback_rear_ft:
+      value: 10
+      cite: King City KCMC 16.114.050 Table 16.114-4, Rear yard to residential building
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L252-L254"
+    max_height_ft:
+      value: 35
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280"
+    max_coverage_pct:
+      value: 80
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces (held as building coverage, looser than the code)
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
+    notes: >-
+      DRAFT. Fourplex allowed outright (multi-dwelling only as a
+      conditional use here). 2,400 sq ft lot, 20 wide, 60 deep; at least 8
+      units per net acre; front 10 to 26, garage 18, side 10 for a
+      two-story building, street side 8, rear 10; 35 ft; coverage 80
+      percent of buildings and paving, held as building coverage only.
+
+# THE MAP'S OTHER CODES. Layer 1 spells two districts without their hyphen
+# and carries five county codes marked "(WC)"; layer 4 names the Kingston
+# Terrace zones instead of coding them, and paints one area "Neighborhood
+# Mixed Use" that is no Kingston Terrace zone. Counted on 2026-09-29.
+#
+# THE (WC) CODES ARE POCKETS. 16.80.050 A: "Zoning regulations applicable
+# to an area prior to annexation to the city shall continue to apply and
+# shall be enforced by the city until a zone change for the area has been
+# adopted by the city council" (kcc.16.80.general.txt L84-L99). Unlike
+# Beaverton's 10.40.1 no city chapter supersedes any part of it, so a lot
+# the map marks with a county code screens under the county's layer and
+# that district, as the Beaverton WAcnty pocket does. Each label names its
+# county district, so the pocket names it too rather than reading the map.
+zone_rulings:
+  R9:
+    outcome: alias
+    of: R-9
+    note: >-
+      "R9", "Residental 9 units/acre", 25 features on the city's zoning
+      layer (ZONECLASS) on 2026-09-29. The map's spelling of R-9, Small Lot
+      and Attached Residential, in the 16.80.020 district list
+      (kcc.16.80.general.txt L32). One district, two spellings; the block is
+      R-9.
+  R12:
+    outcome: alias
+    of: R-12
+    note: >-
+      "R12", "Attached Residential 12 units/acre", 14 features on the
+      city's zoning layer (ZONECLASS) on 2026-09-29. The map's spelling of
+      R-12, Attached Residential, in the 16.80.020 district list
+      (kcc.16.80.general.txt L33). One district, two spellings; the block is
+      R-12.
+  Town Center:
+    outcome: alias
+    of: KTTC
+    note: >-
+      "Town Center", three features on the Kingston Terrace Zone
+      Designations layer (layer 4, Zoning_Designations) on 2026-09-29. The
+      map's name for KTTC, Kingston Terrace Town Center Mixed-Use, in
+      16.80.020 (kcc.16.80.general.txt L45-L47) and the "Town Center"
+      column of Tables 16.114-2 to 16.114-4.
+  Beef Bend Neighborhood:
+    outcome: alias
+    of: KTBB
+    note: >-
+      "Beef Bend Neighborhood", one feature on the Kingston Terrace Zone
+      Designations layer (layer 4, Zoning_Designations) on 2026-09-29. The
+      map's name for KTBB, Kingston Terrace Beef Bend Neighborhood, in
+      16.80.020 (kcc.16.80.general.txt L48-L50) and the "Beef Bend
+      Neighborhood" column of Tables 16.114-2 to 16.114-4.
+  Central Neighborhood:
+    outcome: alias
+    of: KTC
+    note: >-
+      "Central Neighborhood", four features on the Kingston Terrace Zone
+      Designations layer (layer 4, Zoning_Designations) on 2026-09-29. The
+      map's name for KTC, Kingston Terrace Central Neighborhood, in
+      16.80.020 (kcc.16.80.general.txt L51) and the "Central Neighborhood"
+      column of Tables 16.114-2 to 16.114-4.
+  Rural Character Neighborhood:
+    outcome: alias
+    of: KTRC
+    note: >-
+      "Rural Character Neighborhood", two features on the Kingston Terrace
+      Zone Designations layer (layer 4, Zoning_Designations) on 2026-09-29.
+      The map's name for KTRC, Kingston Terrace Rural Character
+      Neighborhood, in 16.80.020 (kcc.16.80.general.txt L52-L54) and the
+      "Rural Character Neighborhood" column of Tables 16.114-2 to 16.114-4.
+  Neighborhood Mixed Use:
+    outcome: unencodable
+    note: >-
+      "Neighborhood Mixed Use", one small feature (OBJECTID 23) on the
+      Kingston Terrace Zone Designations layer (layer 4) on 2026-09-29. Not
+      one of the four Kingston Terrace zones 16.114.030 A names
+      (kcc.16.114.kingston-terrace.txt L107-L110) and not a column of any
+      Kingston Terrace table. The city's NMU district (Chapter 16.102) has
+      the same name, but Table 16.114-1 leaves only 16.80, 16.82, 16.84.060
+      and 16.114 of Article III in force inside the plan district (L57-L62),
+      so reading the feature as NMU would apply a chapter the district
+      exempts. Left open, not guessed; the handoff asks.
+  R-6 (WC):
+    outcome: pocket
+    of: or/washington/_unincorporated
+    zone: R-6
+    note: >-
+      "R-6 (WC)", "County Zoning Residental - 6 units/acre", one feature on
+      the city's zoning layer (ZONECLASS) on 2026-09-29. Washington County's
+      R-6 kept on annexed land: 16.80.050 A continues the county's zoning,
+      enforced by the city, until the council adopts a zone change
+      (kcc.16.80.general.txt L84-L99). See the comment above zone_rulings.
+  R-9 (WC):
+    outcome: pocket
+    of: or/washington/_unincorporated
+    zone: R-9
+    note: >-
+      "R-9 (WC)", "Residental 9 units/acre", five features on the city's
+      zoning layer (ZONECLASS) on 2026-09-29. Washington County's R-9, not
+      the city's R-9 (which the map spells "R9"), kept on annexed land under
+      16.80.050 A (kcc.16.80.general.txt L84-L99). See the comment above
+      zone_rulings.
+  R-15 (WC):
+    outcome: pocket
+    of: or/washington/_unincorporated
+    zone: R-15
+    note: >-
+      "R-15 (WC)", "Residental 15 units/acre", one feature on the city's
+      zoning layer (ZONECLASS) on 2026-09-29. Washington County's R-15, not
+      the city's R-15 of Chapter 16.96, kept on annexed land under 16.80.050
+      A (kcc.16.80.general.txt L84-L99). See the comment above
+      zone_rulings.
+  CBD (WC):
+    outcome: pocket
+    of: or/washington/_unincorporated
+    zone: CBD
+    note: >-
+      "CBD (WC)", "Community Business District", one feature on the city's
+      zoning layer (ZONECLASS) on 2026-09-29. Washington County's CBD, kept
+      on annexed land under 16.80.050 A (kcc.16.80.general.txt L84-L99); no
+      King City district has the code. See the comment above zone_rulings.
+  INST (WC):
+    outcome: pocket
+    of: or/washington/_unincorporated
+    zone: INST
+    note: >-
+      "INST (WC)", "Institutional", two features on the city's zoning layer
+      (ZONECLASS) on 2026-09-29. Washington County's Institutional district,
+      kept on annexed land under 16.80.050 A (kcc.16.80.general.txt L84-L99);
+      no King City district has the code. See the comment above
+      zone_rulings.

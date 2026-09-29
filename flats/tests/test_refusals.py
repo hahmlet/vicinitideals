@@ -345,7 +345,20 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 134, "comments": 227, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 241, "tests": 18}
+#
+# 379 -> 393 on 2026-09-29, later again: King City, the fifth Washington
+# County draft from the same cloud session. 14 comments, no note or test.
+# They are Kingston Terrace's standards no field or measured fact holds:
+# the no-backing rule of 16.114.130 C.4.e, the compact stalls of C.9.b,
+# Table 16.114-12's vehicle access rows (none for a fourplex), the
+# 16.144.030 A.2 twenty-foot visual clearance at intersections, the
+# 16.80.060 A setback from a short right-of-way and 16.80.060 B's
+# projections, the 16.82 unlisted-use list, the porch, garage, street-side
+# and alley rows of Table 16.114-4 and its note 14, the neighbourhood-wide
+# unit targets of Table 16.114-3, the 16.114.060 design standards, and
+# 16.114.120 streets and dedication. The unlisted-use paragraph is counted
+# twice: the projections paragraph before it runs on into it.
 #
 # 367 -> 379 on 2026-09-29, later again: Sherwood, the fourth Washington
 # County draft from the same cloud session. 12 comments, no note or test.

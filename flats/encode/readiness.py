@@ -719,6 +719,22 @@ def _unmarked_by_notes(text: str) -> str:
     return _GLUED.sub(cut, text)
 
 
+#: A thousands-grouped number with a marker glued to its last group: King
+#: City's Table 16.114-4 prints 1,500 square feet with note 16 as "1,50016".
+#: Both readers above skip a token with a comma in it, so the figure was
+#: stated and read as absent. Here the grouping settles what the notes have
+#: to settle for a bare token: a group after a thousands comma holds exactly
+#: three digits, so a fourth or fifth can only be a marker, and cutting it
+#: leaves the number the table printed. More than two is not a marker any
+#: table here runs to, and is left alone.
+_GROUPED = re.compile(r"(?<![\d.,])(\d{1,3}(?:,\d{3})*,\d{3})\d{1,2}(?![\d.,])")
+
+
+def _regrouped(text: str) -> str:
+    """The same text with a marker cut from each overlong thousands group."""
+    return _GROUPED.sub(r"\1", text)
+
+
 #: What follows a number, where anything does. Area before length on purpose:
 #: "square feet" ends in a length unit and is not one.
 _UNIT = re.compile(
@@ -839,6 +855,7 @@ def quotes_the_number(
     if glued and (
         _states(_unmarked(hay), float(value))
         or _states(_unmarked_by_notes(hay), float(value))
+        or _states(_regrouped(hay), float(value))
     ):
         return True
     if value != 0:

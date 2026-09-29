@@ -495,7 +495,16 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # is valid. Round-tripping is the whole point of doing this as a port.
     rules = RuleSet(load_rules())
 
-    assert len(rules.layers) == 23  # 22 jurisdictions + the state layer
+    assert len(rules.layers) == 24  # 23 jurisdictions + the state layer
+    # 414 as of 2026-09-29, later again: King City, the fifth Washington
+    # County layer, from the same cloud session. Its 14 zones are the
+    # districts of KCMC 16.80.020: the four Kingston Terrace neighbourhood
+    # zones admit the pod on one lot, and the six older residential
+    # districts (whose housing-type table has no triplex or fourplex row),
+    # NMU, LC, CF and ROS refuse. The maps' other spellings, five county
+    # codes on annexed land and one unmatched Kingston Terrace name are
+    # ruled in the layer.
+    #
     # 400 as of 2026-09-29, later again: Sherwood, the fourth Washington
     # County layer, from the same cloud session. Its 21 zones are the codes
     # the city's zoning map prints for districts the code sets standards
@@ -580,7 +589,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 400
+    assert sum(len(l.zones) for l in rules.layers.values()) == 414
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

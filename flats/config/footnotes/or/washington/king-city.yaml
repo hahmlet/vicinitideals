@@ -1,0 +1,103 @@
+# King City Community Development and Zoning Code (Municode publication 3913,
+# Supplement No. 16). Draft, cloud session 2026-09-29. Nothing here is
+# verified.
+#
+# The census finds one notes block in the King City documents: the six
+# applicability notes of Table 16.114-5, the Kingston Terrace design
+# standards, printed as "[1]" to "[6]" above the table they qualify
+# (kcc.16.114.kingston-terrace.txt L358-L370). Its region runs from the top
+# of the chapter, so every Kingston Terrace value quoted above L358 counted
+# all six as its own. They say which elevation a design standard reaches,
+# and the layer holds no design standard (16.114.060 is a NOT ENCODED
+# comment on the Kingston Terrace zones). All six are dismissed.
+#
+# WHAT THE CENSUS MISSES. The two tables the layer reads print their notes
+# without a period ("16 The minimum lot size ...") and glue the markers to
+# the figures, and the census sees neither block. Read by eye on
+# 2026-09-29, and ruled here so the next reader need not repeat it:
+#
+# - Table 16.114-4, the dimensional table, notes 14 to 24
+#   (kcc.16.114.kingston-terrace.txt L288-L303):
+#   14, setbacks must also meet the Oregon Building Code. A building-code
+#     separation, not a zoning yard; NOT ENCODED in the layer.
+#   15, the lot-size row is for residential use types. The pod is one.
+#   16, the lot size for single-family attached, duplex, triplex and
+#     fourplex "may be reduced to 1,000 square feet" (Town Center and Beef
+#     Bend). Read the stricter way: 1,500 held. The pod's own footprint is
+#     2,000 square feet, so neither figure can bind.
+#   17, the lot width for the same types "may be reduced to 15 feet". Read
+#     the stricter way: 20 held; it cannot bind a 56-foot pod either.
+#   18, a zero-foot side yard only where a building is attached at the
+#     line or keeps six feet from its neighbour. The pod is attached to
+#     nothing across its lot line and no neighbour's building is held:
+#     the 3 is encoded as setback_side_ft.
+#   19, Rural Character's side yard is 5 feet for one story and 10 for
+#     two. Encoded as setback_side_ft 10 in KTRC; the pod is two stories.
+#   20, zero rear yard for an accessory building. The pod has none.
+#   21, a garage entrance on an alley at 0-6 feet or more than 18. The
+#     alley rows are NOT ENCODED (the layer's KT comment says why).
+#   22 and 23, the multi-dwelling, mixed-use and commercial rows' own
+#     setbacks. Another use's rows.
+#   24, the coverage cap does not reach cottage clusters. The pod is a
+#     fourplex, so the cap reaches it; encoded as max_coverage_pct.
+# - Table 16.114-2, the use table, notes 1 to 13 (L172-L185): 1, "As
+#   defined by 16.24.030.C", which sends the fourplex row to the
+#   definition the layer reads; 2, cottage clusters to 16.84.060; 3 to 13,
+#   retail, conditional and utility uses to their own approval standards.
+#   None qualifies the fourplex row beyond note 1.
+#
+# Also outside the census, and none of it reaching the pod: note 25 on
+# commercial ground-floor height (L469-L475); note 26 under Table 16.114-9,
+# the Upland HCA disturbance area (L1526-L1536), which is the HCA overlay
+# the layer does not encode; notes 27 to 38 under Table 16.114-11, the
+# street sections (L2097-L2342), which are streets, not lots.
+notes:
+
+  # --- kcc.16.114.kingston-terrace.txt (Table 16.114-5 applicability) ---
+  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L358"
+    digest: "01a6814a4ef0"
+    state: dismissed
+    reason: >-
+      Note 1 of Table 16.114-5, the design standards: "Applicable to the
+      entire site", for the open-space standards. It says where a design
+      standard applies, and the layer holds no design standard (16.114.060
+      is NOT ENCODED). No dimensional value the layer holds is under it.
+  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L359"
+    digest: "cbc36f48b616"
+    state: dismissed
+    reason: >-
+      Note 2 of Table 16.114-5: design standards on elevations facing a
+      public street, and which street governs on a corner; its item i
+      sends multi-dwelling, mixed-use and commercial development to the
+      circulation standards. Where a design standard applies, not a
+      dimension; the layer holds no design standard.
+  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L366"
+    digest: "979604e31a0b"
+    state: dismissed
+    reason: >-
+      Note 3 of Table 16.114-5: design standards on the elevation with a
+      primary entrance. Where a design standard applies; the layer holds
+      none.
+  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L367"
+    digest: "7b648f6d924b"
+    state: dismissed
+    reason: >-
+      Note 4 of Table 16.114-5: design standards on elevations facing a
+      public park or open space. Where a design standard applies; the
+      layer holds none.
+  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L368"
+    digest: "6c2bbc8d1a69"
+    state: dismissed
+    reason: >-
+      Note 5 of Table 16.114-5: the transitional-space standard for
+      dwellings grouped around a shared open space or path. Where a design
+      standard applies; the layer holds none.
+  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L370"
+    digest: "14ad596eba47"
+    state: dismissed
+    reason: >-
+      Note 6 of Table 16.114-5: the transitional-space standard for a
+      ground-floor entrance within ten feet of the street or a shared open
+      space, or inside the front yard. Where a design standard applies;
+      the layer holds none. The front yard it names is the one the layer
+      holds as setback_front_ft.

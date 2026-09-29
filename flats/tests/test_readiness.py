@@ -742,6 +742,29 @@ def test_a_two_digit_marker_is_cut_only_where_its_note_is_quoted() -> None:
     assert not quotes_the_number("Maximum 12.458", 12.4, glued=True)
 
 
+def test_a_marker_glued_to_a_thousands_group_is_read_by_the_grouping() -> None:
+    """King City's Table 16.114-4 prints 1,500 square feet with note 16 as
+    "1,50016". Both readers above leave a token with a comma alone, so the
+    figure the table states read as absent. A group after a thousands comma
+    holds three digits and no more, so the grouping itself says which digits
+    are the marker. (2026-09-29, Washington County draft.)
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    row = "15 1,50016 1,50016 2,400 2,400"
+    assert quotes_the_number(row, 1500, glued=True)
+    assert quotes_the_number(row, 2400, glued=True)
+    # Only where the document is declared glued.
+    assert not quotes_the_number(row, 1500)
+    # A one-digit marker comes off the same way.
+    assert quotes_the_number("Minimum lot area 7,5001", 7500, glued=True)
+    # A well-formed group is left alone: 7,500 is still not 750 or 75.
+    assert not quotes_the_number("Minimum lot area 7,500", 750, glued=True)
+    assert not quotes_the_number("Minimum lot area 7,500", 75, glued=True)
+    # Three extra digits is not a marker any table here prints.
+    assert not quotes_the_number("Minimum lot area 1,500165", 1500, glued=True)
+
+
 def test_a_decimal_printed_without_its_leading_zero_still_reads() -> None:
     """Wood Village's Table 210-3 gives its LR12 density floor as ".9 (25%)"
     and Table 220-3 gives a coverage as ".80". Both are how a table prints a

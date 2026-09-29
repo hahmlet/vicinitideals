@@ -129,7 +129,13 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 375, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 377, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+# 375 -> 377 stated on 2026-09-29, later again: King City, the fifth
+# Washington County draft from the same cloud session, two exemptions and
+# both `stated`. One is Table 16.114-13's "Not Applicable" parking maximum
+# for "Duplex, Triplex, Fourplex" in Kingston Terrace, held as the layer
+# default; the other is Town Center's "N/A" maximum building height in
+# Table 16.114-4 (the other three neighbourhoods print 45, 35 and 35).
 # 370 / 55 -> 375 / 63 on 2026-09-29, later again: Sherwood, the fourth
 # Washington County draft from the same cloud session, thirteen exemptions.
 # Twelve are density: 16.12.010 F.1, "Maximum density standards shall not

@@ -1,5 +1,5 @@
 {
-  "digest": "8611a38056184f8730e7da3a92397b49c75de4a4253c6362f9bb721fe140bd62",
+  "digest": "0e253fb780ebe7db77dc0fefe25d99f59ec14db2cae0547f9e6b0d1ac819ce06",
   "layers": {
     "or": {
       "misattributed": [],
@@ -1891,6 +1891,20 @@
         }
       ],
       "label": "Hillsboro",
+      "counts": {},
+      "gaps": []
+    },
+    "or/washington/king-city": {
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "parking_front_prohibited",
+          "claimed": "16.114.130",
+          "found": "16.114.120",
+          "quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2612,L2624-L2625"
+        }
+      ],
+      "label": "King City",
       "counts": {},
       "gaps": []
     },

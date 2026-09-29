@@ -8,12 +8,14 @@ because no number is there to misquote.
 
 Like :mod:`flats.tests.test_ragged` this is a test rather than a report
 because the corpus separates cleanly. Happy Valley's accessory-structure
-setback is the one hit; every other candidate is a two-column line that wrapped
+setback is the one hit that lost a numeral; King City's NMU frontage sentence
+is the one hit that kept its numeral in the wrong place (see
+``KNOWN_MISPLACED``). Every other candidate is a two-column line that wrapped
 between the numeral and its unit, or an "of" that introduces a count.
 
-It fails in both directions on purpose. A second orphan means a document was
-fetched with a standard silently missing from it. Happy Valley's going away
-means the document was re-fetched and 16.22.050 is owed a re-read.
+It fails in both directions on purpose. A new orphan means a document was
+fetched with a standard silently missing from it. A pinned one going away
+means its document was re-fetched and the sentence is owed a re-read.
 """
 
 from __future__ import annotations
@@ -31,10 +33,22 @@ from flats.encode.orphaned import ORPHAN, orphans, scan
 #: failure this corpus keeps finding and the next one may not be free.
 KNOWN_ORPHAN = "or/clackamas/happy-valley/16.22.residential.txt#L1138"
 
+#: A sentence the check flags that did not lose its numeral: King City
+#: 16.102.060 A.3.a, the NMU supplemental frontage zone, reads "A maximum
+#: depth between the clear zone and building façade of 20 width of feet;".
+#: The 20 is on the line; the words around it are out of order. The stored
+#: text and the Municode PDF's plain extraction agree (page 359 of
+#: publication 3913, Supplement 16). Read on 2026-09-29 with the King City
+#: draft. It binds nothing the pod meets -- NMU refuses the pod, and the zone
+#: is a mixed-use street frontage -- and it is pinned rather than excused,
+#: because a rule that let a number anywhere on the line clear the hole would
+#: also clear the next real one.
+KNOWN_MISPLACED = "or/washington/king-city/kcc.16.102.nmu.txt#L330"
+
 
 def test_exactly_one_stored_sentence_lost_its_number() -> None:
     found = [o.cite for o in scan()]
-    assert found == [KNOWN_ORPHAN], (
+    assert found == [KNOWN_ORPHAN, KNOWN_MISPLACED], (
         "a unit word with no measurement in front of it is a standard that "
         "went missing on the way into the store, and it leaves no hole for any "
         f"other check to find. Orphaned now: {found}"
