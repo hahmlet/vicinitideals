@@ -33,6 +33,10 @@ from tests.conftest import (
     seed_opportunity,
     seed_org,
 )
+from tests.exporters._parity_seeds import (
+    engine_annual_ncf,
+    seed_all_equity_acquisition,
+)
 from tests.exporters._parity_helpers import (
     RecalcUnavailableError,
     recalc_workbook,
@@ -174,27 +178,27 @@ async def test_property_valuation_formulas_evaluate(
             )
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "DEGENERATE FIXTURE found 2026-09-28: the seed has zero Uses, so "
-        "the workbook's Levered Cash Flow has no negative year (Y0 = "
-        "+$500k debt proceeds, no acquisition outflow) and IRR / equity "
-        "multiple fall to 0 through IFERROR, while the engine reports EM "
-        "125.18x. Give the seed a real acquisition Use, then re-check "
-        "parity before removing this xfail."
-    ),
-)
 async def test_em_parity_within_band(
     session: AsyncSession, tmp_path: Path
 ):
-    """Excel-recalc'd EM ≈ engine's combined_em_x within 0.5x. Tolerance
-    is loose because the engine's monthly waterfall and the workbook's
-    annual-cash-flow SUMIF can differ on equity-call timing."""
-    scenario = await _seed(session)
+    """On an all-equity $800k acquisition (tests/exporters/_parity_seeds.py),
+    the recalc'd Combined Equity Multiple equals
+
+      1. the same SUMIF(>0) / -SUMIF(<0) over the engine's net_cash_flow
+         summed into the workbook's year buckets (like with like), and
+      2. the engine's own combined_em_x (monthly series) within 0.05x --
+         annual bucketing nets a year's mixed-sign months before the
+         ratio is taken, which moves it slightly.
+    """
+    scenario = await seed_all_equity_acquisition(session, name="EM Parity")
     ctx = await _load_all(session, scenario.id)
-    summary = ctx.get("rollup_summary") or {}
-    engine_em = summary.get("totals", {}).get("combined_em_x")
+    engine_em = float(
+        (ctx.get("rollup_summary") or {}).get("totals", {}).get("combined_em_x") or 0
+    )
+    annual = engine_annual_ncf(ctx)
+    assert annual[0] < 0, f"seed must invest equity at Y0; got {annual[0]}"
+    assert engine_em > 1.0, f"engine EM should be a real multiple; got {engine_em}"
+    annual_em = sum(x for x in annual if x > 0) / -sum(x for x in annual if x < 0)
 
     blob = await export_investor_workbook(scenario.id, session, profile="internal")
     path = tmp_path / "wb.xlsx"
@@ -205,16 +209,21 @@ async def test_em_parity_within_band(
         pytest.skip(f"no recalc backend: {exc}")
 
     wb = load_workbook(path, data_only=True)
-    ws = wb["Underwriting Summary"]
-    r = _find(ws, "combined equity multiple")
-    excel_em = ws.cell(row=r, column=2).value
-
-    if engine_em in (None, 0, 0.0):
-        pytest.skip("engine produced no EM (no waterfall rollup)")
-    if excel_em is None:
-        pytest.fail("EM cell empty after recalc -- not evaluated")
-
-    diff = abs(float(excel_em) - float(engine_em))
-    assert diff < 0.5, (
-        f"EM parity: engine={engine_em}x, excel={excel_em}x, diff={diff}"
-    )
+    for sheet, label in (
+        ("Underwriting Summary", "combined equity multiple"),
+        ("Investor Returns", "combined equity multiple (scenario)"),
+    ):
+        ws = wb[sheet]
+        r = _find(ws, label)
+        assert r is not None, f"{sheet}: row missing"
+        excel_em = ws.cell(row=r, column=2).value
+        assert isinstance(excel_em, (int, float)), (
+            f"{sheet}: EM did not evaluate to a number: {excel_em!r}"
+        )
+        assert abs(float(excel_em) - annual_em) < 1e-4, (
+            f"{sheet}: EM {excel_em} != EM of the engine's annual NCF "
+            f"{annual_em} -- the formula reads the wrong stream"
+        )
+        assert abs(float(excel_em) - engine_em) < 0.05, (
+            f"{sheet}: EM parity: engine={engine_em}x, excel={excel_em}x"
+        )
