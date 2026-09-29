@@ -41,6 +41,17 @@ one ray every five feet) and :func:`side_alley_along` hands the court a side
 alley only where one side line is on the alley end to end. Where s4 predates
 that column nothing measured the stretch, and the answer is False: the court
 keeps its street lane, which is the answer it had before side alleys were read.
+
+The rear line is read the same way twice over (FOLLOWUPS 3(d)/(e)). The
+court whose row of stalls backs out into a rear alley gets that plan only
+where :func:`rear_alley_along` says the alley runs the whole rear line; a
+stub still reaches the court, which keeps its own aisle. And the rules'
+``alley_at_rear`` -- the switch on the rear setback's alley variant, one
+number for the line -- is :func:`registry_alley`'s: on only where the alley
+runs the whole rear line, so the stretch across from the neighbour behind
+is never cut at the alley's number. The side line's alley setback is cut
+stretch by stretch instead (:func:`cover_stretches`,
+:func:`flats.geom.envelope.buildable`), since both its numbers are in hand.
 """
 
 from __future__ import annotations
@@ -100,6 +111,86 @@ def observed_alley(
     return {"abuts_alley": rear or side, "alley_at_rear": rear, "alley_at_side": side}
 
 
+#: Where s4's first and last cover rays stand, in from each end of an alley
+#: edge (``ALLEY_COVER_INSET_FT`` in `Lot Analysis/quadfit/s4_edges.py`). The
+#: rays between are evenly spaced, so a cover string's length alone places
+#: every one of them (:func:`cover_stretches`).
+COVER_INSET_FT = 2.5
+
+
+def whole(cover: object) -> bool:
+    """Whether one edge's cover string found the alley on every ray."""
+    return isinstance(cover, str) and bool(cover) and set(cover) == {"1"}
+
+
+def decode_cover(raw: object, n_edges: int) -> list[str | None] | None:
+    """s4's ``alley_cover_json`` for one lot, parallel to its ``n_edges``
+    edges, or None where nothing usable is on record: s4 before the column
+    (null / empty), JSON that does not parse, or a list of the wrong length.
+    Every caller reads None as "nothing measured the stretch", which is never
+    the alley running the whole line."""
+    if raw is None or (isinstance(raw, str) and not raw):
+        return None
+    try:
+        got = json.loads(raw) if isinstance(raw, str) else raw
+    except ValueError:
+        return None
+    if not isinstance(got, list) or len(got) != n_edges:
+        return None
+    return [c if isinstance(c, str) else None for c in got]
+
+
+def _lines(
+    edges: Sequence[Sequence[object]],
+    front_bearings: Sequence[float],
+    name: str,
+) -> list[list[int]]:
+    """The lot's ``name`` lines (``side`` or ``rear``), each a list of edge
+    indices in ring order.
+
+    A line is a run of consecutive edges of that name -- s4's ``S`` or
+    ``R``, and the ``A`` edges :func:`alley_lines` names the same -- that
+    keep one direction: a bend of more than
+    :data:`~flats.geom.edges.PARALLEL_TOL_DEG` starts another line (the two
+    legs of a triangular lot are two lines), and any edge of another name
+    ends it. A ring of nothing but that name (no frontage) has no line.
+    """
+    letter = {"side": "S", "rear": "R"}[name]
+    named = iter(alley_lines(edges, front_bearings))
+    member: list[bool] = []
+    for edge in edges:
+        if edge[4] == ALLEY_CLASS:
+            member.append(next(named) == name)
+        else:
+            member.append(edge[4] == letter)
+    if not member or all(member):
+        return []
+
+    def bearing(i: int) -> float:
+        e = edges[i]
+        return bearing_deg(float(e[0]), float(e[1]), float(e[2]), float(e[3]))  # type: ignore[arg-type]
+
+    # Walk the ring from just after a non-member edge so no line wraps round.
+    start = member.index(False) + 1
+    n = len(edges)
+    lines: list[list[int]] = []
+    line: list[int] = []
+    for k in range(n + 1):
+        i = (start + k) % n
+        same = (
+            k < n
+            and member[i]
+            and (not line or bearing_delta(bearing(line[-1]), bearing(i)) <= PARALLEL_TOL_DEG)
+        )
+        if same:
+            line.append(i)
+            continue
+        if line:
+            lines.append(line)
+        line = [i] if k < n and member[i] else []
+    return lines
+
+
 def side_alley_along(
     edges: Sequence[Sequence[object]],
     front_bearings: Sequence[float],
@@ -112,62 +203,130 @@ def side_alley_along(
     alley edge a string of ``1`` and ``0``, one per ray along it (the alley
     found or not), ``None`` on every other edge.
 
-    A side line is a run of consecutive side edges -- s4's ``S``, and the
-    ``A`` edges :func:`alley_lines` names ``side`` -- that keep one
-    direction: a bend of more than :data:`~flats.geom.edges.PARALLEL_TOL_DEG`
-    starts another line (the two legs of a triangular lot are two lines),
-    and a jog across the lot is parallel to the frontage, so s4 calls it a
-    rear edge and it ends the run. A line qualifies only where every edge of
-    it is an alley edge and every ray along every one found the alley: a
-    line whose front half is a neighbour's fence and rear half the alley is
-    not on the alley, because which half the court would stand in the fit
-    does not say.
+    A side line is a run of consecutive side edges (:func:`_lines`): s4's
+    ``S``, and the ``A`` edges :func:`alley_lines` names ``side``; a jog
+    across the lot is parallel to the frontage, so s4 calls it a rear edge
+    and it ends the run. A line qualifies only where every edge of it is an
+    alley edge and every ray along every one found the alley: a line whose
+    front half is a neighbour's fence and rear half the alley is not on the
+    alley, because which half the court would stand in the fit does not say.
 
     ``cover`` of None, or not one entry per edge, is a record that predates
     the measurement: False, the court's street-fed answer.
     """
     if cover is None or len(cover) != len(edges):
         return False
-    named = iter(alley_lines(edges, front_bearings))
-    side: list[bool] = []
-    for edge in edges:
-        if edge[4] == ALLEY_CLASS:
-            side.append(next(named) == "side")
-        else:
-            side.append(edge[4] == "S")
-    if all(side):
-        return False  # no frontage and no rear: nothing to call a side line
+    return any(
+        all(edges[j][4] == ALLEY_CLASS and whole(cover[j]) for j in line)
+        for line in _lines(edges, front_bearings, "side")
+    )
 
-    def bearing(i: int) -> float:
-        e = edges[i]
-        return bearing_deg(float(e[0]), float(e[1]), float(e[2]), float(e[3]))  # type: ignore[arg-type]
 
-    def on_alley(i: int) -> bool:
-        c = cover[i]
-        return edges[i][4] == ALLEY_CLASS and isinstance(c, str) and bool(c) and set(c) == {"1"}
+def rear_alley_along(
+    edges: Sequence[Sequence[object]],
+    front_bearings: Sequence[float],
+    cover: Sequence[str | None] | None,
+) -> bool:
+    """Whether the rear lot line on the alley is on it from end to end.
 
-    # Walk the ring from just after a non-side edge so no line wraps round.
-    start = side.index(False) + 1
-    n = len(edges)
-    line: list[int] = []
-    for k in range(n + 1):
-        i = (start + k) % n
-        same = (
-            k < n
-            and side[i]
-            and (not line or bearing_delta(bearing(line[-1]), bearing(i)) <= PARALLEL_TOL_DEG)
-        )
-        if same:
-            line.append(i)
+    FOLLOWUPS 3(d)/(e), the rear twin of :func:`side_alley_along`. s4 names
+    a rear line an alley line on three rays of five, so an alley stub along
+    40 % of it makes the whole line ``A``. Two things read that line as if
+    the alley ran all of it: the court whose row of stalls backs out into
+    the alley (:func:`flats.score.paper.court_depth`), and the rear setback
+    a code waives or relaxes on "a lot line abutting an alley"
+    (``alley_at_rear``). The court stands behind the building, and neither
+    the fit (placed at any angle, anywhere in the envelope) nor the rules
+    say where along the rear line; the rear setback is one number the rules
+    resolve for the line. So the honest test is the whole line, the same
+    as the side's.
+
+    True only where the lot has a rear line holding an alley edge, and
+    EVERY rear line holding one (:func:`_lines`) is alley edges end to end,
+    each with every ray on the alley: a rear line half ``R`` (the neighbour
+    behind) and half ``A`` is not on the alley, however well the ``A`` half
+    is covered. A rear line with no alley edge is not asked -- on a corner
+    lot the line along the second street's far side is a rear line too, and
+    it says nothing about the alley behind.
+
+    ``cover`` of None, or not one entry per edge, predates the measurement:
+    False.
+    """
+    if cover is None or len(cover) != len(edges):
+        return False
+    on = [line for line in _lines(edges, front_bearings, "rear")
+          if any(edges[j][4] == ALLEY_CLASS for j in line)]
+    return bool(on) and all(
+        all(edges[j][4] == ALLEY_CLASS and whole(cover[j]) for j in line) for line in on
+    )
+
+
+def cover_stretches(length_ft: float, cover: str) -> tuple[tuple[float, float], ...]:
+    """Where along an alley edge the alley runs, as ``(from, to)`` in feet
+    from the edge's first point -- the stretches the cover's rays vouch for.
+
+    s4 casts the rays :data:`COVER_INSET_FT` in from each end and evenly
+    between (one, at the middle, on an edge too short for two), so a string
+    of ``n`` places them all. A run of ``1`` rays covers from its first ray
+    to its last, and reaches the end of the edge where the run does; the
+    ground between a ``1`` and the next ``0`` is where the alley stopped,
+    somewhere nobody measured, and is left uncovered. An isolated ``1``
+    between two ``0`` rays covers nothing (a point). The empty string --
+    nothing measured -- covers nothing.
+    """
+    n = len(cover)
+    if n == 0 or length_ft <= 0:
+        return ()
+    if n == 1:
+        return ((0.0, length_ft),) if cover == "1" else ()
+    span = max(0.0, length_ft - 2 * COVER_INSET_FT)
+    at = [COVER_INSET_FT + span * i / (n - 1) for i in range(n)]
+    out: list[tuple[float, float]] = []
+    i = 0
+    while i < n:
+        if cover[i] != "1":
+            i += 1
             continue
-        if line and all(on_alley(j) for j in line):
-            return True
-        line = [i] if k < n and side[i] else []
-    return False
+        j = i
+        while j + 1 < n and cover[j + 1] == "1":
+            j += 1
+        a = 0.0 if i == 0 else at[i]
+        b = length_ft if j == n - 1 else at[j]
+        if b > a:
+            out.append((a, b))
+        i = j + 1
+    return tuple(out)
+
+
+def registry_alley(
+    edges: Sequence[Sequence[object]],
+    front_bearings: Sequence[float],
+    cover: Sequence[str | None] | None,
+) -> dict[str, bool]:
+    """The three alley facts as the rules resolve on them.
+
+    :func:`observed_alley`, but ``alley_at_rear`` -- the fact the rear
+    setback's alley variants are switched by (Portland's and Multnomah's
+    exemption, Gresham's and Troutdale's rear-with-alley numbers) -- holds
+    only where :func:`rear_alley_along` says the alley runs the rear line
+    end to end (FOLLOWUPS 3(e)). The variant is one number for the whole
+    line, and on a line the alley runs part of, the stretch across from the
+    neighbour's yard owes the ordinary rear setback: the ordinary number
+    for the line is the conservative one. ``abuts_alley`` stays s4's -- the
+    lot does abut the alley -- and so does ``alley_at_side``, whose one
+    standard (``setback_alley_side_ft``) the envelope cuts stretch by
+    stretch (:func:`flats.geom.envelope.buildable`). No cover on record is
+    no rear alley line.
+    """
+    got = observed_alley(edges, front_bearings)
+    if got["alley_at_rear"]:
+        got["alley_at_rear"] = rear_alley_along(edges, front_bearings, cover)
+    return got
 
 
 def alley_facts_from_quadfit(path: Path = S4_LOTS) -> dict[str, dict[str, bool]]:
-    """Every lot's alley facts, keyed by TLID, from s4's parquet.
+    """Every lot's alley facts, keyed by TLID, from s4's parquet, as the
+    rules resolve on them (:func:`registry_alley`).
 
     One read of the stage file. The returned mapping is what a county-scale
     caller hands to ``configure(observed=...)`` lot by lot; the parquet is
@@ -176,10 +335,16 @@ def alley_facts_from_quadfit(path: Path = S4_LOTS) -> dict[str, dict[str, bool]]
     """
     import pandas as pd  # the only place flats.geom touches a frame
 
-    frame = pd.read_parquet(path, columns=["TLID", "edges_json", "front_bearings_json"])
+    import pyarrow.parquet as pq
+
+    columns = ["TLID", "edges_json", "front_bearings_json"]
+    has_cover = "alley_cover_json" in pq.read_schema(path).names
+    frame = pd.read_parquet(path, columns=columns + (["alley_cover_json"] if has_cover else []))
+    covers = frame["alley_cover_json"] if has_cover else [None] * len(frame)
     out: dict[str, dict[str, bool]] = {}
-    for tlid, ej, fj in zip(frame["TLID"], frame["edges_json"], frame["front_bearings_json"]):
-        out[str(tlid)] = observed_alley(json.loads(ej), json.loads(fj))
+    for tlid, ej, fj, cj in zip(frame["TLID"], frame["edges_json"], frame["front_bearings_json"], covers):
+        edges = json.loads(ej)
+        out[str(tlid)] = registry_alley(edges, json.loads(fj), decode_cover(cj, len(edges)))
     return out
 
 
@@ -202,10 +367,16 @@ def entailed(observed: Mapping[str, bool]) -> dict[str, bool]:
 __all__ = [
     "ALLEY_CLASS",
     "ALLEY_FACTS",
+    "COVER_INSET_FT",
     "S4_LOTS",
     "alley_facts_from_quadfit",
     "alley_lines",
+    "cover_stretches",
+    "decode_cover",
     "entailed",
     "observed_alley",
+    "rear_alley_along",
+    "registry_alley",
     "side_alley_along",
+    "whole",
 ]

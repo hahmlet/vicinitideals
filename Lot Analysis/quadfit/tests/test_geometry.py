@@ -481,6 +481,39 @@ def test_a_real_alley_that_turns_away_leaves_the_end_of_the_line_uncovered():
     assert west_to_east == "1" * 18 + "0" * 2
 
 
+def test_a_real_rear_alley_that_stops_short_leaves_the_north_of_the_line_uncovered():
+    """1S2E05AB -11900, Portland R5, at real coordinates (EPSG:2913, the
+    2026-09-24 s4 fabric within 150 ft). The street is east; the 13 ft alley
+    behind the lot is drawn only as far north as the lot's south-west
+    corner, so the 88.7 ft rear line classes A on three rays of five while
+    only its southern half has an alley to back onto. FLATS used to read the
+    whole line as the court's aisle and waive the whole rear yard
+    (FOLLOWUPS 3(d)/(e)). Ten of the eighteen rays, from the south, find
+    the alley; the eight to the north do not.
+    """
+    import json
+    from pathlib import Path
+
+    d = json.loads((Path(__file__).parent / "fixtures" / "alley_stops_short_1S2E05AB_11900.json").read_text())
+    from s4_edges import classify_lot
+
+    lot = shapely.from_wkt(d["lot"])
+    sg = np.array([shapely.from_wkt(w) for w in d["streets"]], dtype=object)
+    ag = np.array([shapely.from_wkt(w) for w in d["alleys"]], dtype=object)
+    lg = np.array([lot] + [shapely.from_wkt(f["wkt"]) for f in d["fabric"]], dtype=object)
+    private = np.array([True] + [f["private"] for f in d["fabric"]])
+    r = classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        alley_tree=STRtree(ag), alley_geoms=ag,
+        lot_tree=STRtree(lg), lot_geoms=lg, lot_private=private,
+    )
+    assert sorted(e[4] for e in r["edges"]) == sorted(e[4] for e in d["edges"]), "s4's own classes"
+    assert r["alley_width_ft"] == pytest.approx(d["width"], abs=0.1)
+    ((edge, cover),) = [(e, c) for e, c in zip(r["edges"], r["alley_cover"]) if c is not None]
+    south_to_north = cover if edge[1] < edge[3] else cover[::-1]
+    assert south_to_north == "1" * 10 + "0" * 8
+
+
 # ---------------------------------------------------------------------------
 # s4 -- the zone across each lot line
 # ---------------------------------------------------------------------------

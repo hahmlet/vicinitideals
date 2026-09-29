@@ -113,6 +113,14 @@ class Edge:
     #: carve that one line out (Portland waives the side and rear setback from
     #: it). Never set on a front -- an alley is not a street.
     alley: bool = False
+    #: Where along an alley edge the alley really runs: quadfit s4's
+    #: ``alley_cover_json`` for this edge, one ``1`` / ``0`` per ray from
+    #: the first point (:func:`flats.geom.alley.cover_stretches`). The empty
+    #: string where s4 recorded none (nothing measured the stretch, so none
+    #: of it is vouched for). None where the edge came from a classifier
+    #: that measures no stretch (:func:`classify`, a midpoint test): the
+    #: flag then stands for the line as it did before 2026-09-28.
+    cover: str | None = None
 
 
 @dataclass(frozen=True, slots=True)

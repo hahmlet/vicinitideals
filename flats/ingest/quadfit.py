@@ -75,7 +75,9 @@ from flats.geom.alley import (
     ALLEY_FACTS,
     S4_LOTS,
     alley_lines,
+    decode_cover,
     observed_alley,
+    registry_alley,
     side_alley_along,
 )
 from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors
@@ -225,7 +227,11 @@ def observed_facts(
     differently from an answer of False.
 
     * ``abuts_alley`` / ``alley_at_rear`` / ``alley_at_side`` -- s4's edge
-      classes, through :func:`flats.geom.alley.observed_alley`. Only where the
+      classes, through :func:`flats.geom.alley.registry_alley`: ``alley_at_rear``
+      only where s4's ``alley_cover_json`` says the alley runs the whole rear
+      line (FOLLOWUPS 3(e)) -- the rear setback's alley variant is one number
+      for the line, and a stub along part of it leaves the rest across from
+      the neighbour; no cover on record is no rear alley line. Only where the
       lot has edges: a lot s4 could not trace (tier ``D``) has no alley record
       and gets the registry's assumption, named, rather than a False that
       reads as a measurement.
@@ -285,7 +291,7 @@ def observed_facts(
     edges = json.loads(row.get("edges_json") or "[]")
     bearings = json.loads(row.get("front_bearings_json") or "[]")
     if edges:
-        out.update(observed_alley(edges, bearings))
+        out.update(registry_alley(edges, bearings, _cover(row, edges)))
         if _counts_streets(row, layers) and through_lot(edges, bearings):
             out["corner_lot"] = True
         elif len(bearings) < 2 or two_streets(bearings):
@@ -493,8 +499,11 @@ def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
         return None
     bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
     named = iter(alley_lines(raw, bearings))
+    # Where along each alley edge the alley runs (FOLLOWUPS 3(e)); "" on an
+    # alley edge with none on record, so the envelope vouches for no stretch.
+    cover = _cover(row, raw) or [None] * len(raw)
     edges: list[Edge] = []
-    for x1, y1, x2, y2, letter in raw:
+    for (x1, y1, x2, y2, letter), stretch in zip(raw, cover):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         if letter == ALLEY_CLASS:
             cls = EdgeClass.rear if next(named) == "rear" else EdgeClass.side
@@ -510,6 +519,7 @@ def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
                 bearing_deg=bearing_deg(x1, y1, x2, y2),
                 cls=cls,
                 alley=letter == ALLEY_CLASS,
+                cover=(stretch or "") if letter == ALLEY_CLASS else None,
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -621,16 +631,21 @@ def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
     return Envelope(geom, None if strips else setbacks.largest_ft, "flats", setbacks)
 
 
+def _cover(row: Mapping[str, Any], edges: Sequence[Any]) -> list[str | None] | None:
+    """s4's ``alley_cover_json`` on one stage-file row, parallel to ``edges``
+    (:func:`flats.geom.alley.decode_cover`); None where s4 predates the
+    column or the record does not match the edges."""
+    return decode_cover(row.get("alley_cover_json"), len(edges))
+
+
 def _side_alley_along(row: Mapping[str, Any]) -> bool:
     """:func:`flats.geom.alley.side_alley_along` on one stage-file row; False
     where s4 predates ``alley_cover_json`` (nothing measured the stretch)."""
-    raw = row.get("alley_cover_json")
-    if not raw:
-        return False
+    edges = json.loads(row.get("edges_json") or "[]")
     return side_alley_along(
-        json.loads(row.get("edges_json") or "[]"),
+        edges,
         json.loads(row.get("front_bearings_json") or "[]"),
-        json.loads(raw),
+        _cover(row, edges),
     )
 
 
@@ -653,17 +668,30 @@ def lot_from_row(
     lot_wkb = row.get("lot_wkb")
     lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
     edges = lot_edges(row, lot_geom)
+    raw_edges = json.loads(row.get("edges_json") or "[]")
+    s4_alley = (
+        observed_alley(raw_edges, json.loads(row.get("front_bearings_json") or "[]"))
+        if raw_edges
+        else {}
+    )
     facts = LotFacts(
         lot_sqft=_finite(row.get("area_sqft")) or 0.0,
         frontage_ft=frontage if frontage is not None else 0.0,
         lot_width_ft=_finite(row.get("lot_width_ft")),
         lot_depth_ft=_finite(row.get("lot_depth_ft")),
         geometry=tier,
-        envelope_rear_ft=carved_rear_ft(row, observed),
+        # s5 recorded its cut under s4's own class letter, so the key is s4's
+        # reading of the rear line, not the registry's stricter one.
+        envelope_rear_ft=carved_rear_ft(row, s4_alley),
         # The alley behind or beside the lot and how wide s4 measured it: the
         # court it feeds (FOLLOWUPS 4(b), :func:`flats.score.paper.court_depth`,
-        # :func:`flats.score.paper.side_column`).
-        alley_at_rear=bool(observed.get("alley_at_rear")),
+        # :func:`flats.score.paper.side_column`). A rear alley on s4's three
+        # rays of five is enough to reach the court from (the court's own
+        # aisle meets it wherever it runs); the row of stalls backs out into
+        # it only where it runs the whole rear line (FOLLOWUPS 3(d)) -- the
+        # registry's ``alley_at_rear``, :func:`flats.geom.alley.registry_alley`.
+        alley_at_rear=bool(s4_alley.get("alley_at_rear")),
+        alley_rear_whole=bool(observed.get("alley_at_rear")),
         # A side alley feeds the court only where it runs the whole side
         # line (FOLLOWUPS 3(c)): s4 names a line an alley line on three rays
         # of five, and a stub along half of it would park the court against

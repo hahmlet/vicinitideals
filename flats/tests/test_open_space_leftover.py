@@ -305,11 +305,16 @@ def test_where_the_alley_is_the_aisle_the_back_out_room_is_paved_and_no_lane_is(
     # needs 20 ft of which a 14 ft alley gives 14. Four stalls 18 deep plus
     # the 6 ft short, across the 36 ft row; no aisle, no lane.
     zone = rules(parking_alley_access_required=True, parking_alley_backout_ft=20)
-    alley = Alley(14.0, at_rear=True)
+    alley = Alley(14.0, at_rear=True, rear_whole=True)
 
     got = paved(DESIGN, zone, alley, deep_ft=36.0)
 
     assert got == pytest.approx(ROW_FT * (18 + 6))
+    # FOLLOWUPS 3(d): an alley along part of the rear line reaches the court
+    # but is not its aisle -- the court and its own aisle are paved, and
+    # still no lane.
+    stub = Alley(14.0, at_rear=True)
+    assert paved(DESIGN, zone, stub, deep_ft=36.0) == pytest.approx(COURT_SQFT)
 
 
 def test_a_column_along_a_side_alley_paves_its_stalls_and_the_back_out_room() -> None:

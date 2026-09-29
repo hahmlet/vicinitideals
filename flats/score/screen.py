@@ -225,9 +225,14 @@ class LotFacts:
     #: the bridge sets it only where the alley runs the side line end to
     #: end (:func:`flats.geom.alley.side_alley_along`, FOLLOWUPS 3(c)),
     #: because the court stands somewhere along that line and the fit does
-    #: not say where.
+    #: not say where. ``alley_at_rear`` is s4's reading (three rays of five)
+    #: and reaches the court; ``alley_rear_whole`` -- the alley runs the whole
+    #: rear line (:func:`flats.geom.alley.rear_alley_along`, FOLLOWUPS 3(d))
+    #: -- is what lets the row of stalls back out into it. False where
+    #: nothing measured the stretch: the court keeps its own aisle.
     alley_at_rear: bool = False
     alley_at_side: bool = False
+    alley_rear_whole: bool = False
     alley_width_ft: float | None = None
     #: Two streets on the lot that really are two (bearings 45 degrees or
     #: more apart, :func:`flats.geom.corner.is_corner`). Read by the court
@@ -244,7 +249,12 @@ class LotFacts:
     def alley(self) -> Alley | None:
         if not (self.alley_at_rear or self.alley_at_side):
             return None
-        return Alley(self.alley_width_ft, at_rear=self.alley_at_rear, at_side=self.alley_at_side)
+        return Alley(
+            self.alley_width_ft,
+            at_rear=self.alley_at_rear,
+            at_side=self.alley_at_side,
+            rear_whole=self.alley_at_rear and self.alley_rear_whole,
+        )
 
 
 @dataclass(frozen=True, slots=True)

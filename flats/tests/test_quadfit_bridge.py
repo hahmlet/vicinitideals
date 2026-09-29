@@ -135,6 +135,7 @@ def test_an_alley_behind_a_corner_lot_on_a_bulb_in_the_floodplain() -> None:
         row(
             edges_json=json.dumps(edges),
             front_bearings_json="[0.0, 90.0]",
+            alley_cover_json=json.dumps([None, None, "1" * 10, None]),
             fronts_cul_de_sac=True,
             split_zone=True,
             ovl_fema_sfha=True,
@@ -438,8 +439,11 @@ def test_the_strip_s5_cut_off_the_rear_rides_along_for_the_court_charge() -> Non
         [X0, Y0 + 100, X0, Y0, "S"],
     ]
     lot = lot_from_row(row(edges_json=json.dumps(alley_behind), env_setbacks_json=cuts))
-    assert lot.observed["alley_at_rear"] is True
     assert lot.facts.envelope_rear_ft == 0.0
+    # s5 filed that cut under s4's letter, so the key is s4's reading of the
+    # line -- not the rules' stricter one, which a record with no cover
+    # leaves False (FOLLOWUPS 3(e)).
+    assert lot.observed["alley_at_rear"] is False and lot.facts.alley_at_rear is True
     # A stage file from before s5 recorded its cuts, or a lot s5 never
     # traced: nothing is claimed, and the screen charges as it always did.
     assert lot_from_row(row()).facts.envelope_rear_ft is None
@@ -778,17 +782,38 @@ BESIDE = [EDGES[0], [X0 + 50, Y0, X0 + 50, Y0 + 100, "A"], *EDGES[2:]]
 #: stub that dead-ends halfway along the line (FOLLOWUPS 3(c)).
 BESIDE_WHOLE = json.dumps([None, "1" * 20, None, None])
 BESIDE_STUB = json.dumps([None, "1" * 10 + "0" * 10, None, None])
+#: The same for BEHIND's 50 ft rear line (ten rays, run east to west): the
+#: alley the whole way, or a stub behind the eastern 30 ft that dead-ends
+#: there (FOLLOWUPS 3(d)/(e)).
+BEHIND_WHOLE = json.dumps([None, None, "1" * 10, None])
+BEHIND_STUB = json.dumps([None, None, "1" * 6 + "0" * 4, None])
 
 
 def test_a_rear_yard_the_alley_waives_is_cut_at_zero(corpus, policies) -> None:
     # Portland R5: no rear setback where the rear line is an alley. The
     # waiver resolves as an exemption, not a number; it is a yard of zero,
     # not a reason to fall back to quadfit's figure.
-    lot = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND)), corpus.layers)
+    lot = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_cover_json=BEHIND_WHOLE), corpus.layers)
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert s.envelope.source == "flats"
     assert s.envelope.setbacks.rear_ft == 0
     assert s.envelope.sqft == pytest.approx((50 - 2 * 5) * (100 - 10))
+
+
+def test_a_rear_line_the_alley_runs_part_of_keeps_its_rear_setback(corpus, policies) -> None:
+    # FOLLOWUPS 3(e). The waiver is one number for the rear line; where the
+    # alley stops 20 ft short, that 20 ft faces the neighbour's yard, so the
+    # rules resolve the line's ordinary rear setback -- and so does a record
+    # with no cover, which measured nothing. The lot still abuts the alley.
+    for cover in (BEHIND_STUB, None):
+        lot = lot_from_row(
+            cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_cover_json=cover), corpus.layers
+        )
+        assert lot.observed["abuts_alley"] is True and lot.observed["alley_at_rear"] is False
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        assert s.envelope.source == "flats"
+        assert s.envelope.setbacks.rear_ft == 5
+        assert s.envelope.sqft == pytest.approx((50 - 2 * 5) * (100 - 10 - 5))
 
 
 def test_an_exempt_rear_with_a_rear_line_off_the_alley_keeps_quadfits_envelope() -> None:
@@ -809,13 +834,40 @@ def test_a_side_line_on_an_alley_takes_the_rear_unless_the_code_says_otherwise()
     assert envelope_for(lot, waived).sqft == pytest.approx(50 * 75)  # type: ignore[arg-type]
 
 
+def test_a_side_alley_waiver_reaches_only_the_stretch_the_alley_runs() -> None:
+    # FOLLOWUPS 3(e). Portland waives the side setback on "a lot line
+    # abutting an alley"; where the alley runs the front half of the east
+    # line and stops, the rear half faces the neighbour and keeps its 5 ft.
+    # Rays 2.5 ft in and 5 ft apart: the last one on the alley is 47.5 ft
+    # up the line, and the 5 ft strip beyond it runs a square cap 5 ft back.
+    waived = Rules(setback_front_ft=10, setback_side_ft=5, setback_rear_ft=15, setback_alley_side_ft=0)
+
+    def area(cover: str | None) -> float:
+        lot = lot_from_row(cut_row(edges_json=json.dumps(BESIDE), alley_cover_json=cover))
+        return envelope_for(lot, waived).sqft  # type: ignore[arg-type]
+
+    assert area(BESIDE_WHOLE) == pytest.approx(45 * 75)
+    assert area(BESIDE_STUB) == pytest.approx(45 * (42.5 - 10) + 40 * (85 - 42.5))
+    # Nothing measured the stretch: none of it is vouched for.
+    assert area(None) == pytest.approx(40 * 75)
+    # A city with no alley-side number (the alley line is a rear lot line)
+    # cuts the whole line at the deeper yard, measured or not.
+    rear_line = Rules(setback_front_ft=10, setback_side_ft=5, setback_rear_ft=15)
+    lot = lot_from_row(cut_row(edges_json=json.dumps(BESIDE), alley_cover_json=BESIDE_STUB))
+    assert envelope_for(lot, rear_line).sqft == pytest.approx((50 - 5 - 15) * 75)  # type: ignore[arg-type]
+
+
 def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpus, policies) -> None:
     # FOLLOWUPS 4(b). s4's alley width rides into the lot's facts beside the
     # rear alley, and Portland's court behind the pod is charged as a stall
     # and the back-out room the alley's width leaves short -- not a stall and
     # a two-way aisle -- where the lot has the alley at the rear.
-    fed = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0), corpus.layers)
+    fed = lot_from_row(
+        cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0, alley_cover_json=BEHIND_WHOLE),
+        corpus.layers,
+    )
     assert fed.facts.alley_at_rear is True and fed.facts.alley_width_ft == 14.0
+    assert fed.facts.alley_rear_whole is True
     beside = lot_from_row(
         cut_row(zone="R5", edges_json=json.dumps(BESIDE), alley_width_ft=14.0, alley_cover_json=BESIDE_WHOLE),
         corpus.layers,
@@ -827,9 +879,28 @@ def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpu
         (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
         return next(c for c in s.screening.checks if c.check == "fit_ft").threshold
 
-    wide = lot_from_row(cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=20.0), corpus.layers)
+    wide = lot_from_row(
+        cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=20.0, alley_cover_json=BEHIND_WHOLE),
+        corpus.layers,
+    )
     # Six feet of back-out paving on a 14 ft alley, none on a 20 ft one.
     assert asked(fed) - asked(wide) == pytest.approx(6.0)
+
+    # FOLLOWUPS 3(d). An alley along only part of the rear line -- or one
+    # whose stretch nothing measured -- reaches the court but is not its
+    # aisle: the row would back out into the neighbour's yard wherever the
+    # court stands off the alley. The court keeps its own aisle, and the
+    # lot asks what the same lot with no alley asks.
+    plain = lot_from_row(cut_row(zone="R5"), corpus.layers)
+    for cover in (BEHIND_STUB, None):
+        stub = lot_from_row(
+            cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0, alley_cover_json=cover),
+            corpus.layers,
+        )
+        assert stub.facts.alley_at_rear is True and stub.facts.alley_rear_whole is False
+        assert stub.facts.alley is not None and not stub.facts.alley.rear_aisle
+        assert asked(stub) == pytest.approx(asked(plain))
+        assert asked(stub) > asked(fed)
 
 
 def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None:

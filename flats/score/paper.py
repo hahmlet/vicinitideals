@@ -246,6 +246,19 @@ class Alley:
     at_rear: bool = True
     #: The alley runs along a side lot line, beside the court.
     at_side: bool = False
+    #: The rear alley runs the WHOLE rear lot line (s4's cover, FOLLOWUPS
+    #: 3(d)), so the row of stalls along it may back straight out into it
+    #: wherever along the line the court stands. ``at_rear`` alone -- s4's
+    #: three rays of five -- reaches the court (:func:`alley_fed`), and the
+    #: court keeps its own aisle. False unless a caller says so: an alley
+    #: stub may leave the court backing into the neighbour's yard.
+    rear_whole: bool = False
+
+    @property
+    def rear_aisle(self) -> bool:
+        """The alley behind the court is its aisle's ground: at the rear and
+        along the whole rear line."""
+        return self.at_rear and self.rear_whole
 
 
 def alley_fed(rules: "ZoneResolution", alley: Alley | None) -> bool:
@@ -438,9 +451,12 @@ def court_depth(
     # measured width leaves short of the room a car needs, paved on the lot.
     # Taken only where it is shallower, as s6s takes it only where it buys a
     # stall -- a lot deep enough for the court's own aisle keeps it.
-    # The alley at a side is not this: its column is
+    # Only where the alley runs the WHOLE rear line (``Alley.rear_whole``,
+    # FOLLOWUPS 3(d)): the court stands somewhere along that line, nothing
+    # says where, and a stub along part of it would back the row out into
+    # the neighbour's yard. The alley at a side is not this: its column is
     # :func:`side_column`, charged on its own fit.
-    shortfall = _backout_shortfall(rules, alley) if alley is not None and alley.at_rear else None
+    shortfall = _backout_shortfall(rules, alley) if alley is not None and alley.rear_aisle else None
     if shortfall is not None:
         if gap + stall + shortfall < gap + stall + aisle:
             used += ["parking_alley_access_required", "parking_alley_backout_ft"]
@@ -672,7 +688,7 @@ def paved(
         # row turned end-on, plus the back-out room paved beside it.
         assert shortfall is not None, "a column court was paved where no side alley offers one"
         return row * (stall + shortfall)
-    if alley is not None and alley.at_rear and shortfall is not None and shortfall < aisle:
+    if alley is not None and alley.rear_aisle and shortfall is not None and shortfall < aisle:
         # The same choice `court_depth` makes: the alley is the aisle.
         return row * (stall + shortfall)
     court = row * stall + aisle * max(row, across.lane_ft)
