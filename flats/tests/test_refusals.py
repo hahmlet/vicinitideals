@@ -345,7 +345,31 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 122, "comments": 127, "tests": 17}
+EXPECTED = {"notes": 122, "comments": 148, "tests": 17}
+#
+# 284 -> 287 on 2026-09-29, the same layer: the prohibition grep (rulebook
+# step 10) turned up three North Bethany rules the district blocks had not
+# said out loud -- 390-20's facade and siding standards, 390-22.1's window
+# and roof-equipment rules, and 390-18.5 / 390-19.2 A, which prohibit
+# development in a mapped Natural Features Buffer and driveways at the
+# subarea's rural edge. All three are comments on the North Bethany block.
+#
+# 266 -> 284 on 2026-09-29: unincorporated Washington County, a draft layer
+# from a cloud session, and every one of the eighteen is a comment. Eleven are
+# layer-wide: things the county code states and no field or measured fact
+# holds (porch yards, yards measured from a sidewalk easement, right-of-way
+# dedication, the 419-1 height step-down, airport heights and the airport
+# approach-zone prohibition, the 430-37 future-development plan, the eleven
+# Community Plans, the Bonny Slope West overlay, a parking maximum with no
+# row for four units, driveway spacing by road class). Seven sit on the
+# transit-oriented and mixed-use districts: a Middle Housing height that
+# needs "does not abut R-5 or R-6", minimum FAR, the unstored Section 431
+# design standards, frontage occupancy, the 392-9 facade standards, the
+# plaza-and-open-space density ranges and the per-dwelling outdoor area.
+# The last of those was first written with the marker at the END of its
+# paragraph and rendered as a stub carrying the next paragraph's text --
+# the trap the "lead with the marker" note above describes. Moving it to the
+# front fixed it without moving the count.
 #
 # 267 -> 266 on 2026-09-20: a DOCUMENT arrived. One refusal LEFT, Wood
 # Village's header paragraph on the O (Open Space) zone, which had said the

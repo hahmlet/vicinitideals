@@ -638,6 +638,27 @@ RULINGS: dict[str, dict[str, str]] = {
             "zones that implement it are already in the corpus."
         ),
     },
+    "or/washington/_unincorporated": {
+        # All 42 districts on the county's zoning layer are encoded as zone
+        # blocks (2026-09-29, draft); what the harvest still prints is below.
+        "ASC 2": (
+            "overlay: Area of Special Concern 2 (the Kaiser Road corridor) "
+            "of the North Bethany Subarea Plan, named by CDC 390 for the "
+            "yards along Kaiser Road; a community-plan area, not a district."
+        ),
+        "RPZ": (
+            "not-a-zone: the runway protection zone of an airport, defined "
+            "at CDC 106-10.19 among the airport terms."
+        ),
+        "THPRD": (
+            "not-a-zone: the Tualatin Hills Park & Recreation District, a "
+            "service provider named in CDC 390 and 501."
+        ),
+        "TVWD": (
+            "not-a-zone: the Tualatin Valley Water District, a service "
+            "provider named in CDC 501-8."
+        ),
+    },
 }
 
 #: Designations found by hand while ruling the rows above, which the ledger
@@ -727,6 +748,18 @@ BY_HAND: dict[str, dict[str, str]] = {
             "20 ft maximum, 7.5 ft side, 35 ft or 2 storeys, 6,000 sf "
             "maximum building). 25 lots; held as `to_read` in the layer's "
             "zone_rulings until encoded."
+        ),
+    },
+    "or/washington/_unincorporated": {
+        # CDC 375-2 names nine Transit Oriented districts; the county's
+        # zoning layer carries eight. The ninth has no lot, so it is ruled
+        # here rather than encoded, as Clackamas RR was.
+        "TO:R80-120": (
+            "not-listed: CDC 375 Table A has no row for four units on one lot "
+            "in TO:R80-120 -- 106-124 grants Middle Housing only in TO:R9-12, "
+            "TO:R12-18 and TO:R18-24, and the apartment rows are 106-143 "
+            "multi-dwelling structures of five or more; 375-5.2 prohibits "
+            "what is not listed. The TO:R24-40 zone block is the same reading."
         ),
     },
 }

@@ -129,7 +129,19 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 251, "numeric": 47, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 272, "numeric": 55, "marker": 0, "dash": 2, "silent": 2}
+# 251 / 47 -> 272 / 55 on 2026-09-29: unincorporated Washington County, a
+# draft layer from a cloud session, twenty-nine exemptions. Nearly all are one
+# sentence the county prints in every Middle Housing district: "Density is
+# not a consideration for development of Middle Housing" (302-6.1 through
+# 307-6.1 and the North Bethany 390-8.5 and 390-10.5), held as exempt on the
+# minimum and maximum density; and "All other Middle Housing" with no
+# frontage minimum beside the 15 feet a townhouse lot needs. The eight
+# `numeric` are the maximum-density half of that sentence: its quote spans
+# the section heading, whose number ("305-6.1") is the only figure in it, so
+# the verdict is the heading and not a competing standard. The Transit
+# Oriented tables add seven: "None" and "N/A" in the minimum lot area,
+# density and frontage cells of Tables B(1), B(2) and C(1).
 # 249 / 37 / 0 -> 251 / 47 / 2 on 2026-09-19: `parking_side_prohibited`, a
 # bool exempt in fourteen layers (FOLLOWUPS 5 slice A). The field is the
 # townhouse-branch sentence "No off-street parking shall be allowed in the

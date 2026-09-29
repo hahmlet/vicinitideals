@@ -1,5 +1,5 @@
 {
-  "digest": "40f0c186e17e7b46f1063c036fd3ca444701ab239f9aab66f79892873ea7095b",
+  "digest": "e7067c5a72ac605f69622901fe07ffa871cc7628ca612961a797f27f8f60678c",
   "layers": {
     "or": {
       "misattributed": [],
@@ -464,6 +464,12 @@
         }
       ],
       "label": "Wood Village",
+      "counts": {},
+      "gaps": []
+    },
+    "or/washington/_unincorporated": {
+      "misattributed": [],
+      "label": "Washington Unincorporated",
       "counts": {},
       "gaps": []
     }

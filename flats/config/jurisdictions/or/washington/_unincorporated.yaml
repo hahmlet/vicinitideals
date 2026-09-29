@@ -475,6 +475,29 @@ defaults:
 # they change is unknown until the plans are read. Owed locally, and a
 # question for Steph.
 #
+# NOT ENCODED: the Bonny Slope West Subarea Overlay District (Section 391).
+# It reaches only the Bonny Slope West Subarea of the Cedar Hills - Cedar
+# Mill Community Plan (cdc.391.bonny-slope-west.txt#L11-L14), where "the
+# standards of this district shall control" over the rest of the code
+# (L33-L36) and the Community Plan controls over both (L18-L23). Its edge
+# rule prohibits street stubs and driveways at the subarea boundary beside
+# rural farm or forest land north of NW Laidlaw Road, Area of Special
+# Concern 18 (L43-L49), and its landslide provisions work from Community
+# Plan maps. Nothing marks which lots are in the subarea or in ASC 18; the
+# base zone's standards are screened there as everywhere else. Overlay work.
+#
+# Prohibition grep (rulebook step 10), 2026-09-29: all 34 stored chapters
+# searched for "prohibit", "not permitted", "not allowed". Beyond the
+# entries in this layer, one reaches toward the pod and stops short: every
+# R district's X-5.2 prohibits "the use of a manufactured dwelling ... as a
+# residence" (R-5 at cdc.302.r-5.txt#L224-L227), and 106-131 defines a
+# manufactured dwelling as a structure "constructed for movement on the
+# public highways", built before 1962, to Oregon mobile home law, or to the
+# federal manufactured housing standards (cdc.106.definitions.txt
+# #L718-L734). The pod is factory-built but is none of those, so X-5.2 does
+# not reach it. The rest are uses the pod is not (temporary uses, signs,
+# vehicle storage, livestock) or are recorded where they bind.
+#
 # Clean Water Services. The CDC points at CWS twice in what is stored:
 # 106-214 defines a Vegetated Corridor by the CWS "Design and Construction
 # Standards" (cdc.106.definitions.txt#L1130-L1134), and 300-3.1 counts
@@ -1097,6 +1120,24 @@ zones:
   # repeats the airport-approach prohibition for every residential NB
   # district (cdc.390.north-bethany.txt#L83-L86), refused above with 30X-5.6.
   # Parking is Section 413 (390-7), which the layer defaults hold.
+  #
+  # NOT ENCODED: 390-20, Building Design and Variety, which reaches every NB
+  # district except residential development in R-6 NB, NCMU NB, and R-24 NB
+  # and R-25+ NB facades facing Kaiser Road in ASC 2 (L3054-L3075). Window
+  # and door shares of each townhouse front, garage frontage set 8 feet
+  # behind the front wall, blocks of at most ten townhouses, and siding
+  # materials, T-111 and plain plywood prohibited (L3302-L3304). Facade
+  # rules on a factory design; nothing in the screen describes a facade.
+  #
+  # NOT ENCODED: 390-22.1, dark or mirrored ground-floor windows prohibited
+  # and roof equipment screened (L3471-L3478). Facade rules again.
+  #
+  # NOT ENCODED: 390-18.5 and 390-19.2 A. On the Density Restricted Lands
+  # of the Community Plan map, density transfers and development inside the
+  # Natural Features Buffer are prohibited (L2649-L2655), and street stubs
+  # and driveways are prohibited at every NB boundary that abuts Rural
+  # Reserves (L2673-L2677). Both are drawn on the plan's maps; no map is
+  # held. Overlay work.
   R-6 NB:
     cite_default:
       cite: Washington County CDC 390-8 (R-6 North Bethany District)
@@ -1731,3 +1772,434 @@ zones:
     notes: >-
       DRAFT. Transit Oriented employment district: no dwelling row permits
       anything.
+  # --- Pedestrian-Oriented Mixed-Use Districts (Section 392) --------------
+  #
+  # 392-4's table lists "Attached Dwelling Unit (see Section 392-7 for density
+  # requirements)" as Type II in both districts. 106-70.1 B defines an
+  # Attached Dwelling Unit as "Two or more primary dwelling units with a
+  # common building wall and/or ceiling, on individual lots or on a single
+  # shared lot" (cdc.106.definitions.txt#L490-L492), which is the pod on one
+  # lot or on four. Type II is read as allowed, as for Middle Housing
+  # elsewhere in this layer. 392-2 lets Community Plan subareas and Areas of
+  # Special Concern prevail; refused above the zones with the Community Plans.
+  #
+  # NOT ENCODED: the 392-8 street frontage occupancy standard ("At least 50%
+  # of a site's street frontage(s) must be occupied by a building located no
+  # further than the maximum 20-foot setback", cdc.392.mixed-use.txt#L309-L313).
+  # No field holds it. The pod's frontage share depends on the lot.
+  #
+  # NOT ENCODED: the 392-9 development standards (entrances, 25 percent
+  # ground-floor transparency for residential, weather protection, a 2-foot
+  # plane change every 30 feet of facade, multiple frontages, prominent
+  # corners; cdc.392.mixed-use.txt#L337-L581). They are design standards on
+  # a factory pod's facade, which may not meet them. A doubt in the handoff.
+  #
+  # NOT ENCODED: the higher density ranges of 392-7 (2) to (4), which need a
+  # public plaza and extra open space (cdc.392.mixed-use.txt#L223-L239,
+  # L245-L268). The (1) range is held below.
+  #
+  # NOT ENCODED: the Required Outdoor Area on which even the (1) range
+  # depends. It is allowed "when the development provides Required Outdoor
+  # Area that complies with the requirements of Section 307-7.5" (L241-L242):
+  # 250 contiguous square feet a dwelling, no dimension under 10 feet
+  # (cdc.307.r-25plus.txt#L589-L595). No field holds a per-dwelling outdoor
+  # area.
+  #
+  # Interior side and rear yards are owed in both districts, not held at
+  # zero. 392-8 prints "Zero feet (3)", and (3) reads "No minimum interior
+  # yard setbacks are required except where abutting a residential
+  # district. Where abutting a residential district, the side and/or rear
+  # yard shall be no less than that required by the abutting district"
+  # (cdc.392.mixed-use.txt#L306-L308,L323-L326). Zero needs "does not abut
+  # a residential district", a negation `when:` cannot say, and the abutting
+  # district's yard is a number from another zone.
+  NMU:
+    cite_default:
+      cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), NMU
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: true
+      cite: Washington County CDC 392-4, Attached Dwelling Unit (Type II in NMU) + 106-70.1 B
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L42-L43,L53-L54"
+    min_lot_sqft:
+      value: 6000
+      cite: Washington County CDC 392-8, Lot Area Minimum
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L284"
+    min_average_lot_width_ft:
+      value: 85
+      cite: Washington County CDC 392-8, Lot Width Minimum Average
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L287"
+    min_frontage_ft:
+      # "Lot Width at the Access Point, Minimum": the width where the lot
+      # meets its street access, read as its frontage. A doubt.
+      value: 40
+      cite: Washington County CDC 392-8, Lot Width at the Access Point Minimum
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L288-L290"
+    min_lot_depth_ft:
+      # An average depth, held as a depth.
+      value: 50
+      cite: Washington County CDC 392-8, Lot Depth Minimum Average
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L291-L293"
+    max_height_ft:
+      # (1) lets spires, chimneys and the like reach 80; not the dwelling.
+      value: 65
+      cite: Washington County CDC 392-8, Building Height Maximum, NMU
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L295-L297"
+    setback_front_ft:
+      value: 10
+      cite: Washington County CDC 392-8, street-facing front and side setback minimum, ground floor residential
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L304"
+    setback_street_side_ft:
+      value: 10
+      cite: Washington County CDC 392-8, street-facing front and side setback minimum, ground floor residential
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L304"
+    setback_front_max_ft:
+      value: 20
+      cite: Washington County CDC 392-8, street-facing setback maximum
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L301,L305"
+    min_density_du_per_acre:
+      value: 20
+      cite: Washington County CDC 392-7, not in conjunction with a commercial use, NMU
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L220"
+    max_density_du_per_acre:
+      value: 25
+      cite: Washington County CDC 392-7, not in conjunction with a commercial use, NMU
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L220"
+    parking_front_prohibited:
+      value: true
+      cite: Washington County CDC 392-9.7 B(1), surface parking to the side or rear of buildings
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L591,L596-L598"
+    parking_street_setback_ft:
+      value: 5
+      cite: Washington County CDC 392-9.7 C(2)(a), 5-foot setback between surface parking and right-of-way
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L603,L615-L617"
+    # setback_side_ft and setback_rear_ft owed; see the block comment above.
+    notes: >-
+      DRAFT. Neighborhood mixed use: attached dwellings Type II, 6,000 sq ft,
+      85 ft average width, 65 ft, 10 ft front and street side (20 ft max),
+      20 to 25 units per acre. Interior yards owed; frontage occupancy and
+      facade design standards not held.
+  CCMU:
+    cite_default:
+      cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), CCMU
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: true
+      cite: Washington County CDC 392-4, Attached Dwelling Unit (Type II in CCMU) + 106-70.1 B
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L42-L43,L53-L54"
+    min_lot_sqft:
+      value: 6000
+      cite: Washington County CDC 392-8, Lot Area Minimum
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L284"
+    min_average_lot_width_ft:
+      value: 85
+      cite: Washington County CDC 392-8, Lot Width Minimum Average
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L287"
+    min_frontage_ft:
+      # As in NMU: the width at the access point read as frontage.
+      value: 40
+      cite: Washington County CDC 392-8, Lot Width at the Access Point Minimum
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L288-L290"
+    min_lot_depth_ft:
+      value: 50
+      cite: Washington County CDC 392-8, Lot Depth Minimum Average
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L291-L293"
+    max_height_ft:
+      value: 100
+      cite: Washington County CDC 392-8, Building Height Maximum, CCMU
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L295-L297"
+    setback_front_ft:
+      value: 10
+      cite: Washington County CDC 392-8, street-facing front and side setback minimum, ground floor residential
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L304"
+    setback_street_side_ft:
+      value: 10
+      cite: Washington County CDC 392-8, street-facing front and side setback minimum, ground floor residential
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L304"
+    setback_front_max_ft:
+      value: 20
+      cite: Washington County CDC 392-8, street-facing setback maximum
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L301,L305"
+    min_density_du_per_acre:
+      value: 20
+      cite: Washington County CDC 392-7, not in conjunction with a commercial use, CCMU
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L218,L221-L222"
+    max_density_du_per_acre:
+      value: 40
+      cite: Washington County CDC 392-7, not in conjunction with a commercial use, CCMU
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L218,L221-L222"
+    parking_front_prohibited:
+      value: true
+      cite: Washington County CDC 392-9.7 B(1), surface parking to the side or rear of buildings
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L591,L596-L598"
+    parking_street_setback_ft:
+      value: 5
+      cite: Washington County CDC 392-9.7 C(2)(a), 5-foot setback between surface parking and right-of-way
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L603,L615-L617"
+    # setback_side_ft and setback_rear_ft owed; see the NMU block comment.
+    notes: >-
+      DRAFT. Community-center mixed use: attached dwellings Type II, 6,000
+      sq ft, 85 ft average width, 100 ft, 10 ft front and street side (20 ft
+      max), 20 to 40 units per acre. Interior yards owed; frontage
+      occupancy and facade design standards not held.
+  # --- Commercial, industrial and institutional districts -----------------
+  CBD:
+    cite_default:
+      cite: Washington County CDC 313 (Community Business District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 313-3.40 admits "Residential Dwelling Units through a Type II Planned
+      # Development Procedure", and 313-5.3 prohibits new dwelling units
+      # otherwise. The Planned Development chapter (Section 404) is not
+      # stored, so what the procedure asks is not read; held behind the
+      # `planned_development` relief, tiered discretionary. A doubt: it is a
+      # Type II (staff) procedure, and a reader of 404 may find it cheaper.
+      value: false
+      cite: Washington County CDC 313-5.3, new dwelling units except pursuant to 313-3.40
+      quote: "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L147,L212"
+      variants:
+        - value: true
+          when: [planned_development]
+          cite: Washington County CDC 313-3.40 A(1), Residential Dwelling Units through a Type II Planned Development
+          quote: "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L151"
+    min_density_du_per_acre:
+      value: 20
+      cite: Washington County CDC 313-3.40 A(1), density of 20 to 40 units per acre
+      quote: "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L150"
+    max_density_du_per_acre:
+      # A(2) allows 40 to 100 with five percent more open space; not held.
+      value: 40
+      cite: Washington County CDC 313-3.40 A(1), density of 20 to 40 units per acre
+      quote: "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L150"
+    # Every dimension is owed. 313-3.40 A(1) says "The standards of Sections
+    # 307-7 through 307-10 shall apply" (the R-25+ district's dimensional
+    # and development standards, L150-L151), and 313-6 prints the
+    # district's own: 8,500 sq ft, a 20-foot front yard for buildings "that
+    # do not include multi-dwelling units", no side or rear yard except
+    # beside a residential district, 100 feet (L220-L252). Which of the two
+    # governs a Planned Development of dwellings is not settled from the
+    # text. A doubt in the handoff.
+    notes: >-
+      DRAFT. Community business: dwellings only through a Type II Planned
+      Development, 20 to 40 units per acre. Dimensions owed.
+  NC:
+    cite_default:
+      cite: Washington County CDC 311 (Neighborhood Commercial District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 311-3.6 admits dwelling units only when "The ground floor is used for
+      # neighborhood commercial uses"; 311-5.4 prohibits new residential uses
+      # otherwise. The pod's ground floor is dwellings.
+      value: false
+      cite: Washington County CDC 311-3.6 A + 311-5.4
+      quote: "or/washington/_unincorporated/cdc.311.nc.txt#L56,L71-L75,L165-L166"
+    notes: >-
+      DRAFT. Dwellings only over a commercial ground floor.
+  OC:
+    cite_default:
+      cite: Washington County CDC 312 (Office Commercial District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 312-4.4 B admits Attached Dwelling Units only "as part of a mixed use
+      # Office Commercial Development" through a Type III Planned
+      # Development, residential at most half the floor area; 312-5.3
+      # prohibits new dwelling units otherwise. A four-unit residential
+      # building is not a mixed-use office development.
+      value: false
+      cite: Washington County CDC 312-4.4 B + 312-5.3
+      quote: "or/washington/_unincorporated/cdc.312.oc.txt#L166,L178,L184-L187,L207"
+    notes: >-
+      DRAFT. Dwellings only inside a Type III mixed-use office Planned
+      Development.
+  GC:
+    cite_default:
+      cite: Washington County CDC 314 (General Commercial District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 314-5.3, New dwelling units prohibited
+      quote: "or/washington/_unincorporated/cdc.314.gc.txt#L185,L192"
+    notes: >-
+      DRAFT. New dwelling units prohibited.
+  IND:
+    cite_default:
+      cite: Washington County CDC 320 (Industrial District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # The only living quarters the district provides are for custodians
+      # and caretakers, accessory to an industrial use.
+      value: false
+      cite: Washington County CDC 320-5.3, New dwellings except as provided in this District
+      quote: "or/washington/_unincorporated/cdc.320.ind.txt#L274,L281"
+    notes: >-
+      DRAFT. New dwellings prohibited beyond caretaker quarters.
+  INST:
+    cite_default:
+      cite: Washington County CDC 330 (Institutional District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # The exceptions 330-6.2 names (330-3.6, 330-4, 330-5) hold no
+      # dwelling row; the nearest is caretaker living quarters as an
+      # accessory use.
+      value: false
+      cite: Washington County CDC 330-6.2, New dwelling units prohibited
+      quote: "or/washington/_unincorporated/cdc.330.inst.txt#L150,L156-L157"
+    notes: >-
+      DRAFT. New dwelling units prohibited.
+  SID:
+    cite_default:
+      cite: Washington County CDC 377 (Special Industrial Overlay District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 377-1.3, development limited to industrial, office and industrial-park uses
+      quote: "or/washington/_unincorporated/cdc.377.sid.txt#L21-L28"
+    notes: >-
+      DRAFT. Industrial, office and industrial-park uses only.
+  # --- Future Development holding districts (Sections 308, 309) ----------
+  #
+  # Ruled from each district's use lists, as the county brief asks. Both
+  # hold urban land until it is planned, and both admit one detached
+  # dwelling and nothing attached. Neither is named in 106-124 (Middle
+  # Housing), cdc.106.definitions.txt#L676-L678.
+  FD-20:
+    cite_default:
+      cite: Washington County CDC 308 (Future Development 20-Acre District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 308-2.4 (one detached dwelling) + 308-5.1
+      quote: "or/washington/_unincorporated/cdc.308.fd-20.txt#L32-L36,L129-L131"
+    notes: >-
+      DRAFT. Holding district: one detached dwelling.
+  FD-10:
+    cite_default:
+      cite: Washington County CDC 309 (Future Development 10-Acre District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 309-5.1 prohibits what is "not specifically authorized in Section
+      # 308", which reads as a slip for 309; either chapter allows only one
+      # detached dwelling, so the answer does not turn on it.
+      value: false
+      cite: Washington County CDC 309-2.4 (one detached dwelling) + 309-5.1
+      quote: "or/washington/_unincorporated/cdc.309.fd-10.txt#L26-L27,L96-L98"
+    notes: >-
+      DRAFT. Holding district: one detached dwelling.
+  # --- Rural districts (Sections 340-356) ---------------------------------
+  #
+  # Outside the urban growth boundary. Each admits at most one dwelling on a
+  # lot (farm, nonfarm, forest, rural residential or caretaker) and
+  # prohibits what it does not list. No dimensions are held: the use answer
+  # is settled false.
+  EFU:
+    cite_default:
+      cite: Washington County CDC 340 (Exclusive Farm Use District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 340-4.1 G (one nonfarm detached dwelling) + 340-7.1
+      quote: "or/washington/_unincorporated/cdc.340.efu.txt#L82-L86,L434-L435"
+    notes: >-
+      DRAFT. Farm district: one dwelling at most.
+  EFC:
+    cite_default:
+      cite: Washington County CDC 342 (Exclusive Forest and Conservation District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 342-2.8 (detached dwelling unit, one) + 342-6.1
+      quote: "or/washington/_unincorporated/cdc.342.efc.txt#L49-L51,L285-L286"
+    notes: >-
+      DRAFT. Forest district: one dwelling at most.
+  AF-20:
+    cite_default:
+      cite: Washington County CDC 344 (Exclusive Agriculture and Forest AF-20 District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 344-4.1 G (one nonfarm detached dwelling) + 344-7.1
+      quote: "or/washington/_unincorporated/cdc.344.af-20.txt#L82-L86,L432-L433"
+    notes: >-
+      DRAFT. Farm and forest district: one dwelling at most.
+  AF-10:
+    cite_default:
+      cite: Washington County CDC 346 (Agriculture and Forest AF-10 District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 346-2.3 (Detached Dwelling Unit, one) + 346-5.1
+      quote: "or/washington/_unincorporated/cdc.346.af-10.txt#L26,L143-L144"
+    notes: >-
+      DRAFT. Rural district: one detached dwelling.
+  AF-5:
+    cite_default:
+      cite: Washington County CDC 348 (Agriculture and Forest AF-5 District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 348-2.3 (Detached Dwelling Unit, one) + 348-5.1
+      quote: "or/washington/_unincorporated/cdc.348.af-5.txt#L24,L141-L142"
+    notes: >-
+      DRAFT. Rural district: one detached dwelling.
+  RR-5:
+    cite_default:
+      cite: Washington County CDC 350 (Rural Residential District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 350-2.2 (Detached Dwelling Unit, one) + 350-5.1
+      quote: "or/washington/_unincorporated/cdc.350.rr-5.txt#L14,L120-L121"
+    notes: >-
+      DRAFT. Rural residential: one detached dwelling.
+  R-COM:
+    cite_default:
+      cite: Washington County CDC 352 (Rural Commercial District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 352-2.3 (residence with a commercial use, one dwelling structure) + 352-5.1
+      quote: "or/washington/_unincorporated/cdc.352.r-com.txt#L17-L20,L172-L173"
+    notes: >-
+      DRAFT. Rural commercial: one residence with a commercial use.
+  R-IND:
+    cite_default:
+      cite: Washington County CDC 354 (Rural Industrial District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 354-2.1 B (caretaker residence) + 354-5.2
+      quote: "or/washington/_unincorporated/cdc.354.r-ind.txt#L21-L25,L179-L181"
+    notes: >-
+      DRAFT. Rural industrial: caretaker residence only.
+  MA-E:
+    cite_default:
+      cite: Washington County CDC 356 (Land Extensive Industrial District, MAE)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # The county's zoning layer writes MA-E; the CDC writes MAE.
+      value: false
+      cite: Washington County CDC 356-2.1 A and 356-2.2 (caretaker or one detached dwelling with a permitted use) + 356-5.1
+      quote: "or/washington/_unincorporated/cdc.356.mae.txt#L18-L24,L170-L171"
+    notes: >-
+      DRAFT. Rural land-extensive industrial: one dwelling with a permitted
+      use.
