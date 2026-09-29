@@ -160,6 +160,15 @@ ORCA_KEY = "rlis_orca"
 #: (LAND/orca.shp.xml). Recorded raw; which of them a code calls a park is
 #: the code's question, answered in the FLATS layer.
 ORCA_KIND_FIELD = "UNITTYPE"
+#: RLIS STREETS TYPE codes for ways that are not public streets: 1700 a
+#: private road (named: Treehill Dr, Metolius Loop), 1800 an unnamed drive
+#: (a school's loop, a park's service road). Read off the file 2026-09-29;
+#: Metro's feature service publishes no domain for TYPE. See `street_kinds`.
+DRIVE_TYPES = frozenset({1700, 1800})
+#: A private polygon carrying a drive is the drive's own tract when nothing
+#: is built on it: the assessor's building value is at most this. A mobile
+#: home park ($12,780), a school or an office campus is somebody's land.
+DRIVE_TRACT_MAX_BLDGVAL = 5000.0
 
 
 def bearing_deg(x1: float, y1: float, x2: float, y2: float) -> float:
@@ -858,6 +867,106 @@ def park_across(results: list, orca_geoms, orca_kinds) -> list:
     return out
 
 
+def _drive_kind(x1: float, y1: float, x2: float, y2: float, lot_geom, lot_tlid: str,
+                street_tree, street_geoms, street_types, threshold_ft: float,
+                lot_tree, lot_geoms, lot_private, lot_built, fabric_tlid) -> str:
+    """What makes one street (``F``) edge a street edge. See `street_kinds`."""
+    from shapely.geometry import Point
+
+    mid = Point((x1 + x2) / 2, (y1 + y2) / 2)
+    near = [int(k) for k in street_tree.query(mid, predicate="dwithin", distance=threshold_ft)]
+    drives = [k for k in near if street_types[k] in DRIVE_TYPES]
+    if not drives or len(drives) < len(near):
+        # A public way within reach, or no centreline of either kind (a lot
+        # fronted by its alley alone, or the whole file where the code says
+        # an alley is a street): the drive question does not arise.
+        return "street"
+    k = min(drives, key=lambda k: mid.distance(street_geoms[k]))
+    line = street_geoms[k]
+    at = line.interpolate(line.project(mid))
+    if lot_geom.buffer(0.5).contains(at):
+        return "drive_on_lot"
+    dx, dy = at.x - mid.x, at.y - mid.y
+    d = math.hypot(dx, dy)
+    if d < NEIGHBOUR_OFFSET_FT:
+        return "drive"  # the centreline runs along the line itself
+
+    def private_at(pt) -> set[int]:
+        return {
+            int(j) for j in lot_tree.query(pt, predicate="intersects")
+            if lot_private[j] and fabric_tlid[j] != lot_tlid
+        }
+
+    holding = private_at(at)
+    if not holding:
+        return "drive"  # in a gap in the fabric or a right-of-way polygon
+    first = private_at(Point(mid.x + dx / d * NEIGHBOUR_OFFSET_FT, mid.y + dy / d * NEIGHBOUR_OFFSET_FT))
+    if first and not (first & holding):
+        return "drive_off_lot"  # another lot stands between the line and the drive
+    if all(lot_built[j] <= DRIVE_TRACT_MAX_BLDGVAL for j in holding):
+        return "drive"  # an unbuilt tract the line abuts carries it
+    return "drive_off_lot"  # the drive of a built parcel next door
+
+
+def street_kinds(results: list, lot_geoms_s3, lot_tlids, ways, threshold_ft: float,
+                 lot_tree, lot_geoms, lot_private, lot_built, fabric_tlid) -> list:
+    """What kind of way makes each street edge a street edge.
+
+    `classify_lot` classes an edge ``F`` when its midpoint is within
+    `street_threshold_ft` of ANY non-alley centreline in RLIS STREETS, and the
+    file carries two kinds of line no code calls a public street: TYPE 1700
+    (a private road -- Dunbar Ln, Treehill Dr, Metolius Loop) and TYPE 1800
+    (unnamed drives: a school's bus loop, a park's service road, a mobile
+    home park's aisles). Wilsonville (4.001(157), (161), (242)) and Wood
+    Village (720.030 STREET, "a public or private right-of-way") count a
+    private drive the lot abuts as a street; no code in the corpus counts a
+    drive running across somebody ELSE's parcel, or inside the lot itself
+    (Wilsonville: "a private drive bounded on two sides by a single lot
+    shall not be considered"). Measured 2026-09-29 on the 137 stage files:
+    of 5,614 Wilsonville lots with edges, 552 have a street edge only a
+    drive makes -- 435 with such a drive on a tract or in a gap, 217 with
+    one on other land, 26 of those with no other frontage at all; Wood
+    Village 55 / 25 / 39 / 4 of 623.
+
+    Returns, per lot, a list parallel to its ``edges``: ``None`` on every
+    edge that is not ``F``, else
+
+    * ``street`` -- a public way (any TYPE but 1700/1800) is within reach;
+    * ``drive`` -- only a drive, and it runs in a gap in the fabric, on a
+      right-of-way polygon, along the line itself, or on an unbuilt private
+      polygon the line abuts (an HOA tract: building value at most
+      `DRIVE_TRACT_MAX_BLDGVAL`);
+    * ``drive_on_lot`` -- only a drive, and it runs inside this lot;
+    * ``drive_off_lot`` -- only a drive, and it runs on a built parcel next
+      door or behind another lot.
+
+    The last two are street edges by the file and by no code: the line
+    abuts a neighbour (or nothing), and s4's front, corner and access all
+    rest on it. FLATS reads them as an unconfirmed street
+    (`flats.ingest.quadfit`).
+
+    ``ways`` is, per lot, the ``(tree, geoms, types)`` its edges were
+    classified against -- the whole file where the code says an alley is a
+    street, the file less its alleys elsewhere -- or None for every lot where
+    s1 was written before TYPE was carried: nothing measured it, and the
+    column is None.
+    """
+    out = []
+    for r, geom, tlid, way in zip(results, lot_geoms_s3, lot_tlids, ways):
+        if way is None:
+            out.append(None)
+            continue
+        street_tree, street_geoms, street_types = way
+        out.append([
+            _drive_kind(e[0], e[1], e[2], e[3], geom, tlid, street_tree, street_geoms,
+                        street_types, threshold_ft, lot_tree, lot_geoms, lot_private,
+                        lot_built, fabric_tlid)
+            if e[4] == "F" else None
+            for e in r["edges"]
+        ])
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.parse_args()
@@ -877,6 +986,12 @@ def main() -> None:
         )
     is_alley = streets["alley"].fillna(False).astype(bool).to_numpy()
     all_geoms = np.array(list(streets["geom"]), dtype=object)
+    # RLIS TYPE per segment, for `street_kinds`; an s1 written before TYPE
+    # was carried leaves that column unmeasured rather than guessed.
+    all_types = (
+        streets["type"].fillna(-1).astype(int).to_numpy()
+        if "type" in streets.columns else None
+    )
     street_geoms = all_geoms[~is_alley]
     alley_geoms = all_geoms[is_alley]
     tree_all = STRtree(all_geoms)
@@ -891,9 +1006,11 @@ def main() -> None:
     # jurisdiction and zone s2 gave each one) so an alley edge can be asked
     # whether the alley actually lies across it, and how wide it is, and
     # every non-street edge what zone lies across it.
-    s2 = read_stage("s2_lots", columns=["TLID", "wkb", "jurisdiction", "zone_raw", "split_zone"])
+    s2 = read_stage("s2_lots", columns=["TLID", "wkb", "jurisdiction", "zone_raw", "split_zone", "BLDGVAL"])
     lot_geoms = np.array(list(s2["geom"]), dtype=object)
     lot_private = ~s2["TLID"].astype(str).str.contains(NOT_A_TAXLOT_RE, regex=True).to_numpy()
+    fabric_tlid = s2["TLID"].astype(str).to_numpy(dtype=object)
+    lot_built = s2["BLDGVAL"].fillna(0.0).astype(float).to_numpy()
     fabric_juris = s2["jurisdiction"].astype(object).where(s2["jurisdiction"].notna(), None).to_numpy(dtype=object)
     fabric_zone = s2["zone_raw"].astype(object).where(s2["zone_raw"].notna(), None).to_numpy(dtype=object)
     fabric_split = s2["split_zone"].fillna(False).astype(bool).to_numpy()
@@ -931,6 +1048,28 @@ def main() -> None:
     # Parallel to edges_json: per alley edge, a ray every few feet along it
     # that found the alley (1) or did not (0); null on every other edge.
     lots["alley_cover_json"] = [json.dumps(r["alley_cover"]) for r in results]
+
+    # What kind of way makes each street edge one: a public street, a
+    # private drive the line abuts, or a drive on other land that no code
+    # calls a street (`street_kinds`).
+    if all_types is None:
+        print("s4 street kinds: s1_streets has no 'type' column -- street_kind_json left null")
+        ways = [None] * len(results)
+    else:
+        by_street = (tree_streets, street_geoms, all_types[~is_alley])
+        by_all = (tree_all, all_geoms, all_types)
+        ways = [by_all if alley_is_street.get(j, False) else by_street for j in lots["jurisdiction"]]
+    kinds = street_kinds(results, lots["geom"], lots["TLID"].astype(str), ways, thr,
+                         tree_lots, lot_geoms, lot_private, lot_built, fabric_tlid)
+    lots["street_kind_json"] = [None if k is None else json.dumps(k) for k in kinds]
+    if all_types is not None:
+        from collections import Counter as _KCounter
+
+        _k = _KCounter(x for k in kinds if k for x in k if x)
+        _off = lots.assign(_o=[bool(k) and any(x in ("drive_on_lot", "drive_off_lot") for x in k) for k in kinds])
+        per = _off.groupby("jurisdiction")["_o"].sum()
+        print(f"s4 street kinds: street edges {dict(_k)}; lots with a street edge only a drive "
+              f"on other land makes: " + ", ".join(f"{j} {int(v):,}" for j, v in per[per > 0].items()))
 
     # What zone lies across each lot line that is not a street lot line,
     # from the fabric with s2's zones on it. One bulk query for the county.

@@ -1163,3 +1163,40 @@ def test_a_lot_the_search_found_no_room_on_draws_nothing(corpus, policies) -> No
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert s.drawing is None
     assert row_for(s)["drawing"] is None
+
+
+# --- a street that is only a private drive the lot does not abut -------------
+
+
+def test_a_rear_line_near_a_schools_drive_is_not_a_street_and_the_lot_is_not_signed(
+    corpus, policies
+) -> None:
+    """s4 fronts any line within 50 ft of a non-alley centreline, and the
+    street layer carries private roads and unnamed drives (RLIS 1700 / 1800).
+    A drive across the school behind the rear fence (Wilsonville
+    31W13BD01800) is a street by no code: s4 records it as ``drive_off_lot``
+    and the lot is not certified, whatever the checks say. A private drive
+    the lot really abuts (``drive``) is a street in Wilsonville and Wood
+    Village and changes nothing here."""
+    behind = [[*e[:4], "F" if e[4] == "R" else e[4]] for e in EDGES]
+    kinds = ["street", None, "drive_off_lot", None]
+    plain = lot_from_row(row(edges_json=json.dumps(behind)))
+    doubted = lot_from_row(row(edges_json=json.dumps(behind), street_kind_json=json.dumps(kinds)))
+    assert not plain.facts.street_unconfirmed
+    assert doubted.facts.street_unconfirmed
+    (p,) = screen_lot(plain, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (d,) = screen_lot(doubted, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert "STREET_UNCONFIRMED" not in p.signed.reasons
+    assert "STREET_UNCONFIRMED" in d.signed.reasons
+    assert d.signed.triage is not Triage.green
+    tract = ["street", None, "drive", None]
+    assert not lot_from_row(row(street_kind_json=json.dumps(tract))).facts.street_unconfirmed
+    assert lot_from_row(row(street_kind_json=json.dumps(["drive_on_lot"]))).facts.street_unconfirmed
+
+
+def test_an_s4_that_never_read_road_types_keeps_every_street_a_street() -> None:
+    """A stage file written before ``street_kind_json`` existed, or an s1
+    with no TYPE column, reads as absent: the old treatment."""
+    assert "street_kind_json" in S4_COLUMNS
+    for absent in (None, "", "null", "not json"):
+        assert not lot_from_row(row(street_kind_json=absent)).facts.street_unconfirmed

@@ -124,6 +124,13 @@ USE_PROHIBITED = "USE_PROHIBITED"
 #: evidence the pod fits with its cars, and no verdict may rest on it. Our
 #: backlog: the caller has to search again at the width `fit_for` asks.
 COURT_WIDTH_UNMEASURED = "COURT_WIDTH_UNMEASURED"
+#: A line the geometry called a street is one only because a private drive
+#: runs near it -- through the lot itself, or across a school, a park or a
+#: mobile-home park beyond the fence. No code counts a drive the lot does not
+#: abut, and the reading moves the answer both ways: the setback on that line
+#: is too big, and the corner, the lane and the side-street driveway it
+#: grants are not there. A person has to look at the lot (FOLLOWUPS 4).
+STREET_UNCONFIRMED = "STREET_UNCONFIRMED"
 
 #: Checks computed from a proxy that runs in the lot's favour. Empty since
 #: 2026-09-28 (FOLLOWUPS 7(a)): the two it held, open space and landscaping
@@ -248,6 +255,11 @@ class LotFacts:
     #: (:func:`flats.score.paper.side_street_fed`). False where nothing
     #: measured the lot, which keeps the lane beside the building.
     corner: bool = False
+    #: One of the lot's street lines rests only on a private drive the lot
+    #: does not abut (:data:`STREET_UNCONFIRMED`,
+    #: :func:`flats.ingest.quadfit.street_unconfirmed`). False where nothing
+    #: read the road types, which is every caller but the bridge.
+    street_unconfirmed: bool = False
 
     @property
     def landlocked(self) -> bool:
@@ -1243,6 +1255,8 @@ def screen(
         reasons.append(NO_FRONTAGE)
     if lot.geometry is GeometryTier.irregular:
         reasons.append(GEOMETRY_UNREADABLE)
+    if lot.street_unconfirmed:
+        reasons.append(STREET_UNCONFIRMED)
     if "fit_across_ft" in unchecked:
         reasons.append(COURT_WIDTH_UNMEASURED)
     if any(_unencoded(CHECK_FIELD.get(name, name), rules) for name in unchecked):
@@ -1324,6 +1338,7 @@ __all__ = [
     "OPTIMISTIC_CHECKS",
     "RELIEF_UNCONFIRMED",
     "STANDARD_NOT_ENCODED",
+    "STREET_UNCONFIRMED",
     "USE_NOT_ENCODED",
     "USE_PROHIBITED",
     "BindingHistogram",

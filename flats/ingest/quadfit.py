@@ -189,6 +189,7 @@ S4_COLUMNS: tuple[str, ...] = (
     "alley_width_ft",
     "alley_cover_json",
     "street_across_json",
+    "street_kind_json",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -895,6 +896,38 @@ def _side_alley_along(row: Mapping[str, Any]) -> bool:
     )
 
 
+#: s4's ``street_kind_json`` values for a street edge that is a street by no
+#: code: the only centreline within 50 ft is a private road or an unnamed
+#: drive (RLIS TYPE 1700 / 1800) that runs through the lot itself, or across
+#: someone else's built parcel beyond the line -- a school's bus loop, a park's
+#: service road, a mobile-home park's aisle behind the rear fence. Wilsonville
+#: 4.001(157) and Wood Village 720.030 count a private drive the lot ABUTS;
+#: neither counts one the lot only sits near.
+DOUBTFUL_STREET_KINDS: frozenset[str] = frozenset({"drive_on_lot", "drive_off_lot"})
+
+
+def street_unconfirmed(row: Mapping[str, Any]) -> bool:
+    """Whether one of s4's street edges on this row rests only on a drive the
+    lot does not abut (:data:`DOUBTFUL_STREET_KINDS`).
+
+    Such an edge moves the answer both ways -- a front setback on what is
+    really a rear line tightens; a lane or side-street driveway onto a
+    neighbour's land, and a corner no code would call one, relax -- so no
+    direction is the safe one to assume and the lot is not certified
+    (:data:`flats.score.screen.STREET_UNCONFIRMED`). False where s4 predates
+    the column or could not read the street layer's road types: the old
+    treatment, every street edge a street.
+    """
+    raw = row.get("street_kind_json")
+    if not raw:
+        return False
+    try:
+        kinds = json.loads(raw)
+    except (TypeError, ValueError):
+        return False
+    return any(k in DOUBTFUL_STREET_KINDS for k in kinds or ())
+
+
 def lot_from_row(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer] | None = None,
@@ -948,6 +981,9 @@ def lot_from_row(
         # Two streets that really are two: the side street may take the
         # driveway (:func:`flats.score.paper.side_street_fed`).
         corner=is_corner(edges),
+        # A street edge s4 found only because a private drive runs through
+        # the lot or across a built neighbour (FOLLOWUPS 4, 2026-09-29).
+        street_unconfirmed=street_unconfirmed(row),
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -1764,6 +1800,7 @@ __all__ = [
     "CLACKAMAS",
     "LOTS_RESULTS",
     "OBSERVABLE",
+    "DOUBTFUL_STREET_KINDS",
     "S4_COLUMNS",
     "S5O_COLUMNS",
     "S5O_LOTS",
