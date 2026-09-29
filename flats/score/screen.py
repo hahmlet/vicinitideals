@@ -267,6 +267,15 @@ class LotFacts:
     #: :func:`flats.ingest.quadfit.street_unconfirmed`). False where nothing
     #: read the road types, which is every caller but the bridge.
     street_unconfirmed: bool = False
+    #: The side of the largest square of open ground this plan leaves on the
+    #: real lot -- off the building and its pavement, outside the front
+    #: setback, off every overlay carve -- in one contiguous piece holding the
+    #: zone's outdoor area amount (:func:`flats.fit.outdoor.largest_square`).
+    #: Measured by the bridge per plan, only where the screen's own window
+    #: could not prove the square; None where nobody measured it (no lot
+    #: polygon, no front setback, no drawing), which leaves the shape a fact
+    #: nobody observed rather than a miss.
+    outdoor_square_ft: float | None = None
 
     @property
     def landlocked(self) -> bool:
@@ -846,7 +855,22 @@ def _outdoor_shape(
                 if w > 0 and w * d >= need:
                     shape = min(w, d)
                     best = shape if best is None else max(best, shape)
-        proven("open_space_shape", best, side)
+        if (best is None or best < side) and lot.outdoor_square_ft is not None:
+            # Not in the window: the square measured on the lot's own ground
+            # answers it, both ways. A miss there is a real miss -- the lot
+            # less its front yard, the building, its pavement and its overlays
+            # holds no such square in a piece big enough.
+            out.append(
+                policy.evaluate(
+                    "open_space_shape",
+                    max(lot.outdoor_square_ft, best or 0.0),
+                    side,
+                    is_maximum=False,
+                    jurisdiction=where,
+                )
+            )
+        else:
+            proven("open_space_shape", best, side)
 
     patio = rules.get("private_open_space_min_dimension_ft")
     if patio is not None:

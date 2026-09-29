@@ -66,6 +66,15 @@ class Drawing:
     court: BaseGeometry | None
     #: The room holds the building and the court's excess: the fit passed.
     fits: bool
+    #: What the plan PAVES, where the caller said how wide the court's
+    #: pavement is (``paved_across_ft``): the lane from the room's street end
+    #: past the standoff to the aisle, and the stalls and aisle behind the
+    #: standoff, as wide as they are rather than the room's whole width. One
+    #: shape per legal way to stand the row: against the lane where there is
+    #: one, else at either side of the room. The standoff off the rear wall is
+    #: not pavement. Empty where not asked. Read by the outdoor-area shape
+    #: test (FOLLOWUPS 7(b)), never by the page.
+    paved: tuple[BaseGeometry, ...] = ()
 
     def to_json(self, envelope: BaseGeometry | None = None) -> dict:
         """Rings of ``[x, y]`` pairs, rounded, for the lot page.
@@ -206,6 +215,8 @@ def draw(
     street: Iterable[tuple[float, float, float, float]] = (),
     beside_band_ft: float = 0.0,
     beside_len_ft: float = 0.0,
+    paved_across_ft: float | None = None,
+    gap_ft: float = 0.0,
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -220,6 +231,9 @@ def draw(
     (:attr:`flats.fit.rectangle.Fit.beside`): the band on the building's
     flank where the lane would be, ``beside_len_ft`` long from the front
     line, and no lane -- the court's aisle is the drive.
+    ``paved_across_ft`` and ``gap_ft`` ask for :attr:`Drawing.paved` too: the
+    width the court's stalls and aisle pave across (the wider of the row and
+    the lane that reaches it) and the unpaved standoff off the rear wall.
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -283,10 +297,27 @@ def draw(
     def world(g: BaseGeometry | None) -> BaseGeometry | None:
         return None if g is None else affinity.rotate(g, grid.angle_deg, origin=grid.origin)
 
+    paved: list[BaseGeometry] = []
+    if paved_across_ft is not None and court_depth_ft > 0:
+        pw = min(paved_across_ft, across)
+        if lane_ft > 0:
+            # The row stands against the lane, so the lane meets the aisle.
+            sides = [lx0 + lane_ft - pw] if placed.left else [lx0]
+        else:
+            sides = [x0, x0 + across - pw]
+        way_in = band(0.0, deep_b + gap_ft, lx0, lx0 + lane_ft) if lane_ft > 0 else None
+        for left in dict.fromkeys(sides):
+            left = min(max(left, x0), x0 + across - pw)
+            shape = band(deep_b + gap_ft, deep_b + court_depth_ft, left, left + pw)
+            if way_in is not None:
+                shape = shape.union(way_in)
+            paved.append(world(shape))
+
     return Drawing(
         room=world(room),
         building=world(building),
         lane=world(lane),
         court=world(court),
         fits=fits,
+        paved=tuple(paved),
     )

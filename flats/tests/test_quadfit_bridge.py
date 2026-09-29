@@ -868,17 +868,7 @@ def test_a_side_alley_waiver_reaches_only_the_stretch_the_alley_runs() -> None:
     assert envelope_for(lot, rear_line).sqft == pytest.approx((50 - 5 - 15) * 75)  # type: ignore[arg-type]
 
 
-def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(
-    corpus, policies, monkeypatch
-) -> None:
-    # This test reads the court's CHARGE on whichever cut wins. Since
-    # FOLLOWUPS 7(b) Portland R5's 12 ft outdoor square is a check too, and
-    # on this 50 ft lot the turned pod's court fills the window, so no cut
-    # proves it: every cut is held out of GREEN, and the colour ranking
-    # (yellow above unknown) then crowns a cut for its colour, not its
-    # charge. The shape is pinned in test_outdoor_shape.py; switched off
-    # here so the question stays the one this test asks.
-    monkeypatch.setattr("flats.score.screen._outdoor_shape", lambda *a, **k: None)
+def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpus, policies) -> None:
     # FOLLOWUPS 4(b). s4's alley width rides into the lot's facts beside the
     # rear alley, and Portland's court behind the pod is charged as a stall
     # and the back-out room the alley's width leaves short -- not a stall and
@@ -1353,3 +1343,21 @@ def test_an_s4_that_never_read_road_types_keeps_every_street_a_street() -> None:
     for absent in (None, "", "null", "not json"):
         lot = lot_from_row(row(street_kind_json=absent))
         assert lot.second is None and not lot.facts.street_unconfirmed
+def test_the_outdoor_square_is_measured_on_the_lots_own_ground(corpus, policies) -> None:
+    # FOLLOWUPS 7(b1). Portland R5 asks a 12 ft outdoor square. On this 50 ft
+    # lot the pod stands end-on, 36 ft across, with its row of four behind it
+    # off the alley: the window proves nothing, so the bridge measures the
+    # lot -- less its 10 ft front yard, the building and the paved court --
+    # and finds 9 ft at most beside the building. A real miss, scored as one.
+    lot = lot_from_row(
+        cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0,
+                alley_cover_json=json.dumps([None, None, "1" * 9 + "0", None])),
+        corpus.layers,
+    )
+    (s,) = screen_lot(lot, [pod4()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+
+    got = next(c for c in s.screening.checks if c.check == "open_space_shape")
+    assert got.threshold == 12.0
+    assert got.observed == pytest.approx(9.0, abs=0.5)
+    assert got.verdict is slack.Verdict.fails
+    assert "open_space_shape" not in s.screening.unchecked

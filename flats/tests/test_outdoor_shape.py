@@ -242,3 +242,80 @@ def test_a_zone_stating_no_shape_runs_no_shape_check() -> None:
     names = {c.check for c in result.checks} | set(result.unchecked)
     assert not {"open_space_shape", "private_open_space_shape"} & names
     assert result.triage is Triage.green
+
+
+# --- (b1) the square measured on the lot's own ground ----------------------
+
+import dataclasses  # noqa: E402
+
+import shapely  # noqa: E402
+
+from flats.fit.outdoor import largest_square, open_ground  # noqa: E402
+
+
+def measured(square_ft: float) -> LotFacts:
+    return dataclasses.replace(LOT, outdoor_square_ft=square_ft)
+
+
+def test_a_square_the_window_misses_but_the_lot_holds_passes() -> None:
+    # The turned pod that is held above, where the bridge measured a 14 ft
+    # square on the lot's side yard: the window was the only thing short.
+    result = screen(
+        rules(**PORTLAND), measured(14.0), POD80, fit(POD80, Orientation.depth_facing), policy=POLICY
+    )
+
+    got = check(result, "open_space_shape")
+    assert (got.observed, got.verdict) == (14.0, Verdict.passes)
+    assert result.triage is Triage.green
+
+
+def test_a_square_the_lot_cannot_hold_is_a_real_miss_not_a_question() -> None:
+    result = screen(
+        rules(**PORTLAND), measured(9.0), POD80, fit(POD80, Orientation.depth_facing), policy=POLICY
+    )
+
+    got = check(result, "open_space_shape")
+    assert got.verdict is Verdict.fails
+    assert "open_space_shape" not in result.unchecked
+    assert FACT_UNOBSERVED not in result.reasons
+    assert result.triage not in (Triage.green, Triage.unknown)
+
+
+def test_the_front_setback_the_building_and_the_pavement_are_not_outdoor_area() -> None:
+    # A 50 by 100 lot, street along the bottom, 10 ft front yard. A 36 ft
+    # building standing 5 ft off the west line leaves 9 ft on the east side;
+    # the ground behind the paved court is 5 ft deep. No 12 ft square.
+    lot = shapely.box(0, 0, 50, 100)
+    building = shapely.box(5, 10, 41, 66)
+    court = shapely.box(5, 71, 41, 95)
+    ground = open_ground(lot, front_lines=[(0, 0, 50, 0)], front_ft=10, taken=[building, court])
+
+    assert largest_square(ground, [0.0], min_area_sqft=250) == pytest.approx(9.0)
+    # Without the front yard struck, the 10 ft strip along the street would
+    # hold a 10 ft square -- ground 33.110.240.C.3 forbids.
+    loose = open_ground(lot, front_lines=[], front_ft=10, taken=[building, court])
+    assert largest_square(loose, [0.0], min_area_sqft=250) == pytest.approx(10.0)
+
+
+def test_a_wider_lot_holds_the_square_in_its_side_yard() -> None:
+    lot = shapely.box(0, 0, 60, 100)
+    building = shapely.box(5, 10, 41, 66)
+    ground = open_ground(lot, front_lines=[(0, 0, 60, 0)], front_ft=10, taken=[building])
+
+    assert largest_square(ground, [0.0], min_area_sqft=250) >= 19.0
+
+
+def test_the_square_must_stand_in_a_piece_that_holds_the_whole_area() -> None:
+    # Two separate 13 by 13 plots: each holds the square, neither the 250.
+    ground = shapely.union_all([shapely.box(0, 0, 13, 13), shapely.box(20, 0, 33, 13)])
+
+    assert largest_square(ground, [0.0], min_area_sqft=250) == 0.0
+    assert largest_square(ground, [0.0], min_area_sqft=144) == pytest.approx(13.0)
+
+
+def test_an_overlay_carve_is_not_counted_as_outdoor_area() -> None:
+    lot = shapely.box(0, 0, 30, 30)
+    carve = shapely.box(0, 15, 30, 30)
+    ground = open_ground(lot, front_lines=[], front_ft=0, carve=carve)
+
+    assert largest_square(ground, [0.0]) == pytest.approx(15.0)
