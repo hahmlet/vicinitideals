@@ -878,6 +878,13 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # direction. The envelope (`flats.geom.envelope`) applies it
                 # to the alley edge alone.
                 "setback_alley_side_ft (alley-side lots only; the paper fit has no edges)",
+                # The street setback on a line off a Map 130-1 stretch --
+                # zero in Portland's commercial zones, where the stretch's
+                # line takes 10. The paper fit has no edges and so no line
+                # to read off the corridor; it keeps the lot-level 10 on the
+                # front, the conservative direction. The envelope applies it
+                # to the street edge read off every stretch alone.
+                "setback_street_off_corridor_ft (street lines off a mapped corridor; the paper fit has no edges)",
                 "min_frontage_ft (measured at the street, not the envelope)",
                 # Ruled 2026-09-08: the pod parks in a rear court and has no
                 # garage, so a garage-entrance setback cannot reach it. This is

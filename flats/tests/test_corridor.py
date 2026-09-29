@@ -22,10 +22,14 @@ from flats.geom.corridor import (
     Lines,
     load_maps,
     observed_corridors,
+    off_corridor,
+    off_corridor_lines,
     on_corridor,
     street_name,
 )
-from flats.ingest.quadfit import OBSERVABLE, lot_from_row, observed_facts
+from flats.geom.edges import Edge, EdgeClass
+from flats.geom.envelope import Setbacks
+from flats.ingest.quadfit import OBSERVABLE, envelope_for, lot_from_row, observed_facts, setbacks_for
 from flats.rules.conditions import CONDITIONS, close_entailed
 
 pytestmark = pytest.mark.unit
@@ -353,3 +357,198 @@ def test_without_the_street_network_the_every_line_fact_is_unasked() -> None:
 def test_every_line_on_a_stretch_is_at_least_one_line_on_it() -> None:
     assert close_entailed({EVERY: True})["civic_corridor_setback"] is True
     assert close_entailed({"civic_corridor_setback": False})[EVERY] is False
+
+
+# --- the 10 ft minimum PER LINE (FOLLOWUPS 8(d)) ------------------------------
+#
+# Table 130-2's row is "Street Lot Line abutting selected Civic Corridors":
+# one line. The lot-level fact gives 10 to every street line (the tight side,
+# kept for every reader without edges); the envelope gives back, line by
+# line, a street line read surely OFF every stretch, at the plain "Street Lot
+# Line" row -- `setback_street_off_corridor_ft`.
+
+OFF = "setback_street_off_corridor_ft"
+
+
+def _cut(edges: list, **over: object) -> dict[str, object]:
+    return _row(
+        edges_json=json.dumps(edges),
+        tier="B" if sum(1 for e in edges if e[4] == "F") > 1 else "A",
+        lot_wkb=shapely.to_wkb(shapely.box(X0, Y0, X0 + 50, Y0 + 100)),
+        **over,
+    )
+
+
+def test_the_side_street_of_a_corner_lot_on_division_is_off_the_stretch() -> None:
+    cm = division()
+    assert not off_corridor(FRONT, cm)
+    assert off_corridor(WEST, cm)
+    # Per s4 edge, in order; only street lines are ever off.
+    assert off_corridor_lines(CORNER, PDX, [cm]) == (False, False, False, True)
+    # Not a layer the map serves, or not a map that tightens: nothing is read.
+    assert off_corridor_lines(CORNER, "or/multnomah/gresham", [cm]) == (False,) * 4
+    coverage = CorridorMap.from_lines("civic_corridor", [PDX], [ALONG], ["SE DIVISION ST"], cm.streets)
+    assert off_corridor_lines(CORNER, PDX, [coverage]) == (False,) * 4
+
+
+def test_off_is_never_merely_not_on() -> None:
+    # A stretch that ends part way along the line: under half its points
+    # agree, so the line is not ON -- and not OFF either: it keeps 10.
+    short = LineString([(X0 - 500, Y0 - 30), (X0 + 15, Y0 - 30)])
+    assert not on_corridor(FRONT, division(short))
+    assert not off_corridor(FRONT, division(short))
+    # No street network: the drawn line alone can say ON, never OFF --
+    # except for a line no stretch is drawn within reach of at all.
+    assert not off_corridor(WEST, cmap(ALONG))
+    far = LineString([(X0 - 500, Y0 - 400), (X0 + 500, Y0 - 400)])
+    assert off_corridor(WEST, cmap(far))
+    # A point no centreline explains is not off: the network holds Division
+    # alone, and nothing runs beside the west line.
+    lone = CorridorMap.from_lines(
+        "civic_corridor_setback", [PDX], [ALONG], ["SE DIVISION ST"], streets((ALONG, "SE DIVISION ST"))
+    )
+    assert not off_corridor(WEST, lone)
+
+
+@pytest.mark.parametrize("zone", C_ZONES)
+def test_the_street_off_the_corridor_is_quoted_from_the_plain_street_row(zone: str) -> None:
+    from flats.rules.loader import load_rules
+
+    value = load_rules()[PDX].zones[zone].values[OFF]
+    assert value.value == 0
+    assert not value.variants
+    assert value.prov.quote == "or/multnomah/portland/33.130.txt#L618,L640"
+
+
+@pytest.mark.parametrize("zone", C_ZONES)
+def test_a_corner_lot_on_division_cuts_ten_along_division_and_none_along_the_side_street(
+    pdx_rules, zone: str
+) -> None:
+    lot = lot_from_row(_cut(CORNER), corridors=[division()])
+    assert [e.off_corridor for e in lot.edges.edges] == [False, False, False, True]
+    held = [name for name, value in close_entailed(lot.observed).items() if value]
+    got = pdx_rules.resolve(PDX, zone, conditions=held)
+    # The lot-level reading is untouched: every edgeless reader takes 10.
+    assert got.values["setback_front_ft"].value == 10
+    env = envelope_for(lot, got)
+    assert env.source == "flats"
+    assert env.setbacks.front_ft == 10 and env.setbacks.street_off_corridor_ft == 0
+    # 10 off Division (south), none off 82nd (west), the zone's 10 ft
+    # residential-neighbour yards east and north: 40 x 80.
+    assert env.sqft == pytest.approx(40 * 80)
+    # Without the maps nothing is read per line, and both streets keep 10.
+    bare = lot_from_row(_cut(CORNER))
+    assert not any(e.off_corridor for e in bare.edges.edges)
+    assert envelope_for(bare, got).sqft == pytest.approx(30 * 80)
+
+
+def test_a_corner_lot_on_two_stretches_keeps_ten_on_both(pdx_rules) -> None:
+    # SE Division and SE 122nd: both lines are on a stretch, neither is off.
+    net = streets((ALONG, "SE DIVISION ST"), (CROSS, "SE 122ND AVE"))
+    cm = CorridorMap.from_lines(
+        "civic_corridor_setback",
+        [PDX],
+        [ALONG, CROSS],
+        ["SE DIVISION ST - CIVIC CORRIDOR", "SE 122nd AVENUE - CIVIC CORRIDOR"],
+        net,
+    )
+    lot = lot_from_row(_cut(CORNER), corridors=[cm])
+    assert not any(e.off_corridor for e in lot.edges.edges)
+    held = [name for name, value in close_entailed(lot.observed).items() if value]
+    assert EVERY in held
+    env = envelope_for(lot, pdx_rules.resolve(PDX, "CM2", conditions=held))
+    assert env.sqft == pytest.approx(30 * 80)
+
+
+# A real one: taxlot 1S2E10BA 01300, CM2, the corner of SE Division St and SE
+# 111th Ave (Oregon State Plane North, ft) -- s4's edges and RLIS
+# centrelines, and Map 130-1's Division stretch, as the 2026-09-18 snapshot
+# holds them. Division runs along the north line; 111th along the east.
+REAL_EDGES = [
+    [7676716.8, 676442.7, 7676647.1, 676445.4, "R"],
+    [7676647.1, 676445.4, 7676650.0, 676542.8, "R"],
+    [7676650.0, 676542.8, 7676718.5, 676540.3, "F"],
+    [7676718.5, 676540.3, 7676716.8, 676442.7, "F"],
+]
+REAL_LOT = shapely.Polygon([(e[0], e[1]) for e in REAL_EDGES])
+REAL_STREETS = (
+    (LineString([(7676741.8, 676414.7), (7676737.7, 676192.7)]), "SE 111TH AVE"),
+    (LineString([(7676743.3, 676489.9), (7676741.8, 676414.7)]), "SE 111TH AVE"),
+    (LineString([(7676744.9, 676571.1), (7676743.3, 676489.9)]), "SE 111TH AVE"),
+    (LineString([(7676741.8, 676414.7), (7676852.9, 676411.2)]), "SE DIVISION CT"),
+    (LineString([(7676743.3, 676489.9), (7676889.8, 676484.4)]), "SE DIVISION ST-DIVISION CT ALY"),
+    (LineString([(7676744.9, 676571.1), (7676968.5, 676563.6)]), "SE DIVISION ST"),
+    (LineString([(7676516.6, 676593.0), (7676539.9, 676579.9), (7676744.9, 676571.1)]), "SE DIVISION ST"),
+    (LineString([(7676516.6, 676593.0), (7676539.9, 676612.0), (7676968.5, 676595.8)]), "SE DIVISION ST"),
+    (LineString([(7676397.1, 676584.4), (7676474.6, 676581.6), (7676516.6, 676593.0)]), "SE DIVISION ST"),
+    (LineString([(7676522.9, 676792.8), (7676516.6, 676593.0)]), "SE 110TH AVE"),
+)
+REAL_DIVISION = LineString(
+    [(7676397.1, 676597.7), (7676516.6, 676593.0), (7676745.2, 676584.5), (7676968.5, 676576.1)]
+)
+
+
+def test_a_real_corner_on_division_and_111th_cuts_ten_along_division_only(pdx_rules) -> None:
+    cm = CorridorMap.from_lines(
+        "civic_corridor_setback",
+        [PDX],
+        [REAL_DIVISION],
+        ["SE DIVISION ST - CIVIC CORRIDOR"],
+        streets(*REAL_STREETS),
+    )
+    division_line, avenue_line = REAL_EDGES[2], REAL_EDGES[3]
+    assert on_corridor(division_line, cm) and not off_corridor(division_line, cm)
+    assert off_corridor(avenue_line, cm) and not on_corridor(avenue_line, cm)
+    row = _row(
+        TLID="1S2E10BA  -01300",
+        edges_json=json.dumps(REAL_EDGES),
+        front_bearings_json="[89.01, 177.86]",
+        tier="B",
+        lot_wkb=shapely.to_wkb(REAL_LOT),
+        area_sqft=REAL_LOT.area,
+    )
+    lot = lot_from_row(row, corridors=[cm])
+    assert lot.observed["civic_corridor_setback"] is True
+    assert lot.observed[EVERY] is False
+    assert [e.off_corridor for e in lot.edges.edges] == [False, False, False, True]
+    held = [name for name, value in close_entailed(lot.observed).items() if value]
+    got = pdx_rules.resolve(PDX, "CM2", conditions=held)
+    env = envelope_for(lot, got).geom
+    bare = envelope_for(lot_from_row(row), got).geom
+    division_ll = LineString([division_line[:2], division_line[2:4]])
+    avenue_ll = LineString([avenue_line[:2], avenue_line[2:4]])
+    # Ten feet off Division either way; the 111th Ave line gets its ten back.
+    assert env.distance(division_ll) == pytest.approx(10, abs=0.2)
+    assert bare.distance(avenue_ll) == pytest.approx(10, abs=0.2)
+    assert env.distance(avenue_ll) == pytest.approx(0, abs=0.2)
+    assert bare.within(env.buffer(0.01))
+    # The strip given back: ten feet along the 111th line, less the Division
+    # yard and the south line's.
+    assert env.area - bare.area == pytest.approx(10 * (avenue_ll.length - 20), rel=0.05)
+
+
+class _Rules:
+    def __init__(self, **values: object) -> None:
+        self.values, self.exempted = values, ()
+
+    def get(self, name: str) -> object:
+        return self.values.get(name)
+
+
+def test_the_off_corridor_number_stands_in_only_where_no_street_side_number_is_stated() -> None:
+    yards = {"setback_front_ft": 10, "setback_side_ft": 5, "setback_rear_ft": 5, OFF: 0}
+    assert setbacks_for(_Rules(**yards)).street_off_corridor_ft == 0  # type: ignore[arg-type]
+    both = setbacks_for(_Rules(**yards, setback_street_side_ft=8))  # type: ignore[arg-type]
+    assert both.street_off_corridor_ft is None
+
+    s = Setbacks(front_ft=10, side_ft=5, rear_ft=5, street_off_corridor_ft=0)
+
+    def edge(cls: EdgeClass, off: bool) -> Edge:
+        return Edge(0, 0, 1, 0, 1.0, 90.0, cls, off_corridor=off)
+
+    assert s.for_edge(edge(EdgeClass.front, True)) == 0
+    assert s.for_edge(edge(EdgeClass.street_side, True)) == 0
+    assert s.for_edge(edge(EdgeClass.front, False)) == 10
+    # The flag means nothing off a street line.
+    assert s.for_edge(edge(EdgeClass.side, True)) == 5
+    assert s.for_edge(edge(EdgeClass.rear, True)) == 5

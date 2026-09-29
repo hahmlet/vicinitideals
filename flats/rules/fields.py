@@ -137,6 +137,7 @@ _LABELS: dict[str, str] = {
     "setback_side_total_ft": "combined side setbacks",
     "setback_street_side_ft": "street-side setback",
     "setback_alley_side_ft": "alley-side setback",
+    "setback_street_off_corridor_ft": "street setback off a mapped corridor",
 }
 
 
@@ -181,6 +182,22 @@ _F: tuple[FieldDef, ...] = (
         "the shared number would open the far side yard too. The envelope "
         "applies it to the side edge on the alley and to no other; absent, "
         "that line takes setback_side_ft.",
+        False,
+    ),
+    FieldDef(
+        "setback_street_off_corridor_ft",
+        "length_ft",
+        "Minimum setback from a street lot line that is NOT on a mapped "
+        "corridor stretch, in a zone whose street setback turns on one "
+        "(Portland Map 130-1: 10 ft on the stretch, none elsewhere, "
+        "33.130.215.B.1.a). Held apart from setback_front_ft, which carries "
+        "the 10 behind the lot-level civic_corridor_setback -- true when ANY "
+        "street line is on a stretch -- because a variant on the shared "
+        "number would give the side street of a corner lot on Division the "
+        "corridor's number, or the corridor line the side street's. The "
+        "envelope applies it to a street edge read surely off every stretch "
+        "and to no other; absent, or where the zone also states a "
+        "street-side setback, every street line takes its class's number.",
         False,
     ),
     FieldDef(
@@ -941,6 +958,12 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # of its chapter, both by waiving it), and a zone silent about it is
         # a zone whose alley-side line takes the ordinary side setback.
         "setback_alley_side_ft",
+        # The street setback on a line off a mapped corridor, the way the
+        # alley-side one is stated for the side line on an alley: one code in
+        # the corpus distinguishes that line (Portland's commercial zones,
+        # Map 130-1), and a zone silent about it is a zone whose street lines
+        # all take the front and street-side numbers.
+        "setback_street_off_corridor_ft",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",

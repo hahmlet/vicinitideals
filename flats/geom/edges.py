@@ -121,6 +121,14 @@ class Edge:
     #: that measures no stretch (:func:`classify`, a midpoint test): the
     #: flag then stands for the line as it did before 2026-09-28.
     cover: str | None = None
+    #: A street line read surely OFF every Map 130-1 stretch
+    #: (:func:`flats.geom.corridor.off_corridor`). Orthogonal to ``cls`` as
+    #: ``alley`` is: it lets the zone's setback for a street line off the
+    #: corridor (``setback_street_off_corridor_ft``) reach this one line while
+    #: a line on Division keeps the corridor's 10 ft. False -- the default,
+    #: and the answer wherever nothing read the line -- leaves the line on
+    #: its class's number.
+    off_corridor: bool = False
 
 
 @dataclass(frozen=True, slots=True)

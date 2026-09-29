@@ -301,6 +301,7 @@ _ZERO_IS_THE_SAME_AS_NONE = frozenset(
         "setback_side_ft",
         "setback_rear_ft",
         "setback_street_side_ft",
+        "setback_street_off_corridor_ft",
         "setback_side_total_ft",
         "setback_garage_entrance_ft",
         "min_landscaped_pct",

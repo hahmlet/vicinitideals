@@ -350,7 +350,9 @@ _C: tuple[ConditionDef, ...] = (
         "of them keeps a zero setback. Measured from the city's Civic "
         "Corridor Setbacks layer; answered per lot, true when ANY street line "
         "is on one, which applies 10 ft to every street line -- the tighter "
-        "reading of a per-line rule.",
+        "reading of a per-line rule. The envelope then gives back, line by "
+        "line, the street lines read surely off every stretch: those take "
+        "setback_street_off_corridor_ft (flats/geom/corridor.py off_corridor).",
         evidence="Portland Map 130-1, Civic Corridors with Required Setbacks",
         assume=None,
     ),

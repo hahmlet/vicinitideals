@@ -3465,6 +3465,21 @@ zones:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the plain "Street Lot Line"
+      # row. A line the stretch ends part way along is not off, and keeps 10.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -3653,6 +3668,21 @@ zones:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the plain "Street Lot Line"
+      # row. A line the stretch ends part way along is not off, and keeps 10.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -3809,6 +3839,21 @@ zones:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the plain "Street Lot Line"
+      # row. A line the stretch ends part way along is not off, and keeps 10.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -3974,6 +4019,21 @@ zones:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the plain "Street Lot Line"
+      # row. A line the stretch ends part way along is not off, and keeps 10.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -4139,6 +4199,21 @@ zones:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the plain "Street Lot Line"
+      # row. A line the stretch ends part way along is not off, and keeps 10.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -4286,6 +4361,21 @@ zones:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the plain "Street Lot Line"
+      # row. A line the stretch ends part way along is not off, and keeps 10.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to

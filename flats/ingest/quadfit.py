@@ -80,7 +80,7 @@ from flats.geom.alley import (
     registry_alley,
     side_alley_along,
 )
-from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors
+from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors, off_corridor_lines
 from flats.geom.corridor import load_maps as load_corridor_maps
 from flats.geom.corner import (
     front_bearings as corner_fronts,
@@ -485,7 +485,11 @@ _EDGE_CLASS: dict[str, EdgeClass] = {
 }
 
 
-def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
+def lot_edges(
+    row: Mapping[str, Any],
+    geom: Any = None,
+    corridors: Sequence[CorridorMap] = (),
+) -> LotEdges | None:
     """s4's edge record as the envelope reads it, or None where s4 traced none.
 
     The class letters map one to one, but for the alley: s4 records it as
@@ -493,6 +497,11 @@ def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
     alley rules per line (``alley_at_rear`` on the rear setback,
     ``setback_alley_side_ft`` for the side), so the edge is named rear or
     side by the same bearing test the alley facts use and carries the flag.
+
+    With the corridor maps in hand, a street edge read surely off every Map
+    130-1 stretch serving the lot carries ``off_corridor``
+    (:func:`flats.geom.corridor.off_corridor_lines`), for
+    ``setback_street_off_corridor_ft``. Without them no edge does.
     """
     raw = json.loads(row.get("edges_json") or "[]")
     if not raw:
@@ -502,8 +511,9 @@ def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
     # Where along each alley edge the alley runs (FOLLOWUPS 3(e)); "" on an
     # alley edge with none on record, so the envelope vouches for no stretch.
     cover = _cover(row, raw) or [None] * len(raw)
+    off = off_corridor_lines(raw, _layer_id(row), corridors) if corridors else (False,) * len(raw)
     edges: list[Edge] = []
-    for (x1, y1, x2, y2, letter), stretch in zip(raw, cover):
+    for (x1, y1, x2, y2, letter), stretch, off_line in zip(raw, cover, off, strict=True):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         if letter == ALLEY_CLASS:
             cls = EdgeClass.rear if next(named) == "rear" else EdgeClass.side
@@ -520,6 +530,7 @@ def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
                 cls=cls,
                 alley=letter == ALLEY_CLASS,
                 cover=(stretch or "") if letter == ALLEY_CLASS else None,
+                off_corridor=bool(off_line),
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -567,12 +578,21 @@ def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
     if total is not None:
         side = max(side, total / 2)
     alley_side = number("setback_alley_side_ft")
+    street_side = number("setback_street_side_ft")
+    # The street line off a mapped corridor (Portland Map 130-1): the zone's
+    # one number for a street lot line off the stretch. Passed only where the
+    # zone states no street-side setback -- then it stands in for the front
+    # number on any street line, which is what it is; beside a street-side
+    # number it would have to say which of the two it replaces, and it is
+    # dropped rather than guessed (every street line keeps its class's).
+    off_corridor = number("setback_street_off_corridor_ft") if street_side is None else None
     return Setbacks(
         front_ft=front,
         side_ft=side,
         rear_ft=rear,
-        street_side_ft=number("setback_street_side_ft"),
+        street_side_ft=street_side,
         alley_side_ft=max(side, rear) if alley_side is None else alley_side,
+        street_off_corridor_ft=off_corridor,
     )
 
 
@@ -667,7 +687,7 @@ def lot_from_row(
     observed = observed_facts(row, layers, corridors)
     lot_wkb = row.get("lot_wkb")
     lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
-    edges = lot_edges(row, lot_geom)
+    edges = lot_edges(row, lot_geom, corridors)
     raw_edges = json.loads(row.get("edges_json") or "[]")
     s4_alley = (
         observed_alley(raw_edges, json.loads(row.get("front_bearings_json") or "[]"))
