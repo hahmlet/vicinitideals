@@ -1,0 +1,979 @@
+SUBCHAPTER 12.66
+ NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+12.66.010 Purpose.
+12.66.020 Applicability and Designation of Special Features.
+12.66.030 Overview of Development and Design Standards.
+12.66.040 Annexation Agreement—Jackson East-North and Jackson East-South Sub-Areas.
+12.66.100 Base Zone Standards.
+12.66.110 Lot Dimensions.
+12.66.120 Residential Density.
+12.66.130 Setbacks.
+12.66.140 Building Height.
+12.66.150 Floor Area Ratio.
+12.66.200 Site Design.
+12.66.210 Usable Open Space.
+12.66.220 Landscaping.
+12.66.230 Tree Preservation.
+12.66.240 Exterior Lighting.
+12.66.250 Fences, Free-Standing Walls, Hedges and Berms.
+12.66.260 Sight Distance/Vision Clearance.
+12.66.300 Vehicle Parking.
+12.66.310 Purpose, Applicability and Maintenance Responsibilities.
+12.66.320 Number of Spaces Required.
+12.66.330 Exempt Parking.
+12.66.340 Credit for On-Street Parking.
+12.66.350 Vehicle Parking and Loading: Location.
+12.66.360 Vehicle Parking and Loading: Design and Improvements.
+12.66.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity.
+12.66.410 Bicycle Parking.
+12.66.420 Pedestrian and Bicycle Circulation.
+12.66.430 Connectivity and Design Standards at or Near Transit Stops.
+12.66.500 Access and Street Standards.
+12.66.510 Purpose, Applicability and Exceptions.
+12.66.520 Street Connectivity and Access.
+12.66.530 Streets and Alleys: Design and Improvement.
+12.66.540 Flag Lot Driveways: Design and Improvement.
+12.66.550 Sidewalk Widths: Design and Location.
+12.66.560 Street Trees and Landscaping.
+12.66.600 Public Utilities, Site Grading and Storm Water Facilities Site Integration.
+12.66.610 Purpose, Applicability and Exceptions.
+12.66.620 Public Utilities General Requirements.
+12.66.630 Site Grading.
+12.66.640 Storm Water Facilities Site Integration.
+CDC12.66:1
+12.66.700 Design Standards for Residential Development.
+12.66.800 Design Standards for Non-Residential and Mixed-Use Development.
+12.66.810 Purpose and Applicability.
+12.66.820 Main Entries.
+12.66.830 Required Windows.
+12.66.840 Articulation and Detailed Design.
+12.66.845 Step-Back Requirements.
+12.66.850 Improvements and Activities between Streets and Buildings.
+12.66.860 Waste and Recycling Facilities.
+12.66.870 Sidewalk Dining and Displays in Light Rail Zones.
+12.66.875 Drive Through Facilities in Light Rail Zones.
+12.66.880 Outdoor Storage.
+12.66.890 Utilitarian Functions.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:2
+12.66.010  Purpose.
+The North Hillsboro Industrial Area Plan District development and design standards reflect the City's
+goals and objectives for North Hillsboro and are intended to implement the vision, goals, policies and
+principles outlined in the City of Hillsboro Comprehensive Plan and North Hillsboro Industrial Area
+Community Plan (HCP Section 30).
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.020  Applicability and Designation of Special Features.
+A. Plan District Boundary. The standards of this section apply only within the North Hillsboro
+Industrial Area Plan District boundary as shown on Figure 12.66.020-A.
+B. Base Zones. The base zones used to implement the Industrial Comprehensive Plan designa-
+tion within North Hillsboro include: I-P (Industrial Park), I-S (Industrial Sanctuary), HSID
+(Helvetia Special Industrial District), ESID (Evergreen Special Industrial District) and SSID
+(Shute Special Industrial District). In some cases, the base standards of these zones are
+modified by this plan district to achieve the purpose of the North Hillsboro Industrial Area Plan
+District.
+C. Special Features. Specific standards within this section apply to the following special features
+as shown on Figure 12.66.020-A.
+• Urban/Rural Edge Streets
+• District Edge Streets
+• Gateways
+• Waible Creek Greenspace
+ 12.66.020NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:3
+1 Greenspace corridor location shown is approximate. See Section 12.66.130.C. for instructions on calculating the
+Waible Creek Greenspace setback.
+(Ord. 6410 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.030  Overview of Development and Design Standards.
+Table 12.66.030-1 summarizes the applicability of Subchapter 12.50 Development and Design
+Standards within the North Hillsboro Industrial Area Plan District.
+  Table 12.66.030-1:
+Applicability of Subchapter 12.50 Standards
+Standard Applicable Code Sections
+Base Zone Standards
+Lot Dimensions The standards of 12.50.110 apply.
+Residential Density The standards of 12.50.120 are not applicable.
+Setbacks The standards of 12.50.130 apply except as
+modified by 12.66.130.
+ Figure 12.66.020-A:
+North Hillsboro Industrial Area Plan District Boundary and Special Features
+12.66.020 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:4
+Table 12.66.030-1:
+Applicability of Subchapter 12.50 Standards
+Standard Applicable Code Sections
+Building Height The standards of 12.50.140 apply.
+Floor Area Ratio The standards of 12.50.150 apply.
+Site Design
+Usable Open Space The standards of 12.50.210 are not applicable.
+Landscaping The standards of 12.50.220 apply in addition to the
+standards in 12.66.220.
+Tree Preservation The standards of 12.50.230 apply except as
+modified by 12.66.230.
+Exterior Lighting The standards of 12.50.240 apply.
+Fences, Free-Standing Walls, Hedges and
+Berms
+The standards of 12.50.250 apply except as
+modified by 12.66.250.
+Sight Distance/Vision Clearance The standards of 12.50.260 apply.
+Vehicle Parking
+Purpose, Applicability and Maintenance
+Responsibilities
+The standards of 12.50.310 apply.
+Number of Spaces Required The standards of 12.50.320 apply.
+Exempt Parking The standards of 12.50.330 apply.
+Credit for On-Street Parking The standards of 12.50.340 apply.
+Vehicle Parking and Loading: Location The standards of 12.50.350 apply in addition to the
+standards in 12.66.350.
+Vehicle Parking and Loading: Design and
+Improvements
+The standards of 12.50.360 apply except as
+modified by 12.66.350.
+Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+Bicycle Parking The standards of 12.50.410 apply.
+Pedestrian and Bicycle Circulation The standards of 12.50.420 apply.
+Connectivity and Design Standards at or
+near Transit Stops
+The standards of 12.50.430 apply.
+Access and Street Standards
+Purpose, Applicability and Exceptions The standards of 12.50.510.
+Street Connectivity and Access The standards of 12.50.520 apply.
+Public Streets and Alleys Design and
+Improvement
+The standards of 12.50.530 apply.
+Common Driveways and Private Streets:
+Design and Improvement
+The standards of 12.50.540 apply.
+Sidewalk Widths; Design and Location The standards of 12.50.550 apply.
+Street Trees The standards of 12.50.560 apply.
+Public Utilities General Requirements, Site Grading and Storm Water Facilities Site
+Integration
+Purpose, Applicability and Exceptions The standards of 12.50.610 apply.
+ 12.66.030NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:5
+Table 12.66.030-1:
+Applicability of Subchapter 12.50 Standards
+Standard Applicable Code Sections
+Public Utilities General Requirements The standards of 12.50.620 apply except as
+modified by 12.66.620.
+Site Grading The standards of 12.50.630 apply.
+Storm Water Facilities Site Integration The standards of 12.50.640 apply.
+Design Standards for Residential Development
+Design Standards for All Residential
+Development
+The standards of 12.50.710 are not applicable.
+Additional Design Standards for Middle
+Housing
+The standards of 12.50.715 are not applicable.
+Design Standards for Multiple-Dwelling
+Residential
+The standards of 12.50.720 are not applicable.
+Design Standards for Non-Residential and Mixed-Use Development
+Purpose and Applicability The standards of 12.50.810 apply except as
+modified by 12.66.800(A) and (B).
+Main Entries The standards of 12.50.820 apply.
+Ground Floor Windows The standards of 12.50.830 do not apply. They are
+superseded by 12.66.830.
+Articulation and Detailed Design The standards of 12.50.840 do not apply. They are
+superseded by 12.66.840.
+Building Step-Back Requirements The standards of 12.50.845 do not apply.
+Improvements and Activities between
+Streets and Buildings
+The standards of 12.50.850 apply.
+Waste and Recycling Facilities The standards of 12.50.270 apply except as
+modified by 12.66.860.
+Sidewalk Dining and Displays in Light Rail
+Zones
+The standards of 12.50.870 do not apply.
+Drive Through Facilities in Light Rail Zones The standards of 12.50.875 do not apply.
+Outdoor Storage The standards of 12.50.880 apply in addition to the
+standards in 12.66.880.
+Utilitarian Functions The standards of 12.50.890 apply except as
+modified by 12.66.890.
+Public Benefit Standards
+Purpose and Applicability The standards of 12.50.910 apply.
+Building and Site Design Guidelines The guidelines of 12.50.920 apply.
+Sustainable Development Practices The standards of 12.50.930 apply.
+Crime Prevention through Environmental
+Design
+The standards of 12.50.940 apply.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6274 § 1, 2018)
+12.66.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:6
+12.66.040  Annexation Agreement—Jackson East-North and Jackson East-South Sub-Areas.
+A. Purpose. The annexation agreement is intended to ensure awareness of the annexation
+process as well as reasonable certainty to the property owner, the City, Washington County,
+and the public that the scope and timing of subsequent development of the property will occur
+in a manner that facilitates the timely and equitable construction of necessary infrastructure
+improvements. The agreement is intended to describe the intended use of the property
+following annexation, the process for development review, the parties' commitments regarding
+the subsequent development, and the infrastructure anticipated to be necessary to support
+development.
+B. Applicability. Unless waived by the City under Subsection 12.66.040.D., an annexation
+agreement consistent with this Section shall be executed prior to and included with any
+owner-initiated annexation application under Section 12.80.010 for any property located in the
+Jackson East-North or Jackson East-South Sub-Areas, the boundaries of which are depicted
+on Figure 12.25.310-A.
+C. Contents. Unless otherwise agreed by the City, an annexation agreement shall include the
+following information and, at a minimum, address the following elements to the City's satisfac-
+tion:
+1. A legal description of the property;
+2. The current zoning;
+3. The owner's intended urban use of the property in sufficient detail to allow the City to
+determine the public facility impacts and required infrastructure improvements necessary
+to support the intended use. The description should include the anticipated type, size and
+density of the use, the timing of any anticipated phases, and an engineering assessment
+of impact on urban services at full build-out and for each phase of a phased project;
+4. A Transportation Study consistent with the requirements of Sections 12.70.200 that
+includes the portion of Jackson School Road between Waible Creek and US Highway 26
+and describes:
+a. The existing transportation facilities that serve the property, including the existing
+and planned capacity of the facilities;
+b. The committed and funded multi-modal transportation facilities expected to be
+available at full buildout of the property, and at each development phase of a phased
+project;
+c. The intended size, type, location and phased development timing, if any, of
+occupancy;
+d. The transportation impact of the intended use(s) at full buildout, and at each
+development phase of a phased project;
+e. Any transportation improvements that may be necessary to accommodate full
+buildout, and each development phase of a phased project, including the potential
+impacts of anticipated future development; and
+ 12.66.040NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:7
+f. Information establishing compliance with ORS 215.296 for any road improvements
+deemed necessary by the Transportation Study conducted pursuant to Subsection
+C.4.; and
+D. Timing. The City will not execute an annexation agreement until Washington County and the
+City have entered into an agreement regarding transportation system improvements and
+financing for Jackson East-South and Jackson East-North Sub-Areas outlined in the adopted
+Urban Planning Area Agreement (UPAA) between Washington County and the City.
+E. Waiver.
+1. The City may waive the requirement to execute and submit an annexation agreement if
+the City, in its sole discretion, determines the agreement is not necessary and would not
+achieve the purposes described in Section 12.66.040.A.
+2. As a condition of waiving the requirement to execute and submit an annexation agree-
+ment, the City may require a development agreement prior to approval of any necessary
+land use applications for development. Any such development agreement may require, to
+the City's satisfaction, the information and elements described in Section 12.66.040.C.
+F. Owners Commitments. The annexation agreement shall provide for at least the following
+owner commitments:
+1. To limit development of the property such that it will not exceed the capacity of affected
+transportation facilities, as determined by the Transportation Study, including any im-
+provements proposed and constructed as part of the development;
+2. Authorize the City to limit or condition any land use decision or entitlements consistent
+with the Transportation Study, as determined by the City, to ensure that adequate public
+transportation infrastructure is available to serve the proposed development; and
+3. Authorize the City to limit or condition any land use decision or entitlements consistent
+with Section 12.27.200, the City's Significant Natural Resources Overlay District.
+G. City Commitments. The annexation agreement shall provide for at least the following City
+commitments:
+1. To initiate the zone change process to rezone the property to the appropriate City zone at
+the time of annexation or such other time as parties agree.
+H. General Provisions.
+1. An annexation agreement shall include the parties' intended schedule of significant
+development-related events, including annexation, zone change, land use, and land
+division, if applicable.
+2. An annexation agreement expires one year from the last date it is signed by the parties
+unless the City has received an annexation application for the property and deemed the
+application complete.
+12.66.040 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:8
+3. The provisions of an annexation agreement may be included in and made part of a
+subsequent land use decision, in which case the provisions of the land use decision
+supersede any conflicting provisions in the annexation agreement.
+4. An annexation agreement is not effective and binding on the parties until the annexation
+application is approved by the City Council under Section 12.80.010.
+(Ord. 6410 § 1, 2022)
+ 12.66.040NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:9
+12.66.100  Base Zone Standards.
+The base zone standards in the North Hillsboro Industrial Area Plan District include the following
+sections:
+12.66.110 Lot Dimensions
+12.66.120 Residential Density
+12.66.130 Setbacks
+12.66.140 Building Height
+12.66.150 Floor Area Ratio
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.110  Lot Dimensions.
+The standards of the applicable base zone or Section 12.50.110 shall apply in the North Hillsboro
+Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.120  Residential Density.
+The standards of Section 12.50.120 are not applicable in the North Hillsboro Industrial Area Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.130  Setbacks.
+Setbacks required by this section are not additive; they are coexistent (i.e., overlapping) with those
+required by other sections of the Development Code. The standards of Section 12.50.130 and
+applicable base zones apply except as modified below:
+A. District Edge Street Setbacks. Setbacks at property lines abutting District Edge Streets
+(designated on Figure 12.66.020-A) shall be a minimum of 35-foot in width. Landscaping within
+the District Edge Street Setback shall be in accordance with Subsection 12.66.220.C.
+B. Urban/Rural Edge Street Setbacks. Setbacks at property lines abutting Urban/Rural Edge
+Streets (designated on Figure 12.66.020-A) shall be a minimum of 50-foot in width. Landscap-
+ing within the Urban/Rural Edge Street Setback shall be in accordance with Subsection
+12.66.220.D.
+C. Waible Creek Greenspace Setback. Properties abutting the Waible Creek Greenspace, shown
+on Figure 12.66.020-A, shall have a setback of 50 feet from the outermost edge of the Clean
+Water Services Vegetated Corridor. Landscaping within the Waible Creek Green-space
+setback shall be in accordance with Subsection 12.66.220.E.
+1. An easement for recreational trail and public access shall be granted for the entirety of the
+required setback area. The easement may be shown on the final plat or recorded as a
+12.66.100 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:10
+separate easement document. In either case, the easement must be recorded prior to
+issuance of a certificate of occupancy. The land may be dedicated to the City instead of
+granting an easement.
+2. Within the Greenspace Setback, only passive recreation, stormwater management, and
+natural area enhancement uses shall be permitted. These uses include, but are not
+limited to:
+a. Public multi-use paths;
+b. Accessways;
+c. Pedestrian trails and walkways;
+d. Boardwalks;
+e. Picnic areas;
+f. Interpretive and educational displays;
+g. Publicly accessible overlooks, observation towers, and v iewpoints, including benches
+and outdoor furniture;
+h. Bridges and related appurtenances for pedestrians, bicycles and motor vehicles;
+and
+i. Stormwater facilities.
+3. Privately owned stormwater facilities located within the Greenspace Setback shall
+occupy a maximum of 25% of the total area of the Greenspace Setback on a single
+parcel. Regional stormwater facilities are exempt from this standard.
+4. The minimum Waible Creek Greenspace setback width may be waived or reduced by the
+Review Authority upon finding the setback is not necessary to implement key compo-
+nents or policies of the North Hillsboro Community Plan (HCP Section 30) related to
+greenspace corridors.
+D. Gateways. The following requirements shall apply to sites located adjacent to Gateways
+(designated on Figure 12.66.020-A). Landscaping within the Gateway setback shall be in
+accordance with Section 12.66.220.
+1. Area. Gateway Setbacks are required within 50 feet of a designated Gateway as
+measured along the property lines extending out from a property corner located in a
+Gateway. See Figure 12.66.130-B.
+2. Gateway Enhancements. Within the gateway, enhancements should emphasize the
+character of the district and the sense of the gateway as an important entry to the district.
+a. Development proposals shall provide the City with an access easement or other
+means to install and maintain streetscape and design elements such as seating,
+works of art or water features.
+ 12.66.130NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:11
+E. Exceptions to Minimum Setbacks. In addition to the setback exceptions permitted in Subsec-
+tion 12.50.130.H., the Review Authority may approve exceptions to a minimum setback
+standard under any of the following circumstances without a Variance or an Adjustment:
+1. Front Yard Setback Reductions. Minimum front yard setbacks may be reduced in
+accordance with Table 12.66.130-1 to allow buildings to be closer to the street provided
+all of the following standards are met:
+a. The street-facing façade abutting the reduced setback and the first 50 feet of any
+street-facing façade forming a corner with that façade provides windows in accor-
+dance with Section 12.66.830.
+b. The street-facing façade abutting the reduced setback and the first 50 feet of any
+street-facing façade forming a corner with that façade provides articulation in
+accordance with Section 12.66.840.
+c. No portion of a designated Gateway or Urban/Rural Edge Street Setback, as shown
+on Figure 12.66.020-A, shall be reduced by this subsection.
+ Figure 12.66.130-B:
+Required Gateways
+12.66.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:12
+Table 12.66.130-1:
+Reduced Minimum Front Setback
+ Standard Requirement Clarifications
+Minimum Front Setbacks
+• Buildings up to 45 feet high 15 feet
+• Buildings >45 feet in height 15 feet+ 1 additional foot for every 2 feet of
+structural height over 45 feet*
+*The additional setback applies only to those portions of a building over > 45 feet in height.
+Buildings step-backs may be used to comply with this standard. See Figure 12.66.130-A.
+
+ Figure 12.66.130-A:
+Building Step-Backs
+ 12.66.130NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:13
+2. Special Feature Setback Area Exchange. Minimum front yard setbacks on properties
+abutting the Waible Creek Greenspace and/or an Urban/Rural Edge Street, as shown on
+Figure 12.66.020-A, may be reduced in accordance with Table 12.66.130-1 to allow
+buildings to be closer to the street provided all of the following standards are met within
+the reduced setback:
+a. The street-facing façade abutting the reduced setback and the first 50 feet of any
+street-facing façade forming a corner with that façade provides windows in accor-
+dance with Section 12.66.830.
+b. The street-facing façade abutting the reduced setback and the first 50 feet of any
+street-facing façade forming a corner with that façade provide articulation in
+accordance with Section 12.66.840.
+c. The total lineal feet of setback reduction is equal to or less than the total lineal feet
+of Waible Creek Greenspace and/or Urban/Rural Edge Street Setback on the
+property.
+d. No portion of a designated Gateway or Urban/Rural Edge Street Setback, as shown
+on Figure 12.66.020-A, shall be reduced by this subsection.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.140  Building Height.
+The standards of Section 12.50.140 and the applicable base zones apply in the North Hillsboro
+Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.150  Floor Area Ratio.
+The standards of Section 12.50.150 and the applicable base zones apply in the North Hillsboro
+Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:14
+12.66.200  Site Design.
+Site design standards for the North Hillsboro Industrial Area Plan District include the following
+sections:
+12.66.210 Usable Open Space
+12.66.220 Landscaping
+12.66.230 Tree Preservation
+12.66.240 Exterior Lighting
+12.66.250 Fences, Free-Standing Walls, Hedges and Berms
+12.66.260 Sight Distance/Vision Clearance
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.210  Usable Open Space.
+The standards of Section 12.50.210 are not applicable in the North Hillsboro Industrial Area Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.220  Landscaping.
+In addition to the standards of Section 12.50.220, within the North Hillsboro Industrial Area Plan
+District the following standards apply.
+A. Purpose. Enhanced requirements are intended to establish an appropriate and attractive
+rural/urban edge and district edge, improve the Waible Creek Riparian Corridor, as well as to
+encourage the establishment and vitality of Oregon White Oaks and other native plantings.
+B. Landscape Materials. Landscaping shall be designed to feature plant materials that evoke the
+character of the area focusing on Oregon White Oaks and other native plantings. Landscaping
+should be adaptable to climatic, topographic, and hydrologic characteristics and urban con-
+straints. To maintain tree health, landscaping should be designed to avoid the need to water
+underneath mature oaks. Instead, landscaping near oaks should emphasize Pacific Northwest
+native grasses, wildflowers, perennial herbs, and shrubs. Native woodland or prairie plants can
+be used to create a natural landscape which does not require summer irrigation once
+established.
+1. Ground covers are required in all planting areas, unless the entire bed is planted with
+shrubs that branch out so that they cover the surface of the ground. Bark, mulch or other
+organic soil covers are not considered to meet this standard.
+2. Landscaping shall incorporate a mixture of vertical and horizontal elements such as
+ground cover, shrubs and trees and contain a mix of evergreen and deciduous plants.
+3. Irrigation methods shall minimize stormwater run-off through the use of drip irrigation, rain
+sensors, rotor irrigation heads and similar techniques.
+ 12.66.220NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:15
+4. Berms, if utilized, shall be fully landscaped with a mixture of trees, shrubs, and groundcover.
+5. The preservation of existing mature and specimen trees is encouraged.
+C. District Edge Street Landscape Design Standards. The required setback for a designated
+District Edge Street, shown on Figure 12.66.020-A, shall include the following:
+1. A mixture of vertical and horizontal landscaping elements to provide visual and acoustic
+buffering;
+2. Landscaping shall be designed to provide screening of views of parking areas, vehicle
+maneuvering areas, and utilitarian features described in Subsection 12.50.890.C., and
+building façades which do not meet the design standards in Section 12.66.840 from the
+abutting District Edge Street by the time of occupancy; and
+3. Landscape design within the setback shall comply with the minimum size and spacing
+standards for landscaping materials in Table 12.50.220-1 and shall be designed to
+incorporate 2 rows of trees as shown on Figure 12.66.220-A except where such
+landscaping would interfere with the preservation of mature or specimen trees (as
+defined in Section 12.66.230).
+
+ Figure 12.66.220-A:
+Landscaping Along Designated District Edge Streets
+12.66.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:16
+D. Urban/Rural Edge Street Landscape Design Standards. The required setback for a designated
+Urban/Rural Edge Street, shown on Figure 12.66.020-A, shall include the following:
+1. Landscaping shall be designed to provide screening of views of parking areas, vehicle
+maneuvering areas, utilitarian features described in Subsection 12.50.890.C., and build-
+ing façades which do not meet the design standards in Section 12.66.840 from the
+abutting Urban/Rural Edge Street by the time of occupancy; and a visual transition
+between the industrial uses and the rural areas located across the right-of-way.
+2. The required setback for a designated Urban/Rural Edge Street shall be landscaped as
+shown on Table 12.66.220-1 or the alternative treatment described in Subsection
+12.66.220.D.3.
+3. Properties having an Urban/Rural Edge Street setback with a negative slope exceeding
+a 10 feet differential between the property line and finish grade of the building may
+substitute a green roof covering a minimum of 75% of the building(s) for the landscape
+treatment described in Table 12.66.220-1. The Urban/Rural Edge Street Setback shall be
+landscaped in accordance with Subsection 12.66.220.B.
+  Table 12.66.220-1:
+Landscape Treatments at Urban/Rural Edges
+Slope Differential from Property
+Line to Finished Grade
+1  Landscape Treatment
+Positive slope when finish grade is
+up to 10 feet higher
+A mixture of native plants of graduated height
+and treatments and berms as shown in Figure
+12.66.220-B.
+Positive slope when finish grade is
+more than 10 feet higher
+A mixture of native plants of graduated height
+and treatments as shown in Figure 12.66.220-B.
+The use of berms is optional.
+Negative slope when finish grade
+is up to 10 feet lower
+A mixture of native plants of reducing height and
+treatments and berms as shown in Figure
+12.66.220-C.
+Negative slope when finish grade
+is more than 10 feet lower
+A mixture of native plants of reducing height and
+treatments as shown in Figure 12.66.220-C. The
+use of berms is optional. Alternatively, the
+developer may choose to utilize a green roof as
+described in Subsection 12.66.220.D.3.
+1 Measured from the property line to edge of 50-foot Urban/Rural Edge Street Setback.
+ 12.66.220NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:17
+E. Waible Creek Greenspace Setback Landscape Design Standards. The setback required by
+Subsection 12.66.130.B. for properties abutting the Waible Creek Greenspace shall be
+landscaped to the following standards:
+1. Within the outermost 6 feet of the setback, landscaping shall be designed to provide
+screening of views of parking areas, vehicle maneuvering areas, utilitarian features
+described in Subsection 12.50.890.C., and building façades which do not meet the
+design standards in Section 12.66.840 from the future Crescent Park Greenway trail by
+the time of occupancy;
+ Figure 12.66.220-B:
+Urban/Rural Edge Street Landscape Treatment for Positive Slopes
+ Figure 12.66.220-C:
+Urban/Rural Edge Street Landscape Treatment for Negative Slopes
+12.66.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:18
+2. Within the remainder of the setback, a 20% tree and 80% shrub mixture shall be planted
+at a density of 2,600 stems (bare root plantings) per acre, with trees planted 6-foot on
+center and shrubs 4-foot on center;
+3. At least 75% of plants and seeds within the setback shall be selected from and in-stalled
+according to the planting requirements from Appendix A of the June 2007 CWS Design
+and Construction Standards-R&O 17-05; and
+4. A seed mix that includes a mix of native herbaceous groundcover cover and grasses
+appropriate to the plant community and hydrologic zone of the site shall be seeded into
+the understory throughout the setback.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.230  Tree Preservation.
+The standards of Section 12.50.230 apply within the North Hillsboro Industrial Area Plan District
+except as modified below:
+A. Purpose. Increased requirements for on and off-site mitigation for the removal of mature and
+specimen trees supports the goals of improving the Waible Creek Tributary Riparian Corridor.
+Incentives for the voluntary preservation of existing specimen trees further the goal of
+preserving and enhancing the unique natural resources and character of the area while
+supporting economic development.
+B. Applicability. The applicability requirements of Subsection 12.50.230.B. apply in the North
+Hillsboro Industrial Area Plan District.
+C. Standards for Mature Tree Preservation. The standards of Subsection 12.50.230.C. apply in
+the North Hillsboro Industrial Area Plan District except as modified below.
+1. Where the Review Authority determines it is impracticable or unsafe to preserve mature
+trees, removal of the trees shall be mitigated at a ratio of 1 inch (dbh) planted for every 1
+inch (dbh) removed. Mitigation shall be provided by 1 or more of the following alterna-
+tives, as determined by the Review Authority:
+a. The trees shall be replaced in accordance with an approved landscape plan
+including new plantings of similar character at least 1 ½
+�
+in caliper, and no greater
+than 2 ½ � in caliper. The Review Authority may allow the replacement trees to be
+planted off-site in a public open space, natural resource mitigation area, or park,
+with preference given to planting within the Waible Creek Tributary Riparian
+Corridor;
+b. A fee in-lieu-of replacement may be paid by the developer to the City. The amount
+of the in-lieu-of payment shall be approximately equal to the market value of the
+replacement trees cited in Subsection a, above.
+2. A credit toward the mitigation requirements of Subsection 12.66.230.C.1. may be granted
+by the Review Authority for preservation of mature and specimen trees on site, at a ratio
+of ½ inch (dbh) preserved for every 1 inch (dbh) removed, provided measures are also
+ 12.66.230NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:19
+taken to preserve the health of the tree(s) to be preserved. If approved, the amount of
+credit for preservation of specimen trees shall not exceed 30% of the total mitigation
+requirement.
+3. The Review Authority may modify the requirements of this section in a manner which in
+its determination reasonably satisfies the Purpose Statement in subsection A above.
+Where a modification is approved, the Review Authority may impose the conditions in
+Subsection 12.50.230.C.3.
+D. Standards for Specimen Tree Preservation. In addition to the standards in subsection C above,
+the standards of Subsection 12.50.230.D. shall apply in the North Hillsboro Industrial Area Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6274 § 1, 2018)
+12.66.240  Exterior Lighting.
+The standards of Section 12.50.240 apply in the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.250  Fences, Free-Standing Walls, Hedges and Berms.
+The standards of Section 12.50.250 apply within the North Hillsboro Industrial Area Plan District
+except as modified below:
+A. Purpose. Fences, walls, hedges and berms within the North Hillsboro Industrial Area Plan
+District should balance the need for security with the need to provide a consistent, cohesive,
+visually pleasing environment.
+B. Applicability. The applicability requirements of Subsection 12.50.250.B. apply in the North
+Hillsboro Industrial Area Plan District. In addition, within the North Hillsboro Industrial Area Plan
+District the standards of Sections 12.50.250 and 12.66.250 also apply to development
+applications in which fences, hedges, free-standing walls or berms are proposed or required as
+a condition of approval.
+C. Fence Permit Required. The permit requirements of Subsection 12.50.250.C. apply in the
+North Hillsboro Industrial Area Plan District.
+D. Standards. The standards in Subsections 12.50.250.D. through F. apply in the North Hillsboro
+Industrial Area Plan District except as modified by subsections 1 through 4, below.
+1. Materials.
+a. Fences and free-standing walls shall be constructed of durable materials compat-
+ible with the primary materials used on the associated building façade. Materials
+may include, but are not limited to, the following:
+i. Masonry or brick;
+ii. Solid wood with masonry or brick columns;
+iii. Wrought iron with masonry or brick columns; or
+12.66.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:20
+iv. Alternative material(s) as approved by the Review Authority.
+b. Use of plastic, vinyl, barbed wire, razor wire, and electric fences, industrial materials
+and unprocessed waste materials are prohibited as fencing or free-standing wall
+materials.
+c. The use of chain link shall be fully screened so as to be not visible from public
+rights-of-way.
+d. All fences and free-standing walls shall be treated with anti-graffiti sealant.
+2. Berms. On all frontages, berms shall be fully landscaped with a mixture of trees, shrubs
+and ground cover.
+3. Design. Fence designs shall contribute to overall appearance of development within the
+plan district through the use of high quality materials and design.
+4. Retaining Walls. Retaining walls over 30 inches in height shall either be:
+a. Fully screened so as to be not visible from public rights-of-way or residential zones;
+or
+b. A maximum height of 15 feet in height with landscaping at the base which screens
+and softens the appearance of the retaining wall.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6274 § 1, 2018)
+12.66.260  Sight Distance/Vision Clearance.
+The standards of Section 12.50.260 apply in the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+ 12.66.260NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:21
+12.66.300  Vehicle Parking.
+Vehicle parking standards for the North Hillsboro Industrial Area Plan District include the following
+sections:
+12.66.310 Purpose, Applicability and Maintenance Responsibilities
+12.66.320 Number of Spaces Required
+12.66.330 Exempt Parking
+12.66.340 Credit for On-Street Parking
+12.66.350 Vehicle Parking and Loading: Location
+12.66.360 Vehicle Parking and Loading: Design and Improvements
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.310  Purpose, Applicability and Maintenance Responsibilities.
+The standards of Section 12.50.310 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.320  Number of Spaces Required.
+The standards of Section 12.50.320 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.330  Exempt Parking.
+The standards of Section 12.50.330 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.340  Credit for On-Street Parking.
+The standards of Section 12.50.340 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.350  Vehicle Parking and Loading: Location.
+In addition to the standards of Section 12.50.350, within the North Hillsboro Industrial Area Plan
+District the following standards shall apply.
+A. Electric Car Charging Stations. In parking lots with 100 vehicle spaces or more, at least 1
+electric car charging point within a rated capacity of at least 240 volts shall be provided per 100
+vehicle parking spaces or portion thereof.
+12.66.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:22
+B. Off-Street Parking and Loading. Parking, loading, and vehicular circulation shall be located and
+configured to minimize its impact from street frontages. Surface parking or loading shall not be
+located between a front building plane (or a line extended there from) and the street unless 1
+of the following 2 standards is met:
+1. The surface parking or loading is located within or behind the front plane of the building
+and is fully screened so as to be not visible from public rights-of-way by walls with
+decorative features such as grates, artwork, tiles, or similar elements. Windows are not
+required on walls surrounding service docks and loading areas; or
+2. Building setbacks are increased to 75 feet and a 20-foot landscape buffer is provided
+adjacent to the property line. Loading facilities, including maneuvering areas for loading
+docks and loading dock doors, shall be offset a minimum of 25 feet from driveway
+openings. The landscaped buffer shall be planted to the standards of Section 12.66.220,
+and shall include the following:
+a. For parking and circulation areas, this landscaped buffer shall be provided to meet
+1 or more of the following standards:
+i. Planted with large-scale, high canopy, horizontally-branching tree species
+selected and planted to be compatible with trees and above- and below-
+ground utilities in the planter strips or in the public right-of-way. Individual trees
+shall be spaced between parking spaces to reduce damage from automo-
+biles; and/or
+ii. Planted with an evergreen hedge between 30 inches and 42 inches in height,
+with landscaping between the hedge and the sidewalk consistent with Section
+12.66.220; and/or
+iii. A decorative wall or fence 30 to 42 inches in height parallel to and at or beyond
+the landscape buffer line, with landscaping between the wall or fence and the
+sidewalk consistent with Section 12.66.220.
+b. For loading facilities, or a combination of loading facilities and parking and circula-
+tion areas, this landscaped buffer shall be provided to meet 1 or more of the
+following standards:
+i. A wall constructed of materials compatible with the primary materials used on
+the associated building façade, pursuant to Subsection 12.66.250.D., and at a
+height which substantially provides consistent screening from the highest
+loading dock. The wall shall be located at or beyond the landscape buffer line,
+with landscaping between the wall or fence and the sidewalk consistent with
+Section 12.66.220; and/or
+ii. A solid vegetative screening reaching at least 8 feet tall within 2 years, with the
+plantings or wall combination extending the entire distance otherwise required
+for a solid wall as required in Paragraph 1, above. Landscaping shall be
+installed between the screen and the sidewalk consistent with Section 12.66.220.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+ 12.66.350NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:23
+12.66.360  Vehicle Parking and Loading: Design and Improvements.
+In addition to the standards of Section 12.50.360, within the North Hillsboro Industrial Area Plan
+District the following standards shall apply.
+A. Structured Parking.
+1. Structured parking within or adjacent to a primary structure shall be reflective of the
+overall design of the primary structure it serves through the use of visually similar
+architectural features and façade materials.
+2. Free-standing parking structures shall be designed to complement surrounding buildings
+in terms of scale, design elements, building materials, and orientation on the site.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:24
+12.66.400  Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity.
+Bicycle parking and bicycle and pedestrian circulation and connectivity in the North Hillsboro
+Industrial Area Plan District include the following sections:
+12.66.410 Bicycle Parking
+12.66.420 Pedestrian and Bicycle Circulation
+12.66.430 Connectivity and Design Standards at or Near Transit Stops
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.410  Bicycle Parking.
+The standards of Section 12.50.410 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.420  Pedestrian and Bicycle Circulation.
+The standards of Section 12.50.420 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.430  Connectivity and Design Standards at or Near Transit Stops.
+The standards of Section 12.50.430 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+ 12.66.430NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:25
+12.66.500  Access and Street Standards.
+Access and street standards in the North Hillsboro Industrial Area Plan District include the following
+sections:
+12.66.510 Purpose, Applicability and Exceptions
+12.66.520 Street Connectivity and Access
+12.66.530 Streets and Alleys: Design and Improvement
+12.66.540 Flag Lot Driveways: Design and Improvement
+12.66.550 Sidewalk Widths: Design and Location
+12.66.560 Street Trees and Landscaping
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.510  Purpose, Applicability and Exceptions.
+The standards of Section 12.50.510 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.520  Street Connectivity and Access.
+The standards of Section 12.50.520 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.530  Streets and Alleys: Design and Improvement.
+The standards of Section 12.50.530 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.540  Flag Lot Driveways: Design and Improvement.
+The standards of Section 12.50.540 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.550  Sidewalk Widths: Design and Location.
+The standards of Section 12.50.550 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.560  Street Trees and Landscaping.
+The standards of Section 12.50.560 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:26
+12.66.600  Public Utilities, Site Grading and Storm Water Facilities Site Integration.
+Utilities, site grading, and storm water management standards for the North Hillsboro Industrial Area
+Plan District include the following sections:
+12.66.610 Purpose, Applicability and Exceptions
+12.66.620 Public Utilities General Requirements
+12.66.630 Site Grading
+12.66.640 Storm Water Facilities Site Integration
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.610  Purpose, Applicability and Exceptions.
+The standards of Section 12.50.610 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.620  Public Utilities General Requirements.
+The standards of Section 12.50.620 apply within the North Hillsboro Industrial Area Plan District.
+Public Utility Easement and vault locations shall be subject to review and approval by the City
+Engineer and the utility provider.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.630  Site Grading.
+The standards of Section 12.50.630 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.640  Storm Water Facilities Site Integration.
+The standards of Section 12.50.640 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.700  Design Standards for Residential Development.
+Design standards for residential development are not applicable.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+ 12.66.700NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:27
+12.66.800  Design Standards for Non-Residential and Mixed-Use Development.
+Design standards for non-residential and Mixed-Use development include the following sections:
+12.66.810 Purpose and Applicability
+12.66.820 Main Entries
+12.66.830 Required Windows
+12.66.840 Articulation and Detailed Design
+12.66.845 Step-Back Requirements
+12.66.850 Improvements and Activities between Streets and Buildings
+12.66.860 Waste and Recycling Facilities
+12.66.870 Sidewalk Dining and Displays in Light Rail Zones
+12.66.875 Drive Through Facilities in Light Rail Zones
+12.66.880 Outdoor Storage
+12.66.890 Utilitarian Functions
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.810  Purpose and Applicability.
+A. Purpose. These standards are intended to ensure that industrial and commercial develop-
+ments are designed to be consistent with the policies in the North Hillsboro Industrial Area
+Community Plan.
+B. Applicability. Within the North Hillsboro Industrial Area Plan District, the design standards for
+non-residential and mixed-use development in Sections 12.50.800 through 12.50.890 shall
+apply except as modified or superseded by the standards in this section.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.820  Main Entries.
+The standards of Section 12.50.820 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.830  Required Windows.
+The standards of this section supersede Section 12.50.830 and shall apply within the North Hillsboro
+Industrial Area Plan District.
+A. Applicability. The standards of this section shall apply to any façade which is visible from the
+public right-of-way (i.e., not screened).
+12.66.800 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:28
+B. Standards for Development.
+1. All buildings shall have display windows or windows with views into the building interior.
+Such windows shall occupy the percentages of the exterior wall area of the façade that is
+visible from the public right-of-way as shown on Table 12.66.830-1. Windows in entry
+doors also meet this standard.
+2. Required windows shall not be darkly tinted or mirrored.
+  Table 12.66.830-1:
+Percentage of Windows Required on the Façade
+Façade Minimum Percentage of
+Windows
+Façade abutting a front yard setback reduced
+pursuant to Subsection 12.66.130.D.1.
+20% of the façade visible from the
+ROW
+Façade abutting a front yard setback exchanged
+pursuant to Subsection 12.66.130.D.2.
+15% of the façade visible from the
+ROW
+All other façades which are visible from the
+public right-of-way
+10% of the façade visible from the
+ROW
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6274 § 1, 2018)
+12.66.840  Articulation and Detailed Design.
+The standards of this section supersede Section 12.50.840 and shall apply within the North Hillsboro
+Industrial Area Plan District.
+A. Applicability. The standards of this section shall apply to any façade which is visible from the
+public right-of-way (i.e., not screened).
+B. Façade Variation. Façades shall incorporate design features in order to avoid a flat and
+monolithic appearance. Design features include offsets, balconies, projections, or other similar
+elements to preclude large expanses of uninterrupted building surfaces in areas which are
+visible to the public. Window or entry cutouts on an otherwise flat façade do not meet this
+standard.
+1. All buildings shall have design features occupying the exterior wall area of the façade that
+is visible from the public right-of-way as shown on Table 12.66.840-1.
+  Table 12.66.840-1:
+Number and Spacing of Design Features Required on the Façade
+Façade
+Minimum Number of
+Features from
+12.66.840.B.2.
+Maximum Spacing of
+Features
+Façade abutting a front yard
+setback reduced pursuant to
+Section 12.66.130.D.1.
+3 Every 60 feet
+ 12.66.840NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:29
+Table 12.66.840-1:
+Number and Spacing of Design Features Required on the Façade
+Façade
+Minimum Number of
+Features from
+12.66.840.B.2.
+Maximum Spacing of
+Features
+Façade abutting a front yard
+setback exchanged pursuant to
+Section 12.66.130.D.2.
+2 Every 60 feet
+All other façades which are visible
+from the public right-of-way 2 Every 60 feet
+2. Façades shall incorporate one or more of the following design features, at the number
+and spacing requirements listed in Table 12.66.840-1:
+a. Windows, as required by Section 12.66.830;
+b. Recesses (e.g., deck, patio, courtyard, entrance or similar feature) that have a
+minimum depth of 6 feet and run horizontally for a minimum length of 6 feet;
+c. Extensions (e.g., floor area, deck, patio, entrance, or similar feature) that project a
+minimum depth of 2 feet and run horizontally for a minimum length of 6 feet;
+d. Horizontal articulation establishing a defined base, middle and top (e.g., cornices,
+belt courses);
+e. Vertical articulation in the form of offsets or bays with a minimum depth of 1 foot;
+f. Offsets or breaks in roof elevation of 2 feet or greater in height;
+g. Natural wood, weathering steel trim/accents with a minimum dimension of 4 feet by
+6 feet; or
+h. Other similar façade variations approved by the Review Authority.
+3. In order to avoid façade variations that are out of scale with the building, on buildings that
+are less than 3,000 square feet, the minimum dimensions (e.g., depth and width) of the
+features described in subparagraphs a through g, above, may be reduced by up to 50%.
+12.66.840 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:30
+C. Exterior Building Materials. Building façades and roofs shall be constructed using high quality
+and long-lasting exterior building materials. A "primary material" is the predominant building
+material(s) that covers a majority of the building's exterior walls. An "accent material" is not the
+predominant building material, but accent materials should cover at least 20% of the building's
+exterior walls. Any one accent material shall not cover more than 40% of the building's façade.
+Permitted materials are as follows:
+1. Brick, natural stone (e.g., basalt), split- and ground-faced concrete masonry units, tilt-up
+concrete (concrete form liner w/color-integral or stain) or a combination of these materials
+may be used as primary or accent materials.
+2. Glass (other than smoked glass) may be used as primary or accent material.
+3. Wood may be used for soffits, overhangs, entrance canopies and as an accent material.
+4. Metal (e.g., weathering steel) may be used as a primary or accent material.
+5. Other similar materials that are approved by the Review Authority may be used as
+primary or accent materials.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6274 § 1, 2018)
+12.66.845  Step-Back Requirements.
+The standards of Section 12.50.845 do not apply within the North Hillsboro Industrial Area Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.850  Improvements and Activities between Streets and Buildings.
+The standards of Section 12.50.850 apply within the North Hillsboro Industrial Area Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+ Figure 12.66.840-A:
+Example of Façade Articulation and Materials
+ 12.66.850NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:31Supp. No. 1
+12.66.860  Waste and Recycling Facilities.
+The standards of Section 12.50.270 apply within the North Hillsboro Industrial Area Plan District
+except that the Review Authority may approve a reduction to the required minimum waste enclosure
+size of 50 square feet plus 6 square feet per 1,000 square feet GFA for industrial developments over
+50,000 square feet GFA in size with approval from the applicable waste and recycling service
+provider and City of Hillsboro Sustainability Program Manager.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6274 § 1, 2018)
+12.66.870  Sidewalk Dining and Displays in Light Rail Zones.
+The standards of Section 12.50.870 do not apply within the North Hillsboro Industrial Area Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.875  Drive Through Facilities in Light Rail Zones.
+The standards of Section 12.50.875 do not apply within the North Hillsboro Industrial Area Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6274 § 1, 2018)
+12.66.880  Outdoor Storage.
+The standards of this section supersede Section 12.50.880 and shall apply within the North Hillsboro
+Industrial Area Plan District.
+A. Outdoor Storage of Inventory or Equipment. Outdoor storage of inventory or equipment may be
+located between a front building plane (or a line extended there from) and the street if the
+following standards are met:
+1. The Director finds that there is no other practicable location for the storage on-site;
+2. The storage area is surrounded by dense screening material or landscaping, compliant
+with paragraph 3 below, which completely obscures visibility from the public right-of-way;
+and
+3. Any screening material is constructed of decorative or architectural materials consistent
+with the materials in the primary structure. Chain link fences, plain concrete walls or
+wooden fences are not considered to meet this standard; and
+4. The outdoor storage area is set back a minimum of 75 feet from the front property line.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6274 § 1, 2018; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.66.860 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.66:32Supp. No. 1
+12.66.890  Utilitarian Functions.
+The standards of Section 12.50.890 apply within the North Hillsboro Industrial Area Plan District
+except as modified below.
+A. Applicability. The standards of this section shall apply to any façade facing, adjacent to, and
+visible from a public street.
+B. Standards. Loading docks may be located on the street-side façade pursuant to Subsection
+12.66.350.B.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6274 § 1, 2018)
+ 12.66.890NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT
+CDC12.66:33

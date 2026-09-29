@@ -178,6 +178,21 @@ def rows() -> list[Routing]:
 #: 38.3060(A) -> 38.3030(A)(8) excepts community parks and playgrounds, a
 #: conditional use, from the GGR-2 minimum lot size; the zone permits one
 #: house per parcel and refuses ours.
+#:
+#: *Two from Hillsboro, 2026-09-29*, a draft from a cloud session, both in
+#: 12.61.400, the downtown plan district's standards for SCC-DT. The first,
+#: "The following standards apply in addition to, but supersede, the
+#: requirements of Section 12.23.300", points back at the zone the layer
+#: already reads: SCC-DT's values cite Tables 12.23.320-1 and 12.23.360-1.
+#: It stays open because Hillsboro numbers a zone's subsections as siblings
+#: of its heading (12.23.360 beside 12.23.300, not 12.23.300.60), and the
+#: ledger closes a row only on a citation inside the target. That is the
+#: ledger's containment rule meeting a numbering scheme, not a pointer
+#: nobody followed; it is in the Washington handoff rather than fixed here.
+#: The second, "The standards of Section 12.50.845 do not apply in the
+#: SCC-DT", hands nothing on: it switches the city's step-back standard off
+#: in the zone, and nothing in the layer cites 12.50.845 because there is
+#: nothing there to hold.
 OPEN = {
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",
@@ -209,6 +224,8 @@ OPEN = {
     "or/multnomah/gresham 4.1415 -> 10.1700",
     "or/multnomah/gresham 4.1508 -> 10.1700",
     "or/multnomah/portland 33.140.210 -> 33.140.215",
+    "or/washington/hillsboro 12.61.400 -> 12.23.300",
+    "or/washington/hillsboro 12.61.400 -> 12.50.845",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth

@@ -1,0 +1,3343 @@
+SUBCHAPTER 12.24
+ MIXED-USE AND URBAN CENTER ZONES
+12.24.010 Mixed-Use and Urban Center Zones.
+12.24.020 Locational Characteristics.
+12.24.030 Organization within This Subchapter.
+12.24.100 MU-N Mixed-Use—Neighborhood.
+12.24.110 Purpose.
+12.24.120 Housing Types.
+12.24.130 Uses.
+12.24.140 Accessory Uses Permitted by Right.
+12.24.150 Special Provisions Regarding Uses.
+12.24.160 Development Standards.
+12.24.170 Variances and Adjustments.
+12.24.180 Other Pertinent Regulations.
+12.24.200 MU-C Mixed-Use—Commercial.
+12.24.210 Purpose.
+12.24.220 Housing Types.
+12.24.230 Uses.
+12.24.240 Accessory Uses Permitted by Right.
+12.24.250 Special Provisions Regarding Uses.
+12.24.260 Development Standards.
+12.24.270 Variances and Adjustments.
+12.24.280 Other Pertinent Regulations.
+12.24.300 MU-VTC Mixed-Use—Village Town Center.
+12.24.310 Purpose.
+12.24.315 Implementation and Special Provisions.
+12.24.320 Housing Types.
+12.24.330 Uses.
+12.24.340 Accessory Uses Permitted by Right.
+12.24.350 Special Provisions Regarding Uses.
+12.24.360 Development Standards.
+12.24.370 Variances and Adjustments.
+12.24.380 Other Pertinent Regulations.
+12.24.400 SCR-V Station Community Residential—Village.
+12.24.410 Purpose.
+12.24.420 Housing Types.
+12.24.430 Uses.
+12.24.440 Accessory Uses Permitted by Right.
+12.24.450 Special Provisions Regarding Uses.
+12.24.460 Development Standards.
+12.24.470 Variances and Adjustments.
+12.24.480 Other Pertinent Regulations.
+12.24.500 UC-RM Urban Center—Residential Medium Density.
+CDC12.24:1
+12.24.510 Purpose.
+12.24.520 Housing Types.
+12.24.530 Uses.
+12.24.540 Accessory Uses Permitted by Right.
+12.24.550 Special Provisions Regarding Uses.
+12.24.560 Development Standards.
+12.24.570 Variances and Adjustments.
+12.24.580 Other Pertinent Regulations.
+12.24.600 UC-MU Urban Center—Mixed-Use Urban Density.
+12.24.610 Purpose.
+12.24.620 Housing Types.
+12.24.630 Uses.
+12.24.640 Accessory Uses Permitted by Right.
+12.24.650 Special Provisions Regarding Uses.
+12.24.660 Development Standards.
+12.24.670 Variances and Adjustments.
+12.24.680 Other Pertinent Regulations.
+12.24.700 UC-AC Urban Center—Activity Center.
+12.24.710 Purpose.
+12.24.720 Housing Types.
+12.24.730 Uses.
+12.24.740 Accessory Uses Permitted by Right.
+12.24.750 Special Provisions Regarding Uses: Commercial Parking.
+12.24.760 Development Standards.
+12.24.770 Variances and Adjustments.
+12.24.780 Other Pertinent Regulations.
+12.24.800 UC-NC Urban Center—Neighborhood Center.
+12.24.810 Purpose.
+12.24.820 Housing Types.
+12.24.830 Uses.
+12.24.840 Accessory Uses Permitted by Right.
+12.24.850 Special Provisions Regarding Uses.
+12.24.860 Development Standards.
+12.24.870 Variances and Adjustments.
+12.24.880 Other Pertinent Regulations.
+12.24.900 UC-OR Urban Center—Office/Research.
+12.24.910 Purpose.
+12.24.920 Housing Types.
+12.24.930 Uses.
+12.24.940 Accessory Uses and Structures Permitted by Right.
+12.24.950 Special Provisions Regarding Uses.
+12.24.960 Development Standards.
+12.24.970 Variances and Adjustments.
+12.24.980 Other Pertinent Regulations.
+12.24.1000 UC-RP Urban Center—Research Park.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:2
+12.24.1010 Purpose.
+12.24.1020 Housing Types.
+12.24.1030 Uses.
+12.24.1040 Accessory Uses and Structures Permitted by Right.
+12.24.1050 Special Provisions Regarding Uses.
+12.24.1060 Development Standards.
+12.24.1070 Variances and Adjustments.
+12.24.1080 Other Pertinent Regulations.
+ MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:3
+
+12.24.010  Mixed-Use and Urban Center Zones.
+There are 9 mixed-use and urban center zones in the City:
+A. MU-N Mixed-Use — Neighborhood;
+B. MU-C Mixed-Use — Commercial;
+C. MU-VTC Mixed-Use — Village Town Center;
+D. SCR-V Station Community Residential Village;
+E. UC-RM Urban Center — Residential Medium Density;
+F. UC-MU Urban Center — Mixed-Use Urban Density;
+G. UC-AC Urban Center — Activity Center;
+H. UC-NC Urban Center — Neighborhood Center;
+I. UC-OR Urban Center — Office/Research; and
+J. UC-RP Urban Center — Research Park.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 4, 2015)
+12.24.020  Locational Characteristics.
+On the Comprehensive Plan Land Use Map, Mixed-Use and Urban Center zones implement 7
+Comprehensive Plan Land Use Map designations as shown in Table 12.24.020-1.
+  Table 12.24.020-1:
+Mixed-Use and Urban Center Zones and Plan Designations Implemented
+Mixed-Use or Urban Center Zone Plan Designation(s) Implemented
+MU-N Mixed-Use — Neighborhood MU Mixed-Use
+MU-C Mixed-Use — Commercial MU Mixed-Use or C Commercial
+MU-VTC Mixed-Use — Village Town Center MU Mixed-Use
+SCR-V Station Community Residential — Village SCPA Station Community Planning Area
+UC-RM Urban Center — Residential Medium
+Density
+MU-UR Mixed-Use — Urban Residential
+UC-MU Urban Center — Mixed-Use Urban Density MU-UR Mixed-Use — Urban Residential
+MU-UE Mixed-Use — Urban Employment
+MU-I Mixed-Use — Institutional
+UC-AC Urban Center — Activity Center MU-UC Mixed-Use — Urban Commercial
+UC-NC Urban Center — Neighborhood Center MU Mixed-Use
+UC-OR Urban Center — Office/Research MU-UE Mixed-Use — Urban Employment
+or
+MU-I Mixed-Use — Institutional
+UC-RP Urban Center — Research Park MU-I Mixed-Use — Institutional
+(Ord. 6401 § 1, 2022; Ord. 6110 § 4, 2015)
+ 12.24.020MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:5
+12.24.030  Organization within This Subchapter.
+A. Common Elements. Each section in this subchapter contains the following subsections:
+1. Purpose;
+2. Permitted, Conditional, Limited, and Not Permitted Housing Types (organized in tables);
+3. Permitted, Conditional, Limited and Not Permitted Uses (organized in tables);
+4. Accessory Uses Permitted;
+5. Special Provisions Regarding Uses;
+6. Development Standards (organized in tables, illustrated in figures);
+7. Variances and Adjustments; and
+8. Other Pertinent Regulations.
+B. Purpose. Purpose statements for each zone subchapter are descriptive of the zone's charac-
+teristics and intent. This information is drawn from the Comprehensive Plan and/or the
+Community Development Code. Purpose statements are informational and not intended to be
+regulations.
+C. Housing Types. Residential uses in mixed-use zones occupy a variety of housing types.
+Permitted, conditionally permitted, limited and not permitted housing types within each zone
+are summarized in tables based on the definitions of housing types listed in Section 12.01.500.
+Neither the residential use categories nor the housing types distinguish between owner- or
+renter-occupation.
+D. Uses. Permitted, conditionally permitted, limited and not permitted uses within each zone are
+summarized in tables based on the standardized use categories contained in Subchapter
+12.10.
+1. Permitted Uses (P) are permitted by right, subject to all applicable provisions of this Code.
+2. Conditionally Permitted Uses (C) may be allowed, subject to approval on an individual
+basis as Conditional Uses. The Conditional Use application process and approval criteria
+are set forth in Subchapters 12.70 and 12.80. Certain Conditional Uses may have
+additional standards as set forth in Subchapter 12.40.
+3. Limited Uses (L) are permitted by right, but are subject to specified requirements,
+exceptions or restrictions which may vary with the nature, size, or location of the use.
+4. Not Permitted Uses (N) are not permitted in the zone under any circumstances.
+E. Accessory Uses Permitted by Right. Accessory uses vary based on the use categories
+contained in Subchapter 12.10. Accessory uses are permitted in each zone in conjunction with
+the primary use on the site and are subject to the same regulations as the primary use unless
+stated otherwise in the Code. Characteristics and standards for certain accessory uses are
+listed in Subchapter 12.40.
+12.24.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:6
+F. Special Provisions Regarding Uses. Where certain notations in the Clarifications column of the
+uses tables require further explanation, they are noted in this section.
+G. Development Standards.
+1. Development standards in each mixed-use or urban center zone are summarized in
+tables. Development standards are typically numerical standards: minimum and maxi-
+mum densities; minimum floor area ratios; minimum and maximum lot dimensions;
+structural setbacks; maximum building height and lot coverage. All development must
+comply with the development standards unless a discretionary Variance or Adjustment is
+approved as described in subsection H below.
+2. Except in the UC zones, density calculation formulas for minimum and maximum density
+are set forth in Section 12.50.120. Minimum and maximum residential densities apply to
+all residential use categories, except as specified for middle housing in the development
+standards for each zone.
+3. Except in the SCR-V and UC-RP zones, certain development standards are illustrated in
+a figure immediately following the development standards table.
+4. In the UC zones, development intensity standards (du/na and FAR) are applied as
+follows:
+a. Mixed-use development, either vertical or horizontal, is not required.
+b. Minimum FAR standards apply to parcels containing only non-residential develop-
+ment.
+c. Minimum residential density standards apply to parcels containing only residential
+development, and to vertical mixed-use development that includes non-residential
+uses on the ground floor and residential uses on upper floors. In vertical mixed-use
+projects, ground floor non-residential space is not required to meet minimum FAR
+requirements.
+d. If a single building or a single development parcel contains a mix of residential and
+non-residential development, and the provisions of paragraph c above do not apply,
+the minimum required density or FAR shall be based on the percentages of gross
+floor area (GFA) devoted to residential and non-residential uses. For example, if
+70% of the GFA on a single development parcel would be developed as residential
+and 30% as non-residential, the development would be required to meet at least
+70% of the minimum residential density and 30% of the minimum non-residential
+density of the applicable base zone standards.
+H. Variances and Adjustments. Applications to vary or adjust certain numeric standards in each
+zone may be requested and approved under Sections 12.80.152, 12.80.154, and 12.80.156.
+Certain numeric standards may also be subject to exceptions under specific circumstances, as
+described in the Standards section.
+ 12.24.030MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:7
+I. Other Pertinent Regulations. Additional standards such as parking, landscaping, vision clear-
+ance, and street improvements as listed in Subchapter 12.50 may also apply to development
+in mixed-use zones. These site design and development standards may also have exceptions
+as described in those sections. The Amberglen Plan District standards in Subchapter 12.60
+apply in UC zones.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6178 § 1, 2016)
+12.24.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:8
+12.24.100  MU-N Mixed-Use—Neighborhood.
+The MU-N zone includes the following sections:
+12.24.110 Purpose
+12.24.120 Housing Types
+12.24.130 Uses
+12.24.140 Accessory Uses Permitted by Right
+12.24.150 Special Provisions Regarding Uses
+12.24.160 Development Standards
+12.24.170 Variances and Adjustments
+12.24.180 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.110  Purpose.
+A. Create Opportunities for Mixed-Use Development. The MU-N zone implements the Mixed-Use
+Comprehensive Plan designation, providing opportunities to site compatible land uses close
+together in appropriate locations to shorten transportation trips and facilitate multi-modal
+development. Mixed-use developments may occur horizontally side-by-side or vertically in the
+same structure.
+B. Encourage Infill and Redevelopment. The MU-N zone facilitates infill development and allows
+redevelopment of commercial, residential and mixed-use development within existing neigh-
+borhoods.
+C. Enhance Economic Viability of Mixed-Use Projects. The MU-N zone allows flexibility in
+development standards to recognize the challenge of developing small scale Mixed-Use
+buildings a similar scale to surrounding residential development.
+D. Appropriately Scale Commercial Uses. By limiting the size of any one commercial retail Use,
+the standards of the MU-N zone keep the scale of commercial activity appropriate to the
+surrounding area.
+E. Improve Efficiency of Existing Street Systems. The Mixed-Use development pattern of the
+MU-N zone helps support the street system and existing street grid patterns through redevel-
+opment and land divisions as much as possible, or through use of new street plans as
+appropriate.
+(Ord. 6401 § 1, 2022)
+ 12.24.110MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:9
+12.24.120  Housing Types.
+Table 12.24.120-1 lists the Housing Types permitted in the MU-N zone. Housing Types are defined
+in Section 12.01.500.
+  Table 12.24.120-1:
+Housing Types Permitted in the MU-N Zone
+Housing Type Status Clarifications
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage cluster P
+Multiple dwelling structure P
+Manufactured dwelling L Subject to additional standards in Section
+12.40.190.
+Manufactured dwelling project N
+Live-work dwelling L Residential Uses Permitted above or
+behind commercial Uses.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)
+12.24.130  Uses.
+Table 12.24.130-1 lists Uses Permitted, Conditionally Permitted, Limited or Not Permitted in the
+MU-N zone.
+  Table 12.24.130-1:
+Use Categories in the MU-N Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.24.120-1
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B); all other Uses permitted with Conditional Use
+approval.
+Residential Service P/C
+Residential services up to 50 residents permitted. Residential
+services with 51 or more residents permitted with Conditional
+Use approval.
+Residential Business L Subject to limitations in Section 12.24.150.
+12.24.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:10
+Table 12.24.130-1:
+Use Categories in the MU-N Zone
+ Use Status Clarifications
+Commercial Use Categories
+Commercial Lodging N
+Commercial Recreation P/N Indoor Uses permitted; outdoor Uses Not Permitted.
+Commercial Parking N
+Durable Goods Sales N
+Eating and Drinking
+Establishments L Subject to limitations in Section 12.24.150.
+Educational Services L Subject to limitations in Section 12.24.150.
+Office L
+Subject to limitations in Section 12.24.150. Psilocybin facilities
+permitted, subject to additional standards in Section
+12.40.215.
+Retail Products and Services P/L/C/N
+Subject to limitations in Section 12.24.150.
+Minor assembly facilities permitted with Conditional Use
+approval; subject to additional standards in Section 12.40.210.
+Day care facilities permitted subject to limitations in Section
+12.24.150.
+Retail sales of marijuana not permitted.
+Self-Service Storage N
+Vehicle Service and Repair L/N Expansion of existing uses permitted with Conditional Use
+approval; new uses not permitted; see Section 12.30.900.
+Industrial Use Categories — Only Categories listed below permitted
+Manufacturing and Production L/N Cottage industry permitted. All other uses not permitted.
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions permitted with Conditional Use approval
+and subject to additional standards in Section 12.40.210. All
+other uses not permitted.
+Schools N
+ 12.24.130MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:11
+Table 12.24.130-1:
+Use Categories in the MU-N Zone
+ Use Status Clarifications
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities N
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.140  Accessory Uses Permitted by Right.
+A. Accessory Uses to Residential Primary Uses.
+1. Accessory Structures. Accessory structures as defined in Section 12.01.500 are permit-
+ted subject to additional requirements in Section 12.40.104.
+2. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section
+12.01.500, and are permitted when accessory to single detached dwellings or town-
+houses subject to additional requirements in Section 12.40.100.
+3. Certified or Registered Family Child Care Homes and Residential Homes. Certified or
+registered family child care homes as defined in ORS 329A are permitted; and certified
+residential homes as defined in ORS 443 are also permitted.
+4. Household Energy Production Facilities. Household energy production facilities are
+defined in Section 12.01.500, and are permitted subject to issuance of necessary and
+appropriate Federal, State and local permits.
+5. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject
+to issuance of necessary and appropriate Federal, State and local permits.
+6. Home Occupations. Home occupations are defined in Section 12.01.500, and are
+permitted subject to additional requirements in Section 12.40.170.
+7. Community Buildings. Community buildings used solely by residents of a specific
+neighborhood or development are permitted when approved as an amenity of that
+12.24.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:12
+neighborhood or development during the development process. When accessory to
+cottage clusters, community buildings are subject to additional requirements in Subsec-
+tion 12.50.715.E.9.
+B. Accessory Uses to Commercial Primary Uses. Accessory uses to commercial primary uses
+vary based on the use categories contained in Subchapter 12.10. Accessory uses are
+permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in the Code.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.24.150  Special Provisions Regarding Uses.
+A. Maximum First Floor Non-Residential Occupancy Area in Mixed-Use Buildings. The maximum
+area for a single non-residential occupancy on the first floor of a mixed-use building is 6,000
+square feet.
+B. Drive-Through Facilities. Drive-through facilities are not permitted.
+C. Limitations on Manufacturing and Production Uses. Cottage industry uses proposed in the
+MU-N zone shall be scaled and conducted to have no impacts on adjacent properties related
+to noise, dust, odor or light glare.
+D. Limitations on Animal Service Facilities. Accessory overnight pet boarding is permitted outright
+at veterinary clinics, but requires Conditional Use approval at other animal service facilities.
+Outdoor exercise areas are not permitted.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.160  Development Standards.
+Base zone development standards in the MU-N zone are listed in Table 12.24.160-1. Certain
+standards are illustrated in Figure 12.24.160-A.
+  Table 12.24.160-1:
+Development Standards in the MU-N Zone
+ Standard Requirement Clarifications
+Minimum Lot Size
+ • Single detached dwelling or
+duplex
+
+% Lots fronting local or
+Collector streets 4,000 sq. ft.
+
+%
+Lots fronting Arterial
+streets 1,800 sq. ft.
+ • Triplex 5,000 sq. ft.
+ • Quadplex or Cottage Cluster 7,000 sq. ft.
+ • Townhouse 1,500 sq. ft. (average)
+ • Multiple dwelling structure None
+ • Non-residential structure None
+ 12.24.160MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:13
+Table 12.24.160-1:
+Development Standards in the MU-N Zone
+ Standard Requirement Clarifications
+Maximum Lot Size None
+Minimum Residential Density
+ • Residential buildings on lots
+fronting local or Collector
+streets
+8 du/na
+On corner lots at the intersection of
+local/Collector streets and Arterial streets,
+minimum residential density is 8 du/na.
+ • Residential buildings on lots
+fronting Arterial streets 12 du/na
+ • Mixed-use buildings on or
+above the second floor None
+Maximum Residential Density
+ • Residential buildings on lots
+fronting local or Collector
+streets
+11 du/na
+On corner lots at the intersection of
+local/Collector streets and Arterial streets,
+maximum residential density is 11 du/na.
+
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+ • Residential buildings on lots
+fronting Arterial streets 24 du/na
+ • Mixed-use buildings on or
+above the second floor 24 du/na
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions*
+ • Width (at front building
+plane) 18 feet
+ • Depth None
+ • Lot frontage 18 feet
+Exception to lot frontage provided for child
+lots/parcels in middle housing land divisions
+under Section 12.80.099.
+Minimum Setbacks*
+Minimum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front Yard
+
+%
+to residential structure 10 feet
+
+%
+to garage door 19 feet
+
+%
+to commercial or
+mixed-use structure None
+12.24.160 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:14
+Table 12.24.160-1:
+Development Standards in the MU-N Zone
+ Standard Requirement Clarifications
+ • Side Yard
+5 feet; additional
+required if adjacent to
+single detached and
+middle housing zone
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.24.120-1.
+See also Section 12.50.140 regarding setbacks
+and building height transitions.
+ • Rear Yard
+
+%
+to residential structure
+with front yard garage
+access
+10 feet
+
+%
+to residential structure
+with rear yard garage
+access
+Either 5 feet or less, or
+19 feet or more
+5-foot or 19-foot setback measured to garage
+door.
+
+%
+Rear Yard (commercial or
+Mixed-Use) 5 feet See also Section 12.50.140 regarding setbacks
+and building height transitions.
+Maximum Setbacks*
+Maximum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front Yard 20 feet
+ • Side Yard None
+ • Rear Yard None
+Minimum Building Height* None
+Maximum Building Height* 45 feet
+See Section 12.50.140 regarding setbacks and
+building height transitions. Maximum height for
+cottage clusters is in Subsection 12.50.715.E.4.
+Maximum Lot Coverage (primary
+building(s) only) 12,000 gsf
+Does not apply to cottage cluster lots. Lot
+coverage for townhouses is calculated based
+on the overall townhouse project, rather than
+each townhouse lot.
+Minimum Usable Open Space
+(applicable to residential
+development only)
+100 sq. ft./du See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.24.160-A
+ 12.24.160MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:15
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.24.170  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the MU-N zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.24.180  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the MU-N zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+ Figure 12.24.160-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the MU-N Zone
+12.24.160 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:16
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+(Ord. 6401 § 1, 2022)
+ 12.24.180MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:17
+12.24.200  MU-C Mixed-Use—Commercial.
+The MU-C zone includes the following sections:
+12.24.210 Purpose
+12.24.220 Housing Types
+12.24.230 Uses
+12.24.240 Accessory Uses Permitted by Right
+12.24.250 Special Provisions Regarding Uses
+12.24.260 Development Standards
+12.24.270 Variances and Adjustments
+12.24.280 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.210  Purpose.
+A. Create Opportunities for More Intense Mixed-Use Development. The MU-C zone implements
+the Mixed-Use Comprehensive Plan designation, providing opportunities to develop a mixture
+of larger-scale commercial and residential uses on sites that are considerably larger than those
+located within MU-N zones. Mixed-use developments may occur vertically in the same
+structure, or horizontally side-by-side in the same development, but not necessarily on the
+same parcel.
+B. Balance Transportation Needs on Large Sites. The standards of the MU-C zone allow
+development of large-scale lots/parcels with a mix of commercial and residential uses,
+characterized by design amenities that accommodate pedestrians and motorists equally.
+C. Create New Efficient Street Grids. The standards of the MU-C zone facilitate completion of
+street grid patterns from existing and new streets, creating a transportation and development
+framework that accommodates pedestrian, bicycle, transit and automobile travel in the area.
+D. Enhance Economic Viability of Mixed-Use Projects. The MU-C zone allows flexibility in
+development standards to allow a complimentary mixture of uses within a development, but not
+necessarily on the same parcel.
+E. Create an Attractive Streetscape. The MU-C zone standards limit ground floor retail uses to
+reflect a sense of a village center, rather than a shopping center, creating an interesting and
+attractive pedestrian environment.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:18
+12.24.220  Housing Types.
+Table 12.24.220-1 lists housing types permitted in the MU-C zone. Housing types are defined in
+Section 12.01.500.
+  Table 12.24.220-1:
+Housing Types Permitted in the MU-C Zone
+Housing Type Status Clarifications
+Single detached dwelling N
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage cluster N
+Multiple dwelling structure P
+Manufactured dwelling N Subject to additional standards in Section
+12.40.190.
+Manufactured dwelling project N
+Live-work dwelling L Residential uses permitted above or
+behind commercial uses.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.230  Uses.
+Table 12.24.230-1 lists uses permitted, conditionally permitted, limited or not permitted in the MU-C
+zone.
+  Table 12.24.230-1:
+Use Categories in the MU-C Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.24.220-1
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B); all other uses permitted with Conditional Use
+approval.
+Residential Service P
+Residential Business L Subject to limitations in Section 12.24.250.
+Commercial Use Categories
+Commercial Lodging P/N Hotels permitted; all other uses in this category not permitted.
+Commercial Recreation P/N Indoor uses permitted; outdoor uses not permitted.
+ 12.24.230MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:19
+Table 12.24.230-1:
+Use Categories in the MU-C Zone
+ Use Status Clarifications
+Commercial Parking L Subject to minimum FAR and limitations in Section 12.24.250.
+Durable Goods Sales L Subject to minimum FAR and limitations in Section 12.24.250.
+Eating and Drinking
+Establishments L Subject to minimum FAR and limitations in Section 12.24.250.
+Educational Services L Subject to minimum FAR and limitations in Section 12.24.250.
+Office L
+Subject to minimum FAR and limitations in Section
+12.24.250. Psilocybin facilities permitted, subject to additional
+standards in Section 12.40.215.
+Retail Products and Services P/L/C/N
+Subject to minimum FAR and limitations in Section 12.24.250.
+Minor assembly facilities permitted with Conditional Use
+approval; subject to additional standards in Section 12.40.210.
+Day care facilities permitted subject to additional provisions in
+Section 12.24.150.
+Retail sales of marijuana not permitted.
+Self-Service Storage L Permitted in multiple story structures only, without vehicle
+storage.
+Vehicle Service and Repair L/N Expansion of existing uses permitted with Conditional Use
+approval; new uses not permitted; see Section 12.30.900.
+Industrial Use Categories — Only Categories listed below permitted
+Manufacturing and Production L/N Cottage industry permitted. All other uses not permitted.
+Institutional Use Categories
+Colleges and Universities L Subject to minimum FAR and limitations in Section 12.24.350
+and subject to additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+12.24.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:20
+Table 12.24.230-1:
+Use Categories in the MU-C Zone
+ Use Status Clarifications
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C With no equipment storage, permitted with Conditional Use
+approval; subject to additional standards in Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.240  Accessory Uses Permitted by Right.
+A. Accessory Uses to Residential Primary Uses.
+1. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are
+permitted subject to additional requirements in Section 12.40.104.
+2. Community Recreation Facilities and Community Buildings. Community recreation facil-
+ities and community buildings used solely by residents of a specific neighborhood or
+development are permitted when approved as an amenity of that neighborhood or
+development during the development process.
+3. Certified or Registered Family Child Care Home and Residential Homes. Certified or
+registered family child care homes as defined in ORS 329A are permitted, and certified or
+registered residential homes as defined in ORS 443 are also permitted.
+4. Household Energy Production Facilities. Household energy production facilities are
+defined in Section 12.01.500, and are permitted subject to issuance of necessary and
+appropriate Federal, State and local permits.
+5. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject
+to issuance of necessary and appropriate Federal, State and local permits.
+6. Home Occupations. Home occupations are defined in Section 12.01.500, and are
+permitted subject to additional requirements in Section 12.40.170.
+B. Accessory Uses to Commercial Primary Uses. Accessory uses to commercial primary uses
+vary based on the use categories contained in Subchapter 12.10. Accessory uses are
+permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in the Code.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+ 12.24.240MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:21
+12.24.250  Special Provisions Regarding Uses.
+A. Maximum Ground Floor Commercial Occupancy Area in Mixed-Use Buildings. The maximum
+first floor footprint for a single non-residential occupancy in a mixed-use building is 20,000
+square feet; larger buildings may be permitted with integrated structured parking under
+subsection B below.
+B. Larger Footprints Permitted with Structured Parking. Increases in the maximum building
+footprint up to 40,000 square feet may be permitted for buildings which integrate structured
+parking into the building envelope, provided that the structured parking complies with the
+design standards in Subsection 12.50.360.D.
+C. Increased Height Permitted with Structured Parking. Pursuant to Subsection 12.50.140.E.4,
+increases in building height may be permitted for buildings which integrate structured parking
+into the building envelope, provided the structured parking complies with the design standards
+in Subsection 12.50.360.D.
+D. Limitations on Drive-Through Facilities. Drive-through facilities are permitted in the MU-C
+subject to the following limitations:
+1. New drive-through facilities must be located with 100 feet of an arterial street.
+2. No more than 2 drive-through service lanes are permitted between the building façade
+and the street.
+3. Drive-through lanes between a building façade and the street must be buffered at the
+property line by evergreen shrubs at least 2 feet higher than finished grade when planted:
+shrub species must reach at least 3 feet height at maturity.
+E. Limitations on Animal Service Facilities. Accessory overnight pet boarding is permitted outright
+at veterinary clinics, but requires Conditional Use approval at other animal service facilities.
+Outdoor exercise areas are not permitted.
+F. Limitations on Manufacturing and Production Uses. Cottage industry uses proposed in the
+MU-C zone shall be scaled and conducted, and have no impacts on adjacent properties related
+to noise, dust, odor or light glare.
+G. Vertical Mixed-Use Required on Arterial and Collector Streets. At least 60% of street level
+street frontage on arterial and collector streets within each development shall be constructed
+for occupancy by active pedestrian uses, including, but not limited to, eating and drinking
+establishments, retail goods and services, community service uses, and public open space
+including transit shelters. The remaining percentage of the street frontage may be occupied by
+other uses, including residential uses, sidewalk entries or driveways. Private open space
+cannot be included in the minimum 60% street frontage requirement.
+H. Street Level Retail Construction Requirements. To accommodate the active pedestrian uses
+required in subsection G above, ground floor construction in at least 60% of street level street
+frontage on arterial and collector streets within each development must be constructed to the
+following standards:
+1. Minimum floor height of 13 feet and minimum leasable depth of 30 feet;
+12.24.250 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:22
+2. Maximum front setback of 10 feet unless abutting a public open space; and
+3. Provision of pedestrian access directly from the street or public open space at not more
+than 3 feet above or below sidewalk grade or at grade if abutting a public open space.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.260  Development Standards.
+Base zone development standards in the MU-C zone are listed in Table 12.24.260-1. Certain
+standards are illustrated in Figure 12.24.260-A.
+  Table 12.24.260-1:
+Development Standards in the MU-C Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density
+ • On or above the second
+floor in vertical Mixed-Use
+buildings
+12
+ • In free-standing buildings 23 du/na
+Maximum Residential Density
+ • On or above the second
+floor in vertical Mixed-Use
+buildings
+None
+ • In free-standing buildings None
+Minimum FAR
+(includes both residential and
+non-residential square footages)
+0.75
+Maximum FAR
+(includes both residential and
+non-residential square footage)
+None
+Increased FAR above the minimum .75
+permitted subject to PUD approval under
+Section 12.80.120.
+Minimum Lot Dimensions*
+ • Width (at front building
+plane) 18 feet
+ • Depth None
+ • Lot Frontage 18 feet
+ 12.24.260MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:23
+Table 12.24.260-1:
+Development Standards in the MU-C Zone
+ Standard Requirement Clarifications
+Minimum Setbacks*
+Setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front Yard
+
+%
+to residential structure 5 feet
+
+%
+to garage door 19 feet
+  % to commercial or
+mixed-use structure None
+ • Side Yard
+5 feet; more if required
+adjacent to single
+detached and middle
+housing zone
+Side yard setbacks on the common wall may
+be waived for townhouse partitions permitted
+under Table 12.24.220-1.
+See also Section 12.50.140 regarding setbacks
+and building height transitions.
+ • Rear Yard (residential)
+
+%
+to residential structure
+with front yard garage
+access
+10 feet
+
+%
+to residential structure
+with rear yard garage
+access
+Either 5 feet or less, or
+19 feet or more
+5-foot or 19-foot setback measured to garage
+door.
+ • Rear Yard (commercial or
+Mixed-Use)
+None unless required
+adjacent to single
+detached and middle
+housing zone
+See also Section 12.50.140 regarding setbacks
+and building height transitions.
+Maximum Setbacks*
+Maximum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front Yard 10 feet
+On sites with frontage on Collector or Local
+streets, maximum front setbacks apply on all
+street frontages including Private Street tracts.
+On sites with frontage only on an Arterial street,
+maximum front setbacks apply on the Arterial
+street frontage.
+ • Side Yard/Rear Yard None
+Minimum Building Height* 45 feet See Subsection 12.50.140.E.4. regarding
+increased building height for buildings with
+structured parking integrated into the building
+envelope.
+See Subsection 12.50.140.C. regarding
+building height transitions. Maximum Building Height* 70 feet
+12.24.260 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:24
+Table 12.24.260-1:
+Development Standards in the MU-C Zone
+ Standard Requirement Clarifications
+Maximum Lot Coverage (primary
+buildings only)
+ • Without structured parking 30,000 gsf
+ • With structured parking 40,000 gsf Structured parking subject to development
+standards in Section 12.50.300.
+Minimum Usable Open Space
+(applicable to residential
+development only)
+100 sq. ft./du See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.24.260-A
+
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+ Figure 12.24.260-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the MU-C Zone
+ 12.24.260MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:25
+12.24.270  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the MU-C zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156;
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.24.280  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the MU-C zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+(Ord. 6401 § 1, 2022)
+12.24.270 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:26
+12.24.300  MU-VTC Mixed-Use—Village Town Center.
+The MU-VTC zone includes the following sections:
+12.24.310 Purpose
+12.24.315 Implementation and Special Provisions
+12.24.320 Housing Types
+12.24.330 Uses
+12.24.340 Accessory Uses Permitted by Right
+12.24.350 Special Provisions Regarding Uses
+12.24.360 Development Standards
+12.24.370 Variances and Adjustments
+12.24.380 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022; Ord. 6110 § 5, 2015)
+12.24.310  Purpose.
+A. Create Complete New Neighborhoods. The MU-VTC zone provides opportunities to create
+mixed-use centers and neighborhoods containing a variety of housing types, and commercial,
+civic and employment opportunities that are designed for both pedestrian-sensitivity and
+auto-accommodation. To create a complete neighborhood, the zone may be applied within
+planned communities or to properties zoned MU-VTC that are adjacent to an existing MU-VTC
+neighborhood.
+B. Create a Pedestrian-Friendly Environment. The MU-VTC zone encourages design of a
+pedestrian scaled main street character and inclusion of "third places" to encourage a sense of
+community among residents, customers, and employees. This zone also encourages devel-
+opment and infrastructure amenities indicative of a pedestrian-sensitive street and alley
+system along with an associated greenspace system which integrates natural resource
+features and open space into the urban design.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 5, 2015)
+12.24.315  Implementation and Special Provisions.
+A. Implementation. The MU-VTC zone implements the MU Comprehensive Plan designation.
+B. Relationship to South Hillsboro Plan District (12.65).
+1. The MU-VTC zone may be applied to all areas within the South Hillsboro Plan District
+designated Mixed-Use on the Comprehensive Plan map.
+2. The South Hillsboro Plan District includes design and development standards that are
+unique to South Hillsboro. The South Hillsboro Plan District establishes limitations on
+some housing types and uses which modify or supersede this base zone for the
+designated South Hillsboro Town Center and Village Center Core Areas.
+ 12.24.315MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:27
+3. Within the South Hillsboro Plan District the boundaries of the Town Center Core Area and
+Village Center Core Area and Active Use Streets shall be established in accordance with
+12.65.030.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 5, 2015)
+12.24.320  Housing Types.
+Table 12.24.320-1 lists housing types permitted in the MU-VTC zone. Housing types are defined in
+Section 12.01.500.
+  Table 12.24.320-1:
+Housing Types Permitted in the MU-VTC Zone
+ Housing Type Status Clarifications
+Single detached dwelling L
+Within the South Hillsboro Plan District, type
+only permitted outside Village and Town Center
+Core Areas established pursuant to Section
+12.65.030.
+Duplex L
+Within the South Hillsboro Plan District, type
+only permitted outside Village and Town Center
+Core Areas established pursuant to Section
+12.65.030.
+Triplex P
+Quadplex P
+Townhouse P/L
+Within the South Hillsboro Plan District:
+two-dwelling townhouses only permitted outside
+Village and Town Center Core Areas
+established pursuant to Section 12.65.030; 3
+dwelling (or more) townhouses permitted
+throughout MU-VTC zone.
+Cottage cluster L
+Within the South Hillsboro Plan District, type
+only permitted outside Village and Town Center
+Core Areas established pursuant to Section
+12.65.030.
+Multiple-dwelling structure P
+Manufactured dwelling L
+Within the South Hillsboro Plan District, type
+only permitted outside Village and Town Center
+Core Areas established pursuant to Section
+12.65.030 and subject to Special Use
+Standards in Section 12.40.190.
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 5, 2015)
+12.24.315 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:28
+12.24.330  Uses.
+Table 12.24.330-1 lists uses permitted, conditionally permitted, limited, or not permitted in the
+MU-VTC zone.
+  Table 12.24.330-1:
+Use Categories in the MU-VTC Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.24.320-1.
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B); all other uses permitted with Conditional Use
+approval. Buildings subject to applicable residential design
+standards based on building type.
+Residential Services P/C
+Maximum size permitted 150 persons excluding caregivers;
+larger facilities permitted with Conditional Use approval.
+Buildings subject to applicable residential design standards
+based on building type.
+Residential Business L Residential uses permitted above or behind commercial uses.
+Commercial Use Categories
+Commercial Lodging P/L Bed and breakfast inns subject to additional standards in
+Section 12.40.130.
+Commercial Recreation L/C
+Indoor uses permitted subject to the size limitations in
+Subsection 12.24.350.C. Outdoor uses permitted subject to
+the size limitations in Subsection 12.24.350.C. and with
+Conditional Use approval.
+Commercial Parking L Subject to the use limitation in Subsection 12.24.350.A.
+Durable Goods Sales L
+No outdoor storage, display or sales. Uses subject to the use
+limitation in Subsection 12.24.350.A. and the size limitations in
+Subsection 12.24.350.C.
+Eating and Drinking
+Establishments L
+Subject to the use limitations in Subsection 12.24.350.B. and
+size limitations in Subsection 12.24.350.C. Drive-through
+facilities are subject to Subsection 12.24.350.D.
+Educational Services L Subject to the size limitations in Subsection 12.24.350.C.
+Office L
+Subject to the size limitations in Subsection 12.24.350.C.
+Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+Retail Products and Services P/L/N
+Subject to the use limitations in Subsection 12.24.350.B. and
+size limitations in Subsection 12.24.350.C; drive-through
+facilities are subject to Subsection 12.24.350.D.
+Animal service facilities subject to additional standards in
+Section 12.40.110.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150.
+Minor assembly facilities subject to additional standards in
+Section 12.40.210.
+Retail sales of marijuana not permitted.
+ 12.24.330MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:29
+Table 12.24.330-1:
+Use Categories in the MU-VTC Zone
+ Use Status Clarifications
+Self-Service Storage L
+No direct exterior access to individual units within self-service
+storage facility. Uses subject to the use limitation in Subsection
+12.24.350.A. and the size limitations in Subsection
+12.24.350.C.
+Vehicle Service and Repair L
+No outdoor storage, display or sales. Uses subject to the use
+limitation in Subsection 12.24.350.A. and the size limitations in
+Subsection 12.24.350.C.
+Automobile service stations where permitted subject to
+additional standards in Section 12.40.120.
+Industrial Use Categories — Only Uses Listed Below Permitted
+Manufacturing and Production C/N Cottage industry permitted with Conditional Use approval. All
+other uses not permitted.
+Institutional Use Categories
+Colleges and Universities C
+Permitted with Conditional Use approval, subject to the size
+limitation of Subsection 12.24.350.C. and subject to additional
+standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval, subject to the size limitation of
+Subsection 12.24.350.C.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities N/C
+Outdoor uses such as stadiums and amphitheaters not
+permitted. All other uses permitted subject additional standards
+in Section 12.40.210 and subject to the use limitations in
+Subsection 12.24.350.A. and the size limitation in Subsection
+12.24.350.C.
+Schools C
+Permitted with Conditional Use approval, subject to additional
+standards in Section 12.40.210 and subject to the size
+limitation in Subsection 12.24.350.C.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities C/N
+Transit facilities and park-and-ride facilities permitted with
+Conditional Use approval. Storage and maintenance yards not
+permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+12.24.330 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:30
+Table 12.24.330-1:
+Use Categories in the MU-VTC Zone
+ Use Status Clarifications
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015; Ord. 6110 § 5, 2015)
+12.24.340  Accessory Uses Permitted by Right.
+A. Accessory Uses to Residential Primary Uses.
+1. Accessory Structures. Accessory structures as defined in Section 12.01.500 are permit-
+ted subject to additional requirements in Section 12.40.104.
+2. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section
+12.01.500, and are permitted when accessory to single detached dwellings or town-
+houses subject to additional requirements in Section 12.40.100.
+3. Community Recreation Facilities and Community Buildings. Community recreation facil-
+ities and community buildings intended for the sole use by residents of a specific
+neighborhood or development are permitted when approved as an amenity of that
+neighborhood or development during the development process. When accessory to
+cottage clusters, community buildings are subject to additional requirements in Subsec-
+tion 12.50.715.E.9.
+4. Certified or Registered Family Child Care Home and Residential Homes. Certified or
+registered family child care home as defined in ORS 329A are permitted, and residential
+homes as defined in ORS 443 are also permitted.
+5. Household Energy Production Facilities. Household energy production facilities are
+defined in Section 12.01.500, and are permitted subject to issuance of necessary and
+appropriate Federal, State and local permits.
+6. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject
+to issuance of necessary and appropriate Federal, State and local permits.
+7. Home Occupations. Home occupations are defined in Section 12.01.500, and are
+permitted subject to additional requirements in Section 12.40.170.
+B. Accessory Uses to Non-Residential Primary Uses. Accessory uses to non-residential primary
+uses vary based on the use categories contained in Subchapter 12.10. Accessory uses are
+permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in the Code.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1, 2015; Ord. 6110 § 5, 2015)
+ 12.24.340MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:31
+12.24.350  Special Provisions Regarding Uses.
+A. Use Limitations within the South Hillsboro Plan District Village Center and Town Center Core
+Areas. Uses subject to this limitation are not permitted within the Village Center and Town
+Center Core Areas established pursuant to 12.65.030. They are only permitted in those
+MU-VTC zoned areas outside the Village Center and Town Center Core Areas.
+B. Use Limitations outside the South Hillsboro Plan District Village Center and Town Center Core
+Areas. Uses subject to this limitation are not permitted outside the Village Center and Town
+Center Core Areas established pursuant to 12.65.030 unless the Review Authority finds as part
+of a PUD approval that the proposed use will not detract from the role of the Core Areas as the
+primary commercial and civic centers of the plan district.
+C. Non-Residential Occupancy: Footprint Size Limitations in the South Hillsboro Plan District. For
+uses identified in Table 12.24.330-1 as subject to this section, non-residential occupancy is
+limited as follows:
+1. Except as provided for in paragraphs C.2 and 3, below, the total ground floor occupancy
+of each tenant shall not exceed the following:
+a. 20,000 square feet within Town Center or Village Center established pursuant to
+12.65.030.
+2. Larger "per tenant" ground floor occupancies may be permitted where structured parking
+is integrated into the building envelope, provided:
+a. The structured parking complies with the design standards in Subsection 12.50.360.D.
+and Section 12.65.800.
+b. The total ground floor occupancy of each tenant does not exceed 30,000 square
+feet within the Town Center Core or Village Center Core Areas established pursuant
+to 12.65.030 and 60,000 square feet within the remainder of the MU-VTC zone.
+3. Three uses with a total ground floor occupancy up to 60,000 square feet each are
+permitted within the Town Center Core Area established pursuant to Section 12.65.030.
+D. Drive-Through Facilities Within the South Hillsboro Plan District.
+1. Drive-through facilities (including, but not limited to, service windows, bays and lanes)
+shall be located behind buildings and shall not be visible from the street; and
+2. Access to a drive-through facility shall be limited to one driveway crossing and shall not
+be from an active use street established pursuant to Section 12.65.030.
+E. Interim FAR Adjustment. Adjustments of up to 20% FAR may be granted in the Town Center
+Core Area through the PUD. This adjustment request may be done within the first 5 years
+starting from the date of the first preliminary PUD approval which establishes the Town Center
+Core Area boundaries, or until 20% of the Core area has been developed, whichever comes
+12.24.350 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:32
+first. Applications requesting reductions under this provision shall include a conceptual rede-
+velopment plan that demonstrates how 90% of the base FAR standard, of the affected portions
+of the site, may be met with future (re)development of those portions of the site.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 5, 2015)
+12.24.360  Development Standards.
+Development standards in the MU-VTC zone are listed in Table 12.24.360-1. Due to the flexibility of
+the MU-VTC zone, no development standards figure is provided.
+  Table 12.24.360-1:
+Development Standards in the MU-VTC Zone
+ Standard Requirement Clarifications
+Minimum Lot Size
+ • Single detached dwelling or
+duplex 2,000 sq. ft.
+ • Triplex 5,000 sq. ft.
+ • Quadplex or Cottage Cluster 7,000 sq. ft.
+ • Townhouse 1,500 sq. ft. (average)
+ • Multiple dwelling structure None
+ • All other uses None
+Maximum Lot Size
+ • Single detached dwelling 3,500 sq. ft.
+ • Duplex 5,000 sq. ft.
+ • Townhouses, triplex,
+quadplex, cottage cluster, or
+multiple dwelling structure
+None
+ • Other uses None
+Minimum Density Within the South Hillsboro Plan District, see Table 12.24.360-2 below.
+
+Development of duplexes, triplexes, quadplexes, or cottage clusters is
+allowed to exceed the maximum dwelling units provided in Table
+12.24.360-2 for South Hillsboro. Maximum Density
+Minimum FAR
+ • Inside Center Cores 0.5
+ • Outside Center Cores 0.4
+ 12.24.360MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:33
+Table 12.24.360-1:
+Development Standards in the MU-VTC Zone
+ Standard Requirement Clarifications
+Minimum Lot Dimensions
+ • Width (at front building
+plane)
+For townhouse lots with front-yard garage
+access, minimum lot width is 20 feet.
+
+% Residential with front-yard
+garage access 22 feet
+
+%
+Residential with rear-yard
+garage access 18 feet
+
+%
+Commercial/ Industrial/
+Institutional 25 feet
+ • Depth
+
+%
+Residential None
+
+%
+Commercial/ Industrial/
+Institutional 25 feet
+Minimum Setbacks In the South Hillsboro Plan District, see also
+Section 12.65.130.
+ • Front Yard
+
+%
+Single detached dwelling,
+duplex, or cottage cluster
+   • to dwelling 10 feet
+   • to garage door 19 feet
+
+% Townhouses, triplex,
+quadplex, or multiple
+dwelling structure
+   • to dwelling None
+   • to garage door 19 feet
+
+%
+Commercial/ Industrial/
+Institutional None
+ • Side Yard
+
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.24.320-1.
+
+%
+Single detached dwelling,
+duplex, and cottage
+cluster
+5 feet
+
+%
+Townhouses, triplex,
+quadplex, or multiple
+dwelling structure
+None
+
+%
+Commercial/ Industrial/
+Institutional None
+12.24.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:34
+Table 12.24.360-1:
+Development Standards in the MU-VTC Zone
+ Standard Requirement Clarifications
+ • Rear Yard
+
+%
+Residential with front-yard
+garage access 10 feet
+
+% Residential with rear-yard
+garage access
+   • to dwelling 10 feet
+   • to garage door Either 5 feet or less or
+19 feet or more
+
+% Commercial/ Industrial/
+Institutional None
+Maximum Setbacks
+
+In the South Hillsboro Plan District, see also
+Section 12.65.130.
+ • Front Yard
+
+% Single detached dwelling
+or cottage cluster 19 feet
+
+%
+Duplexes 15 feet
+
+% Townhouses, triplex,
+quadplex, or multiple
+dwelling structure
+20 feet
+
+%
+Mixed-use/Commercial/
+Industrial/ Institutional 20 feet
+ • Side Yard (all uses) None
+ • Rear (including alley, all
+uses) None
+Minimum Building Height
+
+Minimum building height does not apply to
+cottage clusters.
+ • Inside Center Cores
+
+%
+Mixed-Use Average = 24 feet
+
+%
+Non-Residential Base = 22 ft
+
+%
+Residential 3 stories
+ • Outside Center Cores
+
+% Mixed-Use 2 stories
+  % Non-Residential 15 feet
+  % Residential 2 stories
+Maximum Building Height 6 stories Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+ 12.24.360MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:35
+Table 12.24.360-1:
+Development Standards in the MU-VTC Zone
+ Standard Requirement Clarifications
+Maximum Lot Coverage None
+Minimum Useable Open Space Variable See Section 12.65.210.
+Minimum Landscaping
+ • Single detached dwellings
+and middle housing None
+ • All other development Variable See Section 12.65.220.
+
+  Table 12.24.360-2:
+Residential Density in the MU-VTC Zone
+Within South Hillsboro Plan District
+Location
+ Minimum
+Dwelling Units
+ Maximum
+Dwelling Units
+All mixed-use designated land north of SE
+McInnis Street 1350 1650
+All mixed-use designated land south of SE
+McInnis Street 150 350
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6110 § 5, 2015)
+12.24.370  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the MU-VTC zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015; Ord. 6110 § 5, 2015)
+12.24.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:36
+12.24.380  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the MU-VTC zone as follows:
+• Sections 12.50.200 and 12.65.200 Site Design
+• Sections 12.50.300 and 12.65.300 Vehicle Parking
+• Sections 12.50.400 and 12.65.400 Bicycle Parking/Bicycle and Pedestrian Circulation
+and Connectivity
+• Sections 12.50.500, 12.65.500, and 12.65.940 Access and Street Standards
+• Sections 12.50.600 and 12.65.600 Public Utilities General Requirements, Site Grading,
+and Storm Water Management Site Integration
+• Section 12.65.700 Design Standards for Residential Development
+• Section 12.65.800 Design Standards for Non-Residential and Mixed-Use Development
+• Section 12.65.900 Transportation Studies, Public Facility Master Plan Compliance Re-
+quirements, Figures and Maps, and Street Figures
+(Ord. 6401 § 1, 2022; Ord. 6110 § 5, 2015)
+ 12.24.380MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:37
+12.24.400  SCR-V Station Community Residential—Village.
+The SCR-V zone includes the following sections:
+12.24.410 Purpose
+12.24.420 Housing Types
+12.24.430 Uses
+12.24.440 Accessory Uses Permitted by Right
+12.24.450 Special Provisions Regarding Uses
+12.24.460 Development Standards
+12.24.470 Variances and Adjustments
+12.24.480 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.410  Purpose.
+A. Create Complete New Neighborhoods. The SCR-V zone provides opportunities to create new
+Mixed-Use neighborhoods containing a variety of Housing Types, neighborhood commercial
+and employment opportunities, designed for both pedestrian-sensitivity and auto-accommo-
+dation. To create a complete neighborhood, the SCR-V zone is generally applied only to sites
+30 or more acres in size, or to properties adjacent to an existing SCR-V neighborhood.
+B. Create a Village Center Environment. The SCR-V zone encourages incorporation of design,
+development and infrastructure amenities indicative of a village center, including a pedestrian-
+sensitive street and alley system, Mixed-Use buildings, integration of natural resource features
+and open space into the village design, and inclusion of "third places" to encourage a sense of
+community among residents, customers, and employees.
+(Ord. 6401 § 1, 2022)
+12.24.420  Housing Types.
+Table 12.24.420-1 lists Housing Types permitted in the SCR-V zone. Housing Types are defined in
+Section 12.01.500.
+  Table 12.24.420-1:
+Housing Types Permitted in the SCR-V Zone
+Housing Type Status Clarifications
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure P
+12.24.400 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:38
+Table 12.24.420-1:
+Housing Types Permitted in the SCR-V Zone
+Housing Type Status Clarifications
+Manufactured dwelling L Subject to Special Use provisions in
+Section 12.40.190.
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)
+12.24.430  Uses.
+Table 12.24.430-1 lists Uses Permitted, Conditionally Permitted, Limited, or Not Permitted in the
+SCR-V zone.
+  Table 12.24.430-1:
+Use Categories in the SCR-V Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.24.420-1.
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B.); all other uses permitted with Conditional Use
+approval.
+Residential Services P/L
+Residential services not exceeding maximum density
+permitted. Residential services exceeding maximum density
+permitted with PUD approval.
+Residential Business L Residential uses permitted above or behind commercial uses.
+Commercial Use Categories
+Commercial Lodging P/L Bed and breakfast inns subject to additional standards in
+Section 12.40.130.
+Commercial Recreation P/N Indoor uses permitted; outdoor uses not permitted.
+Commercial Parking N
+Durable Goods Sales N
+Eating and Drinking
+Establishments L Subject to limitations in Section 12.24.450.
+Educational Services L Subject to limitations in Section 12.24.450.
+ 12.24.430MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:39
+Table 12.24.430-1:
+Use Categories in the SCR-V Zone
+ Use Status Clarifications
+Office L
+Subject to limitations in Section 12.24.450.
+Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+Retail Products and Services P/L/C/N
+Subject to limitations in Section 12.24.450.
+Indoor minor assembly facilities permitted with Conditional Use
+approval, and subject to additional standards in Section
+12.40.210.
+Animal service facilities subject to additional standards in
+Section 12.40.110.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150.
+Retail sales of marijuana not permitted.
+Self-Service Storage L Subject to limitations in Section 12.24.450.
+Vehicle Service and Repair N
+Industrial Use Categories — Only Categories listed below permitted
+Manufacturing and Production C/N Cottage industry permitted with Conditional Use approval. All
+other uses not permitted.
+Institutional Use Categories
+Colleges and Universities N
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities N/C
+Outdoor uses such as stadiums and amphitheaters not
+permitted. All other uses subject to additional standards in
+Section 12.40.210.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+12.24.430 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:40
+Table 12.24.430-1:
+Use Categories in the SCR-V Zone
+ Use Status Clarifications
+Surface Alternative
+Transportation Facilities C/N
+Transit facilities and park-and-ride facilities permitted with
+Conditional Use approval. Storage and maintenance yards Not
+Permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C With no equipment storage, subject to special use provisions
+in Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.440  Accessory Uses Permitted by Right.
+A. Accessory Uses to Residential Primary Uses.
+1. Accessory Structures. Accessory structures as defined in Section 12.01.500 are permit-
+ted subject to additional requirements in Section 12.40.104.
+2. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section
+12.01.500, and are permitted when accessory to single detached dwellings or town-
+houses subject to additional requirements in Section 12.40.100.
+3. Community Recreation Facilities and Community Buildings. Community recreation facil-
+ities and community buildings used solely by residents of a specific neighborhood or
+development are permitted when approved as an amenity of that neighborhood or
+development during the development process. When accessory to cottage clusters,
+community buildings are subject to additional requirements in Subsection 12.50.715.E.9.
+4. Certified or Registered Family Child Care Home and Residential Homes. Certified or
+registered family child care home as defined in ORS 329A are permitted, and residential
+homes as defined in ORS 443 are also permitted.
+5. Household Energy Production Facilities. Household energy production facilities are
+defined in Section 12.01.500, and are permitted subject to issuance of necessary and
+appropriate Federal, State and local permits.
+6. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject
+to issuance of necessary and appropriate Federal, State and local permits.
+7. Home Occupations. Home occupations are defined in Section 12.01.500, and are
+permitted subject to additional requirements in Section 12.40.170.
+B. Accessory Uses to Commercial Primary Uses. Accessory uses to commercial primary uses
+vary based on the use categories contained in Subchapter 12.10. Accessory uses are
+permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in the Code.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+ 12.24.440MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:41
+12.24.450  Special Provisions Regarding Uses.
+A. Commercial Building Occupancy and Footprint Size Limitations. Within the SCR-V zone,
+commercial buildings and occupancy uses are limited as follows:
+1. One-story, single occupant buildings are limited to a maximum 10,000 square feet
+footprint.
+2. Multiple-story, single- or multiple occupant buildings without residential uses are limited
+to a maximum 20,000 square feet footprint.
+3. Multiple-story, multiple occupant mixed-use buildings with at least 2 stories of residential
+use above the first floor are limited to a maximum 60,000 square feet footprint.
+B. Mixed-Use Buildings.
+1. Within 200 feet of an HCT station site, multi-dwelling residential developments with
+densities above 25 units per net acre shall include at least 10% of the ground floor (up to
+5,000 square feet) as retail products and services or office commercial uses. Live/work
+units do not meet this standard.
+2. In mixed-use buildings including residential uses, retail products and service and office
+uses are permitted on all floors. Commercial uses in a mixed-use building shall occupy at
+least 5,000 square feet of the ground floor.
+C. Self-Service Storage. Self-service storage facilities are permitted farther than 1,300 feet from
+an LRT station. Self-service storage facilities shall be at least 2 stories in height, and shall meet
+applicable FAR requirements. Exterior access to individual units is not permitted if visible from
+a public right-of-way. Vehicle storage is not permitted.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.460  Development Standards.
+Development standards in the SCR-V zone are listed in Table 12.24.460-1. Due to the flexibility of
+the SCR-V zone, no development standards figure is provided.
+  Table 12.24.460-1:
+Development Standards in the SCR-V Zone
+ Standard Requirement Clarifications
+Minimum Lot Size
+ • Single detached dwelling or
+duplex 2,000 sq. ft.
+ • Triplex, quadplex,
+townhouse, cottage cluster,
+or multiple dwelling structure
+None
+ • All other uses None
+12.24.450 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:42
+Table 12.24.460-1:
+Development Standards in the SCR-V Zone
+ Standard Requirement Clarifications
+Maximum Lot Size
+ • Single detached dwelling 3,500 sq. ft.
+ • Duplex 5,000 sq. ft.
+ • Townhouses, triplex,
+quadplex, or multiple
+dwelling structure
+None
+ • Other uses None
+Minimum Density
+ • < 1,300 feet from a LRT
+station 24 du/na
+ • 1,301—2,600 feet from a
+LRT station 15 du/na
+ • > 2,600 feet from a LRT
+station 7 du/na
+Maximum Density
+
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+ • < 1,300 feet from a LRT
+station None
+ • 1,301—2,600 feet from a
+LRT station 60 du/na
+ • > 2,600 feet from a LRT
+station 45 du/na
+Minimum FAR
+ • < 1,300 feet from an LRT
+station 0.5
+ •  > 1,300 feet from an LRT
+station 0.4
+Minimum Lot Dimensions
+ • Width (at front building
+plane)
+
+%
+Residential with front-yard
+garage access 20 feet
+
+%
+Residential with rear-yard
+garage access 15 feet
+
+% Commercial 25 feet
+ 12.24.460MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:43
+Table 12.24.460-1:
+Development Standards in the SCR-V Zone
+ Standard Requirement Clarifications
+ • Depth
+
+% Residential None
+
+%
+Commercial 25 feet
+Minimum Setbacks
+Minimum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front Yard
+
+% Residential None
+
+%
+Commercial None
+ • Side Yard
+
+%
+Residential 5 feet
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.24.420-1.
+
+% Commercial None
+ • Rear Yard
+
+% Residential with front-yard
+garage access 10 feet
+
+%
+Residential with rear-yard
+garage access
+Either 5 feet or less or
+19 feet or more
+5-foot or 19-foot rear setback measured to
+garage door.
+
+%
+Commercial None
+Maximum Setbacks
+Maximum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front Yard
+
+%
+Single detached dwelling,
+duplex, or cottage cluster 19 feet
+
+%
+Three-dwelling
+townhouses, triplex,
+quadplex, or multiple
+dwelling structure
+15 feet
+
+%
+Commercial 10 feet
+Additional 10 feet front setback for pedestrian
+amenities in commercial development may be
+requested and approved through Development
+Review.
+ • Side Yard (all uses) None
+ • Rear (including alley, all
+uses) None
+12.24.460 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:44
+Table 12.24.460-1:
+Development Standards in the SCR-V Zone
+ Standard Requirement Clarifications
+Minimum Building Height
+Commercial recreation facilities exempt from
+minimum height requirement within 800 feet of
+an LRT station.
+
+Minimum building height does not apply to
+cottage clusters.
+ • < 800 feet from a LRT
+Station 2 stories
+ • > 800 feet from a LRT
+Station None
+Maximum Building Height 3 stories Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+Maximum Lot Coverage None
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping
+ • Single detached dwellings
+and middle housing None
+ • All other development Variable As required by Section 12.50.220.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.24.470  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the SCR-V zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.24.480  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the SCR-V zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+ 12.24.480MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:45Supp. No. 1
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.700 Design Standards for Residential Development
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+(Ord. 6401 § 1, 2022)
+12.24.480 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:46Supp. No. 1
+12.24.500  UC-RM Urban Center—Residential Medium Density.
+The UC-RM zone includes the following sections:
+12.24.510 Purpose
+12.24.520 Housing Types
+12.24.530 Uses
+12.24.540 Accessory Uses Permitted by Right
+12.24.550 Special Provisions Regarding Uses
+12.24.560 Development Standards
+12.24.570 Variances and Adjustments
+12.24.580 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.510  Purpose.
+A. Create and Maintain Mixed Residential Opportunities. The UC-RM zone implements the
+MU-UR Mixed-Use-Urban Residential Plan designation, providing opportunities for a mix of
+townhouses, condominiums, apartments and other multi-dwelling development within the
+Amberglen area and other appropriate areas.
+B. Transition Residential Density. The UC-RM zone provides a transition between higher intensity
+developments desired at the core of a higher intensity area to the lower intensity residential
+development (both existing and planned) at the periphery of the area.
+C. Preserve Neighborhood Livability. The UC-RM zone encourages livability in existing and future
+mixed density residential neighborhoods by allowing residential development with compatible
+non-residential uses such as schools, assembly facilities and parks.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.520  Housing Types.
+Table 12.24.520-1 lists the housing types permitted in the UC-RM zone. Housing types are defined
+in Section 12.01.500.
+  Table 12.24.520-1:
+Housing Types Permitted in the UC-RM Zone
+Housing Type Status Clarifications
+Single detached dwelling L Detached dwellings permitted only on lots
+platted for that purpose prior to July 5,
+2012.
+Duplex P
+Triplex P
+Quadplex P
+ 12.24.520MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:47Supp. No. 1
+Table 12.24.520-1:
+Housing Types Permitted in the UC-RM Zone
+Housing Type Status Clarifications
+Townhouse P
+Cottage Cluster N
+Multiple-dwelling structure P
+Manufactured dwelling L Manufactured dwellings permitted only on
+single detached residential lots platted for
+that purpose prior to July 5, 2012. Subject
+to special use provisions in Section
+12.40.190.
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.530  Uses.
+Table 12.24.530-1 lists uses permitted, conditionally permitted, limited or not permitted in the UC-RM
+zone.
+  Table 12.24.530-1:
+Use Categories in the UC-RM Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.24.420-1.
+Group Living L/C
+Permitted for person with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B.); all other uses permitted with Conditional Use
+approval.
+Residential Service P/C Maximum size permitted 150 persons excluding caregivers;
+larger facilities permitted with Conditional Use approval.
+Residential Business C Permitted with Conditional Use approval.
+Commercial Use Categories — Only Categories Listed Below Permitted
+Office L
+Limited to structures occupied by office uses prior to July 5,
+2012. Psilocybin facilities permitted, subject to additional
+standards in Section 12.40.215.
+Day Care Facilities P Permitted per ORS 329A.440.
+Industrial Use Categories — Not Permitted
+12.24.520 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:48Supp. No. 1
+Table 12.24.530-1:
+Use Categories in the UC-RM Zone
+ Use Status Clarifications
+Institutional Use Categories — Only Categories Listed Below Permitted
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/N Transit facilities and park-and-ride facilities permitted. Storage
+and maintenance yards not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities L With no equipment storage; subject to additional standards in
+Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019)
+12.24.540  Accessory Uses Permitted by Right.
+A. Accessory Structures. Accessory structures as defined in Section 12.01.500 are permitted
+subject to additional requirements in Section 12.40.104.
+B. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500
+and are permitted when accessory to single detached dwellings or townhouses, subject to
+additional requirements in Section 12.40.100.
+C. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined by ORS 443 are also permitted.
+D. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits, and maintenance in good condition.
+E. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+ 12.24.540MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:49Supp. No. 1
+F. Horticultural Activities. Horticultural activities as defined in Section 12.01.500 are permitted,
+excluding commercial buildings or structures.
+G. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted in
+all housing types subject to additional requirements in Section 12.40.170.
+H. Community Recreation Facilities and Community Buildings. Community recreation facilities
+and community buildings used solely by residents of the specific neighborhood or development
+are permitted when approved as an amenity of that neighborhood or development during the
+development process.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1, 2015)
+12.24.550  Special Provisions Regarding Uses.
+There are no special provisions regarding uses in the UC-RM zone.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.560  Development Standards.
+Base zone development standards in the UC-RM zone are listed in Table 12.24.560-1. Certain
+standards are illustrated in Figure 12.24.560-A.
+  Table 12.24.560-1:
+Development Standards in the UC-RM Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density 24 du/na
+See Subsection 12.24.030.G.4.
+Maximum Residential Density 43 du/na
+Minimum FAR None
+See Subsection 12.24.030.G.4.
+Maximum FAR None
+Minimum Lot Dimensions*
+ • Width (at front building
+plane)
+
+%
+Detached 25 feet
+
+%
+Townhouse, duplex,
+triplex, quadplex, or
+multiple-dwelling structure
+18 feet
+ • Depth 50 feet
+ • Frontage
+
+% Detached 25 feet
+
+%
+Townhouse, duplex,
+triplex, quadplex, or
+multiple-dwelling structure
+18 feet
+12.24.540 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:50Supp. No. 1
+Table 12.24.560-1:
+Development Standards in the UC-RM Zone
+ Standard Requirement Clarifications
+Minimum Setbacks*
+Minimum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front
+
+%
+To residential structure None
+
+%
+To garage door None
+ • Side 5 feet
+Adjustments to side setbacks permitted for
+townhouse partitions allowed under Table
+12.24.420-1.
+ • Rear
+
+%
+To residential structure
+with front yard garage
+access
+10 feet
+
+% To residential structure
+with rear yard garage
+access
+Either 5 feet or less, or
+19 feet or more
+5-foot or 19-foot setback measured to garage
+door.
+Front Property Line Coverage
+75% of primary street
+frontage must be
+occupied by the first 2
+stories of the front
+façade.
+Front setback area not occupied by building
+must contain landscaping or usable open
+space; subject to plan district standards in
+Subchapter 12.64 as applicable. Standard does
+not apply on 185th or NE John Olsen Ave
+frontages.
+Maximum Setbacks*
+Maximum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front 15 feet
+ • Side and Rear None
+Minimum Building Height* 25 feet Subject to Amberglen Plan District standards in
+Section 12.64.800 as applicable. Maximum Building Height* 55 feet
+Maximum Lot Coverage None
+Minimum Usable Open Space Varies Subject to Amberglen Plan District standards in
+Section 12.64.210 as applicable.
+Minimum Landscaping Varies Subject to Amberglen Plan District standards in
+Section 12.64.220 as applicable.
+* Standards illustrated in Figure 12.24.560-A
+ 12.24.560MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:51Supp. No. 1
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6120 § 1,
+2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+ Figure 12.24.560-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the UC-RM Zone
+ Figure 12.24.560-B:
+Examples of UC-RM Development Types
+12.24.560 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:52Supp. No. 1
+12.24.570  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the UC-RM zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.24.580  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the UC-RM zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.700 Design Standards for Residential Development
+• Subchapter 12.64 Amberglen Plan District
+(Ord. 6401 § 1, 2022)
+ 12.24.580MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:53Supp. No. 1
+12.24.600  UC-MU Urban Center—Mixed-Use Urban Density.
+The UC-MU zone includes the following sections:
+12.24.610 Purpose
+12.24.620 Housing Types
+12.24.630 Uses
+12.24.640 Accessory Uses Permitted by Right
+12.24.650 Special Provisions Regarding Uses
+12.24.660 Development Standards
+12.24.670 Variances and Adjustments
+12.24.680 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.610  Purpose.
+A. Create and Maintain Unique High Density Residential Opportunities. The UC-MU zone
+implements either the MU-UR Mixed-Use — Urban Residential Plan designation, the MU-UE
+Mixed-Use — Urban Employment Plan designation, or the MU-I Mixed-Use — Urban Institu-
+tional Plan designation, providing opportunities for a range of medium to high density Housing
+Types (townhomes, apartments and condominiums) with an urban character, constructed at or
+near the street frontage and sidewalk.
+B. Allow Future Retail Development. The standards of the UC-MU zone preserve opportunities for
+the development of retail focus areas over time.
+C. Preserve Solar Access and Views. The standards of the UC-MU zone retain access to sunlight
+and views from individual buildings within the context of high intensity development.
+D. Allow Non-Residential Uses. The standards of the UC-MU zone accommodate complemen-
+tary office and retail uses with limits on size and location.
+E. Preserve Neighborhood Livability. The UC-MU zone encourages livability in existing and future
+high density residential neighborhoods by allowing residential development with compatible
+non-residential Uses such as schools, assembly facilities and parks.
+(Ord. 6401 § 1, 2022)
+12.24.600 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:54Supp. No. 1
+12.24.620  Housing Types.
+Table 12.24.620-1 lists the housing types permitted in the UC-MU zone. Housing types are defined
+in Section 12.01.500.
+  Table 12.24.620-1:
+Housing Types Permitted in the UC-MU Zone
+Housing Type Status Clarifications
+Single detached dwelling N
+Duplex N
+Triplex P
+Quadplex P
+Townhouse P/N Three dwelling (or more) townhouses
+permitted. Two-dwelling townhouses not
+permitted.
+Cottage cluster N
+Multiple dwelling structure P
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)
+12.24.630  Uses.
+Table 12.24.630-1 lists Uses Permitted, Conditionally Permitted, Limited or Not Permitted in the
+UC-MU zone.
+  Table 12.24.630-1:
+Use Categories in the UC-MU Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.24.620-1.
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B.); all other Uses permitted with Conditional Use
+approval.
+Residential Service P
+Residential Business P
+Commercial Use Categories
+Commercial Lodging P
+Commercial Recreation P/N Indoor uses permitted; outdoor uses not permitted.
+ 12.24.630MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:55Supp. No. 1
+Table 12.24.630-1:
+Use Categories in the UC-MU Zone
+ Use Status Clarifications
+Commercial Parking L/C Permitted with Conditional Use approval and subject to
+limitations in Section 12.24.650.
+Durable Goods Sales L/C Permitted with Conditional Use if no portion of the use is
+located < 800 feet from a LRT or HCT station.
+Eating and Drinking
+Establishments P
+Educational Services P
+Office L
+Subject to limitations in Section 12.24.650. Psilocybin facilities
+permitted, subject to additional standards in Section
+12.40.215.
+Retail Products and Services L/N
+Uses to be located only on the first or second floors.
+Animal service facilities subject to additional standards in
+Section 12.40.110.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150. Minor assembly facilities subject to
+additional standards in Section 12.40.210. Retail sales of
+marijuana not permitted.
+Self-Service Storage L
+No portion of the use shall be located < 800 feet of a LRT or
+HCT station.
+Individual unit entrances shall not be located on any façade
+facing a public street, public park, or designated open space.
+Vehicle Service and Repair N
+Industrial Use Categories — Only Categories listed below permitted
+Manufacturing and Production L/N Subject to limitations in Section 12.24.650. Marijuana
+production and processing facilities not permitted.
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L/P Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses are permitted.
+Detention Facilities N
+Hospitals C/L Permitted with Conditional Use approval and limited in size to
+100 or less inpatient beds.
+Major Assembly Facilities L Maximum facility size 50,000 sq. ft. GFA; subject to additional
+standards in Section 12.40.210.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+12.24.630 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:56Supp. No. 1
+Table 12.24.630-1:
+Use Categories in the UC-MU Zone
+ Use Status Clarifications
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities L
+With no equipment storage; subject to additional standards in
+Section 12.40.260.
+No portion of the use to be located < 800 feet from a LRT or
+HCT station.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015; Ord. No. 6506, § 1 (Exh. A), 9-2-2025)
+12.24.640  Accessory Uses Permitted by Right.
+A. Accessory Uses to Residential Primary Uses.
+1. Accessory Structures. Accessory structures as defined in Section 12.01.500 are permit-
+ted subject to additional requirements in Section 12.40.104.
+2. Certified or Registered Family Child Care Homes and Residential Homes. Certified or
+registered family child care homes as defined in ORS 329A are permitted; and certified or
+registered residential homes as defined in ORS 443 are also permitted.
+3. Household Energy Production Facilities. Household energy production facilities are
+defined in Section 12.01.500, and are permitted subject to issuance of necessary and
+appropriate Federal, State and local permits, and maintenance in good condition.
+4. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject
+to issuance of necessary and appropriate Federal, State and local permits.
+5. Horticultural Activities. Horticultural activities as defined in Section 12.01.500 are permit-
+ted, excluding commercial buildings or structures.
+6. Home Occupations. Home occupations are defined in Section 12.01.500, and are
+permitted in all housing types subject to additional requirements in Section 12.40.170.
+ 12.24.640MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:57Supp. No. 1
+B. Accessory Uses to Non-Residential Primary Uses. Accessory uses vary based on the use
+categories contained in Subchapter 12.10. Accessory uses are permitted in conjunction with
+the primary use on the site and subject to the same regulations as the primary use unless
+stated otherwise in this Code. In addition to the standards in Subchapter 12.50, non-residential
+accessory uses in the UC-MU zone are also subject to the Amberglen Plan District require-
+ments in Subchapter 12.64.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1, 2015)
+12.24.650  Special Provisions Regarding Uses.
+A. Commercial Parking Facilities.
+1. Commercial parking facilities shall be located in structures containing at least 1 level of
+parking spaces in a permanent structure constructed above or below grade level.
+2. Commercial parking facilities shall comply with all applicable provisions of Sections
+12.64.300 and 12.64.800.
+3. Commercial parking facilities within the Retail Focus Frontage area shown on Figure
+12.64.640-A shall comply with all applicable provisions of Sections 12.64.360 and
+12.64.850.
+B. Office. Structures containing office uses and located on land to be included in the Central Park,
+but not yet included in the park, may continue to be used for office uses until the lands
+designated for the Central Park are acquired or dedicated for that use.
+C. Manufacturing and Production.
+1. Manufacturing and production uses are limited to operations with an expected employ-
+ment level of at least one person per 500 square feet of gross floor area in the primary
+structure.
+2. Truck shipments to or from the site by trucks with a gross vehicle weight of 25,000 lbs. are
+limited to one per day on average.
+3. Outdoor storage of materials, supplies, inventory, equipment, or other items is not
+permitted.
+4. Truck loading facilities shall not be located on any façade of the building facing a public
+street, public park, or designated open space.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:58Supp. No. 1
+12.24.660  Development Standards.
+Base zone development standards in the UC-MU zone are listed in Table 12.24.660-1. Certain
+standards are illustrated in Figure 12.24.660-A.
+  Table 12.24.660-1:
+Development Standards in the UC-MU Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density 43 du/na
+See Subsection 12.24.030.G.4.
+Maximum Residential Density None
+Minimum FAR 1.00
+See Subsection 12.24.030.G.4.
+Maximum FAR None
+Minimum Lot Dimensions
+ • Width (at front building
+plane) None
+ • Depth 50 feet
+ • Lot frontage None
+Minimum Setbacks*
+Minimum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front None
+ • Side and Rear
+10 feet adjacent to an
+existing building;
+otherwise none.
+Front Property Line Coverage*
+
+Front setback area not occupied by building
+must contain landscaping or usable open
+space.
+
+Subject to Amberglen Plan District standards in
+Section 12.64.800 as applicable.
+ • Streets in Retail Focus
+Frontage areas and Park
+Streets
+>75% of primary street
+frontage occupied by
+first 3 stories of front
+façade.
+ • All other streets
+60% of primary street
+frontage occupied by
+first 3 stories of front
+façade.
+Maximum Setbacks*
+Maximum setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front 15 feet
+ • Side and Rear None
+ 12.24.660MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:59
+Table 12.24.660-1:
+Development Standards in the UC-MU Zone
+ Standard Requirement Clarifications
+Minimum Building Height*
+Subject to Amberglen Plan District standards in
+Section 12.64.800 as applicable.
+ • Base Height 35 feet
+ • Ground Story Height
+
+%
+Streets in Retail Focus
+Frontage areas 13 feet
+
+% All other Streets 10 feet
+Maximum Base Height* 65 feet Subject to Amberglen Plan District standards in
+Section 12.64.800 as applicable. Maximum Building Height None
+Maximum Lot Coverage*
+See Maximum Tower Lot Coverage in
+Amberglen Plan District standards Subsection
+12.64.830.C.
+ • First 90 feet None
+ • 105 feet and above 35%
+Minimum Usable Open Space Varies Subject to Amberglen Plan District standards in
+Section 12.64.210 as applicable.
+Minimum Landscaping Varies Subject to Amberglen Plan District standards in
+Section 12.64.220 as applicable.
+* Standards illustrated in Figure 12.24.660-A
+12.24.660 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:60
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6120 § 1, 2015)
+ Figure 12.24.660-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the UC-MU Zone
+ Figure 12.24.660-B:
+Examples of UC-MU Development Types
+ 12.24.660MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:61
+12.24.670  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the UC-MU zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.24.680  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the UC-MU zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+• Subchapter 12.64 Amberglen Plan District
+(Ord. 6401 § 1, 2022)
+12.24.670 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:62
+12.24.700  UC-AC Urban Center—Activity Center.
+The UC-AC zone includes the following sections:
+12.24.710 Purpose
+12.24.720 Housing Types
+12.24.730 Uses
+12.24.740 Accessory Uses Permitted by Right
+12.24.750 Special Provisions Regarding Uses: Commercial Parking
+12.24.760 Development Standards
+12.24.770 Variances and Adjustments
+12.24.780 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.710  Purpose.
+A. Create Opportunities for Mixed-Use Development. The UC-AC zone implements the MU-UC
+Mixed-Use - Urban Commercial Plan designation, providing opportunities to establish a vibrant
+mix of retail, restaurants, civic, cultural, entertainment, and recreational uses complemented
+by secondary office and residential uses.
+B. Create Active Street Frontages. The standards of the UC-AC zone work to create focused
+activity served by transit and active street frontages along the High Capacity Transit routes that
+provide visual and physical connections to other activity centers.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.720  Housing Types.
+Table 12.24.720-1 lists the housing types permitted in the UC-AC zone. Housing types are defined
+in Section 12.01.500.
+  Table 12.24.720-1:
+Housing Types Permitted in the UC-AC Zone
+ Housing Type Status Clarifications
+Single detached dwelling N
+Duplex N
+Triplex P/L Triplexes and quadplexes permitted; however,
+dwelling units are not permitted on the ground
+floor of any primary street frontage entirely or
+partly within a Retail Focus Frontage Area
+illustrated in Figure 12.64.640-A. Quadplex P/L
+Townhouse C/N
+Three dwelling (or more) townhouses permitted
+with Conditional Use approval. Two-dwelling
+townhouses not permitted.
+Cottage Cluster N
+ 12.24.720MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:63
+Table 12.24.720-1:
+Housing Types Permitted in the UC-AC Zone
+ Housing Type Status Clarifications
+Multiple dwelling structure P/L
+Multiple dwelling structures permitted; however,
+dwelling units are not permitted on the ground
+floor of any primary street frontage entirely or
+partly within a Retail Focus Frontage Area
+illustrated in Figure 12.64.640-A.
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.730  Uses.
+Table 12.24.730-1 lists uses permitted, conditionally permitted, limited or not permitted in the UC-AC
+zone.
+  Table 12.24.730-1:
+Use Categories in the UC-AC Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.24.720-1.
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B.); all other uses permitted with Conditional Use
+approval.
+Residential Service P/C Maximum size for facilities permitted 150 persons; larger
+facilities permitted with Conditional Use approval.
+Residential Business L Residential use shall not be located on the ground floor of the
+primary street frontage.
+Commercial Use Categories
+Commercial Lodging P
+Commercial Recreation P/N Indoor uses permitted; outdoor uses not permitted.
+Commercial Parking C/L Permitted with Conditional Use approval; subject to limitations
+in Section 12.24.750.
+Durable Goods Sales L Maximum facility size 15,000 sq. ft. GFA.
+Eating and Drinking
+Establishments L Maximum facility size 15,000 sq. ft. GFA.
+Educational Services L Maximum facility size 25,000 sq. ft. GFA.
+Office P Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+12.24.720 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:64
+Table 12.24.730-1:
+Use Categories in the UC-AC Zone
+ Use Status Clarifications
+Retail Products and Services P/L/N
+Uses to be located only on the first or second floors.
+Animal service facilities subject to additional standards in
+Section 12.40.110. Minor assembly facilities subject to
+additional standards in Section 12.40.210.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150.
+Retail sales of marijuana not permitted.
+Self-Service Storage N
+Vehicle Service and Repair N
+Industrial Use Categories — Not Permitted
+Institutional Use Categories — Only Categories Listed Below Permitted
+Community Services L
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses are permitted
+with maximum facility size 25,000 sq. ft. GFA., except as
+permitted in Section 12.40.107.
+Major Assembly Facilities L Maximum facility size 25,000 sq. ft. GFA.
+All Uses subject to additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities L
+With no equipment storage; subject to additional standards in
+Section 12.40.260.
+No portion of the use to be located within 800 feet of an LRT or
+HCT station.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+ 12.24.730MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:65
+12.24.740  Accessory Uses Permitted by Right.
+A. Accessory Uses to Residential Primary Uses.
+1. Accessory Structures. Accessory structures as defined in Section 12.01.500 are permit-
+ted subject to additional requirements in Section 12.40.104.
+2. Certified or Registered Family Child Care Homes and Residential Homes. Certified or
+registered family child care homes as defined in ORS 329A are permitted; and certified or
+registered residential homes as defined in ORS 443 are also permitted.
+3. Household Energy Production Facilities. Household energy production facilities are
+defined in Section 12.01.500, and are permitted subject to issuance of necessary and
+appropriate Federal, State and local permits, and maintenance in good condition.
+4. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject
+to issuance of necessary and appropriate Federal, State and local permits.
+5. Horticultural Activities. Horticultural activities as defined in Section 12.01.500 are permit-
+ted, excluding commercial buildings or structures.
+6. Home Occupations. Home occupations are defined in Section 12.01.500, and are
+permitted in all housing types subject to additional requirements in Section 12.40.170.
+B. Accessory Uses to Non-Residential Primary Uses. Accessory uses vary based on the use
+categories contained in Subchapter 12.10. Accessory uses are permitted in conjunction with
+the primary use on the site and subject to the same regulations as the primary use unless
+stated otherwise in this Code. In addition to the standards in Subchapter 12.50, non-residential
+accessory uses in the UC-MU zone are also subject to the Amberglen Plan District require-
+ments in Subchapter 12.64.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.24.750  Special Provisions Regarding Uses: Commercial Parking.
+A. Commercial parking facilities shall be located in structures containing at least 1 level of parking
+spaces in a permanent structure constructed above or below grade level.
+B. Commercial parking facilities shall comply with all applicable provisions of Section 12.50.360
+and Subchapter 12.64.
+C. Commercial parking facilities within the Retail Focus Frontage area shown on Figure 12.64.640-A
+shall comply with all applicable provisions of Sections 12.64.360 and 12.64.850.
+(Ord. 6401 § 1, 2022)
+12.24.740 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:66
+12.24.760  Development Standards.
+Development standards in the UC-AC zone are listed in Table 12.24.760-1. Certain standards are
+illustrated in Figure 12.24.760-A.
+  Table 12.24.760-1:
+Development Standards in the UC-AC Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density 43 du/na
+See Subsection 12.24.030.G.4.
+Maximum Residential Density None
+Minimum FAR 1.00
+See Subsection 12.24.030.G.4.
+Maximum FAR None
+Minimum Lot Dimensions
+ • Width (at front building
+plane) None
+ • Depth None
+ • Lot frontage None
+Minimum Setbacks*
+All setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front Yard None
+ • Side and Rear Yards None
+Front Property Line Coverage*
+Front setback area not occupied by building
+must contain landscaping or usable open
+space; subject to Amberglen Plan District
+standards in Section 12.64.800 as applicable.
+ • Streets in Retail Focus
+Frontage areas
+65% of primary street
+frontage occupied by
+first 2 stories of front
+façade.
+ • All other streets
+60% of primary street
+frontage occupied by
+first 2 stories of front
+façade.
+Maximum Setbacks*
+Setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front 20 feet
+ • Side and Rear None
+ 12.24.760MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:67Supp. No. 1
+Table 12.24.760-1:
+Development Standards in the UC-AC Zone
+ Standard Requirement Clarifications
+Minimum Building Height* 35 feet Subject to Amberglen Plan District standards in
+Section 12.64.800 as applicable. Maximum Building Height None
+Maximum Lot Coverage None
+Minimum Useable Open Space Varies Subject to Amberglen Plan District standards in
+Section 12.64.210 as applicable.
+Minimum Landscaping Varies Subject to Amberglen Plan District standards in
+Section 12.64.220 as applicable.
+* Standards illustrated in Figure 12.24.760-A
+
+ Figure 12.24.760-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the UC-AC Zone
+12.24.760 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:68Supp. No. 1
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+ Figure 12.24.760-B:
+Examples of UC-AC Development Types
+ 12.24.760MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:68.1Supp. No. 1
+
+12.24.770  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the UC-AC zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.24.780  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the UC-AC zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Utilities and Site Grading
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+• Subchapter 12.64 Amberglen Plan District
+(Ord. 6401 § 1, 2022)
+ 12.24.780MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:69
+12.24.800  UC-NC Urban Center—Neighborhood Center.
+The UC-NC zone includes the following sections:
+12.24.810 Purpose
+12.24.820 Housing Types
+12.24.830 Uses
+12.24.840 Accessory Uses Permitted by Right
+12.24.850 Special Provisions Regarding Uses
+12.24.860 Development Standards
+12.24.870 Variances and Adjustments
+12.24.880 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.810  Purpose.
+A. Create Opportunities for Neighborhood Commercial Uses. The UC-NC zone implements the
+MU Mixed-Use Plan designation, providing opportunities to site a mixture of neighborhood-
+serving retail, residential, office, and research uses at moderate to high intensities to support
+primary uses within high-intensity areas.
+B. Encourage Multi-Modal Transportation. The UC-NC zone encourages non-automobile trans-
+portation modes, supporting and enhancing better use of the existing street grid pattern by
+pedestrians, bicyclists, and transit riders.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.820  Housing Types.
+Table 12.24.820-1 lists the housing types permitted in the UC-NC zone. Housing types are defined
+in Section 12.01.500.
+  Table 12.24.820-1:
+Housing Types Permitted in the UC-NC Zone
+ Housing Type Status Clarifications
+Single detached dwelling N
+Duplex N
+Triplex P/L Triplexes and quadplexes permitted, except on
+any primary street frontage entirely or partly
+within a Retail Focus Frontage Area illustrated
+in Figure 12.64.640-A. Quadplex P/L
+Townhouse P/L/N
+Three dwelling (or more) townhouses permitted,
+except on any primary street frontage entirely or
+partly within a Retail Focus Frontage Area
+illustrated in Figure 12.64.640-A.
+Two-dwelling townhouses not permitted.
+Cottage cluster N
+12.24.800 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:70
+Table 12.24.820-1:
+Housing Types Permitted in the UC-NC Zone
+ Housing Type Status Clarifications
+Multiple dwelling structure P/L
+Multiple dwelling structures permitted; however,
+dwelling units not permitted on the ground floor
+of any primary street frontage entirely or partly
+within a Retail Focus Frontage Area illustrated
+in Figure 12.64.640-A.
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.830  Uses.
+Table 12.24.830-1 lists uses permitted, conditionally permitted, limited or not permitted in the UC-NC
+zone.
+  Table 12.24.830-1:
+Use Categories in the UC-NC Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living L See Housing Types Table 12.24.830-1.
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B.); all other uses permitted with Conditional Use
+approval.
+Residential Service P/C Maximum size for facilities permitted 150 persons; larger
+facilities permitted with Conditional Use approval.
+Residential Business L Residential use shall not be located on the ground floor of the
+primary street frontage.
+Commercial Use Categories
+Commercial Lodging L Maximum facility size 100 commercial lodging units.
+Commercial Recreation P/N Indoor uses permitted; outdoor uses not permitted.
+Commercial Parking L/C Permitted with Conditional Use approval and subject to
+limitations in Section 12.24.850.
+Durable Goods Sales L Maximum facility size 15,000 sq. ft. GFA.
+Eating and Drinking
+Establishments L Maximum Facility size 15,000 sq. ft. GFA.
+Educational Services L Maximum Facility size 25,000 sq. ft. GFA.
+Office P Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+ 12.24.830MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:71
+Table 12.24.830-1:
+Use Categories in the UC-NC Zone
+ Use Status Clarifications
+Retail Products and Services P/L/N
+Uses to be located only on the first or second floors of the
+structure.
+Animal service facilities subject to additional standards in
+Section 12.40.110. Minor assembly facilities subject to
+additional standards in Section 12.40.210.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150.
+Retail sales of marijuana not permitted.
+Self-Service Storage L Maximum facility size 25,000 sq. ft. GFA.
+Subject to limitations in Section 12.24.850.
+Vehicle Service and Repair L
+Maximum site size 25,000 sq. ft. including parking and
+circulation areas.
+Automobile service stations subject to additional standards in
+Section 12.40.120.
+Industrial Use Categories — Only Categories listed below permitted
+Industrial Service L/N Maximum facility size 25,000 sq. ft. GFA. Marijuana testing
+laboratories not permitted.
+Institutional Use Categories — Only Categories Listed Below Permitted
+Community Services L
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses are permitted
+with maximum facility size 25,000 sq. ft. GFA.
+Major Assembly Facilities L Maximum facility size 25,000 sq. ft. GFA; subject to additional
+standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities P With no outdoor storage; subject to additional standards in
+Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.830 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:72
+12.24.840  Accessory Uses Permitted by Right.
+A. Accessory Uses to Residential Primary Uses.
+1. Accessory Structures. Accessory structures as defined in Section 12.01.500 are permit-
+ted subject to additional requirements in Section 12.40.104.
+2. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section
+12.01.500, and are permitted when accessory to townhouses subject to additional
+requirements in Section 12.40.100.
+3. Certified or Registered Family Child Care Homes and Residential Homes. Certified or
+registered family child care homes as defined in ORS 329A; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+4. Household Energy Production Facilities. Household energy production facilities are
+defined in Section 12.01.500, and are permitted subject to issuance of necessary and
+appropriate Federal, State and local permits, and maintenance in good condition.
+5. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject
+to issuance of necessary and appropriate Federal, State and local permits.
+6. Horticultural Activities. Horticultural activities as defined in Section 12.01.500 are permit-
+ted, excluding commercial buildings or structures.
+7. Home Occupations. Home occupations are defined in Section 12.01.500, and are
+permitted in all housing types subject to additional requirements in Section 12.40.170.
+B. Accessory Uses to Non-Residential Primary Uses. Accessory uses vary based on the use
+categories contained in Subchapter 12.10. Accessory uses are permitted in conjunction with
+the primary use on the site and subject to the same regulations as the primary use unless
+stated otherwise in this Code. In addition to the standards in Subchapter 12.50, non-residential
+accessory uses in the UC-MU zone are also subject to the Amberglen Plan District require-
+ments in Subchapter 12.64.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.24.850  Special Provisions Regarding Uses.
+A. Commercial Parking.
+1. All commercial parking facilities shall be in structures containing at least one level of
+parking spaces in a permanent structure constructed above or below grade level.
+2. All commercial parking facilities shall comply with all applicable provisions of Section
+12.64.300.
+3. All commercial parking facilities within the Retail Focus Frontage area shown on Figure
+12.64.640-A shall comply with all applicable provisions of Sections 12.64.360 and
+12.64.850.
+ 12.24.850MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:73
+B. Self-Service Storage.
+1. No part of the use shall be located within 800 feet of an LRT or HCT station.
+2. Individual unit entrances shall not be located on any façade facing a public street, public
+park, or designated open space.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.24.860  Development Standards.
+Development standards in the UC-NC zone are listed in Table 12.24.860-1. Certain standards are
+illustrated in Figure 12.24.860-A.
+  Table 12.24.860-1:
+Development Standards in the UC-NC Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density 30 du/na
+See Subsection 12.24.030.G.4.
+Maximum Residential Density None
+Minimum FAR .55
+See Subsection 12.24.030.G.4.
+Maximum FAR None
+Minimum Lot Dimensions*
+ • Width (at front building
+plane) None
+ • Depth None
+ • Lot Frontage
+Minimum Setbacks*
+
+All setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front None
+ • Side and Rear
+15 feet along street
+frontage shared with
+UC-RM zone;
+elsewhere none.
+Front Property Line Coverage*
+
+Front setback area not occupied by building
+must contain landscaping or Usable Open
+Space; subject to Amberglen Plan District
+standards in Section 12.64.800 as applicable.
+ • Streets in Retail Focus
+Frontage areas and HCT
+Corridor
+80% of primary street
+frontage occupied by
+first 2 stories of front
+façade.
+ • All other streets
+60% of primary street
+frontage occupied by
+first 2 stories of front
+façade.
+12.24.850 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:74
+Table 12.24.860-1:
+Development Standards in the UC-NC Zone
+ Standard Requirement Clarifications
+Maximum Setbacks*
+All setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front 15 feet
+ • Side and Rear None
+Minimum Building Height* 25 feet
+Maximum Building Height* 65 feet
+Maximum building height subject to Amberglen
+Plan District transitional standards in Section
+12.64.800 as applicable.
+Maximum Lot Coverage None
+Minimum Useable Open Space Varies Subject to Amberglen Plan District standards in
+Section 12.64.210 as applicable.
+Minimum Landscaping Varies Subject to Amberglen Plan District standards in
+Section 12.64.220 as applicable.
+* Standards illustrated in Figure 12.24.860-A
+
+ Figure 12.24.860-A:
+Development Standards in the UC-NC Zone
+ 12.24.860MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:75
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6120 § 1, 2015)
+12.24.870  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the UC-NC zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.24.880  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the UC-NC zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Utilities and Site Grading
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+• Subchapter 12.64 Amberglen Plan District
+(Ord. 6401 § 1, 2022)
+ Figure 12.24.860-B:
+Examples of UC-NC Development Types
+12.24.860 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:76
+12.24.900  UC-OR Urban Center—Office/Research.
+The UC-OR zone includes the following sections:
+12.24.910 Purpose
+12.24.920 Housing Types
+12.24.930 Uses
+12.24.940 Accessory Uses and Structures Permitted by Right
+12.24.950 Special Provisions Regarding Uses
+12.24.960 Development Standards
+12.24.970 Variances and Adjustments
+12.24.980 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.910  Purpose.
+A. Create Opportunities for Employment Development. The UC-OR zone implements either the
+MU-UE Mixed-Use - Urban Employment or the MU-I Mixed-Use - Institutional Plan designa-
+tion, providing concentrated opportunities for employment to complement residential, retail
+and commercial services within high intensity areas of the City.
+B. Allow Supportive Commercial Uses. The UC-OR zone provides limited opportunities for
+support retail and commercial services and complementary residential Uses.
+C. Retain Existing Office Development. The standards of the UC-OR zone support the retention
+of existing office development until the market presents opportunities to redevelop to more
+intense urban form.
+(Ord. 6401 § 1, 2022)
+ 12.24.910MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:77
+12.24.920  Housing Types.
+Table 12.24.920-1 lists the Housing Types permitted in the UC-OR zone. Housing Types are defined
+in Section 12.01.500.
+  Table 12.24.920-1:
+Housing Types Permitted in the UC-OR Zone
+ Housing Type Status Clarifications
+Single detached dwelling N
+Duplex N
+Triplex P/L Triplexes and quadplexes permitted; however
+dwelling units Not Permitted on the ground floor
+of any primary street frontage entirely or partly
+within a Retail Focus Frontage Area illustrated
+in Figure 12.64.640-A. Quadplex P/L
+Townhouse N
+Cottage Cluster N
+Multiple dwelling structure P/L
+Multiple Dwelling Structures permitted; however
+dwelling units Not Permitted on the ground floor
+of any primary street frontage entirely or partly
+within a Retail Focus Frontage Area illustrated
+in Figure 12.64.640-A.
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6149 § 1, 2015)
+12.24.930  Uses.
+Table 12.24.930-1 lists uses permitted, conditionally permitted, limited or not permitted in the UC-OR
+zone.
+  Table 12.24.930-1:
+Use Categories in the UC-OR Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living L See Housing Types Table 12.24.920-1.
+Group Living N
+Residential Service N
+Residential Business N
+Commercial Use Categories
+Commercial Lodging P
+Commercial Recreation P/N Indoor uses permitted; outdoor uses not permitted.
+Commercial Parking C/L Permitted with Conditional Use approval and subject to
+limitations in Section 12.24.950.
+12.24.920 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:78
+Table 12.24.930-1:
+Use Categories in the UC-OR Zone
+ Use Status Clarifications
+Durable Goods Sales C/L Permitted with Conditional Use approval and no portion of the
+use to be located within 800 feet of an LRT or HCT station.
+Eating and Drinking
+Establishments P
+Educational Services P
+Office P Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+Retail Products and Services P/C/N
+Animal service facilities subject to additional standards in
+Section 12.40.110. Minor assembly facilities subject to
+additional standards in Section 12.40.210.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150.
+Retail sales of marijuana not permitted.
+Self-Service Storage L
+Maximum facility size 25,000 sq. ft. GFA.
+Individual unit entrances shall not be located on any façade
+facing a public street, public park, or designated open space.
+Vehicle Service and Repair L
+Maximum site size 25,000 sq. ft. including parking and
+circulation areas.
+Automobile service stations subject to additional standards in
+Section 12.40.120.
+Industrial Use Categories — Only Categories listed below permitted
+Industrial Services P/N Marijuana testing laboratories not permitted.
+Manufacturing and Production L/N Subject to limitations in Section 12.24.950. Marijuana
+production and processing facilities not permitted.
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L
+Subject to limitations in Section 12.24.950. Emergency
+shelters are permitted subject to additional standards in
+Section 12.40.107.
+Detention Facilities N
+Hospitals C/L Permitted with Conditional Use approval and limited in size to
+100 or less inpatient beds.
+Major Assembly Facilities L Facility size not to exceed 50,000 sq. ft. GFA.
+Subject to additional standards in Section 12.40.210.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+ 12.24.930MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:79
+Table 12.24.930-1:
+Use Categories in the UC-OR Zone
+ Use Status Clarifications
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted; park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities L
+With no equipment storage; subject to additional standards in
+Section 12.40.260.
+No portion of the use to be located within 800 feet of an LRT or
+HCT station.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.940  Accessory Uses and Structures Permitted by Right.
+Accessory uses vary based on the use categories contained in Subchapter 12.10. Accessory uses
+are permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in this Code. Accessory structures as defined in Section
+12.01.500 are permitted subject to the additional requirements in Section 12.40.104. In addition to
+the standards in Subchapter 12.50, non-residential accessory uses and structures in the UC-OR
+zone are also subject to the Amberglen Plan District requirements in Subchapter 12.64.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.950  Special Provisions Regarding Uses.
+A. Commercial Parking.
+1. All commercial parking facilities shall be in structures containing at least one level of
+parking spaces in a permanent structure constructed above or below grade level.
+2. All commercial parking facilities shall comply with all applicable provisions of Section
+12.64.300.
+3. All commercial parking facilities within the Retail Focus Frontage area shown on Figure
+12.64.640-A shall comply with all applicable provisions of Sections 12.64.360 and
+12.64.850.
+12.24.930 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:80
+B. Manufacturing and Production.
+1. Manufacturing and production uses are limited to operations with an expected employ-
+ment level of at least one person per 500 square feet of gross floor area in the primary
+structure.
+2. Truck shipments to or from the property by trucks with a gross vehicle weight of 25,000
+lbs. are limited to one per day on average.
+3. Outdoor storage of materials, supplies, inventory, equipment, or other items is not
+permitted.
+4. Truck loading facilities shall not be located on any façade of the building facing a public
+street.
+(Ord. 6401 § 1, 2022)
+12.24.960  Development Standards.
+Development standards in the UC-OR zone are listed in Table 12.24.960-1. Certain standards are
+illustrated in Figure 12.24.960-A.
+  Table 12.24.960-1:
+Development Standards in the UC-OR Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density 30 du/na
+See Subsection 12.24.030.G.4.
+Maximum Residential Density None
+Minimum FAR .60
+Maximum FAR None
+Minimum Lot Dimensions*
+ • Width (at front building
+plane) None
+ • Depth None
+Minimum Setbacks*
+All setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front None
+ • Side and Rear None
+Front Property Line Coverage*
+75% of primary street
+frontage occupied by
+first 2 stories of front
+façade.
+Front setback area not occupied by building
+must contain landscaping or Usable Open
+Space; subject to Amberglen Plan District
+standards in Section 12.64.800 as applicable.
+ 12.24.960MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:81
+Table 12.24.960-1:
+Development Standards in the UC-OR Zone
+ Standard Requirement Clarifications
+Maximum Setbacks*
+Front yard setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front 15 feet
+ • Side and Rear None
+Minimum Building Height* 25 feet
+Maximum Building Height* 85 feet
+Maximum Lot Coverage None
+Minimum Usable Open Space Varies Subject to Amberglen Plan District standards in
+Section 12.64.210 as applicable.
+Minimum Landscaping Varies Subject to Plan District standards in Section
+12.64.220 as applicable.
+* Standards illustrated in Figure 12.24.960-A
+
+ Figure 12.24.960-A:
+Development Standards in the UC-OR Zone
+12.24.960 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:82
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6120 § 1, 2015)
+12.24.970  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the UC-OR zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.24.980  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the UC-OR zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+• Subchapter 12.64 Amberglen Plan District
+(Ord. 6401 § 1, 2022)
+ Figure 12.24.960-B:
+Examples of UC-OR Development Types
+ 12.24.980MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:83
+12.24.1000  UC-RP Urban Center—Research Park.
+The UC-RP zone includes the following sections:
+12.24.1010 Purpose
+12.24.1020 Housing Types
+12.24.1030 Uses
+12.24.1040 Accessory Uses and Structures Permitted by Right
+12.24.1050 Special Provisions Regarding Uses
+12.24.1060 Development Standards
+12.24.1070 Variances and Adjustments
+12.24.1080 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.24.1010  Purpose.
+A. Create Opportunities for Research and Development Uses. The UC-RP zone implements the
+MU-I Mixed-Use - Institutional Plan designation, providing opportunities for development of a
+range of research, development and testing laboratory Uses; educational Uses; medical
+research and clinical Uses; and high-tech and bio-tech research and applied technology Uses.
+B. Support Institutional Uses. The UC-RP zone supports the retention and ongoing expansion of
+the existing institutional users and addresses their unique requirements.
+C. Create Spin-Off Opportunities. The UC-RP zone fosters and supports development of indus-
+tries resulting from or associated with the basic and applied research, development and testing
+laboratories and programs of the institutions and organizations located in the zone by
+encouraging and allowing incubator establishments within the zone, and by allowing compat-
+ible accessory industrial Uses.
+D. Implement Existing Master Plans. The UC-RP zone allows development in accordance with
+approved Concept Development Plan(s) to encourage a transi t-supportive, pedestrian-
+sensitive campus environment, and to prevent conflicts among the mix of uses and activities
+within the zone.
+(Ord. 6401 § 1, 2022)
+12.24.1000 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:84
+12.24.1020  Housing Types.
+Table 12.24.1020-1 lists the Housing Types permitted in the UC-RP zone. Housing Types are
+defined in Section 12.01.500.
+  Table 12.24.1020-1:
+Housing Types Permitted in the UC-RP Zone
+Housing Type Status Clarifications
+Single detached dwelling L/N Permitted only for caretaker working on the
+property.
+Duplex N
+Triplex P
+Quadplex P
+Townhouse N
+Cottage cluster N
+Multiple dwelling structure P
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)
+12.24.1030  Uses.
+Table 12.24.1030-1 lists uses permitted, conditionally permitted, limited or not permitted in the
+UC-RP zone.
+  Table 12.24.1030-1:
+Use Categories in the UC-RP Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living L See Housing Types Table 12.24.1020-1.
+Group Living P/N
+Limited to dormitory housing developed and used by
+institutional uses; all other uses not permitted. See also Table
+12.24.1060-1.
+Residential Service N
+Residential Business N
+Commercial Use Categories — Only Categories Listed Permitted
+Educational Services P
+Office P Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+Day Care Facilities P Permitted per ORS 329A.440.
+ 12.24.1030MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:85
+Table 12.24.1030-1:
+Use Categories in the UC-RP Zone
+ Use Status Clarifications
+Industrial Use Categories — Only Category Listed Permitted
+Industrial Services P/N Marijuana testing laboratories not permitted.
+Institutional Use Categories — Only Categories Listed Permitted
+Colleges and Universities P Subject to additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Major Assembly Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities L With no outdoor storage; subject to additional standards in
+Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019)
+12.24.1040  Accessory Uses and Structures Permitted by Right.
+Accessory uses vary based on the use categories contained in Subchapter 12.10. Accessory uses
+are permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in this Code. Accessory structures as defined in Section
+12.01.500 are permitted subject to the additional requirements in Section 12.40.104. In addition to
+the standards in Subchapter 12.50, non-residential accessory uses and structures in the UC-RP
+zone are also subject to the Amberglen Plan District requirements in Subchapter 12.64.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6149 § 1, 2015)
+12.24.1050  Special Provisions Regarding Uses.
+There are no limitations regarding uses in the UC-RP zone aside from those listed in Table
+12.24.1030-1.
+(Ord. 6401 § 1, 2022)
+12.24.1030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:86
+12.24.1060  Development Standards.
+Development standards in the UC-RP zone are listed in Table 12.24.1060-1.
+  Table 12.24.1060-1:
+Development Standards in the UC-RP Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density
+ • Multi-dwelling residential,
+triplex, and quadplex 18 du/na
+ • Group living 36 rooms/na Group living density based on single room
+occupancy dormitories or equivalent.
+Maximum Residential Density
+ • Multi-dwelling residential,
+triplex, and quadplex 65 du/na
+ • Group living None
+Minimum FAR
+
+Subject to Amberglen Plan District standards in
+Sections 12.64.200 and 12.64.800 as
+applicable.
+ • Research laboratory and
+animal buildings; industrial
+flex space; and accessory
+industrial facilities
+.35
+ • Commercial, office, clinic,
+classroom uses, and
+mixed-use buildings
+.40
+ • Emergency service facilities .50
+ • Hospitals and related
+laboratory and outpatient
+facilities
+1.0
+Maximum FAR None
+Subject to Amberglen Plan District standards in
+Sections 12.64.200 and 12.64.800 as
+applicable.
+Minimum Lot Dimensions
+ • Width (at front building
+plane) 30 feet
+ • Depth None
+Minimum Setbacks
+All setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front Yard None
+ • Side and Rear Yards None
+Front Property Line Coverage None
+ 12.24.1060MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:87
+Table 12.24.1060-1:
+Development Standards in the UC-RP Zone
+ Standard Requirement Clarifications
+Maximum Setbacks
+All setbacks subordinate to public utility
+easements and ORSC or OSSC requirements
+as applicable.
+ • Front 15 feet/none
+ • Side and rear None
+Minimum Building Height 25 feet
+Maximum Building Height 55 feet
+Maximum Lot Coverage None
+Minimum Useable Open Space Varies
+Subject to Amberglen Plan District standards in
+Sections 12.64.200 and 12.64.800 as
+applicable.
+Minimum Landscaping Varies
+Subject to Amberglen Plan District standards in
+Sections 12.64.200 and 12.64.800 as
+applicable.
+Note— The UC-RP zone supports the retention and on-going expansion of the existing institutional users and
+is structured to address their unique requirements in accordance with one or more Planned Unit Development
+approvals. No Figures for UC-RP base zone development standards are provided.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.24.1070  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the UC-RP zone
+may be approved under one of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.24.1080  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the UC-RP zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+12.24.1060 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.24:88
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+• Subchapter 12.64 Amberglen Plan District
+(Ord. 6401 § 1, 2022)
+ 12.24.1080MIXED-USE AND URBAN CENTER ZONES
+CDC12.24:89

@@ -1,0 +1,1630 @@
+SUBCHAPTER 12.50
+ DEVELOPMENT AND DESIGN STANDARDS
+12.50.010 Purpose.
+12.50.020 Organization and Hierarchy of Standards and Guidelines.
+12.50.030 General Applicability.
+12.50.100 General Lot Standards.
+12.50.110 Lot Dimensions.
+12.50.120 Residential Density.
+12.50.130 Setbacks.
+12.50.140 Building Height.
+12.50.150 Floor Area Ratio.
+12.50.200 Site Design.
+12.50.210 Usable Open Space.
+12.50.220 Landscaping.
+12.50.230 Tree Preservation.
+12.50.240 Exterior Lighting.
+12.50.250 Fences, Free-Standing Walls, Hedges and Berms.
+12.50.260 Sight Distance/Vision Clearance.
+12.50.270 Waste and Recycling Facilities.
+12.50.300 Vehicle Parking.
+12.50.310 Purpose, Applicability and Maintenance Responsibilities.
+12.50.320 Number of Spaces.
+12.50.330 Exempt Parking.
+12.50.335 Reserved.
+12.50.340 On-Street Parking.
+12.50.350 Vehicle Parking and Loading: Location.
+12.50.360 Vehicle Parking and Loading: Design and Improvements.
+12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity.
+12.50.410 Bicycle Parking.
+12.50.420 Pedestrian and Bicycle Circulation.
+12.50.430 Connectivity and Design Standards at or Near Transit Stops.
+12.50.500 Access and Street Standards.
+12.50.510 Purpose, Applicability and Exceptions.
+12.50.520 Street Connectivity and Access.
+12.50.530 Public Streets and Alleys Design and Improvement.
+12.50.540 Private Streets: Design and Improvement.
+12.50.550 Sidewalk Widths: Design and Location.
+12.50.560 Street Trees.
+12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities Site Integra-
+tion.
+12.50.610 Purpose, Applicability and Exceptions.
+12.50.620 Public Utilities General Requirements.
+CDC12.50:1
+12.50.625 Power and Communications Utility Undergrounding.
+12.50.630 Site Grading.
+12.50.640 Storm Water Facilities Site Integration.
+12.50.700 Design Standards for Residential Development.
+12.50.710 Design Standards for All Residential Development.
+12.50.715 Additional Design Standards for Middle Housing.
+12.50.720 Additional Design Standards for Multiple-Dwelling Residential.
+12.50.800 Design Standards for Non-Residential and Mixed-Use Development.
+12.50.810 Purpose and Applicability.
+12.50.820 Main Entries.
+12.50.830 Ground Floor Windows.
+12.50.840 Articulation and Detailed Design.
+12.50.845 Step-Back Requirements.
+12.50.850 Improvements and Activities between Streets and Buildings.
+12.50.870 Sidewalk Dining and Displays.
+12.50.875 Drive-Through Facilities.
+12.50.880 Outdoor Storage.
+12.50.890 Utilitarian Functions.
+12.50.900 Public Benefit Standards.
+12.50.910 Purpose and Applicability.
+12.50.920 Enhanced Building and Site Design Elements.
+12.50.930 Sustainable Development Practices.
+12.50.940 Crime Prevention through Environmental Design.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:2
+12.50.010  Purpose.
+The development and design standards in this subchapter are intended to ensure project design and
+construction which:
+A. Includes adequate, structurally sound public and private streets and utilities;
+B. Allows logical, efficient development or redevelopment of adjacent properties;
+C. Includes a range of lot sizes, structural design, setbacks, and housing choices;
+D. Respects surrounding context and enhances community character;
+E. Considers security and privacy;
+F. Provides attractive usable open space in functional locations;
+G. Provides adequately for community infrastructure such as utilities, vehicle, bicycle and pedes-
+trian transportation, schools, parks and other public requirements; and
+H. In general, promotes public health, safety, convenience, and general welfare.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.50.020  Organization and Hierarchy of Standards and Guidelines.
+Development activities subject to this subchapter are also subject to the base zone standards in
+Subchapters 12.21 through 12.26, the special use standards in Subchapter 12.40, and any
+applicable overlay zone standards or plan district standards in Subchapters 12.27 or 12.60 through
+12.67. Where development and design standards conflict with other standards in this Code, refer to
+Section 12.01.430 for the hierarchy of standards.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.50.030  General Applicability.
+A. Except as modified under subsection B below or exempt under subsection C below, the
+standards of Subchapter 12.50 apply to all properties and development activities within the City
+limits. Each standard includes specific applicability provisions which may modify the general
+applicability, and individual standards may not apply to some development projects. Each
+standard may also include exceptions specific to that standard. Applicability of standards will
+be determined through a Type I, Type II, or Type III application process an alternative review
+procedure described in Section 12.70.025, or during review of major site alterations or other
+construction as defined in Section 12.01.500.
+B. Non-conforming Uses, Structures or Lots. The development standards and design guidelines
+in this subchapter may be applied differently to non-conforming uses, structures or lots, as
+specified in Subchapter 12.30.
+C. Exemptions. The following types of development are exempt from compliance with the
+standards of this subchapter:
+1. Ordinary maintenance or repair of an existing building or structure;
+ 12.50.030DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:3
+2. Interior remodeling or external alteration of an existing building or structure which meets
+any of the following thresholds:
+a. No substantial changes to exterior appearance from a public or private street or
+from a public accessway; or
+b. No change of housing type from single detached dwelling or middle housing to
+multi-dwelling, or
+c. No change of use type from residential to commercial, industrial, or institutional; or
+d. No requirement for approval through the Development Review process due to the
+location of the site in a particular zone, plan district, or overlay zone.
+3. Building and/or site alterations required to comply with the Americans with Disabilities Act
+(ADA); or
+4. Non-structural "minor site alterations" meeting the following standards:
+a. Five hundred square feet or less ground area disturbance due to grading or paving;
+b. No resulting effect on site access, site topography, mature or specimen trees,
+natural resources, or required landscaping; or
+c. No resulting alteration of on-site drainage pattern at a property line.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6178 § 1, 2016)
+12.50.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:4
+12.50.100  General Lot Standards.
+General lot standards include the following sections:
+12.50.110 Lot Dimensions
+12.50.120 Residential Density
+12.50.130 Setbacks
+12.50.140 Building Height
+12.50.150 Floor Area Ratio
+(Ord. 6401 § 1, 2022)
+12.50.110  Lot Dimensions.
+A. Lot Area.
+1. Lot area is defined in Section 12.01.500 under Lot Dimensions.
+2. Lots created after September 4, 2014 must contain the minimum lot area specified within
+the standards of the applicable zone, unless variations are approved by the Review
+Authority pursuant to paragraph 3 of this subsection A, or unless a Variance or Adjust-
+ment has been granted by the Review Authority pursuant to Section 12.80.150.
+3. Lot Area Exception for Middle Housing.
+a. Within middle housing zones, exceptions to the minimum lot area standards in the
+applicable base zone may be approved through a middle housing land division,
+provided that the lot area of the parent lot meets the minimum requirement of the
+base zone.
+b. Within all zones, exceptions to the minimum lot area standards in the applicable
+base zone may be approved by the Review Authority for duplex or townhouse
+development to allow division of parent lots into child lots, as defined in Section
+12.01.500, provided that the lot area of the parent lot meets the minimum require-
+ment of the base zone.
+ 12.50.110DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:5
+B. Lot Depth.
+1. Lot depth is defined in Section 12.01.500 under Lot Dimensions.
+2. Figure 12.50.110-A illustrates methods to measure lot depth on regular lots, irregular lots,
+flag lots, and corner lots.
+3. Lots created after September 4, 2014 must have the minimum lot depth specified within
+the standards of the applicable zone, unless variations are approved by the Review
+Authority pursuant to paragraph 4 below, or unless a Variance or Adjustment has been
+granted by the Review Authority pursuant to Section 12.80.150.
+
+4. Lot Depth Exception for Middle Housing.
+a. Within middle housing zones, exceptions to the minimum lot depth standards in the
+applicable base zone may be approved through a middle housing land division,
+provided that the lot depth of the parent lot meets the minimum requirement of the
+base zone.
+b. Within all zones, exceptions to the minimum lot depth standards in the applicable
+base zone may be approved by the Review Authority for duplex or townhouse
+development to allow division of parent lots into child lots, as defined in Section
+12.01.500, provided that the lot depth of the parent lot meets the minimum
+requirement of the base zone.
+ Figure 12.50.110-A:
+Examples of Measuring Lot Depth on Various Lot Types
+12.50.110 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:6
+C. Lot Width.
+1. Lot width is defined in Section 12.01.500.
+2. Figure 12.50.110-B illustrates methods to measure lot width on regular lots, irregular lots,
+flag lots, and corner lots.
+3. Lots, parcels or tracts created after September 4, 2014 must have the minimum lot width
+specified within the standards of the applicable zone, unless variations are approved by
+the Review Authority pursuant to paragraph 4 below, or unless a variance or an
+adjustment has been granted by the Review Authority pursuant to Section 12.80.150.
+
+4. Lot Width Exception for Middle Housing.
+a. Within middle housing zones, exceptions to the minimum lot width standards in the
+applicable base zone may be approved through a middle housing land division,
+provided that the lot width of the parent lot meets the minimum requirement of the
+base zone.
+b. Within all zones, exceptions to the minimum lot width standards in the applicable
+base zone may be approved by the Review Authority for duplex or townhouse
+ Figure 12.50.110-B:
+Examples of Measuring Lot Width on Various Lot Types
+ 12.50.110DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:7
+development to allow division of parent lots into child lots, as defined in Section
+12.01.500, provided that the lot width of the parent lot meets the minimum require-
+ments of the base zone.
+D. Lot Frontage.
+1. Lot frontage is defined in Section 12.01.500 under Frontage.
+2. Figure 12.50.110-C illustrates methods to measure lot frontage on regular lots, irregular
+lots, and flag lots.
+3. Except for child lots created through a middle housing land division, lots created after
+September 4, 2014 must have the minimum lot frontage specified within the standards of
+the applicable zone, unless a Variance or Adjustment has been granted by the Review
+Authority pursuant to Section 12.80.150. In zones where flag lots are permitted, lot
+frontage may be reduced on adjacent flag lots pursuant to paragraph 5 below.
+
+4. Property abutting the end of a public or private street not ending in a cul-de-sac, or which
+may be subject to future extension, shall not be considered as having lot frontage.
+5. Minimum lot frontages may be reduced below base zone standards for flag lots as
+described in Section 12.40.160.
+ Figure 12.50.110-C:
+Examples of Measuring Lot Frontage on Various Lot Types
+12.50.110 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:8
+E. Lot Coverage.
+1. Lot coverage is defined in Section 12.01.500 under Lot Dimensions.
+2. Lot coverage is calculated by totaling the area(s) of all building footprints on the lot, parcel
+or tract, excluding buildings 24 inches or shorter above native grade, and dividing the total
+footprint area into the area of the lot, parcel or tract. Figure 12.50.110-D illustrates an
+example of lot coverage measurement.
+3. Except for child lots created through a middle housing land division, development on any
+lot after September 4, 2014 shall not be approved if the additional building footprint on the
+lot, parcel or tract would result in a lot coverage percentage exceeding the maximum
+specified within the standards of the applicable zone, unless a Variance or Adjustment
+has been granted by the Review Authority pursuant to Section 12.80.150 or Section
+12.80.120.
+
+(Ord. 6465 § 2, 2024; Ord. 6401 § 1, 2022; Ord. 6178 § 1, 2016; Ord. 6120 § 1, 2015)
+ Figure 12.50.110-D:
+Example of Lot Coverage Measurement
+ 12.50.110DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:9
+12.50.120  Residential Density.
+A. Definition and Purpose. Residential density is defined in Section 12.01.500. Establishing
+minimum and maximum densities creates consistency within neighborhoods, achieves planned
+intensities of residential development and encourages development parameters within which
+the market will operate to provide particular housing types. Establishing maximum densities
+also ensure that the intensity of residential development will match the availability of public
+services.
+B. Standards and Calculation Methodology.
+1. Unless specified otherwise in paragraph 2 or 3 below, residential density in development
+projects containing residential dwellings submitted after September 4, 2014 must be
+between the minimum and the maximum residential density of the applicable zone,
+unless a Variance or Adjustment has been granted by the Review Authority pursuant to
+Section 12.80.120 or 12.80.150.
+2. Unless specified otherwise in the base zone standards, the minimum residential density
+is 80% of the maximum density permitted by the base zone applicable on a site. The
+minimum or maximum number of dwellings permitted for a project is calculated by
+multiplying the minimum or maximum density standard by the net residential acres within
+the development site.
+3. Residential density in group living, residential service uses is calculated at 4 residents
+equivalent to 1 dwelling unit.
+4. In multi-dwelling residential developments, dwelling units with 4 or more bedrooms may
+be calculated as 2 dwelling units at the applicant's discretion. If provided, dwelling units
+with 4 or more bedrooms shall be limited to a maximum of 20% of the total dwelling units.
+5. Unless otherwise specified in the applicable zone, minimum and maximum density
+calculations do not include accessory dwelling units.
+C. Exceptions to Minimum Density.
+1. On lots larger than 12,000 square feet designated Medium, High, or Mid-Rise Density
+Residential on the Comprehensive Plan Map, building permit applications for a single
+detached dwelling shall be approved only upon demonstration by the applicant that the
+dwelling is sited to allow further development of the remainder of the lot at the minimum
+density permitted under the implementing zone of the Comprehensive Plan designation.
+2. One or more dwellings may be constructed on an existing lot of record in a light rail
+residential zone if the dwelling(s) is/are sited to allow future development of the remain-
+der of the lot to at least the minimum applicable density without demolishing the new
+dwelling(s).
+3. On a site containing existing mature or specimen trees as defined in Section 12.50.230,
+net acreage on a development site may be reduced by subtracting the area within the drip
+line of the trees, up to a maximum reduction of 35% of the original net acreage.
+Applications proposing net acreage reductions to preserve existing trees shall include a
+12.50.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:10
+certified arborist's report and tree preservation plan. The approval of the development
+may be conditioned by the Review Authority on implementation of the recommended tree
+preservation measures.
+4. Pursuant to Section 12.27.230, on sites within or partially within a Significant Natural
+Resource (SNR) area, the Review Authority may limit residential density on portions of
+the SNR area below the minimum density specified in the base zone and may allow
+transfer of such density to the portion of the site outside the SNR area.
+D. Exceptions to Maximum Density.
+1. Pursuant to Section 12.80.156, increased residential density above the specified maxi-
+mum of the base zone may be approved as a Major Adjustment in conjunction with a
+Planned Unit Development Concept Plan application. Such density increases shall be
+limited to 120% of the maximum of the underlying base zone density.
+2. Pursuant to Section 12.27.200, on sites within or partially within the Significant Natural
+Resource Overlay (SNRO) zone containing otherwise developable land, overall residen-
+tial density on the site may be limited by the Review Authority to 50% of the maximum
+permitted by the base zone, to protect the SNRO area. The Review Authority may
+approve transfer of a portion of the otherwise allowable density to the remainder of the
+site outside the SNRO area. Such density transfer shall be limited as follows:
+a. Not more than 30% of the maximum number of units allowed in the SNRO area may
+be transferred; and
+b. The resulting density on the remainder of the site shall not exceed 80% of the
+allowed maximum number of units.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.50.130  Setbacks.
+A. Definition and Purpose. Setbacks (also known as "yards") are defined in Section 12.01.500.
+Minimum setback standards are intended to provide light and air between buildings and
+protection to neighboring properties. Maximum setback standards are intended to complement
+applicable standards for building height, floor area ratio, and design to promote an attractive
+streetscape and pleasant pedestrian environment in higher density neighborhoods. Maximum
+setbacks are not applicable in all zones. Minimum and maximum setback standards apply to all
+structures and portions of structures more than 24 inches above grade.
+ 12.50.130DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:11
+B. Measurement Methodology: Minimum Setbacks. Figures 12.50.130-A, 12.50.130-B, and
+12.50.130-C illustrate the methods to measure minimum front, interior, side and rear setbacks
+on interior lots, corner lots, irregular lots and flag lots.
+
+ Figure 12.50.130-A:
+Examples of Measuring Minimum Setbacks on Various Lot Types
+12.50.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:12
+Figure 12.50.130-B:
+Measuring Minimum Front, Interior, Side and Rear Setbacks on Irregular Lots
+ 12.50.130DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:13
+Figure 12.50.130-C:
+Measuring Minimum Setbacks on Flag Lots
+12.50.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:14
+C. Measurement Methodology: Maximum Setbacks.
+1. Figure 12.50.130-D illustrates the methods to measure maximum front setbacks for
+residential and non-residential buildings.
+
+2. Garage and Carport Setbacks.
+a. In General. Setbacks measured to a garage door shall also be applicable to the
+entrance of a carport. The setback distance shall be measured to the support posts
+of the carport closest to the driveway, or to the edge of the carport roof if there are
+no posts.
+b. In Light Rail Zones. Figure 12.50.130-E illustrates the methods to measure garage
+setbacks in light rail zones, where a residential garage or carport is accessed from
+a street or a public alley, the setback to the garage door or carport opening shall be
+either equal to the dwelling unit setback (if that setback is 5 feet or less) or 19 feet
+or greater, except:
+i. If the dwelling unit setback is more than 19 feet, the setback to the garage/
+carport shall equal or exceed the dwelling unit setback; or
+ Figure 12.50.130-D:
+Measuring Maximum Front Setbacks
+Single Detached Dwellings and Middle Housing
+Commercial, Industrial, Institutional, Multi-Dwelling or Mixed-Use Buildings
+ 12.50.130DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:15
+ii. If the garage door or carport opening is perpendicular to the front property line,
+then the garage/carport setback shall be equal to or greater than the dwelling.
+
+3. Maximum Setback Compliance. In zones where maximum setbacks apply, the maximum
+setback standard is considered met under the following circumstances:
+a. For single detached dwellings and middle housing, where at least 1 façade,
+including a porch, is located no farther from the property line than the setback
+specified for the zone; or
+ Figure 12.50.130-E:
+Measuring Garage Setbacks in Light Rail Zones
+12.50.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:16
+b. For commercial, industrial, institutional, multi-dwelling, or Mixed-Use buildings,
+where at least 75% of the front building façade is located no farther from the
+property line or future right-of-way line than the maximum setback specified for the
+zone.
+4. Build-To Zone. In the urban center zones, maximum front setbacks may be expressed as
+build-to zones.
+D. Standards.
+1. Structures built on lots after September 4, 2014 must meet the minimum and maximum
+(if applicable) setback standards of the applicable base zone, unless a variation is
+approved by the Review Authority pursuant to subsection E below or unless a Variance or
+Adjustment has been granted by the Review Authority pursuant to Section 12.80.150. In
+the case of middle housing land divisions, setback standards apply to the parent lot, but
+not the child lot.
+2. Where public or private utility easements are present on a lot, the setback may include
+the easement. However, setbacks are subordinate to such easements if the easement is
+wider than the required setback. Setbacks may be increased by the Review Authority
+above either the minimum or maximum standards of the base zone to accommodate
+such easements, and to provide necessary angles of repose as required by the Building
+Code.
+3. Setbacks measured to a garage door shall also be applicable to the entrance of a carport.
+The setback distance shall be measured to the support posts of the carport closest to the
+driveway, or to the edge of the carport roof if there are no support posts.
+E. Front Yard Setback Variations.
+1. Purpose. Front yard setback variation provisions are intended to provide opportunity for
+a wider range of structural design, setbacks, and housing choices within new develop-
+ment, and provide developers with flexibility in response to varying site conditions.
+2. Applicability.
+a. These standards may be applied to single detached and middle housing residential
+subdivisions or single detached and middle housing residential PUDs with 8 or
+more lots.
+b. Front yard setback variations may not be applied if a Minor or Major Adjustment for
+front yard setback variations has also been requested or approved.
+c. Pursuant to Section 12.50.020, the standards of this section are subordinate to
+more specific standards of any applicable plan district.
+ 12.50.130DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:17
+3. Standards.
+a. Up to 20% of the houses in the subdivision or PUD may have front yard setbacks
+greater or less than the applicable base zone standard, by at least 1-foot variation.
+Setback variations may not be reduced below 80%, or increased above 120%, of
+the required minimum setback. Application of this reduction is further restricted as
+follows:
+i. The varied setback applies only to the residence portion of the structure;
+ii. Front setbacks on corner lots where reduced setbacks are already allowed on
+1 street cannot be further reduced;
+b. Front yard setbacks shall not be reduced if the setback contains a public utility
+easement wider than the proposed reduced setback and the necessary angle of
+repose as required by the Building Code.
+F. Exemptions.
+1. First-Story Decks. For purposes of this Code, first-story decks may be located within
+required side, rear, and interior setbacks if such decks meet the following standards:
+a. The outside edge of the deck is at least 3 feet from the side, rear, and interior
+property lines;
+b. The deck does not exceed the height of the first-story finished floor of the associ-
+ated building, or 24 inches, whichever is less, as measured from the natural grade
+to the finished deck surface; and
+c. The deck surfaces and ground surfaces beneath the deck are both permeable.
+2. Soundwalls and Ramps. For purposes of this Code the following are not considered
+structures for the purposes of determining setbacks:
+a. Sound walls installed according to a plan approved by the City as part of a land use
+application;
+b. Accessibility ramps.
+3. Publicly-Owned Parks. In publicly-owned parks, expansion of existing accessory struc-
+tures or recreational facilities and construction of new accessory structures or recre-
+ational facilities are exempt from the minimum and maximum setback standards of the
+applicable base zone. Accessory structures in public parks and recreational facilities may
+include, but are not limited to: restrooms, weather shelters, equipment storage buildings,
+and similar structures.
+4. Basement Window Egress Wells. For the purposes of this Code, basement window
+egress wells may be located within required side, rear, and interior setbacks.
+G. Exceptions for non-conforming Structures. Pursuant to Section 12.30.600, existing structures
+with non-conforming setbacks may be altered if the alteration does not increase the deviation
+from the setback standard of the applicable base zone. Setbacks for additions to non-
+conforming structures in light rail zones are subject to the provisions of Section 12.30.600.
+12.50.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:18
+H. Exceptions to Minimum Setbacks. The Review Authority may approve exceptions to a
+minimum setback standard under any of the following circumstances without a Variance or an
+Adjustment:
+1. Side Yard Setback Reductions for Structural Building Elements. Side yard setbacks in all
+zones may be reduced to allow structural building elements not containing usable or
+habitable floor area. Such elements may include, but are not limited to, bay windows,
+alcoves, or cantilevered closets. Structural building elements may extend up to 4 feet into
+the required setback, provided that:
+a. A minimum 3-foot setback is provided from the projection to the property line;
+b. Structural building elements on adjacent structures are not aligned opposite one
+another;
+c. The total length of any structural building element(s) is/are not more than 25% of the
+length of the wall from which they project;
+d. Side yard setbacks shall not be reduced if the setback contains a public utility
+easement wider than the proposed reduced setback and the necessary angle of
+repose.
+2. Accessory Structures. In a residential zone, side and rear setbacks may be reduced to 3
+feet for an accessory structure which meets the standards of Subsection 12.40.104.B.
+3. Accessory Dwelling Units. Side and rear setbacks may be reduced for detached acces-
+sory dwelling units that meet the standards of Subsection 12.40.100.D.7.
+4. Townhouse Divisions. In a residential zone, side setbacks may be reduced to zero feet for
+the interior lots of approved duplex or townhouse partitions, subdivisions, or middle
+housing land divisions.
+5. Non-Structural Architectural Features Projecting into Setbacks. Except as provided in
+paragraphs a and b below, non-structural architectural features can project up to 2 feet
+into a required setback. Examples of such features include, but are not limited to,
+cornices, eaves, canopies, sunshades, gutters, chimneys, flues, belt courses, leaders,
+sills, pilasters, and lintels.
+a. Non-structural architectural features on a dwelling unit cannot project more than 4
+feet into a required front or rear setback in single detached and middle housing
+residential zones, or 3 feet into required side yards.
+b. Non-structural architectural features on accessory structures having reduced set-
+backs under paragraph 1 above may not extend closer than 3 feet from any property
+line.
+c. Non-structural architectural features may not project more than 2 feet into the
+required yards in any non-residential zone.
+6. Front or Rear Yard Setback Reductions for Structural Building Elements. In Mixed-Use
+zones only, structural building elements such as porches, decks, pergolas, balconies,
+ 12.50.130DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:19
+and stoops may encroach by no more than 4 feet into a required front or rear setback,
+subject to compliance with applicable standards of the Oregon Structural Specialty Code
+and Oregon Fire Code and accommodation of public utility easements.
+7. Projections into Public Right-of-Way. Second story bay windows, balconies, awnings,
+and canopies may extend into public right-of-way upon approval by the City Engineer,
+Building Official, and Fire Marshal.
+I. Exceptions to Maximum Setbacks. The Review Authority may approve exceptions to a
+maximum setback standard without a Variance or an Adjustment under any of the following
+circumstances:
+1. Where a Public Utility Easement (PUE) is wider than the maximum setback of the
+applicable base zone, the structure shall be set back to accommodate the PUE and the
+necessary angle of repose.
+2. In mixed-use or non-residential developments, maximum front setbacks may be ex-
+ceeded by up to 10 additional feet if the Review Authority finds that all of the additional
+setback would be used to provide enhanced pedestrian amenities such as plazas,
+arcades, courtyards, or other such usable pedestrian space.
+3. In residential development in light rail zones, on irregular lots on curvilinear streets or
+culs-de-sac, increases in maximum setbacks may be granted subject to the following
+standards:
+a. For dwellings, the front setback is the minimum necessary to achieve either of the
+following at the front building plane: a 25-foot lot width for a townhouse; or a 48-foot
+lot width for a detached dwelling;
+b. The increased setback is applied to 5 or fewer individual lots in a land division
+subject to a Type II procedure or 10 or fewer lots in a land division subject to a Type
+III procedure;
+c. The residential density required by the base zone is met; and
+d. The increased setback meets the standards in paragraph 6 below.
+4. To allow location of a structure where the site is located:
+a. In an existing development where the required maximum setback would be incon-
+sistent with previous development on the surrounding properties; or
+b. In an existing development where private legal restrictions require a setback
+greater than the maximum standard of the base zone; or
+c. At the entry of a development, where planned entry features would be precluded by
+conformance with the maximum setback standard; and
+d. The increased setback meets the standards in Section 12.80.158.
+5. To accommodate placement of surface parking, maneuvering or loading areas or service
+docks on corner lots, if the parking, maneuvering or loading areas meet the standards in
+Sections 12.50.350 and 12.50.360.
+12.50.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:20
+J. Increased Setbacks Adjacent to Substandard Right-of-Way.
+1. Setbacks Adjacent to Substandard Alleys. Adjacent to an alley right-of-way less than 20
+feet in width, the setback from the centerline of the alley shall be a minimum of 10 feet, to
+maintain a 20-foot wide emergency fire access corridor free of obstructions. An additional
+setback from an alley may be required by the Fire Marshal if necessary to accommodate
+larger firefighting equipment.
+2. Additional Setbacks to Accommodate Street Widening. To accommodate street improve-
+ments and right-of-way dedications in compliance with the Transportation System Plan
+(TSP), additional setbacks beyond the minimum standards in the base zones shall be
+required on the streets identified in Table 12.50.130-1. On streets identified in Table
+12.50.130-1, the front setback shall be increased by the distance specified, measured
+from the center of the street right-of-way. This distance represents the eventual right-of-
+way width as specified in the TSP.
+  Table 12.50.130-1:
+Special Street-Facing Setback Requirements
+ Street  Feet
+SE 11th Ave: SE Walnut St to 90 feet south of SE Alder St 27
+SE 11th Pl: SE Maple St to SE Walnut St 27
+SE 12th Ave from SE Maple St to E Main St and from SE Elm St to SE Alder St 27
+SE 15th Ave from 400 feet north of SE Oak St to SE Walnut St, and from 50 feet
+south of SE Alder St north 510 feet 27
+SE 16th Ave from SE Oak St to SE Walnut St and from 50 feet south of SE Alder St
+north 510 feet 27
+SE 26th Ave from E Main St south to terminus 27
+SE 40th Ave from SE Bentley St to SE Ash St 27
+SE Alder St from SE 11th Ave to SE 21st Ave 27
+SE Ash St from 350 feet west of SE 40th Ave eastward to city boundary 27
+SE Bentley St from SE 32nd Ave east to city boundary 30
+SE Cedar St from SE 32nd Ave east to city boundary 30
+SE Currin Dr from SE River Rd to city boundary 27
+SE Currin Ln from SE River Rd to city boundary 27
+SE Elm St from SE 12th Ave west 225 feet 27
+SE Maple Ct from SE 18th Ave west 465 feet 27
+SE Walnut St from 50 feet east of S.E. 15th Ave eastward to end of street 27
+NW Brookwood Ave from LRT alignment north to US 26 49
+NW and SW Brookwood Ave from LRT alignment south to UGB 37
+ 12.50.130DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:21
+Table 12.50.130-1:
+Special Street-Facing Setback Requirements
+ Street  Feet
+NE 8th Ave from N Arrington Rd to 120 feet south of NE Queens Ln 27
+NE 9th Ave from 130 feet north of NE Arrington Rd to 120 feet south of NE Queens
+Ln 27
+NE 25th Ave from E Main St to end of road 27
+NE 28th Ave from E Main St to NE Cornell Rd 37
+NE Arrington Rd from NE Jackson School Rd to NE Cornell Rd 27
+NE Birchwood Ln from NE Grant St north 160 feet 27
+NE Birchwood Ter from NE Grant St to NE Donelson Rd 27
+NE Cornell Rd from E Main St to city boundary 49
+NE Lincoln St from NE Cornell Rd to NE 12th Ave 27
+NE Queens Ln from NE 8th Ave to NE Delsey Rd 27
+NW Brogden St within city 30
+NW Forest St from NW Connell Ave to city boundary 27
+NW Hyde St from NW 273rd Ave to NW 269th Ave (NE 28th Ave) 27
+E Main St from the east line of 10th Ave easterly to the City boundary 35
+N Dennis Ave from NW Garibaldi St to NW Forest St 27
+NE 11th Dr from E Main St to NE 12th Ave 27
+NW Padgett Rd (NW 10th Ave and NW Donelson St) 27
+E Main St from the east line of 5th Ave easterly to 10th Ave 35
+SE 10th Ave from SE Maple St north to SE Walnut St 49
+SE 10th Ave from SE Walnut St to SE Oak St 61
+(Ord. 6451 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6323 § 1, 2019; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6120 § 1, 2015)
+12.50.140  Building Height.
+A. Definition and Purposes. Building height is defined in Section 12.01.500. Minimum and
+maximum building height standards promote relationship of scale among structures in resi-
+dential, commercial, and industrial neighborhoods, helping to create harmonious environ-
+ments which enhance a sense of place. Variations in maximum building height among zones
+allow increased intensity of development in light rail, Mixed-Use and Urban Center zones.
+12.50.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:22
+B. Standards and Measurement Methodology.
+1. Standards. Except as provided under subsections C and D below, structures built after
+September 4, 2014 must comply with the maximum (and minimum if applicable) building
+height standards of the applicable base zone, unless a Variance or Adjustment has been
+granted by the Review Authority pursuant to Section 12.80.150.
+2. Figure 12.50.140-A illustrates the methods to measure building heights for buildings with
+flat roofs, mansard roof, and pitch or hip roofs. Except as provided under paragraph 4
+below, building height is measured from finished grade at the center of the front building
+plane.
+
+3. Minimum and maximum building height in light rail, Mixed-Use, and non-residential
+standard zones is calculated in feet, to the points shown in Figure 12.50.140-A.
+4. Figure 12.50.140-B illustrates the method to measure building heights for buildings on
+slopes. Except as provided under paragraph 5 below, building height is measured from
+finished grade at the center of the front building plane.
+
+ Figure 12.50.140-A:
+Measuring Building Height on Various Roof Types
+ Figure 12.50.140-B:
+Measuring Building Height on Slopes
+ 12.50.140DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:23
+5. If a difference of 6 feet or more exists between the elevations at finished grade of the front
+and rear building planes, building height shall be measured from the center of the side
+walls between the front and rear building planes.
+6. Minimum and maximum building height in single dwelling and multi-dwelling residential
+zones is calculated in stories, as shown in Figure 12.50.140-C below. In calculating
+minimum and maximum height in stories, a residential "story" is considered to be not
+more than 10 feet.
+7. Figure 12.50.140-C illustrates measurement of building height in stories related to
+basements and top stories. As illustrated, a basement is not a story if its finished floor is
+at least 6 feet below finished grade at the mid-point of the wall.
+
+C. Building Height Transition in Mixed-Use Zones. Building heights for new development in the
+MU-N and MU-C zones shall "step-down" and provide for a transition where adjacent to
+existing single detached and middle housing residential zoning to provide compatible scale
+and privacy between developments.
+1. Building height transitions shall be applied to new and vertically expanded buildings in the
+MU-N and MU-C zones within 20 feet (measured horizontally) of an existing single
+detached residential or middle housing building 30 feet or less in height.
+2. The building height transition standard is met when the height of the taller building (x)
+does not exceed 1 foot of height for every 1 foot separating the new building from the
+existing single detached residential or middle housing structure (y) as shown in Figure
+12.50.140-D.
+ Figure 12.50.140-C:
+Measuring Building Height in Relation to Basements and Top Stories
+12.50.140 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:24
+D. Exceptions to Maximum Building Height.
+1. The structures or structural parts listed below, while subject to Oregon Structural
+Specialty Code requirements, are not subject to the maximum building height require-
+ments of the applicable base zone:
+a. Chimneys
+b. Elevated storage tanks
+c. Spires or belfries
+d. Domes
+e. Monuments and flagpoles
+f. Emergency services training towers
+g. Observation towers
+h. Telecommunications towers
+i. Cooling towers
+j. Elevator shafts
+k. Electrical transmission towers
+l. Smokestacks
+m. Wind turbines, with the limitation listed in paragraph 2.b below
+n. Photovoltaic or solar equipment, with the limitation listed in paragraph 2.a below
+o. Roof-mounted, non-habitable mechanical penthouses for heating, cooling or ven-
+tilation equipment, with or without screening
+ Figure 12.50.140-D:
+Building Height Transition in Mixed-Use Zones
+ 12.50.140DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:25
+2. Limitations in Urban Center Zones. The exceptions to maximum building height listed in
+paragraph 1 above are limited in certain Urban Center zones as follows:
+a. On-site or roof mounted solar energy production equipment: maximum exception
+36 inches above the applicable height limit.
+b. On-site or roof-mounted wind energy production equipment in the UC-OR and
+UC-RP zones: maximum exception 30 feet above height limit.
+3. Limitations Based on Federal Aviation Regulations. Regardless of the building height
+standards in any base zone, all structures or parts of structures shall be consistent with
+Federal Aviation Regulation (FAR) Part 77 "Objects Affecting Navigable Airspace" (14
+CFR 77).
+4. Limitations for Structured Parking in MU-N and MU-C Zones. Pursuant to Subsection
+12.24.250.C, in the MU-N and MU-C zones for buildings where structured parking is
+integrated into the building envelope, the floors occupied by parking shall not be counted
+toward the maximum building height, provided that:
+a. The design of the building with integrated structured parking complies with the
+standards in Section 12.50.800, and with the standards in Subsection 12.50.360.D.
+for location and design of structured parking.
+b. The design of the building complies with the design standards contained in Section
+12.50.800 regarding building façade and architectural design requirements.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.50.150  Floor Area Ratio.
+A. Definition and Purpose. Floor area ratio (FAR) is defined in Section 12.01.500. Minimum FAR
+standards are intended to achieve an increased intensity of non-residential development in
+light rail zones and Mixed-Use and Urban Center zones, within walking distance of high
+capacity transit. Minimum FAR standards therefore are not applicable in every zone.
+B. Standards and Measurement Methodology.
+1. Except as provided under subsections C and D below, projects developed after Septem-
+ber 4, 2014 must comply with the minimum FAR standard of the applicable base zone,
+unless a Variance or Adjustment has been granted by the Review Authority pursuant to
+Section 12.80.150.
+12.50.140 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:26
+2. Figure 12.50.150-A illustrates the methods to calculate FAR.
+
+3. Calculation of Floor Area Ratio in mixed-use buildings includes the entire residential
+square footage including hallways, common space, mechanical rooms and other utility
+features.
+4. Floor Area Ratio for automobile service stations includes the service area covered under
+the service canopy.
+5. Floor Area Ratios for above-grade parking structures includes all areas within the exterior
+faces of the structure, whether used for parking stalls, ramps and aisles, equipment
+rooms, stairwells or commercial space.
+6. Floor Area Ratios may be calculated on a project-wide basis including multiple contigu-
+ous blocks, pursuant to subsection D below.
+7. In calculating FAR for non-residential development, 25% of employee parking area may
+be subtracted from net acreage if parking is provided at a ratio of 0.5 spaces per
+employee or less for the average number of employees in any 8-hour shift.
+ Figure 12.50.150-A:
+Measuring Floor Area Ratio (FAR)
+ 12.50.150DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:27
+8. In calculating FAR for non-residential development on a site containing existing mature or
+specimen trees as defined in Section 12.50.230, net lot area on a development site may
+be reduced by subtracting the area within the drip line of the trees, up to a maximum
+reduction of 35% of the original net area. Applications proposing net lot area reductions
+to preserve existing trees shall include a certified arborist's report and tree preservation
+plan. The approval of the development may be conditioned by the Review Authority on
+implementation of the recommended tree preservation measures.
+C. Exemptions from Minimum Floor Area Ratios in Phased Developments. Phased development
+in the following categories is exempt from minimum FAR requirements:
+1. Properties subject to an approved Concept Development Plan in the SCR-V zone;
+2. Properties in any phased commercial, industrial or institutional development subject to an
+approved Concept Development Plan or PUD; or
+3. Any development specified as exempt in a plan district under Subchapters 12.60 through
+12.67.
+D. Exceptions to Minimum Floor Area Ratios. Each phase in a phased development must meet
+the applicable minimum FAR standard unless the following standards are met:
+1. The subject phase is not more than 10% of the total project area;
+2. An FAR reduction in the subject phase is mitigated by an FAR increase of 10% or less in
+a later phase, which does not rely on redevelopment of early phases, and which is
+approved in an amended phasing plan and required in a binding legal instrument; or
+3. The subject phase combined with earlier phases meets the minimum FAR requirement.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 7, 2015)
+12.50.150 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:28
+12.50.200  Site Design.
+Site design standards include the following sections:
+12.50.210 Usable Open Space
+12.50.220 Landscaping
+12.50.230 Tree Preservation
+12.50.240 Exterior Lighting
+12.50.250 Fences, Free-Standing Walls, Hedges and Berms
+12.50.260 Sight Distance/Vision Clearance
+12.50.270 Waste and Recycling Facilities
+(Ord. 6401 § 1, 2022)
+12.50.210  Usable Open Space.
+A. Purpose. Usable open space is defined in Section 12.01.500. Availability of usable open space
+is an important aspect of livability and benefits public health and well-being. Usable open space
+standards are intended to assure opportunities for both private relaxation and for community
+interaction among residents, employees, and customers. These standards are intended to
+ensure that required usable open space is functional in terms of location, area, and level of
+improvement and that it remains functional and an asset to the surrounding properties and to
+the larger community.
+B. Applicability. These standards apply in all zones where usable open space standards are
+specified in the base zone in Subchapters 12.21 through 12.26.
+C. Exceptions. Where specified, usable open space standards in Subchapter 12.60 supersede
+the standards of this section.
+D. Exemptions. Single detached dwelling and middle housing developments meeting all of the
+following thresholds are exempt from the requirements of this section:
+1. The net acreage of the development is 3 acres or less;
+2. The development is within ½ mile (measured in walking distance) of a publicly accessible
+active open space such as a public park or elementary school; and
+ 12.50.210DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:29
+3. Minimum of square footage per lot is provided on at least 65% of the lots in the
+development, configured in contiguous front, side and/or rear yards with minimum
+dimensions as shown below:
+a. For single detached residential: 800 square feet area; depth at least 15 feet; width
+at least 40 feet.
+b. For middle housing: 200 square feet area; depth at least 10 feet; width at least 18
+feet.
+E. Exclusions. The following features cannot be counted toward the requirements of this section:
+1. Landscaping planted within 5 feet of building foundations;
+2. The hardscaped surfaces of sidewalks and parking areas;
+3. Private amenities intended for single owner or tenant use and which do not allow shared
+access;
+4. Perimeter or interior parking lot landscape strips or islands, even if enlarged or enhanced
+with seating; or
+5. Unimproved land (land which has not been developed or landscaped) or stormwater
+facilities within a development site unless such land is within a publicly accessible natural
+or wildlife viewing area.
+12.50.210 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:30
+F. Area Standards.
+1. Development approved after September 4, 2014 shall provide the usable open space
+specified in Table 12.50.210-1, unless a Variance or Adjustment has been approved
+under Section 12.80.150. In middle housing zones, development of duplexes, triplexes,
+quadplexes, townhouses, and cottage clusters shall be subject to the usable open space
+standards that apply to single detached residential development.
+  Table 12.50.210-1:
+Usable Open Space Minimum Area Requirements, by Zone and Development Type
+(expressed as percentage of net acreage or square feet per unit)
+ Project
+NA
+ Standard and Light Rail
+Residential Zones and
+MU-N Zone
+ Standard and
+Light Rail
+Non-Residential
+Zones, MU-C and
+MU-VTC Zones
+ SCC-DT and
+SCC-SC
+ All Urban
+Center Zones
+< 3.0
+Single Detached Residential (SDR) =
+exempt if compliant with Section
+12.50.210.D; otherwise 3%
+With no residential =
+none
+With residential =
+200 sq. ft./du
+See Section
+12.61.400.E
+See Section
+12.64.210
+Duplex and Townhouses = exempt if
+compliant with Section 12.50.210.D;
+otherwise 5%
+Multiple Dwelling Structure = 200 sq.
+ft./du
+3.1 to
+to 15.0
+Detached SDR = 5%
+Duplex and Townhouses = 7.5%
+Multiple Dwelling Structure = 200 sq.
+ft./du
+15.1 —
+50.0
+Detached SDR = 7.5%
+With no residential =
+5%;
+With residential =
+200 sq. ft./du;
+can be private or
+common space
+Duplex and Townhouses = 10%
+Multiple Dwelling Structure = 200 sq.
+ft./du
+> 50.1
+Detached SDR = 10%
+Duplex and Townhouses = 12.5%
+Multiple Dwelling Structure = 200 sq.
+ft./du
+2. In applying Table 12.50.210-1 to multi-dwelling residential developments, the 200 square
+feet per dwelling unit standard shall be used for 1-, 2- or 3-bedroom units. Dwelling units
+with 4 or more bedrooms shall provide 400 square feet of usable open space per dwelling
+unit.
+3. The standards of Subsection 12.61.400.E. shall be used in calculating minimum usable
+open space requirements in the SCC-SC zone.
+ 12.50.210DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:31Supp. No. 1
+4. In a non-residential zone where outdoor seating for eating and drinking establishments
+are provided, 65% of the private outdoor seating area may be counted toward the usable
+open space requirement if the area is outside the public right-of-way.
+5. In multi-dwelling or mixed-use developments, commonly accessible courtyards or roof-
+top courtyards, gardens and terraces may be counted as usable open space if such areas
+comply with the following standards:
+a. The area is open and available to the public or for the common use of residents
+and/or building tenants;
+b. The area contains seating and/or recreation facilities; and
+c. Landscaping is provided consistent with the character and function of the space.
+G. Locational Guidelines and Standards.
+1. Purpose. Locational guidelines and standards for usable open space are intended to help
+ensure that usable open space is sited to provide opportunities for active recreation and
+"third place" social interaction, except where Level 1, 2, or 3 Significant Natural Re-
+sources, 1% annual chance floodplain, or delineated wetlands are present on site as
+described in paragraph 3.
+2. Guidelines. In determining the location of Usable Open Space within a development,
+preference should be given to the following:
+a. Public parks, trails, corridors and other open space sites as identified in the Parks
+and Trails Master Plan and Natural Resource Analysis, a Community Plan in the
+Comprehensive Plan, or a Plan District per CDC Subchapters 12.60 through 12.67;
+or as approved by the Parks Commission and accepted by the City Council;
+b. Locations integrated into the overall design of the development;
+c. Easily accessible locations adjacent to public through streets;
+d. Visibility from front yards of adjacent lots or buildings;
+e. Adjacency to multiple properties within or adjacent to the development;
+f. Proximity to neighborhood commercial activity centers;
+g. Otherwise unprotected natural resources and wildlife habitat on the site, particularly
+if isolated smaller areas can be consolidated, and/or if an opportunity is available to
+provide passive space in conjunction with the natural resource site; or
+h. Opportunities to create contiguous natural resource corridors with adjacent prop-
+erties.
+3. Standards for Natural Open Spaces. Usable open space may include passive recreation
+areas only where inventoried Significant Natural Resources, 1% annual chance flood-
+plain, or delineated wetlands and wetlands buffers are present on site. Such areas may
+be counted as usable open space under the following standards:
+a. Public accessways and covered viewing areas are provided;
+12.50.210 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:32Supp. No. 1
+b. The entire Resource area within the site is enhanced pursuant to CWS standards
+and Section 12.27.225 if applicable;
+c. Only the on-site portion of the Resource area, floodplain, wetland or wetland buffer
+area visible from the viewing area is applicable toward the requirement; and
+d. The visible on-site Resource area, floodplain, wetlands or wetlands buffers will not
+count for more than 25% of the required usable open space.
+4. Standards for Private Open Spaces. In single detached dwelling or middle housing
+development not exempt under 12.50.210.D. above, and in multi-dwelling residential and
+mixed-use developments, spaces such as private yards, at grade patios, balconies,
+rooftop gardens, porches, or terraces may be counted as up to 65% of the usable open
+space requirement, if such spaces meet the following requirements:
+a. The spaces comply with the dimensions in Table 12.50.210-2;
+b. Patios, balconies or porches are screened or oriented to avoid direct lines of sight
+into adjacent units; and
+c. At grade spaces are differentiated through use of decorative pavers, pervious
+pavement, and changes in paving color, pattern and texture.
+  Table 12.50.210-2:
+Specifications for Spaces Meeting 65% UOS Requirements
+ Open Space Location Minimum Specifications
+Private Yards
+(single detached)
+Area: 1,000 sq. ft.; configured in contiguous front, side and/or rear
+yards
+Dimensions: depth at least 15 feet; width at least 40 feet
+Private Yards (2-dwelling
+townhouses or duplex)
+Area: 300 sq. ft.; configured in contiguous side and/or rear yards
+Dimensions: depth at least 10 feet; width at least 23 feet
+Private Yards
+(3-dwelling or more
+townhouses, triplexes,
+quadplexes, cottage
+clusters, or multiple
+dwelling structures)
+Area: 200 sq. ft.; configured in contiguous side and/or rear yards
+Dimensions: depth at least 10 feet; width at least 18 feet
+At Grade Patios Area: 100 sq. ft.
+Dimensions: depth at least 8 feet; width at least 10 feet
+Balconies or Porches Area: 50 sq. ft.
+Dimensions: depth at least 5 feet; width at least 8 feet
+Roof Gardens Area: 120 sq. ft.
+Dimensions: depth at least 8 feet; width at least 10 feet
+H. Improvement Standards.
+1. In Station Communities, Regional Centers, Town Centers or Main Streets as identified on
+the Hillsboro 2040 Growth Concept Boundaries Map (Comprehensive Plan Section
+23.1), usable open space improvements shall be designed to enhance the public
+pedestrian environment. Improvements may include, but are not limited to, the following:
+a. Hardscaped courtyards;
+ 12.50.210DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:33Supp. No. 1
+b. Water features;
+c. Public art or sculpture;
+d. Weather canopies or sunshades;
+e. Seating areas;
+f. Drinking fountains;
+g. Free-standing planters and/or raised planting beds;
+h. Play structures; or
+i. Other pedestrian-friendly features as approved by the Review Authority.
+2. In Inner and Outer Neighborhoods, Industrial and Commercial areas as identified on the
+Hillsboro 2040 Growth Concept Boundaries Map (Comprehensive Plan Section 23.1)
+usable open space improvements shall be designed to provide recreational and/or social
+interaction among residents, employees or visitors. Improvements in these areas may
+include, but are not limited to, the following:
+a. Play structures;
+b. Sport courts, fields, or tracks;
+c. Seating areas;
+d. Landscaped or hardscaped courtyards;
+e. Shelters, weather canopies or sunshades;
+f. Free-standing planters and/or raised planting beds; or
+g. Other pedestrian space or design features as approved by the Review Authority.
+I. Usable Open Space Standards: Maintenance and Minimum Area.
+1. The Review Authority may accept as required usable open space an area proposed for a
+public park, trail, corridor or other open space site consistent with paragraph G.2 above.
+Such acceptance shall be conditioned upon compliance with the following standards:
+a. If only unimproved land is proposed to be provided, the size and location of the land
+is consistent with paragraph G.2 above, and the land is accepted by the City
+Council;
+b. If land and improvements are proposed to be provided, the size and location of the
+land is consistent with paragraph G.2 above, the improvements of the area
+consistent with the Parks and Recreation Department standards for public parks,
+natural areas; and both the land and the improvements are accepted by the City
+Council and the Parks Commission as applicable.
+2. Land use approvals for developments containing usable open space shall assign
+maintenance responsibility for the usable open space if the area is not proposed and
+accepted as a public park under paragraph 1 above. The City may enter into an
+agreement with a third party for maintenance of public parks, trails, corridors or open
+space.
+12.50.210 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:34Supp. No. 1
+3. Ownership of common open space through a homeowners association or similar entity
+may be approved only under the limited circumstances listed below:
+a. Where both permanent ownership and maintenance of the private open space
+areas for a minimum of 40 years have been demonstrated to the satisfaction of the
+Parks and Recreation Director and the City Attorney; or
+b. In single detached dwelling and townhouse developments, where the common
+usable open space tract is at least 1.5 acres in area and all improvements therein
+meet the standards of the Parks and Recreation Department for installation in a
+public park.
+4. The Review Authority may decline to approve common usable open space if the
+standards in paragraph 3 above cannot be met.
+J. Usable Open Space in Phased Developments.
+1. Developments constructed in multiple phases may aggregate required usable open
+space into one or more areas if the following criteria are met:
+a. The location and required area of usable open space for the entire development is
+shown in the preliminary development application; and
+b. The percentage of total usable open space developed before or with occupancy of
+the first phase is at least proportional to the percentage of total acreage in the first
+phase.
+2. If an approved phasing plan allocates the majority of usable open space to a particular lot,
+a prorated share of the usable open space may be used to calculate FAR and/or
+residential density in other phases of the development. This provision is applicable
+whether the usable open space is retained in private ownership or is dedicated to the City
+as a public park.
+3. If a Planned Unit Development (PUD) application includes 5 acres or more of land
+proposed for public open space pursuant to paragraph G.2 above, the phasing and
+allocation plan for the usable open space shall be determined as part of the PUD
+approval. The Review Authority may condition approval of any phase of the PUD not
+containing usable open space to guarantee provision of usable open space in later
+phases.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6250 § 1, 2017; Ord. 6178 § 1, 2016; Ord. 6110 § 7,
+2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+ 12.50.210DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:35Supp. No. 1
+12.50.220  Landscaping.
+A. Purpose. Landscaping in new and existing developments accomplishes the following commu-
+nity purposes:
+1. Enhancing aesthetic and economic value in new developments and the community as a
+whole;
+2. Unifying new developments with existing neighborhoods and establishing a more pleas-
+ant community character;
+3. Softening and buffering large-scale structures and parking lots, and buffering or screen-
+ing unsightly features;
+4. Providing privacy and creating buffers between residential and non-residential uses;
+5. Aiding in energy conservation by providing shade from the sun and shelter from the wind;
+and
+6. Reducing stormwater runoff by providing permeable surfaces.
+B. Applicability. The standards of this section shall apply to all Type II and Type III development
+projects, except for single detached dwellings and middle housing, on properties for which
+base zone standards require landscaping.
+C. Exemptions. Landscaping within stormwater management facilities are exempt from the
+standards of this section, and shall be landscaped in compliance with the applicable provisions
+of the CWS Design and Construction Standards Chapter 3 Sensitive Areas and Vegetated
+Corridors and Chapter 4 Runoff Treatment and Control, as amended.
+D. Area and Maintenance Standards.
+1. Type II and III development applications submitted after September 4, 2014 shall provide
+landscaping which meets or exceeds the area percentages specified in the applicable
+base zone standards, unless a Variance or Adjustment has been granted by the Review
+Authority pursuant to Section 12.80.150.
+2. The standard in paragraph 1 above may be satisfied by providing vegetated landscaping
+only or vegetated landscaping in combination with other areas as follows:
+a. Natural vegetation compliant with paragraph E.10 below;
+b. Low Impact Development Approach (LIDA) stormwater facilities compliant with
+Section 12.64.750; or
+c. Hardscaped plazas or required usable open space compliant with Subsection
+12.50.210.H.1.
+3. On development sites in zones having a minimum landscaping percentage standard,
+required landscaping areas shall be located preferentially as follows: first, within front
+yard setbacks adjacent to streets; and second, within side or rear yard setbacks between
+residential and non-residential uses.
+12.50.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:36Supp. No. 1
+4. All areas of the site not occupied by buildings, parking and loading, storage, landscaping,
+required usable open space, or protected natural resources shall be improved with a
+layer of medium or medium-fine bark mulch 2 to 4 inches deep. The bark mulch shall be
+kept at least 2 inches away from the trunk of any tree and be kept free of weeds.
+5. All required plantings shall be maintained to the following standards:
+a. Each planting shall receive regular weekly watering as needed to ensure the plants
+are not stressed during the hotter portions of the growing season (from April 15th
+through October 15th). Water shall be provided in a manner that allows penetration
+into the soil around the tree.
+b. Stakes and ties shall be maintained and repaired as needed. Stakes and ties shall
+be removed if the trees are well rooted into the native soil and are able to withstand
+local wind conditions.
+c. A minimum 3-foot diameter planting area around each tree shall be maintained with
+a layer of medium or medium-fine bark mulch 2 to 4 inches deep. The bark mulch
+shall be kept at least 2 inches away from the trunk of the tree and be kept free of
+weeds.
+d. Any planting falling into one of the following conditions shall be replaced.
+i. Dead Plant. Any plant that has no live growth originating in all or a portion of
+the scaffolding branches.
+ii. Stressed Plant. Any plant that has lost 50% or more of its total foliage or has
+a reduction of 50% of normal leaf size for that species.
+E. Improvement Standards.
+1. Minimum Sizes and Spacing for Landscaping Materials. Table 12.50.220-1 shows the
+minimum sizes and spacing for landscaping materials at planting:
+  Table 12.50.220-1:
+Minimum Sizes and Spacing for Landscaping Materials
+Species Minimum size at planting
+Maximum spacing at
+planting
+Deciduous trees
+Single stem:
+2-inch caliper
+Multi-stem: 8 feet height
+Mature canopy width apart
+Coniferous trees 6 feet height
+15 feet on center;
+10 feet on center if planted
+as a screening buffer
+Large shrubs
+(6+ feet mature height) 5 gallon pot 5 feet on center
+ 12.50.220DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:37Supp. No. 1
+Table 12.50.220-1:
+Minimum Sizes and Spacing for Landscaping Materials
+Species Minimum size at planting
+Maximum spacing at
+planting
+Medium shrubs
+(3 to 6 feet mature height) 3 gallon pot 4 feet on center
+Small shrubs
+(1 to 3 feet mature height) 1 gallon pot 3 feet on center
+Ground covers and
+annuals
+1 gallon pots 2 feet on center
+4-inch pots 18 inches on center
+2¼­inch pots 12 inches on center
+2. Installation of plant materials shall be in accordance with the American Nursery and
+Landscaping Association standards and the following standards:
+a. Plant materials shall be nursery stock or the equivalent quality and installed to
+industry standards or better; and
+b. Plant materials shall be staked to current industry standards or better. Stakes and
+guy wires shall not interfere with vehicular or pedestrian traffic.
+3. For nonresidential development, required landscaping shall be located, selected and
+installed as an integral part of the site, building and streetscape design of the develop-
+ment site.
+4. Where practicable, landscaping species shall be selected to correspond in scale with the
+structures in the project, including selection of taller-height species adjacent to taller
+buildings, if not designated as not permitted by overhead utility lines or reduced setbacks.
+5. Vegetated landscaping shall include a mixture of vertical and horizontal elements such as
+ground cover, shrubs and trees. Trees shall be incorporated in landscaped areas that are
+at least 10 feet in depth and abut a public street.
+6. Nuisance plants as defined in Section 12.01.500 are not permitted for use in any
+landscaping.
+7. Use of drought-tolerant plant species is encouraged in required landscaping, and may be
+required when irrigation is not available. Drought-tolerant grasses, shrubs or trees may
+also be used outside the required landscaping areas specified in paragraphs C.3 and C.4
+above. Irrigation shall be provided in required landscaping areas for plants that are not
+drought-tolerant.
+8. Natural existing vegetation may be counted toward the landscaping requirement, pro-
+vided that the natural vegetation is maintained continuously to remove nuisance plants
+and to keep the natural vegetation alive.
+12.50.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:38Supp. No. 1
+9. Required landscaping in surface parking lots is subject to the standards in Section
+12.50.360.F. in addition to the standards in this section.
+10. Approved landscaping in common open space areas, parking strips, and in all yards
+adjacent to a public or private street shall be installed prior to issuance of certificates of
+occupancy or final building inspections. With City approval, financial assurance accept-
+able to the Director may be provided to ensure installation of required landscaping not
+more than 6 months following acceptance of public infrastructure or final certificates of
+occupancy.
+11. Landscaping provision and maintenance are continuing obligations of the property
+owner. If plantings die, the property owner shall replace each planting with an equivalent
+type (i.e., evergreen shrub replaces evergreen shrub, deciduous tree replaces deciduous
+tree, etc.). All human-made landscaping features required as part of a development
+approval shall be maintained in good condition or replaced with substantially similar
+features.
+12. Landscaping plans for development projects (excluding subdivisions) 1.0 gross acre or
+larger shall be prepared by a licensed landscape architect or other landscaping profes-
+sional as accepted by the Review Authority.
+13. Development of landscape plans should be completed in coordination with the local
+electric utility including pre-design, building, and maintenance phases.
+F. Design Guidelines. In addition to the standards in subsections D and E above, developments
+are encouraged to meet the following guidelines:
+1. Landscaping should be used to enhance pedestrian orientation by creating a sense of
+enclosure and to reduce the scale of large buildings and paved areas, especially in higher
+density areas surrounding light rail stations and in designated town centers and regional
+centers.
+2. Arbors or trellises supporting landscape materials should be considered for ornamenta-
+tion of exterior walls.
+3. Landscaping shall be selected, located, and installed to reduce adverse impacts on
+surrounding properties from root or canopy systems which may extend across property
+lines.
+4. Plant materials identified by the Review Authority as having potential to damage or
+disrupt existing underground utilities, curbs, sidewalks, or gutters through invasive root
+structures should not be used in any landscaping.
+5. Where feasible, tree planting should be consistent with or in excess of the standards of
+the 2021 American National Standards Institute A300 standards.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6178 § 1,
+2016; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+ 12.50.220DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:39Supp. No. 1
+12.50.230  Tree Preservation.
+A. Purpose. Tree preservation establishes character and livability in new neighborhoods and
+preserves the existing character in both residential and non-residential neighborhoods. Mature
+and specimen trees provide shade and temperature moderation, store and maintain carbon
+levels, and reduce air-borne pollutants. To encourage preservation of mature and specimen
+trees the City provides the option in Subsection 12.50.120.C.3. to reduce net acreage on
+project sites, for purposes of calculating residential densities and floor area ratios, where
+existing trees are preserved.
+B. Applicability. The standards of this section shall apply to all Type II and Type III development
+applications.
+C. Standards for Mature Tree Preservation. These standards apply to deciduous trees 8 inches or
+greater in diameter measured 4.5 feet above native grade, or coniferous trees 30 feet or taller
+in height.
+1. Development shall be sited and constructed to avoid removing or damaging mature
+trees. The burden of proof is on the applicant to demonstrate the necessity of tree
+removal.
+2. Applications for development of sites with stands of 5 or more overlapping mature tree
+canopies shall include a tree preservation plan prepared by a Certified Arborist. The plan
+shall identify trees which can be retained and which must be removed to accommodate
+the development or promote public safety. The plan shall also identify areas where
+potential wind throw may occur as a result of partially removing a stand of trees and
+recommend measures to prevent wind throw.
+3. The Review Authority may condition a land use approval to avoid disturbing tree roots by
+grading activities and to protect trees and other significant vegetation to be retained from
+construction activity impacts. Such conditions may include the retention of a qualified
+consulting arborist or horticulturist during and/or after site grading, and a tree mainte-
+nance and management program to provide protection to the trees as recommended by
+the arborist.
+12.50.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:40Supp. No. 1
+4. Trees shown as protected or preserved on the tree protection plan shall be marked and
+protected on site by a construction fence placed at least 5 feet outside the drip line(s)
+illustrated in Figure 12.50.230-A. No soil compaction, material or spoils storage shall be
+allowed within the drip line(s). This provision shall be enforced as a requirement of any
+Building and Engineering Permits for the project.
+
+5. Where the Review Authority determines that mature trees meet the criteria above,
+removal of the trees shall be mitigated by 1 of the following alternatives:
+a. Trees replaced on-site in accordance with an approved landscape plan including
+new plantings of similar character at least 2½
+ in caliper;
+b. A fee in-lieu-of replacement may be paid by the developer to the City. The amount
+of the in lieu of payment shall be approximately equal to the market value of the
+replacement trees cited in subparagraph a, above; or
+c. Replacement trees to be planted off-site in a public open space or park.
+6. Under Section 12.80.150, the applicant may seek an adjustment or variance for reduced
+setbacks to avoid removal of mature trees, provided measures are also taken to preserve
+the health of the trees. If approved, reduced setbacks must remain in compliance with
+Building Division requirements.
+7. The Director may request that the Building Official or the Public Works Director issue a
+Stop Work order to halt construction if site or building construction violates the standards
+of this section either intentionally or through negligence. If construction is halted, a legally
+binding mitigation plan and agreement shall be executed prior to resumption.
+ Figure 12.50.230-A:
+Tree Dripline Location
+ 12.50.230DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:41Supp. No. 1
+D. Standards for Specimen Tree Preservation. In addition to the standards in subsection C above,
+the standards in subsection D apply to the Specimen Trees described in Table 12.50.230-1.
+  Table 12.50.230-1:
+Specimen Tree Sizes
+Tree species
+Diameter defining Specimen status
+(measured at 4.5 feet above native grade)
+Single Douglas Fir greater than 24 inches
+Single Grand Fir, Ponderosa Pine,
+Western Hemlock, or Western Red Cedar greater than 12 inches;
+Any other single conifer greater than 20 inches
+Single Red Alder, Big Leaf Maple, or Oregon
+White Oak greater than 12 inches; or
+Any other single deciduous tree greater than 20 inches
+1. No specimen tree shall be removed or damaged during development construction unless
+1 or more of the following criteria are met:
+a. A Certified Arborist determines that the tree:
+i. Is a safety hazard to persons or property due to its location or condition; or
+ii. Is a dangerous tree as defined in Section 12.01.500; or
+iii. Was diseased, weakened, or dying before construction began and no practi-
+cable means is available to preserve it;
+b. A Registered Engineer determines that removal of the tree is necessary:
+i. To accommodate construction equipment access where there is no practica-
+ble alternative route; or
+ii. To accommodate grading necessary for required storm water management or
+structural building integrity, and there is no practicable grading alternative to
+meet those requirements; or
+iii. To accommodate proposed buildings or other permanent improvements, and
+there is no practicable alternative location or design option for the improve-
+ments at the same scale within the lot.
+12.50.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:42Supp. No. 1
+2. Under Section 12.80.150, the applicant may seek an adjustment or variance for reduced
+setbacks to avoid removal of specimen trees, provided measures are also taken to
+preserve the health of the trees. If approved, reduced setbacks must remain in compli-
+ance with Building Division requirements.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.50.240  Exterior Lighting.
+A. Purpose. Lighting standards ensure that new development provides functional security for
+persons and property and allows extended use of properties into nighttime hours. Lighting
+standards also ensure that lighting is installed and maintained to avoid unnecessary increases
+in ambient nighttime light levels and adverse impacts on adjacent properties.
+B. Applicability. Except as provided in subsection E below, the standards of this section shall
+apply to all Type II and Type III development applications in which exterior lighting is proposed
+or required as a condition of approval, unless a Variance or Adjustment has been granted by
+the Review Authority pursuant to Section 12.80.140 Variances and Adjustments.
+C. Standards.
+1. Development applications shall include a lighting plan showing locations and specifica-
+tions for all lighting used to illuminate public and private streets, buildings, sidewalks,
+multi-use paths, parking lots, plazas, or open space areas. The lighting plan shall be
+evaluated during the land use approval process for compliance with the standards of this
+section.
+2. For safety purposes, lighting shall be provided throughout the on-site pedestrian circu-
+lation system, including street frontages, sidewalks, multi-use paths, parking lots, build-
+ings, and plazas. The on-site pedestrian circulation system shall be lighted to a minimum
+level of 2 foot-candles to enhance pedestrian safety and allow use at night.
+3. Required bicycle parking shall be lighted to a minimum 3 foot-candles to allow secure use
+at night.
+4. The minimum lighting level for building entries of new multi-dwelling, retail, commercial,
+office, industrial and institutional buildings located within 300 feet of the property bound-
+aries of a major transit stop shall be 4 foot-candles. The minimum lighting level for all
+other primary building entrances shall be 3 foot-candles. Lights shall be 6 to 12 feet in
+height and the light source shall be shielded to reduce glare consistent with subsection D
+below.
+5. Maximum lighting levels for pedestrian circulation systems, required bicycle parking, and
+building entrances shall be 4 foot-candles.
+ 12.50.240DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:43Supp. No. 1
+6. Lighting plans shall also show any proposed exterior architectural or aesthetic lighting
+used to create visual interest or emphasize building features. Aesthetic and architectural
+lighting shall also be evaluated during the land use approval process for compliance with
+the standards of this section.
+7. Foreground spaces, such as building entrances and plaza seating areas, shall use
+pedestrian-scale lighting that defines the space without glare. Background spaces such
+as parking lots shall be illuminated as unobtrusively as practicable to meet the functional
+needs of safe circulation and of protecting people and property.
+8. Site lighting that could be confused with warning, emergency, or traffic signals is not
+permitted.
+9. Site lighting that could be confused with airport lighting is not permitted.
+D. Light Trespass Standards.
+1. Light Trespass. Maximum lighting levels at property lines generally shall not increase
+lighting level more than 1.75 foot-candles 10 feet beyond the property line, as illustrated
+in Figure 12.50.240-A:
+
+ Figure 12.50.240-A:
+Examples of Light Trespass
+12.50.240 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:44Supp. No. 1
+2. Shielding. Any light source or lamp that emits more than 900 lumens (13 watt compact
+fluorescent or 60 watt incandescent) shall be concealed or shielded with an Illumination
+Engineering Society of North America (IESNA) full cut-off style fixture with an angle not
+exceeding 90 degrees to minimize the potential for glare and unnecessary diffusion on
+adjacent property. Examples of shielded light fixtures are shown in Figure 12.50.240-B:
+
+E. Exemptions. The following types of lighting are not subject to the requirements of this section:
+1. Public street and right-of-way lighting (standards for street lighting are addressed in the
+Public Works Design and Construction Standards);
+2. Temporary decorative seasonal lighting;
+3. Temporary lighting for emergency or nighttime work and construction;
+4. Temporary lighting for theatrical, television and performance areas, or for special public
+events;
+5. Lighting for a special district, street or building that, according to an adopted City plan or
+ordinance, is determined to require special lighting aesthetics as part of its physical
+character;
+6. Lighting required and regulated by the FAA; and
+7. Lighting for outdoor recreational uses such as stadiums, driving ranges, ball diamonds,
+playing fields, tennis courts and similar uses, provided that: (a) light poles are not more
+than 80 feet tall, (b) maximum illumination at the property line is not brighter than 2
+foot-candles, and exterior lighting is extinguished no later than 11:00 p.m.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.50.250  Fences, Free-Standing Walls, Hedges and Berms.
+A. Purpose. Fences, walls, hedges and berms mark property boundaries and provide privacy and
+security. Standards for construction and installation of fences, walls, hedges and berms are
+intended to ensure that these features are attractive from the public view, accomplish their
+intended purposes, and are reasonably maintained for both private and public benefit.
+ Figure 12.50.240-B:
+Examples of Shielded Light Fixtures
+ 12.50.250DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:45
+B. Applicability. The standards of this section shall apply:
+1. To all Type II or III development applications in which fences, hedges, free-standing walls
+or berms are proposed or required as a condition of approval; and
+2. To any fences, hedges, free-standing walls or berms installed outside the land use
+approval process.
+C. Fence Permit Required; Exception.
+1. Except as provided in paragraph 2 below, installation of a new fence or wall, or relocation
+of a portion of an existing fence or wall, shall require submittal and approval of a fence
+permit application according to the process specified in Section 12.80.060.
+2. When required through a Type II or Type III land use approval, a separate fence permit is
+not required for installation of a fence, free-standing wall, hedge or berm consistent with
+that approval.
+D. Residential Fence and Wall Standards. These standards in this subsection apply to all
+residential fences and walls.
+1. Fences and walls in residential zones are limited to 6 feet 2 inches in height except when:
+a. A residential zone abuts a Commercial, Mixed-Use, Urban Center, Institutional or
+Industrial zone, fences may be up to 8 feet 2 inches in height.
+b. On interior lots, fences and walls within a front yard setback shall not exceed 4 feet
+2 inches.
+c. On corner lots, through lots and multiple frontage lots, the 4-foot 2-inch height
+limitation applies only at the front yard setback abutting the façade with the front
+door.
+d. On flag lots, the height limit of 4 feet 2 inches does not apply in the front yard
+setback.
+2. Soundwalls installed adjacent to light rail facilities are exempt from these height restric-
+tions above.
+3. Fences and walls in residential zones shall not conflict with vision clearance require-
+ments in Section 12.50.260.
+4. One arbor, gate, or similar garden structure not exceeding 8 feet in height and 4 feet in
+width is allowed within the front yard outside a vision clearance triangle.
+5. Use of barbed wire, razor wire, and electric fences shall be consistent with the require-
+ments of the Hillsboro Municipal Code.
+6. Chain link fences shall include a top rail for security and maintenance. Chain link fences
+installed adjacent to landscaped areas, wetlands, or open space areas shall have a
+black, dark brown, or dark green powder coating.
+12.50.250 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:46
+E. Fencing and Wall Requirements for New Residential Developments. In addition to the stan-
+dards in subsection D, above, the following standards apply to all applications for Development
+Review, preliminary Subdivision plat or Planned Unit Development concept plan approval for
+new residential development.
+1. Applications for Development Review, preliminary Subdivision plat or Planned Unit
+Development concept plan approval for new residential development shall submit pro-
+posed fencing or wall plans in compliance with the standards in Table 12.50.250-1.
+2. Perimeter street fences and walls shall be installed by the developer prior to the
+acceptance of public infrastructure, according to the standards listed in Table 12.50.250-1.
+3. Uniform interior yard fences and walls shall be constructed during or after home
+construction, according to the fencing plan approved during preliminary review.
+  Table 12.50.250-1:
+Perimeter Fence and Wall Standards for New Residential Developments
+Project Character Preferred Standard
+Arterial or collector frontage where
+garages and front doors face the
+interior street and rear yards face the
+arterial or collector street
+ • 1st: Masonry or brick walls; anti-graffiti sealant
+ • 2nd: Solid wood fence; masonry or brick
+columns with cap board; anti-graffiti sealant
+ • All fences to be maximum 6 feet high except
+in vision clearance areas
+ • Construction to include a minimum 3-foot wide
+landscaped strip between the sidewalk and
+the fence or wall
+Arterial or collector frontage where
+front doors face the arterial or collector
+street and garages face the interior
+street
+ • 1st: Masonry or brick walls
+ • 2nd: Metal fence with masonry or brick
+columns
+ • 3rd: Solid wood fence with cap board
+ • All fences to be maximum 4 feet high except
+in vision clearance areas
+ • Individual gates or openings to be provided for
+single detached dwellings; consolidated gates
+or openings may be provided for multiple
+dwelling structures and duplex structures
+Neighborhood route or local street
+frontage where garages and front
+doors face the interior street
+Uniform fencing plan to be approved during Type
+II or Type III application review
+Neighborhood route or local street
+frontage where garages and front
+doors face the neighborhood route
+street
+Uniform fencing plan, to be approved during Type
+II or Type III application review
+Perimeter fences or walls adjacent to
+surrounding properties (not street
+frontage)
+Uniform fencing plan, to be approved during Type
+II or Type III application review
+ 12.50.250DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:47
+F. Commercial, Industrial, and Institutional Fence and Wall Standards.
+1. Fences and walls in commercial, industrial, and institutional zones shall not exceed 8 feet
+in height.
+2. Chain link fences shall include a top rail for security and maintenance. Chain link fences
+installed adjacent to landscaped areas, wetlands, or open space areas shall have a
+black, dark brown, or dark green powder coating.
+3. Use of electric fences and/or fences topped with barbed wire, razor wire, or similar
+installations shall comply with the requirements of the Hillsboro Municipal Code.
+4. Soundwalls installed for sound attenuation are exempt from the height restrictions
+contained in this section.
+G. Standards for Hedges. In all zones, vegetation hedges may be installed in compliance with the
+following standards:
+1. Hedge plantings shall not include nuisance plants as defined in Section 12.01.500;
+2. Hedge heights may exceed the maximum fence height standards in any zone;
+3. Hedges may be installed without a fence permit, but must comply with the vision
+clearance requirements in Section 12.50.260; and
+4. Hedges shall not extend into the public right-of-way.
+H. Standards for Berms. As an alternative or in addition to perimeter fences or walls, projects may
+include perimeter earthen berms. Berms in residential developments shall be a maximum 6
+feet in height, with a maximum 25% slope. Berms in commercial, industrial or institutional
+developments may exceed this height and/or slope if approved through the Development
+Review process. If approved, berms shall include stabilizing landscaping on all sloped areas;
+irrigation; and provision for drainage at the toe of all slopes.
+(Ord. 6451 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1, 2019; Ord. 6294 § 1,
+2019; Ord. 6120 § 1, 2015)
+12.50.260  Sight Distance/Vision Clearance.
+A. Purpose. Specified areas along intersection approach legs and across their included corners
+should be clear of obstruction that might block a driver's view of potentially conflicting vehicles,
+bicycles, or pedestrians. When established and maintained in triangular areas at street
+intersections or intersections with alleys or driveways, these vision clearance areas (also
+called clear sight triangles or sight distance areas) ensure that drivers, bicyclists and pedes-
+trians have clearer views of crossing traffic, which improves intersection safety for all parties.
+Corner lots or lots on curvilinear streets may also have additional setback or site design
+requirements to ensure proper sight distance.
+12.50.250 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:48
+B. Applicability.
+1. The standards of this section apply to:
+a. All development applications:
+i. At the intersection of 2 or more streets;
+ii. At the intersections of a street and an alley;
+iii. At the intersections of a street or alley and common driveway; and
+iv. At the intersection of a street and a mixed-use, commercial, industrial or
+institutional use driveway.
+b. Any development occurring outside the land use approval process.
+2. The areas subject to these standards are those portions of the vision clearance areas
+located on private property outside the public right-of-way that avoids obstruction of
+intersection site distance for a public street approach to a public street or driveway
+approach to a public street. Vision clearance requirements in the public right-of-way are
+specified in the Public Works Design and Construction Standards.
+C. Standards.
+1. Projects at intersections listed in paragraph B.2 above must provide intersection sight
+distance as measured and recommended in accordance with the current AASHTO Policy
+on Geometric Design of Highways and Streets, unless otherwise approved in writing by
+the City Engineer or Road Agency Engineer. Sight distances shall be based on the 85th
+percentile or posted speed of the cross street (whichever is higher) as determined by a
+traffic engineering study.
+2. Projects at intersections within private property other than those listed in paragraph B.2
+above must provide sight distance in compliance with Figure 12.50.360-A.
+3. With the exceptions of intersections in the SCC-DT zone listed in paragraphs 4 and 5
+below, required sight distance triangles shall contain no plantings, walls, structures, or
+temporary or permanent obstructions between 30 inches and 10 feet in height, except
+occasional tree trunks or poles. The vertical distances in this section shall be measured
+vertically from the top of the curb or, if there is no curb, from the centerline street grade.
+4. Projects within the SCC-DT zone or within a Mixed-Use Town Center or Village Center
+Core Area established in accordance with Section 12.65.030 must meet the intent of the
+AASHTO standard in paragraph 1 above, but the sight distance triangle may be occupied
+by a plaza, provided the location and size of any furniture, planters or landscaping in the
+plaza do not in the opinion of the City Engineer or the Road Agency Engineer create a
+sight distance hazard.
+5. Projects within the SCC-DT zone or within a Mixed-Use Town Center or Village Center
+Core Area established in accordance with Section 12.65.030 may also meet the intent of
+the AASHTO standard in paragraph 1 above but may provide a structural support for
+ 12.50.260DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:49
+upper stories above the sight distance triangle, provided the location and size of such
+supports do not in the opinion of the City Engineer or the Road Agency Engineer create
+an unsafe sight distance hazard.
+6. The Review Authority may condition land use approvals for projects on corner lots or lots
+on curvilinear streets to have additional setbacks in order to meet sight distance
+requirements.
+7. Sight distance triangle locations and dimensions shall be based on ultimate street and
+cross street rights-of-way.
+D. Exceptions. Sight distance requirements at intersections may be modified at the discretion of
+the City Engineer or Road Agency Engineer. Requests for modifications must be hardship
+driven and submitted in writing prior to or during the land use application review process. Any
+approval of a sight distance triangle exception shall be made in writing by the City Engineer or
+Road Agency Engineer, and may be conditioned to meet the intent of this standard.
+E. Enforcement. To enforce this standard following approval of a land use application, the Review
+Authority may impose conditions on a land use application approval to require plat notes, deed
+restrictions or provision of sight distance easements.
+(Ord. 6451 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6258 § 1, 2018; Ord. 6110 § 7,
+2015)
+12.50.270  Waste and Recycling Facilities.
+A. Purpose. These standards are intended to assure that development incorporates functional
+and adequate space and access for on-site storage and efficient collection of mixed solid waste
+and recyclables prior to pick up and removal.
+B. Applicability. Except as provided in subsection E, below, the standards of this section apply to:
+1. All new construction subject to a Type II or III review procedure in any of the following
+zones:
+a. Commercial;
+b. Mixed-Use;
+c. Industrial.
+2. All new construction of institutional development subject to a Type II or III review
+procedure in any zone; and
+3. All expansions of existing commercial, mixed-use, industrial or institutional development
+which meets the threshold of the Development Review process as described in Subsec-
+tion 12.80.040.B. paragraph 5 or 6; and
+4. Construction of new residential structures which include 5 or more dwelling units; and
+5. In any zone, any expansion of existing multi-dwelling residential development which
+meets the threshold of the Development Review process as described in Subsection
+12.80.040.B. paragraph 5 or 6.
+12.50.260 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:50
+C. Standards.
+1. Combined Storage Areas. Storage areas for townhouses, multiple dwelling structures, or
+multiple uses on a single site or adjacent sites may be combined and shared. Storage
+area space requirements can be satisfied with a single location or multiple locations, and
+can combine both interior and exterior locations.
+2. Co-Location. To encourage its use, the storage area for recyclables shall be co-located
+with the storage area for residual mixed solid waste.
+3. Storage Area Size. Buildings shall provide the minimum storage areas shown in Table
+12.50.270-1 below. If a building has more than one of the uses listed, the storage area
+requirement for the entire building shall be the sum of the requirements for the areas of
+each use. For purposes of this calculation, the floor area of the storage facility itself shall
+not be included in the gross floor area (GFA).
+  Table 12.50.270-1:
+Waste and Recycling Storage Area Size Requirements
+Type of Use Minimum Storage Area
+Residential: Shared facilities 100 sq. ft. plus 5 sq. ft. per unit for each unit above
+10 (can be provided in multiple locations)
+Commercial:
+ • Retail Products and
+Services 50 sq. ft. plus 5 sq. ft./1,000 sq. ft. GFA
+ • Food Services Operations 100 sq. ft. plus 10 sq. ft./1,000 sq. ft. GFA
+ • All other uses 50 sq. ft. plus 5 sq. ft./1,000 sq. ft. GFA
+Industrial 50 sq. ft. plus 6 sq. ft./1,000 sq. ft. GFA
+Institutional 50 sq. ft. plus 4 sq. ft./1,000 sq. ft. GFA
+All other uses 50 sq. ft. plus 4 sq. ft./1,000 sq. ft. GFA
+4. Storage Height. The specific areas in paragraph 3 above are based on a storage height
+of 4 feet. Vertical storage higher than 4 feet but no higher than 7 feet may be used to
+accommodate the same volume of storage in a smaller floor area. If vertical or stacked
+storage is proposed, the site plan shall include drawings to illustrate the layout of the
+storage area and dimensions of containers.
+D. Location, Design and Access Standards for Storage Areas.
+1. Location Standards.
+a. Exterior storage areas shall be located in central and visible locations on the site to
+enhance security for users.
+b. Storage areas shall not obstruct on-site or off-site pedestrian or vehicle traffic
+movement.
+ 12.50.270DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:51
+c. Storage areas shall be accessible to waste collection vehicles, on accessways
+compliant with paragraph 3 below, without requiring backing movements onto a
+public or private street or alley.
+2. Design Standards.
+a. Exterior storage areas shall be contained within opaque enclosures and gates, built
+with the same type of materials as the primary structure on the site. Storage areas
+shall be screened and buffered from on-site or existing off-site residential living
+spaces.
+b. Gate openings which allow access to users and haulers shall be provided on all
+storage areas. Gate openings for haulers shall be a minimum of 12 feet wide and
+capable of being secured in both closed and open positions.
+3. Access Standards.
+a. Storage areas shall be accessible to users at convenient times of the day, and to
+waste collection service personnel on the day and approximate time collection
+service is scheduled. However, access to storage areas may be limited for security
+reasons.
+b. Storage areas shall be designed and surfaced to be easily accessible to waste
+collection trucks and equipment. Storage areas and vehicle approach drives shall
+be paved, and the maximum slope on any approach drive shall be no greater than
+3%.
+c. The full length of the accessway to any enclosed or covered storage area shall
+provide at least 12 feet horizontal clearance and 20 feet vertical clearance shall be
+provided to accommodate collection trucks and containers.
+d. If only a single access point is available to the storage area, adequate turning radius
+shall be provided to allow collection vehicles to safely exit the site by driving
+forward.
+E. Exemptions. Curbside collection of solid waste and recyclables from individual dwelling units in
+townhouse buildings containing 5 or more units on a public or private street or alley may be
+permitted with the consent of the applicable collection service.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.50.270 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:52

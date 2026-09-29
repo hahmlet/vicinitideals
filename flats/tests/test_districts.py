@@ -659,6 +659,62 @@ RULINGS: dict[str, dict[str, str]] = {
             "provider named in CDC 501-8."
         ),
     },
+    "or/washington/hillsboro": {
+        # Every zone the Community Development Code prints a Housing Types
+        # Permitted table for is encoded (2026-09-29, draft, a cloud
+        # session), and the map's ANX, CO, SID I-P and SC-BP are zone
+        # rulings in the layer. What the harvest still prints is below:
+        # four overlays, two plan-district and zone-family names, and
+        # abbreviations.
+        "CRO": (
+            "overlay: the Cultural Resource Overlay zone, CDC 12.27 "
+            "(12.27.overlay-zones L1384); cultural resources, overlay work."
+        ),
+        "FAR": (
+            "not-a-zone: floor area ratio, the development intensity "
+            "standard 12.24 applies with du/na in the UC zones."
+        ),
+        "GFA": (
+            "not-a-zone: gross floor area, defined in 12.01.500 and used "
+            "for the I-P support commercial cluster cap (12.25)."
+        ),
+        "RFO": (
+            "overlay: the Regulatory Floodplain Overlay zone, CDC 12.27 "
+            "(12.27.overlay-zones L127); floodplain, overlay work."
+        ),
+        "ROW": (
+            "not-a-zone: right-of-way, in the facade-window table of the "
+            "North Hillsboro Industrial plan district (12.66)."
+        ),
+        "SID": (
+            "overlay: the Special Industrial District, 12.27.610, 'an "
+            "overlay zone supplementing the provisions of the underlying "
+            "I-P Industrial Park zone'. I-P is encoded and refuses; the "
+            "map's 'SID I-P' is ruled an alias of it in the layer."
+        ),
+        "SNRO": (
+            "overlay: the Significant Natural Resources Overlay zone, CDC "
+            "12.27 (12.27.overlay-zones L758); overlay work."
+        ),
+        "TIA": (
+            "not-a-zone: Traffic Impact Analysis, a study the South "
+            "Hillsboro and Witch Hazel Village South plan districts ask for."
+        ),
+        "UC": (
+            "not-a-zone: the Urban Center family of zones (UC-RM, UC-MU, "
+            "UC-AC, UC-NC, UC-OR, UC-RP), each encoded under its own code; "
+            "12.64 AmberGlen names the family, not a district."
+        ),
+        "WHVS": (
+            "not-a-zone: the Witch Hazel Village South plan district, CDC "
+            "12.68, which modifies the zones under it; a plan district, not "
+            "a zone on the map."
+        ),
+        "ZC": (
+            "not-a-zone: a Zone Change application, 12.80 (12.80.applications "
+            "L2541), a procedure."
+        ),
+    },
 }
 
 #: Designations found by hand while ruling the rows above, which the ledger

@@ -250,7 +250,12 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
                 if "alley_at_rear" in (v.when or ()):
                     keyed_to_line += 1
     assert keyed_to_lot == []
-    assert keyed_to_line == 28 + 19
+    # + 1 on 2026-09-29: Hillsboro SCR-OTC, a draft from a cloud session.
+    # Table 12.21.750-1 gives a rear-loaded dwelling a deeper rear yard (16
+    # feet against 10), and 12.50.715 C.2.c.i sends an alley-backed lot's
+    # access to the alley, so the rear line's own fact is the key. It
+    # tightens; nothing is waived.
+    assert keyed_to_line == 28 + 19 + 1
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:
@@ -349,9 +354,14 @@ def test_four_cities_send_the_driveway_to_the_alley_in_the_corpus(layers) -> Non
         held = layer.defaults.get("parking_alley_access_required")
         if held is not None and held.value is True:
             says_true.add(lid)
+    # A fifth on 2026-09-29, Hillsboro, a draft from a cloud session:
+    # 12.50.715 C.2.c.i takes a middle-housing lot's access "from an
+    # improved abutting alley" where there is one. No quadfit jurisdiction
+    # carries Washington County yet, so its id is written out.
     assert says_true == {
         layer_id_for("portland"), layer_id_for("gresham"),
         layer_id_for("wilsonville"), layer_id_for("west_linn"),
+        "or/washington/hillsboro",
     }
     # Milwaukie's alley sentence places a stall; it does not route the drive.
     assert layers[layer_id_for("milwaukie")].defaults.get("parking_alley_access_required") is None

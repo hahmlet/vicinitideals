@@ -1,5 +1,5 @@
 {
-  "digest": "e7067c5a72ac605f69622901fe07ffa871cc7628ca612961a797f27f8f60678c",
+  "digest": "e9bd5a8a8d1d00798100fc9df139fedd1699bffee40d6bfbfac4759bfa6c7873",
   "layers": {
     "or": {
       "misattributed": [],
@@ -470,6 +470,860 @@
     "or/washington/_unincorporated": {
       "misattributed": [],
       "label": "Washington Unincorporated",
+      "counts": {},
+      "gaps": []
+    },
+    "or/washington/hillsboro": {
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "12.50.715",
+          "found": "12.50.715 12.50.710",
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "driveway_approach_max_width_ft",
+          "claimed": "12.50.715",
+          "found": "12.50.715 12.50.710",
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L179-L182"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "corner_access_street",
+          "claimed": "12.50.715",
+          "found": "12.50.715 12.50.710",
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L186-L188"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "parking_alley_access_required",
+          "claimed": "12.50.715",
+          "found": "12.50.715 12.50.710",
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L186-L190"
+        },
+        {
+          "zone": "MR-1",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "MR-2",
+          "field": "max_coverage_pct",
+          "claimed": "12.22.250",
+          "found": "12.22.240",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L586,L589-L593"
+        },
+        {
+          "zone": "MR-2",
+          "field": "max_coverage_pct [unit_lots]",
+          "claimed": "12.22.250",
+          "found": "12.22.240",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L586,L589,L594"
+        },
+        {
+          "zone": "MR-2",
+          "field": "max_density_du_per_acre",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L545"
+        },
+        {
+          "zone": "MR-2",
+          "field": "max_height_ft",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L582-L583"
+        },
+        {
+          "zone": "MR-2",
+          "field": "max_height_stories",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L582-L583"
+        },
+        {
+          "zone": "MR-2",
+          "field": "min_density_du_per_acre",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L544"
+        },
+        {
+          "zone": "MR-2",
+          "field": "min_frontage_ft",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L560"
+        },
+        {
+          "zone": "MR-2",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L559"
+        },
+        {
+          "zone": "MR-2",
+          "field": "min_lot_width_ft",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L557-L558"
+        },
+        {
+          "zone": "MR-2",
+          "field": "setback_front_ft",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L566-L568"
+        },
+        {
+          "zone": "MR-2",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L566,L571"
+        },
+        {
+          "zone": "MR-2",
+          "field": "setback_rear_ft",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L574-L576"
+        },
+        {
+          "zone": "MR-2",
+          "field": "setback_side_ft",
+          "claimed": "12.22.250",
+          "found": "12.22.250 12.22.220",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L572-L573"
+        },
+        {
+          "zone": "MR-3",
+          "field": "max_coverage_pct",
+          "claimed": "12.22.350",
+          "found": "12.22.340",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L818,L821-L825"
+        },
+        {
+          "zone": "MR-3",
+          "field": "max_coverage_pct [unit_lots]",
+          "claimed": "12.22.350",
+          "found": "12.22.340",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L818,L821,L826"
+        },
+        {
+          "zone": "MR-3",
+          "field": "max_density_du_per_acre",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.22.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L773"
+        },
+        {
+          "zone": "MR-3",
+          "field": "max_height_stories",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.21.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L809-L810"
+        },
+        {
+          "zone": "MR-3",
+          "field": "min_density_du_per_acre",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.22.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L772"
+        },
+        {
+          "zone": "MR-3",
+          "field": "min_frontage_ft",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.22.320 12.21.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L787"
+        },
+        {
+          "zone": "MR-3",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.22.320 12.21.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L786"
+        },
+        {
+          "zone": "MR-3",
+          "field": "min_lot_width_ft",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.22.320 12.21.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L785"
+        },
+        {
+          "zone": "MR-3",
+          "field": "setback_front_ft",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.21.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788-L791"
+        },
+        {
+          "zone": "MR-3",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.21.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788-L789,L794"
+        },
+        {
+          "zone": "MR-3",
+          "field": "setback_rear_ft",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.21.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788,L800-L803"
+        },
+        {
+          "zone": "MR-3",
+          "field": "setback_side_ft",
+          "claimed": "12.22.350",
+          "found": "12.22.350 12.21.320",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788,L795-L796"
+        },
+        {
+          "zone": "MU-C",
+          "field": "min_frontage_ft",
+          "claimed": "12.24.260",
+          "found": "12.24.260 0.75",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806,L810"
+        },
+        {
+          "zone": "MU-C",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "MU-C",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.24.260",
+          "found": "12.24.260 0.75",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806,L809"
+        },
+        {
+          "zone": "MU-C",
+          "field": "min_lot_width_ft",
+          "claimed": "12.24.260",
+          "found": "12.24.260 0.75",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806-L808"
+        },
+        {
+          "zone": "MU-N",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "R-10",
+          "field": "max_coverage_pct",
+          "claimed": "12.21.150",
+          "found": "12.21.150 12.01.500",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L344,L353"
+        },
+        {
+          "zone": "R-10",
+          "field": "max_coverage_pct [corner_lot]",
+          "claimed": "12.21.150",
+          "found": "12.21.150 12.01.500",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L344,L353-L354"
+        },
+        {
+          "zone": "R-10",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "R-10",
+          "field": "setback_front_ft",
+          "claimed": "12.21.150",
+          "found": "12.21.150 12.21.120",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L337"
+        },
+        {
+          "zone": "R-10",
+          "field": "setback_rear_ft",
+          "claimed": "12.21.150",
+          "found": "12.21.150 12.21.120",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L339"
+        },
+        {
+          "zone": "R-10",
+          "field": "setback_side_ft",
+          "claimed": "12.21.150",
+          "found": "12.21.150 12.21.120",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L338"
+        },
+        {
+          "zone": "R-4.5",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "R-6",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "R-7",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "R-8.5",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "SCBP",
+          "field": "quadplex_allowed",
+          "claimed": "12.25.420",
+          "found": "12.25.400",
+          "quote": "or/washington/hillsboro/cdc.12.25.industrial-zones.txt#L1301-L1302,L1305"
+        },
+        {
+          "zone": "SCC-DT",
+          "field": "max_coverage_pct",
+          "claimed": "12.23.360",
+          "found": "12.23.350",
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L874,L886"
+        },
+        {
+          "zone": "SCC-DT",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.23.360",
+          "found": "12.23.360 12.61.400",
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L863,L866"
+        },
+        {
+          "zone": "SCC-DT",
+          "field": "min_lot_width_ft",
+          "claimed": "12.23.360",
+          "found": "12.23.360 12.61.400",
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L863-L865"
+        },
+        {
+          "zone": "SCC-DT",
+          "field": "quadplex_allowed",
+          "claimed": "12.23.320",
+          "found": "12.23.320 12.61.400",
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L694-L696,L703"
+        },
+        {
+          "zone": "SCC-DT",
+          "field": "setback_rear_ft",
+          "claimed": "12.23.360",
+          "found": "12.23.350",
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L874,L877"
+        },
+        {
+          "zone": "SCC-DT",
+          "field": "setback_side_ft",
+          "claimed": "12.23.360",
+          "found": "12.23.360 12.61.400",
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L867,L871"
+        },
+        {
+          "zone": "SCR-DNC",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "max_density_du_per_acre",
+          "claimed": "12.22.560",
+          "found": "12.22.560 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1339"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "max_density_du_per_acre [abuts_lower_density_zone]",
+          "claimed": "12.22.560",
+          "found": "12.22.560 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1330-L1335"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "min_density_du_per_acre",
+          "claimed": "12.22.560",
+          "found": "12.22.560 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1330"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "min_frontage_ft",
+          "claimed": "12.22.560",
+          "found": "12.22.540 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1373,L1379-L1380"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.22.560",
+          "found": "12.22.540 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1372"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "min_lot_width_ft",
+          "claimed": "12.22.560",
+          "found": "12.22.540 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1361-L1366"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "setback_front_ft",
+          "claimed": "12.22.560",
+          "found": "12.22.540 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384-L1385,L1390-L1391"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "12.22.560",
+          "found": "12.22.540 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384-L1385,L1394"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "setback_rear_ft",
+          "claimed": "12.22.560",
+          "found": "12.22.540 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384,L1397-L1400"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "setback_side_ft",
+          "claimed": "12.22.560",
+          "found": "12.22.540 12.22.520",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384,L1395"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "max_coverage_pct",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1599"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "max_height_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1592-L1593"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "min_frontage_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1555"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1554"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "min_lot_width_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1552-L1553"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "setback_front_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1564-L1566"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "setback_front_max_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1579-L1582"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1564,L1569"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "setback_rear_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1571-L1574"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "setback_side_ft",
+          "claimed": "12.21.650",
+          "found": "12.21.640",
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1570"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "max_density_du_per_acre",
+          "claimed": "12.22.460",
+          "found": "12.22.440",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1045-L1046,L1048"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "max_density_du_per_acre [unit_lots]",
+          "claimed": "12.22.460",
+          "found": "12.22.440",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1047"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "min_density_du_per_acre",
+          "claimed": "12.22.460",
+          "found": "12.22.440",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1034"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "min_frontage_ft",
+          "claimed": "12.22.460",
+          "found": "12.22.440",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057,L1075,L1084-L1085"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.22.460",
+          "found": "12.22.440",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057,L1073"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "min_lot_sqft",
+          "claimed": "12.22.460",
+          "found": "12.40.210 12.22.460",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1018-L1021,L1025"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "min_lot_sqft [unit_lots]",
+          "claimed": "12.22.460",
+          "found": "12.40.210 12.22.460",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1018,L1021,L1026"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "min_lot_width_ft",
+          "claimed": "12.22.460",
+          "found": "12.22.440",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057-L1059,L1064-L1065"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "setback_front_ft",
+          "claimed": "12.22.460",
+          "found": "12.22.440",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1092-L1093,L1098-L1099"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "12.22.460",
+          "found": "12.22.440",
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1092-L1093,L1102"
+        },
+        {
+          "zone": "SCR-V",
+          "field": "max_density_du_per_acre",
+          "claimed": "12.24.460",
+          "found": "12.24.450",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1636-L1639"
+        },
+        {
+          "zone": "SCR-V",
+          "field": "min_density_du_per_acre",
+          "claimed": "12.24.460",
+          "found": "12.24.450",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618-L1619,L1629-L1631"
+        },
+        {
+          "zone": "SCR-V",
+          "field": "min_lot_width_ft",
+          "claimed": "12.24.460",
+          "found": "12.24.450",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1651-L1657"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "max_density_du_per_acre",
+          "claimed": "12.24.760",
+          "found": "12.40.110",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2519"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "min_density_du_per_acre",
+          "claimed": "12.24.760",
+          "found": "12.40.110",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2517-L2518"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "min_frontage_ft",
+          "claimed": "12.24.760",
+          "found": "12.40.110",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523,L2527"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.24.760",
+          "found": "12.40.110",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523,L2526"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "min_lot_sqft",
+          "claimed": "12.24.760",
+          "found": "12.40.110",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512-L2513,L2515"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "min_lot_width_ft",
+          "claimed": "12.24.760",
+          "found": "12.40.110",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523-L2525"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "setback_front_ft",
+          "claimed": "12.24.760",
+          "found": "12.40.110 12.24.760",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2532"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "setback_front_max_ft",
+          "claimed": "12.24.760",
+          "found": "12.40.110 12.24.760",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2550,L2554"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "setback_rear_ft",
+          "claimed": "12.24.760",
+          "found": "12.40.110 12.24.760",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2533"
+        },
+        {
+          "zone": "UC-AC",
+          "field": "setback_side_ft",
+          "claimed": "12.24.760",
+          "found": "12.40.110 12.24.760",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2533"
+        },
+        {
+          "zone": "UC-MU",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "max_coverage_pct",
+          "claimed": "12.24.860",
+          "found": "12.24.850",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2844"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "max_density_du_per_acre",
+          "claimed": "12.24.860",
+          "found": "12.40.110 12.24.860",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2790"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "max_height_ft",
+          "claimed": "12.24.860",
+          "found": "12.24.850",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2840"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "min_building_height_ft",
+          "claimed": "12.24.860",
+          "found": "12.24.850",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2839"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "min_density_du_per_acre",
+          "claimed": "12.24.860",
+          "found": "12.40.110 12.24.860",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2788-L2789"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "min_lot_depth_ft",
+          "claimed": "12.24.860",
+          "found": "12.40.110 12.24.860",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2794,L2797"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "min_lot_sqft",
+          "claimed": "12.24.860",
+          "found": "12.40.110",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783-L2784,L2786"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "min_lot_width_ft",
+          "claimed": "12.24.860",
+          "found": "12.40.110 12.24.860",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2794-L2796"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "setback_front_ft",
+          "claimed": "12.24.860",
+          "found": "12.40.110 12.24.860",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2804"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "setback_front_max_ft",
+          "claimed": "12.24.860",
+          "found": "12.24.850",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830-L2831,L2833,L2837"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "setback_rear_ft",
+          "claimed": "12.24.860",
+          "found": "12.40.110 12.24.860",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2805-L2809"
+        },
+        {
+          "zone": "UC-NC",
+          "field": "setback_side_ft",
+          "claimed": "12.24.860",
+          "found": "12.40.110 12.24.860",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2805-L2809"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "max_coverage_pct",
+          "claimed": "12.24.560",
+          "found": "12.24.540 12.24.420",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2008"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "max_height_ft",
+          "claimed": "12.24.560",
+          "found": "12.24.540 12.24.420",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2007"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "min_building_height_ft",
+          "claimed": "12.24.560",
+          "found": "12.24.540 12.24.420",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2006"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "min_frontage_ft [flag_lot]",
+          "claimed": "12.40.160 12.40.160",
+          "found": "12.40.150",
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "setback_front_ft",
+          "claimed": "12.24.560",
+          "found": "12.24.540",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955-L1956,L1958,L1962-L1965"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "setback_front_max_ft",
+          "claimed": "12.24.560",
+          "found": "12.24.540 12.24.420",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2000,L2004"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "12.24.560",
+          "found": "12.24.540",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1962,L1967-L1968"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "setback_rear_ft",
+          "claimed": "12.24.560",
+          "found": "12.24.540 12.24.420",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1973-L1979"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "setback_side_ft",
+          "claimed": "12.24.560",
+          "found": "12.24.540",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1969"
+        }
+      ],
+      "label": "Hillsboro",
       "counts": {},
       "gaps": []
     }

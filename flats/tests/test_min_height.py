@@ -256,19 +256,55 @@ def test_no_floor_sits_above_its_own_zones_ceiling() -> None:
             ceiling = zone.values.get("max_height_ft")
             if floor is None or ceiling is None:
                 continue
+            # 2026-09-29: a ceiling held as exempt is no ceiling, and nothing
+            # sits above it. Hillsboro UC-AC (a draft from a cloud session)
+            # was the first zone to hold a floor beside one: Table
+            # 12.24.760-1 says "Minimum Building Height 35 feet" and
+            # "Maximum Building Height None".
+            if ceiling.exempt:
+                continue
             assert float(floor.value) <= float(ceiling.value), f"{name} {code}"
+
+
+#: The floors a 26-foot, two-storey pod does not reach.
+#:
+#: 2026-09-29: the first five, all Hillsboro, a draft from a cloud session.
+#: Until then the only floor in the corpus a 26-foot pod failed was
+#: Wilsonville's Coffee Creek overlay, on industrial land nobody encoded.
+#: Hillsboro's mixed-use and urban-center tables state floors taller than
+#: the pod in zones that permit a quadplex: MU-C 45 feet (Table 12.24.260-1),
+#: SCC-SC 30 feet within 800 feet of a light-rail station (Table 12.23.460-1,
+#: held everywhere because no fact measures the distance), UC-MU and UC-AC 35
+#: feet (Tables 12.24.660-1 and 12.24.760-1), and MU-VTC 3 stories inside a
+#: Center Core (Table 12.24.360-1, held everywhere because no fact says a lot
+#: is outside one). Each is a doubt and a question in the Washington handoff;
+#: the pod fails them as drafted, and this set says so instead of hiding it.
+FLOORS_ABOVE_THE_POD = {
+    ("or/washington/hillsboro", "MU-C", "min_building_height_ft"),
+    ("or/washington/hillsboro", "MU-VTC", "min_building_height_stories"),
+    ("or/washington/hillsboro", "SCC-SC", "min_building_height_ft"),
+    ("or/washington/hillsboro", "UC-AC", "min_building_height_ft"),
+    ("or/washington/hillsboro", "UC-MU", "min_building_height_ft"),
+}
 
 
 def test_both_catalogued_pods_clear_every_floor_on_file() -> None:
     """True today, and the sentence that makes this field worth having: it
     stops being true the moment a single-storey design enters the catalog, and
-    THAT is when the screen needs to already know how to say so."""
+    THAT is when the screen needs to already know how to say so.
+
+    2026-09-29: true today except for :data:`FLOORS_ABOVE_THE_POD`, which is
+    pinned both ways -- a new floor the pods miss fails here, and so does one
+    of these five that stops binding."""
     for design in load_catalog().active():
+        missed = set()
         for name, code, field, value, _quote in encoded():
             observed = (
                 design.height_ft if field.endswith("_ft") else float(design.stories)
             )
-            assert observed >= value, f"{design.id} misses {name} {code} {field}"
+            if observed < value:
+                missed.add((name, code, field))
+        assert missed == FLOORS_ABOVE_THE_POD, design.id
 
 
 def test_a_zone_holding_a_floor_has_it_screened_rather_than_skipped() -> None:

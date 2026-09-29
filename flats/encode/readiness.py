@@ -577,6 +577,13 @@ _NO_STANDARD = tuple(
         # from minimum" rather than to "exempt", which reaches sentences that
         # take something off a list without removing a floor.
         r"\bexempt\s+from\s+minimum\b",
+        # "The City of Hillsboro does not have standards which require
+        # mandate the provision of parking" -- Hillsboro CDC 12.50.310 A.2,
+        # the city's whole answer to a parking minimum (the stray "require"
+        # is the code's). Scoped to a code that does not have standards
+        # requiring something, not to "does not have", which a code says of
+        # far more than floors.
+        r"\bdoes\s+not\s+have\s+standards\s+which\s+require\b",
         # "may be reduced to zero" -- Happy Valley's townhouse footnote, and
         # the one spelled number `_says` cannot see, because it is not
         # followed by a unit the way "five feet" is.

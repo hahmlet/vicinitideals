@@ -1,0 +1,721 @@
+SUBCHAPTER 12.60
+ PLAN DISTRICTS GENERALLY
+12.60.010 Establishment.
+12.60.020 Scope.
+12.60.030 Hierarchy of Plan District Standards.
+CDC12.60:1
+
+12.60.010  Establishment.
+A plan district is a geographic area for which special zoning regulations have been created by the
+City, either through adoption of a community plan in the Hillsboro Comprehensive Plan or by
+previously adopted provisions in Zoning Ordinance No. 1945. If the plan district applies to the area
+included in a Community Plan, the plan district standards will implement the Community Plan.
+Revision of plan district standards or adoption of a new plan district is a Type IV process pursuant to
+Section 12.70.060.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.60.020  Scope.
+Plan district standards are applied in conjunction with base zone standards (Subchapters 12.21
+through 12.26) and Development and Design Standards (Subchapter 12.50). Plan district provisions
+may modify any regulations of the applicable base zone or of the general standards unless the base
+zone or general standards specifically state otherwise. However, base zone and general standards
+apply unless the plan district provides other regulations for the same specific topic.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.60.030  Hierarchy of Plan District Standards.
+Development activities subject to this subchapter are also subject to the base zone standards in
+Subchapters 12.21 through 12.26, the special use standards in Subchapter 12.40, development and
+design standards in Subchapter 12.50, and any applicable overlay zone standards in Subchapter
+12.27. Where plan district standards conflict with other standards in this Code, refer to Section
+12.01.430 for the hierarchy of standards.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+ 12.60.030PLAN DISTRICTS GENERALLY
+CDC12.60:3
+
+SUBCHAPTER 12.61
+ DOWNTOWN PLAN DISTRICT
+12.61.100 Purpose.
+12.61.200 Applicability.
+12.61.300 Standards Applicable to All Zones.
+12.61.400 Standards Specific to the SCC-DT Zone.
+12.61.500 Downtown Plan District Standards Specific to the SCR-HD Zone.
+12.61.600 Downtown Plan District Standards Specific to the SCR-MD Zone.
+12.61.700 Downtown Plan District Standards Specific to the SCR-DNC Zone.
+12.61.800 Architectural Conservation Standards.
+CDC12.61:1
+
+12.61.100  Purpose.
+A. The geographically-specific Downtown Plan District development and design standards reflect
+the City's goals and objectives for the Downtown SCPA. These regulations and standards were
+developed in 2 phases:
+1. In 1997—2000 during the SCPA adoption process, as reflected in the Downtown Station
+Community Plan and adopted Comprehensive Plan amendments; and
+2. In 2008—2010 during the Downtown Community Plan and Urban Renewal process, as
+reflected in the Downtown Framework Plan.
+B. The purpose of the specific design standards in Section 12.61.700, applicable to the SCR-DNC
+Station Community Residential — Downtown Neighborhood Conservation zone and portions
+of the SCR-MD Station Community Residential — Medium Density and SCC-DT Station
+Community Commercial — Downtown zones, is to conserve the historical and cultural
+significance of residential neighborhoods and the adjacent commercial areas in Hillsboro's
+original core by:
+1. Preserving and restoring the historic architecture and character of certain neighborhoods
+within the Downtown SCPA;
+2. Preserving, restoring and enhancing the landscape features of the downtown neighbor-
+hoods, particularly the mature street trees;
+3. Requiring that new residential structures be of compatible character and architectural
+style with existing structures built between 1890 and 1940, including but not limited to use
+of architectural styles and features, materials, paint and finishes, consistent with this
+period as described in this Subchapter;
+4. Requiring that exterior remodeling or expansion of existing residential structures is
+consistent with the architectural style, materials and colors of the existing structure;
+5. Requiring that new commercial and institutional structures, including public buildings, be
+of similar or compatible size, scale, architectural style and materials to those used in such
+structures between 1890 and 1940; and
+6. Requiring that exterior remodeling or expansion of existing commercial or institutional
+structures, including public buildings, be consistent with the architectural style, materials,
+and colors of the existing structure.
+(Ord. 6401 § 1, 2022)
+ 12.61.100DOWNTOWN PLAN DISTRICT
+CDC12.61:3
+12.61.200  Applicability.
+The standards of this Subchapter apply to properties within the Downtown Plan District boundaries
+as shown on Figure 12.61.200-A. There are 5 zones applicable within the Downtown Plan District:
+A. SCC-DT Station Community Commercial - Downtown;
+B. SCR-HD Station Community Residential - High Density;
+C. SCR-MD Station Community Residential - Medium Density;
+D. SCR-LD Station Community Residential - Low Density; and
+E. SCR-DNC Station Community Residential - Downtown Neighborhood Conservation.
+12.61.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:4
+(Ord. 6401 § 1, 2022)
+ Figure 12.61.200-A:
+Downtown Plan District Boundaries
+ 12.61.200DOWNTOWN PLAN DISTRICT
+CDC12.61:5
+12.61.300  Standards Applicable to All Zones.
+A. Exception to Minimum and Maximum Residential Densities for Multiple-Dwelling Develop-
+ment. Minimum and maximum residential densities established for the base zone shall apply.
+Where multiple-dwelling infill development includes an existing residence, residential densities
+shall be calculated as follows:
+1. Minimum and maximum residential densities for the parent parcel shall be calculated by
+applying the base zone density standards to the undeveloped portion of the lot only as
+described in paragraph 2 below;
+2. The undeveloped portion of the property excludes the portion of the lot surrounding the
+retained house, including minimum required side and rear yard setbacks from the
+structure; and
+3. The existing residence shall be included in the overall density calculation as a single
+dwelling unit.
+B. Alley Dedication and Improvement Requirements. The system of existing and previously
+vacated alleys in the Downtown Plan District is shown in Figure 12.61.300-A. Unless exempted
+under paragraphs 4 or 5 below, new developments in the Downtown Plan District shall use
+alleys for vehicular access wherever practicable to provide secondary access to block
+interiors, thereby encouraging preservation of traditional downtown streetscapes.
+1. The Review Authority shall condition approval of developments in the Downtown Plan
+District adjacent to any existing or vacated alleys shown on Figure 12.61.300-A to provide
+for future alley dedications or easements as shown in Table 12.61.300-1.
+  Table 12.61.300-1:
+Alley Dedication or Easement Requirements
+Property Location in Relation to
+Existing or Vacated Alley Dedication or Easement Requirement
+Corner property at intersection of alley
+and street
+Dedicate or rededicate sufficient to
+complete 20-foot ultimate right-of-way
+width
+Interior property on alley; alley open at
+both ends (extends full depth of block)
+Dedicate or rededicate sufficient to
+complete 20-foot ultimate right-of-way
+width
+Interior property on alley; alley open at 1
+end only (does not extend full depth of
+block)
+Dedicate or rededicate sufficient to
+complete 20-foot ultimate right-of-way
+width
+Interior property on alley; previous
+vacations have closed both ends (does
+not extend full depth of block)
+Provide permanent easement to city
+sufficient to complete 20-foot ultimate
+right-of-way width
+
+12.61.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:6
+2. Unless exempt under paragraph 4 below, the Review Authority shall also condition
+approval of developments in the Downtown Plan District adjacent to any existing or
+vacated alleys shown on Figure 12.61.300-A to construct improvements to the widths
+specified in Table 12.61.300-2 below. The improvements shall be constructed to Public
+Works Design and Construction Standards in any alley right-of-way adjacent to the site
+where the full 20-foot ultimate right-of-way width is available. Accessory structures and
+accessory dwelling units are exempt from the requirement to construct improvements to
+existing or vacated alleys unless the alley is proposed for vehicular access.
+ 12.61.300DOWNTOWN PLAN DISTRICT
+CDC12.61:7
+Figure 12.61.300-A:
+Downtown Plan District Alley System
+12.61.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:8
+Table 12.61.300-2:
+Alley Improvement Requirements
+Property Location in
+Relation to Existing
+or Vacated Alley
+Ultimate 20-Foot
+Alley R-O-W
+Available?
+Required Improvement
+Corner property at
+intersection of alley and
+street
+Yes
+16-foot paved surface with drainage to
+PW D&C standards across full lot
+frontage
+No
+No improvement required; development
+conditioned to provide payment of fee in
+lieu of construction
+Interior property on
+alley; alley open at both
+ends (extends full
+depth of block)
+Yes
+16-foot paved surface with drainage to
+PW D&C standards across full lot
+frontage; interim gravel improvement to
+nearest street
+No
+No improvement required; development
+conditioned to provide payment of fee in
+lieu of construction
+Interior property on
+alley; alley open at 1
+end only (does not
+extend full depth of
+block)
+Yes
+16-foot paved surface with drainage to
+PW D&C standards across full lot
+frontage; interim gravel improvement to
+nearest street
+No
+No improvement required; development
+conditioned to provide payment of fee in
+lieu of construction
+Interior property on
+alley; previous
+vacations have closed
+both ends (does not
+extend full depth of
+block)
+Yes
+No improvement required; development
+conditioned to provide payment of fee in
+lieu of construction
+No
+No improvement required; development
+conditioned to provide payment of fee in
+lieu of construction
+3. Plans for the gravel improvements required under Table 12.61.300-2 above shall be
+subject to review and approval by the City Engineer. At a minimum, the interim gravel
+improvement shall include storm drainage, a gravel surface sufficient to accommodate
+emergency vehicles, and street lighting at the intersections of the alley and the street.
+4. The Review Authority may approve an application for development approval adjacent to
+an existing or vacated alley, which does not include alley dedication and construction
+under paragraphs 1 through 3 above, only if the applicant can demonstrate that alley
+ 12.61.300DOWNTOWN PLAN DISTRICT
+CDC12.61:9Supp. No. 1
+construction is not feasible. Economic hardship does not meet this requirement. If the
+Review Authority accepts the demonstration, the development must comply with all other
+applicable standards.
+C. Sidewalks. On the street frontages shown on Figure 12.61.300-B, the Review Authority shall
+condition development approvals on construction of sidewalk improvements, either 12 feet
+minimum width, with street trees in wells (no planter strip); or 8 feet minimum width, with a
+4-foot minimum width planter strip, on the street. On street frontage not specified on Figure
+12.61.300-B, sidewalk improvements shall be constructed at a 5 feet minimum width, with a
+4-foot minimum width planter strip. All sidewalk construction shall meet Public Works Design
+and Construction (PW D&C) Standards.
+12.61.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:10Supp. No. 1
+Figure 12.61.300-B:
+Downtown Plan District Sidewalk Requirements
+ 12.61.300DOWNTOWN PLAN DISTRICT
+CDC12.61:11Supp. No. 1
+D. Street Trees.
+1. Trees from the PW D&C Standards approved street tree list shall be required with all new
+development. In areas with planter strips, street trees shall be planted consistent with the
+PW D&C Standards. In areas with 12-foot sidewalks, street trees shall be planted within
+wells with a minimum planting area of 16 square feet and metal grates. Street trees shall
+be planted in compliance with PW D&C Standards except as provided under paragraph
+2 below.
+2. Street tree spacing may be varied with the approval of the City Engineer and the Director
+where new development meets the site criteria listed below:
+a. The site is in the SCC-DT zone, and has frontage on an existing street which is
+striped for parallel parking;
+b. Buildings along the street are uniformly built with zero setback from the sidewalk;
+and
+c. The streetscape includes ornamental streetlights supplemented with additional
+decorations (hanging baskets, banners, holiday and festival lighting, etc., main-
+tained on a year-round basis).
+3. On streets meeting the criteria in paragraph 2 above, street trees may be spaced
+according to the following standards:
+a. One tree every 44 feet or corresponding to the dividing line between every-other
+parking space; or
+b. At greater or lesser intervals which would not obscure or interfere with the visibility
+of traffic signals or pre-existing marquees or projecting signs, provided the adjust-
+ment in spacing is the least necessary to avoid visual obstruction; or
+c. At a greater or lesser intervals to coordinate with ornamental streetlights on the
+same block face. Regardless of spacing adjustments, provision shall be made for at
+least 2 trees, evenly spaced between every pair of streetlights on the same block
+face, and, where possible 1 street tree between each intersection and the streetlight
+nearest to the intersection.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6294 § 1, 2019; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.61.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:12Supp. No. 1
+12.61.400  Standards Specific to the SCC-DT Zone.
+The following standards apply in addition to, but supersede, the requirements of Section 12.23.300.
+A. Setbacks to Streets and Alleys.
+1. Setback requirements in the SCC-DT zone are shown on Figure 12.61.400-A.
+2. The setback requirement is met when, at a minimum, the percentage of street frontage
+occupied by the ground level façade of a building(s) meets the standards in Table
+12.61.400-1 and Figure 12.61.400-B.
+  Table 12.61.400-1:
+Minimum Building Width Required Along Street Frontages
+Property Location (from Figure 12.61.400-B) Minimum Street Frontage*
+Fronting on Active Use Street 1 100%
+Fronting on Active Use Street 2 75%
+All other properties 50%
+* Minimum street frontage is the ratio (expressed as a percentage) of the length of the ground level
+façade to the lot width at the front property line.
+ 12.61.400DOWNTOWN PLAN DISTRICT
+CDC12.61:13
+Figure 12.61.400-A:
+Front Yard Setbacks in the SCC-DT Zone
+12.61.400 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:14
+Figure 12.61.400-B:
+Lot Frontage Requirements and Active Use Streets in the SCC-DT Zone
+ 12.61.400DOWNTOWN PLAN DISTRICT
+CDC12.61:15
+3. Exceptions required for pedestrian and vehicular access, emergency services, and utility
+easements shall be granted in conjunction with a Development Review application upon
+determination that the exception is the minimum necessary to accommodate the required
+access, emergency services, or utility easements. In no case shall parking or vehicular
+circulation be located between the building and the street.
+4. Exceptions to provide additional setback adjacent to a public street shall be granted in
+conjunction with a Development Review application upon determination that 100% of the
+additional setback would be used to provide enhanced pedestrian amenities such as
+plazas, arcades, courtyards, or other such usable pedestrian space as a feature of the
+development.
+B. Interior Setbacks. New structures shall have a 10-foot minimum setback from any property line
+shared with lots zoned SCR-HD, SCR-MD, or SCR-DNC.
+C. Floor Area Ratios. Floor area ratios for new construction may be reduced from the ultimate
+standard for the first phase, as provided in Table 12.23.360-1, upon demonstration by the
+applicant that the following criteria are met:
+1. The structure built in the first phase can be expanded vertically and/or horizontally to
+achieve the required minimum FAR. Demonstration of compliance shall include either
+construction to specifications sufficient to support vertical expansion, or design of floor
+plans and parking to accommodate horizontal expansion, as applicable; and
+2. The structure built in the first phase complies with all applicable standards for maximum
+setbacks, minimum building width, and minimum building height as shown in Figures
+12.61.400-A, 12.61.400-B, and 12.61.400-C.
+D. Building Height Requirements.
+1. Minimum Building Height. The minimum height of new buildings shall meet the require-
+ments on Figure 12.61.400-C. Exceptions to the required 2-story minimum building
+height may be granted through a Type III discretionary review upon determination by the
+Planning Commission that a proposed single story building meets the applicable purpose
+statements in Section 12.23.310 and all of the applicable design guidelines in Sections
+12.50.800 and 12.50.920.
+2. Maximum Building Height. Except as described in paragraph 3 below, the maximum
+height of new buildings shall meet the requirements on Figure 12.61.400-D. No excep-
+tions shall be granted to the maximum building height standard in the Residential
+Compatibility area as shown on Figure 12.61.400-D.
+3. Additional Building Height in Planned Unit Developments. Additional building height up to
+a maximum of 100 feet may be approved as part of a Planned Unit Development or a
+previous Concept Development Plan. Additional building height above the maximum
+heights shown in Figure 12.61.400-D shall not be approved in Residential Compatibility
+Zones.
+12.61.400 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:16
+Figure 12.61.400-C:
+Minimum Building Height in the SCC-DT Zone
+ 12.61.400DOWNTOWN PLAN DISTRICT
+CDC12.61:17
+Figure 12.61.400-D:
+Maximum Building Height in the SCC-DT Zone
+12.61.400 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:18
+E. Minimum Usable Open Space Requirements.
+1. Non-residential development projects on less than ½ gross acre (21,780 square feet) are
+not subject to the Usable Open Space requirements of the SCC-DT zone as specified in
+Section 12.50.210. However, if such a development project is or becomes a portion of a
+larger development; the area of the original project shall be combined with all other
+portions to calculate the required Usable Open Space for the larger development.
+2. For purposes of this section, Mixed-Use projects with 4 or fewer dwelling units are
+considered non-residential projects.
+3. Non-residential projects ½ gross acre or larger, Mixed-Use projects with more than 4
+dwelling units, and all residential projects shall provide minimum Usable Open Space
+equal to 5% of the project gross acreage.
+4. Usable Open Space may include any combination of the following:
+a. Private outdoor space accessible only to an individual resident or tenant (such as
+private porches, decks, balconies, patios, atriums, or other private outdoor areas);
+b. Shared private outdoor recreation space accessible to customers, employees or
+residents but not to the public (such as outdoor seating and dining areas, roof decks
+or gardens, play areas, outdoor recreation facilities, or similar space); or
+c. Public outdoor space (e.g., public parks, play areas, courtyards, landscaped
+pedestrian walkways, enhanced extensions to sidewalk depth, or similar space).
+5. The Review Authority may approve alternative approaches to the provision of Usable
+Open Space and recreation facilities (e.g., indoor recreation rooms, fee-in-lieu contribu-
+tions, etc.) under a Type III process pursuant to Section 12.70.050.
+F. Building Entries and Orientation.
+1. Development on Active Use Streets (Types 1 and 2) designated on Figure 12.61.400-B
+shall comply with the standards of Subsection 12.50.820 regarding building entry
+orientation.
+2. Development on lots fronting an Active Use Street designated on Figure 12.61.400-B and
+a non-designated street shall provide either a main building entrance oriented to the
+Active Use Street or to the corner where the streets intersect. Development on lots
+fronting on 2 Active Use Streets designated on Figure 12.61.400-B shall have a main
+entrance at the street intersection or within 30 feet of the intersection.
+3. Building façades over 200 feet in length facing any street shall provide 2 or more main
+building entrances oriented toward the street.
+4. Building entrances shall be covered, recessed, or treated with a permanent architectural
+feature in such a way that weather protection is provided.
+ 12.61.400DOWNTOWN PLAN DISTRICT
+CDC12.61:19
+G. Ground Floor Windows and Building Façades.
+1. On building façades facing an Active Use Street, all ground floor windows shall have a
+Visible Transmittance (VT) of 60% or higher, with the exception of medical/dental offices
+which may have tinted windows.
+2. Building façades greater than 75 feet in length facing a public street shall include
+architectural elements such as bay windows, recessed entrances or other features so as
+to provide pedestrian scale. Within the Residential Compatibility Areas designated on
+Figure 12.61.400-D, this standard shall apply on building façades greater than 50 feet in
+length.
+3. Building façades facing an Active Use Street shall have windows, display areas or
+doorways for at least 70% of the length and 50% of the ground level wall area. In the
+SCC-DT zone, ground level wall area is the wall area above 3 feet and below 12 feet as
+measured from finished grade.
+4. Building façades facing a street other than an Active Use Street, a public open space,
+pedestrian walkway and/or transit station shall have windows, display areas or doorways
+for at least 50% of the length and 25% of the ground level wall area. In the SCC-DT zone,
+the ground level wall area is the wall area above 3 feet and below 12 feet as measured
+from finished grade.
+5. On building façades facing an Active Use Street, weather protection for pedestrians may
+be provided along the façade. Weather protection may be an awning, canopy, arcade,
+colonnade, recessed entry, and/or some combination of these elements. Where pro-
+vided, weather protection shall meet the following standards:
+a. Be constructed of glass, metal, exterior-grade fabric or a combination of these
+materials;
+b. Project at least 5 feet from the building façade;
+c. Have at least 10 feet clearance to the sidewalk;
+d. Match the width of the storefront or the window opening(s); and
+e. Not obscure any existing or proposed transom windows.
+H. Step-Back Requirements. The standards of Section 12.50.845 do not apply in the SCC-DT
+zone.
+I. Location and Design of Off-Street Parking.
+1. On-site vehicular circulation (including surface parking, maneuvering areas, service
+docks and loading areas) are allowed only beside or behind new buildings. If located on
+the side, the on-site vehicular circulation area shall meet the following standards:
+a. Vehicular circulation shall not occupy more than 50% of the site frontage; and
+b. The circulation area shall be screened by a planting strip at least 6 feet wide, behind
+the sidewalk. Improvements shall be installed in the planting strip consistent with
+Section 12.50.360.
+12.61.400 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:20
+2. To accommodate transit-supportive development and provide adequate off-street park-
+ing for Mixed-Use development, parking may be located up to 800 feet from the
+development.
+J. Streetscape Design Standards and Guidelines. The following standards apply to new multi-
+dwelling residential, commercial, Mixed-Use and institutional buildings.
+1. The ground floor of all new buildings facing the street shall be distinguished through
+façade design into a "base," "middle," and "top." The "base"' extends from the finished
+sidewalk to the bottom of the window sill, and shall be defined by a masonry or concrete
+plinth and projecting window sills. The "middle" shall be defined by storefront windows,
+transom windows, canopies, and/or pilasters. The "top" shall be defined by a projecting
+cornice.
+2. The front façade of all new buildings 2 stories or more in height shall have tripartite
+façades, with distinct ground bases, middles, and tops. The ground floor base shall be
+defined by plinths, projected windowsills, large display windows, and/or the use of
+masonry or concrete. The middle shall be defined by vertically-oriented windows,
+changes in materials, and/or horizontal bands (such as string courses or soldier courses).
+The top shall be defined by detailed cornices and/or projecting parapets.
+3. The Review Authority may approve architectural features or materials in addition to those
+cited in paragraphs 1 and 2 above where such features or materials also divide the
+façade into design into a base, middle, and top.
+K. Architectural Standards on NE Washington St. Development north of NE Washington St from
+NE 5th Ave to NE 10th Ave shall be subject to the Architectural Conservation Standards in
+Section 12.61.800.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.61.500  Downtown Plan District Standards Specific to the SCR-HD Zone.
+New structures shall have a minimum setback of 10 feet from any shared property line with parcels
+zoned SCC-DT.
+(Ord. 6401 § 1, 2022)
+12.61.600  Downtown Plan District Standards Specific to the SCR-MD Zone.
+A. Interior Setbacks. New structures shall have a minimum setback of 10 feet from any shared
+property line with parcels zoned SCC-DT.
+B. Residential Businesses. Residential business uses are permitted, subject to conditional use
+approval pursuant to Section 12.80.020. In addition to the standards in Section 12.80.020,
+residential businesses shall meet the following standards:
+1. Structures occupied by a residential business shall include a dwelling unit occupied by
+the business owner/operator or another residential tenant;
+ 12.61.600DOWNTOWN PLAN DISTRICT
+CDC12.61:21
+2. A residential business may occupy a maximum 2,500 square feet commercial floor area,
+with a maximum ground floor commercial area of 1,500 square feet;
+3. A residential business shall have no more than 5 employees, excluding family members
+of the business owner/operator or other residential tenant;
+4. A residential business shall have not more than 10 off-street parking spaces, all of which
+shall be located inside, beside or behind the occupied building. Residential business
+parking is not permitted between the building and the street; and
+5. New structures proposed for occupancy by residential businesses shall comply with all
+applicable design standards and all other fire and life safety occupancy standards
+applicable to the business use.
+C. Architectural Standards on NE Washington St. Development between NE 6th Ave and NE 9th
+Ave, south of NE Jackson St shall be subject to the Architectural Conservation Standards in
+Section 12.61.800.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.61.700  Downtown Plan District Standards Specific to the SCR-DNC Zone.
+A. Architectural Standards; Exterior Alteration or Demolition Review. All new development is
+subject to the Architectural Conservation Standards in Section 12.61.800. All exterior altera-
+tions or demolition of existing structures is subject to the requirements of subsection I below.
+B. Partitioning. In addition to the allowance for middle housing land divisions, in accordance with
+Section 12.80.099, lots containing 2 existing or proposed detached dwelling units may be
+partitioned provided that both lots have full frontage on either a public street or alley and that
+the partition does not require creation of a flag lot.
+C. Interior Setbacks. New structures shall have a minimum setback of 10 feet from any shared
+property line with parcels zoned SCC-DT.
+D. Average Setback Conformance. Where the average front yard setback of existing residences,
+along the entire block face containing the project, exceeds the applicable front yard setback
+from a public street standard of Table 12.21.860-1 by more than 5 feet, new construction shall
+conform to the average setback of all the existing dwellings along that block face. However, in
+no case shall the minimum perimeter setback required for a cottage cluster exceed 10 feet.
+E. Home Occupations and Bed and Breakfast Inns. Pursuant to Section 12.40.130, home
+occupations and bed and breakfast inns are permitted. Bed and breakfast inns are limited in
+size to not more than 5 bedroom units.
+F. Residential Businesses. Pursuant to Section 12.21.830, residential businesses may be al-
+lowed in certain locations through the Conditional Use process consistent with Section
+12.80.020, and may be permitted uses in other zones. In addition to the standards in Section
+12.80.080, residential businesses shall meet the following standards:
+1. Residential businesses are limited to properties located west of NE 5th Ave and north of
+NE Lincoln St;
+12.61.600 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:22
+2. Structures occupied by a residential business shall include a dwelling unit occupied by
+the business owner/operator or another residential tenant;
+3. A residential business may occupy a maximum of 35% of the floor area of all structures
+on the lot, or 1,500 square feet, whichever is less;
+4. The maximum height for any structure occupied by a residential business use is 2 stories;
+5. Residential businesses shall have no more than 3 employees, excluding family members
+of the business owner/operator or other residential tenant;
+6. Residential businesses shall have not more than 5 off-street parking spaces, all of which
+shall be located inside, beside or behind the occupied building. Residential business
+parking is not permitted between the building and the street; and
+7. New structures proposed for occupancy by residential businesses shall comply with all
+applicable design standards.
+G. Arterial Exception Area on First Avenue. Due to their location adjacent to an arterial street,
+certain properties in the SCR-DNC zone are eligible for more intensive development, including
+mixed-use buildings, increased residential density and structural heights. These properties
+(known as the "Arterial Exception Area") are shown on Figure 12.61.200-A. Approval of
+mixed-use buildings, increased residential density and structural heights shall comply with the
+following standards:
+1. Building Heights. Within 100 feet of First Ave, maximum structural height shall be 3
+stories. Between 100 and 200 feet from First Ave, maximum structural height shall be 2
+stories.
+2. Mixed-Use Building Heights. Mixed-use buildings shall be at least 2 stories in height.
+Commercial uses shall be limited to the first and second stories; the uppermost story of
+a mixed-use building shall be limited to residential use only. Commercial uses are not
+permitted above the second floor.
+3. Residential Density. Maximum residential density in mixed-use buildings shall be 18
+dwelling units per acre.
+4. Side Yard Setbacks. The side yard setbacks of the SCR-DNC zone shall apply to new
+2-story buildings 200 feet or more from First Ave. For 3-story mixed-use buildings within
+100 feet of First Ave, a minimum 10-foot side yard setback shall apply at the boundary
+with properties outside the Arterial Exception Area.
+5. Landscaping. For non-residential development or residential development reviewed
+through a Type III land use application, the Review Authority may require the 10-foot
+setback to be landscaped with species selected for increased height and visual screening
+qualities. Landscaping materials may also be required to be planted at a density designed
+to achieve the earliest practicable screening of commercial uses above the first floor.
+ 12.61.700DOWNTOWN PLAN DISTRICT
+CDC12.61:23
+6. Ground Floor Commercial Uses. Ground floor areas of commercial uses are limited as
+follows:
+a. Except as allowed under subparagraph b, below, maximum ground floor occupancy
+for a single commercial use shall be 2,500 square feet.
+b. A single ground floor commercial use may occupy up to 4,000 square feet in a single
+building only if the use is less than 50% of the total ground floor area of the building
+and the remaining ground floor is divided among separate uses occupying less than
+2,500 square feet each. For purposes of this subsection, unenclosed pedestrian
+areas outside the walls of the building are not included in the maximum square
+footage.
+7. Commercial uses on the second or third floors are not subject to the provisions of
+paragraph 6 above.
+8. Commercial uses permitted in mixed-use buildings are limited to those permitted in the
+N-C Neighborhood Commercial zone, with the exception of the following uses which are
+not permitted:
+a. Eating and drinking establishments with a seating capacity of 50 or more;
+b. Minor and major assembly facilities; or
+c. Vehicle service and repair uses.
+9. Commercial uses other than those listed in paragraph 8 above are subject to conditional
+use approval by the Planning and Zoning Hearings Board, pursuant to Section 12.80.020.
+10. Development Review applications shall be reviewed by the Planning Commission, and
+shall include a Traffic Impact Analysis pursuant to Section 12.70.220. The Planning
+Commission may condition approval of a development review application to require
+street improvements pursuant to Subsection 12.50.510.B. and Section 12.70.120.
+H. Exterior Alteration or Demolition Review. Review of all applications for demolition or exterior
+alteration of existing structures shall follow the process described below. For purposes of this
+subsection, "exterior alteration" is defined to include any addition to, removal from, and/or
+change in the external appearance of a structure. The definition includes changes in site
+landscaping if the landscaping is comparable in age to the structure, but excludes maintenance
+and repair of exterior features which do not affect the feature's appearance.
+1. Development Review approval for exterior alterations or demolitions shall include find-
+ings documenting the consistency of the subject structure(s) with the Architectural
+Conservation Standards in Section 12.61.800. The findings shall indicate whether the
+proposed alteration or demolition is consistent with, inconsistent with, or exempt from the
+Architectural Conservation Standards, based on the following factors:
+a. If the application meets the standards of Section 12.61.800, it shall be found
+consistent with those standards and shall be approved or approved with conditions;
+12.61.700 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:24
+b. If the application does not meet the standards of Section 12.61.800, but has not
+been found exempt under subparagraph c below, it shall be found inconsistent with
+those standards and shall be denied; or
+c. In lieu of demonstrating consistency with the Architectural Conservation Standards,
+the applicant may choose to demonstrate that the subject structure is exempt. If the
+subject structure meets either of the thresholds listed in subparagraph i or ii below,
+the application shall be found to be exempt from the standards of Section 12.61.800,
+and shall be approved or approved with conditions:
+i. The age or architectural style of the existing structure is not consistent with the
+standards of the SCR-DNC zone (1890s—1930s); or
+ii. The existing structure is deteriorated, damaged or remodeled beyond reason-
+able expectation of restoration or rehabilitation meeting the standards of
+Section 12.61.800.
+2. Except for additions to, or conversions of, an existing single detached dwelling into
+Middle Housing, in addition to the consistency or exemption findings above, Develop-
+ment Review approvals for exterior alterations shall include findings documenting the
+following:
+a. The exterior alteration will rehabilitate or restore historic features, retain existing
+form and character, or prevent further deterioration or damage;
+b. New additions are consistent with the scale and architectural features of the existing
+structure; and
+c. The exterior alteration retains the following features on façades facing a public
+street: entrances, doors, windows; exterior siding; front porches; balconies; bay
+windows; dormers; and dormer windows.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.61.800  Architectural Conservation Standards.
+A. Applicability.
+1. The standards in this section apply in the Downtown Plan District as shown on Figure
+12.61.200-A. Within this area, new development may replace deteriorated structures,
+and existing structures may have exterior alterations, subject to these standards and the
+process described in Subsection 12.61.700.I.
+2. Applications for the creation of middle housing through internal conversion of, or addition
+to, existing dwellings are only required to demonstrate that proposed conversion does not
+increase nonconformance with these standards.
+3. Applicants may request adjustments to these standards pur suant to Subsection
+12.80.154(C) or 12.80.156(C).
+ 12.61.800DOWNTOWN PLAN DISTRICT
+CDC12.61:25
+B. Residential Construction. Within the boundaries shown on Figure 12.61.200-A, architectural
+styles of new residential construction shall replicate major elements characteristic of the
+1890s—1930s in the downtown area, as demonstrated by compliance with the following
+standards.
+1. Garage Offset. The front of the garage shall be set back at least 5 feet from the front
+building plane of the dwelling.
+2. Porches. Where consistent with the proposed architectural style, front or wrap-around
+porches, are encouraged on front façades. Where provided, front or wrap around
+porches on front façades are encouraged to meet the following standards:
+a. Minimum area of 80 square feet;
+b. Minimum depth of 5 feet;
+c. Covered by a roof or balcony; and
+d. Elevated by at least 24 inches above finished grade or otherwise separated from the
+front yard by a railing or fence.
+3. Foundations. Foundation height shall elevate the finished floor elevation to between 24
+inches and 32 inches above finished grade. At the applicant's request, a lower foundation
+may be permitted as part of a Type II application only to allow ADA access if construction
+of access ramps is not practicable. Plain concrete and plain concrete block may be used
+as foundation materials only if the foundation height elevates the finished floor elevation
+to 28 inches or less above finished grade. This standard does not apply to accessory
+dwelling units created pursuant to subparagraph 12.40.100.C.1.
+4. Siding. Horizontal siding is permitted with a narrow course (6 inches to the weather on
+bevel, clapboard, or similar siding; 10 inches on drop or rustic siding). Board and batten
+vertical siding is also permitted; no other type of vertical or diagonal siding is permitted.
+The following materials are not permitted as siding: concrete slab; concrete block;
+corrugated metal; plywood or T-111; sheet pressboard; oriented strand board; or alumi-
+num.
+5. Colors. Building colors shall be consistent with the color palettes characteristic of
+architectural styles of the 1890s—1930s. Any color selected from Sherwin Williams'
+Historic Exterior Color Wall paint palette meets this requirement. Paint may be supplied
+by another manufacturer if the color has the same RGB/Hex value as one of Sherwin
+Williams' Historic Exterior Color Wall colors.
+6. Windows. Single windows and each window pairing shall be vertically proportioned with
+a height to width ratio of 3:2 and surrounded by window trim at least 3 inches wide and
+!
+inches thick. Multi-paned windows are preferred on street-facing elevations.
+7. Roofs.
+a. Rooflines. Gable end, Dutch gable, hipped, and gabled roofs are permitted. Shed
+roofs are not permitted as the primary roof form, but shed or hipped dormer roofs
+are permitted. Flat roofs are not permitted as the primary roof form.
+12.61.800 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:26
+b. Roof Pitch and Overhang. Roof pitch shall be a minimum of 4/12 for hipped roofs
+and 6/12 for gabled roofs. Roof overhang shall be at least 18 inches at the eaves
+and 1 foot at the gable ends.
+c. Roofing Materials. Roofing materials shall be slate, terra cotta, or concrete tile,
+composition shingles or cedar shingles, or standing seam metal. Roofing materials
+shall be gray, black or brown in color.
+8. Exterior Details.
+a. New residential construction shall incorporate at least 3 of the following exterior
+details into the primary street facing façade:
+i. Cornices at least 3 inches wide extending the length of the façade except
+where precluded by the roof;
+ii. Trim at least 3 inches wide and
+!
+inches thick on all windows and doors;
+iii. Minimum of 2 pilasters or 2 columns supporting the roof of a covered front
+porch. Pilasters and columns shall be at least 8 inches wide and spaced a
+maximum of 8 feet on center;
+iv. Frieze molding at roofline at least 8 inches wide extending the length of the
+façade except where precluded by roof elements;
+v. Entablature at least 14 inches in height and composed of an architrave, frieze,
+and cornice with the ratio of 3:3:2 or 3:2:2.
+b. Except for structures with a covered front porch that extends the length of the
+façade, new residential structures shall have at least 1 gable, pediment, or dormer
+with a minimum width of 4 feet.
+c. Exterior stairs or fire escapes shall not be located on a façade facing a public street.
+9. Exterior Lighting. Entry door and front porch lighting are required on all new dwelling
+units. Exterior lighting on dwellings and accessory structures shall not exceed 2 lumens,
+and shall not glare or shine onto adjacent property.
+10. Multi-Dwelling Residential Development. New multi-dwelling structures shall have a roof
+gable, dormer, or bay window on each elevation facing a public street.
+C. Non-Residential or Institutional Construction. Within the boundaries shown on Figure 12.61.200-A,
+architectural styles of new non-residential construction, including the non-residential compo-
+nents of mixed-use projects, or institutional construction, including public buildings, shall
+replicate major elements characteristic of the 1890s—1930s in the downtown area.
+1. Materials. Materials for new construction shall be selected and installed to replicate
+materials characteristic of the 1890s—1930s in the downtown area. Materials shall be
+durable and selected to integrate the new building with adjoining buildings.
+2. Colors. Building colors shall be compatible with adjacent buildings and consistent with
+the color palettes characteristic of architectural styles of the 1890s—1930s.
+ 12.61.800DOWNTOWN PLAN DISTRICT
+CDC12.61:27
+3. Roofs. Roofing materials shall be consistent with the architectural style of the structure.
+Roll roofing shall be used only in conjunction with parapets, which are required on flat
+roofs. Colors shall be compatible with adjacent buildings.
+4. Building Façades. Building elevations facing a public street shall have windows, tripartite
+façades, weather protection, and other architectural features as required in Subsection
+12.61.400.G: the design of such features shall replicate major elements characteristic of
+the 1890s—1930s in the downtown area.
+5. Exterior Lighting. Exterior lighting fixtures and accessories shall be selected for consis-
+tency with styles characteristic of the 1890s—1930s styles in the downtown area.
+Lighting levels shall be limited to a maximum 4 lumens, and shall not spill onto adjoining
+residential property.
+6. Mechanical Equipment. Mechanical or other equipment located on the ground, building
+exteriors, or roof shall be either screened completely from street level with compatible
+materials, or not visible from any public right-of-way.
+7. Other Applicable Design Standards. In addition to the standards specified in this subsec-
+tion, the Building and Site Design Guidelines in Section 12.50.920 shall be considered as
+requirements for new mixed-use or institutional construction on properties subject to the
+Downtown Plan District Architectural Conservation Standards.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6178 § 1, 2016)
+12.61.800 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.61:28

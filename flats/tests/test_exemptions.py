@@ -129,7 +129,15 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 272, "numeric": 55, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 338, "numeric": 55, "marker": 0, "dash": 2, "silent": 2}
+# 272 -> 338 stated on 2026-09-29, later the same day: Hillsboro, the second
+# Washington County draft from the same cloud session, sixty-six exemptions
+# and every one `stated`. Seventeen are the multi-dwelling and station-
+# community tables' "Maximum density does not apply to duplexes, triplexes,
+# quadplexes, or cottage clusters"; sixteen are "None" or "Not applicable"
+# in a Maximum Lot Coverage row; the rest are "None" in the lot size, width,
+# depth and frontage cells of the mixed-use and urban-center tables, and
+# UC-AC's "Maximum Building Height None".
 # 251 / 47 -> 272 / 55 on 2026-09-29: unincorporated Washington County, a
 # draft layer from a cloud session, twenty-nine exemptions. Nearly all are one
 # sentence the county prints in every Middle Housing district: "Density is

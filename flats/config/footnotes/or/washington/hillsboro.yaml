@@ -1,0 +1,45 @@
+# Hillsboro CDC (Municode publication 4450). Draft, cloud session 2026-09-29.
+#
+# The CDC prints its standards as three-column tables (Standard, Requirement,
+# Clarifications) and says in the Clarifications cell what another code would
+# put in a footnote, so the census finds almost nothing to rule. What it does
+# capture is below: three rows of a table that begin with a digit, which is
+# the shape of a numbered note. None is a note.
+#
+# The census also reports markers with no body in three documents, and none
+# of those is a note either (recorded here because nothing else rules them):
+# - 12.40.special-uses L416-L423: Table 12.40.107-1, Shelter Separation and
+#   Density Standards, whose last column (maximum beds per shelter) is a
+#   figure glued to its row ("SCR-DNC 500 feet 50").
+# - 12.50.100-270.lot-and-site L535-L562: Table 12.50.130-1, Special
+#   Street-Facing Setback Requirements, whose rows end in the feet
+#   ("north 510 feet 27"). The table is a layer-wide NOT ENCODED comment.
+# - 12.65.south-hillsboro L1874-L1947: street cross-section labels ("L3",
+#   "C5") in the South Hillsboro figure list.
+notes:
+  - quote: "or/washington/hillsboro/cdc.12.40.special-uses.txt#L690"
+    digest: "75e87c1e1879"
+    state: dismissed
+    reason: >-
+      Not a note: the first row of Table 12.40.160-1, Flag Lot Access
+      Standards, under "Residential Development: Single Detached; One
+      Dwelling Unit per Flag Lot" -- one lot, 12 feet of flag, 10 feet of
+      pavement, a 12-foot easement. The row begins with the number of lots,
+      which the census reads as a note number. The table's quadplex row is
+      read in the layer (the flag_lot frontage variants, 25 feet).
+  - quote: "or/washington/hillsboro/cdc.12.40.special-uses.txt#L691"
+    digest: "14944a9667a0"
+    state: dismissed
+    reason: >-
+      Not a note: the second row of Table 12.40.160-1, two single detached
+      flag lots with adjacent flags. A row of the table beginning with its
+      lot count, read by the census as note 2. Single detached dwellings are
+      not the pod.
+  - quote: "or/washington/hillsboro/cdc.12.40.special-uses.txt#L692"
+    digest: "68579762c115"
+    state: dismissed
+    reason: >-
+      Not a note: the third row of Table 12.40.160-1, three single detached
+      flag lots with adjacent flags, run on by the census into the next
+      band's heading (duplexes and 2- or 3-unit townhouses). Neither band is
+      the pod; the quadplex band below it is read in the layer.

@@ -1,0 +1,708 @@
+12.50.300  Vehicle Parking.
+Vehicle parking standards include the following sections:
+12.50.310 Purpose, Applicability and Maintenance Responsibilities
+12.50.320 Number of Spaces
+12.50.330 Exempt Parking
+12.50.340 On-Street Parking
+12.50.350 Vehicle Parking and Loading: Location
+12.50.360 Vehicle Parking and Loading: Design and Improvements
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022)
+12.50.310  Purpose, Applicability and Maintenance Responsibilities.
+A. Purpose.
+1. Maximum off-street parking standards are intended to accommodate the majority of
+parking needs for residents, customers and employees, encourage use of alternative
+travel modes such as transit, bicycling and walking, and reduce impervious surface area
+which receives only sporadic parking use.
+2. The City of Hillsboro does not have standards which require mandate the provision of
+parking. This is intended to promote density, housing affordability, and sustainable
+transportation; encourage market-driven development; enhance urban design and liva-
+bility; stimulate economic growth; and create more flexible, efficient land patterns. This
+also implements the requirements of OAR 660-012-0400.
+B. Applicability.
+1. The standards of this section shall apply to all development, including change of use,
+which includes or is required to include parking, including carpool, vanpool, loading and
+bicycle parking except for development which meets the general exemptions in Subsec-
+tion 12.50.030.C.
+2. The location and improvements for vehicle parking shall be constructed under any of the
+following circumstances:
+a. Construction of a new building;
+b. Expansion of an existing building by either 50% of its existing floor area or 3,000
+square feet, whichever is less; or
+c. Change in Oregon Residential Specialty Code or Oregon Structural Specialty Code
+occupancy classification of an existing building.
+3. No provision of this section shall be construed to require the removal of pre-existing
+parking spaces in excess of the maximum number required or allowed.
+ 12.50.310DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:53
+C. Maintenance.
+1. The provision and maintenance of off-street vehicle parking and loading spaces are
+continuing obligations of the property owner.
+2. Parking spaces shall be available for parking operable vehicles of residents, customers,
+patrons, and employees, and shall not be used for vehicle or materials storage or for fleet
+parking.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.50.320  Number of Spaces.
+A. All development shall include not less than 1 Americans with Disabilities Act compliant
+accessible parking space if the context or use of the site meets any of the following:
+1. The structure or use requires accessible parking per the Oregon Structural Specialty
+Code or Oregon Residential Specialty Code;
+2. The adjacent street does not have designated on-street parking; or
+3. The use is not an accessory dwelling unit.
+B. If provided off-site, parking for people with disabilities must be located within the shortest
+possible distance of an accessible entrance via an accessible path and no greater than 200
+feet from that entrance.
+C. Notwithstanding 12.50.320(A), the Review Authority may determine through a Type II proce-
+dure that the accessible space is not required under ORS 447.233 and not necessary or
+feasible.
+D. Maximum parking requirements are calculated based on the location of a site in Zone A or Zone
+B shown on Figure 12.50.320-A. If any portion of a lot or parcel is within Zone A, the entire site
+shall be construed to be within Zone A.
+E. For land uses located in Zone A with more than 65,000 square feet of floor area, surface
+parking may not consist of more area than the floor area of the building.
+1. Non-surface parking such as tuck-under parking, parking underground, and subsurface
+parking, and parking structures are exempted from this calculation.
+2. Surface parking shall be measured inclusive of all surface area on which a vehicle is
+designed to maneuver including all parking stalls, driveways and drive-through lanes
+within the property regardless of length, and all maneuvering areas regardless of depth.
+3. Paved areas not for use by passenger vehicles, such as loading areas or outdoor storage
+of goods or materials, are not counted as surface parking area.
+12.50.310 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:54
+F. Uses may share off-site parking if the shared parking is located within 800 feet of the uses.
+Shared parking located off-site shall be signed for use by the remote development.
+
+ Figure 12.50.320-A:
+Maximum Parking Zones Map
+ 12.50.320DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:55
+Table 12.50.320-1:
+Required Vehicle Parking Spaces for Residential Uses
+(required spaces are per dwelling unit unless specified otherwise)
+(see Section 12.50.335 for exceptions)
+Use Type
+ Maximum*
+Zone A Zone B
+Household Living
+Single Detached Dwelling
+(includes manufactured dwellings and residential
+homes)
+1 per bedroom, not
+to exceed 2 per
+dwelling unit
+None
+Accessory Dwelling Unit 1 2
+Duplex
+1 per bedroom, not
+to exceed 2 per
+dwelling unit
+None
+Townhouse 2 None
+Triplex 2 None
+Quadplex 2
+Cottage Cluster 2 None
+Multiple Dwelling Structure 2 None
+Studio Dwelling 1.2 None
+Dwelling in a Mixed-Use Building or Live-Work
+Dwelling
+0.9 per bedroom, not
+to exceed 2 per
+dwelling unit
+None
+Regulated Affordable Housing
+1 per bedroom, not
+to exceed 2 per
+dwelling unit
+None
+Group Living
+Group Living *(includes student housing) 1.0/resident 1.0/resident
+Residential Services
+Independent Living Units (senior) 1 2
+Other Residential Services Facilities (includes
+assisted living and convalescent care)
+0.50 per resident
++1/staff
+0.50/resident
++1/staff
+12.50.320 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:56
+Table 12.50.320-1:
+Required Vehicle Parking Spaces for Residential Uses
+(required spaces are per dwelling unit unless specified otherwise)
+(see Section 12.50.335 for exceptions)
+Use Type
+ Maximum*
+Zone A Zone B
+Residential Business (calculated for residential portion only)
+Residential Business (includes Live-Work) 2 None
+
+  Table 12.50.320-2:
+Required Vehicle Parking Spaces for Commercial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA) unless otherwise specified)
+(See Section 12.50.335 for exceptions)
+Use Type
+ Maximum*
+Zone A Zone B
+Commercial Lodging
+All uses 1/room None
+Commercial Recreation
+Indoor facilities 5 6
+Court sports 5/court 6/court
+Outdoor facilities (with bleachers) None None
+Outdoor facilities (without bleachers) 40/field None
+Durable Goods Sales
+All uses 3 4
+Eating and Drinking Establishments
+Fast food 10 None
+Casual dining 12 None
+Fine dining 15 None
+Educational Services
+All uses (parking calculated per
+FTE student or employee) 0.30 None
+ 12.50.320DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:57
+Table 12.50.320-2:
+Required Vehicle Parking Spaces for Commercial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA) unless otherwise specified)
+(See Section 12.50.335 for exceptions)
+Use Type
+ Maximum*
+Zone A Zone B
+Office
+General office 4 4
+Medical office 5 6
+Customer Service Communications Center 5 8
+Retail Products and Services
+Minor Assembly Facilities 5 6
+All other uses 5 6
+Self-Service Storage
+All uses
+1/4,000 sq. ft. up to
+20,000 sq. ft.;
+1/20,000 sq. ft.
+thereafter
+None
+Vehicle Service and Repair
+All types 4 None
+
+  Table 12.50.320-3:
+Required Vehicle Parking Spaces for Industrial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA)
+or per student/employee on the largest shift, unless otherwise specified)
+Use Type
+ Maximum*
+Zone A Zone B
+Industrial Services
+All uses None None
+Manufacturing and Production
+All uses 2.5 None
+12.50.320 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:58
+Table 12.50.320-3:
+Required Vehicle Parking Spaces for Industrial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA)
+or per student/employee on the largest shift, unless otherwise specified)
+Use Type
+ Maximum*
+Zone A Zone B
+Solid Waste Treatment and Recycling
+All uses None None
+Vehicle Storage
+All Uses 1.0/employee None
+Warehouse and Freight Movement
+All uses 0.4 0.5
+Wholesale Sales
+All Uses 3 None
+
+  Table 12.50.320-4:
+Required Vehicle Parking Spaces for Institutional Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA)
+or per student/employee on the largest shift, unless otherwise specified)
+Use Type
+ Maximum*
+Zone A Zone B
+Colleges and Universities (measured per FTE student and employee)
+All uses 0.3 0.3
+Community Services
+All uses 4 5
+Detention Facilities (measured per bed)
+All uses 0.4 None
+Hospitals (measured per bed)
+All uses 3 None
+Assembly Facilities (measured by seating type/maximum occupancy* in largest assembly
+room)
+Per fixed seat where provided 1/3 seats 1/2 seats
+ 12.50.320DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:59
+Table 12.50.320-4:
+Required Vehicle Parking Spaces for Institutional Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA)
+or per student/employee on the largest shift, unless otherwise specified)
+Use Type
+ Maximum*
+Zone A Zone B
+Per foot of bench/pew length where provided 0.5 0.8
+Per person where fixed seating not provided 0.6 1.0
+Schools (measured either per classroom or per student and employee)
+Elementary school (grades K—5) 4/classroom None
+Middle school (grades (6—8) 2/classroom 2/classroom
+High School (grades 9—12) 0.2/student and FTE
+employee
+0.2/student and FTE
+employee
+* As determined by the Building Official.
+
+  Table 12.50.320-5:
+Required Vehicle Parking Spaces for Infrastructure and Utilities Facilities Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA)
+or per employee on the largest shift, unless otherwise specified)
+Use Type
+ Maximum*
+Zone A Zone B
+Aviation Uses
+Hangars (measured per aircraft space) 2 None
+Parks and Open Areas
+Indoor facilities 5 6
+Court sports 5/court 6/court
+Outdoor facilities (with bleachers) None None
+Outdoor facilities (without bleachers) 40/field None
+Public Safety Facilities (measured per FTE employee)
+All uses 2 2
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6275 § 1, 2018; Ord. 6149 § 1, 2015; Ord. 6110 § 7, 2015)
+12.50.320 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:60
+12.50.330  Exempt Parking.
+The following types of parking are exempt from the maximum requirements specified in Tables
+12.50.320-1 through 12.50.320-5:
+A. Employee car/vanpool parking spaces. As used in this section, a "carpool" is 2 or more
+commuters, including the driver, who share the ride to and from the destination. A "vanpool" is
+5 or more commuters, including the driver, who share the ride to and from the destination on a
+regular basis;
+B. Dedicated valet parking spaces;
+C. Fleet parking;
+D. Commercial parking;
+E. Parking for vehicles for sale, lease or rent;
+F. Parking spaces in structures located outside Zone A; and
+G. Parking spaces reserved for customer vehicles before or after servicing, provided such spaces
+meet the following standards:
+1. The spaces are not designated for carpool, vanpool or handicapped parking; and
+2. The number of service spaces is not more than 25% of the total number of spaces on-site.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.50.335  Reserved.
+Editor’s note—Ord. No. 6488, §§ 1, 2(Exh. A), adopted Dec. 3, 2024, repealed § 12.50.335, which
+pertained to exceptions to required parking standards and derived from Ord. 6294 § 1, adopted in
+2019; Ord. 6322 § 1, adopted in 2019; and Ord. 6401 § 1, adopted in 2022.
+12.50.340  On-Street Parking.
+On-street spaces constructed with a specific development may not be used exclusively by that
+development, but are available for general public use at all times. Except for those placed by the City,
+signs, other markings, or actions limiting general public use of on-street parking spaces are not
+permitted.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.50.350  Vehicle Parking and Loading: Location.
+A. Parking Location: General Provisions.
+1. Except as may be allowed within middle housing land divisions or within specific plan
+districts, off-street parking for residential uses in all zones shall be located on the same lot
+with the residential use.
+ 12.50.350DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:61Supp. No. 1
+2. Except as may be allowed within specific plan districts, parking for non-residential uses in
+standard zones may be located off-site, not farther than 500 feet from the use it serves.
+Parking for non-residential uses in light rail, mixed-use or urban center zones may be
+located off-site, not farther than 800 feet from the use it serves.
+3. If parking is provided off-site, the distance from the parking to the use shall be measured
+from the nearest parking space to the building entrance on a sidewalk or other pedestrian
+route. The location and terms of the off-site parking shall be specified in a written deed,
+lease or contract, signed and notarized by all affected property owners and filed with the
+Community Development Department.
+B. Loading Location: General Provisions.
+1. Schools and Child Care Facilities. Access drives designed for continuous forward flow of
+passenger vehicles shall be provided at any school or child care facility with a capacity of
+25 or more students.
+2. Merchandise, Materials, or Supplies. Off-street truck loading docks proposed for new
+non-residential development shall be sited and maintained to accommodate anticipated
+truck sizes, numbers and movement on-site, without blocking public streets. Off-street
+parking may be used for loading and unloading operations only during off-peak hours.
+C. Off-Street Surface Parking Location in Standard Zones.
+1. Off-street surface parking located within the front or side yard setbacks of single
+detached or attached residential or middle housing lots, shall be located on a driveway
+providing access to a garage or carport, or if there is no garage or carport, within a paved
+area that accommodates no more than 2 parking spaces per unit.
+2. In development projects adjacent to major pedestrian routes or transit trunk routes, the
+location of surface parking relative to the building(s) it serves shall comply with the
+building orientation and pedestrian connection requirements of Section 12.50.400.
+3. If buildings parking, required landscaping and usable open space do not occupy an entire
+site, the parking shall be sited to meet the following standards:
+a. The location of the parking permits additional development on the site; and
+b. The parking does not abut a significant natural resource area.
+D. Off-Street Surface Parking Location in Light Rail Zones.
+1. Parking for free-standing residential structures in the SCC-DT zone shall be incorporated
+within the structure.
+2. Surface parking, loading docks or maneuvering areas shall not be temporarily or
+permanently located adjacent to, cater-cornered from, or across the street from an HCT
+station site. Tri-Met park-and-ride lots and joint-use parking lots are exempt from this
+standard.
+12.50.350 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:62Supp. No. 1
+3. Except in the SCC-MM, SCBP, SCI, or SCFI zones as provided in paragraph 4 below,
+non-residential surface parking or loading shall not be located between a front building
+plane (or a line extended there from) and a major pedestrian route or transit street unless
+1 of the following 2 standards is met:
+a. The surface parking or loading is at least 50 feet from the major pedestrian route or
+transit street; or
+b. The surface parking or loading is located within or behind the front plane of the
+building and is screened from pedestrian view by walls with decorative features
+such as grates, artwork, tiles, or similar elements. Windows and display area are not
+required on walls surrounding service docks and loading areas.
+4. In the SCC-MM, SCBP, SCI, or SCFI zones, surface parking or loading may be located
+between a front building plane and a major pedestrian route or transit street if the
+following 6 standards are met:
+a. The parking or loading cannot be practicably located to the side or rear of the
+building or more than 50 feet from the major pedestrian route or transit street;
+b. The parking and loading is located as far as practicable from the major pedestrian
+route or transit street, at least far enough that sidewalks will not be partially blocked
+by parked or loading vehicles;
+c. The parking and loading consists of not more than one 2-way circulation aisle with
+double-loaded parking and internal landscaped islands compliant with Section
+12.50.360;
+d. Site access is provided either from a side street or an alley, or from only one 24-foot
+wide driveway per 150 feet of frontage on the major pedestrian route or transit
+street;
+e. A direct pedestrian connection is provided from the major pedestrian route or transit
+street to the main building entrance, compliant with Section 12.50.400; and
+f. A landscaped buffer at least 10 feet wide is installed between the parking or loading
+and the major pedestrian route or transit street. This landscaped buffer shall include
+the following improvements:
+i. Trees spaced and sized, in conjunction with the trees in the planter strip, to
+form a continuous canopy over the public sidewalk; and
+ii. Additional landscaping and/or pedestrian amenities in compliance with Sec-
+tion 12.50.360 to visually mitigate the adjacent parking and loading area.
+5. If a site is adjacent on 2 or more sides to a major pedestrian route, transit street or
+significant natural resource area, off-street parking between the building and the route,
+street or resource area shall be located in the order of preference shown in Table
+12.50.350-1. Where these circumstances apply, the provisions of paragraphs 3 and 4
+above may be waived to allow additional parking depth between the building and the
+route, street, or resource area on not more than 2 sides of the building.
+ 12.50.350DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:63Supp. No. 1
+Table 12.50.350-1:
+Preferred Siting for Off-Street Parking in Light Rail Zones
+Order of Preference Location
+First or Most Preferred Behind or behind the building(s), not adjacent to a
+significant natural resource area
+Second Between the building(s) and the significant natural
+resource area
+Third Between the building(s) and a non-transit public or private
+street
+Fourth Between the building(s) and the transit street
+Fifth or Least Preferred Between the building(s) and the major pedestrian route,
+especially leading to an HCT station
+E. Off-Street Surface Parking and Loading in Mixed-Use Zones.
+1. In mixed-use zones where a maximum setback is required, no surface parking or
+maneuvering area shall be located between the front building plane (as illustrated in
+Section 12.01.500) and a street. Loading areas may be located between a building and
+a street when an anchor tenant requires the use of delivery vehicles with an overall length
+of 40 feet or longer and where the service docks and loading areas comply with the
+provisions contained in paragraph 2 below.
+2. Service docks, maneuvering and loading areas shall be located interior to the site
+wherever practicable. Where location of these facilities adjacent to a street, driveway, or
+pedestrian route cannot be practicably avoided, screening walls for such facilities shall be
+constructed with elements such as artwork or decorative grates or tiles. Screening walls
+surrounding service docks and loading areas shall be at least 12 feet in height. Windows
+and display area are not required on screening walls surrounding service docks and
+loading areas.
+3. On mixed-use zone sites abutting major pedestrian routes, transit streets or significant
+natural resources areas on 2 or more sides, off-street parking between the building and
+the route, street or resource area shall be located in the preferred order shown in Table
+12.50.350-1.
+F. Parking Structures and Structured Parking: Location.
+1. Parking structures or structured parking may be sited adjacent to a High Capacity Transit
+(HCT) station, a major pedestrian route or a transit street only if 1 or more of the following
+3 standards are met:
+a. The parking structure is constructed to accommodate ground floor retail goods and
+service uses, educational service uses, or office or community service uses; or
+12.50.350 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:64Supp. No. 1
+b. The parking structure is located behind buildings fronting on such streets or station;
+or
+c. The structured parking is built wholly or partially below grade. To meet this standard,
+the top deck of the structured parking within 50 feet of such streets or station shall
+not be more than 3½ feet above the adjoining sidewalk and must be functionally
+incorporated into the streetscape.
+2. Where a proposed parking structure is adjacent to an HCT station, transit street and/or
+major pedestrian route on 2 or more sides, vehicle access points shall be located in the
+order of preference shown in Table 12.50.350-2.
+3. Parking structures are subject to the design standards in Section 12.50.360.
+  Table 12.50.350-2:
+Preferred Siting for Access Points to Parking Structures
+Order of Preference Location
+First or Most Preferred On the non-transit street
+Second On the transit street
+Third On the major pedestrian route most directly leading to the
+HCT station
+Fourth or Least Preferred On the street leading to the HCT station
+G. Carpool and Vanpool Parking. Carpool and vanpool parking is encouraged within new
+commercial, industrial and institutional developments with 50 or more required parking spaces.
+Where provided, carpool and vanpool parking spaces shall be located closer to the main
+employee, student or commuter entrance than all other employee, student or commuter
+parking spaces with the exception of handicapped parking spaces. The carpool/vanpool
+spaces shall be clearly marked "Reserved - Carpool/Vanpool Only."
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1,
+2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.50.360  Vehicle Parking and Loading: Design and Improvements.
+A. Purpose and Applicability. The intent of these standards is to ensure that vehicle parking is
+located and designed not only to facilitate its major function but also to complement and
+encourage easy and safe pedestrian movement to, through and around parking facilities.
+Driveways and access aisles should be designed and located to maintain traffic flow on public
+streets and alleys, pedestrian safety and efficient on-site vehicle circulation.
+1. The standards of this section apply to:
+a. All new multi-dwelling residential, commercial, industrial, and institutional develop-
+ment subject to Development Review under Section 12.80.040; and
+ 12.50.360DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:65Supp. No. 1
+b. Single detached residential or middle housing developments where parking is
+provided in common parking areas. For the purposes of this section, common
+parking areas are for the shared use of more than 2 dwelling units.
+2. Parking that is provided to dwellings in individual garages, carports, or spaces, which are
+adjacent and assigned to individual units, is subject only to the standards of Subsection
+12.50.360.C. regarding parking space dimensions.
+B. Off-Street Vehicle Surface Parking Design in General.
+1. Driveway Locations and Access Aisles. Sight distance/vision clearance areas shall be
+provided in compliance with Section 12.50.260 at the intersections cited in that section. At
+all other driveways, sight distance/vision clearance areas shall be provided in compliance
+with Figure 12.50.360-A.
+
+2. Backing Movements onto a Street Not Permitted. Parking lots larger than 4 spaces shall
+use an access driveway to prevent backing movements or other maneuvering on a street.
+Backing movements from larger parking lots are permitted on alleys.
+ Figure 12.50.360-A:
+Driveway Sight Distance/Vision Clearance Requirements
+12.50.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:66Supp. No. 1
+3. Alley Improvements. If a parking area would directly access an alley, the developer shall
+be responsible for any necessary improvements to the alley as required by Subsection
+12.50.530.B.11. and the Public Works Design and Construction Standards. Required
+improvements shall be constructed and completed prior to issuance of final certificates of
+occupancy.
+4. Driveway Consolidation and Parking Area Connection. To reduce congestion on public
+streets, consolidation of curb cuts and/or connection of parking fields in new non-
+residential developments on adjacent sites may be required. To meet this standard,
+provision of reciprocal easements may be a condition of development approval.
+C. Dimensional Requirements for Parking Spaces, Access Aisles and Maneuvering Areas.
+1. Parking areas shall conform to the Americans with Disabilities Act (ADA) standards and
+guidelines for parking spaces (dimensions, van accessible parking spaces, vertical
+clearances in parking structures, etc.).
+2. Except as provided in paragraphs 3 through 5 below, minimum dimensions and config-
+urations for parking spaces, access aisles and maneuvering areas are shown in Figure
+12.50.360-B.
+3. Up to 50% of the provided number of off-street vehicle parking spaces may be con-
+structed as compact spaces, with minimum dimensions of 16 feet depth and 8 feet width.
+Compact parking space depths may be reduced not more than 1½ feet adjacent to
+landscaped strips and pedestrian walkways.
+4. As an alternative to the parking space dimensions in Figure 12.50.360(B), the Review
+Authority may approve universal parking space dimensions. Minimum dimensions for
+universal parking spaces shall be 17 feet, 6 inches in depth and 8 feet, 9 inches in width,
+with a minimum 25-foot wide clear access aisle width. If universal parking space
+dimensions are approved, compact parking spaces as described in paragraph 3 above
+shall not be included unless approved by the Review Authority to accommodate physical
+or structural site limitations. Universal parking space depths may be reduced not more
+than 1½ feet adjacent to landscaped strips and pedestrian walkways.
+ 12.50.360DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:67
+5. As an alternative to the drive aisle widths in Figure 12.50.360(B), the Review Authority
+may approve 22-foot drive aisle widths in parking structures.
+
+ Figure 12.50.360-B:
+Minimum Dimensions for Parking Spaces, Access Aisles and Maneuvering Areas
+12.50.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:68
+6. Wheel Stop Requirements. To prevent vehicle overhang from angled or perpendicular
+parking onto adjacent landscaping or walkways, or across a property line, 1 or more of the
+following improvements shall be installed at the perimeter of a parking lot or common
+parking area as shown on Figure 12.50.360-C:
+a. Wheel stops within each parking space, at least 4 inches high and 6 feet long,
+located 18 inches from the landscaped area or walkway and placed perpendicular
+to the length of the space; or
+b. A continuous bumper rail, wall or fence at the end of the parking spaces adjacent to
+the walkway or landscaped area; or
+c. An additional 18 inches of walkway width adjacent to the parking spaces, to
+maintain a clear 5 feet of unobstructed walkway adjacent to the parking spaces.
+
+ Figure 12.50.360-C:
+Wheel Stop Locations at Parking Lot Perimeters
+ 12.50.360DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:69
+D. Parking Structure Design in MU-C Zones. For development projects which include structured
+parking to increase maximum building footprint (pursuant to Subsection 12.24.250.B.) or to
+increase building height (pursuant to Subsection 12.24.250.C. and Subsection 12.50.140.E.4.),
+the structured parking shall include the following Uses:
+1. For projects with street frontage on Arterial or Collector streets, the structured parking
+shall include ground floor residential, commercial or institutional Uses facing the street.
+2. For projects with frontage on local or neighborhood route streets, the structured parking
+shall be include residential Uses on the ground floor facing the street, or public open
+space areas, such as small plazas with seating areas, between the building and the
+street.
+3. If there are multiple parking floors within the parking structure, the upper floors shall be
+wrapped with office and/or residential Uses or two-story eating and drinking establish-
+ments. The area of the roof of the structured parking not occupied by buildings shall
+provide usable courtyard space, terraces, green roofs and/or community garden plots,
+which are accessible by the office and residential Uses and/or eating and drinking
+establishments.
+4. Parking structure entrances shall be constructed at the minimum practicable size and
+shall be visually integrated into the building elevation by continuing architectural ele-
+ments such as a frieze, cornice, canopy, overhang, trellis, or decorative grilles from the
+adjacent façade.
+E. Parking Lot Surface Improvements.
+1. All vehicular parking areas, including parking spaces, access aisles and driveways shall
+have a durable, dust-free surfacing. Options for surfacing materials include the following,
+subject to approval by the Review Authority:
+a. Asphaltic Concrete;
+b. Portland Cement;
+c. Pervious surfacing and other low impact development approaches (LIDA) tech-
+niques and practices as described in Section 12.64.750 where site conditions are
+favorable; or
+d. Other suitable materials based on a specified need. The burden of proof is on the
+applicant to demonstrate the necessity for other suitable materials.
+2. The uses and operations listed below may provide alternative surfacing, such as gravel
+or other similar semi-pervious surfaces, from the above requirements for vehicular
+parking or storage areas. The access aisles and driveways shall meet the surfacing
+requirements listed above.
+a. Major assembly facilities.
+i. Only allowed for spaces provided for peak demand. Parking meeting the
+above standards shall be provided for average daily traffic, including weekday
+employees and visitors.
+12.50.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:70
+b. Outdoor storage.
+i. Allowed either as an accessory to a primary use or as a standalone primary
+use; and
+ii. The vehicular circulation areas within the outdoor storage area may also be
+semi-pervious. Recreational vehicle and boat storage shall still be required to
+provide paved drive aisles as described in Section 12.40.220.
+c. Telecommunication facilities
+d. Utility facilities
+3. Parking fields shall be graded toward the site interior, to prevent storm water drainage
+across or over public sidewalks or onto any abutting public or private property.
+F. Parking Lot Screening and Landscaping.
+1. Applicability. These standards apply to parking lots serving nonresidential uses and
+common parking areas serving 3 or more dwelling units. In addition to the standards of
+this section, parking lot landscaping is also subject to the general landscaping require-
+ments of Subsection 12.50.220.B.
+2. General Parking Lot Landscaping Standards.
+a. Coverage. A minimum of 70% of all required parking lot landscaped areas, including
+required planting strips and planting bays, shall be planted with trees or shrubs and
+continuous ground cover consisting of lawn, low growing evergreen shrubs, or
+evergreen ground cover. The percentage measurement in this standard shall be
+calculated at plant maturity.
+b. Plant Sizes. The minimum planting size for all required trees, shrubs and ground
+covers in parking lot landscaping shall comply with the standards in Table 12.50.220-1.
+3. Perimeter Landscape/Screening.
+a. Perimeter landscaping or screening shall be provided to meet 1 or more of the
+following standards:
+i. Planter strips at the width specified in Table 12.50.360-1, planted with large-
+scale, high canopy, horizontally-branching street tree species. Adjacent to
+public rights-of-way, tree species in perimeter planter strips shall be selected
+and planted to be compatible with trees and above- and below-ground utilities
+in the planter strips or in the public right-of-way. Individual trees shall be
+spaced between parking spaces to reduce damage from automobiles; and/or
+ii. Planter strips at the width specified in Table 12.50.360-1, planted with an
+evergreen hedge. Hedges adjacent to public rights-of-way shall be between
+30 inches and 42 inches in height; and/or
+iii. A decorative wall or fence 30 to 42 inches in height parallel to and at least 2
+feet from the right-of-way line, with landscaping between the wall or fence and
+the sidewalk consistent with paragraph 2 above.
+ 12.50.360DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:71
+Table 12.50.360-1:
+Parking Area Perimeter Planter Strip Minimum Widths
+Location Minimum Width
+Along an arterial street right-of-way 6 feet
+Along any other street right-of-way 5 feet
+At any other perimeter location 4 feet
+b. Perimeter landscaping or screening shall be selected, installed and maintained to
+preserve sidewalk access and adequate sight distance for vehicles exiting the
+parking area.
+c. Perimeter landscaping is not required between parking lots sharing common
+driveways and/or circulation aisles or other traffic areas. Perimeter landscaping
+may also be reduced or eliminated adjacent to landscaped open space, to transition
+the open space landscaping into the parking area and afford better access between
+the parking and the open space.
+d. Non-residential parking and loading areas adjacent to or within residential zones or
+adjacent to residential uses shall be designed and constructed to reduce impacts on
+residential uses through installation of a sight obscuring fence at the property line.
+The fence shall be between 5 and 6 feet in height, except where vision clearance/
+sight distance triangles are required.
+4. Interior Landscaping.
+a. Surface parking areas shall include interior landscaping meeting the following
+standards:
+i. Planting Islands. At least one 2½ feet caliper street tree shall be planted in
+protected islands at the end of each parking row, and at intervals 100 feet or
+less within the parking rows. Planting islands shall be at least 5 feet wide, with
+a minimum area of 190 square feet in a double loaded parking row or 95
+square feet in a single loaded parking row. The remaining area of each island
+shall be landscaped consistently with the general standards in paragraph 2
+above.
+ii. All Other Areas. Interior landscaping consistent with the general standards in
+paragraph 2 above shall be installed wherever parking spaces, access aisles,
+driveways, or pedestrian movements would not be impeded by landscaping.
+b. Maximum Landscaping Percentage Allowed. If compliance with the standard of this
+section would require that the area of interior parking lot landscaping exceed 10%
+of the total area of the surface parking lot, the area of required landscaping shall be
+limited to 10% unless necessary to meet canopy coverage requirements or other-
+wise requested by the applicant.
+12.50.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:72
+c. Applicable to Other Requirements. All landscaping required under the provisions of
+this subsection may be applied towards compliance with other applicable landscap-
+ing requirements.
+5. Additional Parking Lot Design Requirements
+a. Parking lots greater than ½ acre of new off-street surface parking, as measured
+based on the perimeter of all new off-street parking spaces, maneuvering lanes,
+and maneuvering areas, including driveways and drive aisles shall provide the
+following:
+i. Tree Canopy. Developments shall provide either trees along driveways or a
+minimum of 30% tree canopy coverage over new parking areas at tree
+maturity but no more than 15 years after planting. (Developments are not
+required to provide trees along drive aisles); and one of the following;
+ii. Climate Action Elements.
+(A) Tree canopy covering at least 40% of the new parking lot area at maturity
+but no more than 15 years after planting; or
+(B) Installation of solar panels with a generation capacity of at least ½
+kilowatt per new off-street parking space. Panels may be located any-
+where on the property; or
+(C) Payment of at least $1,500.00 per new off-street parking space into a city
+or county fund dedicated to equitable solar or wind energy development
+or a fund at the Oregon Department of Energy designated for such
+purpose; or
+(D) A mixture of these actions the City deems to meet the purpose of this
+requirement.
+iii. The tree spacing and species planted must be designed to maintain a
+continuous canopy except when interrupted by driveways, drive aisles, and
+other site design considerations
+iv. Development of a tree canopy plan under shall be done in coordination with
+the local electric utility, including pre-design, design, building and mainte-
+nance phases.
+G. Parking Lot Construction: Timing and Deferral.
+1. Completion Time for Parking Lot Construction. Except as provided under paragraph 2
+below, parking lot improvements, including required landscaping and paving, shall be
+completed and the area available for use prior to issuance of final Certificate(s) of
+Occupancy.
+2. Postponement of Parking Lot Construction. A temporary Certificate of Occupancy may be
+granted by the Building Official if the developer posts a performance bond or equivalent
+equal to the cost to complete the improvements as estimated by the Building Official.
+ 12.50.360DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:73
+Postponement of parking lot construction under a temporary Certificate of Occupancy
+shall not exceed 6 months' duration. No extensions of the 6-month postponement shall
+be approved.
+H. Electric Vehicle Infrastructure Requirements.
+1. New commercial development shall provide electrical service capacity, as defined in
+ORS 455.417, to serve not less than 20% of all provided vehicle parking spaces.
+2. New multifamily residential buildings with 5 or more residential dwelling units, and new
+mixed-use buildings consisting of privately owned commercial space and 5 or more
+residential dwelling units, shall provide of electrical service capacity, as defined in ORS
+455.417, to serve 40% of all provided vehicle parking spaces.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6149 § 1, 2015)
+12.50.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:74

@@ -95,6 +95,12 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
         "or/multnomah/portland",
         "or/multnomah/troutdale",
         "or/multnomah/wood-village",
+        # 2026-09-29: Hillsboro, a draft from a cloud session. 12.01.500
+        # "Lot, Corner" counts two street frontages meeting at an angle not
+        # greater than 135 degrees, and says lots on an alley are not
+        # corners. Unincorporated Washington County, drafted the same day,
+        # holds no corner definition and is not here.
+        "or/washington/hillsboro",
     ]
 
 

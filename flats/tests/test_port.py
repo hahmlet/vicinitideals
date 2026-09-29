@@ -495,7 +495,16 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # is valid. Round-tripping is the whole point of doing this as a port.
     rules = RuleSet(load_rules())
 
-    assert len(rules.layers) == 20  # 19 jurisdictions + the state layer
+    assert len(rules.layers) == 21  # 20 jurisdictions + the state layer
+    # 351 as of 2026-09-29, later the same day: Hillsboro, the second
+    # Washington County layer, from the same cloud session. Its 37 zones are
+    # every zone the Community Development Code prints a Housing Types
+    # Permitted table for: 22 admit the pod on one lot, MU-C only off an
+    # arterial, UC-AC, UC-NC and UC-OR only outside the Retail Focus
+    # Frontage Area, and 11 commercial, industrial and institutional zones
+    # refuse. ANX, CO and the map's two alias spellings are ruled in the
+    # layer instead.
+    #
     # 314 as of 2026-09-29: unincorporated Washington County, drafted in a
     # cloud session, the first layer of the third county. Its 42 zones are
     # the 42 codes on the county's own zoning layer (field LUD), every one
@@ -555,7 +564,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 314
+    assert sum(len(l.zones) for l in rules.layers.values()) == 351
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

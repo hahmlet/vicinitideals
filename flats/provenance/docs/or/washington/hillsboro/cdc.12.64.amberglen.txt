@@ -1,0 +1,1914 @@
+SUBCHAPTER 12.64
+ AMBERGLEN PLAN DISTRICT
+12.64.010 Purpose.
+12.64.020 Applicability.
+12.64.030 Organization.
+12.64.100 Base Zone Standards Exceptions.
+12.64.110 Exceptions to Required Setbacks and Height Limits.
+12.64.120 Exceptions to Floor Area and Minimum Floor Area Ratio (FAR).
+12.64.130 Exceptions to the Front Property Line Coverage.
+12.64.200 Site Design.
+12.64.210 Usable Open Space.
+12.64.220 Landscaping.
+12.64.230 Tree Preservation.
+12.64.240 Exterior Lighting.
+12.64.250 Fencing and Free-Standing Walls.
+12.64.260 Drive-Through Facilities.
+12.64.270 Sidewalk Dining and Displays.
+12.64.280 Outdoor Display and Storage.
+12.64.300 Vehicle and Bicycle Parking.
+12.64.310 Applicability.
+12.64.320 Number of Spaces Required.
+12.64.330 Adjustments to Parking.
+12.64.340 Off-Site Parking.
+12.64.350 Vehicle Loading.
+12.64.360 On-Site Parking and Loading: Location, Design and Improvements.
+12.64.370 Bicycle Parking.
+12.64.400 Pedestrian and Bicycle Connectivity and Circulation.
+12.64.500 Street Location and Connectivity Standards.
+12.64.510 Purpose.
+12.64.520 Applicability.
+12.64.530 General Street Connectivity and Circulation Standards.
+12.64.540 Street Location and Connectivity.
+12.64.550 Street Connectivity and Block Length Requirements.
+12.64.600 Street Design and Character.
+12.64.610 General Applicability and Design.
+12.64.620 Maintenance of Landscaping and Irrigation in Rights-of-Way.
+12.64.630 Street Trees.
+12.64.640 Street Cross-Sections and Design Standards.
+12.64.650 Streetscape Standards.
+12.64.700 Stormwater Management and Site Grading.
+12.64.710 Purpose.
+CDC12.64:1
+12.64.720 General Provisions.
+12.64.730 Consolidated Stormwater Facilities.
+12.64.740 Site Grading.
+12.64.750 Low Impact Development Approach Guidelines.
+12.64.800 Building Design Standards.
+12.64.810 Purpose.
+12.64.820 Applicability.
+12.64.830 Massing and Form.
+12.64.840 Building Design and Character.
+12.64.850 Pedestrian Active Use Requirements.
+12.64.860 Structured Parking.
+12.64.870 Green Construction Requirements.
+12.64.900 Application of Public Benefit Standards.
+12.64.910 Purpose.
+12.64.920 General Provisions.
+12.64.930 Vertical Mixed-Use Public Benefits.
+12.64.940 Mixed Income Housing.
+12.64.950 Green Buildings.
+12.64.960 Public Art.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:2
+12.64.010  Purpose.
+The geographically-specific Amberglen Plan District development and design standards reflect the
+City's goals and objectives for the Amberglen Community, and support the implementation of the
+vision, goals, and policies outlined in the Amberglen Community Plan. More specifically, the Plan
+District standards are intended to:
+A. Allow for the gradual transition of existing Uses in the Amberglen Plan District to higher
+intensity development over time;
+B. Support existing office development;
+C. Promote the implementation of urban center density targets;
+D. Provide the concentrations of residential and employment necessary to support high capacity
+transit;
+E. Increase the range of housing options available in the City's urban centers;
+F. Support the retention and expansion of institutional Uses; and
+G. Promote innovative, high-quality, sustainable development.
+(Ord. 6401 § 1, 2022)
+12.64.020  Applicability.
+A. Applicable Zones. The standards of this Subchapter apply to properties within the Amberglen
+Plan District boundaries as shown on Figure 12.64.020-A. There are 6 base zones applicable
+within the Amberglen Plan District:
+1. UC-RM Urban Center — Residential Medium Density;
+2. UC-MU Urban Center — Mixed-Use Urban Density;
+3. UC-AC Urban Center — Activity Center;
+4. UC-NC Urban Center — Neighborhood Center;
+5. UC-OR Urban Center — Office/Research; and
+6. UC-RP Urban Center — Research Park.
+ 12.64.020AMBERGLEN PLAN DISTRICT
+CDC12.64:3
+Figure 12.64.020-A:
+Amberglen Plan District Boundaries
+12.64.020 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:4
+B. Application to Conforming and non-conforming Properties.
+1. The provisions of Subchapter 12.64 apply to all conforming and non-conforming proper-
+ties as shown in Table 12.64.020-1. In Table 12.64.020-1, "immediately previous HZO
+uses and standards" refers to the provisions of Zoning Ordinance No. 1945 as applicable
+on the subject property as of July 5, 2012. "CDC Uses and standards" refers to the
+provisions of this Code. Percentage of expansion in use or structure size is measured
+from existing Gross Floor Area (GFA) as of July 5, 2012.
+  Table 12.64.020-1:
+Applicability of Amberglen Plan District Standards
+(GFA = Gross Floor Area)
+ Percentage
+of
+Expansion
+Conforming Uses and
+Structures Nonconforming Uses, Structures, or Both
+<10% GFA
+CDC uses and standards OR
+immediately previous HZO uses
+and standards applied at
+applicant's election.
+Development Review process NOT
+required
+CDC uses and standards OR immediately
+previous HZO uses and standards applied at
+applicant's election.
+Development Review process NOT required.
+Compliance with Subsection 12.30.800.A.
+demonstration of "practical difficulty or
+unnecessary hardship" NOT required.
+10% to 20%
+GFA
+CDC uses and standards OR
+immediately previous HZO uses
+and standards applied at
+applicant's election.
+Development Review process IS
+required
+CDC uses and standards OR immediately
+previous.
+HZO uses and standards applied at applicant's
+election
+Development Review IS required.
+Compliance with Subsection 12.30.800.A.:
+demonstration of "practical difficulty or
+unnecessary hardship" NOT required.
+>20% GFA CDC uses and standards applicable; Development Review IS required
+2. Where Table 12.64.020-1 allows compliance with either the immediately previous HZO
+standards or the current CDC standards, an application must address all applicable
+provisions of either the CDC or the immediately previous HZO, depending on the
+applicant's election in each case.
+3. Except as specified in Table 12.64.020-1, all provisions of Section 12.80.040 apply to all
+construction, development, and redevelopment in the Urban Center (UC) districts.
+4. Gross Floor Area is defined in Section 12.01.500 as excluding underground parking. In
+the Amberglen Plan District only for development that existed as of July 5, 2012, Gross
+Floor Area includes interior parking and loading spaces.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.64.030  Organization.
+The sections in this Subchapter are structured to mirror the organization of Subchapter 12.50, in
+order to better identify those standards which supersede the requirements of Subchapter 12.50.
+(Ord. 6401 § 1, 2022)
+ 12.64.030AMBERGLEN PLAN DISTRICT
+CDC12.64:5Supp. No. 1
+12.64.100  Base Zone Standards Exceptions.
+Base zone standards exceptions include the following sections:
+12.64.110 Exceptions to Required Setbacks and Height Limits
+12.64.120 Exceptions to Floor Area and Minimum Floor Area Ratio (FAR)
+12.64.130 Exceptions to the Front Property Line Coverage
+(Ord. 6401 § 1, 2022)
+12.64.110  Exceptions to Required Setbacks and Height Limits.
+Table 12.64.110-1 identifies exceptions to the required minimum and maximum setbacks and
+maximum heights specified in the applicable base zones in the Amberglen Plan District. The
+exceptions allowed in Table 12.64.110-1 are subject to compliance with applicable standards of the
+Oregon Structural Specialty Code and Oregon Fire Code.
+  Table 12.64.110-1:
+Exceptions to Base Zone Development Standards
+Structure or Feature Exception
+Exceptions to Minimum and Maximum Setbacks
+Accessory structures and recreational facilities in public
+parks
+Exempt from minimum and maximum
+setbacks
+Architectural projections (see Subsection
+12.50.130.H.3.):
+Non-load-bearing architectural features, porches,
+decks, pergolas, balconies and stoops
+May project up to 4 feet into a required
+setback
+On-site energy production equipment including but not
+limited to solar, wind, and geothermal energy
+equipment
+Permitted in side or rear setbacks, no
+closer than 5 feet to any property line.
+Exceptions to Building Height Limits
+Structural projections (see Subsection 12.50.140.F.) Exempt from maximum building heights
+On-site solar energy production equipment May project up to 3 feet above
+maximum height limit
+On-site wind energy production equipment in the
+UC-OR and UC-RP zones
+May project up to 30 feet above
+maximum height limit
+(Ord. 6401 § 1, 2022)
+12.64.100 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:6Supp. No. 1
+12.64.120  Exceptions to Floor Area and Minimum Floor Area Ratio (FAR).
+A. In the Amberglen Plan District, Floor Area does not include the following: Basements, attics,
+closets, restrooms, lobbies, hallways, stairwells and elevators, utility and mechanical spaces
+and loading docks.
+B. Lots developed below the minimum non-residential FAR standard of the applicable base zone
+may redevelop in accordance with subsection C, below, without reaching the minimum FAR if
+all of the following conditions are met:
+1. No portion of the subject lot is located within 800 feet of a Light Rail Transit (LRT) or High
+Capacity Transit (HCT) station;
+2. The subject lot is developed with non-residential Uses at less than 50% of the minimum
+FAR; and
+3. More than ½ of the adjacent developed parcels with non-residential Uses are also
+developed below the minimum FAR. For purposes of this condition, intervening streets
+between lots do not interrupt adjacency.
+C. If the conditions in subsection B, above, are met, the subject lot can be redeveloped with
+non-residential Uses at whichever of the levels listed in paragraphs 1 and 2, below, results in
+a greater FAR. If the result of either, calculation in paragraphs 1 and 2, below, exceeds the
+minimum FAR standard of the applicable base zone, then the minimum FAR standard shall
+apply. Figure 12.64.120-A illustrates the provisions of this subsection for the UC-MU Zone:
+1. Redevelopment level 1: a non-residential FAR of not less than the current developed
+non-residential FAR on the subject parcel plus 50% of the existing FAR; or
+2. Redevelopment level 2: the current developed non-residential FAR of the adjacent parcel
+with the highest non-residential FAR below the minimum FAR for the zone plus 50% of
+that FAR, whichever is greater.
+ 12.64.120AMBERGLEN PLAN DISTRICT
+CDC12.64:7Supp. No. 1
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.64.130  Exceptions to the Front Property Line Coverage.
+To provide flexibility for construction of buildings that meet either minimum FAR or minimum
+Residential Density, the Front Property Line Coverage percentages required in the Base Zone
+standards in Subchapter 12.24 may be reduced by not more than 25% if the applicant enters into a
+Development Agreement or other instrument acceptable to the City which commits the project to a
+phased development plan which ultimately meets the Front Property Line coverage standard. The
+signed Development Agreement or other instrument shall be recorded and shall run with the land.
+(Ord. 6401 § 1, 2022)
+ Figure 12.64.120-A:
+Examples of Exceptions to Minimum Floor Area Ratio: UC-MU Zone
+12.64.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:8Supp. No. 1
+12.64.200  Site Design.
+Site design standards for the Amberglen Plan District include the following sections:
+12.64.210 Usable Open Space
+12.64.220 Landscaping
+12.64.230 Tree Preservation
+12.64.240 Exterior Lighting
+12.64.250 Fencing and Free-Standing Walls
+12.64.260 Drive-Through Facilities
+12.64.270 Sidewalk Dining and Displays
+12.64.280 Outdoor Display and Storage
+(Ord. 6401 § 1, 2022)
+12.64.210  Usable Open Space.
+A. Purpose. The standards in this section are intended to ensure that all development in the
+Amberglen Plan District provides for on-site open space, and that the shape, size, and design
+of that open space is usable by the occupants, residents, or visitors. This section is intended to
+be read in conjunction with Section 12.50.210, but supersedes Section 12.50.210 pursuant to
+Subsection 12.50.020.C.
+B. Usable Open Space Requirements in General.
+1. Usable open space requirements vary based on gross site acreage and development
+type as specified in Table 12.64.210-1. Required usable open space may be either
+common/shared or private, as defined in Section 12.50.210.
+2. Usable open space areas may be either publicly or privately owned, as determined during
+the land use approval process.
+  Table 12.64.210-1:
+Amberglen Plan District Minimum Usable Open Space Requirements
+ Gross Site
+Acreage
+ Type of Development
+Residential or Mixed-Use with
+Residential Component Non-Residential
+<0.25 100 sq. ft./du None
+0.25 to 1.0 100 sq. ft./du 5% of gross lot area
+1.01 or more 100 sq. ft./du or 5% of gross lot area,
+whichever is greater 5% of gross lot area
+3. Developments larger than 4.0 gross acres may aggregate required usable open space
+into 1 or more designated usable open space sites, common areas, or pocket parks,
+pursuant to subsection C, below.
+ 12.64.210AMBERGLEN PLAN DISTRICT
+CDC12.64:9Supp. No. 1
+4. At least 50% of required usable open space in the following locations shall have public
+access:
+a. Retail focus frontage areas designated on Figure 12.64.640-A; and
+b. UC-NC and UC-AC zones.
+5. In the UC-MU, UC-AC, UC-NC, and UC-OR zones, where outdoor seating for eating and
+drinking establishments are a permitted or conditional use, up to 65% of the seating area
+may be credited toward the usable open space requirement.
+C. Usable Open Space Locational Guidelines.
+1. Purpose. Locational guidelines for usable open space are intended to help ensure that
+usable open space is sited and improved to provide opportunities for physical activity and
+social interaction. The entirety of the required usable open space shall be improved for
+such purposes except where Significant Natural Resources Level 1, 2, or 3, 1% annual
+chance floodplain, or delineated wetlands are present.
+2. Guidelines. Preference in the placement of usable open space should be given to sites
+that:
+a. Enhance opportunities for recreation (active or passive) and access to nature;
+b. Enhance opportunities for interaction between residents, tenants, and/or the public;
+c. Enhance park sites adjacent to converging pedestrian routes;
+d. Preserve otherwise unprotected natural resources and wildlife habitat on the site;
+e. Can be combined with adjacent sites to create opportunities for larger contiguous
+tracts of usable open space; or
+f. Protect lands where more intense development than open space may otherwise
+have an adverse impact on Significant Natural Resources, wetlands, or floodplains
+on adjacent properties.
+3. Significant Natural Resource Areas and Impact Areas may be counted as usable open
+space consistent with Paragraph 12.50.210.D.3.
+D. Outdoor Types of Usable Open Space Areas. The following types of public and private outdoor
+spaces may be counted towards minimum open space requirements:
+1. Plazas, patios, pocket parks, and other community gathering spaces that provide
+opportunities for outdoor seating, dining, and social interaction;
+2. Courtyards, balconies and yards intended for individual units;
+3. Community gardens or similar spaces designated for urban agriculture uses;
+4. Playgrounds;
+5. Recreational facilities;
+6. Habitable, landscaped roofs (which may include "green roof" treatments);
+12.64.210 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:10Supp. No. 1
+7. Green access lanes that do not provide vehicle access, and that comply with the
+standards of Subsection 12.64.640.I;
+8. Extra sidewalk width (beyond that required for through pedestrian passage widths by
+Section 12.64.640) created between the building façade and the required through
+pedestrian passage area and furnished for outdoor dining or seating; or
+9. Similar gathering space as approved by the Review Authority.
+E. Indoor Usable Open Space Areas. To meet social objectives served by usable open space,
+interior, multi-purpose community space provided for private or public use may be counted
+towards the usable open space requirement if requested by the applicant and approved
+through discretionary review (Type II or III).
+F. Usable Open Space Dimensional Requirements for Hardscaped Elements. Where provided,
+hardscaped usable open space shall meet the dimensional standards shown in Table 12.64.210-2.
+  Table 12.64.210-2:
+Minimum Usable Open Space Dimensions
+Type of Usable Open Space Required Size
+Balconies or porches Depth and width at least 6 feet
+At grade patios Depth at least 6 feet and width at least 10
+feet
+Private yards Depth and width at least 10 feet
+Courtyards/plazas or areas providing space
+for outdoor seating, dining, and social
+interaction
+Depth at least 10 feet and width at least 20
+feet; total area at least 1,000 square feet
+G. Pedestrian-Oriented Feature Requirements. In order to create "third places" attractive to and
+usable by the public, usable open space areas in the Amberglen Plan District shall incorporate
+a minimum of 3 pedestrian-oriented features, such as, but not limited to:
+1. Benches or low walls with incorporated seating;
+2. Trees selected from the Public Works Design and Construction Standards Street Tree
+list;
+3. Free standing planters and/or raised planting beds designed to treat stormwater and
+allow infiltration into the underlying soil;
+4. Public art or sculpture;
+5. Water features and/or drinking fountains;
+6. Outdoor dining areas;
+7. Play structures;
+8. Weather canopies or sunshades; or
+ 12.64.210AMBERGLEN PLAN DISTRICT
+CDC12.64:11Supp. No. 1
+9. Other pedestrian-oriented features as proposed by an applicant if approved by the
+Review Authority as part of a Type II or Type III review.
+H. Usable Open Space in Phased Developments. Usable open space in Phased Developments
+shall be provided in compliance with Section 12.50.210.
+I. Exclusions. The features listed in Subsection 12.50.210.E. cannot be counted as usable open
+space.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.64.220  Landscaping.
+A. Purpose. Landscaping standards for development are intended to ensure that landscaping is
+designed and provided to:
+1. Enhance the character of public and private spaces;
+2. Create an inviting, year-round environment for pedestrians;
+3. Reduce urban heat island effects, intercept rainwater, and support urban wildlife; and
+4. Enhance ecological functions and provide access to nature.
+B. Applicability. Any portion of a site not occupied by buildings, parking, improvements, or
+protected natural resources shall be landscaped according to the requirements of this section.
+This section is intended to be read in conjunction with Section 12.50.220, but supersedes
+Section 12.50.220 pursuant to Subsection 12.50.020.C.
+C. CPTED Guidelines. Crime Prevention through Environmental Design (CPTED) guidelines
+located in Section 12.50.940 shall be considered in the design of landscaped areas to preserve
+site lines from sidewalks and parking areas to building entryways. Consideration shall include
+review for the following factors:
+1. Clear distinction between the public and semi-private realms;
+2. Clear sight lines along public pathways and in public spaces;
+3. Clear views from streets to pathways, open space and car parking areas;
+4. Opportunities for natural surveillance of lanes, sidewalks, streets, and other public
+spaces; and
+5. Adequate security lighting of pedestrian and cycling routes, car parking areas, and other
+public spaces.
+D. Landscaping on Public Properties. All landscaped areas in the public right-of-way, and all
+landscaped areas associated with any consolidated regional water quality facility, shall be
+designed by a registered Landscape Architect and installed in accordance with the City of
+Hillsboro Design and Construction Standards, or in accordance with Parks and Recreation
+Department specifications for parkways and any area maintained by the Parks and Recreation
+Department.
+12.64.210 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:12Supp. No. 1
+E. LIDA Standards. All landscaping and planting plans associated with private water quality
+facilities featuring Low Impact Development Approaches (LIDA) shall be designed in accor-
+dance with the requirements of Section 12.64.750.
+F. Landscape Materials. Landscaping shall be designed to feature plant materials that evoke the
+natural character of the Pacific Northwest and that are adaptable to climatic, topographic, and
+hydrologic characteristics and urban constraints.
+1. At least 75% of the plant materials shall be selected from plant lists in Appendix A of the
+June 2007 CWS Design and Construction Design Standards. The remaining plant
+materials shall be selected from naturalized and non-invasive species. Nuisance plants
+as defined in Section 12.01.500 are not permitted. The following exceptions are permit-
+ted:
+a. Non-native, non-naturalized, ornamental plants featured as design accents are
+permitted as plantings in pots and containers.
+b. Lawns are permitted in areas designated for active recreation.
+c. Edible vegetables and fruits are permitted in community gardens where park and
+open space uses are permitted or approved.
+d. Street tree species shall include those listed in the City of Hillsboro Design and
+Construction Manual.
+2. Landscaped areas shall include a mixture of planted areas and hardscape elements,
+including, but not limited to:
+a. Walls;
+b. Seating;
+c. Raised planters;
+d. Pervious paving, rain gardens and other stormwater facilities, compliant with
+Section 12.64.750, that can serve multiple purposes; and
+e. Other features as proposed by an applicant if approved by the Review Authority as
+part of a Type II or Type III review.
+3. Installation and maintenance of plant materials shall be in accordance with the American
+Nursery and Landscaping Association standards and the following standards:
+a. Plant materials shall be nursery stock or the equivalent quality and installed to
+industry standards or better;
+b. Plant materials shall be staked to current industry standards or better. Stakes and
+guy wires shall not interfere with vehicular or pedestrian traffic; and
+c. Planting plans associated with private water quality facilities featuring Low Impact
+Development Approaches (LIDA) as described in the July 2009 CWS LIDA Hand-
+book shall be designed in accordance with the requirements of Section 12.64.750.
+
+ 12.64.220AMBERGLEN PLAN DISTRICT
+CDC12.64:13
+4. Minimum Sizes and Spacing for Landscaping Materials. Table 12.64.220-1 shows the
+minimum sizes and spacing for landscaping materials at planting:
+  Table 12.64.220-1:
+Minimum Sizes and Spacing for Landscaping Materials
+Species Minimum size at planting Maximum spacing at
+planting
+Deciduous trees
+Single stem:
+2-inch caliper
+Multi-stem: 8 feet height
+Mature canopy width apart
+Coniferous trees 6 feet height
+15 feet on center;
+10 feet on center if planted
+as a screening buffer
+Large shrubs
+(> 6 feet mature height) 5 gallon pot 5 feet on center
+Medium shrubs
+(> 6 feet mature height) 3 gallon pot 4 feet on center
+Small shrubs
+(3 to 6 feet mature
+height)
+1 gallon pot 3 feet on center
+Ground covers and
+annuals
+1 gallon pots 2 feet on center
+4-inch pots 18 inches on center
+2¼­inch pots 12 inches on center
+5. Ground Covers Required. Ground covers are required in all planting areas, unless the
+entire bed is planted with shrubs that branch out so that they cover the surface of the
+ground. Bark, mulch or other organic soil covers are not considered to meet this standard.
+6. Natural Vegetation. Natural existing vegetation may be counted toward required land-
+scaping, provided that the natural vegetation is maintained continuously to remove
+nuisance plants and to keep natural vegetation alive.
+7. Open Space and LIDA. Usable open space and LIDA used to manage stormwater in
+accordance with Section 12.64.750 may be credited towards required landscaping
+provided they are integrated into the overall landscape concept for the site.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.64.230  Tree Preservation.
+A. General Standards for Mature Trees.
+1. The standards of Subsection 12.50.230.C. shall apply in the Amberglen Plan District, with
+the exception that conifer trees in Amberglen are considered mature at 20 feet in height.
+12.64.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:14
+2. Where the Review Authority determines it is impracticable or unsafe to preserve mature
+trees, they shall be removed and replaced in accordance with an approved landscape
+plan that includes new and similar trees at least 2 ½ inches in caliper.
+B. General Standards for Specimen Trees. The standards of Subsection 12.50.230.D. shall apply
+in the Amberglen Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.64.240  Exterior Lighting.
+A. Applicability and Exceptions.
+1. Except as provided in paragraph 2, below, these standards shall apply to:
+a. All Type II and Type III development applications in which exterior lighting is
+proposed or required as a condition of approval; and
+b. Any exterior lighting installed outside the land use approval process, unless a
+Variance or Adjustment has been granted by the Review Authority pursuant to
+Section 12.80.150.
+2. The following types of lighting are not subject to the requirements of this section:
+a. Public street and right-of-way lighting;
+b. Temporary decorative seasonal lighting;
+c. Temporary lighting for emergency work or night time construction;
+d. Temporary lighting for theatrical, television and performance areas, or for special
+public events;
+e. Lighting for a special district, street or building that according to an adopted city plan
+or ordinance requires special lighting aesthetics as part of its physical character;
+f. Lighting required and regulated by the FAA; and
+g. Lighting for outdoor recreational uses such as ball diamonds, playing fields, tennis
+courts and similar uses, provided that: (i) light poles are not more than 80 feet tall,
+(ii) maximum illumination at the property line is not brighter than 21.5 lumens/
+square meter, and exterior lighting is extinguished no later than 11:00 p.m.
+B. Design Standards.
+1. Light Trespass and Shielding. Lighting fixtures shall comply with the standards of
+Subsection 12.50.240.D.
+2. Pole and Fixture Heights. Maximum pole height is 20 feet for properties containing
+residential uses and 35 feet for properties containing no residential uses.
+3. Walkway Lighting. On-site walkways shall be illuminated to a minimum of level 2
+foot-candles.
+4. Uplighting. General up-lighting of façades or features is not permitted.
+ 12.64.240AMBERGLEN PLAN DISTRICT
+CDC12.64:15
+5. Efficiency Standards. All exterior lighting fixtures shall meet the efficiency standards in
+Table 12.64.240-1.
+  Table 12.64.240-1:
+Minimum Lighting Efficiency Standards in Amberglen Plan District
+Standard UC-MD
+All Other
+Amberglen
+Districts
+Maximum permitted initial lamp lumens per
+sq. ft. 9.7 lumens/sq. ft. 13.9 lumens/sq. ft.
+Maximum lamp allowance 44,000 lumens 60,000 lumens
+Minimum lumens per watt of energy
+consumed (as documented by manufacturer's
+specifications or results of an independent
+testing laboratory)
+80 lumens/watt 80 lumens/watt
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.64.250  Fencing and Free-Standing Walls.
+A. Maximum Height. Fences and free-standing walls in front, side, or rear yards shall not exceed
+the maximum heights in Table 12.64.250-1 unless approved by the Review Authority pursuant
+to Section 12.80.150.
+  Table 12.64.250-1:
+Maximum Fence/Free-Standing Wall Heights
+Zone
+ Maximum Height
+Front Yard Side Yard Rear Yard
+UC-RM 3½ feet
+6 feet 6 feet
+UC-MU
+4 feet
+UC-AC
+UC-NC
+UC-OR
+UC-RP 6 feet
+B. Materials.
+1. Fences and free-standing walls shall be constructed of durable materials compatible with
+the primary materials used on the associated building façade. Materials may include, but
+are not limited to, the following:
+a. Masonry or brick;
+12.64.240 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:16
+b. Solid wood with masonry or brick columns;
+c. Wrought iron with masonry or brick columns; or
+d. Alternative material(s) as approved by the Review Authority.
+2. Chain link, industrial materials, and unprocessed waste materials are not permitted as
+fencing or free-standing wall materials.
+3. All fences and free-standing walls shall be treated with anti-graffiti sealant.
+4. This section is intended to be read in conjunction with Section 12.50.250, but supersedes
+Section 12.50.250 pursuant to Subsection 12.50.020.C.
+5. All fences and free standing walls in the Amberglen Plan District are subject to review and
+approval under Section 12.80.060.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.64.260  Drive-Through Facilities.
+A. Locations Restricted.
+1. Drive-through facilities in the Amberglen Plan District shall be limited to sites adjacent to
+NE Cornell Rd, NE Walker Rd, NW 185th Ave, or NE John Olsen Ave.
+2. Drive-through facilities are not permitted for eating and drinking establishments or retail
+product and service uses within 400 feet of an HCT station. Beyond 400 feet from an HCT
+station, single-lane drive-through facilities for eating and drinking establishments or retail
+product and service uses are permitted.
+B. Design Requirements. The provisions in Section 12.50.875 shall apply to all drive-through
+facilities in the Amberglen Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.64.270  Sidewalk Dining and Displays.
+In all Amberglen zones except UC-RM, sidewalk seating for restaurants and display stands for
+pedestrian-oriented sales may be located on the sidewalk between the back of curb and the back of
+the sidewalk if such activities meet the following standards:
+A. The activity has received a Street Vendors License under Hillsboro Municipal Code Section
+5.36;
+B. The activity occurs only when the related business is open for business (unless otherwise
+permitted by the Street Vendor License); and
+C. The activity maintains at least 5 feet unimpeded sidewalk clearance for pedestrian movement.
+(Ord. 6401 § 1, 2022)
+ 12.64.270AMBERGLEN PLAN DISTRICT
+CDC12.64:17
+12.64.280  Outdoor Display and Storage.
+A. In all Amberglen zones except the UC-RP zone, permanent outdoor display or storage of
+materials or equipment by commercial uses is not permitted.
+B. Within the UC-RP zone, outdoor storage of inventory or equipment is permitted. The provisions
+in Section 12.50.880 shall apply to outdoor storage in the UR-RP zone.
+C. The term "equipment" as used in this subsection does not apply to motor vehicles licensed for
+street use and regularly used in the conduct of business.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.64.280 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:18
+12.64.300  Vehicle and Bicycle Parking.
+Vehicle and bicycle parking standards for the Amberglen Plan District include the following sections:
+12.64.310 Applicability
+12.64.320 Number of Spaces Required
+12.64.330 Adjustments to Parking
+12.64.340 Off-Site Parking
+12.64.350 Vehicle Loading
+12.64.360 On-Site Parking and Loading: Location, Design and Improvements
+12.64.370 Bicycle Parking.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022)
+12.64.310  Applicability.
+A. The standards in this section apply to:
+1. All new construction in the Amberglen Plan District; and
+2. All redevelopment or expansions of existing structures that increase the Gross Floor Area
+(GFA) of the existing structure by more than 20%.
+B. Compliance with this section is not required for change of occupancy of an existing building:
+this provision supersedes the requirement of Subsection 12.50.410.B. regarding provision of
+bicycle parking with changes of use.
+C. Unless otherwise provided in Section 12.64.340, all parking shall be located on-site on the
+same property as the use it serves, or in the adjacent public right-of-way.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.64.320  Number of Spaces Required.
+Development and redevelopment shall comply with the maximum vehicle parking and minimum
+bicycle parking requirements in Table 12.64.320-1. Maximum parking includes short-term and guest
+parking but does not include parking designed and restricted to shared cars, vanpools, handicapped
+or fleet vehicles.
+ 12.64.320AMBERGLEN PLAN DISTRICT
+CDC12.64:19
+Table 12.64.320-1:
+Minimum, Maximum, and Bicycle Parking Requirements in the Amberglen Plan District
+(required spaces per 1,000 sq. ft. are GFA unless specified otherwise)
+Use Vehicle Maximum Bicycle Minimum
+Residential Use Categories
+Single detached dwellings and
+duplexes 2 per unit None
+Townhouses 2 per unit 1 per unit
+Triplexes and quadplexes 2 per unit 1 per unit
+Multiple-dwelling structure 2 per unit 1 per unit
+Live-work dwelling 2 per unit 1 per unit
+Group Living 1 per bedroom 1 per unit
+Residential Services .75 per resident 1 per unit
+Residential Business 3 per unit 1 per unit
+Commercial Use Categories
+Commercial Lodging 1 per guest room + .6 per
+FTE employee .125 per 1,000 sq. ft. GFA
+Commercial Recreation 6.5 per 1,000 sq. ft. 1.5 per 1,000 sq. ft.
+Commercial Parking NA 1 per 20 auto spaces
+Durable Goods Sales 3.2 per 1,000 sq. ft. .125 per 1,000 sq. ft.,
+minimum 2 spaces
+Eating and Drinking Establishments (see below)
+Fast food 7 per 1,000 sq. ft. 2 per 1,000 sq. ft.,
+minimum 2 spaces
+Casual dining 12 per 1,000 sq. ft. .25 per 1,000 sq. ft.,
+minimum 2 spaces
+Fine dining 10 per 1,000 sq. ft. .125 per 1,000 sq. ft.,
+minimum 2 spaces
+Educational Services .3 space per FTE student
+and employee
+Spaces equal to 5% of FTE
+student and employee
+12.64.320 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:20
+Table 12.64.320-1:
+Minimum, Maximum, and Bicycle Parking Requirements in the Amberglen Plan District
+(required spaces per 1,000 sq. ft. are GFA unless specified otherwise)
+Use Vehicle Maximum Bicycle Minimum
+Office (see below)
+General 3.4 per 1,000 sq. ft. .125 per 1,000 sq. ft.,
+minimum 2 spaces
+Medical, Dental, Veterinary 4.9 per 1,000 sq. ft. .25 per 1,000 sq. ft.,
+minimum 2 spaces
+Retail Products and Services 5 per 1,000 sq. ft. .25 per 1,000 sq. ft.,
+minimum. 2 spaces
+Self-Service Storage 1 per 20 storage units 1 per 20 storage units
+Vehicle Service and Repair 2 per 1,000 sq. ft.
+in primary building
+1 per 1,000 sq. ft.
+in primary building
+Industrial Use Categories
+Industrial Services 2 per 1,000 sq. ft. .125 per 1,000 sq. ft.,
+minimum 2 spaces
+Manufacturing and Production 2 per 1,000 sq. ft. .125 per 1,000 sq. ft.,
+minimum 2 spaces
+Solid Waste Recycling NA NA
+Vehicle Storage NA NA
+Warehouse and Freight Movement NA NA
+Wholesale Sales NA NA
+Institutional Use Categories
+Colleges and Universities 3.0 per 1,000 sq. ft. 5% of FTE students and
+employees
+Community Services 6.5 per 1,000 sq. ft. 1.5 per 1,000 sq. ft.,
+minimum 2 spaces
+Detention Facilities 1.5 per 1,000 sq. ft.
+Hospitals 3.0 per 1,000 sq. ft. .125 per 1,000 sq. ft.
+Major Assembly Facilities .5 per seat 1 space per 20 seats
+ 12.64.320AMBERGLEN PLAN DISTRICT
+CDC12.64:21Supp. No. 1
+Table 12.64.320-1:
+Minimum, Maximum, and Bicycle Parking Requirements in the Amberglen Plan District
+(required spaces per 1,000 sq. ft. are GFA unless specified otherwise)
+Use Vehicle Maximum Bicycle Minimum
+Schools 0.8 per FTE employee
+Spaces equal to 10% of
+FTE, non-bussed day
+students
+Infrastructure and Utilities Use Categories
+Aviation Uses NA NA
+Parks and Open Space NA NA
+Public Safety Facilities .8 per FTE employee .25 per 1,000 sq. ft. GFA
+Surface Alternative Transportation
+Facilities NA NA
+Telecommunication Facilities NA NA
+Utility Facilities NA NA
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.64.330  Adjustments to Parking.
+A. Adjustments in General. The parking standards in Table 12.64.320-1 may be adjusted as
+indicated in subsections B and C, below, with the following exceptions: additional off-street
+parking may be required if the City Engineer finds that more parking is necessary to avoid
+adverse impacts to traffic flow on surrounding streets. Requests for Adjustments shall be
+processed under a Type II or Type III process as specified in Section 12.80.154 or 12.80.156,
+except that the criteria in this section supersede the criteria in Subsections 12.80.158.F. and G.
+B. Bicycle Parking. Except for schools, if a use requires more than 50 bicycle parking spaces to
+be provided, the amount of bicycle parking required above 50 spaces may be reduced by up to
+75%.
+C. Parking Impact Study. The maximum vehicle parking and minimum bicycle parking standards
+in Table 12.64.320-1 may be adjusted if the applicant submits a parking impact study
+supporting the request for Adjustment, and the Director finds that the study reflects the parking
+needs of the property more accurately than Table 12.64.320-1. To qualify for parking Adjust-
+ments based on a parking study, the applicant must consult with the City prior to preparing the
+parking impact study, and the City may require that the applicant use specific assumptions or
+data sources in the preparation of the study. The Director is not required to accept the results
+of the parking impact study or to approve the requested parking Adjustment.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.64.320 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:22Supp. No. 1
+12.64.340  Off-Site Parking.
+If an applicant chooses to demonstrate that vehicle parking cannot be practicably located on-site, it
+may be located not farther than 600 feet from the use it serves, in a parking structure or surface
+parking lot. The 600-foot distance shall be measured on a sidewalk or other pedestrian route from
+the nearest point of the parking structure or parking lot to a pedestrian entrance of the served use.
+A. To provide parking off-site, documentation shall be provided to the City that the use has the
+right to construct or use the required number of spaces in the off-site location for at least 10
+years.
+B. Approval to use off-site parking shall be formalized in an agreement between the applicant and
+the owner of the off-site location, in a form acceptable to the City. The agreement shall stipulate
+that if the off-site parking becomes unavailable for any reason during the minimum 10-year
+period, replacement parking will be provided no further from the property than the original
+parking for the remainder of the 10-year period.
+C. Wherever off-site parking is used, the property owner shall require on-site employees to park
+in the off-site parking to preserve as many on-site parking spaces as possible for patrons and
+residents.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022)
+12.64.350  Vehicle Loading.
+Loading spaces meeting the number and dimensional standards in Table 12.64.350-1 shall be
+provided for primary structures containing at least 25,000 square feet of gross floor area, if the
+structures are occupied by land Uses requiring regular or periodic receipt or distribution of materials
+or merchandise by vehicles with a gross weight over 25,000 pounds.
+  Table 12.64.350-1:
+Minimum Number and Dimensions of Loading Spaces Where Required
+Primary Structure Size
+Minimum Spaces
+Required Minimum Space Dimensions
+25,001—50,000 sq. ft. GFA 1 space 20 ft. × 12 ft. × 15 tall
+50,001—100,000 sq. ft. GFA 2 spaces 1st space: 20 ft. × 12 ft. × 15 tall
+2nd space: 40 ft. × 12 ft. × 15 tall
+> 100,001 sq. ft. GFA 3 spaces
+1st space: 20 ft. × 12 ft. × 15 tall
+2nd and 3rd spaces: 40 ft. × 12 ft. × 15
+tall
+(Ord. 6401 § 1, 2022)
+12.64.360  On-Site Parking and Loading: Location, Design and Improvements.
+A. Location.
+1. Where provided, surface parking shall be located either:
+a. Behind the primary building, such that the primary building is located between the
+surface parking area and the street; or
+ 12.64.360AMBERGLEN PLAN DISTRICT
+CDC12.64:23Supp. No. 1
+b. Beside the primary building. Where surface parking is provided beside the primary
+building, the following standards shall be met:
+i. The closest edge of the surface parking area or driving aisle is located at least
+50 feet from any street as measured from back of the curb; and
+ii. Access to the surface parking area is not provided from the primary street
+frontage unless no other access point is available.
+2. Surface parking is Not Permitted between the street-facing façade line and the street.
+B. Area of New Surface Parking Lots. New surface parking lots constructed after July 5, 2012 for
+new primary structures containing 200,000 square feet or more GFA, shall occupy no more
+than 25% of the gross area of the subject property. This percentage limitation shall apply to
+internal drive aisles but not to access driveways to or from the parking lot.
+C. Compliance with Improvement Standards. Surface parking and parking structure design, and
+lighting shall comply with the requirements of Section 12.50.360.
+D. Compliance with Parking Space and Aisle Dimensions Standards.
+1. Except as provided in paragraph 2, below, all parking shall comply with the standards of
+Subsection 12.50.360.C. regarding space and drive aisle dimensions and layout.
+2. In surface parking lots, parking space dimensions may be reduced to 16 feet × 8.5 feet for
+90-degree parking. Parking aisle widths may be reduced to 20 feet to reduce surface
+runoff and to accommodate Habitat-Friendly Design and Construction or other Low
+Impact Development Approaches (LIDA).
+E. Electric Car Charging. In parking facilities larger than 100 vehicle parking spaces, at least 1
+publicly-accessible electric car charging point within a rated capacity of at least 240 volts shall
+be provided per 100 spaces or portion thereof.
+F. Electric Vehicle Infrastructure Requirements.
+1. New commercial development shall provide electrical service capacity, as defined in
+ORS 455.417, to serve not less than 20% of all provided vehicle parking spaces.
+2. New multifamily residential buildings with 5 or more residential dwelling units, and new
+mixed-use buildings consisting of privately owned commercial space and 5 or more
+residential dwelling units, shall provide of electrical service capacity, as defined in ORS
+455.417, to serve 40% of all provided vehicle parking spaces.
+G. Accessible Parking Requirements. Accessible parking spaces shall be located and improved in
+compliance with Subsection 12.50.360.C.
+H. Parking Lot Screening and Landscaping.
+1. Perimeter Landscaping and Screening. Perimeter landscaping and screening shall
+comply with Subsection 12.50.360.F.3. with the following exceptions:
+a. The minimum width for a parking lot perimeter planting strip along an Arterial
+right-of-way, as specified in Table 12.50.360-1, shall be increased from 6 feet to 10
+feet.
+12.64.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:24Supp. No. 1
+b. Perimeter planting strips at the required widths may incorporate LIDAs that comply
+with Section 12.64.750, as approved by the Review Authority.
+2. Interior Landscaping. Interior landscaping and screening shall comply with Subsection
+12.50.360.F.4. with the following exceptions:
+a. If the total area of the interior parking lot landscaping required in Subsection
+12.50.360.F.4. would exceed 10% of the parking lot area under this standard, the
+area of required landscaping shall be limited to 10% except where requested by the
+applicant.
+b. Where practicable, planting islands shall incorporate LIDA to manage parking lot
+runoff within landscaped areas that comply with Section 12.64.750.
+c. Lawn is Not Permitted as a ground cover in parking lot islands.
+3. Parking Lot Landscaping Maintenance.
+a. Maintenance shall be provided for all required parking lot landscaped areas. All
+landscape plantings and human-made features shall be maintained in good condi-
+tion, or otherwise replaced by the owner.
+b. Sustainable maintenance practices shall be used to care for required landscaping.
+Such practices may include, but are not limited to: drip (rather than spray) irrigation;
+integrated pest management; and organic natural controls.
+c. Dead plantings shall be promptly replaced by the property owner with an equivalent
+type (i.e., evergreen shrub replaces evergreen shrub; deciduous tree replaces
+deciduous tree, etc.).
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6149 § 1, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.64.370  Bicycle Parking.
+A. At least 2 bicycle parking spaces required by Table 12.64.320-1 shall be covered or in lockers
+consistent with Subsection 12.50.410.G. Ten percent of all remaining required bicycle parking
+shall also be covered or in lockers.
+B. All bicycle parking improvements shall comply with Subsection 12.50.410.F.
+C. Residential units are exempt from bicycle parking requirements if each dwelling unit has an
+assigned, enclosed, individual garage or carport space at least 80 square feet in area.
+(Ord. 6401 § 1, 2022)
+ 12.64.370AMBERGLEN PLAN DISTRICT
+CDC12.64:25Supp. No. 1
+12.64.400  Pedestrian and Bicycle Connectivity and Circulation.
+This section is intended to be read in conjunction with Section 12.50.400, but supersedes Section
+12.50.400 pursuant to Subsection 12.50.020.C.
+A. On-Site Pedestrian and Bicycle Circulation. New development or redevelopment in all zones
+except UC-RP shall provide an interconnected network of on-site pedestrian/bicycle ac-
+cessways to allow direct access to and between:
+1. Primary building entrances;
+2. Sidewalks, walkways, and bicycle lanes on adjacent properties and streets that extend to
+the boundaries shared with the applicant's property;
+3. Adjacent or on-site bus or LRT stops;
+4. Adjacent or on-site parks, trail systems, community gardens, open space areas, greenways,
+or other public or civic uses;
+5. Existing or planned Green Access Lanes; and
+6. Any existing or planned Greenway Trails.
+B. Aligning Accessway Crossings. Wherever practicable, entry points of required accessways
+shall align with pedestrian crossing points along adjacent streets and with adjacent street
+intersections.
+C. Allowing Accessway Crossings. Curb cuts or other features shall be provided to allow direct
+connections for pedestrian/bicycle movement at locations where curbs or other channelization
+have been used to control vehicle movements. Examples where curb cuts may be needed
+include driveway medians, curbs between individual parking areas and curbs/fences that
+prevent access to pedestrian/bicycle facilities directly from a parking lot.
+D. Access to School Routes. Where the City, county or school district is implementing a program
+in support of, or funded by, the Federal Safe Routes to School program and that program
+includes a sidewalk, walkway, or trail adjacent to the boundaries of a development or
+redevelopment involving residential uses, the project design shall allow project residents to
+access the designated school route in a convenient and relatively direct manner.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.64.400 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:26Supp. No. 1
+12.64.500  Street Location and Connectivity Standards.
+Street location and connectivity standards for the Amberglen Plan District include the following
+sections:
+12.64.510 Purpose
+12.64.520 Applicability
+12.64.530 General Street Connectivity and Circulation Standards
+12.64.540 Street Location and Connectivity
+12.64.550 Street Connectivity and Block Length Requirements
+(Ord. 6401 § 1, 2022)
+12.64.510  Purpose.
+The unique Amberglen Plan District access and street standards are intended to accomplish the
+following purposes:
+A. To promote a compact, pedestrian and transit-oriented environment in the City's urban centers;
+and
+B. To establish a connected framework of streets, pathways, access lanes, parks, plazas, and
+natural areas to provide access to development, to enhance access to nature, recreation, and
+social opportunities, and to efficiently manage stormwater runoff.
+(Ord. 6401 § 1, 2022)
+12.64.520  Applicability.
+A. The provisions of Section 12.64.500 shall apply to all development and redevelopment in the
+UC-RM, UC-MU, UC-AC, UC-NC, and UC-OR zones, unless otherwise specified by the
+provisions in this section.
+B. The provisions shall also apply in those zones to expansions of existing structures that
+in-crease Gross Floor Area (GFA) by more than 20%, unless otherwise specified by the
+provisions in this section.
+C. Expansions of GFA smaller than 20% shall comply with either the provisions of this section or
+the development standards applicable to the structure prior to July 5, 2012.
+D. These provisions supersede the requirements of Section 12.50.520 in the Amberglen Plan
+District only.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+ 12.64.520AMBERGLEN PLAN DISTRICT
+CDC12.64:27Supp. No. 1
+12.64.530  General Street Connectivity and Circulation Standards.
+A. Streets and connectivity elements shall comply with the requirements of this section and the
+Public Works Design and Construction Standards.
+B. Cul-de-sacs or dead end streets are not permitted, except where topography, pre-existing
+development, or other site constraints limit connectivity or where regulations implementing
+Title 3 of the adopted Metro Urban Growth Management Functional Plan or City Goal 5
+Resource Protection requirements limit connectivity. If a street connection cannot be reason-
+ably provided as a result of 1 or more of the site constraints outlined in this subsection, a Green
+Access Lane shall be provided.
+C. Determination of required street and off-site improvements shall be consistent with the
+requirements of Section 12.70.200.
+D. When a traffic impact report is required pursuant to Section 12.70.200, the pedestrian
+circulation study shall be required regardless of the distance of the development from an LRT
+station.
+E. In the case of a conflict between the standards of this section and other sections of the
+Community Development Code or the Public Works Design and Construction Standards, the
+requirements of this section shall apply.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.64.540  Street Location and Connectivity.
+A. General street locations shall be consistent with Figure 12.64.540-A. Flexibility in the align-
+ment of all streets may be approved through a Type II or Type III approval process pursuant to
+Section 12.70.040 or 12.70.050.
+B. Streets identified in Figure 12.64.540-A are not sufficient to meet the maximum block size
+standards in Subsection 12.64.550.B. unless additional bicycle and pedestrian connections
+are provided. To provide flexibility for the location and design of local access while ensuring
+pedestrian and bicycle connectivity, local streets or Green Access Lanes in addition to those
+identified on Figure 12.64.540-A, shall be provided as necessary to meet the connectivity and
+circulation standards of this section.
+12.64.530 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:28Supp. No. 1
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. No. 6505, § 1 (Exh. A),
+8-19-2025)
+12.64.550  Street Connectivity and Block Length Requirements.
+A. Block Configuration.
+1. Blocks shall generally be square or rectangular, but may vary in shape to protect natural
+features or respond to site constraints.
+2. To the maximum extent practicable, streets and Green Access lanes shall be oriented to
+create block and lot configurations with longer dimensions on an east-west axis to
+improve opportunities for use of passive solar principles.
+B. Maximum Block Size. The following standards shall apply throughout the Amberglen Plan
+District except in the UC-RP zone:
+1. Block length shall not exceed 300 feet except as specified in paragraphs 2 and 3, below;
+ Figure 12.64.540-A:
+Amberglen Plan District Street Classification Map
+ 12.64.550AMBERGLEN PLAN DISTRICT
+CDC12.64:29Supp. No. 1
+2. Blocks up to 400 feet in length are permitted between a street and an abutting Significant
+Natural Resource Area, an existing or planned greenway or nature park, or any other
+barrier as defined in Subsection 12.50.530.B;
+3. Blocks up to 600 feet in length are permitted if a Green Access Lane or comparable
+mid-block pedestrian connection is provided, as approved by the Review Authority; and
+4. For the purposes of this subsection, blocks shall be measured from curb to curb,
+regardless of whether the street is public or private.
+C. Lot and Block Access. Blocks may include alleys, driveway entrances, or Green Access Lanes
+in 1 of the following configurations illustrated on Figure 12.64.550-A:
+1. Mid-Block Access: Includes an alley or Green Access Lane running through or near the
+center of the block;
+2. "H" Configuration: Allows development to front on all 4 block faces; or
+3. "T" Configuration: Includes 2 perpendicular alleys or Green Access Lanes within a block,
+allowing development to front on 3 block faces.
+4. Variations to these access configurations may be granted for locations where the number
+of block faces may be limited due to barriers such as topography, Significant Natural
+Resource areas, rail routes, existing or planned greenways or nature parks.
+12.64.550 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:30Supp. No. 1
+D. Flag lots are Not Permitted.
+Figure 12.64.550-A:
+Amberglen Plan District Block Configurations
+
+(Ord. 6401 § 1, 2022)
+ Top: Mid-Block access option and "H" Configuration.
+Bottom: Alternate Mid-Block access option and "T" Configuration.
+ 12.64.550AMBERGLEN PLAN DISTRICT
+CDC12.64:31Supp. No. 1
+12.64.600  Street Design and Character.
+Street design and character standards for the Amberglen Plan District include the following sections:
+12.64.610 General Applicability and Design
+12.64.620 Maintenance of Landscaping and Irrigation in Rights-of-Way
+12.64.630 Street Trees
+12.64.640 Street Cross-Sections and Design Standards
+12.64.650 Streetscape Standards
+(Ord. 6401 § 1, 2022)
+12.64.610  General Applicability and Design.
+A. Street design elements, including but not limited to lane widths, sidewalks, bike facilities,
+medians, pavement treatment, street trees, vegetated green street planters, and landscape
+areas shall be consistent with the standards in Section 12.64.640 and Section 12.64.650.
+B. Variations to these standards to accommodate unique site considerations (e.g., terrain, soil,
+established development, or other site constraints) or to increase street tree coverage,
+establish multi-function drainage systems, accommodate vegetated roundabouts, or mitigate
+the impact of stream crossings may be approved through a Type II or Type III approval process
+pursuant to Section 12.70.040 or Section 12.70.050.
+C. Public or Private Streets.
+1. Any street or street segment classified on Figure 12.64.540-A as an Arterial, Community
+Arterial, Collector, Neighborhood Route, Commercial/Industrial, or Local-Public shall be
+a public street under the jurisdiction of the City of Hillsboro.
+2. Individual street segments or features for any street classified on Figure 12.64.540-A as
+Local may be either publicly or privately owned, as determined under subsection D,
+below.
+3. Individual Green Access Lane segments or features shall be privately owned. On a Green
+Access Lane, public access for bicycles and pedestrians shall be granted through a
+recorded easement in a form acceptable to the City.
+D. Local street segments provided to comply with the connectivity and circulation standards in
+Section 12.64.500 may be privately owned only if they comply with the following standards:
+1. On a Local street segment, public access for automobiles, bicycles, and pedestrians shall
+be granted through a recorded easement.
+2. Design of private Local streets shall comply with standards and cross-sections identified
+in Section 12.64.640 for Mixed-Use Commercial Street and Mixed-Use Residential Street
+as applicable when a public easement is on the street. Private Local streets with a public
+easement shall also comply with the Public Works Design and Construction Standards
+for public Local streets as determined by the City Engineer.
+12.64.600 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:32Supp. No. 1
+3. Design of private Green Access Lanes shall comply with standards and cross-sections in
+Section 12.64.640 and shall also comply with the City of Hillsboro Design and Construc-
+tion Standards for public streets as determined by the City Engineer.
+E. Any designs or specifications for public streets, street lighting, traffic signals, water lines, storm
+sewer lines and sanitary sewer lines, including construction materials, traffic control, regulatory
+signage, street trees and other improvements in the public-right-of-way not addressed by this
+section shall comply with the Public Works Design and Construction Standards.
+F. Private street segments, Green Access Lane segments, and common driveways providing fire
+access shall meet public street construction standards in the Public Works Design and
+Construction Standards related to fire access. Such streets and common driveways shall also
+meet the access requirements of the City Fire Marshal.
+G. All properties abutting public or Private streets shall provide a minimum 8-foot wide public utility
+easement (PUE) adjacent to the public right-of-way or Private street tract unless a different
+PUE standard is applied through the development approval process.
+H. As new Private streets and access lanes are constructed, or existing Private streets are
+redeveloped, Low Impact Development Approaches (LIDA) may be constructed in accordance
+with Section 12.64.750 to provide sustainability benefits, LEED credits, or other development
+objectives. However, all water quality treatment provided to meet City stormwater manage-
+ment requirements will be provided in regional water quality facilities identified in the Amberglen
+Stormwater Management Plan, and individual LIDA improvements are not required.
+I. Roundabouts shall be considered for any intersection that meets signal warrants. Final
+intersection design requirements shall be determined by the City Engineer.
+(Ord. 6401 § 1, 2022; Ord. No. 6505, § 1 (Exh. A), 8-19-2025)
+12.64.620  Maintenance of Landscaping and Irrigation in Rights-of-Way.
+Maintenance of all plantings, landscape materials, green street facilities, and irrigation in the
+right-of-way on public and Private streets, including medians, shall be ensured through a mainte-
+nance agreement in a form acceptable to the City, with the exception of any parkway landscaping
+and irrigation the Parks Department agrees to maintain.
+(Ord. 6401 § 1, 2022)
+12.64.630  Street Trees.
+A. Applicability. These standards apply to all development which includes or will be required to
+provide street trees on public street frontages, Private street frontages, or Green Access
+Lanes.
+B. General Requirements.
+1. Unless otherwise specified in this section, street trees shall be planted in compliance with
+Public Works Design and Construction Standards. The Design and Construction Stan-
+dards requirements shall apply to public streets, and also to Private streets and green
+access lanes provided to meet the connectivity standards in Section 12.64.500.
+ 12.64.630AMBERGLEN PLAN DISTRICT
+CDC12.64:33Supp. No. 1
+2. Tree species shall be selected from the Public Works Design and Construction Standards
+Approved Street Tree Species list, except where a tree species is identified for a specific
+location as required by this section or and as approved by the City Engineer.
+3. Columnar trees and shrubs shall be planted in street medians.
+4. Street tree spacing in the Amberglen Plan District shall be based upon tree species and
+canopy size at maturity. The tree well shall be at least 24 square feet in area, typically
+configured at 4 feet by 6 feet and landscaped with groundcover. Trees shall be spaced
+approximately 20 feet on center, and at a maximum 27 feet on center. The selection of
+tree species based on tree spread shall be consistent with this spacing. This spacing
+standard supersedes the D & C Standards.
+5. Exceptions to the spacing standard in Subsection 4, above, may be approved by the
+Review Authority:
+a. Where a tree location would conflict with street lights, existing trees, retaining walls,
+utilities, traffic control devices, and similar physical barriers; or
+b. Where alternative street tree spacing is required as specified in subsection C,
+below.
+6. Street trees shall be maintained and replaced as necessary in compliance with the Public
+Works Design and Construction Standards for street tree establishment.
+C. Specific Requirements on NE Stucki Ave.
+1. Special street tree requirements apply on NE Stucki Ave as illustrated on the Green
+Boulevard cross-section Figures 12.64.640-H and 12.64.640-I. The intent of these
+special standards is to continue the boulevard design on NE Evergreen Pkwy between
+NE Stucki Ave and NE Amberglen Pkwy.
+2. Street trees species on NE Stucki Ave between NE Cornell Rd and NE John Olsen Ave
+shall be similar in character to the existing London Plane Sycamore trees on NE
+Ever-green Pkwy between NE Stucki Ave and NE Amberglen Pkwy.
+3. Street trees on NE Stucki Ave shall be planted at a maximum of 21 feet on center.
+D. Assurances. The City shall require the developer to provide a performance and maintenance
+bond in an amount determined by the City Engineer, to ensure the planting of the tree(s) and
+care during the establishment period in the D & C Standards.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. No. 6505, § 1 (Exh. A), 8-19-2025)
+12.64.640  Street Cross-Sections and Design Standards.
+A. In General. The street cross-sections and design standards listed below shall apply as shown
+on Figure 12.64.640-A. These street cross-sections and design standards apply only to streets
+and street segments classified with the design types identified in Section 12.64.640.
+1. Variations to these street cross-sections and other requirements of Section 12.64.640
+may be required by the City Engineer at the approach to an intersection or for fire
+apparatus access. Cross-sections may also be adjusted to be consistent with any
+approved Safe Routes to Schools plan applicable to that street segment.
+12.64.630 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:34Supp. No. 1
+2. Street cross-sections and design standards not classified with the design types identified
+in Figure 12.64.640-A shall be designed and constructed to comply with the Public Works
+Design and Construction Standards.
+3. When the alignment of the High Capacity Transit Route is finalized, 1 or more of these
+cross-sections will be revised to accommodate the High Capacity Transit right-of-way.
+
+B. Mixed-Use Commercial Street. Mixed-Use Commercial Streets are intended to promote an
+active, pedestrian-friendly environment at the street level. They are typically enclosed by
+building façades, wide sidewalks, and outdoor seating and dining areas. Landscaped curb
+extensions soften the street's appearance and allow for additional landscaping and the
+management of stormwater.
+1. Design. Design of public streets shall comply with Figure 12.64.640-B.
+2. Streetscape Standards. The commercial focus streetscape standards in Figure 12.64.650-A
+shall apply unless modified through a Type II or a Type III approval process.
+ Figure 12.64.640-A: Street Design Types
+ 12.64.640AMBERGLEN PLAN DISTRICT
+CDC12.64:35Supp. No. 1
+C. Mixed-Use Residential Street. Mixed-Use Residential Streets are intended to promote a quiet
+and inviting street environment for residents. Raised stoops and outdoor porches and patios
+provide a more gradual transition between the sidewalk and the building façade, create a more
+visually open and relaxed character, and provide an area for landscaping within the private
+realm.
+1. Design. Design of public streets shall comply with Figure 12.64.640-B.
+2. Streetscape Standards. The commercial focus streetscape standards in Figure 12.64.650-A
+shall apply in Retail Focus Frontage areas shown on Figure 12.64.640-A. The residential
+focus streetscape standards in Figure 12.64.650-B shall apply outside of Retail Focus
+Frontage areas. Either streetscape standard may be modified through a Type II or a Type
+III approval process.
+D. Park Street. Park streets are intended as a transition between the more intense mixed-use
+development that will line the central park and the park itself. While the development edge
+incorporates aspects of both Mixed-Use Retail and Residential streets, the park edge incor-
+porates a multi-use path for bicycles and pedestrians. A high-capacity transit route may also be
+incorporated in some locations.
+1. Design. Street design shall comply with Figures 12.64.640-C, 12.64.640-D, 12.64.640-E,
+12.64.640-F, and 12.64.640-G.
+2. Streetscape Standards. The commercial focus streetscape standards in Figure 12.64.650-A
+shall apply in Retail Focus Frontage areas shown on Figure 12.64.640-A. The residential
+focus streetscape standards in Figure 12.64.650-B shall apply outside of Retail Focus
+Frontage areas. Either streetscape standard may be modified through a Type II or a Type
+III approval process.
+3. Urban Multi-Use Path. Urban multi-use paths shall be provided as shown on Figure
+12.64.540-A on the following streets: NE Rockspring Ln between City tract and NE
+Amberglen Pkwy; NE Walker Rd between NE Amberglen Pkwy and NE Compton Dr, NE
+Wilkins St, between NE Amberglen Pkwy and NE Compton Dr; and NE Compton Dr
+ Figure 12.64.640-B:_Mixed-Use Commercial Street and Mixed-Use Residential
+Cross-Section
+12.64.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:36Supp. No. 1
+between NE Walker Rd and NE Wilkins St. Design requirements for urban multi-use path
+improvements and adjacent landscaping shall be reviewed and approved by the Parks
+Director.
+
+ Figure 12.64.640-C: Park Street Cross-Section for Rockspring Ln
+ Figure 12.64.640-D: Park Street Cross-Section for Walker Rd
+ Figure 12.64.640-E: Park Street Cross-Section for NE Amberglen Pkwy
+ 12.64.640AMBERGLEN PLAN DISTRICT
+CDC12.64:37Supp. No. 1
+E. Urban Collector. Urban Collectors are intended to provide a safe and inviting environment for
+walking and biking while accommodating higher volumes of traffic. Landscaped medians,
+seperated bike lanes, and sidewalks with tree wells contribute to the overall character of the
+street.
+1. Design. Street design shall comply with Figure 12.64.640-H.
+2. Streetscape Standards. The residential focus streetscap e standards in Figure 12.64.650-B
+shall apply outside of Retail Focus Frontage areas shown on Figure 12.64.640-A, and the
+commercial focus streetscape standards in Figure 12.64.650-A shall apply in Retail
+Focus Frontage areas, unless those standards are modified through a Type II or a Type
+III approval process.
+3. Curb. Sections with raised median may require mountable curb treatment where the
+cycle track is thickened to support a fire apparatus.
+4. Raised Median. Raised medians are prohibited where the total width of the travel lane
+with shy, curb, and cycle track is less than 20 feet.
+ Figure 12.64.640-F: Park Street Cross-Section for NE Wilkins St
+ Figure 12.64.640-G: Park Street Cross-Section for NE Compton Dr
+12.64.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:38Supp. No. 1
+F. Green Boulevard. The Green Boulevard is intended to provide the primary north/south
+vehicular route through the Amberglen Plan District to a planned mutli-modal connection.
+Landscaped medians, seperated bike lanes, and sidewalks contribute to the overall character,
+width, and grand scale of the street while providing a safe and inviting environment for walking
+and biking. Double rows of London Plane trees relate to the signature streetscape at
+Amberglen Parkway, and provide a unified character for the Amberglen/Tanasbourne Regional
+Center.
+1. Design. Street design shall comply with the following standards, as applicable:
+a. With Figure 12.64.640-I between NE Walker Rd and NE Wilkins St and between NE
+Amberglen Pkwy to the LRT station;
+b. With Figure 12.64.640-J between NE Wilkins St and NE Amberglen Pkwy; or
+c. With Figure 12.64.640-K between NE Cornell Rd and NE Walker Road.
+2. Streetscape Standards. The residential focus streetscap e standards in Figure 12.64.650-B
+shall apply outside of Retail Focus Frontage areas shown on Figure 12.64.640-A, and the
+commercial focus streetscape standards in Figure 12.64.650-A shall apply in Retail
+Focus Frontage areas, unless those standards are modified through a Type II or a Type
+III approval process.
+3. Urban Multi-Use Path. An urban multi-use path shall be provided from NE Wilkins St to
+NE Amberglen Pkwy. Design requirements for urban multi-use path improvements and
+adjacent landscaping shall be subject to review and approval by the Parks Director.
+4. Adjustments for Water Quality Facilities. The Green Boulevard cross-section may be
+adjusted to provide water quality facilities from NE Wilkins St to NE Amberglen Pkwy
+adjacent to Bronson Creek, pending completion of Amberglen District Stormwater
+Management Plan.
+5. Curb. Sections with raised median may require mountable curb treatment where the
+cycle track is thickened to support a fire apparatus.
+ Figure 12.64.640-H: Urban Collector Cross-Section
+ 12.64.640AMBERGLEN PLAN DISTRICT
+CDC12.64:39Supp. No. 1
+6. Raised Median. Raised medians are prohibited where the total width of the travel lane
+with shy, curb, and cycle track is less than 20 feet.
+
+G. Green Connector Street. Green connector streets are intended to provide clear linkages
+between multi-use pathways, greenway trails and the central park. A broad parkway provides
+an opportunity to integrate native vegetation and signature trees as an extension of adjacent
+greenways both for visual interest and for conveyance of stormwater through swales to
+ Figure 12.64.640-I: Green Boulevard Cross-Section for NE Stucki Ave, Walker Rd to NE
+Wilkins St and NE Anberglen Pkwy to LRT
+ Figure 12.64.640-J: Green Boulevard Cross-Section for NE Stucki Ave, NE Wilkins St to NE
+Amberglen Pkwy
+ Figure 12.64.640-K: Green Boulevard Cross-Section for NE Stucki Ave, NE Cornell Rd to NE
+Walker Rd
+12.64.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:40Supp. No. 1
+regional water quality facilities. The urban multi-use paths connect the central park pathway
+loop to the future Bronson Creek regional trail to the east, and the Rock Creek Regional Trail
+to the west.
+1. Design. Street design shall comply with Figures 12.64.640-L and 12.64.640-M.
+2. Streetscape Standards. The residential focus streetscap e standards in Figure 12.64.650-B
+shall apply outside of Retail Focus Frontage areas shown on Figure 12.64.640-A, and the
+commercial focus streetscape standards in Figure 12.64.650-A shall apply in Retail
+Focus Frontage areas, unless those standards are modified through a Type II or a Type
+III approval process.
+3. Urban Multi-Use Path. An urban multi-use path shall be provided within a parkway.
+Parkway landscaping shall be primarily native trees and shrubs and shall feature
+signature conifers to distinguish the parkway routes and assist in wayfinding. Design
+requirements for parkway landscaping and urban multi-use path improvements shall be
+subject to review and approval by the Parks Director.
+4. Stormwater Facilities. Where grades allow, stormwater in the parkway areas may be
+conveyed through landscape swales to regional water quality facilities identified in the
+Amberglen Stormwater Management Plan.
+
+ Figure 12.64.640-L: Green Connector Cross-Section for NE Amberglen Pkwy
+ Figure 12.64.640-M: Green Connector Cross-Section for NE Eckert St
+ 12.64.640AMBERGLEN PLAN DISTRICT
+CDC12.64:41Supp. No. 1
+H. Festival Street. The Festival Street is a unique street intended to provide a plaza area at the
+south end of the Central Park that can accommodate an east/west street connection with
+limited traffic volumes. Traffic may be restricted for special events, allowing the Festival Street
+to serve as an extension of the Central Park.
+1. Design. Street design shall comply with Figure 12.64.640-N.
+2. Design Elements and Requirements.
+a. Construction of a Festival Street shall include the following design elements:
+i. Street lights, street trees, and seating;
+ii. Curbless travel lanes separated from pedestrian areas by bollards (which may
+be removable), street light poles, or other vertical features; and
+iii. Scored concrete paving extended in a continuous pattern across pedestrian
+plaza areas and travel lanes.
+b. In addition to the elements listed in Subsections a.i through a.ii, above, elements
+such as a water feature, landscaped areas, and Green Street planters may be
+integrated with the plaza area design as determined by the Parks Director.
+c. Final location of the travel lanes, and plaza design requirements and specifications
+shall be subject to review and approval by the Parks Director.
+
+I. Green Access Lane. Green Access Lanes are intended to provide pedestrian and bicycle
+connectivity through longer blocks and development sites. They may also accommodate
+emergency access and vehicle access to adjacent development. Green Access Lanes in-
+crease access to sunlight, and may serve as a transition area to private residential patios and
+entries. Enhanced landscaping and seating requirements are intended to create a park-like
+ Figure 12.64.640-N: Festival Street Cross-Section
+12.64.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:42Supp. No. 1
+character. Stormwater quality treatment through bio swales or LIDA facilities is not required;
+but an applicant may choose to incorporate these elements in the streetscape to meet LEED
+requirements or other sustainability and design objectives.
+1. Applicability.
+a. Green Access Lanes designed in accordance with the standards in Subsection 4,
+below, may be proposed to satisfy connectivity and circulation requirements of
+Section 12.64.500. The connectivity and circulation requirements shall be satisfied
+by whether or not vehicle access is provided.
+b. Green Access Lanes are not mapped on Figure 12.64.640-A, except for locations
+adjacent to Arterials under the jurisdiction of Washington County where bicycle and
+pedestrian access is required and vehicle access is Not Permitted.
+2. Design. Street design shall comply with Figures 12.64.640-O, and 12.64.640-P. The
+design is illustrated by the examples in Figure 12.64.640-R.
+3. Pedestrian and Vehicle Access.
+a. Green Access Lanes provide pedestrian access and may also provide shared
+bicycle access, fire access, and secondary vehicle access to parking facilities
+associated with adjacent development.
+b. Green Access Lanes that do not provide vehicle access and are designed in
+accordance with the standards in Section 12.64.210 may also satisfy the require-
+ment for Usable Open Space.
+4. Streetscape Design Standards. Green Access Lane streetscape design requirements
+shall be approved by the Review Authority. Streetscape design elements may vary
+among locations, but at a minimum, the design elements listed below are required.
+a. Street lights, street trees, and seating shall be provided in accordance with the
+requirements of Section 12.64.650. Alternative designs of similar quality may be
+proposed subject to the approval of the Review Authority.
+b. Based on projected pedestrian, bicycle, and vehicle traffic volumes and speeds, the
+Review Authority may require curbless travel lanes to be separated from pedestrian
+areas by bollards, street lights, or other vertical features.
+c. Scored concrete paving or unit pavers shall be provided and shall extend continu-
+ously across pedestrian areas and travel lanes as applicable.
+d. Where the Green Access Lane provides fire access, the design of the pavement
+section shall comply with the Public Works Design and Construction Standards for
+driveways that provide fire access.
+e. Landscaped areas, trees, and planters shall be provided.
+f. Pedestrian access to adjacent development may be incorporated.
+g. Improvements on Green Access Lanes extending between developments shall be
+coordinated for consistency throughout the street segment.
+ 12.64.640AMBERGLEN PLAN DISTRICT
+CDC12.64:43Supp. No. 1
+Figure 12.64.640-O: Green Access Lane Cross-Section
+ Figure 12.64.640-P: Green Access Lane Cross-Section with Retail Focus Frontage
+ Figure 12.64.640-Q: Examples of Green Access Lane Streetscapes
+12.64.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:44Supp. No. 1
+J. Community Arterial. Community Arterial is intended to provide a safe and inviting environment
+for walking and bicycling while accommodating higher volumes of traffic. Separated bike lanes
+and sidewalks contribute to the overall character of the street.
+1. Design. Street design shall comply with Figure 12.64.640-R.
+2. Streetscape Standards. The residential focus streetscap e standards in Figure 12.64.650-B
+shall apply outside of Retail Focus Frontage areas shown on Figure 12.64.640-A, and the
+commercial focus streetscape standards in Figure 12.64.650-A shall apply in Retail
+Focus Frontage areas, unless those standards are modified through a Type II or a Type
+III approval process.
+
+K. Neighborhood Route. Neighborhood Route is intended to provide a safe and inviting environ-
+ment for walking and bicycling for connections in between arterials or collectors. Bike lanes and
+sidewalks contribute to the overall character of the street.
+1. Design. Street design shall comply with Figure 12.64.640-S.
+2. Streetscape Standards. The residential focus streetscap e standards in Figure 12.64.650-B
+shall apply outside of Retail Focus Frontage areas shown on Figure 12.64.640-A, and the
+commercial focus streetscape standards in Figure 12.64.650-A shall apply in Retail
+Focus Frontage areas, unless those standards are modified through a Type II or a Type
+III approval process.
+ Figure 12.64.640-R: Arterial Cross-Section for NE Walker Road from NE Stucki Ave to NE Gibbs
+Dr
+ 12.64.640AMBERGLEN PLAN DISTRICT
+CDC12.64:45Supp. No. 1
+L. Urban Multi-Use Path.
+1. Urban Multi-Use Paths are shown at certain locations on Figure 12.64.540-A, and are
+included in some street cross-sections in Subsections 12.64.640.B. through 12.64.640.M.
+These paths are primarily intended for use by pedestrians and cyclists as an off-street
+recreational facility. However, urban multi-use paths also serve pedestrians and cyclists
+on the park side of the street and replace sidewalks and bicycle lanes that would
+otherwise be required.
+2. Design specifications for Urban Multi-Use Path improvements and adjacent landscape
+plantings required as part of a development shall be reviewed and approved by the Parks
+Director to ensure consistency of standards throughout the Urban Center Zones.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. No. 6505, § 1 (Exh. A), 8-19-2025; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.64.650  Streetscape Standards.
+A. Commercial Focus Streetscape Standards.
+1. Commercial Focus Streetscape Standards illustrated in Figure 12.64.650-A apply to the
+following streets:
+a. Streets designated as Retail Focus Frontage areas on Figure 12.64.540-A; and
+b. Mixed-Use Commercial Streets identified in Figure 12.64.640-A.
+2. Commercial Focus Streetscape Standards may also be applied at other locations in
+conjunction with retail development through a Type II or a Type III process.
+3. Sidewalk design shall define a pedestrian through zone and a sidewalk furnishing zone
+(located between the curb and pedestrian through zone, except at curb extensions). A
+building frontage zone shall be defined for all Mixed-Use Commercial Streets identified
+on Figure 12.64.640-A.
+ Figure 12.64.640-S: Neighborhood Route
+12.64.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:46Supp. No. 1
+4. Sidewalk dimensions may be reduced to 10 feet for Private streets based on the following
+minimum widths as shown on Figure 12.64.650-A:
+a. Building frontage zones shall be a minimum of 1 foot 6 inches in width;
+b. Through pedestrian zones shall be a minimum of 4 feet in width;
+c. Furnishing zones shall be a minimum of 4 feet in width; and
+d. The curb shall be a minimum of 6 inches in width.
+5. Street tree installation shall comply with Section 12.64.630.
+ 12.64.650AMBERGLEN PLAN DISTRICT
+CDC12.64:47Supp. No. 1
+Figure 12.64.650-A:
+Streetscape Plan Detail — Commercial Focus
+12.64.650 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:48Supp. No. 1
+B. Residential Focus Streetscape Standards.
+1. Streetscape requirements illustrated in Figure 12.64.650-B apply to all streets shown on
+Figure 12.64.640-A except:
+a. Streets designated as Retail Focus Frontage areas on Figure 12.64.540-A.
+b. Mixed-Use Commercial Streets identified in Figure 12.64.640-A.
+2. Sidewalk dimensions may be reduced to 10 feet for Private streets based on the following
+minimum widths, as illustrated on Figure 12.64.650-B:
+a. Building frontage zones shall be a minimum of 1 foot 6 inches in width;
+b. Through pedestrian zones shall be a minimum of 4 feet in width;
+c. Furnishing zones shall be a minimum of 4 feet in width; and
+d. The curb shall be a minimum of 6 inches in width.
+3. Where Residential Focus Streetscape Standards apply and retail Uses and services are
+proposed on the adjacent street frontage, the Commercial Focus Streetscape Standard
+may be applied through a Type II or a Type III approval process.
+C. Sidewalk design shall include paving in 3-foot modules and shall define a pedestrian through
+zone and a sidewalk furnishing zone (located between the curb and pedestrian through zone,
+except at curb extensions). A building frontage zone shall be defined for all Mixed-Use
+Commercial Streets identified on Figure 12.64.640-A.
+D. Street trees, street lights, regulatory signs, bike racks, street furnishings, and landscape
+plantings shall be located in the sidewalk furnishing zone.
+E. Vegetated stormwater planters may be used on Private streets and Green Access Lanes.
+F. Bulb-outs or curb extensions are required at all full street intersections.
+G. Street Trees. Numbers of street trees per block shall be maximized by applying the following
+standards in addition to the standards in Section 12.64.630. Where these standards conflict
+with Section 12.64.630, these standards shall prevail.
+1. Street tree spacing shall be consistent with the growth and spread of actual species and
+based on a 3-foot module.
+2. Street tree spacing shall be based on the street lighting layout. Street trees shall not be
+planted within 20 feet of a street light.
+3. Street trees shall not be planted within the sight distance/vision clearance triangle at any
+street or driveway intersection.
+4. Street tree well sizes shall meet the following dimensions:
+a. 4 feet by 6 feet on retail and commercial frontages where Commercial Focus
+Streetscape Standards are applied under Subsection 12.64.650.A; or
+b. In all other locations, from 4 feet by 9 feet to 4 feet by 15 feet with landscape
+plantings, with 4-foot by 6-foot concrete unit pavers provided at car door locations.
+ 12.64.650AMBERGLEN PLAN DISTRICT
+CDC12.64:49Supp. No. 1
+c. Tree wells shall be landscaped with a combination of groundcover, grasses and
+shrubs that is specific to the needs of the site.
+H. Ornamental Street Lights. Ornamental street lights shall be installed wherever public or private
+street improvements are required as part of a development. Light poles and luminaries from
+Portland General Electric's "Option B" materials shall be used as follows:
+1. Luminaire: Hadco Utility Westbrooke; flared; black.
+2. Pole: Hadco Techtra; Black; with Shepherd's Hook Style Mast Arm.
+I. Street Furniture. Benches, trash receptacles, drinking fountains, bollards and other street
+furniture items shall be of the same general design and quality as those used at the Hillsboro
+Civic Center. As an alternative, street furniture items of a complementary design may be
+provided as identified on an adopted streetscape plan approved by the Transportation
+Committee and the Director.
+(Ord. 6401 § 1, 2022; Ord. 6149 § 1, 2015; Ord. No. 6505, § 1 (Exh. A), 8-19-2025; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.64.650 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:50Supp. No. 1
+Figure 12.64.650-B:
+Streetscape Plan Detail—Residential Focus
+ 12.64.650AMBERGLEN PLAN DISTRICT
+CDC12.64:51Supp. No. 1
+
+12.64.700  Stormwater Management and Site Grading.
+Stormwater management and site grading standards for the Amberglen Plan District include the
+following sections:
+12.64.710 Purpose
+12.64.720 General Provisions
+12.64.730 Consolidated Stormwater Facilities
+12.64.740 Site Grading
+12.64.750 Low Impact Development Approach Guidelines
+(Ord. 6401 § 1, 2022)
+12.64.710  Purpose.
+Stormwater standards in the Amberglen Plan District are intended to protect the water quality of
+creeks and wetlands associated with watershed basins in a comprehensive manner by:
+A. Accomplishing stormwater treatment at the district level in consolidated regional water quality
+facilities;
+B. Integrating stormwater conveyance and regional facilities into the public parkways and open
+space framework; and
+C. Designing stormwater system facilities to consider potential aesthetic functions to contribute to
+the character of the district.
+(Ord. 6401 § 1, 2022)
+12.64.720  General Provisions.
+A. Stormwater management and drainage shall be provided in accordance with the more
+restrictive of (a) City drainage master plan requirements/design standards, or (b) Clean Water
+Services Resolution and Order No. 07-20 ("CWS Design Standards"). The City Engineer may
+impose conditions to ensure that stormwater is drained from the development site in compli-
+ance with the applicable standard, or with any other drainage standards subsequently adopted
+by the City Council.
+B. Drainage plans shall be reviewed and approved by the City Engineer for conformance with the
+D & C Standards prior to construction.
+C. Any project that meets the definition of "development" as contained in the CWS Design
+Standards shall comply with the applicable provisions contained in that document.
+(Ord. 6401 § 1, 2022)
+ 12.64.720AMBERGLEN PLAN DISTRICT
+CDC12.64:53
+12.64.730  Consolidated Stormwater Facilities.
+A. Purpose. To consolidate the number of facilities and minimize gross acreage devoted to such
+use, regional stormwater treatment facilities are identified in the Amberglen Stormwater
+Management Plan. To the extent practicable, developers should work with adjacent property
+owners to achieve consolidation of the water quality facilities into regional usage.
+B. Consolidated stormwater facilities shall meet the following standards:
+1. Design and construction of the facility shall be integrated into site design as a component
+of the landscaping, open space, or water features;
+2. The facility shall accommodate all ranges of flows as required by the current version of
+the CWS Design Standards, as amended, including any overflow requirements; and
+3. Water depth in the facility shall not exceed 24 inches unless the facility is fenced as
+required by the Oregon Residential Specialty Code.
+C. Where construction of consolidated regional water quality facilities is not practicable due to
+topography, other site conditions, or other reasons deemed sufficient by the City Engineer, a
+private water quality facility may be approved by the City Engineer.
+(Ord. 6401 § 1, 2022)
+12.64.740  Site Grading.
+Final construction drawings shall include grading plans confirming that site grading will not impede
+or impound existing storm drainage from surrounding properties.
+(Ord. 6401 § 1, 2022)
+12.64.750  Low Impact Development Approach Guidelines.
+A. Low Impact Development Approaches (LIDAs), as defined by the current version of the CWS
+LIDA Handbook, may be used in stormwater facility construction to provide sustainability
+benefits, LEED credits, or other development objectives.
+B. Construction of LIDA facilities shall not reduce the size or need to use consolidated regional
+water quality facilities as set forth in Section 12.64.730. Where construction of such public
+facilities is not practicable, LIDA may be incorporated into the design of a private water quality
+facility as approved by the City Engineer.
+C. When provided, LIDAs should be designed in accordance with the techniques and specifica-
+tions provided in the current version of the CWS LIDA Handbook. Specific approaches should
+be selected based on their suitability to the soil and drainage characteristics of individual
+development sites.
+(Ord. 6401 § 1, 2022)
+12.64.730 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:54
+12.64.800  Building Design Standards.
+Building design standards for the Amberglen Plan District include the following sections:
+12.64.810 Purpose
+12.64.820 Applicability
+12.64.830 Massing and Form
+12.64.840 Building Design and Character
+12.64.850 Pedestrian Active Use Requirements
+12.64.860 Structured Parking
+12.64.870 Green Construction Requirements
+(Ord. 6401 § 1, 2022)
+12.64.810  Purpose.
+The building design standards in the Amberglen Plan District are intended to accomplish the
+following purposes:
+A. Establish a unique and distinctive character and quality of development in the District;
+B. Promote the use of sustainable building materials and development practices; and
+C. Promote compatibility in the scale of development between zones.
+(Ord. 6401 § 1, 2022)
+12.64.820  Applicability.
+A. Unless otherwise specified, the provisions of Section 12.64.800 shall apply as follows:
+1. In the UC-RM, UC-MU, UC-AC, UC-NC, and UC-OR zones; to all new development; and
+2. In the UC-RM, UC-MU, UC-AC, UC-NC, and UC-OR zones, to all redevelopment or
+expansion of existing structures as of July 5, 2012 that increase the gross floor area of the
+existing structure by more than 20%.
+3. In all zones, pursuant to Subsection 12.64.020.B, expansions of gross floor area by less
+than 20% shall comply with either of the following standards at the applicant's discretion:
+a. The provisions of Section 12.64.800; or
+b. The development standards applicable to the structure prior to July 5, 2012.
+4. In the UC-RP zone, the provisions of Section 12.64.800 do not apply.
+ 12.64.820AMBERGLEN PLAN DISTRICT
+CDC12.64:55
+B. Pursuant to Section 12.50.020.C, the standards in Section 12.64.840 supersede the standards
+in Section 12.50.800. However, the standards in Section 12.50.800 shall prevail where Section
+12.65.800 is silent.
+(Ord. 6401 § 1, 2022; Ord. 6149 § 1, 2015)
+12.64.830  Massing and Form.
+A. Height Transitions.
+1. In addition to the maximum building heights established in the UC base zones standards
+in Subchapter 12.24, transitions in height shall be provided as follows:
+a. No portion of a building located within 100 feet of a property zoned UC-RM or
+UC-RP may exceed 55 feet in height except as provided in Subsection 12.50.140.E.3;
+b. No portion of a building located within 100 feet of a UC-NC zone may exceed 65 feet
+in height;
+c. No portion of a building located within 200 feet of Central Park may exceed 105 feet
+in height; and
+d. No portion of a building located within 50 feet of NE John Olsen Ave, Stucki Ave
+south of NE Gibbs Dr, or the UC-RP zone may exceed 35 feet in height.
+2. To meet the requirements in Subsection 1, above, height transitions shall be accom-
+plished through gradual changes in building mass and height that complement the overall
+design and function of the building, rather than abrupt "step-downs" in height.
+12.64.820 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:56
+B. Bulk Plane Requirements. To preserve views to the Central Park and to preserve solar access
+at the street level and for upper stories, a bulk plane shall be established over the properties in
+the UC-MU zone that abut all east/west streets and all north/south streets that abut the Central
+Park. The bulk plane shall begin at a height of 65 feet measured at the property line at the street
+frontage and shall extend upward at a 15-degree angle, as illustrated in Figure 12.64.830-A.
+
+C. Maximum Tower Lot Coverage.
+1. Purpose. The standards in this subsection are intended to preserve generalized solar
+access to surrounding properties and to protect views into the Central Park area for
+properties located farther from the Park.
+2. Standards. In the UC-MU zone, portions of buildings that exceed 65 feet in height shall
+meet the following standards:
+a. The footprint of the building over 65 feet in height shall not exceed 35% of the lot
+area; and
+ Figure 12.64.830-A:
+Example of Bulk Plane Geometry Requirements
+ 12.64.830AMBERGLEN PLAN DISTRICT
+CDC12.64:57
+b. Any portion of the building over 65 feet in height must maintain at least 50 feet in
+spacing from portion(s) of any adjacent building(s) that also exceed 65 feet in
+height, as illustrated in Figure 12.64.830-B.
+
+(Ord. 6401 § 1, 2022)
+12.64.840  Building Design and Character.
+A. Building Entries.
+1. All ground floor tenant spaces with at least 25 feet of frontage shall have at least 1 building
+entrance, opening directly to the outside, oriented toward the adjacent street.
+2. If a building has frontage on more than 1 street, a main building entrance may be oriented
+either toward 1 of the streets or toward the corner where the 2 streets intersect.
+3. If a single tenant has 200 feet or more of frontage on a public or private street, 1 additional
+entrance shall be provided for each 200 feet of frontage on 1 of the public or private
+streets.
+ Figure 12.64.830-B:
+Example of Tower Lot Coverage and Separation Distance Standards
+12.64.830 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:58
+B. Building Orientation.
+1. All buildings are subject to the Front Property Line Coverage requirements in Subchapter
+12.24.
+2. In the UC-NC and UC-AC zones, buildings shall be organized to create pedestrian-
+friendly spaces and streetscapes. This shall be accomplished by using building walls to
+frame or enclose:
+a. Major intersections;
+b. Retail Focus Frontage areas designated on Figure 12.64.640-A;
+c. Surface parking areas;
+d. Plazas, squares, and other public and Private Open Space; and
+e. Other site features.
+3. To the maximum extent feasible, all buildings shall have their front façade oriented within
+30 degrees of a true east-west axis for solar access. This standard shall not apply to
+those buildings located along north-south streets in Retail Focus Frontage areas as
+shown on Figure 12.64.640-A or other north-south street frontages.
+C. Ground Floor Windows.
+1. Minimum Transparency by Location. A minimum percentage of the total length and area
+of each ground floor building façade shall be comprised of transparent windows to allow
+views of interior spaces and merchandise, to enhance the safety of public spaces by
+providing direct visibility to the street, and to create a more inviting environment for
+pedestrians. Minimum percentages vary by location as follows (all locations as shown on
+Figure 12.64.640-A).
+a. On Ground Floor Façades in Retail Focus Frontage Areas: 75% of the length and
+60% of the area of the ground level wall.
+b. On Ground Floor Façades in All Other Locations Including Green Access Lanes:
+60% of the length and 35% of the area of the ground level wall.
+2. Minimum Transparency - Measurement. In application of the standard in Subsection 1.a,
+above, the following measurement methodology and standards apply:
+a. In the Amberglen Plan District, ground level wall area shall mean the area up to the
+finished ceiling height of the fronting space or 15 feet above finished grade,
+whichever is less.
+b. All percentages shall be measured using elevation views of the building façade.
+c. For non-residential Uses, glazing on all ground floor windows shall be transparent.
+d. For residential Uses, glazing on ground floor windows of common hallways, foyers,
+or entryways shall be transparent to allow views into such areas. Glazing on ground
+floor windows of dwelling units may be translucent or opaque to protect privacy.
+e. Black or mirrored glass is not permitted.
+ 12.64.840AMBERGLEN PLAN DISTRICT
+CDC12.64:59
+D. Façade Articulation and Design. Blank façades devoid of architectural detail are not permitted.
+The perceived mass and scale of building façades shall be reduced by incorporating design
+elements such as but not be limited to those below. A minimum of 3 of the design elements
+listed below shall be incorporated along all street-facing façades:
+1. Two or more variations in roof form;
+2. Parapet height variations of at least 2 feet;
+3. Variations in building height by at least 4 feet;
+4. Projected or recessed building mass at least 16 inches deep and 60 inches wide;
+5. Wall plane off-sets at least 18 inches deep;
+6. Window openings;
+7. Balconies;
+8. Changes in texture and color of wall surfaces;
+9. Entries recessed at least 3 feet from the building façade; or
+10. An alternative design element as approved by the Review Authority.
+E. Visitability. In buildings containing more than 50 dwelling units, at least 10% of the dwelling
+units shall provide the following visitability features:
+1. An accessible path of travel from the street, sidewalk, or driveway that has no steps, is at
+minimum of 36-inches wide and is not steeper than 1:20 (5% grade) for walkways or 1:12
+for ramps;
+2. A "zero-step" entrance without a step or threshold;
+3. 32-inch clear doorway openings and hallways that have a minimum clear width of
+36-inches throughout the ground floor of the unit;
+4. Clear doorway openings and clear width hallways throughout the ground floor of the unit
+which are compliant with applicable Oregon Structural Specialty Code requirements for
+accessibility; and
+5. A half bath on the ground floor of the unit sufficiently wide and deep to allow a person in
+a wheelchair to enter, exit and close the door.
+F. Materials.
+1. Primary building materials shall be used on at least 80% of the façade and may include
+those listed in Subsections a through g, below, as approved by the Review Authority. The
+remaining 20% of the façade may be non-primary materials:
+a. Brick, stone, or other natural masonry products;
+b. Cast concrete;
+c. Articulated architectural concrete masonry units (CMU);
+d. Traditional hard coat Stucco;
+12.64.840 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:60
+e. Steel;
+f. Glass; or
+g. Comparable materials approved by the Review Authority.
+2. Smooth surface concrete panels and/or fiber cement panels may be used as a non-
+primary material provided such materials are compliant with Subsection 12.64.840.D.
+regarding articulation and design.
+3. The following materials are Not Permitted on any façade:
+a. T-111 siding;
+b. Synthetic stucco (EIFS);
+c. Untreated wood products; or
+d. Cinder block.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.64.850  Pedestrian Active Use Requirements.
+A. Purpose. Pedestrian active use requirements ensure that new buildings, in key corridors and
+nodes intended for more intense pedestrian activity, are developed to accommodate pedestrian-
+active Uses (such as retail goods and services) in ground floor street frontages.
+B. Applicability. The provisions of this section shall apply to all primary street frontages within the
+Retail Focus Frontage areas shown on Figure 12.64.640-A.
+C. Requirements.
+1. All development shall comply with all other requirements of this Code that are not
+inconsistent with the requirements of this section. In the event of inconsistency, the
+provisions of Section 12.64.850 shall apply.
+2. Within each development parcel, at least 60% of each ground floor street frontage of each
+primary building shall be constructed:
+a. With a floor-to-ceiling height of at least 13 feet;
+b. With a leasable area extending from the street façade of the building towards the
+interior of the building at least 30 feet; and
+c. With at least 1 pedestrian access from the street to a main building entrance per 100
+linear feet of street frontage, or part thereof, at a level no more than 3 feet above or
+below sidewalk grade.
+(Ord. 6401 § 1, 2022)
+ 12.64.850AMBERGLEN PLAN DISTRICT
+CDC12.64:61
+12.64.860  Structured Parking.
+A. Structured parking within or adjacent to a primary structure shall be integrated with the overall
+design of the primary structure it serves through the use of visually similar architectural
+features and façade materials.
+B. Free-standing parking structures shall be designed to complement surrounding buildings in
+terms of scale, design elements, building materials, and orientation on the site.
+C. Ground level structured parking with direct access from drive aisles to parking for individual
+dwelling units shall include garage doors on the elevation where vehicles enter and exit. The
+remaining outer side and rear walls of the structure shall be enclosed by walls or screens
+meeting the requirements of this section. Open-sided and open-ended carports are not
+permitted.
+D. Vehicle access to parking structures from street frontages in Retail Focus Frontage areas
+shown on Figure 12.64.640-A is Not Permitted; access to the structure shall be from other
+frontages.
+E. Ground floor façades of parking structures that front Arterial, Collector streets, or streets in
+Retail Focus Frontage areas shown on Figure 12.64.640-A shall comply with Pedestrian-
+Active Use Requirements in Section 12.64.850.
+F. Pedestrian-oriented design elements as approved by the Review Authority, including the
+following, shall be incorporated into parking structures to screen cars and provide visual
+interest. Such features are illustrated on Figure 12.64.860-A:
+1. Decorative panels for window openings and/or garage entrance gates;
+2. Integrated planting systems;
+3. Public art;
+4. Green roofs (for underground parking decks); and
+5. Other features as approved by the Review Authority.
+12.64.860 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:62
+(Ord. 6401 § 1, 2022)
+12.64.870  Green Construction Requirements.
+In all new construction projects valued at over $250,000.00 in hard construction costs on the building
+permit application, at least 75% of construction debris shall be recycled in a facility located entirely
+or partly within 100 miles of the project site.
+(Ord. 6401 § 1, 2022)
+ Figure 12.64.860-A:
+Examples of Structured Parking Design Elements
+ 12.64.870AMBERGLEN PLAN DISTRICT
+CDC12.64:63
+12.64.900  Application of Public Benefit Standards.
+Public benefit standards for the Amberglen Plan District include the following sections:
+12.64.910 Purpose
+12.64.920 General Provisions
+12.64.930 Vertical Mixed-Use Public Benefits
+12.64.940 Mixed Income Housing
+12.64.950 Green Buildings
+12.64.960 Public Art
+(Ord. 6401 § 1, 2022)
+12.64.910  Purpose.
+To encourage development and redevelopment which will achieve the densities necessary to
+support efficient transit development, the UC zone standards in Subchapter 12.24 and the Amberglen
+Plan District standards in Subchapter 12.64 allow relatively high densities and a wide range and mix
+of urban Uses. In some cases, however, proposed development may not be able to meet minimum
+density requirements or may need to exceed maximum parking limits because of the nature of the
+proposed use or its distance from transit facilities. The standards of this section provide for
+Adjustments to the development and parking standards in the UC zones and in Section 12.64.300 in
+return for the applicant's provision of other benefits consistent with the goals and vision of the
+Community Plan for the plan area. The provision of vertical Mixed-Use development, mixed income
+housing, green buildings, and public art pursuant to this section is hereby determined to be a public
+benefit.
+A. Purpose of Vertical Mixed-Use Benefit. Development or redevelopment below minimum
+density or intensity requirements reduces support for the new transit facility, which in turn
+delays achievement of reduced VMT/emissions and increased transit use. Vertical Mixed-Use
+offsets those impacts by providing opportunity for residents to live and work in the same facility,
+and by allowing more efficient joint use of parking spaces in return for a higher total amount of
+parking provided.
+B. Purpose of Affordable Housing Benefit. Development or redevelopment below minimum
+residential density requirements reduces support for the new transit facility, and delays
+opportunities for lower income households to reduce their combined housing transportation
+costs by obtaining housing near transit facilities. Providing affordable housing can offset these
+impacts by making affordable housing available in close proximity to transit even if residential
+density standards have not been achieved. Although allowing increased parking consumes
+land that could otherwise accommodate additional housing that would increase the supply and
+reduce the cost of individual units providing affordable housing can offset these impacts even
+though potential housing land has been used for parking.
+C. Purpose of Green Buildings Benefit. Development or redevelopment below minimum base
+zone intensity standards reduces support for the new transit facility, which in turn delays
+12.64.900 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:64
+achievement of reduced VMT/emissions and increased transit use. Development of parking
+above maximum parking limits accommodates more auto travel with associated VMT/
+emissions. More efficient "green" buildings can offset those impacts by reducing building
+energy consumption and emissions.
+D. Public Art Benefit. Development or redevelopment below minimum base zone intensity
+standards or development of parking above maximum parking limits reduces the dense,
+walkable urban character which is a goal of the Amberglen Community Plan. The provision of
+public art encourages walking (as opposed to driving) within the Urban Center zones by
+increasing areas and destinations of pedestrian interest.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022)
+12.64.920  General Provisions.
+A. Table 12.64.920-1 lists areas of flexibility in development density, intensity and parking
+standards available in return for the provision of public benefits. Provision of these benefits is
+intended to offset any negative impacts created by reducing development densities or
+intensities or increasing vehicle parking.
+B. Applications for Adjustments in Table 12.64.920-1 shall be submitted through a Type II
+Development Review process.
+C. The Adjustments in Table 12.64.920-1 may be applied to either residential or non-residential
+development, but shall not be applied on any property or portion thereof within 800 feet of an
+LRT or HCT stop.
+D. The Adjustments to minimum densities and FARs in Table 12.64.920-1 and Sections 12.64.930
+through 12.64.960 may be approved in compliance with Sections 12.64.930 through 12.64.960
+as an alternative to the Adjustments in minimum intensity stated in Section 12.64.120. The
+Adjustments available in Table 12.64.920-1 shall not be used in combination with the excep-
+tions under Section 12.64.120 to further reduce minimum density or intensity in development
+or redevelopment.
+E. Adjustments to both maximum parking requirements and minimum density requirements may
+be approved if a different type of public benefit is provided for each requested Adjustment. For
+example, a 20% increase in maximum parking allowance may be approved if vertical Mixed-
+Use is provided pursuant to Section 12.64.930, and a 10% reduction in minimum density may
+be approved if a LEED gold building is constructed pursuant to Section 12.64.950. Adjustments
+greater than 20% in either maximum parking or minimum density or intensity shall not be
+approved, regardless of the number or amount of public benefits proposed.
+F. In Table 12.64.920-1, increased parking approved as an Adjustment is not required to be
+located in a parking structure.
+ 12.64.920AMBERGLEN PLAN DISTRICT
+CDC12.64:65
+Table 12.64.920-1:
+Amberglen Plan District Adjustments for Public Benefits
+Public
+Benefit
+Required
+ Proposed Adjustment
+Development Below Minimum
+Density or Intensity Requirement
+Parking Above Maximum Parking
+Limit
+Vertical
+Mixed-Use
+10% below minimum base zone
+standards for vertical mix of permitted
+Uses from 2 categories in the base
+zone
+10% above maximum parking standard
+for vertical mix of permitted Uses from
+2 categories in the base zone.
+20% below minimum base zone
+standards for vertical mix of permitted
+Uses from 3 categories in the base
+zone
+20% above maximum parking standard
+for vertical mix of permitted Uses from
+3 categories in the base zone.
+Mixed Income
+Housing
+20% below minimum base zone
+residential density for projects
+reserving 10% of for sale units as
+affordable to households at 80% AMI;
+or 10% of rental units as affordable to
+households at 60% AMI.
+Affordability must be assured for at
+least 30 years.
+20% above maximum parking standard
+for projects reserving 10% of for sale
+units as affordable to households at
+80% AMI; or 10% of rental units as
+affordable to households at 60% AMI.
+Affordability must be assured for at
+least 30 years.
+Green
+Buildings
+10% below minimum base zone
+standards for buildings achieving LEED
+Gold Certification or equivalent.
+10% above maximum parking standard
+for buildings achieving LEED Gold
+Certification or equivalent.
+20% below minimum base zone
+standard for buildings achieving LEED
+Platinum Certification or equivalent.
+20% above maximum parking standard
+for buildings achieving LEED Platinum
+Certification or equivalent.
+Public Art
+10% below minimum base zone
+standards for installation of public art
+costing at least 1% of hard construction
+costs for the project
+10% above maximum parking standard
+for installation of public art costing at
+least 1% of hard construction costs for
+the project.
+(Ord. 6401 § 1, 2022)
+12.64.930  Vertical Mixed-Use Public Benefits.
+To meet the threshold for a 10% Adjustment, the vertical Mixed-Use provided must include both a
+permitted residential use and at least 1 permitted Commercial or Institutional use. To meet the
+threshold for a 20% Adjustment, the vertical Mixed-Use provided must include 1 permitted residen-
+tial use, at least 1 permitted Commercial Use and at least 1 permitted Institutional Use.
+(Ord. 6401 § 1, 2022)
+12.64.920 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.64:66
+12.64.940  Mixed Income Housing.
+Twenty percent reductions in minimum residential density requirements in return for setting aside
+10% of units for purchase price affordable to households at 80% of AMI or for rental affordable to
+households at 60% of AMI, as determined by the Review Authority. Affordability at these levels must
+be assured for a period of at least 30 years through a development agreement with the applicant.
+(Ord. 6401 § 1, 2022)
+12.64.950  Green Buildings.
+A. Ten percent reductions in minimum density or 10% increases in maximum parking permitted in
+return for a building receiving a LEED certification at the gold level 20% reductions in minimum
+density or 20% increases in maximum parking permitted in return for a building receiving a
+LEED certification at the platinum level.
+B. To meet the thresholds in lieu of LEED certification, certification may be provided under another
+nationally-recognized or state-recognized program (including but not limited to Energy Star or
+Earth Advantage) that the City determines provides resource savings or sustainability benefits
+comparable to the LEED applicable certification. In addition, applicants must execute a
+development agreement to pursue post-construction LEED certification and if the building fails
+to meet the required level of certification, to make any building alterations necessary to meet
+those thresholds.
+(Ord. 6401 § 1, 2022)
+12.64.960  Public Art.
+Ten percent reductions in minimum density or 10% increases in maximum parking permitted in
+return for the provision of public art costing at least 1% of the hard construction costs of the project,
+as shown on the building permit application. For purposes of this section, hard construction costs
+shall be as shown on the building permit application. Public Art may be provided on the subject site
+or in a public right-of-way elsewhere within the Plan District.
+(Ord. 6401 § 1, 2022)
+ 12.64.960AMBERGLEN PLAN DISTRICT
+CDC12.64:67

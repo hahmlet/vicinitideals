@@ -1,0 +1,1467 @@
+SUBCHAPTER 12.23
+ COMMERCIAL ZONES
+12.23.010 Commercial Zones.
+12.23.020 Locational Characteristics.
+12.23.030 Organization within This Subchapter.
+12.23.100 C-N Commercial—Neighborhood Zone.
+12.23.110 Purpose.
+12.23.120 Housing Types.
+12.23.130 Uses.
+12.23.140 Accessory Uses and Structures Permitted by Right.
+12.23.150 Special Provisions Regarding Uses.
+12.23.160 Development Standards.
+12.23.170 Variances and Adjustments.
+12.23.180 Other Pertinent Regulations.
+12.23.200 C-G Commercial—General Zone.
+12.23.210 Purpose.
+12.23.220 Housing Types.
+12.23.230 Uses.
+12.23.240 Accessory Uses and Structures Permitted by Right.
+12.23.250 Special Provisions Regarding Uses.
+12.23.260 Development Standards.
+12.23.270 Variances and Adjustments.
+12.23.280 Other Pertinent Regulations.
+12.23.300 SCC-DT Station Community Commercial—Downtown Zone.
+12.23.310 Purpose.
+12.23.320 Housing Types.
+12.23.330 Uses.
+12.23.340 Accessory Uses and Structures Permitted by Right.
+12.23.350 Special Provisions Regarding Uses.
+12.23.360 Development Standards.
+12.23.370 Variances and Adjustments.
+12.23.380 Other Pertinent Regulations.
+12.23.400 SCC-SC Station Community Commercial—Station Commercial Zone.
+12.23.410 Purpose.
+12.23.420 Housing Types.
+12.23.430 Uses.
+12.23.440 Accessory Uses and Structures Permitted by Right.
+12.23.450 Special Provisions Regarding Uses.
+12.23.460 Development Standards.
+12.23.470 Variances and Adjustments.
+12.23.480 Other Pertinent Regulations.
+CDC12.23:1
+12.23.500 SCC-MM Station Community Commercial—Multi-Modal Zone.
+12.23.510 Purpose.
+12.23.520 Housing Types.
+12.23.530 Uses.
+12.23.540 Accessory Uses and Structures Permitted by Right.
+12.23.550 Special Provisions Regarding Uses.
+12.23.560 Development Standards.
+12.23.570 Variances and Adjustments.
+12.23.580 Other Pertinent Regulations.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:2
+12.23.010  Commercial Zones.
+There are 5 commercial zones in the City:
+A. C-N Commercial-Neighborhood;
+B. C-G Commercial-General;
+C. SCC-DT Station Community Commercial-Downtown;
+D. SCC-SC Station Community Commercial-Station Commercial; and
+E. SCC-MM Station Community Commercial-Multi-Modal.
+(Ord. 6401 § 1, 2022)
+12.23.020  Locational Characteristics.
+On the Comprehensive Plan Land Use Map, commercial zones implement the Medium Density
+Residential, High Density Residential, Industrial, and Station Community Planning Area designa-
+tions as follows:
+A. C-N does not implement a specific Plan designation, but may be applied in the Medium
+Density, High Density Residential, or Industrial Plan designations.
+B. C-G implements the Commercial Plan designation.
+C. SCC-DT, SCC-SC, and SCC-MM (among other zones) implement certain locations in the
+SCPA Station Community Planning Area designation where these zones are designated on the
+Zoning Map.
+(Ord. 6401 § 1, 2022)
+12.23.030  Organization within This Subchapter.
+A. Common Elements. Each section in this Subchapter contains the following subsections:
+1. Purpose;
+2. Permitted, Conditional, Limited, and Not Permitted Housing Types (organized in tables);
+3. Permitted, Conditional, Limited and Not Permitted Uses (organized in tables);
+4. Accessory Uses Permitted;
+5. Special Provisions Regarding Uses;
+6. Development Standards (organized in tables, illustrated in figures);
+7. Variances and Adjustments; and
+8. Other Pertinent Regulations.
+B. Purpose. Purpose statements for each zone subchapter are descriptive of the zone's charac-
+teristics and intent, and are drawn from the Comprehensive Plan and/or the Community
+Development Code. Purpose statements are informational and not intended to be regulations.
+ 12.23.030COMMERCIAL ZONES
+CDC12.23:3
+C. Allowed Housing Types. Residential uses (where allowed in commercial zones) occupy a
+variety of Housing Types. Permitted, Conditionally Permitted, Limited and Not Permitted
+Housing Types within each zone are summarized in tables based on the definitions of Housing
+Types listed in Section 12.01.500. Neither the residential Use categories nor the Housing
+Types distinguish between owner- or renter-occupation.
+D. Uses. Permitted, Conditionally Permitted, Limited and Not Permitted Uses within each zone
+are summarized in tables based on the standardized Use categories contained in Subchapter
+12.10.
+1. Permitted Uses (P) are permitted by right, subject to all applicable provisions of this Code.
+2. Conditionally Permitted Uses (C) may be allowed, subject to approval on an individual
+basis as conditional uses. The Conditional Use application process and approval criteria
+are described in Sections 12.70.050 and 12.80.020. Certain conditional uses may have
+additional standards as described in Subchapter 12.40.
+3. Limited Uses (L) are permitted by right, but are subject to specified requirements,
+exceptions, or restrictions which may vary with the nature, size or location of the use.
+4. Not Permitted Uses (N) are not permitted in the zone under any circumstance.
+E. Accessory Uses. Accessory Uses are permitted in each zone in conjunction with the primary
+use on the site and subject to the same regulations as the primary use unless stated otherwise
+in the Code. Characteristics and standards for certain accessory uses are listed in Subchapter
+12.40.
+F. Special Provisions Regarding Uses. Where certain notations in the Clarifications column of the
+Uses tables require further explanation, they are noted in this section.
+G. Development Standards.
+1. Development standards in each commercial zone are summarized in tables. Develop-
+ment standards are typically numerical standards: minimum and maximum densities (if
+applicable); minimum and maximum lot dimensions; structural setbacks; maximum
+building height and lot coverage. All development must comply with the development
+standards unless a discretionary Variance or Adjustment is approved as described in
+subsection H below.
+2. Maximum residential densities in each commercial zone that allows residential develop-
+ment are generally derived from the minimum lot size; minimum densities are approxi-
+mately 80% of the maximum density. Density calculation formulas for minimum and
+maximum density are described in Section 12.50.120. Minimum and maximum residen-
+tial densities apply to all residential Use categories.
+3. With the exception of the SCC-DT zone, certain development standards are illustrated in
+a Figure immediately following the development standards table.
+12.23.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:4
+H. Variances and Adjustments. Applications to vary or adjust certain numeric standards in each
+zone may be requested and approved under Sections 12.80.152, 12.80.154, and 12.80.156.
+Certain numeric standards may also be subject to exceptions under specific circumstances, as
+described in the Standards section.
+I. Other Pertinent Regulations. Additional standards such as parking, landscaping, vision clear-
+ance, and street improvements may also apply to development in commercial zones. These
+site design and development standards may also have exceptions as described in those
+sections.
+(Ord. 6401 § 1, 2022)
+ 12.23.030COMMERCIAL ZONES
+CDC12.23:5
+12.23.100  C-N Commercial—Neighborhood Zone.
+The C-N zone includes the following sections:
+12.23.110 Purpose
+12.23.120 Housing Types
+12.23.130 Uses
+12.23.140 Accessory Uses and Structures Permitted by Right
+12.23.150 Special Provisions Regarding Uses
+12.23.160 Development Standards
+12.23.170 Variances and Adjustments
+12.23.180 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.23.110  Purpose.
+A. Provide Neighborhood-Scale Services. The C-N zone does not implement a single specific
+Comprehensive Plan designation, but may be allowed in the Residential Medium Density,
+Residential High Density, or Industrial Plan designations. In these areas, the C-N zone
+provides opportunity to locate small-scale commercial nodes within residential and industrial
+neighborhoods, giving residents and employees more convenient access to goods and
+services.
+B. Reduce Vehicle Trips and Encourage Active Transportation. The C-N zone reduces automobile
+use and increases walking and bicycling opportunities by allowing small-scale retail, service
+and office commercial uses in closer proximity to homes and businesses.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.23.120  Housing Types.
+Table 12.23.120-1 lists housing types permitted in the C-N zone. Housing types are defined in
+Section 12.01.500.
+  Table 12.23.120-1:
+Housing Types Permitted in the C-N Zone
+Housing Types Status Clarifications
+Single detached dwelling N
+Duplex N
+Triplex N
+Quadplex N
+Townhouse N
+Cottage Cluster N
+Multiple-dwelling structure L Residential uses permitted in upper floor(s)
+of a commercial building.
+12.23.100 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:6
+Table 12.23.120-1:
+Housing Types Permitted in the C-N Zone
+Housing Types Status Clarifications
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling L Residential uses permitted in upper floor(s)
+of a commercial building.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.23.130  Uses.
+Table 12.23.130-1 lists uses permitted, conditionally permitted, limited or not permitted in the C-N
+zone.
+  Table 12.23.130-1:
+Use Categories in the C-N Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living L Permitted only in the upper floor(s) of a mixed-use building
+with commercial on the first floor.
+Group Living N
+Residential Service N
+Residential Business L Residential use (including live-work dwellings) limited to above
+or behind business use.
+Commercial Use Categories — Only Categories Listed Below Permitted
+Eating and Drinking
+Establishments L/C See Section 12.23.150.
+Educational Services L Maximum floor area 2,500 sq. ft.; see also Section 12.23.150.
+Office L See Section 12.23.150. Psilocybin facilities permitted, subject
+to additional standards in Section 12.40.215.
+Retail Products and Services P/L/C/N
+See Section 12.23.150.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150; repair uses permitted with Conditional Use
+approval; minor assembly facilities permitted with Conditional
+Use approval if maximum primary floor areas < 3,000 sq. ft.,
+and subject to additional standards in Section 12.40.210.
+Retail sales of marijuana not permitted.
+Vehicle Service and Repair C/N
+See Section 12.23.150. Automobile service stations permitted
+with Conditional Use approval and subject to additional
+standards in Section 12.40.120. All other uses not permitted.
+Industrial Use Categories — Not Permitted
+ 12.23.130COMMERCIAL ZONES
+CDC12.23:7
+Table 12.23.130-1:
+Use Categories in the C-N Zone
+ Use Status Clarifications
+Institutional Use Categories
+Colleges and Universities N
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval if permitted as Conditional Use in an
+adjacent residential zone.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Major assembly facilities permitted with Conditional Use
+approval if maximum primary floor areas < 3,000 sq. ft. or
+maximum IBC occupancy in primary assembly area < 250
+persons, subject to additional standards in Section 12.40.210.
+Larger facilities not permitted.
+Schools C
+Permitted with Conditional Use approval if permitted as
+Conditional Use in an adjacent residential zone and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities N
+Surface Alternative
+Transportation Facilities C/N Transit facilities and park-and-ride facilities permitted with
+Conditional Use approval; all other uses not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1,
+2019; Ord. 6149 § 1, 2015)
+12.23.140  Accessory Uses and Structures Permitted by Right.
+Accessory uses vary based on the applicable use category, as described in Subchapter 12.10.
+Accessory uses are permitted in conjunction with the primary commercial use on the site and are
+subject to the same regulations as the primary commercial use unless stated otherwise in the Code.
+Accessory structures as defined in Section 12.01.500 are permitted subject to the additional
+requirements in Section 12.40.104.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6149 § 1, 2015)
+12.23.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:8
+12.23.150  Special Provisions Regarding Uses.
+A. For All Commercial Uses.
+1. All business activities, including any service, repair, processing and storage shall be
+conducted wholly within an enclosed building. Refuse containment shall be located within
+a screened enclosure. Outdoor seating and display of plants is permitted.
+2. Maximum floor area of each use (except educational services as noted in Table 12.23.130-1)
+shall be 4,000 square feet on the first floor. Floor area constructed below finished grade
+area is not included in this maximum.
+3. Second-floor commercial uses on properties not designated MU Mixed-Use on the
+Comprehensive Plan Map are subject to Conditional Use approval pursuant to Section
+12.80.020.
+B. Eating and Drinking Establishments. Eating and drinking establishments are permitted if in
+compliance with the limitations in subsection A above and the following additional standards:
+1. Maximum floor area of the establishment does not exceed 1,500 square feet;
+2. Carry-out service and limited seating are available;
+3. Drive-thru service is not available; and
+4. Alcoholic beverages are not served.
+C. Eating and Drinking Establishments Permitted with Conditional Use Approval. Eating and
+drinking establishments larger than those described in subsection B.1 above are permitted
+with Conditional Use approval if in compliance with the limitations of subsection A above and
+the following additional standards:
+1. Maximum seating capacity of the establishment is 50 or fewer patrons;
+2. Drive-through service is not available; and
+3. Distilled liquors are not served. Beer, wine, and cider may be served.
+D. Animal Service Facilities. Animal service facilities without outdoor exercise areas are permit-
+ted. Overnight boarding is permitted at veterinary clinics only, but may be permitted with
+Conditional Use approval at other facilities.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+ 12.23.150COMMERCIAL ZONES
+CDC12.23:9
+12.23.160  Development Standards.
+Base zone development standards in the C-N zone are listed in Table 12.23.160-1. Certain
+standards are illustrated in Figure 12.23.160-A.
+  Table 12.23.160-1:
+Development Standards in the C-N Zone
+ Standard Requirement Clarifications
+Minimum Lot Size 7,000 sq. ft.
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density 24 du/na
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions*
+   • Width (at front building
+plane) 60 feet
+ • Depth 90 feet
+Minimum Lot Frontage 25 feet Flag lots not permitted.
+Minimum Setbacks*
+
+Minimum setbacks for buildings with second
+floor commercial uses located on property not
+designated MU Mixed-Use on the
+Comprehensive Plan Map shall be at least
+one-half the height of the principal structure.
+
+Setbacks subordinate to public utility
+easements and OSSC requirements.
+ • Front Yard
+Same as front yard
+setback of the least
+restrictive adjacent
+zone
+
+% Adjacent to
+non-residential
+
+%
+Adjacent to residential
+ • Side Yard
+
+%
+Adjacent to
+non-residential 10 feet
+
+% Adjacent to residential 10 feet
+ • Rear Yard
+
+% Adjacent to
+non-residential 10 feet
+
+%
+Adjacent to residential 10 feet
+Maximum Setbacks None
+Minimum Building Height None
+Maximum Building Height* 35 feet or 2½ stories,
+whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+12.23.160 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:10
+Table 12.23.160-1:
+Development Standards in the C-N Zone
+ Standard Requirement Clarifications
+Maximum Lot Coverage 50%
+Minimum Useable Open Space Not applicable
+Minimum Landscaping 15%
+* Standards illustrated in Figure 12.23.160-A
+
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.23.170  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the C-N zone may
+be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+ Figure 12.23.160-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the C-N Zone
+ 12.23.170COMMERCIAL ZONES
+CDC12.23:11
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.23.180  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the C-N zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+(Ord. 6401 § 1, 2022)
+12.23.170 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:12
+12.23.200  C-G Commercial—General Zone.
+The C-G zone includes the following sections:
+12.23.210 Purpose
+12.23.220 Housing Types
+12.23.230 Uses
+12.23.240 Accessory Uses and Structures Permitted by Right
+12.23.250 Special Provisions Regarding Uses
+12.23.260 Development Standards
+12.23.270 Variances and Adjustments
+12.23.280 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.23.210  Purpose.
+A. Provide Full Range of Commercial Activities. The C-G zone implements the Commercial
+Comprehensive Plan designation, providing opportunities for all types of retail, service, and
+office commercial Uses in a variety of locations throughout the City. Within the C-G zone,
+certain retail Uses may be subject to square footage limitations based on Metro Title 4
+requirements.
+B. Reduce Vehicle Trips and Encourage Use of Alternative Transportation. By siting a wide mix of
+commercial Uses in central locations and on transit routes, the C-G zone provides customers
+and employees with opportunities to undertake several errands in a single trip and/or to access
+the commercial Uses by walking, bicycling or transit.
+(Ord. 6401 § 1, 2022)
+12.23.220  Housing Types.
+Table 12.23.220-1 lists Housing Types permitted in the C-G zone. Housing Types are defined in
+Section 12.01.500.
+  Table 12.23.220-1:
+Housing Types Permitted in the C-G Zone
+Housing Types Status Clarifications
+Single detached dwelling C/L/N Improvement of existing dwellings permitted with
+Conditional Use approval. Expansion of existing
+dwellings may be approved subject to
+non-conforming Use approval pursuant to
+Subchapter 12.30 and Section 12.80.100. New
+detached dwellings Not Permitted.
+Duplex N
+Triplex N
+ 12.23.220COMMERCIAL ZONES
+CDC12.23:13
+Table 12.23.220-1:
+Housing Types Permitted in the C-G Zone
+Housing Types Status Clarifications
+Quadplex N
+Townhouse N
+Cottage Cluster N
+Multiple-dwelling structure L Residential uses permitted in upper floor(s) of a
+commercial building.
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling L Residential uses permitted in upper floor(s) of a
+commercial building.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.23.230  Uses.
+Table 12.23.230-1 lists Uses Permitted, Conditionally Permitted, Limited or Not Permitted in the C-G
+zone.
+  Table 12.23.230-1:
+Use Categories in the C-G Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living C/L/N
+Improvement of existing dwellings permitted with Conditional
+Use approval; expansion of existing dwellings subject to
+non-conforming Use approval pursuant to Subchapter 12.30
+and Section 12.80.100; new Residential Uses permitted in
+upper floor(s) of a commercial building; new detached
+dwellings Not Permitted.
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B); all other uses permitted with Conditional Use
+approval.
+Residential Service C/L
+Residential Services not exceeding maximum residential
+density permitted with Conditional Use approval. Residential
+Services exceeding maximum density permitted only with PUD
+approval.
+Residential Business L Residential Uses permitted in upper floor(s) of a live-work
+dwelling or a commercial building.
+Commercial Use Categories
+Commercial Lodging P/L Bed and breakfast inns subject to additional standards in
+Section 12.40.130.
+Commercial Recreation P
+Commercial Parking P
+12.23.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:14
+Table 12.23.230-1:
+Use Categories in the C-G Zone
+ Use Status Clarifications
+Durable Goods Sales P
+Eating and Drinking
+Establishments P
+Educational Services P
+Office P Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+Retail Products and Services P/L/C
+Subject to limitations in Section 12.23.250. Child care facilities.
+Minor assembly facilities permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210.
+Self-Service Storage P
+Vehicle Service and Repair P/C
+Automobile service stations and vehicle washes permitted with
+Conditional Use approval and subject to additional standards
+in Section 12.40.120.
+Industrial Use Categories
+Industrial Service P/N Marijuana testing laboratories not permitted.
+Manufacturing and Production L/N Custom manufacturing of goods for retail sale on premises
+permitted; all other uses not permitted.
+Solid Waste Treatment and
+Recycling N
+Vehicle Storage L/N
+Incidental RV storage permitted with self-service storage only
+and subject to additional standards in Section 12.40.220. All
+other uses not permitted.
+Warehouse and Freight
+Movement N
+Wholesale Sales L/N Office and showroom permitted where on-site sales limited to
+small items. Marijuana wholesale sales not permitted.
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities C Permitted with Conditional Use approval.
+Hospitals C Permitted with Conditional Use approval.
+Major Assembly Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+ 12.23.230COMMERCIAL ZONES
+CDC12.23:15
+Table 12.23.230-1:
+Use Categories in the C-G Zone
+ Use Status Clarifications
+Schools C/N
+Middle and senior high schools permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210; elementary schools not permitted.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities P
+Surface Alternative
+Transportation Facilities P/C
+Transit facilities permitted. Park-and-ride facilities and transit
+vehicle storage and maintenance facilities permitted with
+Conditional Use approval.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities L With no equipment storage; subject to additional standards in
+Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015; Ord. 6116 § 1, 2015)
+12.23.240  Accessory Uses and Structures Permitted by Right.
+Accessory uses vary based on the use categories contained in Subchapter 12.10. Accessory uses
+are permitted in conjunction with the primary commercial use on the site and subject to the same
+regulations as the primary commercial use unless stated otherwise in the Code. Accessory
+structures as defined in Section 12.01.500 are permitted subject to the additional requirements in
+Section 12.40.104.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6149 § 1, 2015)
+12.23.250  Special Provisions Regarding Uses.
+A. Abutting a Residential Zone. All business activity on property abutting a residential zone shall
+occur within an enclosed building, unless screening from the residential zone is provided by a
+sight-obscuring fence at least 6 feet high.
+B. Adjacent to or Across the Street from a Residential Zone. Openings in commercial structures
+adjacent or across the street from a residential zone shall be designed to prevent glare,
+excessive noise or other adverse impacts upon nearby residences.
+C. Motor Vehicle, Boat or Trailer Rental or Sales Lots. Vehicle rental or sales lots shall be drained
+and surfaced with crushed rock or paved with asphalt except where required landscaping is
+installed pursuant to Sections 12.50.220 and 12.50.360.
+12.23.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:16
+D. Major Retail Uses Restrictions Based on Metro Title 4. Figure 12.23.250-A illustrates the
+application of Metro Urban Growth Management Functional Plan Title 4 Retail in Employment
+and Industrial Areas. Within the employment areas shown on Figure 12.23.250-A, a new major
+retail use as defined in Section 12.01.500 may be permitted in a C-G zone only with Conditional
+Use approval pursuant to Section 12.80.020. In addition to the Conditional Use approval
+criteria, the Conditional Use application shall demonstrate compliance with the following
+approval criteria:
+1. Transportation facilities are adequate to serve the major retail use consistent with the
+City's Transportation System Plan and adopted Metro Regional Transportation System
+Plan and these facilities will be in place at the time when the retail use begins operation;
+and
+2. Transportation facilities are adequate to meet the transportation need for other planned
+land uses within the surrounding employment area or are contained within the City's
+Transportation System Plan.
+E. Additional Regulations for Special Uses. The following retail products and services uses are
+subject to additional standards in Subchapter 12.40 as noted:
+1. Animal service facilities: see Section 12.40.110;
+2. Day care facilities: see Section 12.40.150; and
+3. Medical marijuana dispensaries: see Section 12.40.194.
+4. Marijuana retail sales: see Section 12.40.194.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6160 § 1, 2016; Ord. 6149 § 1,
+2015)
+ 12.23.250COMMERCIAL ZONES
+CDC12.23:17
+Figure 12.23.250-A:
+C-G Zone Title 4 Major Retail Use Restrictions Map
+12.23.250 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:18
+12.23.260  Development Standards.
+Base zone development standards in the C-G zone are listed in Table 12.23.260-1. Certain
+standards are illustrated in Figure 12.23.260-A.
+  Table 12.23.260-1:
+Development Standards in the C-G Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density 24 du/na
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions*
+   • Width (at front building
+plane) 50 feet
+ • Depth None
+Minimum Lot Frontage 25 feet
+Minimum Setbacks*
+
+Minimum setbacks subordinate to public utility
+easements and OSSC requirements.
+ • Front Yard 1 foot
+ • Side Yard 1 foot on alleys;
+otherwise none
+ • Rear Yard 1 foot on alleys;
+otherwise none
+Maximum Setbacks None
+Minimum Building Height None
+Maximum Building Height 35 feet
+Maximum Lot Coverage 60%
+Minimum Usable Open Space Not applicable
+Minimum Landscaping 15% See Section 12.50.220.
+* Standards illustrated in Figure 12.23.260-A
+ 12.23.260COMMERCIAL ZONES
+CDC12.23:19
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.23.270  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the C-N zone may
+be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+ Figure 12.23.260-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the C-G Zone
+12.23.260 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:20
+12.23.280  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the C-G zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+(Ord. 6401 § 1, 2022)
+ 12.23.280COMMERCIAL ZONES
+CDC12.23:21
+12.23.300  SCC-DT Station Community Commercial—Downtown Zone.
+The SCC-DT zone includes the following sections:
+12.23.310 Purpose
+12.23.320 Housing Types
+12.23.330 Uses
+12.23.340 Accessory Uses and Structures Permitted by Right
+12.23.350 Special Provisions Regarding Uses
+12.23.360 Development Standards
+12.23.370 Variances and Adjustments
+12.23.380 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.23.310  Purpose.
+A. Implement the Downtown Core Vision. The SCC-DT zone implements the Station Community
+Planning Area Comprehensive Plan designation, and implements the Downtown Core Vision
+Statement from the Downtown Framework Plan (Comprehensive Plan Section 28).
+B. Create a Vibrant Downtown Core. The standards of the SCC-DT zone are intended to create
+a downtown core that is a vibrant and active place, with shopping, dining, entertainment
+venues, arts and cultural experiences, civic activities and spaces and public gathering places
+supported by existing and new residents, employees and students living and working in and
+around the historic core.
+C. Provide Opportunities for Higher Density Residential and Mixed-Use Development. The higher
+density residential and Mixed-Use residential/commercial development opportunities provided
+in the SCC-DT zone increase housing choices and entrepreneurial opportunities in the historic
+downtown.
+D. Reduce Vehicle Trips and Encourage Active Transportation. The SCC-DT zone reduces
+automobile use for some daily activities by allowing higher density residential, commercial and
+Mixed-Use development in close proximity to light rail stations, increasing both transit use and
+walking and bicycling opportunities.
+(Ord. 6401 § 1, 2022; Ord. 6250 § 1, 2017)
+12.23.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:22
+12.23.320  Housing Types.
+Table 12.23.320-1 lists Housing Types permitted in the SCC-DT zone. Housing Types are defined in
+Section 12.01.500.
+  Table 12.23.320-1:
+Housing Types Permitted in the SCC-DT Zone
+Housing Types Status Clarifications
+Single detached dwelling N
+Duplex L Permitted only within Residential
+Compatibility Areas as shown on Figure
+12.61.400-A; subject to minimum and
+maximum densities in Table 12.23.360-1.
+Triplex P
+Quadplex P
+Townhouse L Permitted only within Residential
+Compatibility Areas as shown on Figure
+12.61.400-A; subject to minimum and
+maximum densities in Table 12.23.360-1.
+Cottage cluster N
+Multiple-dwelling structure P
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling L Residential uses permitted behind or
+above business use.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.23.330  Uses.
+Table 12.23.330-1 lists uses permitted, conditionally permitted, limited or not permitted in the
+SCC-DT zone. Within each use category, certain uses may be restricted pursuant to Section
+12.30.900.
+  Table 12.23.330-1:
+Use Categories in the SCC-DT Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.23.320-1.
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B); all other uses permitted with Conditional Use
+approval.
+Residential Service P/L
+Residential services not exceeding maximum density
+permitted. Residential services exceeding maximum density
+permitted only with PUD approval.
+ 12.23.330COMMERCIAL ZONES
+CDC12.23:23
+Table 12.23.330-1:
+Use Categories in the SCC-DT Zone
+ Use Status Clarifications
+Residential Business L Residential use to be located behind or above business use.
+Commercial Use Categories
+Commercial Lodging P/N Motels not permitted. All other uses permitted.
+Commercial Recreation P/N Indoor uses permitted; outdoor uses not permitted.
+Commercial Parking P Location and design subject to Section 12.50.300.
+Durable Goods Sales N
+Eating and Drinking
+Establishments P/L Drive-through facilities subject to limitations in Section
+12.23.350.
+Educational Services P
+Office P Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+Retail Products and Services P/L/N
+Minor assembly facilities permitted subject to additional
+standards in Section 12.40.210.
+Animal service facilities subject to additional standards in
+Section 12.40.110.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150.
+New drive-through facilities not permitted; existing facilities
+subject to additional standards in Section 12.61.400.
+Expansions of certain existing uses not permitted: see Section
+12.30.900. Retail sales of marijuana not permitted.
+Self-Service Storage N
+Vehicle Service and Repair C/N Expansion of existing uses permitted with Conditional Use
+approval; new uses not permitted; see Section 12.30.900.
+Industrial Use Categories — Only Categories listed below permitted
+Manufacturing and Production P/C/N
+Breweries permitted in conjunction with a brew pub or tasting
+room. Cottage industry permitted with Conditional Use
+approval. All other uses not permitted.
+Institutional Use Categories
+Colleges and Universities L Subject to limitations in Section 12.23.350 and subject to
+additional standards in Section 12.40.210.
+Community Services L/P Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses are permitted.
+Detention Facilities C Permitted with Conditional Use approval.
+Hospitals L Subject to limitations in Section 12.23.350.
+Major Assembly Facilities C/N
+Outdoor uses such as stadiums and amphitheaters not
+permitted. All other uses permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210.
+12.23.330 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:24
+Table 12.23.330-1:
+Use Categories in the SCC-DT Zone
+ Use Status Clarifications
+Schools C/N
+Middle and senior high schools permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. Elementary schools not permitted.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities P
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval; storage and maintenance yards
+not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities L With no equipment storage; subject to additional standards in
+Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6149 § 1, 2015)
+12.23.340  Accessory Uses and Structures Permitted by Right.
+Accessory uses vary based on the use categories contained in Subchapter 12.10. Accessory uses
+are permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in the Code. Accessory structures as defined in Section
+12.01.500 are permitted subject to the additional requirements in Section 12.40.104.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6149 § 1, 2015)
+12.23.350  Special Provisions Regarding Uses.
+A. Accessory Uses to Household Uses. Home occupations are defined in Section 12.01.500 and
+are permitted as accessory uses in permitted housing types subject to the additional standards
+in Section 12.40.170.
+B. Drive-Through Facilities. New drive-through facilities are not permitted except as provided in
+Subsection 12.30.900.E.
+C. Animal Service Facilities. Overnight pet boarding permitted at veterinary clinics; elsewhere
+only with Conditional Use approval. Outdoor exercise areas not permitted. See Section
+12.40.110 for additional standards on this use.
+ 12.23.350COMMERCIAL ZONES
+CDC12.23:25
+D. Institutional Uses. Colleges and universities, hospitals, and medical centers are permitted with
+Planned Unit Development approval. Modifications of existing approved concept plans are
+also permitted with Planned Unit Development approval.
+E. Mixed-Use Buildings. Any combination of permitted, conditional, or limited uses is permitted on
+any floor.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.23.360  Development Standards.
+Base zone development standards in the SCC-DT zone are listed in Table 12.23.360-1. Certain
+standards are illustrated in Figures 12.61.400-A through 12.61.400-D in the Downtown Plan District
+section.
+  Table 12.23.360-1:
+Development Standards in the SCC-DT Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density
+
+Densities applicable to free-standing residential
+buildings. Residential Compatibility Area
+locations shown on Figure 12.61.400-A.
+ • Within Residential
+Compatibility Area 18 du/na
+ • Outside Residential
+Compatibility Area 30 du/na
+Maximum Density
+Densities applicable to free-standing residential
+buildings or mixed-use buildings. Residential
+Compatibility Area locations shown on Figure
+12.61.400-A. Higher densities permitted with
+Type III approval.
+ • Within Residential
+Compatibility Area 36 du/na
+ • Outside Residential
+Compatibility Area 90 du/na
+Minimum FAR
+.75;
+.50 permitted in first
+phase
+Minimum Lot Dimensions
+ • Width (at front building
+plane) None
+ • Depth None
+Minimum Setbacks Setbacks subordinate to OSSC and public
+utility easements.
+ • Front Yard Specified in Plan
+District Front setbacks shown on Figure 12.61.400-A.
+ • Side Yard none
+12.23.350 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:26
+Table 12.23.360-1:
+Development Standards in the SCC-DT Zone
+ Standard Requirement Clarifications
+ • Rear Yard none
+Maximum Setbacks Setbacks subordinate to OSSC and public
+utility easements.
+ • Front Yard Specified in Plan
+District Front setbacks shown on Figure 12.61.400-A.
+ • Side Yard none
+ • Rear Yard none
+Minimum Building Height See Subsection 12.61.400.C.1. and Figure 12.61.400-C.
+Maximum Building Height See Subsection 12.61.400.C.2. and Figure 12.61.400-D.
+Maximum Lot Coverage Not Applicable
+Minimum Useable Open Space Variable See Section 12.50.210 and Subsection
+12.61.400.D.
+Minimum Landscaping Variable See Section 12.50.220.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.23.370  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the SCC-DT zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.23.380  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the SCC-DT zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+ 12.23.380COMMERCIAL ZONES
+CDC12.23:27
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+• Subchapter 12.61 Downtown Plan District Standards
+(Ord. 6401 § 1, 2022)
+12.23.380 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:28
+12.23.400  SCC-SC Station Community Commercial—Station Commercial Zone.
+The SCC-SC zone includes the following sections:
+12.23.410 Purpose
+12.23.420 Housing Types
+12.23.430 Uses
+12.23.440 Accessory Uses and Structures Permitted by Right
+12.23.450 Special Provisions Regarding Uses
+12.23.460 Development Standards
+12.23.470 Variances and Adjustments
+12.23.480 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.23.410  Purpose.
+A. Provide Full Range of Commercial Activities. The SCC-SC zone implements the Station
+Community Planning Area Comprehensive Plan designation, providing opportunity to locate
+high intensity commercial and community service Uses in close proximity (less than 1,300 feet)
+to light rail stations outside downtown.
+B. Provide Opportunities for Higher Density Residential and Mixed-Use Development. The higher
+density residential and mixed-use residential/commercial development opportunities provided
+in the SCC-SC zone increase housing choices and entrepreneurial opportunities for smaller
+scale businesses near light rail stations.
+C. Reduce Vehicle Trips and Encourage Active Transportation. The SCC-SC zone reduces
+automobile use for some daily activities by allowing higher density residential, commercial and
+mixed-use development in close proximity to light rail stations, increasing both transit use and
+walking and bicycling opportunities.
+(Ord. 6401 § 1, 2022)
+12.23.420  Housing Types.
+Table 12.23.420-1 lists Housing Types permitted in the SCC-SC zone. Housing Types are defined in
+Section 12.01.500.
+  Table 12.23.420-1:
+Housing Types Permitted in the SCC-SC Zone
+Housing Types Status Clarifications
+Single detached dwelling N
+Duplex P
+Triplex P
+Quadplex P
+ 12.23.420COMMERCIAL ZONES
+CDC12.23:29
+Table 12.23.420-1:
+Housing Types Permitted in the SCC-SC Zone
+Housing Types Status Clarifications
+Townhouse P
+Cottage Cluster N
+Multiple-dwelling structure P
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling L Residential uses permitted behind or
+above commercial use.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)
+12.23.430  Uses.
+Table 12.23.430-1 lists uses permitted, conditionally permitted, limited or not permitted in the
+SCC-SC zone. Within each use category, certain uses may be restricted pursuant to Section
+12.30.900.
+  Table 12.23.430-1:
+Use Categories in the SCC-SC Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.23.420-1.
+Group Living L/C
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B); all other uses permitted with Conditional Use
+approval.
+Residential Service P/L
+Residential services not exceeding maximum density
+permitted. Residential services exceeding maximum density
+permitted with PUD approval.
+Residential Business L Residential use to be located behind or above business use.
+Commercial Use Categories
+Commercial Lodging P/N Motels not permitted. All other uses permitted.
+Commercial Recreation P/N Indoor uses permitted; outdoor uses not permitted.
+Commercial Parking P
+Durable Goods Sales L Limited to certain locations. See Section 12.23.450.
+Eating and Drinking
+Establishments L Drive-through facilities subject to limitations in Section
+12.23.450.
+Educational Services L Subject to limitations in Section 12.23.450.
+12.23.420 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:30
+Table 12.23.430-1:
+Use Categories in the SCC-SC Zone
+ Use Status Clarifications
+Office L
+Subject to limitations in Section 12.23.450. Psilocybin facilities
+permitted, subject to additional standards in Section
+12.40.215.
+Retail Products and Services P/C
+L/N
+Subject to limitations in Section 12.23.450; minor assembly
+facilities also subject to additional standards in Section
+12.40.210.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150.
+Animal service facilities with overnight boarding permitted with
+Conditional Use approval; see Section 12.23.450.
+Expansions of certain existing uses not permitted; see Section
+12.30.900.
+Self-Service Storage N
+Vehicle Service and Repair L/N Expansion of existing uses permitted with Conditional Use
+approval; new uses not permitted; see Section 12.30.900.
+Industrial Use Categories — Only Categories listed below permitted
+Manufacturing and Production C/N Cottage industry permitted with conditional use approval. All
+other uses not permitted.
+Institutional Use Categories
+Colleges and Universities L Subject to limitations in Section 12.23.450 and subject to
+additional standards in Section 12.40.210.
+Community Services L/P Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses are permitted.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Outdoor uses such as stadiums and amphitheaters not
+permitted. All other uses permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210.
+Schools C/N
+Middle and senior high schools permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. Elementary schools not permitted.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities P
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards not permitted.
+ 12.23.430COMMERCIAL ZONES
+CDC12.23:31
+Table 12.23.430-1:
+Use Categories in the SCC-SC Zone
+ Use Status Clarifications
+Telecommunications Facilities C Subject to additional standards in Section 12.40.240.
+Utility Facilities L With no equipment storage; subject to additional standards in
+Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6160 § 1, 2016; Ord. 6149 § 1, 2015; Ord. 6116 § 1, 2015)
+12.23.440  Accessory Uses and Structures Permitted by Right.
+Accessory uses vary based on the use categories contained in Subchapter 12.10. Accessory uses
+are permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in the Code. Accessory structures as defined in Section
+12.01.500 are permitted subject to the additional requirements in Section 12.40.104.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6149 § 1, 2015)
+12.23.450  Special Provisions Regarding Uses.
+A. Accessory Uses to Household Uses. Home occupations are defined in Section 12.01.500
+permitted as accessory uses in permitted housing types subject to the additional standards in
+Section 12.40.170.
+B. Commercial Building Footprint Limitation. Commercial uses are limited in size and intensity to
+promote a local orientation and to limit adverse impacts on nearby residential areas. Multi-story
+commercial buildings or mixed-use commercial/residential buildings are permitted with a
+footprint up to 20,000 square feet.
+C. Mixed-Use Buildings.
+1. Within 200 feet of an HCT station site, multi-dwelling residential developments with
+densities above 25 units per net acre shall include at least 10% of the ground floor (up to
+5,000 square feet) as retail products and services or office commercial uses. Live/work
+units do not meet this standard.
+2. In mixed-use buildings including residential uses, retail products and service and office
+uses are permitted on all floors. Commercial uses in a mixed-use building shall occupy at
+least 5,000 square feet of the ground floor.
+D. Animal Service Facilities. Overnight pet boarding is permitted at veterinary clinics; but is
+allowed elsewhere only with Conditional Use approval. Outdoor exercise areas are not
+permitted. See Section 12.40.110 for additional standards on this use.
+E. Drive-Through Facilities. New drive-through facilities are not permitted except as provided in
+Subsection 12.30.900.E.
+12.23.430 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:32
+F. Institutional Uses. Colleges and universities are permitted with Planned Unit Development
+approval. Modifications of existing approved concept plans are also permitted with Planned
+Unit Development approval.
+G. Additional Regulations for Special Uses. The following retail products and services uses are
+subject to additional standards in Subchapter 12.40 as noted:
+1. Day care facilities: see Section 12.40.150;
+2. Marijuana retail sales: see Section 12.40.194.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6160 § 1, 2016)
+12.23.460  Development Standards.
+Development standards in the SCC-SC zone are listed in Table 12.23.460-1. Certain standards are
+illustrated in Figure 12.23.460-A.
+  Table 12.23.460-1:
+Development Standards in the SCC-SC Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density
+ • Free-standing, within 1,300
+
+of an LRT station 30 du/na
+ • Free-standing, beyond
+1,300  from an LRT station 24 du/na
+ • In Mixed-Use Buildings None
+Maximum Density
+ • Free-standing, within 1,300
+
+of an LRT station 36 du/na
+ • Free-standing, beyond
+1,300
+
+from an LRT station 30 du/na
+ • In Mixed-Use Buildings None
+Minimum FAR
+ • within 1,300
+
+of an LRT
+station 0.5
+ • beyond 1,300  from an LRT
+station 0.4
+Minimum Lot Dimensions*
+ • Width (at front building
+plane) 25 feet
+ • Depth 25 feet
+ 12.23.460COMMERCIAL ZONES
+CDC12.23:33
+Table 12.23.460-1:
+Development Standards in the SCC-SC Zone
+ Standard Requirement Clarifications
+Minimum Setbacks*
+
+Setbacks subordinate to OSSC and public
+utility easements.
+ • Front Yard None
+ • Side Yard None
+ • Rear Yard None
+Maximum Setbacks*
+ • Front Yard
+Additional 10 feet front yard setback for
+pedestrian amenities may be requested and
+approved through Development Review.
+
+%
+Mixed-Use or Commercial 10 feet
+  % Residential 15 feet
+ • Side Yard
+
+%
+Mixed-Use or Commercial None
+
+%
+Residential 5 feet (none on alleys)
+ • Rear Yard
+
+% Mixed-Use or Commercial None
+
+%
+Residential 5 feet (none on alleys)
+Minimum Building Height*
+ • Within 800 ft. of an LRT
+Station 30 feet
+ • Beyond 800 ft. of an LRT
+Station None
+Maximum Building Height* 75 feet
+Maximum Lot Coverage Not applicable
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Variable See Section 12.50.220.
+* Standards illustrated in Figure 12.23.460-A
+12.23.460 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:34
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.23.470  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the SCC-SC zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.23.480  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the SCC-SC zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+ Figure 12.23.460-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the SCC-SC Zone
+ 12.23.480COMMERCIAL ZONES
+CDC12.23:35
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+• Subchapter 12.61 Downtown Plan District Standards
+(Ord. 6401 § 1, 2022)
+12.23.480 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:36
+12.23.500  SCC-MM Station Community Commercial—Multi-Modal Zone.
+The SCC-MM zone includes the following sections:
+12.23.510 Purpose
+12.23.520 Housing Types
+12.23.530 Uses
+12.23.540 Accessory Uses and Structures Permitted by Right
+12.23.550 Special Provisions Regarding Uses
+12.23.560 Development Standards
+12.23.570 Variances and Adjustments
+12.23.580 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.23.510  Purpose.
+A. Provide Full Range of Commercial Activities. The SCC-MM zone implements the Station
+Community Planning Area Comprehensive Plan designation at locations on arterial streets
+approximately 2,600 feet from an LRT platform, providing opportunity to locate a mixture of
+commercial and community service uses oriented City-wide.
+B. Provide Opportunities for Higher Density Residential and Mixed-Use Development. The higher
+density residential and mixed-use residential/commercial development opportunities provided
+in the SCC-MM zone increase housing choices and entrepreneurial opportunities for larger
+scale businesses.
+C. Reduce Vehicle Trips and Encourage Active Transportation. By siting a wider mix of commer-
+cial uses in SCC-MM locations on arterial streets where existing and planned street systems
+will support such uses, shoppers have opportunities to undertake several errands in a single
+trip and/or to access the commercial center by walking, bicycling or transit.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.23.520  Housing Types.
+Table 12.23.520-1 lists housing types permitted in the SCC-MM zone. Housing types are defined in
+Section 12.01.500.
+  Table 12.23.520-1:
+Housing Types Permitted in the SCC-MM Zone
+Housing Types Status Clarifications
+Single detached dwelling N
+Duplex P
+Triplex P
+Quadplex P
+ 12.23.520COMMERCIAL ZONES
+CDC12.23:37
+Table 12.23.520-1:
+Housing Types Permitted in the SCC-MM Zone
+Housing Types Status Clarifications
+Townhouse P
+Cottage cluster N
+Multiple-dwelling structure P
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling L Residential uses permitted above or
+behind commercial use.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.23.530  Uses.
+Table 12.23.530-1 lists uses permitted, conditionally permitted, limited or not permitted in the
+SCC-MM zone. Within each use category, certain uses may be restricted pursuant to Section
+12.30.900.
+  Table 12.23.530-1:
+Use Categories in the SCC-MM Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.23.520-1.
+Group Living L/C
+Permitted for person with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Subsection
+12.80.050.B); all other uses permitted with Conditional Use
+approval.
+Residential Service P/L
+Residential services not exceeding maximum density
+permitted. Residential services exceeding maximum density
+permitted with PUD approval.
+Residential Business L Residential use to be located above or behind business use.
+Commercial Use Categories
+Commercial Lodging P
+Commercial Recreation P
+Commercial Parking P
+Durable Goods Sales L Subject to limitations in Section 12.23.550.
+Eating and Drinking
+Establishments P
+Educational Services P
+Office P Psilocybin facilities permitted, subject to additional standards
+in Section 12.40.215.
+12.23.520 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:38
+Table 12.23.530-1:
+Use Categories in the SCC-MM Zone
+ Use Status Clarifications
+Retail Products and Services P/L
+Subject to limitations in Sections 12.23.550 and 12.30.900;
+minor assembly facilities also subject to additional standards in
+Section 12.40.210.
+Day care facilities permitted subject to additional standards in
+Section 12.40.150.
+Self-Service Storage L Subject to limitations in Section 12.23.550.
+Vehicle Service and Repair P/C/L
+Automobile service stations permitted with Conditional Use
+approval; subject to additional standards in Section 12.40.120.
+All other uses permitted.
+Industrial Use Categories — Only Categories listed below permitted
+Manufacturing and Production C/N Cottage industry permitted with Conditional Use approval. All
+other uses not permitted.
+Institutional Use Categories
+Colleges and Universities L Subject to limitations in Section 12.23.550 and subject to
+additional standards in Section 12.40.210.
+Community Services L/P Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses are permitted.
+Detention Facilities N
+Hospitals C Permitted with Conditional Use approval and subject to
+limitations in Section 12.23.550.
+Major Assembly Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Schools C/N
+Middle and senior high schools permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. Elementary schools not permitted.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities P Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted; park-and-ride facilities permitted
+with Conditional Use approval; storage and maintenance yards
+not permitted.
+ 12.23.530COMMERCIAL ZONES
+CDC12.23:39
+Table 12.23.530-1:
+Use Categories in the SCC-MM Zone
+ Use Status Clarifications
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities L With no equipment storage; subject to additional standards in
+Section 12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6160 § 1, 2016; Ord. 6149 § 1, 2015; Ord. 6116 § 1, 2015)
+12.23.540  Accessory Uses and Structures Permitted by Right.
+Accessory uses vary based on the use categories contained in Subchapter 12.10. Accessory uses
+are permitted in conjunction with the primary use on the site and subject to the same regulations as
+the primary use unless stated otherwise in the Code. Accessory structures as defined in Section
+12.01.500 are permitted subject to the additional requirements in Section 12.40.104.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6149 § 1, 2015)
+12.23.550  Special Provisions Regarding Uses.
+A. Accessory Uses to Household Uses. Home occupations as defined in Section 12.01.500 are
+permitted as accessory uses in permitted housing types subject to the additional standards in
+Section 12.40.170.
+B. Mixed-Use Buildings. In mixed-use buildings including residential uses, retail products and
+service and office uses are permitted on all floors. Commercial uses in a mixed-use building
+shall occupy at least 5,000 square feet of the ground floor.
+C. Animal Service Facilities. Overnight pet boarding is permitted at veterinary clinics; but is
+allowed elsewhere only with Conditional Use approval. Outdoor exercise areas are not
+permitted. See Section 12.40.110 for additional standards on this use.
+D. Durable Goods. Durable goods sales are permitted only on sites farther than 2,600 feet from a
+light rail station.
+E. Self-Service Storage. Self-service storage facilities shall be at least 2 stories in height, and
+shall meet applicable FAR requirements. Exterior access to individual units is not permitted if
+visible from a public right-of-way. Vehicle storage is not permitted.
+F. Institutional Uses. Colleges and universities, hospitals and medical centers, are permitted with
+Planned Unit Development approval. Modifications of existing approved concept plans are
+also permitted with Planned Unit Development approval.
+12.23.530 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:40
+G. Additional Regulations for Special Uses. The following retail products and services uses are
+subject to additional standards in Subchapter 12.40 as noted:
+1. Day care facilities: see Section 12.40.150;
+2. Marijuana retail sales: see Section 12.40.194.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6160 § 1, 2016)
+12.23.560  Development Standards.
+Development standards in the SCC-MM zone are listed in Table 12.23.560-1. Certain standards are
+illustrated in Figure 12.23.560-A.
+  Table 12.23.560-1:
+Development Standards in the SCC-MM Zone
+ Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density
+
+In mixed-use buildings, residential uses are
+permitted on or above the second floor.
+ • Free-Standing 15 du/na
+ • In Mixed-Use Buildings None
+Maximum Density Free-Standing
+and in Mixed-Use Buildings 30 du/na
+Minimum FAR None
+Minimum Lot Dimensions
+ • Width (at front building
+plane) None
+ • Depth None
+ • Frontage 25 feet
+Minimum Setbacks
+ • Front Yard
+
+Setbacks subordinate to OSSC and public
+utility easements.
+
+%
+to structure None
+
+%
+to garage door Either 5 feet or less;
+or 19 feet or more
+ • Side Yard None
+ • Rear Yard
+
+%
+to structure None
+  % to garage door Either 5 feet or less;
+or 19 feet or more
+ 12.23.560COMMERCIAL ZONES
+CDC12.23:41
+Table 12.23.560-1:
+Development Standards in the SCC-MM Zone
+ Standard Requirement Clarifications
+Maximum Setbacks
+Maximum setbacks apply only to buildings
+constructed within 50 feet of a transit truck
+route or major pedestrian route.
+ • Front Yard
+Additional 10 feet front setback for pedestrian
+amenities may be requested and approved
+through Development Review.
+
+%
+Residential 15 feet
+
+%
+Commercial 20 feet
+ • Side Yard None
+ • Rear Yard None
+Minimum Building Height None
+Maximum Building Height 50 feet
+Maximum Lot Coverage Not applicable
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Variable See Section 12.50.220.
+* Standards illustrated in Figure 12.23.560-A
+
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+ Figure 12.23.560-A:
+Minimum Lot Dimensions, Setbacks
+and Height Requirements in the SCC-MM Zone
+12.23.560 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.23:42
+12.23.570  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the SCC-MM
+zone may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.23.580  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the SCC-MM zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.800 Design Standards for Non-Residential and Mixed-Use Development
+(Ord. 6401 § 1, 2022)
+ 12.23.580COMMERCIAL ZONES
+CDC12.23:43

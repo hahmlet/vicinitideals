@@ -1,0 +1,1096 @@
+SUBCHAPTER 12.68
+ WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+12.68.010 Purpose.
+12.68.020 Applicability.
+12.68.030 Annexation Agreements.
+12.68.040 Development Agreements.
+12.68.050 Overview of Development and Design Standards.
+12.68.100 Base Zone Standards.
+12.68.110 Base Zone Standards Exceptions.
+12.68.200 Site Design.
+12.68.210 Usable Open Space.
+12.68.220 Landscaping.
+12.68.230 Tree Preservation.
+12.68.240 Exterior Lighting.
+12.68.250 Fences, Free-Standing Walls, Hedges and Berms.
+12.68.260 Site Distance/Vision Clearance.
+12.68.270 Solar Access and Lot Orientation.
+12.68.280 Waste and Recycling Facilities.
+12.68.300 Vehicle Parking.
+12.68.310 Purpose, Applicability and Maintenance Responsibilities.
+12.68.320 Number of Spaces Required.
+12.68.330 Exempt Parking.
+12.68.340 Credit for On-Street Parking.
+12.68.350 Vehicle Parking and Loading: Location and Design.
+12.68.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity.
+12.68.410 Bicycle Parking.
+12.68.420 Pedestrian and Bicycle Circulation.
+12.68.500 Access and Street Standards.
+12.68.510 Purpose, Applicability and Exceptions.
+12.68.520 Street Connectivity and Access.
+12.68.530 Public Streets and Alleys: Design and Improvement.
+12.68.540 Private Streets: Design and Improvement.
+12.68.550 Sidewalk Widths: Design and Location.
+12.68.560 Street Trees and Landscaping.
+12.68.600 Public Utilities, Site Grading and Storm Water Facilities Site Integration.
+12.68.610 Purpose, Applicability and Exceptions.
+12.68.620 Utilities General Requirements.
+12.68.630 Site Grading.
+12.68.640 Stormwater Facilities Design.
+12.68.700 Design Standards for Residential Development.
+12.68.710 Design Standards for All Residential Development.
+CDC12.68:1
+12.68.715 Additional Design Standards for Middle Housing.
+12.68.720 Additional Design Standards for Multiple-Dwelling Residential.
+12.68.800 Design Standards for Non-Residential and Mixed-Use Development.
+12.68.810 Purpose and Applicability.
+12.68.820 Main Entries.
+12.68.830 Ground Floor Windows.
+12.68.840 Articulation and Detailed Design.
+12.68.900 Public Facility Master Plan Compliance Requirements, Figures and Maps, and
+Street Figures.
+12.68.910 Transportation Studies Requirements Unique to the District.
+12.68.920 Public Facility Master Plan Compliance Requirements.
+12.68.930 Figures and Maps.
+12.68.940 Street Cross-Sections.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:2
+12.68.010  Purpose.
+The Witch Hazel Village South (WHVS) Plan District development and design standards reflect the
+City's goals, policies, and implementation measures in Comprehensive Plan Section 32 WHVS
+Community Plan. Specifically, the WHVS Plan District standards:
+A. Support development of a vibrant and dynamic residential community that includes opportu-
+nities for small-scale, neighborhood serving commercial uses;
+B. Provide a wide range of housing types that are attainable to a diversity of households;
+C. Facilitate connectivity for all modes of travel throughout the community;
+D. Integrate and connect trees, open spaces, and natural areas with built spaces;
+E. Support environmental sustainability and climate resiliency approaches;
+F. Provide for orderly and efficient extension of public services, facilities, and utilities;
+G. Provide a clear and objective permitting path for development to occur.
+(Ord. 6440 § 1, 2023)
+12.68.020  Applicability.
+A. Plan District Boundary. The standards of this section apply only within the WHVS Plan District
+boundary as shown on Figure 12.68.020-A.
+B. Base Zones. The base zones used to implement the Comprehensive Plan designations
+include those listed in Table 12.68.020-1. In some cases, the base standards of these zones
+are modified by this plan district to support the purpose of the WHVS Plan District.
+  Table 12.68.020-1:
+WHVS Plan District Base Zones
+Comprehensive Plan Designation Implementing Base Zone
+Low Density Residential (RL) R-10, R-8.5, R-7, R-6
+Medium Density Residential (RM) R-4.5, MR-1
+High Density Residential (RH) MR-2
+Open Space (OS)
+All base zones are considered
+implementing zones for the OS
+designation.
+C. Applicability of the WHVS Community Plan Maps. Maps indicating the location and extent of
+the parks, trails, open space, and infrastructure improvements within WHVS are included in
+Section 12.68.930. A land use application and a decision to approve the application shall
+provide improvements that substantially comply with these maps and are proportional to the
+proposed development or provide other improvements that are comparable in terms of size,
+capacity, and location.
+ 12.68.020WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:3
+(Ord. 6440 § 1, 2023)
+ Figure 12.68.020-A:
+WHVS Community Plan
+12.68.020 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:4
+12.68.030  Annexation Agreements.
+A. Purpose. The annexation agreement is intended to ensure awareness of the annexation
+process as well as reasonable certainty to the property owner, the City, and the public that the
+scope and timing of subsequent development of the property will occur in a manner that
+facilitates the timely and equitable construction of necessary infrastructure improvements. The
+agreement is intended to describe the intended use of the property following annexation, the
+process for development, the parties' commitments regarding the subsequent development,
+and the infrastructure anticipated to be necessary to support development.
+B. Applicability. Unless waived by the City under Subsection D, an annexation agreement
+consistent with this section shall be executed prior to and included with any owner-initiated
+annexation application under Section 12.80.010.
+C. Contents. Unless otherwise agreed by the City, an annexation agreement shall include the
+following information and, at a minimum, address the following elements to the City's satisfac-
+tion:
+1. A legal description of the property;
+2. The current zoning;
+3. The proposed zoning consistent with the implementing base zones shown in Table
+12.68.020-1;
+4. The owner's intended urban use of the property in sufficient detail to allow the City to
+determine the public facility impacts and required infrastructure improvements necessary
+to support the intended use. The description should include the anticipated type, size and
+density of the use, the timing of any anticipated phases, and an engineering assessment
+of impact on urban services at full build-out and for each phase of a phased project;
+5. A Transportation Study consistent with the requirements of Section 12.70.200 that
+describes:
+a. The existing transportation facilities that serve the property, including the existing
+and planned capacity of the facilities,
+b. The committed and funded multi-modal transportation facilities expected to be
+available at full buildout of the property, and at each development phase of a phased
+project,
+c. The intended size, type, location and phased development timing, if any, of
+occupancy,
+d. The transportation impact of the intended use(s) at full buildout, and at each
+development phase of a phased project, and
+e. Any transportation improvements that may be necessary to accommodate full
+buildout, and each development phase of a phased project, including the potential
+impacts of anticipated future development as required under Section 12.68.910.
+ 12.68.030WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:5
+D. Waiver.
+1. The City may waive the requirement to execute and submit an annexation agreement if
+the City, in its sole discretion, determines the agreement is not necessary and would not
+achieve the purposes described in Subsection 12.68.030.A. for one or more of the
+following reasons:
+a. The size of the property is such that the development potential does not justify the
+analysis otherwise provided in the annexation agreement;
+b. The anticipated scope of the development is such that the transportation study is
+not necessary to identify and accommodate the likely impacts of the development;
+c. The property was included in a larger annexation processed under ORS 222.170
+but the owner of the affected property did not consent to the annexation.
+2. If the City waives the requirement to execute and submit an annexation agreement, the
+City may require a development agreement described in Section 12.68.040 as a condi-
+tion of approving the annexation or other land use application.
+E. Owner Commitments. The annexation agreement shall provide for at least the following owner
+commitments:
+1. To limit development of the property such that it will not exceed the capacity of:
+a. Affected transportation facilities, as determined by the Transportation Study, includ-
+ing any improvements proposed and constructed as part of the development; and
+b. Other affected public facilities including facilities for water, sanitary sewer and storm
+water management.
+2. That any requests by the owner for tax credits associated with the construction of an
+eligible improvement(s) will conform to the assumptions of the Transportation Financing
+Program, including any ordinances and methodology reports that implement the Pro-
+gram. This may include waiving the right to request tax credits under the County
+Transportation Development Tax (TDT) Ordinance for eligible improvements, if any, such
+as, but not limited to:
+a. The added costs of wet weather construction where dry weather construction was
+assumed in the Transportation Finance Program;
+b. Costs associated with right-of-way, design, permitting and construction of condi-
+tioned non-contiguous "local street" improvements; and
+3. Authorize the City to limit or condition any land use decision or entitlements consistent
+with the Transportation Study and other available public infrastructure capacity analysis,
+as determined by the City, to ensure that adequate public infrastructure is available to
+serve the proposed development.
+F. City Commitments.
+1. To initiate the zone change process to rezone the property to the appropriate City zone(s)
+at the time of annexation or such other time as parties agree.
+12.68.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:6
+2. To apply City zoning that is consistent with Table 12.68.020-1.
+G. General Provisions.
+1. The City shall not approve "vertical" development of the property until the City approves
+a Financing Program for the WHVS Plan Area and any implementing ordinances are
+adopted and effective. As used in this section, "vertical" development means any
+structure intended for human occupation or commerce for which a certificate of occu-
+pancy is required, except as may be necessary for the construction of public facilities,
+such as a construction trailer, or for the provision of public utilities such as a pump station.
+2. An annexation agreement shall include the parties' intended schedule of significant
+development-related events, including annexation, zone change, land division(s) and
+land development.
+3. An annexation agreement expires 1 year from the last date it is signed by the parties
+unless the City has received an annexation application for the property and deemed the
+application complete prior to the 1-year expiration date.
+4. The provisions of an annexation agreement may be included in and made part of a
+subsequent land use decision, in which case the provisions of the land use decision
+supersede any conflicting provisions in the annexation agreement.
+5. An annexation agreement is not effective and binding on the parties until the annexation
+application is approved by the City Council under Section 12.80.010.
+(Ord. 6440 § 1, 2023)
+12.68.040  Development Agreements.
+A. Purpose. A development agreement is intended to provide reasonable certainty to the property
+owner, the City, and the public that the scope and timing of development of the property will
+occur in a manner that facilitates the timely and equitable construction of necessary infrastruc-
+ture improvements. The development agreement is intended to follow annexation and describe
+in greater detail the owner's intended use of the property, the parties' commitments regarding
+subsequent development of the property, the infrastructure determined to be necessary to
+support development, and the parties' obligations with respect to financing and constructing
+the infrastructure.
+B. Applicability. An executed development agreement consistent with this section is required prior
+to approval of any necessary land use applications for development if:
+1. An annexation agreement was not required prior to annexation per Section 12.68.030;
+2. Any of the required items of the annexation agreement were deferred pursuant to
+[Section] 12.68.030;
+3. A development agreement was required by the annexation agreement;
+4. If required as a condition of approval of a land use decision.
+ 12.68.040WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:7
+C. The development agreement must include the following information to the City's satisfaction:
+1. A description of the anticipated type and scope of commercial or residential development
+(including the number of housing units), consistent with Table 12.68.020-1;
+2. A description of the parties' intended schedule of significant development-related events,
+including annexation, zone change, land division and development review;
+3. The proposed timing and any phasing of the development as it relates to available or
+planned infrastructure capacity;
+4. The financing and development obligations for any required or necessary infrastructure;
+5. The owner's commitment to design and construct amenities that further the goals and
+objectives of the WHVS Community Plan;
+6. Any landscape maintenance agreements for medians and curbside planters;
+7. A detailed plan for financing and constructing complete and connected arterial and/or
+collector planned streets where the full right-of-way is under the control of the owner or
+developer, such that a new collector or arterial street is not terminated without connecting
+to another improved street. A "complete street" includes both adjacent and opposite side
+full street improvements, including public and private utilities, where required; and
+8. A description of specific aspects of the development, including, but not limited to:
+a. Design,
+b. Infrastructure,
+c. Open space,
+d. Amenities, and
+e. Phasing.
+D. General Provisions.
+1. The City shall not approve "vertical" development of the property until the City approves
+a Financing Program for the WHVS Plan Area and any implementing ordinances are
+adopted and effective. As used in this section, "vertical" development means any
+structure intended for human occupation or commerce for which a certificate of occupa-
+tion is required, except as may be necessary for the construction of public facilities, such
+as construction trailer, or for the provision of public utilities such as a pump station.
+2. The provisions of a development agreement may be included in and made part of a
+subsequent land use decision, in which case the provisions of the land use decision
+supersede any conflicting provisions in the development agreement.
+(Ord. 6440 § 1, 2023)
+12.68.040 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:8
+12.68.050  Overview of Development and Design Standards.
+Subchapter 12.50 Development and Design Standards applies within the WHVS Plan District,
+except as modified by this subchapter or exempted as noted in Table 12.68.050-1.
+  Table 12.68.050-1:
+Subchapter 12.50 Modifications
+Standard  Applicable
+Code Sections
+Base Zone Standards
+Lot dimensions 12.50.110 Modified by 12.68.110.B.
+Residential density 12.50.120 Modified by 12.68.110.B.
+Setbacks 12.50.130 Modified by 12.68.110.C.
+Building height 12.50.140 Modified by 12.68.110.B.
+Site Design
+Usable open space 12.50.210 Modified by 12.68.110.B
+Tree preservation 12.50.230 Modified by 12.68.230
+Vehicle Parking
+Purpose, applicability, and maintenance
+responsibilities 12.50.310 Modified by 12.68.310
+Number of spaces required 12.50.320 Modified by 12.68.320
+Exempt parking 12.50.330 Modified by 12.68.330
+Credit for on-street parking 12.50.340 Exempt. Superseded by
+12.68.340
+Vehicle parking and loading: location 12.50.350 Modified by 12.68.350
+Vehicle parking and loading: design and
+improvements 12.50.360 Modified by 12.68.350
+Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+Pedestrian and bicycle circulation 12.50.420 Modified by 12.68.420
+Access and Street Standards
+Street connectivity and access 12.50.520 Modified by 12.68.520
+Public streets and alleys: design and
+improvement 12.50.530 Modified by 12.68.530
+Sidewalk widths: design and location 12.50.550 Modified by 12.68.550
+Street trees 12.50.560 Modified by 12.68.560
+Public Utilities, Site Grading, and Stormwater Facilities
+Stormwater facilities site integration 12.50.640 Modified by 12.68.640
+Design Standards for Residential Development
+Design standards for all residential
+development 12.50.710 Modified by 12.68.710
+ 12.68.050WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:9
+Table 12.68.050-1:
+Subchapter 12.50 Modifications
+Standard  Applicable
+Code Sections
+Design Standards for Non-Residential and Mixed-Use Development
+Purpose and applicability 12.50.810 Exempt. Superseded by
+12.68.810
+Main entries 12.50.820 Exempt. Superseded by
+12.68.820
+Ground floor windows 12.50.830 Exempt. Superseded by
+12.68.830
+Articulation and detailed design 12.50.840 Exempt. Superseded by
+12.68.840
+(Ord. 6440 § 1, 2023)
+12.68.100  Base Zone Standards.
+The standards of the applicable base zone and Subchapter 12.50 shall apply in WHVS as follows:
+A. Uses. Base zone standards apply except as modified in Section 12.68.110.A. below.
+B. Lot Dimensions. Base zone standards and Section 12.50.110 apply, except as modified in
+Section 12.68.110.B. below.
+C. Residential Density. Base zone standards and Section 12.50.120 apply, except as modified in
+Section 12.68.110(.. below.
+D. Setbacks. Base zone standards and Section 12.50.130 apply, except as modified in Section
+12.68.110.C. below.
+E. Building Height. Base zone standards and Section 12.50.140 apply, except as modified in
+Section 12.68.110.B. below.
+(Ord. 6440 § 1, 2023)
+12.68.110  Base Zone Standards Exceptions.
+The following exceptions to base zone standards apply in the WHVS Plan District:
+A. Commercial Uses in Residential Zones. In addition to uses permitted per the applicable
+residential base zone, small-scale, neighborhood-serving commercial uses are permitted
+outright in the WHVS Plan District, consistent with the following:
+1. Commercial uses in residential zones are limited to the following:
+a. Eating and Drinking Establishments;
+b. Office;
+c. Retail Products and Services, with the following exceptions:
+i. Retail sales of marijuana is not permitted,
+12.68.050 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:10
+ii. Minor assembly facilities are not permitted.
+2. Commercial uses may be stand-alone buildings or part of a mixed-use building. In either
+case, the size limitation of Subsection A.3. applies.
+3. Commercial uses may not exceed 5,000 square feet of gross floor area per building.
+4. Commercial uses shall be consistent with the Design Standards in CDC 12.68.800 for
+non-residential uses.
+5. Drive-thru services are prohibited in WHVS. This includes drive-thru services that are
+accessory to the primary use, such as a pharmacy or bank drive-thru.
+B. Exceptions for Regulated Affordable Housing. In the MR-1 and MR-2 zones, the following
+exceptions apply to regulated affordable housing that meets the definition in CDC 12.01.500.
+These standards are specific to the MR-1 and MR-2 zones within the WHVS Plan District.
+Housing permitted under Senate Bill 8 Affordable Housing rules is subject to CDC 12.40.107.
+1. Applicability. In order to be eligible for the exceptions in Subsections 2-5 below, at least
+20% of the total number of units in the development must be designated as regulated
+affordable housing that meets the definition in CDC 12.01.500. For phased development
+projects, this shall be calculated per phase.
+2. Lot Coverage.
+a. Maximum lot coverage for multiple-dwelling structures may be increased to 75%.
+b. Maximum lot coverage may not exceed 75% in any circumstance, even when
+combined with the Planned Unit Development provisions of CDC 12.80.120.
+3. Density.
+a. For developments where 100% of the units in the development are designated as
+regulated affordable housing that meets the definition in CDC 12.01.500, no
+maximum density applies.
+b. For developments that contain a mix of market rate and regulated affordable
+housing, the following applies:
+i. In the MR-1 zone, maximum density may be increased to 32 dwelling units per
+net acre.
+ii. In the MR-2 zone, maximum density may be increased to 42.5 dwelling units
+per net acre.
+iii. Any increased densities established through the Planned Unit Development
+(PUD) provisions of CDC 12.80.120 may be used in conjunction with the
+density increases established in this section.
+4. Building Height.
+a. In the MR-1 zone, maximum building height for a multiple-dwelling structure may be
+increased to 5 stories.
+ 12.68.110WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:11
+b. In the MR-2 zone, maximum building height for a multiple-dwelling structure may be
+increased to 6 stories.
+5. Usable Open Space. Where applicable per CDC 12.50.210, the useable open space
+standard for multiple-dwelling structures is 48 square feet per dwelling unit. Usable open
+space may not be reduced below 48 square feet per unit, even when combined with the
+Planned Unit Development provisions of CDC 12.80.120.
+C. Setbacks.
+1. For visitable units that meet the requirements of Section 12.68.710.A., the minimum front
+building setback may be reduced to 10 feet. Garage setbacks shall not be reduced.
+2. Future Intersection Capacity Improvements. In accordanc e with Subparagraph
+12.68.910.D.3.c, the required minimum setback for buildings and parking lots may be
+modified for anticipated intersection capacity improvements and future infill of Urban
+Growth Boundary areas.
+(Ord. 6440 § 1, 2023)
+12.68.110 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:12
+12.68.200  Site Design.
+Site design standards for the WHVS Plan District include the following sections:
+12.68.210 Usable Open Space
+12.68.220 Landscaping
+12.68.230 Tree Preservation
+12.68.240 Exterior Lighting
+12.68.250 Fences, Free-Standing Walls, Hedges, and Berms
+12.68.260 Site Distance/Vision Clearance
+12.68.270 Solar Access and Lot Orientation
+12.68.280 Waste and Recycling Facilities
+(Ord. 6440 § 1, 2023)
+12.68.210  Usable Open Space.
+The standards of Section 12.50.210 and the applicable base zones apply in the WHVS Plan District,
+except as noted in Section 12.68.110.B. for regulated affordable housing.
+(Ord. 6440 § 1, 2023)
+12.68.220  Landscaping.
+The standards of Section 12.50.220 and the applicable base zones apply in the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.230  Tree Preservation.
+The standards of Section 12.50.230 apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.240  Exterior Lighting.
+The standards of Section 12.50.240 apply in the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.250  Fences, Free-Standing Walls, Hedges and Berms.
+The standards of Section 12.50.250 apply in the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.260  Site Distance/Vision Clearance.
+The standards of Section 12.50.260 apply in the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+ 12.68.260WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:13
+12.68.270  Solar Access and Lot Orientation.
+A. Purpose. Enhanced requirements for solar access support the policy goal of housing designs
+that incorporate passive use of solar energy for lighting and heating purposes, energy-efficient
+construction, the potential for installation of photovoltaic panels, and similar techniques.
+B. Applicability. The standards of this section shall apply to all Type II and Type III development
+applications within the WHVS Plan Area unless a variance or adjustment has been granted by
+the Review Authority pursuant to Section 12.80.150 Variances and Adjustments.
+C. Solar Access and Lot Orientation Standards. At least 50% of lots for single detached and
+middle housing dwellings with lot widths less than 50 feet shall be oriented with the side lot lines
+within plus or minus 20 degrees of geographical east-west.
+D. Exceptions to Solar Access and Orientation Standards. A proposal shall qualify for an
+exception to Subsection C. of this section if one or more of the following development
+constraints are present:
+1. Compliance with applicable street standards or public street plans requires a street
+configuration that prevents the lot(s) from being oriented for solar access.
+2. An existing public easement or right-of-way prevents the lot(s) from being oriented for
+solar access.
+3. There is a mapped significant natural resource on the site that will be preserved, and that
+prevents the lot(s) from being oriented for solar access. Mapped resources are those
+within the Significant Natural Resource (SNR) Sites and Impact Areas as depicted on the
+Significant Natural Resources Overlay Map, a portion of the official Zoning Map, and as
+identified in the adopted List of Significant Goal 5 Natural Resources Sites in Hillsboro
+and the City of Hillsboro Goal 5 Natural Resources Inventory and Assessment Report and
+Economic, Social, Environmental and Energy (ESEE) analyses.
+E. Exemptions from the Solar Access and Orientation Standards. A proposed lot shall be counted
+as a lot that satisfies Subsection C. of this section when the lot satisfies one of the following
+conditions:
+1. Slopes. The lot has an average slope of 15% or more in a direction greater than 45
+degrees east or west of true south.
+2. Existing Off-Site Shade. At least 20% of the lot is within the shadow pattern of off-site
+features, such as, but not limited to, buildings, topography, or coniferous trees or
+broadleaf evergreens, which will remain after development occurs on the site from which
+the shade is originating.
+a. Shade from existing or approved off-site buildings or structures and from topo-
+graphic features is assumed to remain after development of the site.
+b. Shade from vacant developable areas off site is assumed to be the shadow pattern
+that would result from the largest building allowed at the closest setback allowed on
+adjoining land, whether or not that building now exists.
+12.68.270 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:14
+c. Shade from coniferous trees or broadleaf evergreens is assumed to remain after
+development of the site if that vegetation is situated in a required setback; or part of
+a developed area, public park, or legally reserved open space; or part of landscap-
+ing or other features required pursuant to this Code.
+3. Existing On-Site Shade. The site, or portion of the site for which the exemption is sought,
+complies with at least one of the following:
+a. The site is within the shadow pattern of on-site features such as, but not limited to,
+buildings and topography which will remain after the development occurs.
+b. The site contains coniferous trees or broadleaf evergreens at least 30 feet tall and
+more than 8 inches in diameter measured 4 feet above the ground which have a
+crown cover over at least 80% of the site or relevant portion. The applicant can show
+such crown cover exists using a scaled survey or an aerial photograph. If granted,
+the exemption shall be approved subject to the condition that the applicant shall
+preserve at least 50% of the vegetation that causes the shade that warrants the
+exemption. The applicant shall file a note on the plat or documents in the office of
+the County Recorder binding the applicant to comply with this requirement.
+(Ord. 6440 § 1, 2023)
+12.68.280  Waste and Recycling Facilities.
+The standards of Section 12.50.270 apply in the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+ 12.68.280WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:15
+12.68.300  Vehicle Parking.
+Vehicle parking standards for the WHVS Plan District include the following sections:
+12.68.310 Purpose, Applicability and Maintenance Responsibilities
+12.68.320 Number of Spaces Required
+12.68.330 Exempt Parking
+12.68.340 Credit for On-Street Parking
+12.68.350 Vehicle Parking and Loading: Location and Design
+(Ord. 6440 § 1, 2023)
+12.68.310  Purpose, Applicability and Maintenance Responsibilities.
+The standards of Section 12.50.310 shall apply within the WHVS Plan District except as modified
+below.
+A. Purpose. Modified parking standards support the goal of establishing a cohesive and active
+streetscape by providing for adjustments in the minimum number of required spaces, surface
+parking location requirements, and additional parking lot landscaping.
+B. Applicability. The applicability requirements of Subsection 12.50.310.B. apply within the WHVS
+Plan District.
+C. Maintenance. The standards of Subsection 12.50.310.C. apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.320  Number of Spaces Required.
+The standards of Section 12.50.320 apply within the WHVS Plan District. In addition, the following
+adjustment to reduce the number of required parking spaces is applicable.
+A. Adjustments for Age- or Ability-Restricted Housing. Minimum required off-street parking for
+multi-dwelling residential, residential services, or group living uses may be reduced by 50% for
+each structure in which at least 80% of the units are restricted to occupancy by persons over
+55 years of age, or where at least 80% of the units are restricted to occupancy by persons
+meeting the Federal Housing Administration definition of "handicapped" individuals.
+(Ord. 6440 § 1, 2023)
+12.68.330  Exempt Parking.
+The standards of Section 12.50.330 apply within the WHVS Plan District. In addition, the following
+exemptions are applicable.
+A. Exemption for Regulated Affordable Housing. Regulated affordable housing units, as defined
+in Section 12.01.500, are exempt from minimum off-street parking requirements.
+12.68.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:16
+B. Exemption for Commercial Uses. Commercial uses permitted per Section 12.68.110.A. are
+exempt from minimum off-street parking requirements.
+(Ord. 6440 § 1, 2023)
+12.68.340  Credit for On-Street Parking.
+The standards of Section 12.50.340 do not apply in the WHVS Plan District. They are superseded by
+the standards below.
+A. Credit for On-Street Parking. Minimum required off-street parking may be reduced by 1 space
+for each on-street parking space located immediately in front of the development site as
+described in Paragraphs 1 through 4, below.
+1. On Interior Lots. Creditable on-street spaces shall include only those on the same street
+side as the development, where more than half the length of the parking space is located
+between the 2 extended side lot lines of the site.
+2. On Corner Lots. Creditable on-street spaces shall include only those on the same street
+side as the development, where more than half the length of the parking space is located
+between the extended side lot line of the site and the street intersection.
+3. Compliance with Municipal Code. Creditable on-street spaces shall include only those in
+compliance with Hillsboro Municipal Code Subchapter 8.12 regarding on-street parking.
+4. On-Street Parking Near Intersections. On-street spaces shall not be creditable on a local
+road or neighborhood route within 330 feet of the end of a curb return that connects to a
+collector designated for commercial and industrial uses, or to an arterial. This distance
+ensures the City's ability to convert the on-street spaces for a turn lane if needed in the
+future. On-street spaces located on collectors or arterials should not be located within
+500 feet of an intersection.
+ 12.68.340WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:17
+(Ord. 6440 § 1, 2023)
+12.68.350  Vehicle Parking and Loading: Location and Design.
+The standards of Sections 12.50.350 and 12.50.360 apply within the WHVS Plan District, except as
+modified below.
+A. Electric Car Charging Stations. For new multiple-dwelling and mixed-use buildings with 5 or
+more residential units, at least 40% of all vehicle parking spaces shall provide electrical service
+capacity, as defined in ORS 455.417. The electric car charging station spaces shall not be
+located in the right-of-way.
+(Ord. 6440 § 1, 2023)
+ Figure 12.68.340-A:
+Credit for On-Street Parking
+12.68.340 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:18
+12.68.400  Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity.
+Bicycle parking and bicycle and pedestrian circulation and connectivity in the WHVS Plan District
+include the following sections:
+12.68.410 Bicycle Parking
+12.68.420 Pedestrian and Bicycle Circulation
+(Ord. 6440 § 1, 2023)
+12.68.410  Bicycle Parking.
+The standards of Section 12.50.410 apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.420  Pedestrian and Bicycle Circulation.
+The standards of Section 12.50.420 apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+ 12.68.420WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:19
+12.68.500  Access and Street Standards.
+Access and street standards in the WHVS Plan District include the following sections:
+12.68.510 Purpose, Applicability and Exceptions
+12.68.520 Street Connectivity and Access
+12.68.530 Public Streets and Alleys: Design and Improvement
+12.68.540 Private Streets: Design and Improvement
+12.68.550 Sidewalk Widths: Design and Location
+12.68.560 Street Trees and Landscaping
+(Ord. 6440 § 1, 2023)
+12.68.510  Purpose, Applicability and Exceptions.
+The standards of Section 12.50.510 apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.520  Street Connectivity and Access.
+The standards of Section 12.50.520 apply within the WHVS Plan District, except as modified below.
+A. Street Connectivity and Block Length Requirements in Standard Zones. The standards of
+Subsection 12.50.520(C) shall apply, except for Subsection 12.50.520.C.5, which is super-
+seded by Subsection B. below.
+B. Block Perimeter and Orientation Requirements. The following block perimeter and orientation
+standards shall apply within the WHVS Plan District.
+1. The maximum block perimeter lengths created by the street and alley pattern shall be as
+shown in Table 12.68.520-1.
+  Table 12.68.520-1:
+Maximum Block Perimeters within WHVS
+Comprehensive Plan Designation Maximum Block Perimeter
+Low Density Residential 1,800 feet
+Medium Density Residential 1,600 feet
+High Density Residential 1,600 feet
+2. Street connections along arterial streets are subject to review and approval by the
+appropriate Road Agency.
+3. Full movement street connections along collector roads shall not be less than 300 feet
+and no more than 500 feet apart unless superseded by the Road Agency.
+4. Street connections along neighborhood routes and local streets shall not be spaced more
+than 500 feet apart unless superseded by the Road Agency.
+12.68.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:20
+5. To create a unified street grid and to facilitate solar access and orientation, streets shall
+be laid out to create blocks that reflect the dimensional and lot orientation requirements
+in Section 12.68.270, unless the exceptions established in Subsection 12.68.270.D.
+apply.
+C. Exceptions to Block Length and Orientation Requirements. A variance or adjustment to
+Subsection B. above may be approved by the Review Authority pursuant to Sections 12.80.154,
+12.80.156 and Subsection 12.80.158.N.
+D. Alley Access Required for Single Detached, Townhouse and Duplex Developments. Unless
+precluded by barriers as described in Subsection 12.68.270.D., all single detached, town-
+house, and duplex developments shall provide vehicle access to all lots and units from an alley.
+Alleys shall be created at the time of land division approval and shall be public right-of-way.
+E. PUD Applications Required for Alternative Access to Residential Development. Alternative
+access for residential development, such as court yards and parking courts, may be approved
+as part of a PUD application provided that street design and connectivity requirements are met.
+(Ord. 6440 § 1, 2023)
+12.68.530  Public Streets and Alleys: Design and Improvement.
+The standards of Section 12.50.530 shall apply within the WHVS Plan District in addition to the street
+cross-sections found in Section 12.68.940.
+(Ord. 6440 § 1, 2023)
+12.68.540  Private Streets: Design and Improvement.
+The standards of Section 12.50.540 shall apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.550  Sidewalk Widths: Design and Location.
+The standards of Section 12.50.550 shall apply within the WHVS Plan District except that the width
+and location of sidewalks shall also be consistent with street cross-sections in Section 12.68.940.
+(Ord. 6440 § 1, 2023)
+12.68.560  Street Trees and Landscaping.
+The standards of Section 12.50.560 shall apply within the WHVS Plan District except that street
+trees within the public right-of-way shall also be subject to the following standards:
+A. Street Tree Species. In WHVS, new street trees shall be species selected from the WHVS
+Approved Street Tree List in Table 12.68.560-1.
+B. Street Tree Spacing and Planting. Street tree spacing in the WHVS Plan District shall be based
+upon tree species and canopy size at maturity, consistent with the Hillsboro Design and
+Construction standards. The planting area shall be at least 24 square feet in area, typically
+configured at 5 feet by 5 feet.
+ 12.68.560WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:21
+C. Street Tree Variety. In order to promote more variety in street tree species and greater
+resiliency to blight, no more than 10 street trees of the same species shall be planted in a row.
+If street length allows, a minimum of at least 3 different species of street trees shall be planted
+in rows of 10 before species begin to repeat. For example: Species A (10 trees), Species B (10
+trees), Species C (10 trees), then back to Species A.
+D. Root Barrier Installation. Root barriers shall be installed according to Design and Construction
+Standards Standard Drawing No. 730-1.
+  Table 12.68.560-1:
+WHVS Approved Street Tree List
+ Common Name  Scientific Name  Shape  Height  Spread  Color  Fall Color
+European
+Hornbeam
+Carpinus betulus
+'Fastigiata'
+Dense compact,
+narrow when
+young, becoming
+oval
+30
+ 25 Dark Green Yellow
+Emerald Avenue
+Hornbeam
+Carpinus betulus
+'JFS-KW1CB' Pyramidal, Oval 40
+ 30 Dark Green Yellow
+Purple Catalpa Catalpa x erubescens
+'Purpurea' Round 50
+ 35
+Deep Purple,
+Green Yellow
+Hackberry Celtis occidentalis
+Broad top with
+ascending, then
+arching branches
+45
+ 35 Green Yellow
+Yellowwood Cladrastis kentukea Broad, Round 30  40 Bright green Brilliant Yellow
+Turkish Filbert Corylus colurna Pyramidal 45  30 Green Yellow
+Lavalle Hawthorn Crataegus x lavallei Vase-Shaped 28  20
+Deep Green,
+Glossy
+Orange, Rusty
+Orange
+Imperial Honey
+locust
+Gleditsia triacanthos
+'Imperial' Round, Spreading 35
+ 35 Green Yellow
+Skyline Honey
+locust
+Gleditsia triacanthos
+'Skycole' Broadly Pyramidal 45
+ 35 Green Golden, Yellow
+Golden rain Tree Koelreuteria paniculata Round 30  30 Bright Green Yellow
+Red Rage Tupelo Nyssa sylvatica
+'Haymanred' Broadly Pyramidal 35
+ 20
+Dark Green,
+Glossy Bright Red
+Afterburner Tupelo Nyssa sylvatica
+'David Odom'
+Strong Central
+Leader, Pyramidal 35
+ 20
+Dark Green,
+Glossy Scarlet
+Wildfire Tupelo Nyssa sylvatica
+'Wildfire'
+Pyramidal, Round
+at maturity 40
+ 25
+Bright glossy
+green
+Yellow-Orange,
+Scarlet
+American
+Hophornbeam Ostrya virginiana Upright Oval 40
+ 25 Dark Green Yellow
+Persian Parrotia Parrotia persica Round 30  20 Green Yellow, orange,
+red
+His Majesty Cork
+Tree
+Phellodendron
+amurense 'His Majesty' Vase Shaped 40
+ 35 Green Yellow
+Sawtooth Oak Quercus acutissima Rounded 40  40 Green Golden Brown
+Green Pillar Oak Quercus palustris
+'Pringreen' Upright, Columnar 50
+ 15 Dark Green Deep Red,
+Scarlet
+Willow Oak Quercus phellos Round 50
+ 35 Bright Green Orange-Red,
+Yellow
+Sterling Silver
+Linden Tilia tomentosa 'Sterling' Round 45
+ 35
+Dark Green,
+Gray Yellow
+(Ord. 6440 § 1, 2023)
+12.68.560 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:22
+12.68.600  Public Utilities, Site Grading and Storm Water Facilities Site Integration.
+Utilities, site grading, and storm water management standards for the WHVS Plan District include
+the following sections:
+12.68.610 Purpose, Applicability and Exceptions
+12.68.620 Utilities General Requirements
+12.68.630 Site Grading
+12.68.640 Stormwater Facilities Design
+(Ord. 6440 § 1, 2023)
+12.68.610  Purpose, Applicability and Exceptions.
+The standards of Section 12.50.610 apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.620  Utilities General Requirements.
+The standards of Section 12.50.620 apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.630  Site Grading.
+The standards of Section 12.50.630 apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.640  Stormwater Facilities Design.
+The standards of Section 12.50.640 apply within the WHVS Plan District.
+A. Purpose. To integrate stormwater facilities with natural resource areas and facilitate creation of
+stormwater facilities that serve a dual purpose as community amenities.
+B. Applicability. The incentives of Subsection 12.68.640.C. are only permitted through the PUD
+process in Section 12.80.120.
+C. Incentives.
+1. For developments that provide a stormwater facility that integrates with a natural
+resource area, the integrated area can count toward any applicable usable open space
+requirements per Section 12.68.210.
+2. For developments that provide a stormwater facility that provides a community amenity,
+the area of the stormwater facility can count toward any applicable usable open space
+requirements per Section 12.68.210.
+ 12.68.640WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:23
+D. Guidelines. The following guidelines shall be used to determine whether a stormwater facility
+is also a community amenity. In order to be considered a community amenity, the stormwater
+facility must integrate 3 of these components. This determination will be made as part of the
+Planned Unit Development review:
+1. The facility is as an above-ground feature, except that control structure manholes,
+pretreatment manholes, and pipes should be buried.
+2. The facility is designed and vegetated as a focal point or to appear natural.
+3. If stormwater is conveyed in the facility, attractive conveyances are provided. Examples
+include dry streambeds and cascading flow-through swales or planters.
+4. Public access is provided to the facility. Examples of access include ensuring a portion of
+the facility perimeter is open to the public or installing a trail within or along the facility.
+5. Viewpoints into the facility or to the surrounding natural areas or regional scenes are
+provided. These viewpoints are publicly accessible.
+6. Free-standing interpretive displays describing the facility's purpose are proposed. Dis-
+play size, content and materials shall be approved by the City Engineer.
+7. Structures and furnishings are installed in the facility. These structures and furnishings
+should be secured to the ground and constructed or manufactured to withstand periodic
+inundation.
+8. Passive recreation elements such as park benches, picnic tables, and open play spaces
+are incorporated into the facility.
+9. Active recreation elements such as a sports court, nature-play area, outdoor play
+structures, or a multi-purpose trail are incorporated into the facility.
+(Ord. 6440 § 1, 2023)
+12.68.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:24
+12.68.700  Design Standards for Residential Development.
+Residential design standards for the WHVS Plan District include the following sections:
+12.50.710 Design Standards for All Residential Development
+12.50.715 Additional Design Standards for Middle Housing
+12.50.720 Additional Design Standards for Multiple-Dwelling Residential
+(Ord. 6440 § 1, 2023)
+12.68.710  Design Standards for All Residential Development.
+The standards of Section 12.50.710 shall apply within the WHVS Plan District, except as modified
+below:
+A. Visitability Standards.
+1. Purpose. Visitability standards are intended to provide accessible features to accommo-
+date people living in or visiting the residence regardless of age or ability.
+2. Applicability. The visitability standards in this section are encouraged for any new
+residential subdivision or middle housing development. Visitable units are eligible for
+reduced front setbacks and a density bonus, per Subsection 4 of this section.
+3. Incentives for Visitable Units. Developments that provide 1 or more visitable units may
+apply the following:
+a. Reduced Front Setback. For those lots containing a visitable dwelling unit per
+Subsection B.3.a—d, the front setback may be reduced to 10 feet for the dwelling
+structure. Front garage setbacks may not be reduced.
+b. Lot Coverage. For those lots containing a visitable dwelling unit, the maximum lot
+coverage may be increased to 55% for interior lots and 60% for corner lots.
+c. Density Bonus. For new residential subdivisions that include 1 or more visitable
+units, a density bonus of 1 additional unit (above the established maximum density)
+is allowed. The density bonus may be applied at a ratio of 1 bonus unit per visitable
+unit, up to 150% of the maximum density of the underlying zone.
+4. Visitable Unit Standard. To be considered a visitable dwelling unit, the dwelling must meet
+the following standards:
+a. Visitable Entrance. At least 1 entrance must be accessible via a route that does not
+have any stairs between it and the street lot line or an on-site parking space. The
+slope of the route may not exceed 1:8.
+b. Visitable Bathroom. At least 1 bathroom with a sink and toilet must be designed to
+accommodate an unobstructed circle that is at least 60 inches in diameter. The
+visitable bathroom must be on the same floor as the visitable entrance or be
+accessible from the visitable entrance via a ramp, elevator or lift.
+ 12.68.710WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:25
+c. Visitable Living Area. There must be at least 200 square feet of living area on the
+same floor as the visitable entrance or 200 square feet of living area must be
+accessible from the visitable entrance via a ramp, elevator or lift.
+d. Visitable Doors. All door openings between and including the visitable entrance,
+visitable living area, and the visitable bathroom must be at least 34 inches wide.
+e. Adjustments to the requirements of Paragraphs 4.a through 4.d above are prohib-
+ited.
+(Ord. 6440 § 1, 2023)
+12.68.715  Additional Design Standards for Middle Housing.
+The standards of Section 12.50.715 shall apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.720  Additional Design Standards for Multiple-Dwelling Residential.
+The standards of Section 12.50.720 shall apply within the WHVS Plan District.
+(Ord. 6440 § 1, 2023)
+12.68.710 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:26
+12.68.800  Design Standards for Non-Residential and Mixed-Use Development.
+Design standards for non-residential and mixed-use development include the following sections:
+12.68.810 Purpose and Applicability
+12.68.820 Main Entries
+12.68.830 Ground Floor Windows
+12.68.840 Articulation and Detailed Design
+(Ord. 6440 § 1, 2023)
+12.68.810  Purpose and Applicability.
+A. Purpose. These standards are intended to create attractive small-scale commercial develop-
+ments that are compatible with residential neighborhoods.
+B. Applicability. Except where noted in each subsection, the standards of this section apply to all
+commercial development in WHVS, as allowed under Section 12.68.110.A.
+(Ord. 6440 § 1, 2023)
+12.68.820  Main Entries.
+A. Entry Orientation. All ground-floor commercial spaces shall have at least 1 building entry
+oriented to the street. This entry shall open directly to the building exterior, at the ground floor
+level.
+B. Entry Orientation on Corner Lots. On corner lots, a building entry may be oriented to either of
+the streets or to the corner where the 2 streets intersect.
+C. Sidewalk Connections to Entries. A pedestrian sidewalk or pathway shall be provided directly
+to the building entrance from all public or private street sidewalks.
+D. Standards for Main Building Entries.
+1. All main entries shall comply with applicable accessibility standards.
+2. Main entries shall be lighted to a minimum level of 32.5 lumens/square meter. Light
+sources shall be 3 to 12 feet above finished grade and equipped with cut-off fixtures to
+minimize glare.
+3. Main entries shall be highlighted with at least 2 of the following architectural features:
+recessed doorway(s); overhangs or canopies; transom windows; at least 2 ornamental
+light fixtures flanking the entry; larger, transparent or more prominent doors; or pilasters
+or columns that frame the doorway.
+E. Additional Entries. Buildings may have more street-oriented main entries than required by this
+section and may have secondary entrances oriented to off-street parking areas.
+(Ord. 6440 § 1, 2023)
+ 12.68.820WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:27
+12.68.830  Ground Floor Windows.
+A. Building Facades. All building facades that face a street, park, plaza, or other outdoor public
+space shall have ground floor display windows or windows with views into the building interior.
+Such windows shall occupy 50% of the length and 25% of the area of the ground level exterior
+wall area. Windows in entry doors also meet this standard. For purposes of this section,
+"ground level wall area" is defined as the area up to the finished ceiling height of the first floor
+or 15 feet above exterior grade, whichever is less. Required windows shall not be darkly tinted
+or mirrored unless the wall is at least 50 feet from the sidewalk.
+(Ord. 6440 § 1, 2023)
+12.68.840  Articulation and Detailed Design.
+A. Articulation and Detailed Design. Building elevations shall be varied and articulated to avoid a
+flat appearance by incorporating at least 3 of the features found within Section 12.50.840.B.
+(Ord. 6440 § 1, 2023)
+12.68.830 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:28
+12.68.900  Public Facility Master Plan Compliance Requirements, Figures and Maps, and
+Street Figures.
+The Public Facility Master Plan Compliance Requirements, Figures and Maps, and Street Figures
+section includes the following sections:
+12.68.910 Transportation Studies Requirements Unique to the District
+12.68.920 Public Facility Master Plan Compliance Requirements
+12.68.930 Figures and Maps
+12.68.940 Street Cross-Sections
+(Ord. 6440 § 1, 2023)
+12.68.910  Transportation Studies Requirements Unique to the District.
+The requirements of Sections 12.70.200 through 12.70.230 apply to development in the WHVS Plan
+District except as cited below.
+A. The requirements of Section 12.70.200 apply in their entirety.
+B. The requirements of Section 12.70.210 apply in their entirety.
+C. The requirements of Section 12.70.230 apply in their entirety.
+D. The requirements of Section 12.70.220 apply, with the following exceptions:
+1. Regarding Traffic Impact Analysis Study Areas, the requirements of Subsection 12.70.220.D.
+apply. Additional analysis or trip assignments may be required on the following off-site
+intersections as necessary to determine the scope and timing of planned improvements
+to evaluate the cumulative effect of annexations and development:
+a. TV Hwy and River Rd
+b. TV Hwy and Cypress St
+c. TV Hwy and Brookwood Ave
+d. TV Hwy and Century Blvd
+e. TV Hwy and Cornelius Pass
+f. TV Hwy and 209th Ave
+g. TV Hwy and Intel Access
+h. TV Hwy and 198th Ave
+i. Farmington Rd and 198th Ave
+j. Baseline Rd and Brookwood Ave
+k. Baseline Rd and Century Blvd
+l. Baseline Rd and Cornelius Pass Rd
+m. Johnson St and Cornelius Pass Rd
+n. River Rd and Minter Bridge Rd
+ 12.68.910WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:29
+o. River Rd and Rood Bridge Rd
+p. River Rd and Witch Hazel Rd
+q. Brookwood Ave and Witch Hazel Rd
+r. Alexander St and Brookwood Ave
+s. Alexander St and Century Blvd
+t. River Rd and Davis Rd
+u. Davis Rd and Brookwood Ave
+v. Davis Rd and Century Blvd
+w. Blanton St and Cornelius Pass Rd
+x. Blanton St and 209th Ave
+y. Pheasant St and River Rd
+z. Pheasant St and Hazeltine Ave
+aa. Pheasant St and Brookwood Ave
+bb. Brookwood Ave and River Rd
+cc. Brookwood Ave and Road A
+dd. Kinnaman Rd and Century Blvd
+ee. Kinnaman Rd and Cornelius Pass Rd
+ff. Kinnaman Rd and 209th Ave
+gg. Rosa Rd and River Rd
+2. Regarding Contents of the Traffic Impact Analysis (Traffic Forecasts), the requirements of
+Subsection 12.70.220.E.3. are superseded by the following requirements in the WHVS
+Plan District regarding traffic volume data. The Traffic Impact Analysis (TIA) shall provide
+traffic volume information in compliance with the standards listed below:
+a. Except as described in Paragraph D.2.b. below, existing traffic shall be measured
+for the morning and afternoon peak periods within 12 months prior to the land use
+application submittal date.
+b. The City Engineer may allow use of traffic counts older than 12 months for a TIA
+submitted with a land use application on property in the WHVS Plan District, for
+which a prior TIA was approved in conjunction with an executed annexation
+agreement.
+c. In addition to the requirements of Paragraph D.2.a. above, the midday period shall
+also be provided if the peak traffic period for the existing street, the proposed
+development, or the composite of both is greater than the morning and afternoon
+peak periods.
+d. Traffic volumes shall be based on data from a typical Tuesday through Thursday
+weekday of a week without holidays and during which public schools are in session,
+12.68.910 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:30
+unless otherwise approved by the City Engineer. In addition, data shall be provided
+for weekends if weekends are the peak traffic period for either the existing adjacent
+street or the proposed development.
+e. Seasonal variations in traffic volumes shall be considered if required by an affected
+Road Authority.
+3. Regarding contents of the Traffic Impact Analysis (Existing Conditions), the requirements
+of Subsection 12.70.220.E.4.i. and ii. are superseded by the following requirements in the
+WHVS Plan District:
+a. Trip Generation. Estimates of the proposed development's trip generation shall be
+made for peak period traffic. Selection of the peak period used in the analysis shall
+be justified and shall consider, at a minimum, the peak period for the proposed
+development and the peak period for surrounding streets. The City Engineer may
+require review of other time periods based on known or anticipated marginal or
+substandard traffic capacity or traffic safety. Trip generation estimates shall be
+based on the Institute of Transportation Engineers (ITE) Trip Generation (12th
+Edition). The City Engineer may approve different trip generation rates when trip
+generation rates are not available in ITE's Trip Generation or different rates are
+justified. Consideration of trip generation rate reductions due to alternative mode
+use, mixed land use interaction, and transportation demand management methods
+shall be approved by the Review Authority.
+b. Trip Distribution and Assignment. Traffic generated by the proposed development
+shall be logically distributed and assigned according to professional accepted
+practice to the street system within the Study Area and any additional locations
+previously identified by the City Engineer. For TIAs prepared for development in the
+WHVS Plan District, trip distribution for residential uses shall comply with Figures
+12.68.910-A and 12.68.910-B of this Section. Alternative trip distribution may be
+approved by the City Engineer based on trip distribution information from Washing-
+ton County, ODOT, Metro, analysis of local traffic patterns based on data less than
+12 months old, or on an alternative data source.
+c. Forecast Year Analysis. Forecast Year Analysis has been completed for the im-
+pacted intersections identified for mitigation improvements by cumulative develop-
+ment within the WHVS Plan District.
+i. Figure 12.68.910-C illustrates critical intersection lane improvements identi-
+fied to accommodate development under the Comprehensive Plan and Zon-
+ing Concept for the WHVS Plan District. TIAs prepared in conjunction with
+WHVS Plan District development shall consider, and land use conditions of
+approval may include dedications of right-of-way and construction of, or
+accommodation for future construction of, identified improvements. An alter-
+native analysis may be provided by a registered professional engineer utiliz-
+ 12.68.910WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:31Supp. No. 1
+ing forecast traffic volumes provided by the Road Agencies to recommend
+alternative intersection improvements, subject to review and approval of the
+Road Agencies.
+ii. Building and parking lot setbacks shall accommodate potential future inter-
+section capacity improvements anticipated with growth in Urban Reserve
+areas established by HB 4078 adopted by the 2014 Oregon Legislature, and
+future infill of Urban Growth Boundary areas consistent with those depicted in
+Figure 12.68.910-D. An alternative analysis may be provided by a registered
+professional engineer utilizing forecast traffic volumes provided by the Road
+Agencies to recommend alternative intersection improvements, subject to
+review and approval of the Road Agencies.
+12.68.910 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:32Supp. No. 1
+Figure 12.68.910-A:
+WHVS Site Trip Distribution AM Peak Period
+ 12.68.910WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:33Supp. No. 1
+Figure 12.68.910-B:
+WHVS Site Trip Distribution PM Peak Period
+12.68.910 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:34Supp. No. 1
+Figure 12.68.910-C:
+WHVS Buildout Recommended Intersection Improvements
+ 12.68.910WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:35Supp. No. 1
+(Ord. 6440 § 1, 2023; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+ Figure 12.68.910-D:
+WHVS & Rosa Reserve Buildout Recommended Intersection Improvements
+12.68.910 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:36Supp. No. 1
+12.68.920  Public Facility Master Plan Compliance Requirements.
+A. Purpose. Adequate public facilities are necessary to support development in the WHVS Plan
+District. A development application shall describe the location and capacity of the public
+facilities that will provide service to the development site and a decision to approve the
+application may require the installation of additional facilities as necessary to provide an
+adequate level of service.
+B. Compliance with Community Plan Public Facilities Plans. Development in the WHVS Plan
+District shall demonstrate compliance with the type, location and size of the public streets
+shown in Section 12.68.920.
+C. Development approvals conditioned upon compliance with public master plans.
+D. The Review Authority may approve a Zoning Review, Type II, or Type III land use application
+for development provided that the following criteria are met:
+1. Adequate public facilities are available to serve the development, or the decision is
+conditioned to require the installation of such services;
+2. The developer's public facility obligations are consistent with the terms of an annexation
+agreement, if any, for the site.
+E. A decision to approve a development may include such conditions as necessary to ensure
+compliance with this section.
+(Ord. 6440 § 1, 2023)
+ 12.68.920WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:37Supp. No. 1
+12.68.930  Figures and Maps.
+
+ Figure 12.68.930-A: WHVS Streets
+12.68.930 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:38Supp. No. 1
+Figure 12.68.930-B: Water System Master Plan
+ 12.68.930WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:39Supp. No. 1
+Figure 12.68.930-C: Sanitary Sewer Master Plan, Low (WHVS Only)
+12.68.930 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:40Supp. No. 1
+Figure 12.68.930-D: Sanitary Sewer Master Plan, High (WHVS and Rosa Reserve)
+ 12.68.930WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:41Supp. No. 1
+Figure 12.68.930-E: Parks, Trails, and Open Space Mater Plan
+12.68.930 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:42Supp. No. 1
+(Ord. 6440 § 1, 2023; Ord. No. 6505, § 1 (Exh. A), 8-19-2025)
+ Figure 12.68.930-F: Stormwater Master Plan, Status Quo Facilities
+ 12.68.930WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:43Supp. No. 1
+12.68.940  Street Cross-Sections.
+
+12.68.940 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:44Supp. No. 1
+12.68.940WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:45Supp. No. 1
+12.68.940 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:46Supp. No. 1
+12.68.940WITCH HAZEL VILLAGE SOUTH PLAN DISTRICT
+CDC12.68:47Supp. No. 1
+(Ord. 6440 § 1, 2023; Ord. No. 6505, § 1 (Exh. A), 8-19-2025)
+12.68.940 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.68:48Supp. No. 1

@@ -1,0 +1,1971 @@
+SUBCHAPTER 12.65
+ SOUTH HILLSBORO PLAN DISTRICT
+12.65.010 Purpose.
+12.65.020 Applicability.
+12.65.030 Designation of Town and Village Center Core Areas and Active Use Streets.
+12.65.040 Annexation Agreements.
+12.65.050 Development Agreements.
+12.65.060 Overview of Development and Design Standards.
+12.65.100 Base Zone Standards.
+12.65.110 Lot Dimensions.
+12.65.120 Residential Density.
+12.65.130 Setbacks.
+12.65.140 Building Height.
+12.65.150 Floor Area Ratio.
+12.65.200 Site Design.
+12.65.210 Usable Open Space.
+12.65.220 Landscaping.
+12.65.230 Tree Preservation.
+12.65.240 Exterior Lighting.
+12.65.250 Fences, Free-Standing Walls, Hedges and Berms.
+12.65.260 Sight Distance/Vision Clearance.
+12.65.270 Solar Access and Lot Orientation.
+12.65.300 Vehicle Parking.
+12.65.310 Purpose, Applicability and Maintenance Responsibilities.
+12.65.320 Reserved.
+12.65.330 Exempt Parking.
+12.65.340 Reserved.
+12.65.350 Vehicle Parking and Loading: Location.
+12.65.360 Vehicle Parking and Loading: Design and Improvements.
+12.65.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity.
+12.65.410 Bicycle Parking.
+12.65.420 Pedestrian and Bicycle Circulation.
+12.65.430 Connectivity and Design Standards at or Near Transit Stops.
+12.65.500 Access and Street Standards.
+12.65.510 Purpose, Applicability and Exceptions.
+12.65.520 Street Connectivity and Access.
+12.65.530 Streets and Alleys Design and Improvement.
+12.65.540 Flag Lot Driveways: Design and Improvement.
+12.65.550 Sidewalk Widths: Design and Location.
+12.65.560 Street Trees and Landscaping.
+12.65.600 Public Utilities, Site Grading and Storm Water Facilities Site Integration.
+12.65.610 Purpose, Applicability and Exceptions.
+CDC12.65:1
+12.65.620 Public Utilities General Requirements.
+12.65.630 Site Grading.
+12.65.640 Storm Water Facilities Site Integration.
+12.65.700 Design Standards for Residential Development.
+12.65.710 Design Standards for All Residential Development.
+12.65.715 Additional Design Standards for Middle Housing.
+12.65.720 Multi-Dwelling Residential Design Standards.
+12.65.800 Design Standards for Non-Residential and Mixed-Use Development.
+12.65.850 South Hillsboro Design Standards for Active Use Streets.
+12.65.900 Transportation Studies, Public Facility Master Plan Compliance Requirements,
+Figures and Maps, and Street Figures.
+12.65.910 Transportation Studies Requirements Unique to the District.
+12.65.920 Public Facility Master Plan Compliance Requirements.
+12.65.930 Figures and Maps.
+12.65.940 Street Cross-Sections.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:2
+12.65.010  Purpose.
+The South Hillsboro Plan District development and design standards reflect the City's goals and
+objectives for South Hillsboro and are intended to implement the vision, goals, policies and principles
+outlined in the South Hillsboro Community Plan to create a complete, connected and green
+community. More specifically, the South Hillsboro Plan District provides standards for developing a
+residential mixed-use community organized around a town center and complemented by a village
+center.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.020  Applicability.
+A. Plan District Boundary. The standards of this section apply only within the South Hillsboro Plan
+District boundary as shown on Figure 12.65.930-A.
+B. Base Zones. The base zones used to implement the Community Plan designations include
+those listed in Table 12.65.020-1. In some cases, the base standards of these zones are
+modified by this plan district to the purpose of the South Hillsboro Plan District.
+  12.65.020-1:
+South Hillsboro Plan District Base Zone
+Community Plan Designation Implementing Base Zones (Section
+Number)
+Low Density Residential
+R-10 (Section 12.21.100)
+R-8.5 (Section 12.21.200)
+R-7 (Section 12.21.300)
+R-6 (Section 12.21.400)
+Medium Density Residential R-4.5 (Section 12.21.500)
+MR-1 (Section 12.22.100)
+High Density Residential MR-2 (Section 12.22.200)
+Mid-Rise Density Residential MR-3 (Section 12.22.300)
+Mixed-Use
+MU-VTC (Section 12.24.300)  • Town Center
+ • Village Center
+C. Applicability of the South Hillsboro Community Plan Maps. Maps indicating the location and
+extent of the infrastructure improvements within South Hillsboro are included in Section
+12.65.930. A land use application and a decision to approve the application shall provide
+improvements that substantially comply with these maps and are proportional to the proposed
+development or provide other improvements that are comparable in terms of size, capacity and
+location.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 8, 2015)
+ 12.65.020SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:3
+12.65.030  Designation of Town and Village Center Core Areas and Active Use Streets.
+A. Town Center and Village Center Core Areas. The Town Center Core Area and Village Center
+Core Area are intended to be vibrant areas with compact urban forms providing mixes of uses
+that encourage pedestrian activity.
+1. One Town Center Core Area and one Village Center Core Area shall be designated within
+the Mixed-Use—Village Town Center (MU-VTC) zone.
+2. The boundaries of the Town Center Core and Village Center Core shown on Figure
+12.65.930-A illustrate the size, location and orientation of these areas.
+3. Development Standards for the Town Center Core or Village Center Core Areas shall be
+applied within the boundaries of those areas.
+B. Active Use Streets. The design of development along key streets within the Town Center Core
+Area and Village Center Core Area shall reinforce the pedestrian-friendly, main street character
+of these areas per Section 12.65.850.
+1. Active Use 1 and 2 Streets shall be designated within the Town Center Core Area and the
+Village Center Core Area. Active Use streets may exist and extend outside of the Town
+Center and Village Center Core Areas.
+2. The Active Use Streets shown on Figure 12.65.930-A illustrate the street type and
+location of these streets.
+3. The development standards applicable to the Active Use Streets apply to developments
+with frontage on an Active Use street.
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1, 2019; Ord. 6110 § 8, 2015)
+12.65.040  Annexation Agreements.
+A. Purpose. The annexation agreement is intended to ensure awareness of the annexation
+process as well as reasonable certainty to the property owner, the City, and the public that the
+scope and timing of subsequent development of the property will occur in a manner that
+facilitates the timely and equitable construction of necessary infrastructure improvements. The
+agreement is intended to describe the intended use of the property following annexation, the
+process for development review, the parties' commitments regarding the subsequent devel-
+opment, and the infrastructure anticipated to be necessary to support development.
+B. Applicability. Unless waived by the City under subsection D, an annexation agreement
+consistent with this section shall be executed prior to and included with any owner-initiated
+annexation application under Section 12.80.010.
+C. Contents. Unless otherwise agreed by the City, an annexation agreement shall include the
+following information and, at a minimum, address the following elements to the City's satisfac-
+tion:
+1. A legal description of the property;
+2. The current zoning;
+12.65.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:4
+3. The proposed zoning shown on the City Zoning Concept Map, Figure 31-3, in Section 31
+of the Hillsboro Comprehensive Plan;
+4. The owner's/applicant's requested zoning if different from the City Zoning Concept Map;
+5. The owner's intended urban use of the property in sufficient detail to allow the City to
+determine the public facility impacts and required infrastructure improvements necessary
+to support the intended use. The description should include the anticipated type, size and
+density of the use, the timing of any anticipated phases, and an engineering assessment
+of impact on urban services at full build-out and for each phase of a phased project;
+6. A Transportation Study consistent with the requirements of Sections 12.70.200 and
+12.65.910 that describes:
+a. The existing transportation facilities that serve the property, including the existing
+and planned capacity of the facilities,
+b. The committed and funded multi-modal transportation facilities expected to be
+available at full buildout of the property, and at each development phase of a phased
+project,
+c. The intended size, type, location and phased development timing, if any, of
+occupancy,
+d. The transportation impact of the intended use(s) at full buildout, and at each
+development phase of a phased project, and
+e. Any transportation improvements that may be necessary to accommodate full
+buildout, and each development phase of a phased project, including the potential
+impacts of anticipated future development as required unde r Paragraph
+12.65.910.D.3.
+D. Waiver.
+1. The City may waive the requirement to execute and submit an annexation agreement if
+the City, in its sole discretion, determines the agreement is not necessary and would not
+achieve the purposes described in Subsection 12.65.040.A. for one or more of the
+following reasons:
+a. The size of the property is such that the development potential does not justify the
+analysis otherwise provided in the annexation agreement;
+b. The anticipated scope of the development is such that the transportation study is
+not necessary to identify and accommodate the likely impacts of the development;
+c. The property was included in a larger annexation processed under ORS 222.170
+but the owner of the affected property did not consent to the annexation.
+2. If the City waives the requirement to execute and submit an annexation agreement, the
+City may require a development agreement described in Section 12.65.050 as a condi-
+tion of approving the annexation or other land use application.
+ 12.65.040SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:5
+E. Owner Commitments. The annexation agreement shall provide for at least the following owner
+commitments:
+1. To limit development of the property such that it will not exceed the capacity of:
+a. Affected transportation facilities, as determined by the Transportation Study, includ-
+ing any improvements proposed and constructed as part of the development; and
+b. Other affected public facilities including facilities for water, sanitary sewer and storm
+water management.
+2. That any requests by the owner for tax credits associated with the construction of an
+eligible improvement(s) will conform to the assumptions of the Transportation Financing
+Program, including any ordinances and methodology reports that implement the Pro-
+gram. This may include waiving the right to request tax credits under the County
+Transportation Development Tax (TDT) Ordinance for eligible improvements, if any such
+as but not limited to:
+a. The added costs of wet weather construction where dry weather construction was
+assumed in the Transportation Finance Program;
+b. Sidewalks greater than 6-foot standard where required by Figure 12.65.920-A to
+comply Active Use Overlay requirements;
+c. Costs associated with right-of-way, design, permitting and construction of condi-
+tioned non-contiguous "local street" improvements; and
+d. Eligible right-of-way costs in excess of $6.00 per square foot (2014 value, adjusted
+annually in accordance with the land value index methodology of the TDT ordi-
+nance).
+3. Authorize the City to limit or condition any land use decision or entitlements consistent
+with the Transportation Study and other available public infrastructure capacity analysis,
+as determined by the City, to ensure that adequate public infrastructure is available to
+serve the proposed development.
+F. City Commitments.
+1. To initiate the zone-change process to rezone the property to the appropriate City zone at
+the time of annexation or such other time as parties agree.
+2. To apply City zoning that is generally consistent with the Zoning Concept Map as depicted
+on Figure 31-3 in Comprehensive Plan Section 31.
+G. General Provisions.
+1. The City shall not approve "vertical" development of the property until the City approves
+a Financing Program for the South Hillsboro Plan Area and any implementing ordinances
+are adopted and effective. As used in this section, "vertical development" means any
+structure intended for human occupation or commerce for which a certificate of occu-
+pancy is required, except as may be necessary for the construction of public facilities,
+such as a construction trailer, or for the provision of public utilities such as a pump station.
+12.65.040 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:6
+2. An annexation agreement shall include the parties' intended schedule of significant
+development-related events, including annexation, zone change, land division and
+development review.
+3. An annexation agreement expires 1 year from the last date it is signed by the parties
+unless the City has received an annexation application for the property and deemed the
+application complete.
+4. The provisions of an annexation agreement may be included in and made part of a
+subsequent land use decision, in which case the provisions of the land use decision
+supersede any conflicting provisions in the annexation agreement.
+5. An annexation agreement is not effective and binding on the parties until the annexation
+application is approved by the City Council under Section 12.80.010.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 8, 2015)
+12.65.050  Development Agreements.
+A. Purpose. A development agreement is intended to provide reasonable certainty to the property
+owner, the City, and the public that the scope and timing of development of the property will
+occur in a manner that facilitates the timely and equitable construction of necessary infrastruc-
+ture improvements. The development agreement is intended to follow annexation and describe
+in greater detail the owner's intended use of the property, the parties' commitments regarding
+subsequent development of the property, the infrastructure determined to be necessary to
+support development, and the parties' obligations with respect to financing and constructing
+the infrastructure.
+B. Applicability. A development agreement is required for all properties in South Hillsboro that are
+not subject to an annexation agreement under Section 12.65.040, unless otherwise agreed by
+the City.
+C. An executed development agreement consistent with this section is required prior to approval
+of any necessary land use applications for development if:
+1. An annexation agreement was not required prior to annexation;
+2. Any of the required items of the annexation agreement were deferred pursuant to
+12.65.040;
+3. A development agreement was required by the annexation agreement;
+4. If required as a condition of approval of a land use decision.
+D. The development agreement must include the following information to the City's satisfaction:
+1. A description of the anticipated type and scope of commercial or residential development
+(including the number of housing units), consistent with the Zoning Concept (Figure 31-3)
+and in compliance with the assumptions set forth in the Transportation Finance Program
+and Methodology Report;
+ 12.65.050SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:7
+2. A description of the parties' intended schedule of significant development-related events,
+including annexation, zone change, land division and development review;
+3. The proposed timing and any phasing of the development as it relates to available or
+planned infrastructure capacity;
+4. The financing and development obligations for any required or necessary infrastructure;
+5. The owner's commitment to design and construct amenities that further the goals and
+objectives of the South Hillsboro Community Plan;
+6. Any landscape maintenance agreements for medians and curbside planters;
+7. A detailed plan for financing and constructing complete and connected arterial and/or
+collector planned streets where the full right-of-way is under the control of the owner or
+developer, such that a new collector or arterial street is not terminated without connecting
+to another improved street. A "complete street" includes both adjacent and opposite side
+full street improvements, including public and private utilities, where required; and
+8. A description of specific aspects of the development, including, but not limited to:
+a. Design,
+b. Infrastructure,
+c. Open space,
+d. Amenities, and
+e. Phasing.
+E. General Provisions.
+1. The City shall not approve "vertical" development of the property until the City approves
+a Financing Program for the South Hillsboro Plan Area and any implementing ordinances
+are adopted and effective. As used in this section, "vertical development" means any
+structure intended for human occupation or commerce for which a certificate of occupa-
+tion is required, except as may be necessary for the construction of public facilities, such
+as construction trailer, or for the provision of public utilities such as a pump station.
+2. The provisions of a development agreement may be included in and made part of a
+subsequent land use decision, in which case the provisions of the land use decision
+supersede any conflicting provisions in the development agreement.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 8, 2015)
+12.65.050 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:8
+12.65.060  Overview of Development and Design Standards.
+Table 12.65.060-1 summarizes the applicability of Subchapter 12.50 Development and Design
+Standards within the South Hillsboro Plan District.
+  Table 12.65.060-1:
+Applicability of Subchapter 12.50 Standards
+Standard Applicable Code Sections
+Base Zone Standards
+Lot Dimensions The standards of 12.50.110 apply.
+Residential Density The standards of 12.50.120 apply.
+Setbacks The standards of 12.50.130 apply except as
+modified by 12.65.130.
+Building Height The standards of 12.50.140 apply.
+Floor Area Ratio The standards of 12.50.150 apply except as
+modified by 12.65.150.
+Site Design
+Usable Open Space The standards of 12.50.210 apply.
+Landscaping The standards of 12.50.220 apply except as
+modified by 12.65.220.
+Tree Preservation The standards of 12.50.230 apply except as
+modified by 12.65.230.
+Exterior Lighting The standards of 12.50.240 do not apply. They are
+superseded by the standards in 12.65.240.
+Fences, Free-Standing Walls, Hedges and
+Berms
+The standards of 12.50.250 apply except as
+modified by 12.65.250.
+Sight Distance/Vision Clearance The standards of 12.50.260 apply.
+Vehicle Parking
+Purpose, Applicability and Maintenance
+Responsibilities
+The standards of 12.50.310 apply except as
+modified by 12.65.310.
+Number of Spaces Required The standards of 12.50.320 apply except as
+modified by 12.65.320.
+Exempt Parking The standards of 12.50.330 apply.
+Credit for On-Street Parking The standards of 12.50.340 do not apply. They are
+superseded by the standards in 12.65.340.
+ 12.65.060SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:9
+Table 12.65.060-1:
+Applicability of Subchapter 12.50 Standards
+Standard Applicable Code Sections
+Vehicle Parking and Loading: Location The standards of 12.50.350 do not apply. They are
+superseded by the standards in 12.65.350.
+Vehicle Parking and Loading: Design and
+Improvements
+The standards of 12.50.360 apply except as
+modified by 12.65.360.
+Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+Bicycle Parking The standards of 12.50.410 apply.
+Pedestrian and Bicycle Circulation The standards of 12.50.420 apply except as
+modified by 12.65.420.B.
+Connectivity and Design Standards at or
+near Transit Stops The standards of 12.50.430 apply.
+Access and Street Standards
+Purpose, Applicability and Exceptions The standards of 12.50.510 apply except as
+modified by 12.65.510.
+Street Connectivity and Access The standards of 12.50.520 apply except as
+modified by 12.65.520.
+Public Streets and Alleys Design and
+Improvement
+The standards of 12.50.530 apply except as
+modified by 12.65.530.
+Common Driveways and Private Streets:
+Design and Improvement
+The standards of 12.50.540 apply except as
+modified by 12.65.540.
+Sidewalk Widths; Design and Location The standards of 12.50.550 apply except as
+modified by 12.65.550.
+Street Trees The standards of 12.50.560 apply except as
+modified by 12.65.560.
+Public Utilities General Requirements, Site Grading and Storm Water Facilities Site
+Integration
+Purpose, Applicability and Exceptions The standards of 12.50.610 apply except as
+modified by 12.65.610.
+Public Utilities General Requirements The standards of 12.50.620 apply except as
+modified by 12.65.620.
+Site Grading The standards of 12.50.630 apply.
+12.65.060 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:10
+Table 12.65.060-1:
+Applicability of Subchapter 12.50 Standards
+Standard Applicable Code Sections
+Storm Water Facilities Site Integration The standards of 12.50.640 apply except as
+modified by 12.65.640.
+Utility Vaults The standards of 12.65.650 apply.
+Design Standards for Residential Development
+Design Standards for All Residential
+Development
+The standards of 12.50.710 apply except as
+modified by 12.65.710.
+Additional Design Standards for Middle
+Housing
+The standards of 12.50.715 apply except as
+modified by 12.65.715.
+Additional Design Standards for
+Multiple-Dwelling Residential
+The standards of 12.50.720 apply except as
+modified by 12.65.720.
+Design Standards for Non-Residential and Mixed-Use Development
+Purpose and Applicability The standards of 12.50.810 apply except as
+modified by 12.65.800.A. and B.
+Main Entries The standards of 12.50.820 apply except as
+modified by 12.65.800.C.1. and 2.
+Ground Floor Windows The standards of 12.50.830 apply.
+Articulation and Detailed Design The standards of 12.50.840 apply except as
+modified by 12.65.800.C.4.
+Building Step-Back Requirements The standards of 12.50.845 apply.
+Improvements and Activities between
+Streets and Buildings The standards of 12.50.850 apply.
+Waste and Recycling Facilities The standards of 12.50.270 apply.
+Sidewalk Dining and Displays The standards of 12.50.870 apply.
+Drive Through Facilities The standards of 12.50.875 do not apply.
+Outdoor Storage The standards of 12.50.880 apply.
+Utilitarian Functions The standards of 12.50.890 apply.
+Exterior Finish Materials The standards of 12.65.800.C.11. apply.
+Roofs and Roof-Mounted Equipment The standards of 12.65.800.C.12. apply.
+Structured Parking The standards of 12.65.800.C.13. apply.
+ 12.65.060SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:11
+Table 12.65.060-1:
+Applicability of Subchapter 12.50 Standards
+Standard Applicable Code Sections
+Active Use Streets
+Active Use Streets The standards of 12.65.850 apply.
+Public Benefit Standards
+Purpose and Applicability The standards of 12.50.910 apply.
+Building and Site Design Guidelines The guidelines of 12.50.920 apply.
+Sustainable Development Practices The standards of 12.50.930 apply.
+Crime Prevention through Environmental
+Design The standards of 12.50.940 apply.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 8, 2015)
+12.65.060 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:12
+12.65.100  Base Zone Standards.
+The base zone standards in the South Hillsboro Plan District include the following sections:
+12.65.110 Lot Dimensions
+12.65.120 Residential Density
+12.65.130 Setbacks
+12.65.140 Building Height
+12.65.150 Floor Area Ratio
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.110  Lot Dimensions.
+The standards of the applicable base zone or Section 12.50.110 shall apply in the South Hillsboro
+Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.120  Residential Density.
+The standards of the applicable base zone and Section 12.50.120 shall apply in the South Hillsboro
+Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.130  Setbacks.
+The standards of Section 12.50.130 and applicable base zones shall apply except as modified
+below:
+A. Maximum Setback Compliance. Maximum setback compliance within the South Hillsboro Plan
+District is considered met when either the standards of the applicable base zone are met; or for
+Active Use Street frontages, the standards of Section 12.65.850 are met.
+B. Structural Building Elements Projecting into Setbacks. Within the South Hillsboro Plan District,
+structural building elements such as porches, decks, pergolas, balconies, and stoops may
+encroach by no more than 4 feet into a required front or rear setback, subject to compliance
+with applicable standards of currently adopted codes, including the Oregon Structural Spe-
+cialty Code and Oregon Fire Code, and to accommodation of public utility easements.
+C. Future Intersection Capacity Improvements. In accordanc e with Subparagraph 12.65.910.D.3.d,
+the required minimum setback for buildings and parking lots may be modified for anticipated
+intersection capacity improvements and future infill of Urban Growth Boundary areas.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6110 § 8, 2015)
+ 12.65.130SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:13
+12.65.140  Building Height.
+The standards of Section 12.50.140 and the applicable base zones shall apply in the South Hillsboro
+Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.150  Floor Area Ratio.
+The standards of Section 12.50.150 and the applicable base zones shall apply except as modified
+below.
+A. Residential Square Footage Counted Toward Floor Area Ratio (FAR). Mixed use buildings and
+free standing residential buildings within an approved PUD in the MU-VTC zone may be
+included in the FAR calculation.
+B. Exemptions from Minimum Floor Area Ratios (FAR) in Phased Developments. Individual
+phases of a phased development may be exempt from minimum FAR requirements pro-vided
+that a phasing plan approved as part of a PUD ensures that the minimum FAR requirements
+will be met upon completion of the project.
+C. Minimum Floor Area (FAR) Adjustments as permitted by MU-VTC 12.24.350.E.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.140 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:14
+12.65.200  Site Design.
+Site design standards for the South Hillsboro Plan District include the following sections:
+12.65.210 Usable Open Space
+12.65.220 Landscaping
+12.65.230 Tree Preservation
+12.65.240 Exterior Lighting
+12.65.250 Fences, Free-Standing Walls, Hedges and Berms
+12.65.260 Sight Distance/Vision Clearance
+12.65.270 Solar Accessories and Lot Orientation
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.210  Usable Open Space.
+The standards of Section 12.50.210 and the applicable base zones apply in the South Hillsboro Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.220  Landscaping.
+In addition to the standards of Section 12.50.220, within the South Hillsboro Plan District the
+following standards apply.
+A. Purpose. Enhanced requirements for landscaping support the goal of creating a "green"
+community and are intended to:
+1. Enhance the character of public and private spaces;
+2. Create an inviting, year-round environment for pedestrians;
+3. Reduce urban heat island effects, intercept rainwater, and support urban wildlife;
+4. Frame or help define gathering places as well as natural areas; and
+5. Enhance ecological functions and provide access to nature.
+B. Applicability. Within the South Hillsboro Plan District, this section applies to developments
+subject to Development Review. In applicable developments, a minimum of 15% of the lot
+being developed, and any portion of a site not occupied by buildings, parking, improvements,
+or protected natural resources, shall be landscaped according to the requirements of this
+section.
+C. Landscaping on Public Properties.
+1. All landscaped areas in the public right-of-way, and all landscaped areas associated with
+any consolidated regional water quality facility, shall be designed by a registered
+Landscape Architect, unless this requirement is waived by the Review Authority.
+ 12.65.220SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:15
+2. Landscaping on public properties shall be installed in accordance with the City of
+Hillsboro Design and Construction Standards, or in accordance with Parks and Recre-
+ation Department specifications for any area maintained by the Parks and Recreation
+Department.
+3. Landscaping on public properties shall be accompanied by a private maintenance
+agreement subject to the review and approval of the City Engineer.
+D. Landscaping Along Tualatin Valley Highway and the Railroad Right-of-Way. Private properties
+abutting the southern side of the railroad and adjacent public right-of-way shall include the
+following:
+1. There shall be a minimum 35-foot setback from the property line of the southern boundary
+of the right-of-way, which supersedes the base zone side or rear yard setback as
+applicable.
+2. The 35-foot setback required above shall be landscaped and contain a mixture of vertical
+and horizontal landscaping elements to provide visual and acoustic buffering.
+E. Landscape Materials. Landscaping shall be designed to feature plant materials that evoke the
+natural character of the Pacific Northwest and that are adaptable to climatic, topographic, and
+hydrologic characteristics and urban constraints.
+1. Ground covers are required in all planting areas, unless the entire bed is planted with
+shrubs that branch out so that they cover the surface of the ground. Bark, mulch or other
+organic soil covers are not considered to meet this standard.
+2. Landscaped areas may include a mixture of planted areas and hardscape elements as an
+overall landscape framework including, but not limited to:
+a. Private paths and trails;
+b. Walls;
+c. Seating;
+d. Raised planters;
+e. Rain gardens and other stormwater facilities that can serve multiple purposes; and
+f. Other features as approved by the Review Authority.
+3. Installation and maintenance of plant materials shall be in accordance with the following
+standards:
+a. Plant materials shall be nursery stock or the equivalent quality and installed to
+industry standards or better;
+b. Plant materials shall be staked to current industry standards or better. Stakes and
+guy wires shall not interfere with vehicular or pedestrian traffic; and
+c. Plant materials shall be maintained in accordance with approved landscape plans
+for the development approval.
+12.65.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:16
+4. Landscaping shall incorporate a mixture of vertical and horizontal elements such as
+ground cover, shrubs and trees.
+5. The planting of nuisance plants as defined in Section 12.01.500 is prohibited.
+6. Irrigation methods shall minimize stormwater run-off through the use of drip irrigation, rain
+sensors, rotor irrigation heads and similar techniques.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.230  Tree Preservation.
+In addition to the standards of Section 12.50.230, within the South Hillsboro Plan District the
+following standards apply.
+A. Purpose. Enhanced requirements for the preservation of mature trees support the goal of
+creating a "green" community, retaining mature trees and landscaping for environmental,
+habitat and aesthetic purposes.
+B. Applicability. The applicability requirements of Subsection 12.50.230.B. apply in the South
+Hillsboro Plan District.
+C. Standards for Mature Trees. The standards of Subsection 12.50.230.C. shall apply in the
+South Hillsboro Plan District.
+D. Standards for Specimen Trees. The standards of Subsection 12.50.230.D. do not apply in the
+South Hillsboro Plan District, but are superseded by the standards of this subsection.
+1. In addition to the standards in subsection C above, the standards in this subsection apply
+to the Specimen Trees described in Table 12.65.230-1 below. In Table 12.65.230-1,
+"grove" is defined as 5 or more trees with overlapping canopies, each of which meet the
+diameter standards in Table 12.65.230-1.
+  Table 12.65.230-1:
+Specimen Tree Sizes in South Hillsboro Plan District
+Tree species
+Diameter defining Specimen
+status (measured 4.5 feet
+above native grade)
+Diameter defining Grove
+status (measured 4.5 feet
+above native grade)
+Single Douglas Fir greater than 24 inches 18 inches or greater when part
+of a grove
+Single Grand Fir,
+Ponderosa Pine, Western
+Hemlock, or Western Red
+Cedar
+greater than 12 inches 9 inches or greater when part
+of a grove
+Any other single conifer greater than 20 inches 15 inches or greater when part
+of a grove
+ 12.65.230SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:17
+Table 12.65.230-1:
+Specimen Tree Sizes in South Hillsboro Plan District
+Tree species
+Diameter defining Specimen
+status (measured 4.5 feet
+above native grade)
+Diameter defining Grove
+status (measured 4.5 feet
+above native grade)
+Single Red Alder, Big
+Leaf Maple, or Oregon
+White Oak
+greater than 12 inches 9 inches or greater when part
+of a grove
+Any other single
+deciduous tree greater than 20 inches 15 inches or greater when part
+of a grove
+2. No specimen tree or tree within a grove as defined in paragraph 1 above shall be
+removed or damaged during development construction unless 1 or more of the following
+criteria are met:
+a. A Certified Arborist registered in the State of Oregon submits a determination to the
+Review Authority that the tree:
+i. Is a safety hazard to persons or property due to its location or condition;
+ii. Is a dangerous tree as defined in Section 12.01.500;
+iii. Was diseased, weakened, or dying before construction began and no practi-
+cable means is available to preserve it; or
+iv. Was planted with the spacing and intent of being harvested for timber or as
+nursery stock.
+b. A Licensed Engineer registered in the State of Oregon submits an alternatives
+analysis to the Review Authority under paragraph 5 below, which demonstrates that
+removal of the tree is necessary:
+i. To accommodate construction equipment access where there is no practica-
+ble alternative route; or
+ii. To accommodate grading necessary for required storm water management or
+structural building integrity, and there is no practicable grading alternative to
+meet those requirements; or
+iii. To accommodate proposed buildings or other permanent improvements, and
+there is no practicable alternative location or design option for the improve-
+ments at the same scale within the development.
+3. Under Section 12.80.150, the Review Authority may authorize an adjustment or variance
+for reduced setbacks or a reduction in the number of parking spaces to avoid removal of
+a specimen tree or a tree within a grove as defined in paragraph 1 above, provided
+measures are also taken to preserve the health of the trees. If approved, reduced
+setbacks or numbers of parking spaces must remain in compliance with Building
+Department requirements.
+12.65.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:18
+E. Exemptions. Removal or damage to a specimen tree or a tree within a grove as defined in
+paragraph D.1 above is exempt from the requirements of paragraph D.2 above if all of the
+following circumstances apply:
+1. The specimen tree or trees is/are located in either of the following areas:
+a. Within an existing or planned right-of-way for an arterial, collector, or neighborhood
+route street; or
+b. Within an infrastructure improvement shown on an adopted South Hillsboro Master
+Plan found in Section 12.65.930 or in the South Hillsboro Community Plan (Section
+31 of Comprehensive Plan Ordinance No. 2793 as amended) such as sanitary and
+water transmission lines or public trail facilities; and
+2. The removal or damage is proposed in conjunction with a Type II or Type III land use
+approval or an approved public infrastructure project; and
+3. An alternatives analysis prepared pursuant to subsection F below has been approved by
+the Review Authority.
+F. Alternatives Analysis. The tree removal alternative analysis referenced in subparagraph D.2.b
+and in paragraph E.3 above shall include the following information, and shall be subject to
+approval by the Review Authority:
+1. Explanation of how retention of the tree(s) would impede construction of necessary
+infrastructure, obstruct compliance with the zoning and development standards of this
+Code, or hinder implementation of key components or policies of the South Hillsboro
+Community Plan (Comprehensive Plan Section 31);
+2. Explanation of why alternatives that would reduce tree removal or damage are not
+practicable;
+3. Assessment prepared by a Certified Arborist of the current health of the tree(s) and its
+long-term health prospects following development of the surrounding areas;
+4. Verification that the tree/grove is or is not within an area delineated as a Significant
+Natural Resource Site or Impact Area as identified under Subsection 12.27.230.F.4.;
+5. Justification of how the removal of the tree(s) would contribute to enhanced site design
+and more complete attainment of the goals and policies of the South Hillsboro Commu-
+nity Plan; and
+6. A mitigation plan prepared in accordance with Paragraph 12.50.230.C.5.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6110 § 8, 2015)
+12.65.240  Exterior Lighting.
+The standards of this section supersede Section 12.50.240 and shall apply in the South Hillsboro
+Plan District.
+A. Purpose. Lighting standards ensure that new development provides functional security for
+persons and property and allows extended use of properties into nighttime hours; lighting is
+ 12.65.240SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:19
+installed and maintained to provide for an environmentally sensitive and energy efficient
+nighttime environment that includes the ability to view the stars against a dark sky from
+residential and other appropriate viewing areas; and ambient nighttime light levels do not
+adversely impact adjacent properties.
+B. Applicability. Except as provided in subsection F below, the standards of this section shall apply
+to all Type II and Type III development applications in which exterior lighting is proposed or
+required as a condition of approval, unless a Variance or Adjustment has been granted by the
+Review Authority pursuant to Section 12.80.140 Variances and Adjustments.
+C. Exterior Lighting Standards.
+1. Development applications shall include a lighting plan showing locations and specifica-
+tions for all exterior lighting, including lighting used to illuminate streets, buildings,
+sidewalks, multi-use paths, parking lots, plazas, or open space areas. The lighting plan
+shall be evaluated during the land use approval process for compliance with the
+standards of this section.
+2. Lighting plans shall also show any proposed exterior architectural or aesthetic lighting
+used to create visual interest or emphasize building features. Aesthetic and architectural
+lighting shall also be evaluated during the land use approval process for compliance with
+the standards of this section.
+3. For safety purposes, lighting shall be provided throughout the on-site pedestrian circu-
+lation system, including street frontages, sidewalks, multi-use paths, parking lots, build-
+ings, and plazas. The on-site pedestrian circulation system shall be lighted to a minimum
+level of 2 foot-candles and a maximum of 3 foot-candles to enhance pedestrian safety
+and allow use at night.
+4. Required bicycle parking lighting level shall be 3 foot-candles to allow secure use at night.
+5. The minimum lighting level for building entries of new multi-dwelling, retail, commercial,
+office, industrial and institutional buildings located within 300 feet of the property bound-
+aries of a major transit stop shall be 4 foot-candles. The lighting level for all other primary
+building entrances shall be 3 foot-candles. Lights shall be 6 to 12 feet in height and the
+light source shall be shielded.
+6. Maximum lighting levels for parking lot lighting shall be 3 foot-candles.
+7. Fixtures on mixed-use and commercially zoned properties that are mounted to the
+underside of structures such as canopies, awnings, etc., (such as those found at gas
+stations, drive-through facilities, service stations and parking structures) shall be flush
+mounted to the canopy so that the lens does not protrude below the surface to which it is
+mounted. In instances where the canopy is not thick enough to accommodate a flush
+mount fixture, a fully shielded fixture may be utilized and mounted to the surface.
+8. Illumination of government flags is allowed provided the light fixtures direct the light
+downward or are fully shielded.
+9. Exterior lighting shall not blink, flash, or change color or intensity.
+12.65.240 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:20
+10. Foreground spaces, such as building entrances and plaza seating areas, shall use
+pedestrian-scale lighting that defines the space without glare. Background spaces such
+as parking lots shall be illuminated as unobtrusively as practicable to meet the functional
+needs of safe circulation and of protecting people and property.
+11. Site lighting that could be confused with warning, emergency, or traffic signals is not
+permitted.
+12. Site lighting that could be confused with airport lighting is not permitted.
+D. Light Trespass Standards. Maximum lighting levels at property lines shall not increase lighting
+level more than 1.1 lumens/square meter 10 feet beyond the property line or 5.4 lumens/
+square meter adjacent to non-residentially zoned property or public rights-of-way.
+
+E. Shielding. Any light source or lamp that emits more than 900 lumens (13 watt compact
+fluorescent or 60 watt incandescent) shall be concealed or shielded with an Illumination
+Engineering Society of North America (IESNA) full cut-off style fixture with an angle not
+exceeding 90 degrees to minimize the potential for glare and unnecessary diffusion on
+adjacent property. Examples of shielded light fixtures are shown in Figure 12.65.240-B:
+
+ Figure 12.65.240-A:
+Examples of Light Trespass
+ Figure 12.65.240-B:
+Examples of Shielded Light Fixtures
+ 12.65.240SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:21
+1. Light fixtures shall be fully shielded.
+2. Light fixtures shall be installed and used in a manner such that light is directed downward,
+not outward or upward.
+F. Exemptions. The following types of lighting are not subject to the requirements of this section:
+1. Public street and right-of-way lighting (standards for street lighting are addressed in the
+Public Works Design and Construction Standards);
+2. Temporary decorative seasonal lighting illuminated no longer than 60 days;
+3. Temporary lighting for emergency or nighttime work and construction;
+4. Temporary lighting for theatrical, television and performance areas, or for special public
+events;
+5. Lighting for a special district, street or building that, according to an adopted City plan or
+ordinance, is determined to require special lighting aesthetics as part of its physical
+character;
+6. Lighting required and regulated by the FAA; and
+7. Lighting for outdoor recreational uses such as stadiums, driving ranges, ball diamonds,
+playing fields, tennis courts and similar uses, provided that:
+a. Light poles are not more than 80 feet tall,
+b. Maximum illumination at the property line is not brighter than 21.5 lumens/square
+meter, and
+c. Exterior lighting is extinguished no later than 11:00 p.m.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 8, 2015)
+12.65.250  Fences, Free-Standing Walls, Hedges and Berms.
+Except as noted below, the standards of Section 12.50.250 shall apply in the South Hillsboro Plan
+District.
+A. Purpose. Fences, walls, hedges and berms within the South Hillsboro Plan District should
+balance the need for privacy with the need to provide a consistent, cohesive, visually pleasing
+and pedestrian friendly environment. Designs should contribute to the overall appearance of
+the plan district through the use of a uniform approach that includes high quality materials and
+avoids creating hard edges between adjacent neighborhoods and development projects.
+B. Applicability. The applicability requirements of Subsection 12.50.250.B. apply in the South
+Hillsboro Plan District. In addition, within the South Hillsboro Plan District the standards of
+Sections 12.50.250 and 12.65.250 also apply to development applications in which fences,
+hedges, free-standing walls or berms are proposed or required as a condition of approval.
+C. Fence Permit Required. The permit requirements of Subsection 12.50.250.C. shall apply in the
+South Hillsboro Plan District. In addition, a uniform fencing plan is required for all Type II or
+Type III applications.
+12.65.240 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:22
+D. Standards. The standards in Subsections 12.50.250.D. through F. shall apply in the South
+Hillsboro Plan District except as modified by paragraphs 1 and 2, below.
+1. Maximum Height. Fences and free-standing walls in all zones shall not exceed 4 feet in
+height in the front yard and 6 feet in height in side and rear yards.
+2. Materials.
+a. Fences and free-standing walls shall be constructed of durable materials compat-
+ible with the primary materials used on the associated building façade. Materials
+may include but are not limited to, the following:
+i. Masonry or brick;
+ii. Solid wood with masonry or brick columns;
+iii. Wrought iron with masonry or brick columns; or
+iv. Alternative material(s) requested by the applicant if approved by the Review
+Authority.
+b. Use of plastic, vinyl, barbed wire, razor wire, and electric fences, industrial materials
+and unprocessed waste materials are prohibited as fencing or free-standing wall
+materials.
+c. Except for schools, recreational facilities, water quality facilities and other utility
+facilities as approved by the Review Authority, the use of chain link is prohibited.
+Where permitted, chain link fences shall include a top rail for security and mainte-
+nance and shall have a black, dark brown, or dark green powder coating.
+d. All fences and free-standing walls shall be treated with anti-graffiti sealant.
+3. Design. Fence designs shall contribute to overall appearance of development within the
+plan district through the use of a uniform approach that includes high quality materials
+and avoids creating hard edges between adjacent neighborhoods and development
+projects.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 8, 2015)
+12.65.260  Sight Distance/Vision Clearance.
+The requirements of Section 12.50.260 shall apply in the South Hillsboro Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.270  Solar Access and Lot Orientation.
+A. Purpose. Enhanced requirements for solar access support the policy goal of housing designs
+that incorporate passive use of solar energy for lighting and heating purposes, energy-efficient
+construction, the potential for installation of photovoltaic panels, and similar techniques.
+B. Applicability. The standards of this section shall apply to all Type II and Type III development
+within the South Hillsboro Plan Area unless a variance or adjustment has been granted by the
+Review Authority pursuant to Section 12.80.150 Variances and Adjustments.
+ 12.65.270SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:23
+C. Solar Access and Lot Orientation Standards. Lots for single detached dwellings, duplexes,
+triplexes, and quadplexes with lot widths less than 50 feet shall be oriented with the side lot
+lines within plus or minus 20 degrees of geographical east-west.
+D. Exceptions to Solar Access and Orientation Standards. A variance or adjustment to subsection
+C above may be approved by the Review Authority pursuant to Sections 12.80.154, 12.80.156
+and Subsection 12.80.158.O.
+(Ord. 6401 § 1, 2022; Ord. 6193 § 1, 2016)
+12.65.270 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:24
+12.65.300  Vehicle Parking.
+Vehicle parking standards for the South Hillsboro Plan District include the following sections:
+12.65.310 Purpose, Applicability and Maintenance Responsibilities
+12.65.330 Exempt Parking
+12.65.350 Vehicle Parking and Loading: Location
+12.65.360 Vehicle Parking and Loading: Design and Improvements
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.310  Purpose, Applicability and Maintenance Responsibilities.
+The standards of Section 12.50.310 shall apply within the South Hillsboro Plan District except as
+modified below.
+A. Purpose. Modified parking standards support the goal of establishing a cohesive and active
+streetscape by providing for adjustments in the minimum number of required spaces, surface
+parking location requirements, and additional parking lot landscaping.
+B. Applicability. The applicability requirements of Section 12.50.310.B. apply within the South
+Hillsboro Plan District.
+C. Maintenance. The standards of Section 12.50.310.C. apply within the South Hillsboro Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.320  Reserved.
+Editor’s note—Ord. No. 6488, §§ 1, 2(Exh. A), adopted Dec. 3, 2024, repealed § 12.65.320, which
+pertained to the number of required parking spaces and derived from Ord. 6110 § 1, adopted in 2015;
+and Ord. 6401 § 1, adopted in 2022.
+12.65.330  Exempt Parking.
+The standards of Section 12.50.330 shall apply within the South Hillsboro Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.340  Reserved.
+Editor’s note—Ord. No. 6488, §§ 1, 2(Exh. A), adopted Dec. 3, 2024, repealed § 12.65.340, which
+pertained to the number of required parking spaces and derived from Ord. 6110 § 1, adopted in 2015;
+and Ord. 6401 § 1, adopted in 2022.
+12.65.350  Vehicle Parking and Loading: Location.
+The standards of Section 12.50.350 do not apply within the South Hillsboro Plan District. They are
+superseded by the standards below.
+ 12.65.350SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:25Supp. No. 1
+A. Parking Location: General Provisions.
+1. Off-street parking for residential uses in the MU-VTC zone may be located off site, not
+farther than 400 feet from the use it serves. For residential uses in all other zones,
+[parking] shall be located on the same lot with the residential use.
+2. Parking for non-residential uses may be located off site, not farther than 1,000 feet from
+the use it serves.
+3. If parking is provided off site, the distance from the parking to the use shall be measured
+from the nearest parking space to the building entrance on a sidewalk or other pedestrian
+route.
+4. The location and terms of the off-site parking shall be specified in a written deed, lease or
+contract, signed and notarized by all affected property owners, recorded with Washington
+County and filed with the Community Development Department.
+B. Loading Location: General Provisions.
+1. Service docks, maneuvering and loading areas shall be located interior to the site. Where
+location of these facilities adjacent to a street, driveway, or pedestrian route cannot be
+practicably avoided, screening walls for such facilities shall be constructed with elements
+such as artwork or decorative grates or tiles. Screening walls surrounding service docks
+and loading areas shall be at least 12 feet in height. Windows and display area are not
+required on screening walls surrounding service docks and loading areas.
+2. Off-street truck loading docks proposed for new non-residential development shall be
+sited and maintained to accommodate anticipated truck sizes, numbers and movement
+on-site, without blocking public streets. Off-street parking may be used for loading and
+unloading operations only during off-peak hours.
+3. Schools and Child Care Facilities. Access drives designed for continuous forward flow of
+passenger vehicles shall be provided at any school or child care facility with a capacity of
+25 or more students.
+C. Parking Location: Multi-Dwelling, Non-Residential and Mixed-Use Developments. Surface
+parking and vehicular circulation facilities, such as driveways and access aisles shall be
+located behind or beside the building(s). If located beside the building(s), surface parking areas
+shall not be located forward of the front façade(s) of the building closest to the street and shall
+occupy no more than 50% of each street frontage of the development site. In zones, other than
+MU-VTC, frontages that provide a significant landscape feature such as a plaza or enhanced
+and activated usable open space may be granted an increase of up to 10% of this requirement
+(allowing surface parking to occupy up to 60% of the street frontage), if requested by the
+applicant per the processes in Sections 12.80.150, 12.80.154 and 12.80.156.
+12.65.350 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:26Supp. No. 1
+D. Carpool and Vanpool Parking. Carpool and vanpool parking is required within new commercial,
+industrial and institutional developments with 50 or more required parking spaces. Where
+provided, carpool and vanpool parking spaces shall be located closer to the main employee,
+student or commuter entrance than all other employee, student or commuter parking spaces
+with the exception of handicapped parking spaces. The carpool/vanpool spaces shall be
+clearly marked "Reserved - Carpool/Vanpool Only."
+E. Electric Car Charging Stations. In parking lots with 100 vehicle spaces or more, at least 1
+electric car charging point within a rated capacity of at least 240 volts shall be provided per 100
+vehicle parking spaces or portion thereof.
+F. Electric Vehicle Infrastructure Requirements.
+1. New commercial development shall provide electrical service capacity, as defined in
+ORS 455.417, to serve not less than 20% of all provided vehicle parking spaces.
+2. New multifamily residential buildings with 5 or more residential dwelling units, and new
+mixed-use buildings consisting of privately owned commercial space and 5 or more
+residential dwelling units, shall provide of electrical service capacity, as defined in ORS
+455.417, to serve 40% of all provided vehicle parking spaces.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+ Figure 12.65.350-A:
+Parking Location for Multi-Dwelling
+Non-Residential and Mixed-Use Developments
+ 12.65.350SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:27Supp. No. 1
+12.65.360  Vehicle Parking and Loading: Design and Improvements.
+The standards of Section 12.50.360 apply within the South Hillsboro Plan District. In addition, within
+the South Hillsboro Plan District, parking lots which include more than 40 parking spaces shall also
+comply with the following additional standards.
+A. Parking Lot Perimeter Landscape/Screening. Within the MU-VTC zone, parking area perime-
+ter planter strips along any public or private street shall have a minimum width of 6 feet and
+shall be planted with large-scale street trees as listed in the Hillsboro Design and Construction
+Standards approved Street Tree List and spaced not more than 30 feet on center and a mix of
+shrubs and/or ground cover. Lawn, bark mulch or hardscape shall not be used to meet the
+screening requirement.
+B. Parking Lot Interior Landscaping. The applicant shall submit a landscaping plan demonstrating
+that all surface parking areas will be landscaped to achieve a 30% tree canopy at 15 years
+maturity. Eligible tree canopy must be directly over the parking lot and incorporated landscape
+islands.
+
+C. Structured Parking.
+1. Structured parking within or adjacent to a primary structure shall be integrated with the
+overall design of the primary structure it serves through the use of visually similar
+architectural features and façade materials.
+ Figure 12.65.360-A: Parking Lot Tree Canopy
+12.65.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:28Supp. No. 1
+2. Free-standing parking structures shall be designed to complement surrounding buildings
+in terms of scale, design elements, building materials, and orientation on the site.
+3. Ground level structured parking with direct access from drive aisles to parking for
+individual dwelling units shall include garage doors on the elevation where vehicles enter
+and exit. The remaining outer side and rear walls of the structure shall be enclosed by
+walls or screens meeting the requirements of this section. Open-sided and open-ended
+carports are not permitted.
+4. Pedestrian-oriented design elements, including the following, shall be incorporated into
+parking structures to screen cars and provide visual interest. Such features are illustrated
+on Figure 12.65.360-B:
+a. Decorative panels for window openings and/or garage entrance gates;
+b. Integrated planting systems;
+c. Public art;
+d. Green roofs (for underground parking decks); and
+e. Other features as approved by the Review Authority.
+
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+ Figure 12.65.360-B:
+Parking Structures: Pedestrian-Oriented Design Elements
+ 12.65.360SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:29
+12.65.400  Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity.
+Bicycle parking and bicycle and pedestrian circulation and connectivity in the South Hillsboro Plan
+District include the following sections:
+12.65.410 Bicycle Parking
+12.65.420 Pedestrian and Bicycle Circulation
+12.65.430 Connectivity and Design Standards at or near Transit Stops
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.410  Bicycle Parking.
+The standards of Section 12.50.410 apply within the South Hillsboro Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.420  Pedestrian and Bicycle Circulation.
+A. The on-site pedestrian and bicycle standards of Subsection 12.50.420.D. apply within the
+South Hillsboro Plan District.
+B. The following standards apply to off-site pedestrian and bicycle facilities within the South
+Hillsboro Plan District.
+1. Purpose. Enhanced pedestrian/bicycle accessways further the goal of creating a "con-
+nected" community that provides residents and visitors with full multi-modal access,
+seamlessly connecting neighborhoods to each other, to the Town and Village Centers
+and to open spaces. The standards support the policy of designing spaces to provide
+safe, convenient, and comfortable pedestrian movement by effectively connecting build-
+ing entries, open spaces, streets, transit facilities, and parking areas.
+2. Applicability. Within the South Hillsboro Plan District, pedestrian and bicycle accessways
+shall include those facilities shown in Figure 12.65.930-E.
+3. Standards. The standards of Section 12.50.420 apply to bicycle and pedestrian facilities
+within the South Hillsboro Plan District except that accessways within the South Hillsboro
+Plan District are not subject to the fencing and screening requirements.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.430  Connectivity and Design Standards at or Near Transit Stops.
+The standards of Section 12.50.430 apply within the South Hillsboro Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.400 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:30
+12.65.500  Access and Street Standards.
+Access and street standards in the South Hillsboro Plan District include the following sections:
+12.65.510 Purpose, Applicability and Exceptions
+12.65.520 Street Connectivity and Access
+12.65.530 Streets and Alleys Design and Improvement
+12.65.540 Flag Lot Driveways: Design and Improvement
+12.65.550 Sidewalk Widths: Design and Location
+12.65.560 Street Trees and Landscaping
+(Ord. 6401 § 1, 2022)
+12.65.510  Purpose, Applicability and Exceptions.
+The standards of Section 12.50.510 shall apply within the South Hillsboro Plan District except as
+modified below.
+A. Purpose. Create a complete, connected and green community by providing smaller blocks, a
+consistent and legible block pattern, interconnected neighborhoods and amenities and solar
+orientation.
+B. Applicability. The applicability requirements of Subsection 12.50.510.B. shall apply within the
+South Hillsboro Plan District.
+C. Exceptions. The exceptions in Subsection 12.50.510.C. shall apply within the South Hillsboro
+Plan District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.520  Street Connectivity and Access.
+The standards of Section 12.50.520 shall apply within the South Hillsboro Plan District except as
+modified below.
+A. General Standards. The standards of Subsection 12.50.520.A. shall apply within the South
+Hillsboro Plan District.
+B. Street Connectivity and Block Length Requirements in Standard Zones. The standards of
+Subsection 12.50.520.B. shall apply, except for Subsections 12.50.520.B.5. and 12.50.520.B.6,
+which are superseded by subsection D below.
+C. Street Connectivity and Block Length Requirements in Mixed-Use Zones. The standards of
+Subsection 12.50.520.C. shall apply, except for Subsection 12.50.520.C.5, which is super-
+seded by subsection D below.
+ 12.65.520SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:31
+D. Block Length and Orientation Requirements. The following block length and orientation
+standards shall apply within the South Hillsboro Plan District.
+1. The maximum block perimeter lengths created by the street and alley pattern shall be as
+shown in Table 12.65.520-1.
+  Table 12.65.520-1:
+Maximum Block Perimeters within South Hillsboro
+Comprehensive Plan Designation Maximum Block Perimeter
+Low Density Residential 1,800 feet
+Medium Density Residential 1,600 feet
+High Density Residential 1,600 feet
+Mid-Rise Density Residential 1,600 feet
+Mixed-Use Urban Residential 1,600 feet
+2. Street connections along arterial streets are subject to review and approval by the Road
+Agency.
+3. Full movement street connections along collector roads shall not be less than 300 feet
+and no more than 500 feet apart unless superseded by the Road Agency.
+4. Street connections along neighborhood routes and local streets shall be spaced not more
+than 500 feet apart unless superseded by the Road Agency.
+5. To create a unified street grid and to facilitate solar access and orientation requirements
+in Section 12.65.270, streets shall be laid out to create blocks that reflect the dimensional
+and lot orientation requirements in Section 12.65.270. Blocks shall be oriented within plus
+or minus 20 degrees of either geographical east-west or north-south.
+E. Exceptions to Block Length and Orientation Requirements. A variance or adjustment to
+subsection D above may be approved by the Review Authority pursuant to Sections 12.80.154,
+12.80.156 and Subsection 12.80.158.N.
+F. Alley Access Required for Single Detached, Townhouse and Duplex Developments. Unless
+precluded by barriers as described in subsection D above, all single detached, townhouse, and
+duplex developments shall provide vehicle access to all lots and units from an alley. Alleys shall
+be created at the time of land division approval and shall be public right-of-way.
+G. PUD Applications Required for Alternative Access to Residential Development. Alternative
+access for residential development, such as court yards and parking courts, may be approved
+as part of a PUD application provided that street design and connectivity requirements are met.
+(Ord. 6401 § 1, 2022; Ord. 6193 § 1, 2016; Ord. 6110 § 8, 2015)
+12.65.520 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:32
+12.65.530  Streets and Alleys Design and Improvement.
+The standards of Section 12.50.530 apply within the South Hillsboro Plan District except as modified
+below.
+A. Street Cross-Sections. Street sections, curbs, gutters, sidewalks, street lights and street trees
+shall also be generally consistent with street cross-sections in Figures 12.65.940-A—T.
+B. Active Use Street Intersections. Within the Town Center and Village Center Core Areas,
+intersections of Active Use Streets shall incorporate appropriate pedestrian-friendly features
+including, but not limited to the following features as illustrated on Figure 12.65.530-A:
+1. Visible Crosswalks. Well-marked, visible crossings shall be provided to alert drivers to the
+fact that they are approaching a location where they may encounter crossing pedestri-
+ans. In some cases, raised or colored crossings may be appropriate.
+2. Parking Restrictions at Corners. Restricting parking adjacent to corners makes pedes-
+trians and vehicles approaching intersections more visible to one another.
+3. Crossing Aids. Accessible pedestrian facilities such as curb ramps and accessible
+pedestrian signals shall be provided.
+4. Tight curb radii for turning vehicles shall be utilized to shorten crossing distances,
+increase pedestrian visibility, and slow turning traffic.
+5. Curb Extensions. The installation of curb extensions should be considered in areas with
+high pedestrian volumes to reduce crossing times, increase pedestrian visibility, and slow
+turning traffic.
+6. Median Refuges. Where medians are present or space otherwise exists, median refuges
+should be considered up to the crosswalk to provide a space for crossing pedestrians
+who may not be able to cross the entire roadway in the signal time allotted.
+7. Roadway and Pedestrian Lighting. Intersections should be well-lit at night to improve
+visibility for all users. Sufficient lighting to illuminate crossing pedestrians should be
+provided.
+8. Streetscape Elements. Streetscape elements, including trees, plantings, and seating
+should be provided adjacent to intersections to enhance the character and quality of the
+public realm and the sense of an intersection as an important public space.
+9. Traffic Calming Features. Intersections may contain traffic calming features such as
+traffic circles to slow vehicles and enhance neighborhood character.
+ 12.65.530SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:33
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.540  Flag Lot Driveways: Design and Improvement.
+The standards of Section 12.50.540 shall apply within the South Hillsboro Plan District except that
+flag lots are prohibited within the Mixed-Use — Village Town Center (MU-VTC) zone.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.550  Sidewalk Widths: Design and Location.
+The standards of Section 12.50.550 shall apply within the South Hillsboro Plan District except that
+the width and location of sidewalks shall also be generally consistent with street cross-sections in
+Figure 12.65.530-A.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.560  Street Trees and Landscaping.
+The standards of Section 12.50.560 shall apply within the South Hillsboro Plan District except that
+street trees and landscaping within the public right-of-way shall also be subject to the following
+standards:
+A. Street Tree Spacing. Street tree spacing in the South Hillsboro Plan District shall be based
+upon tree species and canopy size at maturity. The planting area shall be at least 24 square
+feet in area, typically configured at 5 feet by 5 feet. Trees shall be spaced approximately 25 feet
+on center, and at a maximum 30 feet on center. The selection of tree species shall be in
+accordance with the approved Street Tree List in the D&C standards, and shall be consistent
+ Figure 12.65.530-A:
+Active Use Street Intersections
+12.65.530 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:34
+with this spacing based upon tree spread. This spacing standard supersedes the Design and
+Construction Standards except as modified for regulatory and warning sign visibility per the
+Hillsboro Municipal Code and Hillsboro Design and Construction Standards.
+B. Root Barrier Installation. Root barriers shall be installed according to the manufacturer's
+specifications when a street tree is planted within 5 feet of any hard surface paving or utility box,
+or as otherwise required by the City Engineer.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+ 12.65.560SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:35
+12.65.600  Public Utilities, Site Grading and Storm Water Facilities Site Integration.
+Utilities, site grading, and storm water management standards for the South Hillsboro Plan District
+include the following sections:
+12.65.610 Purpose, Applicability and Exceptions
+12.65.620 Public Utilities General Requirements
+12.65.630 Site Grading
+12.65.640 Storm Water Facilities Site Integration
+(Ord. 6401 § 1, 2022)
+12.65.610  Purpose, Applicability and Exceptions.
+A. Purpose. Encourage creation of a sustainable community that incorporates state-of-the-art
+green development practices, preserving and improving existing natural resources and wildlife
+corridors and reflect the goal of creating a community of distinction which provides for compact,
+pedestrian-friendly development within the MU-VTC zone generally, but particularly within the
+Town Center and Village Center Core Areas.
+B. Applicability. The standards of Section 12.50.610.B. shall apply within the South Hillsboro Plan
+District.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.620  Public Utilities General Requirements.
+The standards of Section 12.50.620 shall apply within the South Hillsboro Plan District except that
+utilities are required to be undergrounded, with the exception of electrical transmission lines, either
+in the public right-of-way or in a public utility easement. Public Utility Easement and vault locations
+shall be subject to review and approval by the City Engineer and the utility provider.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.630  Site Grading.
+The standards of Section 12.50.630 shall apply.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.640  Storm Water Facilities Site Integration.
+The standards of Section 12.50.640 shall apply within the South Hillsboro Plan District. In addition,
+within the Town Center and Village Center the City Engineer may approve increased depth in a storm
+drainage facility if site constraints make underground storm drainage facilities impractical and
+provision of surface storm facilities would prevent development at the minimum allowable density.
+Any deeper facility approved by the City Engineer shall meet the following standards:
+A. The perimeter shall be fenced for public safety;
+B. Landscaping shall be installed both inside and outside the fence;
+12.65.600 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:36
+C. Fence materials and colors shall blend to the maximum practicable extent with the landscaping
+and surroundings; and
+D. The overall site plan shall use open space and landscaping for natural detention, retention and
+biofiltration to reduce the overall size and depth of the facility.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+ 12.65.640SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:37
+12.65.700  Design Standards for Residential Development.
+Design standards for residential development include the following sections:
+12.65.710 Design Standards for All Residential Development
+12.65.715 Additional Design Standards for Middle Housing
+12.65.720 Multi-Dwelling Residential Design Standards
+(Ord. 6401 § 1, 2022)
+12.65.710  Design Standards for All Residential Development.
+A. Purpose. Create desirable residential neighborhoods as part of a complete, connected and
+green community, consistent with the design principles and best practices described in the
+South Hillsboro Community Plan to ensure high quality design that evokes a sense of place
+and permanence and a strong connection with the street.
+B. Applicability.
+1. The design standards for residential development in Section 12.50.710 apply except as
+modified or superseded by the standards in Section 12.65.710.
+2. The design standards in this section apply to all single detached residential, duplex,
+triplex, quadplex, townhouse, cottage cluster, and multi-dwelling development in the
+South Hillsboro Plan District unless otherwise specified. In addition, Section 12.65.715
+applies only to middle housing and Section 12.65.720 applies only to multi-dwelling
+residential.
+3. The design standards in this section apply to all accessory dwelling units and accessory
+structures in the South Hillsboro Plan District associated with single detached dwelling
+and townhouse structures unless otherwise specified.
+4. Developments on Active Use streets are also subject to the design standards in Section
+12.65.850.
+5. Applicants may request adjustments to these standards pursuant to Section 12.80.154 or
+12.80.156.
+C. Exceptions.
+1. Non-conforming situations which existed prior to the adoption and effective date of the
+South Hillsboro Plan District.
+2. If alternative standards have been approved through a discretionary process.
+12.65.700 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:38
+D. Standards.
+1. Main Entries. On each lot at least 1 main entrance shall meet both of the standards in a
+and b. These standards do not apply to cottage clusters.
+a. Front doors shall face the street.
+b. If the entry opens to a front porch the following standards shall be met:
+i. Openings more than 1 foot in area between the porch floor and finished grade
+must be covered by a solid material or lattice; and
+ii. The porch shall meet the standards contained in Subsection 12.50.710.C.
+c. For lots with more than 1 street frontage, any street-facing façade with a main
+entrance must meet the standards in subsections a and b.
+2. Windows. Cottage clusters are not subject to these standards; instead, see Subsection
+12.50.715.D.11.
+a. Front Elevations.
+i. For front loaded dwellings, on single story structures, at least 15% of the total
+area of each façade facing a street or commonly-accessible open space shall
+be windows or entry doors with window insets, as illustrated in Figure
+12.65.710-A. On multistory structures a minimum of 20% of the total area and
+15% of the ground floor area facing a street or commonly-accessible open
+space shall be windows or entry doors with window insets as illustrated in
+Figure 12.65.710-A.
+ii. For rear loaded dwellings, at least 25% of the area of each front elevation
+facing a street or commonly-accessible open space, and 20% of the ground
+floor facing those 2 features, shall be windows or entry doors with window
+insets, as illustrated in Figure 12.65.710-A.
+b. Side Elevations. The combined sum of the windows or doors with window insets on
+the 2 side elevations shall be at least 20%, and individual side windows shall be a
+minimum of 8% of the total area of the side elevations.
+c. Rear Elevations.
+i. At least 25% of the area of each rear elevation shall be windows or doors with
+window insets.
+ii. At least 10% of the area of each side or rear elevation shall be windows or
+doors with window insets where a garage is present.
+ 12.65.710SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:39
+d. "Percent of elevation" is measured as the percentage of the façade area, excluding
+gable ends which are not part of an upper story, containing doors, porches,
+balconies, terraces and/or windows per Figures 12.65.710-A and 12.65.710-B
+below. The standard applies to each full and partial building story.
+
+ Figure 12.65.710-A:
+Street Facing Façade Area Calculation
+ Figure 12.65.710-B:
+Window Area Calculation
+12.65.710 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:40
+3. Foundation Materials. The standards in Section 12.50.710 apply.
+4. Articulation. Except as noted for cottage clusters, all building elevations in the South
+Hillsboro Plan District visible from a street right-of-way shall provide prominent defined
+entrances, and a combination of architectural features consistent with Section 12.50.710.
+Cottage clusters are subject to the standards in Subsection 12.50.715.E.12.
+5. Detailed Design Elements. Except as noted for cottage clusters, residential structures
+shall demonstrate variation, articulation and detailing on all elevations facing and visible
+from an open space or public or private streets, including elevations which may be
+separated from such streets by open areas such as rail rights-of-way, access streets, or
+parking lots as required by the standards in Section 12.50.710. Cottage clusters are
+subject to the standards in Subsection 12.50.715.E.12.
+6. Exterior Finish Materials. The following standards must be met on all building façades:
+a. Plain concrete block, plain concrete, corrugated metal, plywood and sheet press-
+board are not allowed as exterior finish material, except as secondary finishes if
+they cover no more than 10% of the surface area of each façade.
+b. Composite and/or cementitious boards manufactured from wood or other products,
+such as hardboard or hardplank, may be used when the board product is less than
+8 inches wide.
+c. Where wood products are used for siding, the siding must be shingles, shakes or
+horizontal siding.
+d. Where horizontal siding is used, it must be shiplap or clapboard siding composed of
+boards with a reveal of 3 to 8 inches.
+e. Trim detail must mark all building rooflines, porches, windows, and doors on all
+façades. Roofline (fascia) and porch trim shall be at least 6 inches wide and 1 inch
+thick. Window and door trim shall be at least 3 inches wide and
+!
+inch thick.
+ 12.65.710SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:41
+7. Façade Requirements. Where alley access is not provided, the following standards shall
+apply:
+a. The width of the garage door(s) or parking area(s) facing the street shall not exceed
+40% of the length of the street-facing building façade.
+b. The garage door that faces a street shall be further from the street lot line than the
+longest street-facing wall of the dwelling unit by at least 5 feet.
+
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6193 § 1,
+2016; Ord. 6110 § 8, 2015)
+ Figure 12.65.710-C: Façade Requirements
+12.65.710 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:42
+12.65.715  Additional Design Standards for Middle Housing.
+A. Purpose. These standards are intended to work together with the standards in Section
+12.65.710 to create desirable residential areas by promoting diversity of housing types,
+aesthetically pleasing environments, safety, privacy, energy conservation and recreational
+opportunities.
+B. Applicability.
+1. The design standards in this section apply to 3 or more unit townhouse, triplex, quadplex,
+and cottage cluster developments in the South Hillsboro Plan District unless otherwise
+specified.
+2. These standards do not apply to duplexes.
+3. These standards do not apply to middle housing created through conversion of, or
+addition to, an existing dwelling; however, the conversion or addition shall not increase
+nonconformance with these standards.
+4. Applicants may request adjustments to these standards pursuant to Section 12.80.154 or
+12.80.156.
+C. Standards for Triplexes and Quadplexes. The standards of Subsection 12.50.715.C. apply
+unless they conflict with standards in Section 12.65.710, in which case the standards in Section
+12.65.710 shall prevail.
+D. Standards for Townhouses. The standards of Subsection 12.50.715.D. apply unless they
+conflict with standards in Section 12.65.710, in which case the standards in Section 12.65.710
+shall prevail.
+E. Standards for Cottage Clusters. The standards of Subsection 12.50.715.E. apply unless they
+conflict with standards in Section 12.65.710, in which case the standards in Section 12.65.710
+shall prevail.
+(Ord. 6401 § 1, 2022)
+12.65.720  Multi-Dwelling Residential Design Standards.
+A. Purpose. These standards are intended to ensure that higher density residential developments
+are designed to reinforce the goal of creating a complete, connected and green community,
+consistent with the policies in the South Hillsboro Community Plan, developments should
+provide high quality design that evokes a sense of place and permanence and a strong
+connection with the street.
+B. Applicability.
+1. The design standards in this section apply to all multi-dwelling developments in the South
+Hillsboro Plan District unless alternative standards are requested by the applicant and
+approved by the review authority.
+2. Developments on Active Use streets are also subject to the design standards in Section
+12.65.850 and the more restrictive standards apply.
+ 12.65.720SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:43
+3. Applicants may request adjustments to these standards pursuant to Section 12.80.154 or
+12.80.156.
+C. Exceptions.
+1. Non-conforming situations which exist prior to the adoption and effective date of the
+South Hillsboro Plan District.
+2. If alternative standards have been approved through a discretionary process.
+D. Standards.
+1. Main entries shall be prominent and defined, as demonstrated by compliance with the
+standards of Subsections 12.50.710.C.1. and 12.50.720.C.1 within all zones in the South
+Hillsboro Plan District.
+2. On sites with multiple street frontages, the developer shall designate and orient the front
+of the structure to the street with the highest classification. Where streets are of equal
+classification, the developer may choose which street frontage to designate for the
+purposes of this standard. Developments on Active Use streets are subject to the
+Maximum Setback and Front Property Line Coverage requirements in Section 12.65.850.
+3. Windows.
+a. Front Elevation.
+i. At least 25% of the area of each façade facing a street or commonly-
+accessible open space shall be windows or entry doors with window insets, as
+illustrated in Figure 12.65.720-A. On multistory structures a minimum of 20%
+of the ground floor facing a street or commonly-accessible open space shall
+be windows or entry doors with window insets.
+b. Side Elevation. At least 15% of the area of each side façade shall be windows or
+doors with window insets.
+c. Rear Elevation.
+i. At least 20% of the area of each rear elevation shall be windows or doors with
+window insets.
+ii. At least 10% of the area of each side or rear elevation shall be windows or
+doors with window insets where a garage is present.
+12.65.720 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:44
+d. "Percent of elevation" is measured as the percentage of the façade area, excluding
+gable ends which are not part of an upper story, containing doors, porches,
+balconies, terraces and/or windows per Figure 12.65.720-A. The standard applies
+to each full and partial building story.
+
+4. Roofs. The standards of Section 12.50.720 shall apply.
+5. Foundation Materials. The standards of Section 12.50.710 shall apply.
+6. Articulation. In addition to the standards of Section 12.50.710, street-facing elevations
+(walls and roofs) shall be divided into smaller areas or planes to break up large expanses
+of uninterrupted building surfaces. Street-facing elevations with areas larger than 750
+square feet shall be divided into distinct planes of 500 square feet or less. In implement-
+ing this standard, areas of wall or roof entirely separated from other wall areas by a
+projection, such as the porch or a roof over a porch, shall be considered individual
+building wall planes.
+7. Detailed Design Elements. In addition to the design elements required in Section
+12.50.710, public alley access is required for townhouse developments unless it is
+determined by the Review Authority to be infeasible due to natural resource, public
+infrastructure or topography constraints. For multi-dwelling development with individual
+garages, or where townhouses cannot be alley loaded, street access may be allowed
+provided each dwelling meets the following standards:
+a. The length of the garage wall or parking area facing the street shall not exceed 40%
+of the length of the street-facing building façade.
+ Figure 12.65.720-A:
+Three or More Unit Townhouse and Multi-Dwelling Window Calculation
+ 12.65.720SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:45
+b. The garage wall that faces a street shall be no closer to the street lot line than the
+longest street-facing wall of the dwelling unit.
+
+8. Exterior Finish Materials. The following finish materials are prohibited or limited by the
+standards below:
+a. Plain concrete block, plain concrete, corrugated metal, plywood and sheet press-
+board are not allowed as exterior finish materials.
+b. Composite and/or cementitious horizontal boards manufactured from wood or other
+products, such as hardboard or hardplank, may be used when the board product is
+less than 8 inches wide.
+c. Where horizontal siding is used, it must be shiplap or clapboard siding composed of
+boards with a reveal of 3 to 6 inches.
+d. Trim must mark all building rooflines, entries, windows, and doors on all façades.
+Roofline (fascia) and porch trim shall be at least 6 inches wide and 1 inch thick.
+Window and door trim shall be at least 3 inches wide and
+!
+inch thick.
+9. Waste and Recycling Facilities. The standards of Section 12.50.270 shall apply.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 8, 2015)
+ Figure 12.65.720-B:
+Detailed Design Elements
+12.65.720 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:46
+12.65.800  Design Standards for Non-Residential and Mixed-Use Development.
+A. Purpose. These standards are intended to ensure that non-residential and mixed-use devel-
+opments are designed to reinforce the goal of creating a complete, connected and green
+community, consistent with the policies in the South Hillsboro Community Plan. Most, but not
+all, non-residential and mixed-use development within the District will occur within the Mixed-
+Use—Village Town Center (MU-VTC). Non-residential and mixed-use developments will
+contribute to the public realm by providing connections to the street that promote safety and a
+sense of interaction between activities inside and outside of buildings.
+B. Applicability.
+1. The design standards for non-residential and mixed-use development in Sections 12.50.800
+through 12.50.890 apply to all non-residential and mixed-use development in all zones
+within the District except as modified or superseded by the standards in this section.
+2. Developments on Active Use streets are also subject to the design standards in Section
+12.65.850 and should Code sections conflict, the more restrictive standards apply.
+C. Standards.
+1. Main Entries. Buildings shall contribute to the public realm by creating a clear sense of an
+entrance from nearby streets as well as offering pedestrians shelter from the elements
+and shall be subject to the following standards:
+a. Where a single tenant occupies 200 feet or more of a building façade, 1 additional
+entry shall be provided for each 200 feet of street façade.
+b. Main entries shall be covered by either roofs or be recessed within the building
+plane. The entry and cover shall be at least 10 feet wide and 5 feet deep.
+2. Entry Orientation. On sites with multiple street frontages, the developer shall designate
+and orient the front of the structure to the street with the highest classification. Where
+streets are of equal classification, the developer may choose which street frontage to
+designate for the purposes of this standard. Developments on Active Use Streets are
+subject to the Maximum Setback and Front Property Line Coverage requirements in
+Section 12.65.850.
+3. Ground Floor Windows. The standards of Section 12.50.830 shall apply.
+4. Articulation and Detailed Design. Building elevations shall be varied and articulated to
+avoid a flat appearance by incorporating at least 5 of the features found within Section
+12.50.840. Except as modified above, the standards in Section 12.50.840 apply.
+5. Step-Back Requirements. The standards in Section 12.50.845 shall apply.
+6. Improvements and Activities between Streets and Buildings. The standards in Section
+12.50.850 shall apply.
+7. Waste and Recycling Facilities. The standards of Section 12.50.270 shall apply.
+8. Sidewalk Dining and Displays. The standards of Section 12.50.870 shall apply.
+ 12.65.800SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:47
+9. Outdoor Storage. The standards of Section 12.50.880 shall apply.
+10. Utilitarian Functions. The standards of Section 12.50.890 shall apply.
+11. Exterior Finish Materials. The following finish materials are prohibited or limited by the
+standards below:
+a. Plain concrete block, plain concrete, corrugated metal, plywood and sheet press-
+board are not allowed as exterior finish materials.
+b. Composite and/or cementitious horizontal boards manufactured from wood or other
+products, such as hardboard or hardplank, may be used when the board product is
+less than 8 inches wide.
+c. Where horizontal siding is used, it must be shiplap or clapboard siding composed of
+boards with a reveal of 3 to 6 inches.
+d. Trim detail shall mark all building rooflines, entries, windows, and doors on all
+façades.
+12. Roofs. Roofs on the primary structure must meet the following standards:
+a. Sloped roofs may be permitted if the pitch is no steeper than 12/12, and no flatter
+than 4/12 and unless approved under paragraph b below.
+b. Flat roofs may be permitted in compliance with the following standards:
+i. The roof has a 2-part cornice that is harmonious with the selected building and
+trim materials, the upper portion of which projects at least 6 inches from the
+building face and at least 2 inches farther from the building face than the lower
+portion, and the overall height of which is based on the height of the building
+as shown in Table 12.50.800-1; or
+ii. The roof top is usable as a deck or balcony.
+  Table 12.65.800-1:
+Minimum Cornice Heights Applicable with Reduced Roof Pitch
+Overall Building Height Minimum Cornice Height
+15 feet or less 12 inches
+Greater than 15 feet and less than 30 feet 18 inches
+Greater than 30 feet 24 inches
+13. Structured Parking.
+a. Structured parking within or adjacent to a primary structure shall be integrated with
+the overall design of the primary structure it serves through the use of visually
+similar architectural features and façade materials.
+b. Free-standing parking structures shall be designed to complement surrounding
+buildings in terms of scale, design elements, building materials, and orientation on
+the site.
+c. Ground level structured parking with direct access from drive aisles to parking for
+individual dwelling units shall include garage doors on the elevation where vehicles
+12.65.800 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:48
+enter and exit. The remaining outer side and rear walls of the structure shall be
+enclosed by walls or screens meeting the requirements of this section. Open-sided
+and open-ended carports are not permitted.
+d. Pedestrian-oriented design elements, including the following, shall be incorporated
+into parking structures to screen cars and provide visual interest. Such features are
+illustrated on Figure 12.65.800-A:
+i. Decorative panels for window openings and/or garage entrance gates;
+ii. Integrated planting systems;
+iii. Public art;
+iv. Green roofs (for underground parking decks); and
+v. Other features as approved by the Review Authority.
+
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6110 § 8, 2015)
+ Figure 12.65.800-A:
+Parking Structures: Pedestrian-Oriented Design Elements
+ 12.65.800SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:49
+12.65.850  South Hillsboro Design Standards for Active Use Streets.
+A. Purpose. In order to further facilitate pedestrian-friendly development, certain streets are
+designated for "active use" and development along these streets is subject to the additional
+design standards in this section. The Active Use Street design standards assure that devel-
+opment will be compatible with the vision of South Hillsboro as a complete, connected and
+green community, consistent with the design principles and best practices described in the
+South Hillsboro Community Plan, while allowing for some flexibility for new development.
+Because designated Active Use Streets play a primary role in conveying the pattern of new
+development in South Hillsboro, buildings located along these corridors are expected to be
+more urban in character, and architecturally expressive. Public spaces between the building
+and the street should emphasize urban qualities of walkability and public gathering. All
+buildings should be sited with minimal setbacks and in a manner that engages the public realm
+and supports a pedestrian friendly environment. Building heights should be sufficient to create
+a sense of street enclosure, or "outdoor room."
+1. Active Use 1 Streets. Developments along designated Active Use 1 Streets should
+exhibit a strong pedestrian-orientation. Buildings should line the street to form a contin-
+uous storefront and building edge and larger building volumes should be oriented to the
+street to emphasize and enclose the street. Any setback areas between the building and
+sidewalk should be designed as extensions of the sidewalk, offering public places for
+people to sit and gather, or space for tables and chairs, associated with a café or
+restaurant.
+2. Active Use 2 Streets. Developments along designated Active Use 2 Streets are expected
+to exhibit the same type of sidewalk orientation as the buildings along Active Use 1
+streets, but without the storefront retail space at the ground level. Along Active Use 2
+Streets, other uses, such as office or residential, may also be located at the ground level,
+still encouraging pedestrian use, but not necessarily creating a continuous storefront-
+retail environment. Generally, building setbacks along these streets should follow the
+same principles as those for Active Use 1 Streets, although setbacks adjacent to
+ground-level residential uses may incorporate landscape plantings and/or trees.
+B. Applicability. The design standards in this section apply to all development on lots with frontage
+on an Active Use Street designated in accordance with Section 12.65.030.
+C. Exceptions. These standards do not apply if alternative standards have been approved
+through a PUD as specified in Subsection 12.65.030.B.
+D. Standards.
+1. Maximum Setback and Front Property Line Coverage Requirement. Buildings shall be
+sited in a manner that engages the public realm and supports a pedestrian friendly
+environment.
+a. The maximum setbacks established in Table 12.65.850-1 supersede any base zone
+setback requirements for building planes along Active Use Streets.
+12.65.850 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:50
+Table 12.65.850-1:
+Maximum Setback and Minimum Property Line
+Coverage Requirements on Active Use Streets
+Maximum Setback Minimum Property Line Coverage
+Active Use 1 Street 10 feet 75%
+Active Use 2 Street 15 feet 70%
+b. Except as provided below, all buildings shall meet the maximum setback and front
+property line coverage requirements in Table 12.65.850-1 along Active Use Street
+frontages. The Review Authority may approve an increase in the maximum setback
+or a decrease in the percentage of required property line coverage allowed in the
+following circumstances:
+i. For the protection of a designated significant natural resource, preservation of
+a specimen tree or to accommodate topographic constraints or required utility
+easements.
+ii. To allow for the placement of pedestrian amenities within the setback, includ-
+ing, but not limited to, seating areas, water features, and plazas.
+
+ Figure 12.65.850-A:
+Maximum Setback and Minimum Property Line Coverage Requirements
+ 12.65.850SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:51
+2. Minimum Building Height at Street Corners. The intersection of Active Use Streets shall
+be designed as gateway locations that establish a sense of entry into the distinct South
+Hillsboro community. Where development is proposed on a corner lot created by the
+intersection of 2 Active Use Streets or at gateway locations designated on Figure
+12.65.930-F, buildings with 30 feet of the intersection shall meet the following standards:
+a. Buildings shall be designed to preserve or create strong building edges at street
+corners.
+b. Buildings shall reinforce street corners by repeating façade elements such as
+awnings and window and wall treatments on both sides of the building facing the
+corner.
+c. Except as provided in paragraph d below, single story buildings located on street
+corners shall contain an architectural corner element which exceeds the eave
+height of the primary roof by at least 5 feet (see Figure 12.65.850-B). If the façade
+of the corner element exceeds 25 feet in height, then windows are required to
+provide the appearance of a usable second story.
+d. As an alternative to providing architectural corner elements, at up to 2 of the 4
+corners of an intersection, buildings may be approved with chamfered corners,
+pedestrian plazas, enclosed porch, entrance pavilion or other design elements
+provided that the proposed design emphasizes the importance of intersections as
+gateways.
+
+3. Building Entries and Orientation. All buildings on Active Use Streets shall provide direct
+access from the main building entrance to the sidewalk along the Active Use Street.
+a. Development on lots fronting an Active Use Street and a non-designated street shall
+provide either a main building entrance oriented to the Active Use Street or to the
+corner where the streets intersect.
+ Figure 12.65.850-B:
+Typical Corner Element
+12.65.850 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:52
+b. Development on corner lots fronting on 2 Active Use Streets shall have a main
+entrance at the street intersection or within 30 feet of the intersection opening onto
+the higher classified Active Use Street. If the 2 Active Use Streets are of the same
+classification, then the applicant may choose to which Active Use Street the main
+entrance fronts.
+c. Surface parking facilities and vehicular circulation facilities, such as driveways and
+queues, are prohibited between the required building frontage and an Active Use
+Street.
+4. Weather Protection. On building façades facing an Active Use Street, weather protection
+for pedestrians shall be provided along a minimum of 50% of the façade. Weather
+protection may be an awning, canopy, arcade, colonnade, recessed entry, and/or some
+combination of these elements, with at least 10 feet minimum vertical clearance from the
+element to the sidewalk. Where provided, awnings and/or canopies shall meet the
+following standards:
+a. Constructed of glass, metal, wood or a combination of these materials;
+b. Minimum 5-foot projection from the building façade;
+c. Width matching the width of storefronts or window openings; and
+d. Location such that any transom windows present are not obscured.
+
+5. Ground Floor Windows. Buildings shall incorporate transparent windows into the ground
+level building façades along Active Use Street frontages. The windows shall provide an
+active and interesting streetscape; allow views of interior spaces and merchandise;
+enhance the safety of public spaces by providing direct visibility to the street; and create
+a more inviting environment for pedestrians.
+a. Minimum percentages for windows on ground level building façades shall be as
+follows:
+i. On Active Use 1 Streets: 70% of the length and 60% of the area of the ground
+level wall area shall be windows.
+ Figure 12.65.850-C:
+Weather Protection
+ 12.65.850SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:53
+ii. On Active Use 2 Streets: 60% of the length and 50% of the area of the ground
+level wall area shall be windows.
+b. Minimum Transparency Measurement. To apply paragraph a above, use the
+following measurement methodology and standards:
+i. Ground level wall area shall mean the area up to the finished ceiling height of
+the fronting space or 15 feet above finished grade, whichever is less.
+ii. All percentages shall be measured using elevation views of the building
+façade.
+iii. For non-residential uses, glazing on all ground floor windows shall be trans-
+parent.
+iv. For residential uses, glazing on ground floor windows of common hallways,
+foyers, or entryways shall be transparent to allow views into such areas.
+Glazing on ground floor windows of dwelling units may be translucent or
+opaque to protect privacy.
+
+ Figure 12.65.850-D:
+Ground Floor Windows
+12.65.850 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:54
+6. Pedestrian Active Use Requirements. Pedestrian active use requirements ensure that
+buildings on Active Use 1 Streets are developed to accommodate pedestrian-active uses
+(such as retail goods and services) in ground floor street frontages. At least 60% of Active
+Use 1 Street frontage of each primary building shall be constructed:
+a. With an internal floor-to-ceiling height of at least 15 feet;
+b. With a leasable area extending from the street façade of the building towards the
+interior of the building at least 30 feet; and
+c. With at least 1 pedestrian access from the street to a main building entrance per 100
+linear feet of street frontage, or part thereof, at a level no more than 3 feet above or
+below sidewalk grade.
+
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6110 § 8, 2015)
+ Figure 12.65.850-E:
+Pedestrian Active Use Requirement
+ 12.65.850SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:55
+12.65.900  Transportation Studies, Public Facility Master Plan Compliance Requirements,
+Figures and Maps, and Street Figures.
+The Transportation Studies, Public Facility Master Plan Compliance Requirements, Figures and
+Maps, and Street Figures section includes the following sections:
+12.65.910 Transportation Studies Requirements Unique to the District
+12.65.920 Public Facility Master Plan Compliance Requirements
+12.65.930 Figures and Maps
+12.65.940 Street Cross-Sections
+(Ord. 6401 § 1, 2022)
+12.65.910  Transportation Studies Requirements Unique to the District.
+The requirements of Sections 12.70.200 through 12.70.230 apply to development in the South
+Hillsboro Plan District except as cited below.
+A. The requirements of Section 12.70.200 apply in their entirety.
+B. The requirements of Section 12.70.210 apply in their entirety.
+C. The requirements of Section 12.70.230 apply in their entirety.
+D. The requirements of Section 12.70.220 apply, with the following exceptions:
+1. Regarding Traffic Impact Analysis Study Areas, the requirements of Subsection 12.70.220.D.
+apply. Additional analysis or trip assignments may be required on the following off-site
+intersections as necessary to determine the scope and timing of planned improvements
+to evaluate the cumulative effect of annexations and development:
+a. SW Tualatin Valley Hwy and SE Century Blvd,
+b. SW Tualatin Valley Hwy and SW Cornelius Pass Rd,
+c. SW Tualatin Valley Hwy and SW 209th Ave,
+d. SW Tualatin Valley Hwy and SW 198th Ave,
+e. SE Century Blvd and SW Alexander St,
+f. SW Rosedale Rd and SW River Rd,
+g. SW 198th Ave and SW Kinnaman Rd,
+h. SW 209th Ave and SW Blanton St,
+i. SW 209th Ave and SW Kinnaman Rd,
+j. SW 209th Ave and SW McInnis Ln,
+k. SW 209th Ave and SE Deline St,
+l. SW 209th Ave and SE Butternut Creek Pkwy,
+m. SW 209th Ave and SW Murphy Ln,
+n. SW 209th Ave and SW Rosedale Rd,
+12.65.900 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:56
+o. SW 209th Ave and SW Farmington Rd,
+p. SW 209th Ave and SE Vermont St,
+q. SW Tualatin Valley Hwy and SE Brookwood Ave.
+2. Regarding Contents of the Traffic Impact Analysis (Traffic Forecasts) the requirements of
+Subsection 12.70.220.E.3. are superseded by the following requirements in the South
+Hillsboro Plan District regarding traffic volume data. The Traffic Impact Analysis (TIA)
+shall provide traffic volume information in compliance with the standards listed below:
+a. Except as described in paragraph b. below, existing traffic shall be measured for the
+morning and afternoon peak periods within 12 months prior to the land use
+application submittal date.
+b. The City Engineer may allow use of traffic counts older than 12 months for a TIA
+submitted with a land use application on property in the South Hillsboro Plan
+District, for which a prior TIA was approved in conjunction with an executed
+annexation agreement.
+c. In addition to the requirements of paragraph a. above, mid-day period shall also be
+provided if the peak traffic period for the existing street, the proposed development,
+or the composite of both is greater than the morning and afternoon peak periods.
+d. Traffic volumes shall be based on data from a typical Tuesday through Thursday
+weekday of a week without holidays and during which public schools are in session,
+unless otherwise approved by the City Engineer. In addition, data shall be provided
+for weekends if weekends are the peak traffic period for either the existing adjacent
+street or the proposed development.
+e. Seasonal variations in traffic volumes shall be considered if required by an effected
+Road Authority.
+3. Regarding Contents of the Traffic Impact Analysis (Existing Conditions) the requirements
+of Subsection 12.70.220.E.4.i. and ii. are superseded by the following requirements in the
+South Hillsboro Plan District:
+a. Trip Generation. Estimates of the proposed development's trip generation shall be
+made for peak period traffic. Selection of the peak period used in the analysis shall
+be justified and shall consider, at a minimum, the peak period for the proposed
+development and the peak period for surrounding streets. The City Engineer may
+require review of other time periods based on known or anticipated marginal or
+substandard traffic capacity or traffic safety. Trip generation estimates shall be
+based on Institute of Transportation Engineers (ITE) Trip Generation (12th Edition).
+If the land use application is associated with properties included in the South
+Hillsboro Local Improvement District established by Ordinance No. 6161, trip
+generation estimates shall be based on ITE's Trip Generation 9th Edition. The City
+Engineer may approve different trip generation rates when trip generation rates are
+not available in ITE's Trip Generation or different rates are justified. Consideration
+ 12.65.910SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:57Supp. No. 1
+of trip generation rate reductions due to alternative mode use, mixed land use
+interaction, and transportation demand management methods shall be approved by
+the Review Authority.
+b. Trip Distribution and Assignment. Traffic generated by the proposed development
+shall be logically distributed and assigned according to professional accepted
+practice to the street system within the Study Area and any additional locations
+previously identified by the City Engineer. Trip distribution and assignment shall be
+based on trip distribution information from Washington County, ODOT, Metro,
+analysis of local traffic patterns based on data less than 12 months old, or on an
+alternative data source approved by the City Engineer. For Traffic Impact Analyses
+prepared for development in the South Hillsboro Plan District, trip distribution for
+residential, office and retail uses shall comply with Figures 12.65.910-A, 12.65.910-B,
+and 12.65.910-C of this Section.
+c. Forecast Year Analysis. Forecast Year Analysis has been completed for the im-
+pacted intersections identified for mitigation improvements by cumulative develop-
+ment within the South Hillsboro Plan District.
+i. Figure 12.65.910-D illustrates critical intersection lane improvements identi-
+fied to accommodate development under the Comprehensive Plan and Zon-
+ing Concept for the South Hillsboro Plan District in addition to development of
+Urban Growth Boundary expansion areas and infill development consistent
+with HB 4078 adopted by the 2014 Oregon Legislature. Traffic Impact Analy-
+ses prepared in conjunction with South Hillsboro Plan District development
+shall consider, and land use conditions of approval may include dedications of
+right-of-way and construction of, or accommodation for future construction of,
+identified improvements. An alternative analysis may be provided by a regis-
+tered professional engineer utilizing forecast traffic volumes provided by the
+Road Agencies to recommend alternative intersection improvements; subject
+to review and approval of the Road Agencies.
+ii. Building and parking lot setbacks shall accommodate potential future inter-
+section capacity improvements anticipated with growth in Urban Reserve
+areas established by HB 4078 adopted by the 2014 Oregon Legislature, and
+future infill of Urban Growth Boundary areas consistent with those depicted in
+Figure 12.65.910-E. An alternative analysis may be provided by a registered
+professional engineer utilizing forecast traffic volumes provided by the Road
+Agencies to recommend alternative intersection improvements; subject to
+review and approval of the Road Agencies.
+12.65.910 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:58Supp. No. 1
+Figure 12.65.910-A:
+South Hillsboro Residential and Office Outer Cordon Trip Distribution
+ 12.65.910SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:59Supp. No. 1
+Figure 12.65.910-B:
+South Hillsboro Residential and Office Inner Cordon Trip Distribution
+12.65.910 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:60Supp. No. 1
+Figure 12.65.910-C:
+South Hillsboro Retail Trip Distribution
+ 12.65.910SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:61Supp. No. 1
+Figure 12.65.910-D:
+Urban Growth Boundary Recommended Intersection Improvements
+12.65.910 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:62Supp. No. 1
+(Ord. 6414 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6110 § 8,
+2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+ Figure 12.65.910-E:
+Urban Reserves Recommended Intersection Improvements
+ 12.65.910SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:63Supp. No. 1
+12.65.920  Public Facility Master Plan Compliance Requirements.
+A. Purpose. Adequate public facilities are necessary to support development in the South
+Hillsboro Plan District. A development application shall describe the location and capacity of
+the public facilities that will provide service to the development site and a decision to approve
+the application may require the installation of additional facilities as necessary to provide an
+adequate level of service.
+B. Compliance with Community Plan Public Facilities Plans. Development in the South Hillsboro
+Plan District shall demonstrate compliance with the type, location and size of the public
+facilities described in the following public facilities master plans shown in Section 12.65.930:
+Streets; Existing and Future Water System; Existing and Future Sewer Facilities.
+C. Development Approvals Conditioned upon Compliance with Public Facilities Master Plans.
+1. The Review Authority may approve a Type II or Type III land use application for
+development provided that the following criteria are met:
+a. Adequate public facilities are available to serve the development or the decision is
+conditioned to require the installation of such services;
+b. The development will comply with the requirements of the Financing Program
+described in Section 31 of the Comprehensive Plan; and
+c. The developer's public facility obligations are consistent with the terms of an
+annexation agreement, if any, for the site.
+2. A decision to approve a development may include such conditions as necessary to
+ensure compliance with this section and any applicable requirements of Section 31 of the
+Comprehensive Plan.
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+12.65.930  Figures and Maps.
+A. Plan District Boundary, Town Center and Village Center Boundaries, Active Use Streets. Figure
+12.65.930-A shows the location of the South Hillsboro Plan District boundary, and the
+approximate locations of the Town Center and Village Center boundaries and the Active Use
+Streets.
+12.65.920 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:64Supp. No. 1
+* NOTE: The boundaries of the Town Center and Village Center and the location of Active Use Streets depicted on this map
+are for illustrative purposes only. The final location of these features shall be established through the PUD process pursuant
+to Sections 12.24.315 and 12.65.030.
+ Figure 12.65.930-A:
+South Hillsboro Plan District Boundary,
+Town and Village Center Core Areas and Active Use Streets*
+ 12.65.930SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:65Supp. No. 1
+B. Streets. Figure 12.65.930-B shows the Streets Master Plan.
+
+ Figure 12.65.930-B:
+Streets Master Plan
+12.65.930 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:66Supp. No. 1
+C. Existing/Future Water System. Figure 12.65.930-C shows the Water System Master Plan.
+
+ Figure 12.65.930-C:
+Water System Master Plan
+ 12.65.930SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:67Supp. No. 1
+D. Existing/Future Sanitary Sewer System. Figure 12.65.930-D shows the Sanitary Sewer Master
+Plan.
+
+ Figure 12.65.930-D:
+Sanitary Sewer Master Plan
+12.65.930 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:68Supp. No. 1
+E. Parks, Trails, Schools, and Open Space Master Plan. Figure 12.65.930-E shows the Parks,
+Trails, Schools, and Open Space Master Plan.
+
+ Figure 12.65.930-E:
+Parks, Trails, Schools, and Open Space Master Plan
+ 12.65.930SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:69Supp. No. 1
+F. Gateway Opportunities. Figure 12.65.930-F shows the Gateway Opportunities Master Plan.
+
+(Ord. 6414 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+ Figure 12.65.930-F:
+Gateway Opportunities Master Plan
+12.65.930 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:70Supp. No. 1
+12.65.940  Street Cross-Sections.
+The Transportation Studies, Public Facility Master Plan Compliance Requirements, Figures and
+Maps, and Street Figures section includes the following figures:
+Figure 12.65.940-A: "L1" — City Residential Cul-de-sac/Local Street (No Parking)
+Figure 12.65.940-B: "L2" — City Residential Cul-de-sac/Local Street (Parking One Side)
+Figure 12.65.940-C: "L3" — City Residential Local Street (Parking Both Sides)
+Figure 12.65.940-D: "L4" — City Mixed-Use Local Street
+Figure 12.65.940-E: "Y1" — City Alley
+Figure 12.65.940-F: "N1" — City Neighborhood Route
+Figure 12.65.940-G: "N2" — City Green Neighborhood Route
+Figure 12.65.940-H: "C1" — City 3-Lane Collector
+Figure 12.65.940-I: "C2" — City 3-Lane Neighborhood Collector
+Figure 12.65.940-J: "C3" — City 3-Lane Collector with 12-Foot Sidewalks
+Figure 12.65.940-K: "C4" — City 3-Lane Collector at UGB Boundary
+Figure 12.65.940-L: "C5" — County 3-Lane Collector
+Figure 12.65.940-M: "C6" — County 3-Lane Collector at UGB Boundary
+Figure 12.65.940-N: "A1" — County 7-Lane Arterial with 12-Foot Sidewalks
+Figure 12.65.940-O: "A2" — County 5-Lane Arterial
+Figure 12.65.940-P: "A3" — County 5-Lane Arterial with 12-Foot Sidewalks
+Figure 12.65.940-Q: "A4" — County 3-Lane Arterial at UGB Boundary
+Figure 12.65.940-R: "A5" — County 3-Lane Arterial in a 5-Lane Right-of-Way
+Figure 12.65.940-S: Active Use Overlay
+Figure 12.65.940-T: Trail Adjacent to Public Local Street
+ 12.65.940SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:71
+Note: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the
+eave or the top of the parapet, whichever is greater, may require an increased drivable surface width of 26
+paved feet.
+
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street
+intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Note #2: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the
+eave or the top of the parapet, whichever is greater, may require an increased drivable surface width (not
+including parking) of 26 paved feet.
+ Figure 12.65.940-A: "L1" — City Residential Cul-de-sac/Local Street
+(<250 vehicles per day; no on-street parking)
+ Figure 12.65.940-B: "L2" — City Residential Cul-de-sac/Local Street
+(> 250 vehicles per day but <1,500 vehicles per day; on-street parking on one side only)
+12.65.940 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:72
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street
+intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Note #2: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the
+eave or the top of the parapet, whichever is greater, may require an increased drivable surface width (not
+including parking) of 26 paved feet.
+
+Note: Where on street parking is provided, curb bulb-outs shall be used at all public and private street
+intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+ Figure 12.65.940-C: "L3" — City Residential Local Street
+(>1,500 vehicles per day; on-street parking on both sides)
+ Figure 12.65.940-D: "L4" — City Mixed-Use Local Street
+ 12.65.940SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:73
+Note: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the
+eave or the top of the parapet, whichever is greater, may require an increased drivable surface width of 26
+paved feet.
+
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street
+intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+ Figure 12.65.940-E: "Y1" — City Alley
+ Figure 12.65.940-F: "N1" — City Neighborhood Route
+12.65.940 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:74
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street
+intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Note #2: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the
+eave or the top of the parapet, whichever is greater, may require an increased drivable surface width (not
+including parking) of 26 paved feet.
+
+ Figure 12.65.940-G: "N2" — City Green Neighborhood Route
+ Figure 12.65.940-H: "C1" — City 3-Lane Collector
+ 12.65.940SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:75
+Figure 12.65.940-I: "C2" — City 3-Lane Neighborhood Collector
+ Figure 12.65.940-J: "C3" — City 3-Lane Collector with 12-Foot Sidewalks
+12.65.940 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:76
+Figure 12.65.940-K: "C4" — City 3-Lane Collector at UGB Boundary
+ Figure 12.65.940-L: "C5" — County 3-Lane Collector
+ 12.65.940SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:77
+Figure 12.65.940-M: "C6" — County 3-Lane Collector at UGB Boundary
+ Figure 12.65.940-N: "A1" — County 7-Lane Arterial with 12-Foot Sidewalks
+12.65.940 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:78
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street
+intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+ Figure 12.65.940-O: "A2" — County 5-Lane Arterial
+ Figure 12.65.940-P:
+"A3" — County 5-Lane Arterial with 12-Foot Sidewalks
+ 12.65.940SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:79
+Figure 12.65.940-Q:
+"A4" — County 3-Lane Arterial at UGB Boundary
+ Figure 12.65.940-R:
+"A5" — County 3-Lane Arterial in a 5-Lane Right-of-Way
+12.65.940 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.65:80
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+ Figure 12.65.940-S: Active Use Overlay
+ Figure 12.65.940-T: Trail Adjacent to Public Local Street
+ 12.65.940SOUTH HILLSBORO PLAN DISTRICT
+CDC12.65:81

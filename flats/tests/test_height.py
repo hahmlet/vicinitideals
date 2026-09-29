@@ -468,14 +468,30 @@ def test_the_sweep_at_the_design_height_agrees_with_the_screen() -> None:
         ), f"{row.layer} {row.zone} moved at its own height"
 
 
+#: Zones whose storey standard refuses a two-storey building at every height.
+#: 2026-09-29: Hillsboro MU-VTC, a draft from a cloud session. Table
+#: 12.24.360-1 asks a residential building inside a Center Core for 3
+#: stories, 2 outside one; no condition says a lot is outside a core, so the
+#: draft holds the 3 everywhere and the pod fails it. It does not make the
+#: sweep's feet-only reading wrong for anyone else: the zone is out at every
+#: height, so it moves no row of the curve. It is a doubt in the Washington
+#: handoff, and the day the draft is read with the cores drawn, it leaves.
+STOREY_FLOOR_ABOVE_TWO = {("or/washington/hillsboro", "MU-VTC")}
+
+
 def test_no_storey_standard_binds_on_a_two_storey_building() -> None:
     """The sweep prints "storeys are held at 2, so the whole question is feet",
     and that sentence is only true while it is true. A district capping two
     storeys, or requiring three, would make the feet-only reading wrong."""
+    bound = set()
     for band in bands():
         assert band.refusals(CATALOGUE_FT, 2) == band.refusals(CATALOGUE_FT, 2)
         assert "max_height_stories" not in band.refusals(LOW_FT, 2)
-        assert "min_building_height_stories" not in band.refusals(LOW_FT, 2)
+        if "min_building_height_stories" in band.refusals(LOW_FT, 2):
+            bound.add((band.layer, band.zone))
+            # Refused at every height, so it is no cliff on the curve.
+            assert not any(band.admits(h, 2) for h in cliffs()), band
+    assert bound == STOREY_FLOOR_ABOVE_TWO
 
 
 def test_every_sampled_height_is_a_standard_some_district_states() -> None:
@@ -496,7 +512,11 @@ def test_every_sampled_height_is_a_standard_some_district_states() -> None:
 def test_a_zone_with_no_ceiling_is_kept_at_every_height_in_the_range() -> None:
     """Six zones state no maximum. They are the floor under the curve: whatever
     the design meeting decides, these lots do not move."""
-    open_ended = [b for b in bands() if b.ceiling_ft is None and b.floor_ft is None]
+    open_ended = [
+        b for b in bands()
+        if b.ceiling_ft is None and b.floor_ft is None
+        and (b.layer, b.zone) not in STOREY_FLOOR_ABOVE_TWO
+    ]
     assert open_ended, "no open-ended zones -- this test proves nothing"
     for height in cliffs():
         kept = {(b.layer, b.zone) for b in open_ended if b.admits(height, 2)}

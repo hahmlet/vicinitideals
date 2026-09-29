@@ -1,0 +1,1053 @@
+SUBCHAPTER 12.10
+ USE CATEGORIES
+12.10.010 General Principles.
+12.10.020 Uses Not Specifically Addressed.
+12.10.030 Special Use Standards.
+12.10.100 Residential Use Categories.
+12.10.110 Household Living.
+12.10.120 Group Living.
+12.10.130 Residential Services.
+12.10.140 Residential Business.
+12.10.200 Commercial Use Categories.
+12.10.210 Commercial Lodging.
+12.10.215 Commercial Recreation.
+12.10.220 Commercial Parking.
+12.10.225 Durable Goods Sales.
+12.10.230 Eating and Drinking Establishments.
+12.10.235 Educational Services.
+12.10.240 Office.
+12.10.245 Retail Products and Services.
+12.10.250 Self-Service Storage.
+12.10.255 Vehicle Service and Repair.
+12.10.300 Industrial Use Categories.
+12.10.310 Industrial Services.
+12.10.320 Manufacturing and Production.
+12.10.330 Solid Waste Treatment and Recycling.
+12.10.340 Vehicle Storage.
+12.10.350 Warehouse and Freight Movement.
+12.10.360 Wholesale Sales.
+12.10.400 Institutional Use Categories.
+12.10.410 Colleges and Universities.
+12.10.420 Community Services.
+12.10.430 Detention Facilities.
+12.10.440 Hospitals.
+12.10.450 Major Assembly Facilities.
+12.10.460 Schools.
+12.10.500 Infrastructure and Utilities Categories.
+12.10.510 Aviation Uses.
+12.10.520 Parks and Open Areas.
+12.10.530 Public Safety Facilities.
+12.10.540 Surface Alternative Transportation Facilities.
+12.10.550 Telecommunication Facilities.
+12.10.560 Utility Facilities.
+CDC12.10:1
+
+12.10.010  General Principles.
+A. Purpose. Land uses in this Code are classified into use categories on the basis of common
+functional, product or physical characteristics. These characteristics include the type and
+intensity of activity, type(s) of customers or residents, typical off-site impacts and building type.
+The basis for allowing or prohibiting the use categories in the various zones is the goals and
+policies of the Comprehensive Plan.
+B. Organization and Guidelines. Each use category is organized into the following sections:
+1. Characteristics. A description of the functional, product or physical characteristics which
+most closely describes the nature of the primary use.
+2. Examples of Uses. An illustrative, not exhaustive, list of examples of uses included in that
+category. The lists are intended to demonstrate the intent of this Code in determining the
+appropriate classification for unlisted or new uses not specifically addressed when these
+regulations were adopted.
+3. Examples of Accessory Uses. Accessory uses allowed in conjunction with the primary
+use and subject to the same regulations as the primary use unless stated otherwise in this
+Code.
+4. Exceptions. Uses that may appear to be included in the use category but are classified in
+another use category, and to which a reference is provided.
+C. Multiple Primary Uses. When all primary uses of a development fall within 1 use category, then
+the development is assigned to that use category. When the primary uses of a development fall
+within different use categories, each primary use is classified in the applicable category and is
+subject to the regulations for that category.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.10.020  Uses Not Specifically Addressed.
+Uses not specifically addressed in this Code may be classified into a use category through the
+process of a Director's Interpretation application, pursuant to Section 12.80.050.
+(Ord. 6322 § 1, 2019)
+12.10.030  Special Use Standards.
+In addition to the base zone standards in Subchapters 12.21 through 12.26, certain uses are also
+subject to the requirements of Subchapter 12.40.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+ 12.10.030USE CATEGORIES
+CDC12.10:3
+12.10.100  Residential Use Categories.
+Residential use categories include the following sections:
+12.10.110 Household Living
+12.10.120 Group Living
+12.10.130 Residential Services
+12.10.140 Residential Business
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.10.110  Household Living.
+A. Characteristics. Household living is characterized by the residential occupancy of a dwelling
+unit that contains 8 or fewer bedrooms. Occupancy is arranged on a month-to-month basis or
+for a longer period. Dwelling units in this category must be self-contained, with cooking,
+sleeping and bathroom facilities.
+B. Examples of Uses.
+• Single detached dwelling
+• Duplex, Triplex, Quadplex
+• Residential home (as defined in Section 12.01.500)
+• Townhouse
+• Cottage cluster
+• Multiple-dwelling structure
+• Manufactured dwelling
+• Live-work dwelling
+• Dwelling unit in mixed-use building
+C. Examples of Accessory Uses.
+• Accessory dwelling units (when accessory to a single detached dwelling or townhouse)
+• Accessory structures
+• Home occupations
+• Certified or registered family child care home as defined in ORS 329A
+• Certified or registered residential home as defined in ORS 443
+• Private community recreation areas and/or facilities and community buildings within a
+development
+• Household energy production facilities, with energy produced and used mainly on-site
+• Amateur or "ham" radio facilities
+12.10.100 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:4
+• Horticultural activities, excluding commercial structures and commercial processing
+D. Exceptions.
+1. Bed and breakfast inns are classified as commercial lodging.
+2. Residential businesses that exceed the standards for home occupations are classified as
+residential business.
+3. Except for residential homes noted in subsection B, facilities that provide State licensed
+and/or permitted provision of care, treatment or training such as medical, rehabilitative,
+palliative, acute or respite care are classified as group living or residential services.
+4. Emergency Shelters as defined in Section 12.01.500 are classified as community
+services.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019)
+12.10.120  Group Living.
+A. Characteristics. Group living is characterized by the residential occupancy of a structure that
+contains more than 8 bedrooms. Persons in group living may, or may not, receive care,
+treatment or training for which the State requires certification or licensure. Group living uses
+often have common facilities for dining, socializing, recreation, laundry, or other activities.
+B. Examples of Uses.
+• Dormitories, fraternities and sororities
+• Monasteries and convents
+• Single detached dwelling with more than 8 bedrooms
+• Group homes for persons with disabilities that are not otherwise classified as household
+living or residential services
+• Facilities for treatment of substance abuse and other addictions that are not licensed or
+certified, for which reasonable accommodation has been mad e under Subsection
+12.80.050.B.
+C. Examples of Accessory Uses.
+• Facilities for shared eating, socializing, recreation, laundry or treatment
+• Institutional kitchens and laundry facilities
+• Offices
+• Parking for residents, visitors, and employees
+D. Exceptions.
+1. Residential occupancy of a dwelling unit that contains 8 or fewer bedrooms is classified
+as household living regardless of the number of dwelling units within a structure.
+2. Lodging where tenancy may be arranged for less than 1 month and a fee is collected and
+transient lodging tax owed is classified as commercial lodging.
+ 12.10.120USE CATEGORIES
+CDC12.10:5
+3. Facilities for persons under judicial detainment with 24-hour supervision are classified as
+detention facilities. This includes court-ordered post-incarceration transitional housing.
+4. Residential facilities as defined by State law (currently ORS 197.660) that are licensed
+and/or permitted by the State are classified as residential services.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.10.130  Residential Services.
+A. Characteristics. Residential services are characterized by the residential or institutional
+occupancy of a structure for persons who receive on-site, State licensed and/or permitted
+provision of care, treatment or training such as medical, rehabilitative, palliative, acute or
+respite care. Residential services uses may have common facilities for dining, socializing,
+recreation and laundry and may provide accessory services such as room and board and
+assistance with activities associated with daily life.
+B. Examples of Uses.
+• Licensed or certified residential facility as defined by State law (currently ORS 197.660)
+• Licensed or certified programs for treatment of substance abuse and other addictions
+• Licensed or certified senior, nursing, or convalescent care, including assisted living
+facilities
+• Licensed or certified hospice facilities
+C. Examples of Accessory Uses.
+• Facilities for shared eating, socializing, recreation, laundry or treatment
+• Institutional kitchens and laundry facilities
+• Offices
+• Parking for residents, visitors and employees
+D. Exceptions.
+1. Facilities that are unlicensed and/or uncertified by the State which provide care, treat-
+ment, or training are classified as either household living or group living depending on the
+number of bedrooms.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.10.140  Residential Business.
+A. Characteristics. Residential business is characterized by the simultaneous occupancy of a
+structure in a residential or mixed-use zone by both a residential use and a commercial or light
+manufacturing use where the latter exceeds the standards for a home occupation as specified
+in Section 12.40.170. The non-residential activity may vary in size and intensity with the
+intensity of the underlying residential zone. The residential occupancy of the structure is not
+12.10.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:6
+limited to the business owner or operator. Residential Business may be subject to additional
+Plan District standards as specified in Subchapter 12.60 and to approval through the Condi-
+tional Use process as specified in Section 12.80.020.
+B. Examples of Uses.
+• Commercial Use, such as bakery or funeral home, with attached dwelling unit
+• Dwelling unit with interior commercial use, such as physician's office or dance school
+• Dwelling unit with attached or interior light manufacturing use, such as glass, pottery or
+textile fabrication
+C. Examples of Accessory Uses.
+• Parking for residents, customers and employees
+• Accessory uses to permitted uses in the zone
+D. Exceptions.
+1. Home Occupations as specified in Section 12.40.170 are classified as Household Living.
+2. In-home child day care that is licensed by the State is classified as Household Living.
+3. Residential homes as defined by the State of Oregon are classified as Household Living.
+4. Residential facilities as defined by the State of Oregon are classified as Residential
+Services.
+5. Licensed and/or certified facilities which provide care, treatment, or training are classified
+as residential services.
+(Ord. 6401 § 1, 2022)
+ 12.10.140USE CATEGORIES
+CDC12.10:7
+12.10.200  Commercial Use Categories.
+Commercial use categories include the following sections:
+12.10.210 Commercial Lodging
+12.10.215 Commercial Recreation
+12.10.220 Commercial Parking
+12.10.225 Durable Goods Sales
+12.10.230 Eating and Drinking Establishments
+12.10.235 Educational Services
+12.10.240 Office
+12.10.245 Retail Products and Services
+12.10.250 Self-Service Storage
+12.10.255 Vehicle Service and Repair
+(Ord. 6401 § 1, 2022)
+12.10.210  Commercial Lodging.
+A. Characteristics. Commercial Lodging includes both privately-owned and -operated and com-
+mercially-owned and -operated overnight accommodations where tenancy is typically ar-
+ranged on a daily, weekly, or monthly basis, and for which transient lodging tax should be paid.
+B. Examples of Uses.
+• Bed and breakfast inns
+• Short-term Rentals (STRs)
+• Hotels and motels
+• Executive suite hotels
+• Extended stay hotels or suites
+C. Examples of Accessory Uses.
+• Banquet, ballroom and conference center facilities
+• Lobbies
+• Offices
+• Parking for customers and employees
+• Restaurant and bars
+• Support retail activities
+• Indoor or outdoor recreation facilities for use by customers only
+12.10.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:8
+D. Exceptions.
+1. Emergency Shelters as defined in Section 12.01.500 are classified as community
+services.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6410 § 1, 2022; Ord. 6401 § 1, 2022)
+12.10.215  Commercial Recreation.
+A. Characteristics. Commercial Recreation uses are sports-oriented facilities used for a variety of
+health, recreational, or social activities. Activities are primarily by and for participants; specta-
+tors are incidental and present on a non-recurring basis. Activities may be conducted within an
+enclosed building or in open facilities.
+B. Examples of Outdoor Commercial Recreation Uses.
+• Golf courses and driving ranges
+• Miniature golf facilities
+• Disc parks
+• Outdoor swimming pools or tracks
+• Outdoor sport courts
+• Batting cages
+C. Examples of Indoor Commercial Recreation Uses.
+• Sports courts
+• Bowling alleys
+• Skating rinks
+• Game arcades, pool halls, and billiards halls
+• Indoor firing ranges
+• Clubs and gymnasiums with weight rooms, indoor pools or tracks, and similar facilities
+D. Examples of Accessory Uses.
+• Caretaker's quarters
+• Concessions or incidental retail sales
+• Restaurants and banquet facilities
+• Conference rooms
+• Child care facilities
+• Maintenance facilities
+• Parking for customers and employees
+ 12.10.215USE CATEGORIES
+CDC12.10:9
+E. Exceptions. Uses which draw large numbers of people to periodic events are classified as
+Major Assembly Facilities.
+(Ord. 6401 § 1, 2022)
+12.10.220  Commercial Parking.
+A. Characteristics. Commercial Parking facilities, in structures or on surface lots, provide public,
+customer, or employee accessory parking not associated with a particular use. A facility
+providing both accessory and general parking is also classified as a Commercial Parking
+facility. A fee may or may not be charged.
+B. Examples of Uses.
+• Short- and long-term fee parking garages and surface parking lots
+• Commercial district shared parking lots
+• Commercial shuttle parking
+C. Examples of Accessory Uses.
+• Ground floor or second floor commercial or institutional uses
+• Alternative transportation facilities such as secured bicycle parking
+D. Exceptions.
+1. Surface lots or parking garages accessory to a particular Use, used by the public for a fee
+during occasional nearby events are not classified as Commercial Parking.
+2. Public transit park-and-ride facilities are classified as Surface Alternative Transportation
+Facilities.
+(Ord. 6401 § 1, 2022)
+12.10.225  Durable Goods Sales.
+A. Characteristics. Durable Goods Sales involve the sale, rental or leasing of new and used large
+goods having extended utility and generally requiring extensive indoor and/or outdoor display
+areas.
+B. Examples of Uses.
+• Furniture, large appliance and home improvement stores
+• Lumber yards
+• New and used vehicle sales including those for automobiles, trucks, motorcycles, boats
+and other personal transportation vehicles
+• Nurseries
+C. Examples of Accessory Uses.
+• Indoor or outdoor display and storage areas
+• Offices
+12.10.215 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:10
+• On-site receiving, warehousing and shipping facilities
+• Parking for customers and employees
+D. Exceptions.
+1. Sales of building and landscaping materials primarily sold to contractors is classified as
+Wholesale Sales.
+2. Sales, leasing or rental of industrial, farm, or construction equipment is classified as
+Wholesale Sales.
+(Ord. 6401 § 1, 2022)
+12.10.230  Eating and Drinking Establishments.
+A. Characteristics. Eating and Drinking Establishments sell food and/or beverages to the general
+public as the primary Use, for on-site consumption and/or take-away service.
+B. Examples of Uses.
+• Cafes, coffee shops and delicatessens
+• Dine-in restaurants with or without take-out facilities
+• Drive-up or drive-through restaurants with or without seating
+• Taverns, brew pubs, bars and night clubs
+C. Examples of Accessory Uses.
+• Offices
+• Parking for customers and employees
+• Storage
+• Outdoor seating or banquet facilities
+• On-site breweries or wineries, with tasting rooms
+• Catering facilities
+• Incidental retail sales
+D. Exceptions.
+1. Food service that is accessory to another use, (e.g., hotel, major entertainment venue),
+is regulated as part of the primary use.
+2. Catering or food preparation without on-site consumption is classified as Retail Products
+and Services.
+(Ord. 6401 § 1, 2022)
+ 12.10.230USE CATEGORIES
+CDC12.10:11
+12.10.235  Educational Services.
+A. Characteristics. Educational Services provide specialized training or instruction not regulated
+by the State of Oregon Board of Higher Education. These services may be provided to children
+or adults. Training or instruction may be provided for fine arts, recreational or athletic activities,
+professional or vocational skills, or academic tutorial instruction.
+B. Examples of Uses.
+• Business and trade schools
+• Martial arts or gymnastics instruction
+• Music or dance instruction
+• Arts and crafts schools
+• Culinary schools
+• Vocational training for disabled persons
+• Tutoring services
+C. Examples of Accessory Uses.
+• Offices
+• Parking for students, customers and employees
+• Storage
+D. Exceptions.
+1. Institutions regulated by the State of Oregon Board of Higher Education are classified as
+Colleges and Universities.
+2. Trade schools where industrial vehicles and equipment are operated are classified as
+Industrial Services.
+(Ord. 6401 § 1, 2022)
+12.10.240  Office.
+A. Characteristics. Office uses provide professional services in an office setting.
+B. Examples of Uses.
+• Computer system design and programming
+• Construction contracting offices without on-site storage
+• Data processing
+• Engineering, architectural, planning, and similar services
+• Graphic and industrial design
+• Outpatient medical, dental, behavioral health, substance use disorder, and allied health
+clinics and offices, and blood collection facilities
+12.10.235 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:12
+• Psilocybin facilities
+• Medical and dental laboratories
+• Movie production facilities and recording studios
+• Financial, insurance, and real estate services
+• Scientific and technical services
+• Software and internet content development and publishing
+• Telecommunication service providers
+• Telemarketing or custom support center
+• Television, video, radio, and internet studios and broadcasters
+C. Examples of Accessory Uses.
+• Cafeterias
+• Parking for customers and employees
+• Recreation facilities, and other amenities primarily for the use of employees in the
+company or building
+D. Exceptions. If equipment and materials are stored on site and/or work is undertaken on site,
+contracting firms are classified as industrial services.
+(Ord. 6417 § 1, 2022; Ord. 6408 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1,
+2019)
+12.10.245  Retail Products and Services.
+A. Characteristics. Retail products and services sell, lease, rent and/or repair new or used
+products and provide personal services. These services typically are provided directly to
+consumers, as opposed to wholesale products and services provided to industrial, institutional,
+or commercial users.
+B. Examples of Uses.
+• Sales, leasing or rental of products and equipment including art and crafts supplies,
+bicycles, dry goods, electronic equipment, entertainment media, groceries, hardware,
+home improvements, jewelry, pets, pet food, pharmaceuticals, plants and garden sup-
+plies, office supplies, and printed media
+• Retail sales of marijuana, cannabinoid products, and related items, including medical
+marijuana from a State-licensed retail sales facility
+• Repair or servicing of products or equipment generally performed on-site including
+communication and electronic devices, bicycles, clocks, watches, shoes, firearms,
+appliances and office equipment, locksmithing, and upholstery
+• Processing of products or equipment, including photo processing, dry cleaning and
+alterations, and photocopy and blueprint services
+ 12.10.245USE CATEGORIES
+CDC12.10:13
+• Personal services including adult or child day care, branch banks, free-standing urgent
+medical care clinics, laundromats, photographic studios, personal care services, soup
+kitchens and surplus food distribution centers, taxidermists, mortuaries and crematoria,
+and animal-related services including animal day care, grooming and overnight boarding
+and veterinary clinics
+• A minor assembly facility, such as a theater, church, or fraternal club, with a maximum
+Oregon Structural Specialty Code occupancy within the primary assembly area that is
+less than 250 persons
+• Catering or food preparation without on-site consumption
+C. Examples of Accessory Uses.
+• Delivery of marijuana, cannabinoid products, and related items, including medical mari-
+juana, from a State-licensed retail sales facility
+• Manufacturing or repackaging of goods for on-site sale
+• Offices
+• Parking for customers and employees
+• Storage
+D. Exceptions.
+1. Sales, leasing and/or rental of automobiles, motorcycles, boats and trucks are classified
+as durable goods sales.
+2. Sales, leasing and/or rental of industrial, farm or construction equipment are classified as
+wholesale sales.
+3. Repair and service of automobiles, motorcycles and boats is classified as vehicle service
+and repair.
+4. Service of industrial, construction, and farm vehicles and equipment is classified as
+industrial services.
+5. Trade schools providing instruction on heavy equipment or truck operation are classified
+as industrial services.
+6. In home child day care that is licensed by the State is classified as household living.
+7. Residential homes that are licensed and/or permitted by the State are classified as
+household living.
+8. Facilities that are licensed and/or permitted by the State which provide care, treatment or
+training are classified as residential services.
+9. Medical clinics or medical office buildings providing outpatient care and not located in a
+hospital are classified as office.
+12.10.245 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:14
+10. Uses involving concentrations of people gathering in reasonably close quarters such as
+theaters, churches, or fraternal clubs, with a maximum Oregon Structural Specialty Code
+occupancy within the primary assembly area that is equal to or greater than 250 persons,
+are classified as major assembly facilities.
+(Ord. 6408 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.10.250  Self-Service Storage.
+A. Characteristics. Self-service storage uses provide free-standing indoor storage facilities for
+rent to individuals and businesses. These uses are designed to allow private access at all
+hours by the tenant for storing or removing personal or business property.
+B. Examples of Uses.
+• Mini-storages or mini-warehouses that are single-story or multi-story buildings with
+outside access to each unit or inside access from a common internal hallway
+C. Examples of Accessory Uses.
+• Caretaker's residence
+• Offices for security and/or leasing functions
+• Moving truck or trailer rental
+• Portable storage container rental
+• Covered or uncovered storage of vehicles
+• Parking for customers and employees
+D. Exceptions. A transfer and storage business where there are no individual storage units or
+where business employees are the primary movers of the stored or transferred goods is
+classified as warehouse and freight movement.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.10.255  Vehicle Service and Repair.
+A. Characteristics. Vehicle service and repair include those uses related to service or repair of
+automobiles, trucks, motorcycles, boats, recreational vehicles and other personal transporta-
+tion vehicles.
+B. Examples of Uses.
+• Vehicle servicing and repair
+• Vehicle body and/or paint shops
+• Vehicle washes
+• Department of Environmental Quality vehicle emission test sites
+ 12.10.255USE CATEGORIES
+CDC12.10:15
+• Automobile service stations, including gas stations and unattended card-lock fueling
+stations
+• Quick lubrication services
+• Tire sales and installation shops
+• Vehicle engine, transmission and muffler repair and maintenance shops
+• Vehicle upholstery and detailing shops
+C. Examples of Accessory Uses.
+• Offices
+• Indoor vehicle parts and sales
+• Indoor storage of vehicle parts and tires
+• On-site associated convenience store
+• On-site fleet refueling and maintenance facilities
+• Parking for customers and employees
+D. Exceptions.
+1. Truck stops are classified as industrial services.
+2. Refueling facilities for business fleets or bus barns located where such vehicles are
+stored are accessory uses to the primary use of the site.
+3. Sales, leasing and rental of construction and farm trucks and equipment are classified as
+wholesale sales.
+4. Repair and service of heavy trucks, industrial vehicles and equipment is classified as
+industrial service.
+5. Towing and vehicle storage is classified as vehicle storage.
+6. Vehicle wrecking and salvage is classified as solid waste treatment and recycling.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.10.255 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:16
+12.10.300  Industrial Use Categories.
+Industrial use categories include the following sections:
+12.10.310 Industrial Services
+12.10.320 Manufacturing and Production
+12.10.330 Solid Waste Treatment and Recycling
+12.10.340 Vehicle Storage
+12.10.350 Warehouse and Freight Movement
+12.10.360 Wholesale Sales
+(Ord. 6401 § 1, 2022)
+12.10.310  Industrial Services.
+A. Characteristics. Industrial services uses are engaged in repair and/or servicing of industrial,
+business or consumer machinery, equipment, products or by-products or in training or
+instruction of such repair or servicing. Contractors and building maintenance firms and similar
+uses perform services on or off site.
+B. Examples of Uses.
+• Building, heating, plumbing and electrical contractors
+• Bulk sales of building materials and landscaping materials
+• Contracting firms with on-site storage of equipment and materials
+• Data storage, processing and information technology centers
+• Equipment rental facilities
+• Extermination services
+• Fuel oil distribution and solid fuel yards
+• Heavy truck servicing and repair
+• Janitorial and building maintenance services
+• Laundry, dry-cleaning and carpet cleaning plants (not self-service)
+• Printing, publishing and lithography shops
+• Research and development laboratories
+• Repair and servicing of heavy construction or farm equipment (not automobiles)
+• Testing laboratories for marijuana, cannabinoid products, and related items, including
+medical marijuana
+• Tire retreading or recapping
+• Tool, electric motor and scientific or professional instrument repair
+• Trade schools where industrial vehicles and equipment are operated
+ 12.10.310USE CATEGORIES
+CDC12.10:17Supp. No. 1
+• Truck stops
+• Welding and machine shops
+C. Examples of Accessory Uses.
+• Interior and exterior storage of equipment and materials
+• Offices
+• Parking for customers, employees and fleet vehicles
+D. Exceptions.
+1. If equipment and materials are stored off site, and work is not undertaken on site,
+contracting firms are classified as office.
+2. Hotels, restaurants and other services which are part of a truck stop are considered
+accessory to the truck stop.
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.10.320  Manufacturing and Production.
+A. Characteristics. Manufacturing and production companies are involved in the manufacturing,
+processing, fabrication, packaging and/or assembly of products on-site, using natural, human-
+made, raw, secondary or partially-completed materials. Products are generally not displayed or
+sold on site, but if so, sales and display are accessory to the primary use. This category
+includes cottage industry as defined in Section 12.01.500. Products may be displayed or sold
+on site in a cottage industry use.
+B. Examples of Uses.
+• Breweries, distilleries and wineries
+• Catering establishments and commissaries
+• Concrete batching and asphalt mixing plants
+• Manufacture of solar, wind-power or other energy production devices
+• Food, beverage, and related product processing
+• Manufacture or assembly of machinery, equipment and instruments
+• Manufacture of micro-processors and computer components
+• Production of artwork and toys
+• Production of chemical, rubber, leather, clay, bone, plastic, stone or glass materials or
+products
+• Production of prefabricated structures, including manufactured dwellings
+• Production or fabrication of metals or metal products including enameling and galvaniz-
+ing
+12.10.310 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:18Supp. No. 1
+• Production or processing of marijuana, cannabinoid products, and related items, includ-
+ing medical marijuana
+• Sign making
+• Weaving or production of textiles or apparel
+• Woodworking, including cabinet makers
+• Printing, publishing, and lithography shops
+C. Examples of Accessory Uses.
+• Cafeterias
+• Employee recreational facilities
+• Interior and exterior storage
+• Offices
+• Parking for employees and fleet vehicles
+• Research and development specific to the primary use
+• On-site caretaker residence
+• Food and beverage production, on-site tasting rooms, with or without food service
+D. Exceptions.
+1. Manufacturing of goods to be sold primarily on site and to the general public is classified
+as retail products and services.
+2. Compost production and rendering plants are classified as solid waste treatment and
+recycling.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.10.330  Solid Waste Treatment and Recycling.
+A. Characteristics. Solid waste treatment and recycling are characterized by uses that receive,
+process and/or recycle solid waste materials.
+B. Examples of Uses.
+• Vehicle and heavy machinery salvage and wrecking
+• Energy recovery plants
+• Hazardous-waste collection sites
+• Portable toilet collection, storage and pumping
+• Commercial recycling collection sites
+• Landfills
+• Commercial waste composting and/or compost production
+ 12.10.330USE CATEGORIES
+CDC12.10:19Supp. No. 1
+• Rendering plants
+C. Examples of Accessory Uses.
+• Loading docks
+• Material recycling facilities
+• Offices
+• Parking for employees and fleet vehicles
+• Re-packaging, sales and shipment of by-products and salvaged goods
+D. Exceptions.
+1. Disposal of clean fill material, as defined in OAR 340-093-0030, is not regulated as a land
+use.
+2. Community recycling or composting facilities at a community garden are classified as
+Community Services.
+(Ord. 6401 § 1, 2022)
+12.10.340  Vehicle Storage.
+A. Characteristics. Vehicle storage yards provide covered or uncovered storage facilities for
+vehicles including automobiles, trucks, trailers, boats and recreational vehicles.
+B. Examples of Uses.
+• Vehicle impoundment yards
+• Vehicle fleet storage and maintenance facilities
+• Towing and vehicle storage operations
+• School bus yards
+• Recreational vehicle storage
+C. Examples of Accessory Uses.
+• Caretaker's residence
+• Offices for security and/or leasing functions
+• Waste disposal facilities for tenants' use
+• Mini-warehouse units accessory to the vehicle storage
+• Fleet maintenance, refueling and storage
+• Parking for customers and employees
+D. Exceptions. None.
+(Ord. 6401 § 1, 2022)
+12.10.330 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:20Supp. No. 1
+12.10.350  Warehouse and Freight Movement.
+A. Characteristics. Warehouse and Freight Movement companies are involved in the storage,
+repackaging, delivery and movement of products.
+B. Examples of Uses.
+• Centralized warehouses
+• Cold storage plants, including frozen food lockers
+• General freight storage
+• Household and business moving operations
+• Major post offices
+• Major wholesale distribution centers
+• Parcel or postal distribution facilities
+• Storage and stockpiling of sand, gravel, or other aggregate or raw materials
+• Freight terminals and yards
+• Mail-order merchandise warehouses
+• Heavy rail facilities
+• Transfer and storage facilities without individual units
+C. Examples of Accessory Uses.
+• Loading docks
+• Maintenance areas
+• Offices
+• Parking for customers, employees and fleet vehicles
+• Customer support centers
+D. Exceptions.
+1. Uses that involve the transfer or storage of solid or liquid wastes are classified as Solid
+Waste Treatment and Recycling.
+2. Mini-warehouses are classified as Self-Service Storage.
+(Ord. 6401 § 1, 2022)
+12.10.360  Wholesale Sales.
+A. Characteristics. Wholesale Sales companies are involved in the sale, lease and/or rental of
+products primarily to businesses. On-site sales to the general public are limited.
+B. Examples of Uses.
+• Mail order houses
+ 12.10.360USE CATEGORIES
+CDC12.10:21
+• Sale and/or rental of construction and farm machinery, equipment, and vehicles, building
+materials, special trade tools, welding supplies, machine parts, electrical supplies,
+janitorial supplies, restaurant equipment and store fixtures
+• Wholesalers of food, clothing, auto parts, building hardware and office supplies
+• Wholesalers of marijuana, cannabinoid products, and related items, including medical
+marijuana
+C. Examples of Accessory Uses.
+• Offices
+• Product repair facilities
+• Parking for customers, employees and fleet vehicles
+• Warehouses
+D. Exceptions.
+1. Companies that engage primarily in sales to the general public are classified as Retail
+Products and Services.
+2. Companies that engage in sales on a membership basis are classified as either Retail
+and Products Services or Wholesale Sales, based on the characteristics of the Use.
+3. Companies that are primarily storing goods with little on-site business activity are
+classified as Warehouse and Freight Movement.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.10.360 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:22
+12.10.400  Institutional Use Categories.
+Institutional Use categories include the following sections:
+12.10.410 Colleges and Universities
+12.10.420 Community Services
+12.10.430 Detention Facilities
+12.10.440 Hospitals
+12.10.450 Major Assembly Facilities
+12.10.460 Schools
+(Ord. 6401 § 1, 2022)
+12.10.410  Colleges and Universities.
+A. Characteristics. This category includes public or private colleges, universities and institutions
+which offer courses of study leading to an associate, bachelors and/or advanced degrees or
+trades certification. Such institutions are certified by the State of Oregon Board of Higher
+Education or by a recognized accrediting agency.
+B. Examples of Uses.
+• Community colleges
+• Liberal arts colleges
+• Religious colleges
+• Universities
+• Medical or nursing schools
+C. Examples of Accessory Uses.
+• Auditoriums and conference facilities
+• Faculty and administrative offices
+• Food service and dining facilities
+• Health facilities
+• Indoor or outdoor research animal housing
+• Indoor and outdoor recreation facilities including gymnasiums, playing fields and stadi-
+ums
+• Libraries, classrooms, laboratories and related instructional facilities
+• Student, faculty/staff and visitor parking
+• Student housing
+• Support retail services
+ 12.10.410USE CATEGORIES
+CDC12.10:23
+• Parking for students, visitors, employees and fleet vehicles
+• Utility plants and facilities
+• Security offices
+D. Exceptions. Business and trade schools are classified as Educational Services.
+(Ord. 6401 § 1, 2022)
+12.10.420  Community Services.
+A. Characteristics. Community Services are uses of a public or nonprofit nature providing a range
+of continuous on-site social, cultural and recreational services to residents of the community.
+B. Examples of Uses.
+• Community centers, youth or senior centers, open to the general public
+• Community aquatic centers, open to the general public
+• Libraries, museums and related cultural facilities
+• Post offices
+• Animal shelters
+• Emergency shelters
+C. Examples of Accessory Uses.
+• Indoor athletic facilities
+• Classrooms and conference rooms
+• Day care facilities
+• Food service and dining areas
+• Health and therapy facilities
+• Offices
+• Parking for customers, employees and fleet vehicles
+D. Exceptions.
+1. Private lodges, clubs and private or commercial athletic or health clubs are classified as
+Retail Products and Services.
+2. Emergency shelters operating for a period of 90 days or less are considered temporary
+buildings or uses and subject to HMC Subchapter 11.12.
+(Ord. 6401 § 1, 2022)
+12.10.410 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:24
+12.10.430  Detention Facilities.
+A. Characteristics. Detention Facilities include facilities for the court-ordered detention or incar-
+ceration of people. Inmates and detainees are under 24-hour supervision by peace officers or
+other designated personnel, except when on an approved leave.
+B. Examples of Uses.
+• Jails and prisons
+• Juvenile detention facilities
+• Post-incarceration transitional facilities and restitution centers
+C. Examples of Accessory Uses.
+• Food service and dining facilities
+• Housing for residents and supervisory staff
+• Administrative and facility offices
+• Parking for visitors, employees and fleet vehicles
+• Recreational, health and therapy facilities
+• Vocational and manufacturing facilities
+D. Exceptions. None.
+(Ord. 6401 § 1, 2022)
+12.10.440  Hospitals.
+A. Characteristics. Hospitals provide comprehensive inpatient, outpatient and emergency ser-
+vices and are accredited by State and national accreditation agencies. Such institutions tend
+be located on multi-block sites in campus-like settings. Hospitals may or may not include
+on-campus medical office buildings associated with the hospital organization.
+B. Examples of Uses.
+• Free-standing inpatient hospitals
+• Inpatient hospitals including on-campus medical office buildings
+C. Examples of Accessory Uses.
+• Administrative and physician offices
+• Auditoriums and conference facilities
+• Food service and dining facilities
+• Chapels or meditation centers
+• Housekeeping and maintenance facilities
+• Inpatient, emergency and outpatient diagnostic and treatment facilities
+• Physical therapy and rehabilitation facilities
+ 12.10.440USE CATEGORIES
+CDC12.10:25
+• Overnight housing for patients, their families, and health care providers
+• Parking for patients, employees, visitors and fleet vehicles (including temporary recre-
+ational vehicle visitor parking)
+• Teaching facilities for health care professionals including nursing and medical schools
+• Central utility plants
+• Security offices
+D. Exceptions.
+1. Residential homes that are licensed and/or permitted by the State are classified as
+Household Living.
+2. Residential facilities that are licensed and/or permitted by the State are classified as
+residential services.
+3. Facilities that are licensed and/or permitted by the State which provide care, treatment, or
+training are classified as residential services.
+4. Free-standing medical clinics or medical office buildings providing outpatient care and
+not located in a hospital campus are classified as office.
+5. Free-standing urgent medical care clinics are classified as retail products and services.
+6. Free-standing facilities that are licensed and/or permitted by the State as a hospital but
+provide only specialized non-emergency inpatient care and are not located in a hospital
+campus are classified as residential service.
+(Ord. 6408 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.10.450  Major Assembly Facilities.
+A. Characteristics. Major assembly facilities are uses that attract a large number of people who
+participate as a group in a specific activity or event that may be religious, cultural, social or
+recreational. The distinguishing characteristic between a major and minor assembly facility is
+maximum occupancy. The maximum Oregon Structural Specialty Code occupancy within the
+primary assembly area of a major assembly facility is equal to or greater than 250 persons and
+less than 250 persons for a minor assembly facility.
+B. Examples of Uses.
+• Churches, synagogues, mosques or temples
+• Auditoriums
+• Coliseums, stadiums and sports arenas
+• Convention and conference centers
+• Fairgrounds
+• Race tracks
+• Outdoor amphitheaters
+12.10.440 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:26
+C. Examples of Accessory Uses.
+• Locker rooms and related indoor and outdoor recreational facilities
+• Social halls and kitchens
+• Restaurants, bars and concessions
+• Offices
+• Maintenance facilities
+• Child or senior day care
+• Religious school classrooms
+• Parking for attendees, customers and employees
+• Recreational vehicle camping facilities where permitted in the underlying base zone
+• Caretaker residence
+D. Exceptions.
+1. A minor assembly facility is classified as retail products and services.
+2. Day care/nursery schools and schools for students from grades K-12 that are located in
+a religious institution are subject to regulations for day care and schools, respectively.
+3. An assembly area that is accessory to the primary use, such as a conference facility in a
+hotel or industrial campus or an auditorium in a school, is considered accessory to the
+primary use.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015; Ord. 6112 § 1, 2015)
+12.10.460  Schools.
+A. Characteristics. School uses are public and private educational facilities providing State-
+mandated basic education. Schools may serve any ages of students from kindergarten
+through 12th grade.
+B. Examples of Uses.
+• Public and private elementary, middle and high schools, with or without kindergartens
+• Boarding schools and military academies that have residential facilities for students
+C. Examples of Accessory Uses.
+• Auditoriums
+• Classrooms, laboratories, libraries and related educational facilities
+• Daycare facilities for students and staff
+• Kitchens and cafeterias
+• Indoor and outdoor recreational facilities including gymnasiums and athletic facilities
+• Offices
+ 12.10.460USE CATEGORIES
+CDC12.10:27
+• Parking for visitors, students (high school only) and employees
+• Student housing
+D. Exceptions.
+1. Pre-schools which are standalone schools not associated with the grade levels of
+State-mandated basic education are classified as day care under retail products and
+services.
+2. Pre-schools which are incorporated into the education continuum of State-mandated
+basic education within a public or private educational facility are classified as schools but
+are subject to the Special Use Standards in Section 12.40.150.
+3. Business and trade schools are classified as educational services.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.10.460 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:28
+12.10.500  Infrastructure and Utilities Categories.
+Infrastructure and utilities use categories include the following sections:
+12.10.510 Aviation Uses
+12.10.520 Parks and Open Areas
+12.10.530 Public Safety Facilities
+12.10.540 Surface Alternative Transportation Facilities
+12.10.550 Telecommunication Facilities
+12.10.560 Utility Facilities
+(Ord. 6401 § 1, 2022)
+12.10.510  Aviation Uses.
+A. Characteristics. Aviation Uses include landing, take-off, servicing and storage of aircraft
+including airplanes, jets, helicopters and gliders, and activities related to or using aircraft or
+aviation services.
+B. Examples of Uses.
+• Aviation-related activities, including taxiing, take-offs and landings
+• Air passenger and air freight services and facilities
+• Emergency medical flight services
+• Law enforcement and firefighting activities
+• Search and rescue operations
+• Flight instruction
+• Aircraft service, maintenance and training
+• Aircraft rental and supporting facilities
+• Aircraft and aeronautic equipment and supplies sales
+• Indoor or outdoor storage of aircraft (hangars or tie-downs)
+• Crop dusting activities
+• Agricultural activities as authorized by the airport authority
+• Manufacturing, processing, or distribution of aircraft or aircraft related products
+• Commercial supporting uses at terminal buildings
+• Aeronautic educational, recreational and sporting activities
+• Flights carrying parachutists and parachute drops
+C. Examples of Accessory Uses.
+• Aircraft sales and storage
+ 12.10.510USE CATEGORIES
+CDC12.10:29
+• Air traffic control towers
+• Freight-handling areas
+• Landside aviation navigation facilities
+• Offices
+• Maintenance and fueling facilities
+• Parking for pilots, visitors, employees and fleet vehicles
+• Restaurants, concessions and shops
+D. Exceptions. Private helicopter landing facilities on the same site as another use, such as a
+hospital, are considered accessory uses. However, such facilities remain subject to all Federal
+and State regulations governing helicopter landing facilities.
+(Ord. 6401 § 1, 2022)
+12.10.520  Parks and Open Areas.
+A. Characteristics. Parks and Open Areas are primarily publicly-owned or nonprofit facilities
+featuring natural or cultivated landscaping; active and passive outdoor recreation including
+playing fields, basketball and tennis courts, swimming pools and trails; community gardens
+and public squares.
+B. Examples of Uses.
+• Botanical gardens
+• Cemeteries
+• Community gardens
+• Nature preserves
+• Parks
+• Public squares and plazas
+• Recreational trails
+C. Examples of Accessory Uses.
+• Caretaker's residence
+• Educational centers
+• Columbaria and mausoleums
+• Incidental retail and concessions
+• Maintenance facilities
+• Playing fields, tennis courts, swimming pools and trails
+• Parking for visitors and employees
+• Picnic shelters and pedestrian amenities
+12.10.510 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:30
+• Ponds and water features
+D. Exceptions. Golf courses are classified as Commercial Recreation.
+(Ord. 6401 § 1, 2022)
+12.10.530  Public Safety Facilities.
+A. Characteristics. Public Safety Facilities provide police, fire, ambulance and emergency ser-
+vices to the community. With the exception of ambulance services, these facilities are typically
+publicly owned and operated.
+B. Examples of Uses.
+• Emergency communications centers
+• Police and fire stations
+• Publicly- and privately-operated ambulance facilities
+• Public agency or private utility operations centers
+C. Examples of Accessory Uses.
+• Communication equipment and towers
+• Kitchens and dining facilities
+• Overnight accommodations for employees
+• Parking for visitors, employees, fleet vehicles and equipment
+• Training facilities
+• Recreational facilities for employees
+D. Exceptions. None.
+(Ord. 6401 § 1, 2022)
+12.10.540  Surface Alternative Transportation Facilities.
+A. Characteristics. Surface Alternative Transportation Facilities support mass transit, including
+bus, light rail, commuter rail, and bicycle transportation. Surface Alternative Transportation
+Facilities do not include road rights-of-way and the associated improvements such as bicycle
+paths, lanes or sidewalks.
+B. Examples of Uses.
+• Bicycle parking centers
+• Bus stops and shelters
+• Light rail or commuter stations and transit centers
+• Transit park-and-ride facilities, both surface and structured
+• Transit vehicle storage and maintenance yards
+ 12.10.540USE CATEGORIES
+CDC12.10:31
+C. Examples of Accessory Uses.
+• Ticketing equipment or booths
+• Incidental retail Uses
+• Public safety facilities
+• Public open space
+D. Exceptions.
+1. Heavy rail facilities are classified as Warehouse and Freight Movement.
+2. School bus yards are classified as Vehicle Storage.
+(Ord. 6401 § 1, 2022)
+12.10.550  Telecommunication Facilities.
+A. Characteristics. Telecommunication Facilities include all devices, equipment, machinery, struc-
+tures and supporting structures necessary to produce or transfer a signal or message. Only
+free-standing towers are classified as Telecommunication Facilities.
+B. Examples of Uses.
+• AM and FM radio and television towers, including "low power FM" facilities
+• Wireless transmission towers
+• Point-to-point microwave towers
+• Two-way radio towers
+• Receive only antennas
+C. Examples of Accessory Uses.
+• Broadcast facilities
+• Offices
+• Parking for visitors and employees
+• Transmitter facilities
+• Utility cabinets
+• Generators and other incidental improvements
+D. Exceptions.
+1. Free-standing radio and television studios are classified as Offices.
+2. Telecommunication Facilities at a Public Safety Facilities use are accessory to that use.
+3. Amateur "Ham" radio facilities on residential property are accessory to the Household
+Living use.
+12.10.540 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.10:32
+4. Stealth telecommunication facilities mounted on or within buildings or structures are not
+regulated as separate from the primary use.
+(Ord. 6401 § 1, 2022)
+12.10.560  Utility Facilities.
+A. Characteristics. Utility Facilities are local and regional infrastructure facilities which must be
+located in or near the area to which the infrastructure is provided. Utility facilities may be
+publicly or privately owned and operated. Most facilities have few or no on-site employees,
+although treatment plants may be staffed continuously.
+B. Examples of Uses.
+• Electrical substations
+• High tension electrical power lines
+• Sewage disposal and conveyance systems
+• Telephone exchange equipment
+• Water or sewage pump stations
+• Water towers and reservoirs
+• Water quality and flow control facilities
+• Water or sewage treatment plants
+C. Examples of Accessory Uses.
+• Control, monitoring, data and/or transmission equipment within or outside structures
+• Offices
+• Parking for visitors, employees and fleet vehicles
+• Security fencing
+D. Exceptions.
+1. Utility offices where employees or customers are generally present are classified as
+Offices.
+2. Public agency or private utility operations centers are classified as Public Safety Facili-
+ties.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+ 12.10.560USE CATEGORIES
+CDC12.10:33

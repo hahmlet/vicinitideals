@@ -1,0 +1,2719 @@
+SUBCHAPTER 12.80
+ APPLICATIONS
+12.80.005 Purpose.
+12.80.010 Annexation.
+12.80.020 Conditional Use.
+12.80.030 Cultural Resource Alterations, Relocations and Demolitions.
+12.80.040 Development Review.
+12.80.050 Director's Interpretation.
+12.80.060 Fence Permit.
+12.80.070 Floodplain Activity.
+12.80.080 Home Occupation Permit.
+12.80.090 Land Divisions, Property Line Adjustments, and Lot Consolidations.
+12.80.092 Property Line Adjustment.
+12.80.094 Lot Consolidation.
+12.80.096 Partition.
+12.80.098 Subdivision.
+12.80.099 Expedited and Middle Housing Land Divisions.
+12.80.100 Modification of Approved Plans and Permits.
+12.80.110 Nonconforming Use or Structure Expansion.
+12.80.120 Planned Unit Development.
+12.80.122 PUD Implementation through Development Review or Land Division Approval.
+12.80.126 Partial-Dwelling STR.
+12.80.130 Significant Natural Resources Permit.
+12.80.140 Text Amendment.
+12.80.150 Variances and Adjustments.
+12.80.152 Variances.
+12.80.154 Minor Adjustments.
+12.80.156 Major Adjustments.
+12.80.158 Standard-Specific Approval Criteria for Variances and Adjustments.
+12.80.160 Zoning and Comprehensive Plan Amendments.
+12.80.162 Comprehensive Plan Map Amendment.
+12.80.164 Comprehensive Plan Minor Amendment.
+12.80.166 Comprehensive Plan Major Amendment.
+12.80.168 Zone Change.
+12.80.170 Zoning Review.
+12.80.180 Non-Temporary Emergency Shelter Review.
+CDC12.80:1Supp. No. 1
+
+12.80.005  Purpose.
+A. Purpose. This subchapter establishes approval criteria for each type of land use application
+and legislative land use action (Type I, II, III, or IV) and applications filed under an authorized
+land use process alternative (Zoning Review, Expedited Land Division, and Middle Housing
+Land Division). Cross-references to the procedure type that governs the decision-making
+process and to the Code standards specific to the particular application are provided.
+B. Summary Table. Table 12.70.020-1 in Subchapter 12.70 lists the procedures types, decision
+and appeal authority for applications included in this subchapter.
+C. Approval Criteria.
+1. Approval criteria define the burden of proof that an applicant must meet for approval of an
+application. Approval criteria also set parameters for issues that may be raised by the City
+or affected parties.
+2. When an approval criterion refers to a requirement to meet a specific threshold, such as
+provision of adequate services or absence of significant detrimental environmental
+impacts, satisfaction of that criterion includes any proposed or conditioned improve-
+ments, mitigation measures, and limitations. All proposed or conditioned improvements,
+mitigation measures and limitations must be identified prior to a final decision by a Review
+Authority.
+3. Review against the goals and policies of the Comprehensive Plan is not required unless
+specifically stated as an approval criterion.
+(Ord. 6401 § 1, 2022)
+12.80.010  Annexation.
+A. Purpose. The annexation application process is intended to facilitate efficient urban and
+economic development opportunities by transferring jurisdiction over properties within the
+Urban Growth Boundary from Washington County to the City of Hillsboro. The process is
+intended to comply with the requirements of ORS 222, ORS 268 and Metro Code Section 3.09.
+B. Procedure. An annexation application is subject to a modified Type III procedure, including
+public notice and a public hearing.
+C. Submittal Requirements.
+1. An annexation application must include the information set forth in Metro Code 3.09, and
+the applicable application fee(s).
+2. For property in the South Hillsboro and Witch Hazel Village South Plan Districts and the
+Jackson East-North and Jackson East-South Sub-Areas, an owner-initiated annexation
+application shall include an executed annexation agreement consistent with Section
+12.65.040.
+ 12.80.010APPLICATIONS
+CDC12.80:3Supp. No. 1
+D. Zone Change Process Concurrent with Annexation Application.
+1. Pursuant to Subsection 12.80.168.C., the Planning Commission may initiate a Zone
+Change on properties for which an annexation application has been received and
+deemed complete. The Planning Commission's action to initiate the Zone Change shall
+include a recommendation of appropriate zone or zones, based on the approval criteria
+in Subsection 12.80.168.E., and shall be forwarded to the City Council in conjunction with
+the annexation application. The City Council may approve, modify or deny the Planning
+Commission's recommendation. The City Council may condition the Zone Change
+consistent with Subsection 12.80.168.F.
+2. A property owner who seeks a zone other than the zone recommended by the Planning
+Commission may apply for a Zone Change to an alternative zone. An owner-initiated
+Zone Change application for annexed property shall be processed under Section
+12.80.168.
+3. A property owner in the South Hillsboro Plan District who seeks a zone other than the
+zone recommended by the Planning Commission may apply for a Zone Change to an
+alternative zone, provided that requested zone is consistent with the provisions of an
+applicable annexation agreement executed under Section 12.65.040. An owner-initiated
+Zone Change application for annexed property in the South Hillsboro Plan District shall
+be processed under Section 12.80.168.
+E. Approval Criteria. The City may approve an annexation application if the City determines the
+following criteria are met:
+1. These criteria are set forth in Metro Code 3.09.
+2. In the South Hillsboro and Witch Hazel Village South Plan Districts and the Jackson
+East-North and Jackson East-South Sub-Areas, that the annexation is consistent with
+the re-quirements of an applicable annexation agreement.
+3. The annexation is in the City's best interest.
+F. Conditions of Approval. Except in the South Hillsboro Plan District, approval of an annexation
+application cannot be conditioned by the City.
+G. Appeal of a Decision. A final decision on an annexation application may be appealed to the
+Land Use Board of Appeals.
+H. Expiration of a Decision. A final decision on an annexation application does not expire.
+I. Extension of a Decision. Because a final decision on an annexation application does not
+expire, the decision is not subject to extension.
+(Ord. 6401 § 1, 2022; Ord. 6250 § 1, 2017; Ord. 6110 § 10, 2015; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.80.010 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:4Supp. No. 1
+12.80.020  Conditional Use.
+A. Purpose. Although they may have beneficial effects and serve important public interests,
+certain Uses are identified in this Code as conditional uses rather than permitted uses. The
+purpose of the Conditional Use application is to allow a higher level of review for Uses that may
+be consistent with the purpose of the underlying zone but require review on a case-by-case
+basis because of their size, operational characteristics, or other factors. The Conditional Use
+review process provides an opportunity to allow the Use without conditions where it has
+minimal impacts, to allow it with conditions to address identified concerns, or to deny the Use
+if the concerns cannot be resolved.
+B. Procedure. Conditional Use applications are subject to the Type III procedure, as described in
+Section 12.70.050.
+C. Submittal Requirements.
+1. Type III application submittal requirements are set forth in Section 12.70.050. Specific
+submittal requirements are provided on application forms and checklists as authorized in
+Section 12.70.110.
+2. At a minimum, an application for Conditional Use approval shall include the following:
+a. An application form signed by the applicant or applicant's representative, and the
+property owner or owner's representative;
+b. Full payment of the application fee, based on the fee schedule in effect on the date
+of submittal;
+c. Existing Conditions Plan;
+d. Site Development Plan;
+e. Landscape Plan;
+f. Building Elevations (for new construction);
+g. Phasing Plan (if phasing is proposed);
+h. Transportation Studies pursuant to Section 12.70.200; and
+i. Narrative addressing compliance with each approval criterion and applicable stan-
+dard.
+D. Approval Criteria. To approve a Conditional Use, the Review Authority shall make findings of
+fact, based on evidence provided, that all of the following criteria are satisfied:
+1. The proposed use is listed as a conditional use in the underlying zone;
+2. The proposed conditional use complies with any special use standards for that particular
+use set forth in Subchapter 12.40, if applicable;
+3. Approving the Conditional Use would meet some public need or convenience;
+4. The characteristics of the site (size, shape, location, topography, and location of improve-
+ments and natural features) are suitable for the proposed Conditional Use;
+ 12.80.020APPLICATIONS
+CDC12.80:5Supp. No. 1
+5. The proposed Conditional Use will not change the character of the surrounding area in a
+way which limits or precludes use of the surrounding properties consistent with the
+provisions of the underlying zone;
+6. The proposed Conditional Use addresses adequacy of transportation systems and public
+facilities and services that exist or are planned for the area affected by the use; and
+7. The proposed Conditional Use satisfies any applicable goals and policies of the Com-
+prehensive Plan.
+E. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on a Conditional Use approval to ensure compliance with the approval criteria. Any
+of the following conditions, stipulations or limitations may be attached to a Conditional Use
+approval:
+1. Street dedication and/or street improvements abutting/within the development area;
+2. Joint use/access agreement or limitations on access;
+3. Improvement agreements for the installation of necessary on-site public facilities and/or
+off-site public improvements based on proportional impacts;
+4. Utility easements;
+5. Landscaping, screening, fencing;
+6. Off-street parking;
+7. Storm drainage improvements;
+8. Surety/performance bond; and
+9. Non-remonstrance clause.
+F. Appeal of a Conditional Use Decision. Refer to Section 12.70.180.
+G. Expiration of a Decision. Refer to Section 12.70.140.
+H. Extension of a Decision. Refer to Section 12.70.150.
+I. Annual Report or Planning Commission Review.
+1. The Planning and Zoning Hearings Board may require an annual report for any condi-
+tional use to ensure that the use remains in compliance with the imposed conditions of
+approval and with all applicable Code requirements.
+2. If the Planning Commission determines that sufficient grounds are present to warrant a
+review, the Commission may initiate a review of the operation of any Conditional Use and
+may call for a public hearing to determine whether the use is in compliance with
+applicable standards and conditions. If the conditional use is found non-compliant with
+conditions of approval or applicable Code standards, the property owner shall be directed
+to submit a compliance schedule and to fully comply with applicable conditions and
+standards within 45 days. If the Commission determines there is a cause for emergency
+action based on threats to the public health, safety, or welfare, the Commission may
+12.80.020 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:6Supp. No. 1
+require more expedient compliance. Failure to submit a compliance schedule or to
+comply with a submitted schedule will result in revocation of the conditional use approval.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.80.030  Cultural Resource Alterations, Relocations and Demolitions.
+A. Purpose. Cultural Resource Alteration, Relocation and Demolition (CRAs) applications imple-
+ment the provisions of the Cultural Resource Overlay zone. The provisions of this section shall
+be read in concert with Section 12.27.300 of this Code.
+B. Where Required. CRAs are required for alteration (as defined in Section 12.01.500), demoli-
+tion, or relocation of designated structures within the Cultural Resource Overlay zone which
+are included on the Cultural Resource Inventory as described in Section 12.27.300.
+C. Procedures. There are 2 types of CRA applications, as described in Section 12.27.300:
+1. Minor Cultural Resource Alterations are subject to the Type II procedure, as described in
+Section 12.70.040.
+2. Major Cultural Resource Alterations, Relocations and Demolitions are subject to the Type
+III procedure, as described in Section 12.70.050.
+3. Prior to the determination of application completeness, the Director may decide that a
+Minor CRA application which would otherwise meet the standards of Section 12.27.350
+warrants review as a Major CRA due to the following factors:
+a. The likelihood of significant interest or opposition from surrounding property owners
+or affected agencies; or
+b. The presence of issues requiring significant discretion during the review process; or
+c. The submittal of concurrent applications or processes such as Adjustments.
+D. General Submittal Requirements. General submittal requirements for Type II and Type III
+applications are set forth in Sections 12.70.040 and 12.70.050, respectively. At a minimum, an
+application for a CRA shall include the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A site development plan;
+4. Exterior building elevations;
+5. Materials specifications; and
+6. Narrative addressing compliance with each approval criterion and all applicable stan-
+dards.
+ 12.80.030APPLICATIONS
+CDC12.80:7Supp. No. 1
+E. Approval Criteria for Alterations. To approve a Minor CRA or a Major CRA not involving
+relocation or demolition, the Review Authority shall make findings, based on evidence pro-
+vided, that the following criteria are satisfied:
+1. The alteration would allow the resource to be used as it was historically or to have a new
+use requiring the least practicable change to its distinctive materials, features, spaces,
+and spatial relationships;
+2. The historic character of the resource property would be retained and preserved, and the
+relocation of distinctive materials or alteration of features, spaces, and spatial relation-
+ships that characterize a property will be avoided;
+3. The alteration would recognize a physical record of the resource's time, place, and use,
+and changes that create a false sense of historical development (such as adding features
+from other historic properties) are not proposed;
+4. The proposed alteration would retain and preserve changes to the resource that have
+attained historic significance in their own right;
+5. The alteration would preserve distinctive materials, features, finishes, and construction
+techniques or examples of craftsmanship that characterize the resource;
+6. Deteriorated historic features would be repaired rather than replaced. If severe deterio-
+ration requires replacement of a distinctive feature, the new feature would match the old
+in design, color, texture, and where possible, materials. Replacement of missing features
+would be documented by historical evidence. Replacement of original features, such as
+wooden window, doors, or siding, with features made from modern materials such as
+vinyl, metal, or fiberglass, would be minimized;
+7. Any proposed chemical and physical treatments would be undertaken using the gentlest
+means possible. Treatments that cause damage to historic materials would be avoided;
+8. Any archeological resources would be protected and preserved in place. If archeological
+disturbance cannot be avoided, appropriate mitigation measures would be included as
+part of the alteration;
+9. New additions, exterior alterations, or related new construction would not destroy historic
+materials, features, and spatial relationships that characterize the resource. To protect
+the integrity of the resource, new work would be differentiated from the old and would be
+compatible with the historic materials, features, size, scale and proportion, and massing;
+10. Any new additions and adjacent or related new construction proposed in the alteration
+would be constructed in a manner to allow their removal in the future without impairing the
+essential form and integrity of the resource and its surroundings; and
+11. For the review of exterior alterations of historic resources, the Historic Landmarks
+Advisory Committee and the Planning Commission may use as supplemental information
+for clarification the Secretary of the Interior's Standards for Rehabilitation and Guidelines
+12.80.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:8Supp. No. 1
+for Rehabilitating Historic Buildings, published by the U.S. Department of the Interior,
+National Park Service and codified in 36 CFR 67 for use in the Federal Historic
+Preservation Tax Incentives Program.
+F. Approval Criteria for Relocation or Demolition. To approve a Major CRA involving relocation or
+demolition of a designated Cultural Resource, the Review Authority shall make findings, based
+on evidence provided, that the following criteria have been satisfied:
+1. The designated resource has deteriorated beyond repair, and relocation or demolition is
+structurally necessary;
+2. No prudent and feasible alternative exists to repair or use the structure in its present
+location;
+3. The relocation or demolition is economically necessary. To prove economic necessity, the
+applicant must demonstrate through presentation of at least one rehabilitation option that
+the resource cannot be reasonably rehabilitated in its present location, and that the
+condition of the cultural resource prevents any substantial beneficial use of the property;
+4. The proposed use of the property has been found to be in compliance with all applicable
+city, state and federal requirements including zoning and building codes; and
+5. The value to the community of the proposed use of the property outweighs the value of
+retaining the designated Cultural Resource on its present site.
+G. Conditions of Approval. Pursuant to Section 12.70.120, the Historic Landmarks Advisory
+Committee may recommend, or the Planning Commission may require, conditions on the
+approval of a Cultural Resource alteration, relocation or demolition to ensure compliance with
+the approval criteria.
+H. Delay of Relocation or Demolition.
+1. Approval of an application for relocation or demolition may be delayed up to 60 days by
+the Planning Commission. The Planning Commission may place any of the following
+conditions on approval of a demolition application:
+a. Interior and/or exterior documentation of the site prior to the proposed, demolition;
+b. Preservation of selected architectural features and site landscaping; and/or
+c. A good faith effort by the applicant to sell the structure for relocation.
+2. The Planning Commission may however approve a demolition permit at any time within
+the 60-day period if it feels the applicant has made an effort in good faith to retain,
+document, and/or preserve the culturally significant characteristics of the resource.
+3. The City Council may extend a demolition delay by an additional 60 days at the request
+of the Historic Landmarks Advisory Committee, the Planning Commission or an inter-
+ested party.
+I. Appeal of a Decision. Refer to Section 12.70.180.
+J. Expiration of a Decision. Refer to Section 12.70.140.
+ 12.80.030APPLICATIONS
+CDC12.80:9Supp. No. 1
+K. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.80.040  Development Review.
+A. Purposes. The purposes of the Development Review (DR) approval process are to:
+1. Encourage site planning in advance of construction;
+2. Protect lives and property from potential adverse impacts of development;
+3. Consider natural or human-made hazards which may impose limitations on develop-
+ment;
+4. Conserve the City's natural beauty and visual character and minimize adverse impacts of
+development on the natural environment as much as is reasonably practicable;
+5. Assure that development is supported with necessary public facilities and services;
+6. Ensure that structures and other improvements are properly related to their sites and to
+surrounding sites and structures; and
+7. Implement the City's Comprehensive Plan and land use regulations with respect to
+development standards and policies.
+B. Applicability. Approval of a Development Review application is required in all of the following
+circumstances:
+1. New development in any zone excluding the exemptions listed in Subsection D. below;
+2. Whenever an application, which would have otherwise been subject to Zoning Review in
+accordance with Section 12.80.170, includes one or more Adjustments;
+3. Alteration, expansion, or new construction of any structure (except accessory dwelling
+units and residential accessory structures) in the SCR-DNC or SCR-OTC zones;
+4. Manufactured dwelling projects;
+5. Major site alterations on sites where construction is not anticipated for 30 days or more
+following grading;
+6. Marijuana facilities;
+7. Psilocybin facilities; and
+8. Full-dwelling short term rentals (STRs); and
+9. Any other development project for which Development Review is required as a condition
+of approval of another land use approval or permit.
+C. Optional Applicability. At the applicant's discretion, an application for any development type not
+listed in Subsection B. above may be submitted for processing in compliance with the
+requirements of this section.
+12.80.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:10Supp. No. 1
+D. Exemptions. The activities, development and construction projects listed below are exempt
+from Development Review approval, but are subject to all other applicable provisions of this
+Code, and may be subject to Zoning Review under Section 12.80.170:
+1. Middle housing and single detached dwellings in the MR-1, SCR-LD, or SCR-MD zones
+or any R zone when no Adjustments to residential design and development standards are
+requested;
+2. Accessory dwelling units and residential accessory structures in any zone when no
+Adjustments to residential design and development standards are requested;
+3. Horticultural uses not involving buildings;
+4. Minor site alterations as defined in Section 12.01.500;
+5. Expansion of existing multi-dwelling residential, commercial, or mixed-use buildings
+which increases existing floor area by less than 10% or where the expansion is not visible
+from a public right-of-way or an adjacent residential zone;
+6. Expansion of existing industrial buildings which increases existing floor area by less than
+15% or where the expansion is not visible from a public right-of-way or an adjacent
+residential zone;
+7. Alteration of up to and including 10% or 500 square feet, whichever is less, of the façade
+of any multi-dwelling, commercial, mixed-use, industrial or institutional building or where
+the façade is not visible from a public right-of-way;
+8. Manufactured dwellings on individual lots where allowed under Subchapters 12.21
+through 12.26;
+9. Interior remodeling of an existing building or structure (also called tenant improvements)
+or building alterations required to meet ADA or Oregon Residential Specialty Code or
+Oregon Structural Specialty Code requirements as applicable;
+10. Certified or registered family child care or licensed residential senior care home;
+11. Home Occupation Permits;
+12. Maintenance of a building, structure, or site consistent with previous approvals;
+13. Temporary structures associated with temporary uses;
+14. Accessory structures not requiring a building permit and not subject to other provisions of
+this Code (such as accessory structures in the SCR-OTC or SCR-DNC zones);
+15. Commercial or industrial equipment or accessory structures that are screened from view
+from the public rights-of-way by structure or natural grade;
+16. Construction, alteration, or maintenance of public infrastructure including streets, traffic
+control devices, drainage ways, sanitary and storm sewers, stormwater quality facilities,
+water lines, electrical power or gas distribution lines, or telephone or television cable
+systems; and
+ 12.80.040APPLICATIONS
+CDC12.80:11Supp. No. 1
+17. Enlargement, expansion, or replacement of residential non-conforming uses and struc-
+tures in the Jackson East-North Sub-Area of the I-S Industrial Sanctuary zone where
+allowed under Subchapter 12.30.
+E. Procedure. Development Review applications are subject to the Type II procedure as de-
+scribed in Section 12.70.040, unless any of the following circumstances apply:
+1. The applicant chooses to submit an application for a Type III procedure;
+2. The Development Review application is submitted concurrent with a Type III primary
+application which includes a Type III Adjustment; or
+3. The Type III process is required for Development Review by the Review Authority as a
+condition of approval on a previous or related land use approval.
+F. Submittal Requirements. Type II application submittal requirements are set forth in Section
+12.70.040 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, an application for Development
+Review shall include the following:
+1. An application form signed by the property owner or owner's representative and the
+applicant or applicant's representative;
+2. Full payment of the application fee, based on the fee schedule in effect on the date of
+submittal;
+3. Plans and descriptions including the following:
+a. Existing Conditions Plan,
+b. Site Development Plan, including vehicular and pedestrian connectivity within and
+adjacent to the site,
+c. Grading and Erosion Control Plan,
+d. Landscape Plan,
+e. Parking Lot Tree Canopy Plan (if required),
+f. Exterior Lighting Plan,
+g. Waste and Recycling Facilities Plan,
+h. Architectural Elevations,
+i. Exterior materials board and color palette, unless alternative submittal materials
+have been approved by the Review Authority,
+j. Floor plans, and
+k. Descriptions of materials to be used on proposed structures;
+4. Narrative. A narrative clearly describing the project and addressing compliance with all
+approval criteria and applicable standards;
+12.80.040 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:12Supp. No. 1
+5. Site Activity Statement. For commercial or industrial developments, a written statement
+identifying:
+a. The nature of the proposed use,
+b. The planned number of shifts and the maximum number of employees per shift,
+c. Plans for treatment and disposal of industrial wastes, and
+d. Mitigation plans for traffic, noise, glare, air pollution, fire, or safety hazards;
+6. Transportation Studies. Technical reports as authorized by Sections 12.70.200 through
+12.70.230, may also be required based on the specific location and anticipated impacts
+of the Development Review proposal. The Director shall make every reasonable effort to
+identify submittal requirements for technical reports at the pre-application conference.
+G. Concurrent Applications for Minor Adjustments. A request for a Minor Adjustment to any
+numeric development standard excluding residential density may be consolidated with and
+processed concurrently with a Development Review application in accordance with Section
+12.80.154. The Minor Adjustment process cannot be used to vary or take an exception from the
+standards listed in Subsection 12.80.150.C.
+H. Approval Criteria. To approve an application for Development Review, the Review Authority
+shall make findings of fact based on evidence provided that the following criteria are satisfied:
+1. The proposal complies with all of the development standards of the base zone, unless a
+minor adjustment has been approved concurrently with the Development Review appli-
+cation;
+2. The proposal complies with any applicable provisions of Subchapter 12.27;
+3. The proposal complies with any applicable provisions of Subchapter 12.40;
+4. The proposal complies with the applicable development standards in Subchapter 12.50;
+5. The proposal complies with any applicable plan district standards in Subchapter 12.60;
+6. The proposal meets all existing conditions of approval for the site or use, as required by
+prior land use decision(s), as applicable;
+7. Additional Criteria for Non-Residential Applications. (including the non-residential portion
+of a mixed-use development):
+a. The transportation system can safely and adequately accommodate the proposed
+development,
+b. Parking areas and entrance-exit points are designed to facilitate on-site vehicular
+circulation and pedestrian safety and avoid congestion on public streets,
+c. Any special features of the site (such as topography, hazards, vegetation, signifi-
+cant natural and cultural resources, etc.) have been integrated into the site devel-
+opment plan,
+d. The design and operating characteristics of the proposed development are reason-
+ably compatible with surrounding development and land uses, and
+ 12.80.040APPLICATIONS
+CDC12.80:13Supp. No. 1
+e. Negative impacts of the development have been sufficiently minimized or mitigated.
+I. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of a Development Review application to ensure compliance with the
+approval criteria.
+J. Appeal of a Decision. Refer to Section 12.70.180.
+K. Expiration of a Decision. Refer to Section 12.70.140.
+L. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord. 6410 § 1,
+2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6178
+§ 1, 2016; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.80.050  Director's Interpretation.
+A. Purpose. The purpose of the Director's Interpretation (DI) application is to provide a process to
+clarify terms or phrases within this Code which may require further interpretation (Code
+interpretation). The DI application also provides a means to assign new or noncategorized
+uses to a use category. Interpretations of Code terms, intent, or meaning are different from
+other land use applications in that they are an interpretation of language and policy, as opposed
+to an evaluation of a use or development. A DI application may be submitted in advance of, or
+concurrent with, an application, permit, or other action.
+B. Interpretation for Reasonable Accommodation. Notwithstanding any other provision of this
+Code, the Director has the authority to make an interpretation of reasonable accommodations
+in the application of this Code when such accommodations may be necessary to afford a
+person with a disability equal opportunity to use and enjoy a dwelling to the extent required by
+Federal or State law. In considering whether an accommodation is reasonable, the Director
+may consider whether the request puts an undue burden or expense on the City and whether
+the proposed use creates a fundamental alteration in the Code. The Director may ask for, or the
+applicant may voluntarily submit, additional information based on the requested accommoda-
+tion, to determine whether the request creates an undue burden or a fundamental alteration.
+The accommodation may result in a permitted or conditional waiver of any limitation of this
+Code.
+C. Director's Authority to Initiate an Interpretation. The Director may initiate a DI on behalf of the
+City, either specific or not specific to a particular property or circumstance. The Director may
+also initiate an interpretation when there is a reasonable dispute or lack of clarity regarding
+permitted uses on a property. If initiated by the Director, the DI shall be processed as either a
+Type I or Type II application under the requirements of this section, and shall include the
+materials specified in subsection F. with the exceptions of an application form and payment.
+D. Director's Authority to Decline an Application.
+1. The Director has the authority to consider the request for an interpretation, and shall
+respond within 30 days following the date of the request, as to whether or not a requested
+interpretation will be issued. If requested, the Director must issue an interpretation for
+reasonable accommodation.
+12.80.040 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:14Supp. No. 1
+2. Except for a requested interpretation for reasonable accommodation, the Director may
+issue or decline to issue a requested interpretation. The Director's decision to decline to
+issue an interpretation is final when the decision is mailed to the party requesting the
+interpretation. The decision to decline to issue an interpretation is not subject to local
+appeal.
+E. Procedures. A DI for reasonable accommodation, or a DI not specific to a particular property or
+circumstance, is subject to the Type I procedure, as described under Section 12.70.030. A DI
+application for a particular property or circumstance is subject to the Type II procedure, as
+described in Section 12.70.040.
+F. Submittal Requirements. Type I application submittal requirements are set forth in Section
+12.70.030. Type II application submittal requirements are set forth in Section 12.70.040. More
+specific submittal requirements are provided on application forms and checklists as authorized
+in Section 12.70.110. At a minimum, a DI application shall include all of the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal, unless any of the following circumstances apply:
+a. If the requested interpretation is for reasonable accommodation or is not specific to
+a particular property or circumstance, the fee shall be waived,
+b. If the Director finds that the interpretation has a wider public interest, the fee may be
+waived, and
+c. If the DI is submitted in conjunction and concurrent with another application or
+permit, the separate interpretation fee may also be waived;
+3. A narrative clearly identifying the Code term or phrase for which interpretation is
+requested, and an explanation why the applicant believes the term or phrase is unclear or
+inappropriate, and:
+a. If the requested interpretation is for assignment of a use category, an explanation of
+the character of the proposed use in terms of infrastructure, use, traffic and
+environmental impacts, and operational characteristics, or
+b. If the requested interpretation is for interpretation of a commercial use in an
+industrial zone, an explanation of the infrastructure, traffic and environmental
+impacts and the operational characteristics of the use, and explanation of how the
+commercial use is oriented toward and supports surrounding industrial uses rather
+than attracting customers City-wide, or
+c. If the requested interpretation is for reasonable accommodation, an explanation of
+the following:
+i. The specific standard(s) from which accommodation is/are requested,
+ii. How the use of the subject site with the proposed accommodation(s) will be
+generally consistent with the purpose of the subject zone, and
+ 12.80.050APPLICATIONS
+CDC12.80:15Supp. No. 1
+iii. How the use of the subject site with the proposed accommodation will be
+generally consistent with the characteristics of the permitted (or conditionally
+permitted) uses in the subject zone. Examples of characteristics include, but
+are not limited to: structural setbacks; height limitations; lot coverage; number
+of persons per household; number of vehicle trips per day to be generated;
+number of off-street parking spaces to be provided.
+G. Standards for Assignment of a Use Category. The assignment of a use to a particular use
+category by the Director shall be based on findings that the proposed use:
+1. Shares common characteristics with other examples in the use category;
+2. Has intensity, density and off-site impacts similar to other examples in the use category;
+and
+3. Has impacts on public facilities, including streets; sewer, water and stormwater systems;
+schools; and police and fire services similar to other examples in the use category.
+H. Standards for Reasonable Accommodation. In considering whether an accommodation is
+reasonable, the Director may consider whether the request puts an undue burden or expense
+on the City and whether the proposed use creates a fundamental alteration in the Code. The
+Director may ask for, or the applicant may voluntarily submit, additional information based on
+the requested accommodation, to determine whether the request creates an undue burden or
+a fundamental alteration. The accommodation may result in a permitted or conditional waiver
+of any limitation of this Code.
+I. Standards for Code Interpretation. An interpretation of code terms, intent, or meaning shall be
+as consistent as possible with the standards listed below. Not all of the standards need to be
+met for a code interpretation to be issued.
+1. The proposed interpretation is consistent with the common meaning of the words or
+phrases at issue.
+2. The proposed interpretation is consistent with relevant policy direction from official City
+documents such as the Comprehensive Plan and its supporting documents.
+3. The proposed interpretation is consistent with the legislative intent for the words or
+phrases at issue. The intent is based on the legislative record for the ordinance that
+adopted or amended the regulations at issue.
+4. The proposed interpretation is consistent with the interpretation of other portions of the
+Community Development Code.
+5. The proposed interpretation is consistent with regional, State, and Federal laws and court
+rulings that affect the words or phrases at issue.
+J. Limitations on Director's Interpretation.
+1. The Director may interpret provisions of this Code, but shall not issue any legal opinion or
+interpretation of case law.
+12.80.050 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:16Supp. No. 1
+2. A DI does not establish precedent, and does not bind the Planning and Zoning Hearings
+Board, the Planning Commission, or the City Council in current or future decisions
+regarding the subject property or application or similar properties or applications.
+3. A DI does not run with the land unless the development is substantially consistent with the
+description in the Director's Interpretation.
+K. Expiration of a Decision. A DI does not expire unless superseded by a subsequent Director's
+Interpretation or a Text Amendment. A DI for Reasonable Accommodation cannot be super-
+seded, but may be subject to review and/or revocation if it is demonstrated that the use of the
+site has changed and is no longer consistent with the statements made in the application for
+Reasonable Accommodation.
+L. Appeal of a Decision. Refer to Section 12.70.180.
+M. Interpretations on File. The Director shall keep a record of all DIs on file in the Community
+Development Department.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6120 § 1, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.80.060  Fence Permit.
+A. Purpose. The purpose of a Fence Permit is to ensure that fences are installed in accordance
+with the requirements of this Code, thereby providing certainty to property owners prior to
+installation of the fence.
+B. Procedure. Fence applications are subject to the Type I procedure as described in Section
+12.70.030.
+C. Submittal Requirements. Type I application submittal requirements are set forth in Section
+12.70.030 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, a fence permit application shall
+include the following:
+1. An application form signed by the applicant or applicant's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A scaled site plan of the property and any abutting public or private streets, showing the
+location of the proposed fence(s); and
+4. A drawing illustrating the height, materials, and general appearance of the fence.
+D. Approval Criteria. In order to approve a fence permit, the Review Authority shall make a
+determination based on evidence provided that the height and location of the fence are
+consistent with the provisions Section 12.50.250 Fences, Free-Standing Walls, Hedges and
+Berms, and Section 12.50.260 Sight Distance/Vision Clearance.
+E. Conditions of Approval. The Review Authority may impose conditions on approval of a fence
+permit to ensure compliance with the approval criteria.
+ 12.80.060APPLICATIONS
+CDC12.80:17Supp. No. 1
+F. Appeal of a Decision. Refer to Section 12.70.180.
+G. Expiration of a Decision. Refer to Section 12.70.140.
+H. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022)
+12.80.070  Floodplain Activity.
+A. Purpose. Floodplain Activity (FA) approvals implement the provisions of the RFO. This section
+shall be read in concert with Section 12.27.100.
+B. Where Required. FA approvals are required for all development in the RFO as described in
+Section 12.27.100.
+C. Procedures. There are 2 types of FAs as described in Section 12.27.100:
+1. FA I are subject to the Type I procedure, as described in Section 12.70.030.
+2. FA II are subject to the Type II procedure, as described in Section 12.70.040.
+D. Submittal Requirements. Submittal requirements for Type I and Type II applications are set
+forth in Sections 12.70.030 and 12.70.040, respectively. At a minimum, an application for a
+Floodplain Activity permit shall also include the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal; and
+3. A narrative addressing compliance with all approval criteria and each applicable standard
+in Section 12.27.130 and 12.27.135.
+4. Unless determined to be unnecessary by the City Floodplain Administrator or the City
+Engineer, a stamped geotechnical report, encompassing all areas of the site's floodplain
+and areas where fill may be present and where disturbance and/or construction are
+proposed;
+5. If deemed appropriate by the City Floodplain Administrator or the City Engineer, a no-rise
+analysis certified by a registered professional civil engineer; and
+6. Elevation in relation to mean sea level of the lowest floor (including basement) of all
+structures;
+7. Elevation in relation to mean sea level of floodproofing in any structure;
+8. Certification by a registered professional engineer or architect that the floodproofing
+methods for any nonresidential structure to be floodproofed meet the floodproofing
+criteria in Section 12.27.135; and
+9. Description of the extent to which a watercourse will be altered or relocated as a result of
+proposed development; and
+12.80.060 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:18Supp. No. 1
+10. A Plan set clearly depicting the following:
+a. A wetland and/or 2-year ordinary high water mark delineation prepared by a
+professional wetland scientist;
+b. Pre-existing site-surveyed topography, prepared and stamped by a Professional
+Land Surveyor, using minimum 1-foot contour intervals in the City of Hillsboro
+Vertical Datum, showing the site's Base Flood Elevation(s) as determined by the
+Floodplain Administrator or City Engineer;
+c. The boundaries of the Special Flood Hazard Area (e.g., the 1% annual chance
+floodplain as shown on the effective Flood Insurance Rate Map) as determined by
+the Floodplain Administrator. If the floodplain activity involves a critical facility as
+described in Federal Emergency Management Agency publication #543, the 0.2%
+chance ("500-year") floodplain as shown on the effective Flood Insurance Rate Map
+shall be shown as well;
+d. The nature, location, dimensions, and elevations of the project area as well as any
+existing and proposed structures, fill, storage of materials, and drainage facilities.
+E. Approval Criteria. In order to approve a FA the Review Authority shall make findings of fact,
+based on evidence provided, that the following criteria are satisfied:
+1. The proposed use or activity meets all applicable standards listed in Section 12.27.130
+and 12.27.135.
+2. All other required Federal, State, and local permits have been obtained.
+F. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of the FA to ensure compliance with the approval criteria and special
+use standards of Section 12.27.100.
+G. Appeal of a Decision. Refer to Section 12.70.180.
+H. Expiration of a Decision. Refer to Section 12.70.140.
+I. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6276 § 1, 2018; Ord. 6120 § 1, 2015; Ord. No. 6500, § 1(Exh. A),
+6-17-2025; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.80.080  Home Occupation Permit.
+A. Purpose. The purpose of a Home Occupation Permit (HOP) is to allow residents an opportunity
+to use their homes to conduct small-scale business activities, while establishing criteria and
+standards to ensure that home occupations are subordinate to the residential use, and are in
+appearance and operation neither detrimental nor disruptive to neighboring properties and
+residents.
+B. Procedure. HOP applications are subject to the Type I procedure as described in Section
+12.70.030.
+ 12.80.080APPLICATIONS
+CDC12.80:19Supp. No. 1
+C. Submittal Requirements. Type I application submittal requirements are set forth in Section
+12.70.030 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, a HOP application shall include
+the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A scaled plot plan of the proposed home occupation site, and a floor plan of any buildings
+to be used for the home occupation; and
+4. A narrative addressing compliance with the approval criteria and special use standards in
+Section 12.40.170.
+D. Approval Criteria. In order to approve a HOP, the Review Authority shall make findings of fact,
+based on evidence provided, that the following criteria are satisfied:
+1. The zoning of the subject property lists a home occupation as an allowed use;
+2. The proposal complies with the standards for Home Occupations in Section 12.40.170
+Special Uses.
+E. Conditions of Approval. The Review Authority may impose conditions on approval of a HOP to
+ensure compliance with the approval criteria. Such conditions may include a requirement to
+obtain a city business license pursuant to Municipal Code Subchapter 5.04.
+F. Appeal of a Decision. Refer to Section 12.70.180.
+G. Expiration of a Decision. Refer to Section 12.70.140.
+H. Extension of a Decision. Refer to Section 12.70.150.
+I. Invalidation of a Decision. Approval of an HOP is site-specific to the property and the original
+applicant. If an applicant moves, the HOP becomes invalid unless a new HOP is approved for
+the subsequent occupant of the property.
+J. Revocation of a Decision. A business license for a permitted home occupation is subject to
+revocation at any time by the City Council for cause pursuant to Municipal Code Subchapter
+5.04 under the following circumstances:
+1. There is a violation of any provision of this Code;
+2. There is a violation of any term or condition of any applicable permit;
+3. Failure to pay the City business license fee when due.
+12.80.080 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:20Supp. No. 1
+K. Waiting Period for Re-Application. When a business license for a home occupation permit is
+revoked due to violation of the standards of this section, or any condition of approval attached
+to the permit, a minimum period of 60 days shall elapse before another application for a home
+occupation permit on the subject property will be considered.
+(Ord. 6401 § 1, 2022)
+12.80.090  Land Divisions, Property Line Adjustments, and Lot Consolidations.
+A. Purpose. Land Division, Property Line Adjustment, and Lot Consolidation applications estab-
+lish regulations, procedures, and standards for land divisions and property line reconfiguration,
+to assure that newly created or reconfigured lots meet the standards of this Code. Authorization
+and minimum standards for this section are provided by ORS Chapter 92 Subdivisions and
+Partitions.
+B. Applicability. These land division regulations apply to all partitions, subdivisions, and property
+line adjustments.
+C. Application Types. There are 6 types of applications under this section: Property Line
+Adjustment (PLA); Lot Consolidation; Partition (PAR); Subdivision (SUB); Expedited Land
+Division (ELD); and Middle Housing Land Division (MHLD).
+D. Period of Vesting. Pursuant to ORS 92.040(2), construction on lots created through land
+division is vested against changes to this Code approved subsequent to the City's final
+decision on the land division, unless the applicant elects otherwise.
+(Ord. 6401 § 1, 2022)
+12.80.092  Property Line Adjustment.
+A. When Applicable. An application for Property Line Adjustment (PLA) shall be required to
+relocate a common boundary between lots of record without creating or reducing the number
+of lots.
+B. Procedure. PLA applications are subject to the Type I procedure, as described in Section
+12.70.030.
+C. Submittal Requirements. Type I application submittal requirements are set forth in Section
+12.70.030 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, a PLA application shall include
+the following:
+1. An application form signed by the owners of both properties to be modified by the PLA;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A scaled plot plan showing the following:
+a. Location of all existing property lines and structures;
+b. The proposed location of the adjusted property lines;
+ 12.80.092APPLICATIONS
+CDC12.80:21Supp. No. 1
+c. Setbacks from the structures to existing and proposed property lines;
+d. The location of any public or private easement;
+e. A calculation of the square footage of the lots before and after the PLA; and
+4. A narrative describing the project and addressing compliance with all approval criteria
+and applicable standards.
+D. Approval Criteria. In order to approve a PLA, the Review Authority shall make findings of fact,
+based on evidence provided, that the following criteria are satisfied:
+1. Both properties are lawfully established units of land, or the PLA is intended to rectify
+previous unlawful establishment of units of land;
+2. No new parcels will result from the adjustment;
+3. Both affected properties would comply with the minimum lot depth, width and area
+standards of the applicable zone after the proposed adjustment;
+4. Existing structures on both properties would comply with the minimum and maximum
+setback standards of the applicable zone after the proposed adjustment; and
+5. If either or both of the affected properties are eligible for additional development under
+existing zoning, the proposed adjustment will not:
+a. Preclude the opportunity for such additional development; or
+b. Reconfigure the properties in a pattern which might avoid or reduce the need to
+install public improvements typically required as a condition of such additional
+development.
+E. Conditions of Approval. Property Line Adjustment decisions are not subject to imposition of
+conditions of approval.
+F. Requirements for Conveyance and Recording. Pursuant to Subsection 12.70.030.H.4., the
+Notice of Decision for a Property Line Adjustment shall specify that the Decision expires 2
+years from the date of approval unless the following requirements have been met:
+1. The applicant has filed a record of survey with the County as required by ORS Chapter 92
+and has provided a copy to the City.
+2. The applicant has provided evidence to the City that a conveyance instrument conform-
+ing to the approved Property Line Adjustment has been recorded at Washington County.
+G. Appeal of a Decision. Refer to Section 12.70.180.
+H. Expiration of a Decision. Refer to Section 12.70.140.
+I. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.80.092 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:22Supp. No. 1
+12.80.094  Lot Consolidation.
+A. When Applicable. An application for Lot Consolidation shall be required to dissolve the
+common property line between 2 or more properties in the same ownership.
+B. Procedure. Lot Consolidation applications are subject to the Type I procedure, as described in
+Section 12.70.030.
+C. Submittal Requirements. Type I application submittal requirements are set forth in Section
+12.70.030 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, a Lot Consolidation application
+shall include the following:
+1. An application form signed by the applicant or applicant's representative and property
+owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A scaled plot plan showing the following:
+a. Location of all existing property lines and structures;
+b. The location of the property lines proposed to be dissolved;
+c. The location of any public or private easement; and
+4. A narrative describing the project and addressing compliance with all approval criteria
+and applicable standards.
+D. Approval Criteria. To approve a Lot Consolidation, the Review Authority shall make findings of
+fact, based on evidence provided, that the following criteria are satisfied:
+1. Both properties are lawfully established units of land, or the Lot Consolidation is intended
+to rectify previous unlawful establishment of units of land;
+2. The resulting number of parcels will be less than the existing number;
+3. All affected properties would comply with the minimum lot depth, width and area
+standards of the applicable zone after the proposed consolidation;
+4. Existing structures on any affected property would comply with the minimum and
+maximum setback standards of the applicable zone after the proposed consolidation;
+and
+5. If the resulting aggregation of affected properties is eligible for additional development
+under existing zoning, the proposed consolidation will not:
+a. Preclude the opportunity for such additional development; or
+b. Reconfigure the properties in a pattern which might avoid or reduce the need to
+install public improvements typically required as a condition of such additional
+development.
+ 12.80.094APPLICATIONS
+CDC12.80:23Supp. No. 1
+E. Conditions of Approval. Lot Consolidation decisions are not subject to imposition of conditions
+of approval.
+F. Requirements for Conveyance and Recording. Pursuant to Subsection 12.70.030.H.4., the
+Notice of Decision for a Lot Consolidation shall specify that the Decision expires 2 years from
+the date of approval unless the following requirements have been met:
+1. The applicant has filed a record of survey with the County as required by ORS Chapter 92
+and provided a copy to the City.
+2. The applicant has provided evidence to the City that a conveyance instrument conform-
+ing to the approved Lot Consolidation has been recorded at Washington County.
+G. Appeal of a Decision. Refer to Section 12.70.180.
+H. Expiration of a Decision. Refer to Section 12.70.140.
+I. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6120 § 1, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.80.096  Partition.
+A. When Applicable. An application for Partition (PAR) shall be required for the creation of 2 or 3
+new parcels from at least 1 lot of record (parent parcel) in 1 calendar year.
+B. Compliance with ORS Chapter 92. PAR applications shall conform to all state regulations set
+forth in ORS Chapter 92, Subdivisions and Partitions.
+C. Lot Size Limitations for Partitions. In order to effectively implement density standards and
+subdivision requirements, and except as provided in subsection D. below, partitions for single
+detached or duplex residential development shall not be processed on single lots or aggre-
+gated contiguous lots under the same ownership with sufficient net acreage to allow creation
+of more than 3 lots meeting the density range requirements of this Code for single detached
+dwellings.
+D. Homestead Exception. On the larger lots cited in subsection C. above, a 2-lot partition
+application may be processed only to divide 1 smaller parcel for a single detached dwelling or
+middle housing from a larger parent parcel, provided the parcel for the single detached dwelling
+or middle housing does not have sufficient lot area to allow further division under the standards
+of the applicable base zone, except for creation of townhouse lots or middle housing land
+divisions. This exception may also include creation of tracts for natural resource preservation.
+E. Procedure. Partitions are reviewed through a 2-step procedure, a preliminary plat and a final
+plat.
+1. The preliminary partition plat is subject to the Type II procedure, as described in Section
+12.70.040.
+2. The final partition plat is subject to the Type I procedure, as described in Section
+12.70.030.
+12.80.094 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:24Supp. No. 1
+F. Submittal Requirements. Type II application submittal requirements are set forth in Section
+12.70.040 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. Type I application submittal requirements are
+set forth in Section 12.70.030 and more specific submittal requirements are provided on
+application forms and checklists as authorized in Section 12.70.110. At a minimum, an
+application for a preliminary partition shall include the following:
+1. An application form, signed by the applicant or applicant's representative and the
+property owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A preliminary partition plat with all information required on the application form and/or
+checklist;
+4. A connectivity analysis demonstrating compliance with Section 12.50.520; and
+5. A narrative describing the project and addressing compliance with all approval criteria
+and applicable standards.
+G. Approval Criteria for a Preliminary Partition Plat. To approve a preliminary partition application,
+the Review Authority shall make findings of fact, based on evidence provided, that the following
+criteria are satisfied:
+1. All proposed parcels comply with the development standards of the base zone;
+2. Adequate public facilities are available or can be provided to serve the proposed parcels;
+3. The application provides for the dedication or conveyance of public rights-of-way or utility
+easements necessary and adequate to meet the standards of the applicable master plan;
+and
+4. All proposed improvements including access locations meet City and applicable agency
+standards.
+H. Concurrent Processing of Minor Adjustments. A request for a Minor Adjustment to any
+standards shall be made in accordance with Section 12.80.154 and shall be reviewed as part
+of the preliminary partition application. The Minor Adjustment process cannot be used to vary
+or take an exception from the standards listed in Subsection 12.80.150.C.
+I. Conditions of Approval on a Preliminary Partition Plat. Pursuant to Section 12.70.120, the
+Director may impose conditions on the approval of a preliminary partition plat to ensure
+compliance with the approval criteria.
+J. Appeal of a Decision. Refer to Section 12.70.180.
+K. Expiration of a Decision. Refer to Section 12.70.140.
+L. Extension of a Decision. Refer to Section 12.70.150.
+ 12.80.096APPLICATIONS
+CDC12.80:25Supp. No. 1
+M. Final Partition Plat Submittal. An application for final partition plat shall be reviewed under the
+Type I procedure, as described in Section 12.70.030. At a minimum, an application for a final
+partition shall include the following:
+1. The application form, signed by the owner of the property to be partitioned;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A final plat prepared by a land surveyor or engineer licensed to practice in Oregon,
+incorporating any applicable conditions of approval imposed by the Director as part of the
+preliminary plat approval;
+4. A narrative addressing compliance with the preliminary plat approval and all conditions of
+that approval; and
+5. Signed and notarized copies of all supplemental documents required by the preliminary
+plat approval, such as Covenants, Conditions and Restrictions, Waivers of Remon-
+strance, or easements. Such document(s) shall be fully executed.
+N. Final Partition Plat Approval Criterion. If the final partition plat is consistent with the approved
+preliminary plat, and if the conditions of approval have been satisfied, the Director shall sign the
+final plat.
+O. Implementation of Final Plat Approval.
+1. The approved final partition plat shall be recorded prior to expiration of the original
+decision. Refer to Section 12.70.140. If the final plat is not recorded within this time, the
+final plat shall be null and void. If the Director has signed the final plat, but it has not yet
+recorded, the Director has the authority to revoke the City's approval of the final plat.
+2. The applicant shall be responsible for all recording fees and shall provide the City with a
+copy of the recorded plat within 15 days of the recording. The Director has the authority,
+as applicable, to stop submittal of building permits, issuance of permits, or issuance of
+Certificate of Occupancy until provided with the recorded copies.
+3. The applicant shall provide the City with copies of any recorded supplemental documents
+required by the preliminary plat approval, such as Covenants, Conditions and Restric-
+tions, Waivers of Remonstrance, or easements within 5 days of the recording. The
+Director has the authority, as applicable, to stop submittal of building permits, issuance of
+permits, or issuance of Certificate of Occupancy until provided with copies of the
+recorded supplemental documents.
+P. Building Permit Issuance.
+1. With the exception of a model home as a project sales office pursuant to Section
+12.40.200, no residential building permit shall be issued on a parcel created by a partition
+plat until the approved final partition plat has been recorded at Washington County.
+12.80.096 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:26Supp. No. 1
+2. Prior to either issuance of an occupancy permit or final inspection, all improvements
+required by the conditions of approval shall be constructed or the construction shall be
+guaranteed through a performance bond or other instrument acceptable to the City
+Engineer.
+Q. Appeal of a Final Decision. Refer to Section 12.70.180.
+R. Expiration of a Decision. Refer to Section 12.70.140.
+S. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6465 § 2, 2024; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6149 § 1,
+2015; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.80.098  Subdivision.
+A. When Applicable. An application for a Subdivision (SUB) shall be required for the creation of 4
+or more new lots from at least 1 lot of record in 1 calendar year.
+B. Compliance with ORS Chapter 92. All subdivision proposals shall conform to all state
+regulations set forth in ORS Chapter 92, Subdivisions and Partitions.
+C. Procedure. Subdivisions are reviewed through a 2-step process: the preliminary plat and the
+final plat.
+1. The preliminary subdivision plat is subject to the Type II procedure, as described in
+Section 12.70.040.
+2. The final subdivision plat is subject to the Type I procedure, as described in Section
+12.70.030.
+D. Submittal Requirements. General submittal requirements for Type II applications are set forth
+in Section 12.70.040. More specific submittal requirements are provided on application forms
+and checklists as authorized in Section 12.70.110. At a minimum, an application for a
+subdivision preliminary plat shall include the following:
+1. The application form, signed by the owner of the property to be subdivided;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A narrative addressing compliance with each approval criterion and applicable develop-
+ment standards and architectural design and construction standards of Subchapter 12.50
+as applicable;
+4. A vicinity map showing existing conditions within 500 feet of the proposed subdivision,
+including topography, lotting patterns, utilities and transportation facilities;
+5. A connectivity analysis, consistent with Section 12.50.520; and
+6. Any additional information identified through a pre-application conference.
+ 12.80.098APPLICATIONS
+CDC12.80:27Supp. No. 1
+E. Approval Criteria for Subdivision Preliminary Plat. To approve a subdivision preliminary plat,
+the Review Authority shall make findings of fact, based on evidence provided, that the following
+criteria are satisfied:
+1. The proposal complies with the criteria and standards of this Code, including the
+minimum and maximum residential densities of the base zone, if applicable;
+2. The proposal provides for necessary public utilities and facilities including, but not limited
+to, water, sanitary sewer, storm sewer, streets, parks, fire protection, and police protec-
+tion;
+3. The proposal facilitates safe and convenient bicycle and pedestrian connections and
+access within the proposed subdivision compliant with Section 12.50.420;
+4. The proposal facilitates the efficient development of and safe access to and from the
+proposed subdivision and to adjoining undeveloped properties compliant with Sections
+12.50.430 and 12.50.520;
+5. The proposal complies with the development and design standards in Subchapter 12.50
+relating to street and bicycle/pedestrian design, usable open space, and development
+and design guidelines, and with any other applicable standards identified at the pre-
+application conference;
+6. The proposal complies with the requirements of any other affected agencies, including
+but not limited to: Washington County; CWS; DSL; and ODOT;
+7. Any oversized lots within the development are configured to allow future division in
+accordance with the requirements of this Code; and
+8. Streets, driveways, and utilities will be sufficiently sized to serve the proposed develop-
+ment and future development on any oversized lots.
+F. Requests for Minor Adjustments. A request for a Minor Adjustment to any standard shall be
+made in accordance with Section 12.80.154 and shall be reviewed as part of the subdivision
+preliminary plat application. The Minor Adjustment process can be used in conjunction with a
+Subdivision application. The Minor Adjustment process cannot be used to vary or take an
+exception from the standards listed in Subsection 12.80.150.C.
+G. Phased Development. If the subdivision is proposed to be developed in phases, the applicant
+shall include a phasing program with the subdivision preliminary plat application submittal. The
+applicant shall also provide a schedule for the final platting of the various phases. If the total
+time period for the final platting of all stages is proposed be longer than 5 years, approval of a
+new preliminary subdivision plat application shall be required for the remaining unplatted
+phases.
+H. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of a preliminary subdivision plat application to ensure compliance
+with the approval criteria.
+I. Appeal of a Decision. Refer to Section 12.70.180.
+12.80.098 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:28Supp. No. 1
+J. Expiration of a Decision. Refer to Section 12.70.140.
+K. Extension of a Decision. Refer to Section 12.70.150.
+L. Subdivision Final Plat Submittal. An application for subdivision final plat shall be reviewed
+under the Type I procedure, as described in Section 12.70.030. At a minimum, an application
+for a final plat shall include the following:
+1. The application form, signed by the owner(s) of the property to be subdivided;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A final plat prepared by a land surveyor or engineer licensed to practice in Oregon,
+incorporating any applicable conditions of approval imposed by the Review Authority
+under the preliminary subdivision plat approval;
+4. A narrative addressing compliance with the preliminary plat approval and all conditions of
+that approval;
+5. Signed and notarized copies of all supplemental documents required by the preliminary
+plat approval, such as Covenants, Conditions and Restrictions, Waivers of Remon-
+strance, or easements.
+M. Subdivision Final Plat Approval Criteria.
+1. If the Director determines that the final plat is consistent with the approved preliminary
+plat, and the conditions of approval have been satisfied, the Director shall sign the final
+plat as the representative of the Planning Commission.
+2. If the Director determines that the final plat is not consistent with the approved preliminary
+plat, or the conditions of approval have not been satisfied, the Director shall provide
+findings of fact stating the basis for denial. The applicant may then either submit a revised
+final plat application or appeal the Director's decision as provided in Section 12.70.180.
+N. Implementation of Final Plat Approval.
+1. The approved final subdivision plat shall be recorded prior to expiration of the original
+decision. Refer to Section 12.70.140. If the final plat is not recorded within this time, the
+final plat shall be null and void. If the Director has signed the final plat, but it has not yet
+recorded, the Director has the authority to revoke the City's approval of the final plat.
+2. The applicant shall be responsible for all recording fees and shall provide the City with a
+copy of the recorded plat within 5 days of the recording. The Director has the authority, as
+applicable, to stop submittal of building permits, issuance of permits, or issuance of
+Certificate of Occupancy until provided with copies of the recorded supplemental docu-
+ments.
+3. The applicant shall provide the City with copies of any recorded supplemental documents
+required by the preliminary plat approval, such as Covenants, Conditions and Restric-
+tions, Waivers of Remonstrance, or easements within 5 days of the recording. The
+ 12.80.098APPLICATIONS
+CDC12.80:29Supp. No. 1
+Director has the authority, as applicable, to stop submittal of building permits, issuance of
+permits, or issuance of Certificate of Occupancy until provided with copies of the
+recorded supplemental documents.
+O. Building Permit Issuance.
+1. With the exception of a model home as a project sales office pursuant to Section
+12.40.200, no residential building permit shall be issued on a lot created by a subdivision
+plat until the approved final subdivision plat has been recorded at Washington County.
+2. Prior to either issuance of an occupancy permit or final inspection, all improvements
+required by the conditions of approval shall be constructed or the construction shall be
+guaranteed through a performance bond or other instrument acceptable to the City
+Engineer.
+P. Appeal of a Final Decision. Refer to Section 12.70.180.
+Q. Expiration of a Decision. Refer to Section 12.70.140.
+R. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024; Ord. 6465 § 2, 2024; Ord. 6401 § 1, 2022; Ord. 6294 § 1,
+2019; Ord. 6178 § 1, 2016; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.80.099  Expedited and Middle Housing Land Divisions.
+A. Applicability. Applicability for Expedited Land Divisions (ELD) is stated in paragraph C.1 below.
+Applicability for Middle Housing Land Divisions (MHLD) is stated in subsection D. below.
+B. Compliance with ORS Chapter 92. All ELD and MHLD proposals shall conform to all applicable
+State regulations set forth in ORS Chapter 92, Subdivisions and Partitions.
+C. Preliminary Plat Application for Expedited Land Divisions. ELDs are subject to the alternative
+review procedures as described in Section 12.70.025.
+1. Applicability and Approval Criteria. Approval of a preliminary plat for an ELD application
+will be granted if the Director finds that the application has met all of the following criteria:
+a. The land is zoned for residential use and is within the urban growth boundary.
+b. The land is solely for the purpose of residential use, including recreational or open
+space uses accessory to residential use.
+c. The land division will not provide for dwellings or accessory buildings to be located
+on land that is specifically mapped and designated in the Comprehensive Plan and
+land use regulations for full or partial protection of natural features under the
+statewide planning goals that protect open spaces, scenic and historic areas, and
+natural resources.
+d. The land division satisfies minimum street or other right-of-way connectivity stan-
+dards established by the City's acknowledged land use regulations.
+12.80.098 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:30Supp. No. 1
+e. The land division will result in development that either:
+i. Creates enough lots or parcels to allow building residential units at 80% or
+more of the maximum net density permitted by the zoning designation of the
+site; or
+ii. Will be sold or rented to households with incomes below 120% of the median
+family income for the county in which the project is built.
+2. Submittal Requirements. In addition to the items listed in Subsection 12.70.025.F.1., an
+application for an ELD shall describe the manner in which the proposed partition or
+subdivision complies with each of the criteria in paragraph C.1. above.
+3. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of a preliminary plat application for an ELD to ensure
+compliance with the approval criteria.
+D. Preliminary Plat Application for Middle Housing Land Division. An MHLD is a partition or
+subdivision of a lot or parcel within a middle housing zone on which a middle housing project
+has been developed or approved for development under the provisions of this Code and ORS
+197.758 subject to the alternative review procedures as described in Section 12.70.025. An
+MHLD may be submitted and reviewed concurrently with a Partition or Subdivision preliminary
+plat to create parent lots.
+1. Approval Criteria. Approval of a preliminary plat for an MHLD application will be granted
+if the Director finds that the application has met all of the following criteria:
+a. The middle housing development complies with the applicable CDC middle housing
+regulations, including but not limited to, the provisions in base zones, and in
+Sections 12.50.710—12.50.715. The plans shall demonstrate how the existing or
+proposed structures comply with the applicable CDC middle housing regulations on
+parent lots/parcels. Exactly 1 dwelling unit shall be located on each resulting child
+lot or parcel with the exception of lots, parcels, or tracts used as common areas that
+do not require a dwelling unit to be located on them.
+b. Separate utilities will be provided for each dwelling unit along with easements for
+locating, accessing, replacing, and servicing all utilities.
+c. Easements will be provided as necessary to and from each dwelling unit on the site
+for:
+i. Pedestrian access from each dwelling unit to a private or public road; and
+ii. Access to any common use areas, shared building elements, and dedicated
+driveways or parking.
+d. Where a resulting child lot or parcel abuts a street that does not meet City
+standards, street frontage improvements will be constructed and, if necessary,
+additional right-of-way will be dedicated, pursuant to Section 12.50.530 or 12.50.540.
+e. Further division of child lots resulting from a previous MHLD shall only include lots
+which create housing that is at or above minimum density for the base zone.
+ 12.80.099APPLICATIONS
+CDC12.80:31Supp. No. 1
+2. Submittal Requirements. In addition to the items listed in Subsection 12.70.025.F.1., an
+application for a MHLD shall describe the manner in which the proposed partition or
+subdivision complies with each of the provisions of paragraph D.1. above.
+3. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of a preliminary plat application for an MHLD to ensure
+compliance with the approval criteria listed in Subsection 12.80.099D.1. In accordance
+with ORS Chapter 92, the City shall not attach conditions of approval requiring that a child
+lot or parcel require driveways, vehicle access, parking, or minimum or maximum street
+frontage.
+E. Final Plat Requirements for Expedited and Middle Housing Land Divisions.
+1. Approval Criteria. The Director shall sign the final plat for an ELD or MHLD if the final plat
+application provides documentation of compliance with all of the following:
+a. The final plat is in substantial conformance with the preliminary plat; and
+b. All conditions of approval attached to the preliminary plat have been satisfied,
+including that all improvements required to satisfy applicable standards have been
+constructed.
+2. Submittal Requirements. An application for an ELD or MHLD final plat shall include the
+items listed in Subsection 12.70.025.F.1.
+3. Implementation of Final Plat Approval.
+a. The approved final plat shall be recorded prior to expiration of the original decision.
+Refer to Section 12.70.140. If the final plat is not recorded within this time, the final
+plat shall be null and void. If the Director has signed the final plat, but it has not yet
+recorded, the Director has the authority to revoke the City's approval of the final plat.
+b. The applicant shall be responsible for all recording fees and shall provide the City
+with a copy of the recorded plat within 5 days of the recording. The Director has the
+authority, as applicable, to stop submittal of building permits, issuance of permits, or
+issuance of Certificate of Occupancy until provided with copies of the recorded
+supplemental documents.
+c. The applicant shall provide the City with copies of any recorded supplemental
+documents required by the preliminary plat approval, such as Covenants, Condi-
+tions and Restrictions, Waivers of Remonstrance, or easements. The Director has
+the authority, as applicable, to stop submittal of building permits, issuance of
+permits, or issuance of Certificate of Occupancy until provided with copies of the
+recorded supplemental documents.
+(Ord. 6465 § 2, 2024; Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.80.100  Modification of Approved Plans and Permits.
+A. Purposes. The Modification (MOD) process may be initiated at the applicant's option to enable
+approved plans and permits to be modified under an appropriate review process without
+initiating repetition of the original application. The Modification process also allows use of 2
+Procedure Types based on the scale of the proposed modification.
+12.80.099 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:32Supp. No. 1
+B. Applicability. The following development applications, approved through the provisions of this
+Code, may be modified pursuant to this section:
+1. Development Review;
+2. Land Divisions (partitions or subdivisions); and
+3. Planned Unit Development.
+C. Thresholds for Major Modifications. A MOD application meeting any of the following thresholds
+shall be processed as a Major Modification:
+1. Change in use category on any portion of the site;
+2. Increased residential density;
+3. Changes in perimeter setbacks or lot coverage;
+4. Increases in proposed building height within 100 feet of single detached and middle
+housing residential zones;
+5. Reduction of usable common open space areas;
+6. Changes to approved development on slopes greater than 25% and/or within Significant
+Natural Resource Areas or Impact Areas;
+7. Changes in access or parking locations affecting exterior driveway or intersection
+locations or off-site traffic circulation;
+8. Changes in traffic volume which affect the need for on-site and/or off-site traffic safety or
+capacity improvements;
+9. Decreases in pedestrian or bicycle amenities, recreational facilities, screening, and/or
+landscaping provisions; and/or
+10. Any change to a condition of approval similar to paragraphs 1 through 9 which, under the
+Director's discretion is determined to have detrimental impacts on adjoining properties.
+D. Thresholds for Minor Modifications. If it meets none of the thresholds identified in subsection C.
+above, a Modification application meeting any of the thresholds listed below shall be processed
+as a Minor Modification:
+1. Reduction in residential density within the designated range of the underlying zone;
+2. Increases in pedestrian or bicycle amenities, recreational facilities, screening, and/or
+landscaping provisions;
+3. Increases in usable common open space areas; and/or
+4. Any change involving a shift in building heights or locations, proposed interior streets,
+parking or utility easement configurations, landscaping or other interior site improve-
+ments.
+ 12.80.100APPLICATIONS
+CDC12.80:33Supp. No. 1
+E. Procedure for Modifications. Major Modifications are subject to the same procedure Type as
+the original application, either a Type II procedure as described in Section 12.70.040 or a Type
+III procedure as described in Section 12.70.050. Minor Modification applications are subject to
+the Type II procedure as described in Section 12.70.040.
+F. Submittal Requirements. Type II and Type III application submittal requirements are set forth in
+Sections 12.70.040 and 12.70.050, respectively. Specific submittal requirements are provided
+on application forms and checklists as authorized in Section 12.70.110. At a minimum, an
+application for a Minor or Major Modification shall include the following:
+1. An application form signed by the applicant or the applicant's representative and the
+property owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. Narrative addressing compliance with either the Major or the Minor Modification thresh-
+olds listed in subsections C. and D. above;
+4. Narrative addressing whether the modification affects compliance with the approval
+criteria and applicable standards of the original application.
+G. Scope of Review. The scope of review for a Modification shall be limited to the modification
+request.
+H. Approval Criteria. To approve a Minor or Major Modification application, the Review Authority
+shall make findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. The location, size, and functional characteristics of the modified development can be
+made reasonably compatible with, and would have a minimal impact on, properties
+surrounding the subject site; and
+2. New elements are provided that functionally compensate for any negative effects caused
+by the requested modification(s). New elements used to compensate for a negative effect
+shall be of at least equal value to the elements proposed to be changed.
+3. The criteria in paragraphs 1 and 2 above shall be applied only to the area and/or lots
+within the development that are affected by the proposed Modification.
+4. In the case of a Major Modification, the entire development with the proposed modifica-
+tion shall demonstrate compliance with the approval criteria of the original application.
+I. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of a Modification application to ensure compliance with the original
+approval criteria.
+J. Appeal of a Decision. Refer to Section 12.70.180.
+K. Expiration of a Decision. Refer to Section 12.70.140.
+12.80.100 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:34Supp. No. 1
+L. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6178 § 1, 2016; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.80.110  Nonconforming Use or Structure Expansion.
+A. Purpose. Pre-existing legally compliant uses and structures become non-conforming when a
+zone or development standard applicable to the use or the site changes, and the existing use
+or structures would no longer be allowed under the changed zoning. Requiring non-conforming
+uses or structures (NCUs) to immediately conform to the changed zoning would be a significant
+hardship on property owners, residents, and businesses. Regulating non-conforming situa-
+tions such as uses and structures limits expansion of such situations and encourages future
+uses and development toward consistency with this Code, eventually bringing such situations
+into conformance. The provisions of this section shall be read in concert with Subchapter
+12.30.
+B. Procedure. Except as specified herein, applications to expand non-conforming uses or
+structures are reviewed through the Type III procedure, as described in Section 12.70.050. The
+creation of middle housing through additions to, and conversion of, an existing non-conforming
+single detached dwelling in accordance with Subsection 12.30.500.C.2. is permitted and does
+not require Nonconforming Use or Structure Expansion review.
+C. Submittal Requirements. Type III application submittal requirements are set forth in Section
+12.70.050 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, an application for expansion of a
+non-conforming use or structure shall include the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or owner's representative;
+2. Payment in full of the appropriate fee, based on the fee schedule in effect on the date of
+submittal; and
+3. Narrative addressing compliance with the approval criteria.
+D. Approval Criteria. To approve an Expansion of an NCU, the Review Authority shall make
+findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. The non-conforming situation was not created unlawfully;
+2. With mitigation measures, the expanded situation will have fewer or reduced detrimental
+impacts on the surrounding area. Detrimental impacts in this context include the follow-
+ing:
+a. Extended hours of operation;
+b. Vehicle trips to or from the site and impacts on surrounding on-street parking;
+c. Noise, vibration, dust, odor, fumes, glare, and smoke; and
+ 12.80.110APPLICATIONS
+CDC12.80:35Supp. No. 1
+d. Increased amount, location, and nature of any outside displays, storage or activi-
+ties.
+12.80.110 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:36Supp. No. 1
+3. In a residential zone, if changes are proposed to the site, the appearance of the expanded
+non-conforming use or structure will not adversely affect the residential character of the
+area, taking into account all of the following factors:
+a. Building scale, location, and façade;
+b. Parking area location;
+c. Buffering and the potential loss of privacy to abutting residential uses; and
+d. Lighting and signage.
+4. In a commercial or industrial zone, if changes are proposed to the site, the appearance of
+the expanded non-conforming use or structure will not detract from the purpose, function
+and character of the zone.
+5. The proposal complies with all applicable provisions of CDC Section 12.30.800.
+E. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of the Expansion of an NCU to ensure compliance with the approval
+criteria.
+F. Appeal of a Decision. Refer to Section 12.70.180.
+G. Expiration of a Decision. Refer to Section 12.70.140.
+H. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.80.120  Planned Unit Development.
+A. Purposes. The purposes of the Planned Unit Development (PUD) application and process are
+found in CDC Subsection 12.27.500.
+B. Where Required. An applicant may request the PUD process for any development project of
+any size in any zone. However, the PUD process is required in the following circumstances:
+1. For any non-residential development projects in the MU-VTC or SCR-V zone;
+2. For any non-residential phased development within a light rail zone;
+3. For any non-residential development projects within the boundaries of the Witch Hazel
+Village Community Plan area;
+4. For any non-residential development projects in the South Hillsboro Plan District with a
+site size over 15 gross acres; or
+5. For any new development in the SCFI zone.
+C. Allowable Uses.
+1. PUDs in Residential Zones. In residential zones, PUD concept plan approval allows
+development of a site with a mixture of uses. The following uses are allowed with PUD
+approval:
+a. All uses permitted or conditionally permitted in the underlying zone;
+ 12.80.120APPLICATIONS
+CDC12.80:37
+b. Community recreation facilities or similar uses;
+c. Outdoor recreation facilities or similar uses; and
+d. Recreational vehicle storage areas.
+2. PUDs in Commercial and Industrial Zones. In areas designated Commercial or Industrial
+on the Comprehensive Plan Map, PUD concept plan approval allows development of a
+site with mixed uses subject to the following limitations:
+a. At least 60% of the PUD area shall be occupied to uses permitted or conditionally
+permitted by the implementing zones of the Comprehensive Plan designation; and
+b. If retail commercial use is not allowed by the base zone, a multi-tenant retail
+commercial facility or structure under common ownership or common control may
+be approved in an industrial PUD if the square footage is 15,000 square feet or less.
+3. PUDs in the MU-VTC Zone. In the MU-VTC Mixed-Use Village Town Center zone, PUD
+concept plan approval allows development of a site with a mixture of all permitted, limited,
+and/or conditional uses in the underlying zone.
+D. Phasing. Unless otherwise authorized by the Planning Commission, a phased development
+may not exceed 5 years between commencement of development on the first and final phases.
+E. Procedures. PUD applications are subject to the Type III procedure, as described in Section
+12.70.050.
+1. Any requests for special adjustments shall be consolidated within the PUD application
+and shall address the relevant approval criteria in Sections 12.80.156 and 12.80.158.
+2. A PUD application that is consolidated with a Land Division application and/or a Devel-
+opment Review application is subject to the Type III procedure, as described in Section
+12.70.050. A separate Land Division and/or Development Review application is not
+needed if the request is consolidated with the PUD application.
+3. A PUD application and a concurrent Development Review application are both subject to
+the Type III procedure, as described in Section 12.70.050. A PUD application and a
+concurrent Land Division application may not occur.
+4. A PUD application followed by a deferred Land Division application and/or a deferred
+Development Review application may occur. The deferred Land Division application will
+be subject to the Type II or Type III procedure, as applicable. The deferred Development
+Review application will be subject to the Type II procedure.
+F. Implementation of Planned Unit Development Concept Plan Approval. A PUD concept plan
+shall be implemented through either a Development Review approval under Section 12.80.040,
+a Land Division approval under Section 12.80.096 or Section 12.80.098, or both.
+12.80.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:38
+G. Consolidated, Concurrent and Sequential Applications.
+1. Applications for PUDs and implementing Land Division and/or Development Review
+applications may be submitted at the applicant's discretion as consolidated, concurrent or
+sequential, and shall be processed as described in Table 12.80.120-1 below:
+  Table 12.80.120-1:
+Consolidated, Concurrent and Sequential PUD Applications
+ Consolidated Concurrent Sequential
+Procedure
+Type
+All applications processed
+as Type III
+Applications may be Type II or Type III as required in
+Table 12.70.020-1.
+Submittal All applications submitted
+together
+Applications submitted
+simultaneously or
+consecutively.
+Applications submitted
+consecutively.
+Signature
+forms Separate signature forms submitted for each application.
+Narrative
+Criteria and standards for
+all applications addressed
+in single narrative
+Criteria and standards for each application addressed
+in separate narratives.
+Plans Submitted in single
+package Submitted in separate packages with applications.
+Public Notices
+One public notice mailed
+for all applications; notice
+references applicable
+approval criteria and
+sections for all applications
+submitted in the
+consolidated packet.
+Public notices mailed
+either simultaneously or
+consecutively, dependent
+on application submittal
+date and procedure type.
+Notices cross-reference
+related applications.
+Public notices mailed
+consecutively.
+
+Notices cross-reference
+related previous
+applications.
+Staff Reports
+All applications and issues
+reviewed in a single staff
+report.
+Applications and issues reviewed in separate staff
+reports.
+Public
+Hearings
+All applications reviewed in
+a single hearing.
+Applications reviewed separately under the applicable
+process(es) and Review Authority.
+Notice of
+Decision
+Single decision issued:
+may have subsections for
+each application.
+Multiple decisions issued: approvals may be
+cross-conditioned upon approval of related applications.
+2. If the applicant chooses to submit the implementing Development Review application
+sequentially, the PUD concept plan application must include sufficiently detailed building
+locations, dimensions, elevations, and building and landscaping materials palettes to
+clearly establish the standards by which the Development Review application will be
+reviewed administratively as a Type II application under Section 12.70.040.
+H. Planned Unit Development Submittal Requirements. Type III application submittal require-
+ments are set forth in Section 12.70.050 and more specific submittal requirements are
+provided on application forms and checklists as authorized in Section 12.70.110. At a
+minimum, a PUD shall include the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or owner's representative.
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal.
+3. An Existing Conditions plan.
+ 12.80.120APPLICATIONS
+CDC12.80:39
+4. Concept Plan sets including but not limited to the following:
+a. Pedestrian and Vehicle Site Circulation;
+b. Development Pattern, including approximate location, acreage, type and density of
+proposed development, and for any residential development the housing types, unit
+densities, and generalized lot sizes at their proposed locations on the site;
+c. Conceptual architectural designs, including drawings, illustrations and building
+elevations, with exterior materials board and color palette;
+d. Open Space and Natural Resources, including percentage of site area and approx-
+imate locations of proposed parks, playgrounds or other outdoor play areas,
+common areas and usable open space; and natural, historic and cultural resource
+areas or features proposed for preservation.
+5. Preliminary partition or subdivision plat if land division is included in the development
+proposal.
+6. Preliminary phasing plan including infrastructure phasing, if project phasing is proposed.
+7. Narrative statements including but not limited to the following:
+a. Description, approximate location and timing of each proposed phase of develop-
+ment;
+b. Explanation of how the proposed PUD is consistent with the purposes of this
+section, the intent of the underlying zone, and any applicable Community Plan;
+c. A Transportation Planning Rule Compliance analysis pursu ant to Section 12.70.230;
+d. A Traffic Impact Analysis pursuant to Section 12.70.220;
+e. A statement describing the impacts of the proposed development on natural
+resources and on any resources contained in the City's Inventory of Cultural
+Resources within the proposed site;
+f. Narrative addressing compliance with partition or subdivision approval criteria if
+applicable;
+g. Narrative addressing compliance with development review approval criteria if
+applicable;
+h. Narrative addressing compliance with adjustment approval criteria if applicable;
+and
+i. Narrative and/or drawings justifying and substantiating the need for variances or
+adjustments, if requested, to the development and/or design standards of the
+applicable base zone, overlay zone, or Plan District; and addressing the applicable
+approval criteria in Subsections 12.80.152.C. through E., 12.80.154.C., 12.80.156.C.,
+and 12.80.158.A. through M.
+I. Development Regulations and Design Standards not Subject to Adjustment. The PUD appli-
+cation process with consolidated Adjustment cannot be used to vary or take an exception from
+the standards listed in Subsection 12.80.150.C.
+12.80.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:40
+J. Concept Plan Approval Criteria. To approve a PUD concept plan, the Planning Commission
+shall make findings, based on evidence provided, that the following criteria are satisfied:
+1. The development concept demonstrates that the PUD has some significant advantages
+over a standard development allowed under base zoning standards. "Significant advan-
+tages" in this context may include, but are not limited to, 1 or more of the following:
+a. The PUD is consistent with the provisions of any applicable adopted Community
+Plan in the Comprehensive Plan and any applicable plan district in Subchapters
+12.60 through 12.66;
+b. The PUD protects, preserves, and/or manages areas of significant natural re-
+sources beyond the requirements of the base zoning regulations;
+c. The general arrangement of proposed uses in the PUD better integrates future
+development into the surrounding neighborhood, either through more compatible
+street layout, architectural styles and housing types, or by providing better transi-
+tions between the surrounding neighborhood and the PUD with compatible devel-
+opment or open space buffers;
+d. Any requests for Adjustments included in the concept plan, including requests for
+increased density, comply with the applicable standards in Sections 12.80.154,
+12.80.156 and 12.80.158 as applicable;
+e. Areas of open space, their intended levels of use, and their relationship to other
+proposed uses in the PUD provide enhanced opportunities for "third place" gather-
+ing areas;
+f. The PUD features outstanding site design and construction; such as enhanced
+architectural design and materials; best management practices for on-site storm
+water management, green building materials, water and energy efficiency, and/or
+horticultural activities;
+g. Site design in the PUD will create a diverse neighborhood including age- or
+disability-friendly features such as "visitability"; and
+h. The PUD features enhanced opportunities for walkability or transit ridership, includ-
+ing separated parking bays, off street walking paths, shorter pedestrian routes than
+vehicular routes, linkages to or other provisions for bus stops, etc.
+2. Any adjustment(s) proposed meet the approval criteria for the specific adjustment(s) as
+set forth in Section 12.80.158.
+3. If a preliminary plat was submitted for approval with the PUD concept plan, then the
+preliminary plat complied with the applicable approval criteria in Subsection 12.80.096.G.
+or 12.80.098.F.
+K. Conditions of Approval and Binding Elements. Pursuant to Section 12.70.120, the Review
+Authority may impose conditions on the approval of the PUD concept plan to ensure compli-
+ 12.80.120APPLICATIONS
+CDC12.80:41
+ance with the approval criteria and may also impose conditions of approval on the PUD
+concept plan regarding changes in detailed site plans or elevations as necessary to ensure
+compliance with Sections 12.50.700, 12.50.800 and/or 12.50.900.
+PUD concept approval shall constitute preliminary approval for the proposed development,
+with final approval implemented in the concurrent or subsequent Development Review
+approval, Land Division Final Plat approval, or both. However, the PUD approval shall be
+binding as to the following aspects, which shall not be modified in the implementing approvals:
+1. Minimum residential density, minimum floor area ratio and minimum usable open space
+for the project as a whole;
+2. Approximate location and type of permitted uses; and
+3. Consistency with the purposes identified in this section.
+L. Zoning Map Designation. The boundaries of an approved Planned Unit Development shall be
+designated and applied to the Zoning Map. A separate Zone Change application is not required
+to apply the Planned Unit Development Overlay.
+M. Appeal of a Decision. Refer to Section 12.70.180.
+N. Expiration of a Decision. Refer to Section 12.70.140.
+O. Extension of a Decision. Refer to Section 12.70.150.
+P. Requests for Adjustments after Concept Development Plan Approval. Requests for variances
+or adjustments to an approved PUD Concept Development Plan submitted after the original
+approval shall be processed as a modification to the PUD approval pursuant to Section
+12.80.100.
+Q. Previously Approved Concept Development Plans Approved as Planned Unit Developments.
+Any Concept Development Plan approval issued prior to September 4, 2014 shall be consid-
+ered an approved Planned Unit Development. Subsequent modifications to any such Concept
+Development Plan shall be processed as PUD modifications under Section 12.80.100.
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6250 § 1,
+2017; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. 6110 § 11, 2015)
+12.80.122  PUD Implementation through Development Review or Land Division Approval.
+A. Timing. Following Planned Unit Development (PUD) concept plan approval, an applicant may
+submit implementing applications for Development Review, Partition or Subdivision Final Plat
+approval, or both, consistent with the approved PUD concept plan. Applications for the
+implementing approvals for the first phase of the PUD shall be filed within 18 months of the final
+decision date approving the PUD concept plan.
+B. Procedures. An application for an implementing Development Review application shall be
+reviewed under a Type II procedure, as set forth in Section 12.70.040. An application for an
+implementing final partition or subdivision plat shall be reviewed under a Type I procedure, as
+set forth in Section 12.70.030.
+12.80.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:42
+C. Implementing Application Submittal Requirements. Specific submittal requirements for Devel-
+opment Review (DR) and Land Division final plats are provided on application forms and
+checklists as authorized in Section 12.70.110. Minimum application submittal requirements for
+Development Review are provided in Section 12.80.040. Minimum application submittal
+requirements for Subdivision Final Plats are provided in Section 12.80.098. Minimum applica-
+tion submittal requirements for Partition Final Plats are provided in Section 12.80.096.
+D. Approval Criteria. To approve an implementing application for Development Review, Land
+Division Final Plat or both, the Review Authority shall make findings, based on evidence
+provided, that the following criteria are satisfied:
+1. The implementing application complies with all applicable requirements of Section
+12.80.040; Section 12.80.098; and/or Section 12.80.096.
+2. The implementing application complies with all applicable development standards in
+Subchapter 12.50; and any applicable provisions regarding overlay zones in Subchapter
+12.27 or plan districts in Subchapters 12.60 through 12.66.
+3. The implementing application conforms to the PUD concept plan approval and all the
+conditions of approval.
+E. Limitations on Changes from Concept Plan Approval.
+1. The Review Authority may approve an implementing application which includes minor
+changes from the PUD concept plan, if the minor changes meet all of the following
+criteria:
+a. The change does not affect a binding element under Subsection 12.80.120.L. or a
+non-variable standard under Subsection 12.80.150.C.;
+b. The change does not relate to a condition of approval or a requirement placed on
+the PUD concept plan by the Planning Commission;
+c. The change does not involve a change in use;
+d. The change does not increase or decrease the overall residential density of the
+PUD by more than 5%;
+e. The change does not decrease the overall density of the development;
+f. The change does not increase the average daily auto trips associated with the
+approved plan by more than 100 trips;
+g. The change involves a shift in the location of buildings or internal streets, parking lot
+configuration, landscaping, or usable open space within the site and does not
+impact properties outside the development with respect to intersection locations,
+utility connections, increased traffic impacts, or site drainage; and
+h. Any change in the schedule or phasing does not adversely impact or delay
+construction of related infrastructure, streets or transportation system improve-
+ments; preclude timely and efficient provision of services to adjacent properties; or
+adversely impact existing infrastructure or transportation systems in the vicinity.
+ 12.80.122APPLICATIONS
+CDC12.80:43
+2. If the Review Authority finds that the implementing applications do not conform to the
+approved PUD concept plan or the changes do not meet the criteria of "minor changes"
+as listed in paragraph 1 above, the implementing applications shall be denied unless the
+Review Authority places conditions on the implementing applications to achieve confor-
+mance with the approved PUD concept plan.
+F. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of the implementing applications to ensure compliance with the
+approval criteria and the relevant standards of this Code, including standards set out in overlay
+districts, master plans for transportation and utilities and adopted design standards, provided
+such conditions are consistent with the PUD concept plan approval. In approving implementing
+DR and/or Land Division applications, the Review Authority may require adequate financial
+guarantees of compliance with the approved PUD concept plan.
+G. Appeal of a Decision. Refer to Section 12.70.180.
+H. Expiration of a Decision. Refer to Section 12.70.140.
+I. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 11, 2015)
+12.80.126  Partial-Dwelling STR.
+A. Purpose. The purpose of a partial-dwelling STR is to allow residents an opportunity to rent a
+portion of their dwelling to paying guests for 30 days or less, while establishing criteria and
+standards to ensure that the rental activity is subordinate to the residential use, and is in
+appearance and operation neither detrimental nor disruptive to neighboring properties and
+residents.
+B. Procedure. Partial-dwelling STR applications are subject to the Type I procedure as described
+in Section 12.70.030.
+C. Submittal Requirements. Type I application submittal requirements are set forth in Section
+12.70.030 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, a partial-dwelling STR application
+shall include the following:
+1. An application form signed by the property owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A scaled plot plan of the proposed partial-dwelling STR site, and a floor plan of any
+dwelling to be used by the owner or guests during a rental; and
+4. A narrative addressing compliance with the approval criteria and special use standards in
+Section 12.40.230.
+5. Proof of property ownership.
+12.80.122 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:44
+D. Approval Criteria. In order to approve a partial-dwelling STR, the Review Authority shall make
+findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. The zoning of the subject property lists Short Term Rentals as an allowed use;
+2. The proposal complies with the standards for partial-dwelling STRs in Section 12.40.170
+Special Uses.
+E. Conditions of Approval. The Review Authority may impose conditions on approval of a
+partial-dwelling STR to ensure compliance with the approval criteria.
+F. Appeal of a Decision. Refer to Section 12.70.180.
+G. Expiration of a Decision. Refer to Section 12.70.140.
+H. Extension of a Decision. Refer to Section 12.70.150.
+I. Invalidation of a Decision. Approval of a partial-dwelling STR permit is site-specific to the
+property and the original applicant. If an applicant moves, the partial-dwelling STR permit
+becomes invalid unless a new permit is approved for the subsequent owner of the property.
+J. Revocation of a Decision. A business license for a permitted partial-dwelling STR is subject to
+revocation at any time by the City Council for cause pursuant to Municipal Code Subchapter
+5.04 under the following circumstances:
+1. There is a violation of any provision of this Code;
+2. There is a violation of any term or condition of any applicable permit;
+3. Failure to pay the City business license fee when due.
+K. Waiting Period for Re-Application. When a business license for a partial-dwelling STR is
+revoked due to violation of the standards of this section, or any condition of approval attached
+to the permit, a minimum period of 60 days shall elapse before another application for a
+partial-dwelling STR permit on the subject property will be considered.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024)
+12.80.130  Significant Natural Resources Permit.
+A. Purpose. Significant Natural Resources Permits (SNRPs) implement the provisions of the
+Significant Natural Resource Overlay zone. This section shall be read in concert with Section
+12.27.200.
+B. Where Required. SNRPs are required for development in the Significant Natural Resource
+Overlay zone as described in Section 12.27.200.
+C. Procedures. There are 3 types of SNRPs as described in Section 12.27.200:
+1. SNRP I are subject to the Type I procedure, as described in Section 12.70.030.
+2. SNRP II are subject to the Type II procedure, as described in Section 12.70.040.
+3. SNRP III are subject to the Type III procedure, as described in Section 12.70.050.
+ 12.80.130APPLICATIONS
+CDC12.80:45Supp. No. 1
+D. General Submittal Requirements. General submittal requirements for Type I and Type II
+applications are set forth in Sections 12.70.030 and 12.70.040, respectively. At a minimum, an
+application for a SNRP shall include the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A site plan drawn to scale showing the location of the following:
+a. The boundaries of the SNR Sites and Impact Areas on the property. If the applicant
+does not have access to the SNR site, the impact area shall be drawn as shown on
+the adopted SNRO map.
+b. Existing and proposed property lines, streets, driveways, and off-street parking and
+loading areas;
+c. Areas where existing structures are located and where new structures are pro-
+posed;
+d. Areas where vegetation is proposed to be removed;
+e. If applicable, the location of proposed mitigation areas and a proposed planting
+plan;
+f. Locations of stakes marking the areas in paragraphs d and e above.
+4. Photographs taken within the last 90 days of the staked locations of proposed structures
+or vegetation removal on the site. The location and direction of the photographs shall be
+indicated on the site plan.
+5. An Environmental Report, if required by Subsection 12.27.230.C.
+E. Process Requirements Specific to Significant Natural Resources Permits. As required by ORS
+227.350, Community Development staff shall send a Wetland Land Use Notification Form to
+the Department of State Lands when an SNRP application is declared complete if that
+application is for uses or activities on property wholly or partially identified as wetlands on the
+Statewide Wetlands Inventory.
+F. SNRP I Approval Criteria. To approve an SNRP I, the Review Authority shall make findings of
+fact, based on evidence provided, that all of the applicable standards are met.
+G. SNRP II Approval Criteria. Unless a use or activity is exempt from these general SNRP II
+approval criteria pursuant to Section 12.27.235, to approve an SNRP II, the Review Authority
+shall make findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. For Activities and Development in Impact Areas:
+a. To the extent practicable, proposed activities are located and designed to minimize
+potential adverse impacts to SNR functions and values. Efforts to minimize adverse
+impacts may include, but are not limited to:
+i. Locating the Development outside the SNR Site,
+12.80.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:46Supp. No. 1
+ii. Avoiding the root zone of trees within an adjacent SNR Site,
+iii. Buffering the SNR Site with additional native landscaping, and/or
+iv. Reducing impervious surfaces within the Development.
+b. Compensatory mitigation as cited in Section 12.27.235 is provided for any adverse
+impacts to a SNR Site resulting from regulated activities within the adjacent Impact
+Area.
+c. Compensatory mitigation cited in paragraph b above may be waived if an applicant
+can show through the SNRP application that the use, activity or Development
+proposed within the Impact Area will have no adverse impact on the adjacent SNR
+Site.
+2. For Activities and Development in Significant Natural Resource Sites:
+a. Within Level 1 SNR Sites, activities are located and designed to minimize potential
+adverse impacts to the SNR Site to the extent practicable;
+b. Within Level 2 SNR Sites, activities are located and designed to avoid potential
+adverse impacts to the SNR Site to the extent practicable;
+c. Within Level 3 SNR Sites, activities are avoided altogether to the extent practicable;
+d. When activity within an SNR Site cannot be avoided, the activity is located and
+designed to minimize potential adverse impacts to SNR functions and values as
+identified in the City of Hillsboro Goal 5 Natural Resources Inventory and Assess-
+ment Report; and
+e. Compensatory mitigation as cited in Section 12.27.235 is provided for all develop-
+ment within an SNR Site.
+H. SNRP II Approval Criteria—Specific Uses. Where a use or activity is exempt from the general
+Type II approval criteria pursuant to Section 12.27.235, to approve a SNRP II, the Review
+Authority shall make findings of fact, based on evidence provided, that all of the applicable
+standards are met.
+I. SNRP III Approval Criteria. To approve an SNRP III, the Review Authority shall make findings
+of fact, based on evidence provided, that all of the applicable standards are met.
+J. Conditions of Approval. The Review Authority may impose conditions on the approval of a
+Significant Natural Resources Permit to ensure compliance with the standards of Section
+12.27.200.
+K. Appeal of a Decision. Refer to Section 12.70.180.
+L. Expiration of a Decision. Refer to Section 12.70.140.
+M. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+ 12.80.130APPLICATIONS
+CDC12.80:47Supp. No. 1
+12.80.140  Text Amendment.
+A. Purpose. The Community Development Code Text Amendment (CDCA) process shall be used
+for legislative amendments to this Code. Such amendments are necessary to reflect changing
+community conditions, needs, and desires, to fulfill regional obligations, and to address
+changes in State law.
+B. Procedure. CDCAs are subject to the Type IV procedure, as described in Section 12.70.060.
+However, the Director is authorized to make typographical, grammatical and cross-referencing
+corrections to this Code as needed without initiating the CDCA process.
+C. Submittal Requirements. Type IV application submittal requirements are set forth in Section
+12.70.060.
+D. Approval Criteria. In order to approve a Text Amendment application, the Review Authority
+shall make findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. The CDCA addresses an issue or issues of concern on a variety of properties or
+conditions, and is not intended to resolve a property-specific or condition-specific
+situation;
+2. The CDCA is consistent with relevant goals and policies of the Hillsboro Comprehensive
+Plan, any applicable Community Plans, and with the provisions of this Code;
+3. The CDCA is consistent with relevant provisions of the Metro Urban Growth Management
+Functional Plan;
+4. The CDCA is consistent with relevant provisions of the Statewide Planning Goals, the
+Oregon Administrative Rules, and State statutes; and
+5. The CDCA is deemed by the Review Authority to be desirable, appropriate, and proper.
+E. Appeal of a Decision. Refer to Section 12.70.180.
+F. Expiration of a Decision. Text Amendments are not subject to expiration.
+G. Extension of a Decision. Text Amendments are not subject to extension.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.80.150  Variances and Adjustments.
+A. Purpose. Variance applications and Adjustment processes allow flexibility in applying the
+standards in this Code if a proposed development meets the intended purpose of those
+standards. As part of a discretionary review process, Variances and Adjustments may provide
+opportunities for provision of public benefits (pursuant to Section 12.50.900) to mitigate
+impacts of the Variances and Adjustments.
+B. Applicability of Provisions; Exemptions.
+1. The Variance application (VAR) shall be used if pre-existing conditions on a lot or parcel
+create a hardship in developing the lot or parcel consistent with the standards of this
+Code.
+12.80.140 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:48Supp. No. 1
+2. The Minor Adjustment process shall be used only under the following circumstances:
+a. As part of a Type II Development Review, Partition, or Subdivision application; or
+b. As part of a Type III Development Review, or Planned Unit Development applica-
+tion.
+3. The Major Adjustment process shall be used only as part of a Type III Development
+Review application or a Type III Planned Unit Development application.
+4. With the exception of the standards listed in subsection C. below, Minor Adjustments, and
+Major Adjustments may be submitted to request flexibility in the application of standards
+as shown in Table 12.80.150-1.
+5. The lot dimension variations specified in Section 12.50.110 are permitted without the
+approval of a Variance or Adjustment, subject to compliance with the standards of that
+section.
+6. Applications for land divisions to divide duplexes or townhouses into separate lots are
+exempt from the variance and adjustment processes, provided that the parent parcel
+meets the minimum lot dimension standards of the applicable underlying zone.
+  Table 12.80.150-1:
+MaximumApplicability of Variance and Adjustment Processes
+ Standard from which flexibility is requested:  Variance
+ Minor
+Adjustment
+w/Type II
+Application
+ Major
+Adjustment
+w/Type III
+Application
+To reduce lot size or dimensions below the base zone
+minimum standards (adjustments not available beyond
+optional variations in Section 12.50.110 unless approved as
+part of a PUD)
+X X X
+To reduce residential density less than 10% below the base
+zone minimum standard X X
+To reduce residential density more than 10% below the
+base zone minimum standard X
+To increase residential density above the base zone
+maximum standard* X
+To reduce minimum Floor Area Ratio less than 10% below
+the minimum base zone standard X X
+To reduce setbacks below the base zone minimum
+standards* X X X
+To increase setbacks above the base zone maximum
+standards X X
+To increase building heights above the base zone
+maximum standard* (adjustment not available in
+Residential Compatibility Areas)
+X X
+To increase lot coverage above the base zone maximum
+standard X X
+To decrease Usable Open Space areas below the minimum
+standard for the use type* X
+To decrease landscaping coverage below the minimum
+standard for the use type X X
+ 12.80.150APPLICATIONS
+CDC12.80:49Supp. No. 1
+Table 12.80.150-1:
+MaximumApplicability of Variance and Adjustment Processes
+ Standard from which flexibility is requested:  Variance
+ Minor
+Adjustment
+w/Type II
+Application
+ Major
+Adjustment
+w/Type III
+Application
+To increase the number of parking spaces above the
+maximum standard for the use type* X X
+To adjust requirements for undergrounding overhead
+utilities* X X
+To adjust bicycle/pedestrian access way requirements* X X
+To adjust building entrance requirements* X X
+To adjust ground floor window transparency requirements* X X
+To adjust other numeric design standards X X
+To adjust non-numeric design standards X X
+  * Indicates certain criteria applicable as specified in Section 12.80.158.
+C. Limitations on Cumulative Adjustments.
+1. The cumulative number of requests for Minor Adjustments in a Partition application shall
+not affect more than 1 parcel. The cumulative number of requests for Minor Adjustments
+in a Subdivision application shall not affect more than 25% of the lots. If requests for
+adjustments are proposed on a larger number of lots, the application shall be processed
+as a Planned Unit Development pursuant to Section 12.80.120.
+2. Requests for Minor Adjustments in a Development Review, Partition, or Subdivision,
+application may be submitted for not more than 4 of the following 7 categories:
+a. Lot dimensions (area, width, or height);
+b. Setbacks;
+c. Building height;
+d. Lot coverage;
+e. Parking;
+f. Usable open space;
+g. Landscaping; or
+h. Building design standards.
+3. Not more than 3 Minor Adjustment requests shall be submitted per lot or building. In
+calculating the number of Minor Adjustments under this provision, each adjustment on
+each lot shall be counted as one request. For example, a front yard and side yard
+adjustment on one lot equals 2 requests; requests for adjustments in front yard setback,
+building height, and parking equals 3 requests.
+4. If requests for more than 3 Minor Adjustments are proposed on a single lot or building, the
+requests shall be processed as a Major Adjustment with a PUD or Type III Development
+Review application.
+12.80.150 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:50Supp. No. 1
+D. Standards not Subject to Variance or Adjustment.
+1. Variance or Adjustment applications may address any regulation in this Code except the
+following:
+a. To change a definition or use category classification;
+b. To allow a use or development type cited as "prohibited" or "not permitted";
+c. To modify or remove a threshold for review, such as a standard which requires a
+particular application for review of a certain project;
+d. To change the steps of a procedure type or to change assigned procedures;
+e. To modify the numeric standards in Section 12.40.194, Marijuana Facilities; or
+f. To modify the numeric standards in Section 12.40.215, Psilocybin Facilities.
+2. Adjustment applications may address any regulation in this Code regarding light rail
+zones except the following:
+a. To reduce residential density below 90% of the base zone minimum standard;
+b. To increase residential density above the base zone maximum standard;
+c. To reduce floor area ratio below 90% of the base zone minimum standard;
+d. To reduce Usable Open Space below 85% of the base zone minimum standard;
+e. To reduce lot frontage below the base zone minimum standard;
+f. To adjust street or alley performance standards in Section 12.50.530;
+g. To allow surface parking or loading between a building and a major pedestrian
+route;
+h. To allow parking cater-cornered from a Light Rail Station site at an intersection;
+i. To requirements for pedestrian-oriented commercial uses wrapping the ground
+floor of a parking structure; or
+j. To increase building height in residential compatibility areas in the SCC-DT Station
+Community Commercial - Downtown zone, as shown in Figure 12.61.400-D.
+E. SB 1537 Mandatory Adjustments. Residential projects which qualify for mandatory adjust-
+ments under Senate Bill 1537 (2024) can request allowable adjustments in conjunction with a
+housing development application. The adjustment decision is a limited land use decision and
+will be processed consolidated with a Type II application or concurrently with a Type III
+application. The public notice shall clearly state what adjustments are being requested through
+SB 1537. The Notice of Decision shall state that the SB 1537 adjustment decision is only
+appealable by the applicant and shall provide findings of fact on how the request meets the
+criteria outlined in SB 1537. This section of SB 1537 is set to sunset on January 2, 2032.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6294 § 1,
+2019; Ord. 6178 § 1, 2016; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. 6110 § 12, 2015; Ord. No.
+6508, § 1 (Exh. A), 11-4-2025)
+ 12.80.150APPLICATIONS
+CDC12.80:51Supp. No. 1
+12.80.152  Variances.
+A. Procedure. Variance applications are subject to the Type III procedure, as described in Section
+12.70.050.
+B. Submittal Requirements. Type III application submittal requirements are set forth in Section
+12.70.050 and more specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, an application for a Variance shall
+include the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or the owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. Existing Conditions Plan;
+4. Proposed Site Development Plan; and
+5. A narrative clearly identifying each applicable standard from which variance is requested,
+citing the reasons for the request, and addressing compliance with each approval
+criterion.
+C. Approval Criteria for Variances in Standard Zones. To approve a Variance in a standard zone,
+the Review Authority shall make findings of fact, based on evidence provided, that the following
+criteria are satisfied:
+1. Special conditions over which the applicant has no control apply to the subject property,
+which do not apply generally to other properties in the same zone or vicinity. Examples of
+such special conditions may include but are not limited to lot shape, topography, or
+unique landscape features;
+2. The requested variance is the minimum necessary deviation from the applicable stan-
+dard to allow the proposed use of the site;
+3. If more than one variance is requested, the cumulative effect of the variances results in a
+project that is still consistent with the overall purpose of this Code or any adopted City
+policy;
+4. The variance complies with any applicable additional criteria in Section 12.80.158;
+5. Any negative impacts on surrounding properties which would result from the variance can
+be mitigated to the extent practical;
+6. The variance is necessary for the preservation of a property right of the applicant
+substantially the same as is possessed by owners of other property in the same zone or
+vicinity; and
+7. The applicable standard from which the variance is requested is not listed as a Standard
+not Subject to Variance or Adjustment in Subsection 12.80.150.D.
+12.80.152 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:52Supp. No. 1
+D. Approval Criteria for Variances in Mixed-Use or Light Rail Zones. To approve a Variance in a
+mixed-use or light rail zone, the Review Authority shall make findings of fact, based on
+evidence provided, that the following criteria are satisfied:
+1. The variation will equally or better meet the purposes of the standard to be varied;
+2. The development including the variation or cumulative variations remains consistent with
+the overall purpose and intent of the district;
+3. The variation will not have significant detrimental impacts on inventoried cultural re-
+sources, significant natural resources or impact areas;
+4. The Variance complies with any applicable additional criteria in Section 12.80.158; and
+5. The applicable standard from which the variance is requested is not listed as a Standard
+not Subject to Variance or Adjustment in Subsection 12.80.150.D.
+E. Approval Criteria for Variances from Regulatory Floodplain Overlay (RFO) Standards. Appli-
+cations for Variances from the standards of the RFO in Section 12.27.100 shall be subject to
+the following criteria and shall consider all technical evaluations, all relevant factors, and
+standards specified in other sections of this subchapter, in addition to subsection C. or D.
+above:
+1. The variance application is for new construction and/or substantial improvements on a lot
+of record contiguous to and surrounded by lots with existing structures constructed below
+the base flood level, and the following factors have been considered:
+a. The danger that materials may be swept onto other lands to the injury of others;
+b. The danger to life and property due to flooding or erosion damage;
+c. The susceptibility of the proposed facility and its contents to flood damage and the
+effect of such damage on the individual owner;
+d. The importance of the services provided by the proposed facility to the community;
+e. The necessity to the facility of a waterfront location, where applicable;
+f. The availability of alternative locations for the proposed use which are not subject to
+flooding or erosion damage;
+g. The compatibility of the proposed use with existing and anticipated development;
+h. The relationship of the proposed use to the Comprehensive Plan and Floodplain
+Management Program for that area;
+i. The safety of access to the property in times of flood for ordinary and emergency
+vehicles;
+j. The expected heights, velocity, duration, rate of rise, and sediment transport of the
+flood waters and the effects of wave action, if applicable, expected at the site; and
+k. The costs of providing governmental services during and after flood conditions,
+including maintenance and repair of public utilities and facilities such as sewer, gas,
+electrical, and water systems, streets and bridges.
+ 12.80.152APPLICATIONS
+CDC12.80:53Supp. No. 1
+2. If a Variance is requested on a lot larger than one-half acre, the applicant's burden of
+proof of technical justification for the Variance increases.
+3. Approval of the Variance, if affecting an area within the floodway, will not result in any
+increase in flood levels during the base flood discharge.
+4. The applicant has demonstrated that the RFO Variance is based on good and sufficient
+cause.
+5. Granting of a Variance will not result in increased flood heights, additional threats to
+public safety, extraordinary public expense, create nuisances, cause fraud on or victim-
+ization of the public or conflict with existing local laws or ordinances.
+6. The Variance is the minimum necessary, considering the flood hazard, to afford relief.
+7. Variances may be issued for non-residential buildings in very limited circumstances to
+allow a lesser degree of floodproofing than watertight or dry floodproofing, where the
+Review Authority finds that approval of the Variance meets the following criteria:
+a. The proposed construction will have low potential for flood damage;
+b. The proposed construction complies with all other Variance criteria except para-
+graph 1 above; and
+c. All improvements will be constructed to minimize flood damage, by using flood
+resistant materials, anchoring, and protecting on-site public and private utilities
+where applicable.
+8. Variances shall be approved only if the variance is found to be the minimum deviation
+necessary, considering the flood hazard, to afford relief.
+9. The applicable standard from which the variance is requested is not listed as a Standard
+not Subject to Variance or Adjustment in Subsection 12.80.150.D.
+F. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of the Variance application to ensure compliance with the approval
+criteria.
+G. Appeal of a Decision. Refer to Section 12.70.180.
+H. Expiration of a Decision. Refer to Section 12.70.140.
+I. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6276 § 1, 2018; Ord. 6178 § 1, 2016; Ord. 6120 § 1,
+2015; Ord. 6110 § 12, 2015; Ord. No. 6500, § 1(Exh. A), 6-17-2025)
+12.80.154  Minor Adjustments.
+A. Procedure.
+1. A request for a Minor Adjustment may be submitted only as part of certain land use
+applications, as listed in Subsection 12.80.150.B.
+12.80.152 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:54Supp. No. 1
+2. If Minor Adjustments are requested, the primary application shall determine the proce-
+dure type. The primary application shall describe the requested Adjustments in the
+narrative, clearly identify them on all plans, and respond to all applicable Adjustment
+criteria.
+B. Submittal Requirements. In addition to the submittal requirements of the primary application,
+requests for Minor Adjustments shall include a narrative clearly identifying each applicable
+standard from which an adjustment is requested, citing the reasons for the request, and
+addressing compliance with the approval criteria in Subsection C. below, and any standard-
+specific criteria listed in Section 12.80.158 if applicable.
+C. Approval Criteria. To approve a Minor Adjustment, the Review Authority shall make additional
+findings of fact, based on evidence provided by the applicant, that all of the following criteria are
+satisfied:
+1. Except for Adjustments subject to Subsection 12.80.158.K., the Adjustment is for 10% or
+less of a numeric or dimensional standard. "Dimensional standard" in this context does
+not include minimum or maximum residential density;
+2. Granting the requested Adjustment will not obstruct on- or off-site pedestrian or vehicular
+movement;
+3. City-designated significant natural or cultural resources, if present, will be preserved if the
+Adjustment is approved;
+4. The development will remain consistent with the overall purpose of the base zone after
+the Adjustment or the combined Adjustments if more than 1 is proposed;
+5. Except for Adjustments subject to Subsection 12.80.158.K., any Adjustment granted is
+the minimum necessary to permit a reasonable use of land, buildings and structures;
+6. The request for the Adjustment includes building, structure, or site design features, such
+as the public benefit standards in Section 12.50.900 or the habitat friendly practices in
+Section 12.50.930, that compensate for the requested Adjustment or better meet the
+purpose of the standard being adjusted;
+7. The Adjustment complies with any applicable additional criteria in Section 12.80.158;
+8. The Minor Adjustment is not a response to special conditions over which the applicant
+has no control, which would be more appropriately addressed under a Variance proce-
+dure;
+9. The applicable standard from which the adjustment is requested is not listed as a
+Standard not Subject to Variance or Adjustment in Subsection 12.80.150.D.; and
+10. The cumulative number of Minor Adjustment requests complies with the maximum
+number of Minor Adjustments allowed under Subsection 12.80.150.C.
+D. Conditions of Approval. Pursuant to Section 12.70.120, the Review Authority may impose
+conditions on the approval of the primary Type II or Type III application to ensure compliance
+with the Adjustment approval criteria.
+ 12.80.154APPLICATIONS
+CDC12.80:55Supp. No. 1
+E. Appeal of a Decision. Refer to Section 12.70.180 for the primary application.
+F. Expiration of a Decision. Refer to Section 12.70.140 for the primary application.
+G. Extension of a Decision. Refer to Section 12.70.150 for the primary application.
+(Ord. 6437 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6120 § 1,
+2015; Ord. 6110 § 12, 2015)
+12.80.156  Major Adjustments.
+A. Procedure. A request for a Major Adjustment may be submitted only as part of a Planned Unit
+Development or a Type III Development Review application, and shall be reviewed as part of
+the Type III application.
+B. Submittal Requirements. In addition to the submittal requirements of the primary application,
+requests for Major Adjustments shall include a narrative clearly identifying each applicable
+standard from which an adjustment is requested, citing the reasons for the request, and
+addressing compliance with the general approval criteria in Subsection C, and the standard
+specific criteria in Section 12.80.158 if applicable. Major Adjustments shall also be clearly
+identified on all plans in the primary application.
+C. Approval Criteria. To approve a Major Adjustment, the Review Authority shall make additional
+findings of fact, based on evidence provided, that all of the following criteria are satisfied:
+1. Granting the requested Adjustment will not obstruct on- or off-site pedestrian or vehicular
+movement;
+2. City-designated significant natural or cultural resources, if present, will be preserved if the
+Adjustment is approved;
+3. The development will remain consistent with the overall purpose of the base zone after
+the Adjustment or the combined Adjustments if more than 1 is proposed;
+4. The request for the Adjustment includes building, structure, or site design features, such
+as the public benefit standards in Section 12.50.900 or the habitat friendly practices in
+Section 12.50.930, that compensate for the requested Adjustment or better meet the
+purpose of the standard being adjusted;
+5. The Adjustment complies with any applicable additional standard-specific criteria in
+Section 12.80.158;
+6. The Major Adjustment is not a response to special conditions over which the applicant
+has no control, which would be more appropriately addressed under a Variance proce-
+dure; and
+7. The applicable standard from which the adjustment is requested is not listed as a
+Standard not Subject to Variance or Adjustment in Subsection 12.80.150.D.
+D. Appeal of a Decision. A decision on a Major Adjustment may only be appealed as part of an
+appeal of the primary Type III application. Section 12.70.180 outlines requirements for appeals
+of Type III decisions.
+12.80.154 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:56Supp. No. 1
+E. Expiration of a Decision. Refer to Section 12.70.140.
+F. Extension of a Decision. Refer to Section 12.70.150.
+(Ord. 6437 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6120 § 1,
+2015; Ord. 6110 § 12, 2015)
+12.80.158  Standard-Specific Approval Criteria for Variances and Adjustments.
+In addition to the criteria listed in Subsection 12.80.154.C. or 12.80.156.C., applications for
+Variances or Adjustments from the standards listed below shall comply with standard-specific criteria
+listed below as applicable:
+A. Criteria for Adjustments to Increase Residential Density. An increase up to 120% of the
+maximum density of the underlying base zone may be allowed if all of the following criteria are
+met:
+1. The proposed increase in residential density is requested in conjunction with a Planned
+Unit Development concept plan application submitted pursuant to Section 12.80.120 or
+Type III Development Review application submitted pursuant to Section 12.80.040;
+2. Existing and proposed streets and pedestrian/bicycle accessways within and connecting
+to the development will support the proposed density;
+3. Existing and proposed water, sanitary sewer and storm drainage systems within and
+connecting to the development will support the proposed density;
+4. The development demonstrates innovative site design, outstanding architectural variety,
+and quality of construction which will mitigate the increased density;
+5. The additional density will be located to minimize the visual impact on adjacent proper-
+ties;
+6. The increased density does not impact significant natural resource areas or necessitate
+unnecessary topographic alterations;
+7. The increased density will be mitigated by providing exceptional quality or quantity of
+usable open space and other amenities, especially active recreational areas; and
+8. The development demonstrates a high level of compliance with the habitat friendly
+practices in Section 12.50.930 and the public benefit standards in Section 12.50.900.
+B. Criteria for Adjustments to Building Setback Requirements. Building setbacks may be reduced
+or increased below or above the minimum and maximum setbacks of the underlying base zone
+if the following criteria are met:
+1. The requested adjustment has been verified compliant with building codes by the
+Building Official;
+2. The requested adjustment will not adversely affect adjoining properties in terms of light,
+air circulation, noise levels, privacy, and fire hazard; and
+ 12.80.158APPLICATIONS
+CDC12.80:57Supp. No. 1
+3. The requested adjustment provides at least 1 of the following:
+a. More efficient use of the site,
+b. Preservation of Significant Natural Resource Areas or Habitat Benefit Areas which
+will be incorporated into site design, and/or
+c. Safer vehicular and pedestrian access and circulation to and within the site;
+4. Building is located outside of the influence area of an intersection identified in Figure
+12.65.910E. as requiring special setbacks for accommodation of future transportation
+growth.
+C. Criteria for Adjustments to Maximum Setbacks. In addition to the criteria in Subsection B.
+above, setbacks greater than the specified maximum of the base zone may be approved if the
+Review Authority finds that:
+1. The increased setback and the building design were approved under either a Develop-
+ment Review or a Planned Unit Development process; and
+2. The increase in setback depth is the least increase practicable to achieve the intended
+purpose.
+D. Criteria for Adjustments to Maximum Building Height. Building height may be increased above
+the maximum height of the underlying base zone if the following criteria are met:
+1. The transportation system can accommodate any increased traffic resulting from addi-
+tional floor area created by the additional building height;
+2. Adequate public utilities are available to serve additional floor area created by the
+additional building height;
+3. The proposal complies with Federal Aviation Regulations Part 77; and
+4. The current level of solar access is maintained to existing solar energy devices on
+adjacent property.
+E. Criteria for Adjustments to Required Open Space. Usable open space area for developments
+other than single detached residential may be reduced below the minimum development
+standard if the following criteria are met:
+1. The development is within ½ mile (measured in actual walking distance) of a publicly
+accessible active open space area such as a public park or elementary school; or
+2. The Review Authority finds that usable open space compliant with the area standards of
+Table 12.50.210-1 cannot be located within the development consistent with the Locational
+standards in Subsection 12.50.210.G.; or
+3. The Review Authority finds that usable open space compliant with the area standards of
+Table 12.50.210-1 cannot be located within the development consistent with the Mainte-
+nance and Minimum Area standards in Subsection 12.50.210.I.
+12.80.158 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:58Supp. No. 1
+F. Criteria for Adjustments to Lighting Level Standards. Lighting level standards in Section
+12.50.240 may be adjusted if the applicant demonstrates that application of the standard is
+inappropriate due to the specific circumstances of the development. Such circumstances may
+include, but are not limited to, the following:
+1. The development requires enhanced lighting levels due to increased need for on-site
+surveillance through the night; or
+2. The development is intended to extend hours of outdoor activity in commercial or
+mixed-use zones.
+G. Criteria for Adjustments to Increase Number of Parking Spaces Provided. The number of
+off-street parking spaces provided may be increased above the maximum standards in Section
+12.50.320 if the site is not located in Zone A and the following criteria are met:
+1. For High Intensity Uses.
+a. Within a light rail or mixed-use zone, off-street parking may be increased above the
+maximum standards allowed in Tables 12.50.320-1 through 12.50.320-5 if the land
+use application includes documentation that the proposed use will be more intense
+than the "target densities" specified in Comprehensive Plan Section 24. These
+target densities are:
+i. SCC-DT zone or urban center zones: 60 persons/net acre.
+ii. All other light rail or mixed-use zones: 45 persons/net acre.
+b. If the documentation verifies that the proposed use will be more intense than the
+"target" densities pursuant to paragraph i above, additional parking may be pro-
+vided above the maximum standard at the same numeric ratio as the proposed
+density to the target density.
+2. For Industrial Uses on Shifts. Maximum parking for industrial developments may be
+exceeded by up to 50% for process uses with equal numbers of employees on 2 or more
+shifts.
+3. For Nearby Secondary Uses. Surface parking lots or structures may provide off-site
+parking in excess of the maximum required, if the Director finds, based on documentation
+provided by the applicant, that the following 2 conditions are satisfied:
+a. The surplus parking has been assigned to or is available for other uses in the
+vicinity; and
+b. The total amount of off-site parking provided for all uses does not exceed the
+combined maximum number required for the uses.
+4. As Required by the City Engineer. The City Engineer may require additional off-street
+parking above the maximum specified in Tables 12.50.320-1 through 12.50.320-5 if the
+City Engineer determines it necessary to avoid adverse impacts to traffic flow on
+surrounding streets.
+ 12.80.158APPLICATIONS
+CDC12.80:59Supp. No. 1
+H. Criteria for Adjustments to Number of Bicycle Parking Spaces. The number of bicycle parking
+spaces provided may be adjusted from the standards in Section 12.50.410 if the following
+criteria are met:
+1. Existing development patterns preclude safe and convenient bicycle access to the
+proposed development; or
+2. Application of the standards is not reasonably related to the scale and intensity of the
+development.
+I. Criteria for Adjustments to Pedestrian/Bicycle Accessway Requirements. The pedestrian and
+bicycle accessway standards in Subsection 12.50.430.B. may be adjusted if the following
+criteria are met:
+1. Federal, State or other agency requirements prevent construction of the required ac-
+cessway;
+2. Physical or topographic conditions (such as steep slopes, wetlands or other bodies of
+water, freeways, or railroads) make the required accessway connection impracticable;
+3. The accessway would cross an area affected by an overlay district in a manner
+incompatible with the purposes of the overlay district;
+4. Buildings or other existing development on adjacent properties physically preclude a
+connection at present or in the future upon redevelopment of the adjacent property;
+5. The accessway would terminate at the urban growth boundary; and/or
+6. The accessway would violate provisions of leases, easements, covenants, restrictions or
+other agreements existing as of May 1, 1995 which preclude a required accessway
+connection.
+J. Criteria for Adjustments to Utility Undergrounding Requi rements. The requirements for
+undergrounding electric power lines and co-located communication lines and service connec-
+tions to on-site development in Section 12.50.625 may be adjusted, and aerial utility services
+(electricity, telephone, cable, etc.) may be installed or retained when either criteria 1 or 2 is met
+and criterion 3 is met:
+1. The development is an in-fill building or dwelling within an existing neighborhood where
+existing utility service is provided aerially rather than underground and the electric power
+lines serving both abutting sites on the same block face are currently located above
+ground;
+2. The City finds that undergrounding the electric power lines and co-located communica-
+tions lines in compliance with Section 12.50.625 would conflict with significant existing
+underground utilities.
+3. If an Adjustment is granted, the applicant shall pay a FIL of undergrounding the electric
+power lines and co-located communication lines as required by Section 12.50.625.
+Payment of this fee shall be considered sufficient compensation for the impacts of the
+Adjustment to address Subsection 12.80.154.C.6. or 12.80.156.C.4. (as applicable).
+12.80.158 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:60Supp. No. 1
+K. Criterion for Adjustments to Building Entrance Requirements. Where the standards in Subpar-
+agraph 12.50.430.E.1.b. or Section 12.50.820 require more than 1 building entrance to be
+oriented to the street, an adjustment may be granted to allow a single secured entrance to a
+building upon a finding that the internal security measures which are standard operating
+procedures of the building would be irreparably harmed by this requirement.
+L. Criteria for Adjustments to Ground Floor Window Transparency Requirements. Where the
+Ground Floor Windows standards in Section 12.50.830 require ground floor window transpar-
+ency, an adjustment may be granted to allow opaque windows if the following criteria are met:
+1. Opaque windows or walls are necessary to avoid compromising necessary personal
+privacy or security within the building (i.e., privacy in a medical examination room or
+security in a pharmacy storeroom);
+2. Structural designs or other demonstrable restrictions or constraints preclude alternative
+means of providing the required personal privacy or security; and
+3. The reduced ground floor transparent window area cannot be replaced elsewhere on the
+façade.
+M. Criteria for Adjustments to Block Length and Orientation Requirements. The block length and
+orientation standards in Section 12.65.520 may be adjusted if the following criteria are met:
+1. Federal, State or other agency requirements prevent compliance with the block length
+and orientation requirements;
+2. Arterial or collector street alignment and spacing requirements necessitate adjustment
+from the block orientation and length standards;
+3. Physical or topographic conditions (such as steep slopes, wetlands or other bodies of
+water, aerial transmission lines, or railroads) make the required block length and
+orientation requirements impracticable;
+4. Location of parks, schools or other major public facilities necessitate adjustment from the
+block orientation and length standards; or
+5. The block length and orientation requirements would affect an overlay zone in a manner
+incompatible with the purposes of the overlay zone; and
+6. If the adjustment requested under Paragraphs 1 through 5 above would decrease solar
+access or orientation, the applicant shall demonstrate that the adjustment improves
+block/grid pattern continuity and connectivity.
+N. Criteria for Adjustments to Solar Access and Lot Orientation Requirements within South
+Hillsboro. The lot orientation standards in Section 12.65.270 may be adjusted if the following
+criteria are met:
+1. The Review Authority approves an alternative design proposal that demonstrates pas-
+sive or active solar access and better achieves the policy intent for solar access;
+2. Federal, State or other agency requirements prevent compliance with the lot orientation
+requirements; or
+ 12.80.158APPLICATIONS
+CDC12.80:61Supp. No. 1
+3. Physical or topographic conditions (such as steep slopes, wetlands or other bodies of
+water, aerial transmission lines, or railroads) make the required lot orientation require-
+ments impracticable; or
+4. Location of parks, schools or other major public facilities necessitate adjustment from the
+lot orientation standards; or
+5. The lot orientation requirements would affect an overlay zone in a manner incompatible
+with the purposes of the overlay zone; or
+6. Arterial or collector street alignment and spacing requirements necessitate adjustment
+from the lot orientation requirements; and
+7. If the adjustment requested under Paragraphs 1 through 6 above would decrease solar
+access or orientation, the applicant shall demonstrate that the adjustment retains overall
+block/grid pattern continuity and connectivity.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6437 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6393 § 1,
+2021; Ord. 6322 § 1, 2019; Ord. 6250 § 1, 2017; Ord. 6193 § 1, 2016; Ord. 6110 § 12, 2015; Ord. No.
+6508, § 1 (Exh. A), 11-4-2025)
+12.80.160  Zoning and Comprehensive Plan Amendments.
+A. Purpose. Sections 12.80.160 through 12.80.168 establish regulations, procedures, and stan-
+dards for consideration of legislative and quasi-judicial applications to amend the Zoning Map
+and Comprehensive Plan map and text. Such amendments may be necessary to reflect
+changing community conditions, needs and desires, to fulfill regional obligations, or to address
+changes in State law.
+B. Applicability. These zoning and Comprehensive Plan amendment regulations apply to all
+applications for a Zone Change or Comprehensive Plan Amendments.
+C. Application Types. There are 4 types of applications under this section: Comprehensive Plan
+Map Amendment; Comprehensive Plan Minor Text Amendment; Comprehensive Plan Major
+Amendment; and Zone Change. As described in Section 12.80.166, there are 2 subtypes of
+Comprehensive Plan Major Amendment: (1) significant changes to the Plan; and (2) Plan
+revisions.
+(Ord. 6401 § 1, 2022; Ord. 6250 § 1, 2017)
+12.80.162  Comprehensive Plan Map Amendment.
+A. Purpose. A Comprehensive Plan Map Amendment application provides a process to consider
+a proposed quasi-judicial, site-specific amendment to the Comprehensive Plan Map. The
+Comprehensive Plan Map Amendment process may also be used to apply new Comprehen-
+sive Plan Map designations that reflect changing community conditions, needs, and desires.
+B. Exceptions. As used in this Section 12.80.162, the term "Comprehensive Plan Map Amend-
+ment" does not include and the procedures of this Subsection do not apply to any of the
+Comprehensive Plan amendments listed in Sections 12.80.164 and 12.80.166, nor to any City
+Functional Plan as defined in Section 12.01.500.
+12.80.158 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:62Supp. No. 1
+C. Procedure. A Comprehensive Plan Map Amendment application is reviewed using the Type III
+procedure described in Section 12.70.050. Public hearings on Comprehensive Plan Map
+Amendments shall be held before the Planning Commission.
+1. A Comprehensive Plan Map Amendment application may be submitted by a property
+owner(s), a person(s) purchasing property under contract, or a person(s) who has the
+written consent of the property owner.
+2. A Comprehensive Plan Map Amendment application may be initiated by the Planning
+Commission or the City Council.
+D. Submittal Requirements. Type III application submittal requirements are set forth in Section
+12.70.050. More specific submittal requirements are provided on application forms and
+checklists as authorized in Section 12.70.110. At a minimum, an owner-initiated application for
+a Comprehensive Plan Map Amendment shall include the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A narrative addressing compliance with each approval criterion; and
+4. A Transportation Planning Rule Compliance analysis pursuant to Section 12.70.230 that
+analyzes the range of land uses allowed under the proposed Comprehensive Plan Map
+designation.
+E. Approval Criteria. To approve a Comprehensive Plan Map Amendment, the Review Authority
+shall make findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. The property is better suited for the proposed uses rather than the uses for which the
+property is currently designated by the Plan;
+2. A need exists for the proposed Plan Map designation that is not already met by existing
+Plan Map designations in the general area;
+3. The proposed designation is consistent with relevant goals and policies of the Hillsboro
+Comprehensive Plan;
+4. For a City-initiated application:
+a. The land use on the subject property has changed substantially since the adoption
+of the Plan Map designation, and is inconsistent with the current Plan Map
+designation;
+b. The subject property has passed from public ownership and use to private owner-
+ship and use, or the reverse; or
+c. The current Plan Map designation on the subject property is inconsistent with the
+surrounding properties, based on earlier Plan map changes, and development of
+the subject property under the implementing zone of the Plan Map designation
+would have substantial adverse effects on the surrounding properties; and
+ 12.80.162APPLICATIONS
+CDC12.80:63Supp. No. 1
+5. For changes to the Mixed-Use (MU) designation:
+a. The overall area of the site proposed for the MU designation must equal 5 or more
+acres; and
+b. The site proposed for the MU designation must be located adjacent to the intersec-
+tion of 2 arterial streets, 2 collector streets, or an arterial street and a collector street.
+6. Pursuant to Section 12.70.230, the Transportation Planning Rule Compliance analysis
+demonstrates that traffic impacts can be reasonably mitigated at the time of develop-
+ment. As an alternative to providing a Transportation Planning Rule Compliance analysis,
+the applicant may provide evidence that the potential traffic impacts from development
+under the proposed designation are no greater than potential impacts from development
+under the existing designation.
+F. Conditions of Approval. Approval of a Comprehensive Plan Map Amendment application
+cannot be conditioned by the City.
+G. Appeal of a Decision. Refer to Section 12.70.180.
+H. Expiration of a Decision. An approved Comprehensive Plan Map Amendment does not expire:
+refer to Section 12.70.140.
+I. Extension of a Decision. An approved Comprehensive Plan Map Amendment is not subject to
+extension: refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6250 § 1, 2017)
+12.80.164  Comprehensive Plan Minor Amendment.
+A. Purpose. A Comprehensive Plan Minor Amendment application provides a process to consider
+small-scale legislative amendments to the text, figures, or exhibits of the Comprehensive Plan
+whenever the evidence of the need for such a revision is documented. Such amendments may
+be necessary to reflect changing community conditions, needs, and desires; to fulfill regional
+obligations; or to address changes in State law. An amendment to reflect the current adopted
+version of a document or plan incorporated by reference into the Comprehensive Plan shall be
+adopted as a Minor Plan Amendment to the Comprehensive Plan. A Comprehensive Plan
+Minor Amendment is distinguished from a Comprehensive Plan Major Amendment by the scale
+and scope of the amendment.
+B. Minor Amendment—Public Facility Plan. The City Council or Planning Commission may initiate
+a Comprehensive Plan Minor Amendment to incorporate a Public Facility Plan as part of the
+Comprehensive Plan in accordance with State statute and regulations implementing Statewide
+Planning Goal 11. A Public Facility Plan, defined in Section 12.01.500, may include plans
+created by City or other agencies for water systems, sewer systems, schools, streets and
+roadways, public airports, public transit and public transportation, and other public facility or
+utilities systems or services.
+12.80.162 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:64Supp. No. 1
+C. Exceptions. The term "Comprehensive Plan Minor Amendment" does not include and the
+procedures of this subsection do not apply to any of the Comprehensive Plan amendments
+listed in Sections 12.80.162 and 12.80.166, nor to any City Functional Plan as defined in
+Section 12.01.500.
+D. Procedure. A Comprehensive Plan Minor Amendment application is reviewed using the Type
+IV procedure described in Section 12.70.060. However, the Director is authorized to make
+nonsubstantive typographical, grammatical and cross-referencing corrections to the Compre-
+hensive Plan as needed without initiating the Comprehensive Plan Minor Amendment process.
+1. A Comprehensive Plan Minor Amendment application may be initiated by the Planning
+Commission or the City Council. Public hearings on City-initiated Comprehensive Plan
+Minor Amendment shall be held before the Planning Commission.
+E. Approval Criteria. To approve a Comprehensive Plan Minor Amendment, the Review Authority
+shall make findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. The proposed amendment is necessary to reflect changing community conditions,
+needs, and desires, to fulfill regional obligations, or to address changes in State law.
+2. The proposed amendment supports the goals and policies of the Comprehensive Plan.
+3. Except for project timing and financing provisions, the Public Facility Plan is consistent
+with state statutes, the Statewide Planning Goals, and state regulations.
+4. The Public Facility Plan complies with any applicable provisions of the Comprehensive
+Plan.
+F. Conditions of Approval. Approval of a Comprehensive Plan Minor Amendment application
+cannot be conditioned by the City.
+G. Appeal of a Decision. Refer to Section 12.70.180.
+H. Expiration of a Decision. An approved Comprehensive Plan Minor Amendment does not
+expire: refer to Section 12.70.140.
+I. Extension of a Decision. An approved Comprehensive Plan Minor Amendment is not subject to
+extension: refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6250 § 1, 2017; Ord. No. 6504, § 1 (Exh. A),
+7-15-2025; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.80.166  Comprehensive Plan Major Amendment.
+A. Purpose. A Comprehensive Plan Major Amendment application provides for a significant
+change or revision to the Comprehensive Plan text or map and is initiated by the City Council
+or Planning Commission.
+B. Major Amendment-Significant Change. The City Council or Planning Commission may initiate
+a Comprehensive Plan Major Amendment that proposes a significant change to the Plan. A
+"significant change" is one that amends or refines both the Plan text and map, affects a large
+ 12.80.166APPLICATIONS
+CDC12.80:65Supp. No. 1
+geographic area and is likely to have significant environmental, energy, economic and social
+consequences. A significant change includes but is not limited to Plan amendments that
+incorporate community plans as part of the Comprehensive Plan.
+1. Community Plan. A Community Plan, defined in Section 12.01.500, may contain a map,
+policy statements, and recommendations relating to development densities, public
+facility and utility improvements, and the arrangement of land uses to guide future land
+use decisions and implementing measures for a specific geographic area. An area-
+specific refinement plan must be consistent with the Statewide Planning Goals and the
+Comprehensive Plan.
+C. Major Amendment-Plan Revision. The City Council is authorized to initiate a Comprehensive
+Plan Major Amendment to propose a Plan Revision. A "Plan Revision" means a revision(s) to
+the entire Comprehensive Plan text or map initiated; (1) under a Periodic Review Program
+pursuant to ORS 197.628; (2) to implement an adopted Regional Framework Plan or Metro
+Functional Plan; or (3) as part of a comprehensive evaluation of the Comprehensive Plan.
+D. Exceptions. The term "Comprehensive Plan Major Amendment" does not include and the
+procedures of this Subsection do not apply to any of the Comprehensive Plan amendments
+listed in Sections 12.80.162 and 12.80.164, nor to any City Functional Plan as defined in
+Section 12.01.500.
+E. Procedure. A Comprehensive Plan Major Amendment application is reviewed using the Type
+IV procedure described in Section 12.70.060.
+1. A Comprehensive Plan Major Amendment-Significant Change may be initiated by the
+Planning Commission or the City Council. A public hearing shall be held before the
+Planning Commission. The City Council may choose to hold a hearing on the application,
+pursuant to Subsection 12.70.060.J.
+2. A Comprehensive Plan Major Amendment-Plan Revision may be initiated by the City
+Council. Public hearings shall be held before both the Planning Commission and the City
+Council.
+3. A Public Communications and Engagement Plan is required for a Comprehensive Plan
+Major Amendment application, pursuant to Subsection 12.70.062.B.
+F. Approval Criteria. To approve a Comprehensive Plan Major Amendment, the Review Authority
+shall make findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. The amendment or revision is in the City's best interest.
+2. A factual basis has been documented, establishing the public need for the amendment.
+3. All applicable provisions of the adopted Public Communications and Engagement Plan
+have been satisfied pursuant to Subsection 12.70.062.C.
+4. Except for project timing and financing provisions, the Community Plan is consistent with
+Statewide Planning Goals and with the Comprehensive Plan.
+12.80.166 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:66Supp. No. 1
+5. The proposed changes reflect the factual basis established in the adopted Comprehen-
+sive Plan's technical framework or implementing plans as they are updated and amended
+over time.
+6. The proposed changes support the intent of applicable goals and policies in the Com-
+prehensive Plan.
+7. The proposed changes are equally or more supportive of the Comprehensive Plan and its
+components taken together as a whole than the existing language or designation.
+G. Conditions of Approval. Approval of a Comprehensive Plan Major Amendment application
+cannot be conditioned by the City.
+H. Appeal of a Decision. Refer to Section 12.70.180.
+I. Expiration of a Decision. An approved Comprehensive Plan Major Amendment does not
+expire: refer to Section 12.70.140.
+J. Extension of a Decision. An approved Comprehensive Plan Major Amendment is not subject to
+extension: refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6250 § 1, 2017; Ord. No. 6504,
+§ 1 (Exh. A), 7-15-2025)
+12.80.168  Zone Change.
+A. Purpose. Zone Change (ZC) applications provide a process for consideration of quasi-judicial
+amendments to the Zoning Map to implement property designations on the Comprehensive
+Plan Land Use Map. The Zone Change also provides a process for consideration of legislative
+amendments to the Zoning Map to apply new zones reflecting changing community conditions,
+needs, and desires.
+B. Exceptions. The term "Zone Change" shall not include, and the Zone Change procedure shall
+not apply to, any of the revisions listed in Subsection 12.01.200.C.
+C. Procedure. Zone Change applications are reviewed through the Type III procedure, as
+de-scribed in Section 12.70.050 except that a city-initiated Zone Change processed concur-
+rently with a City-initiated Text Amendment is reviewed through the Type IV procedure, as
+described in Section 12.70.060.
+1. A Zone Change application may be submitted by a property owner or the owner's
+authorized agent. The public hearings on an owner-initiated Zone Change shall be held
+before the Planning and Zoning Hearings Board.
+2. A city-initiated Zone Change process may be initiated by the Planning Commission or the
+City Council. Public hearings on city-initiated Zone Changes shall be held before the
+Planning Commission, except as provided in paragraph 3 below. A city-initiated Zone
+Change proposal may be processed concurrently with a City-initiated Type IV Text
+Amendment proposal.
+ 12.80.168APPLICATIONS
+CDC12.80:67Supp. No. 1
+3. The public hearing for a Zone Change initiated by the Planning Commission in conjunc-
+tion with an Annexation application pursuant to Subsection 12.80.010.D. shall be held
+before the City Council.
+D. Submittal Requirements. Type III application submittal requirements are set forth in Section
+12.70.050. Type IV application submittal requirements are set forth in Section 12.70.060. More
+specific submittal requirements are provided on application forms and checklists as authorized
+in Section 12.70.110. At a minimum, an owner-initiated application for a Zone Change shall
+include the following:
+1. An application form signed by the applicant or applicant's representative and the property
+owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of submittal;
+3. A narrative addressing compliance with each approval criterion;
+4. A Transportation Planning Rule Compliance analysis pursuant to Section 12.70.230,
+analyzing the range of uses allowed under the proposed zoning; and
+5. Within the South Hillsboro Plan District (if applicable), a copy of the applicable executed
+annexation agreement required under Section 12.65.040.
+E. Approval Criteria. To approve a Zone Change, the Review Authority shall make findings of fact,
+based on evidence provided, that the following criteria are satisfied:
+1. The proposed zone implements and is consistent with the Comprehensive Plan Land
+Use Map designation for the site. A zone change to a zone not consistent with the
+Comprehensive Plan Map designation cannot be approved prior to approval of an
+amendment to the Comprehensive Plan Land Use Map to change the designation to one
+which is implemented by the requested zone;
+2. Where the Comprehensive Plan Map designation has more than one implementing zone,
+the proposed zone is the most appropriate for the subject site, based on the purposes of
+each zone and the zoning pattern of surrounding land;
+3. Existing or planned transportation facilities are adequate or can be made available to an
+adequate capacity to serve the site and uses allowed by the proposed zone;
+4. Existing or planned public infrastructure services (water, wastewater, stormwater, police
+and fire protection) are adequate or can be made available to an adequate capacity to
+serve the site and uses allowed by the proposed zone;
+5. Pursuant to Section 12.70.230, the Transportation Planning Rule Compliance analysis
+demonstrates that traffic impacts can be reasonably mitigated at the time of develop-
+ment. As an alternative to providing a Transportation Planning Rule Compliance analysis,
+the applicant may provide evidence that the potential traffic impacts from development
+under the proposed zoning are no greater than potential impacts from development
+under existing zoning;
+12.80.168 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:68Supp. No. 1
+6. Any potential impacts on any designated significant natural resources, cultural resources
+or areas within the 1% annual chance floodplain as a result of the proposed Zone Change
+are minimal or can be reasonably mitigated at the time of development;
+7. Within the South Hillsboro Plan District (if applicable), the requested zone is consistent
+with the applicable executed annexation agreement consistent with Section 12.65.040;
+and
+8. For a parcel with an existing Comprehensive Plan Map designation of Industrial that is
+located adjacent to an area with an existing Residential or Mixed Use Comprehensive
+Plan Map designation, the proposed zone minimizes conflicts between industrial and
+residential land uses, considering such factors as permitted uses and development
+standards.
+F. Conditions of Approval. The Planning and Zoning Hearings Board or the City Council may
+impose conditions on the approval of a Zone Change as set forth in Section 12.70.120 to
+ensure compliance with the approval criteria. In order to impose conditions on a Zone Change,
+the Review Authority must adopt findings showing that:
+1. The Zone Change will allow uses more intensive than those allowed in the current zone;
+2. The conditions are reasonably related to impacts caused by development allowed in the
+proposed zone or to impacts caused by the specific development proposed on the
+subject property;
+3. The conditions will serve a public purpose such as mitigating the negative impacts of
+allowed uses on adjacent properties;
+4. The conditions are based upon policies or standards in the Comprehensive Plan or other
+standards adopted by the City of Hillsboro; and
+5. Within the South Hillsboro Plan District (if applicable), the applicant requested Zone
+Change will be less intensive than the minimum density allowed by existing City zoning
+and results in a reduction in planned transportation financing revenue from the levels
+assumed in the adopted South Hillsboro Transportation Financing Program and Meth-
+odology Report.
+G. Appeal of a Decision. Refer to Section 12.70.180.
+H. Expiration of a Decision. Zone changes are not subject to expiration: refer to Section
+12.70.140.
+I. Extension of a Decision. Zone changes are not subject to ext ension: refer to Section 12.70.150.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6250 § 1, 2017; Ord. 6110 § 13, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+ 12.80.168APPLICATIONS
+CDC12.80:69Supp. No. 1
+12.80.170  Zoning Review.
+A. Purpose. Zoning Review is intended to ensure that the clear and objective standards of the
+CDC are met for housing described in subsection B, below.
+B. Applicability. Approval of a Zoning Review application is required for development of new
+single detached dwellings, ADUs, and middle housing units on existing lots, except when the
+development meets the thresholds for Type II Development Review.
+C. Procedure. Zoning Review applications are subject to the Alternative Review Procedures as
+described in Section 12.70.025 and is completed using the clear and objective Zoning Review
+application and checklist.
+D. Submittal Requirements. Applications for Zoning Review shall, at a minimum, include the
+following:
+1. An application form, signed by the applicant or applicant's representative and the
+property owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on
+the date of the submittal; and
+3. Completed checklist and preliminary plans and elevations confirming compliance with
+design requirements.
+E. Approval Criteria. Zoning Reviews shall be approved when the follow criteria are met:
+1. The proposal complies with all of the development standards of the base zone;
+2. The proposal complies with any applicable provisions of Subchapter 12.27. Proposals
+which require a Floodplain Activity approval, Significant Natural Resource Permit, or
+Cultural Resources Alteration approval must obtain those approvals prior to submitting
+an application for a Zoning Review;
+3. If the proposal is for an Accessory Dwelling Unit (ADU), the proposal must comply with
+the Special Use Standards for ADUs in Section 12.40.100.
+4. The proposal complies with the following development standards in Subchapter 12.50:
+a. Section 12.50.130 Setbacks;
+b. Section 12.50.140 Building Height;
+c. Section 12.50.210 Usable Open Space
+d. Section 12.50.260 Sight Distance/Vision Clearance;
+e. Section 12.50.270 Waste and Recycling Facilities (if applicable for projects with 5 or
+more dwelling units);
+f. Section 12.50.300 Vehicle Parking;
+g. Section 12.50.510 Access and Street Standards;
+h. Section 12.50.630 Site Grading;
+i. Section 12.50.640 Storm Water Facilities Site Integration;
+12.80.170 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:70Supp. No. 1
+j. Section 12.50.710 Design Standards for All Residential Development;
+k. Section 12.50.715 Additional Design Standards for Middle Housing (if applicable);
+5. The proposal complies with any applicable plan district standards in Subchapter 12.60;
+6. For triplexes, quadplexes, townhouses and cottage cluster developments, the applicant
+must provide plans or service provider letters demonstrating that sufficient infrastructure
+as defined in Subchapter 12.01 is available or can be made available prior to occupancy.
+F. Conditions of Approval. Zoning Reviews are subject to conditions of approval.
+G. Appeal of a Decision. Refer to Subsection 12.70.025.E.7.
+H. Expiration of a Decision. Refer to Section 12.70.140.
+I. Extension of a Decision. Zoning Reviews are not subject to extension.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.80.180  Non-Temporary Emergency Shelter Review.
+A. Purpose. Non-Temporary Emergency Shelter Review is intended to ensure that the clear and
+objective standards of the CDC are met for new non-temporary emergency shelters as
+described in Subsection 12.40.107.D. The Non-Temporary Emergency Shelter Review is
+intended to ensure a project proposal meets the basic requirements of the CDC before the City
+authorizes the Building Official to issue a building permit.
+B. Applicability. Approval of a Non-Temporary Emergency Shelter Review application is required
+for development of new non-temporary emergency shelters meeting the characteristics found
+in Subsection 12.40.107.D.3.
+C. Procedure and Submittal Requirements. Non-Temporary Emergency Shelter Review is com-
+pleted using the clear and objective Non-Temporary Emergency Shelter Review application
+and checklist.
+D. Approval Criteria. Non-Temporary Emergency Shelter Reviews shall be approved when the
+proposal complies with all of the following:
+1. The development standards of the base zone;
+2. Any applicable provisions of Subchapter 12.27. Proposals which require a Floodplain
+Activity approval, Significant Natural Resource Permit, or Cultural Resources Alteration
+approval must obtain those approvals prior to submitting an application for a Non-
+Temporary Emergency Shelter Review;
+3. Special use standards of Subsection 12.40.107.D.;
+4. Any applicable development standards in Subchapter 12.50; and
+5. Any applicable plan district standards in Subchapter 12.60.
+E. Conditions of Approval. Non-Temporary Emergency Shelter Reviews are subject to conditions
+of approval.
+ 12.80.180APPLICATIONS
+CDC12.80:71Supp. No. 1
+F. Appeal of a Decision. Refer to Section 12.70.180.
+G. Expiration of a Decision. Refer to Section 12.70.140.
+H. Extension of a Decision. Non-Temporary Emergency Shelter Review are not subject to
+extension.
+(Ord. 6401 § 1, 2022)
+12.80.180 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.80:72Supp. No. 1

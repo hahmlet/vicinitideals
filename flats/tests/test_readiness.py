@@ -390,6 +390,25 @@ def test_a_code_that_waives_a_standard_in_prose_states_zero() -> None:
     assert quotes_the_number("Off-street parking is not required.", 0)
 
 
+def test_a_city_that_has_no_standards_requiring_parking_states_zero() -> None:
+    """Hillsboro CDC 12.50.310 A.2 is the city's whole answer to a parking
+    minimum, and it prints no digit, no dash and no "no minimum": "The City
+    of Hillsboro does not have standards which require mandate the provision
+    of parking" (the stray "require" is the code's). The draft's zero read as
+    misquoted against it until the sentence was learned. Held narrow: a code
+    that "does not have" something is not waiving a floor, and the pattern
+    never reaches a value other than zero."""
+    from flats.encode.readiness import quotes_the_number
+
+    sentence = (
+        "The City of Hillsboro does not have standards which require mandate "
+        "the provision of parking."
+    )
+    assert quotes_the_number(sentence, 0)
+    assert not quotes_the_number(sentence, 2)
+    assert not quotes_the_number("The zone does not have a front setback line.", 0)
+
+
 def test_a_borrowing_with_no_floor_is_checked_for_words_and_not_for_a_figure() -> None:
     """`same_as` where the sentence carries no number at all.
 

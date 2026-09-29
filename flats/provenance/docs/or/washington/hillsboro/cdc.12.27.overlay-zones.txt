@@ -1,0 +1,1835 @@
+SUBCHAPTER 12.27
+ OVERLAY ZONES
+12.27.010 Overlay Zones.
+12.27.020 Locational Characteristics.
+12.27.030 Organization within this Subchapter.
+12.27.100 RFO Regulatory Floodplain Overlay.
+12.27.105 Purposes.
+12.27.107 Liability.
+12.27.110 Applicability, Code Interpretation, and Floodplain Boundary/Base Flood Elevation
+Interpretation.
+12.27.115 Administrative and Regulatory Coordination.
+12.27.120 Exempt and Permitted Uses and Activities.
+12.27.125 Reserved.
+12.27.130 General Development Standards.
+12.27.135 Standards for Specific Development Types.
+12.27.140 Variances from RFO Standards.
+12.27.145 Reserved.
+12.27.200 SNRO Significant Natural Resources Overlay.
+12.27.205 Purposes.
+12.27.215 Administrative and Regulatory Coordination.
+12.27.220 Exempt, Permitted and Prohibited Uses and Activities.
+12.27.230 General Development Standards.
+12.27.235 Standards for Specific Development Types within a Resource Site or Impact Area.
+12.27.240 Compensatory Mitigation Standards.
+12.27.245 Adjustments from Standards of Underlying Zoning.
+12.27.250 Boundary Verification and Modification.
+12.27.300 CRO Cultural Resource Overlay.
+12.27.310 Purpose.
+12.27.320 Applicability and Boundary Delineation.
+12.27.330 Addition to the CRO.
+12.27.340 Removal from the CRO and Inventory.
+12.27.350 Routine Maintenance of Cultural Resource Structures.
+12.27.360 Minor Cultural Resource Alterations Permitted with Type II Approval.
+12.27.370 Major Cultural Resource Alterations Permitted with Type III Approval.
+12.27.380 Provision for Additional Open Space on Cultural Resource Sites.
+12.27.400 ASCO Airport Safety and Compatibility Overlay. (Reserved)
+12.27.500 PUD Planned Unit Development Overlay.
+12.27.510 Purposes.
+12.27.520 Distinction from other Overlay Zones/Applicability.
+12.27.530 Administrative and Regulatory Coordination.
+12.27.540 Uses and Activities Permitted.
+12.27.550 Application and Process for PUD Approval.
+12.27.560 Modification of PUD Boundaries.
+CDC12.27:1Supp. No. 1
+12.27.600 SID Special Industrial District.
+12.27.610 Purpose.
+12.27.620 Applicability.
+12.27.630 Administration.
+12.27.640 Regulations on Permitted Uses or Activities.
+12.27.650 Establishment or Modification of Overlay Boundaries.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:2Supp. No. 1
+12.27.010  Overlay Zones.
+There are 5 overlay zones in the City:
+A. RFO Regulatory Floodplain Overlay zone;
+B. SNRO Significant Natural Resource Overlay zone;
+C. CRO Cultural Resource Overlay zone;
+D. PUD Planned Unit Development; and
+E. SID Special Industrial District.
+(Ord. 6401 § 1, 2022)
+12.27.020  Locational Characteristics.
+Overlay zones are applied on properties or portions of properties to modify or supplement the
+regulations of the underlying base zone in recognition of historic sites, environmental conditions,
+external environmental impacts, or regulatory requirements. The Regulatory Floodplain Overlay
+zone implements the FP Floodplain Comprehensive Plan Land Use Map designation and the
+requirements of the National Flood Insurance Program in areas that the Federal Emergency
+Management Agency and the City Floodplain Administrator have deemed to be at risk of flooding
+according to best available data on the boundaries of the Base Flood and the Base Flood Elevation
+at a given location. The Significant Natural Resource Overlay zone and the Cultural Resource
+Overlay zone implement Comprehensive Plan goals and policies. The Special Industrial District is
+applied only on land with the Industrial Plan Designation, to implement certain Metro goals regarding
+retention of large industrial lots. Except as noted in this Subchapter, overlay zone provisions do not
+change Use Category status or the development standards of the underlying base zone. Boundaries
+of an overlay zone may be either property lines or site-specific environmental boundaries.
+(Ord. 6401 § 1, 2022; Ord. 6276 § 1, 2018)
+12.27.030  Organization within this Subchapter.
+A. Common Elements. Each section in this Subchapter contains the following components. Due
+to the unique character of each overlay zone, sequence and terminology varies among zones.
+1. Purpose. Purpose statements for each overlay zone are descriptive of the overlay's
+characteristics and intent, and are drawn from the Comprehensive Plan and/or the
+Community Development Code. Purpose statements are informational and not intended
+to be regulations.
+2. Applicability. Each overlay zone is applied based on specific conditions as described in
+each section. Overlay zones may be applicable to an entire property or to a portion of
+property. More than 1 overlay zone may apply to a property or portion thereof.
+3. Administration and Regulatory Coordination. Land Uses and development activities in
+some overlay zones may be subject to regulation by other agencies. The jurisdiction of
+these agencies may vary within an overlay zone.
+ 12.27.030OVERLAY ZONES
+CDC12.27:3Supp. No. 1
+4. Regulations on Permitted Uses or Activities. The Use categories status or development
+standards of the underlying base zone may be modified or supplemented to accomplish
+the purpose of the overlay zone in reducing negative impacts on an identified resource.
+5. Applications and Processes for Land Use Approvals. Certain types of land use applica-
+tion approvals are required in most overlay zones to accomplish the purposes of the
+zone. Submittal materials and criteria for these applications are also related to demon-
+strating compliance with the purposes of the overlay zone.
+6. Establishment or Modification of Overlay Boundaries. The boundaries of some overlay
+zones may be subject to change either through development activity or environmental
+conditions. Each overlay zone has a unique process to establish or modify the overlay
+boundary.
+(Ord. 6401 § 1, 2022)
+12.27.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:4Supp. No. 1
+12.27.100  RFO Regulatory Floodplain Overlay.
+The Regulatory Floodplain Overlay includes the following sections:
+12.27.105 Purposes
+12.27.107 Liability
+12.27.110 Applicability, Code Interpretation, and Floodplain Boundary/Base Flood Elevation
+Interpretation.
+12.27.115 Administrative and Regulatory Coordination
+12.27.120 Exempt and Permitted Uses and Activities
+12.27.125 Reserved
+12.27.130 General Development Standards
+12.27.135 Standards for Specific Development Types
+12.27.140 Variances from RFO Standards
+12.27.145 Reserved
+(Ord. 6401 § 1, 2022; Ord. 6192 § 1, 2016; Ord. No. 6500, § 1(Exh. A), 6-17-2025)
+12.27.105  Purposes.
+A. Statutory Authorization. Consistent with the provisions of the Code of Federal Regulations
+related to local administration of the National Flood Insurance Program (44 CFR 59—76); ORS
+197.175; Article XI, section 2 of the Oregon Constitution; and the Purpose of the Community
+Development Code cited in Section 12.01.110, the City of Hillsboro has responsibility for
+planning, adopting, and enforcing land use regulations to manage floodplains identified by
+FEMA or as otherwise identified by the Floodplain Administrator or City Engineer within the
+jurisdiction of the City of Hillsboro.
+B. Statement of Purpose. The Regulatory Floodplain Overlay (RFO) zone is established for the
+following purposes:
+1. To reduce potential danger and serious damage to life and property from flooding;
+2. To regulate topographic alterations within the floodplain that may affect upstream or
+downstream flood levels;
+3. To regulate use of areas subject to flooding and encroachment into the floodplain by
+restricting Uses subject to flood damage; and
+4. To reduce the financial burden on the community that results from flood damage.
+5. To protect the beneficial ecological, hydraulic, and hydrologic functions of floodplains.
+ 12.27.105OVERLAY ZONES
+CDC12.27:5Supp. No. 1
+C. Methods of Reducing Flood Losses. In order to accomplish its purposes, the RFO includes
+methods and provisions for:
+1. Restricting or prohibiting development which is dangerous to health, safety, and property
+due to water or erosion hazards, or which result in damaging increases in erosion or in
+flood heights or velocities.
+2. Requiring that development vulnerable to floods, including facilities which serve such
+uses, be protected against flood damage at the time of initial construction.
+3. Controlling the alteration of natural floodplains, stream channels and natural protective
+barriers which help accommodate or channel flood waters.
+4. Controlling filling, grading, paving, dredging and other development which may increase
+flood damage.
+5. Preventing or regulating the construction of flood barriers which will unnaturally divert
+flood waters or may increase flood hazards in other areas.
+(Ord. 6401 § 1, 2022; Ord. 6276 § 1, 2018; Ord. 6192 § 1, 2016; Ord. No. 6500, § 1(Exh. A),
+6-17-2025)
+12.27.107  Liability.
+The degree of flood protection required by this Community Development Code is based on scientific
+and engineering considerations and is considered reasonable for regulatory purposes. Larger floods
+can and will occur on rare occasions, and flood heights may be increased by human-made or natural
+causes. This Community Development Code is not intended to imply and should not be construed to
+mean that land outside floodplain areas or uses permitted within floodplains will be free from flooding
+or flood damages at all times. Nothing in this Community Development Code creates any liability on
+the part of the City of Hillsboro, any officer or employee thereof, or the Federal Insurance and
+Mitigation Administration for any flood damage that may result from reliance on this Community
+Development Code or any administrative decision lawfully made hereunder.
+(Ord. 6401 § 1, 2022; Ord. 6192 § 1, 2016; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.27.110  Applicability, Code Interpretation, and Floodplain Boundary/Base Flood Elevation
+Interpretation.
+A. Applicability.
+1. The Regulatory Floodplain Overlay (RFO) zone applies to special flood hazard area (also
+known as the "1% annual chance floodplain," "100-year floodplain," "floodplain") identi-
+fied by the Federal Insurance Administration in a scientific and engineering report titled
+"Flood Insurance Study for Washington County, Oregon and Incorporated Areas" dated
+October 19, 2018, with accompanying Flood Insurance Maps, which are hereby adopted
+by reference and declared to be a part of the Community Development Code. The Flood
+Insurance Study is on file and available at the Community Development Department at
+150 E Main Street, Hillsboro, Oregon. The Flood Insurance Study and accompanying
+FIRMs are hereby adopted by reference and declared to be a part of this ordinance. The
+12.27.105 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:6Supp. No. 1
+RFO may also apply to areas identified by the Floodplain Administrator or City Engineer
+under paragraph B, Boundary Interpretation, below. All proposed development, including
+placement of manufactured homes, in the RFO requires a Floodplain Activity Permit (see
+CDC Section 12.80.070 Floodplain Activity), except where an exemption is granted in
+Section 12.27.120.
+2. No structure or Use shall be located, extended, converted, expanded, enlarged, re-
+placed, or structurally altered within the boundaries of the RFO without compliance with
+this Subchapter.
+3. No topographic alteration shall occur within the boundaries of the RFO without compli-
+ance with this Subchapter.
+4. These requirements are in addition to the standards of the underlying base zone and to
+any other standards in this Subchapter. Where conflicts may occur among standards, the
+standards of this Subchapter supersede all other standards.
+B. Code Interpretation. An applicant may request a Director's Interpretation of the provisions of
+the CDC under Section 12.80.050. In the interpretation and application of this subchapter, all
+provisions shall be:
+1. Considered as minimum requirements;
+2. Liberally construed in favor of the governing body; and,
+3. Deemed neither to limit or repeal any other powers granted under State statutes.
+C. Coordination with State of Oregon Specialty Codes. Pursuant to the requirement established
+in ORS 455 that the City of Hillsboro administers and enforces the State of Oregon Specialty
+Codes, the City of Hillsboro does hereby acknowledge that the Oregon Specialty Codes
+contain certain provisions that apply to the design and construction of building and structures
+located in special flood hazard areas. Therefore, this code is intended to be administered and
+enforced in conjunction with the Oregon Specialty Codes.
+D. Base Flood Elevation Interpretation. The City Engineer and Floodplain Administrator are
+authorized to interpret the National Flood Insurance Program data, local data, and data from
+other parties to determine the Base Flood Elevation at a project location. The City Engineer and
+Floodplain Administrator are authorized to interpret the effective Flood Insurance Study to
+determine the approximate Base Flood Elevation when the project location is between
+locations where FEMA specifies a Base Flood Elevation in the Flood Insurance Study. The City
+may obtain, review, and reasonably utilize any flood-related data available from a Federal,
+State, or other source to administer Section 12.27.100 and may require the applicant to submit
+a survey of site topography prepared by a Professional Land Surveyor.
+(Ord. 6401 § 1, 2022; Ord. 6276 § 1, 2018; Ord. 6192 § 1, 2016; Ord. No. 6500, § 1(Exh. A),
+6-17-2025)
+ 12.27.110OVERLAY ZONES
+CDC12.27:7Supp. No. 1
+12.27.115  Administrative and Regulatory Coordination.
+A. Designation of the Local Floodplain Administrator. The Director and designated Floodplain
+Administrator are hereby appointed to administer and implement the requirements and
+provisions of Sections 12.27.100 and 12.80.070. The Floodplain Administrator may delegate
+authority to implement these provisions.
+B. Responsibilities of the Floodplain Administrator. Duties of the Floodplain Administrator, or their
+designee, shall include but not be limited to:
+1. Permit Review. Review all development permits to:
+a. Determine that the requirements of the Regulatory Floodplain Overlay have been
+satisfied on any development therein;
+b. Determine that all required Federal, State, or local governmental permits have been
+obtained and approved;
+c. Determine if the proposed development is located in the floodway. If located in the
+floodway, assure that the encroachment provisions of Section 12.27.100 are met;
+d. Determine if the proposed development is located in an area where base flood elevation
+data is provided through the Flood Insurance Study or FIRM and provide to the Building
+Official the Base Flood Elevation applicable to any building requiring a development
+permit;
+e. Ensure proposed development activity is reviewed to determine whether such proposals
+will be reasonably safe from flooding. If a new development includes new development in
+a flood-prone area, any such proposals shall be reviewed to assure that:
+i. such proposals minimize potential for flood damage within the flood-prone area,
+ii. all public utilities and facilities, such as sewer, gas, electrical, and water systems are
+located and constructed to minimize or eliminate flood damage,
+iii. adequate drainage is provided to reduce exposure to flood hazards, and
+iv. all development-related activities comply with Section 12.27.100;
+f. Ensure that if the base flood elevation has not been provided or is not available from
+another authoritative source, it is generated for subdivision proposals and other pro-
+posed developments of at least 50 lots or 5 acres (whichever is less), and all permits are
+reviewed to confirm that the building sites are expected to be reasonably safe from
+flooding;
+g. Determine if the proposed development qualifies as a substantial improvement.
+h. Determine if the proposed development activity is a watercourse alteration. If a water-
+course alteration is proposed, ensure compliance with the provisions in Section 12.27.135.
+i. Determine if the proposed development activity includes the placement of fill or excava-
+tion.
+12.27.115 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:8Supp. No. 1
+j. Ensures all records pertaining to the provisions of Section 12.27.100, including but not
+limited to any variances granted, elevation certificates, floodproofing certificates, hydro-
+logic and hydraulic analyses, substantial improvement and damage determinations and
+no net loss records are maintained and available for public inspection.
+C. Other Affected Agencies. The regulations of other agencies may apply to development
+proposals and other projects within the floodplain. These agencies include the Federal
+Insurance Administration, the Federal Emergency Management Agency, the U.S. Army Corps
+of Engineers, the Oregon Department of State Lands, the U.S. Fish and Wildlife Service, the
+Environmental Protection Agency, the Oregon Department of Fish and Wildlife, Washington
+County, and Clean Water Services.
+D. Community Boundary Alterations. The Floodplain Administrator shall notify the Federal Insur-
+ance Administrator in writing whenever the boundaries of the community have been modified
+by annexation to ensure that the Flood Hazard Boundary Maps and FIRMs accurately
+represent the community's boundaries.
+E. Letters of Map Change.
+1. When a development will alter a watercourse within the floodplain, modify floodplain
+boundaries, or modify Base Flood Elevations, the person responsible for the develop-
+ment or other project shall obtain approvals or comments from other affected agencies,
+including FEMA, and submit the approvals or comments to the City prior to requesting
+City permits and inspections, commencing work on the site in the floodplain, and/or after
+completing work on the site, as determined by the City. Such approvals or comments
+shall include, but may not be limited to:
+a. Conditional Letter of Map Revision (CLOMR). An application for a Conditional Letter
+of Map Revision from FEMA, which may entail site-specific studies prepared by a
+qualified expert of habitat (e.g., Endangered Species), hydrology, hydraulics, and/or
+other topics related to the project or its impacts. A CLOMR is required according to
+Table 12.27.115-1.
+b. Letter of Map Revision (LOMR). Where required in Table 12.27.115-1, an applica-
+tion for a Letter of Map Revision (LOMR) shall be submitted to FEMA depicting
+as-built conditions within 6 months of project completion. The applicant shall include
+either:
+i. A proposed maintenance plan to assure the flood carrying capacity within the
+altered or relocated portion of the watercourse is maintained; or
+ii. Certification by a registered professional engineer that the project has been
+designed to retain its flood carrying capacity without periodic maintenance.
+c. Letter of Map Revision based on Fill (LOMR-F). A LOMR-F is required for placement
+of fill in the floodplain to elevate a structure. Applicant must receive approval of a
+LOMR-F prior to issuance of building permits for structures using fill to meet the
+elevation requirements.
+ 12.27.115OVERLAY ZONES
+CDC12.27:9Supp. No. 1
+Table 12.27.115-1:
+Required Submittals of Letters of Map Changes to FEMA
+Use or Activity
+ Conditional Letter of Map
+Revision (CLOMR) Re-
+quired
+ Letter of Map Revision
+(LOMR) Required
+Alteration of a watercourse X X
+Proposed floodway develop-
+ment that increases the base
+flood elevations
+X X
+Proposed development which
+increases the base flood ele-
+vation by more than one foot
+in areas where FEMA has pro-
+vided base flood elevations but
+no floodway
+X X
+Modifications to Floodplain
+Boundaries including physical
+alterations or to revise bound-
+aries
+X
+Placement of fill in the flood-
+plain to elevate a structure
+X (LOMR-F)
+2. The applicant is responsible for completing and submitting application forms, preparing
+technical data and studies to support evaluation of the applications, and paying any
+processing or application fees to other agencies. The complete submittal packages
+(applications as well as supporting documentation and models) shall be provided to the
+City upon request.
+3. The Floodplain Administrator is under no obligation to sign a Community Acknowledge-
+ment Form for a FEMA application until it has been demonstrated that the project as
+proposed meets the requirements of this Code and all applicable State and Federal laws.
+4. The applicant shall construct the project as approved and required by any applicable
+reviews, conditions of approval, and/or permitting processes. If deviations from or
+revisions to reviewed or approved plans are desired, the applicant shall request autho-
+rization in advance from the City as well as other regulatory agencies. The City may
+require additional reviews, public notices, and/or permits prior to authorizing deviations
+from approved project plans.
+(Ord. 6401 § 1, 2022; Ord. 6276 § 1, 2018; Ord. 6192 § 1, 2016; Ord. No. 6500, § 1(Exh. A),
+6-17-2025; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.27.115 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:10Supp. No. 1
+12.27.120  Exempt and Permitted Uses and Activities.
+A. Exempt Uses and Activities. If allowed in the underlying base zone, the following Uses and
+activities may be permitted in the RFO without the approval of a Floodplain Activity permit,
+subject to a review by the Floodplain Administrator of the activities proposed as well as the
+applicant's compliance with the general development standards in 12.27.125:
+1. Agricultural Uses with no structures except boundary fences that have been approved
+under a Fence Permit per Section 12.80.060;
+2. Residential accessory Uses not including structures, topographic alterations, or build-
+ings;
+3. Underground utility facilities constructed and installed to minimize water damage and
+flood water infiltration where there is no ground disturbance within the RFO;
+a. Maintenance of public streets, light rail transit tracks and associated bridges and
+crossings, bikeways, and footpaths which has been verified by the City Engineer as
+complying with Section 12.27.100, and
+4. Projects whose primary purpose is wetland or floodplain, restoration, or other enhance-
+ment, and that do not involve topographic alterations.
+B. Permitted Uses and Activities. Unless exempt pursuant to Subsection A, a Floodplain Activity
+(FA) permit is required for all development within the RFO. Uses and activities listed in Table
+12.27.120-1, below, are permitted upon approval of a permit in accordance with Section
+12.80.070. Where two permit types are indicated, the threshold for the permit type is specified
+in the applicable requirements.
+  Table 12.27.120-1:
+FA Permit Requirements
+Use or Activity Permit Type Applicable Requirements
+Topographic alterations, includ-
+ing cutting, filling, grading, pav-
+ing, mining, dredging, drilling,
+or other operations
+FA I/II 12.27.135.A
+New construction including
+new structures, additions to
+existing structures and conver-
+sion of existing structures used
+for parking, access or storage
+to usable floor space
+FA II 12.27.135.B
+Alteration or renovation of an
+existing structure
+FA I/II 12.27.135.C
+Reconstruction or repair of a
+damaged existing structure
+FA I/II 12.27.135.D
+ 12.27.120OVERLAY ZONES
+CDC12.27:11Supp. No. 1
+Table 12.27.120-1:
+FA Permit Requirements
+Use or Activity Permit Type Applicable Requirements
+Accessory Structures (for stor-
+age, access, and parking only)
+FA I 12.27.135.E
+Placement of Manufactured
+dwellings
+FA II 12.27.135.F
+Storage of material or equip-
+ment
+FA I 12.27.135.G
+Infrastructure construction in-
+cluding underground and
+above ground utilities, public
+and private streets, light rail
+transit tracks, associated
+bridges, crossings, bikeways
+and footpaths.
+FA I 12.27.135.H
+Surface Parking FA I 12.27.135.I
+Water-dependent uses FA I 12.27.135.J
+C. Prohibited Uses and Activities in the Floodway. With the exception of the Uses listed below, no
+use, activity, encroachment, alteration, development, or construction shall be allowed in the
+floodway:
+1. The Uses and activities exempt in the RFO under Section 12.27.120.A;
+2. Infrastructure construction;
+3. Bridges and other water-dependent uses; and
+4. Erosion control activities.
+(Ord. 6401 § 1, 2022; Ord. 6276 § 1, 2018; Ord. 6192 § 1, 2016; Ord. 6149 § 1, 2015; Ord. No. 6500,
+§ 1(Exh. A), 6-17-2025)
+12.27.125  Reserved.
+Editor’s note—Ord. No. 6500, § 1(Exh. A), adopted June 17, 2025, repealed § 12.27.125, which
+pertained to uses and activities in the floodways and derived from Ord. 6401 § 1, adopted 2022; Ord.
+6276 § 1, adopted 2018.
+12.27.130  General development standards.*
+The following standards apply to all development and uses on properties containing RFO. The
+standards in this section are in addition to all construction requirements imposed as conditions of
+approval by the City of Hillsboro or any other permit agency.
+*Editor’s note—Ord. No. Ord. No. 6500, § 1(Exh. A), adopted June 17, 2025, repealed the former
+§ 12.27.130, and enacted a new § 12.27.130 as set out herein. The former § 12.27.130 pertained to
+minor uses and activities permitted with type II approval and derived from Ord. 6401 § 1, adopted
+2022.
+12.27.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:12Supp. No. 1
+A. Uses or activities shall remain in compliance with applicable Federal, State, and local
+requirements.
+B. Floodplain Location on Applications. The location of the Base Flood Elevation, as established
+by the most current FIRM, Flood Insurance and Floodway Maps, or the best available
+information, shall be shown on any development application on property including floodplain
+areas, even if the application proposes no activity or use in the floodplain. If the floodplain
+activity involves a critical facility as described in Federal Emergency Management Agency
+publication #543, the boundary of the 0.2% chance ("500-year") floodplain as shown on the
+effective Flood Insurance Rate Map shall be shown as well. If the Base Flood Elevation is not
+available, it shall be calculated by a registered professional engineer.
+C. In areas where a regulatory floodway has not been designated, no new construction, substan-
+tial improvements, or other development (including fill) shall be permitted within Zones A1-30
+and AE on the community's FIRM, unless it is demonstrated that the cumulative effect of the
+proposed development, when combined with all other existing and anticipated development,
+will not increase the water surface elevation of the base flood more than one foot at any point
+within the community.
+D. When a structure is located in multiple flood zones on the FIRM, the provisions for the more
+restrictive flood zone shall apply. When a structure is partially located in a special flood hazard
+area, the entire structure shall meet the requirements for new construction and substantial
+improvements.
+E. Anchoring.
+a. All new construction, substantial improvements, tanks and equipment shall be anchored
+to prevent flotation, collapse, or lateral movement of the structure resulting from hydro-
+dynamic and hydrostatic loads, including the effects of buoyancy.
+F. Utilities and Equipment.
+a. Water Supply, Sanitary Sewer and septic systems.
+i. All new and replacement water supply systems and sanitary sewage systems shall
+be designed to minimize or eliminate infiltration of flood waters into the systems and
+discharge from the systems into flood waters.
+ii. Septic systems shall be located above the base flood elevation. In addition, they
+shall be located to avoid impairment to them or contamination from them during
+flooding consistent with the Oregon Department of Environmental Quality.
+b. Electrical, mechanical, plumbing and other equipment.
+i. Electrical, hearing, ventilating, air-conditioning, plumbing, duct systems and other
+equipment shall be elevated at or above the base flood elevation or shall be
+designed and installed to prevent water from entering or accumulating within the
+components and to resist hydrostatic and hydrodynamic loads and stresses,
+including the effects of buoyancy during conditions of flooding.
+ 12.27.130OVERLAY ZONES
+CDC12.27:13Supp. No. 1
+c. Tanks.
+i. Above-ground tanks shall be installed at least one foot above the Base Flood
+Elevation.
+G. Recreational Vehicles.
+a. Recreational vehicles within the RFO shall meet all of the following standards:
+i. Be located outside of the floodway;
+ii. Be onsite for fewer than 180 consecutive days;
+iii. Shall be removed from the RFO entirely during the months of November, De-
+cember and January;
+iv. Be fully licensed and ready for highway use;
+v. Be on wheels or jacking system;
+vi. Be attached to the site only by quick-disconnect type utilities and security devices;
+and
+vii. Have no permanently attached additions.
+(Ord. No. 6500, § 1(Exh. A), 6-17-2025)
+12.27.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:14Supp. No. 1
+12.27.135  Standards for specific development types.*
+A. Topographic Alterations.
+1. Topographic Alterations are permitted within the RFO with approval of a FA I. In addition
+to the general standards in Section 12.27.130, the following requirements apply:
+a. Must be located outside of the floodway and not involve alteration of a watercourse;
+b. No more than 30% of the total site area within the RFO (prior to the alteration) is
+altered;
+c. Fills are balanced by corresponding cuts to retain the onsite storage capacity of the
+floodplain;
+d. Cuts and fills are not more than 5 feet deep or are commensurate with the
+surrounding topography;
+e. No alterations are made below the lowest current elevation on the site;
+f. New slopes created by the alteration that will be below the site's Base Flood
+Elevation are either:
+i. No greater than 20%, or
+ii. Certified to remain permanently stable under a variety of hydraulic flow
+conditions in a stamped geotechnical report;
+g. All impacted areas which are not covered by structure or impervious surface are
+stabilized from erosion with vegetation or other means;
+h. All activity is conducted to avoid disturbing areas adjacent to the alteration. If
+disturbed, adjacent areas shall be restored to their natural state;
+i. All alteration activity is completed consistent with the Design and Construction
+Standards and any required grading and erosion control permits;
+j. A registered professional engineer has certified that the alteration will not increase
+the elevation of the base flood.
+2. All other topographic alterations require a FA II and are subject to the following standards:
+a. A registered professional engineer has certified that the alteration will not increase
+the elevation of the base flood or a CLOMR has been approved by FEMA per Table
+12.27.115-1.
+b. Any alteration within the floodway or to a watercourse shall meet any additional
+LOMA requirements in Table 12.27.115-1. In addition,
+i. The City shall notify Washington County, DLCD, the Corps, CWS, DSL, and
+any adjacent jurisdictions prior to any alteration of watercourses within the
+City and shall submit evidence of such notification to the Federal Insurance
+Administration.
+*Editor’s note—Ord. No. 6500, § 1(Exh. A), adopted June 17, 2025, repealed the former § 12.27.135,
+and enacted a new § 12.27.135 as set out herein. The former § 12.27.135 pertained to major uses
+and activities permitted with type III approval and derived from Ord. 6401 § 1, adopted 2022; Ord.
+6276 § 1, adopted 2018; Ord. 6192 § 1, adopted 2016; Ord. 6120 § 1, adopted 2015.
+ 12.27.135OVERLAY ZONES
+CDC12.27:15Supp. No. 1
+ii. An alteration to watercourses within the floodplain shall be designed and
+maintained so that flood-carrying capacity is not diminished.
+B. New construction including new structures, additions to existing structures and conversion of
+existing structures used for parking, access or storage to usable floor space. In addition to the
+general standards in Section 12.27.130, the following requirements apply:
+1. Flood Openings.
+a. All new construction and substantial improvements with fully enclosed areas below
+the lowest floor (excluding basements) are subject to the following requirements.
+Enclosed areas below the Base Flood Elevation, including crawl spaces, shall:
+i. Be designed to automatically equalize hydrostatic flood forces on walls by
+allowing for the entry and exit of floodwaters;
+ii. Be solely used for parking, storage, or building access;
+iii. Be certified by a registered professional engineer or architect or meet all of the
+following minimum criteria:
+1. A minimum of two openings;
+2. The total net area of non-engineered openings shall be not less than one
+square inch for each square foot of enclosed area where the enclosed
+area is measured on the exterior of the enclosed walls;
+3. The bottom of all openings shall be no higher than one foot above grade;
+4. Openings may be equipped with screens, louvers, valves or other
+coverings or devices provided that they shall allow the automatic flow of
+floodwater into and out of the enclosed areas and shall be accounted for
+in the determination of the net open area; and
+5. All additional higher standards for flood openings in the State of Oregon
+Residential Specialty Codes Section R322.2.2 shall be complied with
+when applicable.
+2. Below-grade crawlspaces.
+a. Below-grade crawlspaces are permitted and shall meet the following standards:
+i. Crawlspaces under the structure shall comply with FEMA and Federal Insur-
+ance and Mitigation Administration guidelines as found in FEMA Technical
+Bulletin 11-01, Crawlspace Construction for Buildings Located in Special
+Flood Hazard Areas;
+ii. Crawlspace construction is not allowed in areas with base flood velocities
+greater than 5 feet per second unless the design is reviewed and stamped by
+a qualified design professional such as a registered architect or professional
+engineer.
+iii. Flood openings are required per CDC Section 12.27.135.A.1.
+iv. Portions of the building below the BFE shall be constructed with materials and
+techniques resistant to flood damage.
+12.27.135 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:16Supp. No. 1
+v. Joists and insulation shall be above BFE.
+vi. Any building utility systems within the crawlspace shall be elevated above
+BFE or designed so that floodwaters cannot enter or accumulate within the
+system components during base flood conditions. In particular, ductwork shall
+either be placed above the BFE or sealed from floodwaters.
+vii. The interior grade of a crawlspace below the BFE shall not be more than 2 feet
+below the lowest adjacent exterior grade.
+viii. Any building utility systems within the crawlspace shall be elevated above
+BFE or designed so that floodwaters cannot enter or accumulate within the
+system components during base flood conditions. In particular, ductwork shall
+either be placed above the BFE or sealed from floodwaters.
+ix. The interior grade of a crawlspace below the BFE shall not be more than 2 feet
+below the lowest adjacent exterior grade.
+x. The height of the below-grade crawlspace, measured from the interior grade
+of the crawlspace to the underside of the floor framing, shall not exceed 4 feet
+at any point.
+xi. The crawlspace complies with FEMA Technical Bulletin 11-01, Crawlspace
+Construction for Buildings Located in Special Flood Hazard Areas.
+3. Residential Construction.
+a. Residential construction is permitted within the RFO outside of the floodway with
+the approval of a FA II permit. In addition to the general development standards in
+Section 12.27.130, the following requirements apply:
+i. All new construction and substantial improvements shall be constructed with
+materials and utility equipment resistant to flood damage and using methods
+and practices that minimize flood damage.
+ii. All new construction, conversion to residential and substantial improvements
+of any residential structure shall have the lowest floor, including basement,
+elevated to at least one foot above the Base Flood Elevation.
+iii. Attached garages may be constructed with the garage floor slab below the
+Base Flood Elevation if only used for parking, access and/or storage and the
+floors are at or above grade on at least one side.
+iv. Any topographic alterations needed to facilitate construction shall meet the
+standards of 12.27.135.A.
+v. A registered professional civil engineer has certified that the placement of the
+structure will not reduce the site's capacity to carry the base flood, nor cause
+any increase in the base flood level;
+vi. FEMA Elevation Certificates are required to be filed with the Floodplain
+Administrator three times due to the importance of verifying elevations before,
+during, and after construction: (1) prior to issuance of a building permit; (2)
+upon placement of the lowest floor, including any basement, and prior to
+ 12.27.135OVERLAY ZONES
+CDC12.27:17Supp. No. 1
+further vertical construction; and (3) prior to issuance of a certificate of
+occupancy or approval of final inspections. Each FEMA Elevation Certificate
+shall be prepared and sealed by a professional land surveyor.
+4. Non-Residential Construction.
+a. Non-Residential construction is permitted within the RFO outside of the floodway
+with the approval of a FA II permit. In addition to the general development standards
+in Section 12.27.130, the following requirements apply:
+i. The lowest floor including the basement must be located at least one foot
+above the Base Flood Elevation, or
+ii. The structure and all associated utility systems must be floodproofed to one
+foot above the base flood elevation.
+iii. A registered professional civil engineer has certified that the placement of the
+structure will not reduce the site's capacity to carry the base flood, nor cause
+any increase in the base flood level;
+iv. FEMA Floodproofing Certificates are required to be filed with the Floodplain
+Administrator three times due to the importance of verifying floodproofing
+elevations before, during and after construction: (1) prior to issuance of a
+building permit; (2) upon placement of the lowest floor, including any base-
+ment, and prior to further vertical construction; and (3) prior to issuance of a
+certificate of occupancy or approval of final inspections. Each FEMA Floodproof-
+ing Certificate shall be prepared and sealed by a professional land surveyor.
+v. Applicants floodproofing non-residential buildings shall be notified that flood
+insurance premiums will be based on rates that are one (1) foot below the
+floodproofed level (e.g. a building floodproofed to the base flood level will be
+rated as one (1) foot below.
+C. Alteration or renovation of an existing structure. In addition to the general standards in Section
+12.27.130, the following requirements apply to all alterations or renovations of existing
+structures.
+1. Alteration or renovation of an existing structure which meets all of the following standards
+requires a FA I.
+a. The alteration or renovation is not a substantial improvement.
+b. Any additions to the structure must meet the standards of Section 12.27.135.
+2. All other alterations which are considered substantial improvements require a FA II permit
+and must meet the standards of Section 12.27.135.
+D. Reconstruction or repair of a damaged existing structure.
+1. Reconstruction or repair of a damaged existing structure which meets the following
+standards requires a FA I.
+a. The structure has not been substantially damaged.
+12.27.135 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:18Supp. No. 1
+2. All other reconstruction or repair which is a result of substantial damage requires a FA II
+and must meet the standards of Section 12.27.135.
+E. Accessory Structures (for parking, access, and/or storage). Accessory structures are permitted
+within the RFO with the approval of a FA I. In addition to the general development standards in
+Section 12.27.130, the following requirements apply:
+1. The accessory structure must be located outside of the floodway;
+2. The accessory structure is used for parking, access and/or storage only and shall not be
+used for human habitation;
+3. The portions of the accessory structure located below the Base Flood Elevation shall be
+built using flood resistant materials;
+4. The accessory structure must be designed to equalize hydrostatic forces on exterior
+walls and comply with the requirements for flood openings in Section 12.27.135A.1.
+5. Accessory structures shall not be used to store toxic materials, oil, gasoline or any priority
+persistent pollutant identified by the Oregon Department of Environmental Quality unless
+confined in a tank installed in compliance with Section 12.27.130.4.C.
+6. Electrical, mechanical and other utilities shall be elevated above the base flood elevation
+or floodproofed to prevent water from entering or accumulating within the components
+during a flooding event.
+F. Placement of Manufactured Dwellings. Manufactured dwellings are permitted in the RFO with
+the approval of a FA II. In addition to the general standards in Section 12.27.130, the following
+requirements apply:
+1. The dwelling must be located outside of the floodway.
+2. The bottom of the longitudinal chassis frame beam shall be at least one foot above the
+Base Flood Elevation.
+3. If the dwelling is elevated using solid foundation walls, the walls shall be constructed with
+flood openings as required by Section 12.27.135.A.
+4. Manufactured dwellings shall be anchored to prevent flotation, collapse and lateral
+movement during the base flood. Anchoring methods may include but are not limited to
+use of over-the-top or frame ties to ground anchors (Reference FEMA's "Manufactured
+Home Installation in Flood Hazard Areas" guidebook for additional techniques;
+5. Electrical crossover connections shall be a minimum of 12 inches above the Base Flood
+Elevation.
+G. Storage of Material or Equipment. Storage of material or equipment is permitted in the RFO
+with the approval of a FA I. In addition to the general standards in Section 12.27.130, the
+following requirements apply:
+1. The material or equipment must be anchored to prevent flotation.
+ 12.27.135OVERLAY ZONES
+CDC12.27:19Supp. No. 1
+H. Infrastructure construction including underground and above ground utilities, public and
+private streets, light rail transit tracks, associated bridges, crossings, bikeways and footpaths.
+Infrastructure construction is permitted in the RFO with the approval of a FA I. In addition to the
+general standards in Section 12.27.130, the following requirements apply:
+1. A registered professional civil engineer has certified that the infrastructure construction
+will not increase the elevation of the base flood; and a no-rise analysis prepared and
+stamped by a registered professional civil engineer may be required;
+2. Construction of public streets, light rail transit tracks and associated bridges and cross-
+ings which implement the adopted Transportation System Plan shall have travel surfaces
+elevated 1 foot or more above the elevation of the Base Flood;
+3. Construction of public or private streets not implementing the Transportation System
+Plan may be constructed at existing grade.
+I. Surface Parking. Surface Parking is permitted with the approval of a FA I. In addition to the
+general standards in Section 12.27.130, the following requirements apply:
+1. The parking must be located outside of the floodway;
+2. The parking must be constructed at existing grade or meet the requirements for topo-
+graphic alterations in Section 12.27.130.
+J. Water-dependent uses. Water-dependent uses not covered by other sections of this code (i.e.
+infrastructure) are permitted with the approval of a FA I. Water-dependent uses must meet the
+general standards in Section 12.27.130.
+(Ord. No. 6500, § 1(Exh. A), 6-17-2025)
+12.27.140  Variances from RFO Standards.*
+A. Definition. For floodplain management purposes, a Variance means a grant of relief by a
+community from the terms of a floodplain management regulation.
+B. Criteria and Procedures. A variance from one or more of the RFO standards in Sections
+12.27.120, 12.27.125,12.27.130, and 12.27.135 may be approved by the Review Authority
+upon approval of a Variance. The criteria for approval of a Variance from RFO standards are
+listed in Subsection 12.80.152.E. An application for an RFO Variance shall be processed as a
+Type III procedure under the provisions of Section 12.70.050.
+C. Additional Provisions Regarding RFO Variances.
+1. Variances may be approved for the reconstruction, rehabilitation, or restoration of
+structures listed on the National Register of Historic Places, the State Inventory of
+*Editor’s note— Ord. No. 6500, § 1(Exh. A), adopted June, 17, 2025, renumbered the former
+§ 12.27.145 as § 12.27.140 after repealing the former § 12.27.140 which pertained to additional
+standards and derived from Ord. 6401 § 1, adopted 2022; Ord. 6276 § 1, adopted 2018; Ord. 6192
+§ 1, adopted 2016. The historical notation has been retained with the amended provisions for
+reference purposes.
+12.27.135 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:20Supp. No. 1
+Historic Places, or the Cultural Resource Inventory, without regard to the Variance criteria
+in Subsection 12.80.152.E, provided that the reconstruction, rehabilitation, or restoration
+does not require a topographic alteration.
+2. Variances as interpreted in the National Flood Insurance Program are based on the
+general zoning law principle that they pertain to a physical piece of property; they are not
+personal in nature and do not pertain to the structure, its inhabitants, nor economic or
+financial circumstances. As such, Variances from the requirements of the RFO should be
+quite rare. Insurance premium rates are determined according to actuarial risk and are
+not modified by the granting of a variance to the standards of the RFO.
+(Ord. 6401 § 1, 2022; Ord. 6276 § 1, 2018; Ord. 6192 § 1, 2016; Ord. No. 6500, § 1(Exh. A),
+6-17-2025)
+ 12.27.140OVERLAY ZONES
+CDC12.27:21Supp. No. 1
+12.27.200  SNRO Significant Natural Resources Overlay.
+The Significant Natural Resources Overlay includes the following sections:
+12.27.205 Purposes
+12.27.215 Administrative and Regulatory Coordination
+12.27.220 Exempt, Permitted and Prohibited Uses and Activities
+12.27.230 General Development Standards
+12.27.235 Standards for Specific Development Types within a Resource Site or Impact Area
+12.27.240 Compensatory Mitigation Standards
+12.27.245 Adjustments from Standards of Underlying Zoning
+12.27.250 Boundary Verification and Modification
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note— Ord. No. 6473, §§ 1, 2(Exh. A), adopted June 28, 2025, amended 12.27.200,
+12.27.205, 12.27.210, 12.27.215, 12.27.220, 12.27.225, 12.27.230, 12.27.235, 12.27.240, 12.27.245,
+12.27.250, 12.27.255 in its entirety to read as herein set out. Former §§ 12.27.200—12.27.255,
+pertained to the SNRO Significant Natural Resources Overlay, and derived from Ord. 6401 § 1,
+adopted in 2022.
+12.27.205  Purposes.
+The Significant Natural Resources Overlay zone (SNRO) is established for the following purposes:
+A. Provide Required Protection for Significant Natural Resources. The provisions of this Subchapter
+meet Statewide Planning Goal 5 (ORS 197.015(8)) and OAR 660, Division 23 to inventory and
+protect Significant Natural Resources according to specific procedures, standards and defini-
+tions. Significant Natural Resources are those areas designated as Significant Wetlands,
+Riparian Corridors and Wildlife Habitat as identified in the adopted List of Significant Goal 5
+Natural Resources Sites in Hillsboro and the City of Hillsboro Goal 5 Natural Resources
+Inventory and Assessment Report.
+B. Balance Conservation with Economic Use. Standards in this Subchapter conserve and protect
+the functions and values of Significant Natural Resources while allowing reasonable economic
+use of property where adverse impacts to the resources can be mitigated.
+C. Evaluate Development Proposals. Standards in this Subchapter provide means to evaluate
+permitting developments, alterations and vegetation removal that affect Significant Natural
+Resources.
+D. Improve Intergovernmental Coordination. The provisions of the SNRO are intended to en-
+hance coordination between city, county, state, federal and other jurisdictional agencies and
+regional planning efforts, including CWS, Metro and the Tualatin Basin Goal 5 program,
+regarding alterations and development activities in or near Significant Natural Resources.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note—See editor's note to Sec. 12.27.200.
+12.27.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:22Supp. No. 1
+12.27.215  Administrative and Regulatory Coordination.
+A. Standards within the CDC. These requirements are in addition to the standards of the
+underlying base zone and to any other standards in this Code. Where conflicts may occur
+among standards, the standards of this Subchapter supersede all other standards.
+B. Other Affected Agencies. The regulations of other agencies may apply to development
+proposals within the SNRO. These agencies may include, but are not limited to, the US Army
+Corps of Engineers (Corps), the Oregon Department of State Lands (DSL), the US Fish and
+Wildlife Service, the Environmental Protection Agency (EPA), the Oregon Department of Fish
+and Wildlife, Washington County, and Clean Water Services (CWS).
+C. Notification. The City will notify applicable agencies, including, but not limited to, DSL and
+CWS, of specific development proposals prior to the issuance of City permits. Applicants are
+encouraged to contact applicable agencies before development plans are completed to
+determine the requirements and restrictions that may be imposed by the agencies.
+D. CWS Requirements. Applicants are advised that CWS requires applicants to secure a service
+provider letter from the District or its designee which specifies the conditions and requirements
+associated with Vegetated Corridors and Sensitive Areas necessary for the District to issue a
+Stormwater Connection Permit pursuant to the CWS Design and Construction Manual.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note—See editor's note to Sec. 12.27.200.
+12.27.220  Exempt, Permitted and Prohibited Uses and Activities.
+A. Exempt Uses and Activities. Where an exemption specifies an allowance of area for develop-
+ment area, impervious surface, or improvement, that area represents the total cumulative
+amount allowed pursuant to that exemption. The amount of development area, impervious
+surface, or improvement permitted by each exemption shall be calculated independently.
+1. Continued use, routine repair and maintenance of public and private structures, streets,
+driveways, public and private utility facilities, flood control facilities, constructed ponds,
+recreational areas and lawns, gardens and landscaping in existence as of May 1, 2003,
+or subsequently approved by the City.
+2. Applications for development or redevelopment on sites for which the application require-
+ments of the SNRO have been previously met, all required mitigation has been provided,
+the proposed development area was identified on the original permit, and no new portion
+of an SNR Site or Impact Area will be disturbed.
+3. Temporary emergency procedures as necessary for the protection of public health, safety
+and welfare provided that such remedial or preventative action must take place within a
+timeframe too short to allow for compliance with the requirements of the SNRO. After the
+emergency, the person or agency undertaking the action shall fully restore any impacts to
+the SNR Site or Impact Area resulting from the emergency action.
+4. Placement by a public agency of signs, markers, and aids.
+ 12.27.220OVERLAY ZONES
+CDC12.27:23Supp. No. 1
+5. Agricultural/Farming and forestry practices such as grazing, plowing, planting, cultivat-
+ing, and harvesting, that existed on the property prior to the date of this ordinance June
+18, 2025, and do not include new or expanded structures, roads, or other constructed
+facilities.
+6. Stream enhancement or restoration to remove Nuisance Plants or to plant Native
+Vegetation and/or enhancement or restoration for water quality or quantity benefits or fish
+and wildlife habitat improvement made in accordance with a previously approved plan
+pursuant to Section 12.27.235.F.
+7. Removal of plant species identified as a noxious weed by the State of Oregon or listed on
+Tualatin Soil and Water Conservation District's Weed and Pest Directory, provided only
+handheld tools are used, and after such removal all open soil areas greater than 25
+square feet are replanted.
+8. Wildfire prevention including the creation of defensible space surrounding habitable
+structures and powerlines to be limited to:
+a. Vegetation removal, including the removal of trees, and vegetation within 10 feet of
+overhead powerlines.
+b. Vegetation removal, including the removal of trees, within 10 feet of habitable
+buildings.
+9. The following uses and activities provided a written verification of exemption is obtained
+from the City prior to conducting exempt uses or activities. To obtain a written verification
+of exemption, a completed form with a site plan showing location of work and location of
+SNRA(s) and/or Impact Area(s) on the site, a description of the work to be done, methods
+of protection (if any), and anticipated schedule of the work shall be submitted to the City
+a minimum of 7 business days prior to the proposed activity.
+a. Replacement of public and private structures, streets, driveways, public and private
+utility facilities, flood control facilities, constructed ponds, recreational areas and
+lawns and landscaping in existence as of May 1, 2003, or subsequently approved
+by the City, that are destroyed by fire, flood or other unintentional cause.
+b. The following development or redevelopment that is, or will be, located within the
+SNRO, provided that the applicant complies with the general development stan-
+dards in Section 12.27.230.A. (including verifying the SNR Site and Impact Area
+boundaries):
+i. All development or redevelopment not located within the boundary of a
+verified SNR Site or Impact Area.
+ii. Development or redevelopment, including redevelopment of existing impervi-
+ous areas within the boundary of a verified SNR Site or Impact Area, that does
+not increase the development area within the SNR Site or Impact Area.
+iii. For each lot of record, up to 500 square feet of development within Impact
+Areas within a 5-year period.
+12.27.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:24Supp. No. 1
+iv. For each lot of record as of May 31, 2003, up to 200 square feet of develop-
+ment within SNR Sites within a 5-year period.
+c. Infrastructure expansion or enlargement, including the expansion of capacity of
+public streets, driveways, public or private utility facilities, flood control facilities,
+communication or energy distribution and transmission systems (including cables,
+lines, poles but excluding substations), which does not increase development area.
+B. Permitted Uses and Activities. Unless exempt pursuant to Subsection A or precluded by other
+standards or conditions, a Significant Natural Resource Permit (SNRP) is required for all
+development and redevelopment activities within the SNRO, or, for residential land divisions,
+on properties containing SNRO. Uses and activities listed in Table 12.27.220-1, below, may be
+permitted upon approval of a permit in accordance with Section 12.80.130. Where 2 permit
+types are indicated (e.g., "SNRP I/II"), the threshold for the permit type is specified in the
+applicable requirements. The Type I process is available for applications that meet the clear
+and objective standards. Applicants who choose not to meet the clear and objective standards,
+can demonstrate compliance with the Type II or III SNRP requirements.
+  Table 12.27.220-1: SNR Permit Requirements
+Proposed Activity or Request  Permit Type
+ Applicable
+Requirements
+1. New or expanded development or redevelopment
+(as defined in Section 12.01.500) except as
+described in items 2—7, below. Building footprints
+identified on residential land divisions are
+considered new development for the purposes of
+this Chapter
+SNRP I/II 12.27.235.A.
+2. New or expanded public utilities SNRP I 12.27.235.B.
+3. New or expanded public and private streets and
+access
+SNRP I/II 12.27.235.C.
+4. New or expanded outdoor recreation facilities
+(within Commercial Recreation Use Category
+(12.10.215) or Parks and Open Area Use Category
+(12.10.520))
+SNRP I/II 12.27.235.D.
+5. Removal of dangerous trees not associated with
+other site improvements
+SNRP I 12.27.235.E.
+6. Natural resource enhancement plans and
+non-exempt natural resource enhancement projects
+SNRP I/II 12.27.235.F.
+7. Natural Resource Management Plans for Major
+Transportation Facilities
+SNRP III 12.27.235.G.
+8. Map correction SNRP I/II 12.27.250.B.
+ 12.27.220OVERLAY ZONES
+CDC12.27:25Supp. No. 1
+C. Prohibited Activities. The following activities are prohibited within SNR Sites and Impact Areas
+(including mitigation areas).
+1. Dumping of garbage, lawn debris or other unauthorized materials.
+2. The planting of plant species identified as a noxious weed by the State of Oregon or listed
+on Tualatin Soil and Water Conservation District's Weed and Pest Directory.
+3. Use of Chemicals. Herbicides or pesticides shall not be used in a SNR or an impact area
+except as applied by a licensed applicator to either:
+a. Control pests in accordance with the practices outlined in CWS's Integrated Pest
+Management Plan; or
+b. Eradicate pests as defined in ORS 634.650 or diseases affecting native vegetation.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note—See editor's note to Sec. 12.27.200.
+12.27.230  General Development Standards.
+A. The following standards apply to all regulated development within verified SNR Sites or Impact
+Areas. The standards in this section are in addition to all construction requirements imposed as
+conditions of approval by the City of Hillsboro or any other permit agency.
+1. Boundaries Verified and Marked. Prior to any construction, demolition, grading or
+clearing on the site, the outer boundary of the impact area shall be established in
+accordance with Section 12.27.250 and shall be located, staked and demarcated with
+standard orange construction fencing or equivalent.
+2. Stockpiling and Equipment Storage. During construction, there shall be no stockpiling of
+fill material, no parking, and/or no storage of construction equipment within a Significant
+Natural Resource Site or its Impact Area except within approved development areas.
+An exception to this standard may be approved by the Director during the Type II or Type
+III application process for staging activities for approved construction projects that occur
+within the permitted work window, based on demonstration by the applicant that no other
+practicable alternatives to the storage or stockpiling is available, and that measures to
+mitigate the effects of the storage or stockpiling on the SNR Site will be taken when the
+activities cease.
+A construction management site plan must show the locations of proposed equipment
+and material staging and stockpile areas.
+3. Lighting. If a lighting plan for the development application is required pursuant to Section
+12.50.240, it shall ensure that lighting fixtures do not directly, or indirectly from reflection,
+cause illumination within SNR Sites and Impact Areas in excess of a measurement of 0.5
+foot candles of light. City approved street lights and safety lighting for parks are exempt
+from this standard.
+12.27.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:26Supp. No. 1
+4. Except for those uses and activities which are identified as exempt from providing
+compensatory mitigation, all regulated development or activities in an SNR Site or Impact
+Area are subject to Compensatory Mitigation Standards in Section 12.27.240.
+5. Temporary development areas from construction activities must be fully restored by
+following on-site mitigation requirements in Section 12.27.240.
+6. Landscaping plans for development applications submitted under Section 12.50.220
+shall limit plantings within the SNR Sites to only species on the CWS Native Plant List.
+SNRO area improved and maintained in compliance with Section 12.27.240 may be used
+to satisfy the landscaping requirements in Section 12.50.220.
+7. Proposed fences in an SNR Site must be designed to allow wildlife passage through sites
+and toward crossings under, over, or around streets. Alternatively, fences must be a
+maximum of 42 inches high with at least 12 inches of clearance between the ground and
+the lowest beam or wire.
+B. Residential Land Divisions. The following requirements apply to residential land divisions.
+1. Areas to be protected as "undevelopable land" shall be determined through the SNRP
+review and identified on the plat.
+2. The final plat of any land division on property containing SNR Sites shall designate that
+portion of the SNR Site defined as "undevelopable land" (under Section 12.01.500 under
+Acreage, Net) in a separate permanent open space tract.
+3. Responsibility for maintenance and preservation of the permanent open space tract(s)
+consistent with this section shall be specified in covenants, conditions and restrictions or
+other legal instrument subject to approval by the Director and recorded with the final plat.
+C. Environmental Report.
+1. An Environmental Report is required for the following uses and activities.
+a. Proposed activities subject to a SNRP II which will disturb more than 500 square
+feet within a SNR Level 3 Site.
+b. Proposed activities subject to a SNRP III.
+2. Compliance with the recommendations of the Environmental Report is required. In
+addition to the required compensatory mitigation, the applicant must comply with the
+recommendations on the nature and extent to which the alterations and improvements to
+be made could be modified in order to reduce negative impacts on the SNR to the
+maximum feasible extent as outlined in the Environmental Report.
+3. The Environmental Report shall be prepared by 1 or more Qualified Natural Resources
+Professionals and shall include the additional information listed in Subsections 1 through
+7. To evaluate the Environmental Report, the Director may consult with a third-party
+professional with appropriate expertise to evaluate either an Abbreviated or a Full
+Environmental Report, or may rely on appropriate staff expertise. If the Director finds that
+the Environmental Report is inadequate and deficient in addressing the applicable
+ 12.27.230OVERLAY ZONES
+CDC12.27:27Supp. No. 1
+requirements, the Director shall reject the Environmental Report. Such rejection shall be
+grounds to deny a development or permit application associated with the SNRP, involving
+an SNR Site or its Impact Area. At a minimum, the Environmental Report shall include the
+following:
+a. The delineated location of Significant Natural Resource Sites and Impact Areas and
+the boundaries of the Significant Natural Resources Overlay designation;
+b. A delineation of each of the resources present on the site (Wetland, Riparian
+Corridor, Upland Wildlife Habitat) and the conditions of topography, soils and
+vegetation found on the site, including: site topography at 2-foot contour intervals;
+the type, species and diameter (4.5 feet above grade) of all trees over 4.5-inch dbh;
+and the types and species of native and non-native vegetation)
+c. If requested by the Director, a cross-section view of the site showing the proposed
+use, topographic alterations, slopes and other pertinent information.
+d. If mitigation is required, a mitigation plan which includes the following information:
+i. The location of the impact to the Significant Natural Resource or Impact Area;
+ii. Existing conditions in the SNR or Impact Area prior to development;
+iii. The location of the proposed mitigation area;
+iv. A detailed planting plan of the proposed mitigation area with species and
+densities; and
+v. A narrative describing how the adverse impacts will be mitigated.
+e. A narrative assessment addressing impacts of the proposed development on the
+Significant Natural Resources (SNR) Site, its Impact Area, and the features and
+characteristics of the site as identified in the Local Wetlands Inventory; the adopted
+List of Significant Goal 5 Natural Resources Sites in Hillsboro; and the City of
+Hillsboro Goal 5 Natural Resources Inventory and Assessment Report.
+f. Recommendations on the nature and extent to which the proposed alterations and
+improvements could be modified in order to reduce negative impacts on the SNR to
+the maximum feasible extent.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+Editor’s note—See editor's note to Sec. 12.27.200.
+12.27.235  Standards for Specific Development Types within a Resource Site or Impact Area.
+A. New or expanded development or redevelopment (as defined in Section 12.01.500) except as
+listed in Subsections B—G, below. In addition to the general standards in Section 12.27.230
+12.27.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:28Supp. No. 1
+the following standards apply to all regulated development activities involving new or ex-
+panded development or redevelopment (except for those activities listed in Subsections B—G,
+below).
+1. New or expanded development or redevelopment which meets all of the following
+standards requires an SNRP I.
+a. The proposed development or redevelopment is on one of the following:
+i. A lot of record existing as of the date of the ordinance from which these are
+sections is derived, June 18, 2024.
+ii. A lot within an existing or proposed residential land division provided that the
+land division included at least 90% of the Significant Natural Resources (SNR)
+Site and Impact Area within a separate tract.
+b. The following maximum development area allowances are not exceeded.
+i. Except as specified in Subsection ii, the maximum development area (perma-
+nent and temporary) allowed within the Impact Area on a lot is determined by
+subtracting all portions of the lot outside the Resource Site and Impact Area
+from 6,000 square feet. This is calculated as follows:
+ Maximum potential development area of 6,000 SF 6,000 SF
+  Less area of a lot NOT within a Resource Site or
+Impact Area
+Less    SF
+Total development area allowed within the Impact Area
+equals
+   SF
+ii. Exception: If the application of this standard would preclude a 40-foot by
+40-foot development footprint on the site, the maximum development area
+allowed within the Impact Area may be increased by the minimum area
+required to allow such a development footprint. The applicant may exclude the
+following areas from the development footprint: existing utility and access
+easements, floodplains, and land with slopes in excess of 25%.
+ 12.27.235OVERLAY ZONES
+CDC12.27:29Supp. No. 1
+Hypothetical examples of standards applied to a 20,000 SF lot (200 ft. by 100 ft.)
+
+12.27.235 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:30Supp. No. 1
+iii. Of the 6,000 square feet maximum development area permitted, no more than
+4,000 square feet shall be permanent development area. The balance may be
+temporary development area. Within the temporary development area, no
+trees 24 inches dbh or larger shall be removed.
+iv. Trees may be removed within the permanent development area. If any part of
+the Critical Root Zone of a 24-inch dbh or larger tree is within a proposed
+permanent development area, the entire Critical Root Zone of the tree shall be
+included for the purposes of calculating the maximum permanent develop-
+ment area.
+2. All other new or expanded development or redevelopment (except as listed in Subsec-
+tions B—G and A.3), below, require an SNRP II and are subject to the SNRP II approval
+criteria in Section 12.80.130.G.
+B. Utility Expansion or Enlargement. Utility Expansion or Enlargement are subject to the general
+standards in Section 12.27.230. An SNRP I is required.
+NOTE: For utility projects undertaken by utility providers across property that is not owned by
+the provider, the utility provider shall not be required to map or provide any information about
+the property except for the area within 50 feet on either side of the proposed development area
+of the utility's project.
+C. Public and Private Streets and Access. In addition to the general standards in Section
+12.27.230, the following requirements apply to all regulated development activities involving
+new or expanded streets and access.
+1. Street and access projects which will be constructed at a location specified in an adopted
+City plan require an SNRP I.
+2. All other street and access expansion or enlargement projects require an SNRP II. The
+SNRP II approval criteria in Section 12.80.130.G. do not apply; however, the applicant
+must demonstrate that all of the following requirements are met:
+a. The street or access is necessary to provide access to the buildable area(s) of the
+property(ies) and is the minimum necessary within the SNR Site which allows safe
+passage by vehicles, bicycles and/or pedestrians.
+b. There is no other means of providing access, within the project boundaries or
+off-site through the use of easements, which does not affect an SNR Site or Impact
+Area.
+c. Where multiple properties require crossing an SNR Site for access, access has
+been consolidated into a single crossing by use of shared access easements,
+tracts, or dedication of public right-of-way.
+d. The location of the street or access does not preclude a future extension to
+buildable areas on adjacent properties.
+ 12.27.235OVERLAY ZONES
+CDC12.27:31Supp. No. 1
+D. Outdoor recreation facilities. In addition to the general standards in Section 12.27.230, the
+following requirements apply to all regulated development activities involving new or expanded
+outdoor recreation facilities.
+1. New outdoor recreation facilities which meet all of the following standards require an
+SNRP I.
+a. The proposed trail, path, or enhancement is publicly owned or within a public
+easement and is implementing master planned park facilities or identified in the
+most recent City of Hillsboro Parks and Recreation System Plan.
+b. The proposed facilities are compatible with preserving natural resource functions:
+viewing shelters; benches; picnic tables; nature trails and interpretive signs, and
+similar uses and facilities.
+c. No trees 24-inch dbh or larger shall be removed. Dangerous Trees or invasive trees
+are exempt from this standard and may be removed.
+2. All other outdoor recreation facilities, including all proposals for high impact or facilities for
+active recreation such as athletic fields or courts; golf courses; and similar uses, require
+an SNRP II and are subject to the SNRP II approval criteria in Section 12.80.130.G.
+E. Removal of a Dangerous Tree(s) not in conjunction with other development. Except where
+noted otherwise, in addition to the general standards in Section 12.27.230, the following
+requirements apply to the removal of a Dangerous Tree (not in conjunction with other
+development). The removal of a Dangerous Tree(s) that meets all of the following standards
+requires an SNRP I and is exempt from the mitigation requirements of Section 12.27.240.
+1. An International Society of Arboriculture (ISA) basic tree risk assessment has been
+prepared by an ISA certified arborist.
+2. Removal of the tree is recommended by the qualified certified arborist, professional
+forester or landscape architect who has completed the basic tree risk assessment for the
+tree.
+F. Natural Resource Enhancement Plans and Projects. Except where noted otherwise, in
+addition to the general standards in Section 12.27.230, the following requirements apply to
+natural resource enhancement plans and projects.
+1. A natural resource enhancement plan or project that meets all of the following standards
+requires an SNRP I and is exempt from the mitigation requirements of Section 12.27.240.
+a. The proposal is for bank stabilization, riparian vegetation enhancement, in-channel
+habitat improvements, or similar activities which improve or maintain the quality of
+a SNR Site or its Impact Area.
+b. The quality of 1 or more ecological functions or values of the SNR will be improved.
+c. Plantings include only species from the CWS Native Plants List.
+2. All other natural resource enhancement plans and projects require an SNRP Type II and
+are subject to the SNRP II approval criteria in Section 12.80.130.G.
+12.27.235 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:32Supp. No. 1
+G. Natural Resource Management Plans for Transportation Facilities. To protect public health and
+safety, airports and other public transportation facilities may require regulatory flexibility in
+addressing natural resource management issues. Public agencies responsible for transporta-
+tion facilities (such as ODOT or the Port of Portland) may prepare and submit a Natural
+Resource Management Plan application for consideration by the Planning Commission.
+1. Through the Natural Resource Management Plan approval, the applicant may request
+approval for exceptions to the following requirements of this Code to the General
+Development Standards in Subsection 12.27.230.A. and the Compensatory Mitigation
+Standards in Section 12.27.240.
+2. Natural Resource Management Plans for Transportation Facilities require a SNRP III.
+The applicant must demonstrate that all of the following standards are met:
+a. The applicant is a public agency responsible for major transportation facilities.
+b. The applicant has submitted an Environmental Report prepared in accordance with
+Subsection 12.27.230.C.
+c. The Plan substantially conforms to the purposes of the SNRO zone.
+d. The Plan will improve the overall functions and values of the SNR sites within the
+Plan area.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note—See editor's note to Sec. 12.27.200.
+12.27.240  Compensatory Mitigation Standards.
+A. When mitigation is required by other agencies.
+1. When mitigation is also required by the Corps, DSL and/or CWS, a copy of the mitigation
+plan prepared for those agencies shall be submitted to the Review Authority. The City
+shall not issue a development permit until all applicable Regional, State and Federal
+permit approvals have been granted.
+2. Wetland mitigation shall be provided per the functional and area replacement standards
+established by the Corps and the DSL. The SNRO shall not impose additional mitigation
+requirements for wetlands that exceed the mitigation ratios or functions required by
+federal and state law.
+3. Impacts to any SNR Site or Impact Area that are not within the boundaries of the
+jurisdictional wetland or a CWS vegetated corridor shall be mitigated pursuant to
+Subsection B, below.
+B. When mitigation is required by this section for adverse impacts to areas not otherwise
+regulated by other agencies the applicant shall provide compensatory replacement or enhance-
+ment mitigation according to Table 12.27.240-1 and the illustrative examples below, unless
+alternative mitigation is approved pursuant to Subsection C.
+ 12.27.240OVERLAY ZONES
+CDC12.27:33Supp. No. 1
+Table 12.27.240-1:
+Minimum Compensatory Mitigation Ratios in the SNRO
+Resource Level
+ Ratio of Disturbed Area
+to Replacement
+Mitigation Area
+ AND
+/ OR
+ Ratio of Disturbed Area
+to Enhancement
+Mitigation Area
+Impact Area 1:1 1:1
+SNR Level 1 1:1 1:2
+SNR Level 2 1:1.25 1:2.5
+SNR Level 3 1:1.5 1:3
+Example 1: mitigation of 600 sq. ft. development in a Level 3 SNR = either 900 sq. ft.
+replacement of Level 3 SNR; 1,800 sq. ft. of enhanced Level 3 SNR; or a combination of these
+two.
+Example 2: mitigation of 1,200 sq. ft. development in an Impact Area = 1,200 sq. ft. enhanced
+Impact Area.
+1. Replacement Mitigation Areas shall be protected as Resource Areas when evaluating
+future development proposals.
+2. Replacement Impact Areas shall be contiguous to a resource area.
+3. Mitigation required by other agencies pursuant to Subsection A shall not count toward
+meeting the City of Hillsboro's mitigation requirements required by the Subsection B.
+4. All replacement or enhancement mitigation shall occur on-site and must be contiguous to
+the impacted resource. However, in no case shall mitigation required by this subsection
+be located within the CWS vegetated corridor. Public projects may complete mitigation
+off-site, but shall occur within the Urban Growth Boundary of Hillsboro.
+5. Within a replacement or enhancement mitigation area, trees shall be planted at a density
+at least 5 per 1,000 square feet Shrubs shall be planted at a density of at least 10 per
+1,000 square feet Except for the number of trees and shrubs to be planted, mitigation
+plantings shall follow the re-vegetation standards in the CWS "Design and Construction
+Standards for Sanitary Sewer and Surface Water Management (R&O 19-5 as amended
+by R&O 19-22), Appendix A Planting Requirements." Existing native trees and shrubs,
+which will be retained within the mitigation area and which meet the minimum size and
+height of the planting requirements required for new plantings, may be counted toward
+meeting this requirement.
+C. Alternative Mitigation—Fee-in-lieu of Mitigation. At the applicant's request, as part of an SNRP
+II approval, the Review Authority may approve an alternative to the mitigation ratios and
+standards in Subsection B, above, as detailed below.
+1. The Review Authority may approve a fee-in-lieu of mitigation for all or a portion of the
+required mitigation if the applicant can demonstrate that it is not practicable to complete
+all or a portion of the mitigation on-site due to insufficient land area suitable for mitigation.
+12.27.240 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:34Supp. No. 1
+Land area may be considered unsuitable for mitigation if it is developed or contaminated
+or has similar constraints, or if it has existing high quality resources that would not benefit
+from mitigation.
+2. The fee-in-lieu amount is set by Council resolution and shall be used for natural resource
+projects within the City at large.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note—See editor's note to Sec. 12.27.200.
+12.27.245  Adjustments from Standards of Underlying Zoning.
+The following adjustments and allowances are at the applicant's request. They may be approved by
+the Review Authority to accomplish the purposes of the SNRO and reduce negative impacts on the
+SNR Site.
+A. Applicability of the Development Standards. Requests for modifications to the applicable base
+zone standards for setbacks and lot coverage are reviewed as part of the applicable develop-
+ment application but may be noted in a SNRP application to demonstrate that impacts have
+been minimized to the extent feasible. Adjustments to the SNRO standards are not permitted.
+B. Lot Size Variation Permitted. As part of a land division, the Review Authority may approve
+reduction or enlargement of lot sizes below or above the base zone standards, provided that,
+on average, the entire site meets the base zone standards.
+C. Density calculation. The maximum density of the site shall include areas within the SNR not
+defined as undevelopable land in Section 12.01.500 under Acreage, Net. The minimum density
+may exclude SNR Areas at the applicant's option.
+D. SNR Site and Impact Areas Subtracted from Net Acreage. At the applicant's discretion, any
+SNR Site or Impact Area set aside as open space which exceeds the open space area required
+pursuant to Section 12.50.210 may be subtracted from net acreage used to calculate minimum
+residential density or floor area ratio.
+1. The additional open space shall be identified on the final plat as a separate permanent
+open space tract, with responsibility for maintenance specified as required in Subsection
+3.
+2. If the approval of the development containing the additional open space does not include
+a final plat, the Review Authority shall condition the approval to require the applicant to
+record a separate conservation easement, identifying the additional open space area and
+assigning responsibility for maintenance specified as required in Subsection 3.
+3. Responsibility for maintenance and preservation of the conservation easement area or
+permanent open space tract(s) consistent with this section shall be specified in cove-
+nants, conditions and restrictions or other legal instrument subject to approval by the
+Director and recorded with the final plat.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+Editor’s note—See editor's note to Sec. 12.27.200.
+ 12.27.245OVERLAY ZONES
+CDC12.27:35Supp. No. 1
+12.27.250  Boundary Verification and Modification.
+A. Boundary Verification—Impact Areas. As depicted on the Significant Natural Resources
+Overlay map, Impact Areas are measured adjacent to SNR sites as shown on Table 12.27.250-1.
+Applicants can choose to verify the boundary by either accepting the boundary location shown
+on the Significant Natural Resources Overlay map or updating the location based on Signifi-
+cant Natural Resource Impact Areas widths in Table 12.27.250-1 and the map correction
+criteria in Table 12.27.250-2. In all cases, when delineating the boundary of the impact area in
+the field, the edge of the impact area shall include the outer drip line of those trees where the
+tree trunk is wholly or partially within the boundary.
+  Table 12.27.250-1:
+Significant Natural Resource Impact Areas Widths
+Resource Type/Location Impact Area Width
+ Impact Area Width —
+Starting Point of
+Measurement
+Significant Wetlands related to streams
+with or without Associated Upland
+Wildlife Habitat:
+• Rock Creek Tributary 2 65 feet
+From the edge of the
+delineated wetland boundary
+• Glencoe Swale Tributary 1
+120 feet • Orenco Creek
+• Rock Creek Tributary 3
+All other streams 75 feet
+Isolated Significant Wetlands 50 feet
+Significant Upland Wildlife Habitat 25 feet From the edge of the tree
+canopy for the protection of
+the root-zone
+Riparian Corridor and Associated
+Upland Wildlife Habitat 25 feet
+NOTE: Where a CWS Vegetated Corridor is required, the Vegetated Corridor is subtracted
+from the overall SNRO Impact Area width (i.e., SNRO Impact Area = Impact Area Width -
+CWS VC where present).
+B. Boundary Maintenance.
+1. SNR Site and Impact Area boundaries or resource level information shall be based on
+information obtained as part of site-specific studies, annexations to the City and other
+changes allowed by this Subchapter. Site specific delineation good for 5 years.
+2. Properties not previously inventoried by the City that may contain natural resources shall
+be inventoried by the City or the applicant/property owner prior to annexation and a
+significance determination made using the methodologies described in the adopted City
+12.27.250 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:36Supp. No. 1
+of Hillsboro Goal 5 Natural Resources Inventory and Assessment Report. Natural
+resources determined to be significant and their Impact Areas shall be added to the
+SNRO as part of the rezoning process concurrent with annexation. An Economic, Social,
+Environmental and Energy (ESEE) Consequences Analysis shall be conducted for SNR
+Sites added to the SNRO using the methodology described in the adopted City of
+Hillsboro Economic, Social, Environmental and Energy Consequences Analyses Report
+to determine the SNRO level that will apply to the site: Level 1, 2, or 3; or Impact Area.
+C. Modification of Resource Site or Impact Area Boundaries.
+1. The boundaries or level of a SNR site or Impact Area may be modified as part of a SNRP
+approval to reflect new information from the site-specific study or to include new
+proposed mitigation areas. Modifications to boundaries of locally significant wetlands
+shall be based on a delineation subject to review and approval by the Department of State
+Lands.
+2. Map Corrections. All property owners who believe that the SNRO map is inaccurate in
+terms of either the boundary or level of SNR Site may file a correction request consistent
+with this subsection. Correction requests will be processed under the Type I or Type II
+permit procedure as specified in Table 12.27.250-1. The reasons for map corrections and
+correction criteria are specified in Table 12.27.265-2.
+  Table 12.27.250-2:
+Map Correction Criteria
+Disputed Issue
+Review
+Type Correction Criteria
+Wetland location
+incorrectly identified
+Type I An accurate wetland boundary has been
+delineated using methods currently accepted by
+the Oregon Department of State Lands and the
+U.S. Army Corps of Engineers, and the applicant
+has complied with the revision requirements in
+OAR 141-086-0230(5).
+Stream location
+incorrectly identified
+Type I An accurate location of the stream centerline
+based on the midpoint between Ordinary High
+Water Marks has been identified and surveyed.
+Other regulated
+waterbody location
+incorrectly identified
+Type I An accurate location of the feature's Ordinary High
+Water Mark has been identified and surveyed.
+Wildlife Habitat
+boundary is incorrectly
+identified
+Type II Applicants shall use the methodologies described
+in the adopted City of Hillsboro Goal 5 Natural
+Resources Inventory and Assessment Report to
+establish the revised SNRO wildlife habitat
+boundary.
+ 12.27.250OVERLAY ZONES
+CDC12.27:37Supp. No. 1
+Table 12.27.250-2:
+Map Correction Criteria
+Disputed Issue
+Review
+Type Correction Criteria
+SNR Site Level is
+incorrectly identified
+Type II An Economic, Social, Environmental and Energy
+(ESEE) Consequences Analysis shall be
+conducted using the methodology described in the
+adopted City of Hillsboro Economic, Social,
+Environmental and Energy Consequences
+Analyses Report to determine the SNRO level that
+will apply to the site: Level 1, 2, or 3; or Impact
+Area.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note—See editor's note to Sec. 12.27.200.
+12.27.250 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:38Supp. No. 1
+12.27.300  CRO Cultural Resource Overlay.
+The Cultural Resource Overlay includes the following sections:
+12.27.310 Purpose
+12.27.320 Applicability and Boundary Delineation
+12.27.330 Addition to the CRO
+12.27.340 Removal from the CRO and Inventory
+12.27.350 Routine Maintenance of Cultural Resource Structures
+12.27.360 Minor Cultural Resource Alterations Permitted with Type II Approval
+12.27.370 Major Cultural Resource Alterations Permitted with Type III Approval
+12.27.380 Provision for Additional Open Space on Cultural Resource Sites
+(Ord. 6401 § 1, 2022)
+12.27.310  Purpose.
+The Cultural Resource Overlay zone (CRO) is established to identify and manage cultural re-
+sources, in order to:
+A. Promote public awareness and appreciation of the community's social, political, economic, and
+architectural and archaeological history, and advance civic pride and identity;
+B. Contribute to the community's economy and enhance local property values;
+C. Provide required protection for Cultural Resources: the provisions of this Subchapter meet
+Statewide Planning Goal 5 (ORS 197.015(8)) and OAR 660, Division 23 to inventory and
+protect Significant Cultural Resources according to specific procedures, standards and defi-
+nitions. Cultural Resources are those sites designated as such on the Cultural Resource
+Inventory after designation pursuant to Section 12.27.320 below.
+D. Balance preservation with alternative land Uses. Standards in this Subchapter conserve and
+protect Cultural Resources while allowing reasonable economic use of property where adverse
+impacts to the resources can be mitigated.
+E. Evaluate development proposals. Standards in this Subchapter provide means to evaluate
+permitting development that affects Cultural Resources.
+(Ord. 6401 § 1, 2022)
+12.27.320  Applicability and Boundary Delineation.
+A. Application. The Cultural Resource Overlay (CRO) applies to properties designated by City
+Council Resolution or Ordinance as Cultural Resources and regulated as Goal 5 resources.
+The list of designated Cultural Resources is referred to as the Cultural Resource Inventory
+Map. The CRO is also applied upon annexation to any site designated as a Cultural Resource
+on a Washington County Community Plan Map.
+ 12.27.320OVERLAY ZONES
+CDC12.27:39Supp. No. 1
+B. Application within Conservation District. If a designated Cultural Resource site is located within
+a Conservation District, the more strict provisions of the Cultural Resource Overlay zone shall
+supersede the requirements of the Conservation District.
+C. Cultural Resource Designation Boundary.
+1. Unless otherwise specified, the boundary of a Cultural Resource site shall be the property
+lines of the lot on which the Resource is located. The boundary of the resource site may
+be modified through approval of a Major Cultural Resource Alteration pursuant to Section
+12.27.360.
+2. Notwithstanding paragraph 1 above, the provisions of this section shall be applied only to
+the structures or features specifically included in the designation: structures or features
+not included in the designation are not subject to the provisions of this section.
+D. Unless otherwise specified, the boundary of a Cultural Resource site shall be the property lines
+of the lot on which the Resource is located. However, the provisions of this section shall be
+applied only to the structures or features specifically included in the designation: structures or
+features not included in the designation are not subject to the provisions of this section.
+E. Modification of Designation Boundary. Upon recommendation of the Historic Landmarks
+Advisory Committee, the Planning Commission may modify the boundary of a Cultural
+Resource designation to reflect removal of accessory structures or redevelopment of portions
+of the larger lot. Such modification shall be processed as a major CRA under Section
+12.80.030.
+F. Compliance Required. No designated cultural resource in the CRO shall be altered, relocated
+or demolished without compliance with this Subchapter.
+(Ord. 6401 § 1, 2022)
+12.27.330  Addition to the CRO.
+A. Additions. The Cultural Resource Overlay may be applied to properties upon application either
+by the property owner or by the City, under the provisions of this section.
+1. Addition to the CRO by the Property Owner. A property owner may nominate his or her
+property to the Cultural Resource Inventory by providing responses to the criteria in
+subsection D below to the Historic Landmarks Advisory Committee. The HLAC shall then
+review the nomination and adopt findings and a recommendation to the Planning
+Commission. The Planning Commission's recommendation shall be forwarded to the City
+Council for final designation.
+2. Addition to the CRO by the City. The Historic Landmarks Advisory Committee may
+nominate to the Cultural Resource Inventory any site within the City which is determined
+to have potential cultural significance, based on the criteria in subsection D below.
+12.27.320 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:40Supp. No. 1
+B. Review by the HLAC, Planning Commission and City Council.
+1. Following consideration of an owner-initiated nomination as described in subsection A.1
+above or the nomination and determination of potential cultural significance as described
+in paragraph A.2 above, the Historic Landmarks Advisory Committee shall forward its
+findings and recommendation to the Planning Commission.
+2. The Planning Commission shall receive the HLAC findings and recommendation, and
+shall review the nomination under the following process:
+a. In the case of an HLAC-initiated nomination, notification shall be sent by registered
+mail to the owner of record of the affected property as determined by the Washing-
+ton County Tax Assessor. The notice shall include an explanation of the property
+owner's rights to refuse to consent to the application of the CRO pursuant to
+subsection C below, and the date, time and place of the Planning Commission
+public hearing as described in Subsection c, below;
+b. At least 20 days after mailing the notice to the property owner, the Planning
+Commission shall hold a public hearing on the nomination. Notice of the hearing
+shall be mailed in accordance with Type III notice procedures in Subsection
+12.70.050.F. In addition, mailed notice shall also be provided to recognized local
+and County historical societies and to the State Historic Preservation Office.
+c. At the public hearing, the Planning Commission shall receive the findings and
+recommendation of the Historic Landmarks Advisory Committee, and shall review
+the nomination based on the criteria listed in subsection D. The Planning Commis-
+sion shall also analyze the significance of the resource and the environmental,
+social, economic and energy consequences of allowing, limiting, or prohibiting Uses
+which would conflict with the Cultural Resource designation and its impact or
+conflicts with Uses allowed by the underlying base zone.
+3. Following its review and analysis, the Planning Commission shall make findings with
+respect to the criteria in subsection D, and shall provide a recommendation to the City
+Council concerning the proposed designation.
+4. The City Council shall consider the findings and recommendations of the HLAC and the
+Planning Commission and may by Ordinance apply the CRO to any site found to be
+culturally significant, thereby adding the site to the Cultural Resource Inventory.
+C. Owners' Ability to Decline Nomination. At any time prior to Council action on the nomination, the
+affected property owner or owners of record may refuse to consent to the application of the
+CRO and the addition of the site to the Cultural Resource Inventory. This refusal to consent
+shall be made in writing and filed with the Director. The receipt of a refusal to consent shall
+remove the property from any continued consideration for application of the CRO or listing in
+the Cultural Resources Inventory.
+D. Criteria for Application of the CRO and Inclusion in the Cultural Resource Inventory. Sites
+nominated for application of the CRO shall be evaluated for cultural significance under the
+following criteria:
+1. The site is located within the City limits;
+ 12.27.330OVERLAY ZONES
+CDC12.27:41Supp. No. 1
+2. The building, structure, site, or object is over 50 years of age or of exceptional impor-
+tance;
+3. The site possesses sufficient historic integrity, meaning that there are no major altera-
+tions or additions that have obscured or destroyed the significant historic features. Major
+alterations that may destroy historic integrity include, but are not limited to, the following:
+a. Changes in pitch of the main roof;
+b. Enlargement or enclosure of windows on principal façades;
+c. Addition of upper stories or the removal of original upper stories;
+d. Covering the exterior walls with non-historic materials;
+e. Moving the resource from its original location to one that is dissimilar to the original;
+and/or
+f. Additions which significantly detract from or obscure the form and appearance of
+the historic resource when viewed from the public right-of-way.
+4. The site has historic significance as demonstrated by meeting at least 1 of the following
+criteria:
+a. Association with events that have made a significant contribution to the broad
+patterns of city, county, state, or national history; and/or
+b. Association with the lives or persons significant in our past; and/or
+c. Embody the distinctive characteristics of a type, period, or method of construction or
+that represent the work of a master, or that possess high artistic values, or that
+represent a significant and distinguishable entity whose components may lack
+individual distinction; and/or
+d. Have yielded, or may be likely to yield, information important in prehistory or history.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.27.340  Removal from the CRO and Inventory.
+A. Removal. The Cultural Resource Overlay may be removed from properties either by the
+property owner or by the City, under the provisions of this section. Removal of a property from
+the Overlay automatically removes the site from the Inventory.
+B. Objection to Listing by Original Owner. The property owner of record of a site listed on the
+Cultural Resources Inventory before September 1, 2000, may request removal of the site from
+the Inventory by submitting a written request to the Director if that party still owns the property
+and filed an objection to the original listing of the property.
+1. The request shall specifically describe the site and shall include evidence documenting
+the formal objection of the property owner of record at the time the property was listed on
+the Cultural Resource Inventory.
+12.27.330 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:42Supp. No. 1
+2. The Director shall submit the request to the Planning Commission for adoption of a
+resolution acknowledging the request and forwarding the request to the City Council for
+approval. The Planning Commission shall not conduct a public hearing on the request,
+but may recommend that the City Council conduct a hearing.
+3. Upon receipt of the resolution of the Planning Commission, the City Council shall adopt
+a resolution removing the site from the Cultural Resources Inventory. The City Council
+may, but need not, conduct a public hearing on the request.
+4. The City Council may require that the site be documented in a manner consistent with
+accepted historic site documentation practices. The City shall not issue a permit for
+demolition or modification of a site subject to this subsection for at least 120 days from the
+date of the resolution removing the site from the Cultural Resources Inventory.
+C. Other Circumstances. In the absence of an objection to the initial listing, the property owner of
+record of a site in the CRO may also request removal of the CRO by submitting a written
+request to the City.
+1. The request shall cite the reasons why the property owner believes the site no longer
+qualifies as a designated cultural resource, based on the criteria listed in Subsection
+12.27.330.D.
+2. The HLAC shall consider the request, based on the criteria in Subsection 12.27.330.D,
+and shall forward its findings and recommendation to the Planning Commission.
+3. The Planning Commission shall hold a public hearing on the request. Notice of the
+hearing shall be mailed in accordance with Type III notice procedures in Subsection
+12.70.050.F. In addition, mailed notice shall be provided to recognized local and County
+historical societies, and to the State Historic Preservation Office.
+4. At the public hearing, the Planning Commission shall receive the findings and recom-
+mendation of the HLAC and any testimony submitted by interested parties.
+5. Following receipt of testimony, the Planning Commission shall deliberate and analyze the
+significance of the resource site and the environmental, social, economic and energy
+consequences of removing the Cultural Resource designation. Based on that analysis,
+the Planning Commission shall determine whether to approve or deny the request. A
+decision to approve the request shall be made as a recommendation to the City Council.
+A decision to deny the request shall be final unless appealed.
+6. The City Council shall receive and consider the recommendation from the Planning
+Commission to remove the CRO from the site, and may remove the CRO by ordinance.
+The Council may also choose to conduct its own public hearing on the recommendation.
+7. The City shall not issue a permit for demolition or modification of a site subject to this
+subsection for at least 120 days from the date of a resolution removing the site from the
+Cultural Resources Inventory.
+ 12.27.340OVERLAY ZONES
+CDC12.27:42.1Supp. No. 1
+D. Removal Following Alteration, Relocation or Demolition. Following approval of an application
+to alter, relocate or demolish a designated cultural resource pursuant to Section 12.80.030 the
+HLAC may re-evaluate the site's conformance with the criteria in Subsection 12.27.320.D.
+1. If the HLAC finds that the site no longer conforms to the criteria in Subsection 12.27.320.D,
+the HLAC shall forward findings and a recommendation to the Planning Commission.
+2. Following receipt of the HLAC recommendation, the Planning Commission shall hold a
+public hearing on the proposed removal pursuant to paragraphs C.3 through C.5 above.
+3. The City Council shall receive and consider the recommendation from the Planning
+Commission to remove the CRO from the site, and may remove the CRO by ordinance.
+The Council may also choose to conduct its own public hearing on the recommendation.
+E. Removal Following Unintentional Demolition. If a Resource structure is damaged by accident,
+fire or natural disaster beyond the owner's control to the extent that it no longer retains the
+characteristics which made it eligible for the Cultural Resource Inventory, the Director shall
+prepare an ordinance for Council approval to remove the site from the Cultural Resource
+Inventory.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.27.350  Routine Maintenance of Cultural Resource Structures.
+A. The following types of routine maintenance are permitted without a Cultural Resource Altera-
+tion approval, except as provided in subsection B, below:
+1. Repair or maintenance activities which do not affect the appearance of an architectural
+feature;
+2. Foundation repair or replacement, provided that the foundation material is similar to the
+original material and the new foundation does not raise or lower the building elevation;
+3. Repair and restoration using original or existing materials;
+4. Repair or replacement of deteriorated materials at the identical size, materials, and
+configuration as the original materials;
+5. Addition of fencing;
+6. Construction of detached accessory structures compliant with the following standards:
+a. The provisions of Section 12.40.104, regarding height, area, setbacks, and sepa-
+ration;
+b. Placement behind the rear building plane of the Resource structure; and
+c. Structural height, massing, and rooflines consistent with the Resource structure.
+7. Changes in landscaping newer than the resource structure, or addition of landscaping if
+there was none originally;
+8. Removal of any landscape feature which the Public Works Director deems a hazard to
+public safety.
+12.27.340 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:42.2Supp. No. 1
+B. Routine maintenance as described in paragraphs A.1 through A.7 does not include major
+improvements such as replacement of siding, windows, or roofing throughout the structure.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019)
+12.27.360  Minor Cultural Resource Alterations Permitted with Type II Approval.
+A. Alterations Permitted with Type II Approval. Except as provided under subsection B below,
+certain alterations may be permitted in the CRO upon approval of an administrative Minor
+Cultural Resource Alteration (CRA). The criteria for approval of a minor CRA are listed in
+Section 12.80.030. An application for a minor CRA shall be processed as a Type II procedure
+under the provisions of Section 12.70.040. The following alterations may be permitted upon
+approval of a Minor CRA:
+1. Alteration, relocation or demolition of an accessory building less than 50 years old, unless
+the site is on the National Register of Historic Places;
+2. Application of wood-framed storm windows;
+3. Removal of structural additions less than 50 years old, unless the site is on the National
+Register of Historic Places, or the structural addition is of exceptional significance;
+4. Structural or architectural feature additions to any designated structure if such addition or
+feature is not visible from the public right-of-way and the addition does not necessitate the
+removal of an original feature; and
+5. Demolition of any structure which the Building Official deems a dangerous building.
+B. The Director may determine that an application for Minor Cultural Resource Alteration should
+be processed as a Type III procedure, based on the factors in Subsection 12.80.030.C.3.
+C. Negative Impacts Minimized. Under the provisions of Section 12.80.030, the Director shall
+work with the applicant, interested citizens and technical staff to minimize the negative impact
+of the proposed action, wherever possible.
+D. Minor CRAs Reported to HLAC. The Director shall provide a monthly report to the HLAC and
+the Planning Commission of all minor Cultural Resource Alteration applications and approvals.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.27.370  Major Cultural Resource Alterations Permitted with Type III Approval.
+A. Alterations Permitted with Type III Approval. The following alterations may be permitted in the
+CRO subject to the listed standards, upon approval of a quasi-judicial Major Cultural Resource
+Alteration. The criteria for approval of a major CRA are listed in Section 12.80.030. An
+application for a major CRA shall be processed as a Type III procedure under the provisions of
+Section 12.70.050.
+1. Demolition of a designated structure or removal of an original landscape feature, except
+a dangerous structure or landscape feature under Subsection 12.27.350.A.5;
+2. Relocation of a designated structure;
+ 12.27.370OVERLAY ZONES
+CDC12.27:42.3Supp. No. 1
+3. Alteration, relocation or demolition of an accessory building over than 50 years old, or any
+accessory building on a site on the National Register of Historic Places;
+4. Removal of any original architectural feature or any feature over 50 years old;
+5. Structural or architectural feature additions to any designated structure if such addition or
+feature is visible from the public right-of-way and the addition necessitates the removal of
+an original feature; and
+6. Removal of any landscape feature if the landscape feature is comparable in age to the
+structure and is not deemed by the Building Official to be a hazard to public safety.
+B. Negative Impacts Minimized. The HLAC and the Planning Commission shall work with the
+applicant, interested citizens and technical staff to minimize the negative impact of the
+proposed action, wherever possible.
+(Ord. 6401 § 1, 2022)
+12.27.380  Provision for Additional Open Space on Cultural Resource Sites.
+A. At the applicant's discretion, additional open space area may be set aside around designated
+Cultural Resource features upon development of a larger site. If set aside, the additional open
+space around the features may be subtracted from the net area of the development for
+purposes of residential density calculation.
+B. Additional open space so set aside shall be identified on the final plat (or final development plan
+if no land division is involved) as a conservation easement or a separate permanent open
+space tract.
+C. Responsibility for maintenance and preservation of such tracts or easements shall be specified
+in covenants, conditions, and restrictions or other legal instrument subject to approval by the
+Review Authority.
+(Ord. 6401 § 1, 2022)
+12.27.370 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:42.4Supp. No. 1
+12.27.400  ASCO Airport Safety and Compatibility Overlay. (Reserved)
+[Section heading reserved]
+ 12.27.400OVERLAY ZONES
+CDC12.27:43
+12.27.500  PUD Planned Unit Development Overlay.
+The Planned Unit Development Overlay includes the following sections:
+12.27.510 Purposes
+12.27.520 Distinction from other Overlay Zones/Applicability
+12.27.530 Administrative and Regulatory Coordination
+12.27.540 Uses and Activities Permitted
+12.27.550 Application and Process for PUD Approval
+12.27.560 Modification of PUD Boundaries
+(Ord. 6401 § 1, 2022)
+12.27.510  Purposes.
+The Planned Unit Development (PUD) Overlay zone is established for the following purposes:
+A. To encourage flexibility, innovation, and diversity in location and design of structures and
+improvements consistent with the Comprehensive Plan, the applicable base zone(s), and
+applicable standards;
+B. To allow consideration of special Adjustments to Code standards within the context of the
+overall development project, thereby balancing the request for the Adjustments with desirable
+results that improve community livability;
+C. To allow more efficient site design for land uses, buildings, and circulation, energy, and utility
+systems;
+D. To preserve existing landscape features and natural resources, and better integrate such
+features and resources into site design;
+E. To provide usable and suitably sited public and common facilities;
+F. To provide greater compatibility with surrounding land uses than a project compliant with
+conventional zoning; and
+G. To allow simultaneous land divisions allowed through Subsections 12.80.096, 12.80.098,
+and/or 12.80.099, as applicable.
+(Ord. 6401 § 1, 2022)
+12.27.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:44
+12.27.520  Distinction from other Overlay Zones/Applicability.
+A. Distinction from Other Overlay Zones. The PUD overlay zone is unique, due to its creation as
+a result of an application from the property owner and a discretionary decision by the City,
+rather than as application as a response to existing site characteristics.
+B. Applicability. The PUD overlay may be applied on 1 or more properties of any size in any zone,
+upon application by the property owner and approval by the Review Authority. Development on
+the properties cited in Subsection 12.80.120.B. requires approval of a PUD overlay.
+(Ord. 6401 § 1, 2022)
+12.27.530  Administrative and Regulatory Coordination.
+The regulations of other agencies may apply to development proposals on properties within a PUD.
+The City will notify affected agencies of specific development proposals prior to the issuance of City
+permits. Applicants are encouraged to contact affected agencies before development plans are
+completed to determine requirements and restrictions that may be imposed by those agencies.
+(Ord. 6401 § 1, 2022)
+12.27.540  Uses and Activities Permitted.
+A. Residential and Mixed-Use Zones. In residential and Mixed-Use zones, PUD concept plan
+approval allows development of a site with a mixture of Uses as listed in Subsection
+12.80.120.C.1, subject to the density provisions of the underlying zone. Requests for additional
+density shall be considered under the provisions of Subsections 12.80.156 and 12.80.158.A.
+B. Commercial and Industrial Zones. In areas designated Commercial or Industrial on the
+Comprehensive Plan Map, PUD concept plan approval allows development of a site with
+Mixed-Uses subject to the limitations listed in Subsection 12.80.120.C.2.
+C. Regulations on Permitted Uses or Activities. In a PUD, use categories status or development
+standards of the underlying base zone may be modified or supplemented to accomplish the
+stated purpose of the PUD, as cited in Subsection 12.80.120.A.
+(Ord. 6401 § 1, 2022)
+12.27.550  Application and Process for PUD Approval.
+See Sections 12.80.120 and 12.80.122.
+(Ord. 6401 § 1, 2022)
+12.27.560  Modification of PUD Boundaries.
+See Section 12.80.100.
+(Ord. 6401 § 1, 2022)
+ 12.27.560OVERLAY ZONES
+CDC12.27:45
+12.27.600  SID Special Industrial District.
+The Special Industrial District includes the following sections:
+12.27.610 Purpose
+12.27.620 Applicability
+12.27.630 Administration
+12.27.640 Regulations on Permitted Uses or Activities
+12.27.650 Establishment or Modification of Overlay Boundaries
+(Ord. 6401 § 1, 2022)
+12.27.610  Purpose.
+The Special Industrial District (SID) is an overlay zone supplementing the provisions of the
+underlying I-P Industrial Park zone. The purposes of the Special Industrial District are:
+A. To protect and enhance development opportunities for industrial Uses which may require large
+sites in a planned campus industrial park setting;
+B. To provide opportunities for small- and medium-sized industrial Uses, compatible with planned
+campus industrial parks, to locate near large single user industrial Uses; and
+C. To preserve large lots for single major industrial Uses until such time as there is no demon-
+strated demand or need for such large lots.
+(Ord. 6401 § 1, 2022)
+12.27.620  Applicability.
+The SID overlay zone may be applied only on properties designated Industrial on the Comprehen-
+sive Plan Land Use Map, located within the following boundaries:
+• North Boundary: NW West Union Rd
+• South Boundary: NE Jacobson St
+• East Boundary: Western edge of the Burlington Northern Railroad right-of-way
+• West Boundary: Eastern edge of the Bonneville Power Administration easement
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.27.630  Administration.
+The purposes of the SID overlay zone are administered and implemented through the land division
+process under Section 12.80.090 and the Development Review process under Section 12.80.040.
+(Ord. 6401 § 1, 2022)
+12.27.600 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:46
+12.27.640  Regulations on Permitted Uses or Activities.
+A. Exceptions to the Underlying Zoning.
+1. Development in the SID overlay zone shall conform to the base zone development
+standards of the I-P Industrial Park zone as contained in Section 12.25.200, except that
+the minimum lot size for development in the SID shall be 1 acre.
+2. Within the SID overlay zone, development and land division shall comply with the
+following standards:
+a. Lots of record < 5 acres. The minimum lot size for land divisions and development
+on lots of record 5 acres or smaller is 1 acre.
+b. Lots of Record < 30 acres. Except as provided in subsection D, contiguous lots of
+record in common ownership totaling between 5 and 30 acres shall be divided only
+in compliance with subsection B or C below.
+B. Reconfiguration of Contiguous Lots in One Ownership. New lots smaller than 30 acres may be
+created when all contiguous lots of record in common ownership meet all of the following
+requirements:
+1. The number of newly created lots is the same or fewer than the number of original lots;
+2. The newly created lots are configured to better allow aggregation than the original lots;
+3. The reconfiguration includes all contiguous lots of record in the common ownership;
+4. If the contiguous lots in common ownership total more than 30 acres, the proposed
+reconfiguration retains at least one 30-acre parcel. This 30-acre parcel may be further
+divided pursuant to subsection C below; and
+5. The reconfiguration shall be processed as a Type II application under the provisions of
+Section 12.70.040.
+C. Staged Development. Lots of record or contiguous lots of record in common ownership, which
+total more than 30 acres, may be divided into lots smaller than 30 acres subject to the following
+restrictions:
+1. No more than 20% of the total acreage may be divided into lots smaller than 30 acres,
+except under paragraphs 2, 3, and 4 below.
+2. After Development Review approvals pursuant to Section 12.80.040 or building permits
+have been issued on 60% of the lots or 60% of the total acreage, an additional 20% of the
+original land area may be divided into lots smaller than 30 acres.
+3. The staged land division described in paragraph 2 above may continue in 20% incre-
+ments, provided that at least one 30-acre lot, suitable for a single major industrial use,
+remains undivided within the original lot or lots.
+4. The final 30-acre lot may be divided in accordance with this section only under a Type III
+subdivision application process pursuant to Section 12.80.098. To approve the final lot
+division, the Review Authority must find that the current supply of 30-acre or larger vacant
+ 12.27.640OVERLAY ZONES
+CDC12.27:47
+lots in the SID, or in a County industrial zone with substantially similar land division
+restrictions, is adequate to supply the present and projected county-wide demand for
+large lots if the final lot is divided.
+5. Upon compliance with paragraphs 1 through 4 above, division of the final 30-acre lot is
+not subject to the requirements of this section.
+D. Exceptions to Lot Division Requirements.
+1. Transportation Plan Implementation. Lots of record or contiguous lots of record in
+common ownership larger than 30 acres may be reconfigured or divided into smaller lots
+to the extent necessary to allow the dedication and/or construction of public Collector or
+Arterial roadways to implement Comprehensive Plan Section 20 Transportation and the
+adopted Transportation System Plan cited in Comprehensive Plan Section 23.
+2. Natural and Hazard Areas. Lots of record or contiguous lots of record in common
+ownership larger than 30 acres may be reconfigured or divided into smaller lots to
+accommodate the following conditions:
+a. The presence of a natural division of the lot(s) by a significant natural resource area,
+flood hazard area or other resource or hazard designation in which standards may
+restrict development under Subsection 12.27.100 or 12.27.200; or
+b. The intent to divide the lot(s) to provide for separate common or public ownership of
+natural areas, flood hazard areas or other natural resource or hazard areas within
+an industrial park.
+3. Division of Remaining Lots. Smaller lots remaining after the reconfiguration or division of
+a larger lot or lots of record remain eligible for further reconfiguration or division pursuant
+to subsections B and C above. In calculating the land area involved in a subsequent
+reconfiguration or land division, the land area of the original lots at the time of annexation
+shall be used.
+(Ord. 6401 § 1, 2022; Ord. 6250 § 1, 2017)
+12.27.650  Establishment or Modification of Overlay Boundaries.
+The boundaries of the SID overlay zone as described in Section 12.27.620 are not subject to
+modification.
+(Ord. 6401 § 1, 2022)
+12.27.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.27:48

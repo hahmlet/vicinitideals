@@ -1,0 +1,1749 @@
+SUBCHAPTER 12.01
+ GENERAL PROVISIONS
+12.01.100 Title.
+12.01.110 Purpose.
+12.01.120 Compliance.
+12.01.130 Consistency with Plan and Laws.
+12.01.140 Enforcement.
+12.01.150 Violations.
+12.01.160 Severability.
+12.01.200 Zoning Map.
+12.01.210 Comprehensive Plan Implementation.
+12.01.300 Participants.
+12.01.400 Figures, Calculations, and Measuring Distance.
+12.01.410 Interpretation.
+12.01.420 Grammar and Meanings of Words.
+12.01.430 Organization and Hierarchy of Standards and Guidelines.
+12.01.500 Definitions.
+12.01.600 Acronyms and Abbreviations.
+CDC12.01:1
+
+12.01.100  Title.
+This chapter shall be known as the City of Hillsboro Community Development Code (Code or CDC).
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.01.110  Purpose.
+This Code is enacted for the following purposes:
+A. To implement the goals and policies of the Hillsboro Comprehensive Plan Ordinance No. 2793
+as amended;
+B. To promote coordinated, sound development, taking into consideration the City's natural
+environment, amenities, views, and the appearance of its buildings and open spaces;
+C. To achieve a balanced and efficient land use pattern, to protect and enhance real property
+values, to promote safe and uncongested traffic movement and to avoid uses and develop-
+ment which might be detrimental to the stability and livability of the City;
+D. To encourage innovations in residential development and renewal so that the demand for
+housing may be met by a greater variety in the type and design of dwellings and by the
+conservation and more efficient and attractive use of open space;
+E. To safeguard and enhance the appearance of the City through advancement of effective land
+use, architectural design and site planning which reflect improvements in the technology of
+urban development;
+F. To provide an orderly, efficient and speedy process of reviewing applications for development
+activities and to avoid increased development costs borne by citizens and consumers as a
+result of unnecessary delay;
+G. To enable interested and affected persons to provide input in the development process; and
+H. To provide methods of administering and enforcing the provisions of this Code.
+(Ord. 6401 § 1, 2022)
+12.01.120  Compliance.
+Land within the Hillsboro City limits shall be used, or developed by land division or otherwise, and a
+structure may be used or developed by construction, reconstruction, alteration, occupancy or
+otherwise as this Community Development Code permits, except in the case of a legally established
+non-conforming use or structure as defined herein. The provisions of this Code apply to any person
+developing or using land or a structure, and to the person's successor(s) in interest.
+(Ord. 6401 § 1, 2022)
+12.01.130  Consistency with Plan and Laws.
+A. All use or development of land or structures within the City limits of Hillsboro shall comply with
+the Hillsboro Comprehensive Plan, the Hillsboro Municipal Code, and applicable regional,
+State, Federal and local laws. Determination of compliance with regional, State, Federal or
+ 12.01.130GENERAL PROVISIONS
+CDC12.01:3Supp. No. 1
+local laws shall be made by the applicable regional, State, Federal or local authority respon-
+sible for administering the subject law(s). A determination of compliance with such law shall not
+be a standard or condition of approval, except that proof that mandatory permits have been
+obtained may be required by specific standards of this Code or as a condition of approval
+imposed by the Review Authority. Nothing in this Code shall relieve a use or development from
+compliance with other applicable laws except as provided herein.
+B. The provisions of this Code shall be interpreted as minimum requirements. When this Code
+imposes a greater restriction than is required by other provisions of law, or by other regulations,
+resolutions, easements, covenants or agreements between parties, the provisions of this Code
+shall control.
+C. Recorded instruments affecting real property shall comply with, and be enforceable only as
+provided by, House Bill 2001 (2019).
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019)
+12.01.140  Enforcement.
+A. The Director shall have the power and duty to interpret and enforce the provisions of this Code.
+B. Notwithstanding any other provision of this Code, the Director has the authority to make
+reasonable accommodations for disabled persons in the application of this Code under Section
+12.80.050.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.01.150  Violations.
+Violations of the Community Development Code are considered infractions and subject to the civil
+provisions of the City. In addition, violations are hereby declared to be nuisances and may be abated
+under the applicable provisions of Title 6 of the Hillsboro Municipal Code.
+(Ord. 6401 § 1, 2022)
+12.01.160  Severability.
+The provisions of this Code are hereby declared to be severable. If any section, sentence, clause or
+phrase of this Code is adjudged by a court of competent jurisdiction to be invalid, such decision shall
+not affect the validity of the remaining portions of this Code.
+(Ord. 6401 § 1, 2022)
+12.01.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:4Supp. No. 1
+12.01.200  Zoning Map.
+A. The location and boundaries of the zones designated in subsection B, below, are hereby
+established as shown on the map entitled "City of Hillsboro Zoning Map" hereafter referred to
+as the "Zoning Map." Copies of the Zoning Map showing all amendments shall be maintained
+by the Community Development and Information Services Departments.
+B. For the purposes of this Code, the City is divided into zones identified as shown in Table
+12.01.200-1. The term "standard zones" includes all zones with an R, MR, C or I prefix as well
+as all zones with ID in the abbreviation; the term "light rail zones" includes all zones with a SC
+prefix; the term "mixed-use zones" includes all zones with an MU prefix; and the term "urban
+center zones" includes all zones with a UC prefix. The term "conservation zone" refers to the
+subset of light rail zones with the word "conservation" in the title (SCR-DNC or SCR-OTC). The
+term "middle housing zone" refers to a zone in which residential dwellings are the primary use
+and single detached dwellings are permitted, and which implements a residential Comprehen-
+sive Plan Map designation in accordance with OAR 660-046-0020. "Middle housing zones" are
+identified in Table 12.01.200-1.
+  Table 12.01.200-1: Zones
+Abbreviation Zone Classification Zone Type
+R-10 R-10 Residential Standard; Middle housing
+R-8.5 R-8.5 Residential Standard; Middle housing
+R-7 R-7 Residential Standard; Middle housing
+R-6 R-6 Residential Standard; Middle housing
+R-4.5 R-4.5 Residential Standard; Middle housing
+SCR-LD SCR-LD Station Community Residential -
+Low Density
+Light rail; Middle housing
+SCR-OTC SCR-OTC Station Community
+Residential - Orenco Townsite
+Conservation
+Light rail; Conservation; Middle
+housing
+SCR-DNC SCR-DNC Station Community
+Residential - Downtown Neighborhood
+Conservation
+Light rail; Conservation; Middle
+housing
+MR-1 MR-1 Multi-Dwelling Residential Standard; Middle housing
+MR-2 MR-2 Multi-Dwelling Residential Standard
+MR-3 MR-3 Multi-Dwelling Residential Standard
+SCR-MD SCR-MD Station Community Residential
+- Medium Density
+Light rail; Middle housing
+ 12.01.200GENERAL PROVISIONS
+CDC12.01:5Supp. No. 1
+Table 12.01.200-1: Zones
+Abbreviation Zone Classification Zone Type
+SCR-HD SCR-HD Station Community Residential -
+High Density
+Light rail
+C-N C-N Commercial - Neighborhood Standard
+C-G C-G Commercial - General Standard
+SCC-DT SCC-DT Station Community Commercial
+- Downtown
+Light rail
+SCC-SC SCC-SC Station Community Commercial
+- Station Commercial
+Light rail
+SCC-MM SCC-MM Station Community Commercial
+- Multi-Modal
+Light rail
+MU-N MU-N Mixed-Use - Neighborhood Mixed-use; Middle housing
+MU-C MU-C Mixed-Use - Commercial Mixed-use
+MU-VTC MU-VTC Mixed-Use - Village Town
+Center
+Mixed-use; Middle housing
+SCR-V SCR-V Station Community Residential -
+Village
+Light rail; Middle housing
+UC-RM Urban Center - Residential Medium
+Density
+Urban center
+UC-MU Urban Center - Mixed-Use Urban Density Urban center
+UC-AC Urban Center - Activity Center Urban center
+UC-NC Urban Center - Neighborhood Center Urban center
+UC-OR Urban Center - Office/Research Urban center
+UC-RP Urban Center - Research Park Urban center
+I-G I-G Industrial - General Standard
+I-P I-P Industrial Park Standard
+I-S I-S Industrial Sanctuary Standard
+SCBP SCBP Station Community Business Park Light rail
+SCI SCI Station Community Industrial Light rail
+SSID SSID Shute Road Special Industrial
+District
+Standard
+12.01.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:6Supp. No. 1
+Table 12.01.200-1: Zones
+Abbreviation Zone Classification Zone Type
+HSID HSID Helvetia Special Industrial District Standard
+ESID ESID Evergreen Special Industrial District Standard
+SCFI SCFI Station Community Fair Complex
+Institutional
+Light rail
+C. Zone Boundaries and Interpretation. The Director shall resolve any dispute over the exact
+location of a zone boundary. In interpreting the location of a zone boundary, the Director shall
+rely on the Comprehensive Plan Land Use map and the following guidelines:
+1. Unless otherwise specified, zone boundaries are lot lines, the center line of streets,
+highways, alleys or railroad rights-of-way, or such lines extended. Where a zone bound-
+ary divides a lot between 2 zones, the entire lot shall be placed in the zone that accounts
+for the greater area of the lot by the adjustment of the boundaries, provided the boundary
+adjustment is a distance of less than 20 feet.
+2. Zone boundaries indicated as approximately following the centerline of streams, rivers or
+other bodies of water shall be construed to follow such centerline.
+3. Where a zone change references a specific property description, that description shall
+establish the zone boundary. Where 2 or more property descriptions establish conflicting
+boundaries, the most recent description shall govern.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6112 § 1, 2015; Ord. 6110 § 1, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.01.210  Comprehensive Plan Implementation.
+As listed in Subchapters 12.21 through 12.26, each zone in the City implements 1 or more Plan
+designations. In developed areas where existing zoning is not consistent with the Comprehensive
+Plan Land Use Map designation, a zone change which would allow development consistent with the
+Plan designation shall be required prior to redevelopment.
+(Ord. 6401 § 1, 2022)
+ 12.01.210GENERAL PROVISIONS
+CDC12.01:7Supp. No. 1
+12.01.300  Participants.
+The major participants in the planning process and their roles are generally outlined below. The roles
+and responsibilities are further defined in the Hillsboro City Charter and the Municipal Code.
+A. City Council.
+1. The City Council is the policy and ultimate land use and zoning decision-making body for
+the City except as otherwise provided by the City Charter, the Comprehensive Plan, the
+Constitution of the State of Oregon, or Oregon State Statutes. The City Council retains
+and exercises all the powers granted to the City except as provided herein, or by action
+of the Council through either the adoption of an Ordinance or Resolution.
+2. The City Council may initiate amendments to this Code pursuant to Section 12.80.140.
+3. The City Council may appoint advisory committees for individual geographic areas of the
+City or to consult with the preparation, adoption, revision and implementation of this
+Code. Advisory committees may be composed of residents, interested parties, property
+owners, business operators, and/or affected agencies.
+4. Notwithstanding the provisions of Subsection 12.01.140.A, upon request by the Director
+the City Council may interpret the Community Development Code where ambiguity exists
+as to the meaning of specific provisions. This interpretation, when made, shall be used to
+guide staff and the Review Authority in applying the Code to specific situations.
+B. Planning Commission.
+1. The Planning Commission has the powers and duties assigned to it by this Code, the
+Municipal Code, City Council ordinance and resolution and State law. The Planning
+Commission conducts public hearings, advises the council on land use issues and
+priorities, and makes quasi-judicial land use decisions and legislative recommendations
+to the City Council in accordance with this Code.
+2. The Planning Commission will make recommendations to the City Council on proposed
+Community Development Code amendments to implement Metro's functional plans, the
+Regional Framework Plan and City-initiated land use related growth management
+proposals.
+3. The Planning Commission will make recommendations to the City Council on implemen-
+tation and the periodic update of the Community Development Code, including stan-
+dards, procedures and findings.
+4. The Planning Commission will make recommendations to the City Council on incorpo-
+rating actions and principles of the Hillsboro 2020 Vision Action Plan. This includes review
+and comments on implementation measures in the Community Development Code
+related to land use, promoting public participation in the implementation of the plan and
+recommending revisions to the plan.
+12.01.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:8Supp. No. 1
+C. Planning and Zoning Hearings Board.
+1. The Planning and Zoning Hearings Board will perform quasi-judicial reviews of certain
+Type III land use applications pursuant to Subchapter 12.70 through the exercise of
+powers and duties delegated by this Code, City Council ordinance or resolution, and
+State law.
+2. The Planning and Zoning Hearings Board may conduct public hearings and make
+determinations on other land use matters at the request of the City Council or Planning
+Commission. The Planning and Zoning Hearings Board panel will request, receive and
+examine available information, prepare a record, enter findings and conclusions, and
+exercise such other powers as are necessary to carry out its assigned duties.
+3. The Planning and Zoning Hearings Board will make reports on hearings activities as the
+City Council and Planning Commission may require. The Planning and Zoning Hearings
+Board will advise the City Council and Planning Commission concerning any problem or
+issue related to the powers and duties of the Planning and Zoning Hearings Board.
+D. Historic Landmarks Advisory Committee.
+1. The Historic Landmarks Advisory Committee maintains sites in the Cultural Resource
+Overlay zone by making recommendations to the Planning Commission and City Council
+regarding designation of properties to or removal of properties from the Cultural Re-
+source Overlay zone pursuant to Sections 12.27.330 and 12.27.340.
+2. The Historic Landmarks Advisory Committee regulates and protects sites in the Cultural
+Resource Overlay zone through review and recommendations to the Planning Commis-
+sion and City Council, pursuant to Section 12.27.370, relating to approval or denial of
+proposed activities in accordance with the criteria for alteration, relocation or demolition
+of landmarks in this Code.
+3. At the direction of the City Council or Planning Commission, the Historic Landmarks
+Advisory Committee may review proposed activities by the City and other government
+agencies that may seriously affect sites in the Cultural Resource Overlay zone, and may
+advise the Planning Commission and City Council regarding such activities.
+E. Director.
+1. The Director shall be the chief administrator of the Community Development Code. The
+Director's or Director's designee's responsibilities may include but are not limited to the
+following activities:
+a. Assigning and scheduling land use applications for review and hearings, including
+giving notice pursuant to Sections 12.70.040, 12.70.050, and 12.70.060;
+b. Conducting all pertinent correspondence of the Planning Commission, Planning
+and Zoning Hearings Board, and Historic Landmarks Advisory Committee;
+c. Maintaining agendas and minutes of all Planning Commission, Planning and
+Zoning Hearings Board, and Historic landmarks Advisory Committee meetings;
+ 12.01.300GENERAL PROVISIONS
+CDC12.01:9Supp. No. 1
+d. Compiling and maintaining all necessary records, files and indexes for Community
+Development and development activities; and
+e. Providing professional expertise and staff assistance to the City Council, Planning
+Commission, Planning and Zoning Hearings Board, and Historic Landmarks Advi-
+sory Committee as necessary for planning matters.
+2. The Director or the Director's designee shall coordinate planning functions with other City
+departments, other jurisdictions, and other agencies as is necessary to carry out the
+provisions of this Code.
+3. The Director or the Director's designee(s) shall provide assistance and information to the
+public on land use applications and activities.
+F. Public Engagement Committee.
+1. The Public Engagement Committee serves as an advisory body to the Planning Com-
+mission (PC) regarding citizen involvement outreach strategies for proposed Compre-
+hensive Plan Major Amendments, or upon request by the City Council, to the City
+regarding other matters of concern. The Public Engagement Committee fulfills the duties
+described in Statewide Planning Goal 1 for a committee for citizen involvement.
+2. The Public Engagement Committee is responsible for assisting the City with developing
+a program that promotes and enhances citizen involvement in land-use planning,
+assisting in the implementation of the citizen involvement program, and evaluating the
+process being used for citizen involvement through review and recommendations,
+pursuant to Section 12.70.062, relating to the creation and adoption of Public Commu-
+nications and Engagement Plans for Comprehensive Plan Major Amendments.
+3. At the direction of the City Council or Planning Commission, the Public Engagement
+Committee shall advise on the creation of Public Communications and Engagement
+Plans, and may advise the Planning Commission and City Council regarding such efforts.
+(Ord. 6401 § 1, 2022; Ord. 6250 § 1, 2017; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.01.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:10Supp. No. 1
+12.01.400  Figures, Calculations, and Measuring Distance.
+A. Figures. Figures are provided for terms, phrases or standards in order to provide an illustrative
+example. In this Code, figures are drawn to scale but a particular scale is not specified to avoid
+confusion when figures are enlarged or reduced.
+B. Calculations. In determining compliance with numeric standards of this Code, calculations
+shall be rounded up or down as follows:
+1. Dwelling units per acre: less than 0.5 rounded down to the nearest whole unit; 0.5 or more
+rounded up to the nearest whole unit.
+2. Parking spaces: less than 0.5 rounded down to the nearest whole space; 0.5 or more
+rounded up to the nearest whole space.
+3. Distances (such as lot dimensions or setbacks): cannot be rounded up or down.
+4. Percentages (such as floor area ratio or usable open space): cannot be rounded up or
+down.
+C. Measuring Distance. Where a distance is specified in this Code, the distance shall be
+measured from nearest point to nearest point. Where distance is measured from a zone
+boundary, the zone boundary shall be considered to be the property line.
+(Ord. 6401 § 1, 2022)
+12.01.410  Interpretation.
+A. The word "shall" is mandatory and not discretionary; the word "may" is permissive.
+B. The term "this Code" shall be deemed to include the text of this Code, the accompanying
+Zoning Map, and all amendments made hereafter to either.
+C. The Code shall be read literally. Regulations are not more or less strict than as stated.
+D. Where it is unclear whether or in what manner sections of this Code apply to a given situation,
+or if terms or sections are ambiguous or vague, the following should be applied as warranted
+under the circumstances:
+1. This Code shall be interpreted reasonably, reading questioned regulations in relation to
+other sections such that an interpretation most fully effectuates the intent and purpose of
+the regulations; and
+2. This Code shall be interpreted most favorably to provide all necessary authority to carry
+out its purposes and provisions.
+(Ord. 6401 § 1, 2022)
+12.01.420  Grammar and Meanings of Words.
+A. Tense. All words used in the present tense include the future tense.
+B. Singular/Plural. All words used in the plural include the singular, and all words used in the
+singular include the plural unless the context indicates to the contrary.
+ 12.01.420GENERAL PROVISIONS
+CDC12.01:11Supp. No. 1
+C. Gender. The code uses gender-neutral language.
+D. "Building" and "Structure." The definition of "structure" includes a "building" but there are many
+structures that are not defined as a building.
+E. "Used for." The phrase "used for" includes the phrases "arranged for," "designed for," "intended
+for," "maintained for" and "occupied for."
+F. "Land" and "Property." The words "land" and "property" are used interchangeably unless the
+context clearly indicates to the contrary.
+G. Meaning of Words. Terms defined in Section 12.01.500 have the specific definitions in that
+Section unless the context in which they are used clearly indicates to the contrary. Terms or
+words not defined shall have their ordinary accepted meanings within the context of their use.
+The contemporary edition of Webster's Third New International Edition Dictionary of the
+English Language (principal copyright 1961) shall be considered as providing accepted
+meanings.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.01.430  Organization and Hierarchy of Standards and Guidelines.
+A. Standards in Subchapters 12.27, 12.40 and 12.60 through 12.66. Additional location-specific
+standards and guidelines are contained in separate sections as follows:
+1. Overlay Zone Standards (Subchapter 12.27): Overlay zones apply to certain areas of the
+City subject to environmental conditions not related to land use (floodplain, significant
+natural resources, or historical significance). These standards have been identified by the
+City as necessary to balance development rights with protection of community assets
+such as wetlands or historic structures.
+2. Special Use Standards (Subchapter 12.40): The specific uses identified in these sections
+are subject to conformance with more specific standards, identified by the City as
+necessary due to the potential impacts of these uses on neighboring properties.
+3. Plan District Standards (Subchapters 12.60 through 12.66): Plan districts have been
+identified in certain locations in the City where community plans and/or district zoning are
+intended to create unique neighborhood character. Location-specific standards and
+guidelines are necessary to implement these plans and/or zones in these neighbor-
+hoods.
+B. Development and Design Standards (Subchapter 12.50). The standards and guidelines in this
+Code are organized in several sections, as described below:
+1. General Lot Standards (Section 12.50.100): Includes lot dimensions, residential densi-
+ties, setbacks, building heights, and floor area ratios which apply to all properties within
+that zone, but which may vary among zones.
+2. Site Development Standards (Sections 12.50.200 through 12.50.600): This level of
+standards applies generally to development regardless of its location in the City. Devel-
+opment standards include usable open space, lighting, landscaping, and vehicle and
+12.01.420 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:12Supp. No. 1
+bicycle parking. Infrastructure standards such as pedestrian and bicycle connectivity and
+circulation, access and street standards, and utilities and site grading are intended to be
+implemented in conjunction with the Public Works Design and Construction Standards,
+and to provide an additional level of design specificity.
+3. Design Standards (Sections 12.50.700 through 12.50.900): Includes architectural stan-
+dards (building entries and orientation, ground floor windows and building façades, and
+architectural elements). Design standards represent the City's requirements, but may
+vary among broad categories of uses (residential, non-residential and mixed-use). Public
+benefit standards (Section 12.50.900) represent the City's desired expectation regarding
+development quality and may not be mandatory in all cases. However, where appropri-
+ate, adherence to public benefit standards may be required as a condition of a discre-
+tionary approval.
+C. Base Zone Standards (Subchapters 12.21 through 12.26). Location-specific standards and
+guidelines are organized by zones and are grouped into subsections based on common
+elements. Each subchapter includes summaries of uses permitted, conditionally permitted,
+limited, and not permitted along with development standards for each zone. Development
+standards are typically numerical standards: minimum and maximum densities; minimum and
+maximum lot dimensions; structural setbacks; maximum building height and lot coverage.
+D. Hierarchy of Standards. The standards and guidelines in this Code are organized in a hierarchy
+based on their applicability. Where conflicts occur among standards, the order of application
+will be as follows:
+1. Where applicable, overlay zone standards supersede all other standards;
+2. Where applicable, plan district standards are subordinate to overlay zone standards;
+3. Where applicable, special use standards are subordinate to overlay zone and plan district
+standards;
+4. Development and design standards are applicable throughout the City, but are subordi-
+nate to overlay zone standards, plan district standards, and special use standards;
+5. Base zone standards are applicable throughout the City, but are subordinate to overlay
+zone standards, plan district standards, and special use standards; and
+6. If required as a condition of discretionary approval, the public benefit standards of Section
+12.50.900 supersede base zone standards and plan district standards, but are subordi-
+nate to overlay zone standards and special use standards.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+ 12.01.430GENERAL PROVISIONS
+CDC12.01:13Supp. No. 1
+12.01.500  Definitions.
+As used in this Code, the following words, terms and phrases are defined as shown in this section.
+Terms defined in this section are shown in italic typeface where they occur in other definitions.
+Abbreviated Environmental Report. See Environmental Report, Abbreviated.
+Abutting. To be contiguous to; having a property line , zoning boundary, or wall in common.
+"Abutting" does not apply to buildings, uses, or properties separated by a street or alley. See also
+contiguous.
+Access. The place, means, route or way by which pedestrians, bicyclists and/or vehicles have
+ingress and egress to a property or use. A private access is an access not in public ownership or
+control by means of deed, right-of-way dedication or public easement.
+Access Management. Regulations or techniques used to control points of access to public streets,
+roads and highways from other public or Private streets and driveways, with the purpose of reducing
+conflicts among drivers, bicyclists and pedestrians. Examples of access management include
+limiting or consolidating driveways, selectively prohibiting left-turn movement at and between
+intersections, and using physical controls such as signals, raised medians, signage and striping.
+Accessory Structure or Use. A structure or use incidental and subordinate to the main use of the
+property, located on the same lot as the main structure or use.
+Acreage, Gross. The total area of a lot, tract or parcel of land, measured within the property lines.
+Acreage, Net. The area on a site which is eligible for development. Net acreage is calculated by
+subtracting undevelopable land from gross acreage. Undevelopable land is limited to the following:
+1. Required dedications of public street rights-of-way or private street tracts, required public
+or private access easements, and required internal fire access;
+2. Electrical transformer platforms, industrial chemical and/or gas storage areas, or other
+hazardous area where occupancy is Not Permitted for safety reasons;
+3. Required stormwater treatment and detention facilities;
+4. Any land dedicated to the City for parks or greenways;
+5. Delineated wetlands, vegetated corridors and buffers as required by Clean Water
+Services or other regulatory authorities;
+6. Areas with 25% or greater slopes, unless such areas are used for building or parking;
+7. Area within the 1% annual chance floodplain, unless: (a) such area is within a structural
+footprint of a building that is to remain or that is to be altered or constructed under an
+approved Floodplain Activity permit; or (b) such area will be removed from the floodplain
+through topographic alterations under an approved Floodplain Activity permit and/or
+FEMA Letter of Map Change.
+Adjacent. Buildings or uses are adjacent to each other if they are sited on abutting parcels or lots,
+or across a street or alley, and are not separated from each other by existing or planned intervening
+buildings.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:14Supp. No. 1
+Alley. A right-of-way through or partially through a block, intended for secondary vehicular access to
+the rear or side of properties. However, where vehicle access from the street is not permitted or not
+possible, an alley may provide primary vehicle access.
+Alteration. Any change, addition or modification of an existing structure.
+Alteration (of a Cultural Resource). Any addition to, removal from, and/or change in the
+external appearance of any portion of a cultural resource. Alterations include changes in site
+landscaping if the landscaping is comparable in age to the resource structure, but exclude
+changes in newer landscaping or the addition of landscaping if there was none originally. This
+definition also excludes ordinary repair and maintenance of an exterior feature which does not
+affect the feature's appearance, if such repair has been certified by the City Building Official as
+necessary for safe occupancy.
+Americans with Disabilities Act (ADA). The Federal Americans with Disabilities Act of 1990 (P.L.
+101-336) as amended.
+Angle of Repose. The angle at which the weight from a building foundation will affect adjacent utility
+trenches and/or other foundations. Angle of repose is the slope, measured in degrees from the
+horizontal, at which loose solid material will remain in place without sliding. Angle of repose is
+site-specific, based on the characteristics of the soil.
+Animal Service Facility. A commercial establishment primarily engaged in performing veterinary,
+boarding, grooming, training, and other services for domestic animals, primarily dogs and cats.
+Outdoor facilities such as runs and exercise yards may or may not be included in the use. Examples
+of animal service facilities include veterinary clinics, dog and cat day care facilities, dog training
+facilities, and overnight pet boarding. Pet stores are not considered animal service facilities.
+At or Near a Major Transit Stop. "At" refers to location within 200 feet of the property boundaries
+of a major transit stop. "Near" refers to location within 300 feet of the property boundaries of a major
+transit stop.
+Auxiliary Lane. A traffic lane other than a through lane, used to separate entering, exiting or turning
+traffic from through traffic.
+Average Daily Traffic (ADT). ADT is the total volume of traffic passing a point or segment of
+roadway over a 24 hour period.
+Base Flood. See Flood, Base.
+Base Flood Elevation. See Flood, Base Elevation.
+Basement. Any area of the building having its floor subgrade (below ground level) on all sides.
+Bed and Breakfast Inn. A residential building or group of residential buildings with separate
+bedroom units for travelers' temporary accommodation. Standards for bed and breakfast inns are
+included in Section 12.40.130.
+Below-Grade Crawl Space. An enclosed area in which the interior grade is below the lowest
+adjacent exterior grade.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:15Supp. No. 1
+Bioretention. Use of shallow, vegetated depressions and engineered soils to collect, filter, and store
+stormwater runoff while it percolates into the ground.
+Build-Out Year. As used in Transportation Studies (see Section 12.70.200), the year in which
+completion and occupancy of a studied development is anticipated.
+Build-To Zone. The maximum horizontal distance, or a range of maximum horizontal distances,
+between a front lot line and a building or structure.
+Building. A structure having a roof supported by columns or walls, which is built for the support,
+shelter or enclosure of persons, animals, or property of any kind.
+Building Coverage. That portion (typically expressed as a percentage) of the acreage, net of a lot
+occupied by the footprint of a building.
+Building Official. The Building Official of the City of Hillsboro or the Official's designee.
+Building Plane, Front or Rear. An imaginary vertical plane across the farthest front or rear elevation
+of a structure, as illustrated in Figure 12.01.500-A. Building planes are most commonly used in
+determining lot widths or setbacks.
+
+Bus Rapid Transit. See Transit.
+Cannabinoid. Any of the chemical compounds that are the active constituents of marijuana.
+Catercorner(ed). To be located diagonally opposite, usually at the intersection of 2 streets.
+Certified Wood Products. Wood products made from lumber harvested in a sustainable manner as
+certified by a reliable third party, including but not limited to the Forest Stewardship Council (FSC),
+Sustainable Forestry Initiative (SFI) and the Canadian Standards Association (CSA).
+ Figure 12.01.500-A:
+Front and Rear Building Planes
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:16Supp. No. 1
+Child Care Facility. Any facility that provides child care to children, including a child care center,
+certified family child care home, and registered family child care home. The term applies to the total
+child care operation and includes the physical setting, administration, staff, equipment, program, and
+care of children. This definition includes facilities such as nursery schools, preschools, kindergar-
+tens, child play school facilities, before or after school care, or child development centers, except
+those excluded under ORS 329A.
+City. The City of Hillsboro, Oregon.
+City Council. The elected City Council of Hillsboro, Oregon.
+City Engineer. The City Engineer of the City of Hillsboro or the Engineer's designee.
+City Functional Plan. A plan or strategy created by the City that further refines and implements
+Comprehensive Plan policies and recommendations regarding specific topic areas of interest or
+concern to the City. Such topic areas may include but are not limited to parks and recreation,
+housing, open spaces, natural resources development and conservation, historic resources, culture
+and the arts, economic development, environmental quality and other topic area or elements
+addressed in the Comprehensive Plan.
+Common Courtyard. A common area for use by residents of a cottage cluster or other type of
+residential development.
+Common Wall. A wall or set of walls in a single building shared by 2 or more dwelling units. To meet
+this definition, the wall must be shared for at least 25% of the length and 50% of the height of the side
+of the building of the dwelling units, as shown on Figure 12.01.500-A-1.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:17Supp. No. 1
+Community Building. A building intended for the shared use of residents in a development (such as
+a cottage cluster) that provides space for accessory uses such as community meeting rooms, guest
+housing, exercise rooms, day care, community eating areas, or picnic shelters.
+Community Plan. A plan, planning document or coordinated set of planning policies that establish
+coordinated policies and development guidelines for the development of land uses and development
+activities within a specific area of the City.
+Commuter Rail. See Transit.
+Condominium or Unit Ownership. Land, all buildings, improvements and structures thereon, and
+all easements, rights and appurtenances belonging thereto, which are submitted pursuant to the
+provisions of ORS 91.500 to 91.671 to 91.990.
+Conservation District. A zone-defined area in which certain standards may be applied regarding
+retention or alteration of existing buildings and architectural standards for new buildings, in order to
+retain and restore the historic character of the neighborhood.
+Construction. As used in this Code, construction includes the new construction, replacement or any
+major remodeling of any building or structure; or any enlargement of an existing building or structure
+ Figure 12.01.500-A-1:
+Dwellings Attached on a Common Wall
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:18Supp. No. 1
+which increases its floor area by 10% or more and which is visible from a street or public right-of-way.
+Construction does not include the ordinary repair and maintenance of an existing building or
+structure.
+Construction, Existing. For floodplain management purposes, for the purposes of determin-
+ing insurance rates, structures for which the "start of construction" commenced before the
+effective date of the FIRM or before January 1, 1975, for FIRMs effective before that date.
+"Existing construction" may also be referred to as "existing structures."
+Construction, New. For floodplain management purposes, for the purposes of determining
+insurance rates, structures for which the "start of construction" commenced on or after the
+effective date of an initial FIRM or after December 31, 1974, whichever is later, and includes
+any subsequent improvements to such structures. For floodplain management purposes, new
+construction means structures for which the start of construction commenced on or after the
+effective date of a floodplain management regulation adopted by a community and includes
+any subsequent improvements to such structures.
+Construction, Start Of. Includes substantial improvement, and means the date the building
+permit was issued, provided the actual start of construction, repair, reconstruction, rehabilita-
+tion, addition placement, or other improvement was within 180 days of the permit date. The
+actual start means either the first placement of permanent construction of a structure on a site,
+such as the pouring of slab or footings, the installation of piles, the construction of columns, or
+any work beyond the stage of excavation; or the placement of a manufactured home on a
+foundation. Permanent construction does not include land preparation, such as clearing,
+grading and filling; nor does it include the installation of streets and/or walkways; nor does it
+include excavation for a basement, footings, piers, or foundations or the erection of temporary
+forms; nor does it include the installation on the property of accessory buildings, such as
+garages or sheds not occupied as dwelling units or not part of the main structure. For a
+substantial improvement, the actual start of construction means the first alteration of any wall,
+ceiling, floor, or other structural part of a building, whether or not that alteration affects the
+external dimensions of the building.
+Consumer. An adult person who purchases, acquires, owns, holds or uses marijuana items for a
+purpose other than resale.
+Contiguous. Having a property line, zoning boundary or wall in common. "Contiguous" does not
+apply to buildings, uses, or properties separated by a street or alley. See also abutting and adjacent.
+Control Delay. See Delay, Control.
+Cool Roof. A roof constructed of materials which reflect most solar radiation, intended to prevent
+heat penetration into the interior of the building.
+Cottage Industry. A small-scale manufacturing or production use, conducted entirely within an
+enclosed building, which have no impacts on adjacent properties related to noise, dust, odor or light
+glare. Examples of cottage industries include woodworking, letterpress operation, and artisan metal,
+tile, textile, or glass fabrication.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:19Supp. No. 1
+County. Washington County, Oregon.
+Creation (of a natural resource). Modification of vegetation, hydrology and/or topography in a
+non-wetland, riparian or wildlife habitat ecosystem in order to create a functional wetland, riparian
+area, or wildlife habitat. To create a natural resource, soils may also be modified to facilitate the
+transition to the natural resource system.
+Cul-de-Sac. See Street, Cul-de-sac.
+Cultural Resource. Any building, structure, site, or object included on the Cultural Resource
+Inventory, and therefore subject to the provisions of Section 12.27.300.
+Cultural Resource Inventory. The list of buildings, structures, sites and objects within the City
+which are recognized by City Council resolution as being culturally significant.
+Dangerous Tree. Any tree which, in the professional assessment of an expert recognized by the City
+(such as, but not limited to an arborist, professional forester or landscape architect) has a strong
+likelihood of causing a hazard to life or property.
+Day. Unless otherwise specifically stated, a 24-hour calendar day.
+Delay. The additional travel time experienced by a driver, passenger, bicyclist, or pedestrian beyond
+the required time at the desired speed.
+Control Delay. A delay associated with a traffic control device. Control delay includes the times
+spent slowing in advance of an intersection or stopped on an intersection approach, the time
+spent as vehicles move up in the queue, and the time needed for vehicles to accelerate to their
+desired speed.
+Delineation. A determination of the boundary of a natural resource, wetland, riparian or wildlife
+habitat area by a qualified natural resource professional . Wetland delineations are prepared
+following methods described in the 1987 US Army Corps of Engineers Wetlands Delineation Manual
+or those currently accepted by the Oregon Division of State Lands and US Army Corps of Engineers.
+Riparian and wildlife habitat delineations are based on an assessment of the tree canopy and plant
+communities described for the resource in the adopted List of Significant Goal 5 Natural Resources
+Sites in Hillsboro and the City of Hillsboro Goal 5 Natural Resources Inventory and Assessment
+Report.
+Demolition. Any intentional defacement, destruction, and/or other action which would cause partial
+or total destruction of the structural elements of a structure.
+Density. A measurement of the intensity of development on a net acre of developable land.
+Residential density is measured in number of dwelling units per net acre. Non-residential density or
+intensity may be measured by floor area ratio . Methodology for calculating density is included in
+Section 12.50.120.
+Detached, Single Dwelling. See Housing Types.
+Development. Any human-made change to improved or unimproved real estate, including but not
+limited to construction or installation of buildings or other structures, mining, dredging, filling,
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:20Supp. No. 1
+grading, paving, excavation or drilling operations or storage of equipment or materials, as well as
+improvements for use as parking. Within the Significant Natural Resource Overlay (Section 12.27.200),
+vegetation removal and changes to existing lot boundaries (e.g., subdivisions, partitions, and
+property line adjustments) are also considered development.
+Diameter at Breast Height (dbh). The diameter of a tree at breast height or 4.5 feet above native
+grade. When the trunk branches or splits less than 4.5 feet from the ground, measure the smallest
+circumference below the lowest branch and divide by 3.14. For multi-stemmed trees, the size is
+determined by measuring all the trunks, and then adding the total diameter of the largest trunk to ½
+the diameter of each additional trunk. A multi-stemmed tree has trunks that are connected above the
+ground and does not include individual trees growing close together or from a common root stock
+that do not have trunks connected above the ground.
+
+Director. The Director of the Community Development Department of the City of Hillsboro or the
+Director's designee. Where Director is used in the code without further specification, the reference
+is to the Community Development Director.
+Disability. With respect to a person, (1) a physical or mental impairment which substantially limits 1
+or more of such person's major life activities; (2) a record of having such an impairment; or (3) being
+regarded as having such an impairment. "Disability" does not include current, illegal use of or
+addiction to a controlled substance as defined by 21 U.S.C. § 802, or pedophilia, exhibitionism,
+voyeurism or other sexual behavior disorders. "Disability" will be interpreted consistent with the
+meaning of "handicap" under 42 U.S.C. § 3602(h).
+Drive-In or Drive-Through Facilities. Sites and building features such as driveway approaches,
+internal circulation, and exterior vending facilities that allow motor vehicle drivers to complete
+transactions for retail goods or services without leaving their vehicle. Vehicle service and repair
+facilities are not considered drive-in facilities even if the service or repair can be conducted without
+the driver leaving the vehicle.
+Duplex. See Housing Types.
+Dwelling Unit. A single unit providing complete independent living facilities for 1 or more persons,
+including provisions for living, sleeping, cooking and sanitation. Provisions for cooking shall mean an
+area used, or designated to be used, for the preparation of food. The unit may include multiple
+cooking areas. For types of dwelling units, see housing types.
+ Figure 12.01.500-A.2: Measuring Split Trunk and Multi-Stemmed
+Trees
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:21Supp. No. 1
+Easement. A right to the use of certain real property for specified purposes, granted by the property
+owner to specific persons, firms, corporations or the public.
+Eco Roof. A vegetated roof surface comprised of several layers including a root barrier, waterproof
+membrane, drainage, soil system, and plants, used in place of a conventional roof and intended to
+provide environmental benefits. Also known as a "green roof."
+Elevated Building. A nonbasement building that has its lowest elevated floor raised above ground
+level by foundation walls, shear walls, posts, piers, pilings, or columns.
+Emergency Shelter. A building or cluster of buildings that provides shelter on a temporary basis for
+individuals and families who lack permanent housing.
+Enhancement (of a Significant Natural Resource or Impact Area). Modification of a Significant
+Natural Resource Site to improve resource functions and values, or modification of an Impact Area
+to improve its ability to buffer the adjacent resource from adverse impacts associated with develop-
+ment.
+Environmental Report. A site report prepared by a qualified natural resources professional which
+includes the following elements in addition to those included in an abbreviated environmental report:
+• Delineation(s) of Significant Natural Resource boundaries;
+• Descriptions of the condition of the natural resources within the specified boundaries;
+• Analyses of development impacts on the Significant Natural Resources;
+• Descriptions of measures to prevent or reduce negative development impacts; and
+• Provisions of mitigation and enhancement plans.
+Specifications for preparation of environmental reports are cited in Section 12.80.130.
+Environmental Report, Abbreviated. A site report which includes the following elements:
+• Location of proposed structures or vegetation removal on site maps and photographs;
+• Descriptions of the condition of the natural resources within the areas proposed to be
+impacted;
+• Analyses of development impacts on the Significant Natural Resources;
+• Documentation that the proposed development can be done in compliance with the
+applicable criteria in Section 12.80.130.
+Specifications for preparation of abbreviated environmental reports are cited in Section 12.80.130.
+Excavation. Removal of earth or mineral matter by human action.
+Façade. The vertical wall face of a building, or the sum of multiple vertical faces, facing the street.
+Fair Housing Act (FHA). The Federal Fair Housing Act of 1968, (P.L. 90-284), Title VIII, as
+amended.
+Fill. Any deposit of earth or mineral material by human action. The term fill may also be used to
+describe the deposited material.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:22Supp. No. 1
+Final Plat. See Plat, Final.
+Flood or Flooding.
+A. A general and temporary condition of partial or complete inundation of normally dry land
+areas from:
+1. The overflow of inland or tidal waters.
+2. The unusual and rapid accumulation or runoff of surface waters from any source.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:22.1Supp. No. 1
+
+3. Mudslides (i.e., mudflows) which are proximately caused by flooding as defined in
+paragraph A.2 of this definition and are akin to a river of liquid and flowing mud on
+the surfaces of normally dry land areas, as when earth is carried by a current of
+water and deposited along the path of the current.
+B. The collapse or subsidence of land along the shore of a lake or other body of water as a
+result of erosion or undermining caused by waves or currents of water exceeding
+anticipated cyclical levels or suddenly caused by an unusually high water level in a
+natural body of water, accompanied by a severe storm, or by an unanticipated force of
+nature, such as flash flood or an abnormal tidal surge, or by some similarly unusual and
+unforeseeable event which results in flooding as defined in paragraph A.1 of this
+definition.
+Area of Shallow Flooding. A designated AO, AH, AR/AO, AR/AH, or VO zone on a commu-
+nity's Flood Insurance Rate Map with a 1% or greater annual chance of flooding to an average
+depth of 1 to 3 feet where a clearly defined channel does not exist, where the path of flooding
+is unpredictable, and where velocity flow may be evident. Such flooding is characterized by
+ponding or sheet flow.
+Area of Special Flood Hazard. The land in the floodplain within a community subject to a 1%
+or greater chance of flooding in any given year. Also referred to as the Special Flood Hazard
+Area (SFHA).
+Flood, Base. A flood having a 1% chance of being equaled or exceeded in any given year. Also
+referred to as the "100-year flood."
+Flood Elevation, Base. The water surface elevation of the base flood, delineated in mean feet
+above sea level.
+Flood Fringe. The portion of the floodplain that is outside of the floodway.
+Flood Insurance Rate Map (FIRM). An official map of a community, on which the Federal
+Insurance Administrator has delineated both the special hazard areas and the risk premium
+zones applicable to the community. A FIRM that has been made available digitally is called a
+Digital Flood Insurance Rate Map (DFIRM).
+Flood Insurance Study. An examination, evaluation and determination of flood hazards and,
+if appropriate, corresponding water surface elevations, or an examination, evaluation and
+determination of mudslide (i.e., mudflow) and/or flood-related erosion hazards.
+Floodplain. The area subject to inundation by the base flood as identified on the FIRM. The
+floodplain includes both the floodway and flood fringe.
+Floodproofing. Any combination of temporary or permanent architectural, structural and
+non-structural additions or changes to a structure or its contents that prevent or provide
+resistance to damage from flooding while allowing floodwaters to enter the structure. Flood-
+proofing standards are specified in Section 12.27.100.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:23
+Floodway. The channel of a river or other watercourse and the adjacent land areas that must
+be reserved in order to discharge the base flood without cumulatively increasing the water
+surface elevation more than a designated height.
+Floor Area and Floor Area, Gross (GFA). The sum of the horizontal areas of all above-ground
+floors of a building intended for occupancy or storage. Floor area is measured from the exterior faces
+of a building or structure or in the case of common wall buildings, from the centerline of the common
+wall. Floor area includes structured parking and garage area above finished grade level, but does not
+include the following:
+• Areas where the elevation of the floor is 4 feet or more below the lowest elevation of an
+adjacent right-of-way;
+• Roof area, including roof top parking;
+• Roof top mechanical equipment;
+• Roofed porches, exterior balconies, or other similar areas, unless they are enclosed by
+walls that are more than 42 inches in height, for 50% or more of their perimeter.
+• Vent shafts, underground parking spaces, uncovered steps and exterior balconies.
+Floor Area, Net. The gross floor area of a building, excluding lobbies, restrooms, hallways,
+stairwells, elevators, mechanical and utility spaces and loading docks. Also called "Gross Leasable
+Area."
+Floor Area Ratio (FAR). The ratio (typically expressed as a decimal) of the total amount of enclosed
+gross floor area (GFA) within a building or structure to the amount of net lot area . Calculation
+methodology of Floor Area Ratios is cited in Section 12.50.150.
+Footprint. The horizontal area of a building or structure as seen in plan, measured from outside of
+all exterior walls and supporting columns. The footprint of a building does not include trellises; patios;
+areas of porch, deck, and balcony less than 30 inches from finished grade; cantilevered covers,
+porches or projections; or ramps and stairways required for access. The footprint of each detached
+building or structure on a site is calculated separately.
+Forecast Year. As used in Transportation Studies (see Section 12.70.200), the subject year of the
+Transportation Study analysis. The Forecast Year may be the Build-Out Year or another future year
+deemed appropriate for the Study.
+Free Standing Wall. A vertical structure built outdoors to separate properties or areas, or to provide
+sound attenuation from a noise source. Free standing walls are not intended to support any roof
+structure, and may be used as an alternative to a fence or hedge.
+Frontage. The length of the front lot line of a lot, parcel or tract which abuts a public street or alley,
+or platted Private street or alley, usually measured in feet. Lot frontage may be approximately equal
+to lot width on a regular lot, but may differ on other shapes of lots.
+Functional Plan. See City Functional Plan.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:24
+Gap Availability Study. As used in Section 12.70.200, a traffic measurement used to determine the
+number of opportunities for a vehicle to execute a turning movement (gap) from a 2-way stop-
+controlled intersection or access during a defined time period.
+Garage. A structure or portion thereof designed and intended for use for parking or temporary
+storage of vehicles.
+Garage, Front Loaded or Rear Loaded. See Loading, Front, Side or Rear.
+Grade. Ground elevation, measured in height in feet above mean sea level. Grade elevation is used
+in measurement of building height and for application of floodplain regulations.
+Grade, Finished. The average of the ground elevations at the center of all walls of a building,
+following completion of site grading. If a wall is parallel to and within 5 feet of a sidewalk,
+finished grade is measured at the sidewalk.
+Grade, Native. The ground elevation existing before human alteration such as grading, filling
+or excavation.
+Grade, Street. The elevation at the top of a street curb or the top of the edge of pavement or
+traveled way where there is no curb.
+Grading. Cutting and/or filling of the ground surface to a desired slope or elevation.
+Grading, Mass. Grading conducted over a majority of a development site or phase thereof,
+with the intent to create a more uniform ground elevation and/or building pads.
+Green Streets. Public or Private streets designed to reduce or redirect stormwater runoff quantity
+and/or to improve stormwater runoff quality within the right-of-way or street tract. Green street design
+generally involves using vegetated swales; Low Impact Development Approaches (LIDA), bioreten-
+tion and/or pervious pavement as an alternative to conventional catch basins, pipes, curbs and
+detention facilities.
+Gross Acreage. See Acreage, Gross.
+Gross Floor Area. See Floor Area, Gross.
+Habitat Benefit Areas. The Tualatin Basin Fish & Wildlife Habitat Program areas shown on Metro's
+Regionally Significant Fish and Wildlife Habitat Inventory map as containing Classes I, II, and III
+riparian corridors/wildlife habitat and Class A Upland Wildlife Habitat. See also Habitat-Friendly
+Development Practices.
+Habitat-Friendly Development Practices. A range of development techniques and activities used
+to reduce detrimental impact on fish and wildlife habitat relative to traditional development practices.
+Habitat-Friendly Development Practices are listed in Subsection 12.50.930.A.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:25
+Height, Building. The vertical distance from finished grade to the highest point of the coping of a flat
+roof or to the deck line of a mansard roof or to the point midway between the ridge and the eaves of
+a pitch or hip roof, as illustrated in Figure 12.01.500-B. Measurement methodology for building
+height is cited in Subsection 12.50.140.B.
+
+High Capacity Transit. See Transit, High Capacity.
+High-Profile Industrial Building. An industrial building designed and constructed for manufactur-
+ing or warehouse use, characterized by highly specialized mechanical and/or automated equipment
+requiring structural heights greater than 45 feet.
+Historic Landmarks Advisory Committee (HLAC). The Historic Landmarks Advisory Committee
+of the City of Hillsboro.
+Home Occupation. A lawful business conducted on a residential property only by the residents of
+the property and not more than 2 non-residents, where the business operation is secondary to the
+residential use of the dwelling. Standards for approval and operation of Home Occupations are
+contained in Section 12.40.170.
+Horticultural Activities. Activities including, but not limited to, orchard keeping and vegetable or
+flower gardening, which may be conducted for either household consumption and enjoyment or in
+connection with a home occupation or residential business. Horticultural activities do not include
+either keeping of livestock as defined in Hillsboro Municipal Code (HMC) Subchapter 6.20, or
+marijuana facilities as defined in this section.
+Hospital. An institution which provides clinical, diagnostic and treatment services to patients on an
+inpatient, outpatient and emergency basis, and which has received a Certificate of Need from the
+State of Oregon.
+Hotel. A building, or portion thereof, of more than 5 guest rooms designed or intended to be used, let
+or hired out for the purpose of offering to the general public lodging for a fee on a daily, weekly, or
+monthly basis, where the primary entrance is through a lobby or foyer with internal circulation to the
+rooms.
+ Figure 12.01.500-B:
+Different Roof Types and Building Height
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:26
+Hotel, Executive Suites. Hotel where food service is included in the use along with one or more
+business-oriented amenities such as conference rooms, business centers, banquet facilities, and
+meeting facilities.
+Household. A group of people living together in a dwelling unit. The following are also considered
+households:
+• Residents of residential homes; and
+• Residents of residential facilities with 8 or fewer persons.
+Household Energy Production Facilities. Systems for the collection and conversion of alternative
+energy sources such as solar or wind, to serve the energy needs of the subject property. Such
+systems include facilities for energy collection, support structures, and components for the control
+and conversion of the captured energy.
+Housing. See Dwelling Unit and Housing Types.
+Housing Types.
+Accessory Dwelling Unit. An additional dwelling unit that is located on the same lot as, and
+is accessory to, a single detached dwelling or townhouse. The unit includes its own indepen-
+dent living facilities with provisions for sleeping, cooking, and sanitation, and is designed for
+residential occupancy independent of the primary dwelling unit. Also previously defined as a
+secondary dwelling unit. Any area dedicated to the preparation of food in an accessory dwelling
+unit, regardless of the type of mechanical equipment provided, shall be considered a cooking
+area.
+Cottage Cluster. A grouping of no fewer than 4 detached dwelling units per net acre sharing a
+common courtyard. Units may be located on a single lot or parcel, or on individual lots or
+parcels following a middle housing land division.
+Duplex. A residential structure containing 2 dwelling units attached on a common wall, floor or
+ceiling. Both units of a duplex must be built on a single lot or parcel, or attached on a common
+wall and located on 2 child lots created through a middle housing land division.
+Live-Work Dwelling. A dwelling unit occupied by both residential and non-residential (com-
+mercial or light-industrial) uses, in which the non-residential use is subordinate to the residen-
+tial use.
+Manufactured Dwelling. A single detached dwelling unit, constructed to allow movement on
+public highways built on a permanent chassis, that is constructed consistent with applicable
+State law. Also referenced as a mobile home or manufactured home. The term "manufactured
+dwelling" does not include a "recreational vehicle."
+Multiple Dwelling Structure. A residential structure containing 5 or more dwelling units
+sharing common walls or floors and ceilings, built on a single lot or parcel. Multiple-dwelling
+structures include apartments and condominiums without regard to ownership status. Devel-
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:27
+opment consisting of multiple dwelling structures is called multi-dwelling residential. Residen-
+tial developments of 3 to 4 units are also classified as multi-dwelling residential if the
+development cannot otherwise meet the definition of middle housing.
+Quadplex. A residential structure containing 4 dwelling units attached on a common wall, floor
+or ceiling. All 4 units of a quadplex must be built on a single lot or parcel, or attached on a
+common wall and located on 4 child lots created through a middle housing land division.
+Single Detached Dwelling. A detached dwelling unit built and intended for occupancy by one
+household, built on a single lot or parcel, constructed on site or elsewhere. For purposes of this
+Code, detached modular homes (aka prefabricated buildings) constructed of multiple modules
+constructed off site, are considered single detached dwellings. Dwelling units on individual lots
+that are part of a cottage cluster are not single detached dwellings for the purposes of this
+Code.
+Studio Apartment. An apartment consisting of a single large room serving as bedroom and
+living room/cooking space, with a separate private bathroom.
+Townhouse. A dwelling unit that is part of a row of 2 or more attached units, where each unit
+is located on an individual lot or parcel and shares at least one common wall with an adjacent
+unit. Development consisting of townhouses is called single attached residential.
+Triplex. A residential structure containing 4 dwelling units attached on a common wall, floor or
+ceiling. All 4 units of a triplex must be built on a single lot or parcel, or attached on a common
+wall and located on 4 child lots created through a middle housing land division.
+Housing Types, Projects.
+Cottage Cluster Project. A development site with one or more cottage clusters.
+Manufactured Dwelling Project. A lot or parcel on which 4 or more manufactured dwellings
+are placed, either owned in common by the dwelling owners or rented or leased to them by
+another party. A cottage cluster composed of manufactured dwellings is not considered a
+manufactured dwelling project.
+Townhouse Project. One or more townhouse structures constructed, or proposed to be
+constructed, together with the development site where the land has been divided, or is
+proposed to be divided, to reflect the townhouse property lines and any commonly owned
+property.
+Impact Area. The buffer area within the boundaries of the Significant Natural Resource Overlay
+District in which allowed uses could "adversely impact" the adjacent identified resource. Impact Area
+measurement and development standards are specified in Section 12.27.200.
+Inpatient Care. Medical care in which a patient receives health care services and is admitted to a
+facility for at least one overnight.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:28
+Isolated Upland Wildlife Habitat. Areas of Significant Wildlife Habitat identified in the adopted List
+of Significant Goal 5 Natural Resources Sites in Hillsboro and the City of Hillsboro Goal 5 Natural
+Resources Inventory and Assessment Report , which are not contiguous to a stream, wetland or
+riparian corridor.
+Joint-Use Parking. See Shared Parking.
+Loading, Front, Side or Rear. A descriptive term used to identify the location of a vehicular garage
+entrance or driveway in relation to the main building entrance. A front-loaded garage or driveway
+faces or accesses the same street as the main building entrance. A side-loaded garage or driveway
+faces a side street or alley or a side lot line. A rear-loaded garage faces the street or alley opposite
+the main pedestrian entry.
+Local Wetlands Inventory. A systematic survey of an area to identify, classify and map the
+approximate boundaries of wetlands in accordance with the requirements of OAR Chapter 141,
+Division 086, used in place of the National Wetlands Inventory and incorporated into the Statewide
+Wetlands Inventory after approval by the Oregon Department of State Lands.
+Lot. A unit of land created by a subdivision. The term lot may also be used generically to refer to units
+of land created through partitions or to lots of record. See also Parcel and Tract. Lots occur in a
+variety of shapes and configurations, as illustrated in Figure 12.01.500-C, including the following:
+Lot, Corner. A lot abutting 2 streets intersecting at an angle not greater than 135 degrees.
+Exception: lots with frontage on both a street and an alley are not considered corner lots.
+Lot, Double Frontage. A lot having street frontage on 2 streets that do not intersect. Also
+called a reverse frontage lot or a through lot.
+Lot, Flag. A lot so shaped that the buildable area (the "flag") is not adjacent to the street or alley
+on which the lot fronts, and which includes a private access strip (the "pole") connecting the
+buildable area to the street or alley.
+Lot, Interior. A lot abutting a single street.
+Lot, Middle Housing. A lot that is created by a middle housing land division, and that may, or
+may not, have street frontage.
+Lot, Regular. A lot having 4 property lines and typically square or rectangular in shape, where
+opposite property lines (front and rear; 2 opposite sides) are parallel or roughly parallel.
+Lot, Irregular. A lot having 4 or more property lines, where opposite property lines are not
+parallel or are curved.
+Lot, Multiple Frontage. A lot abutting 3 or more streets.
+Lot of Record. A lot or parcel created pursuant to applicable State law.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:29
+Lot, Parent/Lot, Child. Parent lot refers to a lot of record or a lot in a subdivision, partition, or
+middle housing land division which is developed, or proposed to be developed, with 2 or more
+townhouses or other type of middle housing, and which may therefore be further divided to
+allow individual ownership of each dwelling unit. Child lot refers to the unit(s) of land created
+from a parent lot. A child lot created through a middle housing land division is also referred to
+as a middle housing lot. Only one dwelling unit is permitted on each resulting middle housing
+lot.
+
+Lot Dimensions. Physical lot dimensions include the following:
+Lot Area. The total horizontal area inside the property lines of a lot, parcel, or tract. Lot area is
+generally measured in square feet or acres. For the purposes of this Code, lot area excludes
+any portion of a lot, parcel or tract located within public right-of-way regardless of the inclusion
+of that portion in a metes and bounds description or other legal instrument.
+ Figure 12.01.500-C:
+Lot Types
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:30
+Lot Coverage. That portion of the lot area which is covered by buildings taller than 24 inches
+above native grade, as illustrated in Figure 12.01.500-D. Lot coverage is expressed as a
+percentage of lot area.
+
+Lot Depth. The horizontal distance from the midpoint of the front lot line to the midpoint of the
+rear lot line. Lot depth on corner lots is the horizontal distance between 1 of the front lot lines
+and the opposite interior lot line . Methods of measuring lot depth are specified in Section
+12.50.110.
+Lot Width. The horizontal distance between the midpoints of the side lot lines. Lot width on
+corner lots is the horizontal distance between 1 of the front lot lines and the opposite interior lot
+line. Methods of measuring lot width are specified in Section 12.50.110.
+Lot Line. The property line bounding a lot, parcel, tract or lot of record . Types of lot lines, as
+illustrated in Figure 12.01.500-E, include the following:
+Lot Line, Front. The property line(s) separating a lot, parcel, tract or lot of record from a street,
+alley, or access tract. Interior lots have 1 front lot line; corner lots have 2 front lot lines; multiple
+frontage lots have 3 or more front lot lines.
+ Figure 12.01.500-D:
+Lot Coverage
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:31
+Lot Line, Rear. The lot line of a regular, interior lot which is opposite and most distant from the
+front lot line. Corner lots, double frontage lots and multiple frontage lots do not have a rear lot
+line, but may have multiple side lot lines. Methods of establishing rear lot lines of irregular or
+flag lots for setback purposes are specified in Figure 12.50.130-C.
+Lot Line, Side. Any lot line abutting another lot, parcel, tract or lot of record , which is not
+considered a front or rear lot line.
+
+Low Impact Development Approach (LIDA). A stormwater management and land-development
+strategy applied at the parcel and subdivision scale that emphasizes conversation and use of onsite
+natural features integrated with engineered, small-scale hydrologic controls to more closely mimic
+predevelopment hydrologic functions.
+Lowest Floor. For purposes of floodplain management, the lowest floor of the lowest enclosed area
+(including basement). An unfinished or flood resistant enclosure, usable solely for parking of
+vehicles, building access or storage in an area other than a basement area is not considered a
+building's lowest floor; provided, that such enclosure is not built so as to render the structure in
+violation of the applicable non-elevation design requirements of Section 12.27.100.
+Main Building Entrance. A primary pedestrian entrance to a building.
+ Figure 12.01.500-E:
+Types of Lot Lines
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:32
+Major Pedestrian Route. See Pedestrian Route, Major.
+Major Retail Use. A retail operation with 60,000 square feet or more of net floor area per building or
+business.
+Major Transit Stop. See Transit Stop, Major.
+Manufactured Home Park or Subdivision. A lot or parcel on which 4 or more manufactured
+dwellings are placed, either owned in common by the dwelling owners or rented or leased to them by
+another party. In the Regulatory Floodplain or Special Flood Hazard Area, "manufactured home park
+or subdivision" means a parcel (or contiguous parcels) of land divided into 2 or more manufactured
+home lots for rent or sale.
+Marijuana Facilities.
+Processing. A building or structure used in whole or in part for processing marijuana as
+defined in ORS 845.025.1015 as the processing, compounding or conversion of marijuana into
+cannabinoid products, cannabinoid concentrates or cannabinoid extracts, and which is li-
+censed by the Oregon Liquor Control Commission and/or Oregon Health Authority. Processing
+does not include packaging or labeling.
+Production. A building or structure used in whole or in part for producing marijuana as defined
+in ORS 845.025.1015, as the manufacture, planting, cultivation, growing or harvesting of
+marijuana, and which is licensed by the Oregon Liquor Control Commission and/or Oregon
+Health Authority. Producing does not include drying or cultivation of immature plants received
+from a producer, or the cultivation and growing of an immature marijuana plant by a processor,
+wholesaler, or retailer if that party purchased or otherwise received the plant from a licensed
+producer.
+Retail Sales (also known as marijuana retail sales facility ). A building or structure used in
+whole or in part for retail sales or delivery to a consumer of marijuana, cannabinoid products,
+and miscellaneous items, including medical marijuana, and which is licensed by the Oregon
+Liquor Control Commission and/or Oregon Health Authority. Retail sales facilities include
+medical marijuana dispensaries.
+Testing Laboratories. A building or structure used in whole or in part for testing of marijuana
+items, and which is licensed by the Oregon Liquor Control Commission and/or Oregon Health
+Authority.
+Wholesale Sales. A building or structure used in whole or in part for wholesale sales of
+marijuana, cannabinoid products, and miscellaneous items to a person other than a consumer,
+and which is licensed by the Oregon Liquor Control Commission and/or Oregon Health
+Authority.
+Marijuana Waste. The unwanted part or parts of a marijuana plant including but not limited to,
+trimmings, shake, stems, remnants, by-products or any other vegetative elements of a marijuana
+plant that a generator wishes to dispose of. Marijuana waste for the purposes of this Code does not
+include part or parts of a marijuana plant that have been treated or contaminated with solvents, or
+other chemicals that would be considered household hazardous waste or hazardous waste.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:33
+Mass Grading. See Grading, Mass.
+Medical Marijuana. A cannabinoid product, cannabinoid concentrate or cannabinoid extract that
+has a concentration of tetrahydrocannabinol that is permitted under ORS 475B.625 for consumers
+who hold a valid registry identification card issued under ORS 475B.415.
+Medical Marijuana Dispensary (Also Known As Marijuana Facility, Retail Sales). A retail facility,
+registered by the Oregon Health Authority, that is allowed to receive marijuana, immature marijuana
+plants, or usable marijuana products (such as edible products, ointments, concentrates or tinctures)
+and to transfer or sell that marijuana, immature plants, or usable products to a person with a valid
+Oregon Medical Marijuana Program card (a patient or the patient's caregiver) or to persons over the
+age of 21 as described in ORS 475.314. See also Marijuana Facilities, Retail Sales.
+Metro. The Portland area metropolitan service district, which is the regional government established
+by Charter and providing defined regional services including planning and policy making.
+Middle Housing. A category of housing types that includes duplexes, triplexes, quadplexes,
+townhouses, and cottage clusters.
+Middle Housing Land Division. The partition or subdivision of a lot or parcel in a middle housing
+zone on which the development of middle housing is allowed under ORS 197.758(2). A middle
+housing land division is an action distinct from other types of land divisions per this Oregon law.
+Further division of lots or parcels resulting from a middle housing land division are prohibited.
+Middle Housing Zone. See subsection 12.01.200.B.
+Minimum Residential Density. The minimum number of dwelling units required per net acre of
+developable land. Calculation methods for minimum residential density are contained in Section
+12.50.120.
+Mitigation. Measures taken to reduce or offset damage or negative impacts from development
+activities, such as enhanced vegetation to mitigate visual impacts from the sidewalk, installation of
+insulation or sound walls to mitigate increased noise levels, or shift scheduling to mitigate traffic
+peaking.
+Mitigation (of a Natural Resource or Impact Area). Measures taken to compensate for impacts to
+a significant natural resource or its impact area including replacement, creation, or enhancement
+activities. Examples of mitigation include constructing new replacement wetlands, replanting vege-
+tation, removing nuisance plants, and restoring disturbed streamside vegetation.
+Mixed-Use Building or Development. Buildings or developments which combine 2 or more types
+of uses, either vertically or horizontally. A mixed-use building is designed to accommodate uses such
+as live/work units, residential with commercial or light industrial, retail with office, or commercial with
+light industrial. Live-work dwellings are considered mixed-use buildings. A mixed-use development
+typically consists of multiple buildings designed to accommodate diverse but compatible land uses.
+Mobile Home. See Manufactured Dwelling in Housing Types.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:34
+Motel. A building, or portion thereof, of more than 5 guest rooms designed or intended to be used,
+let or hired out for the purpose of offering to the general public lodging for a fee on a daily, weekly, or
+monthly basis, where there is external pedestrian access to guest rooms.
+Multi-Dwelling Residential. Development consisting of multiple dwelling structures (see housing
+types.
+Multi-Use Path. A path physically separated from motor vehicle traffic, located either within a street
+right-of-way or a separate right-of-way or easement, and intended for use by bicyclists, pedestrians
+and non-motor vehicle traffic.
+Native Vegetation. Plants which occur naturally and are historically within the City limits. Native
+vegetation species are identified and listed on CWS Native Plant List.
+Neighborhood Activity Center. A land use which draws high levels of daily pedestrian usage, and
+which functions as a destination for pedestrian and vehicle trips. Examples of neighborhood activity
+centers include existing or planned parks and recreation facilities, schools, shopping areas,
+employment centers, theaters, and museums.
+Net Acre. See Acreage, Net.
+Nonconforming Situation. A use and/or structure which was legally compliant prior to a change in
+the provisions of an applicable zone or development standard, but which does not meet 1 or more
+requirements under the changed zone or standard. The application process and standards for
+expansions of non-conforming uses are cited in Section 12.30.800.
+Nuisance Plants. Plants which are both invasive and non-native. Nuisance plants are identified and
+listed as a noxious weed by the State of Oregon or listed on Tualatin Soil and Water Conservation
+District's Weed and Pest Directory.
+On-Site Circulation. The pattern internal to a development site that accommodates the movement
+of motor vehicles, bicycles and pedestrians.
+Other Construction. New construction, replacement, and any major remodeling of any building or
+structure; or any enlargement of an existing building or structure for which approval is not required
+through a Type I, II or III process, which the Director has determined will substantially change its
+exterior appearance from a public or private street; or change its occupancy from single family use
+to commercial or industrial use.
+Outpatient Care. Care in which a patient receives health care services without staying over-night.
+Palliative. Medical service rendered to reduce or moderate temporarily the intensity of an otherwise
+stable medical condition, but not including those medical services rendered to diagnose, heal or
+permanently alleviate or eliminate a medical condition.
+Para-Transit. Transportation services characterized by flexible routes and schedules, which oper-
+ate smaller vehicles (such as vans or smaller buses) to accommodate riders with mobility impair-
+ments. Para-transit vehicles are generally wheelchair accessible.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:35Supp. No. 1
+Parcel. A unit of land created by partitioning. When referencing lot configurations or lot dimensions,
+the term parcel may be used interchangeably with the term lot. See also Tract and Lot of Record.
+Park, Public. Land that is publicly owned or controlled and used to provide active or passive outdoor
+recreation.
+Parking Space. A permanently maintained space improved and used for the parking of 1 motor
+vehicle or 1 bicycle.
+Parking Structure. A building above and/or below grade, constructed and used for parking motor
+vehicles, which may also include bicycle parking. See also Structured Parking.
+Partition. Either the act of partitioning land or a unit of land partitioned.
+Partition Land. To divide land into 2 or 3 parcels. The application process and standards for
+partitioning land are cited in Section 12.80.096. For purposes of this Code, partition and partition
+land are not used in reference to middle house land division, unless specifically indicated.
+Pedestrian/Bicycle Accessway, or Accessway. Any off-street path or walkway designed and
+constructed for use by pedestrians and/or bicyclists where such routes are not otherwise provided by
+the street system.
+Pedestrian Connection. A route between 2 points intended and suitable for pedestrian use.
+Pedestrian connections include, but are not limited to, pedestrian/bicycle accessways, sidewalks,
+walkways, stairways and pedestrian bridges.
+Pedestrian Crossing. Any location, either at an intersection or midblock, where a pedestrian
+sidewalk, path or walkway crosses vehicular lanes. At a pedestrian crossing, pedestrian traffic is
+usually 2-way; but motor vehicle traffic may be either 1-way or 2-way.
+Pedestrian-Friendly Features. Features in the built environment designed and used to enhance
+pedestrian comfort, safety and interest. Pedestrian-friendly features may include sidewalks, public
+art, awnings or other weather protection, fountains or water features, kiosks, landscaping, pedestrian-
+oriented signs and lighting, seating areas, street trees, transit stops and shelters, or pedestrian scale
+buildings with high levels of transparency and articulation.
+Pedestrian Route, Major. A pedestrian route located on an arterial or collector street or major transit
+route. Pedestrian routes on local streets or street segments within 1,300 feet of a major transit stop,
+transit center or transit station where the street or street segment provides reasonably direct
+connection to the station or center.
+Pedestrian Scale. The proportional relationship between the dimensions of a building or building
+element, outdoor space, street or streetscape element and the average dimensions of the human
+body, emphasizing features and characteristics which can be observed in close proximity at an
+average pedestrian's walking speed.
+Pedestrian-Sensitive. An adjective used to describe development in which primary emphasis is
+given to pedestrian access and use of the site and buildings, rather than to motor vehicle access and
+parking areas. A "pedestrian-sensitive environment" is designed with pedestrian friendly features
+and is conducive to walking between destinations.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:36Supp. No. 1
+Person. An individual, firm, partnership, association, or corporation.
+Place of Assembly. A permanent or temporary structure, facility, place or activity where concentra-
+tions of people gather in reasonably close quarters.
+Planning Commission. The Planning Commission of the City of Hillsboro.
+Planning and Zoning Hearings Board. The Planning and Zoning Hearings Board of the City of
+Hillsboro.
+Plat. A map or diagram and other writing(s) containing all the required descriptions, locations,
+specifications, dedications, provisions and information required by State law and prepared for the
+purpose of dividing property through subdivision or partition.
+Plat, Final. A plat of a subdivision or partition, prepared by a licensed surveyor or engineer for
+submittal to the City for review pursuant to the requirements of Section 12.80.098 or Section
+12.80.096 which demonstrates compliance with earlier conditions of approval and is intended
+to be recorded with the Washington County Surveyor in accordance with applicable State law.
+Plat, Preliminary. A plat of a subdivision or partition prepared for submittal to the City for
+review and approval pursuant to the requirements of Section 12.80.098 or Section 12.80.096.
+Plaza. An outdoor area designed to encourage social interaction and accommodate recreational
+activities, events and relaxation. Plazas are typically provided with pedestrian amenities, art and/or
+landscaping.
+Practicable. Feasible; capable of being put into practice, done or accomplished given consideration
+of available technology and project economics. When applied in Significant Natural Resource Areas,
+the term is used relative to potential adverse impacts on the functions and values of the SNR.
+Primary Street Frontage. Street frontage to which the primary building on the site is oriented,
+generally the street containing the main building entrance and/or the numbered street address of the
+building.
+Processing, Marijuana. See Marijuana Facilities.
+Production, Marijuana. See Marijuana Facilities.
+Property Line. The division line between 2 units of land.
+Property Line Adjustment. The relocation or elimination of all or a portion of the common property
+line between abutting properties, which does not create an additional lot or parcel. The application
+process and standards for Property Line Adjustments are specified in Section 12.80.092.
+Psilocybin Facilities.
+Product Manufacture. A building or structure, licensed under ORS 475A.290, used in whole
+or in part for the manufacture, planting, cultivation, growing, harvesting, production, prepara-
+tion, propagation, compounding, conversion or processing of a psilocybin product, either
+directly or indirectly by extraction from substances of natural origin, or independently by means
+of chemical synthesis, or by a combination of extraction and chemical synthesis, and includes
+any packaging or repackaging of the psilocybin product or labeling or relabeling of its container.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:37Supp. No. 1
+Service Center. A building or structure, licensed under ORS 475A.305, used in whole or in part
+for psilocybin administration sessions and at which other psilocybin services may be provided.
+Testing Laboratory. A building or structure, licensed under ORS 475A.594, used in whole or
+in part for the testing of psilocybin products.
+Psilocybin Waste. The unwanted part or parts of a psilocybin-bearing mushroom or any related
+elements (such as growth medium, etc.) that a producer wishes to dispose of. Psilocybin waste for
+the purposes of this Code does not include waste that has been treated or contaminated with
+solvents, or other chemicals that would be considered household hazardous waste or hazardous
+waste.
+Public Communications and Engagement Plan (PCEP). A public involvement plan that complies
+with Statewide Planning Goal 1 requirements to provide adequate notice on public involvement
+activities, advanced information on matters under consideration, and opportunities for community
+involvement in all phases of the planning process for Comprehensive Plan Major Amendments.
+Public Engagement Committee (PEC). The Public Engagement Committee of the City of Hillsboro.
+Public Facility Plan. A plan created by the City in accordance with Statewide Planning Goal 11 to
+coordinate programs, policies, jurisdictional responsibilities, project timing or financing for public
+facilities or services or for topic areas required by a Statewide planning goal to be addressed in the
+Comprehensive Plan.
+Public Utility Easement (PUE). See definition in Hillsboro Municipal Code Section 9.48.020.
+Qualified Natural Resources Professional. An individual qualified to complete the technical tasks
+identified in these guidelines, as demonstrated through attainment of 1 or more of the following
+credentials:
+1. An advanced degree (Masters, PhD) in one of the fields listed below and 3 years relevant
+work experience;
+2. Bachelor's degree in one of the fields listed below and 5 years relevant work experience;
+3. An Associate degree or minimum 90 hours of college level credit in one of the fields listed
+below and 7 years relevant work experience; OR
+4. Ten years relevant work experience.
+Accepted fields of study: Ecology, botany, wildlife biology, natural resource management,
+wetland science, environmental science or environmental planning.
+Relevant work experience: Technical or professional level work collecting and analyzing
+habitat-related data, conducting wildlife habitat investigations, following pertinent laws and
+regulations, and/or planning and monitoring habitat projects.
+Reasonably Direct. A term used to signify that a route minimizes out-of-direction travel that is no
+more than 120% of the straight-line distance.
+Recreational Vehicle. A vehicle that is:
+• Built on a single chassis;
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:38Supp. No. 1
+• 400 square feet or less when measured at the largest horizontal projections;
+• Designed to be self-propelled or permanently towable by a light-duty truck; and
+• Not designed for use as a permanent dwelling but as temporary living quarters for
+recreational, camping, travel, or seasonal use.
+Redevelopment. Construction of new structures, expansion or change of existing structures or
+building footprints, reconfiguration of existing driveways or parking, and site grading related to such
+additions, changes, or reconfiguration. Redevelopment does not include the following, when
+undertaken consistent with City regulations:
+• Maintenance, repair or removal of existing structures, driveways or other site improve-
+ments;
+• Interior structural improvements or vertical additions that do not affect existing building
+footprints or impervious areas on a site; or
+• Replacement of structures due to a catastrophic event such as fire.
+Regulated Affordable Housing. Housing that is made affordable through public subsidies and/or
+statutory regulations that restrict or limit resident income levels and/or rents. To be considered
+regulated affordable housing, units must:
+1. Have a local, State, or Federal compliance agreement or contract;
+2. Be affordable to households at or below 80% Median Family Income as defined annually
+by Housing and Urban Development (HUD) for the county in which the development is
+built or for the State, whichever is greater;
+3. Remain regulated affordable housing units for a minimum of 30 years from the date of
+occupancy.
+Additional definitions of "Affordable Housing" related to specific State legislation are provided
+in CDC Section 12.40.107.
+Rehabilitation. As applied to Cultural Resources and within Conservation districts, rehabilitation is
+the process of repairing or altering a structure to allow an efficient contemporary use, while
+preserving those portions and features that are significant to the historic, architectural and cultural
+values of the resource. Rehabilitation may include compatible elements not found in the original
+structure and does not involve the technical or historic replication in restoration.
+Repair and Maintenance. Activities intended to preserve and care for a structure, landscaping, or
+other improvements to such an extent that they remain safe, presentable and carry out the purpose
+for which they were initiated, installed, constructed or required, without expanding the existing
+development or activity.
+Replacement (of a Significant Natural Resource (SNR)). The construction or creation of a new
+SNR site, in substitution for the removal or destruction of an existing SNR site. In the case of
+wetlands, replacement construction is limited to sites where conditions have been demonstrated to
+exist capable of producing and sustaining a wetland.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:39Supp. No. 1
+Residential Facility. "Residential facility" as defined by State law (currently ORS 197.660), includes
+a residential care, residential training or residential treatment facility, as those terms are de-fined in
+ORS 443, licensed or registered under ORS 443, or licensed under ORS 418, by the Department of
+Human Services that provides residential care alone or in conjunction with treatment or training or a
+combination thereof for 6 to 15 individuals who need not be related. Staff persons required to meet
+licensing requirements are not counted in the number of facility residents, and need not be related
+to each other or to any resident of the residential facility.
+Residential Home. "Residential home" as defined by State law (currently ORS 197.660), includes
+a residential treatment or training or an adult foster home licensed by or under the authority of the
+Department of Human Services, as defined in ORS 443, a residential facility registered under ORS
+443, or an adult foster home licensed under ORS 443 that provides residential care alone or in
+conjunction with treatment or training or a combination thereof for 5 or fewer individuals who need
+not be related. Staff persons required to meet licensing requirements are not counted in the number
+of home residents, and need not be related to each other or to any resident of the residential home.
+Restoration. To return a building or structure to its original condition in precise detail. As applied to
+Cultural Resources and within Conservation Districts restoration may include removal of later
+additions or elements and/or the reconstruction of deteriorated or previously destroyed features.
+Also known as "preservation."
+Restoration (of a Significant Natural Resource). To return an SNR site to its original condition. As
+applied to Significant Natural Resource sites, restoration may include removal of invasive or
+non-native species and replanting with native species, and/or site alterations to restore previous
+topography.
+Retail Sales. See Marijuana Facilities, Retail Sales.
+Review Authority. The person or body responsible for making a decision regarding a land use
+application or appeal. Review Authority in this Code may refer to the Director, the Planning and
+Zoning Hearings Board, the Historic Landmarks Advisory Committee, the Planning Commission or
+the City Council.
+Right-of-Way. An area of land dedicated, deeded or granted to the public to accommodate public
+uses such as a portion of a transportation system or public utility system. Examples of rights-of-way
+include transportation routes for motor vehicles, transit, bicycles and pedestrians and public utility
+corridors for water, sewer, and storm water lines, and for power lines and gas lines where adequate
+public utility easements are not available.
+Riparian Area. The area adjacent to a river, lake, or stream, consisting of the area of transition from
+an aquatic ecosystem to a terrestrial ecosystem as defined in OAR 660-023-0090.
+Riparian Corridor. The water areas, fish habitat, adjacent riparian areas, and wetlands within the
+riparian area boundary as defined in OAR 660-023-0090.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:40Supp. No. 1
+Riparian Upland Resources. Areas contiguous to a stream or wetland which include a combination
+of significant wildlife habitat and riparian areas, as identified in the adopted List of Significant Goal 5
+Natural Resources Sites in Hillsboro and the City of Hillsboro Goal 5 Natural Resources Inventory
+and Assessment Report.
+Road Authority. The agency with jurisdiction over the right-of-way and responsible for maintenance
+of the existing or required public improvements.
+Roadway Link. As used in Section 12.70.200, a section of roadway which includes the intersections
+at both ends, or at 1 end in the case of a cul-de-sac. The end points of a roadway link will be at an
+equally or higher classed roadway.
+Setback. The distance between a structure and the property lines of the lot, parcel, or tract on which
+it is located. See also Yard.
+Shared Parking. Public or private parking shared by 2 or more uses. Criteria for shared parking are
+contained in Subsection 12.80.156.D.6.
+Shared Street. A street designed to accommodate access for vehicles, pedestrians and bicycles to
+abutting property within the same circulation space. To indicate that the entire street is intended for
+pedestrians as well as vehicles, a shared street may be surfaced with ornamental pavers rather than
+having separate sidewalks. A shared street may function as a community open space, with
+landscaping and landscaping features, street furniture, lighting fixtures and benches. A shared street
+may also be designed with traffic calming measures.
+Short Term Rental (STR). The offering of space or of 1 or more bedrooms (and any use of common
+area) in a dwelling unit for transient residential purposes to serve paying guests for periods of 30
+days or less. An STR includes both partial-dwelling rental, where the owner or operator remains on
+site, and full-dwelling rental, where the owner does not remain on site. Standards for STRs are
+included in Section 12.40.230.
+Significant Natural Resources Area (SNRA). A significant wetland, riparian corridor and/or wildlife
+habitat as identified in the List of Significant Goal 5 Natural Resources Sites adopted in Ordinance
+No. 5066. Significant Natural Resources Areas are divided into 3 protection levels as described
+below, based on the Goal 5 Natural Resources Inventory and Assessment (also adopted in
+Ordinance No. 5066) and the Goal 5 Economic, Social, Environmental and Energy Analysis
+(adopted as findings for Ordinance No. 5269):
+SNR Protection Level 1. An SNR area where uses that conflict with resource preservation are
+moderately limited. Such limitations have been found to be appropriate where the economic or
+energy benefits of utilizing the site significantly outweigh the environmental or social benefits of
+fully limiting conflicting uses. SNR Protection Level 1 development standards are specified in
+Section 12.27.200.
+SNR Protection Level 2. An SNR area where uses that conflict with resource preservation are
+limited in order to balance flexibility for development with protection of the resource at a
+baseline level. SNR Protection Level 2 development standards are specified in Section
+12.27.200.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:41Supp. No. 1
+SNR Protection Level 3. An SNR area where uses that conflict with resource preservation are
+strictly limited. Such limitations have been found to be appropriate where the environmental or
+social benefits of protecting the site significantly outweigh the economic or energy benefits of
+utilizing the site. SNR Protection Level 3 development standards are specified in Section
+12.27.200.
+Significant Natural Resources Permit (SNRP). An approval granted by the Review Authority after
+a review process is completed that allows certain activities or uses to occur in the Significant Natural
+Resources Overlay District. The review process and approval criteria for a Significant Natural
+Resources Permit are specified in Section 12.80.130.
+Significant Natural Resources (SNR) Site. A Significant Natural Resource Area (SNRA) for which
+the boundary has been verified in accordance with Section 12.27.250.
+Site Alterations, Major. Non-structural site alterations disturbing more than 500 square feet of
+ground area due to grading or paving, for which approval is not required through a Type I, II or III
+process, and which affect site access, topography, mature trees, natural resources, required
+landscaping, or which increase or concentrate the on-site drainage flow at a property line.
+Site Alterations, Minor. Non-structural site alterations disturbing up to or less than 500 square feet
+of ground area due to grading or paving, which do not affect site access, topography, mature trees,
+natural resources, required landscaping, or which do not increase or concentrate the on-site
+drainage flow at a property line.
+Stabilization. Construction methods intended to either prevent erosion or failure of a soil slope
+following grading or vegetation removal; or to structurally reinforce or arrest material deterioration of
+a building to prevent failure.
+Stockpiling. Storage of native or imported soil with the intent to redistribute it in order to contour site
+elevations to a finished grade.
+Story. That portion of a building between the upper surface of any floor and the upper surface of the
+floor next above, with the exception that the top story is that portion of a building between the upper
+surface of the top floor and the ceiling above or the roof rafters if there is no ceiling. A basement is
+considered a story if the finished floor level directly above the basement is more than 6 feet above
+finished grade. Story or stories are an internal measurement of the vertical dimension of a building,
+as opposed to building height which is an external measurement. Stories are illustrated in Figure
+12.01.500-F.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:42Supp. No. 1
+Story, Half. A top story, the floor area of which does not exceed 50% of the floor area of the story
+below, located under a sloping roof. In order to limit overall building height, dimensions shall
+demonstrate top of wall on at least 2 opposite exterior walls which are not more than 4 feet above the
+top floor.
+
+Street. A right-of-way or tract intended for motor vehicle, pedestrian or bicycle travel and/or access
+to abutting property. For purposes of this Code, facilities with other names meeting this definition
+(such as road, avenue, or highway) are also considered streets. Transportation studies referenced
+in Section 12.70.200 may also use the interchangeable term "roadway." A "street" does not include
+alleys, railroad rights-of-way, or the Sunset Highway (U.S. Highway 26). The Transportation System
+Plan categorizes streets into the classifications listed below: dimensions and construction standards
+for each street classification are found in Subchapter 9.04 of the Hillsboro Municipal Code (HMC).
+Street, Arterial. A street intended to serve as a primary route for travel between the City and
+other parts of the region or between major areas of urban activity.
+Street, Commercial or Industrial. A street intended to serve primarily abutting commercial
+and/or industrial uses.
+Street, Collector. A street providing both access and circulation within residential and
+commercial/industrial areas. Collector streets may penetrate residential neighborhoods dis-
+tributing trips for the local and neighborhood route systems.
+Street, Cul-De-Sac. A street having only one open end and permanently terminated by a
+vehicular turn around. The term may also refer to the turnaround area itself.
+Street, Local Residential. A street intended to serve only abutting land and designed to carry
+less than 1,500 cars per day.
+ Figure 12.01.500-F:
+Building Stories
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:43Supp. No. 1
+Street, Neighborhood Route. A street providing connectivity between local residential streets
+and collector streets or arterial streets , used by residents in an area to enter or exit a
+neighborhood but not serving as City-wide area circulation.
+Streetcar. See Transit.
+Streetscape. The design elements that constitute the physical makeup of a street and that as a
+group define its character, including building frontage, street paving, street furniture, landscaping,
+including trees and other plantings, signs and lighting.
+Structure. That which is built or constructed. An edifice or building of any kind or any constructed or
+erected object built up or composed of parts joined together in some definite manner, which requires
+location on the ground or which is attached to something having a location on the ground but may not
+be roofed. For floodplain management purposes, "structure" means a walled and roofed building,
+including a gas or liquid storage tank, that is principally above ground, as well as a manufactured
+home.
+Structured Parking. Motor vehicle parking spaces, access drive aisles and ramps, constructed
+within a building with 2 or more stories, which are intended as an accessory use to the main use of
+the building. Structured parking does not include private garages for detached or attached single
+family dwellings or duplexes, but does include parking spaces integrated into a larger structure
+occupied by the primary use.
+Study Area. As used in Section 12.70.200, the geographic area encompassing the roadways and
+intersections required to be analyzed in a transportation study.
+Subdivide Land. To divide a unit of land into 4 or more lots. The review process and approval criteria
+for a subdivision are specified in Section 12.80.098. For purposes of this Code, subdivision and
+subdivide land are not used in reference to middle house land division, unless specifically indicated.
+Subdivision. Either the act of subdividing a unit of land or the unit of land subdivided.
+Substantial Construction. An approved application shall have undertaken substantial construction
+when any of the following have taken place: utilities have been installed to serve the project;
+approved grading has been undertaken representing at least 25% of all the required preliminary
+grading; foundation excavation has occurred; foundation or building construction has occurred;
+street improvements are being installed; or a major physical improvement, required as part of the
+approved permit, has clearly begun. Substantial construction is not satisfied by simply having
+approved pre-construction plans or building permits, or by site clearing and grubbing. Actual physical
+improvements as identified above must have taken place.
+Substantial Damage. Damage of any origin sustained by a structure whereby the cost of restoring
+the structure to its before-damaged condition would equal or exceed 50% of the market value of the
+structure before the damage occurred.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:44Supp. No. 1
+Substantial Improvement. Any reconstruction, rehabilitation, addition or other improvement of a
+structure, the cost of which equals or exceeds 50% of the market value of the structure before the
+"start of construction" of the improvement. This term includes structures which have incurred
+"substantial damage," regardless of the actual repair work performed.
+Substantial improvement occurs when the alteration of any wall, ceiling, floor, or other structural part
+of a structure begins, whether that alteration does or does not affect the external dimensions of the
+structure. Substantial improvement does not include:
+1. Improvements to correct existing violations of State or local health, sanitary, or safety
+code specifications identified by the local code enforcement official which are the
+minimum necessary to assure safe living conditions; or
+2. Alteration of a structure listed on the National Register of Historic Places or the State
+Inventory of Historic Places.
+Sufficient Infrastructure. When used in the evaluation of public services provided to a new triplex,
+quadplex, townhouse, or cottage cluster in middle housing zones, all of the following levels of public
+services shall be defined as "sufficient infrastructure":
+1. Connection to a public sewer system capable of meeting established service levels;
+2. Connection to a public water system capable of meeting established service levels;
+3. Access to the City's public street system via public or private streets that meet adopted
+emergency vehicle access standards; and
+4. Storm drainage facilities capable of meeting established service levels for storm drain-
+age.
+Testing Laboratories. See Marijuana Facilities, Testing Laboratories.
+Third Place. A location which is neither "home" nor "work," which functions as a gathering place for
+social interaction. Third places can be either indoors or outdoors, and either publicly or privately
+owned.
+Townhouse. See Housing Types.
+Tract. A unit of land created by partition or subdivision, created for and limited by deed restriction or
+dedication to a specific use, including but not limited to access, utility placement, vehicle storage,
+open space, or significant natural resource areas. In phased developments, the term may also be
+used to describe units of land intended for future development. See also Lot and Parcel.
+Traffic. As used in Transportation Studies (see Section 12.70.200):
+Background Traffic is the combination of existing traffic and in-process traffic. Background
+traffic may also include trips calculated using a growth rate or model forecast instead of or in
+addition to in-process traffic.
+Development Traffic is the number of trips anticipated to be generated by the proposed
+development, generally calculated based on the Institute of Transportation Engineers Trip
+Generation Manual or other acceptable transportation planning practice.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:45Supp. No. 1
+Existing Traffic is the current traffic volume on study roadways and intersections, typically
+based on physical traffic counts.
+In-Process Traffic is the projected traffic from approved developments not yet occupied. For
+developments within the South Hillsboro Plan District, In-Process Traffic shall also include trips
+vested for each phase of development within the South Hillsboro Plan District approved
+through an executed Annexation Agreement or Development Agreement.
+Total Traffic is the combination of background and development traffic.
+Traffic Calming Measures. Physical elements within or adjacent to a roadway which are designed
+to reduce motor vehicle speeds and alter driver behavior in the interest of street safety, livability and
+other public purposes.
+Traffic Direction.
+Downstream. The direction toward which traffic is moving.
+Upstream. The direction from which traffic is approaching.
+Traffic Impact Analysis (TIA) as known as Traffic Impact Study. A technical report intended to
+assess the potential impact of new development on the public transportation system. A TIA typically
+analyzes a development's future impact on roadway capacity, level of service, safety, access
+provisions, and determines if any on-site and off-site mitigation is needed. Methodology for TIA is
+described in Section 12.70.200.
+Traffic Management Plan. A report usually prepared in conjunction with a TIA, that identifies
+potential traffic impacts and appropriate measures to mitigate such impacts.
+Transit. Scheduled passenger transportation services provided by public, private, or nonprofit
+entities. Examples of transit include bus service and the following:
+Bus Rapid Transit. A transit system using buses, serving major transit routes with limited
+stops on routes where the bus route is physically separated from other modes. Bus Rapid
+Transit is intended to emulate light rail transit in speed, frequency and comfort.
+Commuter Rail. Transit service on existing freight ("heavy") rail tracks, either exclusively or
+shared with freight use. Commuter rail service typically focuses on peak periods but can be
+offered at other times when demand exists and where rail capacity is available. Commuter rail
+stations are typically located 1 or more miles apart.
+Frequent Bus Service. Frequent bus service offers local and regional bus service with stops
+approximately every 750 to 1,000 feet, providing corridor service rather than nodal service
+along selected arterial streets. This service typically runs at least every 15 minutes throughout
+the day and on weekends though frequencies may increase based on demand, and it can
+include transit preferential treatments, such as reserved bus lanes and transit signal priority,
+and enhanced passenger infrastructure along the corridor and at major bus stops, such as
+covered bus shelters, curb extensions, special lighting and median stations.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:46Supp. No. 1
+High Capacity Transit. A form of public transit distinguished from local service transit such as
+bus lines by higher speeds, fewer stops, more passengers, and more frequent service. High
+capacity transit includes light rail, commuter rail, bus rapid transit and rapid streetcar transit.
+Light Rail Transit. A high-capacity transit system operating on fixed tracks, which may or may
+not be located in a street right-of-way.
+Streetcar. A relatively lightweight passenger railcar operated either singly or in a short train, on
+fixed rails in right-of-way which may or may not be separated from motor vehicle traffic.
+Streetcars operate among neighborhoods within cities, as opposed to among cities.
+Transit Center. A hub location where transit lines or routes for multiple transit modes meet to
+facilitate transfers.
+Transit Park And Ride. Any surface parking lot or parking structure located at a transit stop which
+provides automobile and bicycle parking.
+Transit Route. Any public or private right-of-way where transit service is currently provided or a
+location planned for future transit service as identified on the Transit Master Plan in the Transpor-
+tation System Plan or other adopted City plans.
+Transit Route, Major. A transit route which serves areas planned and zoned for higher population
+and employment densities such as Metro 2040-designated regional centers, town centers, employ-
+ment centers, main streets, station communities, and corridors. As used in this definition, "major
+transit routes" are limited to the streets shown on Figure 12.01.500-G:
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:47Supp. No. 1
+Transit Station. Land owned or held through permanent easement by a transit provider, on which
+facilities related to a high capacity transit stop are located, such as a station platform, park and ride
+lots, larger shelters, bike station, information kiosks, public art, and other similar facilities. Land
+intended for future use as a transit station is called a "transit station site."
+Transit Stop. Any area posted as a transit stop where transit passengers board or exit.
+Transit Stop, Major. An existing transit stop, or one shown in an adopted city plan, located on
+a major transit route.
+Transit Stop, Minor. An existing transit stop not located on a major transit route.
+ Figure 12.01.500-G:
+Major Transit Routes
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:48Supp. No. 1
+Transit-Supportive. A use or development which supports transit, pedestrian and bicycle mobility
+and which is designed with pedestrian-friendly features and connectivity improvements which
+reduce conflicts among vehicles, pedestrians, and bicycles.
+Transportation System Plan. The adopted transportation system plan of the City of Hillsboro, cited
+in the Hillsboro Comprehensive Plan.
+Trim. When used in the context of window or door trim, trim means wood or other rigid material
+abutting the window or door on at least 3 sides, which is distinct from the siding. On brick, stone or
+stucco façades, trim can be formed by insetting (recessing) the window or door into the wall a
+minimum of 1 inch.
+Usable Open Space. Areas planned and improved to provide opportunities for active recreation,
+passive relaxation, or community interaction, and which are accessible to the general public or to
+residents, employees or customers in common. Examples include plazas, courtyards, private parks,
+sport fields and courts, and viewpoints overlooking natural resource areas. Usable Open Space
+does not include public parks unless the parks were approved as Usable Open Space and conveyed
+to the City.
+Use. The activity or operation for which land or a structure is designed or constructed, or for which
+it is occupied or maintained.
+Vegetation Removal. Removal of site vegetation through cutting, clearing, grubbing, mowing, or
+similar activities. Vegetation removal does not include routine maintenance of landscaped areas or
+removal of individual diseased or dead plants, shrubs or trees.
+Vision Clearance Area. An area adjacent to a street or a railroad, in which sight obstructing
+plantings or structures may be restricted to improve traffic safety. Standards for vision clearance
+areas are specified in Section 12.50.260.
+Visitability. A term used to describe building design features which allow persons with mobility
+impairments to visit, but not necessarily to live, in a dwelling. Dimensions and Standards for
+visitability are included in Subsection 12.50.930.G.
+Volume-to-Capacity Ratio (V/C) is a Measurement of Roadway Capacity Utilization. It is
+expressed as a ratio, in which the numerator is traffic volume and denominator is the available
+capacity of a roadway, intersection, lane group or movement, both expressed in trips per time period.
+A V/C ratio < 1.0 represents traffic volume less than the carrying capacity of a roadway, whereas a
+V/C ratio > 1.0 represents traffic volume that exceeds the carrying capacity of a roadway.
+Waiver of Remonstrance. See definition of Non-Remonstrance Agreement in Hillsboro Municipal
+Code 3.16.010.
+Walkway. A transportation facility built for use by pedestrians, usually located outside a street
+right-of-way or tract. Examples of walkways include pedestrian paths and nature trails.
+Water-Dependent. For purposes of floodplain management, a structure for commerce, industry, or
+recreation that cannot exist in any other location and is dependent on the water or proximity to water
+due to the intrinsic nature of its operations or function.
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:49Supp. No. 1
+Water Impoundment. A temporary or permanent, human-made body of water, excluding above-
+ground or in-ground swimming pools, hot tubs, or spas with surface areas less than 650 square feet.
+Water impoundments include wastewater treatment settling ponds, storm water swales, detention
+and retention ponds, artificial lakes and ponds, and similar water features. An expansion of an
+existing water impoundment is considered a new impoundment except where such expansion was
+authorized by the City prior to November 5, 2009.
+Wetland. An area inundated or saturated by surface or ground water at a frequency and duration
+sufficient to support, and that under normal circumstances does support, a prevalence of vegetation
+typically adapted for life in saturated soil conditions.
+Wetland, Significant. A wetland that both meets the Department of State Lands definition of
+a Locally Significant Wetland and is listed on the Local Wetlands Inventory . Significant
+wetlands may be either associated with a stream or hydrologically isolated.
+Wetland, Non-Significant. A wetland that does not meet the Department of State Lands
+definition of a Locally Significant Wetland and does not appear on the Local Wetlands
+Inventory. Development in non-significant wetlands is not regulated by this Code, but does
+require Department of State Lands notification under ORS 227.350.
+Wholesale Sales. See Marijuana Facilities, Wholesale Sales.
+Wildlife Habitat. An area upon which wildlife depends in order to meet their requirements for food,
+water, shelter, and reproduction as defined in OAR 660-023-0110.
+Yard. The area between a structure and a property line. See also Setback. Types of yards are
+illustrated in Figure 12.01.500-H.
+Yard, Front (Interior Lot). The yard between the side lot lines from the front lot line to the
+nearest point of the structure.
+Yard, Front (Corner Lot). Any yard abutting a front lot line.
+Yard, Interior (Corner Lot). Any yard other than a front yard.
+Yard, Rear. The yard between side lot lines from the rear lot line to the nearest point of the main
+structure.
+Yard, Side. The yard between the front and rear yard from the side lot line to the nearest point
+of the structure. The term "street side yard" may be used to indicate a front yard on a corner lot.
+12.01.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:50Supp. No. 1
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024; Ord. No.
+6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6465 § 2, 2024; Ord. 6451 § 1, 2023; Ord. 6417 § 1, 2022; Ord.
+6410 § 1, 2022; Ord. 6408 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019;
+Ord. 6294 § 1, 2019; Ord. 6276 § 1, 2018; Ord. 6275 § 1, 2018; Ord. 6250 § 1, 2017; Ord. 6192 § 1,
+2016; Ord. 6178 § 1, 2016; Ord. 6160 § 1, 2016; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. 6116
+§ 1, 2015; Ord. 6110 § 2, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+ Figure 12.01.500-H:
+Types of Yards
+ 12.01.500GENERAL PROVISIONS
+CDC12.01:51Supp. No. 1
+12.01.600  Acronyms and Abbreviations.
+As used in this Code, the following acronyms and abbreviations reference the statute, agency,
+organization or item indicated:
+ ADA The Federal Americans with Disabilities Act of 1990 (P.L. 101-336)
+ADT Average Daily Traffic
+ADU Accessory Dwelling Unit
+ASCO Airport Safety and Compatibility Overlay (zone)
+Corps U.S. Army Corps of Engineers
+County Washington County
+CDC Community Development Code
+CCRs Covenants, Conditions and Restrictions
+COH City of Hillsboro
+CWS Clean Water Services District
+D&C (Public Works) Design and Construction (Standards)
+DLCD Oregon State Department of Land Conservation and Development
+DLUT Washington County Department of Land Use and Transportation
+DSL Oregon Department of State Lands
+FAA Federal Aviation Administration
+FIL Fee-in-Lieu
+FAR Floor Area Ratio
+FEMA Federal Emergency Management Agency
+FIRM Flood Insurance Rate Map
+Ft. Feet or foot
+FHA The Federal Fair Housing Act of 1968 (PL 90-284) Title VIII
+GFA Gross Floor Area
+HLAC Historic Landmarks Advisory Committee
+HOA Homeowners Association
+HCP Hillsboro Comprehensive Plan
+HCT High Capacity Transit
+HMC Hillsboro Municipal Code
+ITE Institute of Transportation Engineers
+LCDC Oregon State Land Conservation and Development Commission
+LIDA Low Impact Development Approach
+LOS Level of Service
+LUBA Oregon State Land Use Board of Appeals
+LRT Light Rail Transit
+Metro Metropolitan Service District
+NFA Net Floor Area
+OAR Oregon Administrative Rule
+ODA Oregon Department of Aviation
+ODOT Oregon Department of Transportation
+12.01.600 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.01:52Supp. No. 1
+ORS Oregon Revised Statute
+ORSC Oregon Residential Specialty Code
+OSSC Oregon Structural Specialty Code
+PCEP Public Communications and Engagement Plan
+PEC Public Engagement Committee
+POA Property Owners Association
+PUD Planned Unit Development
+PUE Public Utility Easement
+PW Public Works Department
+RFO Regulatory Floodplain Overlay (zone)
+ROW Right-of-Way
+SCPA Station Community Planning Area
+SNRA Significant Natural Resource Area
+SNRO Significant Natural Resource Overlay (zone)
+SNRP Significant Natural Resources Permit
+SPL Service Provider Letter
+Sq. ft. Square Feet or Square Foot
+TDT Transportation Development Tax
+TIA Traffic Impact Analysis
+Tri-Met Tri-County Metropolitan Transit Service District
+TPR Statewide Transportation Planning Rule OAR 660-12-0060
+THPRD Tualatin Hills Park and Recreation District
+TSP Transportation System Plan
+US United States
+V/C Volume to Capacity (ratio)
+(Ord. 6437 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6250 § 1, 2017; Ord. 6192 § 1, 2016; Ord. 6120 § 1,
+2015)
+ 12.01.600GENERAL PROVISIONS
+CDC12.01:53Supp. No. 1

@@ -345,7 +345,23 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 122, "comments": 148, "tests": 17}
+EXPECTED = {"notes": 129, "comments": 194, "tests": 18}
+#
+# 287 -> 341 on 2026-09-29, later the same day: Hillsboro, the second
+# Washington County draft from the same cloud session. 46 comments, 7 notes
+# and 1 test. The comments are the Community Development Code's standards
+# that no field or measured fact holds: minimum FAR and front property line
+# coverage in the mixed-use and urban-center zones, lot coverage stated as a
+# floor area (gsf), maximum side setbacks and maximum lot sizes, the
+# corner-lot and substandard right-of-way setback rows, the 12.50.140 C
+# height transition, the 2 1/2-story count, 12.40.104's middle-housing
+# coverage bonus, stall and aisle dimensions, SCC-DT's in-structure parking
+# rule and figure-drawn front setback, the plan districts (12.61 to 12.68),
+# and the density bands that collapse against a held floor. The notes are
+# the zone summaries saying so (MU-VTC's plan-area density, SCC-DT's
+# figure-drawn height, R-6's table misprinted "SR-6"). The test is the
+# Hillsboro test module's own docstring: four map codes "ruled, not
+# encoded".
 #
 # 284 -> 287 on 2026-09-29, the same layer: the prohibition grep (rulebook
 # step 10) turned up three North Bethany rules the district blocks had not

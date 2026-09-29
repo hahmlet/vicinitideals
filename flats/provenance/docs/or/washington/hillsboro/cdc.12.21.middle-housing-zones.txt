@@ -1,0 +1,2283 @@
+SUBCHAPTER 12.21
+ SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+12.21.010 Single Detached and Middle Housing Residential Zones.
+12.21.020 Locational Characteristics.
+12.21.030 Organization within This Subchapter.
+12.21.100 R-10 Residential.
+12.21.110 Purposes.
+12.21.120 Housing Types.
+12.21.130 Uses.
+12.21.140 Accessory Uses Permitted by Right.
+12.21.150 Development Standards.
+12.21.160 Variances and Adjustments.
+12.21.170 Other Pertinent Regulations.
+12.21.200 R-8.5 Residential.
+12.21.210 Purposes.
+12.21.220 Housing Types.
+12.21.230 Uses.
+12.21.240 Accessory Uses Permitted by Right.
+12.21.250 Development Standards.
+12.21.260 Variances and Adjustments.
+12.21.270 Other Pertinent Regulations.
+12.21.300 R-7 Residential.
+12.21.310 Purposes.
+12.21.320 Housing Types.
+12.21.330 Uses.
+12.21.340 Accessory Uses Permitted by Right.
+12.21.350 Development Standards.
+12.21.360 Variances and Adjustments.
+12.21.370 Other Pertinent Regulations.
+12.21.400 R-6 Residential.
+12.21.410 Purposes.
+12.21.420 Housing Types.
+12.21.430 Uses.
+12.21.440 Accessory Uses Permitted by Right.
+12.21.450 Development Standards.
+12.21.460 Variances and Adjustments.
+12.21.470 Other Pertinent Regulations.
+12.21.500 R-4.5 Residential.
+12.21.510 Purposes.
+12.21.520 Housing Types.
+12.21.530 Uses.
+12.21.540 Accessory Uses Permitted by Right.
+12.21.550 Development Standards.
+CDC12.21:1
+12.21.560 Variances and Adjustments.
+12.21.570 Other Pertinent Regulations.
+12.21.600 SCR-LD Station Community Residential—Low Density.
+12.21.610 Purposes.
+12.21.620 Housing Types.
+12.21.630 Uses.
+12.21.640 Accessory Uses Permitted by Right.
+12.21.650 Development Standards.
+12.21.660 Variances and Adjustments.
+12.21.670 Other Pertinent Regulations.
+12.21.700 SCR-OTC Station Community Residential—Orenco Townsite Conservation.
+12.21.710 Purposes.
+12.21.720 Housing Types.
+12.21.730 Uses.
+12.21.740 Accessory Uses Permitted by Right.
+12.21.750 Development Standards.
+12.21.760 Variances and Adjustments.
+12.21.770 Other Pertinent Regulations.
+12.21.800 SCR-DNC Station Community Residential—Downtown Neighborhood Conserva-
+tion.
+12.21.810 Purposes.
+12.21.820 Housing Types.
+12.21.830 Uses.
+12.21.840 Accessory Uses Permitted by Right.
+12.21.850 Development Standards.
+12.21.860 Variances and Adjustments.
+12.21.870 Other Pertinent Regulations.
+ HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:2
+12.21.010  Single Detached and Middle Housing Residential Zones.
+There are 8 single detached and middle housing residential zones in the City:
+A. R-10 Residential;
+B. R-8.5 Residential;
+C. R-7 Residential;
+D. R-6 Residential;
+E. R-4.5 Residential;
+F. SCR-LD Station Community Residential—Low Density;
+G. SCR-OTC Station Community Residential—Orenco Townsite Conservation; and
+H. SCR-DNC Station Community Residential—Downtown Neighborhood Conservation.
+(Ord. 6401 § 1, 2022)
+12.21.020  Locational Characteristics.
+On the Comprehensive Plan Land Use Map, single detached and middle housing residential zones
+implement the RL Residential Low Density designation with the following exceptions:
+A. R-4.5 implements the lowest density in the RM Residential Medium Density designation.
+B. SCR-LD, SCR-OTC and SCR-DNC (among other zones) implement the SCPA Station Com-
+munity Planning Area designation.
+(Ord. 6401 § 1, 2022)
+12.21.030  Organization within This Subchapter.
+A. Common Elements. Each section in this subchapter contains the following subsections:
+1. Purposes.
+2. Permitted, Conditional, Limited and Not Permitted Housing Types (organized in tables).
+3. Permitted, Conditional, Limited and Not Permitted Uses (organized in tables).
+4. Accessory Uses Permitted.
+5. Development Standards (organized in tables, illustrated in figures).
+6. Variances and Adjustments.
+7. Other Pertinent Regulations.
+B. Purpose. Purpose statements for each zone subchapter are descriptive of the zone's charac-
+teristics and intent, and are drawn from the Comprehensive Plan and/or the Community
+Development Code. Purpose statements are informational and not intended to be regulations.
+ 12.21.030SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:3
+C. Housing Types. Residential uses occupy a variety of housing types. Permitted, limited and not
+permitted housing types within each zone are summarized in tables based on the definitions of
+housing types listed in Section 12.01.500. Neither the residential use categories nor the
+housing types distinguish between owner- or renter-occupation.
+D. Uses. Permitted, conditionally permitted, limited and not permitted uses within each zone are
+summarized in tables based on the standardized use categories described in Subchapter
+12.10.
+1. Permitted Uses (P) are allowed by right, subject to all applicable provisions of this Code.
+2. Conditionally Permitted Uses (C) may be allowed, subject to approval on an individual
+basis as Conditional Uses. The Conditional Use permit application process and approval
+criteria are described in Section 12.80.020. Certain Conditional Uses may have addi-
+tional standards as described in Subchapter 12.40.
+3. Limited Uses (L) are permitted by right, but are subject to specified requirements,
+exceptions or restrictions which may vary with the nature, size, or location of the use.
+4. Not Permitted Uses (N) are not permitted in the zone under any circumstances.
+E. Accessory Uses Permitted. Accessory uses are permitted in each zone, in conjunction with the
+primary residence on the site and are subject to the same regulations as the primary use unless
+stated otherwise in the Code. Characteristics and standards for certain accessory uses are
+listed in Subchapter 12.40.
+F. Development Standards.
+1. Development standards for each single detached and middle housing residential zone
+are summarized in tables. Development standards are typically numerical standards:
+minimum and maximum densities; minimum and maximum lot dimensions; structural
+setbacks; maximum building height and lot coverage. All new development must comply
+with the development standards unless a variance or adjustment is approved as de-
+scribed in subsection G below.
+2. Maximum residential densities in each single detached and middle housing residential
+zone are generally derived from the minimum lot size: Minimum densities are approxi-
+mately 80% of the maximum density. Density calculation formulas for minimum and
+maximum density are described in Section 12.50.120. Minimum and maximum residen-
+tial densities apply to all residential use categories, except as specified for middle
+housing in the development standards for each zone.
+3. Certain development standards are illustrated in a figure following the development
+standards table in each zone.
+G. Variances and Adjustments. Applications to vary or adjust certain numeric standards in each
+zone may be requested and approved under Sections 12.80.152, 12.80.154, and 12.80.156.
+Certain numeric standards may also be subject to exceptions under specific circumstances, as
+described in the Standards section.
+12.21.030 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:4
+H. Other Pertinent Regulations. Additional standards such as parking, landscaping, vision clear-
+ance, and street improvements, may also apply to development in single detached and middle
+housing residential zones. These site design and development standards may also have
+exceptions as described in those sections.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019)
+ 12.21.030SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:5
+12.21.100  R-10 Residential.
+The R-10 zone includes the following sections:
+12.21.110 Purposes
+12.21.120 Housing Types
+12.21.130 Uses
+12.21.140 Accessory Uses Permitted by Right
+12.21.150 Development Standards
+12.21.160 Variances and Adjustments
+12.21.170 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.21.110  Purposes.
+A. Create and Maintain Large Lot Residential Opportunities. The R-10 zone implements the
+lowest density of the Low Density Residential Comprehensive Plan designation, providing an
+opportunity for large lot residential development in appropriate areas.
+B. Preserve Neighborhood Livability. The R-10 zone encourages livability in existing and future
+large lot residential neighborhoods by allowing residential development with compatible
+non-residential uses such as schools, assembly facilities and parks.
+(Ord. 6401 § 1, 2022)
+12.21.120  Housing Types.
+Table 12.21.120-1 lists Housing Types permitted in the R-10 zone. Housing Types are defined in
+Section 12.01.500.
+  Table 12.21.120-1:
+Housing Types in the R-10 Zone
+ Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure N
+Manufactured dwelling L Permitted subject to Special Use standards in
+Section 12.40.190
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)
+12.21.100 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:6
+12.21.130  Uses.
+Table 12.21.130-1 lists the Permitted, Conditionally Permitted, Limited, and Not Permitted Uses in
+the R-10 zone.
+  Table 12.21.130-1:
+Use Categories in the R-10 Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.21.120-1.
+Group Living L/N
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation only (see
+Section 12.80.050); all other uses Not Permitted.
+Residential Services N
+Residential Business N
+Commercial Use Categories - Only Categories Listed Below Permitted
+Commercial Lodging L/C/N
+Full-dwelling STRs subject to additional standards in Section
+12.40.230. Bed and breakfast inns permitted with Conditional
+Use approval and subject to additional standards in Section
+12.40.130. All other uses Not Permitted.
+Retail Products and Services C/N
+Minor assembly facilities permitted with Conditional Use
+approval subject to additional standards in Section 12.40.210.
+All other uses Not Permitted.
+Industrial Use Categories — Not Permitted
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions such as churches, synagogues,
+mosques, and temples permitted with Conditional Use
+approval subject to additional standards in Section 12.40.210.
+All other uses Not Permitted.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+ 12.21.130SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:7
+Table 12.21.130-1:
+Use Categories in the R-10 Zone
+ Use Status Clarifications
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards Not Permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6149 § 1,
+2015)
+12.21.140  Accessory Uses Permitted by Right.
+A. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500,
+and are permitted when accessory to single detached dwellings or townhouses subject to
+additional requirements in Section 12.40.100.
+B. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are permit-
+ted subject to additional requirements in Section 12.40.104.
+C. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted
+subject to additional requirements in Section 12.40.170.
+D. Community Recreation Facilities and Community Buildings. Community recreation facilities
+and community buildings used solely by residents of a specific neighborhood or development
+are permitted when approved as an amenity of that neighborhood or development during the
+development process. When accessory to cottage clusters, community buildings are subject to
+additional requirements in Subsection 12.50.715.E.9.
+E. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+F. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits.
+G. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+H. Horticultural Activities. Horticultural activities are defined in Section 12.01.500, and are
+permitted, excluding commercial buildings or structures.
+12.21.130 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:8
+I. Partial-dwelling STRs are permitted subject to additional requirements in Section 12.40.230.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6323 § 1,
+2019; Ord. 6120 § 1, 2015)
+12.21.150  Development Standards.
+Base zone development standards in the R-10 zone are listed in Table 12.21.150-1. Certain
+standards are illustrated in Figure 12.21.150-A.
+  Table 12.21.150-1:
+Development Standards in the R-10 Zone
+ Standard Requirement Clarifications
+Minimum Lot Size 10,000 sq. ft.
+For townhouse lots, average minimum lot size
+is 1,500 sq. ft.
+
+Variation of lot areas permitted in some
+subdivisions: see Section 12.50.110.
+
+Middle housing is exempt from maximum lot
+size.
+Maximum Lot Size 19,999 sq. ft.
+Minimum Density 3.5 du/na Minimum density for cottage clusters is 4
+du/na.
+Maximum Density 4.35 du/na
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 17.4
+du/na.
+Minimum FAR Not applicable
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width is 20
+feet and minimum lot depth is 65 feet. Variation
+of widths permitted in some subdivisions: see
+Section 12.50.110.
+
+Adjustments to frontage permitted for adjacent
+flag lots under Section 12.40.160; and
+exception provided for child lots/parcels in
+middle housing land divisions under Section
+12.80.099.
+ • Width (at front building
+plane) 70 feet
+ • Depth 90 feet
+ • Frontage 12 feet
+Minimum Setbacks*
+For cottage clusters, the minimum front and
+rear yard setback to dwellings is 10 feet; the
+minimum front and rear yard setback to garage
+doors is 20 feet. Variation of front yards
+permitted in some subdivisions: see Subsection
+12.50.130.E.
+
+Variation of side yards permitted in some
+subdivisions: see Subsection 12.50.130.E. Side
+yard setbacks on the common wall shall be
+waived for townhouses permitted under Table
+12.21.120-1.
+ • Front Yard 20 feet
+ • Side Yard 10 feet
+ • Rear Yard 20 feet
+Maximum Setbacks None
+Minimum Building Height None
+ 12.21.150SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:9
+Table 12.21.150-1:
+Development Standards in the R-10 Zone
+ Standard Requirement Clarifications
+Maximum Building Height* 2 ½ stories or 35 feet,
+whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500. Maximum height for cottage
+clusters is in Subsection 12.50.715.E.4.
+Maximum Lot Coverage 40% for interior lot
+45% for corner lot
+Does not apply to cottage cluster lots. Lot
+coverage for townhouses is calculated based
+on the overall townhouse project, rather than
+each townhouse lot.
+Minimum Usable Open Space Variable See Section 12.50.210
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.21.150-A
+
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1, 2015)
+ Figure 12.21.150-A:
+Development Standards in the R-10 Zone
+12.21.150 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:10
+12.21.160  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the R-10 zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.21.170  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the R-10 zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.700 Design Standards for Residential Development
+(Ord. 6401 § 1, 2022)
+ 12.21.170SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:11
+12.21.200  R-8.5 Residential.
+The R-8.5 zone includes the following sections:
+12.21.210 Purposes
+12.21.220 Housing Types
+12.21.230 Uses
+12.21.240 Accessory Uses Permitted by Right
+12.21.250 Development Standards
+12.21.260 Variances and Adjustments
+12.21.270 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.21.210  Purposes.
+A. Create and Maintain Large Lot Residential Opportunities. The R-8.5 zone implements the
+lower end of the Residential Low Density Comprehensive Plan designation range, providing an
+opportunity for large lot residential development in appropriate areas.
+B. Preserve Neighborhood Livability. The R-8.5 zone encourages livability in existing and future
+large lot residential neighborhoods by allowing residential development with compatible
+non-residential uses such as schools, assembly facilities and parks.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.21.220  Housing Types.
+Table 12.21.220-1 lists housing types permitted in the R-8.5 zone. Housing types are defined in
+Section 12.01.500.
+  Table 12.21.220-1:
+Housing Types in the R-8.5 Zone
+ Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure N
+Manufactured dwelling L Permitted subject to Special Use standards in
+Section 12.40.190
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.21.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:12
+12.21.230  Uses.
+Table 12.21.230-1 lists the permitted, conditionally permitted, limited, and not permitted uses in the
+R-8.5 zone.
+  Table 12.21.230-1:
+Use Categories in the R-8.5 Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.21.220-1.
+Group Living L/N
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Section
+12.80.050); all other uses not permitted.
+Residential Service N
+Residential Business N
+Commercial Use Categories — Only Categories Listed Below Permitted
+Commercial Lodging L/C/N
+Full-dwelling STRs subject to additional standards in Section
+12.40.230. Bed and breakfast inns permitted with Conditional
+Use approval and subject to additional standards in Section
+12.40.130. All other uses Not Permitted.
+Retail Products and Services C/N
+Minor assembly facilities permitted with Conditional Use
+approval and subject to Special Use standards in Section
+12.40.210. All other uses not permitted.
+Industrial Use Categories — Not Permitted
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions such as churches, synagogues,
+mosques, and temples permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses not permitted.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+ 12.21.230SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:13
+Table 12.21.230-1:
+Use Categories in the R-8.5 Zone
+ Use Status Clarifications
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1,
+2019; Ord. 6149 § 1, 2015)
+12.21.240  Accessory Uses Permitted by Right.
+A. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500,
+and are permitted when accessory to single detached dwellings or townhouses subject to
+additional requirements in Section 12.40.100.
+B. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are permit-
+ted subject to additional requirements in Section 12.40.100.
+C. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted
+subject to additional requirements in Section 12.40.170.
+D. Community Recreation Facilities and Community Buildings. Community recreation facilities
+used solely by residents of a specific neighborhood or development are permitted when
+approved as an amenity of that neighborhood or development during the development
+process. When accessory to cottage clusters, community buildings are subject to additional
+requirements in Subsection 12.50.715.E.9.
+E. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+F. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits.
+G. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+H. Horticultural Activities. Horticultural activities are defined in Section 12.01.500, and are
+permitted, excluding commercial buildings or structures.
+12.21.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:14
+I. Partial-dwelling STRs are permitted subject to additional requirements in Section 12.40.230.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.21.250  Development Standards.
+Development standards in the R-8.5 zone are listed in Table 12.21.250-1. Certain standards are
+illustrated in Figure 12.21.250-A.
+  Table 12.21.250-1:
+Development Standards in the R-8.5 Zone
+ Standard Requirement Clarifications
+Minimum Lot Size 8,500 sq. ft. For townhouse lots, average minimum lot size
+is 1,500 sq. ft.
+Variation of lot areas permitted in some
+subdivisions: see Section 12.50.110.
+Middle housing is exempt from maximum lot
+size. Maximum Lot Size 16,999 sq. ft.
+Minimum Density 4 du/na
+Maximum Density 5 du/na
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 20 du/na.
+Minimum FAR Not applicable
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width is 20
+feet and minimum lot depth is 65 feet.
+
+Variation of widths permitted in some
+subdivisions: see Section 12.50.110.
+
+Adjustments to frontage permitted for adjacent
+flag lots under Section 12.40.160; and
+exception provided for child lots/parcels in
+middle housing land divisions under Section
+12.80.099.
+ • Width (at front building
+plane) 65 feet
+ • Depth 90 feet
+ • Frontage 12 feet
+Minimum Setbacks*
+For cottage clusters, the minimum front and
+rear yard setback to dwellings is 10 feet; the
+minimum front and rear yard setback to garage
+doors is 20 feet.
+
+Variation of front yards permitted in some
+subdivisions: see Subsection 12.50.130.E.
+
+Variation of side yards permitted in some
+subdivisions: see Subsection 12.50.130(E)
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.21.220-1.
+ • Front Yard 20 feet
+ • Side Yard
+
+% Interior Lots 6 feet
+
+%
+Corner Lots 8 feet
+ • Rear Yard 20 feet
+Maximum Setbacks None
+Minimum Building Height None
+ 12.21.250SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:15
+Table 12.21.250-1:
+Development Standards in the R-8.5 Zone
+ Standard Requirement Clarifications
+Maximum Building Height* 2½ stories or 35 feet,
+whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+Maximum Lot Coverage 45% for standard lot
+50% for corner lot
+Does not apply to cottage cluster lots. Lot
+coverage for townhouses is calculated based
+on the overall townhouse project, rather than
+each townhouse lot.
+Minimum Usable Open Space Variable See Section 12.50.210
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.21.250-A
+
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1, 2015)
+ Figure 12.21.250-A:
+Single Detached Dwelling Development Standards in the R-8.5 Zone
+12.21.250 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:16
+12.21.260  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the R-8.5 zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a Primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.21.270  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the R-8.5 zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.700 Design Standards for Residential Development
+(Ord. 6401 § 1, 2022)
+ 12.21.270SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:17
+12.21.300  R-7 Residential.
+The R-7 zone includes the following sections:
+12.21.310 Purposes
+12.21.320 Housing Types
+12.21.330 Uses
+12.21.340 Accessory Uses Permitted by Right
+12.21.350 Development Standards
+12.21.360 Variances and Adjustments
+12.21.370 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.21.310  Purposes.
+A. Create and Maintain Large Lot Residential Opportunities. The R-7 zone implements the middle
+of the Low Density Residential Comprehensive Plan designation density range, providing an
+opportunity for residential development on moderate sized lots in appropriate areas.
+B. Preserve Neighborhood Livability. The R-7 zone encourages livability in existing and future
+residential neighborhoods with moderate sized lots by allowing residential development with
+compatible non-residential uses such as schools, assembly facilities and parks.
+(Ord. 6401 § 1, 2022)
+12.21.320  Housing Types.
+Table 12.21.320-1 lists Housing Types permitted in the R-7 zone. Housing Types are defined in
+Section 12.01.500.
+  Table 12.21.320-1:
+Housing Types in the R-7 Zone
+ Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure N
+Manufactured dwelling L Permitted subject to additional standards in
+Section 12.40.190
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.21.300 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:18
+12.21.330  Uses.
+Table 12.21.330-1 lists the Permitted, Conditionally Permitted, Limited, and Not Permitted Uses in
+the R-7 zone.
+  Table 12.21.330-1:
+Use Categories in the R-7 Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.21.320-1.
+Group Living L/N
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Section
+12.80.050); all other uses Not Permitted.
+Residential Services N
+Residential Business N
+Commercial Use Categories — Only Categories Listed Below Permitted
+Commercial Lodging L/C/N
+Full-dwelling STRs subject to additional standards in Section
+12.40.230. Bed and breakfast inns permitted with Conditional
+Use approval and subject to additional standards in Section
+12.40.130. All other uses Not Permitted.
+Retail Products and Services C/N
+Minor assembly facilities permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses Not Permitted.
+Industrial Use Categories — Not Permitted
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions such as churches, synagogues,
+mosques, and temples permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses Not Permitted.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+ 12.21.330SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:19
+Table 12.21.330-1:
+Use Categories in the R-7 Zone
+ Use Status Clarifications
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards Not Permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6294 § 1,
+2019; Ord. 6149 § 1, 2015)
+12.21.340  Accessory Uses Permitted by Right.
+A. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500,
+and are permitted when accessory to single detached dwellings or townhouses subject to
+additional requirements in Section 12.40.100.
+B. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are permit-
+ted subject to additional requirements in Section 12.40.104.
+C. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted
+subject to additional requirements in Section 12.40.170.
+D. Community Recreation Facilities and Community Buildings. Community recreation facilities
+and community buildings used solely by residents of a specific neighborhood or development
+are permitted when approved as an amenity of that neighborhood or development during the
+development process. When accessory to cottage clusters, community buildings are subject to
+additional requirements in Subsection 12.50.715.E.9.
+E. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+F. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits.
+G. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+H. Horticultural Activities. Horticultural activities are defined in Section 12.01.500, and are
+permitted, excluding commercial buildings or structures.
+12.21.330 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:20
+I. Partial-dwelling STRs are permitted subject to additional requirements in Section 12.40.230.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.21.350  Development Standards.
+Base zone development standards in the R-7 zone are listed in Table 12.21.350-1. Certain
+standards are illustrated in Figure 12.21.350-A.
+  Table 12.21.350-1:
+Development Standards in the R-7 Zone
+ Standard Requirement Clarifications
+Minimum Lot Size 7,000 sq. ft. For townhouse lots, average minimum lot size
+is 1,500 sq. ft.
+Variation of lot areas permitted in some
+subdivisions: see Section 12.50.110.
+Middle housing is exempt from maximum lot
+size. Maximum Lot Size 13,999 sq. ft.
+Minimum Density 5.0 du/na
+Maximum Density 6.25 du/na
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+Minimum FAR Not applicable
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width is 20
+feet and minimum lot depth is 65 feet. Variation
+of widths permitted in some subdivisions: see
+Section 12.50.110.
+
+Adjustments to frontage permitted for adjacent
+flag lots under Section 12.40.160; and
+exception provided for child lots/parcels in
+middle housing land divisions under Section
+12.80.099.
+ • Width (at front building
+plane) 60 feet
+ • Depth 90 feet
+ • Frontage 12 feet
+Minimum Setbacks*
+For cottage clusters, the minimum front and
+rear yard setback to dwellings is 10 feet; the
+minimum front and rear yard setback to garage
+doors is 20 feet.
+Variation of front yards permitted in some
+subdivisions: see Subsection 12.50.130.E.
+
+Variation of side yards permitted in some
+subdivisions: see Subsection 12.50.130.E.
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.21.320-1.
+ • Front Yard 20 feet
+ • Side Yard
+5 feet;
+sum of 2 side yards at
+least 13 feet
+ • Rear Yard 20 feet
+Maximum Setbacks None
+Minimum Building Height None
+ 12.21.350SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:21
+Table 12.21.350-1:
+Development Standards in the R-7 Zone
+ Standard Requirement Clarifications
+Maximum Building Height* 2½ stories or 35 feet,
+whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+Maximum Lot Coverage 45% for standard lot
+50% for corner lot
+Does not apply to cottage cluster lots. Lot
+coverage for townhouses is calculated based
+on the overall townhouse project, rather than
+each townhouse lot.
+Minimum Usable Open Space Variable See Section 12.50.210
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.21.350-A
+
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1, 2015)
+ Figure 12.21.350-A:
+Development Standards in the R-7 Zone
+12.21.350 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:22
+12.21.360  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the R-7 zone may
+be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.21.370  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the R-7 zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.700 Design Standards for Residential Development
+(Ord. 6401 § 1, 2022)
+ 12.21.370SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:23
+12.21.400  R-6 Residential.
+The R-6 zone includes the following sections:
+12.21.410 Purposes.
+12.21.420 Housing Types.
+12.21.430 Uses.
+12.21.440 Accessory Uses Permitted by Right.
+12.21.450 Development Standards.
+12.21.460 Variances and Adjustments.
+12.21.470 Other Pertinent Regulations.
+(Ord. 6401 § 1, 2022)
+12.21.410  Purposes.
+A. Create and Maintain Smaller Lot Residential Opportunities. The R-6 zone implements the
+highest end of the Low Density Residential Comprehensive Plan designation density range,
+providing an opportunity for smaller lot residential development in appropriate areas.
+B. Preserve Neighborhood Livability. The R-6 zone encourages livability in existing and future
+smaller lot residential neighborhoods by allowing residential development with compatible
+non-residential Uses such as schools, assembly facilities and parks.
+(Ord. 6401 § 1, 2022)
+12.21.420  Housing Types.
+Table 12.21.420-1 lists Housing Types permitted in the R-6 zone. Housing Types are defined in
+Section 12.01.500.
+  Table 12.21.420-1:
+Housing Types in the R-6 Zone
+ Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure N
+Manufactured dwelling L Permitted subject to additional standards in
+Section 12.40.190
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.21.400 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:24
+12.21.430  Uses.
+Table 12.21.430-1 lists the Permitted, Conditionally Permitted, Limited, and Not Permitted Uses in
+the R-6 zone.
+  Table 12.21.430-1:
+Use Categories in the R-6 Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.21.420-1.
+Group Living L/N
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Section
+12.80.050); all other uses Not Permitted.
+Residential Services N
+Residential Business N
+Commercial Use Categories — Only Categories Listed Below Permitted
+Commercial Lodging L/C/N
+Full-dwelling STRs subject to additional standards in Section
+12.40.230. Bed and breakfast inns permitted with Conditional
+Use approval and subject to additional standards in Section
+12.40.130. All other uses Not Permitted.
+Retail Products and Services C/N
+Minor assembly facilities permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses Not Permitted.
+Industrial Use Categories — Not Permitted
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions such as churches, synagogues,
+mosques, and temples permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses Not Permitted.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+ 12.21.430SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:25
+Table 12.21.430-1:
+Use Categories in the R-6 Zone
+ Use Status Clarifications
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards Not Permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6294 § 1,
+2019; Ord. 6149 § 1, 2015)
+12.21.440  Accessory Uses Permitted by Right.
+A. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500,
+and are permitted when accessory to single detached dwellings or townhouses subject to
+additional requirements in Section 12.40.100.
+B. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are permit-
+ted subject to additional requirements in Section 12.40.104.
+C. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted
+subject to additional requirements in Section 12.40.170.
+D. Community Recreation Facilities and Community Buildings. Community recreation facilities
+and community buildings used solely by residents of a specific neighborhood or development
+are permitted when approved as an amenity of that neighborhood or development during the
+development process. When accessory to cottage clusters, community buildings are subject to
+additional requirements in Subsection 12.50.715.E.9.
+E. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+F. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits.
+G. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+H. Horticultural Activities. Horticultural activities are defined in Section 12.01.500, and are
+permitted, excluding commercial buildings or structures.
+12.21.430 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:26
+I. Partial-dwelling STRs are permitted subject to additional requirements in Section 12.40.230.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1,
+2019; Ord. 6120 § 1, 2015)
+12.21.450  Development Standards.
+Base zone development standards in the R-6 zone are listed in Table 12.21.450-1. Certain
+standards are illustrated in Figure 12.21.450-A.
+  Table 12.21.450-1:
+Development Standards in the SR-6 Zone
+ Standard Requirement Clarifications
+Minimum Lot Size
+
+Variation of lot areas permitted in some
+subdivisions: see Section 12.50.110.
+
+Middle housing is exempt from maximum lot
+size.
+ Single detached dwelling,
+duplex, or triplex 6,000 sq. ft.
+ Quadplex or Cottage Cluster 7,000 sq. ft.
+ Townhouse 1,500 sq. ft. (average)
+Maximum Lot Size 11,999 sq. ft.
+Minimum Density 6.0 du/na
+Maximum Density 7.5 du/na
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+Minimum FAR Not applicable
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width is 20
+feet and minimum lot depth is 65 feet.
+
+Variation of widths permitted in some
+subdivisions: see Section 12.50.110.
+
+Adjustments to frontage permitted for adjacent
+flag lots under Section 12.40.160; and
+exception provided for child lots/parcels in
+middle housing land divisions under Section
+12.80.099.
+ • Width (at front building
+plane) 55 feet
+ • Depth 85 feet
+ • Frontage 12 feet
+Minimum Setbacks*
+For cottage clusters, the minimum front yard
+and rear setback to dwellings is 10 feet; the
+minimum front and rear yard setback to garage
+doors is 20 feet.
+
+Variation of front yards permitted in some
+subdivisions: see Subsection 12.50.130.E.
+
+Variation of side yards permitted in some
+subdivisions: see Subsection 12.50.130.E.
+
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.21.420-1.
+ • Front Yard (interior lots):
+to dwelling or garage door 20 feet
+ • Front Yard (corner lots)
+
+%
+to dwelling 10 feet on 1 frontage;
+20 feet on the other
+
+% to garage door 20 feet
+ • Side Yard 5 feet
+ • Rear Yard 20 feet
+ 12.21.450SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:27
+Table 12.21.450-1:
+Development Standards in the SR-6 Zone
+ Standard Requirement Clarifications
+Maximum Setbacks None
+Minimum Building Height None
+Maximum Building Height* 2½ stories or 35 feet,
+whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+Maximum height for cottage clusters is in
+Subsection 15.50.715.E.4.
+Maximum Lot Coverage 55% for interior lot
+60% for corner lot
+Does not apply to cottage cluster lots. Lot
+coverage for townhouses is calculated based
+on the overall townhouse project, rather than
+each townhouse lot.
+Minimum Usable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.21.450-A
+
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6323 § 1, 2019; Ord. 6120 § 1, 2015)
+ Figure 12.21.450-A:
+Development Standards in the R-6 Zone
+12.21.450 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:28
+12.21.460  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the R-6 zone may
+be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit application pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.21.470  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the R-6 zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.700 Design Standards for Residential Development
+(Ord. 6401 § 1, 2022)
+ 12.21.470SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:29
+12.21.500  R-4.5 Residential.
+The R-4.5 zone includes the following sections:
+12.21.510 Purposes
+12.21.520 Housing Types
+12.21.530 Uses
+12.21.540 Accessory Uses Permitted by Right
+12.21.550 Development Standards
+12.21.560 Variances and Adjustments
+12.21.570 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.21.510  Purposes.
+A. Create and Maintain Small Lot Residential Opportunities. The R-4.5 zone implements the
+lowest density of the Medium Density Residential Comprehensive Plan designation, providing
+an opportunity for small lot residential development in appropriate areas.
+B. Preserve Neighborhood Livability. The R-4.5 zone encourages livability in existing and future
+small lot residential neighborhoods by allowing residential development with compatible
+non-residential Uses such as schools, assembly facilities and parks.
+(Ord. 6401 § 1, 2022)
+12.21.520  Housing Types.
+Table 12.21.520-1 lists Housing Types permitted in the R-4.5 zone. Housing Types are defined in
+Section 12.01.500.
+  Table 12.21.520-1:
+Housing Types Permitted in the R-4.5 Zone
+ Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure N
+Manufactured dwelling L Permitted subject to additional standards in
+Section 12.40.190
+Manufactured dwelling project N
+Live-work dwellings N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6120 § 1, 2015)
+12.21.500 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:30
+12.21.530  Uses.
+Table 12.21.530-1 lists the Permitted, Conditionally Permitted, Limited, and Not Permitted Uses in
+the R-4.5 zone.
+  Table 12.21.530-1:
+Use Categories in the R-4.5 Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.21.520-1.
+Group Living L/N
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Section
+12.80.050); all other uses Not Permitted.
+Residential Services N
+Residential Business N
+Commercial Use Categories — Only Categories Listed Below Permitted
+Commercial Lodging L/C/N
+Full-dwelling STRs subject to additional standards in Section
+12.40.230. Bed and breakfast inns permitted with Conditional
+Use approval and subject to additional standards in Section
+12.40.130; all other uses Not Permitted.
+Retail Products and Services C/N
+Minor assembly facilities permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses Not Permitted.
+Industrial Use Categories — Not Permitted
+Institutional Use Categories
+Colleges and Universities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions such as churches, synagogues,
+mosques, or temples permitted with Conditional Use approval
+and subject to additional standards in Section 12.40.210. All
+other uses Not Permitted.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+ 12.21.530SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:31
+Table 12.21.530-1:
+Use Categories in the R-4.5 Zone
+ Use Status Clarifications
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards Not Permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6294 § 1,
+2019; Ord. 6149 § 1, 2015)
+12.21.540  Accessory Uses Permitted by Right.
+A. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500,
+and are permitted when accessory to single detached dwellings or townhouses subject to
+additional requirements in Section 12.40.100.
+B. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are permit-
+ted subject to additional requirements in Section 12.40.104.
+C. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted
+subject to additional requirements in Section 12.40.170.
+D. Community Recreation Facilities and Community Buildings. Community recreation facilities
+and community buildings used solely by residents of a specific neighborhood or development
+are permitted when approved as an amenity of that neighborhood or development during the
+development process. When accessory to cottage clusters, community buildings are subject to
+additional requirements in Subsection 12.50.715.E.9.
+E. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+F. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits.
+G. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+H. Horticultural Activities. Horticultural activities are defined in Section 12.01.500, and are
+permitted, excluding commercial buildings or structures.
+12.21.530 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:32
+I. Partial-dwelling STRs are permitted subject to additional requirements in Section 12.40.230.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.21.550  Development Standards.
+Base zone development standards in the R-4.5 zone are listed in Table 12.21.550-1. Certain
+standards are illustrated in Figure 12.21.550-A.
+  Table 12.21.550-1:
+Development Standards in the R-4.5 Zone
+ Standard Requirement Clarifications
+Minimum Lot Size
+
+Variation of lot areas permitted in some
+subdivisions: see Section 12.50.110.
+ • Single detached dwelling or
+duplex 4,500 sq. ft.
+ • Triplex 5,000 sq. ft.
+ • Quadplex or Cottage Cluster 7,000 sq. ft.
+ • Townhouse 1,500 sq. ft. (average)
+Maximum Lot Size 8,999 sq. ft. Middle housing is exempt from maximum lot
+size.
+Minimum Density 8.0 du/na
+Maximum Density 10.0 du/na
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+Minimum FAR Not applicable
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width is 20
+feet and minimum lot depth is 65 feet. Variation
+of widths permitted in some subdivisions: see
+Section 12.50.110.
+
+Exception provided for child lots/parcels in
+middle housing land divisions under Section
+12.80.099.
+ • Width (at front building
+plane) 50 feet
+ • Depth 80 feet
+ • Frontage 12 feet
+ 12.21.550SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:33
+Table 12.21.550-1:
+Development Standards in the R-4.5 Zone
+ Standard Requirement Clarifications
+Minimum Setbacks*
+
+For cottage clusters, the minimum front and
+rear yard setback to dwellings is 10 feet; the
+minimum front and rear yard setback to garage
+doors is 15 feet.
+
+Variation of front yards permitted in some
+subdivisions: see Subsection 12.50.130.E.
+
+Variation of side yards permitted in some
+subdivisions: see Subsection 12.50.130.E.
+
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.21.520-1.
+ • Front Yard (interior lots)
+
+%
+to dwelling 15 feet
+
+%
+to garage door 20 feet
+ • Front Yard (corner lots)
+
+%
+to dwelling 10 feet on 1 frontage;
+15 feet on the other
+
+%
+to garage door 20 feet
+ • Side Yard 5 feet
+ • Rear Yard 15 feet
+Maximum Setbacks None
+Minimum Building Height None
+Maximum Building Height* 2½ stories or 35 feet,
+whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+Maximum Lot Coverage 55% for interior lot
+60% for corner lot
+Does not apply to cottage cluster lots. Lot
+coverage for townhouses is calculated based
+on the overall townhouse project, rather than
+each townhouse lot.
+Minimum Usable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.21.550-A
+12.21.550 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:34
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2109; Ord. 6120 § 1, 2015)
+12.21.560  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the R-4.5 zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2109; Ord. 6120 § 1, 2015)
+ Figure 12.21.550-A:
+Single Detached Dwelling Minimum Lot Dimensions, Setbacks
+and Height Requirements in the R-4.5 Zone
+ 12.21.560SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:35
+12.21.570  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the R-4.5 zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.700 Design Standards for Residential Development
+(Ord. 6401 § 1, 2022)
+12.21.570 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:36
+12.21.600  SCR-LD Station Community Residential—Low Density.
+The SCR-LD zone includes the following sections:
+12.21.610 Purposes
+12.21.620 Housing Types
+12.21.630 Uses
+12.21.640 Accessory Uses Permitted by Right
+12.21.650 Development Standards
+12.21.660 Variances and Adjustments
+12.21.670 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.21.610  Purposes.
+A. Provide Housing Options in Proximity to Transit. The SCR-LD zone implements the SCPA
+Station Community Planning Area Comprehensive Plan designation, providing opportunities
+for development of single detached dwellings, middle housing, and accessory dwelling units
+generally greater than ½ mile or more from a transit stop.
+B. Transition Residential Density. The SCR-LD zone may also be applied to serve as a transition
+area between higher intensity development within a Station Community Planning Area and
+lower density neighborhoods.
+C. Preserve Neighborhood Livability. The SCR-LD zone encourages livability in existing and
+future residential neighborhoods by allowing residential development with compatible non-
+residential uses such as schools, assembly facilities and parks.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019)
+12.21.620  Housing Types.
+Table 12.21.620-1 lists housing types permitted in the SCR-LD zone. Housing types are defined in
+Section 12.01.500.
+  Table 12.21.620-1:
+Housing Types Permitted in the SCR-LD Zone
+ Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure N
+Manufactured dwelling L Permitted subject to additional standards in
+Section 12.40.190.
+ 12.21.620SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:37
+Table 12.21.620-1:
+Housing Types Permitted in the SCR-LD Zone
+ Housing Type Status Notes
+Manufactured dwelling project N
+Live-work dwellings N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.21.630  Uses.
+Table 12.21.630-1 lists the permitted, conditionally permitted, limited, and not permitted uses in the
+SCR-LD zone.
+  Table 12.21.630-1:
+Use Categories in the SCR-LD Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.21.620-1.
+Group Living L/N
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Section
+12.80.050); all other uses not permitted.
+Residential Services N
+Residential Business N
+Commercial Use Categories — Only Categories Listed Below Permitted
+Commercial Lodging L/C/N
+Full-dwelling STRs subject to additional standards in Section
+12.40.230. Bed and breakfast inns permitted with Conditional
+Use approval and subject to additional standards in Section
+12.40.130. All other uses Not Permitted.
+Retail Products and Services C/N
+Minor assembly facilities permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses not permitted.
+Industrial Use Categories — Not Permitted
+Institutional Use Categories
+Colleges and Universities N
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions such as churches, synagogues,
+mosques, and temples permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses not permitted.
+12.21.620 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:38
+Table 12.21.630-1:
+Use Categories in the SCR-LD Zone
+ Use Status Clarifications
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1,
+2019; Ord. 6149 § 1, 2015)
+12.21.640  Accessory Uses Permitted by Right.
+A. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500,
+and are permitted when accessory to single detached dwellings or townhouses subject to
+additional requirements in Section 12.40.100.
+B. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are permit-
+ted subject to additional requirements in Section 12.40.104.
+C. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted
+subject to additional requirements in Section 12.40.170.
+D. Community Recreation Facilities and Community Buildings. Community recreation facilities
+and community buildings used solely by residents of a specific neighborhood or development
+are permitted when approved as an amenity of that neighborhood or development during the
+development process. When accessory to cottage clusters, community buildings are subject to
+additional requirements in Subsection 12.50.715.E.9.
+E. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+ 12.21.640SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:39Supp. No. 1
+F. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits.
+G. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+H. Horticultural Activities. Horticultural activities are defined in Section 12.01.500, and are
+permitted, excluding commercial buildings or structures.
+I. Partial-dwelling STRs are permitted subject to additional requirements in Section 12.40.230.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.21.650  Development Standards.
+Base zone development standards in the SCR-LD zone are listed in Table 12.21.650-1. Certain
+standards are illustrated in Figure 12.21.650-A.
+  Table 12.21.650-1:
+Development Standards in the SCR-LD Zone
+ Standard Requirement Clarifications
+Minimum Lot Size
+ • Single Detached Dwelling or
+Duplex 3,600 sq. ft.
+ • Triplex 5,000 sq. ft.
+ • Quadplex or Cottage Cluster 7,000 sq. ft.
+ • Townhouse 1,500 sq. ft. (average)
+Maximum Lot Size
+ • Detached Single-Dwelling
+Structure 7,199 sq. ft.
+ • Other housing types None
+Minimum Density 9.0 du/na
+Maximum Density 14.0 du/na
+Within 100 feet of a developed non-SCPA
+neighborhood, maximum density for single
+detached dwellings is limited as follows: either
+7.0 du/na; or the density of the adjacent area,
+whichever is greater.
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+Minimum FAR Not applicable
+12.21.640 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:40Supp. No. 1
+Table 12.21.650-1:
+Development Standards in the SCR-LD Zone
+ Standard Requirement Clarifications
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width and
+frontage are 20 feet.
+
+No minimum lot depth required for lots or
+parcels created by subdivision or partition.
+
+Exception to minimum frontage provided for
+child lots/parcels in middle housing land
+divisions under Section 12.80.099.
+ • Width (at front building
+plane) 30 feet
+ • Depth None
+ • Frontage 30 feet
+Minimum Setbacks*
+
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.21.620-1.
+
+Minimum front yard setback subordinate to
+public utility easements.
+ • Front Yard
+
+% to dwelling 10 feet
+
+%
+to garage door 20 feet
+ • Side Yard 5 feet
+ • Rear Yard
+
+%
+to dwelling 10 feet
+
+%
+to garage door Either 5 feet or less;
+or 19 feet or more
+Maximum Setbacks
+
+Applicable to dwelling; not to garage door.
+ • Front Yard 13 feet
+ • Side Yard
+
+%
+interior lot line None
+
+%
+along Street or Alley 5 feet
+ • Rear (including alley) None
+Minimum Building Height* None
+Maximum Building Height 2½ stories or 35 feet,
+whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+Maximum Lot Coverage None
+Minimum Usable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.21.650-A
+ 12.21.650SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:41Supp. No. 1
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6323 § 1, 2019; Ord. 6149 § 1, 2015; Ord. 6120 § 1,
+2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.21.660  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the SCR-LD zone
+may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+ Figure 12.21.650-A:
+Single Detached Dwelling Minimum Lot Dimensions, Setbacks
+and Height Requirements in the SCR-LD Zone
+12.21.650 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:42Supp. No. 1
+12.21.670  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the SCR-LD zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.50.700 Design Standards for Residential Development
+(Ord. 6401 § 1, 2022)
+ 12.21.670SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:43
+12.21.700  SCR-OTC Station Community Residential—Orenco Townsite Conservation.
+The SCR-OTC zone includes the following sections:
+12.21.710 Purposes
+12.21.720 Housing Types
+12.21.730 Uses
+12.21.740 Accessory Uses Permitted by Right
+12.21.750 Development Standards
+12.21.760 Variances and Adjustments
+12.21.770 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.21.710  Purposes.
+A. Preserve the Historic Orenco Townsite. The SCR-OTC zone implements the SCPA Station
+Community Planning Area Comprehensive Plan designation in the historic Orenco neighbor-
+hood, conserving the historic lotting pattern, open space and architectural character of the
+townsite, providing opportunities for rehabilitation of existing buildings and construction of
+compatible new development.
+B. Provide Transit-Supportive Housing Options. The SCR-OTC zone provides for the develop-
+ment of single detached dwellings, middle housing, and accessory dwelling units that are
+within reasonable proximity to the Orenco Light Rail Transit station.
+C. Preserve Neighborhood Livability. The SCR-OTC zone encourages livability in an existing
+historic neighborhood by allowing compatible non-residential uses such as schools, neighbor-
+hood commercial, and parks.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019)
+12.21.720  Housing Types.
+Table 12.21.720-1 lists housing types permitted in the SCR-OTC zone. Housing types are defined in
+Section 12.01.500.
+  Table 12.21.720-1:
+Housing Types Permitted in the SCR-OTC Zone
+ Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure N
+12.21.700 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:44
+Table 12.21.720-1:
+Housing Types Permitted in the SCR-OTC Zone
+ Housing Type Status Notes
+Manufactured dwelling L Permitted subject to additional standards in
+Section 12.40.190 and Orenco Plan District
+Townsite architectural standards in Section
+12.62.500.
+Manufactured dwelling project N
+Live-work dwellings N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.21.730  Uses.
+Table 12.21.730-1 lists the permitted, conditionally permitted, limited, and not permitted uses in the
+SCR-OTC zone.
+  Table 12.21.730-1:
+Use Categories in the SCR-OTC Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.21.720-1.
+Group Living L/N
+Permitted for persons with disabilities with Director's
+Interpretation of Reasonable Accommodation (see Section
+12.80.050); all other uses not permitted.
+Residential Services N
+Residential Business N
+Commercial Use Categories — Only Categories Listed Below Permitted
+Commercial Lodging L/C/N
+Full-dwelling STRs subject to additional standards in Section
+12.40.230. Bed and breakfast inns permitted with Conditional
+Use approval on lots abutting NE Alder St between NE 68th
+Ave and NE Century Blvd and subject to additional standards
+in Section 12.40.130. All other uses not permitted.
+Eating and Drinking
+Establishments L
+Small-scale eating and drinking establishment uses permitted
+on lots abutting NE Alder St between NE 68th Ave and NE
+Century Blvd.
+Office L
+Small-scale office uses permitted on lots abutting NE Alder St
+between NE 68th Ave and NE Century Blvd. Psilocybin
+facilities permitted, subject to additional standards in Section
+12.40.215.
+Retail Products and Services C/L/N
+Small-scale retail products and services uses permitted on lots
+abutting NE Alder St between NE 68th Ave and NE Century
+Blvd.
+Minor assembly facilities permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses not permitted.
+Industrial Use Categories — Not Permitted
+ 12.21.730SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:45
+Table 12.21.730-1:
+Use Categories in the SCR-OTC Zone
+ Use Status Clarifications
+Institutional Use Categories
+Colleges and Universities N
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions such as churches, synagogues,
+mosques, or temples permitted with Conditional Use approval
+and subject to additional standards in Section 12.40.210. All
+other uses not permitted.
+Schools C Permitted with Conditional Use approval subject to additional
+standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities C Permitted with Conditional Use approval.
+Surface Alternative
+Transportation Facilities P/C/N
+Transit facilities permitted. Park-and-ride facilities permitted
+with Conditional Use approval. Storage and maintenance
+yards not permitted.
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.21.740  Accessory Uses Permitted by Right.
+A. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500,
+and are permitted when accessory to single detached dwellings or townhouses subject to
+additional requirements in Section 12.40.100, and to the requirements of the Orenco Plan
+District under Subchapter 12.62.
+B. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are permit-
+ted subject to additional requirements in Section 12.40.104. All accessory structures are
+subject to the architectural requirements of the Orenco Plan District under Section 12.62.400.
+12.21.730 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:46
+C. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted
+subject to additional requirements in Section 12.40.170.
+D. Community Recreation Facilities and Community Buildings. Community recreation facilities
+and community buildings used solely by residents of a specific neighborhood or development
+are permitted when approved as an amenity of that neighborhood or development during the
+development process. When accessory to cottage clusters, community buildings are subject to
+additional requirements in Subsection 12.50.715.E.9.
+E. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+F. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits.
+G. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+H. Horticultural Activities. Horticultural activities are defined in Section 12.01.500, and are
+permitted, excluding commercial buildings or structures.
+I. Partial-dwelling STRs are permitted subject to additional requirements in Section 12.40.230.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.21.750  Development Standards.
+Base zone development standards in the SCR-OTC zone are listed in Table 12.21.750-1. Certain
+standards are illustrated in Figure 12.21.750-A.
+  Table 12.21.750-1:
+Development Standards in the SCR-OTC Zone
+ Standard Requirement Clarifications
+Minimum Lot Size
+
+For townhouse lots, average minimum lot size
+is 1,500 sq. ft.
+ • Residential 7,500 sq. ft.
+ • Non-Residential and
+Mixed-Use None
+Maximum Lot Size
+
+Maximum residential lot size subject to original
+townsite lot dimensions (see Subsection
+12.62.300.A).
+ • Residential See clarifications
+ • Non-Residential and
+Mixed-Use None
+Minimum Density 6.0 du/na
+ 12.21.750SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:47
+Table 12.21.750-1:
+Development Standards in the SCR-OTC Zone
+ Standard Requirement Clarifications
+Maximum Density 12.0 du/na
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+Minimum FAR 0.4
+Applicable only to commercial development on
+lots abutting NE Alder St between NE 68th Ave
+and NE Century Blvd.
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width and
+frontage is 20 feet and minimum lot depth is 65
+feet.
+
+Alley frontage not permitted without street
+frontage on the same lot; flag lots not permitted
+(see Subsection 12.62.400.I).
+
+Exception provided for child lots/parcels in
+middle housing land divisions under Section
+12.80.099.
+ • Width (at front building
+plane) 50 feet
+ • Depth 150 feet
+ • Frontage 50 feet
+Minimum Setbacks*: Residential
+
+Minimum front yard setback subordinate to
+public utility easements.
+
+Garage locations subject to additional
+requirements in Section 12.62.500.
+
+Common wall garages permitted with zero side
+setback, subject to IBC compliance.
+
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.21.720-1.
+
+For cottage clusters, the minimum rear yard
+setback to dwellings is 10 feet.
+
+Garage locations subject to additional
+requirements in Section 12.62.400.
+ • Front Yard
+
+%
+to dwelling 5 feet
+
+%
+to garage door 19 feet
+ • Side Yard 5 feet; sum of 2 side
+yards at least 15 feet
+ • Rear Yard
+
+% to front-loaded dwelling 10 feet
+
+%
+to rear-loaded dwelling 16 feet to alley
+  % to garage door Either 5 feet or less;
+or 19 feet or more
+Minimum Setbacks:
+Non-Residential and Mixed-Use None All setbacks subordinate to public utility
+easements and IBC requirements.
+Maximum Setbacks: Residential
+ • Front Yard 20 feet
+ • Side Yard None
+ • Rear Yard None
+12.21.750 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:48
+Table 12.21.750-1:
+Development Standards in the SCR-OTC Zone
+ Standard Requirement Clarifications
+Maximum Setbacks:
+Non-Residential and Mixed-Use
+ • Front Yard 10 feet
+ • Side Yard None
+ • Rear Yard None
+Minimum Building Height
+ • Residential* None
+ • Non-Residential and
+Mixed-Use
+
+%
+< 800 ft. from LRT Station 2 stories or 25 feet,
+whichever is less
+
+% > 800 ft. from LRT Station None
+Maximum Building Height
+
+Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+ • Residential* 2 stories or 35 feet
+ • Non-Residential and
+Mixed-Use 3 stories or 40 feet
+Maximum Lot Coverage None
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Illustrated in Figure 12.21.750-A
+ 12.21.750SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:49
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6283 § 1,
+2018; Ord. 6120 § 1, 2015)
+12.21.760  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the SCR-OTC
+zone may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit application pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+ Figure 12.21.750-A:
+Single Detached Dwelling Lot Dimensions Setbacks
+and Height Requirements in the SCR-OTC Zone
+12.21.750 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:50
+12.21.770  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the SCR-OTC zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.62.300 Standards Specific to the Orenco Townsite Area
+• Section 12.62.400 Architectural Conservation Standards Specific to the Orenco Townsite
+Area
+(Ord. 6401 § 1, 2022)
+ 12.21.770SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:51
+12.21.800  SCR-DNC Station Community Residential—Downtown Neighborhood Conserva-
+tion.
+The SCR-DNC zone includes the following sections:
+12.21.810 Purposes
+12.21.820 Housing Types
+12.21.830 Uses
+12.21.840 Accessory Uses Permitted by Right
+12.21.850 Development Standards
+12.21.860 Variances and Adjustments
+12.21.870 Other Pertinent Regulations
+(Ord. 6401 § 1, 2022)
+12.21.810  Purposes.
+A. Preserve Historic Downtown Neighborhoods. The SCR-DNC zone implements the SCPA
+Station Community Planning Area Comprehensive Plan designation in the historic neighbor-
+hoods near the downtown, conserving their historic, open space and architectural qualities and
+providing opportunities for rehabilitation of existing buildings and construction of compatible
+new development.
+B. Provide Transit-Supportive Housing Options. The SCR-DNC zone provides for the develop-
+ment of single detached dwellings, middle housing, multi-dwelling structures, live-work dwell-
+ings, and small-scale commercial development with reasonable proximity to the downtown
+LRT stations.
+C. Preserve Neighborhood Livability. The SCR-DNC zone encourages livability in an existing
+historic neighborhood by allowing compatible non-residential Uses such as schools and parks.
+D. Provide Mixed-Use Development Opportunities. In the SCR-DNC zone, residential businesses
+and neighborhood commercial Uses are permitted in selected areas.
+(Ord. 6401 § 1, 2022)
+12.21.820  Housing Types.
+Table 12.21.820-1 lists Housing Types permitted in the SCR-DNC zone. Housing Types are defined
+in Section 12.01.500.
+  Table 12.21.820-1:
+Housing Types Permitted in the SCR-DNC Zone
+ Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+12.21.800 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:52
+Table 12.21.820-1:
+Housing Types Permitted in the SCR-DNC Zone
+ Housing Type Status Notes
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure P
+Manufactured dwelling L Permitted subject to additional standards in
+Section 12.40.190 and Downtown Plan District
+architectural standards in Section 12.61.800.
+Manufactured dwelling project N
+Live-work dwellings P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)
+12.21.830  Uses.
+Table 12.21.830-1 lists uses permitted, conditionally permitted, limited or not permitted in the
+SCR-DNC zone.
+  Table 12.21.830-1:
+Use Categories in the SCR-DNC Zone
+ Use Status Clarifications
+Residential Use Categories
+Household Living P See Housing Types Table 12.21.820-1.
+Group Living L/N Group living permitted up to 15 residents; residential facilities
+permitted; all other uses not permitted.
+Residential Services L/N
+Residential Business C/L
+Residential businesses permitted with Conditional Use
+approval in certain areas and subject to additional standards in
+Subsection 12.61.700.G.
+Commercial Use Categories — Only Categories Listed Below Permitted
+Commercial Lodging L/C/N
+Full-dwelling STRs subject to additional standards in Section
+12.40.230. Bed and breakfast inns with not more than 5
+bedroom units permitted with Conditional Use approval and
+subject to additional standards in Section 12.40.130. All other
+uses not permitted.
+Eating and Drinking
+Establishments L
+Permitted in mixed-use buildings in the Arterial Exception Area
+on N 1st Ave; see special provisions in Subsection
+12.61.700.G.
+Office L
+Permitted in mixed-use buildings in the Arterial Exception Area
+on N 1st Ave; see special provisions in Subsection
+12.61.700.G. Psilocybin facilities permitted, subject to
+additional standards in Section 12.40.215.
+ 12.21.830SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:53
+Table 12.21.830-1:
+Use Categories in the SCR-DNC Zone
+ Use Status Clarifications
+Retail Products and Services L/N
+Permitted in mixed-use buildings in the Arterial Exception Area
+on N 1st Ave; see special provisions in Subsection
+12.61.700.G.
+Minor assembly facilities permitted with Conditional Use
+approval, and subject to additional standards in Section
+12.40.210. Retail sales of marijuana not permitted.
+Institutional Use Categories
+Colleges and Universities N
+Community Services L/C
+Emergency shelters are permitted subject to additional
+standards in Section 12.40.107; all other uses permitted with
+Conditional Use approval.
+Detention Facilities N
+Hospitals N
+Major Assembly Facilities C/N
+Religious institutions such as churches, synagogues,
+mosques, and temples permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.210. All other uses not permitted.
+Schools C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.210.
+Infrastructure and Utilities Use Categories
+Aviation Uses N
+Parks and Open Space C Permitted with Conditional Use approval. Cemeteries subject
+to additional standards in Section 12.40.140.
+Public Safety Facilities N
+Surface Alternative
+Transportation Facilities N
+Telecommunications Facilities C Permitted with Conditional Use approval and subject to
+additional standards in Section 12.40.240.
+Utility Facilities C
+With no equipment storage, permitted with Conditional Use
+approval and subject to additional standards in Section
+12.40.260.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1, 2015)
+12.21.840  Accessory Uses Permitted by Right.
+A. Accessory Dwelling Units. Accessory dwelling units (ADUs) are defined in Section 12.01.500,
+and are permitted when accessory to single detached dwellings or townhouses subject to
+additional requirements in Section 12.40.100, and to the requirements of the Downtown Plan
+District under Subchapter 12.61.
+12.21.830 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:54
+B. Accessory Structures. Accessory structures are defined in Section 12.01.500, and are permit-
+ted subject to additional requirements in Section 12.40.104. All accessory structures are
+subject to the architectural requirements of the Downtown Plan District under Section 12.61.800.
+C. Home Occupations. Home occupations are defined in Section 12.01.500, and are permitted
+subject to additional requirements in Section 12.40.170.
+D. Community Recreation Facilities and Community Buildings. Community recreation facilities
+used solely by residents of a specific neighborhood or development are permitted when
+approved as an amenity of that neighborhood or development during the development
+process. When accessory to cottage clusters, community buildings are subject to additional
+requirements in Subsection 12.50.715.E.9.
+E. Certified or Registered Family Child Care Homes and Residential Homes. Certified or regis-
+tered family child care homes as defined in ORS 329A are permitted; and certified or registered
+residential homes as defined in ORS 443 are also permitted.
+F. Household Energy Production Facilities. Household energy production facilities are defined in
+Section 12.01.500, and are permitted subject to issuance of necessary and appropriate
+Federal, State and local permits.
+G. Amateur or "Ham" Radio Facilities. Amateur or "ham" radio facilities are permitted subject to
+issuance of necessary and appropriate Federal, State and local permits.
+H. Horticultural Activities. Horticultural activities are defined in Section 12.01.500, and are
+permitted, excluding commercial buildings or structures.
+I. Partial-dwelling STRs are permitted subject to additional requirements in Section 12.40.230.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6120 § 1,
+2015)
+12.21.850  Development Standards.
+A. Development Standards in General. Base zone development standards in the SCR-DNC zone
+are listed in Table 12.21.850-1. Certain standards are illustrated in Figure 12.21.850-A.
+  Table 12.21.850-1:
+Development Standards in the SCR-DNC Zone
+ Standard Requirement Clarifications
+Minimum Lot Size
+ • Single detached dwelling or
+duplex 3,000 sq. ft.
+ • Triplex 5,000 sq. ft.
+ • Quadplex or Cottage Cluster 7,000 sq. ft.
+ • Townhouse 1,500 sq. ft. (average)
+ • Multi-dwelling structure 3,000 sq. ft. per unit
+ • Commercial structure None
+ 12.21.850SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:55
+Table 12.21.850-1:
+Development Standards in the SCR-DNC Zone
+ Standard Requirement Clarifications
+Maximum Lot Size
+ • Single detached dwelling 4,850 sq. ft.
+ • Other housing types None
+ • Commercial structure None
+Minimum Density
+ • Within 1,300 ft. of an LRT
+station 15 du/na
+ • Beyond 1,300 ft. of an LRT
+station 9 du/na
+Maximum Density
+
+Maximum density does not apply to duplexes,
+triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+ • Within 1,300 ft. of an LRT
+station 23 du/na
+ • Beyond 1,300 ft. of an LRT
+station 14 du/na
+ • Arterial Exception Area 18 du/na
+Minimum FAR Not applicable
+Minimum Lot Dimensions
+
+For townhouse lots: minimum lot width/frontage
+with front-loaded garage is 20 feet; minimum lot
+depth is 65 feet.
+
+Exception to lot frontage provided for child
+lots/parcels in middle housing land divisions
+under Section 12.80.099.
+ Width (at front building plane)
+ • Dwelling with front-loaded
+garage 22 feet
+ • Dwelling with rear-loaded
+garage 18 feet
+ Depth 85 feet
+ Frontage Same as lot width
+Minimum Setbacks
+ • Front Yard
+
+For cottage clusters, the minimum front yard
+setback to dwellings is 10 feet.
+
+%
+on Main Street between
+5th and 10th Avenues 20 feet
+
+%
+elsewhere to dwelling 15 feet
+
+%
+elsewhere to garage door 19 feet
+ • Side Yard
+Side yard setbacks on the common wall shall
+be waived for townhouses permitted under
+Table 12.21.820-1.
+12.21.850 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:56
+Table 12.21.850-1:
+Development Standards in the SCR-DNC Zone
+ Standard Requirement Clarifications
+
+%
+Arterial Exception Area
+10 feet for 3-story
+mixed-use buildings
+abutting the Area edge
+See Subsection 12.61.700.G.4.
+
+% Elsewhere 5 feet, or 10 feet if
+abutting SCC-DT
+ • Rear Yard
+
+% structure 10 feet
+
+%
+rear-loading garage door Either 5 feet or less, or
+19 feet or more
+Maximum Setbacks
+ • Front Yard 25 feet
+Maximum front yard setback subordinate to
+public utility easements.
+Maximum front yards subject to averaging
+pursuant to Subsection 12.61.700.E.
+Additional 10 feet front setback for pedestrian
+amenities permitted in the Arterial Exception
+Area through Development Review.
+ • Side Yard 15 feet
+ • Rear (including alley) None
+Minimum Building Height
+ • Residential None
+ • Mixed-Use 2 stories
+Maximum Building Height*
+ • Arterial Exception Area 3 stories
+See Subsection 12.61.700G.
+
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+
+Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+ • Elsewhere 2 ½ stories or 35 feet,
+whichever is less
+Maximum Building Coverage None
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping
+
+Additional screening landscaping required in
+Arterial Exception Area: see Subsection
+12.61.700.G.
+ • Single Detached Dwellings
+and Middle Housing None
+ • All other development 15%
+* Illustrated in Figure 12.21.850-A
+ 12.21.850SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:57
+B. Reduced Front Yard Setbacks in the SCR-DNC Zone. Front yard setbacks for new dwellings
+constructed in the SCR-DNC zone may be reduced if dwellings on abutting lots on 2 sides have
+front setbacks less than the applicable standard in Table 12.21.850-1. Reduced front yard
+setbacks shall comply with the following standards:
+1. If the dwellings on 2 abutting lots have reduced front setbacks, the front setback of the
+new dwelling may be reduced to the average front setback of the abutting dwellings.
+2. If only 1 dwelling on an abutting lot has a reduced front setback, the front setback of the
+new dwelling may be reduced to the average of the front setback of the abutting dwelling
+and the required front setback.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.21.860  Variances and Adjustments.
+Applications for Variances and Adjustments per Section 12.80.150 to standards in the SCR-DNC
+zone may be approved under 1 of 4 processes:
+A. As a Variance pursuant to Section 12.80.152;
+B. As a Minor Adjustment in conjunction with a primary Type II or Type III application pursuant to
+Section 12.80.154;
+ Figure 12.21.850-A:
+Single Detached Dwelling Minimum Lot Dimensions, Setbacks
+and Height Requirements in the SCR-DNC Zone
+12.21.850 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.21:58
+C. As a Major Adjustment in conjunction with a primary Type III application pursuant to Section
+12.80.156; or
+D. With a Significant Natural Resource Permit pursuant to Section 12.80.130.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.21.870  Other Pertinent Regulations.
+Additional standards such as parking, landscaping, vision clearance, and street improvements also
+apply to development in the SCR-DNC zone as follows:
+• Section 12.50.200 Site Design
+• Section 12.50.300 Vehicle Parking
+• Section 12.50.400 Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity
+• Section 12.50.500 Access and Street Standards
+• Section 12.50.600 Public Utilities, Site Grading and Storm Water Management Facilities
+Site Integration
+• Section 12.61.300 Downtown Plan District Standards Applicable to all Zones
+• Section 12.61.700 Downtown Plan District Standards Specific to the SCR-DNC Zone
+• Section 12.61.800 Downtown Plan District Standards Architectural Conservation Stan-
+dards
+(Ord. 6401 § 1, 2022)
+ 12.21.870SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES
+CDC12.21:59

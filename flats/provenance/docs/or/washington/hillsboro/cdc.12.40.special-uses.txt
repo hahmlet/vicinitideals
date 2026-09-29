@@ -1,0 +1,1465 @@
+SUBCHAPTER 12.40
+ SPECIAL USE STANDARDS
+12.40.010 Purpose.
+12.40.020 Applicability.
+12.40.030 Organization.
+12.40.100 Accessory Dwelling Units.
+12.40.104 Accessory Structures and Equipment.
+12.40.107 Affordable Housing and Emergency Shelters.
+12.40.110 Animal Service Facilities.
+12.40.120 Automobile Service Station.
+12.40.130 Bed and Breakfast Inns.
+12.40.140 Cemeteries.
+12.40.150 Day Care Facilities.
+12.40.160 Flag Lot Development.
+12.40.170 Home Occupations.
+12.40.180 Manufactured Dwelling Projects.
+12.40.190 Manufactured Dwellings Placed Outside Manufactured Dwelling Projects.
+12.40.194 Marijuana Facilities.
+12.40.200 Model Home as Project Sales Office.
+12.40.210 Places of Assembly.
+12.40.215 Psilocybin Facilities.
+12.40.220 Recreational Vehicle and Boat Storage.
+12.40.230 Short Term Rentals.
+12.40.240 Telecommunication Facilities.
+12.40.250 Temporary Commercial Activities at Stadiums.
+12.40.260 Utility Facilities.
+12.40.270 Vehicle Wrecking Yards.
+CDC12.40:1
+
+12.40.010  Purpose.
+This subchapter lists development requirements for specific uses which may be permitted or
+permitted as conditional uses in one or more zones. Specific standards are necessary for these uses
+due to their potential impacts on neighboring properties.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.40.020  Applicability.
+Specific uses listed in this subchapter are subject to the base zone standards in Subchapters 12.21
+through 12.26, the development and design standards in Subchapter 12.50, and any applicable
+overlay zone standards or plan district standards in Subchapters 12.27 or 12.60 through 12.66.
+Where special use standards conflict with other standards in this Code, refer to Section 12.01.430 for
+the hierarchy of standards.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.40.030  Organization.
+Each special use section includes 2 subsections: characteristics and standards. Characteristics
+describe the functional and physical attributes or qualities which most closely describe or define the
+special use. Standards include the criteria for approval of the use and specify its parameters.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.40.100  Accessory Dwelling Units.
+A. Characteristics. Accessory dwelling units (ADUs) are defined in Section 12.01.500, and
+provide the following housing opportunities:
+1. Accommodating additional density in existing neighborhoods with minimum cost and
+disruption to surrounding neighborhoods;
+2. Allowing more efficient use of existing housing stock and infrastructure;
+3. Providing a mix of housing in response to changing family needs and smaller households;
+4. Allowing seniors, single parents, families with grown children and other residents to
+remain in their homes and neighborhoods; and
+5. Providing a broader range of housing types and costs.
+B. Approval Process.
+1. Where permitted, ADUs are subject to review and approval pu rsuant to Section 12.80.170.
+2. Applicants may request Variances and Adjustments pursuant to Section 12.80.150.
+C. Creation of an ADU. An ADU may be created as follows:
+1. Converting existing floor area in an existing dwelling or accessory structure such as a
+garage;
+2. Adding new floor area to an existing dwelling or accessory structure; or
+ 12.40.100SPECIAL USE STANDARDS
+CDC12.40:3Supp. No. 1
+3. Constructing a separate unit on a lot with a new or existing primary dwelling.
+D. Standards. Construction and occupancy of an ADU shall conform to the following standards:
+1. Occupancy Restriction. An ADU is subject to the maximum occupancy of a dwelling unit
+as defined in Section 12.01.500.
+2. Eligibility and Number. A maximum of one ADU is allowed per legal, single detached
+dwelling or townhouse. If the proposed ADU is on a child lot which resulted from a Middle
+Housing Land Division, the housing on the lot must be at or above the minimum density
+for the zone.
+3. Location. An ADU shall be located on the same lot as the primary single detached
+dwelling or townhouse.
+4. Parking. No off-street parking is required for ADUs. Any parking required for the primary
+dwelling shall be retained or replaced.
+5. Minimum and Maximum Floor Area. See Section 12.01.500 for information about how to
+measure floor area. Below are additional standards relative to floor area for ADUs.
+a. Except as provided in subparagraph c. below, an ADU shall be at least 250 square
+feet, but not more than 750 square feet in area.
+b. The minimum and maximum floor areas identified in subparagraph a. above can
+exclude exterior walls, interior staircases, common/shared space between the
+primary dwelling and the ADU, interior parking, and unfinished storage space that is
+not internally accessible from the ADU.
+c. An ADU created by the conversion of a level or floor (e.g., basement, attic, or
+second story) of the primary dwelling may occupy the entire level or floor, even if the
+floor area of the ADU would be more than 750 square feet. The maximum size shall
+not exceed 50% of the total square footage of the primary dwelling.
+6. Height. Except as provided in subparagraph 7.c.ii, below, an ADU must conform to the
+standards of the applicable zone or plan district regarding building height.
+7. Placement.
+a. Except as provided in subparagraphs 7.b. and c. below, an ADU must be placed and
+conform to the standards of the applicable zone or plan district regarding lot
+coverage and setbacks. If the applicable zone or plan district has standards for the
+placement of ADUs, such standards supersede this section.
+b. An ADU shall be placed in relation to the primary dwelling as follows:
+i. On all lots, an ADU shall be located behind the front building plane of the
+primary dwelling, except ADUs created by converting existing floor area. For
+corner lots, through lots, and multiple frontage lots, the ADU shall be placed
+behind the front building plane of the façade with the front door.
+12.40.100 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:4Supp. No. 1
+c. Side and rear setbacks may be reduced to 3 feet for a detached ADU meeting the
+following specifications. An ADU connected to the primary residence by an archi-
+tectural or structural connection between the dwellings (such as a breezeway) is
+considered attached.
+i. The total building area is 450 square feet or smaller;
+ii. The building does not exceed one story in height (maximum 10 feet measured
+mid-point between the roof peak and the roof eave);
+iii. The outer edges of the eaves are located at least 2 feet from the side and rear
+property lines; and
+iv. Separation from any other structure on the site by at least 6 feet.
+d. An ADU cannot be located in any public or private utility or access easement.
+8. Entrances for ADUs.
+a. The entrance to the ADU can be provided on any façade and shall include all of the
+following:
+i. A recessed building entry or porch at least 2 feet deep, as measured horizon-
+tally from the face of the main building façade, and at least 5 feet wide;
+ii. Entrance lighting is required on all ADUs. Exterior lighting shall not exceed 2
+lumens, and shall not glare or shine onto adjacent property; and
+iii. One or more sidelights, glass doors, or windows.
+9. Architectural Standards. ADUs shall:
+a. Include 2 or more of the articulation elements or detailed design elements found in
+Section 12.50.710.C.4. and C.5. on all façades of the ADU; and
+b. Shall not include glazing on any building elevation that is facing and within 20 feet
+of an abutting residential property unless:
+i. The glazing is limited to windows located on the upper one-third of all stories,
+with an option for the first story to have no glazing limitations of a minimum
+6-foot screen by fencing or evergreen landscaping is installed between the
+ADU and the abutting residential property. The screen or fencing shall extend
+the entire distance of the ADU building elevation, plus an additional 3 lineal
+feet. Newly planted shrubs shall be no less than 5 feet in height at time of
+planting.
+c. Meet the architectural standards for ADUs in any applicable zone or plan district, as
+such standards supersede the standards of this section.
+10. Code Compliance. ADUs shall comply with applicable building, fire, health, and safety
+codes.
+(Ord. 6451 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+ 12.40.100SPECIAL USE STANDARDS
+CDC12.40:5Supp. No. 1
+12.40.104  Accessory Structures and Equipment.
+A. Characteristics. Accessory structures are defined in Section 12.01.500, and are used by the
+residents, customers, or employees of the primary structure(s) on the site. Examples of
+residential accessory structures include playhouses, storage sheds, detached garages or
+workshops, and greenhouses. Examples of commercial or industrial accessory structures
+include trash or utility enclosures, storage tanks, and cooling towers. Accessory equipment
+includes heating, ventilation and air-conditioning devices and communication equipment such
+as satellite dishes.
+B. Standards.
+1. Except as provided in paragraph 2., below, accessory structures must conform to the
+standards of the applicable zone or plan district regarding setbacks. If the applicable zone
+or plan district has standards for the placement of accessory structures, such standards
+supersede this section.
+2. Side and rear yard setbacks may be reduced to 3 feet for residential accessory structures
+meeting all the following specifications:
+a. The structural footprint is 450 square feet or less, measured at the outside of the
+foundation or supports;
+b. The structure does not exceed 1 story in height (maximum 10 feet, measured
+mid-point between the roof peak and the roof eave);
+c. The outer edges of any eaves are located at least 2 feet from the side and rear
+property lines;
+d. The structure is placed behind the front building plane of the dwelling. For corner
+lots, through lots, and multiple frontage lots this includes the front building plane on
+all streets; and
+e. Accessory structures are separated from any other structure on the site by at least
+6 feet.
+3. The combined footprints of primary and accessory structures on a lot cannot exceed the
+maximum lot coverage standard of the applicable zone with the exception of middle
+housing in middle housing zones which may exceed the maximum lot coverage by up to
+10%.
+4. Accessory equipment, whether installed either on the ground or attached to a structure,
+shall be located outside any required emergency access routes or clearances from the
+structure.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019)
+12.40.104 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:6Supp. No. 1
+12.40.107  Affordable Housing and Emergency Shelters.
+A. Senate Bill 8 Affordable Housing. Senate Bill 8 (2021) requires local governments to allow
+affordable housing without requiring a zone change or conditional use permit if certain criteria
+and standards are met. These requirements are implemented by this subsection.
+1. Applicability Criteria. Affordable housing projects allowed pursuant to this Subsection
+12.40.107.A. must meet subsection A.1.a. and either subsection A.1.b. or c. below:
+a. Affordability. The affordability of the units is enforceable, including as described in
+ORS 456.270 to 456.295, for a duration of no less than 30 years and shall meet
+either paragraph i. or ii. below:
+i. Each unit on the property is made available to own or rent to families with
+incomes of 80% or less of the area median income as determined by the
+Oregon Housing Stability Council based on information from the United States
+Department of Housing and Urban Development; or
+ii. The average of all units on the property is made available to families with
+incomes of 60% or less of the area median income.
+b. Ownership. The housing is owned by:
+i. A public body, as defined in ORS 174.109; or
+ii. A nonprofit corporation that is organized as a religious corporation.
+c. Zoning. The property is zoned for or allows for 1 or more of the following:
+i. Commercial uses;
+ii. Places of assembly for religious institutions;
+iii. Institutional and Open Space Zones per Subchapter 12.26; or
+iv. Industrial uses provided the property is publicly owned, adjacent to lands
+zoned for residential uses or schools, and not specifically designated for
+heavy industrial uses including all of the Industrial Zones in Subchapter 12.25.
+2. Standards. Only affordable housing developed pursuant to Subsection 12.40.107.A. is
+subject to the following standards.
+a. Site Suitability. The site shall be suitable for development of affordable housing.
+Affordable housing shall not be located on lands where the City determines that:
+i. The development on the property cannot be adequately served by water,
+sewer, storm water drainage or streets, or will not be adequately served at the
+time that development on the lot is complete;
+ii. The property contains a slope of 25% or greater;
+iii. The property is within a 1% annual chance floodplain;
+iv. The development of the property is constrained by land use regulations based
+on statewide land use planning goals relating to: natural disasters and
+hazards; or natural resources, including air, water, land or natural areas (but
+not including open spaces or historic resources); or
+ 12.40.107SPECIAL USE STANDARDS
+CDC12.40:7Supp. No. 1
+v. The property is zoned for industrial use and does not meet the criteria in
+subsection A.1.c.iv. above.
+b. Density and Height in Areas That Are Zoned for Residential Uses. Except as
+provided by subsection A.2.b.iii. below, the greater of density and height standards
+in subsections A.2.b.i. or ii. below, shall apply:
+i. Any City density bonus for affordable housing; or
+ii. Without consideration of any local density bonus for affordable housing:
+(A) For property with existing maximum density of 16 or fewer units per net
+acre, based on the proposed housing type, 200% of the existing density
+and 12 additional feet;
+(B) For property with existing maximum density of 17 or more units per net
+acre, and 45 or fewer units per net acre, based on the proposed housing
+type, 150% of the existing density and 24 additional feet; or
+(C) For property with existing maximum density of 46 or more units per net
+acre, based on the proposed housing type, 125% of the existing density
+and 36 additional feet.
+iii. Exceptions to the density and height bonuses.
+(A) The density and height bonuses provided by this section do not apply to
+housing in areas that are not zoned for residential uses.
+(B) The City may reduce the density or height of the density bonus as
+necessary to address a health, safety or habitability issue, including fire
+safety, or to comply with a protective measure adopted pursuant to a
+statewide land use planning goal provided the City adopts findings
+supported by substantial evidence demonstrating the necessity of this
+reduction.
+c. Density and Height in Zones That Do Not Allow Housing.
+i. Industrial Zones. The maximum density shall be based on the density appli-
+cable to the contiguously zoned residential property including the density
+bonuses described in subsection c, above. If there is more than 1 contiguous
+residential property, the zoning of the property with the greatest density
+applies. If the proposed development site is not contiguous to a residentially
+zoned site, then the density standards of the MR-3 zone shall apply. The
+height standard of the base zone shall apply.
+ii. SCFI Station Community Fair Complex Institutional. The maximum density
+shall be based on the density applicable to the contiguously zoned residential
+property including the density bonuses described in subsection A.2.b., above.
+If there is more than 1 contiguous residential property, the zoning of the
+property with the greatest density applies. If the proposed development site is
+not contiguous to a residentially zoned site, then the density standards of the
+MR-3 zone shall apply. The height standard of the base zone shall apply.
+12.40.107 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:8Supp. No. 1
+d. Affordable housing projects allowed pursuant to this section are subject to the
+development standards in the applicable zone and to a residential multi-dwelling
+use. A Type II approval is required if it would otherwise be required for a develop-
+ment of that scale in that zone.
+B. House Bill 2008 Affordable Housing. House Bill 2008 (2021) and this subsection establish
+standards to allow a nonprofit corporation organized as a religious corporation to develop
+affordable housing.
+1. Applicability Criteria. Affordable housing projects all owed pursuant to Section 12.40.107.B.
+must meet subsection B.1.a. and b. below:
+a. Affordability. The affordable housing meets the definition in ORS 197.311.
+b. Ownership. The property is owned by a nonprofit corporation organized as a
+religious corporation.
+2. Standards.
+a. Residential and Nonresidential Sites. The City shall only apply restrictions or
+conditions of approval to the development of affordable housing that are:
+i. Clear and objective as described in ORS 197.307(4); or
+ii. Discretionary standards related to health, safety, habitability or infrastructure.
+For the purposes of this standard, that means that affordable housing shall not
+be located on lands where the City determines that the development on the
+property cannot be adequately served by water, sewer, storm water drainage
+or streets, or will not be adequately served at the time that development on the
+lot is complete.
+b. Nonresidential Sites.
+i. The City shall approve the development of affordable housing on property not
+zoned for housing if:
+(A) The property is not zoned for industrial uses; and
+(B) The property is contiguous to property zoned to allow residential uses.
+ii. Affordable housing allowed under this subsection shall be subject only to the
+restrictions applicable to the contiguously zoned residential property as lim-
+ited by subsection B.2.a. of this section and without requiring that the property
+be rezoned for residential uses. If there is more than 1 contiguous residential
+property, the zoning of the property with the greatest density applies.
+C. Conversion of a Hotel or Motel to an Emergency Shelter or Affordable Housing. House Bill 3261
+(2021) and this subsection allow the conversion of a hotel or motel to an emergency shelter or
+affordable housing when the following criteria and standards are met.
+1. Definitions. The definition of "regulated affordable housing" is specified in Section
+12.01.500 and the definitions of "conversion" and "lawful use" applicable to this Subsec-
+tion 12.40.107.C. are specified below.
+a. "Conversion" includes an alteration to a building that changes the number of units
+but does not expand the building footprint. A conversion under this section is not a
+land use decision as defined in ORS 197.015.
+ 12.40.107SPECIAL USE STANDARDS
+CDC12.40:9Supp. No. 1
+b. "Lawful use" includes a nonconforming use as described in ORS 215.130(6) or any
+other local land use regulation allowing for the continuation of a use that was lawful
+when first enacted.
+2. Applicability Criteria. Proposed conversions allowed under this Subsection 12.40.107.C.
+must meet 1 of the following:
+a. The proposed conversion is from use as a hotel or motel to use as an emergency
+shelter; or
+b. The proposed conversion is from use as a hotel or motel to use as affordable
+housing; or
+c. The proposed conversion is from an emergency shelter to use as affordable
+housing.
+3. Standards.
+a. Site Suitability. The conversion of a hotel or motel to an emergency shelter or
+affordable housing pursuant to this section is not permitted on sites where the City
+determines that:
+i. There is inadequate transportation access to commercial and medical ser-
+vices;
+ii. The site is specifically for heavy industrial uses including all of the Industrial
+Zones in Subchapter 12.25; or
+iii. The site is designated for a statewide land use planning goal relating to natural
+disasters or hazards, including flood plains or mapped environmental health
+hazards, unless the converted use complies with regulations directly related
+to the disasters or hazards.
+b. Emergency Shelters. Conversion of a hotel or motel to an emergency shelter if no
+site alterations are proposed is subject only to the following standards:
+i. Applicable building codes; and
+ii. Occupancy limits.
+c. Affordable Housing. Conversion of a hotel or motel to affordable housing, or
+conversion of a hotel or motel that was previously converted to an emergency
+shelter to affordable housing is subject to the following standards:
+i. Applicable building codes;
+ii. Occupancy limits; and
+iii. Standards applicable to multi-dwelling residential in Subchapter 12.50.
+d. Site Alteration. Site alterations, including but not limited to alterations to parking
+areas and landscaping, are subject to the applicable standard in Subchapter 12.50.
+D. Non-Temporary Emergency Shelters.
+1. Effectiveness and Vesting. The special use standards described in this Subsection
+12.40.107(D) shall not apply to shelters meeting the applicability of Section 3, House Bill
+12.40.107 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:10Supp. No. 1
+2006 (Section 3, Chapter 18, Oregon Laws 2021) while the bill remains in effect. When
+Section 3, House Bill 2006 (2021) is repealed, the special use standards below shall be
+effective City-wide. Any non-temporary emergency shelter established in compliance
+with Section 3, House Bill 2006 (2021) is considered vested and not subject to the special
+use standards below as long as the use of the shelter as an emergency shelter is not
+interrupted or abandoned for more than 2 years. Any non-temporary emergency shelter
+not meeting the applicability of Section 3, House Bill 2006 (2021) while the bill remains in
+effect shall be subject to the special use standards below.
+2. Intent. It is the intent of these standards to ensure that any conflicts between a
+non-temporary emergency shelter and the surrounding land uses are mitigated through
+the special use standards, while also ensuring that shelter providers are not subject to
+overly prohibitive standards that would diminish shelter access within the community.
+3. Characteristics. An emergency shelter is defined in Section 12.01.500 and provides
+shelter on a temporary basis for individuals and families who lack permanent housing, as
+well as those without adequate protection during times of extreme weather. As used in
+this section, a non-temporary emergency shelter is a shelter that is within an existing or
+newly constructed building(s) and is available year-round rather than being operated
+during shorter periods of time. Being available year-round shall not require that the
+shelter is open 365 days per year.
+4. Exceptions. The following special use standards apply to all non-temporary emergency
+shelters, except those allowed through Subsection 12.40.107.C. A temporary emergency
+shelter that meets the provisions of HMC Subchapter 11.12 is not subject to these special
+use standards.
+5. Approval Process. A non-temporary emergency shelter requires approval of a non-
+temporary emergency shelter application subject to the Type I procedure identified in
+CDC Section 12.70.030.
+6. Stakeholder Engagement. A non-temporary emergency shelter applicant/operator shall
+facilitate a stakeholder engagement process prior to submittal of the land use application
+that meets the following minimum standards:
+a. An invitation shall be mailed to all property owners and tenants within the areas
+identified below inviting them to engage with the applicant/operator on the proposed
+use. In that invitation, the applicant/operator shall request a written/verbal response
+within 7 days of the invitation being mailed and shall provide a specific email
+address and phone number where those responses can be sent. In addition, the
+invitation shall also include an area for the recipients to identify their preferred topic
+area. The invitations shall be mailed to all property owners and tenants within the
+radii specified below that shall be taken from the boundary of the subject property:
+i. Shelters With 49 Beds or Less: Within 2,000 feet
+ii. Shelters With 50 Beds or More: Within 3,000 feet
+ 12.40.107SPECIAL USE STANDARDS
+CDC12.40:11Supp. No. 1
+b. The applicant is encouraged to choose the most appropriate form of engagement
+based on the amount of interest received and the stakeholders involved. Examples
+of this engagement shall include, but not be limited to, in-person or virtual meetings,
+a singular large group meeting, and/or multiple smaller group meetings with
+written/verbal dialogue answering questions;
+c. In these engagement discussions, the applicant/operator shall provide preliminary
+details of the major elements of the shelter, including compliance with the standards
+listed in subsection D.7. below; and
+d. The applicant/operator shall include a copy of the list of parties notified, affidavits of
+mailing, copies of all materials provided during the engagement, and notes from the
+engagement with the application upon submittal. If the shelter proposal is revised
+after the engagement process, a second stakeholder engagement process with a
+new invitation shall be required before the revised application is submitted.
+7. Standards. A non-temporary emergency shelter shall conform to the following standards.
+Unless otherwise modified, the standards of the base zone also apply.
+a. An operations plan for the shelter shall be included with the land use application. An
+operations plan shall include, at a minimum, items addressing shelter supervision
+and management, client interaction, rules for shelter use, facility operations and
+maintenance, safety and security provisions, and signage that complies with the
+Hillsboro Municipal Code.
+b. A shelter shall meet the separation standards in Table 12.40.107-1 and shall not
+exceed the maximum number of beds dependent upon the zone where the shelter
+is located.
+  Table 12.40.107-1:
+Shelter Separation and Density Standards
+ Zones
+ Minimum Separation
+Between Properties*
+ Maximum Number of
+Beds Per Shelter**
+R-10 — R-4.5; SCR-LD; SCR-OTC;
+SCR-DNC 500 feet 50
+MR-1 — MR-2; SCR-MD; MU-N; MU-VTC;
+SCR-V 500 feet 60
+MR-3; SCR-HD; MU-C; UC-RM; C-N;
+UC-NC 500 feet 70
+C-G; SCC-DT; SCC-SC; SCC-MM;
+UC-MU; UC-AC; UC-OR 1,000 feet 80
+UC-RP; SCFI 1,000 feet 90
+I-G; I-P; I-S; SCBP; SCI; SSID; HSID;
+ESID Not permitted Not permitted
+* The distances are measured from any property line on which the shelter is located to any other
+shelter's closest property line.
+** If the site has split zoning, the smaller number applies.
+12.40.107 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:12Supp. No. 1
+c. Except for a shelter that supports families, children, and/or unaccompanied youth,
+a non-temporary emergency shelter shall not be located within 1,000 feet of a public
+or private elementary, middle, or high school or other school attended primarily by
+children under 18 years of age. This proximity restriction does not apply to day
+cares. If schools are sited after a shelter becomes operational, then the shelter shall
+be allowed to continue to operate and expand. For purposes of this subsection, the
+distances are measured from any property line on which the shelter is located to the
+closest property line of the school.
+d. All functions associated with the shelter, except for children's play areas, outdoor
+recreation areas, parking, animal runs, and outdoor waiting must take place within
+the building(s) proposed to house the shelter. Outdoor waiting for clients, if any,
+shall not be in, and shall be separated from, the public right-of-way. Recreational
+vehicles may be permitted to park on the property; however, no living, sleeping, or
+residing may occur in recreational vehicles parked on the same property as a
+non-temporary emergency shelter unless permitted by ORS.
+8. Suspension and Closure. A shelter may be suspended or closed in accordance with the
+following procedures and criteria.
+a. The Manager may close the shelter if:
+i. More than 40 valid emergency service calls within 30 calendar days are made
+regarding on-site activity associated with the shelter;
+ii. Any safety issues are identified during an inspection, including, but not limited
+to, fire and life safety issues that warrant closure; and/or
+iii. Any violation of the building or fire permits or land use decision, Hillsboro
+Municipal Code and/or State or Federal law occurs.
+b. Prior to closure, the Manager shall start by suspending the shelter and providing the
+operator with a written notice of the Manager's intent to close the shelter that
+specifies which of the above criteria apply. In the written suspension notice, the
+Manager shall provide the operator a minimum of 7 days to either: (i) provide a
+written response identifying the plan to reduce the number of valid emergency
+service calls; and/or (ii) to correct safety issues and violations. The shelter may be
+allowed to continue sheltering clients during the suspension unless the Manager
+finds that there is a case of an emergency or threat to human health or life safety.
+c. If the operator has not corrected the issue(s) identified in the written notice within 7
+days, the Manager shall move to close the facility. The Manager shall give the
+operator, clients of the shelter, and the property owner 7 days to remove shelter
+components, and for clients to vacate the location of the shelter. In cases of
+emergency or threat to human health or life safety, less than 7 days' notice may be
+given. The Manager's decision to close a shelter shall be effective immediately and
+shall specify the duration of the closure. An operator shall be permitted to reopen
+the facility following the specified duration of time as long as all items have been
+corrected and those corrections have been documented in writing and confirmed by
+ 12.40.107SPECIAL USE STANDARDS
+CDC12.40:13Supp. No. 1
+the Manager. An appeal on the closure shall be made to the City Council. The owner
+or operator shall not be required to remove components utilized for the shelter that
+are also part of the owner or operator's other routine operations on the property.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.40.110  Animal Service Facilities.
+A. Characteristics. Animal service facilities are defined in Section 12.01.500. Facilities providing
+overnight pet care may include living quarters for facility operators. Animal service facilities do
+not include keeping of domesticated animals in compliance with Municipal Code Chapter 6.20.
+B. Approval Process. Animal service facilities primarily enclosed within a building, or having
+exterior yards for supervised activity only, may be permitted in certain zones, subject to Section
+12.80.040. Where allowed, facilities with outdoor runs allowing unsupervised activity are
+permitted only as conditional uses under Section 12.80.020.
+C. Additional Information on Applications. An application for an animal services facility or for
+accessory outdoor exercise areas shall specify the following operational conditions of the
+facility or area:
+1. Average number of animals kept during a 24-hour period, weekdays and weekends, and
+maximum number of animals kept during peak periods;
+2. On-site pick-up/drop-off vehicle circulation patterns;
+3. Interior and exterior noise attenuation materials to be used, including, but not limited to,
+solid exterior noise barriers and enhanced interior building insulation;
+4. Visual screening of outdoor exercise areas or runs;
+5. Sanitation measures for outdoor exercise areas;
+6. Staffing levels during all hours of operation; and
+7. Schedule and scale of training, competition, or show activities generating additional
+vehicular traffic or on-site activities.
+D. Standards for Outdoor Exercise Areas. Accessory outdoor exercise areas shall comply with the
+following standards:
+1. Not more than 10 animals per 1,000 square feet of outdoor exercise area shall be
+permitted in the area at any given time;
+2. Outdoor exercise areas shall be fully screened from adjacent properties and from public
+right-of-way;
+3. Noise attenuation measures shall be provided on the walls or fences of outdoor exercise
+areas, to mitigate animal generated noise. This standard will be considered met if the
+applicant provides documentation from a qualified sound engineer that the sound
+attenuation measures will ensure compliance with the following standards:
+a. Animal-generated noise at any property line of the site does not exceed 60 dBA at
+any time except as provided in subparagraph b;
+12.40.107 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:14Supp. No. 1
+b. Animal-generated noise above 60 dBA shall be allowed on an "infrequent" basis
+within the 12-hour period between 7:00 a.m. and 7:00 p.m. of the same day. In
+applying this standard "infrequent" is defined as either:
+i. Continuous animal-generated noise of up to 70 dBA at a property line for no
+more than 10 minutes of the 12-hour period; or
+ii. Intermittent animal-generated noise of up to 70 dBA at a property line for no
+more than 30 minutes of the 12-hour period.
+c. For purposes of measuring "infrequent" sound levels from approved outdoor
+exercise areas, Hillsboro Municipal Code Section 6.24.030 shall not apply.
+4. The effectiveness of these standards may be reevaluated at any time at the discretion of
+the Review Authority responsible for the initial decision.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.40.120  Automobile Service Station.
+A. Characteristics. An automobile service station is a vehicle service and repair use specifically
+providing primarily vehicle fuel sales, but which may also supply other goods and services,
+excluding major vehicle repairs, painting, and body work.
+B. Approval Process. Where permitted, automobile service stations are subject to approval as a
+as a conditional use under Section 12.80.020.
+C. Standards. Approval and operation of new automobile service stations shall conform to the
+following standards:
+1. Location. No service station shall be located closer than 200 feet from any school or
+public playground and 400 feet from any church, hospital, or residential services facility.
+2. Minimum Required Lot Dimensions.
+a. Lot area: 15,000 square feet.
+b. Street frontage (corner lot): 180 feet.
+c. Street frontage (interior lot): 120 feet.
+3. Exterior Lighting.
+a. All site lighting must comply with the standards of Section 12.50.240.
+b. Freestanding light fixtures cannot be higher than 25 feet. Only 1 free-standing light
+fixture is permitted for each driveway approach.
+4. Screening. A sight-obscuring fence or wall 6 feet to 8 feet high must be provided between
+the service station site and abutting property in a residential zone. In the front yard
+setback the height of the wall or fence must be reduced to 3 ½ feet.
+5. Landscaping. Site landscaping shall comply with Section 12.50.220.
+ 12.40.120SPECIAL USE STANDARDS
+CDC12.40:15
+6. Other required conditions:
+a. Except for small vehicle accessories, sales, storage, and display of merchandise
+must be conducted within an enclosed building.
+b. Storage of inoperative vehicle or vehicle parts is not permitted for longer than 72
+hours, except in enclosed structures.
+(Ord. 6401 § 1, 2022)
+12.40.130  Bed and Breakfast Inns.
+A. Characteristics. Bed and breakfast inn is defined in Section 12.01.500. Bedroom units in a bed
+and breakfast inn typically do not contain individual cooking facilities. The lodging price at a bed
+and breakfast inn typically includes the price of a morning meal available only to guests of the
+inn. Additional rooms or structures may be added onto the original building or site provided the
+total number of lodging units remains at 5 or less.
+B. Approvals Required. Bed and breakfast inns in residential zones must be approved as
+conditional uses under Section 12.80.020. Bed and breakfast inns in any zone are subject to
+review and approval under Section 12.80.040.
+C. Standards. Bed and breakfast inns permitted as conditional uses in residential zones must
+comply with the following standards:
+1. The site to be used as a bed and breakfast inn must contain a dwelling unit having been
+occupied as a residence for at least 5 years prior to the date of conditional use application
+submittal;
+2. The site of the bed and breakfast inn must contain a dwelling unit occupied as the primary
+residence of the person or persons identified as the bed and breakfast operator(s).
+Primary residence is defined as the operator's permanent residence of record as
+substantiated by official documents such as driver's license or tax forms;
+3. Commercial assembly events, such as weddings, meetings, receptions, or other gather-
+ings for direct or indirect compensation, shall not be held at the inn;
+4. No more than an average of 5 customer vehicles may access the premises on a daily
+basis;
+5. No more than an average of 2 business related deliveries per day is allowed. Business
+deliveries shall not restrict pedestrian or vehicular circulation on adjoining public streets
+and sidewalks;
+6. No more than 1 person who is not a principal resident of the site containing the bed and
+breakfast inn can be engaged in the operation of the bed and breakfast inn at any one
+time;
+12.40.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:16
+7. A parking plan with the following elements shall be included in the Conditional Use
+application or the Development Review application:
+a. Location of all provided parking on pavement or pavers within site boundaries,
+including the driveway leading to the garage/carport vehicle entrance. One parking
+space may be allowed adjacent to the driveway, in front of the side yard adjacent to
+the garage/carport, with evidence of written permission from the owner of the
+property adjacent to the additional space. If no garage/carport is present, then
+parking shall be designed to minimize its appearance from the street and its impact
+to adjacent residents, and to maintain a residential appearance for the site; and
+b. Provision of a solid fence or wall, together with landscaping, to buffer surrounding
+residents from the adverse effects of headlights and noise from guest or employee
+vehicles.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.40.140  Cemeteries.
+A. Characteristics. Cemeteries are land used or intended to be used for interment of the dead.
+Interment structures such as mausoleums and columbariums, and structures for associated
+Uses such as mortuaries and crematoria may be included within the boundaries of a cemetery.
+Accessory structures may include chapels, maintenance buildings and caretakers' dwellings.
+B. Approval Process. Where allowed, cemeteries shall be subject to review and approval under
+Sections 12.80.020 and 12.80.040.
+C. Standards. Applications for new cemeteries, mausoleums, or columbariums shall comply with
+the following standards:
+1. Minimum Lot Size. The minimum lot size shall be 2 acres if used for earthen burials. The
+minimum lot size for mausoleums and columbariums without earthen burials shall be that
+of the applicable base zone.
+2. Minimum Lot Size with Accessory Uses. The minimum lot size shall be 5 acres where a
+mortuary, crematorium, columbarium or mausoleum is included in the cemetery.
+3. Fencing, Landscaping and Irrigation. Fencing, landscaping and irrigation shall be pro-
+vided consistent with Sections 12.50.220 and 12.50.250.
+4. Plat Requirements. A plat and maintenance agreement shall be recorded prior to sale of
+lots.
+5. State Requirements. Cemetery operation shall continuously conform to applicable State
+standards.
+(Ord. 6401 § 1, 2022)
+12.40.150  Day Care Facilities.
+A. Characteristics. Day care facilities provide care to children or adults. Child care facilities are
+defined in Section 12.01.500. As used in this Code, day care facilities applies to the total child
+or adult care operation and includes the physical setting, administration, staff, equipment,
+program, and care of children or adults.
+ 12.40.150SPECIAL USE STANDARDS
+CDC12.40:17
+B. Approval Process. Day care facilities may be allowed as either permitted or conditional uses,
+dependent on the applicable base zone standards.
+C. Exemptions from Standards. Pursuant to ORS 329A, certified or registered family child care
+homes serving 16 or fewer children, or licensed adult day care services facilities serving 5 or
+fewer adults, are exempt from the standards in this section.
+D. Standards.
+1. All day care facilities shall provide site plans with adequate capacity to accommodate
+drop-off and pick-up activities without impeding traffic or safety on the adjacent public
+streets.
+2. Child day care facilities shall conform to the following standards:
+a. A sight-obscuring fence at least 4 feet but not more than 6 feet in height shall be
+provided separating any outdoor play area from abutting lots.
+b. Child care facilities in residential zones shall be located at the intersection of 2
+neighborhood route streets or on a collector street.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1,
+2019; Ord. 6120 § 1, 2015)
+12.40.160  Flag Lot Development.
+A. Characteristics. Flag lot developments may be approved for any type of structure on a lot
+without full street frontage, to which street access is provided by an access strip (the "pole").
+The vehicular access to the buildable portion of the lot (the "flag") may be located on the "pole"
+or on an easement on an adjacent lot. Creation of flag lots may be restricted by the Review
+Authority if alternative means of access or lotting patterns is deemed more appropriate by the
+Review Authority.
+B. Restrictions on Flag Lot Development. The City's preferred standard for lot configuration is
+regular lots as defined in Section 12.01.500. Creation of flag lots may be approved only under
+the limited circumstances listed below:
+1. In standard zones, where construction of a public cul-de-sac street would prevent
+achievement of the minimum residential density or any minimum floor area ratio of the
+applicable zone.
+2. Creation of flag lots is not permitted in the SCR-OTC Station Community Residential -
+Orenco Townsite Conservation District zone.
+3. In any light rail zone except the SCR-OTC, creation of flag lots is restricted as listed
+below:
+a. Flag lots are not permitted unless the Review Authority finds, based on documen-
+tation provided by the applicant, that dedication and improvement of a public or
+private alley is impracticable; or
+12.40.150 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:18
+b. Flag lots are not permitted on corner lots. The Review Authority may approve
+reduced lot depths or widths to allow partitioning of a corner lot if there is no
+possibility of future construction of an alley in lieu of the requested flag lot access.
+4. In a light rail zone, the Review Authority may approve a "temporary" flag lot access if alley
+right-of-way or easements are not available, and the applicant dedicates or provides a
+permanent public easement on the rear portion of the flag lot as necessary to provide
+right-of-way necessary for a future alley. Temporary flag lot access strips shall meet the
+standards of Table 12.40.160-1 below.
+C. Standards. Flag lot development shall be subject to compliance with the following standards:
+1. Creation of flag lots must be approved through a land division process under Section
+12.80.090.
+2. In residential development, multi-dwelling structures and townhouses with more than 3
+units are prohibited on flag lots.
+3. Access strips and individual or common driveway improvements for flag lots shall be
+provided at the widths shown in Table 12.40.160-1 below.
+  Table 12.40.160-1:
+Minimum Access Strip Widths and Driveway Improvements for Flag Lots
+ Flag Lot Configuration
+ Minimum Lot
+Frontage/Flagpole
+Width
+ Minimum
+Pavement Width
+ Minimum Driveway
+Easement Width
+Residential Development: Single Detached; One Dwelling Unit per Flag Lot
+1 lot 12 feet 10 feet 12 feet
+2 lots with adjacent flags 8 feet for each lot 15 feet 17 feet
+3 lots with adjacent flags 8 feet for each lot 20 feet 22 feet
+Residential Development: Duplex or 2- or 3-Unit Townhouse Dwelling Units per Flag Lot
+Duplex on 1 lot (2 units on
+1 lot) 12 feet 15 feet 17 feet
+2- or 3-Unit Townhouse (1
+unit per lot) on 2—3 lots
+with adjacent flags
+10 feet for each lot 15 feet 17 feet
+Residential Development: Triplex, Quadplex, or Cottage Cluster
+1 triplex, quadplex or
+cottage cluster on 1 flag lot 25 feet 20 feet 25 feet
+Commercial, Industrial or Institutional Development
+Any number of buildings on
+1 flag lot 25 feet 26 feet 26 feet
+4. Pavement sections, including minimum access strip widths for flag lot driveway improve-
+ments are subject to approval by the City Engineer and the Fire Marshal, based on
+Oregon Fire Code requirements.
+ 12.40.160SPECIAL USE STANDARDS
+CDC12.40:19
+5. Turnaround configuration and dimensions for flag lot driveways and common driveways
+are subject to approval by the City Engineer and the Fire Marshal, based on Oregon Fire
+Code requirements.
+6. Sidewalks shall be required by the Review Authority for flag lot development for 3 or more
+dwellings or non-residential development.
+7. Utility improvements for development on flag lots is subject to approval by the City
+Engineer, the Fire Marshal, and the Building Official, based on currently adopted codes
+including the Oregon Fire Code and Oregon Structural Specialty Code.
+8. Each structure on a flag lot shall be served by water, sanitary and storm service
+connections. Townhouses on flag lots shall have separate utility connections for each
+dwelling.
+9. Parking is prohibited on flag lot driveways and common driveways in all development
+types. The Review Authority may require installation of No Parking signage on such
+driveways as a condition of approval.
+10. Structural setbacks on flag lots shall conform to the requirements of the applicable zone.
+Setbacks shall be measured as described in Section 12.50.130.
+11. Access, maintenance and utility easements necessary to accommodate and maintain
+proposed driveway improvements and utilities shall be provided prior to final occupancy
+of any structures on the flag lots. Easement documents shall be prepared and submitted
+on forms acceptable to the City.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6120 § 1, 2015)
+12.40.170  Home Occupations.
+A. Characteristics. Home occupations are defined in Section 12.01.500. In appearance and
+operation, a home occupation is a small-scale business activity conducted in a manner neither
+detrimental nor disruptive to neighboring properties and residents.
+B. Exemptions. The following activities are exempt from the provisions of this section:
+1. Garage sales as allowed by Subchapter 5.40 of the Hillsboro Municipal Code;
+2. Child care facilities for up to 16 children or adult day care for up to 12 adults, pursuant to
+ORS 657A.440 and ORS 657A.250; and
+3. Residential homes or adult foster homes providing residential treatment or training for up
+to 5 adults who are not related to the provider by blood or marriage under ORS
+443.705(1), pursuant to ORS 197.665.
+C. Uses Not Permitted as Home Occupations. The following uses are not permitted as home
+occupations:
+1. Auto-body repair and painting;
+2. On-going mechanical repair conducted outside of an entirely enclosed building;
+12.40.160 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:20
+3. Junk and salvage operations;
+4. Storage and/or sale of fireworks;
+5. Marijuana facilities; and
+6. Any other use with characteristics consistent with home occupations but non-compliant
+with these standards.
+D. Standards for Operation. Home occupations shall operate in on-going conformance with the
+following standards:
+1. Operation of a home occupation requires issuance of a City business license and renewal
+as necessary;
+2. No more than 25% of the floor area of all structures on the lot or 528 square feet,
+whichever is less, can be used in connection with the home occupation or associated
+storage;
+3. No one other than the principal residents of the dwelling, and not more than 2 persons
+closely related to the principal residents, shall be engaged in the home occupation at the
+dwelling;
+4. No more than 1 commercially licensed vehicle in excess of 1-ton manufacturer's rating
+shall be utilized or parked at the dwelling unit in connection with the home occupation;
+5. No more than an average of 10 customer vehicle trips per day area allowed, with no more
+than 2 customer vehicles on the premises at any time;
+6. No more than 3 business related deliveries per week are allowed. Such deliveries shall
+not restrict pedestrian or vehicular circulation on adjoining public streets and sidewalks.
+Deliveries by the U.S. Postal Service are not considered business related deliveries for
+purposes of this provision;
+7. No direct retail sales are permitted, excepting the occasional sale of products associated
+with the home occupation, with such sales being clearly secondary to the primary
+business activity; and
+8. No customers may enter the premises between the hours of 9:00 p.m. and 7:00 a.m.
+E. Activities Not Permitted with Home Operations. Conduct of home occupations shall not include
+any of the following activities:
+1. Displays or other evidence of business operations visible from public rights-of-way or
+abutting residences, except for signage as permitted by HMC 11.32;
+2. Changes in the IBC occupancy classification of the residence or any accessory structure;
+3. Outside storage of equipment, materials, or supplies associated with the home occupa-
+tion;
+4. Indoor storage or use of hazardous materials not normally associated with a residence is
+not permitted; and
+ 12.40.170SPECIAL USE STANDARDS
+CDC12.40:21
+5. Generation of any noise, vibrations, odors, heat, glare or visual or audible electrical
+interference or fluctuations in the line voltage detectable beyond any property line.
+F. Compliance with Standards through Conditions. The Review Authority may impose conditions
+on approval of a home occupation permit to ensure compliance with this section. Such
+conditions may include, but are not limited to, the following:
+1. Limitations on hours, days, place and manner of operation;
+2. Construction or installation of site and building design features to minimize noise,
+vibration, air pollution, glare, odor and dust;
+3. Increased building setbacks;
+4. Limitations on building area and outdoor storage used by the home occupation and/or
+restrictions on the location of home occupation uses on the site in relation to adjoining
+uses;
+5. Restriction of the size, number, location and design of vehicular access points;
+6. Restriction of on-street parking adjacent to the home occupation site;
+7. Installation of landscaping to screen the use from adjoining properties, and continued
+maintenance of such landscaping;
+8. Installation of fencing, including specifications regarding size, height, location, and
+materials;
+9. Construction of additional paved areas for parking and loading areas and additional
+storm drainage improvements as necessary to accommodate the increased impervious
+surface;
+10. Limitations on interior or exterior building remodeling to accommodate the home occu-
+pation;
+11. Limitations on the location and intensity or outdoor lighting; and
+12. Limitations on the type and number of vehicles or equipment parked or stored on site.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6160 § 1, 2016)
+12.40.180  Manufactured Dwelling Projects.
+A. Characteristics. Manufactured dwelling projects are defined in Section 12.01.500. In manufac-
+tured dwelling projects, separate water and sanitary sewer connections are provided for each
+manufactured dwelling. Individual parking spaces, community buildings and/or open space
+may also be provided. Access to individual units is provided by privately owned and maintained
+streets.
+B. Approval Process. Where permitted under the base zone standards of Subchapters 12.21
+through 12.26, manufactured dwelling projects shall be reviewed as a Conditional Use under
+a Type III procedure pursuant to Section 12.70.050, except that the Review Authority shall be
+the Planning Commission.
+12.40.170 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:22
+C. Standards. Development of new manufactured dwelling projects shall be reviewed for compli-
+ance with the following standards:
+1. Zoning and Density. Manufactured dwelling projects may be approved in the MR-1
+Multi-Dwelling Residential zone.
+2. Location Outside Floodplain. All new manufactured dwellings in projects shall be placed
+above the elevation of the Base Flood on the property, as referenced in Section
+12.27.100.
+3. Age. All dwellings placed in new manufactured dwelling projects shall have been
+constructed after June 15, 1976. All dwellings shall bear an "Insignia of Compliance"
+indicating compliance with the Federal Manufactured Dwelling Construction and Safety
+Standards and bear a date of manufacture, except if the dwelling is being relocated due
+to the closure or partial closure of another manufactured dwelling project pursuant to
+paragraph 4 below.
+4. Age Exception in Older Projects. Manufactured dwellings constructed before June 15,
+1976 may be relocated to an existing project from another project. Dwellings relocated
+shall be replacements of dwellings previously in the project: placement of additional
+dwellings increasing the total number is not permitted except under Subchapter 12.30.
+5. Project Design Requirements.
+a. Design Team. All manufactured dwelling projects shall be designed by a team
+including an architect (or a landscape architect) and a civil engineer, all licensed by
+the State of Oregon.
+b. Minimum Lot Size: 1.00 acres.
+c. Minimum Lot Frontage: 100 feet on a public street.
+d. Maximum Lot Coverage: 50% of the gross lot area.
+e. Minimum Common Recreation Area: 5% of the site area.
+f. Minimum Perimeter Setback Requirements:
+i. Front Yard: 30 feet minimum, measured on each yard abutting a public street.
+ii. Side and Rear Yards: 20 feet minimum.
+g. Minimum Interior Setback Requirements.
+i. Front Yard: 10 feet from the closest edge of the curb or sidewalk.
+ii. Structure Separation: 10 feet between structures.
+ 12.40.180SPECIAL USE STANDARDS
+CDC12.40:23
+h. Street Standards. All interior streets within the manufactured dwelling project shall
+be privately owned and maintained. Interior streets shall be improved to the widths
+shown in Table 12.40.180-1:
+  Table 12.40.180-1:
+Manufactured Dwelling Project Street Improvements
+ Number of
+Dwellings
+Served
+ Street Type
+Entry Street Loop Street Cul-de-sac
+< 300 feet long
+Cul-de-sac
+> 300 feet long
+1—120 32 feet 28 feet 24 feet 28 feet
+121+ 36 feet 32 feet 24 feet 28 feet
+i. Maximum Cul-de-Sac Length: 500 feet.
+ii. Cul-de-Sac Terminus Configuration. Turnaround configuration and dimen-
+sions for cul-de-sacs are subject to approval by City Engineer and Fire
+Marshal, based on Oregon Fire Code requirements.
+iii. Street Cross Section and Materials. Interior streets shall be constructed to the
+public street cross-section and materials standards pursuant to the Public
+Works Design and Construction (D&C) Standards.
+iv. Curbs. Interior streets shall have a continuous concrete curb on both sides of
+the street, compliant with the D&C Standards for public street improvements.
+i. Sidewalks. Interior streets 36 feet wide shall have a sidewalk on both sides of the
+street. Interior streets less than 36 feet wide shall have a sidewalk on one side of the
+street. Such sidewalks shall be compliant with the D&C Standards for public street
+improvements. Mailboxes, light poles, or other obstructions that may be located a
+sidewalk shall be placed to leave at least 5 feet of unobstructed width.
+j. Utilities.
+i. Plans. Plans for water, sanitary sewer and storm drainage lines shall be
+subject to review and approval by the City Engineer. All on-site systems shall
+be public systems, compliant with the D&C Standards for public utility improve-
+ments.
+ii. Storm Drainage. All storm drainage shall be compliant with the D&C Stan-
+dards for public utility improvements. If a public storm drain line is not
+available, the developer may be required to construct an off-site storm
+drainage system acceptable to the City Engineer and compliant with the D&C
+Standards for public utility improvements.
+iii. Electricity and Telecommunications Cable. All electrical and telecommunica-
+tions cable lines shall be located underground.
+12.40.180 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:24
+k. Resident Parking. Provided spaces may be in a tandem configuration, but shall not
+be located in a perimeter yard. Driveways and off-street parking areas shall be
+paved with asphaltic concrete or Portland cement concrete.
+  Table 12.40.180-2:
+Parking on Manufactured Dwelling Project Private Streets
+Street Width Parking Permitted
+36 feet Both sides
+32 feet Both sides
+28 feet One side
+24 feet No parking
+l. Landscaping. All areas not occupied by parking, streets, or structures shall be
+landscaped consistent with Section 12.50.220 including removal of dead plants and
+irrigation.
+m. Perimeter Fencing. A uniform perimeter fence between 4 and 6 feet high shall be
+installed to separate the project from the adjacent properties.
+n. Street Names and Addresses. Private street names and individual dwelling ad-
+dresses shall conform to the City street name and address grid. Street identification
+signs shall be standard City street signs unless other similar street identification
+signs are approved during the Development Review process under Section 12.80.040.
+Street identification signs shall be installed prior to the placement of any manufac-
+tured dwelling in the project and shall be maintained by the project owner.
+o. Recreational Vehicle Storage. Storage areas for recreational and similar vehicles or
+equipment shall not be located within 100 feet of the perimeter lot lines of the site,
+and shall have a 10-foot setback to the nearest structure inside the project. Storage
+areas shall be screened by a sight-obscuring fence and landscaping.
+p. Manufactured Dwelling Design. All manufactured dwellings within a project shall
+comply with the following design standards:
+i. Removal of Towing Equipment. All towing hitches, wheels, running lights and
+other towing related equipment shall be removed within 30 days after instal-
+lation.
+ii. Foundations. Foundations shall conform to the construction specification of
+the Oregon Manufactured Dwelling Installation Specialty Code.
+iii. Siding. All dwellings shall have vinyl, wood or aluminum lap siding or pre-
+treated simulated wood siding and composition shingle roofing.
+iv. Roofs. Roof slope shall have a minimum 2:12 pitch with a minimum 6-inch
+overhang. All roof areas shall have gutters with runoff draining through piped
+connections to the adjacent street gutter or to the project storm drainage
+system.
+ 12.40.180SPECIAL USE STANDARDS
+CDC12.40:25Supp. No. 1
+v. Skirting. Dwellings and decks shall be skirted with vinyl, wood or aluminum lap
+siding, pretreated simulated wood siding or masonry to blend with the color
+and texture of the dwelling exterior. Skirting shall be installed within 30 days of
+setup.
+vi. Awnings, Decks and Carports. All manufactured dwellings shall have a deck
+or patio with a minimum size of 120 square feet. Garages or carports shall be
+constructed and finished to blend with the exterior materials of the manufac-
+tured dwelling.
+vii. Storage Sheds. One storage shed is allowed for each dwelling. Storage sheds
+shall be 200 square feet or smaller, located adjacent to the dwelling or deck,
+and painted or finished to match the exterior color of the dwelling. If required,
+the storage shed shall conform to the structural requirements of the Oregon
+Residential Specialty Code or other applicable codes.
+viii. Antennas. Telecommunication antennas larger than 3 feet diameter are not
+permitted unless the antenna serves a centralized signal distribution system
+in the project. Home dish antennas smaller than 3 feet in diameter shall be
+installed only at the rear of the dwelling, 5 feet or less above the roof peak.
+Antennas shall not be located in a perimeter yard.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6451 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6322 § 1,
+2019)
+12.40.190  Manufactured Dwellings Placed Outside Manufactured Dwelling Projects.
+A. Characteristics. Manufactured dwellings as defined in Section 12.01.500 may be placed on
+individual lots outside a manufactured dwelling project, in any zone where single detached
+dwellings are permitted. Manufactured dwellings may also be placed on individual lots as part
+of a cottage cluster project in which each dwelling unit is on its own lot.
+B. Approval Process. A manufactured dwelling shall be subject to the same approval process that
+would apply to a single detached dwelling in that zone.
+C. Standards. Placement of manufactured dwellings outside manufactured dwelling projects shall
+be reviewed for compliance with the following standards:
+1. Location and Density. Manufactured dwellings may be placed on individual lots outside a
+manufactured dwelling project, in any zone where single detached dwellings are permit-
+ted, subject to the minimum and maximum residential densities of the underlying base
+zone.
+2. Location Outside Floodplain. Placement is not permitted in the 1% annual chance
+floodplain except in compliance with Section 12.27.100.
+3. Certification. The manufactured home shall be certified by the manufacturer that the
+structure has an exterior thermal envelope meeting performance standards which reduce
+levels equivalent to the performance standards required of single-family dwellings
+constructed under the Low-Rise Residential Dwelling Code as defined in ORS 455.010.
+12.40.180 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:26Supp. No. 1
+4. Lot Size, Setbacks, and Lot Coverage. Placement of the dwelling shall comply with all the
+standards of the applicable base zone.
+5. Standards. A manufactured dwelling shall be subject to the same standards that would
+apply to a single detached dwelling in that zone.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.40.194  Marijuana Facilities.
+A. Characteristics. Five types of marijuana facilities are defined in Section 12.01.500. For
+purposes of this Code, marijuana facilities must be licensed by the Oregon Liquor Control
+Commission or Oregon Health Authority. A marijuana business not licensed by the Oregon
+Liquor Control Commission or Oregon Health Authority is not permitted in any zone.
+B. Approval Process. Where permitted, marijuana facilities are subject to approval under Section
+12.80.040 Development Review. Applications for Development Review approval shall include
+detailed responses to the applicable standards listed in this section.
+C. Standards for Marijuana Retail Sales Facilities.
+1. Hours of Operation. Marijuana retail sales facilities shall operate only between the hours
+of 8:00 a.m. to 10:00 p.m. An individual retailer may set hours within those specified, but
+may not be open outside those parameters.
+2. Security Measures Required.
+a. Landscaping shall be continuously maintained to provide clear lines of sight from
+public rights-of-way to all building entrances.
+b. Exterior lighting shall be provided and continuously maintained consistent with
+Subsections 12.50.240.C. and D.
+c. Any security bars installed on doors or windows visible from the public right-of-way
+shall be installed interior to the door or window, in a manner that they are not visible
+from the public right-of-way.
+3. Co-Location Prohibited. A marijuana retail sales facility shall not be located at the same
+address as a marijuana processing or production facility, including a grow operation. A
+dispensary shall also not be located at the same address with any facility or business at
+which medical marijuana is consumed by cardholders.
+4. Mobile or Temporary Businesses Prohibited. A marijuana retail sales facility may not
+operate as a mobile or temporary business as defined in the Municipal Code.
+5. Drive-in or Drive-Through Facilities Prohibited. A marijuana retail sales facility shall not
+have a drive-in or drive-through facility, as defined in Section 12.01.500.
+ 12.40.194SPECIAL USE STANDARDS
+CDC12.40:27Supp. No. 1
+6. Proximity Restrictions. A marijuana retail sales facility shall not be located within the
+specified proximity of any of the uses listed below. For purposes of this paragraph, the
+distance specified is measured from the closest points between property lines of the
+affected properties:
+a. Schools. Within 1,000 feet of a public or private elementary, middle, or high school
+or other school attending primarily by children under 18 years of age.
+b. Other Retail Facilities. Within 1,000 feet of another marijuana retailer.
+c. Public Plazas and Active Use Parks. Within 1,000 feet of a public plaza or active use
+park. As used in this paragraph, an active use park includes a public park which
+includes features such as playground equipment, athletic courts or fields, active use
+water features, or skating or skateboard features.
+d. Other Uses. Within any distance from any other use as specified by State law.
+7. Where Proximity Restrictions Bisect Properties. In the circumstance where a proximity
+restriction distance bisects a property, that property's eligibility as a location for a
+marijuana retail sales facility shall be determined by the Planning Director under the Type
+II Director's Interpretation process pursuant to Section 12.80.050, based on the factors
+listed below.
+a. Whether the majority of the lot area is within or outside the boundary; and
+b. Whether the proposed retail sales premises inside the existing or proposed building
+is within or outside the boundary.
+8. Exceptions to Proximity Restrictions.
+a. A marijuana retail sales facility that exists at the time any use listed in paragraph 6
+of this subsection C is located within 1,000 feet of the facility may remain at that
+location.
+b. A marijuana retail sales facility may be located within 1,000 feet of the uses listed in
+paragraph 6 of this subsection if:
+i. Pursuant to ORS 475B.109, the Oregon Liquor Control Commission deter-
+mines that there is a physical or geographic barrier capable of preventing
+children from traversing to the premises of the marijuana retailer; and
+ii. The marijuana retail sales facility is not located within 500 feet of the uses
+listed in paragraph 6 of this subsection.
+D. Standards for Marijuana Production, Processing, Testing Laboratories, and Wholesale Sales
+Facilities.
+1. Facility Construction Requirements. Marijuana production, processing, testing laborato-
+ries, and wholesale sales facilities shall take place consistent with the Use Tables in
+Subchapter 12.25 and only within buildings compliant with the following standards:
+a. In the I-G General Industrial zone, either in existing buildings constructed and
+occupied as of May 16, 2016 or in new buildings; both subject to compliance with
+paragraph c below;
+12.40.194 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:28Supp. No. 1
+b. In the I-P Industrial Park zone, the SC-BP Station Community Business Park zone,
+and the SCI Station Community Industrial zone: either in existing buildings as of
+May 16, 2016, or in new buildings of either tilt-up concrete or concrete masonry unit
+(CMU) construction; both subject to compliance with paragraph c below.
+c. In the case of production facilities, views from the exterior of the building into the
+production area are prohibited. Views of interior lighting in the production area from
+the exterior of the building are also prohibited.
+2. Public Access Prohibited. Access to an industrial facility shall be limited to employees,
+personnel, and guests over the age of 21, authorized by the facility operator.
+3. Security Measures Required.
+a. Landscaping shall be continuously maintained to provide clear lines of sight from
+public rights-of-way to all building entrances.
+b. Exterior lighting shall be provided and continuously maintained consistent with
+Subsection 12.50.240.C.
+c. Any security bars installed on doors or windows visible from the public right-of-way
+shall be installed interior to the door or window, in a manner that they are not visible
+from the public right-of-way.
+4. Odor Mitigation Measures Required. Production and processing facilities shall install and
+maintain enhanced ventilation systems designed to prevent detection of marijuana odor
+from adjacent properties or the public right-of-way. Such systems shall include the
+following features:
+a. Installation of activated carbon filters on all exhaust outlets to the building exterior;
+b. Location of exhaust outlets a minimum of 10 feet from the property line and 10 feet
+above finished grade; and
+c. Maintenance of negative air pressure within the facility; or
+d. An alternative odor control system approved by the Building Official based on a
+report by a mechanical engineer licensed in the State of Oregon, demonstrating that
+the alternative system will control odor equally or better than the required activated
+carbon filtration system.
+5. Waste Security Measures Required.
+a. Prior to disposal, marijuana waste shall be rendered unusable by either grinding
+and mixing (at a ratio of at least 1:1) with other compostable materials or yard waste,
+or by mixing with noncompostable solid waste such as paper, cardboard, plastic,
+soils, or other approved materials.
+b. Marijuana waste shall be temporarily stored in an indoor container until it is
+rendered unusable.
+ 12.40.194SPECIAL USE STANDARDS
+CDC12.40:29Supp. No. 1
+c. Any facility generating marijuana waste shall use the services of a solid waste
+franchisee or self-haul such materials to a properly licensed and approved solid
+waste disposal or recycling facility.
+d. An alternative waste security system approved by the Sustainability Program
+Manager, demonstrating that the alternative system will render marijuana waste
+unusable equally or better than the required grinding, mixing, and disposal system.
+6. Proximity Restrictions. A marijuana production, processing, testing laboratory or whole-
+sale sales facility shall not be located within 100 feet of any residential, mixed use, urban
+center or institutional zone. For purposes of this paragraph, the distance specified is
+measured from the closest points between property lines of the affected properties. In the
+circumstance where a proximity restriction distance bisects a property, that property's
+eligibility as a location for a facility shall be determined as specified in subsection C.7.
+(Ord. 6418 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6149 § 1,
+2015; Ord. 6120 § 1, 2015; Ord. 6116 § 1, 2015)
+12.40.200  Model Home as Project Sales Office.
+A. Characteristics. In residential projects, model homes are sometimes built to be used for lot and
+home sales purposes and/or as examples of available floor plans, materials and finishes. To
+facilitate early sales, such model homes are generally constructed prior to completion of all the
+streets and utility lines within the development. When sales are complete, the sales office use
+is discontinued and the structures convert to their intended use as dwelling units.
+B. Standards. Construction of model homes as project sales offices shall be reviewed for
+compliance with the following standards:
+1. The number of model homes in a development shall not exceed the number of lots of
+record within the boundary of the development.
+2. The model home(s) shall be connected to water and sanitary sewer lines prior to
+occupancy as a sales office. Lines used for connection shall be inspected and accepted
+by the City prior to connection.
+3. If the development includes a land division, the model home shall be sited where its
+setbacks will comply with the standards of the underlying base zone after the land division
+plat is recorded.
+4. Fire protection shall be available to the model home(s) during both construction and
+occupancy as a sales office. Fire protection plans shall be submitted and shall be subject
+to review and approval by the Fire Marshal.
+5. Emergency vehicle access shall be provided to the model home(s) during both construc-
+tion and occupancy as a sales office.
+6. Any structural or architectural modifications or features on the model home related to its
+use as a sales office shall be removed before it is converted to a dwelling unit.
+(Ord. 6401 § 1, 2022)
+12.40.194 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:30Supp. No. 1
+12.40.210  Places of Assembly.
+A. Characteristics. Places of assembly are defined in Section 12.01.500 and are characterized by
+concentrations of people gathering in reasonably close quarters for educational, religious,
+athletic, recreational, or other purposes, and where such assembly is associated with the
+primary use of the site. Places of assembly examples include, but are not limited to, major and
+minor assembly facility uses such as religious institutions, conference centers, and stadiums;
+schools, including public or private schools; and similar uses. Facilities secondary to a primary
+use, such as a conference center within an industrial campus, are not places of assembly.
+B. Approval Process. Pursuant to Subchapters 12.21 through 12.26, the various uses considered
+to be places of assembly may be permitted, allowed through the Conditional Use process
+consistent with Section 12.80.020, or not permitted, depending on the use and zone. Uses are
+described in Subchapter 12.10.
+C. Standards. Construction of new structures, or conversion of existing structures, to places of
+assembly shall be reviewed under the following standards:
+1. Compliance with Applicable Codes. Applicable IBC provisions for exiting, fire suppres-
+sion, ventilation, and sanitary facilities.
+2. Parking and Internal Vehicle Circulation. Provision of parking and internal circulation as
+specified in Section 12.50.300.
+3. Setbacks. In a residential zone, provision of front, side and rear yard setbacks equal to
+one-half the height of the principal structure. In any zone the Review Authority may
+require increased setbacks beyond the standard of the applicable base zone.
+4. Height. The principal structure of a place of assembly may exceed the height limitations
+of the applicable zone up to a maximum height of 50 feet if the FAR of all structures on site
+is less than 1.5 and the setback of the principal structure complies with paragraph 3
+above.
+5. Minimum Elementary School Acreage. One acre of site area for each 90 pupils or a
+minimum of 1 acre for each 3 classrooms, whichever is greater.
+6. Places of Worship. Per ORS 227.500, if a place of worship is permitted, either condition-
+ally or outright, the following activities customarily associated with the practices of the
+religious activity shall be allowed outright:
+a. Worship services
+b. Religion classes
+c. Weddings
+d. Funerals
+e. Meal programs
+f. Child care or any preschool or prekindergarten education
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+ 12.40.210SPECIAL USE STANDARDS
+CDC12.40:31Supp. No. 1
+12.40.215  Psilocybin Facilities.
+A. Characteristics. Three types of psilocybin facilities are defined in Section 12.01.500. For
+purposes of this Code, psilocybin facilities must be licensed by the Oregon Health Authority. A
+psilocybin business not licensed by the Oregon Health Authority is not permitted in any zone.
+B. Approval Process. Where permitted, psilocybin facilities are subject to approval under Section
+12.80.040. Applications for Development Review approval shall include detailed responses to
+the applicable standards listed in this section.
+C. Standards for Psilocybin Service Centers.
+1. Hours of Operation. Psilocybin service centers shall operate only between the hours of
+8:00 a.m. to 10:00 p.m. An individual service center may set hours within those specified,
+but may not be open outside those parameters.
+2. Floor Area. The maximum floor area of a psilocybin service center shall be 2,000 square
+feet.
+3. Security Measures Required.
+a. Landscaping shall be continuously maintained to provide clear lines of sight from
+public rights-of-way to all building entrances.
+b. Exterior lighting shall be provided and continuously maintained consistent with
+Subsections 12.50.240.C. and D.
+c. Any security bars installed on doors or windows visible from the public right-of-way
+shall be installed interior to the door or window, in a manner that they are not visible
+from the public right-of-way.
+4. Mobile or Temporary Businesses Prohibited. A psilocybin service center may not operate
+as a mobile or temporary business as defined in the Municipal Code.
+5. Drive-in or Drive-Through Facilities Prohibited. A psilocybin service center shall not have
+a drive-in or drive-through facility, as defined in Section 12.01.500.
+6. Proximity Restrictions. A psilocybin facility shall not be located within the specified
+proximity of any of the uses listed below. For the purposes of this paragraph, the distance
+specified is measured from the closest points between the property lines of the affected
+properties:
+a. Schools. Within 1,000 feet of a public or private elementary, middle, or high school
+or other school attended primarily by children under 18 years of age.
+b. Public Plazas and Active Use Parks. Within 1,000 feet of a public plaza or active use
+park. As used in this paragraph, an active use park includes a public park which
+includes features such as playground equipment, athletic courts or fields, active use
+water features, or skating or skateboarding features.
+c. Other Uses. Within any distance from any other use as specified by State law.
+12.40.215 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:32Supp. No. 1
+7. Where Proximity Restrictions Bisect Properties. In the circumstance where a proximity
+restriction distance bisects a property, that property's eligibility as a location for a
+psilocybin facility shall be determined by the Director under the Type II Director's
+Interpretation process pursuant to Section 12.80.050, based on the factors listed below.
+a. Whether the majority of the lot area is within or outside the boundary; and
+b. Whether the proposed psilocybin service center inside the existing or proposed
+building is within or outside the boundary.
+8. Exceptions to Proximity Restrictions.
+a. A psilocybin facility that exists at the time any use listed in paragraph 6 of this
+subsection C is located within 1,000 feet of the facility may remain at that location.
+b. A psilocybin facility may be located within 1,000 feet of the uses listed in paragraph
+6 of this subsection if:
+i. Pursuant to ORS 475A.310, the Oregon Health Authority determines that
+there is a physical or geographic barrier capable of preventing children from
+traversing to the premises of the psilocybin service center; and
+ii. The psilocybin facility is not located within 500 feet of the uses listed in
+paragraph 6 of this subsection.
+D. Standards for Psilocybin Production or Testing Facilities.
+1. Facility Construction Requirements. Psilocybin production and testing facilities shall
+operate place only within buildings compliant with the following standards:
+a. In the case of production facilities, views from the exterior of the building into the
+production area are prohibited.
+2. Public Access Prohibited. Access to an production or testing facility shall be limited to
+employees, personnel, and guests over the age of 21, authorized by the facility operator.
+3. Security Measures Required.
+a. Landscaping shall be continuously maintained to provide clear lines of sight from
+public rights-of-way to all building entrances.
+b. Exterior lighting shall be provided and continuously maintained consistent with
+Subsection 12.50.240.C.
+c. Any security bars installed on doors or windows visible from the public right-of-way
+shall be installed interior to the door or window, in a manner that they are not visible
+from the public right-of-way.
+4. Waste Security Measures Required.
+a. Prior to disposal, psilocybin waste shall be rendered unusable by either grinding
+and mixing (at a ratio of at least 1:1) with other compostable materials or yard waste,
+or by mixing with noncompostable solid waste such as paper, cardboard, plastic,
+soils, or other approved materials.
+ 12.40.215SPECIAL USE STANDARDS
+CDC12.40:33Supp. No. 1
+b. Psilocybin waste shall be temporarily stored in an indoor container until it is
+rendered unusable.
+c. Any facility generating psilocybin waste shall use the services of a solid waste
+franchisee or self-haul such materials to a properly licensed and approved solid
+waste disposal or recycling facility.
+d. An alternative waste security system approved by the Sustainability Program
+Manager, demonstrating that the alternative system will render psilocybin waste
+unusable equally or better than the required grinding, mixing, and disposal system.
+(Ord. 6417 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.40.220  Recreational Vehicle and Boat Storage.
+A. Characteristics. Recreational vehicle and boat storage facilities are commercial or industrial
+properties improved for vehicle storage purposes. Site improvements may include cover
+canopies for stored vehicles, sanitary sewer disposal connections for waste disposal, and
+living quarters for facility operators.
+B. Approval Process. Where permitted, development of recreational vehicle and boat storage
+facilities shall be reviewed under Section 12.80.040.
+C. Standards. Recreational vehicle and boat storage facilities shall be reviewed for compliance
+with the following standards:
+1. On-site security is provided, including both fencing and lighting.
+2. Perimeter landscaping is provided adjacent to public rights-of-way. Perimeter landscap-
+ing at a minimum shall be at least 5 feet in depth, measured from the property lines.
+3. Drive aisles within the facility are paved with asphalt or concrete (storage spaces may be
+improved with gravel or other similar semi-pervious surfaces).
+4. Any sanitary sewer facilities comply with City standards.
+(Ord. 6401 § 1, 2022)
+12.40.230  Short Term Rentals.
+A. Characteristics. Short term rentals (STRs) are defined in Section 12.01.500.
+B. Approvals Required.
+1. Partial-dwelling STRs are subject to approval pursuant to Section 12.80.126.
+2. Full-dwelling STRs are subject to approval pursuant to Section 12.80.040.
+C. Standards for Partial-dwelling STRs.
+1. The dwelling used for a partial-dwelling STR must be the primary residence of the
+property owner. Primary residence is defined as the owner's permanent residence of
+record as substantiated by official documents such as tax forms.
+12.40.215 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:34Supp. No. 1
+2. The owner of the partial-dwelling STR must reside on the same property as the
+partial-dwelling STR, either in the main dwelling or in a separate dwelling on the same
+property.
+3. The STR may not be used for events or gatherings of people invited to the STR for the
+primary purpose of socializing or participating in a ceremonial or business activity such as
+parties, weddings, reunions or company retreats.
+4. Only 1 rental at a time at the dwelling is permitted.
+5. The owner of the partial-dwelling STR must maintain a valid business license from the
+City of Hillsboro.
+6. Tents, trailers, recreational vehicles, yurts and other spaces not considered permanent
+housing types may not be rented as partial-dwelling STRs.
+D. Standards for Full-Dwelling STRs.
+1. The owner of a full-dwelling STR may only operate or hold ownership interest in 2
+full-dwelling STRs in Hillsboro City limits. Property ownership is substantiated by tax
+forms.
+2. The STR may not be used for events or gatherings of people invited to the STR for the
+primary purpose of socializing or participating in a ceremonial or business activity such as
+parties, weddings, reunions or company retreats.
+3. If there are multiple dwellings on the same property, only 1 dwelling can be rented at a
+time.
+4. The owner of the full-dwelling STR must maintain a valid Business License from the City
+of Hillsboro.
+5. Tents, trailers, recreational vehicles, yurts and other spaces not considered permanent
+housing types may not be rented as full-dwelling STRs.
+6. In the SCR-OTC zone, full-dwelling STRs are permitted only on lots abutting NE Alder
+Street between NE 68
+th Avenue and NE Century Boulevard.
+(Ord. No. 6467, §§ 1, 2(Exh. A), 3-5-2024; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.40.240  Telecommunication Facilities.
+A. Characteristics. Telecommunication facilities are categorized in Section 12.10.550. Telecom-
+munication facilities include a free-standing tower with attached antennae, and 1 or more
+ground-mounted equipment cabinets.
+B. Approval Process. Where allowed, telecommunication faci lities are subject to approval through
+the Conditional Use process under Section 12.80.020 and the Development Review process
+under Section 12.80.040. Requests for eligible modifications to existing facilities are subject to
+approval through a Type II Development Review process under Section 12.80.040. "Eligible
+modification requests" are defined in subsection D below.
+ 12.40.240SPECIAL USE STANDARDS
+CDC12.40:35Supp. No. 1
+C. Exemptions. The following types of communications facilities are exempt from this section:
+1. Replacement of existing antenna on approved towers;
+2. Facilities regulated by the FCC under the Code of Federal Regulations: industrial,
+scientific and medical equipment; military and government communication towers; am-
+ateur (ham) and citizen band towers; and
+3. Temporary facilities used during community emergencies.
+D. Modifications to Existing Facilities. All modifications and expansions to existing facilities are
+permitted in every zone, subject to the requirements of this section. Certain modifications are
+deemed minor in nature and are deemed "eligible modifications" These modifications include
+the addition, removal, and/or replacement of transmission equipment that do not make a
+substantial change to the physical dimensions (height, mass, width) of the existing tower,
+support structure, or base station. Replacement of an existing tower may also be considered
+an eligible modification if such replacement meets the standards in paragraph 4 below.
+1. For the purpose of this section, "substantial change" means the following:
+a. The mounting of the proposed antenna on the tower would increase the existing
+height of the tower by more than 10%, or by the height of 1 additional antenna array
+with separation from the nearest existing antenna not to exceed 20 feet, whichever
+is greater, except that the mounting of the proposed antenna may exceed the size
+limits set forth in this subsection by up to an additional 5% if necessary to avoid
+interference with existing antennas; or
+b. The mounting of the proposed antenna would involve the installation of more than
+the standard number of new equipment cabinets for the technology involved (not to
+exceed 4) or more than 1 new equipment shelter; or
+c. The mounting of the proposed antenna would involve adding an appurtenance to
+the body of the tower that would protrude from the edge of the tower more than 20
+feet, or more than the width of the tower structure at the level of the appurtenance,
+whichever is greater, except that the mounting of the proposed antenna may
+exceed the size limits set forth in this subsection to the extent necessary to shelter
+the antenna from inclement weather or to connect the antenna to the tower via
+cable; or
+d. The mounting of the proposed antenna would involve excavation outside the
+current tower site, defined as the current boundaries of the leased or owned
+property surrounding the tower and any access or utility easements currently
+related to the site.
+2. Increases to height allowed by this subsection above the existing tower shall be based on
+the existing height of the tower, excluding any tower lighting required in the original land
+use approval or in the proposed modification request.
+12.40.240 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:36Supp. No. 1
+3. To the extent feasible, additional equipment shall maintain the appearance intended by
+the original facility, including, but not limited to, color, screening, landscaping, mounting
+configuration, or architectural treatment.
+ 12.40.240SPECIAL USE STANDARDS
+CDC12.40:36.1Supp. No. 1
+
+4. To be considered an eligible modification, a replacement tower shall not exceed the
+height of the original tower by more than 10%, or the diameter of the original tower by
+more than 25% at any given point.
+E. Standards for Free-Standing Towers.
+1. Tower Finishes. Paint and color finishes on free-standing towers shall be selected and
+applied to reduce the tower's visual impact against the skyline.
+2. Co-Location Required. Approved new towers shall be designed and constructed to allow
+co-location of additional antennas. The Review Authority may require owners of ap-
+proved towers to negotiate in good faith with parties seeking co-location.
+3. Equipment Cabinets. Ground-mounted equipment cabinets shall be enclosed within
+secure fences and screened with landscaping.
+4. Additional Setbacks. The Review Authority may require additional setbacks to a pro-
+posed tower to mitigate its visual impacts, protect existing vegetation, or allow use of a
+shared access.
+F. Standards for Antenna Installation.
+1. On Utility Poles. If antennas are installed on existing utility poles, the poles shall be
+maintained with the same colors as poles without antennas. If the antennas do not
+increase the overall height of the pole more than 20 feet, or by more than the minimum
+height necessary to achieve safety clearances as required by the utility pole owner,
+whichever is greater, Conditional Use approval is not required.
+2. On Existing Buildings. If antennas are installed on existing buildings, secondary equip-
+ment on the building roof shall be screened. If the antennas are not over 20 feet in height,
+or are below the maximum building height of the applicable zone, Conditional Use
+approval is not required.
+3. On or within Architectural Elements. Antenna may be installed on or within architectural
+elements such as church steeples or flag poles, if such installation is scaled in proportion
+with the architectural element.
+G. Restrictions.
+1. Antenna Required. Installation of towers without antenna, based on speculation of future
+antenna installation, is not permitted.
+2. Installation on Trees. Installation of transmitting or receiving equipment on trees is not
+permitted.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+ 12.40.240SPECIAL USE STANDARDS
+CDC12.40:37
+12.40.250  Temporary Commercial Activities at Stadiums.
+A. Characteristics. Temporary commercial activities at stadiums are short-term events (not more
+than 30 days duration) which may include retail vehicle sales, large scale vendor gatherings
+such as swap meets, or other similar non-athletic events usually conducted on the parking field
+rather than in the stadium. Temporary commercial activities are subordinate to the primary use
+of the stadium. For purposes of this section, the term "stadium" refers to facilities built solely for
+athletic performances or outdoor events, and not to facilities owned and/or operated as
+accessory to school operations, fairgrounds, or other uses.
+B. Approval Process. Temporary commercial activities at stadiums shall be subject to the
+issuance of a temporary business permit pursuant to Municipal Code Chapter 5.25.
+C. Standards. Temporary commercial activities at stadiums shall comply with the following
+standards:
+1. No single commercial event shall exceed 30 days in duration.
+2. The cumulative total of temporary commercial events at a stadium shall not exceed 120
+days in duration in a calendar year.
+3. Provisions for sanitary facilities and emergency exiting shall comply with City require-
+ments.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.40.260  Utility Facilities.
+A. Characteristics. Utility facilities are categorized in Section 12.10.560.
+B. Approval Process. Pursuant to Subchapters 12.21 through 12.26, utility facilities may be
+allowed in certain zones as conditional uses subject to Section 12.80.020, and may be
+permitted uses in other zones. In all zones where allowed, utility facilities shall be subject to
+Section 12.80.040.
+C. Standards. Utility facilities shall conform to the following standards:
+1. Minimum Lot Size. Minimum lot size of the applicable base zone (as applicable to single
+detached dwellings) or 4,500 square feet, whichever is greater, unless the Review
+Authority finds that locating the facility on a smaller lot will not result in noise or other
+detrimental effects on adjacent property.
+2. Fencing and Landscaping. Utility facilities in any zone shall be fenced and landscaped
+consistent with Sections 12.50.220 and 12.50.250.
+3. Outdoor Storage. Outdoor equipment storage shall be not permitted in a residential or
+C-N zone. In other zones, outdoor storage shall be fenced and landscaped pursuant to
+paragraph 2 above.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)
+12.40.250 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.40:38
+12.40.270  Vehicle Wrecking Yards.
+A. Characteristics. Vehicle wrecking yards are outdoor storage areas on which 2 or more motor
+vehicles or the parts thereof, not in running condition, are stored, or any other location where
+lots or structures are used to disassemble or store such motor vehicles or their parts.
+B. Approval Process. Where allowed, vehicle wrecking yards are subject to approval as a
+conditional use pursuant to Section 12.80.020.
+C. Standards. Operation of vehicle wrecking yards shall comply with the following specifications:
+1. Minimum Lot Area: One acre;
+2. Minimum Lot Frontage: 100 feet;
+3. Fencing: Minimum 8-foot sight-obscuring, continuous, uniform fence enclosing the entire
+portion of the site used for auto wrecking and storage, with a minimum 10-foot land-
+scaped setback between the fence and the right-of-way;
+4. Setbacks: Minimum 40-foot setback to any structures, and minimum 50-foot setback to
+any on-site crushing equipment;
+5. Storage and Stacking: Storage of all vehicles and parts within the fenced area, with no
+stacking higher than the fence;
+6. Oil Disposal: Provision for storage and off-site disposal of oil; and
+7. State Requirements: Continuous compliance with all State requirements.
+(Ord. 6401 § 1, 2022)
+ 12.40.270SPECIAL USE STANDARDS
+CDC12.40:39

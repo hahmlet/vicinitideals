@@ -1,0 +1,1273 @@
+12.50.400  Bicycle Parking/Bicycle and Pedestrian Circulation and Connectivity.
+Bicycle parking and bicycle and pedestrian circulation and connectivity include the following
+sections:
+12.50.410 Bicycle Parking
+12.50.420 Pedestrian and Bicycle Circulation
+12.50.430 Connectivity and Design Standards at or Near Transit Stops
+(Ord. 6401 § 1, 2022)
+12.50.410  Bicycle Parking.
+A. Purpose. Standards for bicycle parking encourage bicycle use, help to reduce principal
+reliance on the automobile, and increase bicyclists' safety and security.
+B. Applicability. Bicycle parking shall be provided in conjunction with all new developments,
+expansions of existing development or changes of use, except those exempt housing types
+and uses listed in subsection C below.
+C. Exemptions.
+1. The following housing types are exempt from bicycle parking requirements:
+a. Detached single dwellings, including manufactured dwellings;
+b. Accessory dwelling units;
+c. Live-work dwellings;
+d. Middle housing; and
+e. Any housing units constructed with individual assigned and enclosed garage or
+carport spaces or storage spaces 80 square feet or larger.
+2. The following uses are exempt from bicycle parking requirements:
+a. Home occupations;
+b. Mobile and/or temporary businesses as defined in Municipal Code Chapter 5.08;
+and
+c. Expansions of pre-existing commercial, industrial or institutional uses which are
+less than 50% of the existing net floor area or 3,000 square feet, whichever is less.
+D. Number of Bicycle Parking Spaces Required.
+1. Except as listed in subsection C above, all new development or expansions of existing
+development shall provide the minimum number of bicycle parking spaces specified in
+Tables 12.50.410-1 through 12.50.410-5. New free-standing commercial, industrial or
+institutional Uses requiring vehicle parking shall provide at least 2 bicycle parking spaces.
+Multiple tenant buildings or developments may consolidate bicycle parking based on the
+aggregated net square footage, pursuant to Subsection 12.50.410.G.8.
+ 12.50.410DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:75Supp. No. 1
+2. For expansions of existing commercial, industrial or institutional uses larger than 50% of
+the current net floor area or 3,000 square feet (whichever is less), bicycle parking shall be
+calculated based on total net square footage rather than the expansion area.
+3. Bicycle parking for changes in use shall be calculated based upon the requirements for
+the new use.
+4. For any use not specifically mentioned in Tables 12.50.410-1 through 12.50.410-5,
+bicycle parking requirements shall be the same as for the use which is most similar to the
+use not specifically mentioned, as determined by the Director pursuant to Section
+12.80.050.
+E. Adjustments to Number of Bicycle Parking Spaces. The Review Authority may adjust minimum
+bicycle parking provided for changes of Use or expansions of an existing use under Subsection
+12.80.156.D.8.
+  Table 12.50.410-1:
+Required Bicycle Parking Spaces for Housing Types or Residential Uses
+(spaces are per dwelling unit unless otherwise specified)
+Use Category Number of Spaces Required
+Household Living
+Multiple Dwelling Structure None if exempt under Subsection
+12.50.410.C.1; otherwise 0.25
+Group Living 0.25/resident
+Residential Services None
+Residential Business (for residential portion only) 1 in Zone A; none in Zone B
+
+  Table 12.50.410-2:
+Required Bicycle Parking Spaces for Commercial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Commercial Lodging
+All Uses 0.13/room
+Commercial Parking
+Surface Parking Lots None
+Structured Parking 1/20 vehicle spaces provided
+Commercial Recreation
+Indoor facilities 1.5
+12.50.410 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:76Supp. No. 1
+Table 12.50.410-2:
+Required Bicycle Parking Spaces for Commercial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Court sports 1/court
+Outdoor facilities (with bleachers) 1/60 ft. of bench length
+Outdoor facilities (without bleachers) 1/field
+Durable Goods Sales
+All Uses 0.05
+Eating and Drinking Establishments
+Fast food 2
+Casual dining 0.25
+Fine dining 0.13
+Educational Services (parking calculated per FTE student or employee)
+All Uses 0.01
+Office
+General office 0.1
+Medical office 0.2
+Retail Products and Services
+Minor Assembly Facilities 0.1
+All other Uses
+1/2,500 square feet up to 50,000
+sq. ft.;
+plus 1/5,000 square feet thereafter
+Self-Service Storage
+All Uses None
+Vehicle Service and Repair
+All Uses 0.075
+Note: Minimum 2 spaces required for all free-standing Uses: See Subsection 12.50.410.D.1.
+ 12.50.410DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:77Supp. No. 1
+Table 12.50.410-3:
+Required Bicycle Parking Spaces for Industrial Uses
+(spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Industrial Services
+All Uses 0.1
+Manufacturing and Production
+All Uses 0.08
+Solid Waste Treatment and Recycling
+All Uses 0.05
+Vehicle Storage
+All Uses 0.01/employee
+Warehouse and Freight Movement
+All Uses 0.01
+Wholesale Sales
+All Uses 0.08
+Note: Minimum 2 spaces required for all free-standing Uses: See Subsection 12.50.410.D.1.
+
+  Table 12.50.410-4:
+Required Bicycle Parking Spaces for Institutional Uses
+(spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Colleges and Universities (measured per classroom)
+All Uses 4
+Community Services
+All Uses 0.2
+Detention Facilities (measured per bed)
+All Uses 0.01
+Hospitals (measured per bed)
+All Uses 0.1
+12.50.410 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:78Supp. No. 1
+Table 12.50.410-4:
+Required Bicycle Parking Spaces for Institutional Uses
+(spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Assembly Facilities (measured by maximum occupancy* in largest room)
+All Uses 0.02
+Schools (measured per classroom)
+Elementary school (grades K—5) 3
+Middle school (grades (6—8) 2
+High School (grades 9—12) 2
+  * As determined by the Building Official.
+Note: Minimum 2 spaces required for all free-standing Uses: See Subsection 12.50.410.D.1.
+
+  Table 12.50.410-5:
+Required Bicycle Parking Spaces for Infrastructure and Utility Facilities Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Aviation Uses
+Hangars (measured per aircraft space) None
+All other aviation uses per commercial or industrial
+requirements
+Parks and Open Areas
+Indoor facilities 2
+Court sports 0.15/court
+Outdoor facilities (with bleachers) 1/60 ft. of bench length
+Outdoor facilities (without bleachers) 1/field
+Playgrounds To be determined during land use
+approval process. Nature parks; natural open space
+Public Safety Facilities (measured per FTE employee)
+All uses
+ 12.50.410DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:79Supp. No. 1
+Table 12.50.410-5:
+Required Bicycle Parking Spaces for Infrastructure and Utility Facilities Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Surface Alternative Transportation Facilities
+Park and ride facilities 1/20 of provided spaces
+Maintenance yards None
+All other uses None
+Telecommunication Facilities
+All uses None
+Utility Facilities
+All uses None
+F. Bicycle Parking Location.
+1. Bicycle parking shall be located on site in secure and accessible locations near a main
+building entrance.
+2. Outdoor bicycle parking shall be visible from on-site buildings or the street. Indoor bicycle
+parking for non-residential uses shall be located on the first floor. Indoor bicycle parking
+may be allowed on any floor in multi-story residential structures.
+3. If required, bicycle parking location(s) shall be shown on the off-street vehicle parking and
+loading plans submitted to the Review Authority.
+G. Bicycle Parking: Improvements.
+1. Space Size. Spaces shall be at least 6 feet long and 2½ feet wide. An access aisle at least
+5 feet wide shall be provided and maintained beside or between each row of parking.
+Each required space shall be accessible without moving another bicycle.
+2. Security. Secure parking shall be provided as either a lockable storage enclosure or a
+stationary rack to which bicycles can be locked. All racks, lockers or other facilities shall
+be securely anchored to the ground or to a structure. Racks shall be designed so that
+every bicycle can be locked by the frame and secured to prevent falling or wheel damage.
+3. Separation Required. Bicycle parking shall be separated from motor vehicle parking and
+maneuvering areas by a barrier or a distance of at least 5 feet.
+4. Connectivity Required. Outside bicycle parking shall be connected to each building's
+main building entrance by pedestrian accessible walkways. Outside bicycle parking also
+shall have reasonably direct hard-surfaced connections to public rights-of-way and to
+existing and proposed pedestrian/bicycle accessways.
+12.50.410 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:80Supp. No. 1
+5. Signage. Required parking shall be signed and reserved for bicycle parking only. If a
+bicycle parking area is not plainly visible from the main building entrance, a directional
+sign shall be posted at the building entrance indicating the location of the bicycle parking
+area.
+6. Sidewalk Obstruction Not Permitted. Bicycle parking shall not obstruct required minimum
+widths of sidewalks or pedestrian connections. As part of a Type II or III review, the
+Review Authority may allow bicycle parking on the public sidewalk only in locations where
+it would not obstruct required minimum widths or conflict with access to doorways.
+7. Landscaping or Usable Open Space Occupancy Not Permitted. Bicycle parking shall not
+occupy curbside landscape strips, landscape buffers or required usable open space.
+8. Distribution between Buildings. Bicycle parking may be distributed as the Review
+Authority determines appropriate as part of a Type II or III review to serve multiple
+buildings in a development. If a building has 2 or more main building entrances, the
+Review Authority may require bicycle parking to be located to serve all main building
+entrances.
+9. Coverage Required/Encouraged. Coverage or shelter is encouraged for all required
+bicycle parking. If more than 20 bicycle parking spaces are required, at least 25% of the
+spaces shall be covered or enclosed. If covered, the overhead clearance shall be at least
+7 feet. Coverage can be provided through roof extensions, overhangs, awnings, arcades,
+carports or enclosures. Similar means of coverage can be approved through a Type II or
+III review. Covered parking can also be provided within a parking structure, garage, or
+bicycle locker, under a separate roof, or in a designated area within a building or
+residential complex.
+10. Security at Transit Stations. At transit transfer stations and park-and-ride lots, at least
+20% of the required spaces shall be lockers and at least 50% of the remaining required
+spaces shall be covered or enclosed.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1,
+2019; Ord. 6294 § 1, 2019; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.50.420  Pedestrian and Bicycle Circulation.
+A. Purpose. On-site and off-site pedestrian and bicycle circulation standards are intended to
+provide connections which minimize out-of-direction travel between buildings and existing
+public rights-of-way, pedestrian/bicycle accessways and other on-site pedestrian facilities.
+B. Applicability. Except as provided in subsection C below, the standards of this section shall
+apply to all Type II, Type III, and new development projects that include more than ½ acre of
+new off-street surface parking on a lot or parcel.
+C. Exceptions and Exemptions.
+1. Certain Land Use Applications Exempt. The following land use applications are exempt
+from the requirements of this section:
+a. Development Review or land division applications for single detached or middle
+housing developments;
+ 12.50.420DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:81Supp. No. 1
+b. Floodplain Activities;
+c. Significant Natural Resource Permits; and
+d. Cultural Resource Alterations.
+2. Certain Land Uses Exempt. The following land Uses are exempt from the requirements
+of this section:
+a. Car washes
+b. Commercial parking facilities, except commercial parking structures within 400 feet
+of a proposed or existing transit station
+c. Golf courses
+d. Greenhouses
+e. Heavy equipment sales
+f. Manufactured home sales
+g. Vehicle service and repair Uses without associated convenience stores, except
+retail or wholesale Uses selling parts and accessories without on-site installation
+h. Vehicle sales, leasing, rental or storage
+i. Solid waste transfer stations
+j. Truck stops
+D. Standards — On-Site Facilities.
+1. Connections Required. New development shall provide on-site pedestrian and bicycle
+circulation systems as follows:
+a. Connecting the new development to abutting residential uses, neighborhood activ-
+ity centers, usable open space, parking lots, and transit stops;
+b. Connecting the main building entrance of each building to the nearest public
+sidewalk or walkway leading to a public sidewalk; and
+c. Stubbing accessways to abutting vacant land or to developed land without pedestrian/
+bicycle connections.
+2. Direct Routing. Pedestrian and bicycle accessways shall be reasonably direct.
+3. Clustering. Where practicable, new commercial, Mixed-Use and office developments
+shall facilitate on-site pedestrian circulation by clustering buildings and creating separate
+accessways through the site and parking areas.
+4. ADA Access. On-site pedestrian circulation systems shall include accessways and
+facilities for handicapped persons, consistent with applicable federal and state require-
+ments, and with emphasis wherever practicable on providing continuous, uninterrupted
+routes.
+12.50.420 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:82Supp. No. 1
+5. Improvements. On-site accessways shall be improved to the following standards:
+a. Accessways shall be hard surfaced, which includes pervious surfacing techniques,
+well-drained, and at least 5 feet in unobstructed width, except as provided in
+paragraph b, below.
+b. Accessway width shall be increased to 7 feet if the walkway abuts perpendicular or
+angled parking spaces unless the spaces are equipped with wheel stops pursuant
+to Subsection 12.50.360.C.3.
+c. Accessway surface material shall contrast visually with adjoining surfaces.
+d. Where accessways are parallel to and abut a vehicular access aisle, the accessway
+shall be raised or separated from the access aisle by a raised curb, bollards,
+landscaping or other physical barriers. Where raised accessways are used, the
+ends shall be equipped with curb ramps.
+6. On-site pedestrian and bicycle circulation shall minimize pedestrian/vehicle conflicts
+through any or all of the following measures or their equivalents:
+a. Separating pedestrian accessways through the site and parking areas;
+b. Minimizing accessway crossings of driveways; or
+c. Marking pedestrian crossings with changes in elevation, paving texture, color, or
+material. Crossing markings shall contrast and clearly delineate the crossing or
+walkway at any time of day or night and shall be improved consistent with ADA and
+the Oregon Structural Specialty Code.
+E. Standards — Off-Site Facilities. Off-site pedestrian and bicycle circulation is only required in
+South Hillsboro per Subsection 12.65.420.B.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022)
+12.50.430  Connectivity and Design Standards at or Near Transit Stops.
+A. Purpose. Major and minor transit stops are defined in Section 12.01.500. Pedestrian improve-
+ments at transit stops encourage use of transit, which reduces carbon emissions, improves
+traffic efficiency on public streets, and provides transportation options for transportation
+disadvantaged persons. In this section "at a major or minor transit stop" means a property line
+of the building site is not more than 200 feet from the transit stop. "Near a major or minor transit
+stop" means a property line of the building site is on an intersecting street not more than 300
+feet from the transit stop. Both distances in this section are measured as walked by a
+pedestrian.
+B. Applicability. The standards of this section shall apply to all Type II and Type III development
+projects located at or near a transit stop and along a transit street that meet 1 or more of the
+following:
+1. New multiple dwelling structure; or
+2. New non-residential development; or
+ 12.50.430DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:83
+3. Non-residential development that includes more than 1,000 square feet of reconstructed
+retail, commercial, office, or institutional floor area.
+C. Exceptions. The following land uses are exempt from the standards of this section.
+1. Car washes;
+2. Commercial parking facilities, excluding commercial parking structures within 400 feet of
+a transit station;
+3. Golf courses;
+4. Greenhouses;
+5. Durable goods sales;
+6. Vehicle service and repair, excluding associated convenience stores and vehicle parts
+and accessories sales without on-site installation;
+7. Vehicle storage;
+8. Solid waste transfer stations;
+9. Truck stops; and
+10. Any other use located at or near a minor or major transit stop, where access to the transit
+stop would require crossing a collector street or an arterial street and a pedestrian
+crossing is not available.
+D. Standards Applicable to Development at or Near Minor Transit Stops.
+1. Applicable development projects at or near a minor transit stop shall provide either a
+transit stop on-site or a pedestrian connection from the development to the nearest transit
+stop along the transit street.
+2. Transit stop improvements shall include at least 1 of the following improvements:
+a. A dedicated area within the public right-of-way, or an easement within the site, for a
+passenger shelter;
+b. An accessible passenger area, compliant with Chapter 11 of the Oregon Structural
+Specialty Code as adopted by the City;
+c. Lighting;
+d. Passenger seating for at least 3 people; and/or
+e. A passenger shelter as approved by the Transit Agency.
+3. To meet the requirement in paragraph D.1, above, the pedestrian connection must be a
+continuous, unobstructed, reasonably-direct route between the 2 points that is intended
+and suitable for pedestrian use. On developed parcels, pedestrian connections shall be
+hard-surfaced. In parks and natural areas, pedestrian connections may be soft-surfaced
+pathways.
+4. Required transit stop or connection improvements shall be installed concurrent with
+development construction.
+12.50.430 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:84
+E. Standards Applicable to Development at or Near Major Transit Stops. Applicable development
+projects at or near a major transit stop shall meet the following standards:
+1. Main building entrances for new retail commercial, office and institutional buildings
+located at or near a major transit stop shall be oriented towards the transit street or the
+street intersecting the transit street. A building meets this standard if the entrance directly
+faces the transit street or the intersecting street, or if the entrance is linked to the transit
+street or the intersecting street by an on-site pedestrian connection.
+a. If the site fronts on more than 1 transit street, or on both a transit street and an
+intersecting street, the building shall have a main entrance oriented to either:
+i. One of the transit streets;
+ii. The intersecting street; or
+iii. The corner where the 2 transit streets or the transit and the non-transit street
+intersect.
+b. If the building façade length on the transit street is 300 feet or more, the building
+shall have 2 or more building entrances facing the transit street. The Review
+Authority may approve a Minor or Major Adjustment to this standard under Section
+12.80.154 or 12.80.156.
+2. Building entrances at or near a major transit stop or facing on a plaza shall have weather
+protection features to protect pedestrians, including, but not limited to, arcades, roofs,
+porches, alcoves, porticos and/or awnings. The use of continuous, on-site weather
+protection features or structures between building entrances and adjacent transit streets,
+streets intersecting transit streets, or transit stops is encouraged.
+3. New retail, commercial or office buildings located within 30 feet of a transit street, a street
+intersecting a transit street, or a major transit stop, shall include changes in relief on 35%
+of their façades facing such a street or transit stop. Such changes in relief may include
+windows, lobbies, covered pedestrian entrances, display windows, cornices, bases,
+fluted masonry, combinations of such treatments, or other pedestrian-friendly treatments.
+4. New retail, commercial, office or institutional buildings located at a major transit stop shall
+provide all of the following transit-supportive improvements:
+a. A plaza at either the major transit stop or at the intersection of the adjacent transit
+street and an intersecting street;
+b. Locate buildings within 20 feet of the front property line closest to the major transit
+stop, the transit street or a street intersecting the transit street;
+c. An accessible passenger area, compliant with Chapter 11 of the Oregon Structural
+Specialty Code as adopted by the City;
+d. A dedicated area within the public right-of-way, or an easement within the site, for a
+passenger shelter if requested by the transit agency, to the degree which the
+ 12.50.430DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:85
+requested easement has a clear nexus with and is proportional to the scale,
+intensity and reasonably expected level of transit ridership generated from the
+building;
+e. Passenger seating or a passenger shelter as approved by the Transit Agency; and
+f. Lighting at the transit stop.
+5. All development shall provide a pedestrian connection between the transit stop and the
+main building entrance(s) on the site that is continuous, unobstructed, reasonably-direct
+route between the 2 points that is intended and suitable for pedestrian use. On developed
+parcels, pedestrian connections shall be hard-surfaced. In parks and natural areas,
+pedestrian connections may be soft-surfaced pathways.
+6. Pursuant to subparagraph 4.b, above, if a building is set within 20 feet of the front property
+line, no off-street parking will be allowed in the front setback. A single vehicle circulation
+lane may be permitted in the front setback only if no practicable alternative is available
+and if driveway crossings are provided for pedestrian safety consistent with Subsection
+12.50.420.D.5.
+7. Vehicle parking on corner lots at or near a major transit stop shall not be located adjacent
+to street intersections.
+F. Redevelopment of Parking. Applications for development at or near major transit stops which
+include surface parking fields larger than 50 spaces shall include a conceptual redevelopment
+plan indicating how the excess spaces could be redeveloped in the future. Omission of specific
+redevelopment plans for the excess parking spaces shall not be the basis for denying the
+application.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6250 § 1,
+2017; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015)
+12.50.430 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:86
+12.50.500  Access and Street Standards.
+Access and street standards include the following sections:
+12.50.510 Purpose, Applicability and Exceptions
+12.50.520 Street Connectivity and Access
+12.50.530 Public Streets and Alleys Design and Improvement
+12.50.540 Private Streets: Design and Improvement
+12.50.550 Sidewalk Widths; Design and Location
+12.50.560 Street Trees
+(Ord. 6401 § 1, 2022)
+12.50.510  Purpose, Applicability and Exceptions.
+A. Purpose. Comprehensive Plan Section 20 Transportation calls for development of a city street
+system that meets several goals: safety; multi-modality; trip reduction; congestion manage-
+ment; efficient freight movement; livability; and accessibility. The standards in this section are
+intended to implement these goals by establishing requirements for street improvements in
+and adjacent to land use developments which will generate the users of and demand for this
+street system.
+B. Applicability.
+1. These standards apply to all Zoning Review applications, Non-Temporary Emergency
+Shelter applications, Type II and Type III land use applications, and Expedited and Middle
+Housing Land Divisions on sites adjacent to existing public streets and/or developments
+which are required to provide new public or Private streets, alleys or common driveways.
+In addition to these standards, the City has also adopted Public Works Design and
+Construction Standards (D & C Standards) that apply to public improvement constructed
+within the City. The D & C Standards provide detailed construction requirements consis-
+tent with this Code.
+2. These standards may require any or all of the following:
+a. Dedication of right-of-way adequate to meet the requirements of the Transportation
+System Plan (TSP); the D & C Standards; or the requirements of Subchapters 12.60
+through 12.67 in certain plan districts;
+b. Street improvements on interior street systems and adjacent existing streets,
+adequate to meet the requirements of the TSP; the D & C Standards; or the
+requirements of Subchapters 12.60 through 12.67 in certain plan districts;
+c. Payment of a fee-in-lieu of construction pursuant to the D & C Standards, at the
+direction of the City Engineer; and/or
+d. Execution of acceptable financial guarantees for improvements deferred at the
+direction of the City Engineer; and/or
+ 12.50.510DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:87
+e. Execution of waivers of remonstrance against improvements deferred at the
+direction of the City Engineer. Required waivers of remonstrance shall be recorded
+by the City, and shall be effective for 10 years following the date of execution.
+C. Exceptions.
+1. On County roads or State highways, the road standards of those jurisdictions supersede
+these requirements.
+2. Where the D & C Standards are more specific than the standards in this section, those
+standards apply.
+3. The standards of this section shall not be enforced as a condition of approval on new
+applications for single detached or middle housing residential building permits unless a
+previous applicable land use approval provides otherwise.
+4. The standards of this section may be modified by the City Engineer upon finding that the
+otherwise required right-of-way dedications and/or street improvements would not meet
+applicable legal requirements with respect to the scale or scope of the approved land use
+development.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6250 § 1, 2017; Ord. 6110 § 7, 2015)
+12.50.520  Street Connectivity and Access.
+A. Applicability. The standards of this section apply to:
+1. Any Type II or Type III development that results in the construction of a street;
+2. A land division that is not a Middle Housing Land Division and that:
+a. Is located on a site that is 1.75 acres or larger in size; or
+b. Abuts a parcel upon which there is a street that has been "stubbed" to the proposed
+development site.
+B. Through Street Connectivity Required.
+1. Applicable development shall provide a street system that meets the block length
+standards in subsections B or C, as applicable, and provides access to the following:
+a. Abutting residential developments;
+b. Abutting undeveloped property; and
+c. Abutting neighborhood activity centers.
+2. The following factors shall be considered in establishing location, grade and width of new
+internal streets:
+a. Connections to existing streets as required in subsection C below;
+b. Topographical conditions and natural resource corridors;
+c. Existing and identified future transit routes and pedestrian/bicycle accessways; and
+d. The proposed use of land to be served by the streets.
+12.50.510 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:88
+3. Intersection angles, grades, tangents and curves proposed for the internal street system
+shall be consistent with the D & C Standards.
+C. Street Connectivity and Block Length Requirements in Standard Zones.
+1. New internal streets within a development shall connect to all existing or planned stubbed
+streets that abut the site.
+2. Unless exempted under Subsection C.3 below, full street connections spaced not more
+than 530 feet apart shall be provided in all contiguous vacant and/or underdeveloped
+sites 5 gross acres or larger planned or zoned for residential or mixed-use development.
+3. Full street connections are not required where barriers prevent their construction or
+require different street connection spacing; in such cases, pedestrian and bicycle
+connections shall be provided as described in subsection D below. Such barriers include
+the following:
+a. Topography;
+b. Railroad right-of-way;
+c. Freeway right-of-way;
+d. Pre-existing development patterns;
+e. Streams, wetlands or waterways regulated under Metro UGM Functional Plan Title
+3; and/or
+f. Significant Natural Resources regulated under Section 12.27.200.
+4. Except where precluded by the barriers listed in subsection C.3, above, maximum block
+lengths between local and collector streets shall be 1,000 feet, and the maximum
+perimeter of blocks formed by local and collector streets shall be 2,750 feet.
+5. Within ½ mile of existing neighborhood activity centers or transit stops, maximum block
+lengths shall be 600 feet, and the maximum perimeter of blocks formed by local and
+collector streets shall be 1,800 feet.
+6. Where the connectivity analysis indicates that larger block lengths or perimeters within a
+proposed development would deter pedestrian and bicycle travel, the Review Authority
+may require construction of additional pedestrian accessways within such blocks where
+appropriate.
+D. Street Connectivity and Block Length Requirements in Light Rail and Mixed-Use Zones.
+1. On sites meeting either of the following criteria, new internal streets and alleys shall be
+configured in a grid connecting to existing or planned streets:
+a. Vacant or underdeveloped sites 3.7 gross acres or larger; or
+b. Sites where existing or planned streets and alleys are stubbed to the perimeter
+property line.
+ 12.50.520DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:89Supp. No. 1
+2. Unless precluded by barriers as described in subsection C.3, above, blocks in undevel-
+oped areas shall include alleys consistent with the proposed street grid to allow use of
+rear-loaded garages and accessory dwelling units and to provide access for utility and
+garbage services.
+3. The street grid system shall be reasonably straight and direct and shall avoid unneces-
+sary curves. Cul-de-sac streets are not permitted unless street continuation is precluded
+by barriers as described in subsection C.3, above.
+4. In the vicinity of a transit station or major transit stop, streets and alleys shall be laid out
+to provide direct and continuous routes to the transit station or stop, or to a street in an
+adjacent development.
+5. Maximum block perimeter lengths created by the street and alley pattern shall be 1,600
+feet.
+E. Connectivity Standards for Pedestrian and Bicycle Accessways Where Through Streets Are
+Not Feasible. Pedestrian accessways shall meet the standards listed below. Accessways used
+as secondary fire access or utility corridors shall also meet the additional standards in
+subsection F, below.
+1. Accessways shall be created within public rights-of-way, public tracts, or private tracts
+with public access easements. Such rights-of-way, tracts, or easements shall be at least
+15 feet wide.
+2. Accessway entry points shall align with pedestrian crossing points on abutting streets
+and with abutting street intersections.
+3. Accessways shall not exceed 300 feet in length between streets.
+4. Accessways shall be sufficiently straight that both end points are visible from any point on
+the accessway.
+5. Accessways shall have no horizontal obstructions and a 9-foot, 6-inch high vertical
+clearance. Additional clearance shall be provided on secondary fire accessways as
+required in subsection F below.
+6. Accessway surface improvements shall be at least 10 feet in width. Improvements shall
+be impervious pavement (asphalt or concrete), unless pervious pavement has been
+approved by the Review Authority and the City Engineer based on usage and site
+conditions.
+7. Accessway surfaces shall drain stormwater runoff to the side or sides. Paving materials,
+storm drainage, shoulder treatment, and landscaping for accessways are subject to
+approval by the City Engineer and the Director.
+8. Accessways shall be lighted as required in Section 12.50.240. Lighting shall be installed
+at both end points and may also be required at intermediate points as determined by the
+City Engineer. Lighting on accessways shall be shielded to minimize glare and unnec-
+essary diffusion into the sky and onto neighboring properties, especially into significant
+natural resource areas.
+12.50.520 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:90Supp. No. 1
+9. Accessways shall have a slope of 5% or less.
+10. Accessways shall be fenced and screened along adjacent property with 1 or both of the
+following improvements:
+a. A minimum 5-foot high fence. To meet this standard, wooden fences must be built of
+pressure-treated structural members with a pressure treated cap rail; and/or
+b. A thick vegetation screen of evergreen shrubs or climbers planted either adjacent to
+a new fence meeting the standard in subsection a, above, or to an existing private
+fence on the adjacent property. To meet this standard, evergreen plant species must
+be low maintenance varieties, capable of 42 inches height within 3 years of planting
+without irrigation. Native species are encouraged; nuisance species are Not Per-
+mitted. Evergreen species with mature heights taller than 4 feet shall be avoided.
+Plant species and spacing are subject to approval by the Review Authority.
+11. To prohibit access by motorized vehicles (except motorized wheelchairs) accessways
+shall be constructed with gates, removable lockable posts, bollards or barriers as
+approved by the Fire Department.
+F. Additional Standards for Accessways Used as Secondary Fire Access or Utility Corridor. In
+addition to the standards in subsection E, above, accessways that also serve as secondary
+emergency vehicle accesses or utility corridors shall meet the following additional standards:
+1. The accessway shall have at least 13 feet 6 inches (13
+� 6 ) vertical clearance or other
+clearance as approved by the Fire Marshal.
+2. The accessway shall have a minimum 20-foot paved surface within a 20-foot wide
+right-of-way, tract, or easement. Reduced width secondary fire access accessways may
+be proposed subject to approval by the City Engineer and the Fire Marshal.
+3. Pervious pavement may be permitted by the Review Authority, subject to approval by the
+City Engineer and the Fire Marshal.
+G. Ownership, Liability and Maintenance of Accessways. To ensure accessway maintenance
+over time, a maintenance agreement shall be recorded that specifically requires present and
+future property owners to provide for liability and maintenance of the accessways to City
+standards.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.50.530  Public Streets and Alleys Design and Improvement.
+A. General Standards and Requirements.
+1. The Review Authority shall condition approvals of land use applications adjacent to
+existing public streets and/or required to provide new public streets or alleys to provide
+adequate right-of-way and improvements to streets, sidewalks, bike routes and bike-
+ways, consistent with the TSP, the Public Works Development and Construction (D & C)
+Standards, and Transportation Committee policy.
+ 12.50.530DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:91Supp. No. 1
+2. The Review Authority shall also consider future needs for street widening and other
+transportation improvements in the vicinity of the proposed development that would
+mitigate traffic impacts generated by the proposed development. The Review Authority
+may require off-site improvements, including, but not limited to: lighting; signalization;
+turn lanes; medians; on-street parking; traffic islands; paving; curbs and gutters; side-
+walks; bikeways; storm drainage systems; or facilities needed due to the anticipated
+vehicular and pedestrian traffic generation from the proposed development.
+3. Narrower designs for local streets may be permitted with City Engineer approval.
+Reduced width street designs shall comply with applicable D & C Standards.
+4. Where site conditions are favorable to stormwater infiltration, "green street" designs are
+encouraged and may be used. In these cases, deviation from the street standards in this
+Code or in the D & C Standards may be approved by the City Engineer. Design elements
+and facilities which require City Engineer approval for use in the public right-of-way
+include, but are not limited to, the following:
+a. Increased numbers of street trees;
+b. Vegetated islands within street improvements;
+c. Reduced improvement widths at stream crossings; and/or
+d. Multi-functional open storm drainage in lieu of conventional curb-and-gutter sys-
+tems.
+5. Except as provided under paragraph 6 below, public utility easements (PUEs) for public
+and private underground utilities (including gas, electric, telephone and cable communi-
+cations conduits or duct banks) shall be provided adjacent to all public rights-of-way. The
+width of the PUEs shall be subject to approval by the City Engineer.
+6. If private utilities cannot be located in a PUE due to setbacks, the City Engineer may
+permit placement in the public right-of-way under the provisions of a City franchise
+agreement.
+7. All street sections, curbs, gutters, sidewalks, street lights and street trees shall be
+constructed and installed consistent with the D & C Standards unless alternative plan
+district standards are specified in Subchapters 12.60 through 12.67.
+B. Street Classifications and Improvements in Standard Zones.
+1. Consistency with TSPs. The street descriptions in this section reflect and implement the
+street classifications on the TSP Functional Classification Map. Traffic capacity volumes
+within each classification provide an order of magnitude distinction between classifica-
+tions, and are generally consistent with the Washington County Transportation Plan.
+"Improvement width" as specified in the classification description includes: required
+travel lanes and curb and gutter components; additional median improvements (land-
+scaped and/or left turn lane); bicycle lanes; on-street parking spaces; and stormwater
+quality measures as permitted or required in a land use approval.
+12.50.530 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:92Supp. No. 1
+2. Applicability to Public Streets. These standards apply to streets which are or will be
+dedicated to the City. Developers may choose to construct private streets at a lesser
+standard pursuant to Section 12.50.540.
+3. Functional Capacity Retained. The street standards contained in this section may be
+varied with City Engineer approval, but the functional classification, projected volumes
+and bike path plan must be accommodated in the variation. However, adjacent to
+properties designated and/or zoned mixed-use, standards for street sections may be
+adjusted to provide on-street parking, increased sidewalk width, or to substitute bicycle
+lanes and bicycle ways on street sections with reduced traffic speeds.
+4. Arterial Streets. Arterial streets are the primary routes for travel between Hillsboro and
+other areas in the region, between major areas of urban activity, and to access the
+highway system. Arterial streets vary in width from 2 lanes to 7 lanes: Arterial street
+widths are shown in the Design and Construction Standards.
+a. If additional left and/or right turn lanes are required as a result of the Traffic Impact
+Analysis pursuant to Section 12.70.220, additional right-of-way shall be required as
+a condition of development approval.
+b. On certain streets in plan districts as specified in Subchapters 12.60 through 12.67,
+sidewalks shall be constructed to increased widths, such as 8 feet, 12 feet, or wider.
+If approved by the City Engineer, additional right-of-way or sidewalk easements
+shall be required on these streets to accommodate the additional sidewalk width.
+c. Property access points to arterial streets between intersections are subject to
+approval by the Road Authority, and may be conditioned to limitations such as right
+turn only configuration, consolidation among adjacent properties, and minimum
+spacing standards to reduce traffic conflicts on the arterial street.
+5. Collector Streets. Collector streets provide both circulation within and access to residen-
+tial and commercial/industrial areas. Although some collector streets may carry the same
+traffic levels as arterial streets, collectors may differ functionally from arterials in several
+respects: entering residential neighborhoods; distributing trips from neighborhood routes
+and local streets; providing a portion of City-wide circulation; and not having access
+controls as strict as those for arterials.
+a. Certain collector streets identified in the TSP shall be constructed to a larger
+capacity.
+b. Left turn lanes in collector streets shall be constructed at major intersections and
+may be required if approved by the City Engineer at authorized property access
+points between intersections.
+6. Neighborhood Routes. Neighborhood routes provide connectivity between local streets
+and collectors or arterials, and are generally longer and carry more traffic than local
+residential streets. To retain neighborhood character and livability, the Review Authority
+ 12.50.530DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:93Supp. No. 1
+may condition development approvals on neighborhood routes to require any of the
+following neighborhood traffic management measures, as described in the Transporta-
+tion System Plan:
+a. Speed humps;
+b. On-street parking;
+c. Traffic circles;
+d. Medians;
+e. Landscaping;
+f. Curb extensions (bulb-outs);
+g. Narrower streets; and/or
+h. Chokers (which narrow roadways at selected locations).
+7. Local Roads. Local roads serve abutting land only. Right-of-way and improvement
+requirements vary with projected vehicles per day (VPD) as specified in the D & C
+Standards.
+a. Local roads should carry less than 1,500 vehicles per day. If projected VPD is more
+than 1,500 vehicles, the Review Authority may require use of neighborhood traffic
+management measures as listed in paragraph 6, above, on the street.
+b. Narrower local street rights-of-way may be permitted with City Engineer approval if
+minimum dimensional requirements are met for travel lanes, bike lanes, parking
+lanes and sidewalk widths.
+c. To improve public safety, reduce traffic hazards and promote safety for residents,
+pedestrians, and bicyclists, and upon recommendation by the City Engineer, the
+Review Authority may require that local streets be constructed to discourage use by
+non-local automobile traffic.
+8. Cul-de-Sac Streets. These streets shall serve not more than 25 dwelling units and should
+not be longer than 200 feet except as specified under subparagraph a, below.
+a. With City Engineer approval, a cul-de-sac street may exceed 200 feet in length
+where the barriers listed in Subsection 12.50.520.C.4. prevent street extension
+outside the site. However, if the City Engineer finds there is potential for future
+connectivity to adjacent vacant property, design and construction of the develop-
+ment and the cul-de-sac shall meet the following standards:
+i. The lotting pattern in the development shall be designed to not preclude future
+extension of the street;
+ii. Street improvements for the cul-de-sac shall not include a permanent turning
+area; and
+iii. Public right-of-way shall be dedicated from the current cul-de-sac terminus to
+the edge of the development to allow future extension of the street.
+12.50.530 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:94Supp. No. 1
+b. Pursuant to Subsection 12.50.520.B.2, an applicant for a development including
+cul-de-sac streets shall make a good faith effort to construct pedestrian and bicycle
+accessway connections to neighboring properties from the end of the cul-de-sacs.
+c. If construction of the accessways in subparagraph b above is not technically or
+economically feasible at the time of land use approval, the Review Authority may
+require any or all of the following as a condition of the development approval if the
+City Engineer finds that a pedestrian-bicycle connection may be feasible in the
+future:
+i. Lotting patterns and siting of buildings which do not preclude possible future
+connectivity;
+ii. Provision of a public easement compliant with Subsection 12.50.430.D. or
+12.50.430.E. as applicable, from the cul-de-sac to the property line of the
+adjacent lot; and/or
+iii. Construction or payment of fee in lieu for the segment of the connection within
+the development.
+9. Commercial and Industrial Streets. Commercial and industrial streets are intended to
+serve primarily abutting non-residential land uses and are not through routes. Due to the
+nature of the adjacent land uses, traffic will include larger trucks requiring wider travel
+lanes and additional turning radii.
+10. Mixed-Use Streets. Mixed-use streets are located within or adjacent to neighborhoods
+designated and/or zoned mixed-use on the Comprehensive Plan and Zoning Map.
+Mixed-use streets may be local residential or neighborhood streets, collectors, or arterial
+streets within or adjacent to these neighborhoods. Mixed-use developments may be
+subject to additional base zone standards as listed in Subchapter 12.24, including
+variations to the street standards listed in the TSP. Where special plan district street
+standards are included in Subchapters 12.60 through 12.67, those standards supersede
+both the TSP and the D & C Standards regarding street design and structural cross-
+sections.
+a. To encourage pedestrian activity and access and increased density of development
+in mixed-use neighborhoods, the Review Authority may modify mixed-use street
+sections to provide on-street parking, increase sidewalk width, reduce travel lane
+width, and/or add bicycle lanes or bicycle ways.
+b. Modified mixed-use street configurations may be conditioned by the Review Au-
+thority to encourage reduced traffic speeds.
+11. Public Alleys. Alleys serve abutting properties only, and are intended primarily as
+secondary access for parking and service uses.
+a. Development projects within the plan districts listed in Subchapters 12.60 through
+12.67 shall improve existing adjacent existing alleys or dedicate and improve new
+alleys as required by the plan district standards.
+ 12.50.530DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:95Supp. No. 1
+b. Public alleys may be approved in development projects outside plan districts.
+Where approved, the maximum service area and length shall meet D & C Stan-
+dards.
+C. Street Classifications and Improvements in Light Rail Zones. New streets shall be designed to
+accommodate traffic volumes and characteristics of the surrounding land uses, including
+demand for on-street parking. Street cross-sections and right-of-way widths in light rail zones
+may be varied from the D & C Standards with City Engineer approval if the specifications in
+paragraphs 1 and 2 below are met.
+1. Local and Neighborhood Route Street Standards. Local and Neighborhood Route streets
+shall be improved to the specifications in Table 12.50.530-1:
+  Table 12.50.530-1:
+Local and Neighborhood Route Street Specifications in Light Rail Zones
+Street Design Component Specification
+Minimum Lane Width 10 feet
+Maximum Lane Width 12 feet
+Curb Return Radius 15 feet
+Minimum 2-Lane Intersection Throat 24 feet
+Minimum 3-Lane Intersection Throat 34 feet
+Parking Lane or On-Street Bay Minimum Width 7 feet (see paragraph c below)
+Minimum Curbside Landscape Strip 4 feet
+Minimum Sidewalk Width 5 feet (see paragraph a below)
+Bicycle Lane Width 6 feet (see paragraph b below)
+Minimum Alley Improvement Width 16 feet surfaced travel lane within
+a 20-foot ROW
+a. Bicycle Lanes. Bicycle lanes are required on both sides of a neighborhood route
+street, but are not required on local streets.
+b. On-street Parking. On-street parking is required on at least 1 side of a street
+adjacent to residential development unless additional visitor parking is provided
+within the development. If on-street parking is not provided, the street adjacent to
+the site shall be signed to prohibit parking.
+2. Collector and Arterial Streets Standards. Collector and arterial streets shall be improved
+to the specifications shown in Table 12.50.130-1, with the following exceptions:
+a. Collector streets shall have a 3-lane section: 2 travel lanes at least 10 feet wide and
+a center median or left turn lane at least 11 feet wide. The length of the left turn lane
+shall be based on the recommendation of a Traffic Impact Analysis (TIA) pursuant
+to Section 12.70.220, and shall be subject to approval by the City Engineer.
+b. Collector and arterial streets designated or planned as transit streets shall have
+wider curbside lanes: at least 12 feet wide. The widths of other transit street
+12.50.530 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:96Supp. No. 1
+components within the right-of-way shall not be reduced to compensate for this
+increased width, and the Review Authority may require additional right-of-way to
+accommodate the increased width.
+c. Collector and arterial streets shall have on-street bicycle lanes in both travel
+directions.
+d. The Review Authority may require traffic calming measures on any street within a
+light rail zone, consistent with Subsection 12.50.530.B.6, and the recommendations
+of the TIA.
+e. Arterial street components shall be sized and constructed in compliance with the D
+& C Standards and the TIA. If the Standards and the TIA conflict with specific
+provisions of this Code, the provisions of this Code shall prevail.
+f. Collector and arterial street intersections controlled by traffic signals shall provide
+additional sidewalk area at the intersection sufficient to meet AASHTO Urban Street
+Pedestrian Queuing Area Level of Service "D" (7 square feet/person). If the street is
+3 or more lanes, a center median pedestrian refuge area shall be included in the
+street design and improvement, sufficient to meet AASHTO Urban Street Pedes-
+trian Queuing Area Level of Service "C" (10 square feet/person). Queuing area size
+shall be determined based on estimated pedestrian traffic from the TIA.
+3. Street Lighting and Furniture. Except as provided under paragraph 5 below, street
+lighting and furniture installed in the public right-of-way within 1,300 feet of an HCT station
+shall be either the same as those installed under the original light rail transit project; or as
+approved by the Review Authority. Street lighting and furniture subject to this standard
+include the following:
+a. Streetlight poles and fixtures
+b. Bicycle racks
+c. Benches
+d. Street tree grates
+e. Trash receptacles
+f. Street and sidewalk surface patterns and materials
+g. Street signage
+4. Additional Lighting on Arterial and Collector Streets. The City Engineer may require street
+lighting on arterial and collector streets to have higher illumination or different poles and
+fixtures. The City Engineer may require ornamental street lighting to be supplemented by
+the minimum necessary number of standard luminaires mounted on poles matching as
+closely as practicable the ornamental streetlight poles.
+5. Pedestrian Use Street Design in Light Rail Zones. In light rail residential zones and in the
+SCC-SC zone, streets extending from light rail stations should be designed to allow use
+by pedestrian-friendly retail and service uses, recreation and social activities.
+ 12.50.530DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:97Supp. No. 1
+D. Street Improvements in Mixed-Use Zones. In addition to the standards in subsections A and B,
+above, developments in mixed-use zones adjacent to public streets shall install the following
+improvements:
+1. Ornamental street lights (as identified in the D & C Standards) with any required public
+street improvement; and
+2. Curb extensions (bulb-outs) at public street intersections with any required public street
+improvement. The design of the bulb-outs shall be subject to approval by the Director and
+City Engineer.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6258 § 1, 2018; Ord. 6110 § 7, 2015; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.50.540  Private Streets: Design and Improvement.
+A. Applicability. These standards apply to all land divisions and development projects which
+include or will be required to provide private streets.
+B. Specifications and Standards.
+1. Use of Private Streets Restricted. The City's preferred standard for access is a public
+street. Private through streets are not permitted under all circumstances. Private cul-de-
+sac streets may be approved only under the limited circumstances listed below:
+a. Where barriers to connectivity, as listed in Subsection 12.50.520.B.4, prevent
+construction of public through streets; and
+b. Where construction of a non-standard street cross-section (not consistent with the
+Public Works Design and Construction Standards) has been approved by the City
+Engineer; and
+c. Where both permanent ownership and maintenance of the private street tract for a
+minimum of 40 years have been demonstrated to the satisfaction of the City
+Engineer and the City Attorney.
+2. Private Cul-de-Sac Street Standards. If permitted, private cul-de-sac streets shall be
+constructed to the reduced width cul-de-sac standards in the Public Works Design and
+Construction Standards.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)
+12.50.550  Sidewalk Widths: Design and Location.
+A. Applicability. These standards apply to all Type II and III development projects and land
+divisions adjacent to public and private streets, which include or will be required to provide
+sidewalks.
+12.50.530 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:98Supp. No. 1
+B. General Sidewalk Standards.
+1. The Review Authority shall condition approvals of land use applications adjacent to
+existing public streets, and/or required to provide new public or Private streets, to provide
+sidewalks consistent with the TSP and the D & C Standards, unless modified or
+alternative improvements are approved by the Review Authority or are specified in the
+plan districts listed in Subchapters 12.60 through 12.67.
+2. Sidewalks are required on both sides of public streets and both sides of private streets
+longer than 100 feet. The Review Authority may reduce sidewalk requirements on a
+public or private street to 1 side of the frontage to reduce impacts in Significant Natural
+Resource Areas or Habitat Benefit Areas or where physical or topographic features
+encourage reduced width street improvements.
+3. Except as provided in subsection C below, sidewalk widths, design and location on public
+streets shall comply with the D & C Standards sidewalk widths. Sidewalk locations on
+private streets shall comply with Table 12.50.540-2.
+4. Sidewalks on public and private streets shall be constructed to the D & C specifications.
+5. Clear sidewalk widths shall not be reduced below 5 feet to accommodate sidewalk
+obstacles. If such an obstacle could reduce the clear sidewalk width to less than 5 feet,
+the obstacle shall be placed either in the landscape strip or on the property behind the
+back edge of the sidewalk, or the sidewalk shall be widened to maintain the minimum
+5-foot clear width. As used in this section, sidewalk obstacles may include any of the
+following or similar objects:
+a. Pedestrian benches;
+b. Trash or recycling receptacles;
+c. Street light poles;
+d. Fire hydrants;
+e. Traffic signals;
+f. Parking meters;
+g. Telephone booths;
+h. Newspaper boxes;
+i. Public utility vaults;
+j. Mailboxes;
+k. Vending stands or carts;
+l. Temporary signs.
+ 12.50.550DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:99
+6. In light rail zones, if existing public right-of-way cannot accommodate required sidewalks
+and landscape strips, additional right-of-way dedications or easements shall be provided
+to the City prior to the issuance of building permits for the subject development, except as
+provided under paragraph 7 below.
+7. In light rail zones, where the façade of an existing building is less than 13 feet from the
+curb face, and a proposed redevelopment or remodeling would not move the façade from
+its current position, the dedication or easement required under paragraph 5, above, may
+be reduced upon approval by the City Engineer and the Building Official to the minimum
+width permitted under the Building Code.
+C. Alternative Sidewalk Standards.
+1. Alternative sidewalk widths, design and location standards in certain plan districts are
+specified in Subchapters 12.60 through 12.67, with alternative sidewalk width, design
+and location standards include the following:
+a. Downtown;
+b. Fair Complex/Hawthorn Farm;
+c. Orenco;
+d. Amberglen;
+e. South Hillsboro; and
+f. Witch Hazel Village.
+2. New development on NE John Olsen Ave. and NE Quatama St. shall construct 8-foot
+sidewalks, with at least 4-foot planter strips along the street frontages as shown on Figure
+12.50.550-A. Sidewalks on streets not shown on Figure 12.50.550-A shall meet the width
+requirements of the Public Works Design and Construction Standards.
+3. The Review Authority may approve alternative sidewalk elements under a PUD applica-
+tion process pursuant to Section 12.80.120. Alternative sidewalk elements shall also be
+subject to approval by the City Engineer.
+12.50.550 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:100
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 7, 2015)
+12.50.560  Street Trees.
+A. Applicability. These standards apply to all Type II and III development applications and land
+divisions adjacent to public streets for which street and/or sidewalk improvements have been
+required under Section 12.50.550.
+B. Standards. The following standards apply to street tree selection, installation and maintenance
+unless alternative standards are specified in Subchapter 12.60.
+1. The Review Authority shall condition land use approvals, including requirements for
+street and/or sidewalk improvements in public rights-of-way, to select, install and main-
+tain street trees and irrigation systems in compliance with the D & C Standards.
+ Figure 12.50.550-A:
+Sidewalk Requirements for Quatama St/John Olsen Ave
+ 12.50.560DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:101
+2. As required by the D & C Standards, approval of land use applications including street
+tree installation shall be conditioned to require provision of acceptable financial assur-
+ances to ensure compliance with the applicable standards.
+3. Following the 2-year establishment period, maintenance, pruning, and if necessary
+removal and replacement of street trees shall comply with the provisions of the D & C
+Standards.
+(Ord. 6401 § 1, 2022)
+12.50.560 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:102
+12.50.600  Public Utilities, Site Grading and Storm Water Management Facilities Site Integra-
+tion.
+Public utilities general requirements, site grading, and storm water facilities site integration stan-
+dards include the following sections:
+12.50.610 Purpose, Applicability and Exceptions
+12.50.620 Public Utilities General Requirements
+12.50.625 Power and Communications Utility Undergrounding
+12.50.630 Site Grading
+12.50.640 Storm Water Facilities Site Integration
+(Ord. 6401 § 1, 2022)
+12.50.610  Purpose, Applicability and Exceptions.
+A. Purpose. Comprehensive Plan Section 15 Public Facilities and Services requires that devel-
+opment is appropriately guided and supported by the provision of public facilities and services
+in a timely, orderly and efficient manner. These standards set out a framework to assure that
+proposed development provides for the design, construction and maintenance of the neces-
+sary public facilities.
+B. Applicability. Except as may be specified otherwise in this section, these standards apply to all
+development projects requiring installation of public utilities on site, adjacent, or off site to the
+project.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6261 § 1, 2018; Ord. 6250 § 1, 2017)
+12.50.620  Public Utilities General Requirements.
+A. General Standards.
+1. Adequate Utilities Required. The Review Authority shall condition a land use application
+approval to require provision of public water, sanitary sewer, communications, and storm
+drainage service adequate to serve the approved level of development in a manner that
+is consistent with Section 12.50.620.A.2. It is the applicant's burden of proof to demon-
+strate that adequate facilities and services are presently available or will be made
+available concurrent with development. The Review Authority may condition a develop-
+ment approval to extend, modify or replace an existing off-site public water, sanitary
+sewer, communications, or storm drainage facility or system to provide adequate public
+facilities or services in a manner that is consistent with Section 12.50.620.A.2. to the
+development site.
+2. Compliance with Other Standards. Construction of all public water, sanitary sewer,
+communications, and storm drainage facilities and services shall comply with the D & C
+Standards, CWS standards or TVWD standards as applicable.
+ 12.50.620DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:103
+3. Service Provider Letters Presumed Correct. Service providers shall be presumed correct
+in the evidence which they submit relating to the adequacy and availability of facilities and
+services to the development.
+B. Public Utility Easements.
+1. A land division approved under Section 12.80.090 shall be conditioned to require public
+utility easements (PUEs) for private utilities as approved by the City Engineer, consistent
+with the D & C Standards.
+2. The Review Authority may condition approval of any Type I, Type II or Type III land use
+application, Zoning Review applications, and ELD Preliminary Plat applications to pro-
+vide PUEs as approved by the City Engineer, consistent with the D & C Standards.
+3. PUEs required under paragraphs 1 and 2 above shall be provided to and accepted by the
+City upon recording of a final plat or prior to occupancy if a final plat is not required. A
+required easement width specified in the D & C Standards may be reduced only with
+approval of the City Engineer, Building and Water Departments, and all affected utilities.
+C. Undergrounding Public Utilities.
+1. Except as specified in Section 12.50.625, all public utility distribution and service
+connections shall be underground.
+D. Maintaining Angle of Repose.
+1. Preliminary applications for developments proposing front setbacks less than 10 feet
+shall include utility plans showing horizontal and vertical locations of public and private
+utilities to demonstrate adequate angles of repose.
+2. To assure that structural footprints are sited to provide adequate area for installation and
+maintenance of public and private utilities in compliance with City standards, the Review
+Authority may condition land use approvals to require additional setbacks or easement
+widths to assure adequate separation of utilities before and after construction.
+3. Where additional setbacks or easements cannot be provided or acquired without signif-
+icantly affecting the project design or reducing the buildable area, the Building Official
+may allow modifications to a structural foundation footing to reduce the angle of repose
+influence on an adjacent public utility easement.
+E. Utility Equipment in Urban Areas.
+1. Location. Utility equipment in the following zones shall be located either within an
+underground vault or shall be screened and spaced as required by Subsections E.2 and
+E.3:
+a. SCC-DT Station Community Commercial — Downtown.
+b. Within the Orenco Town Center Plan District: SCC-SC Station Community Com-
+mercial — Station Commercial and SCR-V Station Community Residential —
+Village.
+12.50.620 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:104
+c. All zones within the Amberglen Plan District.
+d. All zones within the Tanasbourne Town Center Plan.
+e. Within the South Hillsboro Plan District: along Active Use Streets 1 and 2 in the
+MU-VTC Mixed Use — Village Town Center.
+2. Spacing. Above ground utility equipment shall be located away from any paved surfaces
+including public and private streets, driveways, and walkways to allow a minimum of 10
+feet of clearance between the paved surface and the utility equipment in such a way that
+safety and system reliability is not compromised.
+3. Screening. One or more of the following methods of screening shall be required for above
+ground utility equipment:
+a. Low walls that are a minimum of 6 inches taller than the vents, access doors, or
+utility equipment to be screened, and which are architecturally treated to match the
+other on-site walls and covered with vines with a minimum size of 5 gallons, spaced
+10 feet on center or as otherwise approved by the Review Authority. Walls shall
+comply with all applicable zoning requirements.
+b. Landscaping that, upon installation, shall screen a minimum of 75% of the vents,
+access doors, or utility equipment from view.
+c. Artificial "rock" equipment that covers 100% of the utility equipment. These should
+be accented with natural boulders and landscaping.
+d. Locating the utility equipment within a building, as permitted by regulations.
+e. Locating the utility equipment in an alley or on the rear of the project.
+f. Any other screening option that may be available due to unique site or building
+design characteristics and that complies with Section 12.50.620.A.2.
+(Ord. 6437 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6261 § 1, 2018; Ord. No. 6508,
+§ 1 (Exh. A), 11-4-2025)
+12.50.625  Power and Communications Utility Undergrounding.
+A. Purpose. To require the undergrounding of all above ground electric power lines and commu-
+nication lines along the site's frontage, and to include service connections to on-site develop-
+ment, in order to improve public safety, the reliability of service during and after storms, and
+streetscape aesthetics.
+B. Applicability.
+1. The standards in this Section 12.60.625 apply to new and existing utility lines that operate
+below 35,000 volts.
+2. Exemptions. Applicants are not required to underground existing electric power lines and
+other co-located communication lines or pay fee-in-lieu (FIL) of undergrounding these
+utilities in the following situations:
+a. The site is already fully in compliance with the requirements of this Section
+12.50.625;
+ 12.50.625DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:105Supp. No. 1
+b. The project is the result of damages caused by natural disaster (e.g., earthquake,
+flood, etc.) which is outside the influence of the property owner and/or applicant;
+c. The application is for one of the following:
+i. Minor partition in a middle housing zone (per Table 12.01.200-1),
+ii. Single detached dwelling, accessory dwelling unit, or middle housing devel-
+opment,
+iii. Type I review,
+iv. Expansion of existing multi-dwelling residential, commercial or mixed use
+buildings which increase existing floor area by less than 10% or 5,000 square
+feet, whichever is less. Cumulative expansions that increase floor area over
+10% are not exempt,
+v. Expansion of existing industrial buildings which increase existing floor area by
+less than 15% or 5,000 square feet, whichever is less. Cumulative expansions
+that increase floor area over 15% are not exempt.
+3. Type A Projects. Type A projects are projects that are not exempt, but which meet one of
+the criteria below. Type A projects are subject to the standards of Subsection C.
+a. The site has less than 100 feet of street frontage with existing above ground electric
+power lines that is subject to the undergrounding requirement;
+b. Undergrounding the existing above ground electric power lines would not result in a
+decrease in the number of electric utility poles. The change in the number of utility
+poles shall be based on an estimate provided by the electric power franchise.
+4. Type B Projects. Except for capital improvement projects which are subject to the City of
+Hillsboro's Capital Improvement Plan and Type A projects which are subject to the
+standards of Subsection C, all other projects are considered Type B projects and are
+subject to the standards in Subsection D.
+C. Standards Applicable to Type A Projects.
+1. All above ground electric power lines and co-located communication lines along the site's
+frontage and related service connections to on-site development shall be installed
+underground unless the applicant opts to pay a FIL in accordance with Paragraph C.3 or
+D.2.
+2. Electric power lines and co-located communication lines to be installed underground are
+subject to the installation standards in Subsection E.
+12.50.625 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:106Supp. No. 1
+3. Applicants for Type A projects may opt to make a partial payment of the required FIL using
+the percent of project valuation methodology in this section or pay the full FIL using the
+methodology in Subsection D.2.
+ Project Type Amount of FIL
+Subdivisions 10% of the project valuation
+Projects other than subdivisions 5% of the project valuation
+a. Project valuation shall be determined utilizing valuation tables or through use of an
+estimate provided by the architect, engineer, or contractor for the project, whichever
+is higher.
+b. For subdivisions, the FIL shall be paid to the City prior to approval of a final plat. For
+other projects, the FIL shall be paid to the City prior to the issuance of the first
+building permit for the project.
+c. The fees shall be deposited in a fund to be used only for undergrounding of utilities
+in the City and purposes directly related thereto.
+d. If the project valuation estimate is less than the linear foot estimate in Subsection
+D.2, additional FIL payments up to the full amount required by Subsection D.2 shall
+be required at the time when the site further develops or redevelops.
+D. Standards Applicable to Type B Projects.
+1. Except where an Adjustment has been approved pursuant to Section 12.80.154 or
+Section 12.80.156, all above ground electric power lines and co-located communication
+lines along the site's frontage and related service connections to on-site development
+shall be placed underground.
+2. If an Adjustment is approved, the applicant shall pay a FIL of undergrounding the utilities.
+a. The FIL shall be based on the City's approved fee schedule.
+b. If a partial fee has already been paid on a site, the fee is reduced by the amount that
+has previously been paid. If 100% of the fee has been paid on a site, no further fees
+are due.
+c. For subdivisions, the FIL shall be paid to the City prior to approval of a final plat. For
+other projects, the FIL shall be paid to the City prior to the issuance of the first
+building permit for the project.
+d. The fees shall be deposited in a fund to be used only for undergrounding of utilities
+in the City and purposes directly related thereto.
+ 12.50.625DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:107Supp. No. 1
+E. Installation Standards for the Undergrounding Electric Power Lines and Other Co-Located
+Communication Lines.
+1. Electric power lines and co-located communication lines shall be undergrounded in the
+locations listed in Table 12.50.625-1, subject to the approval of the City Engineer.
+2. As an alternative to the locations listed in Table 12.50.625-1, the Review Authority may
+require utilities to be placed underground within an adjacent alley right-of-way if such
+right-of-way is available, with vault locations as approved by the City Engineer and the
+utility provider.
+  Table 12.50.625-1:
+Electric Power Lines and Other Co-Located
+Communication Lines Undergrounding Scenarios
+Applicable Situation Location for Undergrounding
+Applicable minimum zone setback
+is 10 feet or greater Located in a PUE with a minimum width of 8 feet
+Applicable minimum zone setback
+is less than 10 feet
+Located in the right-of-way under the sidewalk
+with approval of the City Engineer, or in a PUE
+(Ord. 6437 § 1, 2023; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.50.630  Site Grading.
+A. Purpose. The standards of this section are intended to assure that grading prior to or during site
+development, or independently from development, is planned and accomplished to avoid
+adverse impacts to adjacent or abutting properties and significant natural resource areas,
+maintain pedestrian and bicycle connectivity between properties were applicable, and main-
+tain accessibility to public and private utility lines and easements.
+B. Applicability.
+1. The on-site surface contour grading standards specified in this section are applicable to
+all major and minor site alterations as defined in Section 12.01.500 where site fill or
+excavation, mass grading or soil stockpiling is proposed.
+2. Pursuant to the requirements of Public Works Design and Construction Standards
+Section 115.3, a site grading plan is required for any development that involves excava-
+tion or fill on public or private property or in public right-of-way. Plans for grading proposed
+in conjunction with a Type I, Type II or Type III land use application development shall be
+submitted with the land use applications pursuant to Subchapter 12.80 Applications.
+3. The section does not supersede Section 12.27.100 Regulatory Floodplain Overlay or
+Section 12.27.200 Significant Natural Resource Overlay: where these standards conflict
+with those sections, the requirements of those sections supersede.
+12.50.625 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:108Supp. No. 1
+C. Exemptions. The following site alterations are exempt from the standards in this section:
+1. Public right-of-way road improvements including new streets, street widening, sidewalks,
+and similar or related improvements;
+2. Public utility improvements including new water, sanitary sewer, or storm drainage lines,
+public storm water facilities, and similar or related improvements; and
+3. Filling, excavating, and grading on private properties adjacent to public improvements
+listed in Paragraphs 1 and/or 2 above, when such alterations are undertaken as part of
+and in conjunction with the construction of the improvements.
+D. Standards Applicable within and Adjacent to Single Dwelling Residential Zones.
+1. Except as provided in subsection F below, when grading a site within 25 feet of a property
+line within or abutting any property zoned single dwelling residential (as listed in Section
+12.21.010), on-site grading shall be finished to the surface contours shown in Table
+12.50.630-1:
+  Table 12.50.630-1:
+On-Site Grading Grade Differential Requirements in
+and Adjacent to Single Dwelling Residential Zones
+Distance from Property Line Difference from existing or finished elevation
+of abutting property as applicable
+0.0 feet to 1.0 feet No grade differential
+1.0 feet to 5.0 feet Maximum 2 feet grade differential
+5.1 feet to 10.0 feet Maximum 4 feet grade differential
+10.1 feet to 15.0 feet Maximum 6 feet grade differential
+15.1 feet to 20.0 feet Maximum 8 feet grade differential
+Over 20.0 feet Maximum 10 feet grade differential
+2. Where an existing grade differential before site alteration exceeds 1 or more of the
+standards in Table 12.50.630-1 above, the grade differential after alteration shall not
+exceed the original.
+3. The on-site grading differential standards in paragraph 1 above apply only to perimeter
+property lines of a parent property, and not to internal property lines created by a land
+division process under Section 12.80.090.
+E. Standards Applicable Adjacent to Significant Natural Resource Areas.
+1. Notwithstanding the requirements of subsections D and E above, grading within 25 feet
+of a Significant Natural Resource (SNR) boundary or Resource Impact Areas (IA)
+boundary, whether located on or off site, shall be finished to the following surface
+contours:
+a. From 0.0 to 10.0 feet from the boundary: no change in pre-development ground
+elevation; and
+ 12.50.630DEVELOPMENT AND DESIGN STANDARDS
+CDC12.50:109
+b. From 10.1 feet to 25.0 feet from the boundary: a maximum 10% slope gradient
+difference from the pre-development ground elevation.
+2. Based on the recommendation of a Qualified Natural Resources Professional as defined
+in Section 12.01.500, the Review Authority may require additional surface contouring or
+other grading measures to protect the SNR or IA area from grading or erosion impacts.
+F. Land Use Approval Required for Mass Grading or Site Grading Not Associated with Develop-
+ment. If mass grading or stockpiling as defined in Section 12.01.500 is proposed on public or
+private property, the site grading plan required under D & C Standards Section 120.4 shall be
+submitted as a Type II Development Review application pursuant to Section 12.80.040.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6258 § 1, 2018)
+12.50.640  Storm Water Facilities Site Integration.
+A. Purpose. The standards of this section are intended to assure that aboveground stormwater
+facilities are designed and constructed to meet applicable standards in the Public Works
+Design and Construction Standards and in Clean Water Services (CWS) Construction Stan-
+dards, and that overall landscape design is integrated with such facilities.
+B. Applicability. The standards specified in this section are applicable to any project which
+includes aboveground stormwater facilities and meets the definition of "development" in CWS
+Design and Construction Standards.
+C. Exemptions. Activities exempted from the definition of "development" under CWS Design and
+Construction Standards are exempt from the provisions of this section.
+D. Standards.
+1. Plans for aboveground stormwater facilities shall be submitted with landscaping plans for
+land use applications under Subchapter 12.80 Applications. Site improvements in the
+vicinity of the stormwater facility shall designed and installed to integrate the facility into
+the site design through coordination of finished grade elevations and use of compatible
+landscaping species consistent with Section 12.50.220.
+2. The Review Authority may condition any Type II or Type III land use application approval
+to require that the aboveground stormwater facility complies with the applicable provi-
+sions of the 2018 CWS Design and Construction Standards Chapter 3 Sensitive Areas
+and Vegetated Corridors and Chapter 4 Runoff Treatment and Control.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6258 § 1, 2018)
+12.50.630 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.50:110

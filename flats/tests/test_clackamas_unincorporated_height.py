@@ -335,7 +335,14 @@ def test_the_pod_clears_all_nine(rules: RuleSet) -> None:
 def test_and_the_corpus_wide_height_gap_is_now_one_zone_wide(rules: RuleSet) -> None:
     """Twenty-six zones across three jurisdictions when this started. What is
     left is Wilsonville's OTR, which hands height to a design standards book by
-    name and should keep reporting nothing until somebody fetches it."""
+    name and should keep reporting nothing until somebody fetches it.
+
+    2026-09-29: two zones wide again, and the name is kept so the history
+    reads. Hillsboro SCC-DT (a draft from a cloud session) hands its maximum
+    to a drawing the same way: 12.61.400 D.2, "the maximum height of new
+    buildings shall meet the requirements on Figure 12.61.400-D", and the
+    figure is a map of downtown blocks nothing reads. It should keep
+    reporting nothing until somebody reads the figure."""
     silent = [
         (layer_id, zone)
         for layer_id, layer in sorted(rules.layers.items())
@@ -344,4 +351,7 @@ def test_and_the_corpus_wide_height_gap_is_now_one_zone_wide(rules: RuleSet) -> 
         and got.values["quadplex_allowed"].value
         and "max_height_ft" in got.missing_required
     ]
-    assert silent == [("or/clackamas/wilsonville", "OTR")]
+    assert silent == [
+        ("or/clackamas/wilsonville", "OTR"),
+        ("or/washington/hillsboro", "SCC-DT"),
+    ]
