@@ -661,6 +661,95 @@ def test_a_landlocked_lot_has_no_lines_to_ask():
     assert r["tier"] == "D" and across == []
 
 
+# ---------------------------------------------------------------------------
+# s4 -- the zone across the STREET from each street line
+# ---------------------------------------------------------------------------
+
+
+def _across_street(lot, streets, fabric, rows=()):
+    """`classify_lot` and then `street_across` on one lot, as s4's main runs
+    them; the fabric as in `_across`."""
+    from s4_edges import classify_lot, street_across
+
+    sg = np.array(streets, dtype=object)
+    polys = [lot, *[f[0] for f in fabric], *rows]
+    lg = np.array(polys, dtype=object)
+    private = np.array([True] * (1 + len(fabric)) + [False] * len(rows))
+    juris = np.array(["portland", *[f[1] for f in fabric], *[None] * len(rows)], dtype=object)
+    zone = np.array(["CM2", *[f[2] for f in fabric], *[None] * len(rows)], dtype=object)
+    split = np.array([False, *[f[3] for f in fabric], *[False] * len(rows)])
+    tree = STRtree(lg)
+    r = classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        lot_tree=tree, lot_geoms=lg, lot_private=private,
+    )
+    return r, street_across([r], tree, lg, private, juris, zone, split)[0]
+
+
+def test_the_zone_across_the_street_is_the_first_lot_past_the_right_of_way():
+    """Portland 33.130.215.B.1.b sets a street setback on a street lot line
+    facing an R zone across a local street. A 100 x 100 lot, the street
+    south with a 60 ft right-of-way: five rays square to the line, over
+    the right-of-way strip (looked through: not private), each find the
+    R5 lot beyond. Only the street edge is asked."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+    across = (shapely.box(-20, -160, 120, -60), "portland", "R5", False)
+    row = shapely.box(-100, -60, 200, 0)
+    r, got = _across_street(lot, [street], [across], rows=[row])
+    classes = [cls for *_xy, cls in r["edges"]]
+    assert [a is None for a in got] == [c != "F" for c in classes]
+    assert got[classes.index("F")] == {"z": [["portland", "R5"]], "split": 0, "none": 0, "near": 0}
+
+
+def test_what_the_rays_cannot_place_is_counted_not_read():
+    """Nothing within reach (a freeway, a river), a split-zone lot, and a
+    lot nearer than any street is wide -- each is counted for what it is,
+    and none of them is a zone. An unzoned lot stacked on a zoned one (a
+    condominium file) leaves the ray split: every lot the ray meets first
+    has to be readable."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    street = LineString([(-60, -30), (160, -30)])
+
+    def south(fabric):
+        r, got = _across_street(lot, [street], fabric)
+        return got[[c for *_xy, c in r["edges"]].index("F")]
+
+    assert south([]) == {"z": [], "split": 0, "none": 5, "near": 0}
+    split = (shapely.box(-20, -160, 120, -60), "portland", "R5", True)
+    assert south([split]) == {"z": [], "split": 5, "none": 0, "near": 0}
+    close = (shapely.box(-20, -160, 120, -8), "portland", "CM2", False)
+    assert south([close]) == {"z": [], "split": 0, "none": 0, "near": 5}
+    zoned = (shapely.box(-20, -160, 120, -60), "portland", "CM2", False)
+    condo = (shapely.box(-20, -160, 120, -60), "portland", None, False)
+    got = south([zoned, condo])
+    assert got["split"] == 5 and got["none"] == 0 and got["near"] == 0
+
+
+def test_the_zone_across_the_street_at_a_real_corner():
+    """Taxlot 1S2E18CD 07200, CM2, the corner of SE Woodstock Blvd and SE
+    50th Ave (Oregon State Plane North, ft), with s1's centrelines and s2's
+    private fabric as the 2026-09-28 run holds them. Across the 79 ft of
+    Woodstock is CM2 (1S2E18CA 06300 and 07200); across 50th is RM2
+    (1S2E18CD 00400), an RF-RM2 zone 33.130.215.B.1.b names. The run's own
+    street_across for the lot is in the fixture, and this rebuilds it."""
+    import json
+    from pathlib import Path
+
+    d = json.loads((Path(__file__).parent / "fixtures" / "street_across_1S2E18CD_07200.json").read_text())
+    lot = shapely.from_wkt(d["lot"])
+    streets = [shapely.from_wkt(s["wkt"]) for s in d["streets"] if not s["alley"]]
+    fabric = [(shapely.from_wkt(f["wkt"]), f["jurisdiction"], f["zone"], f["split"]) for f in d["fabric"]]
+    r, got = _across_street(lot, streets, fabric)
+    assert [e[4] for e in r["edges"]] == [e[4] for e in d["edges"]], "s4's own classes"
+    for mine, run in zip(r["edges"], d["edges"]):
+        assert mine[:4] == pytest.approx(run[:4], abs=0.05)
+    assert got == d["street_across"]
+    woodstock, fiftieth = got[2], got[3]
+    assert woodstock["z"] == [["portland", "CM2"]]
+    assert fiftieth["z"] == [["portland", "RM2"]]
+
+
 def test_without_the_fabric_the_centreline_alone_decides():
     """The fabric is optional: a caller without it (the two cities whose
     code says an alley is a street never pass alleys at all, and a stage

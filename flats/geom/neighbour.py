@@ -43,6 +43,17 @@ asked) where that leaves it open. The lot then screens UNKNOWN on the fact
 exactly as it did before the measurement, which is the correct answer for
 a line nobody could read.
 
+**Across the street** is the same reading one right-of-way further out.
+Portland's commercial zones set a 5 ft street setback on a street lot line
+facing an RF-RM2 or RMP zone across a local service street
+(33.130.215.B.1.b). s4 casts five rays square to each street line to the
+first private lot beyond the right-of-way (``street_across_json``), and
+:func:`street_lines_clear` answers, per street line, whether that line is
+surely clear of every zone the code names -- the relaxing answer, which
+needs every ray read. It answers no lot-level fact: the rule is about one
+line, and it reaches the envelope through the per-line field
+``setback_street_across_nonresidential_ft``.
+
 A neighbour across a city line is unresolved on purpose. Portland's
 section lists Portland's codes; Gresham's LDR-7 is residential in Gresham's
 code and nothing in Portland's, and the corpus has refused to let one
@@ -173,10 +184,62 @@ def observed_neighbours(
     return out
 
 
+def street_lines_clear(
+    across: Sequence[Mapping[str, object] | None],
+    rule: NeighbourRule | None,
+    jurisdiction: str,
+    normalise: Callable[[str, str], str | None],
+) -> tuple[bool, ...]:
+    """Per s4 edge, in order: a STREET line surely facing none of the zones
+    ``rule`` names across the street.
+
+    ``across`` is s4's ``street_across_json`` decoded -- per edge ``None``
+    (not a street edge) or ``{"z": [[jurisdiction, zone_raw], ...], "split":
+    n, "none": m, "near": k}`` from five rays square to the line
+    (`Lot Analysis/quadfit/s4_edges.py` ``street_across``). ``rule`` is the
+    lot's layer's list for an across-the-street condition, whose
+    ``true_for`` codes are the zones the code's street setback is written
+    for (Portland 33.130.215.B.1.b: RF through RM2, RMP).
+
+    True is the RELAXING answer -- the line gets the zone's plain street
+    setback instead of the across-the-street one -- so it is the expensive
+    one, the same bargain as ``abuts_nonresidential_zone``: every one of the
+    five rays resolved (no split-zone or unzoned lot, nothing out of reach,
+    nothing nearer than a street's width), every zone found in the lot's own
+    jurisdiction (a neighbour in another city is on neither list), and every
+    one on the rule's ``false_for`` side. One residential ray settles the
+    line False; so does a ray nobody could place. False on every edge where
+    there is no rule to read against.
+    """
+    if rule is None:
+        return tuple(False for _ in across)
+    no = set(rule.false_for)
+    out: list[bool] = []
+    for edge in across:
+        if edge is None:
+            out.append(False)
+            continue
+        unresolved = sum(int(edge.get(k, 0) or 0) for k in ("split", "none", "near"))
+        zones = list(edge.get("z") or ())  # type: ignore[call-overload]
+        if unresolved or not zones:
+            out.append(False)
+            continue
+        clear = True
+        for pair in zones:
+            juris, raw = str(pair[0]), pair[1]
+            code = normalise(juris, str(raw)) if raw is not None else None
+            if juris != jurisdiction or code is None or code not in no:
+                clear = False
+                break
+        out.append(clear)
+    return tuple(out)
+
+
 __all__ = [
     "EVERY_LINE",
     "Line",
     "NEIGHBOUR_FACTS",
     "lines_from_quadfit",
     "observed_neighbours",
+    "street_lines_clear",
 ]

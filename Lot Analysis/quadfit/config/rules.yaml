@@ -185,7 +185,7 @@ jurisdictions:
       # read on the page yet.
       - zone: CE
         quadplex_allowed: true
-        setback_front_ft: 0
+        setback_front_ft: 5  # 33.130.215.B.1.b: 5 ft facing an RF-RM2/RMP zone across a local street, held on every street line (nothing here reads across the street)
         setback_side_ft: 10
         setback_rear_ft: 10
         max_coverage_pct: 75
@@ -215,7 +215,7 @@ jurisdictions:
         notes: "Corpus zone or/multnomah/portland/CM1, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
       - zone: CM2
         quadplex_allowed: true
-        setback_front_ft: 0
+        setback_front_ft: 5  # 33.130.215.B.1.b: 5 ft facing an RF-RM2/RMP zone across a local street, held on every street line (nothing here reads across the street)
         setback_side_ft: 10
         setback_rear_ft: 10
         max_coverage_pct: 85
@@ -226,7 +226,7 @@ jurisdictions:
         notes: "Corpus zone or/multnomah/portland/CM2, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_density_du_per_acre, min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
       - zone: CM3
         quadplex_allowed: true
-        setback_front_ft: 0
+        setback_front_ft: 5  # 33.130.215.B.1.b: 5 ft facing an RF-RM2/RMP zone across a local street, held on every street line (nothing here reads across the street)
         setback_side_ft: 10
         setback_rear_ft: 10
         max_coverage_pct: 85
@@ -247,7 +247,7 @@ jurisdictions:
         notes: "Corpus zone or/multnomah/portland/CR, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for max_density_du_per_acre, min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
       - zone: CX
         quadplex_allowed: true
-        setback_front_ft: 0
+        setback_front_ft: 5  # 33.130.215.B.1.b: 5 ft facing an RF-RM2/RMP zone across a local street, held on every street line (nothing here reads across the street)
         setback_side_ft: 10
         setback_rear_ft: 10
         max_coverage_pct: 100

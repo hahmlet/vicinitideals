@@ -68,6 +68,16 @@ flagged :attr:`~flats.geom.edges.Edge.off_corridor` and to no other. The zone
 states one number for every street lot line, so it stands in for both the
 front and the street-side number; where the zone also states a street-side
 setback, the bridge does not pass it (:func:`flats.ingest.quadfit.setbacks_for`).
+
+*The street line across from a residential zone.* The same zones set 5 ft
+from a street lot line facing an RF-RM2 or RMP zone across a local street
+(33.130.215.B.1.b). The street's class is not held, so every street is read
+as local, and the 5 is the zone's street number -- the front setback, and
+``setback_street_off_corridor_ft`` off the corridor. The plain "none" row
+arrives as :attr:`Setbacks.street_clear_ft` and is applied only to a street
+edge flagged both ``off_corridor`` and
+:attr:`~flats.geom.edges.Edge.across_clear` (every ray across the street read
+and none of them residential, :func:`flats.geom.neighbour.street_lines_clear`).
 """
 
 from __future__ import annotations
@@ -117,6 +127,12 @@ class Setbacks:
     #: does vouch for (:func:`_pieces`). Also set, with ``rear_ft`` the
     #: ordinary number, on a lot whose alley runs PART of its rear line.
     alley_rear_ft: float | None = None
+    #: The setback on a street line surely off every Map 130-1 stretch AND
+    #: surely facing no zone the across-the-street rule names
+    #: (``setback_street_across_nonresidential_ft``; Portland 33.130.215.B.1.b).
+    #: None means the zone does not distinguish it. Read for a front or
+    #: street-side edge flagged both ``off_corridor`` and ``across_clear``.
+    street_clear_ft: float | None = None
 
     def for_class(self, cls: EdgeClass) -> float:
         return {
@@ -149,6 +165,13 @@ class Setbacks:
             return max(self.rear_ft, self.alley_rear_ft)
         if (
             edge.off_corridor
+            and edge.across_clear
+            and edge.cls in (EdgeClass.front, EdgeClass.street_side)
+            and self.street_clear_ft is not None
+        ):
+            return self.street_clear_ft
+        if (
+            edge.off_corridor
             and edge.cls in (EdgeClass.front, EdgeClass.street_side)
             and self.street_off_corridor_ft is not None
         ):
@@ -177,6 +200,7 @@ class Setbacks:
             alley_side_ft=self.alley_side_ft,
             street_off_corridor_ft=self.street_off_corridor_ft,
             alley_rear_ft=self.alley_rear_ft,
+            street_clear_ft=self.street_clear_ft,
         )
 
 

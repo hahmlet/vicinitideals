@@ -27,7 +27,12 @@ from typing import Any
 
 import yaml
 
-from flats.rules.conditions import CONDITIONS, NEIGHBOUR_ZONE_CONDITIONS, PARK_CONDITIONS
+from flats.rules.conditions import (
+    ACROSS_STREET_CONDITIONS,
+    CONDITIONS,
+    NEIGHBOUR_ZONE_CONDITIONS,
+    PARK_CONDITIONS,
+)
 from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
@@ -1448,7 +1453,9 @@ def _parse_neighbours(
               C, E or CI zone"; "from a lot line that abuts an RF through
               RM4, RMP, or IR zone is 10 feet" ...
 
-    Only the three registered neighbour-zoning conditions may appear; both
+    Only the three registered neighbour-zoning conditions, and the
+    across-the-street ones read per street line
+    (``ACROSS_STREET_CONDITIONS``), may appear; both
     lists are required, are disjoint, and hold codes as strings; the quote
     and a note of a ruling's length are required, because the list is a
     reading and a reading without its sentence is a recollection. The lists
@@ -1464,10 +1471,10 @@ def _parse_neighbours(
     for name, body in raw.items():
         name = str(name).strip()
         at = f"{where}.neighbours.{name}"
-        if name not in NEIGHBOUR_ZONE_CONDITIONS:
+        if name not in NEIGHBOUR_ZONE_CONDITIONS + ACROSS_STREET_CONDITIONS:
             problems.append(
                 f"{at}: not a neighbour-zoning condition; one of "
-                f"{', '.join(NEIGHBOUR_ZONE_CONDITIONS)}"
+                f"{', '.join(NEIGHBOUR_ZONE_CONDITIONS + ACROSS_STREET_CONDITIONS)}"
             )
             continue
         if not isinstance(body, dict):

@@ -2756,7 +2756,9 @@ def test_a_zero_front_setback_is_read_as_zero_and_only_an_absent_one_is_not():
 
     s6s = _sp_setup_cities()
     rules = load_rules()
-    for jur, zone in (("portland", "CM2"), ("portland", "CM3"), ("portland", "RX"),
+    # (CM2 and up hold 5 since 2026-09-29: 33.130.215.B.1.b's across-the-
+    # street setback, read on every street line. CR and CM1 keep none.)
+    for jur, zone in (("portland", "CR"), ("portland", "CM1"), ("portland", "RX"),
                       ("oregon_city", "MUC-1"), ("oregon_city", "WFDD")):
         assert rules.jurisdictions[jur].rule_for(zone).setback_front_ft == 0
         assert s6s._front_setback_for(rules, jur, zone, 6_000.0) == 0.0
@@ -2770,7 +2772,7 @@ def test_a_zero_front_setback_is_read_as_zero_and_only_an_absent_one_is_not():
 
 
 def test_a_portland_side_court_keeps_ten_feet_off_the_street_in_a_zero_setback_zone():
-    """A 150 x 70 Portland CM2 lot at county coordinates: no front setback
+    """A 150 x 70 Portland CM1 lot at county coordinates: no front setback
     (the envelope stands on the street lot line), 10 ft sides and rear.
     The room behind the pod is too shallow for a court, so the plan is the
     court BESIDE the building -- and Portland keeps a stall 10 ft off a
@@ -2787,15 +2789,15 @@ def test_a_portland_side_court_keeps_ten_feet_off_the_street_in_a_zero_setback_z
     lot = _to_county(shapely.Polygon([(0, 0), (W, 0), (W, D), (0, D)]), _PDX_XY, 0.0)
     edges = _to_county([[0.0, 0.0, W, 0.0, "F"], [W, 0.0, W, D, "S"],
                         [W, D, 0.0, D, "R"], [0.0, D, 0.0, 0.0, "S"]], _PDX_XY, 0.0)
-    zr = rules.jurisdictions["portland"].rule_for("CM2")
+    zr = rules.jurisdictions["portland"].rule_for("CM1")
     env = build_envelope(lot, edges, {"F": zr.setback_front_ft, "S": zr.setback_side_ft,
                                       "R": zr.setback_rear_ft,
                                       "A": zr.setback_rear_ft}, "A")
-    fsb = s6s._front_setback_for(rules, "portland", "CM2", lot.area)
-    psb = sp.parking_street_setback_for("portland", "CM2")
+    fsb = s6s._front_setback_for(rules, "portland", "CM1", lot.area)
+    psb = sp.parking_street_setback_for("portland", "CM1")
     assert fsb == 0.0 and psb == 10.0
     fe = [e[:4] for e in edges if e[4] == "F"]
-    r = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM2",
+    r = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM1",
              parking_setback_ft=psb, front_setback_ft=fsb, street_setback_ft=fsb,
              lot_xy=[(e[0], e[1]) for e in edges])
     assert r["site_plan_ok"] is True, r["layout_fail"]
@@ -2805,7 +2807,7 @@ def test_a_portland_side_court_keeps_ten_feet_off_the_street_in_a_zero_setback_z
     assert stalls
     assert min(s.bounds[1] for s in stalls) >= psb - 0.6
     # ... and what the 10 ft fallback drew: the same court on the lot line.
-    old = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM2",
+    old = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM1",
                parking_setback_ft=psb, front_setback_ft=10.0, street_setback_ft=fsb,
                lot_xy=[(e[0], e[1]) for e in edges])
     old_stalls = [_from_county(g, _PDX_XY, 0.0) for k, g in old["geoms"].items()

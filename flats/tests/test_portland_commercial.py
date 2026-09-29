@@ -79,7 +79,13 @@ def test_the_binding_street_standard_is_a_maximum_not_a_minimum(
     building set back behind it."""
     for zone in COMMERCIAL:
         values = portland.zones[zone].values
-        assert values["setback_front_ft"].value == 0, zone
+        # CM2 and up hold the across-the-street 5 (33.130.215.B.1.b) on every
+        # street line until the line is read facing no RF-RM2/RMP zone; the
+        # plain none rides per line (setback_street_across_nonresidential_ft).
+        across = zone in ("CM2", "CM3", "CE", "CX")
+        assert values["setback_front_ft"].value == (5 if across else 0), zone
+        if across:
+            assert values["setback_street_across_nonresidential_ft"].value == 0, zone
         assert values["setback_front_max_ft"].value == 10, zone
 
     text = store.quote(portland.zones["CM2"].values["setback_front_max_ft"].prov.quote)

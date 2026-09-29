@@ -129,6 +129,15 @@ class Edge:
     #: and the answer wherever nothing read the line -- leaves the line on
     #: its class's number.
     off_corridor: bool = False
+    #: A street line read surely clear of every zone the code's
+    #: across-the-street setback names -- every ray across the street found
+    #: a lot of this city in a zone on the ``false_for`` side
+    #: (:func:`flats.geom.neighbour.street_lines_clear`). With
+    #: ``off_corridor`` it lets the zone's plain street setback
+    #: (``setback_street_across_nonresidential_ft``) reach this one line.
+    #: False -- the default, and the answer wherever nothing read the line --
+    #: keeps the across-the-street number.
+    across_clear: bool = False
 
 
 @dataclass(frozen=True, slots=True)

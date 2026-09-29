@@ -61,7 +61,7 @@ from __future__ import annotations
 import dataclasses
 import json
 import math
-from collections.abc import Iterable, Iterator, Mapping, Sequence
+from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -85,7 +85,13 @@ from flats.geom.alley import (
     side_alley_along,
     usable_run_ft,
 )
-from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors, off_corridor_lines
+from flats.geom.corridor import (
+    CORRIDOR_FACTS,
+    STREET_CLASS,
+    CorridorMap,
+    observed_corridors,
+    off_corridor_lines,
+)
 from flats.geom.corridor import load_maps as load_corridor_maps
 from flats.geom.corner import (
     front_bearings as corner_fronts,
@@ -98,9 +104,15 @@ from flats.geom.corner import (
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
-from flats.geom.neighbour import NEIGHBOUR_FACTS, lines_from_quadfit, observed_neighbours
+from flats.geom.neighbour import (
+    NEIGHBOUR_FACTS,
+    lines_from_quadfit,
+    observed_neighbours,
+    street_lines_clear,
+)
 from flats.geom.park import PARK_FACTS, observed_parks
 from flats.ingest.normalize import zone_for
+from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
@@ -168,6 +180,7 @@ S4_COLUMNS: tuple[str, ...] = (
     "park_across_json",
     "alley_width_ft",
     "alley_cover_json",
+    "street_across_json",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -401,6 +414,50 @@ def screened_zone(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) ->
     return (home.holds(code) or code) if home is not None else code
 
 
+def _normaliser(layers: Mapping[str, Layer]) -> Callable[[str, str], str | None]:
+    """A neighbour's map code spelled the way ITS layer screens it, or None
+    where the corpus has no layer for its jurisdiction (see
+    :func:`_neighbour_facts`)."""
+
+    def normalise(neighbour_juris: str, raw: str) -> str | None:
+        try:
+            layer = layers.get(layer_id_for(neighbour_juris))
+        except KeyError:
+            return None
+        if layer is None:
+            return None
+        code, held = zone_for(layer, raw)
+        return held or code
+
+    return normalise
+
+
+def _across_clear(
+    row: Mapping[str, Any], n_edges: int, layers: Mapping[str, Layer] | None
+) -> tuple[bool, ...]:
+    """Per s4 edge: a street line surely facing none of the zones the lot's
+    layer names for its across-the-street setback
+    (:func:`flats.geom.neighbour.street_lines_clear`, Portland
+    33.130.215.B.1.b). All False without the corpus, without s4's
+    ``street_across_json`` (a stage file older than the column: nothing
+    read across the street), where the record does not match the edges,
+    and where the lot's layer declares no across-the-street list."""
+    none = (False,) * n_edges
+    raw = row.get("street_across_json")
+    if layers is None or not raw:
+        return none
+    home = _home_layer(row, layers)
+    if home is None:
+        return none
+    rule = next((home.neighbours[c] for c in ACROSS_STREET_CONDITIONS if c in home.neighbours), None)
+    if rule is None:
+        return none
+    across = json.loads(raw)
+    if not isinstance(across, list) or len(across) != n_edges:
+        return none
+    return street_lines_clear(across, rule, str(row.get("jurisdiction")), _normaliser(layers))
+
+
 def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
     """The three neighbour-zoning facts for one s4 row, or nothing.
 
@@ -420,19 +477,8 @@ def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dic
         home = None
     if home is None or not home.neighbours:
         return {}
-
-    def normalise(neighbour_juris: str, raw: str) -> str | None:
-        try:
-            layer = layers.get(layer_id_for(neighbour_juris))
-        except KeyError:
-            return None
-        if layer is None:
-            return None
-        code, held = zone_for(layer, raw)
-        return held or code
-
     across = json.loads(row["neighbour_zones_json"])
-    lines = lines_from_quadfit(across, normalise)
+    lines = lines_from_quadfit(across, _normaliser(layers))
     # Traced, and every edge a street edge: a whole block. An empty list is
     # a lot s4 never traced and stays unanswered, and so does an irregular
     # lot, whose edge classes are the guesswork the uniform buffer exists
@@ -536,6 +582,7 @@ def lot_edges(
     row: Mapping[str, Any],
     geom: Any = None,
     corridors: Sequence[CorridorMap] = (),
+    layers: Mapping[str, Layer] | None = None,
 ) -> LotEdges | None:
     """s4's edge record as the envelope reads it, or None where s4 traced none.
 
@@ -549,6 +596,12 @@ def lot_edges(
     130-1 stretch serving the lot carries ``off_corridor``
     (:func:`flats.geom.corridor.off_corridor_lines`), for
     ``setback_street_off_corridor_ft``. Without them no edge does.
+
+    With the corpus in hand and s4's ``street_across_json`` on the row, a
+    street edge whose every ray across the street found a zone the lot's
+    layer does not name for its across-the-street setback carries
+    ``across_clear`` (:func:`_across_clear`), for
+    ``setback_street_across_nonresidential_ft``. Without either, no edge does.
     """
     raw = json.loads(row.get("edges_json") or "[]")
     if not raw:
@@ -559,8 +612,11 @@ def lot_edges(
     # alley edge with none on record, so the envelope vouches for no stretch.
     cover = _cover(row, raw) or [None] * len(raw)
     off = off_corridor_lines(raw, _layer_id(row), corridors) if corridors else (False,) * len(raw)
+    clear = _across_clear(row, len(raw), layers)
     edges: list[Edge] = []
-    for (x1, y1, x2, y2, letter), stretch, off_line in zip(raw, cover, off, strict=True):
+    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line in zip(
+        raw, cover, off, clear, strict=True
+    ):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         if letter == ALLEY_CLASS:
             cls = EdgeClass.rear if next(named) == "rear" else EdgeClass.side
@@ -578,6 +634,7 @@ def lot_edges(
                 alley=letter == ALLEY_CLASS,
                 cover=(stretch or "") if letter == ALLEY_CLASS else None,
                 off_corridor=bool(off_line),
+                across_clear=bool(clear_line) and letter == STREET_CLASS,
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -675,6 +732,15 @@ def setbacks_for(
         on_alley = _yard(alleyed, "setback_rear_ft")
         if on_alley is not None and on_alley != rear:
             alley_rear = on_alley
+    # The street line across from no residential zone (Portland
+    # 33.130.215.B.1.b): the zone's plain street row, on a line off the
+    # corridor whose every ray across the street was read clear. Passed on
+    # the same terms as the off-corridor number, which it refines.
+    clear = (
+        number("setback_street_across_nonresidential_ft")
+        if street_side is None and off_corridor is not None
+        else None
+    )
     return Setbacks(
         front_ft=front,
         side_ft=side,
@@ -683,6 +749,7 @@ def setbacks_for(
         alley_side_ft=alley_side_ft,
         street_off_corridor_ft=off_corridor,
         alley_rear_ft=alley_rear,
+        street_clear_ft=clear,
     )
 
 
@@ -838,7 +905,7 @@ def lot_from_row(
     observed = observed_facts(row, layers, corridors)
     lot_wkb = row.get("lot_wkb")
     lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
-    edges = lot_edges(row, lot_geom, corridors)
+    edges = lot_edges(row, lot_geom, corridors, layers)
     raw_edges = json.loads(row.get("edges_json") or "[]")
     s4_alley = (
         observed_alley(raw_edges, json.loads(row.get("front_bearings_json") or "[]"))

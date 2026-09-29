@@ -255,6 +255,7 @@ def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
     got = {(lid, name) for lid, name, _ in declared(corpus)}
     assert got == {
         ("or/multnomah/portland", "abuts_nonresidential_zone"),
+        ("or/multnomah/portland", "faces_residential_zone_across_street"),
         ("or/multnomah/troutdale", "abuts_nonresidential_zone"),
         ("or/multnomah/fairview", "abuts_nonresidential_zone"),
         ("or/clackamas/oregon-city", "abuts_residential_zone"),

@@ -674,6 +674,30 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "faces_residential_zone_across_street",
+        "site_fact",
+        "A STREET lot line has a residential zone on the far side of the "
+        "street. Portland's CM2, CM3, CE and CX zones state no street setback "
+        "except two: 10 ft on a Map 130-1 corridor, and 5 ft (a building "
+        "entirely in residential use) \"from a street lot line facing an RF "
+        "through RM2 or RMP zone\" across a local service street "
+        "(33.130.215.B.1.b). A rule about one street line, so it is read and "
+        "applied PER LINE and never answered for the lot: the zone's street "
+        "setback is 5 on every street line (the tight reading, since neither "
+        "the street's Transportation System Plan class nor the transit-street "
+        "exception is held), and the envelope gives back the plain \"none\" "
+        "row -- setback_street_across_nonresidential_ft -- only to a line off "
+        "every corridor stretch whose five rays across the street all found a "
+        "lot of this city in a zone the code does not name. The layer's "
+        "`neighbours:` block holds which codes are which.",
+        evidence=(
+            "quadfit s4 street_across_json: per street edge, the zone of the "
+            "first private lot a ray square to the edge enters beyond the "
+            "right-of-way (Lot Analysis/quadfit/s4_edges.py street_across)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "abuts_park",
         "site_fact",
         "A lot line that is not a street lot line has a park across it, "
@@ -904,6 +928,13 @@ NEIGHBOUR_ZONE_CONDITIONS: tuple[str, ...] = (
 #: the loader refuses any other name in that block.
 PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 
+#: The site facts about what zone lies across the STREET from a street lot
+#: line, read per line (``flats.geom.neighbour.street_lines_clear``) against
+#: the same ``Layer.neighbours`` block and never answered for a whole lot:
+#: the rules that turn on them are rules about one street line, and each
+#: reaches the envelope through a per-line field, not a variant.
+ACROSS_STREET_CONDITIONS: tuple[str, ...] = ("faces_residential_zone_across_street",)
+
 
 def condition(name: str) -> ConditionDef:
     """Look up a condition, refusing anything unregistered.
@@ -957,6 +988,7 @@ def deepest(tiers: Iterable[Tier]) -> Tier:
 
 
 __all__ = [
+    "ACROSS_STREET_CONDITIONS",
     "ASSUMED",
     "ASSUMED_TIER",
     "ASSUMED_USE_TIER",

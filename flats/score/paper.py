@@ -937,6 +937,12 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # front, the conservative direction. The envelope applies it
                 # to the street edge read off every stretch alone.
                 "setback_street_off_corridor_ft (street lines off a mapped corridor; the paper fit has no edges)",
+                # The plain street row on a line facing no residential zone
+                # across the street -- zero in Portland's CM2/CM3/CE/CX, where
+                # the zone's street number is the 5 ft across-the-street one.
+                # The paper fit has no lines to read across; it keeps 5 on the
+                # front, the conservative direction.
+                "setback_street_across_nonresidential_ft (street lines facing no residential zone; the paper fit has no edges)",
                 "min_frontage_ft (measured at the street, not the envelope)",
                 # Ruled 2026-09-08: the pod parks in a rear court and has no
                 # garage, so a garage-entrance setback cannot reach it. This is

@@ -186,8 +186,12 @@ def test_the_ten_foot_setback_follows_map_130_1_not_map_120_1(pdx_rules, zone: s
     def front(*conditions: str) -> object:
         return pdx_rules.resolve(PDX, zone, conditions=list(conditions)).values["setback_front_ft"].value
 
-    assert front() == 0
-    assert front("civic_corridor") == 0
+    # CR and CM1: "none". CM2 and up: the across-the-street 5 of
+    # 33.130.215.B.1.b, the street number on every line the screen cannot
+    # show faces no residential zone (see ACROSS below).
+    base = 0 if zone in LOW_ZONES else 5
+    assert front() == base
+    assert front("civic_corridor") == base
     assert front("civic_corridor_setback") == 10
 
 
@@ -271,6 +275,8 @@ def test_the_setback_map_takes_either_reading_the_coverage_map_only_the_street()
 
 EVERY = "civic_corridor_setback_all_streets"
 C_ZONES = ("CM1", "CM2", "CM3", "CE", "CX", "CR")
+# 33.130.215.B.1.b: "The setbacks do not apply in the CR or CM1 zones".
+LOW_ZONES = ("CM1", "CR")
 
 # The same 50 x 100 lot on a corner: its west line is a street line too, on a
 # north-south cross street 30 ft out that is not a corridor.
@@ -415,9 +421,15 @@ def test_the_street_off_the_corridor_is_quoted_from_the_plain_street_row(zone: s
     from flats.rules.loader import load_rules
 
     value = load_rules()[PDX].zones[zone].values[OFF]
-    assert value.value == 0
     assert not value.variants
-    assert value.prov.quote == "or/multnomah/portland/33.130.txt#L618,L640"
+    if zone in LOW_ZONES:
+        assert value.value == 0
+        assert value.prov.quote == "or/multnomah/portland/33.130.txt#L618,L640"
+    else:
+        # Off the corridor a line can still face an R zone across a local
+        # street: the across-the-street row, 5 ft.
+        assert value.value == 5
+        assert value.prov.quote == "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
 
 
 @pytest.mark.parametrize("zone", C_ZONES)
@@ -432,10 +444,13 @@ def test_a_corner_lot_on_division_cuts_ten_along_division_and_none_along_the_sid
     assert got.values["setback_front_ft"].value == 10
     env = envelope_for(lot, got)
     assert env.source == "flats"
-    assert env.setbacks.front_ft == 10 and env.setbacks.street_off_corridor_ft == 0
-    # 10 off Division (south), none off 82nd (west), the zone's 10 ft
-    # residential-neighbour yards east and north: 40 x 80.
-    assert env.sqft == pytest.approx(40 * 80)
+    street = 0 if zone in LOW_ZONES else 5
+    assert env.setbacks.front_ft == 10 and env.setbacks.street_off_corridor_ft == street
+    # 10 off Division (south), the zone's street number off 82nd (west) --
+    # none in CR/CM1, the across-the-street 5 above them while nothing has
+    # read across 82nd -- and the 10 ft residential-neighbour yards east and
+    # north: 40 x 80, or 35 x 80.
+    assert env.sqft == pytest.approx((40 - street) * 80)
     # Without the maps nothing is read per line, and both streets keep 10.
     bare = lot_from_row(_cut(CORNER))
     assert not any(e.off_corridor for e in bare.edges.edges)
@@ -517,14 +532,16 @@ def test_a_real_corner_on_division_and_111th_cuts_ten_along_division_only(pdx_ru
     bare = envelope_for(lot_from_row(row), got).geom
     division_ll = LineString([division_line[:2], division_line[2:4]])
     avenue_ll = LineString([avenue_line[:2], avenue_line[2:4]])
-    # Ten feet off Division either way; the 111th Ave line gets its ten back.
+    # Ten feet off Division either way; the 111th Ave line gets five of its
+    # ten back -- CM2's across-the-street 5 (33.130.215.B.1.b) stands until
+    # something reads what is across 111th.
     assert env.distance(division_ll) == pytest.approx(10, abs=0.2)
     assert bare.distance(avenue_ll) == pytest.approx(10, abs=0.2)
-    assert env.distance(avenue_ll) == pytest.approx(0, abs=0.2)
+    assert env.distance(avenue_ll) == pytest.approx(5, abs=0.2)
     assert bare.within(env.buffer(0.01))
-    # The strip given back: ten feet along the 111th line, less the Division
-    # yard and the south line's.
-    assert env.area - bare.area == pytest.approx(10 * (avenue_ll.length - 20), rel=0.05)
+    # The strip given back: five feet along the 111th line, less the
+    # Division yard and the south line's.
+    assert env.area - bare.area == pytest.approx(5 * (avenue_ll.length - 20), rel=0.05)
 
 
 class _Rules:

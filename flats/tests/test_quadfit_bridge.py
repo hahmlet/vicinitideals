@@ -704,14 +704,16 @@ def test_the_envelope_is_cut_with_the_yards_the_corpus_resolved(corpus, policies
     (s,) = screen_lot(shops, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert h.envelope.source == s.envelope.source == "flats"
     # The side edge takes 10 on both lines (the R5 is on the rear line only,
-    # and the ANY-line fact tightens every yard it governs).
-    assert h.envelope.sqft == pytest.approx(30 * 90)
-    assert s.envelope.sqft == pytest.approx(50 * 100)
+    # and the ANY-line fact tightens every yard it governs). The street line
+    # keeps CM2's across-the-street 5 (33.130.215.B.1.b): nothing here read
+    # what faces it across the street.
+    assert h.envelope.sqft == pytest.approx(30 * 85)
+    assert s.envelope.sqft == pytest.approx(50 * 95)
     # The resolved rear IS the strip cut, so the court is charged against
     # the rules' own number.
     assert h.envelope.rear_cut_ft is None
     assert row_for(s)["envelope_source"] == "flats"
-    assert row_for(s)["envelope_sqft"] == pytest.approx(5000)
+    assert row_for(s)["envelope_sqft"] == pytest.approx(4750)
     # assign trims a bridge frame to ROW_COLUMNS; a column row_for writes and
     # the list lacks never reaches the database (run 18 lost the envelope).
     assert list(row_for(s)) == list(ROW_COLUMNS)
@@ -741,7 +743,8 @@ def test_the_carve_overlays_come_off_the_envelope_flats_cuts(corpus, policies) -
     )
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert s.envelope.source == "flats"
-    assert s.envelope.sqft == pytest.approx(50 * 70)
+    # Less the across-the-street 5 on the street line.
+    assert s.envelope.sqft == pytest.approx(50 * 65)
 
 
 def test_an_irregular_lot_is_inset_at_its_largest_yard_and_charged_so() -> None:
@@ -1136,8 +1139,8 @@ def test_a_street_that_bends_is_not_a_corner(corpus, policies) -> None:
 
 
 def test_the_winner_is_drawn_on_the_lot_with_the_building_at_the_street(corpus, policies) -> None:
-    # Walled in by commercial lots, CM2 owes no yard: the 50 x 100 lot is the
-    # envelope, the street along its south edge.
+    # Walled in by commercial lots, CM2 owes no side or rear yard; the street
+    # line keeps the across-the-street 5 (nothing read across the street).
     lot = lot_from_row(cut_row(zone="CM2", neighbour_zones_json=walled(("portland", "CX"))), corpus.layers)
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     drawn = s.drawing
@@ -1149,8 +1152,8 @@ def test_the_winner_is_drawn_on_the_lot_with_the_building_at_the_street(corpus, 
     assert drawn["fits"] == (check.slack >= 0)
     building = shapely.Polygon(drawn["building"])
     assert LOT.buffer(0.1).contains(building)
-    # The pod stands at the street end: its nearest point is on the south line.
-    assert building.bounds[1] == pytest.approx(Y0, abs=0.6)
+    # The pod stands at the street end: its nearest point on the 5 ft yard.
+    assert building.bounds[1] == pytest.approx(Y0 + 5, abs=0.6)
     # The flat row carries it as JSON, the same shapes.
     assert json.loads(row_for(s)["drawing"])["building"] == drawn["building"]
 

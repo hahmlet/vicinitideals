@@ -139,6 +139,7 @@ _LABELS: dict[str, str] = {
     "setback_street_side_ft": "street-side setback",
     "setback_alley_side_ft": "alley-side setback",
     "setback_street_off_corridor_ft": "street setback off a mapped corridor",
+    "setback_street_across_nonresidential_ft": "street setback facing no residential zone",
 }
 
 
@@ -199,6 +200,22 @@ _F: tuple[FieldDef, ...] = (
         "envelope applies it to a street edge read surely off every stretch "
         "and to no other; absent, or where the zone also states a "
         "street-side setback, every street line takes its class's number.",
+        False,
+    ),
+    FieldDef(
+        "setback_street_across_nonresidential_ft",
+        "length_ft",
+        "Minimum setback from a street lot line that is off every mapped "
+        "corridor stretch AND read with no zone across the street that the "
+        "code's across-the-street setback names (Portland 33.130.215.B.1.b: "
+        "5 ft from a street lot line facing an RF through RM2 or RMP zone "
+        "across a local service street, none otherwise). Held apart from "
+        "setback_front_ft and setback_street_off_corridor_ft, which carry the "
+        "5 on every street line -- the tight reading, since the street's class "
+        "is not held -- because the zone across is a fact about ONE street "
+        "line. The envelope applies it to a street edge flagged both "
+        "off_corridor and across_clear and to no other; absent, every street "
+        "line keeps the across-the-street number.",
         False,
     ),
     FieldDef(
@@ -995,6 +1012,12 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # Map 130-1), and a zone silent about it is a zone whose street lines
         # all take the front and street-side numbers.
         "setback_street_off_corridor_ft",
+        # The street setback on a line facing no residential zone across the
+        # street, the way the off-corridor one is stated for a line off the
+        # map: one code distinguishes that line (Portland's CM2, CM3, CE and
+        # CX, 33.130.215.B.1.b), and a zone silent about it keeps the
+        # across-the-street number on every street line.
+        "setback_street_across_nonresidential_ft",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",
