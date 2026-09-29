@@ -118,6 +118,30 @@ datasets:
       Fairview's code is PDF-only, and neither county publishes unincorporated
       zoning through ArcGIS.
 
+  rlis_orca:
+    kind: rlis_zip
+    label: Metro RLIS Outdoor Recreation and Conservation Areas (ORCA)
+    provides: overlay
+    url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
+    member: LAND/orca.shp
+    serves: [or/multnomah, or/clackamas]
+    filter: COUNTY in (Multnomah, Clackamas)
+    fields: [SITENAME, UNITTYPE, OWNER, OWNLEV1, OWNLEV2, MANAGER, CITYMUNI, COUNTY, STATUS, RECREATION]
+    notes: >-
+      Metro's regional inventory of parks, natural areas, golf courses,
+      cemeteries, HOA tracts, school land and trail parcels, registered to the
+      taxlots (the 2026_08 release: 15,932 units, Multnomah 6,327, Clackamas
+      4,129, Washington 5,476 -- the filter drops the last; COUNTY is spelled
+      out here, not M/C as on the taxlots). UNITTYPE is the reading: Park,
+      Natural Area, Home Owners Association, Other, School Land, Cemetery,
+      Golf Course, defined in the member's own metadata (LAND/orca.shp.xml).
+      quadfit's s4 looks the point across each non-street lot line up in it
+      (`park_across_json`), and a layer's `parks:` block says which unit types
+      are a park in its own code's words (flats/geom/park.py) -- Troutdale's
+      MU-3 owes 10 ft "when abutting a park (regardless of zoning district)".
+      The sibling LAND/orca_sites.shp is the same land dissolved into named
+      sites; the unit layer is the one that carries UNITTYPE per parcel.
+
   ugb_metro:
     kind: arcgis
     label: Urban growth boundary

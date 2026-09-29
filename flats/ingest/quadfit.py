@@ -93,6 +93,7 @@ from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
 from flats.geom.neighbour import NEIGHBOUR_FACTS, lines_from_quadfit, observed_neighbours
+from flats.geom.park import PARK_FACTS, observed_parks
 from flats.ingest.normalize import zone_for
 from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
@@ -157,6 +158,7 @@ S4_COLUMNS: tuple[str, ...] = (
     "fronts_cul_de_sac",
     "split_zone",
     "neighbour_zones_json",
+    "park_across_json",
     "alley_width_ft",
     "alley_cover_json",
 )
@@ -178,6 +180,7 @@ OBSERVABLE: tuple[str, ...] = (
     *ALLEY_FACTS,
     *CUL_DE_SAC_FACTS,
     *NEIGHBOUR_FACTS,
+    *PARK_FACTS,
     *CORRIDOR_FACTS,
     "corner_lot",
     "split_zone",
@@ -276,6 +279,15 @@ def observed_facts(
       condition, and only where the lines settle it: a line across a park,
       a split-zone neighbour or another city's lot leaves the permissive
       answer unstated, and the lot screens UNKNOWN on the fact as before.
+    * ``abuts_park`` -- s4's ORCA unit types across each non-street line
+      (``park_across_json``), through :func:`flats.geom.park.observed_parks`
+      against the lot's layer's own list of which types its code calls a
+      park (``Layer.parks``). Only with ``layers`` in hand and only where
+      the layer declares it; ANY line in a park settles True, False needs
+      every line read. A whole block (every edge a street edge, a clean or
+      corner lot) abuts no park and is answered False with or without the
+      column; otherwise a stage file s4 wrote without the ORCA layer leaves
+      it unasked.
     * ``civic_corridor`` / ``civic_corridor_setback`` -- a street line
       running along a line of Portland's corridor maps, through
       :func:`flats.geom.corridor.observed_corridors`. Only with the maps in
@@ -300,6 +312,8 @@ def observed_facts(
             out.update(observed_corridors(edges, _layer_id(row), corridors))
     if layers is not None and row.get("neighbour_zones_json"):
         out.update(_neighbour_facts(row, layers))
+    if layers is not None and edges:
+        out.update(_park_facts(row, edges, layers))
     if layers is not None:
         out.update(_map_code_facts(row, layers))
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
@@ -422,6 +436,27 @@ def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dic
         and TIER.get(str(row.get("tier"))) in (Tier.clean, Tier.corner)
     )
     return observed_neighbours(lines, home.neighbours, juris, all_street=all_street)
+
+
+def _park_facts(row: Mapping[str, Any], edges: Sequence[Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
+    """``abuts_park`` for one s4 row, or nothing.
+
+    The lot's layer supplies which ORCA unit types are a park; a layer that
+    declares no ``parks:`` block answers nothing. A whole block is read off
+    the edge classes rather than off the ORCA column -- no lot line, no park
+    across one -- on the same trust (a clean or corner lot) the neighbour
+    facts put in s4's street classes.
+    """
+    home = _home_layer(row, layers)
+    if home is None or not home.parks:
+        return {}
+    all_street = (
+        all(str(e[4]) == "F" for e in edges)
+        and TIER.get(str(row.get("tier"))) in (Tier.clean, Tier.corner)
+    )
+    raw = row.get("park_across_json")
+    across = json.loads(raw) if raw else None
+    return observed_parks(across, home.parks, all_street=all_street)
 
 
 @dataclass(frozen=True, slots=True)

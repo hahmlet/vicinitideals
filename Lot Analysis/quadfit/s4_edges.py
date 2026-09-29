@@ -50,7 +50,13 @@ not cover). Street edges are null: what is across them is the street. The
 FLATS screen reads this into `abuts_residential_zone`,
 `abuts_lower_density_zone` and `abuts_nonresidential_zone` against each
 city's own list of which zones are which (`flats/geom/neighbour.py`); s5
-and s7 do not read it. `fronts_cul_de_sac` says whether the front lot line lies on the outer
+and s7 do not read it. `park_across_json` is the same five points per
+non-street line looked up in Metro's ORCA layer (`park_across`, raw key
+`rlis_orca`): per edge, every ORCA unit type a point stood in and how many
+of the five stood in none. It is null on every lot when the raw file is
+absent -- a layer nobody loaded is not a lot with no park beside it -- and
+FLATS reads it into `abuts_park` against a layer's own list of which unit
+types its code calls a park (`flats/geom/park.py`). `fronts_cul_de_sac` says whether the front lot line lies on the outer
 radius of a cul-de-sac bulb -- its chords on a circle of a turnaround's
 radius, turning toward the street, with a street centreline ending inside
 that circle (`lotdims.bulb_circles`, `dead_ends`, `fronts_cul_de_sac`).
@@ -93,7 +99,7 @@ from pathlib import Path
 TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
-from common import NOT_A_TAXLOT_RE, load_rules, read_stage, write_stage
+from common import DATA_DIR, NOT_A_TAXLOT_RE, load_geojson_features, load_rules, read_stage, write_stage
 from lotdims import bulb_circles, dimensions
 
 PARALLEL_TOL_DEG = 30.0
@@ -124,6 +130,14 @@ ALLEY_COVER_INSET_FT = 2.5
 #: names this lot and anything stacked on it so neither is its own
 #: neighbour. Sampled at `ALLEY_SAMPLES` along the edge.
 NEIGHBOUR_OFFSET_FT = 2.0
+#: Metro RLIS "Outdoor Recreation and Conservation Areas", the FLATS acquire
+#: key and so the raw file's name (`flats/config/pipeline.yaml` rlis_orca).
+ORCA_KEY = "rlis_orca"
+#: The attribute that says what kind of open land a unit is -- Park, Natural
+#: Area, Home Owners Association, Other, School Land, Cemetery, Golf Course
+#: (LAND/orca.shp.xml). Recorded raw; which of them a code calls a park is
+#: the code's question, answered in the FLATS layer.
+ORCA_KIND_FIELD = "UNITTYPE"
 
 
 def bearing_deg(x1: float, y1: float, x2: float, y2: float) -> float:
@@ -617,6 +631,83 @@ def neighbour_zones(results: list, lot_tree, lot_geoms, lot_private,
     return out
 
 
+def load_orca(path: Path):
+    """ORCA's units as (valid geometries, unit types), or None when the raw
+    file is absent. A unit with no geometry or no type is dropped: a point in
+    it could say nothing about which kind of land it is."""
+    import numpy as np
+    import shapely
+    from shapely.geometry import shape
+
+    if not path.exists():
+        return None
+    geoms, kinds = [], []
+    for f in load_geojson_features(path):
+        g = f.get("geometry")
+        kind = str((f.get("properties") or {}).get(ORCA_KIND_FIELD) or "").strip()
+        if not g or not kind:
+            continue
+        try:
+            geom = shapely.make_valid(shape(g))
+        except Exception:  # a degenerate ring in the regional file
+            continue
+        if geom.is_empty:
+            continue
+        geoms.append(geom)
+        kinds.append(kind)
+    return np.array(geoms, dtype=object), np.array(kinds, dtype=object)
+
+
+def park_across(results: list, orca_geoms, orca_kinds) -> list:
+    """What ORCA land lies across each non-street edge of every lot.
+
+    The points are `neighbour_zones`'s own -- five along the edge, two feet
+    out, across the alley on an alley edge -- looked up in ORCA's unit
+    polygons in one bulk query. Returns, per lot, a list parallel to its
+    ``edges``: ``None`` for a street edge (what is across a street lot line
+    is the street), else ``{"k": [unit types], "none": n}`` -- every distinct
+    UNITTYPE a point stood in, and how many of the five stood in no ORCA
+    unit at all. No point is excluded as this lot's own: the point is
+    outside the lot, so ORCA land under it is ORCA land beside the line.
+
+    Every type seen is kept rather than a vote: a rear line that is park for
+    one point in five abuts a park, and whether a Natural Area is a park is
+    the code's question, not this stage's.
+    """
+    import numpy as np
+    import shapely
+    from shapely.strtree import STRtree
+
+    pt_lot, pt_edge, ox, oy = [], [], [], []
+    per_edge = len(ALLEY_SAMPLES)
+    out = [[None] * len(r["edges"]) for r in results]
+    for li, r in enumerate(results):
+        for ei, samp in enumerate(r["neighbour_samples"]):
+            if samp is None:
+                continue
+            out[li][ei] = {"k": [], "none": per_edge}
+            for a, b, _c, _d in samp:
+                pt_lot.append(li)
+                pt_edge.append(ei)
+                ox.append(a)
+                oy.append(b)
+    if not pt_lot or not len(orca_geoms):
+        return out
+    tree = STRtree(orca_geoms)
+    pi, gi = tree.query(shapely.points(np.c_[ox, oy]), predicate="within")
+    pt_lot = np.asarray(pt_lot)
+    pt_edge = np.asarray(pt_edge)
+    kinds: dict[tuple[int, int], set] = {}
+    hit: dict[tuple[int, int], set] = {}
+    for p, g in zip(pi, gi):
+        key = (int(pt_lot[p]), int(pt_edge[p]))
+        kinds.setdefault(key, set()).add(str(orca_kinds[g]))
+        hit.setdefault(key, set()).add(int(p))
+    for (li, ei), found in kinds.items():
+        out[li][ei] = {"k": sorted(found), "none": per_edge - len(hit[(li, ei)])}
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.parse_args()
@@ -706,6 +797,24 @@ def main() -> None:
     print(f"s4 neighbour zones: {_asked:,} lots with a non-street edge, every edge "
           f"resolved on {_whole:,}; {_edges:,} edges, {_blank:,} with no zoned "
           f"neighbour at all, {_mixed:,} with more than one zone across them")
+
+    # What ORCA land lies across the same lines, where the snapshot carries
+    # the layer. Absent, the column is null on every lot and FLATS leaves
+    # `abuts_park` unasked: a layer nobody loaded grades as nothing, not as
+    # "no park here".
+    orca = load_orca(DATA_DIR / "raw" / f"{ORCA_KEY}.geojson")
+    if orca is None:
+        print(f"s4 park across: raw/{ORCA_KEY}.geojson absent -- park_across_json left null")
+        lots["park_across_json"] = None
+    else:
+        parks = park_across(results, *orca)
+        lots["park_across_json"] = [json.dumps(a) for a in parks]
+        from collections import Counter as _Counter
+
+        _kinds = _Counter(k for a in parks for e in a if e is not None for k in e["k"])
+        _park_lots = sum(1 for a in parks if any(e is not None and "Park" in e["k"] for e in a))
+        print(f"s4 park across: {len(orca[0]):,} ORCA units; edges by unit type across "
+              f"them: {dict(_kinds)}; {_park_lots:,} lots with a Park unit across a line")
     # The alley's width, and the edges that were near an alley's centreline
     # with no alley across them. Printed per city so a city whose alleys
     # the file draws strangely would show as one that lost every alley.

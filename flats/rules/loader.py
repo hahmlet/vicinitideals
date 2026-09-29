@@ -27,7 +27,7 @@ from typing import Any
 
 import yaml
 
-from flats.rules.conditions import CONDITIONS, NEIGHBOUR_ZONE_CONDITIONS
+from flats.rules.conditions import CONDITIONS, NEIGHBOUR_ZONE_CONDITIONS, PARK_CONDITIONS
 from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
@@ -35,6 +35,8 @@ from flats.rules.model import (
     POCKET_ZONE_FROM_MAP,
     ZONE_RULING_OUTCOMES,
     NeighbourRule,
+    ORCA_UNIT_TYPES,
+    ParkRule,
     ZoneRuling,
     READING_OUTCOMES,
     WORD_OUTCOMES,
@@ -1514,6 +1516,97 @@ def _parse_neighbours(
     return out
 
 
+def _parse_parks(
+    raw: object, *, where: str, problems: list[str]
+) -> dict[str, ParkRule]:
+    """Which kinds of Metro ORCA open land this code calls a park::
+
+        parks:
+          abuts_park:
+            true_for: [Park]
+            false_for: [Home Owners Association, School Land, Cemetery]
+            quote: "or/multnomah/troutdale/1.020.definitions.txt#L686-L687"
+            cite: TDC 1.020 (Park)
+            note: >-
+              "A forest, reservation, playground, beach, recreation center or
+              any other area in the City, owned, operated, or maintained by
+              the City and devoted to active or passive recreation" ...
+
+    Only the registered park conditions may appear. ``true_for`` is required
+    and non-empty; ``false_for`` may be empty (every other kind then leaves
+    a line unresolved); both hold ORCA unit types (``ORCA_UNIT_TYPES``) and
+    are disjoint. The quote and a note of a ruling's length are required,
+    for the reason ``neighbours`` requires them.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.parks: expected a mapping of condition -> lists")
+        return {}
+    out: dict[str, ParkRule] = {}
+    for name, body in raw.items():
+        name = str(name).strip()
+        at = f"{where}.parks.{name}"
+        if name not in PARK_CONDITIONS:
+            problems.append(f"{at}: not a park condition; one of {', '.join(PARK_CONDITIONS)}")
+            continue
+        if not isinstance(body, dict):
+            problems.append(f"{at}: expected true_for, false_for, quote and note")
+            continue
+        extra = set(body) - {"true_for", "false_for", "quote", "cite", "note"}
+        if extra:
+            problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
+            continue
+        lists: dict[str, tuple[str, ...]] = {}
+        bad = False
+        for side in ("true_for", "false_for"):
+            kinds = body.get(side)
+            if side == "false_for" and kinds is None:
+                lists[side] = ()
+                continue
+            if not isinstance(kinds, list) or (side == "true_for" and not kinds) or not all(
+                isinstance(k, str) for k in kinds
+            ):
+                problems.append(f"{at}.{side}: a list of ORCA unit types")
+                bad = True
+                continue
+            unknown = sorted({k.strip() for k in kinds} - ORCA_UNIT_TYPES)
+            if unknown:
+                problems.append(
+                    f"{at}.{side}: not an ORCA unit type: {', '.join(unknown)} "
+                    f"(one of {', '.join(sorted(ORCA_UNIT_TYPES))})"
+                )
+                bad = True
+                continue
+            lists[side] = tuple(dict.fromkeys(k.strip() for k in kinds))
+        if bad:
+            continue
+        both = set(lists["true_for"]) & set(lists["false_for"])
+        if both:
+            problems.append(f"{at}: on both sides of the line: {', '.join(sorted(both))}")
+            continue
+        quote = body.get("quote")
+        if not isinstance(quote, str) or not quote.strip():
+            problems.append(f"{at}: a quote of the code's definition of a park")
+            continue
+        note = body.get("note")
+        if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+            problems.append(
+                f"{at}: a note saying which open land the code calls a park, in at least {MIN_RULING} characters"
+            )
+            continue
+        cite = body.get("cite")
+        out[name] = ParkRule(
+            condition=name,
+            true_for=lists["true_for"],
+            false_for=lists["false_for"],
+            quote=quote.strip(),
+            cite=None if cite is None else str(cite).strip(),
+            note=" ".join(note.split()),
+        )
+    return out
+
+
 def _parse_readings(
     raw: object, *, where: str, problems: list[str]
 ) -> dict[str, Reading]:
@@ -1771,6 +1864,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             definitions_from=_adoptions(raw.get("definitions_from"), where=where, problems=problems),
             zone_rulings=_parse_zone_rulings(raw.get("zone_rulings"), zones, where=where, problems=problems),
             neighbours=_parse_neighbours(raw.get("neighbours"), where=where, problems=problems),
+            parks=_parse_parks(raw.get("parks"), where=where, problems=problems),
         )
     except Exception as exc:
         problems.append(f"{where}: {_terse(exc)}")

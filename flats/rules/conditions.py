@@ -674,6 +674,24 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "abuts_park",
+        "site_fact",
+        "A lot line that is not a street lot line has a park across it, "
+        "whatever the park is zoned. Troutdale's mixed-use table (3.230.A) "
+        "gives an MU-3 lot 20 feet against a residential district, none "
+        "against a non-residential one and 10 feet \"when abutting a park "
+        "(regardless of zoning district)\" -- so a park zoned commercial, or "
+        "open space, is not the zero its zone would give. ANY line settles "
+        "it True; False needs every non-street line read with no park "
+        "across it. Which kinds of open land are a park is the code's own "
+        "definition, held per layer (`parks:`), not ORCA's.",
+        evidence=(
+            "Metro RLIS ORCA unit polygons (LAND/orca.shp, UNITTYPE), sampled "
+            "across each non-street lot line by quadfit's s4 (park_across_json)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "protected_water_feature",
         "site_fact",
         "A stream, wetland or water body whose vegetated corridor eats the "
@@ -879,6 +897,13 @@ NEIGHBOUR_ZONE_CONDITIONS: tuple[str, ...] = (
     "abuts_nonresidential_zone",
 )
 
+#: The site facts about what open land lies across the lot lines, answered
+#: from quadfit's per-line reading of Metro's ORCA layer (`flats.geom.park`)
+#: against each layer's own list of which ORCA unit types its code calls a
+#: park (``Layer.parks``). Named for the same reason as the neighbour facts:
+#: the loader refuses any other name in that block.
+PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
+
 
 def condition(name: str) -> ConditionDef:
     """Look up a condition, refusing anything unregistered.
@@ -938,6 +963,7 @@ __all__ = [
     "CONDITIONS",
     "ENTAILS",
     "NEIGHBOUR_ZONE_CONDITIONS",
+    "PARK_CONDITIONS",
     "ConditionDef",
     "close_entailed",
     "Kind",

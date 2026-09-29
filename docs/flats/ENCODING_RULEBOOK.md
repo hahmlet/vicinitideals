@@ -147,6 +147,12 @@ Full format: [flats/config/footnotes/README.md](../../flats/config/footnotes/REA
   - corner fronts (`front_lot_line_corner`)
   - corridors
   - neighbour zoning (`abuts_lower_density_zone` and siblings)
+  - `abuts_park` (Metro ORCA unit types across each line)
+- **Parks.** They are a `parks:` block naming which ORCA unit types the
+  code's own definition of a park covers. A type on neither list leaves the
+  line unresolved. Encode a park row one condition deeper than the zero it
+  overrides (`[abuts_nonresidential_zone, abuts_park]`), because there is
+  no negation. Guard: `test_park.py`.
 - **Neighbour zones.** They are a `neighbours:` block with
   `true_for` / `false_for` lists.
   - Write `yes` / `no` quoted: bare, YAML reads them as booleans.
