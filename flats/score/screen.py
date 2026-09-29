@@ -65,11 +65,13 @@ from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResol
 from flats.score.configure import Configuration
 from flats.score.paper import (
     Alley,
+    Beside,
     court_across,
     court_depth,
     lot_standard,
     paved,
     side_column,
+    side_court,
 )
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
@@ -291,7 +293,8 @@ class Screening:
     stalls_charged: int = 0
     #: How many stalls the lot seats, floor to the design's preferred count
     #: (or the zone's cap), in one row behind the building at the depth the
-    #: parking needs. The number beside the colour, never inside it -- Steph
+    #: parking needs, or beside it where the code allows a court there
+    #: (:func:`seats`). The number beside the colour, never inside it -- Steph
     #: 2026-09-18, *"same as the county map. 4 is enough to sell"*: a lot
     #: seating four is green on parking, and this says whether it seats
     #: six or eight. 0 where not even the floor holds; ``None`` where the fit
@@ -437,13 +440,21 @@ def _checks(
     # strip is land the court may use, and only the excess is charged
     # (`_court_beyond_rear`), against the strip the envelope really lost
     # where the lot says what that was.
+    #
+    # A court BESIDE the building (`fit.beside`, FOLLOWUPS 4(a)) asks past
+    # the rear wall only what its row runs beyond it (`_beside_beyond`).
+    beside = _beside_for(design, rules, lot) if fit.beside else None
     out.append(
         policy.evaluate(
             "fit_ft",
             fit.best_depth_ft,
             fit.required_ft
-            + _court_beyond_rear(
-                design, rules, lot.envelope_rear_ft, lot.alley, column=fit.column
+            + (
+                _beside_beyond(beside, fit.required_ft, rules, lot.envelope_rear_ft)
+                if beside is not None
+                else _court_beyond_rear(
+                    design, rules, lot.envelope_rear_ft, lot.alley, column=fit.column
+                )
             ),
             is_maximum=False,
             jurisdiction=where,
@@ -456,7 +467,9 @@ def _checks(
     # measured a rectangle this zone does not accept, so the depth it found is
     # no evidence either way. That is a hole in the measurement, not a miss
     # on the lot, and it is reported as one rather than scored.
-    if _searched_narrower_than(fit, design, rules, lot.alley, corner=lot.corner):
+    if _searched_narrower_than(
+        fit, design, rules, lot.alley, corner=lot.corner, frontage_ft=lot.frontage_ft
+    ):
         unchecked.append("fit_across_ft")
 
     # Lot area and lot width are the two standards the plat path changes, and
@@ -700,6 +713,7 @@ def _checks(
         lot.alley,
         corner=lot.corner,
         column=fit.column,
+        beside=beside,
         deep_ft=fit.required_ft,
     )
     bound_sqft = lot.lot_sqft - design.ground_sqft
@@ -826,6 +840,42 @@ def _court_beyond_rear(
     return max(0.0, max(court, rear_ft) - carved)
 
 
+def _beside_for(design: Design, rules: ZoneResolution, lot: LotFacts) -> Beside:
+    """The court beside the building that :func:`fit_for` searched for this lot."""
+    got = side_court(design, rules, lot.alley, corner=lot.corner, frontage_ft=lot.frontage_ft)
+    assert got is not None, "a court beside the building was charged where none is offered"
+    return got
+
+
+def _beside_beyond(
+    beside: Beside,
+    deep_ft: float,
+    rules: ZoneResolution,
+    carved_rear_ft: float | None = None,
+) -> float:
+    """Depth a court BESIDE a building ``deep_ft`` deep needs past the
+    envelope's rear edge (:func:`flats.score.paper.side_court`).
+
+    The court behind the building needs its whole depth behind the wall
+    (:func:`_court_beyond_rear`); this one stands beside the building and
+    needs behind the wall only what its row runs past it
+    (:meth:`flats.score.paper.Beside.overhang_ft`) -- nothing where the row
+    is no longer than the building is deep. The building itself still has to
+    stand the RESOLVED rear setback off the line, and that part runs past
+    the wall into the same yard, so the two share it on the court-behind
+    bargain: the ground behind the wall is the deeper of the overhang and
+    the rear setback, less the strip the envelope already lost. ``inf``
+    where the row may not run past the wall and would.
+    """
+    overhang = beside.overhang_ft(deep_ft)
+    if math.isinf(overhang):
+        return math.inf
+    rear_held = rules.get("setback_rear_ft")
+    rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
+    carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
+    return max(0.0, max(overhang, rear_ft) - carved)
+
+
 def seats(
     fitter: Fitter,
     design: Design,
@@ -835,6 +885,7 @@ def seats(
     carved_rear_ft: float | None = None,
     alley: Alley | None = None,
     corner: bool = False,
+    frontage_ft: float | None = None,
 ) -> int | None:
     """How many stalls the lot seats -- the number beside the colour.
 
@@ -858,6 +909,18 @@ def seats(
     (:func:`flats.score.paper.side_column`): no wider than the building, one
     stall's width deeper per car. Each count is asked of both plans and the
     lot seats the most either holds.
+
+    Where the code leaves the side of the building open to a court
+    (:func:`flats.score.paper.side_court`) the row may stand BESIDE the
+    building instead, along the lot: the building's side plus the court's
+    band across, and one stall's width further along per car, charged past
+    the rear wall only where the row outruns the building. The same count,
+    asked of that plan too.
+
+    Still one row, behind or beside. The county map also draws two rows
+    either side of one aisle where the room behind is deep enough, and
+    counts more on those lots than this does (FOLLOWUPS 4(a)); the colour
+    is charged at the floor and does not move on it.
 
     Returns 0 where not even the floor holds at that depth, and ``None``
     for a design with no court to count.
@@ -890,6 +953,14 @@ def seats(
                 if not fitter.holds(side + across.lane_ft, along):
                     break
                 seated = n
+        for n in range(max(seated + 1, across.stalls), across.most + 1):
+            row = side_court(design, rules, alley, corner=corner, frontage_ft=frontage_ft, stalls=n)
+            if row is None:
+                break
+            extra = _beside_beyond(row, deep, rules, carved_rear_ft)
+            if math.isinf(extra) or not fitter.holds(side + row.band_ft, deep + extra):
+                break
+            seated = n
         best = max(best, seated)
     return best
 
@@ -901,6 +972,7 @@ def _searched_narrower_than(
     alley: Alley | None = None,
     *,
     corner: bool = False,
+    frontage_ft: float | None = None,
 ) -> bool:
     """Whether the fit's search was narrower than this zone's parking asks.
 
@@ -919,7 +991,16 @@ def _searched_narrower_than(
     )
     # A column along a side alley stands inside the building's side
     # (:func:`flats.score.paper.side_column`), so that plan asks no more.
-    asked = side + across.lane_ft if fit.column else max(side + across.lane_ft, across.width_ft)
+    # A court beside the building asks its band beside it, and no lane.
+    if fit.beside:
+        got = side_court(design, rules, alley, corner=corner, frontage_ft=frontage_ft)
+        if got is None:
+            return True
+        asked = side + got.band_ft
+    elif fit.column:
+        asked = side + across.lane_ft
+    else:
+        asked = max(side + across.lane_ft, across.width_ft)
     searched = side if fit.across_ft is None else fit.across_ft
     return searched + 1e-9 < asked
 
@@ -933,6 +1014,7 @@ def fit_for(
     carved_rear_ft: float | None = None,
     alley: Alley | None = None,
     corner: bool = False,
+    frontage_ft: float | None = None,
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
 
@@ -959,6 +1041,18 @@ def fit_for(
     ``corner`` is :attr:`LotFacts.corner`: where the code lets a corner
     lot's driveway use the side street there is no lane to search for
     either (:func:`flats.score.paper.side_street_fed`).
+
+    THE COURT'S SHAPE (FOLLOWUPS 4(a)). Where the row behind the building
+    does not fit, and the code leaves the side of the building open to a
+    court (:func:`flats.score.paper.side_court`, which also reads
+    ``frontage_ft`` against a cap on parking along the street), the lot is
+    searched once more for the court BESIDE the building -- the stalls
+    along the lot, the aisle along the building's wall and in from the
+    street -- and that fit is read where it clears with its court
+    (:attr:`flats.fit.rectangle.Fit.beside`). A lot the row already fits
+    keeps the row: the drawing every code here describes, and the one this
+    screen has always charged; so does a lot neither arrangement fits, whose
+    near miss was always measured on the row.
     """
     across = court_across(design, rules, alley, corner=corner)
     axis_required = rules.get("orientation_constraint") == "axis_required"
@@ -983,6 +1077,29 @@ def fit_for(
         )
         if column_room > row_room:
             fit = dataclasses.replace(beside, column=True)
+    room = fit.slack_ft - _court_beyond_rear(
+        design, rules, carved_rear_ft, alley, column=fit.column
+    )
+    court = (
+        side_court(design, rules, alley, corner=corner, frontage_ft=frontage_ft)
+        if room < 0
+        else None
+    )
+    if court is not None:
+        got = fitter.fit_beside(
+            design.footprint.width_ft,
+            design.footprint.depth_ft,
+            band_ft=court.band_ft,
+            beyond=lambda deep: _beside_beyond(court, deep, rules, carved_rear_ft),
+            allow_flip=not axis_required,
+            placement=placement,
+        )
+        # Taken only where it CLEARS: a lot neither arrangement fits keeps
+        # the court behind, the one its near-miss and relief were read on.
+        if got is not None and (
+            got.slack_ft - _beside_beyond(court, got.required_ft, rules, carved_rear_ft) >= 0
+        ):
+            fit = got
     # And how many more the lot seats, floor to preferred: the number the
     # screen reports beside the colour (:func:`seats`).
     return dataclasses.replace(
@@ -995,6 +1112,7 @@ def fit_for(
             carved_rear_ft=carved_rear_ft,
             alley=alley,
             corner=corner,
+            frontage_ft=frontage_ft,
         ),
     )
 

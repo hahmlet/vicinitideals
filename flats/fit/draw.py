@@ -204,6 +204,8 @@ def draw(
     court_depth_ft: float,
     court_beyond_ft: float,
     street: Iterable[tuple[float, float, float, float]] = (),
+    beside_band_ft: float = 0.0,
+    beside_len_ft: float = 0.0,
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -213,6 +215,11 @@ def draw(
     part of it the envelope has to hold (the rest stands in the rear yard).
     ``street`` is the lot's front lines, ``(x1, y1, x2, y2)``. ``None`` where
     the search found no room at the fit's width at all.
+
+    ``beside_band_ft`` draws a court BESIDE the building instead
+    (:attr:`flats.fit.rectangle.Fit.beside`): the band on the building's
+    flank where the lane would be, ``beside_len_ft`` long from the front
+    line, and no lane -- the court's aisle is the drive.
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -255,8 +262,9 @@ def draw(
     # The street end, and the direction into the lot from it.
     face, sign = (y0, 1.0) if placed.low else (y0 + room_deep, -1.0)
     # The building's side of the room, and the lane beyond it.
+    flank = beside_band_ft if beside_band_ft > 0 else lane_ft
     bx0 = x0 if placed.left else x0 + across - across_b
-    lx0 = bx0 + across_b if placed.left else bx0 - lane_ft
+    lx0 = bx0 + across_b if placed.left else bx0 - flank
 
     def band(a: float, b: float, left: float, right: float) -> BaseGeometry:
         y1, y2 = face + sign * a, face + sign * b
@@ -264,8 +272,13 @@ def draw(
 
     room = shapely.box(x0, y0, x0 + across, y0 + room_deep)
     building = band(0.0, deep_b, bx0, bx0 + across_b)
-    lane = band(0.0, deep_b, lx0, lx0 + lane_ft) if lane_ft > 0 else None
-    court = band(deep_b, deep_b + court_depth_ft, x0, x0 + across) if court_depth_ft > 0 else None
+    lane = band(0.0, deep_b, lx0, lx0 + lane_ft) if lane_ft > 0 and not beside_band_ft else None
+    if beside_band_ft > 0:
+        court = band(0.0, beside_len_ft, lx0, lx0 + beside_band_ft)
+    elif court_depth_ft > 0:
+        court = band(deep_b, deep_b + court_depth_ft, x0, x0 + across)
+    else:
+        court = None
 
     def world(g: BaseGeometry | None) -> BaseGeometry | None:
         return None if g is None else affinity.rotate(g, grid.angle_deg, origin=grid.origin)

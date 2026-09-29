@@ -642,6 +642,186 @@ def court_across(
     )
 
 
+@dataclass(frozen=True, slots=True)
+class Beside:
+    """A court BESIDE the building: what it asks of the lot, and why.
+
+    One row of stalls at 90 degrees to the side lot line, each stall's width
+    running along the lot, and the two-way aisle between them and the
+    building's side wall, a gap off that wall. The aisle is also the way in:
+    it runs straight back from the street along the wall, so there is no
+    lane beside it (:func:`side_court`).
+    """
+
+    #: Across the lot beside the building: the gap off the side wall, the
+    #: aisle and one stall's depth.
+    band_ft: float = 0.0
+    #: Along the lot: from the building's front line to the court's far
+    #: end -- the stalls side by side at this zone's width, behind whatever
+    #: a parking setback from the street asks past the building's.
+    length_ft: float = 0.0
+    #: The stalls it holds.
+    stalls: int = 0
+    #: The court may not run past the building's rear wall: a code that
+    #: bans parking between the building and a street, where the far end
+    #: of a through lot is a street nothing here can see.
+    within_building: bool = False
+    #: The two-way aisle, which is also the drive in from the street.
+    aisle_ft: float = 0.0
+    #: What the drive is paved across the front yard at.
+    drive_ft: float = 0.0
+    #: Stalls, each one cell of the row: depth by width.
+    stall_depth_ft: float = 0.0
+    stall_ft: float = 0.0
+    #: Standards the zone actually supplied.
+    from_code: tuple[str, ...] = ()
+
+    def overhang_ft(self, deep_ft: float) -> float:
+        """How far past the building's rear wall the court runs, for a
+        building ``deep_ft`` deep; ``inf`` where it may not run past it."""
+        past = max(0.0, self.length_ft - deep_ft)
+        if past > 1e-9 and self.within_building:
+            return math.inf
+        return past
+
+
+def _settled_false(rules: "ZoneResolution", name: str) -> bool:
+    """A yes/no standard the zone answers NO to: waived, or stated False.
+    Unread is not no."""
+    return name in rules.exempted or rules.get(name) is False
+
+
+def side_court(
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
+    frontage_ft: float | None = None,
+    stalls: int | None = None,
+) -> Beside | None:
+    """The court BESIDE the building, where the code lets one stand there.
+
+    FOLLOWUPS 4(a), the court's shape. :func:`court_depth` and
+    :func:`court_across` charge one arrangement: a row of stalls ACROSS the
+    lot behind the building, reached by a lane down the building's flank.
+    Quadfit's s6s also draws ``townhome_side_court`` (2026-09-19): the stalls
+    in a row ALONG the lot -- each at 90 degrees to the side lot line, their
+    widths end to end from the building's front line back -- and the
+    two-way aisle between them and the building's side wall, entered
+    straight off the street. On a wide, shallow lot it is the plan that
+    fits where the court behind does not: 375 of the 714 lots quadfit
+    calls green and this screen yellow on the fit alone (the September
+    tree, run of 2026-09-28) are drawn that way there.
+
+    What it asks, per the zone, with the same ``max()`` rule as the court
+    behind (a city asking less does not shrink the design): across, the gap
+    off the side wall (``parking_building_buffer_ft``), the two-way aisle
+    (``parking_aisle_two_way_ft``, never narrower than the drive it also is,
+    ``driveway_min_width_two_way_ft``) and one stall's depth; along, the
+    charged stalls at the zone's width (:func:`court_across`), standing
+    back from the building's front line by whatever
+    ``parking_street_setback_ft`` asks past ``setback_front_ft``. It may run
+    past the building's rear wall (:meth:`Beside.overhang_ft`), and the
+    screen charges that as depth.
+
+    Offered ONLY where the words leave the side of the building open to a
+    court, never assumed (``None`` otherwise):
+
+    * ``parking_side_prohibited`` settled no -- the townhouse model-code
+      sentence "no off-street parking ... in the front yard or side yard"
+      that Gresham, Oregon City, Fairview, Troutdale, Wilsonville and
+      Milwaukie hang on the unit-lot branch; unread is not no;
+    * on a corner lot, ``parking_front_prohibited`` settled no too: the fit
+      does not say which side the court stands on, and on a corner one side
+      faces the side street, the ground Portland 33.266.120.C.1.a and
+      Milwaukie 19.505.3.D.4.a keep parking off. Where that ban holds on an
+      interior lot the court stops at the rear wall
+      (:attr:`Beside.within_building`) -- a through lot's far end is a
+      street the fit cannot see either;
+    * not on a corner lot whose code sends the driveway to the side street
+      (``corner_access_street: side``): the aisle is entered off the front;
+    * not where the code sends the driveway to the alley
+      (:func:`alley_fed`): the aisle would have to reach it;
+    * within ``parking_area_max_width_ft`` and ``parking_area_max_frontage_pct``
+      of ``frontage_ft`` where the zone states either: the court's aisle and
+      stall face the street at the building line, and those caps measure the
+      parking and manoeuvring area along the street. A share with no
+      frontage measured is not offered.
+
+    ``stalls`` is the count to stand in the row; the charged floor
+    (:func:`court_across`) when omitted.
+    """
+    parking = design.parking
+    if not parking.court_depth_ft or parking.config not in _COURT_CONFIGS:
+        return None
+    if alley_fed(rules, alley):
+        return None
+    if not _settled_false(rules, "parking_side_prohibited"):
+        return None
+    used = ["parking_side_prohibited"]
+    ban = rules.get("parking_front_prohibited") is True
+    if corner:
+        if not _settled_false(rules, "parking_front_prohibited"):
+            return None
+        if rules.get("corner_access_street") == "side":
+            return None
+        used += ["parking_front_prohibited", "corner_access_street"]
+    elif ban:
+        used.append("parking_front_prohibited")
+    across = court_across(design, rules, alley, corner=corner)
+    count = across.stalls if stalls is None else stalls
+    if not count:
+        return None
+    gap = parking.building_gap_ft
+    stall = parking.stall_depth_ft
+    aisle = parking.aisle_ft
+    drive = parking.lane_width_ft
+    if (stated := _number(rules, "parking_building_buffer_ft")) is not None:
+        used.append("parking_building_buffer_ft")
+        gap = max(gap, stated)
+    if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
+        used.append("parking_stall_depth_ft")
+        stall = max(stall, stated)
+    if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
+        used.append("parking_aisle_two_way_ft")
+        aisle = max(aisle, stated)
+    if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
+        used.append("driveway_min_width_two_way_ft")
+        drive = max(drive, stated)
+    aisle = max(aisle, drive)
+    # How far back from the building's front line the first stall stands: a
+    # parking setback from the street past the building's own. Unread front
+    # against a stated parking setback is a distance nobody can compute.
+    back = 0.0
+    if (street := _number(rules, "parking_street_setback_ft")) is not None:
+        front = _yard(rules, "setback_front_ft")
+        if front is None:
+            return None
+        used.append("parking_street_setback_ft")
+        back = max(0.0, street - front)
+    facing = aisle + stall
+    if (cap := _number(rules, "parking_area_max_width_ft")) is not None:
+        used.append("parking_area_max_width_ft")
+        if facing > cap:
+            return None
+    if (pct := _number(rules, "parking_area_max_frontage_pct")) is not None:
+        used.append("parking_area_max_frontage_pct")
+        if frontage_ft is None or facing > pct / 100.0 * frontage_ft:
+            return None
+    return Beside(
+        band_ft=gap + aisle + stall,
+        length_ft=back + count * across.stall_ft,
+        stalls=count,
+        within_building=ban and not corner,
+        aisle_ft=aisle,
+        drive_ft=drive,
+        stall_depth_ft=stall,
+        stall_ft=across.stall_ft,
+        from_code=tuple(used) + tuple(n for n in across.from_code if n not in used),
+    )
+
+
 def _yard(rules: "ZoneResolution", name: str) -> float | None:
     """A setback's depth in feet: 0 where the code waives it, None where unread."""
     if name in rules.exempted:
@@ -656,6 +836,7 @@ def paved(
     *,
     corner: bool = False,
     column: bool = False,
+    beside: Beside | None = None,
     deep_ft: float,
 ) -> float | None:
     """Square feet this design's parking paves on the lot, or None if unknown.
@@ -692,6 +873,10 @@ def paved(
       is not the aisle, the aisle carried on across the alley-side yard to the
       alley. From a rear alley the court meets the alley line and there is
       nothing to cross.
+    * **a court beside the building** (``beside``, :func:`side_court`): the
+      stalls, and the aisle along their whole length from the building's
+      front line, which is also the drive; and the drive across the front
+      yard to it. The gap off the side wall is not pavement, as behind.
 
     Every figure is the least a legal plan could pave, which is the right
     quantity: the question is whether ANY plan leaves the amount, and the
@@ -714,6 +899,12 @@ def paved(
         return 0.0
     if parking.config not in _COURT_CONFIGS:
         return None
+    if beside is not None:
+        front = _yard(rules, "setback_front_ft")
+        if front is None:
+            return None
+        stalls = beside.stalls * beside.stall_ft * beside.stall_depth_ft
+        return stalls + beside.aisle_ft * beside.length_ft + beside.drive_ft * front
     across = court_across(design, rules, alley, corner=corner)
     if not across.stalls:
         # A cap of nothing: no row is drawn and nothing is paved for it. The

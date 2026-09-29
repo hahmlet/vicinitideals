@@ -123,9 +123,17 @@ from flats.score.paper import (
     front_lot_line_rule,
     front_lot_line_through_rule,
     side_column,
+    side_court,
     side_street_fed,
 )
-from flats.score.screen import LotFacts, Screening, _court_beyond_rear, fit_for, screen
+from flats.score.screen import (
+    LotFacts,
+    Screening,
+    _beside_beyond,
+    _court_beyond_rear,
+    fit_for,
+    screen,
+)
 from flats.score.slack import SlackPolicy, Verdict as CheckVerdict
 
 #: quadfit's per-lot stage record after the envelope was cut and carved
@@ -1136,6 +1144,7 @@ def _screen_on(
         carved_rear_ft=env.rear_cut_ft,
         alley=facts.alley,
         corner=facts.corner,
+        frontage_ft=facts.frontage_ft,
     )
     result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
     shadow = _if_signed(
@@ -1289,22 +1298,43 @@ def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     The same search the verdict read, asked once more for a window: the
     building at the street end, its lane beside it, the court behind it at
     the depth :func:`flats.score.paper.court_depth` charges (or the column
-    along a side alley, :func:`flats.score.paper.side_column`), and the room
+    along a side alley, :func:`flats.score.paper.side_column`; or the court
+    BESIDE the building, :func:`flats.score.paper.side_court`), and the room
     the search found around them. Changes no verdict. The building stands
     as near the lot's front lines as named for this screen as the room
     allows -- on a corner lot, the street it was laid out fronting.
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
     rear = s.envelope.rear_cut_ft if s.envelope else None
+    street = ()
+    if s.lot.edges is not None:
+        street = tuple((e.x1, e.y1, e.x2, e.y2) for e in s.lot.edges.of_class(EdgeClass.front))
+    if s.fit.beside:
+        beside = side_court(
+            s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.frontage_ft
+        )
+        beyond = None if beside is None else _beside_beyond(beside, s.fit.required_ft, s.rules, rear)
+        if beside is None or beyond is None or math.isinf(beyond):
+            return None
+        got = draw(
+            fitter,
+            s.fit,
+            width_ft=s.design.footprint.width_ft,
+            depth_ft=s.design.footprint.depth_ft,
+            lane_ft=0.0,
+            court_depth_ft=0.0,
+            court_beyond_ft=beyond,
+            street=street,
+            beside_band_ft=beside.band_ft,
+            beside_len_ft=beside.length_ft,
+        )
+        return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
         got = side_column(s.design, s.rules, alley)
         court = got[0] if got is not None else 0.0
     else:
         court = court_depth(s.design, s.rules, alley)[0]
     beyond = _court_beyond_rear(s.design, s.rules, rear, alley, column=s.fit.column and court > 0)
-    street = ()
-    if s.lot.edges is not None:
-        street = tuple((e.x1, e.y1, e.x2, e.y2) for e in s.lot.edges.of_class(EdgeClass.front))
     got = draw(
         fitter,
         s.fit,

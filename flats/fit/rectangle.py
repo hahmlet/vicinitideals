@@ -20,9 +20,10 @@ a fit inside it, either way, GREEN with a ``tight_fit`` flag.
 
 from __future__ import annotations
 
+import dataclasses
 import math
 from dataclasses import dataclass
-from typing import Iterable, Sequence
+from typing import Callable, Iterable, Sequence
 
 from shapely.geometry.base import BaseGeometry
 
@@ -71,6 +72,13 @@ class Fit:
     #: :func:`flats.score.screen.fit_for` on the fit it took for that plan:
     #: searched at the building's own side, since the column stands inside it.
     column: bool = False
+    #: The parking the fit was searched for is a court BESIDE the building
+    #: (:func:`flats.score.paper.side_court`), its row of stalls along the
+    #: lot, not a row across it behind the building: ``across_ft`` is the
+    #: building's side plus that court's band, and what the court runs past
+    #: the rear wall is charged as depth by the screen. Set by
+    #: :meth:`Fitter.fit_beside`.
+    beside: bool = False
 
     @property
     def required_ft(self) -> float:
@@ -240,6 +248,69 @@ class Fitter:
             across_ft=best.across_ft,
             placement=best_grid.to_world(row, col, d_cells, w_cells),
         )
+
+    def fit_beside(
+        self,
+        width_ft: float,
+        depth_ft: float,
+        *,
+        band_ft: float,
+        beyond: Callable[[float], float],
+        allow_flip: bool = True,
+        placement: bool = True,
+    ) -> Fit | None:
+        """Best fit for the building with a court BESIDE it.
+
+        Each orientation is searched at the building's side plus ``band_ft``
+        (the court's gap, aisle and stall), and the depth to find is the
+        building's own; ``beyond(deep)`` is what that orientation's court
+        asks past the rear wall, which the screen charges as depth, and it
+        is what the orientations are ranked on here -- the court's length
+        is fixed, so the shallower building can need more depth past its
+        wall than the deeper one. An orientation whose ``beyond`` is
+        infinite may not have the court at all. ``None`` where none may.
+        """
+        options: list[tuple[Orientation, float, float]] = [
+            (Orientation.width_facing, width_ft, depth_ft)
+        ]
+        if allow_flip and width_ft != depth_ft:
+            options.append((Orientation.depth_facing, depth_ft, width_ft))
+        best: tuple[float, Fit, Grid | None, float] | None = None
+        for orientation, side, deep in options:
+            extra = beyond(deep)
+            if math.isinf(extra):
+                continue
+            across_ft = side + band_ft
+            got_ft, grid = self._best(across_ft)
+            room = got_ft - deep - extra
+            if best is None or room > best[0]:
+                best = (
+                    room,
+                    Fit(
+                        fits=got_ft >= deep + extra,
+                        width_ft=width_ft,
+                        depth_ft=depth_ft,
+                        best_depth_ft=got_ft,
+                        slack_ft=got_ft - deep,
+                        angle_deg=grid.angle_deg if grid else None,
+                        orientation=orientation,
+                        across_ft=across_ft,
+                        beside=True,
+                    ),
+                    grid,
+                    deep,
+                )
+        if best is None:
+            return None
+        _room, fit, grid, deep = best
+        if not (placement and fit.fits and grid is not None):
+            return fit
+        assert fit.across_ft is not None
+        w_cells, d_cells = cells_for(fit.across_ft, self.res), cells_for(deep, self.res)
+        hit = grid.first_window(d_cells, w_cells)
+        if hit is None:
+            return fit
+        return dataclasses.replace(fit, placement=grid.to_world(hit[0], hit[1], d_cells, w_cells))
 
     def fit_design(
         self,
