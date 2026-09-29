@@ -396,9 +396,17 @@ function addUnitRow() {
   if (!tbody) return;
   const isInPlace = document.querySelector('input[name="rent_type"]:checked').value === 'in_place';
   const marketStyle = isInPlace ? '' : 'display:none';
+  // Index of this row in the unit_type_*[] arrays. proforma-confirm keeps
+  // only rows whose index is in unit_type_include[] once any row sends one,
+  // so a manually added row needs its own checked include box or it is
+  // silently dropped on save.
+  const idx = tbody.querySelectorAll('tr').length;
+  const rowId = `unit-row-${idx}`;
   const tr = document.createElement('tr');
+  tr.id = rowId;
   tr.innerHTML = `
-    <td></td>
+    <td><input type="checkbox" name="unit_type_include[]" value="${idx}" checked
+               onchange="toggleRow(this, '${rowId}')"></td>
     <td><span class="conf-dot conf-high" title="Manually added"></span></td>
     <td>
       <input type="text" name="unit_type_name[]" value="" placeholder="e.g. 2BR/1BA"
@@ -445,7 +453,7 @@ function addUnitRow() {
         <input type="text" name="unit_type_market_rent[]" value="" class="amount-input" placeholder="optional"
                style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
       </div>
-    </td>\`;
+    </td>`;
   tbody.appendChild(tr);
   toggleMarketCol();
   tr.querySelector('input[name="unit_type_name[]"]').focus();

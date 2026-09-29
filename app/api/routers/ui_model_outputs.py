@@ -1135,6 +1135,14 @@ async def proforma_confirm(
     deal_model = await session.get(Scenario, model_id)
     if not deal_model:
         raise HTTPException(status_code=404, detail="Deal model not found")
+    # Org guard — this route overwrites the model's income streams and OpEx
+    # lines; a user of another org must not be able to write them.
+    if settings.org_isolation_enabled:
+        _user = await _get_user(session, request)
+        _user_org = getattr(_user, "org_id", None) if _user is not None else None
+        _deal = await session.get(Deal, deal_model.deal_id) if deal_model.deal_id else None
+        if _user_org is None or _deal is None or _deal.org_id != _user_org:
+            raise HTTPException(status_code=404, detail="Deal model not found")
 
     # Multi-project deals: route import to the project the user is viewing
     # (from HX-Current-URL ?project=...). Fall back to oldest only if missing.

@@ -3445,6 +3445,19 @@ async def source_coverage_write(
 # missed or wiped by a wizard re-run.
 # ─────────────────────────────────────────────────────────────────────────────
 
+async def _adopt_source_model_in_user_org(
+    session: AsyncSession, request: Request, model_id: UUID
+) -> bool:
+    """Org guard for the Adopt Source routes: True when the Scenario's Deal
+    belongs to the signed-in user's org (always True with isolation off)."""
+    if not settings.org_isolation_enabled:
+        return True
+    _user = await _get_user(session, request)
+    _user_org = getattr(_user, "org_id", None) if _user is not None else None
+    _scen = await session.get(Scenario, model_id)
+    _deal = await session.get(Deal, _scen.deal_id) if _scen is not None and _scen.deal_id else None
+    return _user_org is not None and _deal is not None and _deal.org_id == _user_org
+
 
 @router.get(
     "/ui/models/{model_id}/projects/{project_id}/adopt-source",
@@ -3459,7 +3472,11 @@ async def adopt_source_modal(
     """Render the Adopt Source picker for a project."""
     from app.models.capital import CapitalModuleProject
     project = await session.get(Project, project_id)
-    if project is None or project.scenario_id != model_id:
+    if (
+        project is None
+        or project.scenario_id != model_id
+        or not await _adopt_source_model_in_user_org(session, request, model_id)
+    ):
         return HTMLResponse(
             "<p class='text-muted'>Project not found.</p>", status_code=404
         )
@@ -3499,7 +3516,11 @@ async def adopt_source_write(
     """Attach the chosen scenario CapitalModule to this project."""
     from app.models.capital import CapitalModuleProject
     project = await session.get(Project, project_id)
-    if project is None or project.scenario_id != model_id:
+    if (
+        project is None
+        or project.scenario_id != model_id
+        or not await _adopt_source_model_in_user_org(session, request, model_id)
+    ):
         return HTMLResponse(
             "<p class='text-muted'>Project not found.</p>", status_code=404
         )
