@@ -27,7 +27,7 @@ from tests.conftest import (
     seed_org,
 )
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 
 
 async def _seed_exportable_deal(session: AsyncSession):

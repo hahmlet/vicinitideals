@@ -19,7 +19,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.capital import DrawSource
 
-pytestmark = [pytest.mark.asyncio, pytest.mark.unit]
+pytestmark = [pytest.mark.asyncio, pytest.mark.unit, pytest.mark.usefixtures("api_key_auth")]
 
 
 async def _seed_model(session: AsyncSession):

@@ -77,6 +77,29 @@ These reduce exposure, but they do not fully close the gaps below.
 
 ### `P0-1` Replace shared API key auth with scoped identity
 
+**Correction (2026-09-28).** The finding above understated the problem. Until
+this date `/api/` was **not** guarded by the API key at all: `/api/` sat in both
+`_UI_PATH_PREFIXES` (skips the key check) and `_AUTH_EXEMPT_PATHS` (skips the
+session check), and routes trusted `X-User-ID` from anyone. Anonymous
+`GET /api/users` listed user names; a made-up `X-User-ID` read projects.
+Separately, any value in the old unsigned `vd_user_id` cookie opened every UI
+page. Both were live on production.
+
+**What is enforced now** (`app/api/main.py` `require_auth_for_ui`,
+`app/api/deps.py` `get_current_user_id`):
+- `/api/*` requires a signed `vd_session` cookie (email-verified gate applies)
+  **or** a valid `X-API-Key` (constant-time compare). Anonymous: 401 JSON, or
+  401 + `HX-Redirect: /login` for htmx.
+- Session callers: the user id is the session's user. `X-User-ID` is ignored.
+- `X-User-ID` is trusted only alongside a valid `X-API-Key` (MCP, scripts,
+  deploy smoke check). This is still the shared-key model below.
+- The `vd_user_id` cookie is accepted nowhere.
+- One anonymous `/api/` carve-out, exact path: `POST /api/email-ingest`
+  (Resend webhook; Svix HMAC signature verified in the route, fails closed).
+
+The remaining gap is the one this item always described: the shared key
+holder can act as any user.
+
 **Confirmed issue**
 - `vicinitideals/api/main.py` checks one shared `X-API-Key` value and then trusts a client-provided `X-User-ID` header.
 - This is acceptable for local bootstrap work, but it is not strong enough for a real multi-user or internet-facing deployment.

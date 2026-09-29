@@ -20,7 +20,7 @@ from app.models.org import User
 
 from tests.conftest import seed_org, seed_opportunity
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 
 
 async def _seed_scraped_listing(session: AsyncSession, **overrides) -> Opportunity:

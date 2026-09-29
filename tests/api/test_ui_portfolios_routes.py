@@ -501,8 +501,9 @@ async def test_saved_filter_validation_and_ownership(
     session.add(theirs)
     await _commit(session)
 
-    # Unauthenticated: list is empty, writes are refused
-    assert (await client.get("/api/saved-filters", params={"page": "deals"})).json() == {"items": []}
+    # Unauthenticated: the /api/ gate refuses reads and writes alike
+    anon_read = await client.get("/api/saved-filters", params={"page": "deals"})
+    assert anon_read.status_code == 401
     anon = await client.post("/api/saved-filters", data={"page": "deals", "name": "x"})
     assert anon.status_code == 401
 

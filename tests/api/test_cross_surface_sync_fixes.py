@@ -27,7 +27,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.capital import VehicleType
 from app.models.deal import UseLinePhase
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 

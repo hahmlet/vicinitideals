@@ -22,7 +22,7 @@ from app.models.deal import UseLine, UseLinePhase
 from app.models.project import Project
 
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 
 
 async def _auth(client: AsyncClient, user_id) -> None:

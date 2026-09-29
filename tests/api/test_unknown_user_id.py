@@ -13,6 +13,7 @@ from __future__ import annotations
 import uuid
 from unittest.mock import patch
 
+import pytest
 from httpx import AsyncClient
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -23,6 +24,9 @@ from app.models.org import ProjectVisibility
 from app.models.deal import Scenario
 from app.models.scenario import Sensitivity
 from tests.conftest import seed_deal_model, seed_opportunity, seed_org
+
+# /api/ as an API client: X-API-Key + X-User-ID (see tests/api/test_auth_gate.py).
+pytestmark = pytest.mark.usefixtures("api_key_auth")
 
 
 def _unknown_user() -> dict[str, str]:

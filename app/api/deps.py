@@ -23,8 +23,20 @@ async def get_current_user_id(
     request: Request,
     x_user_id: Annotated[str | None, Header(alias="X-User-ID")] = None,
 ) -> UUID:
-    """Return user UUID from request state, X-User-ID header, or session cookie."""
-    candidate = getattr(request.state, "user_id", None) or x_user_id
+    """Return the caller's user UUID, or 401.
+
+    Sources, in order:
+    1. ``request.state.user_id`` — pinned by the auth middleware from the
+       signed session cookie (or, for API-key callers on non-/api paths, from
+       the X-User-ID header).
+    2. The X-User-ID header — trusted ONLY when the request carried a valid
+       X-API-Key (``request.state.auth_via == "api_key"``: MCP, scripts).
+       From anyone else the header is ignored; it is attacker-settable.
+    3. The signed session cookie.
+    """
+    candidate = getattr(request.state, "user_id", None)
+    if not candidate and getattr(request.state, "auth_via", None) == "api_key":
+        candidate = x_user_id
     if candidate:
         try:
             return UUID(str(candidate))

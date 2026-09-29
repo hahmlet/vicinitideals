@@ -412,6 +412,21 @@ def auth_headers(api_key: str) -> dict[str, str]:
     }
 
 
+@pytest.fixture
+def api_key_auth(request: pytest.FixtureRequest, api_key: str) -> None:
+    """Authenticate the test's client(s) to /api/ with the X-API-Key.
+
+    /api/ refuses a caller with neither a signed session nor the API key
+    (tests/api/test_auth_gate.py). Modules that exercise /api/ as an API
+    client -- identity from the X-User-ID header, as MCP and scripts do --
+    opt in with ``pytestmark = pytest.mark.usefixtures("api_key_auth")``.
+    With the key, X-User-ID is trusted; without it the header is ignored.
+    """
+    for name in ("client", "concurrent_client"):
+        if name in request.fixturenames:
+            request.getfixturevalue(name).headers["X-API-Key"] = api_key
+
+
 def set_client_auth(client: AsyncClient, user_id: "uuid.UUID | str") -> None:
     """Set session cookie AND CSRF token header on *client* for an authenticated user.
 

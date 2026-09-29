@@ -9,7 +9,7 @@ from app.models.source_vehicle import SourceVehicle
 from tests.conftest import seed_org
 
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 def _set_user_header(client: AsyncClient, user_id) -> None:
     client.headers["X-User-ID"] = str(user_id)
 
