@@ -1060,6 +1060,54 @@ def school_drive_and(rlis_type: int):
     return (LineString([(X0 - 60, Y0 + 130), (X0 + 160, Y0 + 130)]), rlis_type)
 
 
+def test_a_drive_across_a_vacant_lot_is_not_a_tract():
+    """A vacant lot next door is unbuilt as a tract is, and a driveway
+    easement across it is not the private street Portland, Happy Valley and
+    Milwaukie count "in a tract": a strip wider than 40 ft is other land."""
+    lot = shapely.box(X0, Y0, X0 + 100, Y0 + 100)
+    public = (LineString([(X0 - 60, Y0 - 30), (X0 + 160, Y0 - 30)]), 1500)
+    lane = (LineString([(X0 - 60, Y0 + 130), (X0 + 160, Y0 + 130)]), 1700)
+    vacant = (shapely.box(X0 - 200, Y0 + 100, X0 + 300, Y0 + 160), "VACANT", 0.0, True)
+    r, kinds = _kinds(lot, [public, lane], [vacant])
+    assert _by_side(r, kinds)["N"] == {("F", "drive_off_lot")}
+
+
+def test_the_lot_read_again_without_its_drive_streets():
+    """`without_streets`: the rear line a school's drive made a street is a
+    rear line again, with the neighbour sample points every other lot line
+    carries; the lot's side lines stay sides; one street direction left is
+    tier A. `drive_readings` offers ``doubtful`` alone where every drive
+    edge is on other land, both where the lot also abuts a private street,
+    and a lot left with no street is tier D."""
+    from s4_edges import drive_readings, without_streets
+
+    lot = shapely.box(X0, Y0, X0 + 100, Y0 + 100)
+    public = (LineString([(X0 - 60, Y0 - 30), (X0 + 160, Y0 - 30)]), 1500)
+    school_drive = (LineString([(X0 - 60, Y0 + 139), (X0 + 160, Y0 + 139)]), 1800)
+    school = (shapely.box(X0 - 200, Y0 + 100, X0 + 300, Y0 + 400), "SCHOOL", 20_794_230.0, True)
+    r, kinds = _kinds(lot, [public, school_drive], [school])
+    assert r["tier"] == "A" and len(r["front_bearings"]) == 1
+    rear = kinds.index("drive_off_lot")
+    alt = without_streets(r, {rear})
+    assert alt["edges"][rear][4] == "R"
+    assert alt["tier"] == "A" and alt["frontage_ft"] == 100.0
+    assert [e[4] for e in alt["edges"]].count("F") == 1
+    assert [e[4] for e in alt["edges"]].count("S") == 2
+    samples = alt["neighbour_samples"][rear]
+    assert samples is not None and len(samples) == 5
+    # Out of the lot on the school's side, in on the lot's own.
+    out_y, in_y = samples[2][1], samples[2][3]
+    assert out_y > Y0 + 100 > in_y
+    got = drive_readings([r], [kinds])[0]
+    assert set(got) == {"doubtful"}
+    street = kinds.index("street")
+    both = drive_readings([r], [["drive" if i == street else k for i, k in enumerate(kinds)]])[0]
+    assert set(both) == {"doubtful", "drives"}
+    assert both["drives"]["tier"] == "D" and both["drives"]["edges"] == []
+    assert drive_readings([r], [None]) == [None]
+    assert drive_readings([r], [["street" if k else None for k in kinds]]) == [None]
+
+
 # ---------------------------------------------------------------------------
 # s2 — majority zone
 # ---------------------------------------------------------------------------

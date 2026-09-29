@@ -2224,3 +2224,18 @@ zone_rulings:
       the building and never between it and the street -- the rear court is
       the zone's own rule. To encode from 59.070; the maximum-lot and
       maximum-building-size rows are the two the model has not held before.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/clackamas/west-linn/02.definitions.txt#L971"
+  says: "A public or private right-of-way"
+  cite: "CDC 02.030 (Street; Private street; Lot line, front; Corner lot)"
+  note: >-
+    "Street. A public or private right-of-way whose primary function is to carry
+    vehicular traffic or provide vehicular access to abutting property", naming
+    "drive" among the facilities that are streets; "Private street. An accessway
+    which is under private ownership" (L780). Front lot line (L626), exterior
+    side lot line (L638) and corner lot (L177) read "street" other than an
+    alley.

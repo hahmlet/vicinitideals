@@ -3043,3 +3043,17 @@ async def test_a_shortlist_says_which_of_it_the_reviewer_can_open(
         pytest.skip("Portland's height words have been ruled")
     assert "We hold" in response.text
     assert "defined elsewhere" in response.text
+
+
+async def test_every_screen_reason_is_said_in_words() -> None:
+    """A reason the screen can give reads as a sentence on the lot page,
+    never as its code (STREET_UNCONFIRMED, FOLLOWUPS 4, 2026-09-29)."""
+    from app.api.routers.ui_flats import _REASON_WORDS, _said_reason
+    from flats.score import screen
+
+    codes = [getattr(screen, n) for n in dir(screen) if n.isupper()]
+    reasons = [c for c in codes if isinstance(c, str) and c.isupper()]
+    assert "STREET_UNCONFIRMED" in reasons
+    for code in reasons:
+        assert code in _REASON_WORDS, code
+    assert "private drive" in _said_reason("STREET_UNCONFIRMED")

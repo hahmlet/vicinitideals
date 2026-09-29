@@ -5741,3 +5741,17 @@ zones:
     min_lot_depth_ft:
       value: 65
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L265"
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: false
+  quote: "or/multnomah/gresham/3.0100.definitions.txt#L2002"
+  says: "The portion of a public right"
+  cite: "GDC 3.0100 (Street, Road or Highway); Table 4.0131 note 2"
+  note: >-
+    "Street, Road or Highway. The portion of a public right-of-way that is open
+    ..." -- public only, and the corner lot ("frontage on two or more streets")
+    and front lot line inherit it. Table 4.0131 note 2 (4.0100.residential.txt
+    L421-L422) says it outright for a double-frontage lot: where "one of the
+    frontages is an alley or private accessway ... that yard will be the rear".

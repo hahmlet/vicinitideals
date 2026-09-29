@@ -3728,3 +3728,18 @@ zone_rulings:
       pocket zone written into the IGA; to read from Gresham planning
       (which chapter governs the 162nd pocket, and what THR stands for
       there) before this lot is screened.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L1085-L1086"
+  says: "any public or"
+  cite: "MCC 39.2000 (Road; Street; Accessway; Lot (Corner); Lot Line (Front))"
+  note: >-
+    "Road - The entire right-of-way of any public or private way" and "Street -
+    See road" (L1233); a corner lot sits at "the intersection of two streets or
+    a street and an accessway" (L836), an accessway being "a private road which
+    is not a part of a lot" (L42); the front lot line separates the lot "from
+    the street or accessway" (L846). A private driveway serving one lot is part
+    of it.

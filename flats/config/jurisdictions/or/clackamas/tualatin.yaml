@@ -1231,3 +1231,17 @@ zone_rulings:
       (L103 on) states the townhouse rows: 1,400 sq ft lot, 14 ft width,
       0-10 ft front setback by architectural review, 90 percent coverage, 15
       units per acre. Four lots; to encode from Table 42-3 with RL's shape.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: false
+  quote: "or/clackamas/tualatin/31.definitions.txt#L315"
+  says: "within the boundary lines of a public right-of-way"
+  cite: "TDC 31.060 (Street; Street Right-of-Way; Corner Lot)"
+  note: >-
+    "Street. A structure within the boundary lines of a public right-of-way",
+    and a street right-of-way is "publicly owned land" (L319); the corner lot
+    abuts "two intersecting streets other than an alley". A private street
+    (Chapter 36, L33-L43) is allowed where public frontage is impractical but is
+    not made a street. Chapter 74.060 is not in the store.

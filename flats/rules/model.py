@@ -377,6 +377,36 @@ class ZoneRuling(BaseModel):
         return self.zone or code
 
 
+class PrivateDriveRuling(BaseModel):
+    """Whether a private road or drive the lot abuts is a street here, for
+    the lot lines, the corner and the yards, in this code's own words.
+
+    s4 counts a lot line within 50 ft of any road in the street file as a
+    street line, and the file carries private roads and unnamed drives
+    beside the public ways. ``street: true`` -- the code counts a private
+    drive the lot abuts (Wilsonville 4.001(157): "a street or private
+    drive") and such a line is a street line. ``street: false`` -- the code
+    says a street is a public way, and the line is an ordinary lot line.
+    A layer that declares nothing is SILENT and the bridge screens such a
+    lot both ways and keeps the worse answer
+    (:func:`flats.ingest.quadfit.screen_lot`). A drive on someone else's
+    land, or through the lot itself, is a street by no code and is screened
+    both ways whatever this says.
+
+    ``quote`` points at the line (``path#Lnn``) and ``says`` is words that
+    line holds verbatim, checked against the store; ``note`` is the
+    argument. Declared per layer and never inherited.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    street: bool
+    quote: str
+    says: str
+    cite: str | None = None
+    note: str | None = None
+
+
 class NeighbourRule(BaseModel):
     """Which zone codes across a lot line make one neighbour-zoning
     condition true here, and which make it false, in this code's own words.
@@ -515,6 +545,9 @@ LAYER_META = frozenset(
         # Which kinds of Metro ORCA open land this jurisdiction's code calls
         # a park, for `abuts_park`. A reading of the code's own definition.
         "parks",
+        # Whether a private drive the lot abuts is a street here, for the
+        # lot lines, the corner and the yards (`PrivateDriveRuling`).
+        "private_drives",
         "kind",
         "label",
         "eligible",
@@ -2359,6 +2392,9 @@ class Layer(BaseModel):
     #: same reason as ``neighbours`` -- and under the same caps rule: a
     #: declared fact is observed, and an observed fact lifts a cap.
     parks: dict[str, "ParkRule"] = Field(default_factory=dict)
+    #: Whether a private drive the lot abuts is a street here (see
+    #: :class:`PrivateDriveRuling`); None where the code is silent.
+    private_drives: PrivateDriveRuling | None = None
 
     @property
     def depth(self) -> int:

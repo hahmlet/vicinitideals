@@ -1738,3 +1738,16 @@ neighbours:
       has an LR lot across it, which is the tightening answer (twenty-seven
       feet for a twenty-six-foot roof); false needs every line read with no
       LR lot across any of them.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/multnomah/wood-village/720.030.definitions.txt#L526"
+  says: "A public or private right-of-way"
+  cite: "WVDC 720.030 (Street, Transportation-Related Definitions)"
+  note: >-
+    "STREET. A public or private right-of-way that is intended for motor vehicle
+    travel or for motor vehicle access to abutting property." Corner lot (L250)
+    and front lot line (L268) read "street", so a private right-of-way the lot
+    abuts is a street for both.

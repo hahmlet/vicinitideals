@@ -5009,3 +5009,20 @@ neighbours:
       gets its own list. The condition is true of a lot only when EVERY
       non-street line is fully read and everything across it is on the true_for
       side; one residential point anywhere settles it false.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/multnomah/portland/33.910.definitions.txt#L1157-L1160"
+  says: "or it may be privately owned"
+  cite: "PCC 33.910 (Right-of-Way; Street Types: Street; Tract)"
+  note: >-
+    A street is "a right-of-way that is intended for motor vehicle ... access to
+    abutting property" (L1373), and a right-of-way "may be privately owned" and
+    "will be in a tract" where not deeded to the public (L1157-L1159); a tract's
+    examples include "private street or alley tracts" (L1430). So a private
+    street on its own tract is a street for the corner lot and the front lot
+    line. A shared driveway on an easement across a neighbour is a driveway
+    (33.266), not a right-of-way: s4 reads that as a drive on other land and it
+    is screened both ways.

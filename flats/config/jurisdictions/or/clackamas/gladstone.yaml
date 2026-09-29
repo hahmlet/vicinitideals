@@ -1238,3 +1238,16 @@ zone_rulings:
       17.14.050(1) through (5)" as a conditional use (L85), the same clause
       as C-3. A `false` use block with a `conditional_use` variant and MR's
       numbers, which wait on MR above.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/clackamas/gladstone/17.06.definitions.txt#L1389"
+  says: "means a public or private way"
+  cite: "GMC 17.06 (Street; Lot line, front; Corner lot)"
+  note: >-
+    "'Street' means a public or private way that is created to provide ingress
+    or egress for persons to one or more lots", naming "drive" and "court";
+    front lot line (L881) and corner lot (L841) read "street" other than an
+    alley. A flag lot's access strip or easement is not its street (L865, L881).

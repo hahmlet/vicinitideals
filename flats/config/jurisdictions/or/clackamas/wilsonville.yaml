@@ -3069,3 +3069,17 @@ zones:
       Planning Commission approve "all uses provided in the Master Plan",
       which is a plan for a school or a hospital campus, not a door for a
       four-unit building on a lot.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/clackamas/wilsonville/4.planning.txt#L795"
+  says: "each abut a street or private drive"
+  cite: "WDC 4.001(157), (161), (312)"
+  note: >-
+    A corner lot is two intersecting lot lines that each abut "a street or
+    private drive"; the front lot line (161) and the front and side yards read
+    the same words, and 4.001(312) makes a private street the same as a private
+    drive. A drive bounded on two sides by a single lot is excluded, which is
+    the drive on the lot's own land, screened both ways anyway.
