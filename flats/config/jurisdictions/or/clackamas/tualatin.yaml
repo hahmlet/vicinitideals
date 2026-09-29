@@ -785,6 +785,21 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-27'
     quote: "or/clackamas/tualatin/40-41.residential.txt#L213-L218"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # NOT ENCODED: `front_lot_line_through`, because the stored code does not
+  # say. TDC 31.060 defines a Through Lot and a Double Frontage Lot
+  # (31.definitions.txt#L3-L4,L18-L19) but the stored extract carries no
+  # front-lot-line definition, and a grep of all 16 stored files for "front
+  # lot line", "through lot", "double frontage", "each street" and "both
+  # street" finds only the flag-lot designation, lot width and 36.400(1)(b)
+  # ("Vehicular access on double frontage lots must be oriented towards the
+  # lowest classification street") -- access, not yards. Unread is screened
+  # as the worst of both fronts and either end rear
+  # (`flats.geom.corner.through_plans`); no zone here states a rear above
+  # its front, so today that is the same envelope.
   #
   # NOT ENCODED: the five-foot perimeter. 73C.210(3) requires landscaping a
   # "Minimum five feet in width in all off-street parking and vehicular

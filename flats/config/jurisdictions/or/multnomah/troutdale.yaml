@@ -819,6 +819,20 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1813
     retrieved: '2026-08-27'
     quote: "or/multnomah/troutdale/1.020.definitions.txt#L548-L552"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # By definition: a double frontage lot is an interior lot (1.020, "An
+  # interior lot can be a double frontage lot"), whose front is "a line
+  # separating the lot from the street", and a rear lot line is "A lot line
+  # not abutting a street". The far street line cannot be the rear.
+  front_lot_line_through:
+    value: both
+    cite: TDC 1.020, Lot Line, Front, for an interior lot a line separating the lot from the street; a rear lot line does not abut a street
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/troutdale/1.020.definitions.txt#L548,L559"
   # AND HOW FAR BACK. 9.095(D): "Parking areas shall be set back from a lot
   # line adjoining a street the same distance as required building setbacks."
   # No number of its own -- the ten feet printed in the same sentence is an

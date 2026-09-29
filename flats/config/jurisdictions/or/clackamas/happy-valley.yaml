@@ -831,6 +831,22 @@ defaults:
     url: https://ecode360.com/print/HA4934?guid=43529904
     retrieved: '2026-08-27'
     quote: "or/clackamas/happy-valley/16.12.definitions.txt#L882-L883"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # 16.12: "On a through lot the applicant or property owner can choose which
+  # lot line is to be the front lot line and which lot line is to be the rear
+  # lot line, regardless of whether the street lot lines are of equal or
+  # unequal length." The far street line takes the REAR setback -- 15 ft
+  # against a 10 ft front in SFA, MURA and VTH, where both-fronts had been
+  # the lenient reading.
+  front_lot_line_through:
+    value: owner
+    cite: HV LDC 16.12, Lot line, front, on a through lot the applicant or property owner chooses the front and the rear lot line
+    url: https://ecode360.com/print/HA4934?guid=43529904
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.12.definitions.txt#L883"
   #
   # NOT ENCODED: a driveway approach width, because Happy Valley states none.
   # The sentence above ends "not less than the full width of the standard

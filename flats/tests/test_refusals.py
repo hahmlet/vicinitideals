@@ -345,7 +345,11 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 122, "comments": 127, "tests": 17}
+EXPECTED = {"notes": 122, "comments": 129, "tests": 17}
+#
+# 127 -> 129 on 2026-09-29: FOLLOWUPS 6(i). Tualatin and Fairview's
+# residential districts say nothing of which end of a through lot is the
+# front; both are screened at the worse end.
 #
 # 267 -> 266 on 2026-09-20: a DOCUMENT arrived. One refusal LEFT, Wood
 # Village's header paragraph on the O (Open Space) zone, which had said the

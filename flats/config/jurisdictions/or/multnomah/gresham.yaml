@@ -2160,6 +2160,25 @@ defaults:
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-3.0100.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/gresham/3.0100.definitions.txt#L1332-L1336"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # 3.0100, Rear Lot Line: "In the case of a double frontage lot, each street
+  # has a front lot line except when an access control strip has been required
+  # along one of the streets by a governmental agency, in which case the line
+  # separating the lot from this street becomes the rear property line."
+  # Table 4.0131 note 2 agrees for setbacks ("each street frontage shall be
+  # considered a front yard", 4.0100.residential.txt#L421-L422). The Manager
+  # names the front for other purposes. Nothing measures an access control
+  # strip, and the residential rows state a rear above the front (LDR-5 10 /
+  # 20), so the screen takes whichever end is the worse to lose.
+  front_lot_line_through:
+    value: both_unless_no_access
+    cite: GDC 3.0100, Front Lot Line and Rear Lot Line, each street of a double frontage lot has a front lot line except where an access control strip is required
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-3.0100.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/3.0100.definitions.txt#L1337-L1340,L1347-L1350"
   #
   # NOT ENCODED: Public Works Standards 6.03, where a driveway may meet the
   # street. Table 6.03 sets the minimum distance from a driveway centerline to

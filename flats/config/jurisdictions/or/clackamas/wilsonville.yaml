@@ -1303,6 +1303,22 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
     quote: "or/clackamas/wilsonville/4.planning.txt#L804-L810"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # 4.001(161) names ONE front on a through lot -- "the narrowest boundary
+  # line abutting a street", then the lower-class street, then the plat --
+  # but 4.169(.01) makes the setback both ways: "Buildings on double
+  # frontage lots (i.e., through lots) and corner lots must meet the front
+  # yard setback for principal buildings on both streets". The named front
+  # matters for orientation, not for the envelope.
+  front_lot_line_through:
+    value: both
+    cite: Wilsonville Development Code 4.169(.01), buildings on through lots meet the front yard setback on both streets
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L14583-L14584"
   # Subsection E is "Standards applicable to Townhouses", which under state
   # law is this building on four unit lots rather than one -- the `unit_lots`
   # lever, said in Wilsonville's words. E.5.a requires access from a paved

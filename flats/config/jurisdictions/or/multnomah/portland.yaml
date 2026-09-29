@@ -2054,6 +2054,19 @@ defaults:
     url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.910.definitions.txt#L754-L758"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # 33.910, Front Lot Line: "However, a through lot has two front lot lines
+  # regardless of whether the street lot lines are of equal or unequal
+  # length." No exception.
+  front_lot_line_through:
+    value: both
+    cite: PCC 33.910, Front Lot Line, a through lot has two front lot lines
+    url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.910.definitions.txt#L757-L758"
   #
   # NOT ENCODED: 33.266.120.C.4, parking in garages takes the garage setback
   # of the base zone. `setback_garage_entrance_ft` already carries that figure

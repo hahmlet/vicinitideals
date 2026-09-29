@@ -311,6 +311,17 @@ def front_lot_line_rule(rules: "ZoneResolution") -> str | None:
     return got if isinstance(got, str) else None
 
 
+def front_lot_line_through_rule(rules: "ZoneResolution") -> str | None:
+    """How this code names a through lot's front (``front_lot_line_through``).
+
+    ``both``, ``both_unless_no_access`` or ``owner``; None where unread.
+    :func:`flats.geom.corner.through_plans` turns it into the readings of
+    the far street line a through lot is screened under.
+    """
+    got = rules.get("front_lot_line_through")
+    return got if isinstance(got, str) else None
+
+
 def side_street_fed(rules: "ZoneResolution", alley: Alley | None, corner: bool) -> bool:
     """Whether this corner lot's court is reached straight off the side street.
 

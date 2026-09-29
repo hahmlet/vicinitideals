@@ -122,6 +122,7 @@ _LABELS: dict[str, str] = {
     "parking_alley_backout_ft": "room to back out into the alley",
     "parking_side_prohibited": "parking banned beside the building",
     "front_lot_line_corner": "which street is the front on a corner lot",
+    "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
     "parking_front_yard_max_pct": "max. vehicle share of front yard",
     "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
@@ -764,6 +765,36 @@ _F: tuple[FieldDef, ...] = (
         None,
         choices=("shortest", "owner", "entrance", "both"),
     ),
+    FieldDef(
+        "front_lot_line_through",
+        "enum",
+        "Which of a THROUGH lot's street lines (streets on two opposite "
+        "sides) is a front line, and so which setback the far street line "
+        "takes. `both`: every street line is a front line and takes the front "
+        "setback -- Portland 33.910 (\"a through lot has two front lot lines "
+        "regardless\"), Wood Village 720.030 (the same sentence), Oregon City "
+        "17.54.030(A) (\"the required front yard on each street\"), "
+        "Wilsonville 4.169(.01), West Linn 02 (\"there is no rear lot "
+        "line\"), and by definition Gladstone 17.06.290, Troutdale 1.020 (a "
+        "rear lot line does not abut a street) and unincorporated Multnomah "
+        "39.2000. `both_unless_no_access`: both, except that a street line "
+        "vehicle access is barred from is the REAR line -- Clackamas ZDO 202 "
+        "(\"abuts a collector, arterial, expressway ... that precludes motor "
+        "vehicle access\") and Gresham 3.0100 (an access control strip "
+        "required along one street). Nothing measures street class or an "
+        "access strip, so the screen takes whichever end is the worse to lose "
+        "to a rear setback. `owner`: the applicant names one street line the "
+        "front and the far one is the rear line, with the rear setback -- "
+        "Happy Valley 16.12 (\"which lot line is to be the front lot line and "
+        "which lot line is to be the rear\"), Milwaukie 19.201 (\"the street "
+        "on which the contemplated development will face\"). Unread (Tualatin, "
+        "Fairview's residential districts) is screened like "
+        "`both_unless_no_access`: the worst of both fronts and either end "
+        "rear, since a rear setback larger than the front makes \"both "
+        "fronts\" the lenient reading. Read by :mod:`flats.geom.corner`.",
+        None,
+        choices=("both", "both_unless_no_access", "owner"),
+    ),
 )
 
 FIELDS: dict[str, FieldDef] = {f.name: f for f in _F}
@@ -1037,6 +1068,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_side_prohibited",
         "corner_access_street",
         "front_lot_line_corner",
+        # Same argument as the corner line above it: a definition, not a row
+        # of a zone table. Unread is screened as the worst reading
+        # (`flats.geom.corner.THROUGH_WORST`), never as a gap.
+        "front_lot_line_through",
         "parking_street_setback_ft",
         "parking_building_buffer_ft",
         "open_space_min_pct",

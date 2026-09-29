@@ -1,5 +1,5 @@
 {
-  "digest": "c721ed6a37c94f088e33e42c46eb2614c4a9561a538a4c6d7a0c163079cba2e5",
+  "digest": "075781fedc41a0a2def064763f771a57c2a6c2e768c5cce05e8e14c049b0a1de",
   "layers": {
     "or": {
       "misattributed": [],
@@ -14,7 +14,15 @@
       "gaps": []
     },
     "or/clackamas/gladstone": {
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "front_lot_line_through",
+          "claimed": "17.06.290",
+          "found": "17.06.290 17.06.310",
+          "quote": "or/clackamas/gladstone/17.06.definitions.txt#L881,L921"
+        }
+      ],
       "label": "Gladstone",
       "counts": {},
       "gaps": []

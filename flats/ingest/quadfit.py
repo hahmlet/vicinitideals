@@ -92,6 +92,7 @@ from flats.geom.corner import (
     is_corner,
     name_front,
     through_lot,
+    through_plans,
     two_streets,
 )
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
@@ -108,6 +109,7 @@ from flats.score.paper import (
     court_across,
     court_depth,
     front_lot_line_rule,
+    front_lot_line_through_rule,
     side_column,
     side_street_fed,
 )
@@ -1042,10 +1044,12 @@ def _screen_on(
     *,
     policy: SlackPolicy,
     relief: ReliefPolicy,
+    plan: Any = None,
 ) -> tuple[Screened, Fitter]:
     """One design screened on one envelope and one named front, for
-    :func:`screen_lot` to rank against the others it tries."""
-    key = (env.source, env.setbacks, front)
+    :func:`screen_lot` to rank against the others it tries. ``plan`` keys
+    the search apart where a through lot's ends are named (FOLLOWUPS 6(i))."""
+    key = (env.source, env.setbacks, front, plan)
     if key not in fitters:
         fitters[key] = Fitter(env.geom, angles)
     if here.facts.alley_at_rear and not here.facts.alley_rear_whole:
@@ -1138,16 +1142,32 @@ def screen_lot(
         # the lot is cut with that front; where it leaves it to the applicant
         # each street is tried and the better answer kept. None: no front is
         # named and every street edge is a front, as before 2026-09-26.
+        #
+        # WHICH END OF A THROUGH LOT (FOLLOWUPS 6(i)): a lot with a street
+        # at each end names its far line by `front_lot_line_through` --
+        # `owner` tries each end as the front with the other the rear and
+        # keeps the better; `both_unless_no_access` and unread screen both
+        # fronts and each end as the rear and keep the WORSE, since nothing
+        # says which is true; `both` is the lot as cut.
         fronts: tuple[float | None, ...] = corner_fronts(
             lot.edges, front_lot_line_rule(got)
         ) or (None,)
+        plans: list[tuple[Any, LotEdges | None, float | None]] = []
+        worst = False
+        if fronts != (None,) and lot.edges is not None:
+            plans = [(f, name_front(lot.edges, f), f) for f in fronts]
+        else:
+            readings, worst = through_plans(lot.edges, front_lot_line_through_rule(got))
+            plans = [(("through", k), e, None) for k, e in enumerate(readings)]
+            if not plans:
+                plans = [(None, lot.edges, None)]
         tried: list[tuple[Screened, Fitter]] = []
         plain: ZoneResolution | None = None
         alleyed: ZoneResolution | None = None
-        for front in fronts:
+        for plan_key, plan_edges, front in plans:
             here = lot
-            if front is not None and lot.edges is not None:
-                here = dataclasses.replace(lot, edges=name_front(lot.edges, front))
+            if plan_edges is not lot.edges:
+                here = dataclasses.replace(lot, edges=plan_edges)
             if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
                 # A rear line off the alley owes the ordinary rear setback:
                 # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
@@ -1172,13 +1192,26 @@ def screen_lot(
                 cut = envelope_for(here, got, plain, alleyed)
                 if cut.setbacks != envs[0].setbacks:
                     envs.append(cut)
-            for env in envs:
-                tried.append(_screen_on(
-                    here, design, config, got, env, front, angles, fitters, step_deg,
-                    policy=policy, relief=relief,
-                ))
+            # The better of the envelope cuts for this reading of the lot;
+            # the readings are ranked against each other below.
+            tried.append(min(
+                (
+                    _screen_on(
+                        here, design, config, got, env, front, angles, fitters, step_deg,
+                        policy=policy, relief=relief, plan=plan_key,
+                    )
+                    for env in envs
+                ),
+                key=lambda t: _front_rank(t[0]),
+            ))
         # Drawn for the winner only: one more window search per design.
-        won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        if worst:
+            # The worse reading: the lower colour, the tighter fit, and on a
+            # tie (the pod's slack is often measured across the lot, which
+            # the ends do not touch) the smaller envelope.
+            won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
+        else:
+            won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
         out.append(dataclasses.replace(won, drawing=drawing_for(won, fitter)))
     return out
 
@@ -1223,6 +1256,10 @@ def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
 #: A stall band's standing in the choice of front: Steph's ruling of
 #: 2026-09-19 (HUMAN_TODO 21) prefers the ``preferred`` band.
 _BAND_RANK: dict[str | None, int] = {"preferred": 0, "target": 1, "minimum": 2}
+
+
+def _env_sqft(s: Screened) -> float:
+    return s.envelope.sqft if s.envelope is not None else 0.0
 
 
 def _front_rank(s: Screened) -> tuple[int, int, int, float]:

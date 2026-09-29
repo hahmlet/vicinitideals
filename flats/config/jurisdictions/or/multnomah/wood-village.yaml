@@ -895,6 +895,21 @@ defaults:
     url: https://woodvillage.municipal.codes/WVDC/720.030
     retrieved: '2026-08-30'
     quote: "or/multnomah/wood-village/720.030.definitions.txt#L268"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # 720.030 copies Portland's sentence: "a through lot has two front lot lines
+  # regardless of whether the street lot lines are of equal or unequal
+  # length." FRONTAGE (L190) lets the owner designate the frontage "on corner
+  # or through lots" -- the address side, not the setback: the front LINE
+  # definition is the one the yards are measured from.
+  front_lot_line_through:
+    value: both
+    cite: WVDC 720.030, Front Lot Lines, a through lot has two front lot lines
+    url: https://woodvillage.municipal.codes/WVDC/720.030
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/720.030.definitions.txt#L268"
   # NOT ENCODED: the other two rows of Table 350-2, both of which set a parking
   # area back from a side or rear lot line rather than from a street, and the
   # model holds only the street one. Against an LR or MR neighbour it is five

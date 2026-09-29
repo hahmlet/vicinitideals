@@ -283,4 +283,5 @@ def test_the_chapter_refused_one_standard_for_every_number_it_gave_up() -> None:
     assert len(parking) == 7
     assert len(mine) == 11
     # 7 -> 10 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
-    assert len(load_rules()[GLADSTONE].defaults) == 10
+    # 10 -> 11 on 2026-09-29: front_lot_line_through (FOLLOWUPS 6(i)).
+    assert len(load_rules()[GLADSTONE].defaults) == 11
