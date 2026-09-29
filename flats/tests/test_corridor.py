@@ -26,7 +26,7 @@ from flats.geom.corridor import (
     street_name,
 )
 from flats.ingest.quadfit import OBSERVABLE, lot_from_row, observed_facts
-from flats.rules.conditions import CONDITIONS
+from flats.rules.conditions import CONDITIONS, close_entailed
 
 pytestmark = pytest.mark.unit
 
@@ -50,8 +50,8 @@ def cmap(*lines: LineString, condition: str = "civic_corridor_setback") -> Corri
     return CorridorMap.from_lines(condition, [PDX], lines)
 
 
-def test_both_facts_are_registered_site_facts_the_bridge_observes() -> None:
-    assert CORRIDOR_FACTS == ("civic_corridor", "civic_corridor_setback")
+def test_the_corridor_facts_are_registered_site_facts_the_bridge_observes() -> None:
+    assert CORRIDOR_FACTS == ("civic_corridor", "civic_corridor_setback", "civic_corridor_setback_all_streets")
     for name in CORRIDOR_FACTS:
         assert CONDITIONS[name].kind == "site_fact"
         assert name in OBSERVABLE
@@ -255,3 +255,101 @@ def test_the_setback_map_takes_either_reading_the_coverage_map_only_the_street()
     names = ["SW BARBUR BLVD"]
     assert on_corridor(FRONT, CorridorMap.from_lines("civic_corridor_setback", [PDX], [drawn], names, net))
     assert not on_corridor(FRONT, CorridorMap.from_lines("civic_corridor", [PDX], [drawn], names, net))
+
+
+# --- Map 130-1's 20 ft maximum: EVERY street line, never ANY -----------------
+#
+# 33.130.215.C.1 (33.130.txt L957-L959): "the maximum a building can be set
+# back from a street lot line is 10 feet, except on Civic Corridors shown on
+# Map 130-1, where the maximum set back is 20 feet." Table 130-2 prints it in
+# all six zones (L653-L654). A raised maximum loosens, so it may not ride on
+# the ANY-line, read-either-way `civic_corridor_setback`.
+
+EVERY = "civic_corridor_setback_all_streets"
+C_ZONES = ("CM1", "CM2", "CM3", "CE", "CX", "CR")
+
+# The same 50 x 100 lot on a corner: its west line is a street line too, on a
+# north-south cross street 30 ft out that is not a corridor.
+WEST = [X0, Y0 + 100, X0, Y0, "F"]
+CORNER = [FRONT, EDGES[1], EDGES[2], WEST]
+CROSS = LineString([(X0 - 30, Y0 - 500), (X0 - 30, Y0 + 500)])
+
+
+def division(*lines: LineString) -> CorridorMap:
+    """Map 130-1's Division stretch with the street network in hand."""
+    net = streets((ALONG, "SE DIVISION ST"), (CROSS, "SE 82ND AVE"))
+    drawn = list(lines) or [ALONG]
+    return CorridorMap.from_lines(
+        "civic_corridor_setback", [PDX], drawn, ["SE DIVISION ST - CIVIC CORRIDOR"] * len(drawn), net
+    )
+
+
+@pytest.mark.parametrize("zone", C_ZONES)
+def test_the_twenty_foot_maximum_follows_every_street_line_not_any(pdx_rules, zone: str) -> None:
+    def most(*conditions: str) -> object:
+        return pdx_rules.resolve(PDX, zone, conditions=list(conditions)).values["setback_front_max_ft"].value
+
+    assert most() == 10
+    # The ANY-line fact tightens the minimum and leaves the maximum at 10.
+    assert most("civic_corridor_setback") == 10
+    assert most("civic_corridor_setback", EVERY) == 20
+
+
+@pytest.mark.parametrize("zone", C_ZONES)
+def test_the_twenty_is_quoted_from_the_corridor_row_and_the_sentence(zone: str) -> None:
+    from flats.rules.loader import load_rules
+
+    value = load_rules()[PDX].zones[zone].values["setback_front_max_ft"]
+    (variant,) = value.variants
+    assert variant.value == 20
+    assert tuple(variant.when) == (EVERY,)
+    assert variant.prov.quote == "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
+
+
+def test_the_minimum_never_passes_the_maximum_on_a_stretch(pdx_rules) -> None:
+    for zone in C_ZONES:
+        for conditions in ([], ["civic_corridor_setback"], ["civic_corridor_setback", EVERY]):
+            got = pdx_rules.resolve(PDX, zone, conditions=conditions).values
+            assert got["setback_front_ft"].value <= got["setback_front_max_ft"].value, (zone, conditions)
+
+
+def test_an_interior_lot_on_division_has_every_street_line_on_it() -> None:
+    assert observed_corridors(EDGES, PDX, [division()]) == {"civic_corridor_setback": True, EVERY: True}
+
+
+def test_a_corner_lot_with_one_line_on_division_keeps_ten_on_both(pdx_rules) -> None:
+    # The per-lot, per-line trap: the rule gives Division's line 20 and the
+    # side street 10, and the lot holds one number. ANY says True (the 10 ft
+    # minimum on both lines, the tight side); EVERY says False, so the lot's
+    # maximum stays 10 -- never 20 on a line the corridor does not touch.
+    got = observed_corridors(CORNER, PDX, [division()])
+    assert got == {"civic_corridor_setback": True, EVERY: False}
+    held = [name for name, value in close_entailed(got).items() if value]
+    assert pdx_rules.resolve(PDX, "CM2", conditions=held).values["setback_front_max_ft"].value == 10
+
+
+def test_the_drawn_line_alone_tightens_but_never_relaxes() -> None:
+    # The loop case above: the line abuts a transit-centre loop 12 ft out and
+    # Barbur's drawn line is 48 ft out. The minimum takes the drawn line; the
+    # maximum's relaxation does not.
+    drawn = LineString([(X0 - 500, Y0 - 48), (X0 + 500, Y0 - 48)])
+    loop = LineString([(X0 - 500, Y0 - 12), (X0 + 500, Y0 - 12)])
+    cm = CorridorMap.from_lines(
+        "civic_corridor_setback", [PDX], [drawn], ["SW BARBUR BLVD"], streets((loop, "BARBUR TC"))
+    )
+    assert observed_corridors(EDGES, PDX, [cm]) == {"civic_corridor_setback": True, EVERY: False}
+
+
+def test_a_stretch_that_ends_part_way_along_the_line_does_not_relax_it() -> None:
+    past_half = LineString([(X0 - 500, Y0 - 30), (X0 + 30, Y0 - 30)])
+    got = observed_corridors(EDGES, PDX, [division(past_half)])
+    assert got == {"civic_corridor_setback": True, EVERY: False}
+
+
+def test_without_the_street_network_the_every_line_fact_is_unasked() -> None:
+    assert observed_corridors(EDGES, PDX, [cmap(ALONG)]) == {"civic_corridor_setback": True}
+
+
+def test_every_line_on_a_stretch_is_at_least_one_line_on_it() -> None:
+    assert close_entailed({EVERY: True})["civic_corridor_setback"] is True
+    assert close_entailed({"civic_corridor_setback": False})[EVERY] is False

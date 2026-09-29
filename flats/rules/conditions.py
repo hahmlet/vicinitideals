@@ -355,6 +355,25 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "civic_corridor_setback_all_streets",
+        "site_fact",
+        "EVERY street lot line of the site is on a Civic Corridor shown on "
+        "Portland Map 130-1. The same map that adds a 10 ft minimum also "
+        "raises the commercial zones' maximum front setback from 10 ft to 20 "
+        "(33.130.215.C.1), and a raised maximum is a loosened standard, so it "
+        "cannot hang on `civic_corridor_setback`: that fact is true when ANY "
+        "street line is on a stretch, read the liberal way, and would give "
+        "the 20 to the side street of a corner lot on Division. True here "
+        "needs every street line on a stretch by the street it abuts, at "
+        "every point sampled, with the street network in hand "
+        "(flats/geom/corridor.py). A corner lot with one line off the "
+        "corridor answers False and keeps 10 on every street line -- the "
+        "per-line field that would give each line its own maximum is not "
+        "built. Unasked, it is unknown, and the 10 binds.",
+        evidence="Portland Map 130-1 against every street lot line of the lot, by the street each abuts",
+        assume=None,
+    ),
+    ConditionDef(
         "hillside_or_resource_overlay",
         "site_fact",
         "Some part of the lot lies inside a mapped hillside-risk or resource "
@@ -807,9 +826,14 @@ CONDITIONS: dict[str, ConditionDef] = {c.name: c for c in _C}
 #: `configure` applies this in both directions and refuses an observation
 #: that contradicts it (a rear alley on a lot said to abut none), because a
 #: registry that lets the pair drift apart has split one concept into two.
+#: `civic_corridor_setback_all_streets` is the same shape the other way
+#: round -- every street line on a Map 130-1 stretch is at least one -- so a
+#: lot asserted onto the 20 ft maximum is also held to the 10 ft minimum,
+#: and a lot with no line on a stretch has not every line on one.
 ENTAILS: dict[str, tuple[str, ...]] = {
     "alley_at_rear": ("abuts_alley",),
     "alley_at_side": ("abuts_alley",),
+    "civic_corridor_setback_all_streets": ("civic_corridor_setback",),
 }
 
 

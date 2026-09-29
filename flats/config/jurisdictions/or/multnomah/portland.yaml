@@ -3473,6 +3473,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -3645,6 +3661,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -3785,6 +3817,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -3934,6 +3982,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -4083,6 +4147,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -4214,6 +4294,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through

@@ -178,6 +178,15 @@ def rows() -> list[Routing]:
 #: 38.3060(A) -> 38.3030(A)(8) excepts community parks and playgrounds, a
 #: conditional use, from the GGR-2 minimum lot size; the zone permits one
 #: house per parcel and refuses ours.
+#:
+#: *Somebody else's building, once more, 2026-09-28.* Portland's
+#: 33.130.215 -> 33.120.280 arrived when the commercial zones' 20 ft maximum
+#: front setback on Map 130-1's corridors was quoted from 33.130.215.C.1
+#: (33.130.txt L957-L959) -- the table row prints "Selected Civic Corridors"
+#: and only that sentence names Map 130-1. Eight lines above it, 215.B.4
+#: sends DETACHED ACCESSORY STRUCTURES on all-residential sites to the
+#: multi-dwelling standards of 33.120.280. The pod is a primary structure;
+#: the pointer reaches a shed or a garage this screen never places.
 OPEN = {
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",
@@ -208,6 +217,7 @@ OPEN = {
     "or/multnomah/gresham 4.1413 -> 4.1414",
     "or/multnomah/gresham 4.1415 -> 10.1700",
     "or/multnomah/gresham 4.1508 -> 10.1700",
+    "or/multnomah/portland 33.130.215 -> 33.120.280",
     "or/multnomah/portland 33.140.210 -> 33.140.215",
 }
 

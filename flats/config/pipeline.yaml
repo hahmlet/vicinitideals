@@ -310,7 +310,10 @@ datasets:
       Five stretches (Barbur, Division, 122nd x2, Stark). Answers
       civic_corridor_setback -- the 10 ft minimum from a street lot line on
       one in the commercial zones (33.130.215.B.1.a). A different map from
-      corridors_pdx; the code names them separately.
+      corridors_pdx; the code names them separately. Also answers
+      civic_corridor_setback_all_streets (every street line on a stretch,
+      read by the street each abuts), which carries the 20 ft maximum front
+      setback the same map allows in place of 10 (33.130.215.C.1).
 
   overlay_gresham_wetlands:
     kind: arcgis

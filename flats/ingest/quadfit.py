@@ -274,7 +274,9 @@ def observed_facts(
       running along a line of Portland's corridor maps, through
       :func:`flats.geom.corridor.observed_corridors`. Only with the maps in
       hand (the bridge's ``--sources``), only on lots of the layers a map
-      serves, and only with edges.
+      serves, and only with edges. ``civic_corridor_setback_all_streets``
+      beside it -- EVERY street line on a Map 130-1 stretch by the street it
+      abuts -- only where the snapshot also holds the street network.
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.

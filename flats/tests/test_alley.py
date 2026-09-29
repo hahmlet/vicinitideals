@@ -240,7 +240,10 @@ def test_the_three_facts_are_registered_as_measured_site_facts() -> None:
         assert defn.kind == "site_fact", name
         assert defn.assume is False, name
         assert "quadfit" in defn.evidence, name
-    assert ENTAILS == {"alley_at_rear": ("abuts_alley",), "alley_at_side": ("abuts_alley",)}
+    assert {k: v for k, v in ENTAILS.items() if k in ALLEY_FACTS} == {
+        "alley_at_rear": ("abuts_alley",),
+        "alley_at_side": ("abuts_alley",),
+    }
 
 
 def test_a_line_fact_carries_the_lot_fact() -> None:

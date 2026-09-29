@@ -48,6 +48,22 @@ so an approximation can only cost a lot, never pass one. For RM2 coverage
 the fact relaxes, and "a site that abuts" a corridor is exactly a site with
 one line on it, so ANY is the rule's own reading.
 
+**The same map relaxes a second standard, and that one needs EVERY line.**
+33.130.215.C.1: "the maximum a building can be set back from a street lot
+line is 10 feet, except on Civic Corridors shown on Map 130-1, where the
+maximum set back is 20 feet." A maximum raised is a standard loosened, and
+the ANY-line fact above -- read the liberal way on purpose, drawn line or
+street -- would hand the 20 to the side street of a corner lot whose one
+line is on Division, and to a lot the drawn line merely passes near. So the
+map answers a partner fact, ``civic_corridor_setback_all_streets``: True
+only when the lot has street lines and EVERY one of them is on a stretch by
+the street reading alone, at every sample point (:data:`EVERY_SHARE`), with
+a street network in hand. Without the network it is left unasked. True is
+the permissive answer, so it is the expensive one -- the same bargain as
+``abuts_nonresidential_zone`` in :mod:`flats.geom.neighbour`. The per-line
+field that would let one line take 20 and the next 10 is not built
+(FOLLOWUPS 8(d)); until it is, a corner lot keeps 10 on every street line.
+
 **Only where the map is.** A condition is answered only on lots of the
 layers the map serves (the registry's ``serves``); Gresham's
 ``civic_corridor`` is Gresham's own corridors, which no map here holds, and
@@ -92,6 +108,12 @@ COINCIDE_FT = 30.0
 #: Half: a line the corridor's drawn end stops part way along still fronts it.
 MIN_SHARE = 0.5
 
+#: The share for an EVERY-line fact, whose True relaxes a standard: all of
+#: them. A line the stretch ends part way along is off it for the 20 ft
+#: maximum -- the part past the end keeps 10 -- and a point with no
+#: centreline beside it does not agree.
+EVERY_SHARE = 1.0
+
 #: Points sampled along each street lot line, ends excluded.
 SAMPLES = 9
 
@@ -109,6 +131,14 @@ CORRIDOR_MAPS: dict[str, str] = {
 #: because a false hit is.
 TIGHTENS: frozenset[str] = frozenset({"civic_corridor_setback"})
 
+#: A map's ANY-line condition -> its partner, true only when EVERY street
+#: line of the lot is on the corridor by the street reading. Map 130-1's
+#: 20 ft maximum front setback (33.130.215.C.1) relaxes the 10 ft one, so it
+#: hangs on the partner, never on the liberal ANY-line fact.
+EVERY_STREET: dict[str, str] = {
+    "civic_corridor_setback": "civic_corridor_setback_all_streets",
+}
+
 #: The street network the lot lines are read against.
 STREETS_KEY = "rlis_streets"
 
@@ -116,7 +146,7 @@ STREETS_KEY = "rlis_streets"
 _STREET_KEEP_FT = CORRIDOR_REACH_FT + FRONT_REACH_FT
 
 #: The facts, in the order they are reported.
-CORRIDOR_FACTS: tuple[str, ...] = tuple(sorted(set(CORRIDOR_MAPS.values())))
+CORRIDOR_FACTS: tuple[str, ...] = tuple(sorted({*CORRIDOR_MAPS.values(), *EVERY_STREET.values()}))
 
 _WORDS = {"AVENUE": "AVE", "STREET": "ST", "BOULEVARD": "BLVD", "ROAD": "RD", "DRIVE": "DR"}
 
@@ -269,17 +299,25 @@ def _fronted(point: Any, own: float, streets: Lines) -> int | None:
     return None if best is None else best[1]
 
 
-def _on_at(point: Any, own: float, cmap: CorridorMap, near: list[int]) -> bool:
-    """Whether the street a lot line abuts at ``point`` is the corridor."""
+def _on_at(point: Any, own: float, cmap: CorridorMap, near: list[int], strict: bool = False) -> bool:
+    """Whether the street a lot line abuts at ``point`` is the corridor.
+
+    ``strict`` is the reading for a fact whose True relaxes a standard: the
+    street reading only, never the drawn line alone, and no agreement where
+    no centreline runs beside the line or there is no network.
+    """
     corridor = cmap.corridor
+    if strict and cmap.streets is None:
+        return False
     drawn = any(_abreast(corridor.lines[i], point, own, REACH_FT) for i in near)
-    if cmap.streets is None or (drawn and cmap.condition in TIGHTENS):
+    if cmap.streets is None or (drawn and cmap.condition in TIGHTENS and not strict):
         return drawn
     s = _fronted(point, own, cmap.streets)
     if s is None:
         # No centreline beside the line here (a curve, a gap in the network):
-        # the drawn line decides, as with no network.
-        return drawn
+        # the drawn line decides, as with no network -- except for a strict
+        # reading, where a point nobody can place does not agree.
+        return False if strict else drawn
     street, name = cmap.streets.lines[s], cmap.streets.names[s]
     foot = street.interpolate(street.project(point))
     for i in near:
@@ -291,10 +329,11 @@ def _on_at(point: Any, own: float, cmap: CorridorMap, near: list[int]) -> bool:
     return False
 
 
-def on_corridor(edge: Sequence[float], cmap: CorridorMap) -> bool:
+def on_corridor(edge: Sequence[float], cmap: CorridorMap, *, strict: bool = False) -> bool:
     """Whether one street lot line ``(x1, y1, x2, y2)`` abuts a corridor.
 
-    At least :data:`MIN_SHARE` of the line's sample points have to agree. A
+    At least :data:`MIN_SHARE` of the line's sample points have to agree
+    (:data:`EVERY_SHARE`, by the street reading only, when ``strict``). A
     sample may agree with a different corridor line than its neighbour: a
     corridor is drawn as many segments, and a lot line can span the join.
     """
@@ -312,9 +351,9 @@ def on_corridor(edge: Sequence[float], cmap: CorridorMap) -> bool:
     hits = 0
     for k in range(1, SAMPLES + 1):
         p = Point(x1 + (x2 - x1) * k / (SAMPLES + 1), y1 + (y2 - y1) * k / (SAMPLES + 1))
-        if _on_at(p, own, cmap, near):
+        if _on_at(p, own, cmap, near, strict):
             hits += 1
-    return hits / SAMPLES >= MIN_SHARE
+    return hits / SAMPLES >= (EVERY_SHARE if strict else MIN_SHARE)
 
 
 def observed_corridors(
@@ -325,7 +364,9 @@ def observed_corridors(
     ``edges`` is s4's ``edges_json`` decoded (``[x1, y1, x2, y2, cls]``). A
     fact is present only for a map that serves the lot's layer, and only
     when the lot has edges: True when any street line is on the corridor,
-    else False.
+    else False. A map's :data:`EVERY_STREET` partner is answered beside it
+    only with a street network and at least one street line: True when
+    every street line is on the corridor by the strict reading, else False.
     """
     edges = [e for e in edges]
     if not edges:
@@ -337,5 +378,8 @@ def observed_corridors(
             continue
         hit = any(on_corridor(e, cmap) for e in street)  # type: ignore[arg-type]
         out[cmap.condition] = out.get(cmap.condition, False) or hit
+        every = EVERY_STREET.get(cmap.condition)
+        if every and street and cmap.streets is not None:
+            out[every] = all(on_corridor(e, cmap, strict=True) for e in street)  # type: ignore[arg-type]
     return out
 
