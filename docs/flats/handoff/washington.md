@@ -1334,6 +1334,13 @@ no dimensions:
 
 ## 4. Refusals and absences
 
+Three cities in the county brief's Encode list were not drafted because
+their sites refused the fetch: Tigard, Forest Grove and Cornelius.
+Section 1's table gives each URL and what was tried. Nothing was worked
+around, and no mirror or cache was used. This section is otherwise about
+the six drafted layers: what each code states that the layer does not
+hold.
+
 Layer-wide NOT ENCODED entries in `_unincorporated.yaml`, each with its quote
 in the layer comment:
 
@@ -3314,6 +3321,14 @@ Durham (all run on 2026-09-29, on the final layer):
 - HB 2138 (2025) requires middle housing on every residential lot from
   2027-01-01. It may bring North Plains, Banks and Gaston into scope. Not acted
   on here.
+- Tigard, Forest Grove and Cornelius, the three Encode cities whose sites
+  refused the fetch (section 1). Each needs its code fetched from a machine
+  the site answers (eCode360 for Tigard and Cornelius, American Legal for
+  Forest Grove), then rulebook steps 1-14. For the map: Tigard's own GIS
+  was unreachable here, and Metro's layer carries its current codes; Forest
+  Grove's zoning layer answered (`zoning_code`); Cornelius has no zoning
+  layer, Metro's is stale (no R-10), and the city's Zoning Map 2025 PDF is
+  reachable.
 
 ### Hillsboro
 
