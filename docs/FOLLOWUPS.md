@@ -418,7 +418,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    along the lane, not the last clip piece (the first cut refused 14
    clipped-corner lots wrongly). The 09-28 s1->s7 lost 50 lanes: 14 back,
    ~17 run past the frontage's end (correct), 5 side-street, 2 now short
-   of stalls, 7 being read; (m) the ~30 wide fronts with no
+   of stalls; the 7 read: 94fed5e3 gives the strip's free end half a
+   grid cell of slack (2 slanted-line lots) and retries the side court
+   up to 6 times when the biggest rectangle has no lane (1S1E03CB-80000);
+   replay of the 88 moved lots: 36 lost -> 31 (29 no lane, 2 few stalls),
+   0 regressions (137 /root/strip_chains/v2/replay2.csv). 32E07DC03600:
+   the curved line past the lane may be a street s4 does not label --
+   worth a look; (m) the ~30 wide fronts with no
    envelope cell within the street reach: s5's tier-C envelope is
    `buffer(-max(setbacks))`, round and uniform, not per edge, and an
    overlay carve-out can eat the strip -- refused today, count which is
