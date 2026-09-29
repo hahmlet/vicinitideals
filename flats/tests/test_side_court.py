@@ -175,7 +175,7 @@ def test_the_search_asks_for_the_building_and_the_band_side_by_side() -> None:
     # 103) does not.
     got = side_court(pod(), Rules(OPEN))
     fitter = Fitter(shapely.box(0, 0, 85, 66), angles=(0.0,))
-    fit = fitter.fit_beside(56, 36, band_ft=got.band_ft, beyond=lambda deep: 0.0)
+    fit = fitter.fit_beside(56, 36, band_ft=got.band_ft, beyond=lambda deep: 0.0, angles=(0.0,))
     assert fit.beside and fit.fits
     assert fit.orientation is Orientation.depth_facing
     assert fit.across_ft == pytest.approx(36 + got.band_ft)
@@ -184,9 +184,29 @@ def test_the_search_asks_for_the_building_and_the_band_side_by_side() -> None:
     banned = side_court(pod(), Rules(OPEN, parking_front_prohibited=True))
     none = fitter.fit_beside(
         56, 36, band_ft=banned.band_ft, beyond=lambda deep: _beside_beyond(banned, deep, Rules(OPEN)),
-        allow_flip=False,
+        angles=(0.0,), allow_flip=False,
     )
     assert none is None or not none.fits
+    # No street direction known, no court beside.
+    assert fitter.fit_beside(56, 36, band_ft=got.band_ft, beyond=lambda deep: 0.0, angles=()) is None
+
+
+def test_the_court_beside_is_searched_only_along_the_street() -> None:
+    # A 57 ft wide, 89 ft deep envelope, street along the bottom (bearing 0).
+    # Turned a quarter, the pod broadside to the side line and the 47 ft
+    # band behind it fit (83 of the 89 ft deep, 56 of the 57 wide) -- but
+    # that is a building with its court BEHIND it and no lane down its
+    # flank to reach it, the arrangement the row search refuses. Along the
+    # street the 83 ft does not fit the 57, and the court is not offered.
+    # Portland R2.5, 1N2E33DC -06600, read in the bound of 2026-09-29.
+    got = side_court(pod(), Rules(OPEN))
+    fitter = Fitter(shapely.box(0, 0, 57, 89), angles=(0.0, 90.0))
+    turned = fitter.fit_beside(56, 36, band_ft=got.band_ft, beyond=lambda deep: 0.0, angles=(90.0,))
+    assert turned.fits, "the quarter turn does hold the rectangle"
+    along = fitter.fit_beside(56, 36, band_ft=got.band_ft, beyond=lambda deep: 0.0, angles=(0.0,))
+    assert not along.fits
+    assert fitter.holds(36 + got.band_ft, 56, angles=(90.0,))
+    assert not fitter.holds(36 + got.band_ft, 56, angles=(0.0,))
 
 
 # --- one lot, at its real coordinates ----------------------------------------

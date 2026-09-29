@@ -1145,6 +1145,7 @@ def _screen_on(
         alley=facts.alley,
         corner=facts.corner,
         frontage_ft=facts.frontage_ft,
+        street_deg=here.front_bearings if front is None else (front,),
     )
     result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
     shadow = _if_signed(

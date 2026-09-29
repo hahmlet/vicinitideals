@@ -886,6 +886,7 @@ def seats(
     alley: Alley | None = None,
     corner: bool = False,
     frontage_ft: float | None = None,
+    street_deg: tuple[float, ...] = (),
 ) -> int | None:
     """How many stalls the lot seats -- the number beside the colour.
 
@@ -914,8 +915,9 @@ def seats(
     (:func:`flats.score.paper.side_court`) the row may stand BESIDE the
     building instead, along the lot: the building's side plus the court's
     band across, and one stall's width further along per car, charged past
-    the rear wall only where the row outruns the building. The same count,
-    asked of that plan too.
+    the rear wall only where the row outruns the building, searched only
+    along the street (``street_deg``, :meth:`Fitter.fit_beside`). The same
+    count, asked of that plan too.
 
     Still one row, behind or beside. The county map also draws two rows
     either side of one aisle where the room behind is deep enough, and
@@ -954,11 +956,15 @@ def seats(
                     break
                 seated = n
         for n in range(max(seated + 1, across.stalls), across.most + 1):
+            if not street_deg:
+                break
             row = side_court(design, rules, alley, corner=corner, frontage_ft=frontage_ft, stalls=n)
             if row is None:
                 break
             extra = _beside_beyond(row, deep, rules, carved_rear_ft)
-            if math.isinf(extra) or not fitter.holds(side + row.band_ft, deep + extra):
+            if math.isinf(extra) or not fitter.holds(
+                side + row.band_ft, deep + extra, angles=street_deg
+            ):
                 break
             seated = n
         best = max(best, seated)
@@ -1015,6 +1021,7 @@ def fit_for(
     alley: Alley | None = None,
     corner: bool = False,
     frontage_ft: float | None = None,
+    street_deg: tuple[float, ...] = (),
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
 
@@ -1048,7 +1055,9 @@ def fit_for(
     ``frontage_ft`` against a cap on parking along the street), the lot is
     searched once more for the court BESIDE the building -- the stalls
     along the lot, the aisle along the building's wall and in from the
-    street -- and that fit is read where it clears with its court
+    street, so searched only at the street's directions (``street_deg``;
+    none known, no court beside) -- and that fit is read where it clears
+    with its court
     (:attr:`flats.fit.rectangle.Fit.beside`). A lot the row already fits
     keeps the row: the drawing every code here describes, and the one this
     screen has always charged; so does a lot neither arrangement fits, whose
@@ -1091,6 +1100,7 @@ def fit_for(
             design.footprint.depth_ft,
             band_ft=court.band_ft,
             beyond=lambda deep: _beside_beyond(court, deep, rules, carved_rear_ft),
+            angles=street_deg,
             allow_flip=not axis_required,
             placement=placement,
         )
@@ -1113,6 +1123,7 @@ def fit_for(
             alley=alley,
             corner=corner,
             frontage_ft=frontage_ft,
+            street_deg=street_deg,
         ),
     )
 
