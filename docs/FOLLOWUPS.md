@@ -120,8 +120,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    alley; the side-alley number is cut per stretch in `buildable`. Probe:
    ~64 rear-alley lots stop short, ~8 green->yellow expected (4-15), 0-5
    side moves. Left: quadfit s6s still reads the alley as the aisle on
-   3-of-5; Gresham's rear-with-alley NUMBER can reach a second, non-alley
-   rear line (`envelope_for` fallback checks exemptions only); whether a
+   3-of-5 (FIXED 10f193ea, rides the next s6s run); Gresham's
+   rear-with-alley number on a second rear line FIXED 09171698 (14 rows /
+   7 lots shrink, 0 colour moves); a rear alley along PART of its line
+   still gives the whole line the ordinary rear -- conservative, but Steph's
+   ruling says the covered stretch is waived, so it could be cut per
+   stretch as side lines are (not built); whether a
    line an alley runs PART of is "a lot line abutting an alley": RULED by
    Steph 2026-09-28 -- careful reading (covered stretch only), and the
    covered stretch is the travel lane only if long enough: BUILT 288f0daa
@@ -543,9 +547,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    f0418b49 (coarser grid), rides the next batch. Left: (a -- settled
    2026-09-27: Table 8A's R-10 row is 20/20, R-7/R-5 are 15; FLATS holds
    the binding R-10 row and quadfit the loosest on purpose, per its own
-   note; FLATS's own envelope charges 20 and RN is RED on use anyway) (b)
-   Portland R5/R2.5/RM* lots with an alley rear AND a rear line off it
-   (~2,700 rows) stay on quadfit's envelope -- the waiver is per line; (c)
+   note; FLATS's own envelope charges 20 and RN is RED on use anyway) (b) DONE 09171698 -- a rear line off the alley keeps the ordinary rear, the alley line takes the waiver (the bridge resolves the lot twice); probe on 09-29 s4: 2,710 Portland rows move from quadfit's envelope to FLATS's, area identical on 2,708, 0 colour moves; (c)
    RULED b1d46053 -- Portland's commercial/employment/industrial chapters
    state no alley setback; under 33.910 an alley line is a non-street line
    and 33.130.215.B.2 sets it by the abutted zone; max(side, rear) already
