@@ -252,6 +252,17 @@ jobs:
       - name: Staging promotion gates
         run: uv run python -m app.scripts.check_promotion_gates --environment staging
 
+      - name: Install LibreOffice (xlsx formula recalc)
+        # The Excel-export parity tests (tests/exporters/*parity*, the recalc
+        # harness, the no-#REF! sweep) recalc the exported workbook and
+        # compare the formula results to the engine. openpyxl cannot evaluate
+        # a formula, so without a spreadsheet engine all 19 skipped -- on
+        # every CI run until 2026-09-28. calc only, no recommends: ~1 min.
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends libreoffice-calc
+          soffice --version
+
       - name: Integration tests
         # Runs the ENTIRE non-E2E suite — no marker filter, no per-file
         # ignores. The 2026-07 suite rehab brought every file to green;
@@ -261,7 +272,13 @@ jobs:
         # runners). Tests that depend on the compose-network `redis`
         # hostname fail-open via the rate limiter, so they cost time
         # but don't break the gate.
-        run: uv run pytest tests/ -q --timeout=120 --ignore=tests/e2e
+        #
+        # REQUIRE_XLSX_RECALC=1: the parity tests skip when no recalc backend
+        # exists; here that is a FAILURE, so the gate cannot go dark again.
+        # -rs prints every skip reason so a new silent skip is visible.
+        run: uv run pytest tests/ -q -rs --timeout=120 --ignore=tests/e2e
+        env:
+          REQUIRE_XLSX_RECALC: "1"
 
       - name: Install Playwright browsers
         run: uv run playwright install chromium --with-deps

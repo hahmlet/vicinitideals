@@ -197,15 +197,27 @@ def count_formula_cells(blob: bytes) -> dict[str, int]:
 # to the .xlsx cache. openpyxl then reads those cached values via
 # ``data_only=True``.
 #
-# The harness uses Excel COM on Windows (Office must be installed). A future
-# CI gate will swap in headless LibreOffice via the same interface
-# (``recalc_workbook(path)``) so non-Windows runs can execute the parity
-# tests too. The plan calls this out in §8 / §9.
+# The harness uses Excel COM on Windows (Office must be installed) and
+# headless LibreOffice everywhere else, behind one interface
+# (``recalc_workbook(path)``). CI installs LibreOffice in the full gate and
+# sets ``REQUIRE_XLSX_RECALC=1``, which turns "no backend" from a skip into a
+# failure: these parity tests skipped silently on every CI run until
+# 2026-09-28, a gate that protected nothing.
 
 
-import platform  # noqa: E402 — kept near the COM helpers, not the top imports.
+import os  # noqa: E402 — kept near the COM helpers, not the top imports.
+import platform  # noqa: E402
 import subprocess  # noqa: E402
 from pathlib import Path  # noqa: E402
+
+REQUIRE_RECALC_ENV = "REQUIRE_XLSX_RECALC"
+
+
+def recalc_required() -> bool:
+    """True when this host promised a recalc backend (CI sets the env var)."""
+    return os.environ.get(REQUIRE_RECALC_ENV, "").strip().lower() in (
+        "1", "true", "yes",
+    )
 
 
 class RecalcUnavailableError(RuntimeError):
@@ -315,7 +327,8 @@ def recalc_workbook(path: Path) -> str:
 
     Returns the backend name ("excel" or "libreoffice") on success.
     Tries Excel COM first (faster, more accurate), then LibreOffice.
-    Raises ``RecalcUnavailableError`` if neither works.
+    Raises ``RecalcUnavailableError`` if neither works — unless
+    ``REQUIRE_XLSX_RECALC`` is set, in which case the calling test fails.
     """
     if platform.system() == "Windows":
         try:
@@ -323,7 +336,21 @@ def recalc_workbook(path: Path) -> str:
             return "excel"
         except RecalcUnavailableError:
             pass
-    recalc_with_libreoffice(path)
+    try:
+        recalc_with_libreoffice(path)
+    except RecalcUnavailableError as exc:
+        if recalc_required():
+            # pytest.fail raises an OutcomeException, which the callers'
+            # ``except RecalcUnavailableError: pytest.skip(...)`` does not
+            # catch — so a host that promised a backend fails loudly.
+            import pytest
+
+            pytest.fail(
+                f"{REQUIRE_RECALC_ENV} is set but no recalc backend is "
+                f"available: {exc}",
+                pytrace=False,
+            )
+        raise
     return "libreoffice"
 
 

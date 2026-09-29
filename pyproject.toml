@@ -135,7 +135,7 @@ dev = [
     # tests (docs/feature-plans/investor-excel-formula-conversion.md §8).
     # Used to force Excel to recalc a workbook so openpyxl can read the
     # cached computed values via ``data_only=True``. Windows-only; CI
-    # gates the parity tests on platform so non-Windows runs skip them.
+    # recalcs with headless LibreOffice instead (full gate, see ci.yml).
     'pywin32>=306; platform_system == "Windows"',
 ]
 e2e = [

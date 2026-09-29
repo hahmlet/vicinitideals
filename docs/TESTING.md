@@ -151,6 +151,11 @@ $env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_phase_b
 - **Light gate**: Ruff lint + unit tests (every push/PR)
 - **Full gate**: integration tests + E2E (Playwright) + Phase B regression + Trivy
   image scan + Semgrep SAST
+- **Excel-export parity** (`tests/exporters/*parity*`, the recalc harness, the
+  no-Excel-errors sweep — 19 tests) needs a formula engine to recalc the exported
+  workbook: Excel COM on Windows, else headless LibreOffice (`soffice`). Locally
+  they skip without one. The full gate installs `libreoffice-calc` and sets
+  `REQUIRE_XLSX_RECALC=1`, which turns that skip into a failure.
 - CI seeds the login via `app/scripts/seed_e2e_user.py` and the reference rows the
   suite reads but never creates via `app/scripts/seed_e2e_fixtures.py` (brokers, so
   far). Every seeder there is guarded on its table being empty, so it no-ops
