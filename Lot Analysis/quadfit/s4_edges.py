@@ -160,6 +160,21 @@ ORCA_KEY = "rlis_orca"
 #: (LAND/orca.shp.xml). Recorded raw; which of them a code calls a park is
 #: the code's question, answered in the FLATS layer.
 ORCA_KIND_FIELD = "UNITTYPE"
+#: RLIS STREETS TYPE codes for ways that are not public streets: 1700 a
+#: private road (named: Treehill Dr, Metolius Loop), 1800 an unnamed drive
+#: (a school's loop, a park's service road). Read off the file 2026-09-29;
+#: Metro's feature service publishes no domain for TYPE. See `street_kinds`.
+DRIVE_TYPES = frozenset({1700, 1800})
+#: A private polygon carrying a drive is the drive's own tract when nothing
+#: is built on it: the assessor's building value is at most this. A mobile
+#: home park ($12,780), a school or an office campus is somebody's land.
+DRIVE_TRACT_MAX_BLDGVAL = 5000.0
+#: ... and when it is a strip no wider than this. A vacant lot next door is
+#: unbuilt too, and a driveway easement across it is not the private street
+#: Portland, Happy Valley and Milwaukie count ("in a tract"); a tract with a
+#: turnaround bulb wider than this reads as other land and is screened both
+#: ways, the conservative side.
+DRIVE_TRACT_MAX_WIDTH_FT = 40.0
 
 
 def bearing_deg(x1: float, y1: float, x2: float, y2: float) -> float:
@@ -858,6 +873,225 @@ def park_across(results: list, orca_geoms, orca_kinds) -> list:
     return out
 
 
+def _drive_kind(x1: float, y1: float, x2: float, y2: float, lot_geom, lot_tlid: str,
+                street_tree, street_geoms, street_types, threshold_ft: float,
+                lot_tree, lot_geoms, lot_private, lot_built, fabric_tlid) -> str:
+    """What makes one street (``F``) edge a street edge. See `street_kinds`."""
+    from shapely.geometry import Point
+
+    mid = Point((x1 + x2) / 2, (y1 + y2) / 2)
+    near = [int(k) for k in street_tree.query(mid, predicate="dwithin", distance=threshold_ft)]
+    drives = [k for k in near if street_types[k] in DRIVE_TYPES]
+    if not drives or len(drives) < len(near):
+        # A public way within reach, or no centreline of either kind (a lot
+        # fronted by its alley alone, or the whole file where the code says
+        # an alley is a street): the drive question does not arise.
+        return "street"
+    k = min(drives, key=lambda k: mid.distance(street_geoms[k]))
+    line = street_geoms[k]
+    at = line.interpolate(line.project(mid))
+    if lot_geom.buffer(0.5).contains(at):
+        return "drive_on_lot"
+    dx, dy = at.x - mid.x, at.y - mid.y
+    d = math.hypot(dx, dy)
+    if d < NEIGHBOUR_OFFSET_FT:
+        return "drive"  # the centreline runs along the line itself
+
+    def private_at(pt) -> set[int]:
+        return {
+            int(j) for j in lot_tree.query(pt, predicate="intersects")
+            if lot_private[j] and fabric_tlid[j] != lot_tlid
+        }
+
+    holding = private_at(at)
+    if not holding:
+        return "drive"  # in a gap in the fabric or a right-of-way polygon
+    first = private_at(Point(mid.x + dx / d * NEIGHBOUR_OFFSET_FT, mid.y + dy / d * NEIGHBOUR_OFFSET_FT))
+    if first and not (first & holding):
+        return "drive_off_lot"  # another lot stands between the line and the drive
+    if all(
+        lot_built[j] <= DRIVE_TRACT_MAX_BLDGVAL
+        and lot_geoms[j].buffer(-DRIVE_TRACT_MAX_WIDTH_FT / 2).is_empty
+        for j in holding
+    ):
+        return "drive"  # an unbuilt strip the line abuts carries it: its tract
+    return "drive_off_lot"  # the drive of a built parcel next door
+
+
+def street_kinds(results: list, lot_geoms_s3, lot_tlids, ways, threshold_ft: float,
+                 lot_tree, lot_geoms, lot_private, lot_built, fabric_tlid) -> list:
+    """What kind of way makes each street edge a street edge.
+
+    `classify_lot` classes an edge ``F`` when its midpoint is within
+    `street_threshold_ft` of ANY non-alley centreline in RLIS STREETS, and the
+    file carries two kinds of line no code calls a public street: TYPE 1700
+    (a private road -- Dunbar Ln, Treehill Dr, Metolius Loop) and TYPE 1800
+    (unnamed drives: a school's bus loop, a park's service road, a mobile
+    home park's aisles). Wilsonville (4.001(157), (161), (242)) and Wood
+    Village (720.030 STREET, "a public or private right-of-way") count a
+    private drive the lot abuts as a street; no code in the corpus counts a
+    drive running across somebody ELSE's parcel, or inside the lot itself
+    (Wilsonville: "a private drive bounded on two sides by a single lot
+    shall not be considered"). Measured 2026-09-29 on the 137 stage files:
+    of 5,614 Wilsonville lots with edges, 552 have a street edge only a
+    drive makes -- 435 with such a drive on a tract or in a gap, 217 with
+    one on other land, 26 of those with no other frontage at all; Wood
+    Village 55 / 25 / 39 / 4 of 623.
+
+    Returns, per lot, a list parallel to its ``edges``: ``None`` on every
+    edge that is not ``F``, else
+
+    * ``street`` -- a public way (any TYPE but 1700/1800) is within reach;
+    * ``drive`` -- only a drive, and it runs in a gap in the fabric, on a
+      right-of-way polygon, along the line itself, or on an unbuilt private
+      polygon the line abuts (an HOA tract: building value at most
+      `DRIVE_TRACT_MAX_BLDGVAL`);
+    * ``drive_on_lot`` -- only a drive, and it runs inside this lot;
+    * ``drive_off_lot`` -- only a drive, and it runs on a built parcel next
+      door or behind another lot.
+
+    The last two are street edges by the file and by no code: the line
+    abuts a neighbour (or nothing), and s4's front, corner and access all
+    rest on it. FLATS reads them as an unconfirmed street
+    (`flats.ingest.quadfit`).
+
+    ``ways`` is, per lot, the ``(tree, geoms, types)`` its edges were
+    classified against -- the whole file where the code says an alley is a
+    street, the file less its alleys elsewhere -- or None for every lot where
+    s1 was written before TYPE was carried: nothing measured it, and the
+    column is None.
+    """
+    out = []
+    for r, geom, tlid, way in zip(results, lot_geoms_s3, lot_tlids, ways):
+        if way is None:
+            out.append(None)
+            continue
+        street_tree, street_geoms, street_types = way
+        out.append([
+            _drive_kind(e[0], e[1], e[2], e[3], geom, tlid, street_tree, street_geoms,
+                        street_types, threshold_ft, lot_tree, lot_geoms, lot_private,
+                        lot_built, fabric_tlid)
+            if e[4] == "F" else None
+            for e in r["edges"]
+        ])
+    return out
+
+
+#: `street_kinds` values for a street edge no code calls a street: the drive
+#: runs through the lot itself, or across someone else's built parcel.
+DOUBTFUL_KINDS = frozenset({"drive_on_lot", "drive_off_lot"})
+#: Every street edge only a private road or unnamed drive makes one.
+DRIVE_KINDS = DOUBTFUL_KINDS | {"drive"}
+
+
+def without_streets(r: dict, drop: set[int]) -> dict:
+    """`classify_lot`'s record for the same lot with the street edges at
+    ``drop`` read as ordinary lot lines -- what s4 would have written had
+    those centrelines not been in the file.
+
+    The dropped lines class by position like any other (``R`` running with
+    a street that is left, ``S`` otherwise), and so do the lot's other
+    non-street, non-alley lines, since which of them is the rear turns on
+    which streets are left. Alley lines keep their class, width and cover;
+    where no street is left and an alley is, the alley is the frontage, as
+    `classify_lot` makes it. No street and no alley left: tier ``D``. The
+    shape tests do not move (an irregular lot stays ``C``); ``A`` against
+    ``B`` is the count of street directions left. A dropped line gets the
+    neighbour sample points every non-street line gets, so the zone and
+    the park across it are read like any other line's.
+    """
+    edges = r["edges"]
+    if not edges or not drop:
+        return r
+    # The ring's orientation from its own vertices, for the samples' outward
+    # side: the right-hand normal points out of a counter-clockwise ring.
+    area2 = sum(e[0] * e[3] - e[2] * e[1] for e in edges)
+    outward = 1.0 if area2 > 0 else -1.0
+    front = [e[4] == "F" and i not in drop for i, e in enumerate(edges)]
+    alley = [e[4] == "A" for e in edges]
+    if not any(front) and any(alley):
+        front, alley = alley, [False] * len(edges)
+    if not any(front):
+        return {"tier": "D", "edges": [], "front_bearings": [], "frontage_ft": 0.0,
+                "alley_width_ft": None, "alley_edges_demoted": r.get("alley_edges_demoted", 0),
+                "neighbour_samples": [], "alley_cover": []}
+    lengths = [math.hypot(e[2] - e[0], e[3] - e[1]) for e in edges]
+    bearings = [bearing_deg(e[0], e[1], e[2], e[3]) for e in edges]
+    fronts = cluster_bearings([(b, ln) for b, ln, f in zip(bearings, lengths, front) if f])
+    classed, samples = [], []
+    for i, (e, ln, b, f, a) in enumerate(zip(edges, lengths, bearings, front, alley)):
+        if f:
+            cls = "F"
+        elif a:
+            cls = "A"
+        elif any(bearing_delta(b, fb) <= PARALLEL_TOL_DEG for fb in fronts):
+            cls = "R"
+        else:
+            cls = "S"
+        classed.append([e[0], e[1], e[2], e[3], cls])
+        old = r["neighbour_samples"][i] if i < len(r["neighbour_samples"]) else None
+        if cls == "F":
+            samples.append(None)
+        elif old is not None:
+            samples.append(old)
+        else:
+            x1, y1, x2, y2 = e[:4]
+            ex, ey = (x2 - x1) / ln, (y2 - y1) / ln
+            nx, ny = outward * ey, -outward * ex
+            samples.append([
+                (
+                    round(x1 + t * (x2 - x1) + NEIGHBOUR_OFFSET_FT * nx, 2),
+                    round(y1 + t * (y2 - y1) + NEIGHBOUR_OFFSET_FT * ny, 2),
+                    round(x1 + t * (x2 - x1) - NEIGHBOUR_OFFSET_FT * nx, 2),
+                    round(y1 + t * (y2 - y1) - NEIGHBOUR_OFFSET_FT * ny, 2),
+                )
+                for t in ALLEY_SAMPLES
+            ])
+    cover = [c if cls[4] == "A" else None
+             for c, cls in zip(r.get("alley_cover") or [None] * len(edges), classed)]
+    tier = "C" if r["tier"] == "C" else ("B" if len(fronts) >= 2 else "A")
+    return {
+        "tier": tier,
+        "edges": classed,
+        "front_bearings": [round(b, 2) for b in fronts[:2]],
+        "frontage_ft": round(sum(ln for ln, f in zip(lengths, front) if f), 1),
+        "alley_width_ft": r["alley_width_ft"] if any(c[4] == "A" for c in classed) else None,
+        "alley_edges_demoted": r.get("alley_edges_demoted", 0),
+        "neighbour_samples": samples,
+        "alley_cover": cover,
+    }
+
+
+def drive_readings(results: list, kinds: list) -> list:
+    """Per lot, the second readings a drive calls for, keyed by what was
+    dropped: ``doubtful`` -- the street edges only a drive on other land
+    makes (`DOUBTFUL_KINDS`), which no code calls streets -- and
+    ``drives`` -- every street edge only a private road or drive makes,
+    for the cities whose code says a private drive is not a street or says
+    nothing. ``drives`` is left out where it drops the same edges as
+    ``doubtful``; a lot with no drive edge, or no kinds measured, is None.
+    Each reading is a `classify_lot` record (`without_streets`), measured
+    on by the caller like the first.
+    """
+    out = []
+    for r, k in zip(results, kinds):
+        if not k:
+            out.append(None)
+            continue
+        doubtful = {i for i, x in enumerate(k) if x in DOUBTFUL_KINDS}
+        drives = {i for i, x in enumerate(k) if x in DRIVE_KINDS}
+        if not drives:
+            out.append(None)
+            continue
+        got = {}
+        if doubtful:
+            got["doubtful"] = without_streets(r, doubtful)
+        if drives != doubtful:
+            got["drives"] = without_streets(r, drives)
+        out.append(got)
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.parse_args()
@@ -877,6 +1111,12 @@ def main() -> None:
         )
     is_alley = streets["alley"].fillna(False).astype(bool).to_numpy()
     all_geoms = np.array(list(streets["geom"]), dtype=object)
+    # RLIS TYPE per segment, for `street_kinds`; an s1 written before TYPE
+    # was carried leaves that column unmeasured rather than guessed.
+    all_types = (
+        streets["type"].fillna(-1).astype(int).to_numpy()
+        if "type" in streets.columns else None
+    )
     street_geoms = all_geoms[~is_alley]
     alley_geoms = all_geoms[is_alley]
     tree_all = STRtree(all_geoms)
@@ -891,9 +1131,11 @@ def main() -> None:
     # jurisdiction and zone s2 gave each one) so an alley edge can be asked
     # whether the alley actually lies across it, and how wide it is, and
     # every non-street edge what zone lies across it.
-    s2 = read_stage("s2_lots", columns=["TLID", "wkb", "jurisdiction", "zone_raw", "split_zone"])
+    s2 = read_stage("s2_lots", columns=["TLID", "wkb", "jurisdiction", "zone_raw", "split_zone", "BLDGVAL"])
     lot_geoms = np.array(list(s2["geom"]), dtype=object)
     lot_private = ~s2["TLID"].astype(str).str.contains(NOT_A_TAXLOT_RE, regex=True).to_numpy()
+    fabric_tlid = s2["TLID"].astype(str).to_numpy(dtype=object)
+    lot_built = s2["BLDGVAL"].fillna(0.0).astype(float).to_numpy()
     fabric_juris = s2["jurisdiction"].astype(object).where(s2["jurisdiction"].notna(), None).to_numpy(dtype=object)
     fabric_zone = s2["zone_raw"].astype(object).where(s2["zone_raw"].notna(), None).to_numpy(dtype=object)
     fabric_split = s2["split_zone"].fillna(False).astype(bool).to_numpy()
@@ -931,6 +1173,28 @@ def main() -> None:
     # Parallel to edges_json: per alley edge, a ray every few feet along it
     # that found the alley (1) or did not (0); null on every other edge.
     lots["alley_cover_json"] = [json.dumps(r["alley_cover"]) for r in results]
+
+    # What kind of way makes each street edge one: a public street, a
+    # private drive the line abuts, or a drive on other land that no code
+    # calls a street (`street_kinds`).
+    if all_types is None:
+        print("s4 street kinds: s1_streets has no 'type' column -- street_kind_json left null")
+        ways = [None] * len(results)
+    else:
+        by_street = (tree_streets, street_geoms, all_types[~is_alley])
+        by_all = (tree_all, all_geoms, all_types)
+        ways = [by_all if alley_is_street.get(j, False) else by_street for j in lots["jurisdiction"]]
+    kinds = street_kinds(results, lots["geom"], lots["TLID"].astype(str), ways, thr,
+                         tree_lots, lot_geoms, lot_private, lot_built, fabric_tlid)
+    lots["street_kind_json"] = [None if k is None else json.dumps(k) for k in kinds]
+    if all_types is not None:
+        from collections import Counter as _KCounter
+
+        _k = _KCounter(x for k in kinds if k for x in k if x)
+        _off = lots.assign(_o=[bool(k) and any(x in ("drive_on_lot", "drive_off_lot") for x in k) for k in kinds])
+        per = _off.groupby("jurisdiction")["_o"].sum()
+        print(f"s4 street kinds: street edges {dict(_k)}; lots with a street edge only a drive "
+              f"on other land makes: " + ", ".join(f"{j} {int(v):,}" for j, v in per[per > 0].items()))
 
     # What zone lies across each lot line that is not a street lot line,
     # from the fabric with s2's zones on it. One bulk query for the county.
@@ -1074,6 +1338,60 @@ def main() -> None:
     print(f"s4 lot width measured on {measured:,} lots")
     deep = int(np.isfinite(np.array(depths, dtype=float)).sum())
     print(f"s4 lot depth measured on {deep:,} lots")
+
+    # The same lot read without the street edges only a drive makes: FLATS
+    # screens it both ways where the drive's standing is in doubt and keeps
+    # the worse answer (`drive_readings`). Measured here, on the same terms
+    # as the first reading -- the zone and the park across every line, the
+    # bulb, the width and depth against the fronts that are left.
+    readings = drive_readings(results, kinds)
+    flat = [(li, key, alt) for li, got in enumerate(readings) if got for key, alt in got.items()]
+    sans: list = [None] * len(results)
+    if flat:
+        alts = [alt for _li, _key, alt in flat]
+        alt_across = neighbour_zones(alts, tree_lots, lot_geoms, lot_private,
+                                     fabric_juris, fabric_zone, fabric_split)
+        alt_parks = park_across(alts, *orca) if orca is not None else [None] * len(alts)
+        geoms = list(lots["geom"])
+        juris_l, zone_l, area_l = (list(lots[c]) for c in ("jurisdiction", "zone_raw", "area_sqft"))
+        for (li, key, alt), zacross, parks in zip(flat, alt_across, alt_parks):
+            w = d = None
+            j = rules.jurisdictions.get(juris_l[li])
+            if alt["tier"] != "D" and j is not None and (j.lot_width_measure or j.lot_depth_measure):
+                rule = j.rule_for(zone_l[li])
+                a = None if area_l[li] is None else float(area_l[li])
+                o = dimensions(
+                    geoms[li], alt["edges"], alt["front_bearings"], alt["tier"],
+                    width_measure=j.lot_width_measure,
+                    depth_measure=j.lot_depth_measure,
+                    front_rule=j.front_lot_line_rule,
+                    front_setback_ft=None if rule is None else rule.effective_setback_front_ft(a),
+                    min_width_ft=None if rule is None else rule.banded("min_lot_width_ft", a),
+                    min_depth_ft=None if rule is None else rule.min_lot_depth_ft,
+                )
+                if o is not None:
+                    w, d = o.width_ft, o.depth_ft
+            if sans[li] is None:
+                sans[li] = {}
+            sans[li][key] = {
+                "tier": alt["tier"],
+                "edges": alt["edges"],
+                "front_bearings": alt["front_bearings"],
+                "frontage_ft": alt["frontage_ft"],
+                "alley_cover": alt["alley_cover"],
+                "alley_width_ft": alt["alley_width_ft"],
+                "lot_width_ft": w,
+                "lot_depth_ft": d,
+                "fronts_cul_de_sac": bool(fronts_cul_de_sac(alt["edges"], tree_dead, dead_points))
+                if alt["edges"] else False,
+                "neighbour_zones": zacross,
+                "park_across": parks,
+            }
+    lots["sans_drive_json"] = [None if s is None else json.dumps(s) for s in sans]
+    if flat:
+        _sd = lots.assign(_s=[s is not None for s in sans]).groupby("jurisdiction")["_s"].sum()
+        print("s4 second readings without drive streets: "
+              + ", ".join(f"{j} {int(v):,}" for j, v in _sd[_sd > 0].items()))
 
     from collections import Counter
 

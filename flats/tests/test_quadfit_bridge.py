@@ -9,6 +9,7 @@ signed colour beside it and never in its place.
 
 from __future__ import annotations
 
+import dataclasses
 import json
 from pathlib import Path
 
@@ -1163,3 +1164,182 @@ def test_a_lot_the_search_found_no_room_on_draws_nothing(corpus, policies) -> No
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert s.drawing is None
     assert row_for(s)["drawing"] is None
+
+
+# --- a street line only a private drive makes ------------------------------
+
+#: The 50 x 100 lot with its rear line read as a street: the only road within
+#: 50 ft of it is the school's drive across the fence (Wilsonville
+#: 31W13BD01800). ``BEHIND_SANS`` is s4's reading of the same lot without it.
+DRIVE_BEHIND = [[*e[:4], "F" if e[4] == "R" else e[4]] for e in EDGES]
+DRIVE_BEHIND_KINDS = ["street", None, "drive_off_lot", None]
+
+
+def _sans(edges=EDGES, **over: object) -> str:
+    alt = {
+        "tier": "A", "edges": edges, "front_bearings": [0.0], "frontage_ft": 50.0,
+        "alley_cover": [None] * len(edges), "alley_width_ft": None,
+        "lot_width_ft": 50.0, "lot_depth_ft": 100.0, "fronts_cul_de_sac": False,
+        "neighbour_zones": [None, *[{"z": [["portland", "R5"]], "split": 0, "none": 0}] * 3],
+        "park_across": None,
+    }
+    alt.update(over)
+    return json.dumps({"doubtful": alt})
+
+
+def behind(**over: object) -> dict[str, object]:
+    base = dict(
+        edges_json=json.dumps(DRIVE_BEHIND),
+        street_kind_json=json.dumps(DRIVE_BEHIND_KINDS),
+        sans_drive_json=_sans(),
+        lot_wkb=shapely.to_wkb(shapely.box(X0, Y0, X0 + 50, Y0 + 100)),
+    )
+    return row(**{**base, **over})
+
+
+def test_a_street_line_only_a_schools_drive_makes_is_read_both_ways() -> None:
+    """s4 fronts any line within 50 ft of a road in the street file, and the
+    file carries private roads and unnamed drives (RLIS 1700 / 1800). A
+    drive across the school behind the rear fence is a street by no code,
+    but the reading is s4's and could be wrong either way: the lot carries
+    s4's reading of itself without the line, rear again, to be screened
+    beside the first."""
+    from flats.geom.edges import EdgeClass
+
+    lot = lot_from_row(behind())
+    assert lot.second is not None
+    assert not lot.facts.street_unconfirmed
+    rear = [e for e in lot.second.edges.edges if e.cls is EdgeClass.rear]
+    assert len(rear) == 1 and not lot.second.facts.street_unconfirmed
+    assert lot.second.second is None
+    # s4 before the column, or a lot with no drive line: one reading.
+    assert lot_from_row(row(edges_json=json.dumps(DRIVE_BEHIND))).second is None
+    assert lot_from_row(row(street_kind_json=json.dumps(["street", None, None, None]))).second is None
+
+
+def test_the_worse_of_the_two_readings_is_kept(corpus, policies) -> None:
+    lot = lot_from_row(behind())
+    kw = dict(rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (both,) = screen_lot(lot, [pod()], **kw)
+    (first,) = screen_lot(dataclasses.replace(lot, second=None), [pod()], **kw)
+    (second,) = screen_lot(lot.second, [pod()], **kw)
+    rank = {Triage.green: 0, Triage.yellow: 1, Triage.unknown: 2, Triage.red: 3}
+    assert rank[both.signed.triage] == max(rank[first.signed.triage], rank[second.signed.triage])
+    assert both.signed.triage in (first.signed.triage, second.signed.triage)
+
+
+def test_no_second_reading_or_no_street_without_the_drive_is_a_question(
+    corpus, policies
+) -> None:
+    """Where s4 wrote no reading without the drive, or the lot has no street
+    left without it, nobody can say the lot fronts a street: never green."""
+    for over in ({"sans_drive_json": None}, {"sans_drive_json": _sans(tier="D", edges=[])}):
+        lot = lot_from_row(behind(**over))
+        assert lot.second is None and lot.facts.street_unconfirmed
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        assert "STREET_UNCONFIRMED" in s.signed.reasons
+        assert s.signed.triage is not Triage.green
+
+
+def test_a_second_reading_on_s5s_envelope_was_never_computed(corpus, policies) -> None:
+    """s5 cut its envelope with the drive as a street; a second reading
+    fitted on it is the first reading again, and the lot is a question."""
+    from flats.ingest.quadfit import _worse
+
+    lot = lot_from_row(behind())
+    kw = dict(rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (a,) = screen_lot(dataclasses.replace(lot, second=None), [pod()], **kw)
+    (b,) = screen_lot(lot.second, [pod()], **kw)
+    green = dataclasses.replace(a, signed=dataclasses.replace(a.signed, triage=Triage.green, reasons=()))
+    fell_back = dataclasses.replace(b, envelope=dataclasses.replace(b.envelope, source="quadfit"))
+    got = _worse(green, fell_back)
+    assert got.signed.triage is Triage.unknown
+    assert "STREET_UNCONFIRMED" in got.signed.reasons
+    assert _worse(green, b).signed.triage is b.signed.triage or b.signed.triage is Triage.green
+
+
+class _Ruled:
+    def __init__(self, street: bool) -> None:
+        self.private_drives = type("R", (), {"street": street})()
+
+
+def test_what_the_code_says_of_a_private_drive_the_lot_abuts_decides_the_readings() -> None:
+    """A private drive on its own tract that the lot abuts: a street where
+    the code counts it (one reading, s4's), an ordinary lot line where the
+    code says a street is a public way (the reading without it, alone), and
+    both ways where the code is silent. A drive on other land is read both
+    ways whatever the code says of drives."""
+    from flats.ingest.quadfit import drive_reading
+
+    tract = row(street_kind_json=json.dumps(["street", None, "drive", None]))
+    school = row(street_kind_json=json.dumps(DRIVE_BEHIND_KINDS))
+    mixed = row(street_kind_json=json.dumps(["drive", None, "drive_off_lot", None]))
+    where = "or/multnomah/portland"
+    counts, excluded, silent = {where: _Ruled(True)}, {where: _Ruled(False)}, {}
+    assert drive_reading(tract, counts) == (None, False)
+    assert drive_reading(tract, excluded) == ("drives", True)
+    assert drive_reading(tract, silent) == ("drives", False)
+    assert drive_reading(tract, None) == ("drives", False)
+    for layers in (counts, excluded, silent):
+        assert drive_reading(school, layers) == ("doubtful", False)
+    assert drive_reading(mixed, counts) == ("doubtful", False)
+    assert drive_reading(mixed, excluded) == ("drives", False)
+
+
+def test_where_the_code_says_a_street_is_public_the_drive_line_is_an_ordinary_line(layers) -> None:
+    """Gresham 3.0100: a street is "the portion of a public right-of-way";
+    Table 4.0131 note 2 makes a private accessway frontage the rear yard. A
+    lot there whose rear line s4 read off a private drive on its own tract
+    is screened on s4's reading without it, alone."""
+    from flats.geom.edges import EdgeClass
+    from flats.ingest.quadfit import drive_reading
+
+    assert layers["or/multnomah/gresham"].private_drives.street is False
+    assert layers["or/clackamas/wilsonville"].private_drives.street is True
+    tract = dict(
+        jurisdiction="gresham", zone="LDR-7",
+        street_kind_json=json.dumps(["street", None, "drive", None]),
+        sans_drive_json=json.dumps({"drives": json.loads(_sans())["doubtful"]}),
+    )
+    assert drive_reading(row(**tract), layers) == ("drives", True)
+    alone = lot_from_row(behind(**tract), layers)
+    assert alone.second is None and not alone.facts.street_unconfirmed
+    assert sum(1 for e in alone.edges.edges if e.cls is EdgeClass.front) == 1
+    # In Wilsonville the same drive is a street, and s4's reading stands.
+    wilsonville = lot_from_row(behind(**{**tract, "jurisdiction": "wilsonville", "zone": "R"}), layers)
+    assert wilsonville.second is None
+    assert sum(1 for e in wilsonville.edges.edges if e.cls is EdgeClass.front) == 2
+
+
+def test_every_private_drive_ruling_quotes_the_line_it_points_at(layers) -> None:
+    """``private_drives.says`` is held verbatim by the line ``quote`` points
+    at, in the store; and the codes the 2026-09-29 reading left undecided
+    declare nothing, so their drive lines are read both ways."""
+    from pathlib import Path
+
+    store = Path(__file__).resolve().parents[1] / "provenance" / "docs"
+
+    def norm(t: str) -> str:
+        return " ".join(t.replace("–", "-").replace("- ", "-").split())
+
+    ruled = {k: v.private_drives for k, v in layers.items() if v.private_drives is not None}
+    assert len(ruled) == 12
+    for layer_id, r in ruled.items():
+        doc, _, rng = r.quote.partition("#L")
+        a, _, b = rng.partition("-L")
+        lines = (store / doc).read_text(encoding="utf-8").split("\n")
+        assert norm(r.says) in norm(" ".join(lines[int(a) - 1 : int(b or a)])), layer_id
+    assert {k for k, r in ruled.items() if not r.street} == {
+        "or/multnomah/gresham", "or/clackamas/tualatin",
+    }
+    for silent in ("or/multnomah/fairview", "or/clackamas/_unincorporated"):
+        assert layers[silent].private_drives is None
+
+
+def test_an_s4_that_never_read_road_types_keeps_every_street_a_street() -> None:
+    """A stage file written before ``street_kind_json`` existed, or an s1
+    with no TYPE column, reads as absent: the old treatment."""
+    assert "street_kind_json" in S4_COLUMNS and "sans_drive_json" in S4_COLUMNS
+    for absent in (None, "", "null", "not json"):
+        lot = lot_from_row(row(street_kind_json=absent))
+        assert lot.second is None and not lot.facts.street_unconfirmed

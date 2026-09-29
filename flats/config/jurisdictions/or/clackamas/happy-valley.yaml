@@ -3503,3 +3503,18 @@ zone_rulings:
       and holds its dimensions, so this is the one pocket where the county's
       answer could be GREEN -- and R-5, which this layer holds, is where the
       lot lands when the city's map catches up.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1641"
+  says: "A public right-of-way or private tract"
+  cite: "HVMC 16.12.020 (Street; Private street; Front lot line; Corner lot)"
+  note: >-
+    A street is "a public right-of-way or private tract that is intended for
+    motor vehicle ... access to abutting property"; front lot line (L883) and
+    corner lot (L908) read "street", and the front property line is any line
+    "separating the lot from a public or private road" (L712). A shared driveway
+    on an easement is not a tract: s4 reads it as a drive on other land,
+    screened both ways.

@@ -1952,3 +1952,18 @@ parks:
       fact unstated and the lot screens UNKNOWN on it. A point in no ORCA
       unit is read as no park -- the reading's one assumption, since ORCA is
       the region's inventory of exactly this land.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/multnomah/troutdale/1.020.definitions.txt#L794"
+  says: "Street, Private. A thoroughfare or street"
+  cite: "TDC 1.020 (Street, Private; Lot, corner; Lot line, front)"
+  note: >-
+    "Street, Private. A thoroughfare or street providing a means of access to a
+    property or properties which is not owned by the City": a private street is
+    a kind of street, and the corner lot ("abut streets other than alleys",
+    L522) and the front lot line (L548) read "street". The code says nothing of
+    a shared driveway; s4 reads one across a neighbour as a drive on other land,
+    screened both ways.

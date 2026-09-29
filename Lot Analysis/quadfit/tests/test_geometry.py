@@ -970,6 +970,145 @@ def test_placement_inside_envelope():
 
 
 # ---------------------------------------------------------------------------
+# s4 -- what kind of way makes a street edge one
+# ---------------------------------------------------------------------------
+
+#: State-plane feet (EPSG 2913) in Wilsonville, south of Boones Ferry Primary:
+#: the shape of 31W13BD01800, whose rear line s4 read as a street because the
+#: school's unnamed drive (RLIS TYPE 1800) runs 39 ft behind it.
+X0, Y0 = 7_634_000.0, 609_000.0
+
+
+def _kinds(lot, ways, fabric, *, types_known=True):
+    """`classify_lot` and `street_kinds` on one lot, the way s4's main runs
+    them. ``ways`` is (line, RLIS TYPE); ``fabric`` is (polygon, TLID,
+    building value, private) for everything but the lot, which is in the
+    fabric first as TLID "LOT"."""
+    from s4_edges import classify_lot, street_kinds
+
+    geoms = np.array([w for w, _t in ways], dtype=object)
+    types = np.array([t for _w, t in ways])
+    tree = STRtree(geoms)
+    r = classify_lot(lot, tree, geoms, STREET_THRESHOLD, SIMPLIFY_TOL)
+    polys = np.array([lot, *[f[0] for f in fabric]], dtype=object)
+    tlids = np.array(["LOT", *[f[1] for f in fabric]], dtype=object)
+    built = np.array([100_000.0, *[f[2] for f in fabric]])
+    private = np.array([True, *[f[3] for f in fabric]])
+    way = (tree, geoms, types) if types_known else None
+    out = street_kinds([r], [lot], ["LOT"], [way], STREET_THRESHOLD,
+                       STRtree(polys), polys, private, built, tlids)[0]
+    return r, out
+
+
+def _by_side(r, kinds):
+    """Each edge's kind, keyed by which side of the lot's box it runs along."""
+    got = {}
+    for (x1, y1, x2, y2, cls), k in zip(r["edges"], kinds):
+        side = "S" if max(y1, y2) < Y0 + 1 else "N" if min(y1, y2) > Y0 + 99 else "EW"
+        got.setdefault(side, set()).add((cls, k))
+    return got
+
+
+def test_a_drive_across_a_built_parcel_is_not_a_street_the_lot_abuts():
+    """s4 fronts an edge within 50 ft of any non-alley centreline, and RLIS
+    carries private roads (TYPE 1700) and unnamed drives (1800) beside the
+    public ways. Wilsonville 4.001(157) and Wood Village 720.030 count a
+    private drive the lot ABUTS as a street; none counts a school's drive
+    running across the school's own land behind the lot's rear line. The
+    edge stays F -- the classes are not moved -- and says which it is."""
+    lot = shapely.box(X0, Y0, X0 + 100, Y0 + 100)
+    public = (LineString([(X0 - 60, Y0 - 30), (X0 + 160, Y0 - 30)]), 1500)
+    school_drive = (LineString([(X0 - 60, Y0 + 139), (X0 + 160, Y0 + 139)]), 1800)
+    school = (shapely.box(X0 - 200, Y0 + 100, X0 + 300, Y0 + 400), "SCHOOL", 20_794_230.0, True)
+    r, kinds = _kinds(lot, [public, school_drive], [school])
+    got = _by_side(r, kinds)
+    assert got["S"] == {("F", "street")}
+    assert got["N"] == {("F", "drive_off_lot")}, "the line abuts the school, not a street"
+    assert all(k is None for (_c, k) in got["EW"])
+
+
+def test_a_private_drive_on_its_own_tract_is_the_street_the_code_counts():
+    """The same drive on an unbuilt 24-ft HOA tract the rear line abuts is a
+    private drive the lot fronts, which is a street in Wilsonville and Wood
+    Village: ``drive``, not doubted. Behind a neighbour's lot instead, the
+    line abuts the neighbour: ``drive_off_lot``. Through the lot itself:
+    ``drive_on_lot``. And an s1 with no TYPE column measures nothing."""
+    lot = shapely.box(X0, Y0, X0 + 100, Y0 + 100)
+    public = (LineString([(X0 - 60, Y0 - 30), (X0 + 160, Y0 - 30)]), 1500)
+    lane = (LineString([(X0 - 60, Y0 + 112), (X0 + 160, Y0 + 112)]), 1700)
+    tract = (shapely.box(X0 - 200, Y0 + 100, X0 + 300, Y0 + 124), "TRACT A", 0.0, True)
+    r, kinds = _kinds(lot, [public, lane], [tract])
+    assert _by_side(r, kinds)["N"] == {("F", "drive")}
+    # A 30-ft deep neighbour between the rear line and the lane.
+    between = (shapely.box(X0 - 200, Y0 + 100, X0 + 300, Y0 + 106), "NEXT DOOR", 250_000.0, True)
+    far = (LineString([(X0 - 60, Y0 + 130), (X0 + 160, Y0 + 130)]), 1700)
+    tract2 = (shapely.box(X0 - 200, Y0 + 106, X0 + 300, Y0 + 150), "TRACT B", 0.0, True)
+    r, kinds = _kinds(lot, [public, far], [between, tract2])
+    assert _by_side(r, kinds)["N"] == {("F", "drive_off_lot")}
+    # A drive running 20 ft inside the lot's own rear line.
+    inside = (LineString([(X0 - 60, Y0 + 80), (X0 + 160, Y0 + 80)]), 1800)
+    r, kinds = _kinds(lot, [public, inside], [])
+    assert ("F", "drive_on_lot") in _by_side(r, kinds)["N"]
+    # A public street behind wins: whatever else is near, the line fronts it.
+    r, kinds = _kinds(lot, [public, school_drive_and(1500)], [])
+    assert _by_side(r, kinds)["N"] == {("F", "street")}
+    r, kinds = _kinds(lot, [public, lane], [tract], types_known=False)
+    assert kinds is None
+
+
+def school_drive_and(rlis_type: int):
+    return (LineString([(X0 - 60, Y0 + 130), (X0 + 160, Y0 + 130)]), rlis_type)
+
+
+def test_a_drive_across_a_vacant_lot_is_not_a_tract():
+    """A vacant lot next door is unbuilt as a tract is, and a driveway
+    easement across it is not the private street Portland, Happy Valley and
+    Milwaukie count "in a tract": a strip wider than 40 ft is other land."""
+    lot = shapely.box(X0, Y0, X0 + 100, Y0 + 100)
+    public = (LineString([(X0 - 60, Y0 - 30), (X0 + 160, Y0 - 30)]), 1500)
+    lane = (LineString([(X0 - 60, Y0 + 130), (X0 + 160, Y0 + 130)]), 1700)
+    vacant = (shapely.box(X0 - 200, Y0 + 100, X0 + 300, Y0 + 160), "VACANT", 0.0, True)
+    r, kinds = _kinds(lot, [public, lane], [vacant])
+    assert _by_side(r, kinds)["N"] == {("F", "drive_off_lot")}
+
+
+def test_the_lot_read_again_without_its_drive_streets():
+    """`without_streets`: the rear line a school's drive made a street is a
+    rear line again, with the neighbour sample points every other lot line
+    carries; the lot's side lines stay sides; one street direction left is
+    tier A. `drive_readings` offers ``doubtful`` alone where every drive
+    edge is on other land, both where the lot also abuts a private street,
+    and a lot left with no street is tier D."""
+    from s4_edges import drive_readings, without_streets
+
+    lot = shapely.box(X0, Y0, X0 + 100, Y0 + 100)
+    public = (LineString([(X0 - 60, Y0 - 30), (X0 + 160, Y0 - 30)]), 1500)
+    school_drive = (LineString([(X0 - 60, Y0 + 139), (X0 + 160, Y0 + 139)]), 1800)
+    school = (shapely.box(X0 - 200, Y0 + 100, X0 + 300, Y0 + 400), "SCHOOL", 20_794_230.0, True)
+    r, kinds = _kinds(lot, [public, school_drive], [school])
+    assert r["tier"] == "A" and len(r["front_bearings"]) == 1
+    rear = kinds.index("drive_off_lot")
+    alt = without_streets(r, {rear})
+    assert alt["edges"][rear][4] == "R"
+    assert alt["tier"] == "A" and alt["frontage_ft"] == 100.0
+    assert [e[4] for e in alt["edges"]].count("F") == 1
+    assert [e[4] for e in alt["edges"]].count("S") == 2
+    samples = alt["neighbour_samples"][rear]
+    assert samples is not None and len(samples) == 5
+    # Out of the lot on the school's side, in on the lot's own.
+    out_y, in_y = samples[2][1], samples[2][3]
+    assert out_y > Y0 + 100 > in_y
+    got = drive_readings([r], [kinds])[0]
+    assert set(got) == {"doubtful"}
+    street = kinds.index("street")
+    both = drive_readings([r], [["drive" if i == street else k for i, k in enumerate(kinds)]])[0]
+    assert set(both) == {"doubtful", "drives"}
+    assert both["drives"]["tier"] == "D" and both["drives"]["edges"] == []
+    assert drive_readings([r], [None]) == [None]
+    assert drive_readings([r], [["street" if k else None for k in kinds]]) == [None]
+
+
+# ---------------------------------------------------------------------------
 # s2 — majority zone
 # ---------------------------------------------------------------------------
 

@@ -46,6 +46,7 @@ from flats.score.screen import (  # noqa: E402
     GEOMETRY_UNREADABLE,
     NO_FRONTAGE,
     STANDARD_NOT_ENCODED,
+    STREET_UNCONFIRMED,
     USE_NOT_ENCODED,
     USE_PROHIBITED,
     LotFacts,
@@ -1117,6 +1118,17 @@ def test_a_corner_lot_is_still_screenable() -> None:
     )
 
     assert result.triage is Triage.green
+
+
+def test_a_street_that_is_only_a_drive_the_lot_does_not_abut_is_never_green() -> None:
+    """The same lot that screens GREEN, with one of its street lines resting
+    on a private drive across someone else's land, is a question for a
+    person: the line's setback, the corner and the lane all turn on it."""
+    facts = dict(lot_sqft=6000, frontage_ft=60, lot_width_ft=60)
+    assert run(lot=LotFacts(**facts)).triage is Triage.green
+    result = run(lot=LotFacts(**facts, street_unconfirmed=True))
+    assert result.triage is Triage.unknown
+    assert result.reasons == (STREET_UNCONFIRMED,)
 
 
 def test_a_lot_with_no_area_cannot_be_screened() -> None:

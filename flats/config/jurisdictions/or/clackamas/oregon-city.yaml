@@ -2185,3 +2185,17 @@ neighbours:
       with nothing on the true_for side across any of them. Today the zones that
       turn on it (C, MUC-1, MUC-2, MUD, WFDD) are ahead of quadfit's own
       rules and unmeasured, so the list waits for that port (FOLLOWUPS).
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/clackamas/oregon-city/17.zoning.txt#L3287-L3289"
+  says: "a public or private way"
+  cite: "OCMC 17.04 (Street or road; Private street; Corner lot; Front lot line)"
+  note: >-
+    "'Street or road' means a public or private way that is created to provide
+    the principal means of ingress or egress for persons to one or more lots";
+    "'Private street' means a privately owned and maintained street or
+    accessway" (L2727). Front lot line (L1702) and corner lot (L2082) read
+    "street".

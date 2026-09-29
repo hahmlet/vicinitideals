@@ -1868,3 +1868,19 @@ zone_rulings:
       (L1587-L1599, Figure 19.304-2). A `false` use block with a `unit_lots`
       variant, a per-street condition this model has no field for, and
       Table 19.304.4 plus the 19.508 downtown design standards, unread.
+
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
+private_drives:
+  street: true
+  quote: "or/clackamas/milwaukie/19.200.definitions.txt#L777-L778"
+  says: "may be dedicated or deeded to the public"
+  cite: "MMC 19.201 (Right-of-way; Street; Frontage; Corner lot)"
+  note: >-
+    A street is "the entire width between right-of-way lines" (L855) and a
+    right-of-way "may be dedicated or deeded to the public ... or it may be
+    privately owned", "usually in a tract or easement"; frontage "abuts a public
+    or private street" (L304) and a corner lot abuts "2 or more streets, other
+    than an alley" (L435). A back lot reached by an easement is fronted from the
+    street it takes access from (L470): the easement is not the street, and s4
+    reads it as a drive on other land.

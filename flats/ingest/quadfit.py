@@ -127,8 +127,10 @@ from flats.score.paper import (
     side_street_fed,
 )
 from flats.score.screen import (
+    STREET_UNCONFIRMED,
     LotFacts,
     Screening,
+    Triage,
     _beside_beyond,
     _court_beyond_rear,
     fit_for,
@@ -189,6 +191,8 @@ S4_COLUMNS: tuple[str, ...] = (
     "alley_width_ft",
     "alley_cover_json",
     "street_across_json",
+    "street_kind_json",
+    "sans_drive_json",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -552,6 +556,10 @@ class QuadfitLot:
     #: runs the whole line, is not at the rear, or nothing measured it.
     #: :func:`screen_lot` measures the run behind each envelope from it.
     rear_runs: tuple[Any, ...] = ()
+    #: The same lot read without the street lines only a private drive
+    #: makes (:func:`drive_reading`): :func:`screen_lot` screens both and
+    #: keeps the worse answer. None where no drive's standing is in doubt.
+    second: "QuadfitLot | None" = None
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -895,6 +903,103 @@ def _side_alley_along(row: Mapping[str, Any]) -> bool:
     )
 
 
+#: s4's ``street_kind_json`` values for a street edge that is a street by no
+#: code: the only centreline within 50 ft is a private road or an unnamed
+#: drive (RLIS TYPE 1700 / 1800) that runs through the lot itself, or across
+#: someone else's built parcel beyond the line -- a school's bus loop, a park's
+#: service road, a mobile-home park's aisle behind the rear fence. Wilsonville
+#: 4.001(157) and Wood Village 720.030 count a private drive the lot ABUTS;
+#: neither counts one the lot only sits near.
+DOUBTFUL_STREET_KINDS: frozenset[str] = frozenset({"drive_on_lot", "drive_off_lot"})
+#: ... and every street edge only a private road or drive makes, the lot's
+#: own or not.
+DRIVE_STREET_KINDS: frozenset[str] = DOUBTFUL_STREET_KINDS | {"drive"}
+
+
+def _street_kinds(row: Mapping[str, Any]) -> list[Any] | None:
+    raw = row.get("street_kind_json")
+    if not raw:
+        return None
+    try:
+        kinds = json.loads(raw)
+    except (TypeError, ValueError):
+        return None
+    return kinds if isinstance(kinds, list) else None
+
+
+def drive_reading(
+    row: Mapping[str, Any], layers: Mapping[str, Layer] | None
+) -> tuple[str | None, bool]:
+    """Which of s4's second readings (``sans_drive_json``) this lot is
+    screened on, and whether it REPLACES the first.
+
+    * A street line only a drive on other land makes (``drive_on_lot`` /
+      ``drive_off_lot``) is a street by no code, but the reading could be
+      s4's error either way: the lot is screened as s4 read it AND without
+      those lines, and the worse answer kept.
+    * A private drive the lot abuts (``drive``): where the lot's code counts
+      it (``private_drives.street: true``) the line is a street and nothing
+      more is asked; where the code says a street is a public way
+      (``street: false``) the line is an ordinary lot line, and the lot is
+      screened on that reading alone; where the code is silent (no
+      ``private_drives``), both ways, the worse kept.
+
+    ``(None, False)``: one reading, s4's own. The key is ``drives`` where
+    the drives go too and s4 wrote a separate reading for that, else
+    ``doubtful``.
+    """
+    kinds = _street_kinds(row)
+    if not kinds:
+        return None, False
+    doubtful = any(k in DOUBTFUL_STREET_KINDS for k in kinds)
+    drives = any(k == "drive" for k in kinds)
+    if not (doubtful or drives):
+        return None, False
+    home = _home_layer(row, layers) if layers is not None else None
+    ruling = home.private_drives if home is not None else None
+    if ruling is not None and ruling.street:
+        return ("doubtful" if doubtful else None), False
+    if not drives:
+        return "doubtful", False
+    return "drives", ruling is not None and not doubtful
+
+
+def _sans_row(row: Mapping[str, Any], key: str) -> dict[str, Any] | None:
+    """The stage-file row as s4 would have written it without the street
+    lines ``key`` names (``sans_drive_json``), or None where s4 wrote no
+    such reading."""
+    raw = row.get("sans_drive_json")
+    if not raw:
+        return None
+    try:
+        got = json.loads(raw)
+    except (TypeError, ValueError):
+        return None
+    alt = got.get(key) if isinstance(got, dict) else None
+    if not isinstance(alt, dict) or "tier" not in alt:
+        return None
+
+    def dumped(v: Any) -> str | None:
+        return None if v is None else json.dumps(v)
+
+    return {
+        **row,
+        "tier": alt["tier"],
+        "edges_json": json.dumps(alt.get("edges") or []),
+        "front_bearings_json": json.dumps(alt.get("front_bearings") or []),
+        "frontage_ft": alt.get("frontage_ft"),
+        "lot_width_ft": alt.get("lot_width_ft"),
+        "lot_depth_ft": alt.get("lot_depth_ft"),
+        "fronts_cul_de_sac": bool(alt.get("fronts_cul_de_sac")),
+        "alley_cover_json": dumped(alt.get("alley_cover")),
+        "alley_width_ft": alt.get("alley_width_ft"),
+        "neighbour_zones_json": dumped(alt.get("neighbour_zones")),
+        "park_across_json": dumped(alt.get("park_across")),
+        "street_kind_json": None,
+        "sans_drive_json": None,
+    }
+
+
 def lot_from_row(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer] | None = None,
@@ -907,6 +1012,22 @@ def lot_from_row(
     ``corridors`` likewise for the corridor facts (before 2026-09-27).
     """
     import shapely
+
+    key, replace = drive_reading(row, layers)
+    second: QuadfitLot | None = None
+    unconfirmed = False
+    if key is not None:
+        alt = _sans_row(row, key)
+        if replace and alt is not None:
+            # The code says a private drive is not a street: that reading
+            # is the lot's only one.
+            return lot_from_row(alt, layers, corridors)
+        if alt is None or alt["tier"] == "D":
+            # No second reading to screen, or no street left without the
+            # drive: nobody can say this lot fronts a street.
+            unconfirmed = True
+        else:
+            second = lot_from_row(alt, layers, corridors)
 
     tier = TIER.get(str(row.get("tier")), Tier.irregular)
     frontage = _finite(row.get("frontage_ft"))
@@ -948,6 +1069,9 @@ def lot_from_row(
         # Two streets that really are two: the side street may take the
         # driveway (:func:`flats.score.paper.side_street_fed`).
         corner=is_corner(edges),
+        # A street line only a drive makes, with no reading of the lot
+        # without it to screen, or none with a street left (FOLLOWUPS 4).
+        street_unconfirmed=unconfirmed,
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -978,6 +1102,7 @@ def lot_from_row(
             if facts.alley_at_rear and not facts.alley_rear_whole
             else ()
         ),
+        second=second,
     )
 
 
@@ -1169,7 +1294,65 @@ def _screen_on(
     )
 
 
+#: Which of two answers is the worse, for :func:`screen_lot`'s two
+#: readings: a definite failure over a question over a path over a pass.
+_WORSE: dict[Triage, int] = {Triage.green: 0, Triage.yellow: 1, Triage.unknown: 2, Triage.red: 3}
+
+
+def _street_unconfirmed(s: Screening) -> Screening:
+    """``s`` as a question (:data:`~flats.score.screen.STREET_UNCONFIRMED`),
+    unless it is already the worse answer."""
+    reasons = s.reasons if STREET_UNCONFIRMED in s.reasons else (*s.reasons, STREET_UNCONFIRMED)
+    triage = s.triage if _WORSE[s.triage] >= _WORSE[Triage.unknown] else Triage.unknown
+    return dataclasses.replace(s, triage=triage, reasons=reasons)
+
+
+def _worse(first: Screened, second: Screened) -> Screened:
+    """The worse of one design's two readings (:func:`drive_reading`).
+
+    Each is sound alone -- the line a street, the line an ordinary lot
+    line -- so the worse cannot be a false GREEN. Compared on the signed
+    colour, the one that differs between them; the verdict's own colour
+    rides with it. A second reading fitted on s5o's envelope was not
+    computed at all -- s5o cut that envelope with the drive as a street --
+    and makes the first a question.
+    """
+    if second.envelope is not None and second.envelope.source == "quadfit":
+        return dataclasses.replace(
+            first,
+            screening=_street_unconfirmed(first.screening),
+            signed=_street_unconfirmed(first.signed),
+        )
+    if _WORSE[second.signed.triage] > _WORSE[first.signed.triage]:
+        return second
+    return first
+
+
 def screen_lot(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+) -> list[Screened]:
+    """Screen one lot against every design, and where a street line rests
+    only on a private drive whose standing is in doubt, screen the lot
+    again without it and keep the worse answer (:func:`drive_reading`).
+    """
+    got = _screen_lot_once(
+        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg
+    )
+    if lot.second is None:
+        return got
+    alt = _screen_lot_once(
+        lot.second, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg
+    )
+    return [_worse(a, b) for a, b in zip(got, alt)]
+
+
+def _screen_lot_once(
     lot: QuadfitLot,
     designs: Sequence[Design],
     *,
@@ -1764,6 +1947,8 @@ __all__ = [
     "CLACKAMAS",
     "LOTS_RESULTS",
     "OBSERVABLE",
+    "DOUBTFUL_STREET_KINDS",
+    "DRIVE_STREET_KINDS",
     "S4_COLUMNS",
     "S5O_COLUMNS",
     "S5O_LOTS",

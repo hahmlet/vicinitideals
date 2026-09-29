@@ -42,6 +42,7 @@ from flats.rules.model import (
     NeighbourRule,
     ORCA_UNIT_TYPES,
     ParkRule,
+    PrivateDriveRuling,
     ZoneRuling,
     READING_OUTCOMES,
     WORD_OUTCOMES,
@@ -1523,6 +1524,54 @@ def _parse_neighbours(
     return out
 
 
+def _parse_private_drives(
+    raw: object, *, where: str, problems: list[str]
+) -> PrivateDriveRuling | None:
+    """Whether a private drive the lot abuts is a street here::
+
+        private_drives:
+          street: true
+          quote: "or/clackamas/wilsonville/4.planning.txt#L795"
+          says: "abut a street or private drive"
+          cite: WDC 4.001(157)
+          note: >-
+            ...
+
+    ``street`` is a boolean; ``quote`` a store pointer, ``says`` words the
+    pointed line holds (checked against the store by the tests); ``note``
+    the argument, at a ruling's length. Absent: the code is silent.
+    """
+    if raw is None:
+        return None
+    at = f"{where}.private_drives"
+    if not isinstance(raw, dict):
+        problems.append(f"{at}: expected street, quote, says and note")
+        return None
+    extra = set(raw) - {"street", "quote", "says", "cite", "note"}
+    if extra:
+        problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
+        return None
+    street = raw.get("street")
+    if not isinstance(street, bool):
+        problems.append(f"{at}.street: true or false")
+        return None
+    quote, says, note = raw.get("quote"), raw.get("says"), raw.get("note")
+    if not isinstance(quote, str) or "#L" not in quote:
+        problems.append(f"{at}.quote: a store pointer, path#Lnn")
+        return None
+    if not isinstance(says, str) or not says.strip():
+        problems.append(f"{at}.says: the words the quoted line holds")
+        return None
+    if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+        problems.append(f"{at}: a note of at least {MIN_RULING} characters")
+        return None
+    cite = raw.get("cite")
+    return PrivateDriveRuling(
+        street=street, quote=quote.strip(), says=says.strip(),
+        cite=None if cite is None else str(cite), note=note.strip(),
+    )
+
+
 def _parse_parks(
     raw: object, *, where: str, problems: list[str]
 ) -> dict[str, ParkRule]:
@@ -1872,6 +1921,9 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             zone_rulings=_parse_zone_rulings(raw.get("zone_rulings"), zones, where=where, problems=problems),
             neighbours=_parse_neighbours(raw.get("neighbours"), where=where, problems=problems),
             parks=_parse_parks(raw.get("parks"), where=where, problems=problems),
+            private_drives=_parse_private_drives(
+                raw.get("private_drives"), where=where, problems=problems
+            ),
         )
     except Exception as exc:
         problems.append(f"{where}: {_terse(exc)}")

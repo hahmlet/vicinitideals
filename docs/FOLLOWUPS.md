@@ -191,8 +191,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (`flats.geom.corner.through_lot`) is a corner; expect tens of
    green->yellow in Gresham MDR-12/24, VLDR-SW, OFR on the next run. Open:
    Wilsonville 4.001(157)(2) / MCC 39.2000 pathway corners (HUMAN_TODO
-   24); Wilsonville and Wood Village count private drives as streets,
-   unchecked against s4's street layer.
+   24); Private drives DONE 876267ad/a731c661 (rides the next full s4->s7
+   run: new s4 column `sans_drive_json`): per-city `private_drives:`
+   rulings (10 count a private road as a street; Gresham, Tualatin do
+   not), a drive over the lot or across another lot screened both ways,
+   worse kept. Bound (09-28 data): of 2,526 drive greens 1,594 stay,
+   358 -> yellow, 574 -> unknown (565 have no real street without the
+   drive), 0 gained. ASKED STEPH 2026-09-29, pending: Fairview (code
+   contradicts itself; 157 lots, 4 greens) and Clackamas County (front
+   only if access is taken from it; 327 lots, 46 greens) -- both screened
+   both ways until ruled. RLIS road types 1700/1800 read from the data.
    (FLATS's own envelope: DONE, item 12.) (`steep_slope` struck
    2026-09-27: no standard in the corpus is conditioned on it, so its
    False assumption leans on no lot; the hillside rules ride the overlay

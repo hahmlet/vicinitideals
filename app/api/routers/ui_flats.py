@@ -2704,6 +2704,7 @@ _REASON_WORDS = {
     "USE_NOT_ENCODED": "whether the zone allows a fourplex is not encoded",
     "USE_PROHIBITED": "the zone forbids the use outright",
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
+    "STREET_UNCONFIRMED": "one of the lot's streets may only be a private drive, and the lot could not be checked without it",
     # The county copy's own reasons (flats.ingest.normalize gates and the
     # assign stage): why a lot on the map was never screened.
     "JURISDICTION_NOT_ENCODED": "the city this lot is in has no encoded rules",
