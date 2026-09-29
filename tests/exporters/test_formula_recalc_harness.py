@@ -16,7 +16,8 @@ end-to-end pipeline (export -> save -> recalc -> reload) is wired.
 
 These tests skip when no recalc backend is available on the host
 (Linux without LibreOffice, macOS without LibreOffice, Windows without
-Office). CI gates run on a Windows runner with Office installed.
+Office). CI's full gate installs headless LibreOffice and sets
+``REQUIRE_XLSX_RECALC=1``, so there a missing backend FAILS instead.
 """
 from __future__ import annotations
 
@@ -105,19 +106,41 @@ async def test_recalc_backend_available_or_skip(
     )
 
 
-def test_recalc_unavailable_raises_on_missing_backend(tmp_path: Path):
+def _no_backend(monkeypatch):
+    """Make every recalc backend look absent, whatever this host has."""
+    from tests.exporters import _parity_helpers
+
+    def _no_excel(path):
+        raise RecalcUnavailableError("Excel COM stubbed out")
+
+    monkeypatch.setattr(_parity_helpers, "recalc_with_excel_com", _no_excel)
+    monkeypatch.setattr(_parity_helpers, "_find_soffice", lambda: None)
+
+
+def test_recalc_unavailable_raises_on_missing_backend(tmp_path: Path, monkeypatch):
     """Direct unit test for the error-when-no-backend branch.
 
-    Doesn't depend on the DB / app. Validates the error type and message
-    so the higher-level harness raises something callers can catch.
+    Doesn't depend on the DB / app. Validates the error type so the
+    higher-level harness raises something callers can catch. The backends
+    are stubbed out, so this runs on hosts that have LibreOffice too (CI).
     """
-    from tests.exporters._parity_helpers import recalc_with_libreoffice
-    # Use a non-existent path so LibreOffice can't actually run. If LO
-    # is installed on this host, this test exercises the "not found"
-    # path only on hosts where it isn't; skip when LO is present.
-    from tests.exporters._parity_helpers import _find_soffice
-    if _find_soffice() is not None:
-        pytest.skip("LibreOffice is installed; cannot test missing-backend path")
-    bogus = tmp_path / "does-not-exist.xlsx"
+    _no_backend(monkeypatch)
+    monkeypatch.delenv("REQUIRE_XLSX_RECALC", raising=False)
     with pytest.raises(RecalcUnavailableError):
-        recalc_with_libreoffice(bogus)
+        recalc_workbook(tmp_path / "does-not-exist.xlsx")
+
+
+def test_missing_backend_fails_when_recalc_required(tmp_path: Path, monkeypatch):
+    """REQUIRE_XLSX_RECALC=1 turns "no backend" from a skip into a failure.
+
+    CI sets it in the full gate. Every parity test catches
+    ``RecalcUnavailableError`` and skips; this proves the required path
+    raises something those ``except`` clauses do NOT catch, so the parity
+    gate cannot silently go dark on a runner that lost LibreOffice.
+    """
+    _no_backend(monkeypatch)
+    monkeypatch.setenv("REQUIRE_XLSX_RECALC", "1")
+    # A RecalcUnavailableError escaping here would error the test: that is
+    # the exception the parity tests turn into a skip.
+    with pytest.raises(pytest.fail.Exception, match="REQUIRE_XLSX_RECALC"):
+        recalc_workbook(tmp_path / "does-not-exist.xlsx")
