@@ -140,7 +140,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's
-   shape -- `court_across` draws one row of stalls across the lot behind
+   shape -- **side court BUILT 3e8e3bab/1b7b5567 (deployed 15ffab9e,
+   rides the next full run)**: a court BESIDE the building with its aisle
+   straight in from the street, tried only when the row behind fails;
+   bound 3,551 lots: 0 losses, 152 yellow->green if signed (Portland 137),
+   228 yellow->unknown (no variance now, an unmeasured fact left). Still
+   open: an L/T-shaped search for the other 339 quadfit-fits lots; two-row
+   stall count; the fit never checks the parking rectangle reaches the
+   street (Gresham 1S3E10AD -05300, L-shaped). Original note: `court_across` draws one row of stalls across the lot behind
    the building (six at 9 ft = 54 ft), quadfit's s6s lays the stalls in the
    largest rectangle behind the building whichever way round fits, so a
    63-ft-wide Portland R5 lot seats eight along its depth where the 54-ft
@@ -420,11 +427,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    carved out of the row or the lane run to the aisle band); (h) the
    alley-aisle court (`townhome_rear_court_alley_aisle`) still scores the
    whole room's exposure -- trim it to its stall row + back-out depth;
-   (i) which end of a through lot is "the front" is read as the
-   applicant's choice under every corner word (Portland 33.910 makes both
-   ends front lot lines) -- read the other 13 cities' through-lot lines;
-   (j) in a ban city the side court is drawn on ONE side of a through-lot
-   pod -- a court on both sides where one side is short of the band;
+   (i) DONE 67402fea (rides the next full run) -- `front_lot_line_through`
+   per city; bound 17 Clackamas-uninc green-if-signed -> yellow, Gresham
+   862 / Fairview 84 envelopes shrink, Milwaukie 8 grow; rulings for Steph
+   pending (Gresham/Clackamas strict until street class is mapped;
+   Tualatin/Fairview silent -> worst end);
+   (j) COUNTED, not built: in a ban city the side court is drawn on ONE
+   side of a through-lot pod -- a court on both sides would help 8 lots;
    (k) DONE 4a3cc09c -- s6s reserves a lane's
    width on the street strip before placing the pod beside it (court
    searched near the lane, straight lane charged as pavement; runs only
@@ -530,9 +539,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (`flats.geom.corridor.off_corridor`) is cut at it, every other keeps 10;
    paper fit / driveway charge keep 10. Next re-screen: 520 corridor lots,
    297 with a line read off; moves only toward green/yellow -- read the
-   gains. Open: the 5/10 ft street setback across a LOCAL street from a
-   residential zone (33.130.215.B.1.b, CM2 and up) is still not encoded
-   (needs street class + zone across) -- a possible false GREEN.
+   gains. (d) re-screened in run 39 (promoted 2026-09-29). (e) DONE c9083b88 --
+   33.130.215.B.1.b: CM2/CM3/CE/CX street lines take 5 ft, 0 only where
+   s4's new `street_across_json` reads every ray across as non-residential
+   and the line is off the corridor (`setback_street_across_nonresidential_ft`);
+   quadfit CE/CM2/CM3/CX front 0 -> 5. Bound ~60 lots green/unknown ->
+   yellow, 0 loosened. NEEDS the next full s4->s7 run (new s4 column).
 10. **Two loose ends from the ruling pass.** (a) DONE 4b725b6a -- alias
    rulings can `observes:` a site fact; FLX->VC observes
    `inside_mapped_use_area`; the bridge applies aliases. Moves 0: the one
