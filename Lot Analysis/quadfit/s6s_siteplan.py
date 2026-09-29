@@ -204,7 +204,11 @@ lane still runs inside the envelope: a pole narrower than the lane, and a
 street piece that does not line up with a column beside the pod (the lane
 would jog through the front yard, or run in the side setback), refuse the
 lot, which the drawing before 2026-09-20 parked over ground it never
-checked (FOLLOWUPS 5 (k)). Until 2026-09-28 the pole's own lane was taken
+checked -- until the stub pass of 2026-09-29 (FOLLOWUPS 6 (k)): where the
+first-fit pod stood across every column of the street piece, a lane's
+columns on the piece are closed to the pod before it is placed, and the
+lane runs straight down them beside the pod; nothing is jogged, and a
+piece that holds no lane's width of envelope stays refused. Until 2026-09-28 the pole's own lane was taken
 at ANY column of the body's top while the pod was placed first-fit at the
 body's top-left, so where the pole met the body at the left the lane
 stood to the pod's right and the run along the body's top from the pole
@@ -793,6 +797,49 @@ def _pole_lanes(ok, span: tuple[float, float], minx: float, res: float,
     c0s = np.flatnonzero(inside if inside.any()
                          else run & (mid >= span[0]) & (mid <= span[1]))
     return sorted({int(c0s.min()), int(c0s.max())}) if c0s.size else []
+
+
+#: How many lanes the stub pass reserves on one front before the pod is
+#: placed (`_stub_lanes`): the two ends of each run of columns a lane can
+#: start in, the outermost kept where there are more.
+STUB_LANES_MAX = 6
+
+
+def _stub_lanes(ok, fcells, drive_c: int) -> list[int]:
+    """The first columns of the lanes a front's own strip can start, for
+    the stub pass (FOLLOWUPS 6 (k)).
+
+    A column can carry a lane from the street where its first envelope cell
+    stands on the front street's strip (`fcells`) -- the test `_front_runs`
+    makes of every lane from the front. A lane is `drive_c` such columns
+    side by side. Returned: the leftmost and the rightmost lane in each run
+    of such columns, so the pod can stand beside it on either hand; where
+    there are more than `STUB_LANES_MAX`, the outermost. Empty where the
+    strip holds no lane's width -- a pole narrower than the lane, a front
+    set back past the street reach -- which stays refused.
+    """
+    import numpy as np
+
+    R, C = ok.shape
+    if C < drive_c:
+        return []
+    has = ok.any(axis=0)
+    start = np.where(has, ok.argmax(axis=0), 0)
+    on = has & fcells[np.clip(start, 0, R - 1), np.arange(C)]
+    good = np.convolve(on.astype(int), np.ones(drive_c, dtype=int), "valid") == drive_c
+    ends: list[int] = []
+    run0 = None
+    for c, g in enumerate(list(good) + [False]):
+        if g and run0 is None:
+            run0 = c
+        elif not g and run0 is not None:
+            ends.extend((run0, c - 1))
+            run0 = None
+    ends = sorted(set(ends))
+    if len(ends) > STUB_LANES_MAX:
+        half = STUB_LANES_MAX // 2
+        ends = ends[:half] + ends[-half:]
+    return ends
 
 
 def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
@@ -1466,7 +1513,22 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         if lot_poly.is_empty or lot_poly.area <= 0:
             lot_poly = None
     any_through = False
-    for b, fe, se in fronts:
+
+    def jobs():
+        # Every front as it has always been drawn; then, only where that
+        # drew nothing and got as far as a court with stalls in it and no
+        # lane (`no_side_lane`), every front once more with the lane's
+        # columns on the front strip reserved BEFORE the pod is placed
+        # (THE STUB PASS, FOLLOWUPS 6 (k), below). Read lazily, so the
+        # test sees the first pass's result; a lot the first pass drew is
+        # never drawn again.
+        for f in fronts:
+            yield (*f, False)
+        if best[1] is None and reach >= 3 and not alley_fed:
+            for f in fronts:
+                yield (*f, True)
+
+    for b, fe, se, stub in jobs():
         # The other streets' edges that run WITH this front are the far end
         # of a through lot (`_through_ends`); a side street is at least
         # `CORNER_MIN_DEG` off. The far end takes the ban and may serve the
@@ -1589,7 +1651,38 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         # lane's length is measured from a pole -- None: the street setback
         # -- and the grid the pod and the lane stand in -- None: `ok`)
         lanes = [(fcells, None, None, None)]
-        if (fe and not alley_fed and front_lane_ok
+        if stub:
+            # THE STUB PASS (FOLLOWUPS 6 (k), 2026-09-29). The pod is
+            # placed first-fit at the front of the envelope, and where the
+            # front street's strip is narrower than the lot -- a stub on
+            # the street with the body behind a neighbour, a notch, a
+            # partial frontage, a front that bends -- the pod can stand
+            # across every column the strip holds, and no lane from the
+            # street runs beside it (278 lots on the bound of 2026-09-20
+            # with a strip at least the lane wide; Gresham 1N3E30CB
+            # -12300). The pole's cure, asked of the strip: a lane's
+            # columns on the strip (`_stub_lanes`) are closed to the pod
+            # before it is placed, so the pod stands beside the lane and
+            # the lane runs straight from the street down the stub to the
+            # court. Nothing is jogged: the lane is the same straight run
+            # inside the envelope every front lane is, found by the same
+            # `_front_runs`, its length and area charged the same way
+            # (`driveway_len_c` into the pavement and out of the open
+            # space). The lane is looked for only in the reserved
+            # columns, so the plan is the one the reservation made room
+            # for.
+            if alley_fed or not front_lane_ok or not fe:
+                continue
+            lanes = []
+            for c0 in _stub_lanes(ok, fcells, drive_c):
+                f_s = np.zeros_like(ok)
+                f_s[:, c0:c0 + drive_c] = fcells[:, c0:c0 + drive_c]
+                shut = ok.copy()
+                shut[:, c0:c0 + drive_c] = False
+                lanes.append((f_s, _integral(shut), None, None))
+            if not lanes:
+                continue
+        elif (fe and not alley_fed and front_lane_ok
                 and strip_w < drive_w and drive_w <= fe_len <= 0.5 * C * res):
             fe_r = rotated(fe)
             span = _pole_span(fe_r, None if lot_poly is None else
@@ -1734,6 +1827,25 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                 row_c = math.ceil((stall_d + aisle_two) / res - 1e-9)
                 if rect is not None and rect[2] < row_c:
                     rect = _largest_rect(ok[court_r0:, :], min_h=row_c) or rect
+                if stub:
+                    # THE STUB PASS'S ROOM MEETS ITS LANE. The lane runs
+                    # straight up its reserved columns, so a room that
+                    # stands wholly to one side of them -- the biggest
+                    # room of a lot whose body swings off the street
+                    # piece at an angle (Gresham 1N3E30CB -12300: 81 ft of
+                    # bent front, the body running off to the north-east)
+                    # -- is one no lane reaches. The room is then sought
+                    # within a court's widest reach of the lane (one row
+                    # of `cap` stalls) on either side; the lane must still
+                    # meet it below, or nothing is offered.
+                    l_cols = np.flatnonzero(fcells.any(axis=0))
+                    l0, l1 = int(l_cols.min()), int(l_cols.max()) + 1
+                    if rect is None or not (rect[1] < l1 and rect[1] + rect[3] > l0):
+                        w0, w1 = max(0, l0 - cap * sw_c), min(C, l1 + cap * sw_c)
+                        sub = ok[court_r0:, w0:w1]
+                        near = _largest_rect(sub, min_h=row_c) or _largest_rect(sub)
+                        if near is not None:
+                            rect = (near[0], near[1] + w0, near[2], near[3])
                 if rect is None:
                     continue
                 reach = max(reach, 2)
