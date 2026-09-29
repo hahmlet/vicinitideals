@@ -111,9 +111,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    alley line; the court uses a side alley only where it runs the whole
    side line (`flats.geom.alley.side_alley_along`). Expect 12 Portland
    lots (24 rows, <=3 green-if-signed) to go street-fed. Same over-read,
-   queued: the rear-alley court trusts the 3-of-5 reading; the alley
-   setback (Portland 0) covers the whole line even where the alley covers
-   part of it; the lot page could say when an alley stops short. (d) Gresham's 200 alley lots fail lot
+   FIXED 59533da1 (also needs the s4 re-run): the alley is the
+   court's aisle only where it runs the whole rear line (a stub still
+   reaches the court); rear alley waivers/numbers only on a whole-line
+   alley; the side-alley number is cut per stretch in `buildable`. Probe:
+   ~64 rear-alley lots stop short, ~8 green->yellow expected (4-15), 0-5
+   side moves. Left: quadfit s6s still reads the alley as the aisle on
+   3-of-5; Gresham's rear-with-alley NUMBER can reach a second, non-alley
+   rear line (`envelope_for` fallback checks exemptions only); whether a
+   line an alley runs PART of is "a lot line abutting an alley" is
+   unruled (cautious reading taken -- a question for Steph); the lot page
+   could say when an alley stops short. (d) Gresham's 200 alley lots fail lot
    area/frontage regardless.
 4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
