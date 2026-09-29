@@ -508,9 +508,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    answers no code the of-layer holds; (c) DONE 1ff23bdb -- Map 130-1's
    maximum is 20 ft instead of 10 (33.130.215.C.1), a RELAXATION, hung on
    `civic_corridor_setback_all_streets` (every street line on a stretch);
-   0 moves, no screen reads a maximum (HUMAN_TODO 12); (d) the corridor facts are per lot (ANY street line), a
-   per-LINE field would let the one line on Division take 10 ft and the side
-   street 0.
+   0 moves, no screen reads a maximum (HUMAN_TODO 12); (d) DONE fa693288 -- the Map 130-1
+   10 ft minimum is per LINE in the envelope: optional field
+   `setback_street_off_corridor_ft` (the "Street Lot Line: none" row, six
+   commercial zones); a street line read surely OFF every stretch
+   (`flats.geom.corridor.off_corridor`) is cut at it, every other keeps 10;
+   paper fit / driveway charge keep 10. Next re-screen: 520 corridor lots,
+   297 with a line read off; moves only toward green/yellow -- read the
+   gains. Open: the 5/10 ft street setback across a LOCAL street from a
+   residential zone (33.130.215.B.1.b, CM2 and up) is still not encoded
+   (needs street class + zone across) -- a possible false GREEN.
 10. **Two loose ends from the ruling pass.** (a) DONE 4b725b6a -- alias
    rulings can `observes:` a site fact; FLX->VC observes
    `inside_mapped_use_area`; the bridge applies aliases. Moves 0: the one
