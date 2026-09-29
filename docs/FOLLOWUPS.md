@@ -618,10 +618,3 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    year-0 revenue entries describe what the code no longer writes. (a) and
    (d) look like export bugs; (b) and (c) are presentation choices for
    Steph. Exporter = app/exporters/investor_export.py (not the engine).
-20. **Who may delete a scenario template -- waiting on Steph.** Today any
-   org member, read-only ones included, can delete any template in the
-   org, including the org default (which also clears the org default only
-   admins may set). Options: admins only / the creator or an admin /
-   anyone. Pinned by the strict xfail
-   tests/api/test_bug_template_delete_non_admin.py (non-admin cannot delete
-   the org default); route in app/api/routers/ui_settings.py.
