@@ -1,0 +1,583 @@
+label: Durham
+kind: city
+eligible: true
+notes: >-
+  DRAFT, cloud session 2026-09-29. Read from the City of Durham Development
+  Code, revised November 13, 2025, the whole-code PDF the city publishes
+  (durham-oregon.us, 137 pages). Every value is draft. Durham has no GIS of
+  its own; its lots reach this layer by the taxlots' JURIS_CITY DURHAM, and
+  their zoning comes from Metro's regional zoning layer (CITY 'Durham'),
+  which carries SDR, MDR, IP, OP and NR and none of the three overlays.
+ingest:
+  geoid: null
+  juris_city_codes:
+  - DURHAM
+# The references the binding ledger stood beside an encoded value, read
+# 2026-09-29. One, and it is the page header.
+crossrefs:
+  "11.13.2025":
+    outcome: misread
+    note: >-
+      Not a reference: the running header "DURHAM DEVELOPMENT CODE Rev.
+      11.13.2025", the code's revision date, printed under every page
+      footer (117 times across the stored chapters, e.g.
+      ddc.3.site-design.txt L37, L345, L419), and so beside the yards, the
+      driveway widths and the parking table.
+code:
+# The whole Development Code is one PDF, revised 11/13/2025. Each chapter
+# heading prints twice -- once in the table of contents with dot leaders,
+# once over the chapter -- so each slice starts at the second occurrence of
+# its chapter title and ends at the next chapter's title, which is printed
+# once after the contents. Chapter 1 (purpose and administration), 6 (signs)
+# and 11 (time limits and enforcement) are not stored: nothing in them
+# places a building. Printed page number = PDF page number.
+- id: "ddc.2.zoning-districts"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 2 - Zoning Districts (SDR 2.8, MDR 2.9, overlays, Table 2.18)"
+  start: "ZONING DISTRICTS"
+  nth: 2
+  end: "SITE AND DESIGN STANDARDS"
+- id: "ddc.3.site-design"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 3 - Site and Design Standards (residential 3.1, access and parking 3.7, streets 3.9)"
+  start: "SITE AND DESIGN STANDARDS"
+  nth: 2
+  end: "APPLICATION AND APPROVAL CRITERIA FOR LAND USE"
+- id: "ddc.4.applications"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 4 - Application and Approval Criteria for Land Use, Rezone and Text Amendment"
+  start: "APPLICATION AND APPROVAL CRITERIA FOR LAND USE"
+  nth: 2
+  end: "TREE PROTECTION"
+- id: "ddc.5.trees"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 5 - Tree Protection"
+  start: "TREE PROTECTION"
+  nth: 2
+  end: "SIGN REGULATION"
+- id: "ddc.7.supplemental"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 7 - Supplemental Land Use Regulations (flood 7.2, cottage cluster 7.11, townhouse 7.12)"
+  start: "SUPPLEMENTAL LAND USE REGULATIONS"
+  nth: 2
+  end: "LAND DIVISIONS"
+- id: "ddc.8.land-divisions"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 8 - Land Divisions (middle housing land division 8.9)"
+  start: "LAND DIVISIONS"
+  nth: 2
+  end: "PROCEDURES"
+- id: "ddc.9.procedures"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 9 - Procedures"
+  start: "PROCEDURES"
+  nth: 2
+  end: "ADJUSTMENT, VARIANCE, NON-CONFORMING USE, MAJOR"
+- id: "ddc.10.adjustments"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 10 - Adjustment, Variance, Non-Conforming Use, Major Modification"
+  start: "ADJUSTMENT, VARIANCE, NON-CONFORMING USE, MAJOR"
+  nth: 2
+  end: "TIME LIMITATIONS; ENFORCEMENT"
+- id: "ddc.12.definitions"
+  url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+  title: "Durham Development Code Chapter 12 - Definitions"
+  start: "DEFINITIONS"
+  nth: 4
+  end: "137 | P a g e"
+  # The glossary is 12.2's list alone (12.2.1 at L11 to 12.2.43 at L194).
+  # Above it are the chapter heading and 12.1, whose "(ORS) shall mean" reads
+  # as an entry; without the span both sat out of alphabet and the chapter
+  # read as skimmed. Nothing the layer uses is defined outside it.
+  definitions_at: L11-L194
+# DEFINITIONS, read 2026-09-29 from Chapter 12 whole (ddc.12.definitions.txt
+# runs from the chapter heading to the last page footer). No `definitions:`
+# block: Durham defines none of the terms the register holds a test for.
+#
+# THE NOUN. 12.2.29: "'Quadplex' means four attached dwelling units on a
+# lot" (L116), and 12.2.22 makes it Middle Housing: "Duplexes, Triplexes,
+# Quadplexes, Cottage Clusters, and Townhouses" (L93-L94). The pod is a
+# Quadplex, and SDR's use list names Middle housing. A Townhouse is a unit
+# "located on an individual lot" sharing a wall (12.2.39, L176-L178), the
+# unit-lot path. The code's own word for the quadplex's units is "attached
+# dwelling units", which is how the rear yard below is read.
+#
+# CORNER LOT, FRONT LOT LINE, SETBACK, HEIGHT, LOT WIDTH. Not defined. 12.1
+# sends every undefined word to its ordinary meaning in Webster's Third
+# (L3-L8). The layer therefore holds no corner-lot test of its own, which the
+# register reports as a gap rather than borrowing another code's; the handoff
+# lists it. The front setback is measured "from the edge of the street right
+# of way" (3.1.3), which is what front_lot_line_corner below reads.
+#
+# THE SPAN. definitions_at (on the code entry above) holds 12.2.1 to
+# 12.2.43, L11-L194: one numbered, alphabetical list with the
+# flood-insurance terms filed in the alphabet, not apart from it. The
+# glossary reader did not know Durham's numbering ("12.2.29", a one-digit
+# middle) and read the running page header as a term; both are reader
+# changes on this branch (handoff, Reader changes). Nine entries still go
+# uncaptured and are read here by hand: Cut and Elevated Building ("means,"),
+# Floor Area Ratio ("or “FAR” means"), Lot, Limited Land Use Decision and
+# Start of Construction (no "means"), Lowest Floor (12.2.19 opens with a
+# closing curly quote, L79, a typesetting slip), Mobile Home and Net
+# buildable area ("has the meaning set out in", ORS 446.003 and Metro's
+# functional plan).
+
+defaults:
+  # PARKING COUNT. Table 3.7.5: "Single Dwelling and Middle Housing,
+  # Attached or Detached 1 / No maximum" (L436-L437). The pod is Middle
+  # Housing by 12.2.22. One stall per unit; the state layer's lot-size bands
+  # cap the total for a quadplex below four on lots under 7,000 sq ft.
+  parking_min_per_unit:
+    value: 1
+    cite: Durham Development Code Table 3.7.5, Single Dwelling and Middle Housing, Attached or Detached (1 minimum)
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L429-L437"
+  parking_max_per_unit:
+    exempt: true
+    cite: Durham Development Code Table 3.7.5, Single Dwelling and Middle Housing, Attached or Detached (No maximum)
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L429-L437"
+  # STALLS AND AISLES. NOT ENCODED: Chapter 3 states no stall or aisle
+  # dimension anywhere. 3.7.4 lists what a parking area for four or more
+  # vehicles must have -- a dustless surface, lighting of at most one
+  # foot-candle at the property line, "Space for backing and maneuvering
+  # that does not require use of public right of way", wheel stops and the
+  # district's landscaping (L408-L427) -- and no size. The layer holds no
+  # stall or aisle; the site plan draws the assumed 24-foot aisle and marks
+  # the lot geometry_assumed (rulebook section 7).
+  #
+  # THE DRIVEWAY. Two rules reach a fourplex's drive, and they disagree.
+  # 3.7.1.4, "A vehicle access way to a multi-unit residential development",
+  # counts dwelling units: "for 3 to 49 dwelling units, 1 two-way at least 30
+  # feet wide or 2 one-way each at least 20 feet wide, 5 foot sidewalk
+  # required on one side" (L333-L339). Table 3.7.1.8, which says it
+  # summarizes the sections above it, prints one SDR row only, "SDR (NOT PRD)
+  # Driveway 10-30 feet wide, fully paved" (L361-L365) -- 3.7.1.3's figure
+  # for "a single, detached residential structure" (L329-L331) -- and files
+  # the "3-49 dwelling units" row under "MDR - MDDO AND PLANNED RESIDENTIAL
+  # DEVELOPMENT (PRD)" (L365-L369), which reads 3.7.1.4 as MDR's and a
+  # PRD's. The pod is four dwelling units, not a single detached structure,
+  # and "multi-unit" is not defined. Held: 3.7.1.4.2, the stricter and the one whose own words
+  # count the pod's units. A question for Steph; on the table's reading the
+  # drive is 10 to 30 feet.
+  #
+  # NOT ENCODED: 3.7.1.6, "shall include a pedestrian access on one side at
+  # least an additional 5 feet wide" (L350-L352). No field holds a walkway
+  # beside a drive; the lane the code asks for is 35 feet, not 30, so the
+  # screen is LOOSER than the code by five feet. A doubt; the handoff
+  # proposes a field. 80 percent paving (L333-L334) is surface, not width.
+  driveway_min_width_two_way_ft:
+    value: 30
+    cite: Durham Development Code 3.7.1.4.2, vehicle access way to a multi-unit residential development of 3 to 49 dwelling units (one two-way at least 30 feet)
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L333-L339"
+  driveway_min_width_one_way_ft:
+    value: 20
+    cite: Durham Development Code 3.7.1.4.2, vehicle access way to a multi-unit residential development of 3 to 49 dwelling units (two one-way each at least 20 feet)
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L333-L339"
+  # 3.7.1.7, in all zoning districts: the part of the access way "within
+  # public right of way, e.g., the driveway apron, shall not be wider than
+  # 40 feet" (L354-L359). Held. Under the table's SDR row the drive itself
+  # would stop at 30 at the property line; not held, for the reason above.
+  #
+  # NOT ENCODED, the rest of 3.7.1.7: the apron "shall be set back from
+  # adjacent property by at least 5 feet and no portion of same shall be
+  # less than 100 feet from any street intersection as measured from the
+  # curb return". Nothing measures the curb return; on a corner lot less than
+  # about 100 feet along a street, the second clause leaves that street no
+  # legal apron at all. A doubt, and one that can turn a corner lot red.
+  # "These dimensions may be adjusted" for joint and reciprocal access: a
+  # relief on an approval, not a standard.
+  driveway_approach_max_width_ft:
+    value: 40
+    cite: Durham Development Code 3.7.1.7, driveway apron within public right of way not wider than 40 feet (all zoning districts)
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L354-L359"
+  # NOT ENCODED: 3.7.1.1, "vehicle access to an occupiable structure shall
+  # extend to no less than 50 feet from a ground level access to that
+  # structure. Pedestrian access shall extend from each ground level entry
+  # to the public right of way" (L320-L322); and 3.7.1.2, pedestrian ways
+  # "visually prominent and visually separated" from vehicle paving
+  # (L324-L327). Where the pod's doors are is the design's, not the lot's; a
+  # rear court puts the drive within 50 feet of the rear doors. Recorded.
+  #
+  # WHICH STREET IS THE FRONT on a corner lot. 3.1.3 measures the front
+  # setback "from the edge of the street right of way" in all residential
+  # districts (L15-L16), and nothing defines a front lot line. Every street
+  # line is the edge of a street right of way, so every street line takes
+  # the front setback: `both`. The SDR street-side figure is the same 20
+  # feet, so the choice changes which line is the rear, not a number.
+  front_lot_line_corner:
+    value: both
+    cite: Durham Development Code 3.1.3, front setback measured from the edge of the street right of way (no front lot line defined, 12.1)
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L15-L17"
+  # WHICH STREET THE DRIVEWAY USES. 3.7.1 asks only for paved access to
+  # "public right of way" (L314-L318) and names no street; `any`. The
+  # townhouse section names one, 7.12.9 Option 1: "A townhouse project that
+  # includes a corner lot shall take access from a single driveway approach
+  # on the side of the corner lot" (ddc.7.supplemental.txt L860-L864), the
+  # model-code sentence Gresham and Oregon City carry. Held on unit lots the
+  # way those layers hold it, the stricter reading of an option that sits
+  # among three.
+  corner_access_street:
+    value: any
+    cite: Durham Development Code 3.7.1, access to public right of way (no street named)
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L313-L318"
+    variants:
+      - value: side
+        when: [unit_lots]
+        cite: Durham Development Code 7.12.9 Option 1, a townhouse project that includes a corner lot takes access from a single driveway approach on the side of the corner lot
+        quote: "or/washington/durham/ddc.7.supplemental.txt#L860-L864"
+  # NOT ENCODED: parking_front_prohibited on unit lots. 7.12.9: "Off-street
+  # parking areas shall be accessed on the back façade or located in the
+  # rear yard. Garages on the front façade of a townhouse, off-street parking
+  # areas in the front yard, and driveway accesses in front of a townhouse
+  # are prohibited unless" one of three options is met, and Option 3 allows
+  # paired front driveways 24 feet apart (L860-L866). Not an outright ban;
+  # the pod parks in a rear court, which the first sentence asks for.
+
+# THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29.
+#
+# NOT ENCODED: 3.1.1's first sentence, "The minimum density for residential
+# development when averaged city-wide shall be maintained at no less than 6
+# dwelling units per net buildable acre" (ddc.3.site-design.txt#L4-L5). A
+# city-wide average the city keeps, not a standard on a lot.
+#
+# NOT ENCODED: 3.1.6, projections up to 5 feet into every yard (L27-L29).
+# An allowance; the pod carries no projection in the catalog.
+#
+# NOT ENCODED: 3.1.7, fences "so long as the fence does not obstruct the
+# vision clearance area between a driveway and the right of way or at the
+# intersections of public rights of way as provided for by City ordinance"
+# (L38-L40). The one figure found is in the city's "Unofficial Municipal
+# Code" (codified ordinances edited 10.27.21, linked from its ordinances
+# page; read, not stored): 132.01 B.2 keeps the view "at the intersection of
+# streets or a street and a driveway" clear between 3 and 10 feet above
+# street grade "for a distance of at least 20 feet from the point of
+# intersection". It binds landscaping in the right of way, which the owner
+# keeps, and 3.1.7 binds fences; neither places a building. A doubt.
+#
+# NOT ENCODED: 3.1.8 and 3.1.9 waiver and fee in lieu (L48-L79). The open
+# space is held in SDR below; the waiver is a finding the City makes.
+#
+# NOT ENCODED: 3.7.3, dedication of right of way "roughly proportional to the
+# projected impact" (L392-L406), and 8.9.2.8, frontage improvements to
+# 3.7.3 on a middle housing land division (ddc.8.land-divisions.txt
+# L272-L274). Ground taken from a lot by an amount nothing measures.
+#
+# NOT ENCODED: 3.7.6 to 3.7.9, bicycle parking for "all multi-unit
+# residential uses with 4 or more units": one space per unit, each 6 by 2
+# feet with a 5-foot paved maneuvering area, "or a garage in lieu"
+# (L450-L465). About 70 square feet of the court; no field holds it.
+#
+# NOT ENCODED: 3.9 streets and 3.10 traffic impact analysis (L516-L673).
+# Private streets begin above six units and a study above 200 trips a day;
+# the pod reaches neither.
+#
+# NOT ENCODED: Chapter 5, tree protection. 5.2.1: it "shall apply to the
+# proposed removal of trees in connection with Type II, Type III, limited
+# land use, and expedited land division applications" (ddc.5.trees.txt
+# L11-L14). A quadplex permitted outright is ministerial (2.3), so the
+# one-lot path does not reach it; a middle housing land division (8.9) does,
+# with its 20 percent of trees and 40 percent of canopy kept and a 35
+# percent canopy target (L167-L176, L245-L249). Needs a tree survey: local
+# work.
+#
+# NOT ENCODED: 7.2, Flood Management Area (ddc.7.supplemental.txt
+# L46-L416). Overlay data along Fanno Creek and the Tualatin River; the
+# flood layers are local work.
+#
+# NOT ENCODED: 2.17.1, no accessory use in a front or side setback
+# (ddc.2.zoning-districts.txt#L296-L298), and 2.17.2, a shed within 5 feet
+# of a rear line (L300-L302). Accessory structures; the pod has none.
+#
+# NOT ENCODED: 7.5, a mobile or manufactured home in SDR must be
+# multi-sectional of at least 1,000 sq ft, on a perimeter foundation, roofed
+# at 3 in 12, and have a garage (ddc.7.supplemental.txt L456-L477). A
+# "Manufactured Dwelling" is "built on a permanent chassis" (12.2.20,
+# ddc.12.definitions.txt L85-L88); the pod is factory-built but is four
+# attached units on a foundation, a Quadplex, not a chassis-built home, so
+# 7.5 is another building's rule. Found reading Chapter 7 in step 10; it
+# says what such a home "shall be", not the prohibition grammar the grep
+# looks for.
+zones:
+  # ------------------------------------------------------------------
+  # SDR, Single Dwelling Residential, 2.8. The only district that admits the
+  # pod. 2.8.1.6 "Middle housing" is a use permitted outright (L81), and so
+  # is the Table 2.18 row (L315-L318); 2.3: a use permitted outright
+  # "requires only ministerial review for conformance to the site
+  # requirements of this Code" (L23-L26). 10.5 exempts middle housing from
+  # major modification review (ddc.10.adjustments.txt#L123-L125). A doubt,
+  # not a refusal: Table 9.10.9 lists "Site Design 2 Chapter 3"
+  # (ddc.9.procedures.txt#L682), a Type 2 review, without saying which
+  # applications it reaches; the table "is not all-inclusive and is for
+  # convenience only" (L656-L658), and 2.3 is the operative sentence.
+  #
+  # THE DIMENSIONS, 3.1 (ddc.3.site-design.txt L3-L25), all residential
+  # districts unless it says SDR:
+  #
+  # - LOT AREA. "The minimum lot area in the SDR district shall be 10,000
+  #   square feet except in a Planned Residential Development" (L6-L7).
+  #   OAR 660-046-0220(2)(a)(B)(ii) lets a Large City keep a quadplex minimum
+  #   equal to a single-family minimum over 7,000 square feet, so 10,000
+  #   stands. Townhouse lots: 1,500, averaged (3.1.1 L7-L8; 7.12.6).
+  # - DENSITY. "The minimum base density for the SDR district shall be
+  #   10,000 square feet per dwelling" (L5-L6). Read as a floor, the word
+  #   printed: at least one unit per 10,000 square feet, so four units hold
+  #   no more than 40,000 square feet. The other reading -- no more than one
+  #   unit per 10,000, a ceiling -- the state layer would exempt on one lot.
+  #   The floor is the stricter of the two where it matters; a question for
+  #   Steph. Held as printed, sqft_per_unit.
+  # - MAXIMUM DENSITY. SDR prints none for a quadplex. 7.12.7: "The maximum
+  #   density for townhouses shall be 18 dwelling units per gross acre"
+  #   (ddc.7.supplemental.txt#L853). Held as the zone's value; the state
+  #   layer exempts maximum density on one lot (or/_state.yaml, unless
+  #   unit_lots), so it reaches only a townhouse plat -- where it belongs.
+  #   Four townhouses at 18 need 9,680 square feet of parent.
+  # - FRONT 20, "from the edge of the street right of way" (L15-L16).
+  # - SIDE 10, and "20 feet from the corner of a residential structure in
+  #   the SDR district" (L16-L17). The 20 is held as the street side. The
+  #   city's 2021 handout reads the same clause as "20 ft. from property
+  #   corner to structure" (not adopted, scratch only), a distance from the
+  #   lot's corner; NOT ENCODED on that reading, which no field holds. A
+  #   doubt.
+  # - REAR "20 feet for detached dwelling units and 15 feet for attached
+  #   units" (L17-L18). A townhouse lot takes 15: its unit is one of "a row
+  #   of two or more attached dwelling units" (12.2.39), and 7.12.8 sends it
+  #   to SDR's rear setback. The quadplex on one lot is held at 20,
+  #   conservatively. The code's words lean the other way -- 12.2.29 makes a
+  #   quadplex "four attached dwelling units" -- but the building itself is
+  #   detached, and the sentence may be sorting buildings, not units. Which
+  #   one the city applies is a question for Steph; if it is 15, the layer
+  #   is 5 feet strict on one lot.
+  # - HEIGHT 35 feet above average grade (L21-L22).
+  # - FRONTAGE 20 feet on a public or private street, "for all residential
+  #   uses" (L24-L25).
+  # - OPEN SPACE. 3.1.8.1: "The common recreational open space in a
+  #   residential subdivision and in a multi-unit residential development
+  #   shall occupy not less than 5% of the gross site area" (L42-L46).
+  #   Whether four units are a "multi-unit residential development" is the
+  #   same undefined phrase as the driveway's, read the same stricter way.
+  #   Held in open_space_min_pct, as Fairview holds its common open space
+  #   (FMC 19.30.090.B.1). It cannot bind: the pod leaves far more than 5
+  #   percent of any 10,000 square foot lot open.
+  # - No coverage limit is printed for SDR.
+  #
+  # THE UNIT-LOT PATH. Two roads split the pod. A middle housing land
+  # division (8.9) keeps the quadplex's type (8.9.2.7,
+  # ddc.8.land-divisions.txt#L269-L270) and so its one-lot standards, which
+  # the state layer's land_division_parent_standards already reads. A
+  # townhouse project (7.12, Type I, lots by Chapter 8) has its own: lots of
+  # 1,500 averaged (7.12.6), 18 units per gross acre (7.12.7), front and rear
+  # as SDR, exterior side as SDR, "Internal side yards shall be zero feet",
+  # and "All other Site and Design Standards shall be the same as for the SDR
+  # zone" (7.12.8, L855-L858) -- so 20 feet of frontage on every lot. The
+  # variants below are the townhouse project's.
+  #
+  # NOT ENCODED: 7.12.5, 20 feet between sets of townhouses (L847). One set.
+  # ------------------------------------------------------------------
+  SDR:
+    cite_default:
+      cite: Durham Development Code 2.8 (SDR Single Dwelling Residential) and 3.1 (Standard Site Design in Residential Zones)
+      url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: Durham Development Code 2.8.1.6 and Table 2.18 (Middle housing permitted outright in SDR), 2.3 (ministerial review), 12.2.22 and 12.2.29 (a Quadplex is Middle Housing)
+      quote: "or/washington/durham/ddc.2.zoning-districts.txt#L23-L26,L61-L67,L81,L310-L318"
+    min_lot_sqft:
+      value: 10000
+      cite: Durham Development Code 3.1.1, minimum lot area in the SDR district
+      quote: "or/washington/durham/ddc.3.site-design.txt#L6-L7"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Durham Development Code 7.12.6, townhouse lots average 1,500 square feet
+          quote: "or/washington/durham/ddc.7.supplemental.txt#L849-L851"
+    min_density_du_per_acre:
+      sqft_per_unit: 10000
+      cite: Durham Development Code 3.1.1, minimum base density for the SDR district (10,000 square feet per dwelling, read as a floor)
+      quote: "or/washington/durham/ddc.3.site-design.txt#L4-L6"
+    max_density_du_per_acre:
+      value: 18
+      cite: Durham Development Code 7.12.7, maximum density for townhouses (no SDR maximum printed for a quadplex; the state layer exempts the one-lot path)
+      quote: "or/washington/durham/ddc.7.supplemental.txt#L853"
+    setback_front_ft:
+      value: 20
+      cite: Durham Development Code 3.1.3, front setback from the edge of the street right of way, all residential districts
+      quote: "or/washington/durham/ddc.3.site-design.txt#L15-L16"
+    setback_side_ft:
+      value: 10
+      cite: Durham Development Code 3.1.3, 10 feet from the side in the SDR district
+      quote: "or/washington/durham/ddc.3.site-design.txt#L15-L17"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Durham Development Code 7.12.8, internal side yards of townhouse lots zero feet
+          quote: "or/washington/durham/ddc.7.supplemental.txt#L855-L858"
+    setback_street_side_ft:
+      value: 20
+      cite: Durham Development Code 3.1.3, 20 feet from the corner of a residential structure in the SDR district
+      quote: "or/washington/durham/ddc.3.site-design.txt#L15-L17"
+    setback_rear_ft:
+      value: 20
+      cite: Durham Development Code 3.1.3, rear setback 20 feet for detached dwelling units (held for the quadplex on one lot, conservatively; 15 for attached units is the other reading)
+      quote: "or/washington/durham/ddc.3.site-design.txt#L17-L18"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Durham Development Code 3.1.3, rear setback 15 feet for attached units, through 7.12.8 (townhouse lots meet the SDR rear setback; a townhouse is one of a row of attached dwelling units, 12.2.39)
+          quote: "or/washington/durham/ddc.3.site-design.txt#L17-L18"
+    max_height_ft:
+      value: 35
+      cite: Durham Development Code 3.1.4, maximum building height 35 feet above average grade
+      quote: "or/washington/durham/ddc.3.site-design.txt#L21-L22"
+    min_frontage_ft:
+      value: 20
+      cite: Durham Development Code 3.1.5, minimum lot frontage on a public or private street, all residential uses
+      quote: "or/washington/durham/ddc.3.site-design.txt#L24-L25"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Durham Development Code 3.1.5 through 7.12.8 (all other Site and Design Standards as for SDR), 20 feet for each townhouse lot
+          quote: "or/washington/durham/ddc.3.site-design.txt#L24-L25"
+    open_space_min_pct:
+      value: 5
+      cite: Durham Development Code 3.1.8.1, common recreational open space in a multi-unit residential development (5% of gross site area)
+      quote: "or/washington/durham/ddc.3.site-design.txt#L42-L46"
+    notes: >-
+      DRAFT. Middle housing permitted outright (ministerial). 10,000 sq ft
+      lot and at least one unit per 10,000 sq ft; front 20, side 10, street
+      side 20, rear 20 (the detached figure, conservatively; 15 for attached
+      units is a question); 35 ft; 20 ft frontage; 5 percent common open
+      space. Townhouse lots 1,500 averaged, 18 units per gross acre, zero
+      internal sides, rear 15.
+  # ------------------------------------------------------------------
+  # MDR, Multi-Dwelling Residential, 2.9, and MDDO, its design overlay,
+  # 2.10. REFUSED, conservatively, and put to Steph.
+  #
+  # The use list: "Multiple residential units within a commonly-owned
+  # structure, including but not limited to residential condominia" (2.9.1.3,
+  # ddc.2.zoning-districts.txt#L100-L101; Table 2.18 L323). The pod is
+  # multiple residential units in one structure. Whether "commonly-owned"
+  # means held by one owner or owned in common, as a condominium or
+  # co-operative, the code does not say; 2.6 uses the same words for a PRD's
+  # "multiple dwelling units within a commonly owned and maintained structure
+  # (a condominium or co-operative or commons ownership)" (L52-L53), which
+  # points to the second. MDR permits no "Middle housing" row and no
+  # quadplex, and allows no detached single dwelling at all -- only "Single
+  # dwelling attached residence" (2.9.1.7, L109) -- so OAR 660-046 does not
+  # carry the pod here as it does in SDR.
+  #
+  # The process: Table 9.10.9 "MDR Development 2 Section 2.9"
+  # (ddc.9.procedures.txt#L676), a Planning Commission decision with notice
+  # (9.6, L128-L130), on 4.3's criteria, one of which is that "the proposed
+  # use substantially complies with the housing policies of the City's land
+  # use comprehensive plan" (ddc.4.applications.txt#L121-L123,L147-L149) --
+  # not clear and objective. MDDO is "discretionary- rather than clear and
+  # objective" by its own words (L128-L131), applied by a Type 3 zone change
+  # (2.10.1, L133-L134), and permits what MDR permits (2.10.2, L136-L137).
+  # ------------------------------------------------------------------
+  MDR:
+    cite_default:
+      cite: Durham Development Code 2.9 (MDR Multi-Dwelling Residential), Table 2.18 and Table 9.10.9
+      url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Durham Development Code 2.9.1 and Table 2.18 (no Middle housing or quadplex row; multiple residential units within a commonly-owned structure, read as condominium) and Table 9.10.9 (MDR Development, Type 2 on the 4.3 criteria)
+      quote: "or/washington/durham/ddc.2.zoning-districts.txt#L89-L109,L321-L326"
+    notes: >-
+      DRAFT. Refuses, conservatively: no middle housing row, a use noun that
+      reads as condominium, and a Type 2 review on a discretionary
+      criterion. A question for the owner.
+  MDDO:
+    # Not on Metro's map on 2026-09-29; held because the code names it a
+    # district (2.10).
+    cite_default:
+      cite: Durham Development Code 2.10 (MDDO Multi-Dwelling Design Overlay)
+      url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Durham Development Code 2.10 and 2.10.2 (MDR's uses, by a discretionary process) and Table 9.10.9 (MDDO Development, Type 3)
+      quote: "or/washington/durham/ddc.2.zoning-districts.txt#L125-L137"
+    notes: >-
+      DRAFT. Refuses: MDR's uses by a discretionary Type 3 process.
+  # ------------------------------------------------------------------
+  # THE EMPLOYMENT AND RESOURCE DISTRICTS. None lists a dwelling. IP, OP and
+  # BPO (an overlay on OP and IP, uses "conducted entirely within a
+  # building") list industry and offices; NR lists access ways, gardens,
+  # open space and recreation; NRO allows "Any use permitted in the
+  # underlying zoning district, but only as part of a Planned Development"
+  # (Table 2.18, L367-L369; 2.15.1, L271-L272), and a Planned Residential
+  # Development takes three acres (3.2) -- not the pod on its own lot. 2.17:
+  # an unlisted use "shall be deemed to be not a permitted use" (L290-L294).
+  # BPO and NRO are not on Metro's map on 2026-09-29.
+  # ------------------------------------------------------------------
+  IP:
+    cite_default:
+      cite: Durham Development Code 2.11 (IP Industrial Park) and Table 2.18
+      url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Durham Development Code 2.11.1 and 2.11.2 (industrial uses only) and 2.17 (unlisted uses not permitted)
+      quote: "or/washington/durham/ddc.2.zoning-districts.txt#L139-L173,L290-L294"
+    notes: >-
+      DRAFT. Refuses: industrial uses only.
+  OP:
+    cite_default:
+      cite: Durham Development Code 2.12 (OP Office Park) and Table 2.18
+      url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Durham Development Code 2.12.1 and 2.12.2 (offices and studios only) and 2.17 (unlisted uses not permitted)
+      quote: "or/washington/durham/ddc.2.zoning-districts.txt#L175-L201,L290-L294"
+    notes: >-
+      DRAFT. Refuses: offices and artist studios only.
+  BPO:
+    cite_default:
+      cite: Durham Development Code 2.13 (BPO Business Park Overlay) and Table 2.18
+      url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Durham Development Code 2.13.1 and 2.13.2 (the OP or IP uses, within a building)
+      quote: "or/washington/durham/ddc.2.zoning-districts.txt#L203-L238"
+    notes: >-
+      DRAFT. Refuses: the underlying OP or IP uses, indoors.
+  NR:
+    cite_default:
+      cite: Durham Development Code 2.14 (NR Natural Resources) and Table 2.18
+      url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Durham Development Code 2.14.1 (access ways, gardens, open space and recreation only)
+      quote: "or/washington/durham/ddc.2.zoning-districts.txt#L242-L263"
+    notes: >-
+      DRAFT. Refuses: open space, gardens and recreation only.
+  NRO:
+    cite_default:
+      cite: Durham Development Code 2.15 (NRO Natural Resources Overlay) and Table 2.18
+      url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Durham Development Code 2.15.1 and Table 2.18 (uses only as part of a Planned Residential Development)
+      quote: "or/washington/durham/ddc.2.zoning-districts.txt#L265-L272,L367-L369"
+    notes: >-
+      DRAFT. Refuses: uses only as part of a Planned Residential Development
+      of three acres or more.

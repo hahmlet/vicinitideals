@@ -1,0 +1,194 @@
+DEFINITIONS
+
+12.1    Generally.
+All words and phrases used in this Code shall have their ordinary meaning unless specially
+defined otherwise in this Code. “Ordinary meaning” shall be the meaning(s) provided in
+Webster’s Third International Dictionary or such other reference source as the Oregon Supreme
+Court may rely on from time to time in its published decisions. All references to Oregon statutes
+(ORS) shall mean those statutes as they may be renumbered or amended from time to time.
+
+12.2    As used in this Code the following words and phrases mean:
+12.2.1           “Accessory Dwelling Unit (ADU)” means an interior or attached residential
+structure that is used in connection with, or that is accessory to, a single detached dwelling.  The
+accessory unit functions as a complete independent living facility with provisions within the unit
+for a separate kitchen, bathroom and sleeping area.
+
+12.2.2           “Area of Special Flood Hazard” means the land in the flood plain within a
+community subject to a one percent or greater chance of flooding in any given year, designate on
+a flood plain map by an A or V.
+
+12.2.3           “Base Flood” means the flood having a one percent chance of being equaled or
+exceeded in any given year, the “100 - year flood,” designated on a flood plain map by an A or V.
+
+12.2.4           “Basement” means any area of a building with the floor subgrade (below ground
+level) on all sides.
+
+12.2.5           “Cottage Cluster” means a grouping of no fewer than five detached dwelling units
+with a footprint of less than 900 square feet each that includes a common courtyard.
+
+12.2.6           “Cut” means, in the context of tree preservation, to fell or remove a tree or to do
+anything that has the natural result of causing the death or substantial destruction of a tree.
+
+12.2.7           “Development” means any man-made change to improved or unimproved real
+estate, including but not limited to buildings or other structures, minim, dredging, filling, grading,
+paving, excavation or drilling operations or storage of equipment or materials located with the
+area of special flood hazard.
+                                                                                                          132 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+12.2.8           “Duplex” means two attached dwelling units on a lot.
+
+12.2.9                “Elevated Building” means, for flood insurance purposes, a non-basement building
+that has its lowest elevated floor raised above ground level by foundation walls, shear walls,
+post, piers, pilings, or columns
+
+12.2.10             “Flood or Flooding” means a general and temporary condition of partial or
+complete inundation of normally dry land areas from 1) the overflow of inland or tidal waters
+and/or 2) the unusual and rapid accumulation of runoff of surface waters from any sou                       rce.
+
+12.2.11          “Flood Insurance Rate Map (FIRM)” means the official map on which the Federal
+Insurance Administration has delineated both the areas of special flood hazards and the risk
+premium zones applicable to the community.
+
+12.2.12          “Flood Insurance Study” means the official report provided by the Federal
+Insurance Administration that includes flood profiles, the Flood Boundary-Floodway Map, and
+the water surface elevation of the base flood.
+
+12.2.13           “Floodway” means the channel of a river or other watercourse and the adjacent
+land areas that must be reserved in order to discharge the base flood without cumulatively
+increasing the water surface elevation more than one foot.“
+
+12.2.14          “Floor Area Ratio” or “FAR” means the ratio of maximum rentable floor space to
+the ground area that comprises the development.
+
+12.2.15          “Land Use Permit” means discretionary approval of proposed land development
+and is further defined in ORS 227.160.
+
+12.2.16          “Limited Land Use Decision” is a final decision by the City that concerns the
+approval or denial of a tentative subdivision or partition plan or the approval or denial of an
+application based on discretionary standards designed to regulate the physical ch                     aracteristics
+of a use permitted outright, including but not limited to site and review and design review.
+
+12.2.17          “Live-Work Residence” means a habitable structure constructed in according with
+the Uniform Building Code that allows for a professional office or service use on the ground floor
+and the business owner’s residence on the upper floor(s).
+
+                                                                                                         133 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+12.2.18          “Lot” is a generic term for any unit of land.
+
+12.2.19          ”Lowest Floor” means the lowest floor of the lowest enclosed area (including
+basement) but not an unfinished or flood resistant enclosure, usable solely for parking of
+vehicles, building access or storage, in an area other than a basement area, if that enclosure is
+not built so as to render the structure in violation of the applicable non-elevation design
+requirements of the City’s floodplain regulation.
+
+12.2.20          “Manufactured Dwelling” means a structure, transportable in one or more
+sections, which is built on a permanent chassis and is designed for use with or without a
+permanent foundation when attached to the require utilities. The term “manufactured dwelling”
+does not include a “recreational vehicle.”
+
+12.2.21          “Manufactured Home Park or Subdivision” means a parcel (or contiguous parcels)
+of land divided into two or more manufactured home lots for rent or sale.
+
+12.2.22          “Middle Housing” means Duplexes, Triplexes, Quadplexes, Cottage Clusters, and
+Townhouses.
+
+12.2.23          “Middle housing expedited land division” is defined as the partition or subdivision
+of a lot or parcel on which the development of middle housing is allowed under Section 8.9.
+
+12.2.24          “Mobile Home” has the meaning set out in ORS 446.003 (as amended and
+renumbered).
+
+12.2.25          “Net buildable area” has the meaning set out in the Metro Urban Growth
+Management Functional Plan.
+
+12.2.26          “New Construction” means structures for which the “start of construction”
+commenced on or after the effective date of this Code.
+
+12.2.27          “OAR” means Oregon Administrative Rule.
+
+12.2.28          “Property Line Adjustment” means a relocation or elimination of all or a portion of
+the common property line between abutting properties that does not create an additional lot or
+parcel.
+
+                                                                                                        134 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+12.2.29          “Quadplex” means four attached dwelling units on a lot.
+
+12.2.30          “Recreational Vehicle” means a vehicle that is built on a single chassis, is 400
+square feet or less measured at the largest horizontal projection, is designed to be self-propelled
+or permanently towable by a light duty truck; and is designed primarily not for use as a
+permanent dwelling but as temporary living quarters for recreational, camping, travel or
+seasonal use.
+
+12.2.31          “Residential Facility” means a residential care-, training- or treatment facility as
+those terms are defined in ORS 443.400 that provides one or more of those services for 6 to 15
+individuals who need not be related, not including staff persons required to meet licensing
+requirements.
+
+12.2.32          “Residential Home” means a residential treatment or training- or adult foster
+home licensed or registered under ORS Chapter 443 that provides one or more of those services
+for five or fewer persons who need not be related, not including staff persons required to meet
+licensing requirements.
+
+12.2.33          “Sign” means a structure or other visible medium that by use of color, form,
+graphic, illumination, motion, symbol, or writing draws attention to a person or thing or
+communicates a message to the observer.
+
+12.2.34          “Start of Construction” includes substantial improvement and means the date the
+building permit was issued if the actual start of construction, repair, reconstruction, placement
+or other improvement was within 180 days of the permit date. The actual start means either the
+first placement of permanent construction of a structure on site, such as the pouring of a slab or
+footings, the installation of piles, the construction of columns, or any work beyond the stage of
+excavation; or the placement of a manufactured home on a foundation. Permanent construction
+does not include land preparation, such as clearing, grading and filling; nor does it include the
+installation of streets and/or walkways; nor does it include excavation of a basement, footing,
+piers or foundation, or the erection of temporary forms; nor does it include the installation on the
+property of accessory buildings, such as garages or sheds not occupied as dwelling units or not
+part of the main structure. For a substantial improvement, the actual start of construction
+
+                                                                                                          135 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+means the first alteration of any wall, ceiling, floor, or other structural part of a building, whether
+or not the alteration affects the external dimensions of the building.
+
+12.2.35          “Structure” means a walled and roofed building including a gas or liquid storage
+tank that is principally above ground.
+
+12.2.36          “Substantial Damage” means damage of any origin sustained by a structure
+whereby the cost of restoring the structure to its before damaged condition would equal or
+exceed 50 percent of the market value of the structure before the damage occurred.
+
+12.2.37          “Substantial Improvement” means any rehabilitation, addition or other
+improvement of a structure, the cost of which equals or exceeds 50 percent of the market value
+of the structure before the improvement, rehabilitation or addition or, if the structure has been
+damaged and is being restored, before the damage occurred. Substantial improvement occurs
+when the first alteration of any wall, ceiling, floor, or other structural part of the building
+commences, whether or not that alteration affects the external dimensions of the structure. The
+term does not include any project for improvement of a structure to correct existing violations of
+state or local health, sanitary, or safety code specifications as identified by the City and that are
+the minimum necessary to assure safe living conditions nor any alteration of a structure listed on
+the National Register of Historic Places or state equivalent.
+
+12.2.38          “Top” means to severely cut back a tree’s crown limbs to stubs three (3) inches or
+larger in diameter and to such a degree so as to remove the natural canopy and disfigure the tree.
+
+12.2.39          “Townhouse” means a dwelling unit that is part of a row of two or more attached
+dwelling units, where each unit is located on an individual lot and shares at least one common
+wall with an adjacent dwelling unit.
+
+12.2.40          “Townhouse Project” means one or more townhouse structures constructed, or
+proposed to be constructed, together with the development site where the land has been
+divided, or is proposed to be divided, to reflect the townhouse property lines and any commonly
+owned property.
+
+12.2.41          “Triplex” means three attached dwelling units on a lot.
+
+                                                                                                          136 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+12.2.42          “Variance” means a grant of relief from the requirements of this ordinance which
+permits construction in a manner that would otherwise be prohibited by this ordinance.
+
+12.2.43          “Water Dependent” means a structure for commerce or industry which cannot
+exist in any other location and is dependent on the water by reason of the intrinsic nature of its
+operation.

@@ -345,7 +345,23 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 134, "comments": 241, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 259, "tests": 18}
+#
+# 393 -> 411 on 2026-09-29, later again: Durham, the sixth Washington County
+# draft from the same cloud session. 18 comments, no note or test. They are
+# the Development Code's standards no field or measured fact holds: the
+# stalls and aisles Chapter 3 never states, 3.7.1.6's additional 5-foot
+# pedestrian way beside a drive, the rest of 3.7.1.7 (the apron 5 feet from
+# the neighbour and 100 feet from a curb return), 3.7.1.1's 50-foot vehicle
+# access, 7.12.9's rear parking on unit lots, 3.1.1's city-wide density
+# average, 3.1.6 projections, 3.1.7 vision clearance, the 3.1.8/3.1.9 open
+# space waiver, 3.7.3 and 8.9.2.8 dedication, 3.7.6 to 3.7.9 bicycle
+# parking, 3.9 streets and 3.10 traffic study, Chapter 5 trees, 7.2 flood,
+# 2.17's accessory structures, 7.5's manufactured-home standards (found
+# reading Chapter 7 in step 10; the pod is not chassis-built), the 2021
+# handout's reading of SDR's "20 feet from the corner" as a distance from
+# the lot's corner (no field holds one), and 7.12.5's spacing between
+# townhouse sets.
 #
 # 379 -> 393 on 2026-09-29, later again: King City, the fifth Washington
 # County draft from the same cloud session. 14 comments, no note or test.

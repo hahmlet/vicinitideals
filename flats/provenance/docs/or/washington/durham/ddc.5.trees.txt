@@ -1,0 +1,356 @@
+TREE PROTECTION
+
+5.1     Purpose.
+The purpose of this Chapter is to establish processes and standards to preserve Durham’s
+prominent and historic tree canopy. Trees contribute to community health, air quality, and
+healthy streams. A tree canopy provides habitat for birds and other urban wildlife. Trees also
+shade properties and public open spaces, enhancing outdoor activities and maintaining livable
+temperatures during the summer season. The Ordinance is intended to promote tree
+preservation, replanting and management of the urban forest.
+
+5.2     Scope.
+5.2.1   This Chapter 5 shall apply to the proposed removal of trees in connection with Type II,
+Type III, limited land use, and expedited land division applications under the Durham
+Development Code.
+
+5.2.2   This Chapter does not apply to the following:
+
+5.2.2.1          The removal of plants that do not meet the definition of tree under this Chapter.
+
+5.2.2.2          The removal of trees governed by Durham Municipal Code.
+
+5.2.3   All calculations and measurements taken pursuant to this chapter shall be completed
+prior to any land division or lot line adjustment, utilizing the square footage of the parent
+property.
+
+5.3     Definitions.
+The following definitions apply to this Chapter:
+
+Applicant: The individual person or entity, or persons or entities, applying to remove a tree. If the
+trunk of the tree proposed to be removed straddles multiple property lines, an application for the
+removal of that tree must be signed by the owner of each property straddled by the tree’s trunk.
+
+Arborist, Project: An arborist who is engaged by an applicant to prepare and implement a Tree
+Preservation Plan.
+
+                                                                                                           50 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+Arborist: An individual who has met the criteria for certification from the International Society of
+Arboriculture and maintains accreditation and who possesses and maintains a Tree Risk
+Assessment Qualification.
+
+Canopy: the area above ground that is covered by the trunk, branches, and foliage of a tree crown
+or group of tree crowns.
+
+Canopy coverage: the amount of tree canopy that will be provided for a given lot or parcel
+through any combination of preserved trees and planting new trees, expressed as the sum of all
+the canopy coverage of all preserved trees and newly planted trees, divided by the total canopy
+coverage for the entire lot or parcel. In general, the formula grants bonus tree canopy credit
+based on the existing tree canopy of preserved trees, and grants additional tree canopy credit
+based on the projected mature tree canopy of newly planted trees. Individual tree canopy
+coverage is identified in the City’s tree list.
+
+City: The City Administrator of the City of Durham or designee.
+
+Crown: The branches and leaves of a tree extending from the trunk.
+
+Dead or Declining Tree: A tree that is lifeless or is in a state of progressive and irreversible
+decline, as determined by the project arborist. Among the factors that could be considered to
+determine if the tree is lifeless include unseasonable lack of foliage, brittle dry branches, or lack
+of any growth during the growing season. Among the factors that could be considered to
+determine if the tree is in progressive and irreversible decline include chlorotic foliage, an overall
+thinning of the crown, significant branch mortality, top dieback, premature fall coloration and
+defoliation, or evidence of disease likely to lead to death.
+
+Diameter at Breast Height (“DBH”): The tree trunk diameter measured at four and a half feet
+(4.5’) above mean ground level at the base of the trunk, except that if a tree splits into multiple
+trunks above ground but below four and a half feet (4.5’), the trunk is measured at its most
+narrow point beneath the split. The diameter is calculated by dividing the circumference by 3.14.
+For trees with multiple stems, the DBH shall be the average diameter of all stems measured at a
+point no more than six inches (6”) above the surrounding grade or measured six inches below the
+point from which all stems digress from the trunk, whichever is larger.
+
+                                                                                                             51 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+Distribution area: The total lot or parcel area of the subject lot or parcel contemplated to be
+developed, subtracting the building footprint and hard surfaces.
+
+Hard surface: A man-made surface that reduces or prevents the absorption of water.
+
+Hazard Tree: A tree that presents a high or extreme on the International Society of Arboriculture
+qualitative tree risk assessment, as determined by the project arborist.
+
+Owner: Any person who owns a property within the City of Durham upon which a tree’s trunk is
+located.
+
+Removal: The cutting down of a tree or removing of more than half of the crown, trunk, or root
+system of a tree; or to damage a tree so as to cause the tree to become a dead or declining tree,
+or to qualify as a hazard tree, each as determined by an arborist. “Removal" does not include the
+normal trimming, pruning, or other maintenance of trees that does not have the effect of causing
+the tree to qualify as a hazard tree or dead or declining tree, as determined by an arborist.
+
+Structure: A building having walls and a roof, whether or not it is erected or set upon an individual
+foundation or slab constructed base which is designed or used for the housing, shelter,
+enclosure, or support of persons, animals, or property of any kind.
+
+Tree: A woody plant having a DBH of six inches (6”) or larger. If a tree splits into multiple trunks
+above ground, but below four and a half feet (4.5’), it is considered one tree. If the tree splits into
+multiple trunks below ground, each trunk shall be considered one tree.
+
+Tree Grove: A group of six or more trees at least 12 inches in diameter, or Oregon white oak trees
+or Pacific madrone trees that are at least 6 inches in diameter, and that form a generally
+continuous canopy, or are spaced as appropriate for that species or species assemblage. Groves
+are generally non-linear. Other trees and understory vegetation located within the grove are
+considered part of the grove and are counted as part of the canopy area. A tree grove may be
+identified by an arborist, based on the types, configuration, or functions of a grouping of trees.
+Functions include structural support and wind protection for the trees within the grove,
+microclimate and shade, and habitat such as nesting, foraging, and cover for birds and other
+wildlife.
+
+                                                                                                             52 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+Tree Protection Zone: An area around the trunk of each preserved tree measured from the trunk
+of the preserved tree outwards at a distance of an additional one foot (1’) for each inch at DBH of
+such preserved tree.
+
+        Trunk: The main stem of a tree that connects the roots to the branches.
+
+Preserved Tree. A tree that has been designated in a Tree Preservation Plan to be preserved.
+
+Tree Preservation Plan. A document describing the scope of work to identify, protect, and
+manage preserved trees, created by a Project Arborist.
+
+5.4     Tree Removal Compliance Required.
+No person may remove a tree without first demonstrating compliance with the terms of this
+Chapter.
+
+5.5     Tree Removal Requirements.
+5.5.1   An application that contemplates removing a tree or trees as further identified in Section
+5.2 of this Chapter shall include a report identifying the following:
+
+5.5.1.1          An inventory of all trees on the subject lot or parcel listing all of the following:
+
+5.5.1.1.1        An assigned number for each tree;
+
+5.5.1.1.2        The tree type or common name, genus, and species for each tree;
+
+5.5.1.1.3        DBH for each tree; and
+
+5.5.1.1.4        For each tree, whether that tree is proposed to be preserved or removed.
+
+5.5.1.2          A Tree Preservation Plan, prepared by the Project Arborist, that consists of the
+following:
+
+5.5.1.2.1        A map drawn to scale of the subject lot or parcel and any lots or parcels resulting
+from a land division, indicating the location, size, species, and tag identification number for all
+trees on-site. Trees proposed for preservation and trees proposed for removal must be clearly
+labeled on the map, as well as all existing and proposed public and private improvements and or
+easement(s);
+
+                                                                                                            53 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+5.5.1.2.2        A tree assessment report prepared by the Project Arborist that includes an
+inventory of trees proposed for preservation and removal, indicating species, condition,
+diameter DBH, estimated canopy square footage, and likelihood of survival in light of the
+development proposed; and
+
+5.5.1.2.3        The specific steps that the Applicant will take for tree preservation and protection
+during all phases of construction, including, but not limited to, excavation, grading, filling,
+cutting, augering, trenching, digging, tree repair and removal, pruning and structural support,
+fertilization, and aeration.
+
+5.5.1.2.4        The proposed mitigation plan demonstrating compliance with Section 5.7.
+
+5.5.1.3          Demonstration of compliance with one of the following tree preservation
+requirements:
+
+5.5.1.3.1        Percentage Compliance.
+
+5.5.1.3.1.1      At least 20% of all trees on the subject lot or parcel must be preserved, excluding
+any dead or declining tree or any hazard tree; AND
+
+5.5.1.3.1.2      At least 40% of the subject lot’s or parcel’s existing canopy coverage must
+
+be preserved; AND
+
+5.5.1.3.1.3      The preserved trees must be dispersed across at least 50% of the distribution area
+(see definitions).
+
+5.5.1.3.2        Discretionary Compliance. If an applicant under this Section is unable to comply
+with the requirements of 5.5.1.3.1, then the applicant must submit a written narrative and
+supporting information demonstrating that compliance with either one or both of these
+subsections is not possible and that removing more trees than allowed by these subsections is
+necessary due to one or more of the following:
+
+5.5.1.3.2.1      Removal is necessary due to existing or proposed utilities that cannot be relocated
+to an alternative location.
+
+                                                                                                            54 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+5.5.1.3.2.2       Removal is necessary due to the topography of the subject lot or parcel and the
+tree(s) is located within or abutting areas of cuts or fills that are deemed threatening to the life of
+the tree, as determined by the Project Arborist.
+
+5.5.2    Applicant’s payment of any tree removal application fee established via resolution.
+
+5.5.3    The removal of trees under this Section shall be subject to mitigation under Section 5.7.
+
+5.5.4    The city will deny any application contemplated in Section 5.2 unless the applicant
+submits all materials identified in this Section 5.5.
+
+5.6      Means of Preserving Trees.
+5.6.1    The city shall include the following provisions as conditions of approval for any decision
+contemplated in Section 5.2:
+
+5.6.1.1           Mark all trees with a tagging system that corresponds to the applicant’s Tree
+Preservation Plan.
+
+5.6.1.2           Install construction fencing at least four feet (4’) high around each tree protection
+zone.
+
+5.6.1.3           Within each tree protection zone, install a layer of wood chips or mulch at least
+four inches (4”) deep and, on top of the layer of wood chips or mulch, install three-quarter inch
+(3/4”) plywood.
+
+5.6.1.4           The Project Arborist shall oversee all excavation within each tree protection zone.
+
+5.6.1.5           Prior to the cutting or pruning of any preserved tree’s root that is two inches (2”) in
+diameter or greater, the Project Arborist shall evaluate the root to be pruned or cut and inform
+the City if such cutting or pruning is, in the Project Arborist’s opinion, likely to result in a dead or
+dying tree. If the cutting or pruning is likely to result in a dead or dying tree, then the applicant
+shall mitigate the tree in accordance with Section 5.7.
+
+5.6.1.6           All pruned or cut roots shall be immediately covered with soil or mulch and
+watered.
+
+                                                                                                               55 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+5.6.1.7           Immediately repair or mitigate and report to the City any damage to a preserved
+tree.
+
+5.6.1.8           Water preserved trees in accordance with the preserved trees’ needs, as identified
+by the Project Arborist.
+
+5.6.2    The City shall have the right to inspect the preserved trees for two years following the
+issuance of a land use approval under Section 5.2 If any preserved tree becomes a dead or
+declining tree prior to the expiration of the two years, the preserved tree shall be replaced by the
+applicant in accordance with Sections 5.7.3 and 5.7.4 of this Chapter.
+
+5.7      Mitigation.
+5.7.1    The applicant shall perform mitigation for any tree removed pursuant to this Chapter.
+Mitigation shall also be required for any tree removed in violation of this Chapter.
+
+5.7.2    Removed trees shall be replaced with mitigation trees to the extent that, at maturity, the
+mitigation trees shall equal the canopy coverage of the removed trees or canopy coverage
+equivalent to 35% of the square footage of the subject lot or parcel, whichever is less. Mature
+canopy coverage shall be as set forth on the City’s tree list based on the tree species.
+
+5.7.3    The canopy of each preserved tree can receive credit for 130% of its existing canopy size.
+The total credit of all existing canopies shall be counted toward the 35% coverage requirement.
+For example, a 10,000 square foot subject lot would require 3,500 square feet of canopy. An
+existing Black Hawthorne has 314 square feet of existing canopy. This lot would receive a credit
+of 408.2 square feet, leaving 3,091.8 square feet that will need to be mitigated by mitigation
+trees.
+
+5.7.4    The species of mitigation trees shall be selected from the City’s tree list. The minimum
+size of a mitigation tree at time of planting shall be one and three quarters inches (1 3/4”) in
+diameter when measured from the top of the root ball for deciduous trees. Evergreen trees shall
+be a minimum of six feet (6’) tall measured from the top of the root ball, excluding the leader.
+
+5.7.5    Mitigation trees shall be located as follows, except to the extent that the mitigation trees
+or trees naturally grow in a tree grove, as identified by the Project Arborist:
+
+                                                                                                             56 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+5.7.5.1          Trees categorized as small on the City’s tree list shall be spaced no closer than
+fifteen feet (15’) on center from other trees and no closer than ten feet (10’) measured from the
+foundation of any existing or contemplated structure.
+
+5.7.5.2          Trees categorized as medium on the City’s list shall be spaced no closer than
+twenty feet (20’) on center from other trees and no closer than ten feet (10’) measured from the
+foundation of any existing structure or structure contemplated within the proposed development
+application or future phases.
+
+5.7.5.3          Trees categorized as large on the City’s tree list shall be spaced no closer than
+thirty feet (30’) on center from other trees and no closer than fifteen feet (15’) from the
+foundation of any existing structure or structure contemplated within the proposed development
+application or future phases.
+
+5.7.5.4          A mitigation tree shall be planted no less than six feet (6’) from any existing hard
+surface or hard surface contemplated within the proposed development application or future
+phases.
+
+5.7.5.5          Mitigation trees shall be distributed across at least 50% of the distribution area
+(see definitions).
+
+5.7.5.6          The City shall identify trees as “small,” “medium,” and “large” on the City’s tree list.
+
+5.7.6   When the subject lot or parcel from which trees are removed cannot accommodate the
+required number and spacing of mitigation trees, the applicant shall pay the City a fee in lieu of
+replacement. The fee in lieu shall be in amount set by resolution.
+
+5.7.7   Trees removed for the purpose of installation of infrastructure upon a division of land may
+be mitigated by planting the required mitigation trees upon any resulting lot or parcel within the
+same land division. Such trees will be required to be planted outside the anticipated footprint of
+any future structure or within required structural setback areas. When vertical construction
+commences on-site, the developer shall receive a credit of 100% for each species planted
+towards the required canopy coverage for the subject lot or parcel.
+
+                                                                                                             57 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+5.7.8    Mitigation planting must be completed and proof of mitigation planting must be
+submitted to the City within six (6) months of the issuance of a land use approval under Section
+5.2 or prior to the issuance of any building permits for the subject lot or parcel (if required),
+whichever is later. The City may grant a sixty (60) day extension if the City finds abnormal weather
+conditions require delay. Additional time beyond the sixty (60) day extension shall be subject to
+Planning Commission approval.
+
+5.8      Violations and Penalties.
+5.8.1    Any person who removes a tree in violation of this chapter shall be subject to the
+provisions of this Section.
+
+5.8.2    Any person who fails to comply with any land use approval condition relating to tree
+removal in violation of this Chapter shall be subject to the provisions of this Section.
+
+5.8.3    In the event of a violation of this Chapter, the City may proceed with any one or more of
+the following:
+
+5.8.3.1           Issue a stop work order for the property upon which the violation allegedly
+occurred, which shall remain in place until the violation is resolved through mitigation;
+
+5.8.3.2           Assess a penalty in the amount established by ordinance or resolution;
+
+5.8.3.3           Pursue any other remedy available to the City at law or in equity, including but not
+limited to revoking the associated land use approval.
+
+5.8.4    Violations of this Chapter are continuing in nature and shall be deemed to occur for each
+day that the violation exists until the violation is resolved. Each tree removal or other instance of
+non-compliance shall constitute a separate violation.
+
+5.8.5    The City Administrator is authorized to enforce the provisions of this Chapter and to
+adopt, implement and update all staff policies, tree lists, and other documents required to carry
+out the provisions of this Chapter.
+
+                                                                                                             58 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+5.9     Tree Removal Modifications.
+5.9.1   A major modification to a land use decision that contemplates removing a tree or trees as
+further identified in Section 5.2 of this Chapter is one that will have significant impacts on the
+development or on the subject lot or parcel. Major changes include:
+
+5.9.1.1          An increase in the removal of trees exceeding standards outlined in the  outlined in
+Section 5.5.1.3.1; or
+
+5.9.1.2          More than a combined total diameter of 24 inches of additional tree removal,
+whichever is less.
+
+5.9.2   A minor modification to a land use decision that contemplates removing a tree or trees as
+further identified in Section 5.2.2.2 “Scope” of this Chapter is one that is not a major
+modification. A minor modification shall follow Section 9.5 “Type 1 Process.”
+
+5.9.3   Major modifications shall proceed in accordance with Section 10.5 “Major Modifications
+to Existing or Approved Land Use.”
+
+                                                                                                            59 | P a g e
+DURHAM DEVELOPMENT CODE Rev. 11.13.2025
+    6

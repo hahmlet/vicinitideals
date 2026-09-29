@@ -129,7 +129,13 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 377, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 378, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+# 377 -> 378 stated on 2026-09-29, later again: Durham, the sixth Washington
+# County draft from the same cloud session, one exemption: Table 3.7.5's
+# "No maximum" parking for residential uses, held as the layer default
+# (ddc.3.site-design L429-L437). Its maximum density is not exempt in the
+# layer: 7.12.7's 18 units an acre is held as a figure and the state layer
+# exempts it on one lot.
 # 375 -> 377 stated on 2026-09-29, later again: King City, the fifth
 # Washington County draft from the same cloud session, two exemptions and
 # both `stated`. One is Table 16.114-13's "Not Applicable" parking maximum

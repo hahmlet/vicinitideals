@@ -479,3 +479,136 @@ def test_a_body_is_captured_once_and_not_also_as_its_own_entry() -> None:
     )
 
     assert [(e.term, e.line) for e in got] == [("Lot coverage", 1)]
+
+
+# --- Durham's chapter, and what reading it taught ----------------------
+
+
+def test_a_one_digit_section_still_numbers_an_entry() -> None:
+    """Durham numbers chapter, section and entry -- "12.2.29" -- and the
+    dotted form wanted a two-digit middle, so thirty-four of its forty-three
+    definitions read as prose. The form wants all three numbers: a decimal
+    opening a sentence is not a section."""
+    got = read(
+        "\n".join(
+            [
+                "12.2.35          “Structure” means a walled and roofed building including a gas or liquid storage",
+                "tank that is principally above ground.",
+                "",
+                "3.5 Buildings shall be set back twenty feet from any street right of way.",
+            ]
+        )
+    )
+
+    assert [e.term for e in got] == ["Structure"]
+
+
+def test_a_running_header_is_furniture_not_a_term() -> None:
+    """Durham heads every page with the code's name and revision date. Read as
+    an entry it is a term ("... Rev"), a full stop and a body; where the page
+    broke inside a definition, the rest of that meaning went under its name."""
+    got = read(
+        "\n".join(
+            [
+                "12.2.34          “Start of Construction” means the date the building permit was issued, for",
+                "a substantial improvement the actual start of construction",
+                "",
+                "                                                     135 | P a g e",
+                "DURHAM DEVELOPMENT CODE Rev. 11.13.2025",
+                "means the first alteration of any wall, ceiling, floor, or other structural part of a building.",
+            ]
+        )
+    )
+
+    assert "DURHAM DEVELOPMENT CODE Rev" not in [e.term for e in got]
+
+
+def test_a_short_meaning_the_code_quotes_and_says_is_an_entry() -> None:
+    """The floor on a body's length throws out headings and page stamps. A
+    quoted term, the verb and a closing full stop are none of those: Durham's
+    quadplex, duplex and triplex are each under forty characters, and they are
+    the words that say which noun the pod is."""
+    got = read(
+        "\n".join(
+            [
+                "12.2.29          “Quadplex” means four attached dwelling units on a lot.",
+                "",
+                "Lot means a parcel or tract.",
+            ]
+        )
+    )
+
+    assert [(e.term, e.text) for e in got] == [
+        ("Quadplex", "four attached dwelling units on a lot.")
+    ]
+
+
+def test_a_short_meaning_cut_off_by_a_heading_shaped_line_is_not_an_entry() -> None:
+    """The waiver wants the full stop. King City's comprehensive plan wraps
+    "the current King" over "City Comprehensive Plan.", which reads as the next
+    stacked term; without the stop, three words of the meaning were filed as
+    all of it."""
+    got = read(
+        "\n".join(
+            [
+                '"Comprehensive plan" means the current King',
+                "City Comprehensive Plan.",
+                '"Cutting" means falling or removal of a tree, or any procedure the natural',
+                "result of which is to cause the death of a tree.",
+            ]
+        )
+    )
+
+    assert "Comprehensive plan" not in [e.term for e in got]
+    assert "Cutting" in [e.term for e in got]
+
+
+def test_a_sentence_in_flight_carries_over_a_heading_shaped_line() -> None:
+    """Durham's middle housing is "Duplexes, Triplexes, Quadplexes, Cottage
+    Clusters, and" over "Townhouses.", and "Townhouses." alone on a line is a
+    stacked term's shape. A line that stops on "and" has not ended, and the
+    line that ends it with a full stop is its end, not the next entry."""
+    got = read(
+        "\n".join(
+            [
+                "12.2.22          “Middle Housing” means Duplexes, Triplexes, Quadplexes, Cottage Clusters, and",
+                "Townhouses.",
+            ]
+        )
+    )
+
+    assert [(e.term, e.text) for e in got] == [
+        ("Middle Housing", "Duplexes, Triplexes, Quadplexes, Cottage Clusters, and Townhouses.")
+    ]
+
+
+def test_a_caption_in_flight_does_not_borrow_the_next_line() -> None:
+    """Only the plain case carries over: the heading-shaped line has to end the
+    sentence. Sherwood's "Figure 1. Areas Excluded from" over "Floor Area
+    Calculation" is a figure caption, and carrying it on made it an entry."""
+    got = read(
+        "\n".join(
+            [
+                "Figure 1. Areas Excluded from",
+                "Floor Area Calculation",
+                "16.10.020",
+                "280Supp. No. 21",
+            ]
+        )
+    )
+
+    assert "Figure 1" not in [e.term for e in got]
+
+
+def test_durhams_chapter_is_read_whole_with_its_nouns(corpus: list[Chapter]) -> None:
+    """Before the three changes above, nine entries, two out of order, read as
+    skimmed; the quadplex was filed under the page header. After, with the
+    12.2 span declared, thirty-four entries and none out of order."""
+    durham = next(c for c in corpus if c.layer == "or/washington/durham")
+    terms = {e.term: e.quote for e in durham.entries}
+
+    assert durham.read_whole
+    assert len(durham.entries) == 34
+    assert terms["Quadplex"] == "or/washington/durham/ddc.12.definitions.txt#L116"
+    assert terms["Middle Housing"] == "or/washington/durham/ddc.12.definitions.txt#L93"
+    assert terms["Townhouse"] == "or/washington/durham/ddc.12.definitions.txt#L176"

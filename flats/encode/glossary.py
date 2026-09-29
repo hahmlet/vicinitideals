@@ -54,7 +54,15 @@ from flats.rules.model import CodeDocument, Layer
 #: county's 225 numbered entries (it now finds 204) -- quadplex and corner lot
 #: not among the 24. The hyphenated form wants a three-digit section so a
 #: range like "12-18" in prose does not open an entry.
-_SECTION = r"(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?|\d{3}-\d{1,3}(?:\.\d{1,3})?)"
+#: Durham numbers chapter, section and entry with a single-digit section
+#: ("12.2.29 “Quadplex” means"), which the dotted form's two-digit middle
+#: refused, so its glossary read as nine entries out of forty-three. That
+#: form wants all three numbers, so a decimal like "3.5" in prose does not
+#: open an entry.
+_SECTION = (
+    r"(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?|\d{1,2}\.\d\.\d{1,3}"
+    r"|\d{3}-\d{1,3}(?:\.\d{1,3})?)"
+)
 
 #: An entry opens its own line: an optional bullet or list marker, the term,
 #: a separator, then the body. The term is a noun phrase, so it is bounded --
@@ -115,6 +123,13 @@ SAYS_IT_IS_A_DEFINITION = re.compile(
 #: a wrapped line rather than somebody's meaning. Measured after whitespace is
 #: collapsed: a layout extraction pads across the column, and "[3.0100- 2]"
 #: spread over sixty characters is a page stamp, not a definition.
+#:
+#: Except where the code names the term in quotation marks, says "means",
+#: and ends the meaning with a full stop: then neither a heading nor a page
+#: stamp nor a wrap is what follows, and the floor only throws meanings away.
+#: Durham's "“Quadplex” means four attached dwelling units on a lot." is 37
+#: characters of meaning, and so are its duplex and triplex -- the three words
+#: that say which noun the pod is. See `_short_but_whole`.
 MIN_BODY = 40
 
 #: Shorter than this and the "term" is a list marker. Gresham's chapter opens
@@ -139,10 +154,15 @@ APPARATUS = re.compile(
 #: COUNTY COMMUNITY DEVELOPMENT CODE", " 106INTRODUCTION AND GENERAL
 #: PROVISIONS". A figure caption above one read as a term defined by the page
 #: header.
+#: Durham heads every page "DURHAM DEVELOPMENT CODE Rev. 11.13.2025", the
+#: code's name and its revision date, which is a term ("... Rev"), a full stop
+#: and a body to the entry reader; where the page break falls inside a
+#: definition, the rest of that meaning was filed under the header's name.
 FURNITURE = re.compile(
     r"^\[[^\]]*\]$|^\(\d+\)$|^Page \d+"
     r"|^[IVX]{1,4}:\d{1,3}(?:Supp\. No\. \d+)?$"
-    r"|^\d{3} ?[A-Z][A-Z ,&'-]{15,}$",
+    r"|^\d{3} ?[A-Z][A-Z ,&'-]{15,}$"
+    r"|^[A-Z][A-Z ]{10,}\bCODE Rev\. \d{1,2}\.\d{1,2}\.\d{4}$",
     re.I,
 )
 
@@ -323,6 +343,10 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
         if PUBLISHER_FOOTER.match(stripped):
             # Everything below is the website, not the chapter.
             break
+        if FURNITURE.match(stripped):
+            # The page's own stamp or running header: never a term, and a
+            # body taken from beneath it is the tail of the entry above.
+            continue
         inline = ENTRY.match(stripped)
         if inline is not None and MIN_TERM <= len(inline.group("term")) <= MAX_TERM:
             body = _collapse(inline.group("body"))
@@ -335,7 +359,7 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
                 # being 35 characters of a 96-character definition. `_whole`
                 # stops at the next entry, so a fragment that really is one
                 # still cannot borrow length from the entry beneath it.
-                len(whole) >= MIN_BODY
+                (len(whole) >= MIN_BODY or _short_but_whole(stripped, inline, whole))
                 and (
                     SAYS_IT_IS_A_DEFINITION.search(inline.group("sep"))
                     or not NOT_A_DEFINITION.match(body)
@@ -392,6 +416,34 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
     return out
 
 
+def _says_so(line: str, inline: re.Match[str]) -> bool:
+    """Whether the line quotes its term and then defines it with the verb.
+
+    Both, because each alone is common in prose: a standard quotes a term it
+    applies ("the “Front Yard” shall be"), and a sentence says what a word
+    means without naming it as an entry. Together, on a line that opens with
+    the term, they are the codifier's own statement that this is an entry.
+    """
+    before = line[: inline.start("term")].rstrip()
+    after = line[inline.end("term") :]
+    return (
+        before.endswith(("\"", "“"))
+        and after.startswith(("\"", "”"))
+        and bool(SAYS_IT_IS_A_DEFINITION.search(inline.group("sep")))
+    )
+
+
+def _short_but_whole(line: str, inline: re.Match[str], whole: str) -> bool:
+    """A body under the floor that is nonetheless a finished meaning.
+
+    The quotation marks and the verb (`_says_so`) say it is an entry; the
+    closing full stop says the meaning was read to its end. Without the stop
+    King City's "“Comprehensive plan” means the current King" was filed with
+    its last line, "City Comprehensive Plan.", mistaken for the next term.
+    """
+    return _says_so(line, inline) and whole.endswith(".")
+
+
 #: How far a definition is allowed to run before the reader is being shown
 #: the rest of the chapter rather than the rest of the meaning.
 MAX_BODY_LINES = 14
@@ -413,10 +465,33 @@ def _whole(lines: Sequence[str], start: int, first: str) -> str:
         opens = ENTRY.match(stripped)
         if opens is not None and MIN_TERM <= len(opens.group("term")) <= MAX_TERM:
             break
-        if STACKED.match(stripped):
+        if STACKED.match(stripped) and not _closes(body[-1], stripped):
             break
         body.append(stripped)
     return _collapse(" ".join(body))
+
+
+#: Where no sentence ends: a comma, or a conjunction, article or preposition
+#: whose object is still to come.
+_IN_FLIGHT = re.compile(
+    r"(?:,|\b(?:and|or|nor|the|a|an|of|to|by|with|for|from|including))$", re.I
+)
+
+
+def _closes(above: str, line: str) -> bool:
+    """Whether a heading-shaped line is really the end of the body above it.
+
+    A short capitalised line reads as the next stacked term, but not when it
+    finishes a sentence still in flight: Durham's middle housing is
+    "Duplexes, Triplexes, Quadplexes, Cottage Clusters, and" over
+    "Townhouses.", and stopping there filed half a meaning, which the
+    docstring above says is worse than none. Only the plain case, both ends
+    marked: the line above stops on a comma or a word no sentence ends on,
+    and this line ends the sentence. A line with no closing mark is too
+    common to read as a wrap -- Beaverton's "Effective on 6/1/2012" stamp,
+    Sherwood's "Figure 1. Areas Excluded from" over "Floor Area Calculation".
+    """
+    return bool(_IN_FLIGHT.search(above.rstrip())) and line.endswith(".")
 
 
 def _under_a_marker(lines: Sequence[str], i: int) -> bool:

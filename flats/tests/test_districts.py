@@ -806,6 +806,16 @@ RULINGS: dict[str, dict[str, str]] = {
             "criteria (16.31.industrial L247-L248); EI is encoded."
         ),
     },
+    "or/washington/durham": {
+        # All eight districts of Chapter 2 are zone blocks (2026-09-29,
+        # draft, a cloud session): SDR admits the pod, the other seven are
+        # refusals. The one designation left is a utility.
+        "CWS": (
+            "not-a-zone: Clean Water Services, the sewer and surface-water "
+            "district whose standards 3.8 requires connection to "
+            "(ddc.3.site-design L476)."
+        ),
+    },
 }
 
 #: Designations found by hand while ruling the rows above, which the ledger
