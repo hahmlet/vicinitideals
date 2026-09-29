@@ -26,13 +26,16 @@ from fastapi import APIRouter, Request
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 
-from app.api.deps import CurrentUserId, DBSession
+from app.api.deps import DBSession, VerifiedUserId
 from app.models.ingestion import IngestJob
 from app.models.realie_usage import RealieUsage
 from app.observability import format_timestamp, log_observation, new_trace_id, utc_now
 from app.scrapers.realie import RealieEnricher, _current_month
 from app.tasks.scraper import _scrape_crexi, scrape_crexi
 
+# Every trigger below starts paid work (residential-proxy scrapes, the monthly
+# Realie call budget). ``/api/*`` passes neither the API-key nor the session
+# gate in main.py, so each trigger must name a real signed-in user itself.
 router = APIRouter(tags=["ingest"])
 logger = logging.getLogger(__name__)
 
@@ -79,7 +82,7 @@ def _queue_scrape_task(
 @router.post("/ingest/trigger")
 async def trigger_ingest_job(
     http_request: Request,
-    current_user_id: CurrentUserId,
+    current_user_id: VerifiedUserId,
     payload: IngestTriggerRequest | None = None,
 ) -> dict[str, str]:
     request = payload or IngestTriggerRequest()
@@ -144,6 +147,7 @@ class ScrapeRunRequest(BaseModel):
 @router.post("/scraper/run")
 async def run_crexi_scraper(
     http_request: Request,
+    _caller: VerifiedUserId,
     max_results: int | None = None,
 ) -> dict[str, str]:
     triggered_by = "ui"
@@ -178,6 +182,7 @@ async def run_crexi_scraper(
 @router.post("/scraper/oregon-elicense/run")
 async def run_oregon_elicense_sweep(
     http_request: Request,
+    _caller: VerifiedUserId,
     max_brokers: int | None = None,
 ) -> dict[str, str]:
     """Manually trigger the Oregon eLicense enrichment sweep.
@@ -247,6 +252,7 @@ async def realie_status(session: DBSession) -> dict[str, Any]:
 async def run_realie_enrichment(
     http_request: Request,
     session: DBSession,
+    _caller: VerifiedUserId,
 ) -> dict[str, Any]:
     """
     Trigger Realie.ai enrichment for all unenriched listings.

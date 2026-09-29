@@ -2199,9 +2199,13 @@ async def test_get_waterfall_report_returns_investor_timelines_and_summary(
 
 async def test_post_scraper_run_enqueues_crexi_task(
     client: AsyncClient,
+    session: AsyncSession,
     auth_headers: dict[str, str],
 ) -> None:
     observed: dict[str, str] = {}
+    # The trigger requires a caller that names a real user.
+    _org, user = await seed_org(session)
+    await session.commit()
 
     class _FakeAsyncResult:
         id = "celery-task-123"
@@ -2226,7 +2230,7 @@ async def test_post_scraper_run_enqueues_crexi_task(
             return _FakeAsyncResult()
 
     with patch("app.api.routers.ingest.scrape_crexi", new=_FakeTask()):
-        response = await client.post("/api/scraper/run", headers=auth_headers)
+        response = await client.post("/api/scraper/run", headers=_as_user(auth_headers, user))
 
     assert response.status_code == 200
     payload = response.json()
