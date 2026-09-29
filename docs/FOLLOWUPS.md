@@ -644,3 +644,35 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    year-0 revenue entries describe what the code no longer writes. (a) and
    (d) look like export bugs; (b) and (c) are presentation choices for
    Steph. Exporter = app/exporters/investor_export.py (not the engine).
+
+17. **Washington County: drafts reviewed; publish, then the county map.**
+   Steph 2026-09-29: no decisions today. Steph's questions are HUMAN_TODO 25
+   (A second cloud round, B pod facade rules, C city emails, D North
+   Plains/Banks/Gaston). Agent work, in order:
+   (a) PUBLISH. Worktree ../vicinitideals-worktrees/washington-draft, main
+   merged twice (f2feb55e, 2bb19114), gaps + crossrefs regenerating, then
+   flats + quadfit suites -> push to main -> deploy. Before the first
+   merge: 886 numbers re-read blind, none wrong (handoff "Local review");
+   quadfit corner pins (BY_RIGHT_GAINS, 14); unweighed OWED_A_COUNTY.
+   (b) FIX BATCH, one ledger regen, before the first Washington screen:
+   Hillsboro SCC-DT refused on 12.50.350 D.1 (parking inside the
+   building); private_drives rulings for the six layers (Sherwood's street
+   includes private roads, 16.10.020); Sherwood driveways <= 50% of
+   frontage (new field; narrow lots pass today); Durham's 5 ft walk beside
+   the drive; whatever HUMAN_TODO 25 answers change.
+   (c) FOREST GROVE (7,756 lots): American Legal 403s from home too. Try the
+   scrapling stealthy browser; if refused, ask Steph to save the PDFs.
+   (d) COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
+   county's LUD layer + city layers (King City layer 4 = Kingston Terrace);
+   overlays incl. Clean Water Services; send Tualatin/Portland/Wilsonville/
+   Lake Oswego/Rivergrove's Washington lots to their existing layers (by
+   JURIS_CITY, never SITECITY); regenerate the coverage ledger and empty
+   OWED_A_COUNTY; bridge, drift, promote.
+   (e) AFTER THE FIRST SCREEN, count what these cost: Beaverton/King City
+   minimum density on big lots (fail vs closer look: bring Steph the
+   number); the bigger next-to-a-named-zone setback (Hillsboro SCR-DNC,
+   Beaverton downtown); Hillsboro's corner coverage bonus + two corner
+   setbacks (test_corner_variants: measure before deferring again).
+   (f) IF STEPH SAYS YES TO 25A: store Tigard (ecode360.com/43691505) and
+   Cornelius (ecode360.com/CO4396) on a branch, then brief the cloud:
+   Tigard, Cornelius, the county's 11 community plans.
