@@ -82,9 +82,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ANY-line False; 1,565 lots county-wide, ~370 of them Portland
    commercial; the tier-C and untraced ones stay unanswered), 272 a split-zone
    neighbour, 46 both, 5 a neighbour in another city. The
-   blank-point class wants `abuts_park` from RLIS orca (Troutdale MU-3
-   owes 10 ft "abutting a park regardless of zoning" -- the row that kept
-   OS off both lists, troutdale.yaml L1866). (d) Portland CI1/CI2: 33.150
+   blank-point class: `abuts_park` BUILT a89a3b9b from RLIS ORCA (per-city
+   `parks:` block; Troutdale MU-3's 10 ft park row encoded, OS now
+   non-residential; only Troutdale conditions on a park in the corpus).
+   NEEDS on 137: acquire `rlis_orca` into 2026-09-18, link into quadfit
+   raw/, re-run s4 (read the "s4 park across" line); expect ~0 moves (all
+   three MU-3 lots already unresolved on the neighbour fact). (d) Portland CI1/CI2: 33.150
    gives a CI lot 10 ft against OS, so the shared Portland list is wrong
    for CI home lots -- safe only while CI stays capped on
    `site_specific_limitation` (guard test); a per-zone list and the
@@ -119,9 +122,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    side moves. Left: quadfit s6s still reads the alley as the aisle on
    3-of-5; Gresham's rear-with-alley NUMBER can reach a second, non-alley
    rear line (`envelope_for` fallback checks exemptions only); whether a
-   line an alley runs PART of is "a lot line abutting an alley" is
-   unruled (cautious reading taken -- a question for Steph); the lot page
-   could say when an alley stops short. (d) Gresham's 200 alley lots fail lot
+   line an alley runs PART of is "a lot line abutting an alley": RULED by
+   Steph 2026-09-28 -- careful reading (covered stretch only), and the
+   covered stretch is the travel lane only if long enough: BUILT 288f0daa
+   (covered run with buildable ground behind it >= stalls x stall width;
+   probe 53 partial rear lines, 30 long enough, 23 not). Left: the fit
+   compares length only, it does not place the court against the stretch;
+   the lot page could say when an alley stops short. (d) Gresham's 200 alley lots fail lot
    area/frontage regardless.
 4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
@@ -586,3 +593,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    before promoting -- out-of-scope moves are accepted known unknowns.
    (Showing the audit on /flats/refresh: Steph 2026-09-25 "an enhancement
    for later" -- not queued.)
+18. **`GET /api/projects` is not scoped to the caller's organisation.** Any
+   signed-in user sees every org's opportunities, filtered only by their
+   own hidden list (found by the /api/ auth fix 2026-09-28, which closed
+   anonymous and made-up-user access). Scope it to the user's org and add
+   a two-org integration test; check the other list routes for the same.
