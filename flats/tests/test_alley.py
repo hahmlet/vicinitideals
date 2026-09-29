@@ -36,8 +36,10 @@ from flats.geom.alley import (
     entailed,
     observed_alley,
     rear_alley_along,
+    rear_cover_runs,
     registry_alley,
     side_alley_along,
+    usable_run_ft,
 )
 from flats.rules.conditions import CONDITIONS, ENTAILS, close_entailed
 from flats.rules.resolver import RuleSet
@@ -242,6 +244,30 @@ def test_the_stretch_the_real_stub_covers_runs_from_the_south_corner() -> None:
     assert end == pytest.approx(2.5 + (length - 5.0) * 9 / 17, abs=0.01)
     assert cover_stretches(length, "1" * 18) == ((0.0, length),)
     assert cover_stretches(length, "") == ()
+
+
+def test_the_run_behind_the_real_stub_stops_at_the_side_yard_and_the_alleys_end() -> None:
+    # Steph's ruling 2026-09-28: the stretch is the court's aisle only if it
+    # is long enough, with the envelope behind it. The stub's 46.8 ft from
+    # the south corner loses the 5 ft side yard at that corner: 41.8 ft.
+    import shapely
+
+    lot = shapely.Polygon([(e[0], e[1]) for e in STUB_EDGES])
+    envelope = lot.buffer(-5, join_style="mitre")
+    (line,) = rear_cover_runs(STUB_EDGES, STUB_FB, STUB_COVER)
+    assert len(line) == 1
+    stub_end = 2.5 + (88.73 - 5.0) * 9 / 17
+    assert usable_run_ft((line,), lot, envelope, 5.0) == pytest.approx(stub_end - 5.0, abs=0.6)
+    # The whole line: its length less both side yards.
+    whole = rear_cover_runs(STUB_EDGES, STUB_FB, [None, None, "1" * 18, None])
+    assert usable_run_ft(whole, lot, envelope, 5.0) == pytest.approx(88.73 - 10.0, abs=0.6)
+    # Nothing on record, no envelope, or no lot: no run.
+    assert rear_cover_runs(STUB_EDGES, STUB_FB, None) == ()
+    assert usable_run_ft((line,), lot, None, 5.0) == 0.0
+    assert usable_run_ft((line,), None, envelope, 5.0) == 0.0
+    # A notch in the envelope behind the stretch breaks the run.
+    notched = envelope.difference(shapely.box(7667180, 682015, 7667200, 682020))
+    assert usable_run_ft((line,), lot, notched, 5.0) < stub_end - 5.0 - 10.0
 
 
 def test_no_cover_measured_is_no_side_alley_court() -> None:

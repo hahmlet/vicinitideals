@@ -43,9 +43,12 @@ that column nothing measured the stretch, and the answer is False: the court
 keeps its street lane, which is the answer it had before side alleys were read.
 
 The rear line is read the same way twice over (FOLLOWUPS 3(d)/(e)). The
-court whose row of stalls backs out into a rear alley gets that plan only
-where :func:`rear_alley_along` says the alley runs the whole rear line; a
-stub still reaches the court, which keeps its own aisle. And the rules'
+court whose row of stalls backs out into a rear alley gets that plan where
+:func:`rear_alley_along` says the alley runs the whole rear line, or --
+Steph's ruling of 2026-09-28 -- where the stretch it does run, with the
+envelope behind it (:func:`usable_run_ft`), is at least as long as the row
+of stalls; a shorter stub still reaches the court, which keeps its own
+aisle. And the rules'
 ``alley_at_rear`` -- the switch on the rear setback's alley variant, one
 number for the line -- is :func:`registry_alley`'s: on only where the alley
 runs the whole rear line, so the stretch across from the neighbour behind
@@ -298,6 +301,119 @@ def cover_stretches(length_ft: float, cover: str) -> tuple[tuple[float, float], 
     return tuple(out)
 
 
+#: One covered stretch of a rear alley line, ``(x1, y1, x2, y2)`` in the
+#: lot's own coordinates, in the edge's ring direction.
+Stretch = tuple[float, float, float, float]
+
+#: How finely :func:`usable_run_ft` walks a covered stretch, in feet.
+RUN_STEP_FT = 0.5
+#: How far past the envelope's rear edge :func:`usable_run_ft` looks for
+#: the envelope: a foot in, twice the fit's half-foot cell.
+RUN_PROBE_FT = 1.0
+
+
+def rear_cover_runs(
+    edges: Sequence[Sequence[object]],
+    front_bearings: Sequence[float],
+    cover: Sequence[str | None] | None,
+) -> tuple[tuple[Stretch, ...], ...]:
+    """Where the alley runs along each rear alley line, in the lot's
+    coordinates: per rear line holding an alley edge (:func:`_lines`), the
+    stretches its cover vouches for (:func:`cover_stretches`), in ring
+    order. A stretch that ends where the next begins is one run carried
+    across the bend; an ``R`` piece of the line is a gap. Empty where
+    nothing measured the cover -- no stretch, no aisle.
+    """
+    if cover is None or len(cover) != len(edges):
+        return ()
+    out: list[tuple[Stretch, ...]] = []
+    for line in _lines(edges, front_bearings, "rear"):
+        if not any(edges[j][4] == ALLEY_CLASS for j in line):
+            continue
+        got: list[Stretch] = []
+        for j in line:
+            c = cover[j]
+            if edges[j][4] != ALLEY_CLASS or not isinstance(c, str):
+                continue
+            x1, y1, x2, y2 = (float(v) for v in edges[j][:4])  # type: ignore[arg-type]
+            length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+            for a, b in cover_stretches(length, c):
+                ta, tb = a / length, b / length
+                got.append((
+                    x1 + (x2 - x1) * ta, y1 + (y2 - y1) * ta,
+                    x1 + (x2 - x1) * tb, y1 + (y2 - y1) * tb,
+                ))
+        out.append(tuple(got))
+    return tuple(out)
+
+
+def usable_run_ft(
+    runs: Sequence[Sequence[Stretch]],
+    lot: object,
+    envelope: object,
+    rear_cut_ft: float | None,
+) -> float:
+    """The longest stretch of rear alley a court could stand behind, in feet.
+
+    Steph's ruling of 2026-09-28: a rear alley that runs only part of the
+    rear line is the court's travel lane *"only if the lane is actually long
+    enough to accommodate"*, and the court has to be able to sit behind that
+    stretch within the envelope. So each covered stretch (``runs``, from
+    :func:`rear_cover_runs`) is walked every :data:`RUN_STEP_FT`, and a point
+    counts only where the envelope stands straight in from it -- probed
+    ``rear_cut_ft`` (the strip the envelope lost at the rear) plus
+    :data:`RUN_PROBE_FT` in, perpendicular to the line. The side yards cut
+    the stretch at each end where they reach it, and a notch in the envelope
+    breaks it. The answer is the longest unbroken run, measured along the
+    line. 0.0 where there is no lot, no envelope or no stretch.
+
+    Only the length is compared (:meth:`flats.score.paper.Alley.rear_aisle_for`):
+    the fit finds the deepest rectangle anywhere in the envelope and does
+    not say where along the rear line its court stands.
+    """
+    import shapely
+
+    if lot is None or envelope is None or getattr(envelope, "is_empty", True) or not runs:
+        return 0.0
+    probe = max(0.0, rear_cut_ft or 0.0) + RUN_PROBE_FT
+    best = 0.0
+    for line in runs:
+        start: float | None = None
+        at = 0.0  # distance walked along this line's stretches
+        last_ok: float | None = None
+        prev_end: tuple[float, float] | None = None
+        for x1, y1, x2, y2 in line:
+            length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+            if length <= 0:
+                continue
+            if prev_end is not None and (
+                (x1 - prev_end[0]) ** 2 + (y1 - prev_end[1]) ** 2
+            ) ** 0.5 > RUN_STEP_FT:
+                start = last_ok = None  # a gap along the line: a new run
+            ux, uy = (x2 - x1) / length, (y2 - y1) / length
+            nx, ny = -uy, ux
+            mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+            if not shapely.contains_xy(lot, mx + nx * RUN_PROBE_FT, my + ny * RUN_PROBE_FT):
+                nx, ny = -nx, -ny  # point the probe into the lot
+            k = max(1, int(length // RUN_STEP_FT))
+            t = [length * i / k for i in range(k + 1)]
+            px = [x1 + ux * d + nx * probe for d in t]
+            py = [y1 + uy * d + ny * probe for d in t]
+            inside = shapely.contains_xy(envelope, px, py)
+            for d, ok in zip(t, inside):
+                here = at + d
+                if ok:
+                    if start is None:
+                        start = here
+                    last_ok = here
+                    best = max(best, last_ok - start)
+                else:
+                    start = last_ok = None
+            at += length
+            prev_end = (x2, y2)
+    return best
+
+
 def registry_alley(
     edges: Sequence[Sequence[object]],
     front_bearings: Sequence[float],
@@ -376,7 +492,9 @@ __all__ = [
     "entailed",
     "observed_alley",
     "rear_alley_along",
+    "rear_cover_runs",
     "registry_alley",
     "side_alley_along",
+    "usable_run_ft",
     "whole",
 ]

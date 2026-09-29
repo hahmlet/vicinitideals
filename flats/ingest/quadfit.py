@@ -77,8 +77,10 @@ from flats.geom.alley import (
     alley_lines,
     decode_cover,
     observed_alley,
+    rear_cover_runs,
     registry_alley,
     side_alley_along,
+    usable_run_ft,
 )
 from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors, off_corridor_lines
 from flats.geom.corridor import load_maps as load_corridor_maps
@@ -486,6 +488,11 @@ class QuadfitLot:
     #: The ground s5o's carve overlays take off the lot (``carve_wkb``);
     #: None where none touches it.
     carve: Any = None
+    #: Where a rear alley that runs only PART of the rear line runs, per rear
+    #: line (:func:`flats.geom.alley.rear_cover_runs`); empty where the alley
+    #: runs the whole line, is not at the rear, or nothing measured it.
+    #: :func:`screen_lot` measures the run behind each envelope from it.
+    rear_runs: tuple[Any, ...] = ()
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -778,6 +785,15 @@ def lot_from_row(
         lot_geom=lot_geom,
         edges=edges,
         carve=shapely.from_wkb(carve_wkb) if carve_wkb else None,
+        rear_runs=(
+            rear_cover_runs(
+                raw_edges,
+                json.loads(row.get("front_bearings_json") or "[]"),
+                _cover(row, raw_edges),
+            )
+            if facts.alley_at_rear and not facts.alley_rear_whole
+            else ()
+        ),
     )
 
 
@@ -893,6 +909,19 @@ def _if_signed(
     return screen(signed, lot, design, fit, policy=policy, relief=relief, config=config)
 
 
+def _rear_ft(env: Envelope, rules: ZoneResolution) -> float:
+    """How deep the strip this envelope lost at the rear is: the recorded
+    cut, else the rear setback it was cut with, else the rules' number (0
+    where they waive it or state none) -- where :func:`usable_run_ft`
+    probes for the envelope behind the alley."""
+    if env.rear_cut_ft is not None:
+        return float(env.rear_cut_ft)
+    if env.setbacks is not None:
+        return float(env.setbacks.rear_ft)
+    held = rules.get("setback_rear_ft")
+    return float(held) if isinstance(held, (int, float)) else 0.0
+
+
 def screen_lot(
     lot: QuadfitLot,
     designs: Sequence[Design],
@@ -955,7 +984,15 @@ def screen_lot(
             key = (env.source, env.setbacks, front)
             if key not in fitters:
                 fitters[key] = Fitter(env.geom, angles)
-            facts = dataclasses.replace(lot.facts, envelope_rear_ft=env.rear_cut_ft)
+            if lot.facts.alley_at_rear and not lot.facts.alley_rear_whole:
+                # A rear alley along PART of the rear line is the court's
+                # aisle only where the stretch it runs, with this envelope
+                # behind it, is as long as the row (Steph 2026-09-28).
+                run = usable_run_ft(lot.rear_runs, lot.lot_geom, env.geom, _rear_ft(env, got))
+                here = dataclasses.replace(
+                    here, facts=dataclasses.replace(here.facts, alley_rear_run_ft=run)
+                )
+            facts = dataclasses.replace(here.facts, envelope_rear_ft=env.rear_cut_ft)
             fit = fit_for(
                 fitters[key],
                 design,

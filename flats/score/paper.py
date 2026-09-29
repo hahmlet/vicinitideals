@@ -253,12 +253,24 @@ class Alley:
     #: court keeps its own aisle. False unless a caller says so: an alley
     #: stub may leave the court backing into the neighbour's yard.
     rear_whole: bool = False
+    #: Where the rear alley runs only PART of the rear line: the longest
+    #: stretch it covers with the envelope standing right behind it, in feet
+    #: (:func:`flats.geom.alley.usable_run_ft`). Steph, 2026-09-28: *"we can
+    #: use the portion the alley abuts for our travel lane only if the lane
+    #: is actually long enough to accommodate"* -- a row of stalls no wider
+    #: than this may back out into it (:meth:`rear_aisle_for`). ``None``
+    #: where nothing measured it: no stretch, no aisle.
+    rear_run_ft: float | None = None
 
-    @property
-    def rear_aisle(self) -> bool:
-        """The alley behind the court is its aisle's ground: at the rear and
-        along the whole rear line."""
-        return self.at_rear and self.rear_whole
+    def rear_aisle_for(self, row_ft: float) -> bool:
+        """Whether a row of stalls ``row_ft`` wide may back out into the rear
+        alley: the alley runs the whole rear line, or the stretch it runs
+        behind the envelope is at least as long as the row."""
+        if not self.at_rear:
+            return False
+        if self.rear_whole:
+            return True
+        return self.rear_run_ft is not None and self.rear_run_ft >= row_ft
 
 
 def alley_fed(rules: "ZoneResolution", alley: Alley | None) -> bool:
@@ -389,8 +401,23 @@ def side_column(
     return gap + count * across.stall_ft, tuple(used + list(across.from_code))
 
 
+def _row_ft(
+    design: Design, rules: "ZoneResolution", alley: Alley | None, stalls: int | None
+) -> float:
+    """How long a stretch of alley the row of ``stalls`` backs out into:
+    the stalls side by side at this zone's width, the charged floor where
+    ``stalls`` is None. The court charges no end clearance across
+    (:func:`court_across`), so none is added."""
+    across = court_across(design, rules, alley)
+    count = across.stalls if stalls is None else stalls
+    return count * across.stall_ft
+
+
 def court_depth(
-    design: Design, rules: "ZoneResolution", alley: Alley | None = None
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    stalls: int | None = None,
 ) -> tuple[float, tuple[str, ...]]:
     """How much depth this design's own parking needs behind the building.
 
@@ -427,6 +454,10 @@ def court_depth(
     Returns ``(depth, from_code)``, where ``from_code`` names the standards the
     zone actually supplied. An empty tuple against a non-zero depth means the
     number is the design's assumption and nothing in the code raised it.
+
+    ``stalls`` is the row the alley has to be long enough for, where the
+    alley runs only part of the rear line (:meth:`Alley.rear_aisle_for`);
+    the charged floor (:func:`court_across`) when omitted.
     """
     court = design.parking.court_depth_ft
     if not court or design.parking.config not in _COURT_CONFIGS:
@@ -452,11 +483,16 @@ def court_depth(
     # Taken only where it is shallower, as s6s takes it only where it buys a
     # stall -- a lot deep enough for the court's own aisle keeps it.
     # Only where the alley runs the WHOLE rear line (``Alley.rear_whole``,
-    # FOLLOWUPS 3(d)): the court stands somewhere along that line, nothing
-    # says where, and a stub along part of it would back the row out into
-    # the neighbour's yard. The alley at a side is not this: its column is
-    # :func:`side_column`, charged on its own fit.
-    shortfall = _backout_shortfall(rules, alley) if alley is not None and alley.rear_aisle else None
+    # FOLLOWUPS 3(d)), or a stretch of it with the envelope behind that is
+    # at least as long as the row of stalls (Steph's ruling 2026-09-28,
+    # :meth:`Alley.rear_aisle_for`): a stub shorter than the row would back
+    # the end stalls out into the neighbour's yard. The alley at a side is
+    # not this: its column is :func:`side_column`, charged on its own fit.
+    shortfall = (
+        _backout_shortfall(rules, alley)
+        if alley is not None and alley.rear_aisle_for(_row_ft(design, rules, alley, stalls))
+        else None
+    )
     if shortfall is not None:
         if gap + stall + shortfall < gap + stall + aisle:
             used += ["parking_alley_access_required", "parking_alley_backout_ft"]
@@ -688,7 +724,12 @@ def paved(
         # row turned end-on, plus the back-out room paved beside it.
         assert shortfall is not None, "a column court was paved where no side alley offers one"
         return row * (stall + shortfall)
-    if alley is not None and alley.rear_aisle and shortfall is not None and shortfall < aisle:
+    if (
+        alley is not None
+        and alley.rear_aisle_for(row)
+        and shortfall is not None
+        and shortfall < aisle
+    ):
         # The same choice `court_depth` makes: the alley is the aisle.
         return row * (stall + shortfall)
     court = row * stall + aisle * max(row, across.lane_ft)

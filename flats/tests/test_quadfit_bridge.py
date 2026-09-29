@@ -64,6 +64,13 @@ def pod() -> Design:
     return Design(**{**yaml.safe_load(POD), "id": "pod"})
 
 
+def pod4() -> Design:
+    """The pod at one stall a home, the catalog's floor: a row of four."""
+    spec = yaml.safe_load(POD)
+    spec["parking"] = {**spec["parking"], "stalls_per_unit": 1.0}
+    return Design(**{**spec, "id": "pod4"})
+
+
 # A 50 x 100 lot at state-plane-sized coordinates, street along the south
 # edge (bearing 0), and its envelope inset 10 / 5 / 5 the way s5 cuts it.
 X0, Y0 = 7_650_000.0, 680_000.0
@@ -886,11 +893,13 @@ def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpu
     # Six feet of back-out paving on a 14 ft alley, none on a 20 ft one.
     assert asked(fed) - asked(wide) == pytest.approx(6.0)
 
-    # FOLLOWUPS 3(d). An alley along only part of the rear line -- or one
-    # whose stretch nothing measured -- reaches the court but is not its
-    # aisle: the row would back out into the neighbour's yard wherever the
-    # court stands off the alley. The court keeps its own aisle, and the
-    # lot asks what the same lot with no alley asks.
+    # FOLLOWUPS 3(d), Steph's ruling 2026-09-28. An alley along only part
+    # of the rear line is the court's aisle only where the stretch it runs,
+    # with the envelope behind it, is as long as the row of stalls: four at
+    # 9 ft, 36 ft. BEHIND_STUB covers the eastern 27.5 ft, 22.5 of it past
+    # the 5 ft side yard -- too short, and a record with no cover is no
+    # stretch at all: the court keeps its own aisle, and the lot asks what
+    # the same lot with no alley asks.
     plain = lot_from_row(cut_row(zone="R5"), corpus.layers)
     for cover in (BEHIND_STUB, None):
         stub = lot_from_row(
@@ -898,9 +907,108 @@ def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpu
             corpus.layers,
         )
         assert stub.facts.alley_at_rear is True and stub.facts.alley_rear_whole is False
-        assert stub.facts.alley is not None and not stub.facts.alley.rear_aisle
         assert asked(stub) == pytest.approx(asked(plain))
         assert asked(stub) > asked(fed)
+    # Nine rays of ten: the alley runs 42.5 ft from the east corner, 37
+    # of it with the envelope behind -- long enough for a row of four at
+    # 9 ft (the pod at one stall a home, the catalog's floor), which backs
+    # out into it. The rear yard is still owed (the alley does not run the
+    # whole line, 3(e)), so the court is charged 29 ft less that 5 ft strip
+    # where the same lot with no cover on record is charged 47 less 5: 18 ft
+    # shallower. One ray fewer leaves 32 ft, and the row keeps its aisle; so
+    # does the 1.5-a-home pod's 54 ft row on the longer stretch.
+    unmeasured = lot_from_row(
+        cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0, alley_cover_json=None),
+        corpus.layers,
+    )
+    def asked4(lot, design=None) -> float:
+        (s,) = screen_lot(
+            lot, [design or pod4()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+        )
+        return next(c for c in s.screening.checks if c.check == "fit_ft").threshold
+
+    long = lot_from_row(
+        cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0,
+                alley_cover_json=json.dumps([None, None, "1" * 9 + "0", None])),
+        corpus.layers,
+    )
+    assert asked4(unmeasured) - asked4(long) == pytest.approx(18.0)
+    assert asked4(long, pod()) == pytest.approx(asked4(unmeasured, pod()))
+    short = lot_from_row(
+        cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0,
+                alley_cover_json=json.dumps([None, None, "1" * 8 + "00", None])),
+        corpus.layers,
+    )
+    assert asked4(short) == pytest.approx(asked4(unmeasured))
+
+
+#: 1S2E05AB -11900, Portland R5, at real coordinates (EPSG:2913; fixture
+#: Lot Analysis/quadfit/tests/fixtures/alley_stops_short_1S2E05AB_11900.json).
+#: The street is east; the 13 ft alley behind the lot is drawn only as far
+#: north as its south-west corner, and ten of the 88.7 ft rear line's
+#: eighteen cover rays, from the south, find it.
+REAL_LOT = shapely.from_wkt(
+    "POLYGON ((7667287.71 682039.1, 7667286.58 681994.75, 7667186.62 681997.77, "
+    "7667187.75 682042.11, 7667188.88 682086.49, 7667288.85 682083.46, 7667287.71 682039.1))"
+)
+REAL_EDGES = [
+    [7667288.85, 682083.46, 7667286.58, 681994.75, "F"],
+    [7667286.58, 681994.75, 7667186.62, 681997.77, "S"],
+    [7667186.62, 681997.77, 7667188.88, 682086.49, "A"],
+    [7667188.88, 682086.49, 7667288.85, 682083.46, "S"],
+]
+
+
+def real_row(cover: str | None) -> dict[str, object]:
+    return row(
+        TLID="1S2E05AB  -11900",
+        area_sqft=float(REAL_LOT.area),
+        frontage_ft=88.7,
+        lot_width_ft=88.7,
+        lot_depth_ft=100.0,
+        edges_json=json.dumps(REAL_EDGES),
+        front_bearings_json="[88.54]",
+        alley_width_ft=13.0,
+        alley_cover_json=None if cover is None else json.dumps([None, None, cover, None]),
+        lot_wkb=shapely.to_wkb(REAL_LOT),
+        wkb=shapely.to_wkb(REAL_LOT.buffer(-5, join_style="mitre")),
+    )
+
+
+def test_a_real_alley_stub_long_enough_for_the_row_is_its_aisle(corpus, policies) -> None:
+    # Steph's ruling 2026-09-28: "we can use the portion the alley abuts for
+    # our travel lane only if the lane is actually long enough to
+    # accommodate". The measured stub runs 46.8 ft north from the south
+    # corner, 41 ft of it past the 5 ft side yard with the envelope behind:
+    # long enough for a row of four at 9 ft, which backs out into the
+    # alley. The alley does not run the whole line, so the rear yard is not
+    # waived (3(e)) -- and a stub of six rays (27 ft, 22 past the yard) is
+    # too short, and the court keeps its own two-way aisle, exactly as on
+    # the same lot with no cover on record.
+    def screened(cover: str | None, design=None):
+        lot = lot_from_row(real_row(cover), corpus.layers)
+        (s,) = screen_lot(
+            lot, [design or pod4()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+        )
+        return lot, s
+
+    def asked(s) -> float:
+        return next(c for c in s.screening.checks if c.check == "fit_ft").threshold
+
+    measured, got = screened("1" * 10 + "0" * 8)
+    assert measured.facts.alley_at_rear is True and measured.facts.alley_rear_whole is False
+    assert measured.observed["alley_at_rear"] is False, "the rear yard is owed"
+    assert got.envelope.setbacks is not None and got.envelope.setbacks.rear_ft == 5.0
+    _, short = screened("1" * 6 + "0" * 12)
+    _, plain = screened(None)
+    # A 13 ft alley leaves 7 ft of the 20 ft back-out room to pave, where
+    # the court's own aisle is 24: the stretch long enough is 17 ft shallower.
+    assert asked(plain) - asked(got) == pytest.approx(17.0)
+    assert asked(short) == pytest.approx(asked(plain))
+    # The 1.5-a-home pod's six stalls are a 54 ft row: longer than the stub.
+    _, six = screened("1" * 10 + "0" * 8, pod())
+    _, six_plain = screened(None, pod())
+    assert asked(six) == pytest.approx(asked(six_plain))
 
 
 def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None:

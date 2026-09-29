@@ -230,9 +230,15 @@ class LotFacts:
     #: rear line (:func:`flats.geom.alley.rear_alley_along`, FOLLOWUPS 3(d))
     #: -- is what lets the row of stalls back out into it. False where
     #: nothing measured the stretch: the court keeps its own aisle.
+    #: ``alley_rear_run_ft`` is the longest stretch of a PART-covered rear
+    #: line with the envelope behind it (Steph's ruling 2026-09-28): a row
+    #: no wider backs out into it too
+    #: (:meth:`flats.score.paper.Alley.rear_aisle_for`). The bridge sets it
+    #: per envelope; None where nothing measured it.
     alley_at_rear: bool = False
     alley_at_side: bool = False
     alley_rear_whole: bool = False
+    alley_rear_run_ft: float | None = None
     alley_width_ft: float | None = None
     #: Two streets on the lot that really are two (bearings 45 degrees or
     #: more apart, :func:`flats.geom.corner.is_corner`). Read by the court
@@ -254,6 +260,7 @@ class LotFacts:
             at_rear=self.alley_at_rear,
             at_side=self.alley_at_side,
             rear_whole=self.alley_at_rear and self.alley_rear_whole,
+            rear_run_ft=self.alley_rear_run_ft if self.alley_at_rear else None,
         )
 
 
@@ -802,14 +809,17 @@ def _court_beyond_rear(
     an aisle (:func:`flats.score.paper.court_depth`). ``column`` charges the
     other plan a side alley allows, ``stalls`` of them standing along it
     (:func:`flats.score.paper.side_column`); the caller asks for it only
-    where that plan exists.
+    where that plan exists. For the row, ``stalls`` is the count a
+    part-covered rear alley has to be long enough for before it serves as
+    the aisle (:meth:`flats.score.paper.Alley.rear_aisle_for`); the charged
+    floor when omitted.
     """
     if column:
         got = side_column(design, rules, alley, stalls)
         assert got is not None, "a column court was charged where no side alley offers one"
         court = got[0]
     else:
-        court, _court_from_code = court_depth(design, rules, alley)
+        court, _court_from_code = court_depth(design, rules, alley, stalls)
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
@@ -855,18 +865,22 @@ def seats(
     across = court_across(design, rules, alley, corner=corner)
     if not across.stalls:
         return None
-    behind = _court_beyond_rear(design, rules, carved_rear_ft, alley)
+    # The depth behind the building per count: a row longer than the stretch
+    # a part-covered rear alley runs keeps its own aisle (Steph 2026-09-28).
+    behind = {
+        n: _court_beyond_rear(design, rules, carved_rear_ft, alley, stalls=n)
+        for n in range(across.stalls, across.most + 1)
+    }
     column = side_column(design, rules, alley) is not None
     best = 0
     for _orientation, side, deep in design.oriented(axis_required=axis_required):
-        depth = deep + behind
         seated = 0
-        held: float | None = None
+        held: tuple[float, float] | None = None
         for n in range(across.stalls, across.most + 1):
-            width = max(side + across.lane_ft, n * across.stall_ft)
-            if width != held and not fitter.holds(width, depth):
+            ask = (max(side + across.lane_ft, n * across.stall_ft), deep + behind[n])
+            if ask != held and not fitter.holds(*ask):
                 break
-            held = width
+            held = ask
             seated = n
         if column:
             for n in range(max(seated + 1, across.stalls), across.most + 1):

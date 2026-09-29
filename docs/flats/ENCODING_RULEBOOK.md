@@ -202,6 +202,20 @@ Full format: [flats/config/footnotes/README.md](../../flats/config/footnotes/REA
   lot is not a "tract".
 - **No garage.** `setback_garage_entrance_ft` is declared excluded. Guard:
   `test_no_catalog_design_has_a_garage`.
+- **An alley along part of a line (Steph, 2026-09-28).** s4 calls a line an
+  alley line on three rays of five, and `alley_cover_json` records how much
+  of it the alley really runs.
+  - Setbacks: the alley's number applies only to the covered stretch. A side
+    line is cut stretch by stretch (`flats.geom.envelope.buildable`). A rear
+    variant (exempt or alley number) applies only when the alley runs the
+    whole rear line (`flats.geom.alley.registry_alley`).
+  - Back-out aisle: a part-covered rear alley still reaches the court (no
+    street lane). It is the court's aisle only where the longest covered
+    stretch with the envelope right behind it (`usable_run_ft`) is at least
+    the row of stalls: stalls × stall width, no end clearance, since
+    `court_across` charges none (`Alley.rear_aisle_for`).
+  - The fit does not place the court along the rear line, so only the
+    length is compared. Missing or unreadable cover means no alley aisle.
 
 ## 8. Verification and second reading
 
@@ -278,6 +292,7 @@ Full format: [flats/config/footnotes/README.md](../../flats/config/footnotes/REA
 | 2026-09-22 | A new zone code warns, does not block, and screens UNKNOWN until ruled (within the week) | same runbook §8 |
 | 2026-09-25 | Batch re-screens. Partial re-screens (splice) are allowed | runbook §4c |
 | 2026-09-26 | Corner lot front: "abide if Portland has guidance". Follow each code's own corner-front definition | `front_lot_line_corner`, `flats/geom/corner.py` |
+| 2026-09-28 | **An alley along part of a lot line.** "Careful reading agreed. And we can use the portion the alley abuts for our travel lane only if the lane is actually long enough to accommodate" | §7. Setbacks: the alley's number reaches only the stretch the alley covers; a rear variant needs the whole rear line. Back-out aisle: the stretch the alley covers, with the envelope behind it, must be at least as long as the row of stalls (stalls × stall width), else the court keeps its own aisle. No cover on record = no alley aisle |
 | standing | All of Oregon is the acquisition market. Data coverage is a separate task | CLAUDE.md |
 
 ## 11. Checklist: a new county's first pass
