@@ -1343,3 +1343,59 @@ def test_an_s4_that_never_read_road_types_keeps_every_street_a_street() -> None:
     for absent in (None, "", "null", "not json"):
         lot = lot_from_row(row(street_kind_json=absent))
         assert lot.second is None and not lot.facts.street_unconfirmed
+def test_the_outdoor_square_is_measured_on_the_lots_own_ground(corpus, policies) -> None:
+    # FOLLOWUPS 7(b1). Portland R5 asks a 12 ft outdoor square. On this 50 ft
+    # lot the pod stands end-on, 36 ft across, with its row of four behind it
+    # off the alley: the window proves nothing, so the bridge measures the
+    # lot -- less its 10 ft front yard, the building and the paved court --
+    # and finds 9 ft at most beside the building. A real miss, scored as one.
+    lot = lot_from_row(
+        cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0,
+                alley_cover_json=json.dumps([None, None, "1" * 9 + "0", None])),
+        corpus.layers,
+    )
+    (s,) = screen_lot(lot, [pod4()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+
+    got = next(c for c in s.screening.checks if c.check == "open_space_shape")
+    assert got.threshold == 12.0
+    assert got.observed == pytest.approx(9.0, abs=0.5)
+    assert got.verdict is slack.Verdict.fails
+    assert "open_space_shape" not in s.screening.unchecked
+
+
+def test_a_court_fed_from_the_side_street_is_measured_with_its_drive_band_paved(
+    corpus, policies
+) -> None:
+    # FOLLOWUPS 7(b1). The Portland corner lot parks off its west street: no
+    # lane beside the pod, and the drive to the court runs across the street
+    # side yard at a point the drawing does not place. The court's whole
+    # depth band is taken as paved, lot line to lot line -- every place the
+    # drive could run -- and the square is measured on what is left rather
+    # than left unasked.
+    from flats.fit.draw import draw
+    from flats.fit.rectangle import Fitter
+    from flats.ingest.quadfit import outdoor_square
+    from flats.score.paper import court_across, court_depth
+
+    lot = lot_from_row(corner_row(zone="R5"), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert row_for(s)["side_street_lane"] is True
+    across = court_across(s.design, s.rules, s.lot.facts.alley, corner=s.lot.facts.corner)
+    assert across.stalls and not across.lane_ft
+
+    fitter = Fitter(s.envelope.geom, [s.fit.angle_deg])
+    square = outdoor_square(s.lot, s.design, s.rules, s.fit, fitter, s.envelope)
+    assert square is not None
+
+    drawn = draw(
+        fitter, s.fit, width_ft=56.0, depth_ft=36.0, lane_ft=0.0,
+        court_depth_ft=court_depth(s.design, s.rules, s.lot.facts.alley)[0], court_beyond_ft=0.0,
+        street=tuple((e.x1, e.y1, e.x2, e.y2) for e in s.lot.edges.of_class(EdgeClass.front)),
+        paved_across_ft=across.width_ft, side_drive=True,
+    )
+    (band,) = drawn.paved
+    on_lot = band.intersection(LOT)
+    # Whichever way the plan stands, the band crosses the lot from one lot
+    # line to the one opposite: over the street side yard to the street.
+    x0, y0, x1, y1 = on_lot.bounds
+    assert (x1 - x0 == pytest.approx(50.0)) or (y1 - y0 == pytest.approx(100.0))

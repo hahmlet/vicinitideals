@@ -345,7 +345,15 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 134, "comments": 261, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 260, "tests": 18}
+#
+# 129 -> 128 comments on 2026-09-29: a FIELD arrived. Portland RF's comment
+# "NOT ENCODED, in the row below it: the minimum DIMENSION, 12 ft. by 12 ft.
+# ... That is a shape test and this registry holds an area" is now held as
+# `open_space_min_dimension_ft` on RF through R2.5 and read by the screen's
+# `_outdoor_shape` (FOLLOWUPS 7(b), `flats/tests/test_outdoor_shape.py`).
+# On this branch that is 413 -> 412 (comments 261 -> 260), a second merge
+# of main into the Washington drafts the same day.
 #
 # 411 -> 413 on 2026-09-29, a merge: main's FOLLOWUPS 6(i) (Tualatin and
 # Fairview's residential districts say nothing of which end of a through lot

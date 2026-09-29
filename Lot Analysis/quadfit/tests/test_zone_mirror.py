@@ -861,6 +861,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     "min_building_height_stories": 1,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
+    #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space
+    #: AMOUNT, never its shape; FLATS measures the square on the lot.
+    "open_space_min_dimension_ft": 6,
 }
 
 

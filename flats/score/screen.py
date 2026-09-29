@@ -147,6 +147,11 @@ OPTIMISTIC_CHECKS: frozenset[str] = frozenset()
 #: reports as ``FACT_UNOBSERVED``: the code names ground nobody measured.
 UNPAVED = "parking_pavement"
 
+#: The shape a code asks the open space to take (a square that fits inside
+#: it, a patio off each home) where the fit's window does not prove it and
+#: the ground outside that window was never measured (:func:`_outdoor_shape`).
+UNSHAPED = "outdoor_area_shape"
+
 #: Which rule field each check reads. A check with no value goes unrun, but only
 #: an unrun check backed by a *required* field means the encoding is incomplete
 #: — many zones genuinely impose no FAR, and treating that silence as a gap
@@ -173,6 +178,8 @@ CHECK_FIELD: dict[str, str] = {
     "parking_cap": "parking_max_per_unit",
     "open_space_pct": "open_space_min_pct",
     "open_space_sqft": "open_space_min_sqft",
+    "open_space_shape": "open_space_min_dimension_ft",
+    "private_open_space_shape": "private_open_space_min_dimension_ft",
     "landscaped_pct": "min_landscaped_pct",
 }
 
@@ -260,6 +267,15 @@ class LotFacts:
     #: :func:`flats.ingest.quadfit.street_unconfirmed`). False where nothing
     #: read the road types, which is every caller but the bridge.
     street_unconfirmed: bool = False
+    #: The side of the largest square of open ground this plan leaves on the
+    #: real lot -- off the building and its pavement, outside the front
+    #: setback, off every overlay carve -- in one contiguous piece holding the
+    #: zone's outdoor area amount (:func:`flats.fit.outdoor.largest_square`).
+    #: Measured by the bridge per plan, only where the screen's own window
+    #: could not prove the square; None where nobody measured it (no lot
+    #: polygon, no front setback, no drawing), which leaves the shape a fact
+    #: nobody observed rather than a miss.
+    outdoor_square_ft: float | None = None
 
     @property
     def landlocked(self) -> bool:
@@ -456,22 +472,21 @@ def _checks(
     # A court BESIDE the building (`fit.beside`, FOLLOWUPS 4(a)) asks past
     # the rear wall only what its row runs beyond it (`_beside_beyond`).
     beside = _beside_for(design, rules, lot) if fit.beside else None
-    out.append(
-        policy.evaluate(
-            "fit_ft",
-            fit.best_depth_ft,
-            fit.required_ft
-            + (
-                _beside_beyond(beside, fit.required_ft, rules, lot.envelope_rear_ft)
-                if beside is not None
-                else _court_beyond_rear(
-                    design, rules, lot.envelope_rear_ft, lot.alley, column=fit.column
-                )
-            ),
-            is_maximum=False,
-            jurisdiction=where,
-        )
+    fitted = policy.evaluate(
+        "fit_ft",
+        fit.best_depth_ft,
+        fit.required_ft
+        + (
+            _beside_beyond(beside, fit.required_ft, rules, lot.envelope_rear_ft)
+            if beside is not None
+            else _court_beyond_rear(
+                design, rules, lot.envelope_rear_ft, lot.alley, column=fit.column
+            )
+        ),
+        is_maximum=False,
+        jurisdiction=where,
     )
+    out.append(fitted)
     # And across. The court's width and the lane beside the building are
     # not a second check: they are what the envelope had to be searched FOR,
     # and `fit_for` asks the search at that width. A fit searched narrower --
@@ -715,10 +730,9 @@ def _checks(
     # lot is held out of GREEN on the fact nobody measured. Never a pass on a
     # leftover larger than the one a plan could leave.
     #
-    # What this still does not hold is the SHAPE: Portland's 12 by 12 square
-    # outside the front setback, Milwaukie's 96 sq ft patio behind each
-    # ground-floor home. That is FOLLOWUPS 7(b), a test on the drawing, and a
-    # different question from the amount answered here.
+    # The SHAPE -- Portland's 12 by 12 square outside the front setback,
+    # Milwaukie's 96 sq ft patio off each ground-floor home -- is a different
+    # question from the amount answered here, and `_outdoor_shape` asks it.
     pavement = paved(
         design,
         rules,
@@ -762,8 +776,129 @@ def _checks(
     # written. A per-dwelling figure arrives multiplied out by the loader, so
     # the threshold is what the four homes owe together.
     leftover("open_space_sqft", "open_space_min_sqft", share=False)
+    _outdoor_shape(rules, lot, design, fit, fitted, policy, out, unchecked, unmeasured)
 
     return out, unchecked, unmeasured
+
+
+def _outdoor_shape(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    design: Design,
+    fit: Fit,
+    fitted: CheckResult,
+    policy: SlackPolicy,
+    out: list[CheckResult],
+    unchecked: list[str],
+    unmeasured: set[str],
+) -> None:
+    """Whether the open space the amount check counted comes in the SHAPE asked.
+
+    FOLLOWUPS 7(b). Two codes state a shape beside the amount, and an amount
+    is no evidence of either: a lot with thousands of square feet left over
+    can hold no 12 ft square once a turned pod, its lane and its court stand
+    on it.
+
+    * **One square, anywhere legal** (``open_space_min_dimension_ft``):
+      Portland 33.110.240 -- 250 sq ft (200 in R2.5) in one piece that a 12
+      by 12 square (10 by 10) fits inside, off vehicle area, outside the
+      front building setback, allowed into the side and rear setbacks.
+    * **A patio off each home** (``private_open_space_min_dimension_ft``):
+      Milwaukie 19.505.3.D.1 -- 96 sq ft per ground-floor home, 5 ft its
+      least dimension, directly accessible from the unit.
+
+    What the screen knows of the ground is the fit: a window ``across_ft``
+    wide and ``best_depth_ft`` deep, the building at its front, the court
+    behind, and how far the court could still slide back (the fit check's
+    slack, which already counts the rear strip the court may use). Nothing
+    here knows the lot outside that window. So a shape found inside the
+    window is PROVEN and the check passes; a shape not found there may still
+    exist beside it, and the honest answer is that nobody measured it -- the
+    lot is held out of GREEN on the fact (``UNSHAPED``), never failed on it.
+    The bridge then measures the square on the lot's own ground
+    (``LotFacts.outdoor_square_ft``, ``flats.fit.outdoor``) and it decides
+    both ways. On run 0928 inputs, of 6,085 Portland single-dwelling plans
+    green before this check, 5,516 stay green, 569
+    are a real miss (mostly a pod turned end-on on a 50 ft lot, a strip of
+    6-10 ft beside it) and none stay unmeasured; no Milwaukie lot moves,
+    where nothing is green today.
+    """
+    where = rules.jurisdiction
+    parks = design.parking.parks
+    across = court_across(design, rules, lot.alley, corner=lot.corner)
+    # Ground behind the court the court need not use: the fit's own spare
+    # depth, across the whole searched width. Never negative.
+    behind = max(0.0, fitted.observed - fitted.threshold)
+
+    def proven(name: str, observed: float | None, threshold: float) -> None:
+        if observed is not None and observed >= threshold:
+            out.append(
+                policy.evaluate(name, observed, threshold, is_maximum=False, jurisdiction=where)
+            )
+            return
+        unchecked.append(name)
+        unmeasured.add(UNSHAPED)
+
+    area = rules.get("open_space_min_sqft")
+    side = rules.get("open_space_min_dimension_ft")
+    if side is not None:
+        side = float(side)
+        need = float(area) if area is not None else side * side
+        best: float | None = None
+        if fit.across_ft is not None and fit.orientation is not None:
+            regions = [(fit.across_ft, behind)]
+            if not fit.column:
+                # Beside the court, behind the building: the window's width
+                # less the paved row (or the lane reaching it, if wider), as
+                # deep as the window runs past the building's rear wall.
+                paved_w = max(across.width_ft, across.lane_ft) if parks else 0.0
+                regions.append(
+                    (fit.across_ft - paved_w, max(0.0, fit.best_depth_ft - fit.required_ft))
+                )
+            for w, d in regions:
+                if w > 0 and w * d >= need:
+                    shape = min(w, d)
+                    best = shape if best is None else max(best, shape)
+        if (best is None or best < side) and lot.outdoor_square_ft is not None:
+            # Not in the window: the square measured on the lot's own ground
+            # answers it, both ways. A miss there is a real miss -- the lot
+            # less its front yard, the building, its pavement and its overlays
+            # holds no such square in a piece big enough.
+            out.append(
+                policy.evaluate(
+                    "open_space_shape",
+                    max(lot.outdoor_square_ft, best or 0.0),
+                    side,
+                    is_maximum=False,
+                    jurisdiction=where,
+                )
+            )
+        else:
+            proven("open_space_shape", best, side)
+
+    patio = rules.get("private_open_space_min_dimension_ft")
+    if patio is not None:
+        patio = float(patio)
+        each = float(area) / design.units if area is not None else patio * patio
+        unit_w = design.footprint.width_ft / design.units
+        deep: float | None = None
+        if fit.across_ft is not None and fit.orientation is Orientation.width_facing:
+            # Behind each home's rear wall: the standoff before the first
+            # stall is not pavement, and the court can slide back by the
+            # fit's spare depth. The front yard is not counted -- whether a
+            # patio may stand in Milwaukie's 20 ft front setback is a ruling
+            # nobody has made.
+            gap = design.parking.building_gap_ft if parks else 0.0
+            if parks and (stated := rules.get("parking_building_buffer_ft")) is not None:
+                gap = max(gap, float(stated))
+            deep = gap + behind
+        elif fit.across_ft is not None and fit.orientation is Orientation.depth_facing:
+            # Turned end-on, each home opens on a flank; the only flank strip
+            # the window holds is what the court's row left beside the
+            # building on the side away from the lane.
+            deep = max(0.0, fit.across_ft - fit.depth_ft - across.lane_ft)
+        got = min(unit_w, deep) if deep is not None and unit_w * deep >= each else None
+        proven("private_open_space_shape", got, patio)
 
 
 def _unconfirmed(outcomes: Sequence[ReliefOutcome]) -> tuple[str, ...]:

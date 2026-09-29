@@ -1167,6 +1167,20 @@ defaults:
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
     quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1458-L1462"
+  # The same sentence's other number: "with a minimum dimension of 5 ft", on a
+  # patio "directly accessible from the interior of the dwelling unit" (D.1.c).
+  # Four patios off four walls, not one area anywhere on the lot, so it is its
+  # own field; the screen's `_outdoor_shape` reads it (FOLLOWUPS 7(b)). The
+  # code names no location, and whether a patio may stand in the 20 ft front
+  # setback is a ruling not yet made -- the screen counts only the ground
+  # behind the building until it is.
+  private_open_space_min_dimension_ft:
+    value: 5
+    unless: [unit_lots]
+    cite: MMC Table 19.505.3.D.1.a and D.1.c, private open space minimum dimension; applicability at 19.505.3.B
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1462,L1464"
   #
   # NOT ENCODED: 19.505.3.D.4.b, "Parking located to the side of a dwelling
   # structure shall be limited to 50% of the linear frontage of that side."

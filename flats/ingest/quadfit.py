@@ -69,8 +69,9 @@ from typing import Any
 
 from flats.designs.model import Design
 from flats.encode.port_quadfit import COUNTY, layer_id_for
-from flats.fit.angles import DEFAULT_STEP_DEG, angles_for
+from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
+from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
 from flats.geom.alley import (
     ALLEY_CLASS,
@@ -118,6 +119,7 @@ from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
 from flats.score.relief import ReliefPolicy
 from flats.score.paper import (
+    _yard,
     court_across,
     court_depth,
     front_lot_line_rule,
@@ -1273,6 +1275,13 @@ def _screen_on(
         street_deg=here.front_bearings if front is None else (front,),
     )
     result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
+    if "open_space_shape" in result.unchecked:
+        # The screen's window could not prove the outdoor square; measure it
+        # on the lot's own ground and screen again on the answer.
+        square = outdoor_square(here, design, got, fit, fitters[key], env)
+        if square is not None:
+            facts = dataclasses.replace(facts, outdoor_square_ft=square)
+            result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
     shadow = _if_signed(
         got, facts, design, fit, result, policy=policy, relief=relief, config=config
     )
@@ -1474,6 +1483,134 @@ def _screen_lot_once(
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
         out.append(dataclasses.replace(won, drawing=drawing_for(won, fitter)))
     return out
+
+
+def outdoor_square(
+    here: QuadfitLot,
+    design: Design,
+    got: ZoneResolution,
+    fit: Fit,
+    fitter: Fitter,
+    env: Envelope,
+) -> float | None:
+    """The largest outdoor square this plan leaves on the lot, in feet
+    (FOLLOWUPS 7(b); :mod:`flats.fit.outdoor`), or None where it cannot be
+    measured.
+
+    The plan is drawn the way the lot page draws it -- building at the street
+    end, lane beside it, the court's stalls and aisle behind the standoff --
+    and the ground left is the lot less the front setback, those shapes and
+    every overlay carve. A court reached across a side yard (a side street or
+    a side alley) has a drive the drawing does not place, so its whole depth
+    band is taken, lot line to lot line. None, leaving the shape unobserved,
+    where there is no lot polygon or front line, the front setback is
+    unstated, the drawing finds no room for the plan, or a side-fed court
+    stands as a column.
+    """
+    side = got.get("open_space_min_dimension_ft")
+    if side is None or here.lot_geom is None or here.edges is None:
+        return None
+    front_ft = _yard(got, "setback_front_ft")
+    street = tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front))
+    if front_ft is None or not street:
+        return None
+    facts = here.facts
+    alley, corner = facts.alley, facts.corner
+    across = court_across(design, got, alley, corner=corner)
+    # A court reached across a side yard (a side street or a side alley):
+    # the drive's line is not drawn, so the court's whole depth band is
+    # paved from lot line to lot line. A column along a side alley is its
+    # own drive and stays unmeasured.
+    side_drive = bool(
+        design.parking.parks and across.stalls and not across.lane_ft and not facts.alley_at_rear
+    )
+    if fit.beside:
+        # A court BESIDE the building (FOLLOWUPS 4(a)): its aisle is the
+        # drive in from the street, so the building and that band are all
+        # the plan paves -- drawn where the lot page draws them, never as a
+        # court behind the building the plan does not have.
+        beside = side_court(design, got, alley, corner=corner, frontage_ft=facts.frontage_ft)
+        beyond = None if beside is None else _beside_beyond(
+            beside, fit.required_ft, got, env.rear_cut_ft
+        )
+        if beside is None or beyond is None or math.isinf(beyond):
+            return None
+        drawn = draw(
+            fitter,
+            fit,
+            width_ft=design.footprint.width_ft,
+            depth_ft=design.footprint.depth_ft,
+            lane_ft=0.0,
+            court_depth_ft=0.0,
+            court_beyond_ft=beyond,
+            street=street,
+            beside_band_ft=beside.band_ft,
+            beside_len_ft=beside.length_ft,
+        )
+        if drawn is None or drawn.court is None:
+            return None
+        return _largest_left(here, got, side, street, front_ft, fit, [(drawn.building, drawn.court)])
+    if side_drive and fit.column:
+        return None
+    if fit.column:
+        column = side_column(design, got, alley)
+        court = column[0] if column is not None else 0.0
+    else:
+        court = court_depth(design, got, alley)[0]
+    gap = design.parking.building_gap_ft
+    if (stated := got.get("parking_building_buffer_ft")) is not None:
+        gap = max(gap, float(stated))
+    drawn = draw(
+        fitter,
+        fit,
+        width_ft=design.footprint.width_ft,
+        depth_ft=design.footprint.depth_ft,
+        lane_ft=across.lane_ft,
+        court_depth_ft=court,
+        court_beyond_ft=_court_beyond_rear(
+            design, got, env.rear_cut_ft, alley, column=fit.column and court > 0
+        ),
+        street=street,
+        paved_across_ft=None if fit.column else max(across.width_ft, across.lane_ft),
+        gap_ft=gap,
+        side_drive=side_drive,
+    )
+    if drawn is None:
+        return None
+    # A plan the fit passed only on the tolerance draws a room a cell or so
+    # short (``drawn.fits`` False): its shapes still stand where the plan
+    # does, and whatever they overhang is taken off the ground all the same.
+    # The column's side of the room is not drawn: the whole court band goes.
+    plans = [(drawn.building, p) for p in drawn.paved] or [
+        (drawn.building, drawn.lane, drawn.court)
+    ]
+    return _largest_left(here, got, side, street, front_ft, fit, plans)
+
+
+def _largest_left(
+    here: QuadfitLot,
+    got: ZoneResolution,
+    side: Any,
+    street: tuple[tuple[float, float, float, float], ...],
+    front_ft: float,
+    fit: Fit,
+    plans: list[tuple[Any, ...]],
+) -> float:
+    """The largest square left by the best-placed of ``plans`` (each
+    the shapes one placement of the plan takes off the lot)."""
+    need = got.get("open_space_min_sqft")
+    need = float(need) if need is not None else float(side) ** 2
+    angles = tuple(a for a in (fit.angle_deg, *map(normalize, here.front_bearings)) if a is not None)
+    return max(
+        largest_square(
+            open_ground(
+                here.lot_geom, front_lines=street, front_ft=front_ft, taken=taken, carve=here.carve
+            ),
+            angles,
+            min_area_sqft=need,
+        )
+        for taken in plans
+    )
 
 
 def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
