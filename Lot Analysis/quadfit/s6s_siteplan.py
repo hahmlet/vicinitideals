@@ -100,6 +100,23 @@ on the lot between the stalls and the alley line and counted in the parking
 area. Until 2026-09-13 the width was trusted, the way the assumed aisle
 trusts SUDAS; now nothing in this drawing is. A lot whose alley has no
 width on record is laid out as if the alley were nothing, the strict way.
+ONLY WHERE THE ALLEY RUNS (Steph's ruling, 2026-09-28: "we can use the
+portion the alley abuts for our travel lane only if the lane is actually
+long enough to accommodate"). s4 classes a lot line ``A`` on three rays of
+five, so an alley that stops halfway along the rear line made the whole
+line the court's aisle, and the end stalls backed out into the neighbour's
+yard. The stalls now stand only against the stretches s4's
+``alley_cover_json`` finds the alley along (`_covered_alley`, the same
+stretches `flats.geom.alley.cover_stretches` reads for FLATS), and where
+the alley runs only part of a line the row must stand in ONE covered run
+with the envelope behind it -- the covered run at least stalls x stall
+width, FLATS's `usable_run_ft` test drawn rather than measured. A stretch
+too short for the row seats fewer stalls, and the court's own aisle (the
+plan reached by a lane from the alley) wins on the ruling's order. A lot
+with no cover on record -- s4 before the column -- has no alley aisle at
+all. The alley's lane (`townhome_rear_court_alley`) is not this: the alley
+still reaches the court along the whole line, as it does in FLATS. The
+side alley is read the same way, stall by stall.
 It is taken only where it buys a stall -- a court deep enough for its own
 aisle keeps it -- so the count of plans on this drawing is the count that
 need it. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask
@@ -250,6 +267,8 @@ from s4_edges import BEARING_CLUSTER_TOL_DEG, bearing_deg, bearing_delta
 from s5_envelope import lot_setbacks
 from s6_fit import _cell_grid, _integral, _placement
 
+from flats.geom.alley import cover_stretches, decode_cover
+
 _CFG: dict = {}
 
 
@@ -396,8 +415,50 @@ def _street_strip_pieces(edges, joins, reach_ft: float, slack_ft: float = 0.0) -
     return out
 
 
+def _covered_alley(alley_edges, cover, reach_ft: float
+                   ) -> tuple[list[list[float]], bool]:
+    """The stretches of the alley lot lines the alley really runs along, as
+    segments for `_alley_mouths(..., cap_style="flat")`, and whether any
+    line is only partly covered.
+
+    `cover` is s4's ``alley_cover_json`` for the alley edges alone, parallel
+    to `alley_edges`: a string of ``1`` and ``0`` per edge, one ray every
+    five feet (`flats.geom.alley.cover_stretches` places them). Each covered
+    stretch is carried `reach_ft` past an end of the edge where it reaches
+    that end -- a flat cap there is the square cap `_alley_mouths` gives a
+    whole edge, so a line the alley runs end to end draws the very strip it
+    drew before 2026-09-28 -- and stops flat where the alley stops mid-edge:
+    the ground past that point backs onto a neighbour, not the alley.
+
+    Returns ``(segments, partial)``: `partial` is True where any alley edge
+    has an uncovered stretch or no cover string, and then the row must stand
+    in one covered run (`_alley_aisle_stalls`, `one_run`). `cover` None, or
+    not one entry per edge, is s4 before the column: no segment at all, and
+    the alley is no aisle anywhere (Steph's ruling: no cover on record, no
+    alley aisle).
+    """
+    if cover is None or len(cover) != len(alley_edges):
+        return [], True
+    segs: list[list[float]] = []
+    partial = False
+    for e, c in zip(alley_edges, cover):
+        x1, y1, x2, y2 = (float(v) for v in e[:4])
+        length = math.hypot(x2 - x1, y2 - y1)
+        if length <= 0:
+            continue
+        got = cover_stretches(length, c) if isinstance(c, str) else ()
+        if got != ((0.0, length),):
+            partial = True
+        ux, uy = (x2 - x1) / length, (y2 - y1) / length
+        for a, b in got:
+            a = -reach_ft if a <= 0.0 else a
+            b = length + reach_ft if b >= length else b
+            segs.append([x1 + ux * a, y1 + uy * a, x1 + ux * b, y1 + uy * b])
+    return segs, partial
+
+
 def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
-                  reach_ft: float, joins=None):
+                  reach_ft: float, joins=None, cap_style: str = "square"):
     """Cells of the envelope grid that stand on the alley strip.
 
     The strip is drawn the way s5 drew the cut it made for the alley: each
@@ -438,7 +499,10 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
     before. An end that nothing in `joins` continues from is a FREE end.
     None (the alley) keeps every cap square, as it was bound on
     2026-09-12; an alley that stops mid-lot is the same question and was
-    not asked of it here.
+    not asked of it here -- except for the row that backs out into it,
+    whose strip is the covered stretches (`_covered_alley`), each already
+    carried past a real end of the line, drawn with `cap_style` "flat" so
+    it stops where the alley does.
 
     WHERE A FREE END IS CUT (2026-09-29). The first draft cut it square
     to the edge it ends -- right on the partial frontage above, whose last
@@ -484,7 +548,7 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
 
     if joins is None:
         pieces = [LineString([(e[0], e[1]), (e[2], e[3])]).buffer(
-            reach_ft, cap_style="square", join_style="mitre") for e in alley_edges]
+            reach_ft, cap_style=cap_style, join_style="mitre") for e in alley_edges]
     else:
         pieces = _street_strip_pieces(alley_edges, joins, reach_ft, 0.5 * res)
     if not pieces:
@@ -732,7 +796,8 @@ def _pole_lanes(ok, span: tuple[float, float], minx: float, res: float,
 
 
 def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
-                        sw_c: int, sd_c: int, cap: int, sb_c: int = 0):
+                        sw_c: int, sd_c: int, cap: int, sb_c: int = 0,
+                        one_run: bool = False):
     """The row of stalls that backs straight out into the alley, or None.
 
     Three edges of the court, in the order a plan reads: its back (the alley
@@ -747,6 +812,13 @@ def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
     alley. Returns (stalls, boxes, edge) for the edge that seats the most,
     boxes as (r0, c0, h, w) in grid cells; the back wins a tie. None where
     no edge seats one.
+
+    `one_run` -- the alley runs only part of a line (`_covered_alley`) --
+    seats the row in ONE run along the edge, the one that seats the most:
+    Steph's ruling of 2026-09-28 asks the stretch the alley covers, with the
+    envelope behind it, to be as long as the row (stalls x stall width), so
+    a row split across two covered pieces is two short stretches, not one
+    long enough. A line the alley runs end to end keeps every run, as before.
     """
     import numpy as np
 
@@ -773,7 +845,10 @@ def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
     best = None
     for edge, on, box_at in edges:
         boxes = []
-        for start, length in runs(np.asarray(on, dtype=bool)):
+        pieces = runs(np.asarray(on, dtype=bool))
+        if one_run and pieces:
+            pieces = [max(pieces, key=lambda p: p[1])]
+        for start, length in pieces:
             for k in range(length // sw_c):
                 if len(boxes) >= cap:
                     break
@@ -1106,7 +1181,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                alley_setback_ft: float = 0.0,
                alley_width_ft: float | None = None,
                street_setback_ft: float | None = None,
-               lot_xy=None) -> dict:
+               lot_xy=None,
+               alley_cover: list[str | None] | None = None) -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
 
     Returns a dict of scalar results + `geoms` (role -> shapely geometry in the
@@ -1139,6 +1215,10 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     taxlot fabric, read only where the cell says `alley_aisle`: the
     city's back-out room (`alley_need`) less this width is paved on the lot
     behind the stalls. None -- no width on record -- is laid out as zero.
+    `alley_cover` is s4's ``alley_cover_json`` for those edges, parallel to
+    `alley_edges`: the row that backs out into the alley stands only where
+    the alley runs (`_covered_alley`; Steph's ruling of 2026-09-28). None --
+    nothing measured -- is no alley aisle; the lane from the alley stands.
 
     `street_setback_ft` is how far the envelope stands off EVERY street lot
     line (`_street_setback_for`: on a corner lot s5 cuts each street edge to
@@ -1287,6 +1367,13 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     shortfall_ft = (max(0.0, alley_need - (alley_width_ft or 0.0))
                     if alley_aisle else 0.0)
     sb_c = math.ceil(round(shortfall_ft / res, 6))
+    # ... but only along the stretches the alley really runs, and where it
+    # runs part of a line only in one run long enough for the row (ONLY
+    # WHERE THE ALLEY RUNS, the module docstring). The reach is the alley
+    # strip's own, below.
+    aisle_segs, aisle_partial = (
+        _covered_alley(alley_edges, alley_cover, alley_setback_ft + 2.0 * res + 0.5)
+        if alley_aisle else ([], True))
     # A 4-plex never needs more than 2/unit — unless the city says fewer, in
     # which case the city's number is the cap and the higher tiers are simply
     # not reachable here. Milwaukie's one-per-unit is the live case.
@@ -1425,6 +1512,12 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         if alley_fed:
             mouths = _alley_mouths(ok, rotated(alley_edges), minx, miny, res,
                                    alley_setback_ft + 2.0 * res + 0.5)
+        # The same strip cut to where the alley runs: the only cells a stall
+        # backing out into the alley may stand against.
+        aisle_mouths = (_alley_mouths(ok, rotated(aisle_segs), minx, miny, res,
+                                      alley_setback_ft + 2.0 * res + 0.5,
+                                      cap_style="flat")
+                        if aisle_segs else None)
         # The cells standing on ANY street strip, for the court's exposure;
         # and, where the city lets a corner lot's driveway come from the
         # side street, the cells on the SIDE street's strip, which the lane
@@ -1663,8 +1756,9 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                 # The alley as the aisle: the stalls that stand on the alley strip
                 # and back straight out into it, asked for a stall depth and no
                 # aisle. Counted beside the court's own aisle, never instead of it.
-                on_alley = (_alley_aisle_stalls(mouths, rr, cc, rh, rw, sw_c, sd_c, cap, sb_c)
-                            if alley_aisle else None)
+                on_alley = (_alley_aisle_stalls(aisle_mouths, rr, cc, rh, rw, sw_c, sd_c,
+                                                cap, sb_c, one_run=aisle_partial)
+                            if aisle_mouths is not None else None)
                 if n_ct <= 0 and on_alley is None:
                     continue
                 reach = max(reach, 3)
@@ -1900,9 +1994,9 @@ def _work_chunk(chunk):
 
     out = []
     for (idx, env_wkb, bearings, fedges, area, fsb, jur, zone, psb, aedges, asb, aw,
-         ssb, xy) in chunk:
+         ssb, xy, acover) in chunk:
         r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur, zone, psb,
-                       aedges, asb, aw, ssb, xy)
+                       aedges, asb, aw, ssb, xy, acover)
         r["geoms_hex"] = {role: shapely.to_wkb(g).hex() for role, g in r.pop("geoms").items()}
         out.append((idx, r))
     return out
@@ -1935,12 +2029,20 @@ def main() -> None:
     # and NaN is laid out as zero: an alley of no known width earns no
     # back-out room.
     _s4p = stage_path("s4_lots")
-    lots = lots.drop(columns=[c for c in ("alley_width_ft",) if c in lots.columns])
-    if "alley_width_ft" in pq.read_schema(_s4p).names:
-        lots = lots.merge(pd.read_parquet(_s4p, columns=["TLID", "alley_width_ft"]),
+    # The alley's cover (`alley_cover_json`, where along each alley edge the
+    # alley runs) comes the same way; a stage that predates it is None on
+    # every lot, and no lot then backs out into its alley (`_covered_alley`).
+    _s4_cols = pq.read_schema(_s4p).names
+    lots = lots.drop(columns=[c for c in ("alley_width_ft", "alley_cover_json")
+                              if c in lots.columns])
+    _take = [c for c in ("alley_width_ft", "alley_cover_json") if c in _s4_cols]
+    if _take:
+        lots = lots.merge(pd.read_parquet(_s4p, columns=["TLID", *_take]),
                           on="TLID", how="left")
-    else:
+    if "alley_width_ft" not in _take:
         lots["alley_width_ft"] = float("nan")
+    if "alley_cover_json" not in _take:
+        lots["alley_cover_json"] = None
 
     n = len(lots)
     site_ok = np.zeros(n, dtype=bool)
@@ -2181,6 +2283,9 @@ def main() -> None:
         # already set back and the plan has no further use for them.
         aedges = ([e[:4] for e in edges if e[4] == "A"]
                   if cells[jur]["alley_access"] else [])
+        _cov = decode_cover(row["alley_cover_json"], len(edges)) if aedges else None
+        acover = (None if _cov is None
+                  else [c for e, c in zip(edges, _cov) if e[4] == "A"])
         if aedges:
             alley_fed[jur] += 1
         _aw = row["alley_width_ft"]
@@ -2196,6 +2301,7 @@ def main() -> None:
             _street_setback(jur, zone, float(row["area_sqft"]), str(row["tier"])),
             # the lot's corners, for the length of a street lot LINE
             [(e[0], e[1]) for e in edges],
+            acover,
         ))
     for j, k in alley_fed.items():
         print(f"s6s: {j} sends the driveway to the alley on a lot that has one "

@@ -129,13 +129,18 @@ def _rect_lot(W: float, D: float):
 def _run(s6s, env, front_edges, area, bearing=0.0, jurisdiction="gresham",
          zone="", parking_setback_ft=None, front_setback_ft=None,
          alley_edges=None, alley_setback_ft=0.0, alley_width_ft=None,
-         bearings=None, street_setback_ft=None, lot_xy=None):
+         bearings=None, street_setback_ft=None, lot_xy=None, alley_cover="whole"):
+    # `alley_cover` "whole" is s4's cover with the alley along every alley
+    # edge end to end, which every synthetic alley in this file is; a list
+    # is s4's per-edge cover, and None is a record with nothing measured.
+    if alley_cover == "whole":
+        alley_cover = ["1" * 5 for _ in (alley_edges or [])]
     return s6s.layout_lot(
         shapely.to_wkb(env), [bearing] if bearings is None else bearings,
         front_edges, area,
         FRONT_S if front_setback_ft is None else front_setback_ft,
         jurisdiction, zone, parking_setback_ft, alley_edges, alley_setback_ft,
-        alley_width_ft, street_setback_ft, lot_xy)
+        alley_width_ft, street_setback_ft, lot_xy, alley_cover)
 
 
 def _corner_lot(W: float, D: float, notch=None):
@@ -1433,6 +1438,134 @@ def test_the_alley_as_the_aisle_needs_the_court_on_the_alley():
     env, fe, ae, area = _alley_lot(100.0, 70.0, "rear")     # 15 ft behind the pod
     r = _run_pdx(s6s, env, fe, ae, area)
     assert r["layout_fail"] == "court_too_shallow"
+
+
+# 1S2E05AB -11900, Portland R5, at real coordinates (EPSG:2913; fixture
+# fixtures/alley_stops_short_1S2E05AB_11900.json). The street is east; the
+# 13 ft alley behind the lot is drawn only as far north as its south-west
+# corner, so the 88.7 ft rear line is A on three rays of five and s4's cover
+# finds the alley on ten of its eighteen rays, from the south: 46.8 ft of
+# line, 41.8 of it past the 5 ft side yard. Steph's ruling of 2026-09-28:
+# the stretch the alley runs is the court's aisle "only if the lane is
+# actually long enough to accommodate" the row, stalls x 9 ft.
+STUB_COVER_MEASURED = "1" * 10 + "0" * 8
+STUB_COVER_SHORT = "1" * 6 + "0" * 12        # 27 ft of line, 22 past the yard
+
+
+def _stub_lot_plan(alley_cover):
+    """The real lot, laid out the way s6s main() lays it out -- s5's own
+    Portland R5 setbacks, the alley's measured 13 ft -- with a 60 x 56 pod
+    so the room behind it (about 29 ft) is too shallow for the court's own
+    aisle and the alley is the only aisle there is. Returns (plan, the alley
+    edge, the stub's end in feet from the south corner)."""
+    import json
+    from pathlib import Path
+
+    from common import load_rules
+    from s5_envelope import build_envelope, lot_setbacks
+
+    d = json.loads((Path(__file__).parent / "fixtures"
+                    / "alley_stops_short_1S2E05AB_11900.json").read_text())
+    lot = shapely.from_wkt(d["lot"])
+    edges = d["edges"]
+    sb = lot_setbacks(load_rules().jurisdictions["portland"].rule_for("R5"), lot.area, "A")
+    assert sb["A"] == 0.0 and sb["S"] == 5.0
+    env = build_envelope(lot, edges, sb, "A")
+    fe = [e[:4] for e in edges if e[4] == "F"]
+    (ae,) = [e[:4] for e in edges if e[4] == "A"]
+    s6s = _sp_setup_cities()
+    s6s._CFG["pods"] = [("pod60x56", 60.0, 56.0)]
+    cover = alley_cover if alley_cover in (None, "whole") else [alley_cover]
+    r = _run(s6s, env, fe, lot.area, bearings=d["fb"], jurisdiction="portland",
+             zone="R5", parking_setback_ft=10.0, front_setback_ft=sb["F"],
+             alley_edges=[ae], alley_setback_ft=sb["A"], alley_width_ft=d["width"],
+             lot_xy=[(e[0], e[1]) for e in edges], alley_cover=cover)
+    length = shapely.geometry.LineString([ae[:2], ae[2:]]).length
+    return r, ae, 2.5 + (length - 5.0) * 9 / 17
+
+
+def _along_from_south(st, ae) -> tuple[float, float]:
+    """How far along the alley line, from its south corner, a stall runs."""
+    line = shapely.geometry.LineString([ae[:2], ae[2:]])     # south to north
+    xs = [line.project(shapely.geometry.Point(p)) for p in st.exterior.coords]
+    return min(xs), max(xs)
+
+
+def test_a_real_alley_stub_long_enough_for_the_row_is_its_aisle():
+    """The measured stub holds a row of four: 41.8 ft of covered line with
+    the envelope behind, a 36 ft row. The four stalls stand against the
+    stretch the alley runs and back out into it -- green, the minimum band
+    -- and not one of them stands against the northern half, where the
+    line backs onto the neighbour. The same line read the old way (the
+    whole line an alley line) parked eight along all of it."""
+    r_old, ae, stub_end = _stub_lot_plan("whole")
+    assert r_old["layout_method"] == "townhome_rear_court_alley_aisle"
+    assert r_old["stalls_provided"] == 8
+    r, ae, stub_end = _stub_lot_plan(STUB_COVER_MEASURED)
+    assert stub_end == pytest.approx(46.8, abs=0.1)
+    assert r["site_plan_ok"] is True
+    assert r["layout_method"] == "townhome_rear_court_alley_aisle"
+    assert r["stalls_provided"] == 4
+    stalls = [g for k, g in r["geoms"].items() if k.startswith("stall_")]
+    assert len(stalls) == 4
+    for st in stalls:
+        lo, hi = _along_from_south(st, ae)
+        assert lo >= 5.0 - 0.6                  # past the side yard
+        assert hi <= stub_end + 0.01            # and short of where the alley stops
+
+
+def test_a_real_alley_stub_too_short_for_the_row_is_not_its_aisle():
+    """Six rays of eighteen: 22 ft of covered line past the side yard, too
+    short for a row of four. The stub seats two, which is not a plan
+    (`too_few_stalls`), where the whole line read as the alley was green on
+    eight; and a court deep enough for its own aisle does not fit behind
+    this pod, so nothing else is offered. No cover on record -- s4 before
+    `alley_cover_json` -- is no alley aisle at all: the court has only its
+    own aisle, and that does not fit."""
+    r, ae, _ = _stub_lot_plan(STUB_COVER_SHORT)
+    assert r["site_plan_ok"] is False
+    assert r["layout_fail"] == "too_few_stalls"
+    assert r["stalls_provided"] == 2
+    for st in [g for k, g in r["geoms"].items() if k.startswith("stall_")]:
+        _, hi = _along_from_south(st, ae)
+        assert hi <= 2.5 + (88.73 - 5.0) * 5 / 17 + 0.01
+    r_none, _, _ = _stub_lot_plan(None)
+    assert r_none["site_plan_ok"] is False
+    assert r_none["layout_method"] == "none"
+    assert r_none["layout_fail"] == "court_too_shallow"
+
+
+def test_a_row_split_across_two_covered_pieces_seats_only_the_longer():
+    """Where the alley runs part of a line, the row stands in ONE covered
+    run (`one_run`): two pieces each shorter than the row are two short
+    stretches, not one long enough. Four cells, two runs of two stalls
+    each, stall 2 cells wide."""
+    import numpy as np
+
+    s6s = _sp_setup()
+    mouths = np.zeros((10, 20), dtype=bool)
+    mouths[9, 0:4] = True
+    mouths[9, 6:12] = True
+    got = s6s._alley_aisle_stalls(mouths, 0, 0, 10, 20, 2, 3, 8)
+    assert got[0] == 5                          # every run, the whole-line reading
+    got = s6s._alley_aisle_stalls(mouths, 0, 0, 10, 20, 2, 3, 8, one_run=True)
+    assert got[0] == 3
+    assert all(6 <= b[1] and b[1] + b[3] <= 12 for b in got[1])
+
+
+def test_covered_alley_is_the_square_capped_line_where_the_alley_runs_it_all():
+    """A line the alley runs end to end draws the strip it drew before the
+    ruling (the flat cap past each real end is the square cap); a stub
+    stops flat where the alley does; no cover is no strip."""
+    s6s = _sp_setup()
+    segs, partial = s6s._covered_alley([[0.0, 0.0, 100.0, 0.0]], ["1" * 20], 3.0)
+    assert partial is False and segs == [[-3.0, 0.0, 103.0, 0.0]]
+    segs, partial = s6s._covered_alley([[0.0, 0.0, 100.0, 0.0]], ["1" * 10 + "0" * 10], 3.0)
+    assert partial is True
+    ((x1, _, x2, _),) = segs
+    assert x1 == -3.0 and x2 == pytest.approx(2.5 + 95.0 * 9 / 19)
+    assert s6s._covered_alley([[0.0, 0.0, 100.0, 0.0]], None, 3.0) == ([], True)
+    assert s6s._covered_alley([[0.0, 0.0, 100.0, 0.0]], [None], 3.0) == ([], True)
 
 
 # ---------------------------------------------------------------------------
