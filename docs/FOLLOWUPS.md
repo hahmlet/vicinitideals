@@ -105,9 +105,15 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    no pod on 23 -- 15 because quadfit keeps the pod across the front while
    FLATS turns it (a wide shallow lot, court at the alley end), 3 an
    irregular block, the rest overlays; read, accepted; if Steph wants the
-   drawing to agree, quadfit's s6s needs the turned pod. (c) FLATS assumes
-   a side alley runs along the court's stretch of the side line; a short
-   alley stub would be over-read. (d) Gresham's 200 alley lots fail lot
+   drawing to agree, quadfit's s6s needs the turned pod. (c) FIXED 8bf9a451 -- NEEDS an s4 re-run
+   (a bridge on an s4 without `alley_cover_json` drops all 904 side-alley
+   lots to the street-fed court): s4 fires a ray every 5 ft along each
+   alley line; the court uses a side alley only where it runs the whole
+   side line (`flats.geom.alley.side_alley_along`). Expect 12 Portland
+   lots (24 rows, <=3 green-if-signed) to go street-fed. Same over-read,
+   queued: the rear-alley court trusts the 3-of-5 reading; the alley
+   setback (Portland 0) covers the whole line even where the alley covers
+   part of it; the lot page could say when an alley stops short. (d) Gresham's 200 alley lots fail lot
    area/frontage regardless.
 4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
@@ -151,7 +157,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Wilsonville, Multnomah MR4/LR5. Open: Gresham's corner is two or more
    streets at any angle incl. through lots -- a through lot with parallel
    streets still answers False (possible false GREEN on Gresham's
-   tightening corner variants).
+   tightening corner variants) -- FIXED f171c994: where the layer
+   defines corner by `frontage_count` (Gresham 3.0100#L1304) a through lot
+   (`flats.geom.corner.through_lot`) is a corner; expect tens of
+   green->yellow in Gresham MDR-12/24, VLDR-SW, OFR on the next run. Open:
+   Wilsonville 4.001(157)(2) / MCC 39.2000 pathway corners (HUMAN_TODO
+   24); Wilsonville and Wood Village count private drives as streets,
+   unchecked against s4's street layer.
    (FLATS's own envelope: DONE, item 12.) (`steep_slope` struck
    2026-09-27: no standard in the corpus is conditioned on it, so its
    False assumption leans on no lot; the hillside rules ride the overlay
@@ -402,12 +414,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    keeps its square extension only where another street edge carries on
    (bend, corner clip, front meeting side street); the alley strip is
    unchanged (whether an alley that stops mid-lot needs the same is open).
-   Bound: `bound_street_strip_zero_front.py` (0ec8575c) on 137 -- read the
-   LOST lots; (m) the ~30 wide fronts with no
+   547e0578: a chain of street edges is one strip, its free end cut
+   along the lane, not the last clip piece (the first cut refused 14
+   clipped-corner lots wrongly). The 09-28 s1->s7 lost 50 lanes: 14 back,
+   ~17 run past the frontage's end (correct), 5 side-street, 2 now short
+   of stalls, 7 being read; (m) the ~30 wide fronts with no
    envelope cell within the street reach: s5's tier-C envelope is
    `buffer(-max(setbacks))`, round and uniform, not per edge, and an
    overlay carve-out can eat the strip -- refused today, count which is
-   which; (n) the pole's lane jog: in the pole case the lane is taken at
+   which; (n) BUILT 91840447 (lane out of the pole, pod
+   beside it, charged from the street; local trial 65 lost / 51 redrawn /
+   884 same -- read the 15 cul-de-sac/angled "not a pole" losses on the
+   county run) -- was: the pole's lane jog: in the pole case the lane is taken at
    any column of the body's top while `_placement` puts the pod first-fit
    at the top-left, so a pole at the left leaves the lane to the pod's
    right with an undrawn, uncharged run along the body's top (92 of 123
@@ -473,9 +491,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    their home jurisdiction. Rides the next s3->s7 run: expect NOT_MEASURED
    -9 (check by the pocket_of TLIDs; drift skips pocket lots); (b) 25 lots stay ZONE_POCKET:
    Troutdale NSA GGC/GSO and Oregon City `County` read against a map that
-   answers no code the of-layer holds; (c) Map 130-1 also carries a MAXIMUM
-   setback of 20 ft on those stretches -- not encoded (a max read wrong is a
-   false GREEN); (d) the corridor facts are per lot (ANY street line), a
+   answers no code the of-layer holds; (c) DONE 1ff23bdb -- Map 130-1's
+   maximum is 20 ft instead of 10 (33.130.215.C.1), a RELAXATION, hung on
+   `civic_corridor_setback_all_streets` (every street line on a stretch);
+   0 moves, no screen reads a maximum (HUMAN_TODO 12); (d) the corridor facts are per lot (ANY street line), a
    per-LINE field would let the one line on Division take 10 ft and the side
    street 0.
 10. **Two loose ends from the ruling pass.** (a) DONE 4b725b6a -- alias
