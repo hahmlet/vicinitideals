@@ -299,7 +299,7 @@ def _largest_rect(ok, min_h: int = 1):
 JOIN_TOL_FT = 0.01
 
 
-def _street_strip_pieces(edges, joins, reach_ft: float) -> list:
+def _street_strip_pieces(edges, joins, reach_ft: float, slack_ft: float = 0.0) -> list:
     """The street strip of `_alley_mouths`, one geometry per chain of edges.
 
     A chain is a run of `edges` that meet end to end. Each edge is
@@ -310,6 +310,8 @@ def _street_strip_pieces(edges, joins, reach_ft: float) -> list:
     the whole chain is trimmed to the side of that line the chain lies
     on. Where the chain does not lie wholly on one side (it doubles back,
     or has no two clear ends), that end is cut square to its own edge.
+    Either cut stands `slack_ft` past the free end (`_alley_mouths`: half
+    a grid cell).
     """
     import shapely
     from shapely.geometry import LineString, box
@@ -371,9 +373,9 @@ def _street_strip_pieces(edges, joins, reach_ft: float) -> list:
                     ax = 0 if abs(dx) >= abs(dy) else 1
                     sg = 1.0 if (dx, dy)[ax] >= 0 else -1.0
                     if all(sg * (v[ax] - end[ax]) >= -JOIN_TOL_FT for v in verts):
-                        cut = (ax, sg, end[ax])
+                        cut = (ax, sg, end[ax] - sg * slack_ft)
                 if cut is None:
-                    ext.append(0.0)
+                    ext.append(slack_ft)
                 else:
                     cuts.append(cut)
                     ext.append(reach_ft)
@@ -456,6 +458,20 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
     a joint inside the chain carries past that line. A chain that doubles
     back past its own free end (a cul-de-sac bulb) is not cut by a line
     it crosses; its free end keeps the cut square to its last edge.
+
+    HALF A CELL OF SLACK AT A FREE END (2026-09-29). A cell counts when
+    its centre is inside the strip, so a cut exactly through the free end
+    dropped a lane column that stood mostly -- or all but a sliver -- on
+    the frontage. The lane and the pod are drawn on the grid's half-foot
+    lattice and cannot move by less than a cell; where a side lot line
+    splays out behind the front, a lane hugging the side setback runs a
+    few inches past the frontage's end at the street and could not step
+    in without the pod stepping too (four lots on the 2026-09-28 run,
+    0.3 to 0.5 ft past the end: 22E18CC02800, 22E08BB03901, 1S1E28AA
+    -00500, 32E07DC03600). Both cuts therefore stand half a cell past the
+    free end: a column counts when any of it stands on the frontage, so a
+    lane is refused for running past the street's end by a cell or more
+    and never for the raster's rounding.
     """
     import numpy as np
     import shapely
@@ -470,7 +486,7 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
         pieces = [LineString([(e[0], e[1]), (e[2], e[3])]).buffer(
             reach_ft, cap_style="square", join_style="mitre") for e in alley_edges]
     else:
-        pieces = _street_strip_pieces(alley_edges, joins, reach_ft)
+        pieces = _street_strip_pieces(alley_edges, joins, reach_ft, 0.5 * res)
     if not pieces:
         return out
     strip = shapely.union_all(pieces)
@@ -619,6 +635,12 @@ def _front_runs(free, fcells, stop_r: int):
              & fcells[np.clip(start, 0, R - 1), np.arange(C)])
     return clear, np.maximum(start - 1, 0)
 
+
+#: How many rectangles the side court search tries on one side of the
+#: building: the strip's largest, then the parts of the strip in front of
+#: and beside a court that holds no stall or that no lane reaches
+#: (`layout_lot`).
+SIDE_COURT_TRIES = 6
 
 #: How far past each end of the street piece, and into the lot, the lot's
 #: ground is looked for by `_pole_span`.
@@ -1531,45 +1553,79 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                     if (front_ban and ocells is not None
                             and ocells[s_lo:s_hi, c_lo:c_hi].any()):
                         continue
-                    found = _side_court(ok, s_lo, s_hi, c_lo, c_hi, outer, stall_d,
-                                        side_aisle, res, sw_c, sd_c, aisle_c, cap)
-                    if found is None:
-                        continue
-                    reach = max(reach, 2)
-                    s_rect, s_rows, n_sc, s_boxes, s_aisle = found
-                    if n_sc <= 0:
-                        continue
-                    reach = max(reach, 3)
-                    s_rr, s_cc, s_rh, s_rw = s_rect
-                    side = {**bld, "rect": s_rect, "stalls": n_sc, "aisle": side_aisle,
-                            "span_ft": s_rh * res, "stall_boxes": s_boxes}
-                    if alley_fed:
-                        lane = _lane_to_alley(free, mouths, s_rr, s_cc, s_rh, s_rw, drive_c)
-                        if lane is not None:
-                            r0, c0, h, w = lane
-                            lane_len_c = h if w == drive_c else w
-                            offer({**side, "driveway": lane if lane_len_c else None,
-                                   "driveway_len_c": lane_len_c,
-                                   "driveway_len": lane_len_c * res + alley_setback_ft,
-                                   "method": "townhome_side_court_alley"})
-                        continue
-                    # The front lane runs straight into the aisle: the first
-                    # clear corridor within the aisle's columns from the
-                    # front street's strip to the court's top (`_front_runs`).
-                    a0, a1 = s_aisle
-                    clear, start = _front_runs(free, fcells, s_rr)
-                    lane_c0 = next((c0 for c0 in range(a0, a1 - drive_c + 1)
-                                    if clear[c0:c0 + drive_c].all()), None)
-                    if lane_c0 is None:
-                        continue
-                    r_top = int(start[lane_c0:lane_c0 + drive_c].max())
-                    offer({**side, "driveway": ((r_top, lane_c0, s_rr - r_top, drive_c)
-                                                if s_rr > r_top else None),
-                           "driveway_len_c": s_rr - r_top,
-                           "driveway_len": (s_rr - r_top) * res + (
-                               street_sb if pole_y is None
-                               else miny + r_top * res - pole_y),
-                           "method": "townhome_side_court"})
+                    # THE LARGEST COURT MAY BE ONE NO LANE REACHES
+                    # (2026-09-29). `_side_court` takes the largest free
+                    # rectangle in the strip, and on a lot whose envelope
+                    # is a ring round ground it leaves out, that is the band
+                    # BEHIND that ground, which no lane from the front
+                    # street reaches, and after it a leg of the ring too
+                    # narrow to park in, while the band in FRONT of it --
+                    # off the street by the parking setback, beside the
+                    # building, a straight lane from the street -- is never
+                    # asked (1S1E03CB -80000, RX, 254 ft of frontage,
+                    # refused on the run of 2026-09-28 once its court had
+                    # to stand the 10 ft parking setback back). Where the
+                    # court found holds no stall or no lane reaches it, the
+                    # strip is searched again in front of it and on either
+                    # side of it, SIDE_COURT_TRIES rectangles at most; the
+                    # first court a lane reaches is offered, as before.
+                    tries = [(s_hi, c_lo, c_hi)]
+                    for _ in range(SIDE_COURT_TRIES):
+                        if not tries:
+                            break
+                        t_hi, t_lo_c, t_hi_c = tries.pop(0)
+                        found = _side_court(ok, s_lo, t_hi, t_lo_c, t_hi_c, outer, stall_d,
+                                            side_aisle, res, sw_c, sd_c, aisle_c, cap)
+                        if found is None:
+                            continue
+                        reach = max(reach, 2)
+                        s_rect, s_rows, n_sc, s_boxes, s_aisle = found
+
+                        def again(rect=s_rect, t_hi=t_hi, t_lo_c=t_lo_c, t_hi_c=t_hi_c):
+                            # In front of the court, and beside it either way.
+                            q_rr, q_cc, _q_rh, q_rw = rect
+                            for sub in ((q_rr, t_lo_c, t_hi_c), (t_hi, t_lo_c, q_cc),
+                                        (t_hi, q_cc + q_rw, t_hi_c)):
+                                if sub[0] > s_lo and sub[2] - sub[1] >= sd_c + aisle_c:
+                                    tries.append(sub)
+
+                        if n_sc <= 0:
+                            if not alley_fed:
+                                again()
+                            continue
+                        reach = max(reach, 3)
+                        s_rr, s_cc, s_rh, s_rw = s_rect
+                        side = {**bld, "rect": s_rect, "stalls": n_sc, "aisle": side_aisle,
+                                "span_ft": s_rh * res, "stall_boxes": s_boxes}
+                        if alley_fed:
+                            lane = _lane_to_alley(free, mouths, s_rr, s_cc, s_rh, s_rw, drive_c)
+                            if lane is not None:
+                                r0, c0, h, w = lane
+                                lane_len_c = h if w == drive_c else w
+                                offer({**side, "driveway": lane if lane_len_c else None,
+                                       "driveway_len_c": lane_len_c,
+                                       "driveway_len": lane_len_c * res + alley_setback_ft,
+                                       "method": "townhome_side_court_alley"})
+                            break
+                        # The front lane runs straight into the aisle: the first
+                        # clear corridor within the aisle's columns from the
+                        # front street's strip to the court's top (`_front_runs`).
+                        a0, a1 = s_aisle
+                        clear, start = _front_runs(free, fcells, s_rr)
+                        lane_c0 = next((c0 for c0 in range(a0, a1 - drive_c + 1)
+                                        if clear[c0:c0 + drive_c].all()), None)
+                        if lane_c0 is None:
+                            again()
+                            continue
+                        r_top = int(start[lane_c0:lane_c0 + drive_c].max())
+                        offer({**side, "driveway": ((r_top, lane_c0, s_rr - r_top, drive_c)
+                                                    if s_rr > r_top else None),
+                               "driveway_len_c": s_rr - r_top,
+                               "driveway_len": (s_rr - r_top) * res + (
+                                   street_sb if pole_y is None
+                                   else miny + r_top * res - pole_y),
+                               "method": "townhome_side_court"})
+                        break
                 if front_ban and through:
                     # The rear court would stand between the building and the
                     # far street: the words refuse it, and no lane cures it.

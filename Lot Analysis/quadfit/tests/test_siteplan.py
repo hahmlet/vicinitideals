@@ -2446,6 +2446,81 @@ def test_the_free_end_cut_follows_the_lane_not_the_last_clip_piece():
     assert not cells[:, past_end].any()
 
 
+# 22E18CC02800, Clackamas unincorporated R10, as the county run of
+# 2026-09-28 held it (the s6s task: s5o envelope simplified to 0.05 ft, s4's
+# front edge, the lot's corners). 82 ft of frontage; the side line at its
+# south-east end splays 20 degrees out behind the front.
+_SPLAY_FE = [[7657800.38, 636003.74, 7657742.92, 636062.13]]
+_SPLAY_XY = [(7657966.88, 636155.97), (7658023.18, 636098.59), (7657898.08, 636048.19),
+             (7657800.38, 636003.74), (7657742.92, 636062.13)]
+_SPLAY_ENV = [(7657896.11, 636052.79), (7657891.57, 636050.96), (7657891.65, 636050.76),
+              (7657811.18, 636014.15), (7657761.6, 636064.54), (7657950.79, 636143.81),
+              (7657999.31, 636094.36), (7657900.65, 636054.62), (7657900.56, 636054.81)]
+
+
+def test_a_lane_a_few_inches_past_the_frontage_end_is_the_grid_not_the_lot():
+    """Half a cell of slack at a free end. The side line splays out behind
+    the front, so the envelope's front corner stands a few inches past a
+    line square to the frontage's end, and the lane hugging the side
+    setback beside the pod -- drawn on the grid's half-foot lattice, the pod
+    against it -- runs 0.3 to 0.5 ft past that end at the street. The cut
+    exactly through the end dropped the lane's outer column by its centre
+    and refused the lot `no_side_lane` (one of four on the run of
+    2026-09-28); a column counts now when any of it stands on the frontage.
+    A lane a cell or more past the end is still refused (the partial
+    frontage above)."""
+    import math
+
+    s6s = _sp_setup_cities()
+    res = s6s._CFG["res"]
+    env = shapely.Polygon(_SPLAY_ENV)
+    lot = shapely.Polygon(_SPLAY_XY)
+    r = _run(s6s, env, _SPLAY_FE, lot.area, bearings=[134.54],
+             jurisdiction="clackamas_unincorporated", zone="R10",
+             front_setback_ft=15.0, street_setback_ft=15.0, lot_xy=_SPLAY_XY)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    # The lane's width along the frontage, measured from its south-east end:
+    # at most one cell of it past the end.
+    x0, y0, x1, y1 = _SPLAY_FE[0]
+    n = math.hypot(x1 - x0, y1 - y0)
+    ux, uy = (x1 - x0) / n, (y1 - y0) / n
+    along = [(x - x0) * ux + (y - y0) * uy
+             for x, y in shapely.get_coordinates(r["geoms"]["driveway"])]
+    assert -res - 0.01 <= min(along) and max(along) <= n, (min(along), max(along))
+
+
+# 1S1E03CB -80000, Portland RX, as the county run of 2026-09-28 held it: 254
+# ft of frontage, a zero street setback, a 10 ft parking setback, and an
+# envelope that is a ring round ground it leaves out.
+_RING_FE = [[7643603.12, 679613.77, 7643368.27, 679710.52]]
+_RING_XY = [(7643442.93, 679891.74), (7643677.78, 679794.99), (7643603.12, 679613.77),
+            (7643368.27, 679710.52)]
+_RING_HOLE = [(7643459.11, 679852.88), (7643410.38, 679734.59), (7643522.76, 679688.29),
+              (7643519.51, 679680.41), (7643586.93, 679652.63), (7643638.92, 679778.81)]
+
+
+def test_a_side_court_no_lane_reaches_is_looked_for_again_nearer_the_street():
+    """The side court is the LARGEST free rectangle in the strip beside the
+    building. On this ring that is the band behind the hole, which no lane
+    from the front street reaches; the band in front of the hole -- off the
+    street by the 10 ft parking setback, a straight lane from the street --
+    was never asked, and the lot was refused `no_side_lane` once its court
+    had to stand the parking setback back (before 2026-09-28 the zero
+    front setback was read as 10 ft and the court stood on the lot line).
+    The strip in front of a court no lane reaches is searched again."""
+    s6s = _sp_setup_cities()
+    env = shapely.Polygon(_RING_XY, [_RING_HOLE])
+    lot = shapely.Polygon(_RING_XY)
+    r = _run(s6s, env, _RING_FE, lot.area, bearings=[157.61], jurisdiction="portland",
+             zone="RX", parking_setback_ft=10.0, front_setback_ft=0.0,
+             street_setback_ft=0.0, lot_xy=_RING_XY)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    front = shapely.LineString([_RING_FE[0][:2], _RING_FE[0][2:]])
+    # The court stands the parking setback off the street, the lane reaches it.
+    assert r["geoms"]["parking_court"].distance(front) >= 10.0 - 0.6
+    assert r["geoms"]["driveway"].distance(front) <= 1.0
+
+
 # ---------------------------------------------------------------------------
 # FOLLOWUPS 5 (o): a front setback of zero is the code's answer, not a gap
 # ---------------------------------------------------------------------------
