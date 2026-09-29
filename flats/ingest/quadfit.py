@@ -1524,6 +1524,32 @@ def outdoor_square(
     side_drive = bool(
         design.parking.parks and across.stalls and not across.lane_ft and not facts.alley_at_rear
     )
+    if fit.beside:
+        # A court BESIDE the building (FOLLOWUPS 4(a)): its aisle is the
+        # drive in from the street, so the building and that band are all
+        # the plan paves -- drawn where the lot page draws them, never as a
+        # court behind the building the plan does not have.
+        beside = side_court(design, got, alley, corner=corner, frontage_ft=facts.frontage_ft)
+        beyond = None if beside is None else _beside_beyond(
+            beside, fit.required_ft, got, env.rear_cut_ft
+        )
+        if beside is None or beyond is None or math.isinf(beyond):
+            return None
+        drawn = draw(
+            fitter,
+            fit,
+            width_ft=design.footprint.width_ft,
+            depth_ft=design.footprint.depth_ft,
+            lane_ft=0.0,
+            court_depth_ft=0.0,
+            court_beyond_ft=beyond,
+            street=street,
+            beside_band_ft=beside.band_ft,
+            beside_len_ft=beside.length_ft,
+        )
+        if drawn is None or drawn.court is None:
+            return None
+        return _largest_left(here, got, side, street, front_ft, fit, [(drawn.building, drawn.court)])
     if side_drive and fit.column:
         return None
     if fit.column:
@@ -1558,6 +1584,20 @@ def outdoor_square(
     plans = [(drawn.building, p) for p in drawn.paved] or [
         (drawn.building, drawn.lane, drawn.court)
     ]
+    return _largest_left(here, got, side, street, front_ft, fit, plans)
+
+
+def _largest_left(
+    here: QuadfitLot,
+    got: ZoneResolution,
+    side: Any,
+    street: tuple[tuple[float, float, float, float], ...],
+    front_ft: float,
+    fit: Fit,
+    plans: list[tuple[Any, ...]],
+) -> float:
+    """The largest square left by the best-placed of ``plans`` (each
+    the shapes one placement of the plan takes off the lot)."""
     need = got.get("open_space_min_sqft")
     need = float(need) if need is not None else float(side) ** 2
     angles = tuple(a for a in (fit.angle_deg, *map(normalize, here.front_bearings)) if a is not None)

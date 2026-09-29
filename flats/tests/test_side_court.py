@@ -271,3 +271,33 @@ def test_a_real_wide_shallow_lot_seats_the_court_beside_the_pod(corpus) -> None:
     assert s.screening.stalls_seated >= court.stalls
     # The drawing stands the court beside the building, not behind it.
     assert s.drawing is not None
+
+
+def test_the_outdoor_square_is_measured_beside_the_court_beside(corpus, monkeypatch) -> None:
+    """A plan with its court beside the building leaves its outdoor square
+    around THAT court (FOLLOWUPS 4(a) x 7(b1)). Drawn as the court behind
+    the building it does not have, the same lot showed a 40 ft square where
+    the real plan leaves 21."""
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    seen: list[tuple[bool, float | None, tuple, dict]] = []
+    measure = quadfit.outdoor_square
+
+    def spy(*a, **k):
+        got = measure(*a, **k)
+        seen.append((a[3].beside, got, a, k))
+        return got
+
+    monkeypatch.setattr(quadfit, "outdoor_square", spy)
+    policy, rel = slack.load_policy(), relief.load_policy()
+    lot = lot_from_row(real_row(), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policy, relief=rel, step_deg=1.0)
+    assert s.fit.beside is True
+    ((beside, square, a, k),) = seen
+    assert beside is True and square == pytest.approx(21.0, abs=0.5)
+    shape = next(c for c in s.screening.checks if c.check == "open_space_shape")
+    assert shape.observed == pytest.approx(square)
+    behind = measure(*a[:3], dataclasses.replace(a[3], beside=False), *a[4:], **k)
+    assert behind is not None and behind > square
