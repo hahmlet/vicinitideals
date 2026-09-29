@@ -41,6 +41,7 @@ from app.models.scraped_listing import ScrapedListing
 from app.api.routers.ui_helpers import (
     _fd,
     _get_user,
+    _model_in_user_org,
     templates,
 )
 from app.api.routers.ui_model_outputs import (
@@ -331,7 +332,7 @@ async def deal_setup_wizard_get(
 ) -> HTMLResponse:
     """Render a single wizard step fragment (used by Back buttons and direct links)."""
     model = await session.get(Scenario, model_id)
-    if model is None:
+    if model is None or not await _model_in_user_org(session, request, model_id):
         return HTMLResponse("Not found", status_code=404)
     default_project = (await session.execute(
         select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)
@@ -448,7 +449,7 @@ async def deal_setup_wizard_step(
     wizard_errors: dict[str, str] = {}
 
     model = await session.get(Scenario, model_id)
-    if model is None:
+    if model is None or not await _model_in_user_org(session, request, model_id):
         return HTMLResponse("Not found", status_code=404)
     default_project = (await session.execute(
         select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)
@@ -813,7 +814,7 @@ async def deal_setup_wizard_complete(
     from app.models.capital import CapitalModule, CapitalModuleProject
 
     model = await session.get(Scenario, model_id)
-    if model is None:
+    if model is None or not await _model_in_user_org(session, request, model_id):
         return HTMLResponse("Not found", status_code=404)
     default_project = (await session.execute(
         select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)

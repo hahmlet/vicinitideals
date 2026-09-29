@@ -1,7 +1,7 @@
 """Settings, billing, scraping-services, and source-vehicle routes.
 
 Extracted from ui.py (Phase 2a). Covers:
-  /  /splash  /settings/*  /mock/billing/*  /ui/admin/*
+  /  /settings/*  /mock/billing/*  /ui/admin/*
   /settings/vehicles/*
 """
 from __future__ import annotations
@@ -662,12 +662,6 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
 @router.get("/", response_class=HTMLResponse)
 async def root() -> RedirectResponse:
     return RedirectResponse(url="/deals")
-
-
-@router.get("/splash", response_class=HTMLResponse)
-async def splash(request: Request, session: DBSession) -> HTMLResponse:
-    users = list((await session.execute(select(User).order_by(User.name))).scalars())
-    return templates.TemplateResponse(request, "splash.html", {"users": users})
 
 
 

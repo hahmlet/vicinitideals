@@ -5,7 +5,7 @@ of another org could list the model's Sources (labels, rates, amounts) and
 attach one of them to a project -- a write to another org's capital stack.
 Fixed with an org check (404, same as an unknown project).
 Router: app/api/routers/ui_model_builder.py (adopt_source_modal,
-adopt_source_write, new helper _adopt_source_model_in_user_org).
+adopt_source_write; guard now shared as ui_helpers._model_in_user_org).
 """
 
 from __future__ import annotations

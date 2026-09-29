@@ -321,9 +321,9 @@ async def test_export_resend_broker_down_marks_copy_failed(
 async def test_upload_proforma_broker_down_htmx_and_json(
     client: AsyncClient, session: AsyncSession, send_task_down: None
 ) -> None:
-    user = await _user(session)
-    set_client_auth(client, user.id)
-    url = f"/ui/models/{uuid.uuid4()}/upload-proforma"
+    model_id, user_id = await _model_and_user(session)
+    set_client_auth(client, user_id)
+    url = f"/ui/models/{model_id}/upload-proforma"
     form = {"task_id": "t-1", "revenue_sheet": "Revenue"}
 
     htmx = await client.post(url, data=form, headers={"hx-request": "true"})
@@ -338,14 +338,14 @@ async def test_proforma_preflight_redis_down(
 ) -> None:
     import redis
 
-    user = await _user(session)
-    set_client_auth(client, user.id)
+    model_id, user_id = await _model_and_user(session)
+    set_client_auth(client, user_id)
     dead = MagicMock()
     dead.set.side_effect = RedisConnectionError("Error 111 connecting to redis:6379.")
     monkeypatch.setattr(redis, "from_url", lambda *_a, **_kw: dead)
 
     resp = await client.post(
-        f"/ui/models/{uuid.uuid4()}/proforma-preflight",
+        f"/ui/models/{model_id}/proforma-preflight",
         files={"file": ("om.docx", b"not really a docx", "application/octet-stream")},
         headers={"hx-request": "true"},
     )

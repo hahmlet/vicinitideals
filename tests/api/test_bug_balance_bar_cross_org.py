@@ -1,15 +1,13 @@
-"""Bug (NOT fixed -- strict xfail): GET /ui/models/{id}/balance-bar leaks
-another org's Sources-vs-Uses numbers.
+"""Bug: GET /ui/models/{id}/balance-bar leaked another org's Sources-vs-Uses
+numbers.
 
 balance-bar is a deprecated alias that delegates to the calc-status pill
-(GET /ui/models/{id}/calc-status), and neither route checks that the model
-belongs to the signed-in user's org. A user of org B who knows a model id
-of org A gets org A's pill, including the dollar gap ("-$250,000 Sources
-Gap"). Most read-only /ui/models/{id}/... panels in ui_model_builder.py
-(calc-status, calc-status/modal, module-nav, ...) share the gap, so the fix
-is a systemic org guard for those reads rather than a one-route patch --
-left for a decision. When it lands this test passes, the strict xfail
-turns it red: drop the marker.
+(GET /ui/models/{id}/calc-status), and neither route checked that the model
+belongs to the signed-in user's org, so a user of org B who knew a model id
+of org A got org A's dollar gap ("-$250,000 Sources Gap"). Fixed with the
+shared org guard ``ui_helpers._model_in_user_org`` across the read-only
+/ui/models/{id}/... panels (404, same as an unknown model); the sibling
+panels are covered in tests/api/test_model_routes_cross_org.py.
 """
 
 from __future__ import annotations
@@ -35,11 +33,6 @@ from tests.conftest import (
 pytestmark = pytest.mark.asyncio
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="balance-bar / calc-status have no org guard; systemic fix for "
-    "/ui/models/{id} read panels pending a decision",
-)
 async def test_balance_bar_hides_other_orgs_numbers(
     client: AsyncClient, session: AsyncSession
 ) -> None:

@@ -14,7 +14,7 @@ Routes covered (all in app/api/routers/ui_settings.py):
   POST /ui/settings/scenario-templates/{template_id}/set-user-default
   POST /ui/admin/backfill-listing-buckets
   GET  /settings/preferences
-  GET  /splash
+  GET  /splash                (deleted route: 404)
 
 Stripe is never reached: ``ui_settings._stripe_api_request`` is replaced by a
 recorder. Email is never sent: ``app.emails.send_invite_email`` is patched,
@@ -869,26 +869,13 @@ async def test_preferences_renders_for_member(client: AsyncClient, session: Asyn
     assert "<html" in resp.text.lower()
 
 
-async def test_splash_is_unreachable_from_a_browser_session(
-    client: AsyncClient, session: AsyncSession
-) -> None:
-    """/splash is the pre-auth "who's working today?" picker. It is not in
-    the UI path list, so the API-key middleware refuses a browser session
-    (403). Its template lists every user in every org, so it must stay
-    unreachable to browsers unless it is scoped first."""
-    _org, user = await seed_org(session)
-    user.name = "Splash Viewer"
-    await session.commit()
-    set_client_auth(client, user.id)
-
-    resp = await client.get("/splash")
-    assert resp.status_code == 403
-    assert "Splash Viewer" not in resp.text
-
-
-async def test_splash_renders_for_api_key_plus_session(
+async def test_splash_is_gone(
     client: AsyncClient, session: AsyncSession, api_key: str
 ) -> None:
+    """/splash was a pre-auth "who's working today?" picker that listed every
+    user in every org (and posted to a /splash/select that never existed).
+    The route and its template are deleted; even a caller that clears the
+    API-key middleware gets a 404 and no user names."""
     org, admin = await _org_with_admin(session, "A")
     member = await _member(session, org, "A")
     await session.commit()
@@ -896,6 +883,6 @@ async def test_splash_renders_for_api_key_plus_session(
     client.headers["X-API-Key"] = api_key
 
     resp = await client.get("/splash")
-    assert resp.status_code == 200
-    assert admin.name in resp.text
-    assert member.name in resp.text
+    assert resp.status_code == 404
+    assert admin.name not in resp.text
+    assert member.name not in resp.text

@@ -19,7 +19,6 @@ import httpx
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, Response, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
-from starlette.templating import _TemplateResponse
 from sqlalchemy import and_, func, literal, or_, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -60,6 +59,7 @@ from app.api.routers.ui_helpers import (
     _get_address_issues_count,
     _get_counts,
     _get_user,
+    _model_in_user_org,
     _override_stabilized_cap,
     _seed_milestones,
     templates,
@@ -2353,6 +2353,10 @@ async def add_project_search(
     user = await _get_user(session, request)
     if user is None:
         return HTMLResponse("")
+    # deal_id here is the Scenario id; another org's scenario is a 404 so its
+    # bound projects ("already used") don't leak.
+    if not await _model_in_user_org(session, request, deal_id):
+        return HTMLResponse("", status_code=404)
 
     q_clean = q.strip()
     q_lower = q_clean.lower()
@@ -3064,7 +3068,7 @@ async def builder_panel(
     from app.models.cashflow import CashFlow
 
     model = await session.get(Scenario, model_id)
-    if model is None:
+    if model is None or not await _model_in_user_org(session, request, model_id):
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
     _active_proj_id = await _active_project_from_request(request, session, model_id)
@@ -3280,7 +3284,11 @@ async def source_coverage_modal(
     """
     from app.models.capital import CapitalModuleProject
     module = await session.get(CapitalModule, source_id)
-    if module is None or module.scenario_id != model_id:
+    if (
+        module is None
+        or module.scenario_id != model_id
+        or not await _model_in_user_org(session, request, model_id)
+    ):
         return HTMLResponse(
             "<p class='text-muted'>Source not found.</p>", status_code=404
         )
@@ -3445,20 +3453,6 @@ async def source_coverage_write(
 # missed or wiped by a wizard re-run.
 # ─────────────────────────────────────────────────────────────────────────────
 
-async def _adopt_source_model_in_user_org(
-    session: AsyncSession, request: Request, model_id: UUID
-) -> bool:
-    """Org guard for the Adopt Source routes: True when the Scenario's Deal
-    belongs to the signed-in user's org (always True with isolation off)."""
-    if not settings.org_isolation_enabled:
-        return True
-    _user = await _get_user(session, request)
-    _user_org = getattr(_user, "org_id", None) if _user is not None else None
-    _scen = await session.get(Scenario, model_id)
-    _deal = await session.get(Deal, _scen.deal_id) if _scen is not None and _scen.deal_id else None
-    return _user_org is not None and _deal is not None and _deal.org_id == _user_org
-
-
 @router.get(
     "/ui/models/{model_id}/projects/{project_id}/adopt-source",
     response_class=HTMLResponse,
@@ -3475,7 +3469,7 @@ async def adopt_source_modal(
     if (
         project is None
         or project.scenario_id != model_id
-        or not await _adopt_source_model_in_user_org(session, request, model_id)
+        or not await _model_in_user_org(session, request, model_id)
     ):
         return HTMLResponse(
             "<p class='text-muted'>Project not found.</p>", status_code=404
@@ -3519,7 +3513,7 @@ async def adopt_source_write(
     if (
         project is None
         or project.scenario_id != model_id
-        or not await _adopt_source_model_in_user_org(session, request, model_id)
+        or not await _model_in_user_org(session, request, model_id)
     ):
         return HTMLResponse(
             "<p class='text-muted'>Project not found.</p>", status_code=404
@@ -4290,6 +4284,8 @@ async def model_calc_status_pill(
     _compute_scenario_statuses so the pill stays consistent with the tab
     chips and doesn't snap to Project 1's pill after modal interactions.
     """
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
     has_adj = False
     if _is_underwriting_view_request(request):
         status = await _aggregate_status_for_underwriting(session, model_id)
@@ -4318,6 +4314,8 @@ async def model_calc_status_modal(
     factor drill-downs); per-project drilldowns are reachable via the
     project tab chips.
     """
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
     if _is_underwriting_view_request(request):
         status = await _aggregate_status_for_underwriting(session, model_id)
         # Underwriting modal shows per-project breakdown, not the 3-factor
@@ -4372,7 +4370,8 @@ async def model_balance_bar(
     session: DBSession,
 ) -> HTMLResponse:
     """DEPRECATED — kept for back-compat. Redirects to calc-status pill.
-    Sidebar balance bar replaced by center-top status pill.
+    Sidebar balance bar replaced by center-top status pill. The org guard
+    lives in the pill handler.
     """
     return await model_calc_status_pill(request, model_id, session)
 
@@ -4383,8 +4382,10 @@ async def model_module_nav(
     model_id: UUID,
     session: DBSession,
     module: str = "",
-) -> _TemplateResponse:
+) -> HTMLResponse:
     """Returns the module nav cards partial for sidebar live-refresh after mutations."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     ctx: dict[str, Any] = {
