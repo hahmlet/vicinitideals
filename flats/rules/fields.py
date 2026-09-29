@@ -732,9 +732,36 @@ _F: tuple[FieldDef, ...] = (
         "feet whatever the lot is, Milwaukie 96 per ground-floor dwelling "
         "(Table 19.505.3.D.1), and Gresham 15 percent -- which on a big lot "
         "is an order of magnitude more. A city that states both means both. "
-        "The minimum DIMENSION some of them state alongside it (Portland's 12 "
-        "by 12) is a shape test no field here holds.",
+        "The minimum DIMENSION some of them state alongside it is its own "
+        "field, `open_space_min_dimension_ft` (one contiguous area) or "
+        "`private_open_space_min_dimension_ft` (each dwelling's own).",
         False,
+    ),
+    FieldDef(
+        "open_space_min_dimension_ft",
+        "length_ft",
+        "The side of a square that must fit entirely inside the required "
+        "outdoor area, which is ONE contiguous piece holding the whole of "
+        "`open_space_min_sqft`: Portland 33.110.240.B, 12 by 12 feet in R20 "
+        "through R5 and 10 by 10 in R2.5, not in the front building setback "
+        "and not on vehicle area (33.110.240.C). A shape test on the ground "
+        "the building and its pavement leave, never an amount: a lot with "
+        "thousands of square feet left over can still hold no 12-foot square "
+        "once a turned pod, its lane and its court stand on it.",
+        False,
+        label="min. outdoor area dimension",
+    ),
+    FieldDef(
+        "private_open_space_min_dimension_ft",
+        "length_ft",
+        "The least width and depth of EACH dwelling's own private open space, "
+        "whose area is `open_space_min_sqft` shared out per dwelling: "
+        "Milwaukie Table 19.505.3.D.1.a, 96 square feet per ground-floor "
+        "unit with a minimum dimension of 5 feet, directly accessible from "
+        "the unit. Held apart from `open_space_min_dimension_ft` because it "
+        "is four pieces off four walls, not one piece anywhere on the lot.",
+        False,
+        label="min. private open space dimension",
     ),
     FieldDef(
         "min_landscaped_pct",
@@ -1099,6 +1126,11 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_building_buffer_ft",
         "open_space_min_pct",
         "open_space_min_sqft",
+        # The shape beside the amount. Stated only where the amount is, and
+        # only by the codes that state one (Portland's single-dwelling table,
+        # Milwaukie's private open space); a zone silent on it is silent.
+        "open_space_min_dimension_ft",
+        "private_open_space_min_dimension_ft",
         "min_landscaped_pct",
         "orientation_constraint",
     }

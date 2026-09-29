@@ -2093,16 +2093,26 @@ zones:
     # contiguous, "may not be used as vehicle area", and "may not be located
     # in the front building setback".
     #
-    # NOT ENCODED, in the row below it: the minimum DIMENSION, 12 ft. by 12
-    # ft. here and 10 by 10 in R2.5 -- "the shape of the outdoor area must be
-    # such that a square of the stated dimension will fit entirely in the
-    # outdoor area". That is a shape test and this registry holds an area.
+    # And in the row below it, the minimum DIMENSION, 12 ft. by 12 ft. here
+    # and 10 by 10 in R2.5 -- "the shape of the outdoor area must be such that
+    # a square of the stated dimension will fit entirely in the outdoor area".
+    # Held since 2026-09-29 as `open_space_min_dimension_ft`, beside the area.
     open_space_min_sqft:
       value: 250
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
+    # The row under the area in the same table: the square that has to fit
+    # entirely inside the outdoor area (33.110.240.B). A shape test on the
+    # ground the building and its pavement leave, read by the screen's
+    # `_outdoor_shape` (FOLLOWUPS 7(b)); not an amount.
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: false
       quote: "or/multnomah/portland/33.110.txt#L302-L313"
@@ -2179,6 +2189,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
+    # The row under the area in the same table: the square that has to fit
+    # entirely inside the outdoor area (33.110.240.B). A shape test on the
+    # ground the building and its pavement leave, read by the screen's
+    # `_outdoor_shape` (FOLLOWUPS 7(b)); not an amount.
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -2255,6 +2275,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
+    # The row under the area in the same table: the square that has to fit
+    # entirely inside the outdoor area (33.110.240.B). A shape test on the
+    # ground the building and its pavement leave, read by the screen's
+    # `_outdoor_shape` (FOLLOWUPS 7(b)); not an amount.
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -2331,6 +2361,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
+    # The row under the area in the same table: the square that has to fit
+    # entirely inside the outdoor area (33.110.240.B). A shape test on the
+    # ground the building and its pavement leave, read by the screen's
+    # `_outdoor_shape` (FOLLOWUPS 7(b)); not an amount.
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -2430,6 +2470,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
+    # The row under the area in the same table: the square that has to fit
+    # entirely inside the outdoor area (33.110.240.B). A shape test on the
+    # ground the building and its pavement leave, read by the screen's
+    # `_outdoor_shape` (FOLLOWUPS 7(b)); not an amount.
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -2531,6 +2581,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
+    # The row under the area in the same table: the square that has to fit
+    # entirely inside the outdoor area (33.110.240.B). A shape test on the
+    # ground the building and its pavement leave, read by the screen's
+    # `_outdoor_shape` (FOLLOWUPS 7(b)); not an amount.
+    open_space_min_dimension_ft:
+      value: 10
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), R2.5 column; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
