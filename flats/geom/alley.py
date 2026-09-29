@@ -54,7 +54,10 @@ number for the line -- is :func:`registry_alley`'s: on only where the alley
 runs the whole rear line, so the stretch across from the neighbour behind
 is never cut at the alley's number. The side line's alley setback is cut
 stretch by stretch instead (:func:`cover_stretches`,
-:func:`flats.geom.envelope.buildable`), since both its numbers are in hand.
+:func:`flats.geom.envelope.buildable`), since both its numbers are in hand;
+and so, since 2026-09-29, is a rear line the alley runs part of, the bridge
+resolving the lot a second time for the alley's rear
+(:func:`flats.ingest.quadfit.part_rear_alley`).
 """
 
 from __future__ import annotations

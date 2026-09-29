@@ -206,9 +206,16 @@ Full format: [flats/config/footnotes/README.md](../../flats/config/footnotes/REA
   alley line on three rays of five, and `alley_cover_json` records how much
   of it the alley really runs.
   - Setbacks: the alley's number applies only to the covered stretch. A side
-    line is cut stretch by stretch (`flats.geom.envelope.buildable`). A rear
-    variant (exempt or alley number) applies only when the alley runs the
-    whole rear line (`flats.geom.alley.registry_alley`).
+    line is cut stretch by stretch (`flats.geom.envelope.buildable`). So is a
+    rear line: the rules' rear variant (exempt or alley number) switches on
+    only when the alley runs the whole rear line
+    (`flats.geom.alley.registry_alley`); on a part-covered rear line the
+    bridge resolves the lot again with `alley_at_rear` and the covered
+    stretches take that rear, the rest the larger of the two
+    (`flats.ingest.quadfit.part_rear_alley`). The court is then charged
+    against the smaller strip, and the screen keeps whichever of the two
+    cuts (stretch, or whole line at the ordinary rear) answers better. No
+    cover on record = no stretch = the whole line at the ordinary rear.
   - Two rear lines, one on the alley (a corner lot's line opposite the side
     street, a jogged rear): the rear variant reaches only the rear line on
     the alley; the other keeps the ordinary rear setback. The bridge resolves

@@ -37,10 +37,15 @@ ordinary side setback. The far side yard is never touched either way.
 also records where along it the alley really runs (``alley_cover_json``,
 :attr:`~flats.geom.edges.Edge.cover`). The side line is cut stretch by
 stretch (:func:`_pieces`): the alley's number where the alley runs, the
-ordinary side setback across from the neighbour. The rear line is not cut
-by the stretch: the bridge switches ``alley_at_rear`` on only where the alley
-runs the whole rear line (:func:`flats.geom.alley.registry_alley`), and a
-rear line the alley runs part of arrives here with the ordinary rear setback.
+ordinary side setback across from the neighbour. So is the rear line the
+alley runs PART of (Steph 2026-09-28, "careful reading": such a line abuts
+the alley along the covered stretch only). The bridge switches
+``alley_at_rear`` on only where the alley runs the whole rear line
+(:func:`flats.geom.alley.registry_alley`), so a part-covered lot resolves
+with the ordinary rear; the bridge resolves it once more with the alley and
+hands that rear over as :attr:`Setbacks.alley_rear_ft`, which the covered
+stretches take -- and the rest of the line the larger of the two. No cover
+on record is no covered stretch, and the whole line keeps the larger.
 
 *Two rear lines, one on the alley* (FOLLOWUPS 12(b), 3). A corner lot's
 line opposite the side street, or the second leg of a jogged rear, is a rear
@@ -107,8 +112,10 @@ class Setbacks:
     #: where the lot ALSO has a rear line off the alley, which then takes
     #: ``rear_ft``, the ordinary number (FOLLOWUPS 12(b), 3). None means the
     #: lot's rear lines are not told apart and every one takes ``rear_ft``.
-    #: Read for a rear edge flagged ``alley`` only, and only where its cover
-    #: vouches for the whole edge (:meth:`for_edge`).
+    #: Read for a rear edge flagged ``alley`` only: the whole edge where its
+    #: cover vouches for all of it (:meth:`for_edge`), else the stretches it
+    #: does vouch for (:func:`_pieces`). Also set, with ``rear_ft`` the
+    #: ordinary number, on a lot whose alley runs PART of its rear line.
     alley_rear_ft: float | None = None
 
     def for_class(self, cls: EdgeClass) -> float:
@@ -194,10 +201,12 @@ Segment = tuple[float, float, float, float]
 def _pieces(edge: Edge, setbacks: Setbacks) -> list[tuple[Segment, float]]:
     """The stretches of one edge and the setback each takes.
 
-    One piece, at :meth:`Setbacks.for_edge`, for every edge but a side line
-    on an alley whose code states its own number for that line
-    (``setback_alley_side_ft``) and whose cover s4 measured (FOLLOWUPS
-    3(e)). The alley number is a rule about "a lot line abutting an alley",
+    One piece, at :meth:`Setbacks.for_edge`, for every edge but an alley
+    line whose cover s4 measured and whose code states its own number for
+    that line: a side line's ``setback_alley_side_ft`` (FOLLOWUPS 3(e)), a
+    rear line's :attr:`Setbacks.alley_rear_ft` (the rear setback's
+    ``alley_at_rear`` variant; FOLLOWUPS 3, Steph's careful reading of
+    2026-09-28). The alley number is a rule about "a lot line abutting an alley",
     and on a line the alley runs part of -- s4 classes the line an alley
     line on three rays of five -- the stretch across from the neighbour's
     yard abuts the neighbour. So the line is cut stretch by stretch: the
@@ -206,24 +215,26 @@ def _pieces(edge: Edge, setbacks: Setbacks) -> list[tuple[Segment, float]]:
     it and the ordinary side setback -- a waiver does not reach the
     neighbour, and a city that calls the alley line a rear lot line (the
     bridge's ``max(side, rear)``) is not relaxed by a stretch it did not
-    measure. Square caps run each piece's strip past its ends, so an
+    measure. The rear line is cut the same way: the alley's rear where the
+    rays found it, the larger of it and the ordinary rear elsewhere. Square
+    caps run each piece's strip past its ends, so an
     uncovered piece bites a few feet into the covered one: never larger
     than the legal envelope. A cover of ``""`` (none on record) vouches for
     no stretch, and the whole line takes the larger number.
     """
     whole_edge: Segment = (edge.x1, edge.y1, edge.x2, edge.y2)
     d = setbacks.for_edge(edge)
-    if (
-        not edge.alley
-        or edge.cls is not EdgeClass.side
-        or setbacks.alley_side_ft is None
-        or edge.cover is None
-    ):
+    if not edge.alley or edge.cover is None:
+        return [(whole_edge, d)]
+    if edge.cls is EdgeClass.side and setbacks.alley_side_ft is not None:
+        alley_ft, plain_ft = setbacks.alley_side_ft, setbacks.side_ft
+    elif edge.cls is EdgeClass.rear and setbacks.alley_rear_ft is not None:
+        alley_ft, plain_ft = setbacks.alley_rear_ft, setbacks.rear_ft
+    else:
         return [(whole_edge, d)]
     from flats.geom.alley import cover_stretches
 
-    alley_ft = setbacks.alley_side_ft
-    ordinary = max(setbacks.side_ft, alley_ft)
+    ordinary = max(plain_ft, alley_ft)
     length = math.hypot(edge.x2 - edge.x1, edge.y2 - edge.y1)
     covered = cover_stretches(length, edge.cover)
     if covered == ((0.0, length),) or ordinary == alley_ft:

@@ -77,6 +77,7 @@ from flats.geom.alley import (
     ALLEY_FACTS,
     S4_LOTS,
     alley_lines,
+    cover_stretches,
     decode_cover,
     observed_alley,
     rear_cover_runs,
@@ -598,7 +599,11 @@ def _yard(rules: ZoneResolution, name: str) -> float | None:
     return float(got)
 
 
-def setbacks_for(rules: ZoneResolution, plain: ZoneResolution | None = None) -> Setbacks | None:
+def setbacks_for(
+    rules: ZoneResolution,
+    plain: ZoneResolution | None = None,
+    alleyed: ZoneResolution | None = None,
+) -> Setbacks | None:
     """The yards these rules resolve, as the envelope cuts them.
 
     None where the front, side or rear is not a number: the screen reports
@@ -624,6 +629,16 @@ def setbacks_for(rules: ZoneResolution, plain: ZoneResolution | None = None) -> 
     rear edges on the alley. Where the two agree nothing is split. Where
     ``plain`` states no rear number the line off the alley has none, and the
     answer is None like any other yard without one.
+
+    ``alleyed`` is the other way round: the same lot and design resolved
+    with ``alley_at_rear`` True, handed over where ``rules`` hold it False
+    because the alley runs only PART of the rear line (:func:`envelope_for`).
+    ``rules``' rear stays the ordinary one; ``alleyed``'s goes to
+    :attr:`Setbacks.alley_rear_ft`, which the envelope cuts along the
+    stretches s4's cover found the alley on and nowhere else
+    (:func:`flats.geom.envelope._pieces`). Where ``alleyed`` states no rear
+    number, or the same one, nothing is split: every rear line keeps the
+    ordinary rear, the answer before 2026-09-29.
     """
 
     def number(name: str) -> float | None:
@@ -654,6 +669,10 @@ def setbacks_for(rules: ZoneResolution, plain: ZoneResolution | None = None) -> 
             return None
         if ordinary != rear:
             alley_rear, rear = rear, ordinary
+    elif alleyed is not None:
+        on_alley = _yard(alleyed, "setback_rear_ft")
+        if on_alley is not None and on_alley != rear:
+            alley_rear = on_alley
     return Setbacks(
         front_ft=front,
         side_ft=side,
@@ -696,8 +715,31 @@ def rear_off_alley(edges: LotEdges | None) -> bool:
     return any(e.alley for e in rear) and any(not e.alley for e in rear)
 
 
+def part_rear_alley(lot: QuadfitLot) -> bool:
+    """Whether this lot's rear alley runs only PART of its rear line and the
+    envelope can cut that line stretch by stretch (FOLLOWUPS 3, Steph's
+    careful reading of 2026-09-28): s4 names a rear line an alley line, the
+    registry's ``alley_at_rear`` is off because the cover does not vouch for
+    the whole line, the lot is cut with per-edge strips, and the cover
+    vouches for at least one stretch of a rear alley edge. A tier C lot is
+    shrunk uniformly by its largest yard, and there is no stretch to cut; a
+    lot with no cover on record has no stretch either, and keeps the
+    ordinary rear on the whole line, the court charged against it."""
+    if not lot.facts.alley_at_rear or lot.facts.alley_rear_whole or lot.edges is None:
+        return False
+    if lot.edges.tier not in (Tier.clean, Tier.corner):
+        return False
+    return any(
+        e.alley and e.cls is EdgeClass.rear and e.cover and cover_stretches(e.length_ft, e.cover)
+        for e in lot.edges.edges
+    )
+
+
 def envelope_for(
-    lot: QuadfitLot, rules: ZoneResolution, plain: ZoneResolution | None = None
+    lot: QuadfitLot,
+    rules: ZoneResolution,
+    plain: ZoneResolution | None = None,
+    alleyed: ZoneResolution | None = None,
 ) -> Envelope:
     """The envelope this lot offers under these rules (FOLLOWUPS 12).
 
@@ -726,12 +768,23 @@ def envelope_for(
     the alley and the ordinary one to the rest (:func:`setbacks_for`). A
     caller that hands no ``plain`` for such a lot gets quadfit's envelope
     where the alley's rear is an exemption, as before 2026-09-29.
+
+    ``alleyed`` is the same lot and design resolved with ``alley_at_rear``
+    True, read only on a lot whose alley runs PART of its rear line
+    (:func:`part_rear_alley`): the covered stretches take its rear, the rest
+    of the line the larger of it and the ordinary rear (:func:`setbacks_for`).
+    The court is then charged against the smaller strip: where the alley's
+    rear is the smaller the envelope reports it as its rear cut
+    (:attr:`Envelope.rear_cut_ft`), since behind the covered stretch that is
+    all the envelope lost -- charging the ordinary rear there would credit
+    the court with ground the envelope still holds.
     """
     quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit")
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
     split = rear_off_alley(lot.edges)
-    setbacks = setbacks_for(rules, plain if split else None)
+    part = alleyed is not None and part_rear_alley(lot)
+    setbacks = setbacks_for(rules, plain if split else None, alleyed if part else None)
     if setbacks is None:
         return quadfit
     strips = lot.edges.tier in (Tier.clean, Tier.corner)
@@ -741,7 +794,10 @@ def envelope_for(
         # caller did not resolve it (``plain``).
         return quadfit
     geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
-    return Envelope(geom, None if strips else setbacks.largest_ft, "flats", setbacks)
+    cut = None if strips else setbacks.largest_ft
+    if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
+        cut = setbacks.alley_rear_ft
+    return Envelope(geom, cut, "flats", setbacks)
 
 
 def _cover(row: Mapping[str, Any], edges: Sequence[Any]) -> list[str | None] | None:
@@ -973,6 +1029,65 @@ def _rear_ft(env: Envelope, rules: ZoneResolution) -> float:
     return float(held) if isinstance(held, (int, float)) else 0.0
 
 
+def _screen_on(
+    here: QuadfitLot,
+    design: Design,
+    config: Configuration,
+    got: ZoneResolution,
+    env: Envelope,
+    front: float | None,
+    angles: Sequence[float],
+    fitters: dict[Any, Fitter],
+    step_deg: float,
+    *,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+) -> tuple[Screened, Fitter]:
+    """One design screened on one envelope and one named front, for
+    :func:`screen_lot` to rank against the others it tries."""
+    key = (env.source, env.setbacks, front)
+    if key not in fitters:
+        fitters[key] = Fitter(env.geom, angles)
+    if here.facts.alley_at_rear and not here.facts.alley_rear_whole:
+        # A rear alley along PART of the rear line is the court's
+        # aisle only where the stretch it runs, with this envelope
+        # behind it, is as long as the row (Steph 2026-09-28).
+        run = usable_run_ft(here.rear_runs, here.lot_geom, env.geom, _rear_ft(env, got))
+        here = dataclasses.replace(
+            here, facts=dataclasses.replace(here.facts, alley_rear_run_ft=run)
+        )
+    facts = dataclasses.replace(here.facts, envelope_rear_ft=env.rear_cut_ft)
+    fit = fit_for(
+        fitters[key],
+        design,
+        got,
+        placement=False,
+        carved_rear_ft=env.rear_cut_ft,
+        alley=facts.alley,
+        corner=facts.corner,
+    )
+    result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
+    shadow = _if_signed(
+        got, facts, design, fit, result, policy=policy, relief=relief, config=config
+    )
+    return (
+        Screened(
+            lot=here,
+            design=design,
+            rules=got,
+            config=config,
+            fit=fit,
+            screening=result,
+            signed=shadow,
+            angles=len(angles),
+            step_deg=step_deg,
+            envelope=env,
+            front_deg=front,
+        ),
+        fitters[key],
+    )
+
+
 def screen_lot(
     lot: QuadfitLot,
     designs: Sequence[Design],
@@ -1028,6 +1143,7 @@ def screen_lot(
         ) or (None,)
         tried: list[tuple[Screened, Fitter]] = []
         plain: ZoneResolution | None = None
+        alleyed: ZoneResolution | None = None
         for front in fronts:
             here = lot
             if front is not None and lot.edges is not None:
@@ -1039,48 +1155,28 @@ def screen_lot(
                     lot.facts, design, observed={**lot.observed, "alley_at_rear": False}
                 )
                 plain = rules.resolve(layer_id, lot.zone, bare.conditions, lot=bare.measures)
-            env = envelope_for(here, got, plain)
-            key = (env.source, env.setbacks, front)
-            if key not in fitters:
-                fitters[key] = Fitter(env.geom, angles)
-            if lot.facts.alley_at_rear and not lot.facts.alley_rear_whole:
-                # A rear alley along PART of the rear line is the court's
-                # aisle only where the stretch it runs, with this envelope
-                # behind it, is as long as the row (Steph 2026-09-28).
-                run = usable_run_ft(lot.rear_runs, lot.lot_geom, env.geom, _rear_ft(env, got))
-                here = dataclasses.replace(
-                    here, facts=dataclasses.replace(here.facts, alley_rear_run_ft=run)
-                )
-            facts = dataclasses.replace(here.facts, envelope_rear_ft=env.rear_cut_ft)
-            fit = fit_for(
-                fitters[key],
-                design,
-                got,
-                placement=False,
-                carved_rear_ft=env.rear_cut_ft,
-                alley=facts.alley,
-                corner=facts.corner,
-            )
-            result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
-            shadow = _if_signed(
-                got, facts, design, fit, result, policy=policy, relief=relief, config=config
-            )
-            tried.append((
-                Screened(
-                    lot=here,
-                    design=design,
-                    rules=got,
-                    config=config,
-                    fit=fit,
-                    screening=result,
-                    signed=shadow,
-                    angles=len(angles),
-                    step_deg=step_deg,
-                    envelope=env,
-                    front_deg=front,
-                ),
-                fitters[key],
-            ))
+            if alleyed is None and part_rear_alley(here):
+                # A rear alley along PART of the line: the covered stretch
+                # abuts the alley and takes its rear (Steph 2026-09-28).
+                on = configure(lot.facts, design, observed={**lot.observed, "alley_at_rear": True})
+                alleyed = rules.resolve(layer_id, lot.zone, on.conditions, lot=on.measures)
+            envs = [envelope_for(here, got, plain)]
+            if alleyed is not None and part_rear_alley(here):
+                # Both cuts are tried and the better answer kept: the stretch
+                # cut is charged the court against the alley's (smaller) rear
+                # everywhere, since the fit does not say where along the line
+                # the court stands, which can cost more behind the uncovered
+                # stretch than it gains behind the covered one; the whole-line
+                # ordinary cut is the answer before 2026-09-29. Each is sound
+                # alone, so the better of the two is.
+                cut = envelope_for(here, got, plain, alleyed)
+                if cut.setbacks != envs[0].setbacks:
+                    envs.append(cut)
+            for env in envs:
+                tried.append(_screen_on(
+                    here, design, config, got, env, front, angles, fitters, step_deg,
+                    policy=policy, relief=relief,
+                ))
         # Drawn for the winner only: one more window search per design.
         won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
         out.append(dataclasses.replace(won, drawing=drawing_for(won, fitter)))
