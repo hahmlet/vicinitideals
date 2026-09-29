@@ -511,14 +511,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Gresham CC/MC (15 % open space), Oregon City C/MUC-1 (15/20 %
    landscaping), Fairview VA (25 %; its paper minimum 3,102 sq ft looks
    odd), GREEN->YELLOW, on lots within a few hundred sq ft of the smallest
-   fitting lot. The lane is priced at its shortest legal length. Left: (b)
-   the shape on the drawing -- Milwaukie Table 19.505.3.D.1's 96 sq ft
-   patio per ground-floor unit, 5 ft minimum, between the back wall and the
-   court (`gap` becomes max(gap, 96 / unit width) on 916 ok plans, inside
-   the depth `court_too_shallow` already fights over); Portland 33.110.240:
-   a 12 x 12 square in the leftover outside the front setback and off the
-   pavement (the screen's leftover still includes the front yard). Measure
-   first. (c) landscaping share on the county map (Happy Valley 20 %,
+   fitting lot. The lane is priced at its shortest legal length. (b) DONE 7bd2d1e4..674208b6 (in full run 0930): Portland 33.110.240's
+   12x12 square (10x10 R2.5) measured on the lot's own ground -- lot less
+   building, court, lane, paving, front setback, overlay carves; a
+   side-fed court paves its whole band; a court beside the building is
+   measured where it stands (674208b6). Milwaukie's 96 sq ft / 5 ft patio
+   encoded (no Milwaukie lot green). Bound on 7,029 Portland R lots: 569
+   green -> yellow (mostly pod80 end-on on 50 ft lots), 0 unknown, 0 other
+   moves. Open: a side-street court standing as a long side strip stays
+   unmeasured. (c) settled -- the amounts are charged since 91f40638;
+   left for the county map only: landscaping share on the county map (Happy Valley 20 %,
    Portland RM 15-30 %, Oregon City R-2 15 %, Fairview 20-25 %, Wilsonville
    15 %) -- s6s holds no landscaping reserve. (d) what the leftover is FOR
    (sheds, ADUs, a second pod) is product direction, belongs with item 6's
