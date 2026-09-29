@@ -734,7 +734,7 @@ async def settings_scraping_services(
             "proxy": "Residential (ProxyOn)" if residential_configured else "Residential (ProxyOn, not configured)",
             "last_run": "—",
             "last_result": "—",
-            "action_url": "/scraper/oregon-elicense/run",
+            "action_url": "/api/scraper/oregon-elicense/run",
             "action_label": "Trigger Sweep",
             "action_method": "post",
         },
