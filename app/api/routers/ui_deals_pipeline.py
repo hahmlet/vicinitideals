@@ -47,6 +47,7 @@ from app.api.routers.ui_helpers import (
     _deal_address,
     _deal_building_description,
     _first_opportunity,
+    _fmt_day,
     _get_counts,
     _get_user,
     _primary_scenario,
@@ -105,7 +106,7 @@ def _build_deal_row(deal: Deal) -> dict:
         ),
         "irr": float(outputs.project_irr_levered) if outputs and outputs.project_irr_levered is not None else None,
         "equity_multiple": None,  # TODO: load from SensitivityResult (needs join)
-        "last_updated_fmt": deal.created_at.strftime("%b %-d, %Y") if deal.created_at else None,
+        "last_updated_fmt": _fmt_day(deal.created_at) if deal.created_at else None,
     }
 
 
@@ -826,7 +827,7 @@ async def deal_detail(
             "noi": float(out.noi_stabilized) if out and out.noi_stabilized is not None else None,
             "irr": float(out.project_irr_levered) if out and out.project_irr_levered is not None else None,
             "equity_required": float(out.equity_required) if out and out.equity_required is not None else None,
-            "created_at_fmt": scenario.created_at.strftime("%b %-d, %Y") if scenario.created_at else None,
+            "created_at_fmt": _fmt_day(scenario.created_at) if scenario.created_at else None,
         })
     models.sort(key=lambda m: (0 if m["is_active"] else 1, -m["version"]))
 
@@ -1120,6 +1121,12 @@ async def toggle_opportunity_favorite(
     opp = await session.get(Opportunity, opp_id)
     if opp is None:
         return HTMLResponse("Not found", status_code=404)
+    # An org-owned opportunity is starred only by its own org. Unpromoted
+    # scraped listings (org_id NULL) are the shared pool and stay open.
+    if settings.org_isolation_enabled and opp.org_id is not None:
+        user = await _get_user(session, request)
+        if user is None or user.org_id != opp.org_id:
+            return HTMLResponse("Not found", status_code=404)
     opp.is_favorited = not opp.is_favorited
     await session.commit()
     await session.refresh(opp)
@@ -1168,7 +1175,8 @@ def _safe_return_path(raw: str) -> str:
     """
     if not raw or not raw.startswith("/") or raw.startswith("//"):
         return ""
-    if any(ch in raw for ch in ("\r", "\n")):
+    # Browsers read a backslash as a slash, so "/\evil.com" means "//evil.com".
+    if any(ch in raw for ch in ("\r", "\n", "\\")):
         return ""
     return raw
 
@@ -1422,6 +1430,7 @@ async def opportunity_detail(
 
 @router.post("/ui/opportunities/{opp_id}/archive")
 async def archive_opportunity(
+    request: Request,
     opp_id: UUID,
     session: DBSession,
 ) -> RedirectResponse:
@@ -1429,6 +1438,11 @@ async def archive_opportunity(
     opp = await session.get(Opportunity, opp_id)
     if opp is None:
         return RedirectResponse("/opportunities", status_code=303)
+    # Another org's opportunity is treated as missing: nothing is written.
+    if settings.org_isolation_enabled and opp.org_id is not None:
+        user = await _get_user(session, request)
+        if user is None or user.org_id != opp.org_id:
+            return RedirectResponse("/opportunities", status_code=303)
     opp.archived = True
     opp.opp_status = OpportunityStatus.archived.value
     await session.commit()

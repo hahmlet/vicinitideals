@@ -20,14 +20,15 @@ a fit inside it, either way, GREEN with a ``tight_fit`` flag.
 
 from __future__ import annotations
 
+import dataclasses
 import math
 from dataclasses import dataclass
-from typing import Iterable, Sequence
+from typing import Callable, Iterable, Sequence
 
 from shapely.geometry.base import BaseGeometry
 
 from flats.designs.model import Design, Orientation
-from flats.fit.angles import angles_for
+from flats.fit.angles import angles_for, normalize
 from flats.fit.raster import GRID_FT, MAX_CELLS, Grid, cells_for, rasterize
 
 
@@ -71,6 +72,13 @@ class Fit:
     #: :func:`flats.score.screen.fit_for` on the fit it took for that plan:
     #: searched at the building's own side, since the column stands inside it.
     column: bool = False
+    #: The parking the fit was searched for is a court BESIDE the building
+    #: (:func:`flats.score.paper.side_court`), its row of stalls along the
+    #: lot, not a row across it behind the building: ``across_ft`` is the
+    #: building's side plus that court's band, and what the court runs past
+    #: the rear wall is charged as depth by the screen. Set by
+    #: :meth:`Fitter.fit_beside`.
+    beside: bool = False
 
     @property
     def required_ft(self) -> float:
@@ -143,16 +151,28 @@ class Fitter:
     def empty(self) -> bool:
         return not self.grids
 
-    def _best(self, w_ft: float) -> tuple[float, Grid | None]:
+    def _grids(self, angles: Iterable[float] | None) -> list[Grid]:
+        """The grids at these angles (folded into [0, 180)); all where None."""
+        if angles is None:
+            return self.grids
+        wanted = [normalize(a) for a in angles]
+        return [
+            g
+            for g in self.grids
+            if any(abs(normalize(g.angle_deg) - a) < 1e-6 for a in wanted)
+        ]
+
+    def _best(self, w_ft: float, angles: Iterable[float] | None = None) -> tuple[float, Grid | None]:
         """Deepest achievable depth at this width, and the grid that achieved it.
 
         Every angle is scanned even after one clears the requirement: the margin
         is reported, ranked on, and compared across designs, so the best one is
-        worth finding rather than the first one.
+        worth finding rather than the first one. ``angles`` confines the scan
+        to the grids at those angles.
         """
         w_cells = cells_for(w_ft, self.res)
         best_cells, best_grid = 0, None
-        for grid in self.grids:
+        for grid in self._grids(angles):
             if grid.cols < w_cells:
                 continue
             got = grid.max_depth_cells(w_cells)
@@ -160,16 +180,19 @@ class Fitter:
                 best_cells, best_grid = got, grid
         return best_cells * self.res, best_grid
 
-    def holds(self, across_ft: float, depth_ft: float) -> bool:
+    def holds(
+        self, across_ft: float, depth_ft: float, *, angles: Iterable[float] | None = None
+    ) -> bool:
         """Whether a rectangle this wide and this deep fits at any angle.
 
         A yes/no, not a margin: one window test per grid and the first hit
         ends it, where :meth:`fit` binary-searches every grid for the deepest
         run. That is what makes it cheap enough to ask several times per lot
         -- the screen asks it once per stall it counts beyond the floor.
+        ``angles`` confines it to the grids at those angles.
         """
         w_cells, d_cells = cells_for(across_ft, self.res), cells_for(depth_ft, self.res)
-        return any(grid.has_window(d_cells, w_cells) for grid in self.grids)
+        return any(grid.has_window(d_cells, w_cells) for grid in self._grids(angles))
 
     def fit(
         self,
@@ -240,6 +263,79 @@ class Fitter:
             across_ft=best.across_ft,
             placement=best_grid.to_world(row, col, d_cells, w_cells),
         )
+
+    def fit_beside(
+        self,
+        width_ft: float,
+        depth_ft: float,
+        *,
+        band_ft: float,
+        beyond: Callable[[float], float],
+        angles: Iterable[float],
+        allow_flip: bool = True,
+        placement: bool = True,
+    ) -> Fit | None:
+        """Best fit for the building with a court BESIDE it.
+
+        Each orientation is searched at the building's side plus ``band_ft``
+        (the court's gap, aisle and stall), and the depth to find is the
+        building's own; ``beyond(deep)`` is what that orientation's court
+        asks past the rear wall, which the screen charges as depth, and it
+        is what the orientations are ranked on here -- the court's length
+        is fixed, so the shallower building can need more depth past its
+        wall than the deeper one. An orientation whose ``beyond`` is
+        infinite may not have the court at all. ``None`` where none may.
+
+        Only at ``angles``, the street's directions: the court's aisle runs
+        in from the street, so the building and its band have to stand side
+        by side ALONG the street. Turned a quarter, the same rectangle is a
+        building with its court behind it and no lane to reach it -- the
+        arrangement the row search already refused. No angle, no court.
+        """
+        angles = tuple(angles)
+        if not angles:
+            return None
+        options: list[tuple[Orientation, float, float]] = [
+            (Orientation.width_facing, width_ft, depth_ft)
+        ]
+        if allow_flip and width_ft != depth_ft:
+            options.append((Orientation.depth_facing, depth_ft, width_ft))
+        best: tuple[float, Fit, Grid | None, float] | None = None
+        for orientation, side, deep in options:
+            extra = beyond(deep)
+            if math.isinf(extra):
+                continue
+            across_ft = side + band_ft
+            got_ft, grid = self._best(across_ft, angles)
+            room = got_ft - deep - extra
+            if best is None or room > best[0]:
+                best = (
+                    room,
+                    Fit(
+                        fits=got_ft >= deep + extra,
+                        width_ft=width_ft,
+                        depth_ft=depth_ft,
+                        best_depth_ft=got_ft,
+                        slack_ft=got_ft - deep,
+                        angle_deg=grid.angle_deg if grid else None,
+                        orientation=orientation,
+                        across_ft=across_ft,
+                        beside=True,
+                    ),
+                    grid,
+                    deep,
+                )
+        if best is None:
+            return None
+        _room, fit, grid, deep = best
+        if not (placement and fit.fits and grid is not None):
+            return fit
+        assert fit.across_ft is not None
+        w_cells, d_cells = cells_for(fit.across_ft, self.res), cells_for(deep, self.res)
+        hit = grid.first_window(d_cells, w_cells)
+        if hit is None:
+            return fit
+        return dataclasses.replace(fit, placement=grid.to_world(hit[0], hit[1], d_cells, w_cells))
 
     def fit_design(
         self,

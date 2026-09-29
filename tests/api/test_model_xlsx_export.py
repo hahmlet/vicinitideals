@@ -16,7 +16,7 @@ from httpx import AsyncClient
 from openpyxl import load_workbook
 from sqlalchemy.ext.asyncio import AsyncSession
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 
 
 async def _seed_model(session: AsyncSession):

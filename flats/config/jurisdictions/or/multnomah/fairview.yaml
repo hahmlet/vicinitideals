@@ -1200,6 +1200,20 @@ defaults:
     url: https://ecode360.com/50509087
     retrieved: '2026-08-27'
     quote: "or/multnomah/fairview/19.13.definitions.txt#L325-L326"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # NOT ENCODED for the residential districts: FMC 19.13 defines no front
+  # lot line and no through lot, and 19.30 states only a corner street side
+  # yard. A grep of all 24 stored files finds the through-lot rule in two
+  # commercial chapters only -- 19.65.040(B)(2) TCC and 19.70 CC: "For
+  # buildings on through-lots (lots with front and rear frontage onto a
+  # street), the front setbacks ... shall apply" -- held on TCC below (CC
+  # refuses the pod on use). 19.162.020 "Double-Frontage Lots" is access
+  # (lowest classification street first). Unread is screened as the worst
+  # of both fronts and either end rear (`flats.geom.corner.through_plans`):
+  # R-6, R-7.5, R-10, RM and VSF state a 15 ft rear against a 10 ft front.
   # 19.30.050(D)(1)(c), on unit lots only: front-facade garages, front-yard
   # parking and front driveways are allowed for townhouses only where every
   # lot has 15 feet of local-street frontage, there is at most one approach
@@ -2272,6 +2286,13 @@ zones:
       quadfit confidence: needs_verification.'
   TCC:
     section: ["19.65"]
+    # 19.65.040(B)(2): through lots take the front setbacks at both streets.
+    front_lot_line_through:
+      value: both
+      cite: FMC 19.65.040(B)(2), Through-Lots, the front setbacks apply
+      url: https://ecode360.com/print/FA4439?guid=50509772
+      retrieved: '2026-09-27'
+      quote: "or/multnomah/fairview/19.65.txt#L378"
     cite_default:
       cite: FMC 19.65.020 Table 19.65.020(A) (Land Uses and Building Types Permitted in the Town Center Commercial District), row 1.h Quadplexes; FMC 19.65.030 through 19.65.060
       url: https://ecode360.com/50509772

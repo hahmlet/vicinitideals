@@ -45,6 +45,10 @@ from tests.conftest import (
     seed_opportunity,
     seed_org,
 )
+from tests.exporters._parity_seeds import (
+    engine_annual_ncf,
+    seed_all_equity_acquisition,
+)
 from tests.exporters._parity_helpers import (
     RecalcUnavailableError,
     recalc_workbook,
@@ -233,19 +237,34 @@ async def test_return_dollars_evaluates_to_engine_value(
 async def test_combined_irr_evaluates_close_to_engine_value(
     session: AsyncSession, tmp_path: Path
 ):
-    """Excel-recalc'd IRR(Levered) ≈ engine's combined_irr_pct value.
+    """On an all-equity $800k acquisition (tests/exporters/_parity_seeds.py),
+    the recalc'd Combined Levered IRR equals
 
-    Tolerance is loose (0.5 percentage points) because Excel IRR uses
-    annual-period intervals while the engine's combined IRR is computed
-    over monthly NCF — annualization differs slightly. The point is
-    that the formula is reading the right cash flow stream, not that
-    it matches the engine's monthly XIRR bit-for-bit.
+      1. IRR over the engine's net_cash_flow summed into the workbook's
+         year buckets, within 0.05pp -- proves the formula reads the
+         right stream (like with like); and
+      2. the engine's combined_irr_pct within 3pp.
+
+    Why (2) is loose: the engine's IRR is a monthly XIRR, the workbook's
+    is Excel IRR() over calendar-year buckets. The exit lands two months
+    into the last bucket (period 62 of 62 -> Y6), and IRR() books it a
+    full year after Y5, ~10 months later than it happens. On this seed
+    that alone costs ~1.9pp (engine 12.5%, workbook ~10.7%). The gap is
+    a timing convention, not a cash-flow disagreement -- (1) pins that.
     """
-    scenario = await _seed_scenario(session)
+    import pyxirr
+
+    scenario = await seed_all_equity_acquisition(session, name="IRR Parity")
     ctx = await _load_all(session, scenario.id)
-    summary = ctx.get("rollup_summary") or {}
-    totals = summary.get("totals") or {}
-    engine_irr_pct = totals.get("combined_irr_pct")
+    engine_irr_pct = float(
+        ((ctx.get("rollup_summary") or {}).get("totals") or {}).get(
+            "combined_irr_pct"
+        ) or 0
+    )
+    annual = engine_annual_ncf(ctx)
+    assert annual[0] < 0, f"seed must invest equity at Y0; got {annual[0]}"
+    assert engine_irr_pct > 0, f"engine IRR should be positive; got {engine_irr_pct}"
+    annual_irr_pct = float(pyxirr.irr(annual)) * 100.0
 
     blob = await export_investor_workbook(scenario.id, session)
     path = tmp_path / "wb.xlsx"
@@ -260,28 +279,15 @@ async def test_combined_irr_evaluates_close_to_engine_value(
     row = _find_row_by_label(ws, "Combined Levered IRR (scenario)")
     assert row is not None
     excel_value = ws.cell(row=row, column=2).value
-
-    # excel_value is a fraction (0.085 for 8.5%); engine stores percent
-    # magnitude (8.5 for 8.5%). Compare in matching units.
-    if excel_value is None:
-        pytest.skip("Excel returned None for Combined Levered IRR cell")
-
-    if engine_irr_pct in (None, 0, 0.0):
-        # Engine didn't run the waterfall rollup, but Excel's IRR formula
-        # can still compute on the Levered Cash Flow row. The point of
-        # this commit is that the formula is wired to the right stream;
-        # we don't require the engine to match. Verify the formula
-        # returned a sane numeric (i.e. IFERROR did not have to fire).
-        excel_pct = float(excel_value) * 100.0
-        assert -100.0 < excel_pct < 1000.0, (
-            f"Excel IRR out of sane range; got {excel_pct}%"
-        )
-        return
-
+    assert isinstance(excel_value, (int, float)), (
+        f"Combined Levered IRR did not evaluate to a number: {excel_value!r}"
+    )
+    # Excel holds a fraction (0.085); the engine stores percent (8.5).
     excel_pct = float(excel_value) * 100.0
-    engine_pct = float(engine_irr_pct)
-    diff = abs(excel_pct - engine_pct)
-    assert diff < 0.5, (
-        f"Combined IRR parity: engine={engine_pct}%, "
-        f"excel={excel_pct}%, diff={diff}pp"
+    assert abs(excel_pct - annual_irr_pct) < 0.05, (
+        f"Combined IRR {excel_pct}% != IRR of the engine's annual NCF "
+        f"{annual_irr_pct}% -- the formula reads the wrong stream"
+    )
+    assert abs(excel_pct - engine_irr_pct) < 3.0, (
+        f"Combined IRR parity: engine={engine_irr_pct}%, excel={excel_pct}%"
     )

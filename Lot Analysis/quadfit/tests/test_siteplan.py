@@ -129,13 +129,18 @@ def _rect_lot(W: float, D: float):
 def _run(s6s, env, front_edges, area, bearing=0.0, jurisdiction="gresham",
          zone="", parking_setback_ft=None, front_setback_ft=None,
          alley_edges=None, alley_setback_ft=0.0, alley_width_ft=None,
-         bearings=None, street_setback_ft=None, lot_xy=None):
+         bearings=None, street_setback_ft=None, lot_xy=None, alley_cover="whole"):
+    # `alley_cover` "whole" is s4's cover with the alley along every alley
+    # edge end to end, which every synthetic alley in this file is; a list
+    # is s4's per-edge cover, and None is a record with nothing measured.
+    if alley_cover == "whole":
+        alley_cover = ["1" * 5 for _ in (alley_edges or [])]
     return s6s.layout_lot(
         shapely.to_wkb(env), [bearing] if bearings is None else bearings,
         front_edges, area,
         FRONT_S if front_setback_ft is None else front_setback_ft,
         jurisdiction, zone, parking_setback_ft, alley_edges, alley_setback_ft,
-        alley_width_ft, street_setback_ft, lot_xy)
+        alley_width_ft, street_setback_ft, lot_xy, alley_cover)
 
 
 def _corner_lot(W: float, D: float, notch=None):
@@ -1435,6 +1440,134 @@ def test_the_alley_as_the_aisle_needs_the_court_on_the_alley():
     assert r["layout_fail"] == "court_too_shallow"
 
 
+# 1S2E05AB -11900, Portland R5, at real coordinates (EPSG:2913; fixture
+# fixtures/alley_stops_short_1S2E05AB_11900.json). The street is east; the
+# 13 ft alley behind the lot is drawn only as far north as its south-west
+# corner, so the 88.7 ft rear line is A on three rays of five and s4's cover
+# finds the alley on ten of its eighteen rays, from the south: 46.8 ft of
+# line, 41.8 of it past the 5 ft side yard. Steph's ruling of 2026-09-28:
+# the stretch the alley runs is the court's aisle "only if the lane is
+# actually long enough to accommodate" the row, stalls x 9 ft.
+STUB_COVER_MEASURED = "1" * 10 + "0" * 8
+STUB_COVER_SHORT = "1" * 6 + "0" * 12        # 27 ft of line, 22 past the yard
+
+
+def _stub_lot_plan(alley_cover):
+    """The real lot, laid out the way s6s main() lays it out -- s5's own
+    Portland R5 setbacks, the alley's measured 13 ft -- with a 60 x 56 pod
+    so the room behind it (about 29 ft) is too shallow for the court's own
+    aisle and the alley is the only aisle there is. Returns (plan, the alley
+    edge, the stub's end in feet from the south corner)."""
+    import json
+    from pathlib import Path
+
+    from common import load_rules
+    from s5_envelope import build_envelope, lot_setbacks
+
+    d = json.loads((Path(__file__).parent / "fixtures"
+                    / "alley_stops_short_1S2E05AB_11900.json").read_text())
+    lot = shapely.from_wkt(d["lot"])
+    edges = d["edges"]
+    sb = lot_setbacks(load_rules().jurisdictions["portland"].rule_for("R5"), lot.area, "A")
+    assert sb["A"] == 0.0 and sb["S"] == 5.0
+    env = build_envelope(lot, edges, sb, "A")
+    fe = [e[:4] for e in edges if e[4] == "F"]
+    (ae,) = [e[:4] for e in edges if e[4] == "A"]
+    s6s = _sp_setup_cities()
+    s6s._CFG["pods"] = [("pod60x56", 60.0, 56.0)]
+    cover = alley_cover if alley_cover in (None, "whole") else [alley_cover]
+    r = _run(s6s, env, fe, lot.area, bearings=d["fb"], jurisdiction="portland",
+             zone="R5", parking_setback_ft=10.0, front_setback_ft=sb["F"],
+             alley_edges=[ae], alley_setback_ft=sb["A"], alley_width_ft=d["width"],
+             lot_xy=[(e[0], e[1]) for e in edges], alley_cover=cover)
+    length = shapely.geometry.LineString([ae[:2], ae[2:]]).length
+    return r, ae, 2.5 + (length - 5.0) * 9 / 17
+
+
+def _along_from_south(st, ae) -> tuple[float, float]:
+    """How far along the alley line, from its south corner, a stall runs."""
+    line = shapely.geometry.LineString([ae[:2], ae[2:]])     # south to north
+    xs = [line.project(shapely.geometry.Point(p)) for p in st.exterior.coords]
+    return min(xs), max(xs)
+
+
+def test_a_real_alley_stub_long_enough_for_the_row_is_its_aisle():
+    """The measured stub holds a row of four: 41.8 ft of covered line with
+    the envelope behind, a 36 ft row. The four stalls stand against the
+    stretch the alley runs and back out into it -- green, the minimum band
+    -- and not one of them stands against the northern half, where the
+    line backs onto the neighbour. The same line read the old way (the
+    whole line an alley line) parked eight along all of it."""
+    r_old, ae, stub_end = _stub_lot_plan("whole")
+    assert r_old["layout_method"] == "townhome_rear_court_alley_aisle"
+    assert r_old["stalls_provided"] == 8
+    r, ae, stub_end = _stub_lot_plan(STUB_COVER_MEASURED)
+    assert stub_end == pytest.approx(46.8, abs=0.1)
+    assert r["site_plan_ok"] is True
+    assert r["layout_method"] == "townhome_rear_court_alley_aisle"
+    assert r["stalls_provided"] == 4
+    stalls = [g for k, g in r["geoms"].items() if k.startswith("stall_")]
+    assert len(stalls) == 4
+    for st in stalls:
+        lo, hi = _along_from_south(st, ae)
+        assert lo >= 5.0 - 0.6                  # past the side yard
+        assert hi <= stub_end + 0.01            # and short of where the alley stops
+
+
+def test_a_real_alley_stub_too_short_for_the_row_is_not_its_aisle():
+    """Six rays of eighteen: 22 ft of covered line past the side yard, too
+    short for a row of four. The stub seats two, which is not a plan
+    (`too_few_stalls`), where the whole line read as the alley was green on
+    eight; and a court deep enough for its own aisle does not fit behind
+    this pod, so nothing else is offered. No cover on record -- s4 before
+    `alley_cover_json` -- is no alley aisle at all: the court has only its
+    own aisle, and that does not fit."""
+    r, ae, _ = _stub_lot_plan(STUB_COVER_SHORT)
+    assert r["site_plan_ok"] is False
+    assert r["layout_fail"] == "too_few_stalls"
+    assert r["stalls_provided"] == 2
+    for st in [g for k, g in r["geoms"].items() if k.startswith("stall_")]:
+        _, hi = _along_from_south(st, ae)
+        assert hi <= 2.5 + (88.73 - 5.0) * 5 / 17 + 0.01
+    r_none, _, _ = _stub_lot_plan(None)
+    assert r_none["site_plan_ok"] is False
+    assert r_none["layout_method"] == "none"
+    assert r_none["layout_fail"] == "court_too_shallow"
+
+
+def test_a_row_split_across_two_covered_pieces_seats_only_the_longer():
+    """Where the alley runs part of a line, the row stands in ONE covered
+    run (`one_run`): two pieces each shorter than the row are two short
+    stretches, not one long enough. Four cells, two runs of two stalls
+    each, stall 2 cells wide."""
+    import numpy as np
+
+    s6s = _sp_setup()
+    mouths = np.zeros((10, 20), dtype=bool)
+    mouths[9, 0:4] = True
+    mouths[9, 6:12] = True
+    got = s6s._alley_aisle_stalls(mouths, 0, 0, 10, 20, 2, 3, 8)
+    assert got[0] == 5                          # every run, the whole-line reading
+    got = s6s._alley_aisle_stalls(mouths, 0, 0, 10, 20, 2, 3, 8, one_run=True)
+    assert got[0] == 3
+    assert all(6 <= b[1] and b[1] + b[3] <= 12 for b in got[1])
+
+
+def test_covered_alley_is_the_square_capped_line_where_the_alley_runs_it_all():
+    """A line the alley runs end to end draws the strip it drew before the
+    ruling (the flat cap past each real end is the square cap); a stub
+    stops flat where the alley does; no cover is no strip."""
+    s6s = _sp_setup()
+    segs, partial = s6s._covered_alley([[0.0, 0.0, 100.0, 0.0]], ["1" * 20], 3.0)
+    assert partial is False and segs == [[-3.0, 0.0, 103.0, 0.0]]
+    segs, partial = s6s._covered_alley([[0.0, 0.0, 100.0, 0.0]], ["1" * 10 + "0" * 10], 3.0)
+    assert partial is True
+    ((x1, _, x2, _),) = segs
+    assert x1 == -3.0 and x2 == pytest.approx(2.5 + 95.0 * 9 / 19)
+    assert s6s._covered_alley([[0.0, 0.0, 100.0, 0.0]], None, 3.0) == ([], True)
+    assert s6s._covered_alley([[0.0, 0.0, 100.0, 0.0]], [None], 3.0) == ([], True)
+
+
 # ---------------------------------------------------------------------------
 # which street is the front, and where the lane comes from (FOLLOWUPS 5)
 # ---------------------------------------------------------------------------
@@ -2195,8 +2328,9 @@ def test_a_flag_lots_pole_is_the_lane_where_it_is_wide_enough(sliver):
     (421 flag lots lost on the bound of 2026-09-20 to the fix that made
     the lane start on the strip, and 122 more with a sliver on the next).
     A pole at least the lane's width IS the lane; the drawn lane resumes
-    at the body's top, beside the pod, and the pole's length is not
-    counted -- it never was."""
+    at the body's top, in the pole's own columns, beside the pod. Since
+    FOLLOWUPS 5 (n) the lane's length runs from the street, the pole
+    included (until then the pole's 30 ft went uncounted)."""
     s6s = _sp_setup()
     env, fe, area = _flag_lot(20.0, sliver)
     r = _run(s6s, env, fe, area)
@@ -2205,10 +2339,11 @@ def test_a_flag_lots_pole_is_the_lane_where_it_is_wide_enough(sliver):
     b = r["geoms"]["building"].bounds
     d = r["geoms"]["driveway"].bounds
     assert d[1] == pytest.approx(30.0 + FRONT_S, abs=0.6)             # from the body's top
+    assert d[0] >= -0.6 and d[2] <= 20.0 + 0.6                         # under the pole
     assert d[0] >= b[2] - 0.6 or d[2] <= b[0] + 0.6                    # beside the pod
     c = r["geoms"]["parking_court"].bounds
     assert d[3] >= c[1] - 0.6
-    assert r["driveway_len_ft"] == pytest.approx(FRONT_S + (c[1] - d[1]), abs=0.6)
+    assert r["driveway_len_ft"] == pytest.approx(c[1], abs=0.6)        # street to court
 
 
 def test_a_flag_lots_pole_narrower_than_the_lane_refuses_the_lot():
@@ -2224,22 +2359,97 @@ def test_a_flag_lots_pole_narrower_than_the_lane_refuses_the_lot():
         assert "driveway" not in r["geoms"]
 
 
-def test_a_stub_front_that_misses_the_columns_beside_the_pod_is_refused():
-    """An L-shaped lot: a 40-ft stub on the street, the 160-ft body behind
-    the neighbour. The stub's strip holds envelope cells, so it is not a
-    pole, and the lane must run straight down from that strip -- but the
-    pod stands across the stub, and no column beside the pod reaches the
-    street, so the lot is refused `no_side_lane`. The drawing before
-    2026-09-20 parked it over the neighbour's ground; a lane down the
-    stub with the pod slid east of it is FOLLOWUPS 5 (k), and this test
-    is the one to flip when it lands."""
-    s6s = _sp_setup()
-    lot = shapely.Polygon([(0, 0), (40, 0), (40, 30), (160, 30), (160, 150), (0, 150)])
-    env = shapely.Polygon([(SIDE_S, FRONT_S), (40 - SIDE_S, FRONT_S),
-                           (40 - SIDE_S, 30 + FRONT_S), (160 - SIDE_S, 30 + FRONT_S),
+def _stub_lot(stub_w: float = 40.0):
+    """An L-shaped Gresham lot: a `stub_w`-ft stub on the street, 30 ft
+    deep, and a 160 x 120 body behind the neighbour. The envelope is the
+    lot less a 10-ft front, 5-ft sides and a 15-ft rear, the stub's own
+    side lines included. (A stub narrower than the lane is a flag lot's
+    pole by `_pole_span`, and is `_flag_lot`'s business above.)
+
+    Returns (lot, envelope, front edges)."""
+    lot = shapely.Polygon([(0, 0), (stub_w, 0), (stub_w, 30), (160, 30), (160, 150), (0, 150)])
+    env = shapely.Polygon([(SIDE_S, FRONT_S), (stub_w - SIDE_S, FRONT_S),
+                           (stub_w - SIDE_S, 30 + FRONT_S), (160 - SIDE_S, 30 + FRONT_S),
                            (160 - SIDE_S, 150 - REAR_S), (SIDE_S, 150 - REAR_S)])
-    r = _run(s6s, env, [[0.0, 0.0, 40.0, 0.0]], lot.area)
-    assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
+    return lot, env, [[0.0, 0.0, stub_w, 0.0]]
+
+
+def test_a_stub_fronts_lane_runs_down_the_stub_beside_the_pod():
+    """FOLLOWUPS 6 (k). The stub's strip holds envelope cells, so it is not a
+    pole, and the lane must run straight down from that strip. Placed
+    first-fit, the pod stood across the stub at the front of the body, no
+    column beside it reached the street, and the lot was refused
+    `no_side_lane` (the drawing before 2026-09-20 had parked it over the
+    neighbour's ground). The stub pass reserves a lane's columns on the
+    strip before the pod is placed: the lane runs straight from the street
+    down the stub to the court, inside the envelope with no jog, the pod
+    stands beside it in the body, and the lane's whole run is charged --
+    its length from the street, its area out of the open space."""
+    s6s = _sp_setup()
+    lot, env, fe = _stub_lot()
+    r = _run(s6s, env, fe, lot.area, lot_xy=list(lot.exterior.coords)[:-1])
+    assert r["site_plan_ok"] is True and r["layout_method"] == "townhome_rear_court"
+    b = r["geoms"]["building"]
+    d = r["geoms"]["driveway"]
+    c = r["geoms"]["parking_court"]
+    assert d.bounds[0] >= SIDE_S - 0.6 and d.bounds[2] <= 40 - SIDE_S + 0.6   # the stub's columns
+    assert d.bounds[1] == pytest.approx(FRONT_S, abs=0.6)                      # from the strip
+    assert d.bounds[3] >= c.bounds[1] - 0.6                                     # to the court
+    assert b.intersection(d).area == pytest.approx(0.0, abs=1e-6)              # beside the pod
+    assert env.buffer(0.01).contains(d)                                         # no jog, no yard
+    lane_ft, lane_w = d.bounds[3] - d.bounds[1], d.bounds[2] - d.bounds[0]
+    assert r["driveway_len_ft"] == pytest.approx(FRONT_S + lane_ft, abs=0.6)
+    assert r["open_space_sqft"] == pytest.approx(
+        lot.area - b.area - r["parking_area_sqft"] - lane_ft * lane_w, abs=1.0)
+
+
+def test_a_real_lot_whose_frontmost_pod_shut_the_strip_now_draws():
+    """1S2E24BB -04001, Portland R5, a triangle at real coordinates
+    (EPSG:2913; fixture fixtures/stub_lane_1S2E24BB_04001.json, the task
+    s6s built for it on run 2026-09-29). The street is the 116 ft west
+    line and the envelope narrows to a point eastward. Placed first-fit
+    the pod stood at the front across every column that could reach a
+    court behind it, and the lot was refused `no_side_lane`. The stub pass
+    reserves a lane at the north end of the strip before the pod is
+    placed: the lane runs east from the front setback line, beside the
+    pod, to the court, inside the lot, and its length from the street is
+    charged."""
+    import json
+    from pathlib import Path
+
+    s6s = _sp_setup()
+    d = json.loads((Path(__file__).parent / "fixtures"
+                    / "stub_lane_1S2E24BB_04001.json").read_text())
+    t = d["task"]
+    r = s6s.layout_lot(bytes.fromhex(t[0]), *t[1:])
+    assert r["site_plan_ok"] is True and r["layout_method"] == "townhome_rear_court"
+    lot = shapely.Polygon(t[12])
+    front = shapely.geometry.LineString([t[2][0][:2], t[2][0][2:]])
+    b, c, dw = (r["geoms"][k] for k in ("building", "parking_court", "driveway"))
+    assert b.intersection(dw).area == pytest.approx(0.0, abs=1e-6)      # beside the pod
+    assert b.intersection(c).area == pytest.approx(0.0, abs=1e-6)
+    assert lot.buffer(0.01).contains(dw) and lot.buffer(0.01).contains(c)
+    assert front.distance(dw) == pytest.approx(10.0, abs=0.6)           # from the setback line
+    assert dw.distance(c) < 0.6                                          # to the court
+    lane_ft = max(front.distance(shapely.Point(x)) for x in dw.exterior.coords)
+    assert r["driveway_len_ft"] == pytest.approx(lane_ft, abs=1.0)      # setback + run, charged
+
+
+def test_stub_lanes_are_the_ends_of_each_run_on_the_strip():
+    """`_stub_lanes` on a raster: the columns whose first envelope cell is
+    on the strip, in three runs; each run's leftmost and rightmost lane,
+    nothing from a run narrower than the lane, nothing without a strip."""
+    import numpy as np
+
+    s6s = _sp_setup()
+    ok = np.zeros((10, 40), dtype=bool)
+    ok[2:, :] = True
+    f = np.zeros_like(ok)
+    f[2, 0:10] = True          # a run of 10 columns
+    f[2, 20:24] = True         # a run of 4, narrower than a 5-wide lane
+    f[2, 30:38] = True         # a run of 8
+    assert s6s._stub_lanes(ok, f, 5) == [0, 5, 30, 33]
+    assert s6s._stub_lanes(ok, np.zeros_like(ok), 5) == []
 
 
 # ---------------------------------------------------------------------------
@@ -2303,16 +2513,18 @@ def test_a_lane_does_not_start_past_the_end_of_the_frontage():
     """FOLLOWUPS 5 (l). The street strip a lane must start on was drawn the
     way s5 draws its cut -- square caps -- so it ran `street_sb` plus the
     raster's cell and a half past the END of the street edge: 21.5 ft on a
-    Gresham lot cut 20 ft from the street. On this lot the pod stands
-    across the whole 35 ft of frontage, and the only columns beside it
-    that reach the front of the envelope lie east of the frontage's end,
-    in front of the NEIGHBOUR's lot line, not the street's. The drawing
-    before the fix started the lane there -- a driveway out through the
-    side yard onto somebody else's lot, 41.5 to 53.5 ft along a street
-    edge that stops at 35 -- and called the lot green. The
-    strip now stops where the street edge stops, so the lot is refused
-    `no_side_lane`, like the stub front above it (sliding the pod off the
-    frontage's columns is FOLLOWUPS 5 (k))."""
+    Gresham lot cut 20 ft from the street. On this lot the pod, placed
+    first-fit, stands across the whole 35 ft of frontage, and the only
+    columns beside it that reach the front of the envelope lie east of the
+    frontage's end, in front of the NEIGHBOUR's lot line, not the
+    street's. The drawing before the fix started the lane there -- a
+    driveway out through the side yard onto somebody else's lot, 41.5 to
+    53.5 ft along a street edge that stops at 35 -- and called the lot
+    green. The strip now stops where the street edge stops, so no lane
+    starts there; and since FOLLOWUPS 6 (k) the stub pass reserves a lane
+    on the frontage's own columns before the pod is placed, so the lot is
+    drawn again with the lane on the street's stretch and the pod slid
+    east of it."""
     s6s = _sp_setup()
     sb = 20.0
     lot, edges, env = _partial_frontage_lot(sb)
@@ -2320,13 +2532,14 @@ def test_a_lane_does_not_start_past_the_end_of_the_frontage():
     r = _run(s6s, env, fe, lot.area, bearing=_GRESHAM_BEARING,
              front_setback_ft=sb, street_setback_ft=sb,
              lot_xy=[(e[0], e[1]) for e in edges])
-    if "driveway" in r["geoms"]:
-        # Whatever else is drawn, the lane's mouth is on the street's own
-        # stretch of the lot line, not beyond its end.
-        d = _from_county(r["geoms"]["driveway"])
-        assert d.bounds[2] <= _PF_F + 0.6, d.bounds
-    assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
-    assert "driveway" not in r["geoms"]
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    d = _from_county(r["geoms"]["driveway"])
+    b = _from_county(r["geoms"]["building"])
+    # The lane's mouth is on the street's own stretch of the lot line, not
+    # beyond its end, and the pod stands clear of the lane.
+    assert d.bounds[2] <= _PF_F + 0.6, d.bounds
+    assert d.bounds[1] == pytest.approx(sb, abs=0.6)
+    assert b.intersection(d).area == pytest.approx(0.0, abs=1e-3)
 
 
 def test_the_street_strip_is_clipped_at_a_free_end_and_kept_at_a_joint():
@@ -2378,6 +2591,147 @@ def test_the_street_strip_is_clipped_at_a_free_end_and_kept_at_a_joint():
     assert (joined == square).all()
 
 
+# 1N2E25AA -02700, Portland R7, exactly as the county run of 2026-09-28 held
+# it (s6_lots edges_json, s5o envelope): 62 ft of frontage, then a 13 ft and a
+# 10 ft piece of corner clip angling down to the east side line, where the
+# street ends. The F chain is the lot's only street.
+_CLIP_EDGES = [
+    [7690762.05, 691278.85, 7690772.35, 691172.4, "R"],
+    [7690772.35, 691172.4, 7690696.58, 691165.56, "R"],
+    [7690696.58, 691165.56, 7690684.74, 691296.75, "R"],
+    [7690684.74, 691296.75, 7690746.95, 691294.51, "F"],
+    [7690746.95, 691294.51, 7690757.91, 691287.69, "F"],
+    [7690757.91, 691287.69, 7690762.05, 691278.85, "F"],
+]
+_CLIP_ENV = [(7690691.14, 691281.51), (7690742.42, 691279.66), (7690746.21, 691277.3),
+             (7690754.83, 691258.9), (7690758.78, 691260.75), (7690766.89, 691176.93),
+             (7690701.11, 691170.99)]
+
+
+def test_a_lane_under_a_corner_clip_reaches_the_street():
+    """The free end of a frontage is cut where a STRAIGHT lane stops meeting
+    the street, not square to whatever short piece the frontage happens to
+    end on. This lot's frontage ends in 10 ft of clip running 65 degrees
+    off the front; the cut square to that piece leaned back over the clip,
+    and the plan the run before had drawn -- a 12 ft lane at x 745-759,
+    straight under the clip -- was refused `no_side_lane`, one of 18 such
+    lots on the county run of 2026-09-28. Every lane in this stage runs
+    along the grid, so the cut is along the grid too: the lane stands, and
+    it still stops at the chain's end (the partial frontage above)."""
+    s6s = _sp_setup_cities()
+    env = shapely.Polygon(_CLIP_ENV)
+    lot = shapely.Polygon([(e[0], e[1]) for e in _CLIP_EDGES])
+    fe = [e[:4] for e in _CLIP_EDGES if e[4] == "F"]
+    r = _run(s6s, env, fe, lot.area, bearings=[177.94, 148.08], jurisdiction="portland",
+             zone="R7", parking_setback_ft=10.0, front_setback_ft=15.0,
+             street_setback_ft=15.0, lot_xy=[(e[0], e[1]) for e in _CLIP_EDGES])
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    d = r["geoms"]["driveway"]
+    # The lane runs straight up to the street: its columns lie under the F
+    # chain (x 7690684.74 - 7690762.05), not past the chain's east end.
+    assert 7690684.74 - 0.6 <= d.bounds[0] and d.bounds[2] <= 7690762.05 + 0.6, d.bounds
+    assert d.bounds[3] > 691255.0  # it reaches the front of the envelope
+
+
+def test_the_free_end_cut_follows_the_lane_not_the_last_clip_piece():
+    """The construction on the same lot: with the frontage ending in a steep
+    clip, every envelope column straight below the clip keeps a cell on the
+    strip -- the cut square to the last clip piece dropped the ones whose
+    foot on that piece falls past its end -- and nothing past the chain's
+    east end is on it."""
+    import numpy as np
+    from s6_fit import _cell_grid
+
+    s6s = _sp_setup_cities()
+    res = s6s._CFG["res"]
+    env = shapely.Polygon(_CLIP_ENV)
+    fe = [e[:4] for e in _CLIP_EDGES if e[4] == "F"]
+    ok = _cell_grid(env, res)
+    minx, miny = env.bounds[:2]
+    reach = 15.0 + 2.0 * res + 0.5
+    cells = s6s._alley_mouths(ok, fe, minx, miny, res, reach, joins=fe)
+    xs = minx + (np.arange(ok.shape[1]) + 0.5) * res
+    under_clip = (xs > 7690747.5) & (xs < 7690758.5)   # below the clip, in the envelope
+    past_end = xs > 7690762.05 + res
+    assert all(cells[:, c].any() for c in np.flatnonzero(under_clip & ok.any(axis=0)))
+    assert not cells[:, past_end].any()
+
+
+# 22E18CC02800, Clackamas unincorporated R10, as the county run of
+# 2026-09-28 held it (the s6s task: s5o envelope simplified to 0.05 ft, s4's
+# front edge, the lot's corners). 82 ft of frontage; the side line at its
+# south-east end splays 20 degrees out behind the front.
+_SPLAY_FE = [[7657800.38, 636003.74, 7657742.92, 636062.13]]
+_SPLAY_XY = [(7657966.88, 636155.97), (7658023.18, 636098.59), (7657898.08, 636048.19),
+             (7657800.38, 636003.74), (7657742.92, 636062.13)]
+_SPLAY_ENV = [(7657896.11, 636052.79), (7657891.57, 636050.96), (7657891.65, 636050.76),
+              (7657811.18, 636014.15), (7657761.6, 636064.54), (7657950.79, 636143.81),
+              (7657999.31, 636094.36), (7657900.65, 636054.62), (7657900.56, 636054.81)]
+
+
+def test_a_lane_a_few_inches_past_the_frontage_end_is_the_grid_not_the_lot():
+    """Half a cell of slack at a free end. The side line splays out behind
+    the front, so the envelope's front corner stands a few inches past a
+    line square to the frontage's end, and the lane hugging the side
+    setback beside the pod -- drawn on the grid's half-foot lattice, the pod
+    against it -- runs 0.3 to 0.5 ft past that end at the street. The cut
+    exactly through the end dropped the lane's outer column by its centre
+    and refused the lot `no_side_lane` (one of four on the run of
+    2026-09-28); a column counts now when any of it stands on the frontage.
+    A lane a cell or more past the end is still refused (the partial
+    frontage above)."""
+    import math
+
+    s6s = _sp_setup_cities()
+    res = s6s._CFG["res"]
+    env = shapely.Polygon(_SPLAY_ENV)
+    lot = shapely.Polygon(_SPLAY_XY)
+    r = _run(s6s, env, _SPLAY_FE, lot.area, bearings=[134.54],
+             jurisdiction="clackamas_unincorporated", zone="R10",
+             front_setback_ft=15.0, street_setback_ft=15.0, lot_xy=_SPLAY_XY)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    # The lane's width along the frontage, measured from its south-east end:
+    # at most one cell of it past the end.
+    x0, y0, x1, y1 = _SPLAY_FE[0]
+    n = math.hypot(x1 - x0, y1 - y0)
+    ux, uy = (x1 - x0) / n, (y1 - y0) / n
+    along = [(x - x0) * ux + (y - y0) * uy
+             for x, y in shapely.get_coordinates(r["geoms"]["driveway"])]
+    assert -res - 0.01 <= min(along) and max(along) <= n, (min(along), max(along))
+
+
+# 1S1E03CB -80000, Portland RX, as the county run of 2026-09-28 held it: 254
+# ft of frontage, a zero street setback, a 10 ft parking setback, and an
+# envelope that is a ring round ground it leaves out.
+_RING_FE = [[7643603.12, 679613.77, 7643368.27, 679710.52]]
+_RING_XY = [(7643442.93, 679891.74), (7643677.78, 679794.99), (7643603.12, 679613.77),
+            (7643368.27, 679710.52)]
+_RING_HOLE = [(7643459.11, 679852.88), (7643410.38, 679734.59), (7643522.76, 679688.29),
+              (7643519.51, 679680.41), (7643586.93, 679652.63), (7643638.92, 679778.81)]
+
+
+def test_a_side_court_no_lane_reaches_is_looked_for_again_nearer_the_street():
+    """The side court is the LARGEST free rectangle in the strip beside the
+    building. On this ring that is the band behind the hole, which no lane
+    from the front street reaches; the band in front of the hole -- off the
+    street by the 10 ft parking setback, a straight lane from the street --
+    was never asked, and the lot was refused `no_side_lane` once its court
+    had to stand the parking setback back (before 2026-09-28 the zero
+    front setback was read as 10 ft and the court stood on the lot line).
+    The strip in front of a court no lane reaches is searched again."""
+    s6s = _sp_setup_cities()
+    env = shapely.Polygon(_RING_XY, [_RING_HOLE])
+    lot = shapely.Polygon(_RING_XY)
+    r = _run(s6s, env, _RING_FE, lot.area, bearings=[157.61], jurisdiction="portland",
+             zone="RX", parking_setback_ft=10.0, front_setback_ft=0.0,
+             street_setback_ft=0.0, lot_xy=_RING_XY)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    front = shapely.LineString([_RING_FE[0][:2], _RING_FE[0][2:]])
+    # The court stands the parking setback off the street, the lane reaches it.
+    assert r["geoms"]["parking_court"].distance(front) >= 10.0 - 0.6
+    assert r["geoms"]["driveway"].distance(front) <= 1.0
+
+
 # ---------------------------------------------------------------------------
 # FOLLOWUPS 5 (o): a front setback of zero is the code's answer, not a gap
 # ---------------------------------------------------------------------------
@@ -2402,7 +2756,9 @@ def test_a_zero_front_setback_is_read_as_zero_and_only_an_absent_one_is_not():
 
     s6s = _sp_setup_cities()
     rules = load_rules()
-    for jur, zone in (("portland", "CM2"), ("portland", "CM3"), ("portland", "RX"),
+    # (CM2 and up hold 5 since 2026-09-29: 33.130.215.B.1.b's across-the-
+    # street setback, read on every street line. CR and CM1 keep none.)
+    for jur, zone in (("portland", "CR"), ("portland", "CM1"), ("portland", "RX"),
                       ("oregon_city", "MUC-1"), ("oregon_city", "WFDD")):
         assert rules.jurisdictions[jur].rule_for(zone).setback_front_ft == 0
         assert s6s._front_setback_for(rules, jur, zone, 6_000.0) == 0.0
@@ -2416,7 +2772,7 @@ def test_a_zero_front_setback_is_read_as_zero_and_only_an_absent_one_is_not():
 
 
 def test_a_portland_side_court_keeps_ten_feet_off_the_street_in_a_zero_setback_zone():
-    """A 150 x 70 Portland CM2 lot at county coordinates: no front setback
+    """A 150 x 70 Portland CM1 lot at county coordinates: no front setback
     (the envelope stands on the street lot line), 10 ft sides and rear.
     The room behind the pod is too shallow for a court, so the plan is the
     court BESIDE the building -- and Portland keeps a stall 10 ft off a
@@ -2433,15 +2789,15 @@ def test_a_portland_side_court_keeps_ten_feet_off_the_street_in_a_zero_setback_z
     lot = _to_county(shapely.Polygon([(0, 0), (W, 0), (W, D), (0, D)]), _PDX_XY, 0.0)
     edges = _to_county([[0.0, 0.0, W, 0.0, "F"], [W, 0.0, W, D, "S"],
                         [W, D, 0.0, D, "R"], [0.0, D, 0.0, 0.0, "S"]], _PDX_XY, 0.0)
-    zr = rules.jurisdictions["portland"].rule_for("CM2")
+    zr = rules.jurisdictions["portland"].rule_for("CM1")
     env = build_envelope(lot, edges, {"F": zr.setback_front_ft, "S": zr.setback_side_ft,
                                       "R": zr.setback_rear_ft,
                                       "A": zr.setback_rear_ft}, "A")
-    fsb = s6s._front_setback_for(rules, "portland", "CM2", lot.area)
-    psb = sp.parking_street_setback_for("portland", "CM2")
+    fsb = s6s._front_setback_for(rules, "portland", "CM1", lot.area)
+    psb = sp.parking_street_setback_for("portland", "CM1")
     assert fsb == 0.0 and psb == 10.0
     fe = [e[:4] for e in edges if e[4] == "F"]
-    r = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM2",
+    r = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM1",
              parking_setback_ft=psb, front_setback_ft=fsb, street_setback_ft=fsb,
              lot_xy=[(e[0], e[1]) for e in edges])
     assert r["site_plan_ok"] is True, r["layout_fail"]
@@ -2451,9 +2807,159 @@ def test_a_portland_side_court_keeps_ten_feet_off_the_street_in_a_zero_setback_z
     assert stalls
     assert min(s.bounds[1] for s in stalls) >= psb - 0.6
     # ... and what the 10 ft fallback drew: the same court on the lot line.
-    old = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM2",
+    old = _run(s6s, env, fe, lot.area, bearing=0.0, jurisdiction="portland", zone="CM1",
                parking_setback_ft=psb, front_setback_ft=10.0, street_setback_ft=fsb,
                lot_xy=[(e[0], e[1]) for e in edges])
     old_stalls = [_from_county(g, _PDX_XY, 0.0) for k, g in old["geoms"].items()
                   if k.startswith("stall_")]
     assert min(s.bounds[1] for s in old_stalls) < 1.0
+
+
+# ---------------------------------------------------------------------------
+# FOLLOWUPS 5 (n): the pole's lane comes straight out of the pole
+# ---------------------------------------------------------------------------
+
+def _pdx_flag_lot(pole_x0: float = 0.0, pole_w: float = 20.0, pole_l: float = 60.0,
+                  body_w: float = 90.0, body_d: float = 120.0, bearing: float = 0.0,
+                  tier: str = "A"):
+    """A Portland R5 flag lot at county coordinates (Hollywood, turned by
+    `bearing`): a pole `pole_w` ft wide and `pole_l` ft long from the street
+    (the south line, starting `pole_x0` ft from the body's west line) up to
+    a `body_w` x `body_d` body. The pole's end is the one front edge; its
+    sides and the body's front line (the neighbours' back yards) are side
+    lines, the body's back the rear. The envelope is s5's own at R5's 10 /
+    5 / 5 ft, tier A by default (tier C: 10 ft all round, s5's inset of an
+    irregular lot -- every pole under 15 ft is one).
+
+    Returns (lot, edges with classes, envelope), all at county coordinates,
+    and the R5 rule."""
+    from common import load_rules
+    from s5_envelope import build_envelope
+
+    x0, P, L, W, D = pole_x0, pole_w, pole_l, body_w, body_d
+    ring = [(x0, 0.0), (x0 + P, 0.0), (x0 + P, L), (W, L), (W, L + D), (0.0, L + D)]
+    if x0 > 0:
+        ring += [(0.0, L), (x0, L)]
+    classes = ["S"] * len(ring)
+    classes[0] = "F"
+    classes[ring.index((W, L + D))] = "R"
+    edges = [[*ring[i], *ring[(i + 1) % len(ring)], classes[i]] for i in range(len(ring))]
+    lot = _to_county(shapely.Polygon(ring), _PDX_XY, bearing)
+    edges = _to_county(edges, _PDX_XY, bearing)
+    zr = load_rules().jurisdictions["portland"].rule_for("R5")
+    env = build_envelope(lot, edges, {"F": zr.setback_front_ft, "S": zr.setback_side_ft,
+                                      "R": zr.setback_rear_ft,
+                                      "A": zr.setback_rear_ft}, tier)
+    return lot, edges, env, zr
+
+
+def _run_pdx_flag(s6s, lot, edges, env, zr, bearing):
+    fe = [e[:4] for e in edges if e[4] == "F"]
+    return _run(s6s, env, fe, lot.area, bearing=bearing, jurisdiction="portland",
+                zone="R5", front_setback_ft=zr.setback_front_ft,
+                street_setback_ft=zr.setback_front_ft,
+                lot_xy=[(e[0], e[1]) for e in edges])
+
+
+@pytest.mark.parametrize("bearing", [0.0, 7.5])
+def test_a_flag_lots_lane_runs_down_its_pole_not_across_the_front_of_the_pod(bearing):
+    """FOLLOWUPS 5 (n). A Portland flag lot: a 20-ft pole up the west side
+    to a 90 x 120 body. The pole is the lane, and until this fix the lane
+    was taken at ANY column of the body's top while the pod went first-fit
+    to the body's top-left -- over the pole's mouth -- so the drawn lane
+    stood to the pod's right, x 61-73, and the run along the body's top
+    from the pole to it, across the front of the building, was neither
+    drawn nor charged (92 of the 123 pole lots restored on 2026-09-20).
+    Now the lane is taken in the pole's own columns, closed to the pod
+    before it is placed, so the lane runs straight from the pole down
+    beside the pod to the court, and its length runs from the street."""
+    s6s = _sp_setup_cities()
+    lot, edges, env, zr = _pdx_flag_lot(bearing=bearing)
+    r = _run_pdx_flag(s6s, lot, edges, env, zr, bearing)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    assert r["layout_method"] == "townhome_rear_court"
+    b = _from_county(r["geoms"]["building"], _PDX_XY, bearing).bounds
+    d = _from_county(r["geoms"]["driveway"], _PDX_XY, bearing).bounds
+    c = _from_county(r["geoms"]["parking_court"], _PDX_XY, bearing).bounds
+    assert d[0] >= -0.6 and d[2] <= 20.0 + 0.6, d                      # under the pole
+    assert d[2] <= b[0] + 0.6                                          # beside the pod
+    assert d[1] == pytest.approx(60.0 + zr.setback_side_ft, abs=0.6)   # from the body's top
+    assert d[3] >= c[1] - 0.6                                          # to the court
+    assert r["driveway_len_ft"] == pytest.approx(c[1], abs=0.6)        # street to court
+
+
+def test_a_pole_mid_front_leaves_the_pod_one_side_of_its_lane():
+    """The same body with the pole 35 ft in from its west line. The old
+    drawing stood the 56-ft pod across the pole's mouth and took a lane at
+    its right, the jog again; with the lane in the pole's columns the pod
+    must stand wholly to one side of it, where 30 or 38 ft is all the
+    body leaves -- the 56-wide pod gives way to the 36-wide (the bound's
+    expected loss on 77-100 ft Portland bodies) and the lot still parks."""
+    s6s = _sp_setup_cities()
+    lot, edges, env, zr = _pdx_flag_lot(pole_x0=35.0)
+    r = _run_pdx_flag(s6s, lot, edges, env, zr, 0.0)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    b = _from_county(r["geoms"]["building"], _PDX_XY, 0.0).bounds
+    d = _from_county(r["geoms"]["driveway"], _PDX_XY, 0.0).bounds
+    assert b[2] - b[0] == pytest.approx(36.0, abs=0.6)
+    assert d[0] >= 35.0 - 0.6 and d[2] <= 55.0 + 0.6, d
+    assert d[2] <= b[0] + 0.6 or d[0] >= b[2] - 0.6
+
+
+def test_a_tier_c_pole_steps_at_most_half_a_lane_off_its_line():
+    """s5 insets an irregular (tier C) lot by its largest setback all round,
+    so a Portland flag lot's body envelope starts 10 ft in from the side
+    line its pole is flush with. Under a 20-ft pole that leaves 10 ft of
+    envelope, less than the 12-ft lane: the lane leaving the pole steps
+    2 ft sideways across the body's front setback and runs down x 10-22,
+    its centre still over the pole. Under a 14-ft pole the lane's centre
+    would be 2 ft past the pole's side, the lane in the body's side yard:
+    refused. The drawing before took both, lane wherever the pod left
+    room."""
+    s6s = _sp_setup_cities()
+    lot, edges, env, zr = _pdx_flag_lot(tier="C")
+    r = _run_pdx_flag(s6s, lot, edges, env, zr, 0.0)
+    assert r["site_plan_ok"] is True, r["layout_fail"]
+    d = _from_county(r["geoms"]["driveway"], _PDX_XY, 0.0).bounds
+    assert d[0] == pytest.approx(10.0, abs=0.6) and d[2] == pytest.approx(22.0, abs=0.6)
+    lot, edges, env, zr = _pdx_flag_lot(pole_w=14.0, tier="C")
+    r = _run_pdx_flag(s6s, lot, edges, env, zr, 0.0)
+    assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
+
+
+def test_a_wide_tract_with_a_short_street_piece_is_not_a_pole():
+    """A 300 x 150 Portland tract whose south line meets the street for its
+    west 30 ft only, the rest abutting neighbours, with an overlay carved
+    out of the envelope behind the east part of the street piece: the
+    envelope's strip on the street is 10 ft, narrower than the lane, and
+    the street piece is short against the lot -- which is what the rule of
+    2026-09-20 took for a pole, making every column of the body's top a
+    lane start (six such tracts, 240-400 ft). The lot's own ground at the
+    street is 300 ft wide, so this is a stub, and a stub narrower than the
+    lane is refused like any other. Without the lot's corners (a caller
+    that has only the envelope) the street piece stands in for the pole."""
+    from common import load_rules
+    from s5_envelope import build_envelope
+
+    s6s = _sp_setup_cities()
+    W, D, F = 300.0, 150.0, 30.0
+    ring = [(0.0, 0.0), (F, 0.0), (W, 0.0), (W, D), (0.0, D)]
+    cls = ["F", "S", "S", "R", "S"]
+    edges = _to_county([[*ring[i], *ring[(i + 1) % 5], cls[i]] for i in range(5)],
+                       _PDX_XY, 0.0)
+    lot = _to_county(shapely.Polygon(ring), _PDX_XY, 0.0)
+    zr = load_rules().jurisdictions["portland"].rule_for("R5")
+    env = build_envelope(lot, edges, {"F": zr.setback_front_ft, "S": zr.setback_side_ft,
+                                      "R": zr.setback_rear_ft,
+                                      "A": zr.setback_rear_ft}, "A")
+    env = env.difference(_to_county(box(15.0, 0.0, 45.0, 35.0), _PDX_XY, 0.0))
+    fe = [e[:4] for e in edges if e[4] == "F"]
+    kw = dict(bearing=0.0, jurisdiction="portland", zone="R5",
+              front_setback_ft=zr.setback_front_ft, street_setback_ft=zr.setback_front_ft)
+    r = _run(s6s, env, fe, lot.area, lot_xy=[(e[0], e[1]) for e in edges], **kw)
+    assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
+    assert "driveway" not in r["geoms"]
+    blind = _run(s6s, env, fe, lot.area, **kw)
+    assert blind["site_plan_ok"] is True
+    d = _from_county(blind["geoms"]["driveway"], _PDX_XY, 0.0).bounds
+    assert d[2] <= F + 0.6                                  # still under its street piece

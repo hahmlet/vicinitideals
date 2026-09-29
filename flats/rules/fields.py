@@ -122,6 +122,7 @@ _LABELS: dict[str, str] = {
     "parking_alley_backout_ft": "room to back out into the alley",
     "parking_side_prohibited": "parking banned beside the building",
     "front_lot_line_corner": "which street is the front on a corner lot",
+    "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
     "parking_front_yard_max_pct": "max. vehicle share of front yard",
     "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
@@ -137,6 +138,8 @@ _LABELS: dict[str, str] = {
     "setback_side_total_ft": "combined side setbacks",
     "setback_street_side_ft": "street-side setback",
     "setback_alley_side_ft": "alley-side setback",
+    "setback_street_off_corridor_ft": "street setback off a mapped corridor",
+    "setback_street_across_nonresidential_ft": "street setback facing no residential zone",
 }
 
 
@@ -181,6 +184,38 @@ _F: tuple[FieldDef, ...] = (
         "the shared number would open the far side yard too. The envelope "
         "applies it to the side edge on the alley and to no other; absent, "
         "that line takes setback_side_ft.",
+        False,
+    ),
+    FieldDef(
+        "setback_street_off_corridor_ft",
+        "length_ft",
+        "Minimum setback from a street lot line that is NOT on a mapped "
+        "corridor stretch, in a zone whose street setback turns on one "
+        "(Portland Map 130-1: 10 ft on the stretch, none elsewhere, "
+        "33.130.215.B.1.a). Held apart from setback_front_ft, which carries "
+        "the 10 behind the lot-level civic_corridor_setback -- true when ANY "
+        "street line is on a stretch -- because a variant on the shared "
+        "number would give the side street of a corner lot on Division the "
+        "corridor's number, or the corridor line the side street's. The "
+        "envelope applies it to a street edge read surely off every stretch "
+        "and to no other; absent, or where the zone also states a "
+        "street-side setback, every street line takes its class's number.",
+        False,
+    ),
+    FieldDef(
+        "setback_street_across_nonresidential_ft",
+        "length_ft",
+        "Minimum setback from a street lot line that is off every mapped "
+        "corridor stretch AND read with no zone across the street that the "
+        "code's across-the-street setback names (Portland 33.130.215.B.1.b: "
+        "5 ft from a street lot line facing an RF through RM2 or RMP zone "
+        "across a local service street, none otherwise). Held apart from "
+        "setback_front_ft and setback_street_off_corridor_ft, which carry the "
+        "5 on every street line -- the tight reading, since the street's class "
+        "is not held -- because the zone across is a fact about ONE street "
+        "line. The envelope applies it to a street edge flagged both "
+        "off_corridor and across_clear and to no other; absent, every street "
+        "line keeps the across-the-street number.",
         False,
     ),
     FieldDef(
@@ -747,6 +782,36 @@ _F: tuple[FieldDef, ...] = (
         None,
         choices=("shortest", "owner", "entrance", "both"),
     ),
+    FieldDef(
+        "front_lot_line_through",
+        "enum",
+        "Which of a THROUGH lot's street lines (streets on two opposite "
+        "sides) is a front line, and so which setback the far street line "
+        "takes. `both`: every street line is a front line and takes the front "
+        "setback -- Portland 33.910 (\"a through lot has two front lot lines "
+        "regardless\"), Wood Village 720.030 (the same sentence), Oregon City "
+        "17.54.030(A) (\"the required front yard on each street\"), "
+        "Wilsonville 4.169(.01), West Linn 02 (\"there is no rear lot "
+        "line\"), and by definition Gladstone 17.06.290, Troutdale 1.020 (a "
+        "rear lot line does not abut a street) and unincorporated Multnomah "
+        "39.2000. `both_unless_no_access`: both, except that a street line "
+        "vehicle access is barred from is the REAR line -- Clackamas ZDO 202 "
+        "(\"abuts a collector, arterial, expressway ... that precludes motor "
+        "vehicle access\") and Gresham 3.0100 (an access control strip "
+        "required along one street). Nothing measures street class or an "
+        "access strip, so the screen takes whichever end is the worse to lose "
+        "to a rear setback. `owner`: the applicant names one street line the "
+        "front and the far one is the rear line, with the rear setback -- "
+        "Happy Valley 16.12 (\"which lot line is to be the front lot line and "
+        "which lot line is to be the rear\"), Milwaukie 19.201 (\"the street "
+        "on which the contemplated development will face\"). Unread (Tualatin, "
+        "Fairview's residential districts) is screened like "
+        "`both_unless_no_access`: the worst of both fronts and either end "
+        "rear, since a rear setback larger than the front makes \"both "
+        "fronts\" the lenient reading. Read by :mod:`flats.geom.corner`.",
+        None,
+        choices=("both", "both_unless_no_access", "owner"),
+    ),
 )
 
 FIELDS: dict[str, FieldDef] = {f.name: f for f in _F}
@@ -941,6 +1006,18 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # of its chapter, both by waiving it), and a zone silent about it is
         # a zone whose alley-side line takes the ordinary side setback.
         "setback_alley_side_ft",
+        # The street setback on a line off a mapped corridor, the way the
+        # alley-side one is stated for the side line on an alley: one code in
+        # the corpus distinguishes that line (Portland's commercial zones,
+        # Map 130-1), and a zone silent about it is a zone whose street lines
+        # all take the front and street-side numbers.
+        "setback_street_off_corridor_ft",
+        # The street setback on a line facing no residential zone across the
+        # street, the way the off-corridor one is stated for a line off the
+        # map: one code distinguishes that line (Portland's CM2, CM3, CE and
+        # CX, 33.130.215.B.1.b), and a zone silent about it keeps the
+        # across-the-street number on every street line.
+        "setback_street_across_nonresidential_ft",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",
@@ -1014,6 +1091,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_side_prohibited",
         "corner_access_street",
         "front_lot_line_corner",
+        # Same argument as the corner line above it: a definition, not a row
+        # of a zone table. Unread is screened as the worst reading
+        # (`flats.geom.corner.THROUGH_WORST`), never as a gap.
+        "front_lot_line_through",
         "parking_street_setback_ft",
         "parking_building_buffer_ft",
         "open_space_min_pct",

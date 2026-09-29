@@ -2054,6 +2054,19 @@ defaults:
     url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.910.definitions.txt#L754-L758"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # 33.910, Front Lot Line: "However, a through lot has two front lot lines
+  # regardless of whether the street lot lines are of equal or unequal
+  # length." No exception.
+  front_lot_line_through:
+    value: both
+    cite: PCC 33.910, Front Lot Line, a through lot has two front lot lines
+    url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.910.definitions.txt#L757-L758"
   #
   # NOT ENCODED: 33.266.120.C.4, parking in garages takes the garage setback
   # of the base zone. `setback_garage_entrance_ft` already carries that figure
@@ -3465,6 +3478,21 @@ zones:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the plain "Street Lot Line"
+      # row. A line the stretch ends part way along is not off, and keeps 10.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -3473,6 +3501,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -3556,7 +3600,7 @@ zones:
       # is the tightest density ceiling anywhere in Portland's inventory.
       sqft_per_unit: 2500
       quote: "or/multnomah/portland/33.130.txt#L668-L669"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft minimum street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) needs the street''s functional class and the facing zone, neither of which this screen holds; it is also disapplied within 100 ft of a transit street. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches. CR is also the only one of the six carrying a density ceiling, and it does not survive resolution: OAR 660-046-0220(2)(b) bars a Large City from applying a density maximum to a quadplex, and the state layer exempts the field outright. The number is encoded anyway because the city wrote it and a future building that is not a quadplex is held to it -- and because a ceiling that vanishes should vanish visibly, with both sentences on the record, rather than never having been read.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) does not reach this zone: "The setbacks do not apply in the CR or CM1 zones" (#L838). (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches. CR is also the only one of the six carrying a density ceiling, and it does not survive resolution: OAR 660-046-0220(2)(b) bars a Large City from applying a density maximum to a quadplex, and the state layer exempts the field outright. The number is encoded anyway because the city wrote it and a future building that is not a quadplex is held to it -- and because a ceiling that vanishes should vanish visibly, with both sentences on the record, rather than never having been read.'
 
   CM1:
     cite_default:
@@ -3637,6 +3681,21 @@ zones:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the plain "Street Lot Line"
+      # row. A line the stretch ends part way along is not off, and keeps 10.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -3645,6 +3704,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -3697,7 +3772,7 @@ zones:
       # screen could evaluate and neither is encoded as a variant yet.
       value: entrance_only
       quote: "or/multnomah/portland/33.130.txt#L1713-L1719"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft minimum street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) needs the street''s functional class and the facing zone, neither of which this screen holds; it is also disapplied within 100 ft of a transit street. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) does not reach this zone: "The setbacks do not apply in the CR or CM1 zones" (#L838). (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
   CM2:
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
@@ -3763,20 +3838,61 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.130.txt#L397-L399"
     setback_front_ft:
-      # Table 130-2, "Min. Building Setbacks - Street Lot Line": none, in all
-      # six zones. The variant is the exception and it runs the other way
-      # from the usual one -- the corridor makes the standard TIGHTER, not
-      # looser -- so it is worth saying plainly that the base here is the
-      # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
-      # map from Map 120-1's corridors, so its own condition, read by
-      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
-      value: 0
-      quote: "or/multnomah/portland/33.130.txt#L618,L640"
+      # Table 130-2 has three "Min. Building Setbacks" rows for a street lot
+      # line, and in this zone the binding one is the third: "Street Lot Line
+      # across a local street from an RF - RM2 or RMP Zone", 5 or 10 ft.
+      # 33.130.215.B.1.b(1) gives the 5 to "buildings that are entirely in a
+      # residential use", which the pod is, "from a street lot line facing an
+      # RF through RM2 or RMP zone" (the 10 of B.1.b(2) is for all other
+      # buildings). It is the base because the screen cannot rule it out for
+      # the lot as a whole: the rule turns on the street's Transportation
+      # System Plan class ("Local Service Street", 33.910) and on the zone
+      # across it, per LINE, and neither the class nor the transit-street
+      # exception ("or on or within 100 feet of a transit street") is held,
+      # so every street is read as local -- the tight side. The plain row,
+      # "Street Lot Line: none", is given back line by line on
+      # setback_street_across_nonresidential_ft below. The corridor variant
+      # (33.130.215.B.1.a, Map 130-1, flats/geom/corridor.py) still tightens
+      # it to 10 on a lot with a street line on a stretch.
+      value: 5
+      quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
       variants:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the zone's street number off
+      # the corridor. A line the stretch ends part way along is not off, and
+      # keeps 10. In this zone that number is the across-the-street 5 (see
+      # setback_front_ft), not the plain "none": a line off the corridor can
+      # still face a residential zone across a local street.
+      value: 5
+      quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
+    setback_street_across_nonresidential_ft:
+      # The plain row, "Street Lot Line: none", held per LINE for the one
+      # street line it reaches here: off every Map 130-1 stretch AND facing
+      # no RF-RM2 or RMP zone across the street (33.130.215.B.1: "Unless as
+      # specified below, there is no minimum required setback from a street
+      # lot line"). The envelope reads it only on a street edge flagged both
+      # off_corridor and across_clear -- five rays square to the line, over
+      # the right-of-way, each finding a Portland lot in a zone the
+      # neighbours block puts on the false_for side of
+      # faces_residential_zone_across_street (flats/geom/neighbour.py
+      # street_lines_clear). A ray that finds a split-zone lot, another
+      # city's lot, nothing within reach, or a lot nearer than a street's
+      # width leaves the line on the 5.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640,L830-L831"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -3785,6 +3901,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -3846,7 +3978,7 @@ zones:
       # encoded -- the overlay is not held here.
       sqft_per_unit: 1450
       quote: "or/multnomah/portland/33.130.txt#L618,L624-L626"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft minimum street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) needs the street''s functional class and the facing zone, neither of which this screen holds; it is also disapplied within 100 ft of a transit street. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
   CM3:
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
@@ -3912,20 +4044,61 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.130.txt#L397-L399"
     setback_front_ft:
-      # Table 130-2, "Min. Building Setbacks - Street Lot Line": none, in all
-      # six zones. The variant is the exception and it runs the other way
-      # from the usual one -- the corridor makes the standard TIGHTER, not
-      # looser -- so it is worth saying plainly that the base here is the
-      # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
-      # map from Map 120-1's corridors, so its own condition, read by
-      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
-      value: 0
-      quote: "or/multnomah/portland/33.130.txt#L618,L640"
+      # Table 130-2 has three "Min. Building Setbacks" rows for a street lot
+      # line, and in this zone the binding one is the third: "Street Lot Line
+      # across a local street from an RF - RM2 or RMP Zone", 5 or 10 ft.
+      # 33.130.215.B.1.b(1) gives the 5 to "buildings that are entirely in a
+      # residential use", which the pod is, "from a street lot line facing an
+      # RF through RM2 or RMP zone" (the 10 of B.1.b(2) is for all other
+      # buildings). It is the base because the screen cannot rule it out for
+      # the lot as a whole: the rule turns on the street's Transportation
+      # System Plan class ("Local Service Street", 33.910) and on the zone
+      # across it, per LINE, and neither the class nor the transit-street
+      # exception ("or on or within 100 feet of a transit street") is held,
+      # so every street is read as local -- the tight side. The plain row,
+      # "Street Lot Line: none", is given back line by line on
+      # setback_street_across_nonresidential_ft below. The corridor variant
+      # (33.130.215.B.1.a, Map 130-1, flats/geom/corridor.py) still tightens
+      # it to 10 on a lot with a street line on a stretch.
+      value: 5
+      quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
       variants:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the zone's street number off
+      # the corridor. A line the stretch ends part way along is not off, and
+      # keeps 10. In this zone that number is the across-the-street 5 (see
+      # setback_front_ft), not the plain "none": a line off the corridor can
+      # still face a residential zone across a local street.
+      value: 5
+      quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
+    setback_street_across_nonresidential_ft:
+      # The plain row, "Street Lot Line: none", held per LINE for the one
+      # street line it reaches here: off every Map 130-1 stretch AND facing
+      # no RF-RM2 or RMP zone across the street (33.130.215.B.1: "Unless as
+      # specified below, there is no minimum required setback from a street
+      # lot line"). The envelope reads it only on a street edge flagged both
+      # off_corridor and across_clear -- five rays square to the line, over
+      # the right-of-way, each finding a Portland lot in a zone the
+      # neighbours block puts on the false_for side of
+      # faces_residential_zone_across_street (flats/geom/neighbour.py
+      # street_lines_clear). A ray that finds a split-zone lot, another
+      # city's lot, nothing within reach, or a lot nearer than a street's
+      # width leaves the line on the 5.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640,L830-L831"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -3934,6 +4107,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -3995,7 +4184,7 @@ zones:
       # encoded -- the overlay is not held here.
       sqft_per_unit: 1000
       quote: "or/multnomah/portland/33.130.txt#L618,L624-L626"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft minimum street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) needs the street''s functional class and the facing zone, neither of which this screen holds; it is also disapplied within 100 ft of a transit street. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
   CE:
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
@@ -4061,20 +4250,61 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.130.txt#L397-L399"
     setback_front_ft:
-      # Table 130-2, "Min. Building Setbacks - Street Lot Line": none, in all
-      # six zones. The variant is the exception and it runs the other way
-      # from the usual one -- the corridor makes the standard TIGHTER, not
-      # looser -- so it is worth saying plainly that the base here is the
-      # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
-      # map from Map 120-1's corridors, so its own condition, read by
-      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
-      value: 0
-      quote: "or/multnomah/portland/33.130.txt#L618,L640"
+      # Table 130-2 has three "Min. Building Setbacks" rows for a street lot
+      # line, and in this zone the binding one is the third: "Street Lot Line
+      # across a local street from an RF - RM2 or RMP Zone", 5 or 10 ft.
+      # 33.130.215.B.1.b(1) gives the 5 to "buildings that are entirely in a
+      # residential use", which the pod is, "from a street lot line facing an
+      # RF through RM2 or RMP zone" (the 10 of B.1.b(2) is for all other
+      # buildings). It is the base because the screen cannot rule it out for
+      # the lot as a whole: the rule turns on the street's Transportation
+      # System Plan class ("Local Service Street", 33.910) and on the zone
+      # across it, per LINE, and neither the class nor the transit-street
+      # exception ("or on or within 100 feet of a transit street") is held,
+      # so every street is read as local -- the tight side. The plain row,
+      # "Street Lot Line: none", is given back line by line on
+      # setback_street_across_nonresidential_ft below. The corridor variant
+      # (33.130.215.B.1.a, Map 130-1, flats/geom/corridor.py) still tightens
+      # it to 10 on a lot with a street line on a stretch.
+      value: 5
+      quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
       variants:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the zone's street number off
+      # the corridor. A line the stretch ends part way along is not off, and
+      # keeps 10. In this zone that number is the across-the-street 5 (see
+      # setback_front_ft), not the plain "none": a line off the corridor can
+      # still face a residential zone across a local street.
+      value: 5
+      quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
+    setback_street_across_nonresidential_ft:
+      # The plain row, "Street Lot Line: none", held per LINE for the one
+      # street line it reaches here: off every Map 130-1 stretch AND facing
+      # no RF-RM2 or RMP zone across the street (33.130.215.B.1: "Unless as
+      # specified below, there is no minimum required setback from a street
+      # lot line"). The envelope reads it only on a street edge flagged both
+      # off_corridor and across_clear -- five rays square to the line, over
+      # the right-of-way, each finding a Portland lot in a zone the
+      # neighbours block puts on the false_for side of
+      # faces_residential_zone_across_street (flats/geom/neighbour.py
+      # street_lines_clear). A ray that finds a split-zone lot, another
+      # city's lot, nothing within reach, or a lot nearer than a street's
+      # width leaves the line on the 5.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640,L830-L831"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -4083,6 +4313,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -4135,7 +4381,7 @@ zones:
       # screen could evaluate and neither is encoded as a variant yet.
       value: entrance_only
       quote: "or/multnomah/portland/33.130.txt#L1713-L1719"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft minimum street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) needs the street''s functional class and the facing zone, neither of which this screen holds; it is also disapplied within 100 ft of a transit street. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
   CX:
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
@@ -4192,20 +4438,61 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.130.txt#L397-L399"
     setback_front_ft:
-      # Table 130-2, "Min. Building Setbacks - Street Lot Line": none, in all
-      # six zones. The variant is the exception and it runs the other way
-      # from the usual one -- the corridor makes the standard TIGHTER, not
-      # looser -- so it is worth saying plainly that the base here is the
-      # permissive reading. 33.130.215.B.1.a requires 10 ft from a street lot
-      # line adjacent to a Civic Corridor shown on Map 130-1 -- a different
-      # map from Map 120-1's corridors, so its own condition, read by
-      # flats/geom/corridor.py from the city's "Civic Corridor Setbacks" layer.
-      value: 0
-      quote: "or/multnomah/portland/33.130.txt#L618,L640"
+      # Table 130-2 has three "Min. Building Setbacks" rows for a street lot
+      # line, and in this zone the binding one is the third: "Street Lot Line
+      # across a local street from an RF - RM2 or RMP Zone", 5 or 10 ft.
+      # 33.130.215.B.1.b(1) gives the 5 to "buildings that are entirely in a
+      # residential use", which the pod is, "from a street lot line facing an
+      # RF through RM2 or RMP zone" (the 10 of B.1.b(2) is for all other
+      # buildings). It is the base because the screen cannot rule it out for
+      # the lot as a whole: the rule turns on the street's Transportation
+      # System Plan class ("Local Service Street", 33.910) and on the zone
+      # across it, per LINE, and neither the class nor the transit-street
+      # exception ("or on or within 100 feet of a transit street") is held,
+      # so every street is read as local -- the tight side. The plain row,
+      # "Street Lot Line: none", is given back line by line on
+      # setback_street_across_nonresidential_ft below. The corridor variant
+      # (33.130.215.B.1.a, Map 130-1, flats/geom/corridor.py) still tightens
+      # it to 10 on a lot with a street line on a stretch.
+      value: 5
+      quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
       variants:
         - value: 10
           when: [civic_corridor_setback]
           quote: "or/multnomah/portland/33.130.txt#L618,L641"
+    setback_street_off_corridor_ft:
+      # The same row as the base above, held per LINE (FOLLOWUPS 8(d)).
+      # Table 130-2 states the corridor number for "Street Lot Line abutting
+      # selected Civic Corridors" -- one line -- and the variant above can
+      # only hand it to the whole lot: `civic_corridor_setback` is true when
+      # ANY street line is on a Map 130-1 stretch, so the side street of a
+      # corner lot on Division takes 10 too. That stays the reading for
+      # every reader without edges. The envelope reads this field instead
+      # on a street line read surely OFF every stretch
+      # (flats/geom/corridor.py off_corridor: no point of the line on it by
+      # either reading, every point placed on a street that is not the
+      # corridor), and cuts that line alone at the zone's street number off
+      # the corridor. A line the stretch ends part way along is not off, and
+      # keeps 10. In this zone that number is the across-the-street 5 (see
+      # setback_front_ft), not the plain "none": a line off the corridor can
+      # still face a residential zone across a local street.
+      value: 5
+      quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
+    setback_street_across_nonresidential_ft:
+      # The plain row, "Street Lot Line: none", held per LINE for the one
+      # street line it reaches here: off every Map 130-1 stretch AND facing
+      # no RF-RM2 or RMP zone across the street (33.130.215.B.1: "Unless as
+      # specified below, there is no minimum required setback from a street
+      # lot line"). The envelope reads it only on a street edge flagged both
+      # off_corridor and across_clear -- five rays square to the line, over
+      # the right-of-way, each finding a Portland lot in a zone the
+      # neighbours block puts on the false_for side of
+      # faces_residential_zone_across_street (flats/geom/neighbour.py
+      # street_lines_clear). A ray that finds a split-zone lot, another
+      # city's lot, nothing within reach, or a lot nearer than a street's
+      # width leaves the line on the 5.
+      value: 0
+      quote: "or/multnomah/portland/33.130.txt#L618,L640,L830-L831"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -4214,6 +4501,22 @@ zones:
       # it.
       value: 10
       quote: "or/multnomah/portland/33.130.txt#L618,L651-L652"
+      variants:
+        # The next row of the same table, and it runs the usual way: on a
+        # Civic Corridor shown on Map 130-1 the building may stand up to 20
+        # ft back instead of 10 (33.130.215.C.1, "except on Civic Corridors
+        # shown on Map 130-1, where the maximum set back is 20 feet"). A
+        # raised maximum LOOSENS, so it does not hang on
+        # `civic_corridor_setback` -- that fact is true when ANY street line
+        # is on a stretch, read either way on purpose, and would hand the 20
+        # to the side street of a corner lot on Division. It hangs on the
+        # EVERY-line partner, read by the street each line abuts; a corner
+        # lot with one line off the corridor keeps 10 on both until a
+        # per-line field exists. Min 10 and max 20 on the corridor leaves a
+        # ten-foot band, and a pod at its minimum setback sits inside it.
+        - value: 20
+          when: [civic_corridor_setback_all_streets]
+          quote: "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
     setback_side_ft:
       # Two rows, one question, and the answer is the neighbour's zoning
       # rather than this lot's. 10 ft from a lot line abutting an RF through
@@ -4266,7 +4569,7 @@ zones:
       # screen could evaluate and neither is encoded as a variant yet.
       value: entrance_only
       quote: "or/multnomah/portland/33.130.txt#L1713-L1719"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft minimum street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) needs the street''s functional class and the facing zone, neither of which this screen holds; it is also disapplied within 100 ft of a transit street. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
   EX:
     cite_default:
       cite: PCC 33.140 — Table 140-1 (33.140.100 Primary Uses), 33.140.100.B.1 and .B.2, 33.140.200 Lot Size, Table 140-2 (Development Standards), Table 140-3 (Minimum Building Setbacks From Residential Zone Lot Lines)
@@ -4652,6 +4955,31 @@ zones:
 # city's, a split-zone neighbour, a park drawn as right-of-way -- leaves the
 # line unresolved and the lot UNKNOWN on the fact, as before 2026-09-21.
 neighbours:
+  faces_residential_zone_across_street:
+    true_for: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RMP]
+    false_for: [RM3, RM4, RX, IR, OS, CR, CM1, CM2, CM3, CE, CX, EG1, EG2, EX, IG1, IG2, IH, CI1, CI2]
+    quote: "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
+    cite: PCC 33.130.215.B.1.b (Required setbacks from a street lot line); Table 130-2
+      (Min. Building Setbacks - Street Lot Line across a local street)
+    note: >-
+      33.130.215.B.1.b: setbacks "from a street lot line on the portion of the
+      site that is across a local service street from an RF through RM2 or RMP
+      zone", 5 ft for a building entirely in residential use "from a street lot
+      line facing an RF through RM2 or RMP zone". RF through RM2 is the
+      residential ladder in the order the code prints it -- RF, R20, R10, R7,
+      R5, R2.5 (33.110), then RM1, RM2 (33.120) -- and RMP is named on its own,
+      so true_for is those nine. Everything past RM2 on the ladder (RM3, RM4,
+      RX), IR, OS and every C, E, I and CI zone is a zone the sentence does not
+      name, and a street line facing one takes Table 130-2's plain "Street Lot
+      Line: none" -- so they are false_for, the relaxing side. Read PER STREET
+      LINE only (flats/geom/neighbour.py street_lines_clear), never answered
+      for the lot: a line is clear when every one of five rays across the
+      street found a Portland lot on the false_for side; one residential ray,
+      a split-zone lot, another city's lot or nothing within reach keeps the
+      line on the 5. The street's class and the transit-street exception are
+      not read, so the list is applied as if every street were local -- the
+      tight side of both. No caps.json entry reaches this layer's commercial
+      zones, so declaring the list lifts no cap.
   abuts_nonresidential_zone:
     true_for: [OS, RX, CR, CM1, CM2, CM3, CE, CX, EG1, EG2, EX, IG1, IG2, IH, CI1, CI2]
     false_for: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RM3, RM4, RMP, IR]

@@ -409,6 +409,48 @@ class NeighbourRule(BaseModel):
     note: str
 
 
+#: ORCA's unit types (Metro RLIS LAND/orca.shp, UNITTYPE), as the member's
+#: own metadata defines them. A ``parks:`` list naming anything else is a typo
+#: or a vocabulary Metro has changed, and either way it would read nothing.
+ORCA_UNIT_TYPES: frozenset[str] = frozenset(
+    {
+        "Park",
+        "Natural Area",
+        "Home Owners Association",
+        "Other",
+        "School Land",
+        "Cemetery",
+        "Golf Course",
+    }
+)
+
+
+class ParkRule(BaseModel):
+    """Which kinds of Metro ORCA open land are a park in this code's words,
+    for ``abuts_park`` -- and which are not.
+
+    ``true_for`` are ORCA unit types the code's definition of a park
+    reaches; ``false_for`` are types it cannot reach. A type in neither list
+    is land the definition may or may not reach (a natural area, where the
+    code asks who owns it), and a line against it leaves the fact
+    unresolved rather than guessed. A point in no ORCA unit at all is not a
+    park: ORCA is Metro's inventory of the region's parks, registered to
+    the taxlots, and that reliance is the reading's one assumption.
+
+    ``quote`` points at the code's definition of a park and ``note`` is the
+    argument for the lists, held to a ruling's length.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    condition: str
+    true_for: tuple[str, ...]
+    false_for: tuple[str, ...] = ()
+    quote: str
+    cite: str | None = None
+    note: str
+
+
 class Ruling(str):
     """Why a cross-reference does not need fetching, and which shape of why.
 
@@ -470,6 +512,9 @@ LAYER_META = frozenset(
         # for the three neighbour-zoning conditions. A reading of the code,
         # not of the map: Portland's list is 33.130.215.B.2's.
         "neighbours",
+        # Which kinds of Metro ORCA open land this jurisdiction's code calls
+        # a park, for `abuts_park`. A reading of the code's own definition.
+        "parks",
         "kind",
         "label",
         "eligible",
@@ -2309,6 +2354,11 @@ class Layer(BaseModel):
     #: list may only be declared once every value it would lift has its
     #: other number written down.
     neighbours: dict[str, "NeighbourRule"] = Field(default_factory=dict)
+    #: Which ORCA unit types are a park here, per park condition (see
+    #: :class:`ParkRule`). Declared per layer and never inherited, for the
+    #: same reason as ``neighbours`` -- and under the same caps rule: a
+    #: declared fact is observed, and an observed fact lifts a cap.
+    parks: dict[str, "ParkRule"] = Field(default_factory=dict)
 
     @property
     def depth(self) -> int:

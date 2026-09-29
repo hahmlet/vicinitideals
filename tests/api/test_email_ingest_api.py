@@ -30,7 +30,7 @@ from app.models.email_ingest import EmailDealSuggestion, InboundEmail, InboundEm
 
 from tests.conftest import seed_org
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 
 _KEY = b"test-webhook-key-0123456789abcdef"
 _SECRET = "whsec_" + base64.b64encode(_KEY).decode()

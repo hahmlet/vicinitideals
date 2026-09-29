@@ -1101,6 +1101,23 @@ defaults:
     url: https://ecode360.com/print/MI4969?guid=43860165
     retrieved: '2026-08-27'
     quote: "or/clackamas/milwaukie/19.200.definitions.txt#L470"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # 19.201: "In the case of a through lot, a line separating the lot from the
+  # street on which the contemplated development will face", and "Rear lot
+  # line" is "a lot line which is opposite and most distant from the front
+  # lot line". A street side yard is on a SIDE line only. So the far street
+  # line is the rear. 19.505.3.D.4.a still bans parking "directly between the
+  # facade of a primary building(s) and an abutting street right-of-way" on
+  # that line -- a parking rule, `parking_front_prohibited`.
+  front_lot_line_through:
+    value: owner
+    cite: MMC 19.201, Front lot line, on a through lot the street on which the contemplated development will face; the rear lot line is opposite and most distant
+    url: https://ecode360.com/print/MI4969?guid=43860165
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.200.definitions.txt#L470,L474"
   # 19.505.5.F, on four unit lots, and it is tighter than anything above.
   # Front-facade garages, front-yard parking and driveways in front of a
   # townhouse are prohibited outright UNLESS all four of: "development of 4

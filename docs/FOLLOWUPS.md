@@ -82,9 +82,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ANY-line False; 1,565 lots county-wide, ~370 of them Portland
    commercial; the tier-C and untraced ones stay unanswered), 272 a split-zone
    neighbour, 46 both, 5 a neighbour in another city. The
-   blank-point class wants `abuts_park` from RLIS orca (Troutdale MU-3
-   owes 10 ft "abutting a park regardless of zoning" -- the row that kept
-   OS off both lists, troutdale.yaml L1866). (d) Portland CI1/CI2: 33.150
+   blank-point class: `abuts_park` BUILT a89a3b9b from RLIS ORCA (per-city
+   `parks:` block; Troutdale MU-3's 10 ft park row encoded, OS now
+   non-residential; only Troutdale conditions on a park in the corpus).
+   NEEDS on 137: acquire `rlis_orca` into 2026-09-18, link into quadfit
+   raw/, re-run s4 (read the "s4 park across" line); expect ~0 moves (all
+   three MU-3 lots already unresolved on the neighbour fact). (d) Portland CI1/CI2: 33.150
    gives a CI lot 10 ft against OS, so the shared Portland list is wrong
    for CI home lots -- safe only while CI stays capped on
    `site_specific_limitation` (guard test); a per-zone list and the
@@ -105,14 +108,46 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    no pod on 23 -- 15 because quadfit keeps the pod across the front while
    FLATS turns it (a wide shallow lot, court at the alley end), 3 an
    irregular block, the rest overlays; read, accepted; if Steph wants the
-   drawing to agree, quadfit's s6s needs the turned pod. (c) FLATS assumes
-   a side alley runs along the court's stretch of the side line; a short
-   alley stub would be over-read. (d) Gresham's 200 alley lots fail lot
+   drawing to agree, quadfit's s6s needs the turned pod. (c) FIXED 8bf9a451 -- NEEDS an s4 re-run
+   (a bridge on an s4 without `alley_cover_json` drops all 904 side-alley
+   lots to the street-fed court): s4 fires a ray every 5 ft along each
+   alley line; the court uses a side alley only where it runs the whole
+   side line (`flats.geom.alley.side_alley_along`). Expect 12 Portland
+   lots (24 rows, <=3 green-if-signed) to go street-fed. Same over-read,
+   FIXED 59533da1 (also needs the s4 re-run): the alley is the
+   court's aisle only where it runs the whole rear line (a stub still
+   reaches the court); rear alley waivers/numbers only on a whole-line
+   alley; the side-alley number is cut per stretch in `buildable`. Probe:
+   ~64 rear-alley lots stop short, ~8 green->yellow expected (4-15), 0-5
+   side moves. Left: quadfit s6s still reads the alley as the aisle on
+   3-of-5 (FIXED 10f193ea, rides the next s6s run); Gresham's
+   rear-with-alley number on a second rear line FIXED 09171698 (14 rows /
+   7 lots shrink, 0 colour moves); a rear alley along PART of its line:
+   BUILT c089acea -- the covered stretch takes the alley's rear, the rest
+   the ordinary rear, cut per stretch as side lines are; both cuts are
+   screened and the better kept (the court is charged against the smaller
+   strip). Probe on 09-29 s4: 53 part-covered rear lines (52 Portland, 1
+   Gresham), 48 cuttable; 0 colour moves, 4 lots gain room (+0.5 to +32
+   ft), nothing worse -- rides the next re-screen; whether a
+   line an alley runs PART of is "a lot line abutting an alley": RULED by
+   Steph 2026-09-28 -- careful reading (covered stretch only), and the
+   covered stretch is the travel lane only if long enough: BUILT 288f0daa
+   (covered run with buildable ground behind it >= stalls x stall width;
+   probe 53 partial rear lines, 30 long enough, 23 not). Left: the fit
+   compares length only, it does not place the court against the stretch;
+   the lot page could say when an alley stops short. (d) Gresham's 200 alley lots fail lot
    area/frontage regardless.
 4. **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's
-   shape -- `court_across` draws one row of stalls across the lot behind
+   shape -- **side court BUILT 3e8e3bab/1b7b5567 (deployed 15ffab9e,
+   rides the next full run)**: a court BESIDE the building with its aisle
+   straight in from the street, tried only when the row behind fails;
+   bound 3,551 lots: 0 losses, 152 yellow->green if signed (Portland 137),
+   228 yellow->unknown (no variance now, an unmeasured fact left). Still
+   open: an L/T-shaped search for the other 339 quadfit-fits lots; two-row
+   stall count; the fit never checks the parking rectangle reaches the
+   street (Gresham 1S3E10AD -05300, L-shaped). Original note: `court_across` draws one row of stalls across the lot behind
    the building (six at 9 ft = 54 ft), quadfit's s6s lays the stalls in the
    largest rectangle behind the building whichever way round fits, so a
    63-ft-wide Portland R5 lot seats eight along its depth where the 54-ft
@@ -151,7 +186,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Wilsonville, Multnomah MR4/LR5. Open: Gresham's corner is two or more
    streets at any angle incl. through lots -- a through lot with parallel
    streets still answers False (possible false GREEN on Gresham's
-   tightening corner variants).
+   tightening corner variants) -- FIXED f171c994: where the layer
+   defines corner by `frontage_count` (Gresham 3.0100#L1304) a through lot
+   (`flats.geom.corner.through_lot`) is a corner; expect tens of
+   green->yellow in Gresham MDR-12/24, VLDR-SW, OFR on the next run. Open:
+   Wilsonville 4.001(157)(2) / MCC 39.2000 pathway corners (HUMAN_TODO
+   24); Wilsonville and Wood Village count private drives as streets,
+   unchecked against s4's street layer.
    (FLATS's own envelope: DONE, item 12.) (`steep_slope` struck
    2026-09-27: no standard in the corpus is conditioned on it, so its
    False assumption leans on no lot; the hillside rules ride the overlay
@@ -386,28 +427,43 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    carved out of the row or the lane run to the aisle band); (h) the
    alley-aisle court (`townhome_rear_court_alley_aisle`) still scores the
    whole room's exposure -- trim it to its stall row + back-out depth;
-   (i) which end of a through lot is "the front" is read as the
-   applicant's choice under every corner word (Portland 33.910 makes both
-   ends front lot lines) -- read the other 13 cities' through-lot lines;
-   (j) in a ban city the side court is drawn on ONE side of a through-lot
-   pod -- a court on both sides where one side is short of the band;
-   (k) the partial frontage / stub lane: a street piece that lines up
-   with no column beside the pod (278 lots above, e.g. Gresham
-   `1N3E30CB  -12300`) -- slide the pod onto the stub's columns, or run
-   the lane through the setback strip with a jog and charge it; needs the
-   lot polygon minus overlays, which `layout_lot` does not receive
-   (`lot_xy` is the bare corners); the test to flip is
-   `test_a_stub_front_that_misses_the_columns_beside_the_pod_is_refused`;
+   (i) DONE 67402fea (rides the next full run) -- `front_lot_line_through`
+   per city; bound 17 Clackamas-uninc green-if-signed -> yellow, Gresham
+   862 / Fairview 84 envelopes shrink, Milwaukie 8 grow; rulings for Steph
+   pending (Gresham/Clackamas strict until street class is mapped;
+   Tualatin/Fairview silent -> worst end);
+   (j) COUNTED, not built: in a ban city the side court is drawn on ONE
+   side of a through-lot pod -- a court on both sides would help 8 lots;
+   (k) DONE 4a3cc09c -- s6s reserves a lane's
+   width on the street strip before placing the pod beside it (court
+   searched near the lane, straight lane charged as pavement; runs only
+   after every front failed "no side lane", never on alley lots). Replay
+   on 137 (09-29 data): +890 plans of 20,949 no-side-lane lots, 0 lost, 0
+   other moves; rides the next s6s->s7->bridge run. Left: bent fronts whose
+   body swings off the strip (Gresham 1N3E30CB -12300, ~238 of the 286
+   targeted) need an angled/jog lane;
    (l) BUILT 5cb2bd75 -- the street strip is cut flat at a free end and
    keeps its square extension only where another street edge carries on
    (bend, corner clip, front meeting side street); the alley strip is
    unchanged (whether an alley that stops mid-lot needs the same is open).
-   Bound: `bound_street_strip_zero_front.py` (0ec8575c) on 137 -- read the
-   LOST lots; (m) the ~30 wide fronts with no
-   envelope cell within the street reach: s5's tier-C envelope is
-   `buffer(-max(setbacks))`, round and uniform, not per edge, and an
-   overlay carve-out can eat the strip -- refused today, count which is
-   which; (n) the pole's lane jog: in the pole case the lane is taken at
+   547e0578: a chain of street edges is one strip, its free end cut
+   along the lane, not the last clip piece (the first cut refused 14
+   clipped-corner lots wrongly). The 09-28 s1->s7 lost 50 lanes: 14 back,
+   ~17 run past the frontage's end (correct), 5 side-street, 2 now short
+   of stalls; the 7 read: 94fed5e3 gives the strip's free end half a
+   grid cell of slack (2 slanted-line lots) and retries the side court
+   up to 6 times when the biggest rectangle has no lane (1S1E03CB-80000);
+   replay of the 88 moved lots: 36 lost -> 31 (29 no lane, 2 few stalls),
+   0 regressions (137 /root/strip_chains/v2/replay2.csv). 32E07DC03600:
+   the curved line past the lane may be a street s4 does not label --
+   worth a look; (m) COUNTED 2026-09-29 on 09-18 data: 32 wide
+   fronts with no envelope cell in street reach = 7 overlay carve-outs, 6
+   round tier-C insets, 3 tier B with no strip, 16 with a strip in both
+   envelopes (an older s6s refused them -- re-check on the current run);
+   (n) BUILT 91840447 (lane out of the pole, pod
+   beside it, charged from the street; local trial 65 lost / 51 redrawn /
+   884 same -- read the 15 cul-de-sac/angled "not a pole" losses on the
+   county run) -- was: the pole's lane jog: in the pole case the lane is taken at
    any column of the body's top while `_placement` puts the pod first-fit
    at the top-left, so a pole at the left leaves the lane to the pod's
    right with an undrawn, uncharged run along the body's top (92 of 123
@@ -473,11 +529,22 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    their home jurisdiction. Rides the next s3->s7 run: expect NOT_MEASURED
    -9 (check by the pocket_of TLIDs; drift skips pocket lots); (b) 25 lots stay ZONE_POCKET:
    Troutdale NSA GGC/GSO and Oregon City `County` read against a map that
-   answers no code the of-layer holds; (c) Map 130-1 also carries a MAXIMUM
-   setback of 20 ft on those stretches -- not encoded (a max read wrong is a
-   false GREEN); (d) the corridor facts are per lot (ANY street line), a
-   per-LINE field would let the one line on Division take 10 ft and the side
-   street 0.
+   answers no code the of-layer holds; (c) DONE 1ff23bdb -- Map 130-1's
+   maximum is 20 ft instead of 10 (33.130.215.C.1), a RELAXATION, hung on
+   `civic_corridor_setback_all_streets` (every street line on a stretch);
+   0 moves, no screen reads a maximum (HUMAN_TODO 12); (d) DONE fa693288 -- the Map 130-1
+   10 ft minimum is per LINE in the envelope: optional field
+   `setback_street_off_corridor_ft` (the "Street Lot Line: none" row, six
+   commercial zones); a street line read surely OFF every stretch
+   (`flats.geom.corridor.off_corridor`) is cut at it, every other keeps 10;
+   paper fit / driveway charge keep 10. Next re-screen: 520 corridor lots,
+   297 with a line read off; moves only toward green/yellow -- read the
+   gains. (d) re-screened in run 39 (promoted 2026-09-29). (e) DONE c9083b88 --
+   33.130.215.B.1.b: CM2/CM3/CE/CX street lines take 5 ft, 0 only where
+   s4's new `street_across_json` reads every ray across as non-residential
+   and the line is off the corridor (`setback_street_across_nonresidential_ft`);
+   quadfit CE/CM2/CM3/CX front 0 -> 5. Bound ~60 lots green/unknown ->
+   yellow, 0 loosened. NEEDS the next full s4->s7 run (new s4 column).
 10. **Two loose ends from the ruling pass.** (a) DONE 4b725b6a -- alias
    rulings can `observes:` a site fact; FLX->VC observes
    `inside_mapped_use_area`; the bridge applies aliases. Moves 0: the one
@@ -496,9 +563,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    f0418b49 (coarser grid), rides the next batch. Left: (a -- settled
    2026-09-27: Table 8A's R-10 row is 20/20, R-7/R-5 are 15; FLATS holds
    the binding R-10 row and quadfit the loosest on purpose, per its own
-   note; FLATS's own envelope charges 20 and RN is RED on use anyway) (b)
-   Portland R5/R2.5/RM* lots with an alley rear AND a rear line off it
-   (~2,700 rows) stay on quadfit's envelope -- the waiver is per line; (c)
+   note; FLATS's own envelope charges 20 and RN is RED on use anyway) (b) DONE 09171698 -- a rear line off the alley keeps the ordinary rear, the alley line takes the waiver (the bridge resolves the lot twice); probe on 09-29 s4: 2,710 Portland rows move from quadfit's envelope to FLATS's, area identical on 2,708, 0 colour moves; (c)
    RULED b1d46053 -- Portland's commercial/employment/industrial chapters
    state no alley setback; under 33.910 an alley line is a non-street line
    and 33.130.215.B.2 sets it by the abutted zone; max(side, rear) already
@@ -546,3 +611,26 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    before promoting -- out-of-scope moves are accepted known unknowns.
    (Showing the audit on /flats/refresh: Steph 2026-09-25 "an enhancement
    for later" -- not queued.)
+18. **`GET /api/projects` is not scoped to the caller's organisation.** Any
+   signed-in user sees every org's opportunities, filtered only by their
+   own hidden list (found by the /api/ auth fix 2026-09-28, which closed
+   anonymous and made-up-user access). Scope it to the user's org and add
+   a two-org integration test; check the other list routes for the same.
+19. **Excel export vs the engine -- four disagreements the parity tests
+   found (PR #21/#22, 2026-09-29), none fixed; each needs a ruling.** (a)
+   LOAN PAYOFF: the export's levered cash flow counts loan proceeds in at
+   purchase but never the payoff at sale, while the engine's leaves loan
+   principal out entirely -- export IRR / equity multiple cannot match the
+   app on any deal with debt (test deal with debt: year 1 -$511k Excel vs
+   -$1.51M engine); the parity deal is all-equity to dodge it. (b) IRR
+   TIMING: "Combined Levered IRR" is annual (sale lands ~10 months late)
+   while "Combined Unlevered IRR" on the same sheet is the engine's monthly
+   figure (10.7% vs 12.5% on the test deal). (c) PRO FORMA mixes bases:
+   revenue is stabilized x 12 but vacancy/capex are the engine's actual
+   calendar year -- a construction-year deal shows full rent, ~no vacancy.
+   (d) the Pro Forma skips the legacy per-deal expense fields (property
+   tax, insurance, cost/unit, mgmt fee %) the engine still charges ($8.6k
+   vs $75k on the standard test deal). Also docs/FINANCIAL_MODEL.md's EGI /
+   year-0 revenue entries describe what the code no longer writes. (a) and
+   (d) look like export bugs; (b) and (c) are presentation choices for
+   Steph. Exporter = app/exporters/investor_export.py (not the engine).

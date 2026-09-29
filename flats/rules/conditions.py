@@ -350,8 +350,29 @@ _C: tuple[ConditionDef, ...] = (
         "of them keeps a zero setback. Measured from the city's Civic "
         "Corridor Setbacks layer; answered per lot, true when ANY street line "
         "is on one, which applies 10 ft to every street line -- the tighter "
-        "reading of a per-line rule.",
+        "reading of a per-line rule. The envelope then gives back, line by "
+        "line, the street lines read surely off every stretch: those take "
+        "setback_street_off_corridor_ft (flats/geom/corridor.py off_corridor).",
         evidence="Portland Map 130-1, Civic Corridors with Required Setbacks",
+        assume=None,
+    ),
+    ConditionDef(
+        "civic_corridor_setback_all_streets",
+        "site_fact",
+        "EVERY street lot line of the site is on a Civic Corridor shown on "
+        "Portland Map 130-1. The same map that adds a 10 ft minimum also "
+        "raises the commercial zones' maximum front setback from 10 ft to 20 "
+        "(33.130.215.C.1), and a raised maximum is a loosened standard, so it "
+        "cannot hang on `civic_corridor_setback`: that fact is true when ANY "
+        "street line is on a stretch, read the liberal way, and would give "
+        "the 20 to the side street of a corner lot on Division. True here "
+        "needs every street line on a stretch by the street it abuts, at "
+        "every point sampled, with the street network in hand "
+        "(flats/geom/corridor.py). A corner lot with one line off the "
+        "corridor answers False and keeps 10 on every street line -- the "
+        "per-line field that would give each line its own maximum is not "
+        "built. Unasked, it is unknown, and the 10 binds.",
+        evidence="Portland Map 130-1 against every street lot line of the lot, by the street each abuts",
         assume=None,
     ),
     ConditionDef(
@@ -653,6 +674,48 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "faces_residential_zone_across_street",
+        "site_fact",
+        "A STREET lot line has a residential zone on the far side of the "
+        "street. Portland's CM2, CM3, CE and CX zones state no street setback "
+        "except two: 10 ft on a Map 130-1 corridor, and 5 ft (a building "
+        "entirely in residential use) \"from a street lot line facing an RF "
+        "through RM2 or RMP zone\" across a local service street "
+        "(33.130.215.B.1.b). A rule about one street line, so it is read and "
+        "applied PER LINE and never answered for the lot: the zone's street "
+        "setback is 5 on every street line (the tight reading, since neither "
+        "the street's Transportation System Plan class nor the transit-street "
+        "exception is held), and the envelope gives back the plain \"none\" "
+        "row -- setback_street_across_nonresidential_ft -- only to a line off "
+        "every corridor stretch whose five rays across the street all found a "
+        "lot of this city in a zone the code does not name. The layer's "
+        "`neighbours:` block holds which codes are which.",
+        evidence=(
+            "quadfit s4 street_across_json: per street edge, the zone of the "
+            "first private lot a ray square to the edge enters beyond the "
+            "right-of-way (Lot Analysis/quadfit/s4_edges.py street_across)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "abuts_park",
+        "site_fact",
+        "A lot line that is not a street lot line has a park across it, "
+        "whatever the park is zoned. Troutdale's mixed-use table (3.230.A) "
+        "gives an MU-3 lot 20 feet against a residential district, none "
+        "against a non-residential one and 10 feet \"when abutting a park "
+        "(regardless of zoning district)\" -- so a park zoned commercial, or "
+        "open space, is not the zero its zone would give. ANY line settles "
+        "it True; False needs every non-street line read with no park "
+        "across it. Which kinds of open land are a park is the code's own "
+        "definition, held per layer (`parks:`), not ORCA's.",
+        evidence=(
+            "Metro RLIS ORCA unit polygons (LAND/orca.shp, UNITTYPE), sampled "
+            "across each non-street lot line by quadfit's s4 (park_across_json)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "protected_water_feature",
         "site_fact",
         "A stream, wetland or water body whose vegetated corridor eats the "
@@ -807,9 +870,14 @@ CONDITIONS: dict[str, ConditionDef] = {c.name: c for c in _C}
 #: `configure` applies this in both directions and refuses an observation
 #: that contradicts it (a rear alley on a lot said to abut none), because a
 #: registry that lets the pair drift apart has split one concept into two.
+#: `civic_corridor_setback_all_streets` is the same shape the other way
+#: round -- every street line on a Map 130-1 stretch is at least one -- so a
+#: lot asserted onto the 20 ft maximum is also held to the 10 ft minimum,
+#: and a lot with no line on a stretch has not every line on one.
 ENTAILS: dict[str, tuple[str, ...]] = {
     "alley_at_rear": ("abuts_alley",),
     "alley_at_side": ("abuts_alley",),
+    "civic_corridor_setback_all_streets": ("civic_corridor_setback",),
 }
 
 
@@ -852,6 +920,20 @@ NEIGHBOUR_ZONE_CONDITIONS: tuple[str, ...] = (
     "abuts_lower_density_zone",
     "abuts_nonresidential_zone",
 )
+
+#: The site facts about what open land lies across the lot lines, answered
+#: from quadfit's per-line reading of Metro's ORCA layer (`flats.geom.park`)
+#: against each layer's own list of which ORCA unit types its code calls a
+#: park (``Layer.parks``). Named for the same reason as the neighbour facts:
+#: the loader refuses any other name in that block.
+PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
+
+#: The site facts about what zone lies across the STREET from a street lot
+#: line, read per line (``flats.geom.neighbour.street_lines_clear``) against
+#: the same ``Layer.neighbours`` block and never answered for a whole lot:
+#: the rules that turn on them are rules about one street line, and each
+#: reaches the envelope through a per-line field, not a variant.
+ACROSS_STREET_CONDITIONS: tuple[str, ...] = ("faces_residential_zone_across_street",)
 
 
 def condition(name: str) -> ConditionDef:
@@ -906,12 +988,14 @@ def deepest(tiers: Iterable[Tier]) -> Tier:
 
 
 __all__ = [
+    "ACROSS_STREET_CONDITIONS",
     "ASSUMED",
     "ASSUMED_TIER",
     "ASSUMED_USE_TIER",
     "CONDITIONS",
     "ENTAILS",
     "NEIGHBOUR_ZONE_CONDITIONS",
+    "PARK_CONDITIONS",
     "ConditionDef",
     "close_entailed",
     "Kind",

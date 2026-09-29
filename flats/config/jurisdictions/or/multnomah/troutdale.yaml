@@ -819,6 +819,20 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1813
     retrieved: '2026-08-27'
     quote: "or/multnomah/troutdale/1.020.definitions.txt#L548-L552"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # By definition: a double frontage lot is an interior lot (1.020, "An
+  # interior lot can be a double frontage lot"), whose front is "a line
+  # separating the lot from the street", and a rear lot line is "A lot line
+  # not abutting a street". The far street line cannot be the rear.
+  front_lot_line_through:
+    value: both
+    cite: TDC 1.020, Lot Line, Front, for an interior lot a line separating the lot from the street; a rear lot line does not abut a street
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/troutdale/1.020.definitions.txt#L548,L559"
   # AND HOW FAR BACK. 9.095(D): "Parking areas shall be set back from a lot
   # line adjoining a street the same distance as required building setbacks."
   # No number of its own -- the ten feet printed in the same sentence is an
@@ -1216,12 +1230,20 @@ zones:
       # It states one setback by what the lot abuts: 20 feet against a
       # residential district, 0 against a non-residential one, 10 against a
       # park. The 20 is the base because the neighbour's zoning is unmeasured.
+      # The park row is read one condition deeper than the zero it overrides:
+      # there is no negation to write "non-residential and not a park", so
+      # the ten is the more specific variant and wins wherever a park is read
+      # across a line. A lot where the park fact is unanswered cannot choose
+      # between 0 and 10 and screens UNKNOWN on it.
       value: 20
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L674,L684,L689"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671,L673,L684,L689"
+        - value: 10
+          when: [abuts_nonresidential_zone, abuts_park]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L672,L684,L689"
     # 9.095(D), stated as equal to the building setback -- see the note in
     # `defaults:`. `same_as` resolves against the front setback above it, and
     # the only figure the sentence carries is an industrial floor that does
@@ -1251,6 +1273,14 @@ zones:
         - value: 0
           when: [attached_wall, abuts_nonresidential_zone]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+        # The park row, as on the front. Its attached-wall pair is spelled out
+        # three deep so the wall on the line keeps its zero against the ten.
+        - value: 10
+          when: [abuts_nonresidential_zone, abuts_park]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L672,L684,L689"
+        - value: 0
+          when: [attached_wall, abuts_nonresidential_zone, abuts_park]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
     setback_rear_ft:
       value: 20
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L674,L684,L689"
@@ -1258,6 +1288,9 @@ zones:
         - value: 0
           when: [abuts_nonresidential_zone]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671,L673,L684,L689"
+        - value: 10
+          when: [abuts_nonresidential_zone, abuts_park]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L672,L684,L689"
     setback_front_max_ft:
       # A MAXIMUM front setback of 20 feet, stated only in this column. Read
       # against the 20-foot minimum above it, MU-3 fixes the building line
@@ -1316,10 +1349,18 @@ zones:
       not that the building may be permitted over the counter.
 
 
-      NOT ENCODED: the 10-foot setback against a park, which needs a fact
-      about the neighbour nothing here holds; the 15-foot setback for building
-      facades over 35 feet, which a 26-foot pod never reaches; and the 60,000
-      sq ft footprint maximum.
+      THE PARK ROW IS NOW SCREENED. The ten feet "when abutting a park
+      (regardless of zoning district)" reads `abuts_park`, which s4 measures
+      against Metro's ORCA inventory across every non-street line and the
+      `parks:` block below turns into a fact against TDC 1.020's definition
+      of a park. It sits one condition deeper than the non-residential zero
+      it overrides, so a lot whose park fact is unanswered stays UNKNOWN
+      rather than taking the zero.
+
+
+      NOT ENCODED: the 15-foot setback for building facades over 35 feet,
+      which a 26-foot pod never reaches; and the 60,000 sq ft footprint
+      maximum.
   LDR-1:
     max_density_du_per_acre:
       # 3.140.B.4: "Maximum density standards shall not apply to duplex,
@@ -1847,7 +1888,7 @@ zone_rulings:
 # flats/geom/neighbour.py against these lists.
 neighbours:
   abuts_nonresidential_zone:
-    true_for: [MU-1, MU-2, MU-3, CC, GC, IP, LI, GI]
+    true_for: [MU-1, MU-2, MU-3, CC, GC, IP, LI, GI, OS]
     false_for: [LDR-1, LDR-2, MDR, HDR]
     quote: "or/multnomah/troutdale/3.zoning-districts.txt#L72-L92,L668,L672-L674,L737-L738,L749-L750"
     cite: TDC 3.020 (Zoning District Outline); TDC 3.230 (Dimensional standards
@@ -1863,15 +1904,51 @@ neighbours:
       and a district the outline files under any heading but Residential is
       the latter -- a mixed-use lot next to another mixed-use lot owes no
       yard, which is what a downtown row of zero-lot-line buildings is. OS
-      is left off both lists on purpose: the same table charges an MU-3 lot
-      ten feet "when abutting a park (regardless of zoning district)", and
-      an OS lot is nearly always a park, so reading it as non-residential
-      would hand an MU-3 lot next to its park a zero it does not have; a
-      park in any other zone is the residual risk, and `abuts_park` from
-      the regional parks layer is the follow-up that closes it. UPA and NSA
-      carry county zoning and are not on either list. 3.235.C.2.a also
+      is filed under Other Districts and so is non-residential. It was kept
+      off both lists until the park row could be read: the same table
+      charges an MU-3 lot ten feet "when abutting a park (regardless of
+      zoning district)", and an OS lot is nearly always a park, so reading
+      it as non-residential alone would have handed an MU-3 lot next to its
+      park a zero it does not have. The MU-3 park variants now read
+      `abuts_park` (the `parks:` block below) one condition deeper than the
+      zero, so OS sits on the true_for side where 3.020 files it and the
+      park answers the park row, in any zone. UPA and NSA carry county
+      zoning and are not on either list. 3.235.C.2.a also
       gives five feet against HDR; the side variant reads only the
       non-residential half, so an HDR neighbour keeps the larger yard,
       which is the tightening way to be incomplete. The condition is true
       of a lot only when EVERY non-street line is fully read and everything
       across it is on the true_for side; one residential point settles it false.
+
+# Which of Metro's ORCA open-land types this code calls "a park", for the
+# MU-3 park row of 3.230.A -- the fact quadfit's s4 reads by looking the same
+# five points per non-street line up in RLIS ORCA (park_across_json), turned
+# into `abuts_park` by flats/geom/park.py against these lists.
+parks:
+  abuts_park:
+    true_for: [Park]
+    false_for: [Home Owners Association, School Land, Cemetery]
+    quote: "or/multnomah/troutdale/1.020.definitions.txt#L686-L687"
+    cite: TDC 1.020 (Definitions, "Park"); TDC 3.230.A ("when abutting a park
+      (regardless of zoning district)")
+    note: >-
+      TDC 1.020 defines a park as "A forest, reservation, playground, beach,
+      recreation center or any other area in the City, owned, operated, or
+      maintained by the City and devoted to active or passive recreation."
+      Metro's ORCA sorts every open-land unit into seven types. Park --
+      "active or passive recreation area where facilities exist primarily
+      intended for recreational uses by the public" -- is read True. Some of
+      those are held by the county, Metro or the state rather than the city,
+      and reading them as a park charges ten feet where the code may charge
+      none: the tightening way to be wrong. Home Owners Association land is
+      privately owned, School Land is owned by a school district, and a
+      Cemetery is not devoted to recreation, so none of the three is "owned,
+      operated, or maintained by the City and devoted to recreation"; they
+      are read False. Natural Area, Other (trail and path parcels, corridor
+      buffers, private plats) and Golf Course are on neither list: a city
+      natural area is a "forest, reservation" the definition names, a trail
+      parcel may be city parkland, and a golf course may be a city one, and
+      ORCA's type does not say which. A line across one of them leaves the
+      fact unstated and the lot screens UNKNOWN on it. A point in no ORCA
+      unit is read as no park -- the reading's one assumption, since ORCA is
+      the region's inventory of exactly this land.

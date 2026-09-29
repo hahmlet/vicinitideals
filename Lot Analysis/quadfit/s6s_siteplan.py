@@ -100,6 +100,23 @@ on the lot between the stalls and the alley line and counted in the parking
 area. Until 2026-09-13 the width was trusted, the way the assumed aisle
 trusts SUDAS; now nothing in this drawing is. A lot whose alley has no
 width on record is laid out as if the alley were nothing, the strict way.
+ONLY WHERE THE ALLEY RUNS (Steph's ruling, 2026-09-28: "we can use the
+portion the alley abuts for our travel lane only if the lane is actually
+long enough to accommodate"). s4 classes a lot line ``A`` on three rays of
+five, so an alley that stops halfway along the rear line made the whole
+line the court's aisle, and the end stalls backed out into the neighbour's
+yard. The stalls now stand only against the stretches s4's
+``alley_cover_json`` finds the alley along (`_covered_alley`, the same
+stretches `flats.geom.alley.cover_stretches` reads for FLATS), and where
+the alley runs only part of a line the row must stand in ONE covered run
+with the envelope behind it -- the covered run at least stalls x stall
+width, FLATS's `usable_run_ft` test drawn rather than measured. A stretch
+too short for the row seats fewer stalls, and the court's own aisle (the
+plan reached by a lane from the alley) wins on the ruling's order. A lot
+with no cover on record -- s4 before the column -- has no alley aisle at
+all. The alley's lane (`townhome_rear_court_alley`) is not this: the alley
+still reaches the court along the whole line, as it does in FLATS. The
+side alley is read the same way, stall by stall.
 It is taken only where it buys a stall -- a court deep enough for its own
 aisle keeps it -- so the count of plans on this drawing is the count that
 need it. The setback IS: 33.110.220.D.9 and 33.120.220.B.3.g ask
@@ -187,16 +204,25 @@ lane still runs inside the envelope: a pole narrower than the lane, and a
 street piece that does not line up with a column beside the pod (the lane
 would jog through the front yard, or run in the side setback), refuse the
 lot, which the drawing before 2026-09-20 parked over ground it never
-checked (FOLLOWUPS 5 (k)). The pole's own lane is taken at ANY column of
-the body's top: the pod is placed first-fit at the body's top-left, so
-where the pole meets the body at the left the lane stands to the pod's
-right, and the run along the body's top from the pole to it is neither
-drawn nor charged -- 92 of the 123 pole lots the bound of 2026-09-20
-restored (median 23 ft; six wide tracts with a short street piece, 240 to
-400 ft, where the lot's ground at the street, not the envelope's, would
-have told a stub from a pole). The drawing before 2026-09-20 took the same
-lots with the same jog; the pod belongs beside the pole's lane (FOLLOWUPS
-5 (n)).
+checked -- until the stub pass of 2026-09-29 (FOLLOWUPS 6 (k)): where the
+first-fit pod stood across every column of the street piece, a lane's
+columns on the piece are closed to the pod before it is placed, and the
+lane runs straight down them beside the pod; nothing is jogged, and a
+piece that holds no lane's width of envelope stays refused. Until 2026-09-28 the pole's own lane was taken
+at ANY column of the body's top while the pod was placed first-fit at the
+body's top-left, so where the pole met the body at the left the lane
+stood to the pod's right and the run along the body's top from the pole
+to it -- across the front of the building -- was neither drawn nor
+charged: 92 of the 123 pole lots the bound of 2026-09-20 restored (median
+23 ft; six wide tracts with a short street piece, 240 to 400 ft, where the
+envelope's strip, not the lot's ground, had called it a pole). Now a pole
+is read off the lot's ground at the street (`_pole_span`), its lane is
+taken in the pole's own columns (`_pole_lanes`) and closed to the pod
+before the pod is placed, so the lane runs straight out of the pole
+beside the building to the court (stepping sideways by at most half its
+width where a tier-C inset leaves less than a lane of envelope under the
+pole); a pole with less than that is refused, and the lane's length runs
+from the street (FOLLOWUPS 5 (n)).
 
 `layout_method` is `townhome_rear_court` (lane from the front street down
 the side of the building), `townhome_rear_court_side_street` (a corner lot
@@ -230,6 +256,7 @@ verdict, it says why the verdict is what it is.
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import math
 import sys
@@ -243,6 +270,8 @@ from common import DATA_DIR, load_footprints, load_rules, read_stage, stage_path
 from s4_edges import BEARING_CLUSTER_TOL_DEG, bearing_deg, bearing_delta
 from s5_envelope import lot_setbacks
 from s6_fit import _cell_grid, _integral, _placement
+
+from flats.geom.alley import cover_stretches, decode_cover
 
 _CFG: dict = {}
 
@@ -293,8 +322,147 @@ def _largest_rect(ok, min_h: int = 1):
 JOIN_TOL_FT = 0.01
 
 
+def _street_strip_pieces(edges, joins, reach_ft: float, slack_ft: float = 0.0) -> list:
+    """The street strip of `_alley_mouths`, one geometry per chain of edges.
+
+    A chain is a run of `edges` that meet end to end. Each edge is
+    buffered `reach_ft` with flat caps, carried `reach_ft` on (a square
+    cap) at every end another edge of `joins` meets. A FREE end -- one
+    nothing in `joins` meets -- is cut along the grid axis across the
+    chain's run (see `_alley_mouths`): its edge is carried on too, and
+    the whole chain is trimmed to the side of that line the chain lies
+    on. Where the chain does not lie wholly on one side (it doubles back,
+    or has no two clear ends), that end is cut square to its own edge.
+    Either cut stands `slack_ft` past the free end (`_alley_mouths`: half
+    a grid cell).
+    """
+    import shapely
+    from shapely.geometry import LineString, box
+
+    def same(p, q):
+        return math.dist(p, q) <= JOIN_TOL_FT
+
+    E = [((e[0], e[1]), (e[2], e[3])) for e in edges
+         if math.hypot(e[2] - e[0], e[3] - e[1]) > 0.0]
+    J = [((j[0], j[1]), (j[2], j[3])) for j in joins]
+
+    def met(p, q, end) -> bool:
+        # Another edge of `joins` has an end at `end` -- the edge (p, q)
+        # itself, listed there too, is not "another".
+        for a, b in J:
+            if (same(a, p) and same(b, q)) or (same(a, q) and same(b, p)):
+                continue
+            if same(a, end) or same(b, end):
+                return True
+        return False
+
+    # Chains: edges of `edges` that share an end, by union-find.
+    parent = list(range(len(E)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    for i in range(len(E)):
+        for k in range(i + 1, len(E)):
+            if any(same(x, y) for x in E[i] for y in E[k]):
+                parent[find(i)] = find(k)
+    chains: dict[int, list[int]] = {}
+    for i in range(len(E)):
+        chains.setdefault(find(i), []).append(i)
+
+    out = []
+    for comp in chains.values():
+        verts = [p for i in comp for p in E[i]]
+        # The chain's two ends: the vertices only one of its edges reaches.
+        ends = [p for p in verts if sum(same(p, v) for v in verts) == 1]
+        cuts = []  # (axis, sign, coordinate) half-planes the chain is kept on
+        pieces = []
+        for i in comp:
+            p, q = E[i]
+            n = math.dist(p, q)
+            ux, uy = (q[0] - p[0]) / n, (q[1] - p[1]) / n
+            ext = []
+            for end in (p, q):
+                if met(p, q, end):
+                    ext.append(reach_ft)
+                    continue
+                cut = None
+                if len(ends) == 2 and any(same(end, x) for x in ends):
+                    far = ends[1] if same(end, ends[0]) else ends[0]
+                    dx, dy = far[0] - end[0], far[1] - end[1]
+                    ax = 0 if abs(dx) >= abs(dy) else 1
+                    sg = 1.0 if (dx, dy)[ax] >= 0 else -1.0
+                    if all(sg * (v[ax] - end[ax]) >= -JOIN_TOL_FT for v in verts):
+                        cut = (ax, sg, end[ax] - sg * slack_ft)
+                if cut is None:
+                    ext.append(slack_ft)
+                else:
+                    cuts.append(cut)
+                    ext.append(reach_ft)
+            s0, s1 = ext
+            pieces.append(LineString([(p[0] - ux * s0, p[1] - uy * s0),
+                                      (q[0] + ux * s1, q[1] + uy * s1)]).buffer(
+                reach_ft, cap_style="flat", join_style="mitre"))
+        chain = shapely.union_all(pieces)
+        if cuts:
+            x0, y0, x1, y1 = chain.bounds
+            for ax, sg, c in cuts:
+                if ax == 0:
+                    keep = box(c, y0, x1, y1) if sg > 0 else box(x0, y0, c, y1)
+                else:
+                    keep = box(x0, c, x1, y1) if sg > 0 else box(x0, y0, x1, c)
+                chain = chain.intersection(keep)
+        out.append(chain)
+    return out
+
+
+def _covered_alley(alley_edges, cover, reach_ft: float
+                   ) -> tuple[list[list[float]], bool]:
+    """The stretches of the alley lot lines the alley really runs along, as
+    segments for `_alley_mouths(..., cap_style="flat")`, and whether any
+    line is only partly covered.
+
+    `cover` is s4's ``alley_cover_json`` for the alley edges alone, parallel
+    to `alley_edges`: a string of ``1`` and ``0`` per edge, one ray every
+    five feet (`flats.geom.alley.cover_stretches` places them). Each covered
+    stretch is carried `reach_ft` past an end of the edge where it reaches
+    that end -- a flat cap there is the square cap `_alley_mouths` gives a
+    whole edge, so a line the alley runs end to end draws the very strip it
+    drew before 2026-09-28 -- and stops flat where the alley stops mid-edge:
+    the ground past that point backs onto a neighbour, not the alley.
+
+    Returns ``(segments, partial)``: `partial` is True where any alley edge
+    has an uncovered stretch or no cover string, and then the row must stand
+    in one covered run (`_alley_aisle_stalls`, `one_run`). `cover` None, or
+    not one entry per edge, is s4 before the column: no segment at all, and
+    the alley is no aisle anywhere (Steph's ruling: no cover on record, no
+    alley aisle).
+    """
+    if cover is None or len(cover) != len(alley_edges):
+        return [], True
+    segs: list[list[float]] = []
+    partial = False
+    for e, c in zip(alley_edges, cover):
+        x1, y1, x2, y2 = (float(v) for v in e[:4])
+        length = math.hypot(x2 - x1, y2 - y1)
+        if length <= 0:
+            continue
+        got = cover_stretches(length, c) if isinstance(c, str) else ()
+        if got != ((0.0, length),):
+            partial = True
+        ux, uy = (x2 - x1) / length, (y2 - y1) / length
+        for a, b in got:
+            a = -reach_ft if a <= 0.0 else a
+            b = length + reach_ft if b >= length else b
+            segs.append([x1 + ux * a, y1 + uy * a, x1 + ux * b, y1 + uy * b])
+    return segs, partial
+
+
 def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
-                  reach_ft: float, joins=None):
+                  reach_ft: float, joins=None, cap_style: str = "square"):
     """Cells of the envelope grid that stand on the alley strip.
 
     The strip is drawn the way s5 drew the cut it made for the alley: each
@@ -332,10 +500,46 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
     a street strip -- and an end of an edge keeps its square cap only where
     it meets another edge of `joins`: the bend of a street chain, a corner
     clip, the corner where the front street meets the side street, all as
-    before. An end that nothing in `joins` continues from is cut flat at
-    the edge's own extent. None (the alley) keeps every cap square, as it
-    was bound on 2026-09-12; an alley that stops mid-lot is the same
-    question and was not asked of it here.
+    before. An end that nothing in `joins` continues from is a FREE end.
+    None (the alley) keeps every cap square, as it was bound on
+    2026-09-12; an alley that stops mid-lot is the same question and was
+    not asked of it here -- except for the row that backs out into it,
+    whose strip is the covered stretches (`_covered_alley`), each already
+    carried past a real end of the line, drawn with `cap_style` "flat" so
+    it stops where the alley does.
+
+    WHERE A FREE END IS CUT (2026-09-29). The first draft cut it square
+    to the edge it ends -- right on the partial frontage above, whose last
+    edge runs along the grid, and wrong on a frontage that ends in a short
+    angled piece: a corner clip or a curve's last chord running 30 to 65
+    degrees off the front (1N2E25AA -02700: 62 ft of Portland frontage,
+    then 13 ft and 10 ft of clip down to the side line). A cut square to
+    that last piece leans back over the frontage, and the county run of
+    2026-09-28 refused 18 lots whose lane ran straight to the street
+    under the clip. Every lane this stage draws runs along a grid axis
+    (`_front_runs`, `_lane_to_alley`), so the question a free end has to
+    answer is whether a lane running straight from a cell toward the
+    street meets it. The cut is therefore along the grid axis a lane to
+    this chain of street edges travels -- across the chain's run, the
+    axis its end-to-end chord runs less along -- through the free end,
+    and it trims every piece of the chain, including the square cap that
+    a joint inside the chain carries past that line. A chain that doubles
+    back past its own free end (a cul-de-sac bulb) is not cut by a line
+    it crosses; its free end keeps the cut square to its last edge.
+
+    HALF A CELL OF SLACK AT A FREE END (2026-09-29). A cell counts when
+    its centre is inside the strip, so a cut exactly through the free end
+    dropped a lane column that stood mostly -- or all but a sliver -- on
+    the frontage. The lane and the pod are drawn on the grid's half-foot
+    lattice and cannot move by less than a cell; where a side lot line
+    splays out behind the front, a lane hugging the side setback runs a
+    few inches past the frontage's end at the street and could not step
+    in without the pod stepping too (four lots on the 2026-09-28 run,
+    0.3 to 0.5 ft past the end: 22E18CC02800, 22E08BB03901, 1S1E28AA
+    -00500, 32E07DC03600). Both cuts therefore stand half a cell past the
+    free end: a column counts when any of it stands on the frontage, so a
+    lane is refused for running past the street's end by a cell or more
+    and never for the raster's rounding.
     """
     import numpy as np
     import shapely
@@ -346,39 +550,11 @@ def _alley_mouths(ok, alley_edges, minx: float, miny: float, res: float,
     if not len(rows) or not alley_edges:
         return out
 
-    def piece(e):
-        (x0, y0), (x1, y1) = (e[0], e[1]), (e[2], e[3])
-        if joins is None:
-            return LineString([(x0, y0), (x1, y1)]).buffer(
-                reach_ft, cap_style="square", join_style="mitre")
-        n = math.hypot(x1 - x0, y1 - y0)
-        if n <= 0.0:
-            return None
-
-        def met(px, py):
-            # Another edge of `joins` has an end at this one -- the edge
-            # itself, listed there too, is not "another".
-            for j in joins:
-                a, b = (j[0], j[1]), (j[2], j[3])
-                if (math.dist(a, (x0, y0)) <= JOIN_TOL_FT
-                        and math.dist(b, (x1, y1)) <= JOIN_TOL_FT) or (
-                        math.dist(a, (x1, y1)) <= JOIN_TOL_FT
-                        and math.dist(b, (x0, y0)) <= JOIN_TOL_FT):
-                    continue
-                if (math.dist(a, (px, py)) <= JOIN_TOL_FT
-                        or math.dist(b, (px, py)) <= JOIN_TOL_FT):
-                    return True
-            return False
-
-        # A square cap is the edge carried `reach_ft` on and cut flat.
-        ux, uy = (x1 - x0) / n, (y1 - y0) / n
-        s0 = reach_ft if met(x0, y0) else 0.0
-        s1 = reach_ft if met(x1, y1) else 0.0
-        return LineString([(x0 - ux * s0, y0 - uy * s0),
-                           (x1 + ux * s1, y1 + uy * s1)]).buffer(
-            reach_ft, cap_style="flat", join_style="mitre")
-
-    pieces = [p for p in (piece(e) for e in alley_edges) if p is not None]
+    if joins is None:
+        pieces = [LineString([(e[0], e[1]), (e[2], e[3])]).buffer(
+            reach_ft, cap_style=cap_style, join_style="mitre") for e in alley_edges]
+    else:
+        pieces = _street_strip_pieces(alley_edges, joins, reach_ft, 0.5 * res)
     if not pieces:
         return out
     strip = shapely.union_all(pieces)
@@ -528,8 +704,147 @@ def _front_runs(free, fcells, stop_r: int):
     return clear, np.maximum(start - 1, 0)
 
 
+#: How many rectangles the side court search tries on one side of the
+#: building: the strip's largest, then the parts of the strip in front of
+#: and beside a court that holds no stall or that no lane reaches
+#: (`layout_lot`).
+SIDE_COURT_TRIES = 6
+
+#: How far past each end of the street piece, and into the lot, the lot's
+#: ground is looked for by `_pole_span`.
+POLE_PROBE_FT = 3.0
+#: How much of that the lot may hold past the street piece's two ends and
+#: still be a pole: pole sides up to about 20 degrees off square. A lot line
+#: that carries on along the street, or turns less than about 60 degrees
+#: from it, fills the probe's three feet at that end.
+POLE_GROUND_TOL_FT = 2.5
+
+
+def _pole_span(fe_r: list[list[float]], lot_r=None) -> tuple[float, float] | None:
+    """The pole's span across the street, (x0, x1) in the rotated frame, or
+    None where the lot's ground at the street is not a pole.
+
+    `fe_r` is the front street's edges and `lot_r` the lot polygon, both in
+    the frame the envelope grid is cut in (front along x). A flag lot's
+    pole meets the street and its two side lines turn straight back from
+    it, so the lot holds no ground past the ends of the street piece: the
+    lot within `POLE_PROBE_FT` of the street piece -- a square-capped
+    buffer, which reaches that far past each end -- is no wider along the
+    street than the piece itself (plus `POLE_GROUND_TOL_FT`). A partial
+    frontage, whose lot line runs on past a short street piece along a
+    neighbour, and a bulb front whose next chord s4 did not call a front,
+    carry the lot's ground on past the end and are stubs, not poles,
+    whatever the envelope's strip there looks like (FOLLOWUPS 5 (n): six
+    tracts 240 to 400 ft wide were drawn as poles on 2026-09-20 because an
+    overlay or the square cap had thinned their strip). The strip beside
+    the piece is asked, not a band across the lot, because a street piece
+    may stand recessed behind the rest of the lot. Without the lot
+    (`lot_r` None, a test) the street piece's own span is taken.
+    """
+    xs = [v for e in fe_r for v in (e[0], e[2])]
+    if not xs:
+        return None
+    x0, x1 = min(xs), max(xs)
+    if lot_r is None:
+        return x0, x1
+    import shapely
+    from shapely.geometry import LineString
+
+    near = shapely.union_all([
+        LineString([(e[0], e[1]), (e[2], e[3])]).buffer(
+            POLE_PROBE_FT, cap_style="square", join_style="mitre") for e in fe_r])
+    ground = lot_r.intersection(near)
+    if ground.is_empty:
+        return None
+    gx0, _, gx1, _ = ground.bounds
+    if gx1 - gx0 > x1 - x0 + POLE_GROUND_TOL_FT:
+        return None
+    return max(x0, gx0), min(x1, gx1)
+
+
+def _pole_lanes(ok, span: tuple[float, float], minx: float, res: float,
+                drive_c: int) -> list[int]:
+    """The first columns of the lanes that come straight out of a pole.
+
+    A lane `drive_c` cells wide, every column of it holding envelope and
+    inside the pole's span (`_pole_span`): the leftmost and the rightmost
+    such lane, so the pod can stand beside it on either hand. Where none
+    fits, the lane whose CENTRE line lies inside the span, leftmost and
+    rightmost. The centre, not the whole width: s5 insets a tier-C lot (every
+    flag lot whose pole is under 15 ft, s4's pole test) by its LARGEST
+    setback all round, so a 20-ft pole flush with the body's side meets an
+    envelope that starts 10 ft in, and the lane leaving the pole steps
+    sideways by up to half its width as it crosses the body's front
+    setback strip -- setback ground a lane crosses, drawn and charged no
+    more than any lane's crossing of its strip. Empty where no such lane
+    holds -- a pole whose mouth the inset leaves less than half a lane of
+    envelope -- and the pole is then no lane at all: the lane from it would
+    run in the body's side yard, which this drawing refuses (FOLLOWUPS 5
+    (n))."""
+    import numpy as np
+
+    C = ok.shape[1]
+    if C < drive_c:
+        return []
+    has = ok.any(axis=0)
+    left = minx + np.arange(C - drive_c + 1) * res
+    right = left + drive_c * res
+    mid = (left + right) / 2.0
+    run = np.convolve(has.astype(int), np.ones(drive_c, dtype=int), "valid") == drive_c
+    # Half a cell of slack at each side: the span is the lot line's, the
+    # grid's columns are wherever the envelope's corner put them.
+    inside = run & (left >= span[0] - 0.5 * res) & (right <= span[1] + 0.5 * res)
+    c0s = np.flatnonzero(inside if inside.any()
+                         else run & (mid >= span[0]) & (mid <= span[1]))
+    return sorted({int(c0s.min()), int(c0s.max())}) if c0s.size else []
+
+
+#: How many lanes the stub pass reserves on one front before the pod is
+#: placed (`_stub_lanes`): the two ends of each run of columns a lane can
+#: start in, the outermost kept where there are more.
+STUB_LANES_MAX = 6
+
+
+def _stub_lanes(ok, fcells, drive_c: int) -> list[int]:
+    """The first columns of the lanes a front's own strip can start, for
+    the stub pass (FOLLOWUPS 6 (k)).
+
+    A column can carry a lane from the street where its first envelope cell
+    stands on the front street's strip (`fcells`) -- the test `_front_runs`
+    makes of every lane from the front. A lane is `drive_c` such columns
+    side by side. Returned: the leftmost and the rightmost lane in each run
+    of such columns, so the pod can stand beside it on either hand; where
+    there are more than `STUB_LANES_MAX`, the outermost. Empty where the
+    strip holds no lane's width -- a pole narrower than the lane, a front
+    set back past the street reach -- which stays refused.
+    """
+    import numpy as np
+
+    R, C = ok.shape
+    if C < drive_c:
+        return []
+    has = ok.any(axis=0)
+    start = np.where(has, ok.argmax(axis=0), 0)
+    on = has & fcells[np.clip(start, 0, R - 1), np.arange(C)]
+    good = np.convolve(on.astype(int), np.ones(drive_c, dtype=int), "valid") == drive_c
+    ends: list[int] = []
+    run0 = None
+    for c, g in enumerate(list(good) + [False]):
+        if g and run0 is None:
+            run0 = c
+        elif not g and run0 is not None:
+            ends.extend((run0, c - 1))
+            run0 = None
+    ends = sorted(set(ends))
+    if len(ends) > STUB_LANES_MAX:
+        half = STUB_LANES_MAX // 2
+        ends = ends[:half] + ends[-half:]
+    return ends
+
+
 def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
-                        sw_c: int, sd_c: int, cap: int, sb_c: int = 0):
+                        sw_c: int, sd_c: int, cap: int, sb_c: int = 0,
+                        one_run: bool = False):
     """The row of stalls that backs straight out into the alley, or None.
 
     Three edges of the court, in the order a plan reads: its back (the alley
@@ -544,6 +859,13 @@ def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
     alley. Returns (stalls, boxes, edge) for the edge that seats the most,
     boxes as (r0, c0, h, w) in grid cells; the back wins a tie. None where
     no edge seats one.
+
+    `one_run` -- the alley runs only part of a line (`_covered_alley`) --
+    seats the row in ONE run along the edge, the one that seats the most:
+    Steph's ruling of 2026-09-28 asks the stretch the alley covers, with the
+    envelope behind it, to be as long as the row (stalls x stall width), so
+    a row split across two covered pieces is two short stretches, not one
+    long enough. A line the alley runs end to end keeps every run, as before.
     """
     import numpy as np
 
@@ -570,7 +892,10 @@ def _alley_aisle_stalls(mouths, rr: int, cc: int, rh: int, rw: int,
     best = None
     for edge, on, box_at in edges:
         boxes = []
-        for start, length in runs(np.asarray(on, dtype=bool)):
+        pieces = runs(np.asarray(on, dtype=bool))
+        if one_run and pieces:
+            pieces = [max(pieces, key=lambda p: p[1])]
+        for start, length in pieces:
             for k in range(length // sw_c):
                 if len(boxes) >= cap:
                     break
@@ -903,7 +1228,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                alley_setback_ft: float = 0.0,
                alley_width_ft: float | None = None,
                street_setback_ft: float | None = None,
-               lot_xy=None) -> dict:
+               lot_xy=None,
+               alley_cover: list[str | None] | None = None) -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
 
     Returns a dict of scalar results + `geoms` (role -> shapely geometry in the
@@ -936,6 +1262,10 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     taxlot fabric, read only where the cell says `alley_aisle`: the
     city's back-out room (`alley_need`) less this width is paved on the lot
     behind the stalls. None -- no width on record -- is laid out as zero.
+    `alley_cover` is s4's ``alley_cover_json`` for those edges, parallel to
+    `alley_edges`: the row that backs out into the alley stands only where
+    the alley runs (`_covered_alley`; Steph's ruling of 2026-09-28). None --
+    nothing measured -- is no alley aisle; the lane from the alley stands.
 
     `street_setback_ft` is how far the envelope stands off EVERY street lot
     line (`_street_setback_for`: on a corner lot s5 cuts each street edge to
@@ -1084,6 +1414,13 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     shortfall_ft = (max(0.0, alley_need - (alley_width_ft or 0.0))
                     if alley_aisle else 0.0)
     sb_c = math.ceil(round(shortfall_ft / res, 6))
+    # ... but only along the stretches the alley really runs, and where it
+    # runs part of a line only in one run long enough for the row (ONLY
+    # WHERE THE ALLEY RUNS, the module docstring). The reach is the alley
+    # strip's own, below.
+    aisle_segs, aisle_partial = (
+        _covered_alley(alley_edges, alley_cover, alley_setback_ft + 2.0 * res + 0.5)
+        if alley_aisle else ([], True))
     # A 4-plex never needs more than 2/unit — unless the city says fewer, in
     # which case the city's number is the cap and the higher tiers are simply
     # not reachable here. Milwaukie's one-per-unit is the live case.
@@ -1167,8 +1504,31 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     reach, REACH = 0, ("no_building", "no_court", "court_too_shallow",
                        "no_alley_lane" if alley_fed else "no_side_lane")
     fronts = _candidate_fronts(bearings, front_edges, front_rule, lot_xy)
+    # The lot itself, for telling a flag lot's pole from a stub by its
+    # ground at the street (`_pole_span`); None in a test that hands in
+    # only the envelope, or where the corners make no polygon.
+    lot_poly = None
+    if lot_xy and len(lot_xy) >= 3:
+        lot_poly = shapely.make_valid(shapely.Polygon(lot_xy))
+        if lot_poly.is_empty or lot_poly.area <= 0:
+            lot_poly = None
     any_through = False
-    for b, fe, se in fronts:
+
+    def jobs():
+        # Every front as it has always been drawn; then, only where that
+        # drew nothing and got as far as a court with stalls in it and no
+        # lane (`no_side_lane`), every front once more with the lane's
+        # columns on the front strip reserved BEFORE the pod is placed
+        # (THE STUB PASS, FOLLOWUPS 6 (k), below). Read lazily, so the
+        # test sees the first pass's result; a lot the first pass drew is
+        # never drawn again.
+        for f in fronts:
+            yield (*f, False)
+        if best[1] is None and reach >= 3 and not alley_fed:
+            for f in fronts:
+                yield (*f, True)
+
+    for b, fe, se, stub in jobs():
         # The other streets' edges that run WITH this front are the far end
         # of a through lot (`_through_ends`); a side street is at least
         # `CORNER_MIN_DEG` off. The far end takes the ban and may serve the
@@ -1214,6 +1574,12 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         if alley_fed:
             mouths = _alley_mouths(ok, rotated(alley_edges), minx, miny, res,
                                    alley_setback_ft + 2.0 * res + 0.5)
+        # The same strip cut to where the alley runs: the only cells a stall
+        # backing out into the alley may stand against.
+        aisle_mouths = (_alley_mouths(ok, rotated(aisle_segs), minx, miny, res,
+                                      alley_setback_ft + 2.0 * res + 0.5,
+                                      cap_style="flat")
+                        if aisle_segs else None)
         # The cells standing on ANY street strip, for the court's exposure;
         # and, where the city lets a corner lot's driveway come from the
         # side street, the cells on the SIDE street's strip, which the lane
@@ -1233,23 +1599,39 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         # A flag lot's pole is setback ground end to end, or keeps a sliver
         # of envelope narrower than the lane between its side setbacks (a
         # 16-ft pole, 5-ft sides: 6 ft), and is the lane itself where the
-        # pole is at least the lane's width: the strip is then the body's
-        # top edge, each column's first envelope cell, so the lane starts
-        # there with nothing of the building above it, and the pole's
-        # length is uncounted as it always was. A pole narrower than the
-        # lane refuses the lot; the drawing before 2026-09-20 took every
-        # pole, a 5-ft one included. A front the strip misses for any
-        # other reason -- a wide one set back farther than the street
-        # setback -- stays refused, and so does a stub narrower than the
-        # lane on a wide lot.
+        # pole is at least the lane's width. A pole narrower than the lane
+        # refuses the lot; the drawing before 2026-09-20 took every pole, a
+        # 5-ft one included. A front the strip misses for any other reason
+        # -- a wide one set back farther than the street setback -- stays
+        # refused, and so does a stub narrower than the lane on a wide lot.
+        #
+        # THE POLE'S LANE COMES STRAIGHT OUT OF THE POLE (FOLLOWUPS 5 (n),
+        # 2026-09-28). A pole is told from a stub by the LOT's ground at the
+        # street (`_pole_span`, from `lot_xy`), not by the envelope's strip,
+        # which an overlay or a square cap can thin on a 400-ft tract with
+        # a short street piece. The lane is then taken in the pole's own
+        # columns (`_pole_lanes`: hard against either side of it, or, where
+        # a tier-C inset leaves less than a lane of envelope under the
+        # pole, stepping sideways by at most half its width as it crosses
+        # the body's front setback), those
+        # columns are closed to the pod before it is placed, and the lane
+        # runs straight from the body's top down beside the pod to the
+        # court. From 2026-09-20 to this date the strip was the WHOLE
+        # body's top edge: the pod went first-fit to the top-left, the lane
+        # to wherever a column beside it was clear, and on a pole at the
+        # left that was the pod's right -- a run along the body's top from
+        # the pole to the lane, across the front of the building, neither
+        # drawn nor charged (92 of the 123 pole lots the bound of
+        # 2026-09-20 restored, median 23 ft, six tracts 240 to 400 ft). The
+        # lane's length now runs from the street, the pole included (the
+        # pole is setback ground, crossed like any strip, and is paved in
+        # length, not in area, as every lane's crossing is).
         fcells = (_alley_mouths(ok, rotated(fe), minx, miny, res, street_reach,
                                 joins=streets)
                   if fe else np.zeros_like(ok))
         fe_len = sum(math.hypot(e[2] - e[0], e[3] - e[1]) for e in fe)
         strip_cols = np.flatnonzero(fcells.any(axis=0))
         strip_w = (strip_cols.max() - strip_cols.min() + 1) * res if strip_cols.size else 0.0
-        if fe and strip_w < drive_w and drive_w <= fe_len <= 0.5 * C * res:
-            fcells = ok & (np.cumsum(ok, axis=0) == 1)
         # The cells on the OTHER streets' strips -- a side street's, a far
         # end's -- which tell a side court in a ban city which side of the
         # building faces a street, and feed the lane from that street.
@@ -1265,16 +1647,80 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         frame = {"rot": rot, "minx": minx, "miny": miny, "scells": scells,
                  "front_deg": float(b), "street_sb": street_sb}
 
+        # (fcells, the placement grid's integral, the street's y where the
+        # lane's length is measured from a pole -- None: the street setback
+        # -- and the grid the pod and the lane stand in -- None: `ok`)
+        lanes = [(fcells, None, None, None)]
+        if stub:
+            # THE STUB PASS (FOLLOWUPS 6 (k), 2026-09-29). The pod is
+            # placed first-fit at the front of the envelope, and where the
+            # front street's strip is narrower than the lot -- a stub on
+            # the street with the body behind a neighbour, a notch, a
+            # partial frontage, a front that bends -- the pod can stand
+            # across every column the strip holds, and no lane from the
+            # street runs beside it (278 lots on the bound of 2026-09-20
+            # with a strip at least the lane wide; Gresham 1N3E30CB
+            # -12300). The pole's cure, asked of the strip: a lane's
+            # columns on the strip (`_stub_lanes`) are closed to the pod
+            # before it is placed, so the pod stands beside the lane and
+            # the lane runs straight from the street down the stub to the
+            # court. Nothing is jogged: the lane is the same straight run
+            # inside the envelope every front lane is, found by the same
+            # `_front_runs`, its length and area charged the same way
+            # (`driveway_len_c` into the pavement and out of the open
+            # space). The lane is looked for only in the reserved
+            # columns, so the plan is the one the reservation made room
+            # for.
+            if alley_fed or not front_lane_ok or not fe:
+                continue
+            lanes = []
+            for c0 in _stub_lanes(ok, fcells, drive_c):
+                f_s = np.zeros_like(ok)
+                f_s[:, c0:c0 + drive_c] = fcells[:, c0:c0 + drive_c]
+                shut = ok.copy()
+                shut[:, c0:c0 + drive_c] = False
+                lanes.append((f_s, _integral(shut), None, None))
+            if not lanes:
+                continue
+        elif (fe and not alley_fed and front_lane_ok
+                and strip_w < drive_w and drive_w <= fe_len <= 0.5 * C * res):
+            fe_r = rotated(fe)
+            span = _pole_span(fe_r, None if lot_poly is None else
+                              affinity.rotate(lot_poly, -rot, origin=origin))
+            if span is not None:
+                y_street = float(np.mean([v for e in fe_r for v in (e[1], e[3])]))
+                # The body starts at the first row the envelope reaches
+                # past the pole's columns; a sliver of envelope up the
+                # pole is setback ground the lane crosses, and is dropped
+                # from the grid, so the raster's stray cells where the
+                # sliver meets the body's cut cannot break the lane.
+                centres = minx + (np.arange(C) + 0.5) * res
+                beyond = ok[:, (centres < span[0]) | (centres > span[1])].any(axis=1)
+                body_top = int(beyond.argmax()) if beyond.any() else 0
+                ok_p = ok.copy()
+                ok_p[:body_top, :] = False
+                top = ok_p & (np.cumsum(ok_p, axis=0) == 1)
+                lanes = []
+                for c0 in _pole_lanes(ok_p, span, minx, res, drive_c):
+                    f_p = np.zeros_like(ok)
+                    f_p[:, c0:c0 + drive_c] = top[:, c0:c0 + drive_c]
+                    shut = ok_p.copy()
+                    shut[:, c0:c0 + drive_c] = False
+                    lanes.append((f_p, _integral(shut), y_street, ok_p))
+                if smouths is not None or not lanes:
+                    # The side street's lane (or none) still has the pod
+                    # where it always stood.
+                    lanes.append((np.zeros_like(ok), None, None, None))
         Sok = _integral(ok)
-        for name, w_ft, d_ft in pods:
+        for (fcells, Sok_l, pole_y, ok_l), (name, w_ft, d_ft) in itertools.product(lanes, pods):
             for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
                 bw, bh = math.ceil(ww / res), math.ceil(dd / res)
-                hit = _placement(Sok, bh, bw)
+                hit = _placement(Sok if Sok_l is None else Sok_l, bh, bw)
                 if hit is None:
                     continue
                 reach = max(reach, 1)
                 br, bc = hit
-                free = ok.copy()
+                free = (ok if ok_l is None else ok_l).copy()
                 free[br:br + bh, bc:bc + bw] = False
                 bld = {**frame, "bld": (name, br, bc, bh, bw, ww * dd), "reaches": True}
                 # THE SIDE COURT: beside the building on either side, off the
@@ -1293,43 +1739,79 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                     if (front_ban and ocells is not None
                             and ocells[s_lo:s_hi, c_lo:c_hi].any()):
                         continue
-                    found = _side_court(ok, s_lo, s_hi, c_lo, c_hi, outer, stall_d,
-                                        side_aisle, res, sw_c, sd_c, aisle_c, cap)
-                    if found is None:
-                        continue
-                    reach = max(reach, 2)
-                    s_rect, s_rows, n_sc, s_boxes, s_aisle = found
-                    if n_sc <= 0:
-                        continue
-                    reach = max(reach, 3)
-                    s_rr, s_cc, s_rh, s_rw = s_rect
-                    side = {**bld, "rect": s_rect, "stalls": n_sc, "aisle": side_aisle,
-                            "span_ft": s_rh * res, "stall_boxes": s_boxes}
-                    if alley_fed:
-                        lane = _lane_to_alley(free, mouths, s_rr, s_cc, s_rh, s_rw, drive_c)
-                        if lane is not None:
-                            r0, c0, h, w = lane
-                            lane_len_c = h if w == drive_c else w
-                            offer({**side, "driveway": lane if lane_len_c else None,
-                                   "driveway_len_c": lane_len_c,
-                                   "driveway_len": lane_len_c * res + alley_setback_ft,
-                                   "method": "townhome_side_court_alley"})
-                        continue
-                    # The front lane runs straight into the aisle: the first
-                    # clear corridor within the aisle's columns from the
-                    # front street's strip to the court's top (`_front_runs`).
-                    a0, a1 = s_aisle
-                    clear, start = _front_runs(free, fcells, s_rr)
-                    lane_c0 = next((c0 for c0 in range(a0, a1 - drive_c + 1)
-                                    if clear[c0:c0 + drive_c].all()), None)
-                    if lane_c0 is None:
-                        continue
-                    r_top = int(start[lane_c0:lane_c0 + drive_c].max())
-                    offer({**side, "driveway": ((r_top, lane_c0, s_rr - r_top, drive_c)
-                                                if s_rr > r_top else None),
-                           "driveway_len_c": s_rr - r_top,
-                           "driveway_len": (s_rr - r_top) * res + street_sb,
-                           "method": "townhome_side_court"})
+                    # THE LARGEST COURT MAY BE ONE NO LANE REACHES
+                    # (2026-09-29). `_side_court` takes the largest free
+                    # rectangle in the strip, and on a lot whose envelope
+                    # is a ring round ground it leaves out, that is the band
+                    # BEHIND that ground, which no lane from the front
+                    # street reaches, and after it a leg of the ring too
+                    # narrow to park in, while the band in FRONT of it --
+                    # off the street by the parking setback, beside the
+                    # building, a straight lane from the street -- is never
+                    # asked (1S1E03CB -80000, RX, 254 ft of frontage,
+                    # refused on the run of 2026-09-28 once its court had
+                    # to stand the 10 ft parking setback back). Where the
+                    # court found holds no stall or no lane reaches it, the
+                    # strip is searched again in front of it and on either
+                    # side of it, SIDE_COURT_TRIES rectangles at most; the
+                    # first court a lane reaches is offered, as before.
+                    tries = [(s_hi, c_lo, c_hi)]
+                    for _ in range(SIDE_COURT_TRIES):
+                        if not tries:
+                            break
+                        t_hi, t_lo_c, t_hi_c = tries.pop(0)
+                        found = _side_court(ok, s_lo, t_hi, t_lo_c, t_hi_c, outer, stall_d,
+                                            side_aisle, res, sw_c, sd_c, aisle_c, cap)
+                        if found is None:
+                            continue
+                        reach = max(reach, 2)
+                        s_rect, s_rows, n_sc, s_boxes, s_aisle = found
+
+                        def again(rect=s_rect, t_hi=t_hi, t_lo_c=t_lo_c, t_hi_c=t_hi_c):
+                            # In front of the court, and beside it either way.
+                            q_rr, q_cc, _q_rh, q_rw = rect
+                            for sub in ((q_rr, t_lo_c, t_hi_c), (t_hi, t_lo_c, q_cc),
+                                        (t_hi, q_cc + q_rw, t_hi_c)):
+                                if sub[0] > s_lo and sub[2] - sub[1] >= sd_c + aisle_c:
+                                    tries.append(sub)
+
+                        if n_sc <= 0:
+                            if not alley_fed:
+                                again()
+                            continue
+                        reach = max(reach, 3)
+                        s_rr, s_cc, s_rh, s_rw = s_rect
+                        side = {**bld, "rect": s_rect, "stalls": n_sc, "aisle": side_aisle,
+                                "span_ft": s_rh * res, "stall_boxes": s_boxes}
+                        if alley_fed:
+                            lane = _lane_to_alley(free, mouths, s_rr, s_cc, s_rh, s_rw, drive_c)
+                            if lane is not None:
+                                r0, c0, h, w = lane
+                                lane_len_c = h if w == drive_c else w
+                                offer({**side, "driveway": lane if lane_len_c else None,
+                                       "driveway_len_c": lane_len_c,
+                                       "driveway_len": lane_len_c * res + alley_setback_ft,
+                                       "method": "townhome_side_court_alley"})
+                            break
+                        # The front lane runs straight into the aisle: the first
+                        # clear corridor within the aisle's columns from the
+                        # front street's strip to the court's top (`_front_runs`).
+                        a0, a1 = s_aisle
+                        clear, start = _front_runs(free, fcells, s_rr)
+                        lane_c0 = next((c0 for c0 in range(a0, a1 - drive_c + 1)
+                                        if clear[c0:c0 + drive_c].all()), None)
+                        if lane_c0 is None:
+                            again()
+                            continue
+                        r_top = int(start[lane_c0:lane_c0 + drive_c].max())
+                        offer({**side, "driveway": ((r_top, lane_c0, s_rr - r_top, drive_c)
+                                                    if s_rr > r_top else None),
+                               "driveway_len_c": s_rr - r_top,
+                               "driveway_len": (s_rr - r_top) * res + (
+                                   street_sb if pole_y is None
+                                   else miny + r_top * res - pole_y),
+                               "method": "townhome_side_court"})
+                        break
                 if front_ban and through:
                     # The rear court would stand between the building and the
                     # far street: the words refuse it, and no lane cures it.
@@ -1345,6 +1827,25 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                 row_c = math.ceil((stall_d + aisle_two) / res - 1e-9)
                 if rect is not None and rect[2] < row_c:
                     rect = _largest_rect(ok[court_r0:, :], min_h=row_c) or rect
+                if stub:
+                    # THE STUB PASS'S ROOM MEETS ITS LANE. The lane runs
+                    # straight up its reserved columns, so a room that
+                    # stands wholly to one side of them -- the biggest
+                    # room of a lot whose body swings off the street
+                    # piece at an angle (Gresham 1N3E30CB -12300: 81 ft of
+                    # bent front, the body running off to the north-east)
+                    # -- is one no lane reaches. The room is then sought
+                    # within a court's widest reach of the lane (one row
+                    # of `cap` stalls) on either side; the lane must still
+                    # meet it below, or nothing is offered.
+                    l_cols = np.flatnonzero(fcells.any(axis=0))
+                    l0, l1 = int(l_cols.min()), int(l_cols.max()) + 1
+                    if rect is None or not (rect[1] < l1 and rect[1] + rect[3] > l0):
+                        w0, w1 = max(0, l0 - cap * sw_c), min(C, l1 + cap * sw_c)
+                        sub = ok[court_r0:, w0:w1]
+                        near = _largest_rect(sub, min_h=row_c) or _largest_rect(sub)
+                        if near is not None:
+                            rect = (near[0], near[1] + w0, near[2], near[3])
                 if rect is None:
                     continue
                 reach = max(reach, 2)
@@ -1367,8 +1868,9 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                 # The alley as the aisle: the stalls that stand on the alley strip
                 # and back straight out into it, asked for a stall depth and no
                 # aisle. Counted beside the court's own aisle, never instead of it.
-                on_alley = (_alley_aisle_stalls(mouths, rr, cc, rh, rw, sw_c, sd_c, cap, sb_c)
-                            if alley_aisle else None)
+                on_alley = (_alley_aisle_stalls(aisle_mouths, rr, cc, rh, rw, sw_c, sd_c,
+                                                cap, sb_c, one_run=aisle_partial)
+                            if aisle_mouths is not None else None)
                 if n_ct <= 0 and on_alley is None:
                     continue
                 reach = max(reach, 3)
@@ -1528,7 +2030,9 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                             "driveway": ((r_top, corridor_c0, rr - r_top, drive_c)
                                          if rr > r_top else None),
                             "driveway_len_c": rr - r_top,
-                            "driveway_len": (rr - r_top) * res + street_sb,
+                            "driveway_len": (rr - r_top) * res + (
+                                street_sb if pole_y is None
+                                else miny + r_top * res - pole_y),
                             "method": "townhome_rear_court",
                         })
 
@@ -1602,9 +2106,9 @@ def _work_chunk(chunk):
 
     out = []
     for (idx, env_wkb, bearings, fedges, area, fsb, jur, zone, psb, aedges, asb, aw,
-         ssb, xy) in chunk:
+         ssb, xy, acover) in chunk:
         r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur, zone, psb,
-                       aedges, asb, aw, ssb, xy)
+                       aedges, asb, aw, ssb, xy, acover)
         r["geoms_hex"] = {role: shapely.to_wkb(g).hex() for role, g in r.pop("geoms").items()}
         out.append((idx, r))
     return out
@@ -1637,12 +2141,20 @@ def main() -> None:
     # and NaN is laid out as zero: an alley of no known width earns no
     # back-out room.
     _s4p = stage_path("s4_lots")
-    lots = lots.drop(columns=[c for c in ("alley_width_ft",) if c in lots.columns])
-    if "alley_width_ft" in pq.read_schema(_s4p).names:
-        lots = lots.merge(pd.read_parquet(_s4p, columns=["TLID", "alley_width_ft"]),
+    # The alley's cover (`alley_cover_json`, where along each alley edge the
+    # alley runs) comes the same way; a stage that predates it is None on
+    # every lot, and no lot then backs out into its alley (`_covered_alley`).
+    _s4_cols = pq.read_schema(_s4p).names
+    lots = lots.drop(columns=[c for c in ("alley_width_ft", "alley_cover_json")
+                              if c in lots.columns])
+    _take = [c for c in ("alley_width_ft", "alley_cover_json") if c in _s4_cols]
+    if _take:
+        lots = lots.merge(pd.read_parquet(_s4p, columns=["TLID", *_take]),
                           on="TLID", how="left")
-    else:
+    if "alley_width_ft" not in _take:
         lots["alley_width_ft"] = float("nan")
+    if "alley_cover_json" not in _take:
+        lots["alley_cover_json"] = None
 
     n = len(lots)
     site_ok = np.zeros(n, dtype=bool)
@@ -1883,6 +2395,9 @@ def main() -> None:
         # already set back and the plan has no further use for them.
         aedges = ([e[:4] for e in edges if e[4] == "A"]
                   if cells[jur]["alley_access"] else [])
+        _cov = decode_cover(row["alley_cover_json"], len(edges)) if aedges else None
+        acover = (None if _cov is None
+                  else [c for e, c in zip(edges, _cov) if e[4] == "A"])
         if aedges:
             alley_fed[jur] += 1
         _aw = row["alley_width_ft"]
@@ -1898,6 +2413,7 @@ def main() -> None:
             _street_setback(jur, zone, float(row["area_sqft"]), str(row["tier"])),
             # the lot's corners, for the length of a street lot LINE
             [(e[0], e[1]) for e in edges],
+            acover,
         ))
     for j, k in alley_fed.items():
         print(f"s6s: {j} sends the driveway to the alley on a lot that has one "

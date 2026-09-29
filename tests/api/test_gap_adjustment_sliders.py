@@ -29,6 +29,9 @@ from app.schemas.gap_adjustment_names import (
     REVENUE_ADJUSTMENT_LABEL,
 )
 
+# /api/ as an API client: X-API-Key + X-User-ID (see tests/api/test_auth_gate.py).
+pytestmark = pytest.mark.usefixtures("api_key_auth")
+
 
 async def _seeded_model(session: AsyncSession):
     """Seed a minimal deal model + project + financials.

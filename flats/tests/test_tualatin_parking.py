@@ -275,7 +275,12 @@ def test_four_refusals_against_ten_values(tualatin: Layer) -> None:
     is a hundred square feet of landscape island at the aisle ends, which is
     inside the court, and RML's unheld side and rear ten feet.
     """
-    mine = [r for r in refusals() if r.kind == "comments" and r.where == TUALATIN]
+    # The through-lot front (FOLLOWUPS 6(i), 2026-09-29) is not a parking
+    # refusal: the stored code does not say which end is the front.
+    mine = [
+        r for r in refusals()
+        if r.kind == "comments" and r.where == TUALATIN and "front_lot_line_through" not in r.text
+    ]
     assert len(mine) == 4
     # 10 -> 13 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
     assert len(tualatin.defaults) == 13

@@ -30,8 +30,10 @@ at the width the zone's parking asks. The envelope is FLATS's own
 for that lot and design -- the variant a commercial neighbour, an alley or
 a corner fired -- less the ground s5o's carve overlays took. quadfit's
 carved envelope is used only where FLATS cannot cut one (no taxlot, no
-street, a yard with no number, an exempt rear on a lot whose rear line is
-not all alley), and each row says which (``envelope_source``).
+street, a yard with no number), and each row says which
+(``envelope_source``). A lot with a rear line on the alley and another off
+it is cut with both rear numbers, the alley's on the one and the ordinary
+on the other (:func:`rear_off_alley`).
 
 **What the verdict is today.** Every value in the corpus is ``draft`` --
 no ``flats/config/verifications.jsonl`` exists -- so the screen answers
@@ -59,7 +61,7 @@ from __future__ import annotations
 import dataclasses
 import json
 import math
-from collections.abc import Iterable, Iterator, Mapping, Sequence
+from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -70,20 +72,47 @@ from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for
 from flats.fit.draw import draw
 from flats.fit.rectangle import Fit, Fitter
-from flats.geom.alley import ALLEY_CLASS, ALLEY_FACTS, S4_LOTS, alley_lines, observed_alley
-from flats.geom.corridor import CORRIDOR_FACTS, CorridorMap, observed_corridors
+from flats.geom.alley import (
+    ALLEY_CLASS,
+    ALLEY_FACTS,
+    S4_LOTS,
+    alley_lines,
+    cover_stretches,
+    decode_cover,
+    observed_alley,
+    rear_cover_runs,
+    registry_alley,
+    side_alley_along,
+    usable_run_ft,
+)
+from flats.geom.corridor import (
+    CORRIDOR_FACTS,
+    STREET_CLASS,
+    CorridorMap,
+    observed_corridors,
+    off_corridor_lines,
+)
 from flats.geom.corridor import load_maps as load_corridor_maps
 from flats.geom.corner import (
     front_bearings as corner_fronts,
     is_corner,
     name_front,
+    through_lot,
+    through_plans,
     two_streets,
 )
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
-from flats.geom.neighbour import NEIGHBOUR_FACTS, lines_from_quadfit, observed_neighbours
+from flats.geom.neighbour import (
+    NEIGHBOUR_FACTS,
+    lines_from_quadfit,
+    observed_neighbours,
+    street_lines_clear,
+)
+from flats.geom.park import PARK_FACTS, observed_parks
 from flats.ingest.normalize import zone_for
+from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
@@ -92,10 +121,19 @@ from flats.score.paper import (
     court_across,
     court_depth,
     front_lot_line_rule,
+    front_lot_line_through_rule,
     side_column,
+    side_court,
     side_street_fed,
 )
-from flats.score.screen import LotFacts, Screening, _court_beyond_rear, fit_for, screen
+from flats.score.screen import (
+    LotFacts,
+    Screening,
+    _beside_beyond,
+    _court_beyond_rear,
+    fit_for,
+    screen,
+)
 from flats.score.slack import SlackPolicy, Verdict as CheckVerdict
 
 #: quadfit's per-lot stage record after the envelope was cut and carved
@@ -147,7 +185,10 @@ S4_COLUMNS: tuple[str, ...] = (
     "fronts_cul_de_sac",
     "split_zone",
     "neighbour_zones_json",
+    "park_across_json",
     "alley_width_ft",
+    "alley_cover_json",
+    "street_across_json",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -167,6 +208,7 @@ OBSERVABLE: tuple[str, ...] = (
     *ALLEY_FACTS,
     *CUL_DE_SAC_FACTS,
     *NEIGHBOUR_FACTS,
+    *PARK_FACTS,
     *CORRIDOR_FACTS,
     "corner_lot",
     "split_zone",
@@ -216,7 +258,11 @@ def observed_facts(
     differently from an answer of False.
 
     * ``abuts_alley`` / ``alley_at_rear`` / ``alley_at_side`` -- s4's edge
-      classes, through :func:`flats.geom.alley.observed_alley`. Only where the
+      classes, through :func:`flats.geom.alley.registry_alley`: ``alley_at_rear``
+      only where s4's ``alley_cover_json`` says the alley runs the whole rear
+      line (FOLLOWUPS 3(e)) -- the rear setback's alley variant is one number
+      for the line, and a stub along part of it leaves the rest across from
+      the neighbour; no cover on record is no rear alley line. Only where the
       lot has edges: a lot s4 could not trace (tier ``D``) has no alley record
       and gets the registry's assumption, named, rather than a False that
       reads as a measurement.
@@ -232,8 +278,13 @@ def observed_facts(
       Wood Village's corner side and rear yard) and relaxes others (Gresham's
       unit-lot corner frontage, Multnomah LR-5's conditional use), so
       neither answer is the safe one, and the registry's assumption is named
-      wherever a standard turns on it. Same caveat as the alley: only with
-      edges.
+      wherever a standard turns on it. Where the lot's own code counts
+      streets rather than asking them to meet (Gresham 3.0100: "a lot that
+      has frontage on two or more streets"; :func:`_counts_streets`), a
+      through lot -- street along two opposite lines,
+      :func:`flats.geom.corner.through_lot` -- is True as well: s4 clusters
+      the two ends into one direction, and the 45-degree test alone read
+      them False. Same caveat as the alley: only with edges.
     * ``split_zone`` -- s2's majority rule: the winning zone covers under
       90 % of the lot. A sliver under that is read by quadfit as zoning-map
       noise against the taxlot fabric, and the bridge carries that reading
@@ -256,11 +307,22 @@ def observed_facts(
       condition, and only where the lines settle it: a line across a park,
       a split-zone neighbour or another city's lot leaves the permissive
       answer unstated, and the lot screens UNKNOWN on the fact as before.
+    * ``abuts_park`` -- s4's ORCA unit types across each non-street line
+      (``park_across_json``), through :func:`flats.geom.park.observed_parks`
+      against the lot's layer's own list of which types its code calls a
+      park (``Layer.parks``). Only with ``layers`` in hand and only where
+      the layer declares it; ANY line in a park settles True, False needs
+      every line read. A whole block (every edge a street edge, a clean or
+      corner lot) abuts no park and is answered False with or without the
+      column; otherwise a stage file s4 wrote without the ORCA layer leaves
+      it unasked.
     * ``civic_corridor`` / ``civic_corridor_setback`` -- a street line
       running along a line of Portland's corridor maps, through
       :func:`flats.geom.corridor.observed_corridors`. Only with the maps in
       hand (the bridge's ``--sources``), only on lots of the layers a map
-      serves, and only with edges.
+      serves, and only with edges. ``civic_corridor_setback_all_streets``
+      beside it -- EVERY street line on a Map 130-1 stretch by the street it
+      abuts -- only where the snapshot also holds the street network.
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.
@@ -269,13 +331,17 @@ def observed_facts(
     edges = json.loads(row.get("edges_json") or "[]")
     bearings = json.loads(row.get("front_bearings_json") or "[]")
     if edges:
-        out.update(observed_alley(edges, bearings))
-        if len(bearings) < 2 or two_streets(bearings):
+        out.update(registry_alley(edges, bearings, _cover(row, edges)))
+        if _counts_streets(row, layers) and through_lot(edges, bearings):
+            out["corner_lot"] = True
+        elif len(bearings) < 2 or two_streets(bearings):
             out["corner_lot"] = len(bearings) >= 2
         if corridors:
             out.update(observed_corridors(edges, _layer_id(row), corridors))
     if layers is not None and row.get("neighbour_zones_json"):
         out.update(_neighbour_facts(row, layers))
+    if layers is not None and edges:
+        out.update(_park_facts(row, edges, layers))
     if layers is not None:
         out.update(_map_code_facts(row, layers))
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
@@ -309,6 +375,34 @@ def _home_layer(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> Layer | 
     return layers.get(layer_id) if layer_id is not None else None
 
 
+def _counts_streets(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> bool:
+    """Whether the lot's own code makes a corner of ANY two street frontages.
+
+    True where the jurisdiction's ``corner_lot`` definition is the
+    ``frontage_count`` test (:mod:`flats.rules.definitions`) -- Gresham's
+    "a lot that has frontage on two or more streets", which asks nothing
+    about the streets meeting, so a through lot is a corner there. Every
+    other code read asks for intersecting or adjacent frontages, which a
+    through lot does not have. Definitions are the layer's own or adopted by
+    ``definitions_from``, as :meth:`~flats.rules.resolver.RuleSet.definitions_for`
+    walks them; without ``layers`` the question is not asked.
+    """
+    if layers is None:
+        return False
+    queue = [_layer_id(row)]
+    seen: set[str] = set()
+    while queue:
+        current = queue.pop(0)
+        if current is None or current in seen or current not in layers:
+            continue
+        seen.add(current)
+        defn = layers[current].definitions.get("corner_lot")
+        if defn is not None:
+            return getattr(defn, "test", None) == "frontage_count"
+        queue.extend(layers[current].definitions_from)
+    return False
+
+
 def _map_code_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
     """The site facts the lot's own map code settles (an alias ruling's
     ``observes``): Fairview's ``FLX`` IS the VC flex area, so a lot mapped
@@ -326,6 +420,50 @@ def screened_zone(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) ->
     code = str(row.get("zone"))
     home = _home_layer(row, layers) if layers is not None else None
     return (home.holds(code) or code) if home is not None else code
+
+
+def _normaliser(layers: Mapping[str, Layer]) -> Callable[[str, str], str | None]:
+    """A neighbour's map code spelled the way ITS layer screens it, or None
+    where the corpus has no layer for its jurisdiction (see
+    :func:`_neighbour_facts`)."""
+
+    def normalise(neighbour_juris: str, raw: str) -> str | None:
+        try:
+            layer = layers.get(layer_id_for(neighbour_juris))
+        except KeyError:
+            return None
+        if layer is None:
+            return None
+        code, held = zone_for(layer, raw)
+        return held or code
+
+    return normalise
+
+
+def _across_clear(
+    row: Mapping[str, Any], n_edges: int, layers: Mapping[str, Layer] | None
+) -> tuple[bool, ...]:
+    """Per s4 edge: a street line surely facing none of the zones the lot's
+    layer names for its across-the-street setback
+    (:func:`flats.geom.neighbour.street_lines_clear`, Portland
+    33.130.215.B.1.b). All False without the corpus, without s4's
+    ``street_across_json`` (a stage file older than the column: nothing
+    read across the street), where the record does not match the edges,
+    and where the lot's layer declares no across-the-street list."""
+    none = (False,) * n_edges
+    raw = row.get("street_across_json")
+    if layers is None or not raw:
+        return none
+    home = _home_layer(row, layers)
+    if home is None:
+        return none
+    rule = next((home.neighbours[c] for c in ACROSS_STREET_CONDITIONS if c in home.neighbours), None)
+    if rule is None:
+        return none
+    across = json.loads(raw)
+    if not isinstance(across, list) or len(across) != n_edges:
+        return none
+    return street_lines_clear(across, rule, str(row.get("jurisdiction")), _normaliser(layers))
 
 
 def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
@@ -347,19 +485,8 @@ def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dic
         home = None
     if home is None or not home.neighbours:
         return {}
-
-    def normalise(neighbour_juris: str, raw: str) -> str | None:
-        try:
-            layer = layers.get(layer_id_for(neighbour_juris))
-        except KeyError:
-            return None
-        if layer is None:
-            return None
-        code, held = zone_for(layer, raw)
-        return held or code
-
     across = json.loads(row["neighbour_zones_json"])
-    lines = lines_from_quadfit(across, normalise)
+    lines = lines_from_quadfit(across, _normaliser(layers))
     # Traced, and every edge a street edge: a whole block. An empty list is
     # a lot s4 never traced and stays unanswered, and so does an irregular
     # lot, whose edge classes are the guesswork the uniform buffer exists
@@ -370,6 +497,27 @@ def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dic
         and TIER.get(str(row.get("tier"))) in (Tier.clean, Tier.corner)
     )
     return observed_neighbours(lines, home.neighbours, juris, all_street=all_street)
+
+
+def _park_facts(row: Mapping[str, Any], edges: Sequence[Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
+    """``abuts_park`` for one s4 row, or nothing.
+
+    The lot's layer supplies which ORCA unit types are a park; a layer that
+    declares no ``parks:`` block answers nothing. A whole block is read off
+    the edge classes rather than off the ORCA column -- no lot line, no park
+    across one -- on the same trust (a clean or corner lot) the neighbour
+    facts put in s4's street classes.
+    """
+    home = _home_layer(row, layers)
+    if home is None or not home.parks:
+        return {}
+    all_street = (
+        all(str(e[4]) == "F" for e in edges)
+        and TIER.get(str(row.get("tier"))) in (Tier.clean, Tier.corner)
+    )
+    raw = row.get("park_across_json")
+    across = json.loads(raw) if raw else None
+    return observed_parks(across, home.parks, all_street=all_street)
 
 
 @dataclass(frozen=True, slots=True)
@@ -399,6 +547,11 @@ class QuadfitLot:
     #: The ground s5o's carve overlays take off the lot (``carve_wkb``);
     #: None where none touches it.
     carve: Any = None
+    #: Where a rear alley that runs only PART of the rear line runs, per rear
+    #: line (:func:`flats.geom.alley.rear_cover_runs`); empty where the alley
+    #: runs the whole line, is not at the rear, or nothing measured it.
+    #: :func:`screen_lot` measures the run behind each envelope from it.
+    rear_runs: tuple[Any, ...] = ()
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -433,7 +586,12 @@ _EDGE_CLASS: dict[str, EdgeClass] = {
 }
 
 
-def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
+def lot_edges(
+    row: Mapping[str, Any],
+    geom: Any = None,
+    corridors: Sequence[CorridorMap] = (),
+    layers: Mapping[str, Layer] | None = None,
+) -> LotEdges | None:
     """s4's edge record as the envelope reads it, or None where s4 traced none.
 
     The class letters map one to one, but for the alley: s4 records it as
@@ -441,14 +599,32 @@ def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
     alley rules per line (``alley_at_rear`` on the rear setback,
     ``setback_alley_side_ft`` for the side), so the edge is named rear or
     side by the same bearing test the alley facts use and carries the flag.
+
+    With the corridor maps in hand, a street edge read surely off every Map
+    130-1 stretch serving the lot carries ``off_corridor``
+    (:func:`flats.geom.corridor.off_corridor_lines`), for
+    ``setback_street_off_corridor_ft``. Without them no edge does.
+
+    With the corpus in hand and s4's ``street_across_json`` on the row, a
+    street edge whose every ray across the street found a zone the lot's
+    layer does not name for its across-the-street setback carries
+    ``across_clear`` (:func:`_across_clear`), for
+    ``setback_street_across_nonresidential_ft``. Without either, no edge does.
     """
     raw = json.loads(row.get("edges_json") or "[]")
     if not raw:
         return None
     bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
     named = iter(alley_lines(raw, bearings))
+    # Where along each alley edge the alley runs (FOLLOWUPS 3(e)); "" on an
+    # alley edge with none on record, so the envelope vouches for no stretch.
+    cover = _cover(row, raw) or [None] * len(raw)
+    off = off_corridor_lines(raw, _layer_id(row), corridors) if corridors else (False,) * len(raw)
+    clear = _across_clear(row, len(raw), layers)
     edges: list[Edge] = []
-    for x1, y1, x2, y2, letter in raw:
+    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line in zip(
+        raw, cover, off, clear, strict=True
+    ):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         if letter == ALLEY_CLASS:
             cls = EdgeClass.rear if next(named) == "rear" else EdgeClass.side
@@ -464,6 +640,9 @@ def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
                 bearing_deg=bearing_deg(x1, y1, x2, y2),
                 cls=cls,
                 alley=letter == ALLEY_CLASS,
+                cover=(stretch or "") if letter == ALLEY_CLASS else None,
+                off_corridor=bool(off_line),
+                across_clear=bool(clear_line) and letter == STREET_CLASS,
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -476,7 +655,22 @@ def lot_edges(row: Mapping[str, Any], geom: Any = None) -> LotEdges | None:
     )
 
 
-def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
+def _yard(rules: ZoneResolution, name: str) -> float | None:
+    """One yard as the envelope cuts it: zero where the code exempts it, the
+    number where it states one, None where it states none."""
+    if name in set(rules.exempted):
+        return 0.0
+    got = rules.get(name)
+    if isinstance(got, bool) or not isinstance(got, (int, float)):
+        return None
+    return float(got)
+
+
+def setbacks_for(
+    rules: ZoneResolution,
+    plain: ZoneResolution | None = None,
+    alleyed: ZoneResolution | None = None,
+) -> Setbacks | None:
     """The yards these rules resolve, as the envelope cuts them.
 
     None where the front, side or rear is not a number: the screen reports
@@ -493,16 +687,29 @@ def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
     Wilsonville define the alley line as a rear lot line, and s5 cuts it at
     the rear for that reason. A city that waives it says so in
     ``setback_alley_side_ft``.
+
+    ``plain`` is the same lot and design resolved with ``alley_at_rear``
+    False, handed over where ``rules`` hold it True and the lot has a rear
+    line off the alley (:func:`envelope_for`). Its rear setback is the
+    ordinary one, for that line; ``rules``' rear -- the alley's variant,
+    exempt or a number -- goes to :attr:`Setbacks.alley_rear_ft`, for the
+    rear edges on the alley. Where the two agree nothing is split. Where
+    ``plain`` states no rear number the line off the alley has none, and the
+    answer is None like any other yard without one.
+
+    ``alleyed`` is the other way round: the same lot and design resolved
+    with ``alley_at_rear`` True, handed over where ``rules`` hold it False
+    because the alley runs only PART of the rear line (:func:`envelope_for`).
+    ``rules``' rear stays the ordinary one; ``alleyed``'s goes to
+    :attr:`Setbacks.alley_rear_ft`, which the envelope cuts along the
+    stretches s4's cover found the alley on and nowhere else
+    (:func:`flats.geom.envelope._pieces`). Where ``alleyed`` states no rear
+    number, or the same one, nothing is split: every rear line keeps the
+    ordinary rear, the answer before 2026-09-29.
     """
-    exempted = set(rules.exempted)
 
     def number(name: str) -> float | None:
-        if name in exempted:
-            return 0.0
-        got = rules.get(name)
-        if isinstance(got, bool) or not isinstance(got, (int, float)):
-            return None
-        return float(got)
+        return _yard(rules, name)
 
     front, side, rear = (number(f"setback_{c}_ft") for c in ("front", "side", "rear"))
     if front is None or side is None or rear is None:
@@ -511,12 +718,46 @@ def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
     if total is not None:
         side = max(side, total / 2)
     alley_side = number("setback_alley_side_ft")
+    street_side = number("setback_street_side_ft")
+    # The street line off a mapped corridor (Portland Map 130-1): the zone's
+    # one number for a street lot line off the stretch. Passed only where the
+    # zone states no street-side setback -- then it stands in for the front
+    # number on any street line, which is what it is; beside a street-side
+    # number it would have to say which of the two it replaces, and it is
+    # dropped rather than guessed (every street line keeps its class's).
+    off_corridor = number("setback_street_off_corridor_ft") if street_side is None else None
+    # The side alley line's default is the rear as ``rules`` read it, the
+    # same whether or not a rear line off the alley splits the rear below.
+    alley_side_ft = max(side, rear) if alley_side is None else alley_side
+    alley_rear: float | None = None
+    if plain is not None:
+        ordinary = _yard(plain, "setback_rear_ft")
+        if ordinary is None:
+            return None
+        if ordinary != rear:
+            alley_rear, rear = rear, ordinary
+    elif alleyed is not None:
+        on_alley = _yard(alleyed, "setback_rear_ft")
+        if on_alley is not None and on_alley != rear:
+            alley_rear = on_alley
+    # The street line across from no residential zone (Portland
+    # 33.130.215.B.1.b): the zone's plain street row, on a line off the
+    # corridor whose every ray across the street was read clear. Passed on
+    # the same terms as the off-corridor number, which it refines.
+    clear = (
+        number("setback_street_across_nonresidential_ft")
+        if street_side is None and off_corridor is not None
+        else None
+    )
     return Setbacks(
         front_ft=front,
         side_ft=side,
         rear_ft=rear,
-        street_side_ft=number("setback_street_side_ft"),
-        alley_side_ft=max(side, rear) if alley_side is None else alley_side,
+        street_side_ft=street_side,
+        alley_side_ft=alley_side_ft,
+        street_off_corridor_ft=off_corridor,
+        alley_rear_ft=alley_rear,
+        street_clear_ft=clear,
     )
 
 
@@ -538,7 +779,45 @@ class Envelope:
         return 0.0 if self.geom is None or self.geom.is_empty else float(self.geom.area)
 
 
-def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
+def rear_off_alley(edges: LotEdges | None) -> bool:
+    """Whether this lot has a rear edge on the alley AND a rear edge off it
+    -- two rear lines the rules' one rear setback cannot both describe
+    (FOLLOWUPS 12(b)): a corner lot's line opposite the side street, the
+    second leg of a jogged rear. Read on the edges as the envelope is cut,
+    after a named front has turned the line opposite the side street into a
+    side (:func:`flats.geom.corner.name_front`)."""
+    if edges is None:
+        return False
+    rear = [e for e in edges.edges if e.cls is EdgeClass.rear]
+    return any(e.alley for e in rear) and any(not e.alley for e in rear)
+
+
+def part_rear_alley(lot: QuadfitLot) -> bool:
+    """Whether this lot's rear alley runs only PART of its rear line and the
+    envelope can cut that line stretch by stretch (FOLLOWUPS 3, Steph's
+    careful reading of 2026-09-28): s4 names a rear line an alley line, the
+    registry's ``alley_at_rear`` is off because the cover does not vouch for
+    the whole line, the lot is cut with per-edge strips, and the cover
+    vouches for at least one stretch of a rear alley edge. A tier C lot is
+    shrunk uniformly by its largest yard, and there is no stretch to cut; a
+    lot with no cover on record has no stretch either, and keeps the
+    ordinary rear on the whole line, the court charged against it."""
+    if not lot.facts.alley_at_rear or lot.facts.alley_rear_whole or lot.edges is None:
+        return False
+    if lot.edges.tier not in (Tier.clean, Tier.corner):
+        return False
+    return any(
+        e.alley and e.cls is EdgeClass.rear and e.cover and cover_stretches(e.length_ft, e.cover)
+        for e in lot.edges.edges
+    )
+
+
+def envelope_for(
+    lot: QuadfitLot,
+    rules: ZoneResolution,
+    plain: ZoneResolution | None = None,
+    alleyed: ZoneResolution | None = None,
+) -> Envelope:
     """The envelope this lot offers under these rules (FOLLOWUPS 12).
 
     Cut from the taxlot with :func:`flats.geom.envelope.buildable` at the
@@ -557,22 +836,63 @@ def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
     Tier C is cut uniformly at the largest yard, the same conservative
     shape s5 cuts, so its rear strip is that largest yard and is reported
     as the cut the court is charged against.
+
+    ``plain`` is the same lot and design resolved with ``alley_at_rear``
+    False (:func:`screen_lot` resolves it where ``rules`` hold the fact
+    True). Read only on a lot with a rear line on the alley and another off
+    it (:func:`rear_off_alley`): the alley's rear setback -- Portland's
+    waiver, Gresham's rear-with-alley number -- goes to the rear edges on
+    the alley and the ordinary one to the rest (:func:`setbacks_for`). A
+    caller that hands no ``plain`` for such a lot gets quadfit's envelope
+    where the alley's rear is an exemption, as before 2026-09-29.
+
+    ``alleyed`` is the same lot and design resolved with ``alley_at_rear``
+    True, read only on a lot whose alley runs PART of its rear line
+    (:func:`part_rear_alley`): the covered stretches take its rear, the rest
+    of the line the larger of it and the ordinary rear (:func:`setbacks_for`).
+    The court is then charged against the smaller strip: where the alley's
+    rear is the smaller the envelope reports it as its rear cut
+    (:attr:`Envelope.rear_cut_ft`), since behind the covered stretch that is
+    all the envelope lost -- charging the ordinary rear there would credit
+    the court with ground the envelope still holds.
     """
     quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit")
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
-    setbacks = setbacks_for(rules)
+    split = rear_off_alley(lot.edges)
+    part = alleyed is not None and part_rear_alley(lot)
+    setbacks = setbacks_for(rules, plain if split else None, alleyed if part else None)
     if setbacks is None:
         return quadfit
     strips = lot.edges.tier in (Tier.clean, Tier.corner)
-    if strips and "setback_rear_ft" in rules.exempted and any(
-        e.cls is EdgeClass.rear and not e.alley for e in lot.edges.edges
-    ):
+    if split and plain is None and strips and "setback_rear_ft" in rules.exempted:
         # The exemption is about the rear line on the alley; a rear line that
-        # is not on it has a setback this resolution does not carry.
+        # is not on it has a setback this resolution does not carry, and the
+        # caller did not resolve it (``plain``).
         return quadfit
     geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
-    return Envelope(geom, None if strips else setbacks.largest_ft, "flats", setbacks)
+    cut = None if strips else setbacks.largest_ft
+    if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
+        cut = setbacks.alley_rear_ft
+    return Envelope(geom, cut, "flats", setbacks)
+
+
+def _cover(row: Mapping[str, Any], edges: Sequence[Any]) -> list[str | None] | None:
+    """s4's ``alley_cover_json`` on one stage-file row, parallel to ``edges``
+    (:func:`flats.geom.alley.decode_cover`); None where s4 predates the
+    column or the record does not match the edges."""
+    return decode_cover(row.get("alley_cover_json"), len(edges))
+
+
+def _side_alley_along(row: Mapping[str, Any]) -> bool:
+    """:func:`flats.geom.alley.side_alley_along` on one stage-file row; False
+    where s4 predates ``alley_cover_json`` (nothing measured the stretch)."""
+    edges = json.loads(row.get("edges_json") or "[]")
+    return side_alley_along(
+        edges,
+        json.loads(row.get("front_bearings_json") or "[]"),
+        _cover(row, edges),
+    )
 
 
 def lot_from_row(
@@ -593,19 +913,37 @@ def lot_from_row(
     observed = observed_facts(row, layers, corridors)
     lot_wkb = row.get("lot_wkb")
     lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
-    edges = lot_edges(row, lot_geom)
+    edges = lot_edges(row, lot_geom, corridors, layers)
+    raw_edges = json.loads(row.get("edges_json") or "[]")
+    s4_alley = (
+        observed_alley(raw_edges, json.loads(row.get("front_bearings_json") or "[]"))
+        if raw_edges
+        else {}
+    )
     facts = LotFacts(
         lot_sqft=_finite(row.get("area_sqft")) or 0.0,
         frontage_ft=frontage if frontage is not None else 0.0,
         lot_width_ft=_finite(row.get("lot_width_ft")),
         lot_depth_ft=_finite(row.get("lot_depth_ft")),
         geometry=tier,
-        envelope_rear_ft=carved_rear_ft(row, observed),
+        # s5 recorded its cut under s4's own class letter, so the key is s4's
+        # reading of the rear line, not the registry's stricter one.
+        envelope_rear_ft=carved_rear_ft(row, s4_alley),
         # The alley behind or beside the lot and how wide s4 measured it: the
         # court it feeds (FOLLOWUPS 4(b), :func:`flats.score.paper.court_depth`,
-        # :func:`flats.score.paper.side_column`).
-        alley_at_rear=bool(observed.get("alley_at_rear")),
-        alley_at_side=bool(observed.get("alley_at_side")),
+        # :func:`flats.score.paper.side_column`). A rear alley on s4's three
+        # rays of five is enough to reach the court from (the court's own
+        # aisle meets it wherever it runs); the row of stalls backs out into
+        # it only where it runs the whole rear line (FOLLOWUPS 3(d)) -- the
+        # registry's ``alley_at_rear``, :func:`flats.geom.alley.registry_alley`.
+        alley_at_rear=bool(s4_alley.get("alley_at_rear")),
+        alley_rear_whole=bool(observed.get("alley_at_rear")),
+        # A side alley feeds the court only where it runs the whole side
+        # line (FOLLOWUPS 3(c)): s4 names a line an alley line on three rays
+        # of five, and a stub along half of it would park the court against
+        # a fence. The registry's ``alley_at_side`` -- the line abuts an
+        # alley, for its setback -- is left as s4 read it.
+        alley_at_side=bool(observed.get("alley_at_side")) and _side_alley_along(row),
         alley_width_ft=_finite(row.get("alley_width_ft")),
         # Two streets that really are two: the side street may take the
         # driveway (:func:`flats.score.paper.side_street_fed`).
@@ -631,6 +969,15 @@ def lot_from_row(
         lot_geom=lot_geom,
         edges=edges,
         carve=shapely.from_wkb(carve_wkb) if carve_wkb else None,
+        rear_runs=(
+            rear_cover_runs(
+                raw_edges,
+                json.loads(row.get("front_bearings_json") or "[]"),
+                _cover(row, raw_edges),
+            )
+            if facts.alley_at_rear and not facts.alley_rear_whole
+            else ()
+        ),
     )
 
 
@@ -746,6 +1093,82 @@ def _if_signed(
     return screen(signed, lot, design, fit, policy=policy, relief=relief, config=config)
 
 
+def _rear_ft(env: Envelope, rules: ZoneResolution) -> float:
+    """How deep the strip this envelope lost at the rear is: the recorded
+    cut, else the rear setback it was cut with, else the rules' number (0
+    where they waive it or state none) -- where :func:`usable_run_ft`
+    probes for the envelope behind the alley."""
+    if env.rear_cut_ft is not None:
+        return float(env.rear_cut_ft)
+    if env.setbacks is not None:
+        return float(env.setbacks.rear_ft)
+    held = rules.get("setback_rear_ft")
+    return float(held) if isinstance(held, (int, float)) else 0.0
+
+
+def _screen_on(
+    here: QuadfitLot,
+    design: Design,
+    config: Configuration,
+    got: ZoneResolution,
+    env: Envelope,
+    front: float | None,
+    angles: Sequence[float],
+    fitters: dict[Any, Fitter],
+    step_deg: float,
+    *,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    plan: Any = None,
+) -> tuple[Screened, Fitter]:
+    """One design screened on one envelope and one named front, for
+    :func:`screen_lot` to rank against the others it tries. ``plan`` keys
+    the search apart where a through lot's ends are named (FOLLOWUPS 6(i))."""
+    key = (env.source, env.setbacks, front, plan)
+    if key not in fitters:
+        fitters[key] = Fitter(env.geom, angles)
+    if here.facts.alley_at_rear and not here.facts.alley_rear_whole:
+        # A rear alley along PART of the rear line is the court's
+        # aisle only where the stretch it runs, with this envelope
+        # behind it, is as long as the row (Steph 2026-09-28).
+        run = usable_run_ft(here.rear_runs, here.lot_geom, env.geom, _rear_ft(env, got))
+        here = dataclasses.replace(
+            here, facts=dataclasses.replace(here.facts, alley_rear_run_ft=run)
+        )
+    facts = dataclasses.replace(here.facts, envelope_rear_ft=env.rear_cut_ft)
+    fit = fit_for(
+        fitters[key],
+        design,
+        got,
+        placement=False,
+        carved_rear_ft=env.rear_cut_ft,
+        alley=facts.alley,
+        corner=facts.corner,
+        frontage_ft=facts.frontage_ft,
+        street_deg=here.front_bearings if front is None else (front,),
+    )
+    result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
+    shadow = _if_signed(
+        got, facts, design, fit, result, policy=policy, relief=relief, config=config
+    )
+    return (
+        Screened(
+            lot=here,
+            design=design,
+            rules=got,
+            config=config,
+            fit=fit,
+            screening=result,
+            signed=shadow,
+            angles=len(angles),
+            step_deg=step_deg,
+            envelope=env,
+            front_deg=front,
+        ),
+        fitters[key],
+    )
+
+
 def screen_lot(
     lot: QuadfitLot,
     designs: Sequence[Design],
@@ -796,50 +1219,76 @@ def screen_lot(
         # the lot is cut with that front; where it leaves it to the applicant
         # each street is tried and the better answer kept. None: no front is
         # named and every street edge is a front, as before 2026-09-26.
+        #
+        # WHICH END OF A THROUGH LOT (FOLLOWUPS 6(i)): a lot with a street
+        # at each end names its far line by `front_lot_line_through` --
+        # `owner` tries each end as the front with the other the rear and
+        # keeps the better; `both_unless_no_access` and unread screen both
+        # fronts and each end as the rear and keep the WORSE, since nothing
+        # says which is true; `both` is the lot as cut.
         fronts: tuple[float | None, ...] = corner_fronts(
             lot.edges, front_lot_line_rule(got)
         ) or (None,)
+        plans: list[tuple[Any, LotEdges | None, float | None]] = []
+        worst = False
+        if fronts != (None,) and lot.edges is not None:
+            plans = [(f, name_front(lot.edges, f), f) for f in fronts]
+        else:
+            readings, worst = through_plans(lot.edges, front_lot_line_through_rule(got))
+            plans = [(("through", k), e, None) for k, e in enumerate(readings)]
+            if not plans:
+                plans = [(None, lot.edges, None)]
         tried: list[tuple[Screened, Fitter]] = []
-        for front in fronts:
+        plain: ZoneResolution | None = None
+        alleyed: ZoneResolution | None = None
+        for plan_key, plan_edges, front in plans:
             here = lot
-            if front is not None and lot.edges is not None:
-                here = dataclasses.replace(lot, edges=name_front(lot.edges, front))
-            env = envelope_for(here, got)
-            key = (env.source, env.setbacks, front)
-            if key not in fitters:
-                fitters[key] = Fitter(env.geom, angles)
-            facts = dataclasses.replace(lot.facts, envelope_rear_ft=env.rear_cut_ft)
-            fit = fit_for(
-                fitters[key],
-                design,
-                got,
-                placement=False,
-                carved_rear_ft=env.rear_cut_ft,
-                alley=facts.alley,
-                corner=facts.corner,
-            )
-            result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
-            shadow = _if_signed(
-                got, facts, design, fit, result, policy=policy, relief=relief, config=config
-            )
-            tried.append((
-                Screened(
-                    lot=here,
-                    design=design,
-                    rules=got,
-                    config=config,
-                    fit=fit,
-                    screening=result,
-                    signed=shadow,
-                    angles=len(angles),
-                    step_deg=step_deg,
-                    envelope=env,
-                    front_deg=front,
+            if plan_edges is not lot.edges:
+                here = dataclasses.replace(lot, edges=plan_edges)
+            if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
+                # A rear line off the alley owes the ordinary rear setback:
+                # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
+                bare = configure(
+                    lot.facts, design, observed={**lot.observed, "alley_at_rear": False}
+                )
+                plain = rules.resolve(layer_id, lot.zone, bare.conditions, lot=bare.measures)
+            if alleyed is None and part_rear_alley(here):
+                # A rear alley along PART of the line: the covered stretch
+                # abuts the alley and takes its rear (Steph 2026-09-28).
+                on = configure(lot.facts, design, observed={**lot.observed, "alley_at_rear": True})
+                alleyed = rules.resolve(layer_id, lot.zone, on.conditions, lot=on.measures)
+            envs = [envelope_for(here, got, plain)]
+            if alleyed is not None and part_rear_alley(here):
+                # Both cuts are tried and the better answer kept: the stretch
+                # cut is charged the court against the alley's (smaller) rear
+                # everywhere, since the fit does not say where along the line
+                # the court stands, which can cost more behind the uncovered
+                # stretch than it gains behind the covered one; the whole-line
+                # ordinary cut is the answer before 2026-09-29. Each is sound
+                # alone, so the better of the two is.
+                cut = envelope_for(here, got, plain, alleyed)
+                if cut.setbacks != envs[0].setbacks:
+                    envs.append(cut)
+            # The better of the envelope cuts for this reading of the lot;
+            # the readings are ranked against each other below.
+            tried.append(min(
+                (
+                    _screen_on(
+                        here, design, config, got, env, front, angles, fitters, step_deg,
+                        policy=policy, relief=relief, plan=plan_key,
+                    )
+                    for env in envs
                 ),
-                fitters[key],
+                key=lambda t: _front_rank(t[0]),
             ))
         # Drawn for the winner only: one more window search per design.
-        won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        if worst:
+            # The worse reading: the lower colour, the tighter fit, and on a
+            # tie (the pod's slack is often measured across the lot, which
+            # the ends do not touch) the smaller envelope.
+            won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
+        else:
+            won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
         out.append(dataclasses.replace(won, drawing=drawing_for(won, fitter)))
     return out
 
@@ -850,22 +1299,43 @@ def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     The same search the verdict read, asked once more for a window: the
     building at the street end, its lane beside it, the court behind it at
     the depth :func:`flats.score.paper.court_depth` charges (or the column
-    along a side alley, :func:`flats.score.paper.side_column`), and the room
+    along a side alley, :func:`flats.score.paper.side_column`; or the court
+    BESIDE the building, :func:`flats.score.paper.side_court`), and the room
     the search found around them. Changes no verdict. The building stands
     as near the lot's front lines as named for this screen as the room
     allows -- on a corner lot, the street it was laid out fronting.
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
     rear = s.envelope.rear_cut_ft if s.envelope else None
+    street = ()
+    if s.lot.edges is not None:
+        street = tuple((e.x1, e.y1, e.x2, e.y2) for e in s.lot.edges.of_class(EdgeClass.front))
+    if s.fit.beside:
+        beside = side_court(
+            s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.frontage_ft
+        )
+        beyond = None if beside is None else _beside_beyond(beside, s.fit.required_ft, s.rules, rear)
+        if beside is None or beyond is None or math.isinf(beyond):
+            return None
+        got = draw(
+            fitter,
+            s.fit,
+            width_ft=s.design.footprint.width_ft,
+            depth_ft=s.design.footprint.depth_ft,
+            lane_ft=0.0,
+            court_depth_ft=0.0,
+            court_beyond_ft=beyond,
+            street=street,
+            beside_band_ft=beside.band_ft,
+            beside_len_ft=beside.length_ft,
+        )
+        return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
         got = side_column(s.design, s.rules, alley)
         court = got[0] if got is not None else 0.0
     else:
         court = court_depth(s.design, s.rules, alley)[0]
     beyond = _court_beyond_rear(s.design, s.rules, rear, alley, column=s.fit.column and court > 0)
-    street = ()
-    if s.lot.edges is not None:
-        street = tuple((e.x1, e.y1, e.x2, e.y2) for e in s.lot.edges.of_class(EdgeClass.front))
     got = draw(
         fitter,
         s.fit,
@@ -884,6 +1354,10 @@ def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
 #: A stall band's standing in the choice of front: Steph's ruling of
 #: 2026-09-19 (HUMAN_TODO 21) prefers the ``preferred`` band.
 _BAND_RANK: dict[str | None, int] = {"preferred": 0, "target": 1, "minimum": 2}
+
+
+def _env_sqft(s: Screened) -> float:
+    return s.envelope.sqft if s.envelope is not None else 0.0
 
 
 def _front_rank(s: Screened) -> tuple[int, int, int, float]:
@@ -1307,6 +1781,7 @@ __all__ = [
     "lot_from_row",
     "observed_facts",
     "per_lot",
+    "rear_off_alley",
     "row_for",
     "run",
     "screen_lot",

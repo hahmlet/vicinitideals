@@ -836,6 +836,15 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: maximum front, the four Oregon City landscaping minimums, MUC-1's storeys,
 #: and the MUC-2 / MUD / WFDD minimum height (WFDD's storeys as well). FLATS
 #: reads every one of them from the corpus; this pipeline does not.
+#: Grew 2026-09-28 by `setback_street_off_corridor_ft` (FOLLOWUPS 8(d)): the
+#: Map 130-1 side street's own number, a PER-LINE field only FLATS's envelope
+#: reads. This pipeline keeps the corridor's 10 ft on every street line, the
+#: strict end, so the gap can only cost it a lot, never grant one.
+#: Grew 2026-09-29 by `setback_street_across_nonresidential_ft` (CM2, CM3, CE,
+#: CX; Portland 33.130.215.B.1.b): the plain "none" row on a street line read
+#: facing no RF-RM2/RMP zone across the street, a PER-LINE field only FLATS's
+#: envelope reads. This pipeline holds the across-the-street 5 on every street
+#: line, the strict end, so again the gap can only cost it a lot.
 UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 67,
     "min_landscaped_pct": 38,
@@ -850,6 +859,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_side_total_ft": 1,
     "min_building_height_ft": 4,
     "min_building_height_stories": 1,
+    "setback_street_off_corridor_ft": 6,
+    "setback_street_across_nonresidential_ft": 4,
 }
 
 

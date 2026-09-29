@@ -1874,6 +1874,20 @@ defaults:
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-27'
     quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L847-L849"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # By definition: Chapter 39 defines no through lot; an interior lot's front
+  # is "a line separating the lot from the street or accessway" and the rear
+  # "The line dividing one lot from another", which a street line is not.
+  # Grepped all 23 stored files: no double-frontage or through-lot rule.
+  front_lot_line_through:
+    value: both
+    cite: MCC 39.2000, Lot Line (Front), for an interior lot a line separating the lot from the street
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L846-L848,L859-L861"
   # NO MAXIMUM, and this one is absence rather than `exempt: true`. The word
   # "maximum" does not occur once in 39.6500 through 39.6600, and the chapter
   # builds no apparatus for one: no ceiling table, no exempt space types, no

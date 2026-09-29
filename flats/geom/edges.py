@@ -113,6 +113,31 @@ class Edge:
     #: carve that one line out (Portland waives the side and rear setback from
     #: it). Never set on a front -- an alley is not a street.
     alley: bool = False
+    #: Where along an alley edge the alley really runs: quadfit s4's
+    #: ``alley_cover_json`` for this edge, one ``1`` / ``0`` per ray from
+    #: the first point (:func:`flats.geom.alley.cover_stretches`). The empty
+    #: string where s4 recorded none (nothing measured the stretch, so none
+    #: of it is vouched for). None where the edge came from a classifier
+    #: that measures no stretch (:func:`classify`, a midpoint test): the
+    #: flag then stands for the line as it did before 2026-09-28.
+    cover: str | None = None
+    #: A street line read surely OFF every Map 130-1 stretch
+    #: (:func:`flats.geom.corridor.off_corridor`). Orthogonal to ``cls`` as
+    #: ``alley`` is: it lets the zone's setback for a street line off the
+    #: corridor (``setback_street_off_corridor_ft``) reach this one line while
+    #: a line on Division keeps the corridor's 10 ft. False -- the default,
+    #: and the answer wherever nothing read the line -- leaves the line on
+    #: its class's number.
+    off_corridor: bool = False
+    #: A street line read surely clear of every zone the code's
+    #: across-the-street setback names -- every ray across the street found
+    #: a lot of this city in a zone on the ``false_for`` side
+    #: (:func:`flats.geom.neighbour.street_lines_clear`). With
+    #: ``off_corridor`` it lets the zone's plain street setback
+    #: (``setback_street_across_nonresidential_ft``) reach this one line.
+    #: False -- the default, and the answer wherever nothing read the line --
+    #: keeps the across-the-street number.
+    across_clear: bool = False
 
 
 @dataclass(frozen=True, slots=True)

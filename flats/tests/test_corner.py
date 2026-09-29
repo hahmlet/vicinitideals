@@ -9,12 +9,21 @@ beside the building.
 
 from __future__ import annotations
 
+import math
+
 import shapely
 
 import pytest
 
 from flats.designs.model import load_catalog
-from flats.geom.corner import front_bearings, is_corner, line_length, name_front, two_streets
+from flats.geom.corner import (
+    front_bearings,
+    is_corner,
+    line_length,
+    name_front,
+    through_lot,
+    two_streets,
+)
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
 from flats.score.paper import Alley, court_across, front_lot_line_rule, side_street_fed
@@ -101,6 +110,60 @@ def test_two_streets_is_the_one_test_and_it_measures_the_angle_both_ways_round()
     for bearings in ((0.0, 90.0), (0.0, 30.0)):
         edges = LotEdges(Tier.corner, lot.edges, bearings, 150.0, 1.0)
         assert is_corner(edges) is two_streets(bearings)
+
+
+#: A point in east Gresham, EPSG:2913 feet, and a street bearing off the grid
+#: (quadfit's ``_GRESHAM_XY``): each lot is drawn square and moved there, so
+#: the through-lot test meets the magnitudes and rotation s4 hands it.
+GRESHAM_XY = (7_690_412.3, 683_951.7)
+GRESHAM_BEARING = 7.5
+
+
+def at_gresham(*ring: tuple[float, float, str]) -> tuple[list[list[object]], list[float]]:
+    """s4's ``edges_json`` for a lot drawn at the origin, one ``(x, y, cls)``
+    per corner in ring order (the class is the edge leaving that corner),
+    rotated and moved to east Gresham; plus its one street direction."""
+    t = math.radians(GRESHAM_BEARING)
+    x0, y0 = GRESHAM_XY
+
+    def pt(x: float, y: float) -> tuple[float, float]:
+        return x0 + x * math.cos(t) - y * math.sin(t), y0 + x * math.sin(t) + y * math.cos(t)
+
+    edges = []
+    for (xa, ya, cls), (xb, yb, _) in zip(ring, ring[1:] + ring[:1]):
+        edges.append([*pt(xa, ya), *pt(xb, yb), cls])
+    return edges, [GRESHAM_BEARING]
+
+
+def test_a_street_along_two_opposite_lines_is_a_through_lot_and_nothing_else_is() -> None:
+    """Gresham 3.0100 makes a corner of "frontage on two or more streets",
+    and s4 clusters the two ends of a through lot into ONE direction, so
+    :func:`two_streets` cannot see it. The test is quadfit's s6s
+    ``_through_ends``: the street edges split across the bearing by at least
+    40 ft and half the lot's depth."""
+    # 50 x 120, a street across each end.
+    through, bearings = at_gresham((0, 0, "F"), (50, 0, "S"), (50, 120, "F"), (0, 120, "S"))
+    assert through_lot(through, bearings)
+    # A shallow through lot along a block: 120 wide, streets 45 ft apart.
+    shallow, _ = at_gresham((0, 0, "F"), (120, 0, "S"), (120, 45, "F"), (0, 45, "S"))
+    assert through_lot(shallow, bearings)
+
+    # One street, rear lot line -- the plain interior lot.
+    interior, _ = at_gresham((0, 0, "F"), (50, 0, "S"), (50, 120, "R"), (0, 120, "S"))
+    assert not through_lot(interior, bearings)
+    # An alley behind is not a street: every code read says so.
+    alley, _ = at_gresham((0, 0, "F"), (50, 0, "S"), (50, 120, "A"), (0, 120, "S"))
+    assert not through_lot(alley, bearings)
+    # A 30 ft jog in one frontage is one street, not two ends (1S2E15BB-02800).
+    jog, _ = at_gresham(
+        (0, 0, "F"), (40, 0, "F"), (40, 30, "F"), (80, 30, "S"), (80, 150, "R"), (0, 150, "S")
+    )
+    assert not through_lot(jog, bearings)
+    # A corner lot is two directions, not two ends: that is two_streets' question.
+    corner, _ = at_gresham((0, 0, "F"), (50, 0, "S"), (50, 120, "R"), (0, 120, "F"))
+    assert not through_lot(corner, [GRESHAM_BEARING, GRESHAM_BEARING + 90.0])
+    # A lot with no street edge at all (s4 tier D) has no ends.
+    assert not through_lot([], bearings)
 
 
 def test_naming_the_front_makes_the_other_street_a_street_side_and_its_neighbour_a_side() -> None:

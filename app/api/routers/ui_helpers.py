@@ -171,6 +171,25 @@ async def _get_user(session: DBSession, request: Request) -> User | None:
     return None
 
 
+async def _model_in_user_org(
+    session: AsyncSession, request: Request, model_id: UUID
+) -> bool:
+    """Org guard for /ui/models/{model_id}/... routes: True when the Scenario's
+    Deal belongs to the signed-in user's org (always True with isolation off).
+
+    False for an unknown model, a signed-out request, or another org's model;
+    callers answer 404 so a foreign model id is indistinguishable from a
+    missing one.
+    """
+    if not settings.org_isolation_enabled:
+        return True
+    _user = await _get_user(session, request)
+    _user_org = getattr(_user, "org_id", None) if _user is not None else None
+    _scen = await session.get(Scenario, model_id)
+    _deal = await session.get(Deal, _scen.deal_id) if _scen is not None and _scen.deal_id else None
+    return _user_org is not None and _deal is not None and _deal.org_id == _user_org
+
+
 def _apply_org_scope(stmt: Any, user: User | None, model: Any) -> Any:
     """Restrict a SELECT to rows owned by the current user's organization.
 

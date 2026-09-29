@@ -197,15 +197,27 @@ def count_formula_cells(blob: bytes) -> dict[str, int]:
 # to the .xlsx cache. openpyxl then reads those cached values via
 # ``data_only=True``.
 #
-# The harness uses Excel COM on Windows (Office must be installed). A future
-# CI gate will swap in headless LibreOffice via the same interface
-# (``recalc_workbook(path)``) so non-Windows runs can execute the parity
-# tests too. The plan calls this out in §8 / §9.
+# The harness uses Excel COM on Windows (Office must be installed) and
+# headless LibreOffice everywhere else, behind one interface
+# (``recalc_workbook(path)``). CI installs LibreOffice in the full gate and
+# sets ``REQUIRE_XLSX_RECALC=1``, which turns "no backend" from a skip into a
+# failure: these parity tests skipped silently on every CI run until
+# 2026-09-28, a gate that protected nothing.
 
 
-import platform  # noqa: E402 — kept near the COM helpers, not the top imports.
+import os  # noqa: E402 — kept near the COM helpers, not the top imports.
+import platform  # noqa: E402
 import subprocess  # noqa: E402
 from pathlib import Path  # noqa: E402
+
+REQUIRE_RECALC_ENV = "REQUIRE_XLSX_RECALC"
+
+
+def recalc_required() -> bool:
+    """True when this host promised a recalc backend (CI sets the env var)."""
+    return os.environ.get(REQUIRE_RECALC_ENV, "").strip().lower() in (
+        "1", "true", "yes",
+    )
 
 
 class RecalcUnavailableError(RuntimeError):
@@ -285,19 +297,55 @@ def recalc_with_libreoffice(path: Path) -> None:
         raise RecalcUnavailableError(
             "LibreOffice (soffice) not found on PATH"
         )
+    import tempfile
+
     src = Path(path).resolve()
-    out_dir = src.parent
-    subprocess.run(
-        [soffice, "--headless", "--calc", "--convert-to", "xlsx",
-         "--outdir", str(out_dir), str(src)],
-        check=True, capture_output=True, timeout=120,
-    )
-    # LibreOffice writes <stem>.xlsx into out_dir; if it equals src we're
-    # done. If LO chose a different name (rare), surface that as an error.
-    if not src.exists():
-        raise RecalcUnavailableError(
-            f"LibreOffice convert did not produce {src.name}"
+    # Convert into a separate directory: LibreOffice will not reliably
+    # overwrite the file it is reading.
+    with tempfile.TemporaryDirectory(prefix="lo-recalc-") as tmp:
+        tmp_dir = Path(tmp)
+        profile = tmp_dir / "profile"
+        _write_always_recalc_profile(profile)
+        out_dir = tmp_dir / "out"
+        out_dir.mkdir()
+        subprocess.run(
+            [soffice, f"-env:UserInstallation={profile.as_uri()}",
+             "--headless", "--calc", "--convert-to", "xlsx",
+             "--outdir", str(out_dir), str(src)],
+            check=True, capture_output=True, timeout=180,
         )
+        produced = out_dir / src.name
+        if not produced.exists():
+            raise RuntimeError(
+                f"LibreOffice convert did not produce {src.name} "
+                f"(outdir holds {sorted(p.name for p in out_dir.iterdir())})"
+            )
+        src.write_bytes(produced.read_bytes())
+
+
+# LibreOffice's default for .xlsx is "never recalculate on load": it keeps
+# whatever cached results the file carries. openpyxl writes formulas with NO
+# cached result, so under the default some cells come back empty after the
+# round trip (first CI run, 2026-09-28: PMT on Debt Schedule, Return ($),
+# the equity multiples). A throwaway user profile with the OOXML and ODF
+# recalc modes set to 0 ("always recalculate") makes LO evaluate every
+# formula, which is what the parity tests assume.
+_ALWAYS_RECALC_XCU = """<?xml version="1.0" encoding="UTF-8"?>
+<oor:items xmlns:oor="http://openoffice.org/2001/registry"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<item oor:path="/org.openoffice.Office.Calc/Formula/Load"><prop oor:name="OOXMLRecalcMode" oor:op="fuse"><value>0</value></prop></item>
+<item oor:path="/org.openoffice.Office.Calc/Formula/Load"><prop oor:name="ODFRecalcMode" oor:op="fuse"><value>0</value></prop></item>
+</oor:items>
+"""
+
+
+def _write_always_recalc_profile(profile: Path) -> None:
+    user = profile / "user"
+    user.mkdir(parents=True, exist_ok=True)
+    (user / "registrymodifications.xcu").write_text(
+        _ALWAYS_RECALC_XCU, encoding="utf-8"
+    )
 
 
 def _find_soffice() -> str | None:
@@ -315,7 +363,8 @@ def recalc_workbook(path: Path) -> str:
 
     Returns the backend name ("excel" or "libreoffice") on success.
     Tries Excel COM first (faster, more accurate), then LibreOffice.
-    Raises ``RecalcUnavailableError`` if neither works.
+    Raises ``RecalcUnavailableError`` if neither works — unless
+    ``REQUIRE_XLSX_RECALC`` is set, in which case the calling test fails.
     """
     if platform.system() == "Windows":
         try:
@@ -323,7 +372,21 @@ def recalc_workbook(path: Path) -> str:
             return "excel"
         except RecalcUnavailableError:
             pass
-    recalc_with_libreoffice(path)
+    try:
+        recalc_with_libreoffice(path)
+    except RecalcUnavailableError as exc:
+        if recalc_required():
+            # pytest.fail raises an OutcomeException, which the callers'
+            # ``except RecalcUnavailableError: pytest.skip(...)`` does not
+            # catch — so a host that promised a backend fails loudly.
+            import pytest
+
+            pytest.fail(
+                f"{REQUIRE_RECALC_ENV} is set but no recalc backend is "
+                f"available: {exc}",
+                pytrace=False,
+            )
+        raise
     return "libreoffice"
 
 

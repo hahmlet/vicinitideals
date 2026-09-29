@@ -9,7 +9,7 @@ from uuid import UUID
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import HTTPException as FastAPIHTTPException, RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 import app as _pkg
@@ -46,7 +46,10 @@ _UI_PATH_PREFIXES = (
     "/ui/",
     "/ui/panel/",
     "/health",
-    "/api/",  # HTMX calls from browser templates don't carry an API key
+    # /api/ skips validate_api_key_header because browser HTMX/fetch calls
+    # carry a session cookie, not an API key. It is NOT public: the
+    # require_auth_for_ui gate demands a signed session OR a valid X-API-Key.
+    "/api/",
     "/tools/",
     "/login",
     "/logout",
@@ -74,10 +77,18 @@ _AUTH_EXEMPT_PATHS = (
     "/forgot-password",
     "/reset-password",
     "/verify-email",
-    "/api/",
     "/share/",  # guest project document-room access, gated by random share slug
     "/d/",  # guest deal-wide document access, gated by random deal-share slug
 )
+
+# Exact /api/ paths reachable with neither a session nor an API key. Each one
+# must carry its own proof of origin; keep this list as short as possible.
+_API_ANONYMOUS_PATHS = frozenset({
+    # Resend inbound-email webhook. Resend cannot send a session or our API
+    # key; the route verifies the Svix HMAC signature and fails closed (403)
+    # when RESEND_WEBHOOK_SECRET is unset.
+    "/api/email-ingest",
+})
 
 # Paths an authenticated-but-unverified user may still access so they
 # can complete verification, finish onboarding, or sign out. Anything
@@ -118,6 +129,17 @@ def _resolve_client_ip(request: Request) -> str | None:
     if request.client is not None:
         return request.client.host
     return None
+
+
+def _has_valid_api_key(request: Request) -> bool:
+    """Constant-time check of the X-API-Key header against the configured key."""
+    import hmac
+
+    presented = request.headers.get("X-API-Key")
+    expected = settings.vicinitideals_api_key
+    if not presented or not expected:
+        return False
+    return hmac.compare_digest(presented.encode(), expected.encode())
 
 
 def _is_ui_path(path: str) -> bool:
@@ -200,6 +222,21 @@ def create_app() -> FastAPI:
             ),
         )
 
+    # Redis / the Celery broker is down: a plain sentence, not a stack trace.
+    # Registered per class so Starlette's MRO lookup picks it over Exception.
+    from app.api.queue_errors import (
+        BROKER_ERRORS,
+        log_queue_unavailable,
+        queue_unavailable_response,
+    )
+
+    async def handle_queue_unavailable(request: Request, exc: Exception) -> Response:
+        log_queue_unavailable(request, exc)
+        return queue_unavailable_response(request)
+
+    for _broker_exc in BROKER_ERRORS:
+        app.add_exception_handler(_broker_exc, handle_queue_unavailable)
+
     @app.exception_handler(FastAPIHTTPException)
     async def handle_http_exception(request: Request, exc: FastAPIHTTPException) -> JSONResponse:
         code = STATUS_CODES.get(exc.status_code)
@@ -226,7 +263,7 @@ def create_app() -> FastAPI:
 
     @app.middleware("http")
     async def validate_user_id_header(request: Request, call_next):
-        if request.headers.get("X-API-Key") != settings.vicinitideals_api_key:
+        if not _has_valid_api_key(request):
             return await call_next(request)
         if _is_ui_path(request.url.path):
             return await call_next(request)
@@ -256,8 +293,7 @@ def create_app() -> FastAPI:
     async def validate_api_key_header(request: Request, call_next):
         if _is_ui_path(request.url.path):
             return await call_next(request)
-        api_key = request.headers.get("X-API-Key")
-        if api_key != settings.vicinitideals_api_key:
+        if not _has_valid_api_key(request):
             return JSONResponse(
                 status_code=403,
                 content=_payload("forbidden", "Invalid API key", None),
@@ -309,10 +345,20 @@ def create_app() -> FastAPI:
 
     @app.middleware("http")
     async def require_auth_for_ui(request: Request, call_next):
-        """Redirect unauthenticated browser requests to /login.
+        """Gate every non-public path on a signed session (or, for /api/ and
+        /mcp, a valid X-API-Key), and pin the caller's identity.
 
-        Exempts: auth pages, static assets, /health, /api/* (HTMX calls carry
-        the session cookie from the browser context so they're fine).
+        Identity rules (read by ``app.api.deps.get_current_user_id``):
+        - Valid X-API-Key (MCP, scripts, smoke checks): ``request.state.auth_via``
+          is ``"api_key"`` and the X-User-ID header is trusted.
+        - Signed session cookie: ``request.state.user_id`` is the session's
+          user. Any X-User-ID header is ignored, so a browser cannot act as
+          another user by sending one.
+        - Nothing else identifies a caller. The old unsigned ``vd_user_id``
+          cookie is not accepted anywhere (it let any value through).
+
+        Public: auth pages, static assets, /health, guest share links
+        (/share/, /d/) and the exact paths in ``_API_ANONYMOUS_PATHS``.
 
         HTMX fragment requests are NOT exempt from the session check — the
         hx-request header is attacker-settable, and a blanket bypass left
@@ -321,26 +367,39 @@ def create_app() -> FastAPI:
         HX-Redirect header instead of a 303, so the client does a full-page
         redirect to /login rather than swapping the login page into a
         fragment. htmx processes HX-Redirect before status handling, so the
-        401 status is safe.
+        401 status is safe. Unauthenticated non-HTMX /api/ calls get a 401
+        JSON body.
         """
         path = request.url.path
-        is_exempt = any(path.startswith(p) for p in _AUTH_EXEMPT_PATHS) or path == "/"
+        is_api = path.startswith("/api/")
         is_htmx = request.headers.get("hx-request") == "true"
-        # MCP clients authenticate via API key; they have no session cookie, so
-        # the session gate would redirect them to /login. Bypass only for /mcp
-        # paths when the key is valid; validate_api_key_header still runs downstream.
-        import hmac as _hmac
-        has_valid_api_key = path.startswith("/mcp") and _hmac.compare_digest(
-            request.headers.get("X-API-Key", ""),
-            settings.vicinitideals_api_key,
-        )
-        if is_exempt or has_valid_api_key:
+
+        from fastapi.responses import RedirectResponse as _RR, Response as _Resp
+
+        # API-key callers (MCP transport, the MCP server's internal client,
+        # scripts, smoke checks) have no session cookie. The key only opens
+        # /api/ and /mcp; UI pages still require a session.
+        if (is_api or path.startswith("/mcp")) and _has_valid_api_key(request):
+            request.state.auth_via = "api_key"
             return await call_next(request)
 
         from app.api.auth import COOKIE_NAME, decode_session_email_verified, decode_session_token
         token = request.cookies.get(COOKIE_NAME)
-        # Also accept legacy vd_user_id cookie so existing sessions aren't broken
-        if token and decode_session_token(token) is not None:
+        session_user_id = decode_session_token(token) if token else None
+        if session_user_id is not None:
+            # The session, not a header, says who this is.
+            request.state.user_id = str(session_user_id)
+            request.state.auth_via = "session"
+
+        is_exempt = (
+            any(path.startswith(p) for p in _AUTH_EXEMPT_PATHS)
+            or path == "/"
+            or path in _API_ANONYMOUS_PATHS
+        )
+        if is_exempt:
+            return await call_next(request)
+
+        if session_user_id is not None:
             # Hard email-verification gate. Legacy UUID-only tokens have no
             # claim → bypass (back-compat). Modern signed sessions with
             # ev=False are bounced to the recovery page unless the path is
@@ -356,27 +415,31 @@ def create_app() -> FastAPI:
                     requested_path = f"{requested_path}?{request.url.query}"
                 next_url = quote(requested_path, safe="")
                 if is_htmx:
-                    from fastapi.responses import Response as _Resp
                     return _Resp(
                         status_code=401,
                         headers={"HX-Redirect": f"/verify-email-required?next={next_url}"},
                     )
-                from fastapi.responses import RedirectResponse as _RR
+                if is_api:
+                    return JSONResponse(
+                        status_code=403,
+                        content=_payload("forbidden", "Email verification required", None),
+                    )
                 return _RR(
                     url=f"/verify-email-required?next={next_url}",
                     status_code=303,
                 )
             return await call_next(request)
-        if request.cookies.get("vd_user_id"):
-            return await call_next(request)
 
         if is_htmx:
-            from fastapi.responses import Response as _Resp
             return _Resp(
                 status_code=401,
                 headers={"HX-Redirect": f"/login?next={request.url.path}"},
             )
-        from fastapi.responses import RedirectResponse as _RR
+        if is_api:
+            return JSONResponse(
+                status_code=401,
+                content=_payload("unauthorized", "Authentication required", None),
+            )
         return _RR(url=f"/login?next={request.url.path}", status_code=303)
 
     app.add_middleware(_NoCacheHTMLMiddleware)
@@ -463,18 +526,9 @@ def create_app() -> FastAPI:
         from app.api.auth import decode_session_token, COOKIE_NAME
         from app.api.csrf import make_csrf_token, validate_csrf_token, CSRF_HEADER
 
-        # Resolve the authenticated user ID (if any) from the session cookie.
-        # Also accepts the legacy vd_user_id cookie so existing sessions still work.
-        import uuid as _uuid
+        # Resolve the authenticated user ID (if any) from the signed session cookie.
         token = request.cookies.get(COOKIE_NAME)
         user_id = decode_session_token(token) if token else None
-        if user_id is None:
-            legacy = request.cookies.get("vd_user_id")
-            if legacy:
-                try:
-                    user_id = _uuid.UUID(legacy)
-                except ValueError:
-                    pass
         user_id_str = str(user_id) if user_id else None
 
         # Always expose the token to templates (empty string when unauthenticated).
@@ -602,7 +656,12 @@ def create_app() -> FastAPI:
         _mcp_client = _httpx.AsyncClient(
             transport=_httpx.ASGITransport(app=app),
             base_url="http://localhost",
-            headers={"X-User-ID": settings.mcp_user_id},
+            # The API key authenticates these internal calls to /api/; without
+            # it the /api/ gate answers 401.
+            headers={
+                "X-User-ID": settings.mcp_user_id,
+                "X-API-Key": settings.vicinitideals_api_key,
+            },
         )
         FastApiMCP(
             app,

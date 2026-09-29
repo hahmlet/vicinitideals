@@ -28,7 +28,7 @@ from app.settings.defaults import ORG_SET_FIELDS, SYSTEM_BASELINE
 
 from tests.conftest import seed_org
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 
 # A field where the user → org → system chain applies (not org-locked).
 OVERRIDABLE_KEY = next(k for k in SYSTEM_BASELINE if k not in ORG_SET_FIELDS)

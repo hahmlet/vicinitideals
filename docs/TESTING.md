@@ -15,7 +15,11 @@
   when test code calls `session.commit()`
 - `httpx.AsyncClient` + `ASGITransport` for API integration tests
 - Seed helpers in `tests/conftest.py`: `seed_org()`, `seed_deal_model()`,
-  `seed_deal_model_with_financials()`
+  `seed_deal_model_with_financials()`. The last one's income stream and OpEx
+  line are active in lease-up + stabilized, as production creates them, so a
+  computed seeded deal earns rent (hand-derived figures pinned in
+  `tests/engines/test_seeded_deal_revenue.py`). Pass `active_in_phases=[]`
+  only when a test truly needs a no-revenue deal.
 - Markers are auto-assigned at collection: e2e by path, integration when DB
   fixtures are present, else unit.
 - A handful of legacy test files still spin up their own in-memory SQLite engine
@@ -147,6 +151,11 @@ $env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_phase_b
 - **Light gate**: Ruff lint + unit tests (every push/PR)
 - **Full gate**: integration tests + E2E (Playwright) + Phase B regression + Trivy
   image scan + Semgrep SAST
+- **Excel-export parity** (`tests/exporters/*parity*`, the recalc harness, the
+  no-Excel-errors sweep — 19 tests) needs a formula engine to recalc the exported
+  workbook: Excel COM on Windows, else headless LibreOffice (`soffice`). Locally
+  they skip without one. The full gate installs `libreoffice-calc` and sets
+  `REQUIRE_XLSX_RECALC=1`, which turns that skip into a failure.
 - CI seeds the login via `app/scripts/seed_e2e_user.py` and the reference rows the
   suite reads but never creates via `app/scripts/seed_e2e_fixtures.py` (brokers, so
   far). Every seeder there is guarded on its table being empty, so it no-ops

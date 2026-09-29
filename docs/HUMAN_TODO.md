@@ -2302,6 +2302,35 @@ More lots on the list, most of which you would skip anyway.
 **Option C — leave them grey.** Nothing changes; they stay out of both the
 green and the red counts, listed as unanswered.
 
+## 24. One small decision: two places say a lot can be a "corner lot" because of a footpath — our map can't see footpaths
+
+Some rules are stricter on corner lots (a wider lot, a longer street
+front). Most cities call a lot a corner lot when it touches two streets
+that meet. Two places add something our map data cannot check:
+
+- **Wilsonville** also counts a lot next to a public pathway strip.
+- **Unincorporated Multnomah County** also counts a lot on a street plus
+  a public accessway.
+
+Today a lot on one street is treated as **not** a corner lot in both. If
+a footpath we can't see runs beside it, the stricter corner rule should
+have applied, and the lot could show green when it should be yellow. We
+have not counted how many lots this could touch; it is the handful of
+zones in those two places that have a stricter corner rule.
+
+**Option A — keep today's reading, recommended for now.** Footpath strips
+beside house lots are rare, and a lot that passes the ordinary rule
+usually passes the corner one too. The lot page already carries the
+normal "check before you buy" caveat.
+
+**Option B — the careful reading.** Every one-street lot in those zones
+shows as "not yet answered" until someone checks for a footpath. Honest,
+but it greys out lots that are almost certainly fine.
+
+**Option C — find a footpath map first.** I look for a city or Metro trail
+and accessway map we could measure against, then decide. Slower, and the
+map may not exist.
+
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
 - **The lot ledger could not see Clackamas County, and it nearly hid item 15's

@@ -6334,14 +6334,13 @@ def _build_su_sheet(
         proj_total_formula = (
             "=" + "+".join(proj_subtotal_refs) if proj_subtotal_refs else "=0"
         )
-        ws.cell(row=line, column=1, value=f"Total Uses P{idx}").font = FONT_LABEL
-        cell = ws.cell(row=line, column=2, value=proj_total_formula)
-        cell.number_format = ACCOUNTING
-        cell.font = FONT_LABEL
-        _proj_total_rows.append(line)
+        _uses_end = line  # first row below the last Use line / subtotal
 
-        # Sources in cols 4-5, parallel to uses starting from use_data_start;
-        # Total Sources on the same row as Total Uses P{n}.
+        # Sources in cols 4-5, parallel to uses starting from use_data_start.
+        # The shared total row (Total Uses P{n} + Total Sources P{n}) goes
+        # below the LONGER of the two lists: a project with more capital
+        # sources than Use rows used to get a source overwritten by a
+        # total whose formula referenced itself (E4 = E4+E5).
         from openpyxl.utils import get_column_letter as _gcl_su
         _SRC_LBL, _SRC_AMT = 4, 5
         _SRC_LETTER = _gcl_su(_SRC_AMT)
@@ -6360,6 +6359,12 @@ def _build_su_sheet(
             _pc.alignment = ALIGN_RIGHT
             _proj_src_refs.append(f"{_SRC_LETTER}{_src_line}")
             _src_line += 1
+        line = max(_uses_end, _src_line)
+        ws.cell(row=line, column=1, value=f"Total Uses P{idx}").font = FONT_LABEL
+        cell = ws.cell(row=line, column=2, value=proj_total_formula)
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_LABEL
+        _proj_total_rows.append(line)
         ws.cell(row=line, column=_SRC_LBL, value=f"Total Sources P{idx}").font = FONT_LABEL
         _sc = ws.cell(row=line, column=_SRC_AMT,
                       value="=" + "+".join(_proj_src_refs) if _proj_src_refs else "=0")

@@ -84,7 +84,7 @@ physically on this lot, with its parking and vehicle access?
 | **Conservative default.** When a standard has two numbers, the binding one is the base value. The permissive one is a variant behind a registered condition | An unmet condition must never unlock the lenient number | `flats/rules/conditions.py`, `test_variants.py` |
 | **A quote is not the right row.** If a note argues for a number, the argument belongs in the variant's `when:`, not in the base value | A correctly quoted wrong row is still a false GREEN | reading |
 | **Never hand-copy a zone.** Use `like:` with its own cite and quote. The claim to borrow is itself a rule | Copies drift apart silently | FLATS_PLAN §17 |
-| **A rule about one of two lot lines needs its own per-line field**, never a variant on the shared number. Examples: `setback_alley_side_ft`, `setback_street_side_ft`, `front_lot_line_corner` | An unread field is merely conservative. A misread variant is a false GREEN | `flats/rules/fields.py` |
+| **A rule about one of two lot lines needs its own per-line field**, never a variant on the shared number. Examples: `setback_alley_side_ft`, `setback_street_side_ft`, `front_lot_line_corner`, `setback_street_off_corridor_ft`, `setback_street_across_nonresidential_ft` (Portland 33.130.215.B.1.b: the across-the-street 5 is the base on every street line; the plain none goes back only to a line read clear across the street and off the corridor) (a lot-level ANY-line variant may stay as the tight reading for edgeless readers; the per-line field gives lines back, and only lines read surely off) | An unread field is merely conservative. A misread variant is a false GREEN | `flats/rules/fields.py` |
 | **New fields are required by default** (`REQUIRED_FIELDS = FIELDS - OPTIONAL_FIELDS`). Decide `OPTIONAL_FIELDS` in the same edit, with a reason | A new standard nobody filled must block, not pass | `flats/rules/fields.py`, `test_unsettled_gates.py` (`test_every_zone_that_owes_a_required_field_says_why`) |
 | **`exempt: true` means "this standard does not reach", never a quantity.** It is the one value that can only produce a false GREEN, so cite the line stating the exemption, not a footnote marker | A cell holding an em dash is not an exemption | `flats/encode/exemptions.py`, `test_exemptions.py` (`test_no_citation_in_this_corpus_points_at_a_footnote_marker`) |
 | A **deliberate absence** (the city states nothing) is different from exempt. Leave the field absent and say so in a comment. A **repeal** is how a code states zero | Absence lets the state layer's cap inherit | `flats/rules/caps.py` |
@@ -147,6 +147,12 @@ Full format: [flats/config/footnotes/README.md](../../flats/config/footnotes/REA
   - corner fronts (`front_lot_line_corner`)
   - corridors
   - neighbour zoning (`abuts_lower_density_zone` and siblings)
+  - `abuts_park` (Metro ORCA unit types across each line)
+- **Parks.** They are a `parks:` block naming which ORCA unit types the
+  code's own definition of a park covers. A type on neither list leaves the
+  line unresolved. Encode a park row one condition deeper than the zero it
+  overrides (`[abuts_nonresidential_zone, abuts_park]`), because there is
+  no negation. Guard: `test_park.py`.
 - **Neighbour zones.** They are a `neighbours:` block with
   `true_for` / `false_for` lists.
   - Write `yes` / `no` quoted: bare, YAML reads them as booleans.
@@ -196,6 +202,32 @@ Full format: [flats/config/footnotes/README.md](../../flats/config/footnotes/REA
   lot is not a "tract".
 - **No garage.** `setback_garage_entrance_ft` is declared excluded. Guard:
   `test_no_catalog_design_has_a_garage`.
+- **An alley along part of a line (Steph, 2026-09-28).** s4 calls a line an
+  alley line on three rays of five, and `alley_cover_json` records how much
+  of it the alley really runs.
+  - Setbacks: the alley's number applies only to the covered stretch. A side
+    line is cut stretch by stretch (`flats.geom.envelope.buildable`). So is a
+    rear line: the rules' rear variant (exempt or alley number) switches on
+    only when the alley runs the whole rear line
+    (`flats.geom.alley.registry_alley`); on a part-covered rear line the
+    bridge resolves the lot again with `alley_at_rear` and the covered
+    stretches take that rear, the rest the larger of the two
+    (`flats.ingest.quadfit.part_rear_alley`). The court is then charged
+    against the smaller strip, and the screen keeps whichever of the two
+    cuts (stretch, or whole line at the ordinary rear) answers better. No
+    cover on record = no stretch = the whole line at the ordinary rear.
+  - Two rear lines, one on the alley (a corner lot's line opposite the side
+    street, a jogged rear): the rear variant reaches only the rear line on
+    the alley; the other keeps the ordinary rear setback. The bridge resolves
+    the lot twice, with and without `alley_at_rear`
+    (`flats.ingest.quadfit.rear_off_alley`, `Setbacks.alley_rear_ft`).
+  - Back-out aisle: a part-covered rear alley still reaches the court (no
+    street lane). It is the court's aisle only where the longest covered
+    stretch with the envelope right behind it (`usable_run_ft`) is at least
+    the row of stalls: stalls × stall width, no end clearance, since
+    `court_across` charges none (`Alley.rear_aisle_for`).
+  - The fit does not place the court along the rear line, so only the
+    length is compared. Missing or unreadable cover means no alley aisle.
 
 ## 8. Verification and second reading
 
@@ -272,6 +304,7 @@ Full format: [flats/config/footnotes/README.md](../../flats/config/footnotes/REA
 | 2026-09-22 | A new zone code warns, does not block, and screens UNKNOWN until ruled (within the week) | same runbook §8 |
 | 2026-09-25 | Batch re-screens. Partial re-screens (splice) are allowed | runbook §4c |
 | 2026-09-26 | Corner lot front: "abide if Portland has guidance". Follow each code's own corner-front definition | `front_lot_line_corner`, `flats/geom/corner.py` |
+| 2026-09-28 | **An alley along part of a lot line.** "Careful reading agreed. And we can use the portion the alley abuts for our travel lane only if the lane is actually long enough to accommodate" | §7. Setbacks: the alley's number reaches only the stretch the alley covers; a rear variant needs the whole rear line. Back-out aisle: the stretch the alley covers, with the envelope behind it, must be at least as long as the row of stalls (stalls × stall width), else the court keeps its own aisle. No cover on record = no alley aisle |
 | standing | All of Oregon is the acquisition market. Data coverage is a separate task | CLAUDE.md |
 
 ## 11. Checklist: a new county's first pass

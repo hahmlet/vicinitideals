@@ -1092,6 +1092,23 @@ defaults:
     url: https://www.clackamas.us/planning/zdo202
     retrieved: '2026-09-27'
     quote: "or/clackamas/_unincorporated/zdo.202.definitions.txt#L285,L289"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # ZDO 202: "A through lot has at least two front lot lines except where
+  # one of the lot lines that would otherwise be a front lot line abuts a
+  # collector, arterial, expressway, interstate, or other feature that
+  # precludes motor vehicle access. In that case, the lot line where access
+  # is precluded is the rear lot line." Nothing measures street class, and
+  # the R zones state a rear (20) above the front (15), so the screen takes
+  # whichever end is the worse to lose.
+  front_lot_line_through:
+    value: both_unless_no_access
+    cite: Clackamas ZDO 202, Lot Line, Front, exception 3, and Lot Line, Rear, exception 3, a through lot has two front lot lines unless one abuts a road that precludes access
+    url: https://www.clackamas.us/planning/zdo202
+    retrieved: '2026-09-27'
+    quote: "or/clackamas/_unincorporated/zdo.202.definitions.txt#L291,L309"
   # 845.03(E)(1)(c), on unit lots: "Driveways and off-street parking areas
   # shall not exceed 12 feet wide." Twelve again -- Gresham, Fairview,
   # Wilsonville and Oregon City all say twelve and Milwaukie says ten. Fail

@@ -32,8 +32,14 @@ from flats.geom.alley import (
     ALLEY_FACTS,
     alley_facts_from_quadfit,
     alley_lines,
+    cover_stretches,
     entailed,
     observed_alley,
+    rear_alley_along,
+    rear_cover_runs,
+    registry_alley,
+    side_alley_along,
+    usable_run_ft,
 )
 from flats.rules.conditions import CONDITIONS, ENTAILS, close_entailed
 from flats.rules.resolver import RuleSet
@@ -146,6 +152,9 @@ def test_the_bridge_reads_s4s_own_record(tmp_path) -> None:
                                    [50, 100, 0, 100, "R"], [0, 100, 0, 0, "S"]])],
         "front_bearings_json": [json.dumps(FRONT_EW)] * 3,
         "jurisdiction": ["portland"] * 3,
+        "alley_cover_json": [json.dumps([None, None, "1" * 10, None]),
+                             json.dumps([None, "1" * 20, None, None]),
+                             json.dumps([None] * 4)],
     })
     path = tmp_path / "s4_lots.parquet"
     frame.to_parquet(path)
@@ -153,6 +162,157 @@ def test_the_bridge_reads_s4s_own_record(tmp_path) -> None:
     assert got["1N1E27AB  100"] == {"abuts_alley": True, "alley_at_rear": True, "alley_at_side": False}
     assert got["1N1E27AB  200"] == {"abuts_alley": True, "alley_at_rear": False, "alley_at_side": True}
     assert got["1N1E27AB  300"] == {"abuts_alley": False, "alley_at_rear": False, "alley_at_side": False}
+    # s4 before the cover column: nothing says the alley runs the rear line
+    # (FOLLOWUPS 3(e)), so the rules get no rear alley line. The lot still
+    # abuts one.
+    old = tmp_path / "s4_old.parquet"
+    frame.drop(columns=["alley_cover_json"]).to_parquet(old)
+    assert alley_facts_from_quadfit(old)["1N1E27AB  100"] == {
+        "abuts_alley": True, "alley_at_rear": False, "alley_at_side": False,
+    }
+
+
+# --- how much of the side line the alley runs ------------------------------
+#
+# FOLLOWUPS 3(c). s4 classes a line A when three of five rays find the
+# alley, so a line can be A with the alley along 40% of it. The court the
+# screen parks beside a side alley can sit anywhere along the side line
+# (the fit is placed at any angle, not at a spot), so the screen parks
+# there only when s4's cover says the alley runs the WHOLE line.
+#
+# 1N1E25DD -09400, NE Portland, s4's own record (EPSG:2913, feet): the
+# alley behind the lot turns north about 8 ft short of the lot's NE corner, so
+# the last two of twenty rays leave it. Its front bearings are two
+# (a through lot), so the A line is named a side.
+REAL_EDGES = [
+    [7658563.26, 688589.09, 7658560.87, 688500.08, "R"],
+    [7658560.87, 688500.08, 7658459.35, 688443.93, "F"],
+    [7658459.35, 688443.93, 7658463.31, 688591.76, "F"],
+    [7658463.31, 688591.76, 7658563.26, 688589.09, "A"],
+]
+REAL_FB = [88.47, 28.94]
+
+
+def test_the_real_alley_that_turns_away_is_not_a_side_court_alley() -> None:
+    assert alley_lines(REAL_EDGES, REAL_FB) == ("side",)
+    assert observed_alley(REAL_EDGES, REAL_FB)["alley_at_side"] is True
+    # s4's measured cover, west to east: the last two rays off the alley.
+    assert side_alley_along(REAL_EDGES, REAL_FB, [None, None, None, "1" * 18 + "0" * 2]) is False
+    # The same line with the alley along all of it parks the court there.
+    assert side_alley_along(REAL_EDGES, REAL_FB, [None, None, None, "1" * 20]) is True
+
+
+# 1S2E05AB -11900, Portland R5, at real coordinates (EPSG:2913; fixture
+# Lot Analysis/quadfit/tests/fixtures/alley_stops_short_1S2E05AB_11900.json).
+# The street is east; the 13 ft alley behind the lot is drawn only as far
+# north as the lot's south-west corner, so the 88.7 ft rear line is A on
+# three rays of five while ten of its eighteen cover rays, from the south,
+# find the alley. Green on run 35 with the whole rear line as the court's
+# aisle and the whole rear yard waived (FOLLOWUPS 3(d)/(e)).
+STUB_EDGES = [
+    [7667288.85, 682083.46, 7667286.58, 681994.75, "F"],
+    [7667286.58, 681994.75, 7667186.62, 681997.77, "S"],
+    [7667186.62, 681997.77, 7667188.88, 682086.49, "A"],
+    [7667188.88, 682086.49, 7667288.85, 682083.46, "S"],
+]
+STUB_FB = [88.54]
+STUB_COVER = [None, None, "1" * 10 + "0" * 8, None]
+
+
+def test_the_real_rear_alley_that_stops_short_is_not_the_whole_rear_line() -> None:
+    assert alley_lines(STUB_EDGES, STUB_FB) == ("rear",)
+    # s4's three-of-five reading still puts the alley at the rear ...
+    assert observed_alley(STUB_EDGES, STUB_FB)["alley_at_rear"] is True
+    # ... but the alley runs only the southern half of the line.
+    assert rear_alley_along(STUB_EDGES, STUB_FB, STUB_COVER) is False
+    assert registry_alley(STUB_EDGES, STUB_FB, STUB_COVER)["alley_at_rear"] is False
+    assert registry_alley(STUB_EDGES, STUB_FB, STUB_COVER)["abuts_alley"] is True
+    # The same line with the alley along all of it keeps the waiver.
+    whole = [None, None, "1" * 18, None]
+    assert rear_alley_along(STUB_EDGES, STUB_FB, whole) is True
+    assert registry_alley(STUB_EDGES, STUB_FB, whole)["alley_at_rear"] is True
+    # Nothing on record is never the whole line.
+    assert rear_alley_along(STUB_EDGES, STUB_FB, None) is False
+    assert rear_alley_along(STUB_EDGES, STUB_FB, [None, None, "", None]) is False
+
+
+def test_the_stretch_the_real_stub_covers_runs_from_the_south_corner() -> None:
+    length = 88.73
+    ((start, end),) = cover_stretches(length, STUB_COVER[2])
+    assert start == 0.0
+    # The tenth ray of eighteen, 2.5 ft in and evenly spaced: about 46.8 ft.
+    assert end == pytest.approx(2.5 + (length - 5.0) * 9 / 17, abs=0.01)
+    assert cover_stretches(length, "1" * 18) == ((0.0, length),)
+    assert cover_stretches(length, "") == ()
+
+
+def test_the_run_behind_the_real_stub_stops_at_the_side_yard_and_the_alleys_end() -> None:
+    # Steph's ruling 2026-09-28: the stretch is the court's aisle only if it
+    # is long enough, with the envelope behind it. The stub's 46.8 ft from
+    # the south corner loses the 5 ft side yard at that corner: 41.8 ft.
+    import shapely
+
+    lot = shapely.Polygon([(e[0], e[1]) for e in STUB_EDGES])
+    envelope = lot.buffer(-5, join_style="mitre")
+    (line,) = rear_cover_runs(STUB_EDGES, STUB_FB, STUB_COVER)
+    assert len(line) == 1
+    stub_end = 2.5 + (88.73 - 5.0) * 9 / 17
+    assert usable_run_ft((line,), lot, envelope, 5.0) == pytest.approx(stub_end - 5.0, abs=0.6)
+    # The whole line: its length less both side yards.
+    whole = rear_cover_runs(STUB_EDGES, STUB_FB, [None, None, "1" * 18, None])
+    assert usable_run_ft(whole, lot, envelope, 5.0) == pytest.approx(88.73 - 10.0, abs=0.6)
+    # Nothing on record, no envelope, or no lot: no run.
+    assert rear_cover_runs(STUB_EDGES, STUB_FB, None) == ()
+    assert usable_run_ft((line,), lot, None, 5.0) == 0.0
+    assert usable_run_ft((line,), None, envelope, 5.0) == 0.0
+    # A notch in the envelope behind the stretch breaks the run.
+    notched = envelope.difference(shapely.box(7667180, 682015, 7667200, 682020))
+    assert usable_run_ft((line,), lot, notched, 5.0) < stub_end - 5.0 - 10.0
+
+
+def test_no_cover_measured_is_no_side_alley_court() -> None:
+    whole = [None, None, None, "1" * 20]
+    assert side_alley_along(REAL_EDGES, REAL_FB, None) is False
+    assert side_alley_along(REAL_EDGES, REAL_FB, whole[:3]) is False  # wrong length
+    assert side_alley_along(REAL_EDGES, REAL_FB, [None, None, None, None]) is False
+    assert side_alley_along(REAL_EDGES, REAL_FB, [None, None, None, ""]) is False
+
+
+def test_a_rear_alley_is_not_a_side_one_however_well_covered() -> None:
+    assert side_alley_along(REAR_ALLEY, FRONT_EW, [None, None, "1" * 20, None]) is False
+    assert side_alley_along(SIDE_ALLEY, FRONT_EW, [None, "1" * 20, None, None]) is True
+
+
+def test_a_side_line_half_street_half_alley_is_not_on_the_alley() -> None:
+    # The east line split in two collinear pieces: the south half S, the
+    # north half A. Whole cover on the A half is still half the line.
+    split = [
+        [0, 0, 50, 0, "F"],
+        [50, 0, 50, 50, "S"],
+        [50, 50, 50, 100, "A"],
+        [50, 100, 0, 100, "R"],
+        [0, 100, 0, 0, "S"],
+    ]
+    assert side_alley_along(split, FRONT_EW, [None, None, "1" * 10, None, None]) is False
+    # Two A pieces on one line, both whole: the line is on the alley.
+    both = [e[:4] + ["A"] if i in (1, 2) else e for i, e in enumerate(split)]
+    assert side_alley_along(both, FRONT_EW, [None, "1" * 10, "1" * 10, None, None]) is True
+    assert side_alley_along(both, FRONT_EW, [None, "1" * 10, "1" * 9 + "0", None, None]) is False
+
+
+def test_a_bend_in_the_side_starts_a_new_line() -> None:
+    # A wedge: frontage south, then a side leg S running north-east, then an
+    # A leg bending 45 degrees back north-west to the rear point. The legs
+    # are two lines, and the A leg covered end to end is a side alley on
+    # its own.
+    wedge = [
+        [0, 0, 60, 0, "F"],
+        [60, 0, 80, 50, "S"],
+        [80, 50, 40, 100, "A"],
+        [40, 100, 0, 0, "S"],
+    ]
+    assert alley_lines(wedge, FRONT_EW) == ("side",)
+    assert side_alley_along(wedge, FRONT_EW, [None, None, "1" * 13, None]) is True
 
 
 # --- the registry ---------------------------------------------------------
@@ -164,7 +324,10 @@ def test_the_three_facts_are_registered_as_measured_site_facts() -> None:
         assert defn.kind == "site_fact", name
         assert defn.assume is False, name
         assert "quadfit" in defn.evidence, name
-    assert ENTAILS == {"alley_at_rear": ("abuts_alley",), "alley_at_side": ("abuts_alley",)}
+    assert {k: v for k, v in ENTAILS.items() if k in ALLEY_FACTS} == {
+        "alley_at_rear": ("abuts_alley",),
+        "alley_at_side": ("abuts_alley",),
+    }
 
 
 def test_a_line_fact_carries_the_lot_fact() -> None:

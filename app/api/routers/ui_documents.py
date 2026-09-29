@@ -903,12 +903,20 @@ async def document_move(
 # File streams (download / view / zip)
 # ---------------------------------------------------------------------------
 
+def _read_or_404(storage_key: str) -> bytes:
+    """Read a stored file; a metadata row whose file is gone is a 404, not a 500."""
+    try:
+        return open_document(storage_key)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="File missing")
+
+
 @router.get("/ui/documents/{document_id}/download")
 async def document_download(
     request: Request, document_id: UUID, session: DBSession
 ) -> StreamingResponse:
     user, doc = await _require_document(session, request, document_id)
-    content = open_document(doc.storage_key)
+    content = _read_or_404(doc.storage_key)
     dl_name = await _doc_download_name(session, doc)
     return StreamingResponse(
         iter([content]),
@@ -924,7 +932,7 @@ async def document_view(request: Request, document_id: UUID, session: DBSession)
     user, doc = await _require_document(session, request, document_id)
     # Converted Office preview (Phase 1b) takes precedence when ready.
     if doc.preview_status == DocumentPreviewStatus.ready and doc.preview_key:
-        content = open_document(doc.preview_key)
+        content = _read_or_404(doc.preview_key)
         return StreamingResponse(
             iter([content]),
             media_type="application/pdf",
@@ -932,7 +940,7 @@ async def document_view(request: Request, document_id: UUID, session: DBSession)
         )
     ext = _ext(doc.filename)
     if ext in _INLINE_MEDIA:
-        content = open_document(doc.storage_key)
+        content = _read_or_404(doc.storage_key)
         return StreamingResponse(
             iter([content]),
             media_type=_INLINE_MEDIA[ext],
@@ -1253,7 +1261,8 @@ async def _tasks_list_response(
 
 
 async def _task_card_response(
-    request: Request, session: DBSession, org_id: UUID, project_id: UUID, task: DocumentTask
+    request: Request, session: DBSession, org_id: UUID, project_id: UUID, task: DocumentTask,
+    errors: list[str] | None = None,
 ):
     mm = await _milestone_map(session, project_id)
     docs = await _task_docs(session, org_id, project_id, task.id)
@@ -1262,7 +1271,11 @@ async def _task_card_response(
     return templates.TemplateResponse(
         request,
         "partials/task_card.html",
-        {"project_id": str(project_id), "t": _task_vm(task, docs, mm, pname)},
+        {
+            "project_id": str(project_id),
+            "t": _task_vm(task, docs, mm, pname),
+            "upload_errors": errors or [],
+        },
     )
 
 
@@ -1343,11 +1356,17 @@ async def task_update(
     # Due date: explicit kind switch (hard-coded vs relative-to-milestone).
     if due_kind == "milestone" and due_milestone_id:
         try:
-            task.due_milestone_id = UUID(due_milestone_id)
+            ms_id = UUID(due_milestone_id)
+        except ValueError:
+            ms_id = None
+        # Only a milestone of this task's own project may anchor its due date;
+        # an unknown id would break the foreign key, another project's would
+        # silently never resolve.
+        ms = await session.get(Milestone, ms_id) if ms_id else None
+        if ms is not None and ms.project_id == task.project_id:
+            task.due_milestone_id = ms.id
             task.due_offset_days = int(due_offset_days or 0)
             task.due_date = None
-        except ValueError:
-            pass
     elif due_kind == "date":
         task.due_date = _parse_due_date(due_date)
         task.due_milestone_id = None
@@ -1417,7 +1436,9 @@ async def task_upload(
     )
     await session.commit()
     _enqueue_previews(created_for_preview)
-    return await _task_card_response(request, session, task.org_id, task.project_id, task)
+    return await _task_card_response(
+        request, session, task.org_id, task.project_id, task, errors
+    )
 
 
 @router.get("/ui/tasks/{task_id}/download")
@@ -1885,7 +1906,7 @@ async def _do_guest_task_upload(
     return templates.TemplateResponse(
         request,
         "partials/share_task_card.html",
-        {"base": base, "t": _task_vm(task, docs, mm, project.name)},
+        {"base": base, "t": _task_vm(task, docs, mm, project.name), "upload_errors": errors},
     )
 
 

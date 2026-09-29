@@ -59,6 +59,17 @@ RLIS_MEMBERS: dict[str, tuple[str, str, set[str] | None, set[str] | None]] = {
     ),
     "zoning_metro": ("LAND/zoning.shp", "LAND/zoning.dbf", None, None),
     "ugb": ("BOUNDARY/ugb.shp", "BOUNDARY/ugb.dbf", None, None),
+    # Metro's parks / natural areas / open-space inventory; s4 reads the
+    # land across each non-street lot line off it (`park_across_json`). Named
+    # as the FLATS acquire key so a staged snapshot and this tree agree.
+    # ORCA spells its counties out, unlike the taxlots' M/C.
+    "rlis_orca": (
+        "LAND/orca.shp",
+        "LAND/orca.dbf",
+        {"SITENAME", "UNITTYPE", "OWNER", "OWNLEV1", "OWNLEV2", "MANAGER",
+         "CITYMUNI", "COUNTY", "STATUS", "RECREATION"},
+        {"MULTNOMAH", "CLACKAMAS"},
+    ),
 }
 
 # slug → (layer query url, outFields)

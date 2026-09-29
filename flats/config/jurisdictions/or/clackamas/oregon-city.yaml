@@ -678,6 +678,20 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
     quote: "or/clackamas/oregon-city/17.zoning.txt#L1701-L1704"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # 17.54.030(A): "Through lots having a frontage on two streets shall
+  # provide the required front yard on each street. The required rear yard
+  # setback shall not apply." Repeated per district in 17.08.045(B),
+  # 17.10.045(B) and 17.12.045(B).
+  front_lot_line_through:
+    value: both
+    cite: OCMC 17.54.030(A), through lots provide the required front yard on each street and no rear yard
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L15609-L15611"
   # On four lots, OCMC 17.16.040, Townhouse driveway access and parking, and
   # it is the state model code again: front-facade garages, front-yard parking
   # and driveways in front of a townhouse are permitted only where outdoor

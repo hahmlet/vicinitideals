@@ -85,6 +85,21 @@ async def create_project_scenario(
     if financial_scenario is None:
         raise HTTPException(status_code=404, detail="Financial scenario not found")
 
+    # The sweep runs against the body's scenario but is filed under the URL's
+    # opportunity; refuse a scenario that no project of that opportunity uses.
+    linked = (
+        await session.execute(
+            select(Project.id)
+            .where(
+                Project.opportunity_id == project_id,
+                Project.scenario_id == payload.scenario_id,
+            )
+            .limit(1)
+        )
+    ).first()
+    if linked is None:
+        raise HTTPException(status_code=404, detail="Financial scenario not found")
+
     if payload.variable not in SCENARIO_VARIABLES:
         raise HTTPException(
             status_code=400,

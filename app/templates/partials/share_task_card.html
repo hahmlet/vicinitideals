@@ -5,6 +5,9 @@
     <span class="task-title">{{ t.title }}</span>
     <a class="btn btn-secondary btn-sm" href="{{ base }}/tasks/{{ t.id }}/download">⬇ Download</a>
   </div>
+  {% if upload_errors %}
+  <div class="g-errors">{% for e in upload_errors %}<div>⚠ {{ e }}</div>{% endfor %}</div>
+  {% endif %}
   <div class="task-meta">Due: {{ t.due_fmt }} · {{ t.doc_count }} file{{ "" if t.doc_count == 1 else "s" }}</div>
   {% if t.has_notes %}<div class="task-notes">{{ t.notes_html | safe }}</div>{% endif %}
 

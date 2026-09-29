@@ -49,7 +49,7 @@ async def _seed(session: AsyncSession, *, rich: bool = True):
     """
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
-    deal_model, inputs, income, _opex = await seed_deal_model_with_financials(
+    deal_model, inputs, _income, _opex = await seed_deal_model_with_financials(
         session, opp, user
     )
     project = (
@@ -58,12 +58,10 @@ async def _seed(session: AsyncSession, *, rich: bool = True):
         )
     ).scalar_one()
 
-    # Seed quirk: the helper leaves active_in_phases=[] which yields zero
-    # engine revenue. Activate the stream so NOI is nonzero.
-    income.active_in_phases = ["lease_up", "stabilized"]
+    # The seed's stream is active in lease-up + stabilized, so NOI is nonzero.
     # Pin both axis bases so the 5x5 windows are deterministic.
     inputs.noi_escalation_rate_pct = Decimal("3.0")  # exit_cap already 5.5
-    session.add_all([income, inputs])
+    session.add(inputs)
 
     if rich:
         inputs.purchase_price = Decimal("1000000")

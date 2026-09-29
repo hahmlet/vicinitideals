@@ -85,7 +85,7 @@
             {% if svc.action_url %}
               <button type="button"
                       class="btn btn-secondary btn-sm"
-                      onclick="fetch('{{ svc.action_url }}', {method: '{{ svc.action_method | upper or 'POST' }}'}).then(r => r.json()).then(d => { alert(d.status === 'queued' ? '{{ svc.action_label }}: queued (task ' + d.task_id + ')' : 'Result: ' + JSON.stringify(d)); })">
+                      onclick="fetch('{{ svc.action_url }}', {method: '{{ svc.action_method | upper or 'POST' }}'}).then(r => r.json()).then(d => { alert(d.status === 'queued' ? '{{ svc.action_label }}: queued (task ' + d.task_id + ')' : '{{ svc.action_label }}: ' + (d.message || JSON.stringify(d))); }).catch(() => alert('{{ svc.action_label }}: the server did not answer; try again in a few minutes.'))">
                 {{ svc.action_label }}
               </button>
             {% else %}

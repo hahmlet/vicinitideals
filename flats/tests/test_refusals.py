@@ -345,7 +345,12 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 134, "comments": 259, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 261, "tests": 18}
+#
+# 411 -> 413 on 2026-09-29, a merge: main's FOLLOWUPS 6(i) (Tualatin and
+# Fairview's residential districts say nothing of which end of a through lot
+# is the front; both are screened at the worse end) added 2 comments while
+# the Washington County drafts below were being written on their own branch.
 #
 # 393 -> 411 on 2026-09-29, later again: Durham, the sixth Washington County
 # draft from the same cloud session. 18 comments, no note or test. They are

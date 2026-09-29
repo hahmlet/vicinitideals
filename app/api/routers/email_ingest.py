@@ -99,8 +99,22 @@ async def receive_inbound_email(
     await session.commit()
     await session.refresh(email_row)
 
+    from app.api.queue_errors import (  # noqa: PLC0415
+        BROKER_ERRORS,
+        log_queue_unavailable,
+        queue_unavailable_response,
+    )
     from app.tasks.email_ingest import process_inbound_email  # noqa: PLC0415
-    process_inbound_email.delay(str(email_row.id), resend_email_id)
+
+    try:
+        process_inbound_email.delay(str(email_row.id), resend_email_id)
+    except BROKER_ERRORS as exc:
+        # Resend retries a non-2xx webhook. Drop the row so the retry is not
+        # a duplicate, and answer 503 so the retry happens at all.
+        log_queue_unavailable(request, exc)
+        await session.delete(email_row)
+        await session.commit()
+        return queue_unavailable_response(request)
 
     return {"status": "accepted", "id": str(email_row.id)}
 

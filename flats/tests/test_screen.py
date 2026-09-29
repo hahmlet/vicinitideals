@@ -521,9 +521,15 @@ def test_the_court_is_charged_against_the_strip_the_envelope_really_lost() -> No
 #: A lot with the alley along its rear line, 14 ft wide as s4 measured it
 #: (the typical Portland alley), and the two sentences that make the alley
 #: the court's way in and its aisle: Portland's C.3 and the 20 ft back-out
-#: room of 33.266.130.F.1.b(2) (Steph's ruling, 2026-09-13).
+#: room of 33.266.130.F.1.b(2) (Steph's ruling, 2026-09-13). s4's cover
+#: says the alley runs the whole rear line (FOLLOWUPS 3(d)).
 ALLEY_LOT = LotFacts(
-    lot_sqft=6000, frontage_ft=60, lot_width_ft=60, alley_at_rear=True, alley_width_ft=14.0
+    lot_sqft=6000,
+    frontage_ft=60,
+    lot_width_ft=60,
+    alley_at_rear=True,
+    alley_rear_whole=True,
+    alley_width_ft=14.0,
 )
 ALLEY_FED = {"parking_alley_access_required": True, "parking_alley_backout_ft": 20}
 
@@ -560,6 +566,36 @@ def test_an_alley_fed_court_backs_out_into_the_alley() -> None:
     got, asked = fit_check(rules(parking_alley_access_required=True), ALLEY_LOT)
     assert asked.threshold == pytest.approx(36.0 + COURT_FT)
     assert "fit_across_ft" not in got.unchecked
+
+
+def test_a_rear_alley_stub_reaches_the_court_but_is_not_its_aisle() -> None:
+    # FOLLOWUPS 3(d). s4 names the rear line an alley line on three rays of
+    # five, so an alley along 40 % of it is enough; the court stands
+    # somewhere along that line and nothing says where, so the row backs out
+    # into the alley only where it runs the whole line. A stub -- or a record
+    # with no cover, which is the same False -- still reaches the court (no
+    # street lane: the code sends the driveway to the alley), and the court
+    # keeps its own aisle.
+    at_building = fit(across_ft=56.0)
+    stub = replace(ALLEY_LOT, alley_rear_whole=False)
+    assert stub.alley is not None and not stub.alley.rear_aisle_for(36.0)
+    got = run(rules(**ALLEY_FED), lot=stub, f=at_building)
+    asked = next(c for c in got.checks if c.check == "fit_ft")
+    assert asked.threshold == pytest.approx(36.0 + COURT_FT)
+    assert "fit_across_ft" not in got.unchecked, "still no lane down the flank"
+    # Steph's ruling 2026-09-28: the stretch the stub runs is the aisle
+    # where it is as long as the row of stalls -- four at 9 ft, 36 ft --
+    # and not an inch shorter.
+    for run_ft, aisle in ((36.0, True), (35.5, False), (None, False)):
+        part = replace(stub, alley_rear_run_ft=run_ft)
+        assert part.alley is not None and part.alley.rear_aisle_for(36.0) is aisle
+        got = run(rules(**ALLEY_FED), lot=part, f=at_building)
+        asked = next(c for c in got.checks if c.check == "fit_ft")
+        whole = run(rules(**ALLEY_FED), lot=ALLEY_LOT, f=at_building)
+        expect = next(c for c in whole.checks if c.check == "fit_ft").threshold
+        assert asked.threshold == pytest.approx(expect if aisle else 36.0 + COURT_FT)
+    # A whole-line reading with no alley at the rear is nothing.
+    assert replace(ALLEY_LOT, alley_at_rear=False, alley_rear_whole=True).alley is None
 
 
 def test_an_alley_the_code_does_not_route_to_changes_nothing() -> None:

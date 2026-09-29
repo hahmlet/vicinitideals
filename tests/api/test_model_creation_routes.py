@@ -29,7 +29,7 @@ from app.models.project import Project
 
 from tests.conftest import seed_deal_model_with_financials, seed_opportunity, seed_org
 
-pytestmark = pytest.mark.asyncio
+pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("api_key_auth")]
 
 
 async def _seed_opp(session: AsyncSession):

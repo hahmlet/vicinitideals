@@ -246,6 +246,31 @@ class Alley:
     at_rear: bool = True
     #: The alley runs along a side lot line, beside the court.
     at_side: bool = False
+    #: The rear alley runs the WHOLE rear lot line (s4's cover, FOLLOWUPS
+    #: 3(d)), so the row of stalls along it may back straight out into it
+    #: wherever along the line the court stands. ``at_rear`` alone -- s4's
+    #: three rays of five -- reaches the court (:func:`alley_fed`), and the
+    #: court keeps its own aisle. False unless a caller says so: an alley
+    #: stub may leave the court backing into the neighbour's yard.
+    rear_whole: bool = False
+    #: Where the rear alley runs only PART of the rear line: the longest
+    #: stretch it covers with the envelope standing right behind it, in feet
+    #: (:func:`flats.geom.alley.usable_run_ft`). Steph, 2026-09-28: *"we can
+    #: use the portion the alley abuts for our travel lane only if the lane
+    #: is actually long enough to accommodate"* -- a row of stalls no wider
+    #: than this may back out into it (:meth:`rear_aisle_for`). ``None``
+    #: where nothing measured it: no stretch, no aisle.
+    rear_run_ft: float | None = None
+
+    def rear_aisle_for(self, row_ft: float) -> bool:
+        """Whether a row of stalls ``row_ft`` wide may back out into the rear
+        alley: the alley runs the whole rear line, or the stretch it runs
+        behind the envelope is at least as long as the row."""
+        if not self.at_rear:
+            return False
+        if self.rear_whole:
+            return True
+        return self.rear_run_ft is not None and self.rear_run_ft >= row_ft
 
 
 def alley_fed(rules: "ZoneResolution", alley: Alley | None) -> bool:
@@ -283,6 +308,17 @@ def front_lot_line_rule(rules: "ZoneResolution") -> str | None:
     corner lot is screened as fronting.
     """
     got = rules.get("front_lot_line_corner")
+    return got if isinstance(got, str) else None
+
+
+def front_lot_line_through_rule(rules: "ZoneResolution") -> str | None:
+    """How this code names a through lot's front (``front_lot_line_through``).
+
+    ``both``, ``both_unless_no_access`` or ``owner``; None where unread.
+    :func:`flats.geom.corner.through_plans` turns it into the readings of
+    the far street line a through lot is screened under.
+    """
+    got = rules.get("front_lot_line_through")
     return got if isinstance(got, str) else None
 
 
@@ -376,8 +412,23 @@ def side_column(
     return gap + count * across.stall_ft, tuple(used + list(across.from_code))
 
 
+def _row_ft(
+    design: Design, rules: "ZoneResolution", alley: Alley | None, stalls: int | None
+) -> float:
+    """How long a stretch of alley the row of ``stalls`` backs out into:
+    the stalls side by side at this zone's width, the charged floor where
+    ``stalls`` is None. The court charges no end clearance across
+    (:func:`court_across`), so none is added."""
+    across = court_across(design, rules, alley)
+    count = across.stalls if stalls is None else stalls
+    return count * across.stall_ft
+
+
 def court_depth(
-    design: Design, rules: "ZoneResolution", alley: Alley | None = None
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    stalls: int | None = None,
 ) -> tuple[float, tuple[str, ...]]:
     """How much depth this design's own parking needs behind the building.
 
@@ -414,6 +465,10 @@ def court_depth(
     Returns ``(depth, from_code)``, where ``from_code`` names the standards the
     zone actually supplied. An empty tuple against a non-zero depth means the
     number is the design's assumption and nothing in the code raised it.
+
+    ``stalls`` is the row the alley has to be long enough for, where the
+    alley runs only part of the rear line (:meth:`Alley.rear_aisle_for`);
+    the charged floor (:func:`court_across`) when omitted.
     """
     court = design.parking.court_depth_ft
     if not court or design.parking.config not in _COURT_CONFIGS:
@@ -438,9 +493,17 @@ def court_depth(
     # measured width leaves short of the room a car needs, paved on the lot.
     # Taken only where it is shallower, as s6s takes it only where it buys a
     # stall -- a lot deep enough for the court's own aisle keeps it.
-    # The alley at a side is not this: its column is
-    # :func:`side_column`, charged on its own fit.
-    shortfall = _backout_shortfall(rules, alley) if alley is not None and alley.at_rear else None
+    # Only where the alley runs the WHOLE rear line (``Alley.rear_whole``,
+    # FOLLOWUPS 3(d)), or a stretch of it with the envelope behind that is
+    # at least as long as the row of stalls (Steph's ruling 2026-09-28,
+    # :meth:`Alley.rear_aisle_for`): a stub shorter than the row would back
+    # the end stalls out into the neighbour's yard. The alley at a side is
+    # not this: its column is :func:`side_column`, charged on its own fit.
+    shortfall = (
+        _backout_shortfall(rules, alley)
+        if alley is not None and alley.rear_aisle_for(_row_ft(design, rules, alley, stalls))
+        else None
+    )
     if shortfall is not None:
         if gap + stall + shortfall < gap + stall + aisle:
             used += ["parking_alley_access_required", "parking_alley_backout_ft"]
@@ -579,6 +642,186 @@ def court_across(
     )
 
 
+@dataclass(frozen=True, slots=True)
+class Beside:
+    """A court BESIDE the building: what it asks of the lot, and why.
+
+    One row of stalls at 90 degrees to the side lot line, each stall's width
+    running along the lot, and the two-way aisle between them and the
+    building's side wall, a gap off that wall. The aisle is also the way in:
+    it runs straight back from the street along the wall, so there is no
+    lane beside it (:func:`side_court`).
+    """
+
+    #: Across the lot beside the building: the gap off the side wall, the
+    #: aisle and one stall's depth.
+    band_ft: float = 0.0
+    #: Along the lot: from the building's front line to the court's far
+    #: end -- the stalls side by side at this zone's width, behind whatever
+    #: a parking setback from the street asks past the building's.
+    length_ft: float = 0.0
+    #: The stalls it holds.
+    stalls: int = 0
+    #: The court may not run past the building's rear wall: a code that
+    #: bans parking between the building and a street, where the far end
+    #: of a through lot is a street nothing here can see.
+    within_building: bool = False
+    #: The two-way aisle, which is also the drive in from the street.
+    aisle_ft: float = 0.0
+    #: What the drive is paved across the front yard at.
+    drive_ft: float = 0.0
+    #: Stalls, each one cell of the row: depth by width.
+    stall_depth_ft: float = 0.0
+    stall_ft: float = 0.0
+    #: Standards the zone actually supplied.
+    from_code: tuple[str, ...] = ()
+
+    def overhang_ft(self, deep_ft: float) -> float:
+        """How far past the building's rear wall the court runs, for a
+        building ``deep_ft`` deep; ``inf`` where it may not run past it."""
+        past = max(0.0, self.length_ft - deep_ft)
+        if past > 1e-9 and self.within_building:
+            return math.inf
+        return past
+
+
+def _settled_false(rules: "ZoneResolution", name: str) -> bool:
+    """A yes/no standard the zone answers NO to: waived, or stated False.
+    Unread is not no."""
+    return name in rules.exempted or rules.get(name) is False
+
+
+def side_court(
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
+    frontage_ft: float | None = None,
+    stalls: int | None = None,
+) -> Beside | None:
+    """The court BESIDE the building, where the code lets one stand there.
+
+    FOLLOWUPS 4(a), the court's shape. :func:`court_depth` and
+    :func:`court_across` charge one arrangement: a row of stalls ACROSS the
+    lot behind the building, reached by a lane down the building's flank.
+    Quadfit's s6s also draws ``townhome_side_court`` (2026-09-19): the stalls
+    in a row ALONG the lot -- each at 90 degrees to the side lot line, their
+    widths end to end from the building's front line back -- and the
+    two-way aisle between them and the building's side wall, entered
+    straight off the street. On a wide, shallow lot it is the plan that
+    fits where the court behind does not: 375 of the 714 lots quadfit
+    calls green and this screen yellow on the fit alone (the September
+    tree, run of 2026-09-28) are drawn that way there.
+
+    What it asks, per the zone, with the same ``max()`` rule as the court
+    behind (a city asking less does not shrink the design): across, the gap
+    off the side wall (``parking_building_buffer_ft``), the two-way aisle
+    (``parking_aisle_two_way_ft``, never narrower than the drive it also is,
+    ``driveway_min_width_two_way_ft``) and one stall's depth; along, the
+    charged stalls at the zone's width (:func:`court_across`), standing
+    back from the building's front line by whatever
+    ``parking_street_setback_ft`` asks past ``setback_front_ft``. It may run
+    past the building's rear wall (:meth:`Beside.overhang_ft`), and the
+    screen charges that as depth.
+
+    Offered ONLY where the words leave the side of the building open to a
+    court, never assumed (``None`` otherwise):
+
+    * ``parking_side_prohibited`` settled no -- the townhouse model-code
+      sentence "no off-street parking ... in the front yard or side yard"
+      that Gresham, Oregon City, Fairview, Troutdale, Wilsonville and
+      Milwaukie hang on the unit-lot branch; unread is not no;
+    * on a corner lot, ``parking_front_prohibited`` settled no too: the fit
+      does not say which side the court stands on, and on a corner one side
+      faces the side street, the ground Portland 33.266.120.C.1.a and
+      Milwaukie 19.505.3.D.4.a keep parking off. Where that ban holds on an
+      interior lot the court stops at the rear wall
+      (:attr:`Beside.within_building`) -- a through lot's far end is a
+      street the fit cannot see either;
+    * not on a corner lot whose code sends the driveway to the side street
+      (``corner_access_street: side``): the aisle is entered off the front;
+    * not where the code sends the driveway to the alley
+      (:func:`alley_fed`): the aisle would have to reach it;
+    * within ``parking_area_max_width_ft`` and ``parking_area_max_frontage_pct``
+      of ``frontage_ft`` where the zone states either: the court's aisle and
+      stall face the street at the building line, and those caps measure the
+      parking and manoeuvring area along the street. A share with no
+      frontage measured is not offered.
+
+    ``stalls`` is the count to stand in the row; the charged floor
+    (:func:`court_across`) when omitted.
+    """
+    parking = design.parking
+    if not parking.court_depth_ft or parking.config not in _COURT_CONFIGS:
+        return None
+    if alley_fed(rules, alley):
+        return None
+    if not _settled_false(rules, "parking_side_prohibited"):
+        return None
+    used = ["parking_side_prohibited"]
+    ban = rules.get("parking_front_prohibited") is True
+    if corner:
+        if not _settled_false(rules, "parking_front_prohibited"):
+            return None
+        if rules.get("corner_access_street") == "side":
+            return None
+        used += ["parking_front_prohibited", "corner_access_street"]
+    elif ban:
+        used.append("parking_front_prohibited")
+    across = court_across(design, rules, alley, corner=corner)
+    count = across.stalls if stalls is None else stalls
+    if not count:
+        return None
+    gap = parking.building_gap_ft
+    stall = parking.stall_depth_ft
+    aisle = parking.aisle_ft
+    drive = parking.lane_width_ft
+    if (stated := _number(rules, "parking_building_buffer_ft")) is not None:
+        used.append("parking_building_buffer_ft")
+        gap = max(gap, stated)
+    if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
+        used.append("parking_stall_depth_ft")
+        stall = max(stall, stated)
+    if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
+        used.append("parking_aisle_two_way_ft")
+        aisle = max(aisle, stated)
+    if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
+        used.append("driveway_min_width_two_way_ft")
+        drive = max(drive, stated)
+    aisle = max(aisle, drive)
+    # How far back from the building's front line the first stall stands: a
+    # parking setback from the street past the building's own. Unread front
+    # against a stated parking setback is a distance nobody can compute.
+    back = 0.0
+    if (street := _number(rules, "parking_street_setback_ft")) is not None:
+        front = _yard(rules, "setback_front_ft")
+        if front is None:
+            return None
+        used.append("parking_street_setback_ft")
+        back = max(0.0, street - front)
+    facing = aisle + stall
+    if (cap := _number(rules, "parking_area_max_width_ft")) is not None:
+        used.append("parking_area_max_width_ft")
+        if facing > cap:
+            return None
+    if (pct := _number(rules, "parking_area_max_frontage_pct")) is not None:
+        used.append("parking_area_max_frontage_pct")
+        if frontage_ft is None or facing > pct / 100.0 * frontage_ft:
+            return None
+    return Beside(
+        band_ft=gap + aisle + stall,
+        length_ft=back + count * across.stall_ft,
+        stalls=count,
+        within_building=ban and not corner,
+        aisle_ft=aisle,
+        drive_ft=drive,
+        stall_depth_ft=stall,
+        stall_ft=across.stall_ft,
+        from_code=tuple(used) + tuple(n for n in across.from_code if n not in used),
+    )
+
+
 def _yard(rules: "ZoneResolution", name: str) -> float | None:
     """A setback's depth in feet: 0 where the code waives it, None where unread."""
     if name in rules.exempted:
@@ -593,6 +836,7 @@ def paved(
     *,
     corner: bool = False,
     column: bool = False,
+    beside: Beside | None = None,
     deep_ft: float,
 ) -> float | None:
     """Square feet this design's parking paves on the lot, or None if unknown.
@@ -629,6 +873,10 @@ def paved(
       is not the aisle, the aisle carried on across the alley-side yard to the
       alley. From a rear alley the court meets the alley line and there is
       nothing to cross.
+    * **a court beside the building** (``beside``, :func:`side_court`): the
+      stalls, and the aisle along their whole length from the building's
+      front line, which is also the drive; and the drive across the front
+      yard to it. The gap off the side wall is not pavement, as behind.
 
     Every figure is the least a legal plan could pave, which is the right
     quantity: the question is whether ANY plan leaves the amount, and the
@@ -651,6 +899,12 @@ def paved(
         return 0.0
     if parking.config not in _COURT_CONFIGS:
         return None
+    if beside is not None:
+        front = _yard(rules, "setback_front_ft")
+        if front is None:
+            return None
+        stalls = beside.stalls * beside.stall_ft * beside.stall_depth_ft
+        return stalls + beside.aisle_ft * beside.length_ft + beside.drive_ft * front
     across = court_across(design, rules, alley, corner=corner)
     if not across.stalls:
         # A cap of nothing: no row is drawn and nothing is paved for it. The
@@ -672,7 +926,12 @@ def paved(
         # row turned end-on, plus the back-out room paved beside it.
         assert shortfall is not None, "a column court was paved where no side alley offers one"
         return row * (stall + shortfall)
-    if alley is not None and alley.at_rear and shortfall is not None and shortfall < aisle:
+    if (
+        alley is not None
+        and alley.rear_aisle_for(row)
+        and shortfall is not None
+        and shortfall < aisle
+    ):
         # The same choice `court_depth` makes: the alley is the aisle.
         return row * (stall + shortfall)
     court = row * stall + aisle * max(row, across.lane_ft)
@@ -862,6 +1121,19 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # direction. The envelope (`flats.geom.envelope`) applies it
                 # to the alley edge alone.
                 "setback_alley_side_ft (alley-side lots only; the paper fit has no edges)",
+                # The street setback on a line off a Map 130-1 stretch --
+                # zero in Portland's commercial zones, where the stretch's
+                # line takes 10. The paper fit has no edges and so no line
+                # to read off the corridor; it keeps the lot-level 10 on the
+                # front, the conservative direction. The envelope applies it
+                # to the street edge read off every stretch alone.
+                "setback_street_off_corridor_ft (street lines off a mapped corridor; the paper fit has no edges)",
+                # The plain street row on a line facing no residential zone
+                # across the street -- zero in Portland's CM2/CM3/CE/CX, where
+                # the zone's street number is the 5 ft across-the-street one.
+                # The paper fit has no lines to read across; it keeps 5 on the
+                # front, the conservative direction.
+                "setback_street_across_nonresidential_ft (street lines facing no residential zone; the paper fit has no edges)",
                 "min_frontage_ft (measured at the street, not the envelope)",
                 # Ruled 2026-09-08: the pod parks in a rear court and has no
                 # garage, so a garage-entrance setback cannot reach it. This is

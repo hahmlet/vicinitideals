@@ -27,6 +27,9 @@ Edge classes:
      city -- see the same field for why. The width of the gap is written
      to `alley_width_ft` (the narrowest, where a lot has more than one
      alley edge), and the site plan asks the city's back-out room of it.
+     How much of each A edge the alley really runs along -- three rays of
+     five class it, so a stub along 40 % of the line is enough -- is
+     written to `alley_cover_json` (`_alley_cover`, one ray every 5 ft).
   R  rear -- not a street, roughly parallel to a front bearing
   S  side -- the rest
 
@@ -47,7 +50,17 @@ not cover). Street edges are null: what is across them is the street. The
 FLATS screen reads this into `abuts_residential_zone`,
 `abuts_lower_density_zone` and `abuts_nonresidential_zone` against each
 city's own list of which zones are which (`flats/geom/neighbour.py`); s5
-and s7 do not read it. `fronts_cul_de_sac` says whether the front lot line lies on the outer
+and s7 do not read it. `park_across_json` is the same five points per
+non-street line looked up in Metro's ORCA layer (`park_across`, raw key
+`rlis_orca`): per edge, every ORCA unit type a point stood in and how many
+of the five stood in none. It is null on every lot when the raw file is
+absent -- a layer nobody loaded is not a lot with no park beside it -- and
+FLATS reads it into `abuts_park` against a layer's own list of which unit
+types its code calls a park (`flats/geom/park.py`). `street_across_json` is
+the other half of the fabric reading: per STREET edge, the zone of the first
+private lot a ray square to the edge enters beyond the right-of-way
+(`street_across`), null on every other edge; FLATS reads it per line against
+Portland's list for 33.130.215.B.1.b (`flats/geom/neighbour.py`). `fronts_cul_de_sac` says whether the front lot line lies on the outer
 radius of a cul-de-sac bulb -- its chords on a circle of a turnaround's
 radius, turning toward the street, with a street centreline ending inside
 that circle (`lotdims.bulb_circles`, `dead_ends`, `fronts_cul_de_sac`).
@@ -90,7 +103,7 @@ from pathlib import Path
 TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
-from common import NOT_A_TAXLOT_RE, load_rules, read_stage, write_stage
+from common import DATA_DIR, NOT_A_TAXLOT_RE, load_geojson_features, load_rules, read_stage, write_stage
 from lotdims import bulb_circles, dimensions
 
 PARALLEL_TOL_DEG = 30.0
@@ -108,6 +121,12 @@ ALLEY_CL_TOL_FT = 3.0      # the centreline may sit this far past the far side
 ALLEY_CL_ALONG_FT = 50.0   # ... and this far along the alley from the ray
 ALLEY_SAMPLES = (0.1, 0.3, 0.5, 0.7, 0.9)   # where along the edge a ray is cast
 ALLEY_SAMPLES_MIN_HIT = 3  # at least this many of the five must find the alley
+# How much of an alley edge the alley really runs along (`_alley_cover`):
+# the same ray, cast every `ALLEY_COVER_STEP_FT` from `ALLEY_COVER_INSET_FT`
+# in from each end. Five rays decide whether a line is on the alley; three of
+# them are enough, so a stub along 40 % of a line classes the whole line A.
+ALLEY_COVER_STEP_FT = 5.0
+ALLEY_COVER_INSET_FT = 2.5
 #: How far past a non-street edge the neighbour is sampled, in feet: beyond
 #: `simplify_tolerance_ft` (1.5), so the point is out of this lot's true
 #: polygon whichever way the simplification cut, and inside a neighbour
@@ -115,6 +134,32 @@ ALLEY_SAMPLES_MIN_HIT = 3  # at least this many of the five must find the alley
 #: names this lot and anything stacked on it so neither is its own
 #: neighbour. Sampled at `ALLEY_SAMPLES` along the edge.
 NEIGHBOUR_OFFSET_FT = 2.0
+#: How far out of a STREET edge the lot across the street is looked for
+#: (`street_across`). A ray from each of the five `ALLEY_SAMPLES` points,
+#: square to the edge, runs over the right-of-way (public polygons and gaps
+#: in the fabric are looked through) to the first private lot it enters.
+#: Portland's widest ordinary arterial right-of-way is under a hundred feet;
+#: past this reach the ray is crossing a freeway or running down a street
+#: that tees into this one, and it finds nobody across. The reach is the
+#: corridor reader's (`flats.geom.corridor.CORRIDOR_REACH_FT`).
+STREET_ACROSS_RAY_FT = 150.0
+#: A first private lot nearer than this to a street edge is not across any
+#: street -- no right-of-way that narrow carries traffic (an alley is 8 to
+#: 40 ft and is classed apart) -- so the ray names the neighbour beside a
+#: line s4 may have misread, and the point counts as unresolved (``near``).
+STREET_ACROSS_MIN_FT = 15.0
+#: Two private polygons entered within this of each other along one ray are
+#: the same place (a lot and a condominium stacked on it, a sliver of fabric
+#: overlap): all of them are what the ray found.
+STREET_ACROSS_TIE_FT = 1.0
+#: Metro RLIS "Outdoor Recreation and Conservation Areas", the FLATS acquire
+#: key and so the raw file's name (`flats/config/pipeline.yaml` rlis_orca).
+ORCA_KEY = "rlis_orca"
+#: The attribute that says what kind of open land a unit is -- Park, Natural
+#: Area, Home Owners Association, Other, School Land, Cemetery, Golf Course
+#: (LAND/orca.shp.xml). Recorded raw; which of them a code calls a park is
+#: the code's question, answered in the FLATS layer.
+ORCA_KIND_FIELD = "UNITTYPE"
 
 
 def bearing_deg(x1: float, y1: float, x2: float, y2: float) -> float:
@@ -197,57 +242,104 @@ def _alley_width(x1: float, y1: float, x2: float, y2: float, outward: float,
     the five find it, so the lot at an alley's dead end, whose rear line
     touches it for fourteen feet of fifty, does not park four cars in the
     neighbour's yard. `outward` is +1 or -1 and turns the edge's
-    right-hand normal to point out of the lot.
+    right-hand normal to point out of the lot. Three of five says the line
+    is on the alley, not how much of it: that stretch is `_alley_cover`.
     """
+    ln = math.hypot(x2 - x1, y2 - y1)
+    widths = []
+    for t in ALLEY_SAMPLES:
+        far = _alley_ray(x1, y1, x2, y2, t * ln, outward, lot_tree, lot_geoms,
+                         lot_private, alley_tree, alley_geoms)
+        if far is not None:
+            widths.append(far)
+    if len(widths) < ALLEY_SAMPLES_MIN_HIT:
+        return None
+    return round(min(widths), 1)
+
+
+def _alley_ray(x1: float, y1: float, x2: float, y2: float, at_ft: float,
+               outward: float, lot_tree, lot_geoms, lot_private, alley_tree,
+               alley_geoms) -> float | None:
+    """One ray of `_alley_width`: cast out of the lot from ``at_ft`` along
+    the edge (from its first point), the alley's width there, or None where
+    no alley is across the edge at that point."""
     from shapely.geometry import LineString, Point, Polygon
 
     ln = math.hypot(x2 - x1, y2 - y1)
     ex, ey = (x2 - x1) / ln, (y2 - y1) / ln       # along the edge
     nx, ny = outward * ey, -outward * ex           # out of the lot
-    widths = []
-    for t in ALLEY_SAMPLES:
-        px, py = x1 + t * (x2 - x1), y1 + t * (y2 - y1)
-        p = Point(px, py)
-        inside = Point(px - 0.5 * nx, py - 0.5 * ny)    # half a foot into this lot
-        outside = Point(px + 0.5 * nx, py + 0.5 * ny)   # ... and half a foot out of it
-        ray = LineString([(px, py), (px + ALLEY_RAY_FT * nx, py + ALLEY_RAY_FT * ny)])
-        # The far side: where private land begins again along the ray.
-        far, on_public = None, False
-        for j in lot_tree.query(ray):
-            g = lot_geoms[j]
-            if not lot_private[j]:
-                on_public = on_public or g.intersects(outside)
-                continue
-            if g.intersects(inside) or not ray.intersects(g):
-                continue
-            d = ray.intersection(g).distance(p)
-            far = d if far is None else min(far, d)
-        if far is None and on_public:
-            # Public land as far as the ray reaches (a freeway, a rail
-            # cut): the centreline's crossing is the alley's middle.
-            d_cl = None
-            for j in alley_tree.query(ray):
-                xx = ray.intersection(alley_geoms[j])
-                if not xx.is_empty:
-                    d = xx.distance(p)
-                    d_cl = d if d_cl is None else min(d_cl, d)
-            far = None if d_cl is None else 2.0 * d_cl
-        if far is None or not ALLEY_WIDTH_MIN_FT <= round(far, 1) <= ALLEY_WIDTH_MAX_FT:
+    px, py = x1 + at_ft * ex, y1 + at_ft * ey
+    p = Point(px, py)
+    inside = Point(px - 0.5 * nx, py - 0.5 * ny)    # half a foot into this lot
+    outside = Point(px + 0.5 * nx, py + 0.5 * ny)   # ... and half a foot out of it
+    ray = LineString([(px, py), (px + ALLEY_RAY_FT * nx, py + ALLEY_RAY_FT * ny)])
+    # The far side: where private land begins again along the ray.
+    far, on_public = None, False
+    for j in lot_tree.query(ray):
+        g = lot_geoms[j]
+        if not lot_private[j]:
+            on_public = on_public or g.intersects(outside)
             continue
-        # The centreline must run in the gap, or the gap is not this alley:
-        # the band is the gap's depth (a foot into the lot, the tolerance
-        # past the far side) for `ALLEY_CL_ALONG_FT` either way along it.
-        a, b = ALLEY_CL_ALONG_FT, far + ALLEY_CL_TOL_FT
-        band = Polygon([(px - a * ex - nx, py - a * ey - ny),
-                        (px + a * ex - nx, py + a * ey - ny),
-                        (px + a * ex + b * nx, py + a * ey + b * ny),
-                        (px - a * ex + b * nx, py - a * ey + b * ny)])
-        if not any(band.intersects(alley_geoms[j]) for j in alley_tree.query(band)):
+        if g.intersects(inside) or not ray.intersects(g):
             continue
-        widths.append(far)
-    if len(widths) < ALLEY_SAMPLES_MIN_HIT:
+        d = ray.intersection(g).distance(p)
+        far = d if far is None else min(far, d)
+    if far is None and on_public:
+        # Public land as far as the ray reaches (a freeway, a rail
+        # cut): the centreline's crossing is the alley's middle.
+        d_cl = None
+        for j in alley_tree.query(ray):
+            xx = ray.intersection(alley_geoms[j])
+            if not xx.is_empty:
+                d = xx.distance(p)
+                d_cl = d if d_cl is None else min(d_cl, d)
+        far = None if d_cl is None else 2.0 * d_cl
+    if far is None or not ALLEY_WIDTH_MIN_FT <= round(far, 1) <= ALLEY_WIDTH_MAX_FT:
         return None
-    return round(min(widths), 1)
+    # The centreline must run in the gap, or the gap is not this alley:
+    # the band is the gap's depth (a foot into the lot, the tolerance
+    # past the far side) for `ALLEY_CL_ALONG_FT` either way along it.
+    a, b = ALLEY_CL_ALONG_FT, far + ALLEY_CL_TOL_FT
+    band = Polygon([(px - a * ex - nx, py - a * ey - ny),
+                    (px + a * ex - nx, py + a * ey - ny),
+                    (px + a * ex + b * nx, py + a * ey + b * ny),
+                    (px - a * ex + b * nx, py - a * ey + b * ny)])
+    if not any(band.intersects(alley_geoms[j]) for j in alley_tree.query(band)):
+        return None
+    return far
+
+
+def _alley_cover(x1: float, y1: float, x2: float, y2: float, outward: float,
+                 lot_tree, lot_geoms, lot_private, alley_tree, alley_geoms,
+                 ) -> str:
+    """Where along an alley edge the alley really runs: one character per
+    ray, ``1`` where it finds the alley and ``0`` where not, in order from
+    the edge's first point.
+
+    `_alley_width` decides an edge is ON the alley when three of its five
+    rays find it, and that is the right test for "does this line abut an
+    alley"; it is not a measurement of how much of the line does. An alley
+    that runs along half of a side line and dead-ends there -- or turns away
+    behind the neighbour -- finds three of five and classes the whole line
+    A. The FLATS court, which parks along a side alley and backs out into
+    it, needs the alley where the court stands, so the stretch is measured
+    here with the same ray every `ALLEY_COVER_STEP_FT`, the first and last
+    `ALLEY_COVER_INSET_FT` in from the corners (a ray on the corner itself
+    stands on the neighbour's line). An edge too short for two rays gets
+    one, at its middle.
+    """
+    ln = math.hypot(x2 - x1, y2 - y1)
+    span = ln - 2 * ALLEY_COVER_INSET_FT
+    if span <= 0:
+        stations = [ln / 2]
+    else:
+        n = max(1, math.ceil(span / ALLEY_COVER_STEP_FT))
+        stations = [ALLEY_COVER_INSET_FT + span * i / n for i in range(n + 1)]
+    return "".join(
+        "0" if _alley_ray(x1, y1, x2, y2, at, outward, lot_tree, lot_geoms,
+                          lot_private, alley_tree, alley_geoms) is None else "1"
+        for at in stations
+    )
 
 
 def dead_ends(street_geoms) -> list:
@@ -349,7 +441,7 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
         edges.append((x1, y1, x2, y2, ln, bearing_deg(x1, y1, x2, y2)))
     none = {"tier": "D", "edges": [], "front_bearings": [], "frontage_ft": 0.0,
             "alley_width_ft": None, "alley_edges_demoted": 0,
-            "neighbour_samples": []}
+            "neighbour_samples": [], "street_rays": [], "alley_cover": []}
     if not edges:
         return none
 
@@ -411,6 +503,16 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
             cls = "S"
         classed.append([round(x1, 2), round(y1, 2), round(x2, 2), round(y2, 2), cls])
 
+    # How much of each alley edge the alley runs along (`_alley_cover`);
+    # None on every other edge, and on every edge where the fabric was not
+    # given -- nothing measured it, which is not the same as no alley.
+    cover = [
+        _alley_cover(c[0], c[1], c[2], c[3], outward, lot_tree, lot_geoms,
+                     lot_private, alley_tree, alley_geoms)
+        if c[4] == "A" and lot_tree is not None else None
+        for c in classed
+    ]
+
     # Where the neighbour across each non-street edge is looked for: five
     # points along the edge, `NEIGHBOUR_OFFSET_FT` out of the lot (across
     # the alley, for an alley edge) and the same distance in. Resolved
@@ -431,6 +533,22 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
                 round(x1 + t * (x2 - x1) - NEIGHBOUR_OFFSET_FT * nx, 2),
                 round(y1 + t * (y2 - y1) - NEIGHBOUR_OFFSET_FT * ny, 2),
             )
+            for t in ALLEY_SAMPLES
+        ])
+
+    # Where the lot ACROSS each street edge is looked for (`street_across`):
+    # the same five points along the edge, each with the outward normal its
+    # ray runs along. None on every edge that is not a street edge.
+    street_rays = []
+    for (x1, y1, x2, y2, ln, _b), c in zip(edges, classed):
+        if c[4] != "F":
+            street_rays.append(None)
+            continue
+        ex, ey = (x2 - x1) / ln, (y2 - y1) / ln
+        nx, ny = outward * ey, -outward * ex
+        street_rays.append([
+            (round(x1 + t * (x2 - x1), 2), round(y1 + t * (y2 - y1), 2),
+             round(nx, 6), round(ny, 6))
             for t in ALLEY_SAMPLES
         ])
 
@@ -462,6 +580,8 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
         "alley_width_ft": alley_width,
         "alley_edges_demoted": demoted,
         "neighbour_samples": samples,
+        "street_rays": street_rays,
+        "alley_cover": cover,
     }
 
 
@@ -550,6 +670,194 @@ def neighbour_zones(results: list, lot_tree, lot_geoms, lot_private,
     return out
 
 
+def street_across(results: list, lot_tree, lot_geoms, lot_private,
+                  fabric_juris, fabric_zone, fabric_split) -> list:
+    """What zone lies ACROSS THE STREET from each street edge of every lot.
+
+    Portland's commercial zones set a street setback by the zone on the far
+    side of the street (33.130.215.B.1.b: 5 ft "from a street lot line
+    facing an RF through RM2 or RMP zone"), which `neighbour_zones` cannot
+    read: it samples two feet out, and two feet out of a street lot line is
+    the street. Here each of the five `ALLEY_SAMPLES` points of a street
+    edge casts a ray square to the edge, out of the lot, for
+    `STREET_ACROSS_RAY_FT`; the right-of-way polygons and the gaps in the
+    fabric are looked through, and the first PRIVATE polygon the ray enters
+    -- not this lot, nor anything stacked on it (a polygon holding the
+    point two feet inside the edge) -- is the lot across the street. Every
+    polygon entered within `STREET_ACROSS_TIE_FT` of that first one counts
+    with it, and the ray is read only when every one of them is zoned and
+    single-zone (an unzoned condominium stacked on a zoned lot leaves the
+    ray split: the tight side). One bulk query for the county.
+
+    Returns, per lot, a list parallel to its ``edges``: ``None`` for an edge
+    that is not a street edge, else ``{"z": [[jurisdiction, zone], ...],
+    "split": n, "none": m, "near": k}`` -- every distinct (jurisdiction,
+    zone) a ray found across on a private, zoned, single-zone polygon; how
+    many of the five rays found only a split-zone or unzoned lot; how many
+    found no private land within reach (a freeway, a river, a street
+    running away from this one at a tee, the edge of the map); and how many
+    found one nearer than `STREET_ACROSS_MIN_FT`, which is no street's
+    width and is not read as across anything. What the zone means is the
+    reader's question: FLATS asks the lot's own layer
+    (`flats/geom/neighbour.py` ``street_lines_clear``) and treats every
+    unresolved ray as the tight answer.
+    """
+    import numpy as np
+    import pandas as pd
+    import shapely
+
+    per_edge = len(ALLEY_SAMPLES)
+    out = [[None] * len(r["edges"]) for r in results]
+    r_lot, r_edge, px, py, nx, ny = [], [], [], [], [], []
+    for li, r in enumerate(results):
+        for ei, rays in enumerate(r.get("street_rays") or ()):
+            if rays is None:
+                continue
+            out[li][ei] = {"z": [], "split": 0, "none": per_edge, "near": 0}
+            for a, b, c, d in rays:
+                r_lot.append(li)
+                r_edge.append(ei)
+                px.append(a)
+                py.append(b)
+                nx.append(c)
+                ny.append(d)
+    if not r_lot:
+        return out
+    r_lot = np.asarray(r_lot)
+    r_edge = np.asarray(r_edge)
+    px, py, nx, ny = (np.asarray(v, dtype=float) for v in (px, py, nx, ny))
+    origins = shapely.points(np.c_[px, py])
+    inside = shapely.points(np.c_[px - NEIGHBOUR_OFFSET_FT * nx, py - NEIGHBOUR_OFFSET_FT * ny])
+    ends = np.c_[px + STREET_ACROSS_RAY_FT * nx, py + STREET_ACROSS_RAY_FT * ny]
+    rays = shapely.linestrings(np.stack([np.c_[px, py], ends], axis=1))
+    ri, gi = lot_tree.query(rays, predicate="intersects")
+    private = np.asarray(lot_private, dtype=bool)
+    keep = private[gi]
+    ri, gi = ri[keep], gi[keep]
+    n_poly = len(lot_geoms)
+    si, sg = lot_tree.query(inside, predicate="within")
+    self_keys = si.astype(np.int64) * n_poly + sg
+    keep = ~np.isin(ri.astype(np.int64) * n_poly + gi, self_keys)
+    ri, gi = ri[keep], gi[keep]
+    if not len(ri):
+        return out
+    geoms = np.asarray(lot_geoms, dtype=object)
+    dist = shapely.distance(origins[ri], shapely.intersection(rays[ri], geoms[gi]))
+    frame = pd.DataFrame({"ray": ri, "poly": gi, "d": dist})
+    frame = frame[np.isfinite(frame["d"])]
+    if frame.empty:
+        return out
+    frame["first"] = frame.groupby("ray")["d"].transform("min")
+    frame = frame[frame["d"] <= frame["first"] + STREET_ACROSS_TIE_FT].copy()
+    polys = frame["poly"].to_numpy()
+    frame["j"] = np.asarray(fabric_juris, dtype=object)[polys]
+    frame["z"] = np.asarray(fabric_zone, dtype=object)[polys]
+    frame["s"] = np.asarray(fabric_split, dtype=bool)[polys]
+    frame["ok"] = frame["j"].notna() & frame["z"].notna() & ~frame["s"]
+    frame["near"] = frame["first"] < STREET_ACROSS_MIN_FT
+    frame["lot"] = r_lot[frame["ray"].to_numpy()]
+    frame["edge"] = r_edge[frame["ray"].to_numpy()]
+    by_ray = frame.groupby("ray", sort=False).agg(
+        lot=("lot", "first"), edge=("edge", "first"), ok=("ok", "all"), near=("near", "first"))
+    zones: dict = {}
+    whole = (frame[frame["ok"] & ~frame["near"]]
+             .drop_duplicates(["lot", "edge", "j", "z"])
+             .sort_values(["lot", "edge", "j", "z"]))
+    for li, ei, j, z in zip(whole["lot"], whole["edge"], whole["j"], whole["z"]):
+        zones.setdefault((int(li), int(ei)), []).append([str(j), str(z)])
+    by_ray["resolved"] = by_ray["ok"] & ~by_ray["near"]
+    by_ray["split"] = ~by_ray["ok"] & ~by_ray["near"]
+    counts = by_ray.groupby(["lot", "edge"], sort=False)[["resolved", "split", "near"]].sum()
+    for (li, ei), resolved, split, near in zip(
+        counts.index, counts["resolved"], counts["split"], counts["near"]
+    ):
+        resolved, split, near = int(resolved), int(split), int(near)
+        out[int(li)][int(ei)] = {
+            "z": zones.get((int(li), int(ei)), []),
+            "split": split,
+            "none": per_edge - resolved - split - near,
+            "near": near,
+        }
+    return out
+
+
+def load_orca(path: Path):
+    """ORCA's units as (valid geometries, unit types), or None when the raw
+    file is absent. A unit with no geometry or no type is dropped: a point in
+    it could say nothing about which kind of land it is."""
+    import numpy as np
+    import shapely
+    from shapely.geometry import shape
+
+    if not path.exists():
+        return None
+    geoms, kinds = [], []
+    for f in load_geojson_features(path):
+        g = f.get("geometry")
+        kind = str((f.get("properties") or {}).get(ORCA_KIND_FIELD) or "").strip()
+        if not g or not kind:
+            continue
+        try:
+            geom = shapely.make_valid(shape(g))
+        except Exception:  # a degenerate ring in the regional file
+            continue
+        if geom.is_empty:
+            continue
+        geoms.append(geom)
+        kinds.append(kind)
+    return np.array(geoms, dtype=object), np.array(kinds, dtype=object)
+
+
+def park_across(results: list, orca_geoms, orca_kinds) -> list:
+    """What ORCA land lies across each non-street edge of every lot.
+
+    The points are `neighbour_zones`'s own -- five along the edge, two feet
+    out, across the alley on an alley edge -- looked up in ORCA's unit
+    polygons in one bulk query. Returns, per lot, a list parallel to its
+    ``edges``: ``None`` for a street edge (what is across a street lot line
+    is the street), else ``{"k": [unit types], "none": n}`` -- every distinct
+    UNITTYPE a point stood in, and how many of the five stood in no ORCA
+    unit at all. No point is excluded as this lot's own: the point is
+    outside the lot, so ORCA land under it is ORCA land beside the line.
+
+    Every type seen is kept rather than a vote: a rear line that is park for
+    one point in five abuts a park, and whether a Natural Area is a park is
+    the code's question, not this stage's.
+    """
+    import numpy as np
+    import shapely
+    from shapely.strtree import STRtree
+
+    pt_lot, pt_edge, ox, oy = [], [], [], []
+    per_edge = len(ALLEY_SAMPLES)
+    out = [[None] * len(r["edges"]) for r in results]
+    for li, r in enumerate(results):
+        for ei, samp in enumerate(r["neighbour_samples"]):
+            if samp is None:
+                continue
+            out[li][ei] = {"k": [], "none": per_edge}
+            for a, b, _c, _d in samp:
+                pt_lot.append(li)
+                pt_edge.append(ei)
+                ox.append(a)
+                oy.append(b)
+    if not pt_lot or not len(orca_geoms):
+        return out
+    tree = STRtree(orca_geoms)
+    pi, gi = tree.query(shapely.points(np.c_[ox, oy]), predicate="within")
+    pt_lot = np.asarray(pt_lot)
+    pt_edge = np.asarray(pt_edge)
+    kinds: dict[tuple[int, int], set] = {}
+    hit: dict[tuple[int, int], set] = {}
+    for p, g in zip(pi, gi):
+        key = (int(pt_lot[p]), int(pt_edge[p]))
+        kinds.setdefault(key, set()).add(str(orca_kinds[g]))
+        hit.setdefault(key, set()).add(int(p))
+    for (li, ei), found in kinds.items():
+        out[li][ei] = {"k": sorted(found), "none": per_edge - len(hit[(li, ei)])}
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.parse_args()
@@ -620,6 +928,9 @@ def main() -> None:
     lots["edges_json"] = [json.dumps(r["edges"]) for r in results]
     lots["front_bearings_json"] = [json.dumps(r["front_bearings"]) for r in results]
     lots["frontage_ft"] = [r["frontage_ft"] for r in results]
+    # Parallel to edges_json: per alley edge, a ray every few feet along it
+    # that found the alley (1) or did not (0); null on every other edge.
+    lots["alley_cover_json"] = [json.dumps(r["alley_cover"]) for r in results]
 
     # What zone lies across each lot line that is not a street lot line,
     # from the fabric with s2's zones on it. One bulk query for the county.
@@ -636,6 +947,37 @@ def main() -> None:
     print(f"s4 neighbour zones: {_asked:,} lots with a non-street edge, every edge "
           f"resolved on {_whole:,}; {_edges:,} edges, {_blank:,} with no zoned "
           f"neighbour at all, {_mixed:,} with more than one zone across them")
+
+    # What zone lies across the street from every street edge -- the far
+    # side of the right-of-way, from the same fabric (`street_across`).
+    print("s4: reading the zone across the street from every street edge ...")
+    streets_across = street_across(results, tree_lots, lot_geoms, lot_private,
+                                   fabric_juris, fabric_zone, fabric_split)
+    lots["street_across_json"] = [json.dumps(a) for a in streets_across]
+    _f = [e for a in streets_across for e in a if e is not None]
+    _fw = sum(1 for e in _f if e["split"] == 0 and e["none"] == 0 and e["near"] == 0)
+    print(f"s4 street across: {len(_f):,} street edges, every ray resolved on {_fw:,}; "
+          f"{sum(1 for e in _f if not e['z']):,} with no zoned lot across at all, "
+          f"{sum(1 for e in _f if e['near']):,} with a lot nearer than "
+          f"{STREET_ACROSS_MIN_FT:.0f} ft")
+
+    # What ORCA land lies across the same lines, where the snapshot carries
+    # the layer. Absent, the column is null on every lot and FLATS leaves
+    # `abuts_park` unasked: a layer nobody loaded grades as nothing, not as
+    # "no park here".
+    orca = load_orca(DATA_DIR / "raw" / f"{ORCA_KEY}.geojson")
+    if orca is None:
+        print(f"s4 park across: raw/{ORCA_KEY}.geojson absent -- park_across_json left null")
+        lots["park_across_json"] = None
+    else:
+        parks = park_across(results, *orca)
+        lots["park_across_json"] = [json.dumps(a) for a in parks]
+        from collections import Counter as _Counter
+
+        _kinds = _Counter(k for a in parks for e in a if e is not None for k in e["k"])
+        _park_lots = sum(1 for a in parks if any(e is not None and "Park" in e["k"] for e in a))
+        print(f"s4 park across: {len(orca[0]):,} ORCA units; edges by unit type across "
+              f"them: {dict(_kinds)}; {_park_lots:,} lots with a Park unit across a line")
     # The alley's width, and the edges that were near an alley's centreline
     # with no alley across them. Printed per city so a city whose alleys
     # the file draws strangely would show as one that lost every alley.

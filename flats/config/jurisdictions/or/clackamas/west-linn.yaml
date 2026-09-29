@@ -904,6 +904,19 @@ defaults:
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
     retrieved: '2026-08-27'
     quote: "or/clackamas/west-linn/02.definitions.txt#L628"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # Lot line, front (1): "The lot line(s) common to the lot and a street";
+  # Lot line, rear (3): "In the case of a double-frontage lot that is not a
+  # corner lot, there is no rear lot line."
+  front_lot_line_through:
+    value: both
+    cite: West Linn CDC Chapter 2, Lot line, rear, a double-frontage lot that is not a corner lot has no rear lot line
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/02.definitions.txt#L626,L636"
   #
   # NOT ENCODED: curb cut spacing, 48.060(C) and (D). Eleven numbers between
   # them and every one is selected by a street classification -- 150 feet from

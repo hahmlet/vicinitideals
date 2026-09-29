@@ -77,27 +77,28 @@ from flats.score import paper
 #: which moved to the first route the same evening, when the court's depth
 #: grew the 5 ft standoff off the rear wall and the buffer became the figure
 #: that can raise it.
+#:
+#: Five left on 2026-09-28 (FOLLOWUPS 4(a)), when the screen learned the
+#: court BESIDE the building (`paper.side_court`): `parking_side_prohibited`
+#: (whether a court may stand there at all), `parking_front_prohibited` (on
+#: a corner lot the flank may face a street; on an interior lot under the
+#: ban the row stops at the rear wall), `parking_street_setback_ft` (the row
+#: starts that far back of the street), and `parking_area_max_width_ft` /
+#: `parking_area_max_frontage_pct` (the aisle and stall face the street).
 SILENTLY_UNREAD = frozenset(
     {
-        "parking_street_setback_ft",
         "setback_front_max_ft",
         "driveway_approach_max_width_ft",
         "min_building_separation_ft",
-        "parking_front_prohibited",
         "driveway_approach_min_width_ft",
-        "parking_area_max_frontage_pct",
         "max_building_width_ft",
         "parking_front_yard_max_pct",
-        "parking_area_max_width_ft",
         # 2026-09-19, FOLLOWUPS 5 slice A: the corner-lot placement fields.
-        # `parking_side_prohibited` is for the side-court arrangement (iii)
-        # and stays unread: the screen's paper lot is a rear court.
         # `front_lot_line_corner` and `corner_access_street` left this set
         # 2026-09-26 (FOLLOWUPS 4(e)): the screen names a corner lot's front
         # as its code does (`paper.front_lot_line_rule`,
         # `flats.geom.corner`) and takes the driveway off the side street
         # where the code allows (`paper.side_street_fed`).
-        "parking_side_prohibited",
     }
 )
 

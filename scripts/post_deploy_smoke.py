@@ -14,6 +14,7 @@ Checks:
     2. DB is reachable (via /health detail)
     3. Celery workers are alive (ping via Redis)
     4. Authenticated UI path redirects to /login (auth middleware active)
+    5. /api/ answers 401 to an anonymous caller
 """
 
 from __future__ import annotations
@@ -85,6 +86,16 @@ def main() -> None:
               f"status={resp.status_code}")
     except Exception as exc:
         check("API key auth", False, str(exc))
+
+    # ------------------------------------------------------------------
+    # 3b. /api/ refuses an anonymous caller (no session, no key)
+    # ------------------------------------------------------------------
+    try:
+        resp = httpx.get(f"{BASE_URL}/api/users", timeout=TIMEOUT)
+        check("API anonymous refused", resp.status_code == 401,
+              f"status={resp.status_code}")
+    except Exception as exc:
+        check("API anonymous refused", False, str(exc))
 
     # ------------------------------------------------------------------
     # 4. Static assets

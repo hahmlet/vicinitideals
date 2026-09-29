@@ -754,6 +754,22 @@ defaults:
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1706.html
     retrieved: '2026-08-27'
     quote: "or/clackamas/gladstone/17.06.definitions.txt#L881"
+  # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
+  # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
+  # street edge is cut as a front unless this names the far one the rear.
+  #
+  # By definition, not by a sentence about through lots: 17.06.290 makes
+  # "a lot line separating a lot from a street other than an alley" a front
+  # lot line and lets the owner designate only on a CORNER lot; 17.06.310
+  # defines a through lot as "an interior lot having frontage on two
+  # streets". Both street lines meet the definition. No zone here states a
+  # rear setback above its front, so no other reading would be stricter.
+  front_lot_line_through:
+    value: both
+    cite: GMC 17.06.290, Front lot line, a lot line separating a lot from a street other than an alley
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1706.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/gladstone/17.06.definitions.txt#L881,L921"
   # NO DRIVEWAY WIDTH, and read rather than unlooked-for. Chapter 17.48 states
   # every dimension of a parking space and none of a driveway: the word appears
   # five times in the chapter and each is about something else -- a half-acre

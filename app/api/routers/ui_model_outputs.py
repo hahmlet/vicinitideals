@@ -20,6 +20,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.api.deps import DBSession
+from app.api.queue_errors import (
+    BROKER_ERRORS,
+    QUEUE_UNAVAILABLE_MESSAGE,
+    log_queue_unavailable,
+    queue_unavailable_response,
+)
 from app.config import settings
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.deal import (
@@ -45,6 +51,7 @@ from app.api.routers.ui_helpers import (
     _active_project_from_request,
     _builder_gantt_from_milestones,
     _get_user,
+    _model_in_user_org,
     templates,
 )
 
@@ -146,12 +153,26 @@ async def preflight_investor_export(
     )
 
 
+async def _fail_unqueued_export(
+    request: Request, session: Any, job: Any, exc: Exception,
+) -> Response:
+    """The broker refused the export job: mark the row failed (so the history
+    and the poller never show it stuck at "queued") and say why in plain words."""
+    from app.models.export_job import ExportJobStatus
+
+    log_queue_unavailable(request, exc)
+    job.status = ExportJobStatus.failed
+    job.error_message = QUEUE_UNAVAILABLE_MESSAGE
+    await session.commit()
+    return queue_unavailable_response(request)
+
+
 @router.post("/ui/models/{model_id}/investor-export/async")
 async def start_investor_export_async(
     model_id: UUID,
     session: DBSession,
     request: Request,
-) -> JSONResponse:
+) -> Response:
     """Enqueue a fresh-build investor-export job and return its id.
 
     Caller (UI) is expected to have hit ``/preflight`` first to decide
@@ -187,7 +208,10 @@ async def start_investor_export_async(
     await session.commit()
     await session.refresh(job)
 
-    _celery.send_task(RUN_EXPORT_TASK, args=[str(job.id)])
+    try:
+        _celery.send_task(RUN_EXPORT_TASK, args=[str(job.id)])
+    except BROKER_ERRORS as exc:
+        return await _fail_unqueued_export(request, session, job, exc)
 
     return JSONResponse(
         {
@@ -229,7 +253,7 @@ async def resend_investor_export_endpoint(
     job_id: UUID,
     session: DBSession,
     request: Request,
-) -> JSONResponse:
+) -> Response:
     """Re-send a previously-completed export from cached xlsx_bytes.
 
     Spawns a fresh ``ExportJob`` row pointing at the same scenario; the
@@ -261,7 +285,10 @@ async def resend_investor_export_endpoint(
     await session.commit()
     await session.refresh(new_job)
 
-    _celery.send_task(RESEND_EXPORT_TASK, args=[str(new_job.id)])
+    try:
+        _celery.send_task(RESEND_EXPORT_TASK, args=[str(new_job.id)])
+    except BROKER_ERRORS as exc:
+        return await _fail_unqueued_export(request, session, new_job, exc)
     return JSONResponse(
         {
             "job_id": str(new_job.id),
@@ -559,11 +586,14 @@ async def _dispatch_proforma_preflight(
 async def proforma_preflight(
     request: Request,
     model_id: UUID,
+    session: DBSession,
     file: UploadFile = File(...),
 ) -> HTMLResponse:
     """Receive uploaded file at the dedicated endpoint. Thin wrapper over
     ``_dispatch_proforma_preflight`` — kept for direct re-upload (proforma-
     restart) and for any external callers that still POST a file directly."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("Not found", status_code=404)
     return await _dispatch_proforma_preflight(
         request=request, model_id=model_id, upload=file,
     )
@@ -699,6 +729,8 @@ async def proforma_resume(
     import whose parse result is still cached, re-render the review page
     so the user can adjust line items without re-uploading. Falls back to
     Step 1 (upload UI) when nothing is cached."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("Not found", status_code=404)
     import redis as _redis  # type: ignore
 
     r = _redis.from_url(settings.redis_url, decode_responses=True)
@@ -791,10 +823,13 @@ def _render_proforma_reanalyze(
 async def proforma_reanalyze(
     request: Request,
     model_id: UUID,
+    session: DBSession,
     task_id: str = Form(...),
 ) -> HTMLResponse:
     """Skip the cache and run a fresh parse. Cache is left intact (use
     /proforma-purge-cache to delete the cached result)."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("Not found", status_code=404)
     return _render_proforma_reanalyze(request, model_id, task_id)
 
 
@@ -802,10 +837,13 @@ async def proforma_reanalyze(
 async def proforma_purge_cache(
     request: Request,
     model_id: UUID,
+    session: DBSession,
     task_id: str = Form(...),
     file_hash: str = Form(...),
 ) -> HTMLResponse:
     """Delete the content-hash cache entry, then trigger a fresh parse."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("Not found", status_code=404)
     import redis as _redis  # type: ignore
 
     if file_hash and len(file_hash) == 64:
@@ -820,6 +858,7 @@ async def proforma_purge_cache(
 async def upload_proforma(
     request: Request,
     model_id: UUID,
+    session: DBSession,
     task_id: str = Form(...),
     revenue_sheet: str = Form(""),
     opex_sheet: str = Form(""),
@@ -831,6 +870,8 @@ async def upload_proforma(
 ) -> HTMLResponse:
     """Queue the Celery parse task with the user-selected sheet/column/range
     coordinates, then return the progress-polling fragment."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("Not found", status_code=404)
     from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
     from app.tasks.celery_app import celery_app as _celery
 
@@ -864,6 +905,7 @@ async def upload_proforma(
 async def upload_proforma_doc(
     request: Request,
     model_id: UUID,
+    session: DBSession,
     task_id: str = Form(...),
     revenue_enabled: str = Form(""),
     opex_enabled: str = Form(""),
@@ -872,6 +914,8 @@ async def upload_proforma_doc(
 ) -> HTMLResponse:
     """Queue the Celery parse task for a PDF with user-selected page ranges,
     then return the progress-polling fragment."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("Not found", status_code=404)
     from app.tasks.proforma_parse import PARSE_PROFORMA_TASK, _parse_pages
     from app.tasks.celery_app import celery_app as _celery
 
@@ -907,11 +951,14 @@ async def upload_proforma_doc(
 async def upload_proforma_multi(
     request: Request,
     model_id: UUID,
+    session: DBSession,
 ) -> HTMLResponse:
     """Receive the multi-file config table, store email_config per file in Redis,
     dispatch a Celery parse task per file, then return progress for the first file.
     Subsequent files are processed in parallel; their results appear under the
     same scenario when confirmed."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("Not found", status_code=404)
     import json as _json_multi
     import redis as _redis_multi
     from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
@@ -1016,6 +1063,8 @@ async def proforma_status(
 ) -> HTMLResponse:
     """HTMX poll endpoint. Returns progress fragment while running; switches to
     the review fragment when the task completes or errors."""
+    if not await _model_in_user_org(session, request, model_id):
+        return HTMLResponse("Not found", status_code=404)
     import redis as _redis  # type: ignore
 
     r = _redis.from_url(settings.redis_url, decode_responses=True)
@@ -1109,6 +1158,14 @@ async def proforma_confirm(
     deal_model = await session.get(Scenario, model_id)
     if not deal_model:
         raise HTTPException(status_code=404, detail="Deal model not found")
+    # Org guard — this route overwrites the model's income streams and OpEx
+    # lines; a user of another org must not be able to write them.
+    if settings.org_isolation_enabled:
+        _user = await _get_user(session, request)
+        _user_org = getattr(_user, "org_id", None) if _user is not None else None
+        _deal = await session.get(Deal, deal_model.deal_id) if deal_model.deal_id else None
+        if _user_org is None or _deal is None or _deal.org_id != _user_org:
+            raise HTTPException(status_code=404, detail="Deal model not found")
 
     # Multi-project deals: route import to the project the user is viewing
     # (from HX-Current-URL ?project=...). Fall back to oldest only if missing.

@@ -23,7 +23,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.milestone import Milestone
 
-pytestmark = [pytest.mark.asyncio, pytest.mark.unit]
+pytestmark = [pytest.mark.asyncio, pytest.mark.unit, pytest.mark.usefixtures("api_key_auth")]
 
 ANCHOR_DATE = date(2026, 1, 1)
 
