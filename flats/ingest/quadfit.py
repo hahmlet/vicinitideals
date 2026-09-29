@@ -30,8 +30,10 @@ at the width the zone's parking asks. The envelope is FLATS's own
 for that lot and design -- the variant a commercial neighbour, an alley or
 a corner fired -- less the ground s5o's carve overlays took. quadfit's
 carved envelope is used only where FLATS cannot cut one (no taxlot, no
-street, a yard with no number, an exempt rear on a lot whose rear line is
-not all alley), and each row says which (``envelope_source``).
+street, a yard with no number), and each row says which
+(``envelope_source``). A lot with a rear line on the alley and another off
+it is cut with both rear numbers, the alley's on the one and the ordinary
+on the other (:func:`rear_off_alley`).
 
 **What the verdict is today.** Every value in the corpus is ``draft`` --
 no ``flats/config/verifications.jsonl`` exists -- so the screen answers
@@ -585,7 +587,18 @@ def lot_edges(
     )
 
 
-def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
+def _yard(rules: ZoneResolution, name: str) -> float | None:
+    """One yard as the envelope cuts it: zero where the code exempts it, the
+    number where it states one, None where it states none."""
+    if name in set(rules.exempted):
+        return 0.0
+    got = rules.get(name)
+    if isinstance(got, bool) or not isinstance(got, (int, float)):
+        return None
+    return float(got)
+
+
+def setbacks_for(rules: ZoneResolution, plain: ZoneResolution | None = None) -> Setbacks | None:
     """The yards these rules resolve, as the envelope cuts them.
 
     None where the front, side or rear is not a number: the screen reports
@@ -602,16 +615,19 @@ def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
     Wilsonville define the alley line as a rear lot line, and s5 cuts it at
     the rear for that reason. A city that waives it says so in
     ``setback_alley_side_ft``.
+
+    ``plain`` is the same lot and design resolved with ``alley_at_rear``
+    False, handed over where ``rules`` hold it True and the lot has a rear
+    line off the alley (:func:`envelope_for`). Its rear setback is the
+    ordinary one, for that line; ``rules``' rear -- the alley's variant,
+    exempt or a number -- goes to :attr:`Setbacks.alley_rear_ft`, for the
+    rear edges on the alley. Where the two agree nothing is split. Where
+    ``plain`` states no rear number the line off the alley has none, and the
+    answer is None like any other yard without one.
     """
-    exempted = set(rules.exempted)
 
     def number(name: str) -> float | None:
-        if name in exempted:
-            return 0.0
-        got = rules.get(name)
-        if isinstance(got, bool) or not isinstance(got, (int, float)):
-            return None
-        return float(got)
+        return _yard(rules, name)
 
     front, side, rear = (number(f"setback_{c}_ft") for c in ("front", "side", "rear"))
     if front is None or side is None or rear is None:
@@ -628,13 +644,24 @@ def setbacks_for(rules: ZoneResolution) -> Setbacks | None:
     # number it would have to say which of the two it replaces, and it is
     # dropped rather than guessed (every street line keeps its class's).
     off_corridor = number("setback_street_off_corridor_ft") if street_side is None else None
+    # The side alley line's default is the rear as ``rules`` read it, the
+    # same whether or not a rear line off the alley splits the rear below.
+    alley_side_ft = max(side, rear) if alley_side is None else alley_side
+    alley_rear: float | None = None
+    if plain is not None:
+        ordinary = _yard(plain, "setback_rear_ft")
+        if ordinary is None:
+            return None
+        if ordinary != rear:
+            alley_rear, rear = rear, ordinary
     return Setbacks(
         front_ft=front,
         side_ft=side,
         rear_ft=rear,
         street_side_ft=street_side,
-        alley_side_ft=max(side, rear) if alley_side is None else alley_side,
+        alley_side_ft=alley_side_ft,
         street_off_corridor_ft=off_corridor,
+        alley_rear_ft=alley_rear,
     )
 
 
@@ -656,7 +683,22 @@ class Envelope:
         return 0.0 if self.geom is None or self.geom.is_empty else float(self.geom.area)
 
 
-def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
+def rear_off_alley(edges: LotEdges | None) -> bool:
+    """Whether this lot has a rear edge on the alley AND a rear edge off it
+    -- two rear lines the rules' one rear setback cannot both describe
+    (FOLLOWUPS 12(b)): a corner lot's line opposite the side street, the
+    second leg of a jogged rear. Read on the edges as the envelope is cut,
+    after a named front has turned the line opposite the side street into a
+    side (:func:`flats.geom.corner.name_front`)."""
+    if edges is None:
+        return False
+    rear = [e for e in edges.edges if e.cls is EdgeClass.rear]
+    return any(e.alley for e in rear) and any(not e.alley for e in rear)
+
+
+def envelope_for(
+    lot: QuadfitLot, rules: ZoneResolution, plain: ZoneResolution | None = None
+) -> Envelope:
     """The envelope this lot offers under these rules (FOLLOWUPS 12).
 
     Cut from the taxlot with :func:`flats.geom.envelope.buildable` at the
@@ -675,19 +717,28 @@ def envelope_for(lot: QuadfitLot, rules: ZoneResolution) -> Envelope:
     Tier C is cut uniformly at the largest yard, the same conservative
     shape s5 cuts, so its rear strip is that largest yard and is reported
     as the cut the court is charged against.
+
+    ``plain`` is the same lot and design resolved with ``alley_at_rear``
+    False (:func:`screen_lot` resolves it where ``rules`` hold the fact
+    True). Read only on a lot with a rear line on the alley and another off
+    it (:func:`rear_off_alley`): the alley's rear setback -- Portland's
+    waiver, Gresham's rear-with-alley number -- goes to the rear edges on
+    the alley and the ordinary one to the rest (:func:`setbacks_for`). A
+    caller that hands no ``plain`` for such a lot gets quadfit's envelope
+    where the alley's rear is an exemption, as before 2026-09-29.
     """
     quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit")
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
-    setbacks = setbacks_for(rules)
+    split = rear_off_alley(lot.edges)
+    setbacks = setbacks_for(rules, plain if split else None)
     if setbacks is None:
         return quadfit
     strips = lot.edges.tier in (Tier.clean, Tier.corner)
-    if strips and "setback_rear_ft" in rules.exempted and any(
-        e.cls is EdgeClass.rear and not e.alley for e in lot.edges.edges
-    ):
+    if split and plain is None and strips and "setback_rear_ft" in rules.exempted:
         # The exemption is about the rear line on the alley; a rear line that
-        # is not on it has a setback this resolution does not carry.
+        # is not on it has a setback this resolution does not carry, and the
+        # caller did not resolve it (``plain``).
         return quadfit
     geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
     return Envelope(geom, None if strips else setbacks.largest_ft, "flats", setbacks)
@@ -976,11 +1027,19 @@ def screen_lot(
             lot.edges, front_lot_line_rule(got)
         ) or (None,)
         tried: list[tuple[Screened, Fitter]] = []
+        plain: ZoneResolution | None = None
         for front in fronts:
             here = lot
             if front is not None and lot.edges is not None:
                 here = dataclasses.replace(lot, edges=name_front(lot.edges, front))
-            env = envelope_for(here, got)
+            if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
+                # A rear line off the alley owes the ordinary rear setback:
+                # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
+                bare = configure(
+                    lot.facts, design, observed={**lot.observed, "alley_at_rear": False}
+                )
+                plain = rules.resolve(layer_id, lot.zone, bare.conditions, lot=bare.measures)
+            env = envelope_for(here, got, plain)
             key = (env.source, env.setbacks, front)
             if key not in fitters:
                 fitters[key] = Fitter(env.geom, angles)
@@ -1491,6 +1550,7 @@ __all__ = [
     "lot_from_row",
     "observed_facts",
     "per_lot",
+    "rear_off_alley",
     "row_for",
     "run",
     "screen_lot",

@@ -209,6 +209,11 @@ Full format: [flats/config/footnotes/README.md](../../flats/config/footnotes/REA
     line is cut stretch by stretch (`flats.geom.envelope.buildable`). A rear
     variant (exempt or alley number) applies only when the alley runs the
     whole rear line (`flats.geom.alley.registry_alley`).
+  - Two rear lines, one on the alley (a corner lot's line opposite the side
+    street, a jogged rear): the rear variant reaches only the rear line on
+    the alley; the other keeps the ordinary rear setback. The bridge resolves
+    the lot twice, with and without `alley_at_rear`
+    (`flats.ingest.quadfit.rear_off_alley`, `Setbacks.alley_rear_ft`).
   - Back-out aisle: a part-covered rear alley still reaches the court (no
     street lane). It is the court's aisle only where the longest covered
     stretch with the envelope right behind it (`usable_run_ft`) is at least

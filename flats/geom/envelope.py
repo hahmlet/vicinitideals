@@ -37,11 +37,20 @@ ordinary side setback. The far side yard is never touched either way.
 also records where along it the alley really runs (``alley_cover_json``,
 :attr:`~flats.geom.edges.Edge.cover`). The side line is cut stretch by
 stretch (:func:`_pieces`): the alley's number where the alley runs, the
-ordinary side setback across from the neighbour. The rear line cannot be,
-because its alley number is the rear setback itself, resolved once for the
-line: the bridge switches ``alley_at_rear`` on only where the alley runs the
-whole rear line (:func:`flats.geom.alley.registry_alley`), and a rear line
-the alley runs part of arrives here with the ordinary rear setback.
+ordinary side setback across from the neighbour. The rear line is not cut
+by the stretch: the bridge switches ``alley_at_rear`` on only where the alley
+runs the whole rear line (:func:`flats.geom.alley.registry_alley`), and a
+rear line the alley runs part of arrives here with the ordinary rear setback.
+
+*Two rear lines, one on the alley* (FOLLOWUPS 12(b), 3). A corner lot's
+line opposite the side street, or the second leg of a jogged rear, is a rear
+line too, and the alley behind the lot is not behind it. The rules resolve
+the rear setback once for the lot, so the bridge resolves it twice -- with
+``alley_at_rear`` and without -- and hands both over: the alley's
+(:attr:`Setbacks.alley_rear_ft`) for the rear edges on the alley, the
+ordinary ``rear_ft`` for every other rear edge. An exemption is a zero like
+any other number here, and an alley rear edge whose cover does not vouch for
+all of it takes the larger of the two.
 
 *The street line off a corridor.* Portland's commercial zones set 10 ft from a
 street lot line on a Map 130-1 stretch and none from any other. The rule
@@ -92,6 +101,15 @@ class Setbacks:
     #: distinguish it and the line takes its class's number. Read for a front
     #: or street-side edge flagged ``off_corridor`` only.
     street_off_corridor_ft: float | None = None
+    #: The rear setback on a rear line the alley runs end to end -- the rear
+    #: setback's ``alley_at_rear`` variant (Portland's and Multnomah's
+    #: exemption, as zero; Gresham's, Troutdale's and Fairview's numbers)
+    #: where the lot ALSO has a rear line off the alley, which then takes
+    #: ``rear_ft``, the ordinary number (FOLLOWUPS 12(b), 3). None means the
+    #: lot's rear lines are not told apart and every one takes ``rear_ft``.
+    #: Read for a rear edge flagged ``alley`` only, and only where its cover
+    #: vouches for the whole edge (:meth:`for_edge`).
+    alley_rear_ft: float | None = None
 
     def for_class(self, cls: EdgeClass) -> float:
         return {
@@ -104,9 +122,24 @@ class Setbacks:
         }[cls]
 
     def for_edge(self, edge: Edge) -> float:
-        """The setback one edge takes: its class's, unless it is the alley side."""
+        """The setback one edge takes: its class's, unless it is an alley line.
+
+        A rear edge on the alley takes :attr:`alley_rear_ft` where it is set
+        and the edge's cover vouches for all of it (or the edge came from a
+        classifier that measures no stretch, ``cover`` None). An alley rear
+        edge whose cover does not -- none on record, or the alley stopping
+        short -- takes the larger of the two rear numbers: the waiver or the
+        alley number is about "a lot line abutting an alley", and nothing
+        says where along this one the neighbour's yard begins.
+        """
         if edge.alley and edge.cls is EdgeClass.side and self.alley_side_ft is not None:
             return self.alley_side_ft
+        if edge.alley and edge.cls is EdgeClass.rear and self.alley_rear_ft is not None:
+            from flats.geom.alley import whole
+
+            if edge.cover is None or whole(edge.cover):
+                return self.alley_rear_ft
+            return max(self.rear_ft, self.alley_rear_ft)
         if (
             edge.off_corridor
             and edge.cls in (EdgeClass.front, EdgeClass.street_side)
@@ -117,7 +150,13 @@ class Setbacks:
 
     @property
     def largest_ft(self) -> float:
-        return max(self.front_ft, self.side_ft, self.rear_ft, self.street_side_ft or 0.0)
+        return max(
+            self.front_ft,
+            self.side_ft,
+            self.rear_ft,
+            self.street_side_ft or 0.0,
+            self.alley_rear_ft or 0.0,
+        )
 
     def on_a_corner(self) -> Setbacks:
         """The same setbacks, with street edges taking the stricter standard."""
@@ -130,6 +169,7 @@ class Setbacks:
             street_side_ft=self.street_side_ft,
             alley_side_ft=self.alley_side_ft,
             street_off_corridor_ft=self.street_off_corridor_ft,
+            alley_rear_ft=self.alley_rear_ft,
         )
 
 
