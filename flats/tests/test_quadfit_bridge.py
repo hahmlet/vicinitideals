@@ -868,7 +868,17 @@ def test_a_side_alley_waiver_reaches_only_the_stretch_the_alley_runs() -> None:
     assert envelope_for(lot, rear_line).sqft == pytest.approx((50 - 5 - 15) * 75)  # type: ignore[arg-type]
 
 
-def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpus, policies) -> None:
+def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(
+    corpus, policies, monkeypatch
+) -> None:
+    # This test reads the court's CHARGE on whichever cut wins. Since
+    # FOLLOWUPS 7(b) Portland R5's 12 ft outdoor square is a check too, and
+    # on this 50 ft lot the turned pod's court fills the window, so no cut
+    # proves it: every cut is held out of GREEN, and the colour ranking
+    # (yellow above unknown) then crowns a cut for its colour, not its
+    # charge. The shape is pinned in test_outdoor_shape.py; switched off
+    # here so the question stays the one this test asks.
+    monkeypatch.setattr("flats.score.screen._outdoor_shape", lambda *a, **k: None)
     # FOLLOWUPS 4(b). s4's alley width rides into the lot's facts beside the
     # rear alley, and Portland's court behind the pod is charged as a stall
     # and the back-out room the alley's width leaves short -- not a stall and
