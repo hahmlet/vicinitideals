@@ -887,9 +887,19 @@ async def settings_organization_post(
     if org is None:
         return HTMLResponse("Organization not found", status_code=404)
 
+    new_slug = org_slug.strip().lower().replace(" ", "-") if org_slug and org_slug.strip() else None
+    if new_slug and new_slug != org.slug:
+        taken = (
+            await session.execute(
+                select(Organization.id).where(Organization.slug == new_slug, Organization.id != org.id)
+            )
+        ).scalar_one_or_none()
+        if taken is not None:
+            return HTMLResponse("That slug is already taken. Choose another.", status_code=400)
+
     org.name = org_name.strip()
-    if org_slug and org_slug.strip():
-        org.slug = org_slug.strip().lower().replace(" ", "-")
+    if new_slug:
+        org.slug = new_slug
     await session.commit()
 
     # Redirect back to GET to show updated data
@@ -914,6 +924,8 @@ async def settings_organization_invite(
     session: DBSession,
 ) -> Response:
     from datetime import timedelta
+
+    from markupsafe import escape as _esc
 
     from app.api.rate_limit import check_rate_limit
     from app.emails import make_invite_token, send_invite_email
@@ -967,7 +979,7 @@ async def settings_organization_invite(
         pass
 
     return HTMLResponse(
-        f'<span style="color:var(--success,#16a34a);font-size:13px;">✓ Invite sent to {email}</span>'
+        f'<span style="color:var(--success,#16a34a);font-size:13px;">✓ Invite sent to {_esc(email)}</span>'
     )
 
 
@@ -1601,11 +1613,16 @@ async def billing_embedded_mock_create_session(
 
 @router.post("/ui/admin/backfill-listing-buckets")
 async def admin_backfill_listing_buckets(
+    request: Request,
     session: DBSession,
 ) -> JSONResponse:
     """Classify all ScrapedListings that have no priority_bucket yet,
-    using the listing's own zoning / county / jurisdiction fields."""
+    using the listing's own zoning / county / jurisdiction fields.
+
+    Site admins only: it writes to every organization's listings."""
     from app.utils.priority import classify as _classify
+
+    _require_settings_owner(await _get_user(session, request))
 
     stmt = (
         select(ScrapedListing)
