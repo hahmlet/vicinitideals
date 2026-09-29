@@ -345,7 +345,25 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 129, "comments": 194, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 215, "tests": 18}
+#
+# 341 -> 367 on 2026-09-29, later again: Beaverton, the third Washington
+# County draft from the same cloud session. 21 comments and 5 notes, no
+# test. The comments are the Development Code's standards no field or
+# measured fact holds: minimum FAR (Multiple Use, Cooper Mountain,
+# Chapter 70), frontage occupancy (60.05.15.6.A), the minimum-density
+# rounding, the design standards-or-guidelines choice (60.05.11.3), garage
+# setbacks, the 60.05.60 middle housing design rules, unit lots, the 10.32
+# overlays, the 20.25.10.1.B gross-site-area relief and the transit-distance
+# density alternatives, the cul-de-sac frontage share, the 12-by-12 common
+# open space square, the Cooper Mountain Nature Park setback, the NS
+# district's 50 percent residential share, Chapter 70's S5.c and street-side
+# maximums, and the UPAA annexation note's lot coverage clause. The overlay
+# paragraph is counted twice: the unit-lot paragraph before it ends "not
+# encoded as variants", and that window runs on into it. The notes are the zone summaries of NS (the 50
+# percent share), SC-MU, SC-HDR and SC-S (the lower density beyond 400 feet
+# of a light rail platform) and RC-OT (Figure 70.15.10.2.3's alternative
+# 18 units an acre).
 #
 # 287 -> 341 on 2026-09-29, later the same day: Hillsboro, the second
 # Washington County draft from the same cloud session. 46 comments, 7 notes

@@ -1,0 +1,361 @@
+20.15. Employment/Industrial Zoning Districts
+
+[ORD 4542, 06/17/2010; ORD 4857, 10/03/2024]
+20.15.05. Employment and Industrial Areas.
+
+The areas of the City that are designated as Employment and Industrial implement the policies of the City's
+Comprehensive Plan and are identified on the City's Zoning Map. Full urban services are to be provided.
+One Employment zone and one Industrial zone establish varied levels of employment uses.
+[ORD 3213, 06/09/1981; ORD 3475, 12/26/1985; ORD 3494, 03/27/1986; ORD 3569, 07/18/1987; ORD 3739,
+09/08/1990; ORD 3785, 09/27/1991; ORD 3825, 09/19/1992; ORD 3958, 06/11/1996; ORD 3975, 03/07/1997; ORD
+4071, 11/25/1999; ORD 4079, 12/09/1999; ORD 4107, 05/02/2000; ORD 4186, 02/07/2002; ORD 4248, 05/08/2003;
+ORD 4265, 10/09/2003; ORD 4332, 01/01/2005; ORD 4542, 06/17/2010]
+Effective on: 6/17/2010
+20.15.10. Purpose.
+
+1.Office Industrial (OI)
+The Office Industrial District is intended to provide areas of office, light manufacturing, and limited retail and
+service uses in an "employment activity center" concept.
+2.Office Industrial - Nike Campus (OI-NC)
+The Office Industrial - Nike Campus District is intended to provide consistent and predictable zoning with
+Washington County zoning for the Nike World Headquarters campus located in an area south of Walker Road, west
+of Murray Boulevard, north of Jenkins Road, and east of 158th Avenue. [ORD 4649, February 2015]
+3.Industrial (IND)
+The Industrial District is intended to provide sites for manufacturing, distribution, industrial uses, and uses requiring
+processing, fabrication and storage, including outdoor storage areas, heavy equipment and other similar uses not
+compatible in an Office Industrial area. [ORD 4584; June 2012]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-19
+[ORD 3108, 04/03/1979; ORD 3136, 10/29/1979; ORD 3162, 04/03/1980; ORD 3177, 07/09/1980; ORD 3184,
+08/06/1980; ORD 3204, 02/26/1981; ORD 3213, 06/09/1981; ORD 3494, 03/27/1986; ORD 3499, 04/24/1986; ORD
+3739, 09/08/1990; ORD 3975, 03/07/1997; ORD 4093, 04/07/2000; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005;
+ORD 4354, 07/14/2005; ORD 4443, 08/23/2007; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4649,
+02/13/2015]
+Effective on: 2/13/2015
+20.15.15. Site Development Standards
+
+Site Development Standards support implementing development consistent with the corresponding zoning district. All
+superscript notations refer to applicable regulations or clarifications as noted in footnotes below. [ORD 4584; June 2012]
+[ORD 4649; Feb 2015]
+
+20.15.15 Employment/Industrial Site Development Standards
+
+Superscript Numbers Refer to Footnote
+# Standard OI OI-NC IND Unit of
+Measurement
+A.1. Minimum Parcel Area None None None Square Feet
+B.1. Residential Density - Minimum/Maximum N/A N/A N/A N/A
+C.1. Floor Area Ratio - Minimum/Maximum N/A None/0.355 N/A N/A
+D.1. Lot Dimensions - Minimum Width None None None Feet
+D.2. Lot Dimensions - Minimum Depth None None None Feet
+E.1. Minimum Yard Setbacks1 - Any Yard Abutting A Residential
+Zone
+75 None 75 Feet
+E.2. Minimum Yard Setbacks1 - Front 35 None 35 Feet
+E.3. Minimum Yard Setbacks1 - Side1,2 10 None 10 Feet
+E.4. Minimum Yard Setbacks1 - Rear2 None None None Feet
+F.1. Building Height - Maximum3 80 80 - 1106 45 Feet
+G.1. Public Parks4 Exempt Exempt Exempt N/A
+20.15.15 Employment/Industrial Site Development Standards - Wireless Communication Facilities
+
+Superscript Numbers Refer to Footnote
+# Standards OI OI-NC IND Unit of
+Measurement
+H.1. Maximum
+Height7 - WCF7
+80 80 80 Feet
+H.2. Maximum
+Height7 -
+ Equipment
+Shelters8
+12 12 12 Feet
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-20
+# Standards OI OI-NC IND Unit of
+Measurement
+H.3. Maximum
+Height7 - Roof
+Mounted
+Antennas
+Shall not extend above
+maximum height of
+underlying zone or
+increase the height of
+any building which is
+nonconforming due to
+height.
+Shall not extend above
+maximum height of
+underlying zone or
+increase the height of
+any building which is
+nonconforming due to
+height.
+Shall not extend above
+maximum height of
+underlying zone or
+increase the height of
+any building which is
+nonconforming due to
+height.
+N/A
+I.1. Yard Setbacks9 -
+Requirements
+Shall comply with
+underlying zoning district
+requirements
+Shall comply with
+underlying zoning district
+requirements
+Shall comply with
+underlying zoning district
+requirements
+N/A
+I.2. Yard Setbacks9 -
+Other
+Refer to 60.70.35.14.A
+and B
+Refer to 60.70.35.14.A
+and B
+Refer to 60.70.35.14.A
+and B
+N/A
+[ORD 4649; February 2015] [ORD 4804; August 2021] [ORD 4857; October 2024]
+Footnotes:
+1. Reduction to Setback Standards: Under the thresholds outlined in Section 40.30.05, application may be made
+for zero side yard setbacks.
+2. No side or rear yard setbacks required where side or rear property lines abut a railroad right-of-way or spur
+track.
+3. Except as provided by Section 60.50.05. (Accessory Uses and Structures).
+4. Public parks, parkways, recreation facilities, trails and related facilities are exempt from these site development
+requirements.
+5. If non-residential or mixed use development is proposed in excess of 0.35 FAR, the applicant shall demonstrate
+that the transportation system serving the development site has adequate planned capacity to accommodate
+additional site-generated traffic, consistent with the applicable adopted level of service standard.
+6. Buildings within 500 linear feet from the nearest residentially designated property shall have a maximum height
+of 80 feet. Buildings may be constructed up to 110 feet in height on portions of the subject properties that are
+500 feet or more from the nearest residentially designated property.
+7. Inclusive of antenna.
+8. At-grade equipment shelters.
+9. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+[ORD 3213, 06/09/1981; ORD 3314, 04/28/1983; ORD 3494, 03/27/1986; ORD 3499, 04/24/1986; ORD 3739,
+09/08/1990; ORD 3975, 03/07/1997; ORD 4071, 11/25/1999; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD
+4354, 07/14/2005; ORD 4443, 08/23/2007; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4649, 02/13/2015;
+ORD 4702, 01/04/2017; ORD 4804, 08/13/2021; ORD 4857, 10/03/2024]
+Effective on: 9/14/2026
+20.15.20. Land Uses
+
+The following Land Uses are Permitted (P), allowed with a Conditional Use (C) approval, or Prohibited (N) as identified in
+the following table for the Employment and Industrial Zoning Districts. [ORD 4584; June 2012]
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-21
+Table 20.15.20.A Employment/Industrial
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Numbers Refer to Footnote
+# Category Specific Use OI OI-NC IND
+1.A. Commercial Animal Care, Major1 N N C
+1.B. Commercial Animal Care, Minor1 P N P
+2.A. Commercial Hospitals1 P N C
+2.B. Commercial Medical Clinics1 P P24 C
+2.C. Commercial Child Care Centers1 P P P
+3.A. Commercial Parking as the Principal Use - Structures P N C
+3.B. Commercial Parking as the Principal Use - Surface N N C
+4.A. Commercial Retail and Service Business - Eating and Drinking
+Establishments
+P2 P24 C2
+4.B. Commercial Retail and Service Business - Equipment and Supply Sales4 P N P5
+4.C. Commercial Retail and Service Business - Equipment Rental Agencies6 C N C
+4.D. Commercial Retail and Service Business - Freestanding Retail or Service
+Business up to and Including 5,000 sq. ft.7
+P P24 N
+4.E. Commercial Retail and Service Business - Freestanding or Combination of
+Retail or Service Business of More than 5,000 but Less than
+30,000 sq. ft.7
+C P24 N
+4.F. Commercial Retail and Service Business - Professional Services P P24 C
+4.G. Commercial Retail and Service Business - Wholesale or Retail Lumber,
+Building, and or Landscaping Materials Yard
+P N P
+4.H. Commercial Retail and Service Business - Wholesale Marijuana Sales P N P
+4.I. Commercial Retail and Service Business - Marijuana Dispensaries N N N
+4.J. Commercial Retail and Service Business - Retail Marijuana Sales N N N
+5.A. Commercial Cold Storage Plants1 N N P
+5.B. Commercial Self Storage Facilities1 N N C
+5.C. Commercial Storage or Sale Yard1, 8 N P24 P
+5.D. Commercial Storage Yard for Building Materials1 N N P
+6. Commercial Temporary Living Quarters C N N
+7.A. Commercial Auto, Truck and Trailer Rental1 N N C
+7.B. Commercial Automotive Service, Major1 N N P10
+7.C. Commercial Automotive Service, Minor1 N N P
+7.D. Commercial Bulk Fuel Dealerships1 N N P
+7.E. Commercial Heavy Equipment Sales1, 11 N N P
+7.F. Commercial Trailer, Recreational Vehicle or Boat Storage1 N P24 P
+7.G. Commercial Trailer Sales or Repair1 N N C
+7.H. Commercial Vehicle Storage Yards1 N N C
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-22
+# Category Specific Use OI OI-NC IND
+8. Commercial Food Cart Pods25 P N N
+9. Industrial Concrete Mixing and Asphalt Batch Plants N N C
+10. Industrial Fuel Oil Distributors N N P
+11. Industrial Heliport C C C
+12. Industrial Mail Order Houses, Wholesale or Retail, Exclusive of On-Site
+Sales to the Public1
+P P P
+13. Industrial Manufacturing, Fabricating, Assembly, Processing, Packing,
+and Storage1
+P12, 13 P P13
+14. Industrial Marijuana Processing P12 N P12
+15. Industrial Motor Freight Terminal N N C
+16. Industrial Operation Centers14 N N P
+17. Industrial Laboratory1 P12, 13 P P
+18. Industrial Salvage Yards, Recycling Centers and Solid Waste Transfer
+Stations1
+N N C
+19. Industrial Warehousing, Wholesale and Distributive Activities1 P12 P P
+20.A. Civic3 Commercial Schools1 C N N
+20.B. Civic3 Educational Institutions1 C N C
+20.C. Civic3 Job Training and Vocational Rehabilitation Services1 P N P
+21. Civic3 Public Buildings and Uses15 P N C
+22.A. Civic3 Railroad Tracks and Facilities - Freight16 P N P
+22.B. Civic3 Railroad Tracks and Facilities - Passenger P N P
+23.A. Civic3 Public Parks and Recreational Facilities1 P N P
+23.B. Civic3 Public Dog Parks and Dog Runs1 C N C
+23.C. Civic3 Private Recreational Facilities1, 17 P P P
+24.A. Civic3 Domestic Violence Shelters P P P
+24.B. Civic3 Emergency Shelters P20 P20 P20
+24.C. Civic3 Mass Shelters P P P
+25. Civic3 Transit Centers18 P P C
+26.A. Civic3 Utilities - Facilities Related to Utility Distribution, such as
+Substations, Water Towers, Pump Station, other than
+Transmission Lines or Power Plants
+C C C
+26.B. Civic3 Utilities - Transmission Lines P P P
+27. Civic3 Vehicle Camping26 P P P
+28. Civic3 Wireless Communications Facilities P P P
+29. Office Office1 P P P19
+30. Office Financial Institutions1 P P24 C
+31. Other Planned Unit Development C C C
+[ORD 4876; January 2026]
+Footnotes:
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-23
+1. Ancillary showrooms and retail area are Permitted if comprising not more than 10% of gross building floor area, and
+provided that no individual retail use exceeds 2,000 square feet of gross building floor area. Ancillary showrooms
+and retail area are Conditional if use is between 10% and 20% of gross building floor area and no individual retail
+business use exceeds 5,000 square feet of gross building floor area.
+2. Drive-through uses are Prohibited; walk-ups Permitted.
+3. Public Art shall be permitted pursuant to Section 60.50.25.13. [ORD 4782; April 2020]
+4. Industrial and professional equipment and supply stores, including incidental service and repair of the same.
+5. Includes incidental service and repair, but excludes retail sales of specific items on display.
+6. Exclusive of trucks, vehicles, or heavy equipment.
+7. No outdoor storage or sales of animals or livestock are allowed with this use.
+8. For contractor's equipment, house mover, delivery vehicles, trucking terminal, used equipment in operable
+condition, and transit storage.
+9. [Repealed ORD 4673; March 2016]
+10. Entirely within enclosed building.
+11. Including incidental service and repair.
+12. Laboratories, manufacturing, assembly, fabricating, processing, packing, storage, wholesale and distribution
+activities shall meet the following requirements:
+a. Activities are entirely enclosed within a building or structure whose appearance is compatible with normal
+industrial or office building design.
+b. Odors, noise, vibrations or other emissions are controlled within the confines of the building or structure.
+c. Are not for servicing or use by the general public.
+d. Do not entail outdoor storage of raw materials or finished products.
+e. Do not entail movement of heavy equipment on and off the site, except truck deliveries.
+f. Do not involve bringing live animals or the waste or by product of dead animals to the site.
+g. Do not involve outdoor testing of products or processes on the site.
+h. Do not involve highly combustible, explosive or hazardous materials or waste.
+i. Examples of uses which normally meet all of the above characteristics include but are not limited to: printing,
+publishing and allied arts, communications equipment, electronic components, measuring, analyzing and
+controlling instruments manufacturing.
+13. Any use having the primary function of storing, utilizing, testing, experimenting or manufacturing of explosive
+material is Prohibited.
+14. For public agencies and utility uses. If major and minor automotive services are provided, the following limitations
+shall apply:
+a. Fueling, repair, washing, and servicing of vehicles is limited to fleet vehicles parked on site for these uses
+established after August 23, 2007. [ORD 4584; June 2012]
+b. All automotive service activities with the exception of those described in Subsection c, below shall be
+undertaken in an enclosed building.
+c. The following automotive service activities are not required to be conducted within an enclosed building:
+d. Vehicle fueling from a fixed source;
+[ORD 4443; August 2007]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-24
+1. Routine check of fluid level and tire pressure and replacement of minor equipment such as light bulbs
+and windshield wipers. Should such a check result in the need to replace fluids, e.g., oil, anti-freeze, the
+vehicle shall be moved into the enclosed building on site for this operation.
+2. Emergency repair of disabled vehicles, e.g., tire replacement.
+15. Excluding services offered on premises to individuals or the general public.
+16. Such as switching yards, spur or holding tracks and freight depots, but not within 200 feet of a residential zone.
+17. Privately owned facilities, such as fitness clubs, racquetball or handball clubs, tennis courts or swimming pools
+exclusive of spectator sports facilities.
+18. Stations and stops exclusive of terminals or transit storage areas.
+19. Unless the Office use is within a multi-story Office building only, or is ancillary to the primary use, Office is
+Permitted as principal use up to 15% of the total land area of a site.
+20. Emergency Shelters may occur where allowed pursuant to Section 10.70.10. [ORD 4838; March 2023]
+21. [Footnote repealed and reserved] [ORD 4804; August 2021]
+22. [Footnote repealed and reserved] [ORD 4804; August 2021]
+23. [Footnote repealed and reserved] [ORD 4804; August 2021]
+24. The use is permitted as an ancillary use to serve the employees and/or support the primary permitted use of the
+site. The ancillary use is intended to provide flexibility for and complement the operation of the primary use of the
+site. The ancillary use is not intended for the use by the general public. [ORD 4649; February 2015]
+25. Food Cart Pods, and their amenities as described in Section 60.11, are exempt from the Site Development
+Standards of 20.15.15 but are subject to the standards of 60.11 of the Development Code. [ORD 4662; September
+2015] [ORD 4857; October 2024]
+26. Vehicle Camping may occur only where allowed through a program established by Council resolution and
+administered by the Mayor. The use is subject to the special requirements found in Section 60.50.25.14. [ORD
+4779; March 2020]
+[ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4595, 02/08/2013; ORD 4648, 11/28/2014; ORD 4649,
+02/13/2015; ORD 4659, 07/10/2015; ORD 4662, 09/11/2015; ORD 4673, 03/04/2016; ORD 4674, 02/10/2016; ORD
+4702, 01/04/2017; ORD 4779, 03/06/2020; ORD 4782, 04/17/2020; ORD 4804, 08/13/2021; ORD 4811, 10/14/2021;
+ORD 4838, 03/09/2023; ORD 4857, 10/03/2024; ORD 4876, 01/20/2026]
+Effective on: 8/10/2026
+20.15.30. Supplemental Development Requirements
+
+In addition to the site development requirements listed in Section 20.15.15, development in Industrial zoning districts
+shall be subject to the following supplemental development requirements:
+1.Off Street Parking and Loading. In addition to the provisions of Section 60.25 (Off-Street Loading) and Section
+60.30 (Off-Street Parking), the following shall apply to all development in industrial zoning districts.
+A. No parking shall be allowed within the first 20 feet of the front yard setback. Parking shall be permitted
+within side or rear yard setbacks; provided, however, when the side and/or rear yards abut a residentially
+developed property or developable property in a Residential zoning district there shall be no parking within
+the first 20 feet of the setback.
+B. In addition to the requirements of Section 60.25., off-street loading shall not be permitted within side or rear
+yard setbacks abutting a residentially developed property or developable property in a Residential zoning
+district or within front yard setbacks abutting any residentially developed property or developable property
+in a Residential zoning district unless the setback is increased to 75 feet and the first 20 feet from the
+property line is landscaped or screened.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-25
+2.Adjacent Residential Zoning District(s). No service roads, spur trackage, hardstands, outside storage areas, etc.
+shall be permitted within required yards adjacent to Residential zoning district(s).
+3.Required Conditions. The following is required for development within the Office Industrial and Industrial zoning
+districts:
+A. All business, service, repair, processing, storage or merchandise display shall be conducted wholly within an
+enclosed building unless screened by a sight-obscuring fence or wall, excluding outdoor seating, domestic
+violence shelters, emergency shelters, mass shelters, and vehicle camping. [ORD 4779; March 2020] [ORD
+4838; March 2023]
+B. Motor vehicle, boat, or trailer storage lots shall be drained and surfaced with crushed rock or pavement
+except in those portions of the lot maintained as landscaped areas.
+C. All materials, including wastes, shall be stored and all grounds shall be maintained in a manner which will not
+attract or aid the propagation of insects or rodents or create health or fire hazards. All areas for storage of
+waste shall be fully screened.
+4.Performance Standards.
+A.Vibration. No vibration other than that caused by highway vehicles, trains and aircraft shall be permitted
+which is discernible without instruments at the property line of the use concerned.
+B.Odors. The emission of odorous gasses or matter as to be readily detectable at any point beyond the
+property line is prohibited.
+C.Heat and Glare. Except for exterior lighting, operations producing heat and glare shall be conducted entirely
+within an enclosed building.
+D.Administration and Enforcement. Prior to the City taking any action on a Type 1, Type 2, or Type 3
+application or the issuance of an occupancy permit, information sufficient to determine the degree of
+compliance with the standards in this subsection shall be furnished by the applicant. Such request may
+include continuous records of operations, for periodic checks to assure maintenance of standards, or for
+special surveys.
+[ORD 4542, 06/17/2010; ORD 4779, 03/06/2020; ORD 4838, 03/09/2023]
+Effective on: 3/9/2023

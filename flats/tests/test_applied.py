@@ -115,8 +115,19 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     is what puts the quadplex in that column, so it is encoded beside note 1.
     Both now reach the layer default alone: PMD, MR-1, MR-2 and VA no longer
     carry a minimum of their own.
+
+    60 -> 85 on 2026-09-29, Beaverton (draft, a cloud session): 21 sentences
+    ruled `encoded`, 25 printings. The Beaverton Development Code puts much of
+    what matters in its table notes -- the RMA/RMB/RMC minimum lot for a
+    quadplex, the RMB and RMC height plane, the MR and commercial rows that
+    admit the pod only attached, the OI-WS and C-WS refusals, the CM front
+    maximum, the parking maximum's rounding, and the stall and aisle sizes --
+    and every one confirms. Three first read `broken` or `unreadable` because
+    their sentences named figures the layer holds only in a reason (the 25
+    feet of the 20.30 plane, RC-OT's alternative 18, the 7.2 stalls); the
+    claims were rewritten to name the field and the figure the layer holds.
     """
-    assert len(rows) == 60
+    assert len(rows) == 85
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

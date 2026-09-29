@@ -661,7 +661,15 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
     the back of the code with the other figures and answers for no section
     number. It is the same shape as P100 and P200 -- a chapter pointing at a
     drawing -- with the opposite outcome, because this drawing carries its
-    numbers as a table and they extract."""
+    numbers as a table and they extract.
+
+    The sixth arrived 2026-09-29 and is a fourth kind: an agreement between
+    two governments. ``wc.beaverton-upaa`` is the Washington County-Beaverton
+    Urban Planning Area Agreement, which numbers its parts in Roman numerals
+    (§V.D keeps county standards for developments the county had partly
+    approved) and so answers for no section of the Beaverton code. Beaverton
+    cites it by that name (BDC 10.40.3.A), and the layer quotes it for the one
+    clause it holds."""
     store = ProvenanceStore()
     silent = {d for d in store.documents() if not _doc_ids([d])}
 
@@ -671,6 +679,7 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/clackamas/_unincorporated/roadway.p100.txt",
         "or/clackamas/_unincorporated/roadway.p200.txt",
         "or/clackamas/tualatin/appendix-b.figures.txt",
+        "or/washington/beaverton/wc.beaverton-upaa.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

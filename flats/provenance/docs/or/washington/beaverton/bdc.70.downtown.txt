@@ -1,0 +1,3558 @@
+CHAPTER 70 - DOWNTOWN DESIGN DISTRICT
+
+Contents:
+70.05. Administration
+70.10. Downtown Design Principles
+70.15. Downtown Zoning and Streets
+70.20. Downtown Design Guidelines and Standards
+[ORD 4799, 01/08/2021]
+70.05 Administration
+
+Contents:
+70.05.05. Purpose
+70.05.10. Design Review Process
+70.05.15. How to Use the Code
+[ORD 4799, 01/08/2021]
+70.05.05 Purpose
+
+Beaverton’s Community Vision calls for a vibrant Downtown that is the social, economic and cultural heart of Beaverton.
+Downtown Design District regulations are intended to create a recognizable, vibrant, walkable mixed-use downtown.
+Pedestrian-oriented, mixed-use environments are encouraged with development featuring:
+●Concentrated services and amenities;
+●Safe and comfortable connectivity using a variety of ways to move around (walking, biking, rolling, riding
+transit, using automobiles and moving freight);
+●Ground floors that engage streets and sidewalks;
+●Room to bike, walk, and spend time outdoors;
+●A diverse and dense mix of residential, office and commercial uses; and
+●An authentic sense of place and identity.
+CHAPTER 70 helps promote these outcomes by providing development rules encouraging development in Downtown
+that adds more jobs, housing, cultural facilities, and places to gather while setting site and building design expectations.
+The intent of these rules is to provide baseline expectations for new development while allowing for innovative,
+inspiring, high-quality urban design and architecture which will complement and reinforce Beaverton’s Community
+Vision.
+The Downtown Design District boundary is shown in Figure 70.05.05.1 Downtown Design District Boundary.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-2
+Figure 70.05.05.1: Downtown District Boundary
+Disclaimer: The above map is intended for informational purposes only. It is not intended for legal, engineering, or
+surveying purposes. Please consult with Beaverton Planning staff for interpretation.
+[ORD 4799, 01/08/2021]
+Effective on: 8/21/2026
+70.05.10. Design Review Process
+
+Applications for new development, additions and renovations in the Downtown Design District are subject to Design
+Review as described in the Section 40.23 of the Development Code. They shall meet all applicable requirements of the
+Downtown Design District standards and/or guidelines in CHAPTER 70 and all other applicable regulations contained in
+the Beaverton Development Code.
+Development within the Downtown Design District has three tracks:
+1. Type 1. Minor building and site modifications. The proposal must meet all applicable design standards. The Director
+is the decision-making authority for proposals following the Type 1 track. See Section 40.23.15.1.A for specific
+thresholds.
+2. Type 2. Smaller new construction and building additions, and major site modifications: The proposal may meet up
+to three applicable discretionary design guidelines. All other applicable design standards must be met. Projects
+proposing to exceed the maximum height of the base zone through the provisions of Section 70.20.10.3 shall be
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-3
+automatically elevated to a Type 3 process. The Director is the decision-making authority for proposals following
+the Type 2 track. See Section 40.23.15.2.A for specific thresholds.
+3. Type 3. Larger new construction and building additions, plus projects that respond to least four discretionary design
+guidelines rather than the corresponding design standard, or the project exceeds the height maximum through the
+provisions of Section 70.20.10.3. The Planning Commission is the decision-making authority for proposals following
+the Type 3 track. See Section 40.23.15.3.A for specific thresholds.
+Proposals submitted with additional land use applications shall be processed concurrently, and the entire proposal shall
+be processed along the track of the highest application type.
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.05.15. How to Use the Code
+
+This document establishes development and design regulations for zoning and overlay districts in Downtown Beaverton
+Design District. The document has three sections:
+1.Downtown Design Principles. Section 70.10, Downtown Design Principles, include overarching statements that
+provide a description of the desired built environment and future outcomes for Downtown. The Design Guidelines
+and Standards in each section are written to support the principles and implement them on a project-specific level.
+Applicable Design Principles are identified and restated within each sub-section of Section 70.20 Design Guidelines
+and Standards. In instances where projects follow the Discretionary Track, the relevant Principles will be reviewed
+for compliance during the decision-making process.
+2.Downtown Zoning and Streets. Section 70.15 describes the Zoning Districts in the Downtown Design District. This
+section includes the zoning map, street typology map, development standards, and use regulations.
+A. Zoning Map. The Zoning Map identifies the location and boundaries of the four zoning districts that make up
+Downtown, as well a historic overlay.
+B. Street Typology Map. The Street Typology Map is utilized to determine primary and secondary streets in
+cases of sites with multiple frontages to guide site planning, including building and driveway locations.
+C. Development Standards. Development Standards provide basic building envelope and site requirements
+necessary to ensure forms of development appropriate for an urban environment. These standards include
+building heights, floor area ratios, densities, setbacks, and other basic regulations.
+D. Use Regulations. The Use Regulations lists uses that are permitted, conditionally permitted or prohibited for
+each zoning district.
+3.Downtown Design Guidelines and Standards. Downtown Design Guidelines and Standards provide the regulatory
+structure to implement the Downtown Design Principles. The Guidelines and Standards are divided into Site Design
+and Building Design sections that set expectations for design. Each design subsection includes the following
+elements:
+A. Intent. The intent statement describes the desired outcome of the Design Guidelines and Standards for that
+topic.
+B. Design Principles. The Design Principles section lists the most applicable Design Principles that are
+implemented by that design sub-section.
+C. Design Guidelines. The Design Guidelines describe how an application can meet City expectations, as
+expressed through the Design Principles and applicable intent statements, for one design topic or subtopic.
+The guidelines provide a discretionary way to satisfy a design sub-topic. A corresponding Design standard is
+provided for each Design Guideline.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-4
+D. Design Standards. The Design Standards provide clear and objective rules for satisfying a particular design
+sub-topic.
+4.Images and Diagrams. Images, photographs and diagrams are provided to illustrate design guidelines and
+standards and assist in understanding the desired character or proposed implementation of a standard. Images that
+are part of the Downtown Development Code will be labeled with figure numbers. Images that are not part of the
+Downtown Development Code are not numbered, and are not regulatory in nature.
+5.Applicability and Conformity of Development. No construction, modification, addition, or placement of any
+building or structure shall occur, nor shall any new use commence on any parcel, on or after the effective date of
+the Beaverton Downtown Development Code that is not in conformity with the provisions of this Beaverton
+Downtown Development Code. If the Director determines that an existing use or structure in Downtown Beaverton
+is an existing nonconforming use, the regulations of CHAPTER 30 of the Beaverton Development Code shall apply.
+The provisions of this Beaverton Downtown Development Code shall only apply to development projects within the
+Downtown Design District boundary. If the Downtown Design District boundary divides a site, only the portion of
+the site within the Downtown Design District boundary shall be subject to the rules in CHAPTER 70.
+6.Compliance with Other Sections of the Beaverton Development Code. Where the general provisions of the
+Downtown Design District Code are inconsistent with other sections of the Beaverton Development Code, the
+provisions of the Downtown Design District shall prevail and supersede the applicable provisions of the Beaverton
+Development Code. When the Downtown Design District Code is silent on an issue that is specifically regulated in
+other sections of the Beaverton Development Code, those provisions in the Beaverton Development Code shall
+apply.
+Compliance with other Code sections includes, but is not limited to:
+●CHAPTER 10 - GENERAL PROVISIONS
+●CHAPTER 30 - NONCONFORMING USES
+●CHAPTER 40 - Permits and Applications
+●CHAPTER 50 - PROCEDURES
+●CHAPTER 60 - SPECIAL REQUIREMENTS
+●CHAPTER 90 - DEFINITIONS
+7.Downtown Development Code Exemptions. Downtown developments are exempt from the following regulations:
+A. CHAPTER 20, except Section 20.25 DENSITY CALCULATIONS
+B. Section 60.05, except Lighting Design regulations in 60.05.30 and 60.05.50
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.10. Downtown Design Principles
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-5
+The Downtown Design Principles provide a description of the desired built environment and future outcomes for
+Downtown. The intent statements, Design Standards and Design Guidelines in Section 70.20 Downtown Design
+Guidelines and Standards are written to support these principles and achieve the outcomes described here. Applicable
+Design Principles are identified and restated within each topic of Design Guidelines and Design Standards.
+Applicants and the Review Authority should consider applicable design principles to understand intent statements under
+each topic and inform judgments about how to apply applicable design guidelines.
+1.Design Places for People. Promote buildings, urban open spaces and streets that are comfortable and welcoming
+to pedestrians. Create strong relationships among buildings, open spaces and the people walking along the street.
+Produce pedestrian-scaled places and streetscapes that are interesting, enjoyable, and engaging for people. Ensure
+Downtown is a place for everyone, including racially and ethnically diverse populations as well as historically
+underrepresented and underserved populations.
+2.Support an Intensely Developed, Mixed-Income, Mixed-Use Downtown. Lead with housing at all income levels as
+a key to downtown vibrancy. Allow for a wide variety of complementary uses that encourage a critical mass of
+energy and activity. This healthy mix of places to work, live, gather, and recreate concentrated in an intensely
+developed Downtown supports a diverse population and vibrant, 18-hour-a-day activity.
+3.Promote High-Quality Design. Design sites, buildings and streets so they are quality, long-term additions to
+Downtown. Incorporate exterior design and building materials that exhibit permanence and quality; provide visual
+interest and add to people’s experience of Downtown as an interesting, inviting and authentic place. Designs of
+sites, buildings and urban spaces help achieve all Downtown Design Principles whether they are traditional and
+unassuming or innovative and inspiring.
+4.Consider Development Context. Consider the development context of Downtown’s sub-districts and nearby
+buildings, taking into account massing, character, rhythm, uses, and historic significance. Downtown welcomes
+innovation and design excellence, and future developments will achieve this principle while avoiding mimicry.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-6
+5.Provide Safe and Comfortable Connectivity. Prioritize active transportation and other non-automobile travel to
+create a welcoming environment that increases social interaction, commerce, creativity and fun. Implement
+pedestrian-friendly designs and block lengths. Bridge pedestrian barriers. Respect the Old Town block structure and
+improve Central Beaverton’s pedestrian and vehicular network. Promote effective and safe travel for all modes,
+including automobiles, trucks and transit, as part of promoting Downtown vibrancy.
+6.Preserve, Enhance and Engage Nature. Healthy natural systems are part of a functional and prosperous
+Downtown. Preserve, enhance and engage nature and natural systems, including Downtown’s creeks and trees to
+promote flood control, wildlife habitat, beauty and improved health for community members.
+7.Incorporate Sustainability and Resiliency. Incorporate sustainability and resiliency to promote positive effects on
+the built and natural environment and community health. Strive for sustainable and resilient site and building
+designs that reduce operating costs, improve livability, and reduce impacts from natural hazards and disasters.
+8.Integrate Places to Gather and Spend Time Outdoors. Create urban open spaces and stopping/viewing places,
+whether publicly or privately-owned, that contribute to Downtown’s livability and vibrancy, allowing people to
+connect with nature; exercise; and socialize and play with family, pets, and friends.
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.15 Downtown Zoning and Streets
+
+Contents:
+70.15.05. Zoning Districts
+70.15.10. District Purpose and Development Standards
+70.15.15. Street Typology
+70.15.20. Downtown Use Regulations
+70.15.25. Active Ground-floor Land Use Regulations
+[ORD 4799, 01/08/2021]
+70.15.05. Zoning Districts
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-7
+Figure 70.15.05.1: Downtown Zoning Districts
+Disclaimer: The above map is intended for informational purposes only. It is not intended for legal, engineering, or
+surveying purposes. Please consult with Beaverton Planning staff for interpretation.
+
+Each Zoning District description includes a purpose statement and standards that regulate height, floor area ratio,
+density, and setbacks. Land uses for each zone are regulated in Section 70.15.20.
+The four zoning districts in Downtown are:
+●Beaverton Central (RC-BC)
+●Old Town (RC-OT)
+●Mixed Use (RC-MU)
+●Downtown Transition (RC-DT)
+Downtown also includes one overlay:
+●Historic Overlay
+Figure 70.15.05.1 Downtown Zoning District identifies the boundaries of the zoning districts and overlay.
+[ORD 4799, 01/08/2021]
+Effective on: 8/21/2026
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-8
+70.15.10. District Purpose and Development Standards
+
+1.Beaverton Central (RC-BC)
+A.Purpose. The Beaverton Central (RC-BC) District is intended to create a pedestrian-oriented, high-density,
+mixed-use district around rail stations, with opportunities for new development to define the Downtown
+skyline.
+B.Building Height & Density.
+
+Table 70.15.10.1.A RC-BC Building Height & Density
+
+Development Standards Minimum Maximum
+Height N/A 120 ft1
+Intensity (Floor Area Ratio) 1.52 None
+Density (Units/Acre)3,4  602 None
+Additional Massing Regulations Refer to Section 70.20.10.3 Refer to Section 70.20.10.3
+Footnotes:
+1. Buildings over 120 feet in height shall be considered through a discretionary review process (refer to 70.20.10.3.G4)
+2. Sites with average depth or width measurements less than 50 feet whose configuration existed prior to December
+9, 1999, shall be subject to reduced minimum density and intensity standards. See Section 70.15.10.5 Supplemental
+Density and Intensity Standards.
+3. Minimum density only applies to 100% residential development.
+4. Existing single-detached dwellings, and their replacements, are exempt from the minimum density standard. [ORD
+4857; October 2024]
+
+C.Setbacks
+Table 70.15.10.1.B   RC-BC Setbacks1
+
+Setback Requirements Side
+Minimum
+Rear
+Minimum
+Front
+Minimum
+Front
+Maximum
+Front setback with ground floor residential units N/A N/A 6 ft 12 ft
+Front setback without ground floor residential units N/A N/A 0 ft 10 ft
+Interior side or rear setback N/A N/A 0 ft N/A
+Street facing side or rear setback with ground floor residential units N/A N/A 6ft 12 ft
+Street facing side or rear setback without ground floor residential
+units N/A N/A 0 ft 10 ft
+Setback abutting property zoned residential and/or Downtown
+Transition (DT) 10 ft 20 ft N/A N/A
+Footnotes:
+1. Existing single-detached dwellings are exempt from setback standards. [ORD 4857; October 2024]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-9
+Figure 70.15.10.1.1 RC-BC Setbacks – Without Ground-floor Residential
+Figure 70.15.10.1.2 RC-BC Setbacks - With Ground-floor Residential
+
+D.Wireless Communications Facilities Standards
+Table 70.15.10.1.C RC-BC   Wireless Communications Facilities Standards
+
+Standard Type Requirement
+Maximum Height - WCF1 80 ft.1
+Maximum Height - Equipment Shelters2 12 ft.1
+Maximum Height - Roof Mounted Antennas
+Shall not extend above maximum height of underlying
+zone or increase the height of any building which is
+nonconforming due to height.
+Yard Setbacks3 - Requirements Shall comply with underlying zoning district requirements
+Yard Setbacks3 - Other Refer to 60.70.35.14.A and B
+Footnotes:
+1. Inclusive of antenna.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-10
+2. At-grade equipment shelters.
+3. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+
+2.Old Town (RC-OT).
+A.Purpose. The Old Town (RC-OT) District encompasses Beaverton’s original Downtown and is intended to
+provide a mix of housing, jobs, and services at a scale that acknowledges and complements historic
+development patterns.
+B.Building Height & Density.
+Table 70.15.10.2.A RC-OT   Building Height & Density
+
+Development Standards Minimum Maximum
+Height N/A 65 ft 1
+Intensity (Floor Area Ratio) 0.5 or 0.7 2,4 None
+Density (Units/Acre)3,5 18 or 24 2,4 None
+Additional Massing Regulations Refer to Section 70.20.10.3 Refer to Section 70.20.10.3
+Footnotes:
+1. Buildings can be built to 75 feet in height through a discretionary review process (refer to 70.20.10.3.G6)
+2. Sites with average depth or width measurements less than 50 feet whose configuration existed prior to
+December 9, 1999, shall be subject to reduced minimum density and intensity standards. See Section
+70.15.10.5 Supplemental Density and Intensity Standards.
+3. Minimum density only applies to 100% residential development.
+4. Refer to Figure 70.15.10.2.3
+5. Existing single-detached dwellings, and their replacements, are exempt from the minimum density
+standard. [ORD 4857; October 2024]
+
+C.Setbacks
+Table 70.15.10.2.B   RC-OT Setbacks1
+
+Setback Requirements Minimum Maximum
+Front setback with ground floor residential units 6 ft 16 ft
+Front setback without ground floor residential units 0 ft 10 ft
+Interior side or rear setback 0 ft N/A
+Street facing side or rear setback with ground floor residential units 6 ft 16 ft
+Street facing side or rear setback without ground floor residential units 0 ft 10 ft
+Setback abutting property zoned residential and/or Downtown Transition (DT) - Side 10 ft N/A
+Setback abutting property zoned residential and/or Downtown Transition (DT) - Rear 10 ft N/A
+Footnotes:
+1. Existing single-detached dwellings are exempt from setback standards.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-11
+Figure 70.15.10.2.1 RC-OT Setbacks - Without Ground-floor Residential
+Figure 70.15.10.2.2 RC-OT Setbacks - With Ground-floor Residential
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-12
+Figure 70.15.10.2.3   RC-OT Minimum Density / Intensity
+Disclaimer: The above map is intended for informational purposes only. It is not intended for legal, engineering, or
+surveying purposes. Please consult with Beaverton Planning staff for interpretation.
+
+D.Wireless Communications Facilities Standards
+Table 70.15.10.2.C RC-OT Wireless Communications Facilities Standard
+
+Standard Type Requirement
+Maximum Height - WCF1 80 ft.1
+Maximum Height - Equipment Shelters2 12 ft.1
+Maximum Height - Roof Mounted Antennas
+Shall not extend above maximum height of underlying
+zone or increase the height of any building which is
+nonconforming due to height.
+Yard Setbacks3 - Requirements  Shall comply with underlying zoning district requirements.
+Yard Setbacks3 - Other Refer to 60.70.35.14.A and B
+Footnotes:
+1. Inclusive of antenna.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-13
+2. At-grade equipment shelters.
+3. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+
+3.Mixed Use (RC-MU)
+A.Purpose. The Mixed Use (RC-MU) District is intended to create a high-density neighborhood with a mix of
+uses in close proximity to Beaverton Central.
+B.Building Height & Density
+
+Table 70.15.10.3.A RC-MU Building Height & Density
+
+Development Standards Minimum Maximum
+Height  N/A 75 ft 1
+Intensity (Floor Area Ratio) 1.0 2 None
+Density (Units/Acre)3,5 43 2 None
+Additional Massing Regulations Refer to Section 70.20.10.3 Refer to Section 70.20.10.3
+Footnotes:
+1. Buildings can be built to 120 feet in height through a discretionary review process (refer to 70.20.10.3.G8)
+2. Sites with average depth or width measurements less than 50 feet whose configuration existed prior to
+December 9, 1999, shall be subject to reduced minimum density and intensity standards. See Section 70.15.10.5
+Supplemental Density and Intensity Standards.
+3. Minimum density only applies to 100% residential development.
+4. Existing single-detached dwellings, and their replacements, are exempt from the minimum density
+standard. [ORD 4857; October 2024]
+
+C.Setbacks
+Table 70.15.10.3.B RC-MU Setbacks1
+
+Setback Requirements Minimum Maximum
+Front setback with ground floor residential units 6 ft 16 ft
+Front setback without ground floor residential units 0 ft 16 ft
+Interior side or rear setback 0 ft N/A
+Street facing side or rear setback with ground floor residential units 6 ft 16 ft
+Street facing side or rear setback without ground floor residential units 0 ft 15 ft
+Setback abutting property zoned residential and Downtown Transition (DT) - Side 10 ft N/A
+Setback abutting property zoned residential and Downtown Transition (DT) - Rear 20 ft N/A
+
+Footnotes:
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-14
+1. Existing single-detached dwellings are exempt from setback standards. [ORD 4857; October 2024]
+
+Figure 70.15.10.3.1 RC-MU Setbacks – Without Ground-floor Residential
+ Figure 70.15.10.3.2 RC-MU Setbacks - With Ground-floor Residential
+D.Wireless Communications Facilities Standards
+
+Table 70.15.10.3.C RC-MU Wireless Communications Facilities Standards
+
+Standard Type Requirement
+Maximum Height - WCF1 80 ft.1
+Maximum Height - Equipment Shelters2 12 ft.1
+Maximum Height - Roof Mounted Antennas
+Shall not extend above maximum height of underlying
+zone or increase the height of any building which is
+nonconforming due to height.
+Yard Setbacks3 - Requirements Shall comply with underlying zoning district requirements.
+Yard Setbacks3 - Other Refer to 60.70.35.14.A and B
+Footnotes:
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-15
+1. Inclusive of antenna.
+2. At-grade equipment shelters.
+3. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+
+4.Downtown Transition (RC-DT) [ORD 4857; October 2024]
+A.Purpose Statement. The Downtown Transition (RC-DT) District is intended to create a transitional area in
+scale and use between the Beaverton Central and adjacent residential neighborhoods. [ORD 4857; October
+2024]
+B.Building Height & Density
+Table 70.15.10.4.A RC-DT Building Height & Density
+
+Development Standards Minimum Maximum
+Height N/A 60 ft
+Intensity (Floor Area Ratio) 1.0 1 None
+Density (Units/Acre)2,3 30 1 60
+Additional Massing Regulations Refer to Section 70.20.10.3 Refer to Section 70.20.10.3
+Footnotes:
+1. Sites with average depth or width measurements less than 50 feet whose configuration existed prior to
+December 9, 1999, shall be subject to reduced minimum density and intensity standards. See Section 70.15.10.5
+Supplemental Density and Intensity Standards.
+2. Minimum density only applies to 100% residential development.
+3. Existing single-detached dwellings, and their replacements, are exempt from the minimum density
+standard. [ORD 4857; October 2024]
+
+C.Setbacks
+Table 70.15.10.4.b RC-DT Setbacks1
+
+Setback Requirements Minimum Maximum
+Front setback with ground floor residential units 10 ft 20 ft
+Front setback without ground floor residential units 0 ft 15 ft
+Interior side or rear setback 0 ft N/A
+Street facing side or rear setback with ground floor residential units 10 ft 20 ft
+Street facing side or rear setback without ground floor residential units 0 ft 15 ft
+Setback abutting property zoned Residential - Side 10 ft N/A
+Setback abutting property zoned Residential - Rear 20 ft N/A
+Footnotes:
+1. Existing single-detached dwellings are exempt from setback standards. [ORD 4857; October 2024]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-16
+
+Figure 70.15.10.4.1 RC-DT Setbacks – Without Ground-floor Residential
+Figure 70.15.10.4.2 RC-DT Setbacks - With Ground-floor Residential
+D.Wireless Communications Facilities Standards
+Table 70.15.10.4.C RC-DT Wireless Communications Facilities Standards
+
+Standard Type Requirement
+Maximum Height - WCF1 80 ft.1
+Maximum Height - Equipment Shelters2 12 ft.1
+Maximum Height - Roof Mounted Antennas
+Shall not extend above maximum height of underlying
+zone or increase the height of any building which is
+nonconforming due to height.
+Yard Setbacks3 - Requirements  Shall comply with underlying zoning district requirements.
+Yard Setbacks3 - Other Refer to 60.70.35.14.A and B
+Footnotes:
+1. Inclusive of antenna.
+2. At-grade equipment shelters.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-17
+3. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+
+5.Supplemental Density and Intensity Standards
+To accommodate smaller lot sizes in the Downtown Design District that existed prior to December 9, 1999, the
+required minimum floor area ratio for multiple use or non-residential developments, and minimum density for
+residential only developments, found in Sections 70.15.10.1-4 may be further modified based upon lot dimensions,
+as follows:
+Table 70.15.10.5 Density And Intensity Modifications
+
+Minimum Side Width Minimum Side Depth Modification
+Less than 50 feet Less than 50 feet 50% of minimum requirement
+Less than 50 feet 50 feet or greater 75% of minimum requirement
+50 feet or greater Less than 50 feet 75% of minimum requirement
+50 feet or greater 50 feet or greater 100% of minimum requirement
+7.Historic Overlay
+A.Purpose Statement. The Historic Overlay is intended to preserve, enhance, and perpetuate landmarks within
+the Downtown Historic District that represent or reflect elements of the City’s cultural, social, economic, and
+architectural history and to promote new construction that complements existing landmarks. The following
+activities within the Historic Overlay are regulated by CHAPTER 40 of the Development Code: Alteration of
+Landmark, Emergency Demolition of a Landmark, and Demolition of a Landmark.
+New Construction within the Historic Overlay shall be regulated by Section 70.20.10.11, and is intended to
+provide additional design guidelines and standards to ensure that new buildings are compatible with select
+abutting historic landmarks.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-18
+Figure 70.15.10.6 Historic Overlay
+Disclaimer: The above map is intended for informational purposes only. It is not intended for legal, engineering, or
+surveying purposes. Please consult with Beaverton Planning staff for interpretation.
+[There are no ordinances associated with this section.]
+Effective on: 8/21/2026
+70.15.15. Street Typology
+
+The Street Typology Diagram identifies street hierarchies in the Downtown Design District. Guidelines and Standards
+throughout the code may refer to the Street Typology Diagram regulating items including primary frontages and locating
+parking, loading and new curb cuts.
+These Typologies do not replace or supersede the Functional Classifications as described in the Transportation System
+Plan.
+New streets dedicated after establishment of this code shall be designated Local Streets, or as determined by the
+Director.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-19
+Figure 70.15.15.1 Street Typology Diagram
+1.Determining Primary Frontage. For provisions of this code referring to Primary Frontages, the Primary Frontage
+shall be determined as follows:
+A. Sites with one frontage: The primary frontage shall be the street facing lot line.
+B. Sites with multiple frontages: The primary frontage shall be the street facing lot line with the highest level
+typology ranked in the following order:
+1. Loop Street
+2. Commercial Street
+3. Connector Street
+4. Major Street
+5. Local Street
+C. If abutting streets are designated as the same Downtown Street Type, the primary street may be determined
+by the applicant.
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.15.20. Downtown Use Regulations
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-20
+The following Land Uses are classified in the following three categories: Permitted (P) including their accessory uses and
+structures, Conditional Uses (C), or Prohibited (N) uses as identified in the table below for all four Zoning Districts. All
+superscript notations refer to applicable regulations or clarifications as noted in footnotes below.
+
+Table 70.15.20.A Commercial
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Refers to Use Restrictions
+# Category Specific Use RC-BC RC-OT RC-MU RC-DT
+1.A Residential Dwellings - Single-Detached Dwelling N1 N1 N1 N1
+1.B Residential Dwellings - Duplex P P P P
+1.C Residential Dwellings - Triplex and Quadplex P P P P
+1.D Residential Dwellings - Townhouse P P P P
+1.E Residential Dwellings - Cottage Cluster N N N N
+1.F Residential Dwellings - Multi-Dwelling P P P P
+1.G Residential Dwellings - Home Occupation P P P P
+1.H Residential Dwellings - Planned Unit Development C C C C
+1.I Residential Dwellings - Single-Room Occupancies P P P P
+1.J Residential Dwellings - Accessory Dwelling Units P16 P16 P16 P16
+2.A Commercial Animal Care, Major N N N N
+2.B Commercial Animal Care, Minor P P P P3
+3.A Commercial Hospitals C C C C
+3.B Commercial Medical Clinics P P P C
+3.C Commercial Child Care Centers P P P P
+3.D Commercial Residential Care Facilities P P P C
+4. Commercial Commercial Amusement P P P N
+5. Commercial Drive-Up Window Facilities N8 N8 N8 N8
+6. Commercial Eating and Drinking Establishment P P P P3
+7. Commercial Financial Institutions P P P N
+8. Commercial Live / Work Units P P P C
+9. Commercial Meeting Facilities P P C2 P N
+10. Commercial Office P P P P3
+11. Commercial Parking as the Principal Use C C C N
+12. Commercial Rental Business P P P P3
+13. Commercial Rental of Equipment Only N N N N
+14. Commercial Retail P9 P9 P9 P3,9
+15. Commercial Personal Service Business P P P P3
+16. Commercial Service Business / Professional Services P10 P10 P10 P10
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-21
+# Category Specific Use RC-BC RC-OT RC-MU RC-DT
+17. Commercial Marijuana Dispensary N N N N
+18. Commercial Retail and Wholesale Marijuana Sales N N N N
+19.A Commercial Self-Storage Facilities N N N N
+19.B Commercial Storage Yards N N N N
+20. Commercial Temporary Living Quarters P P P C4
+21.A Commercial Vehicles - Automotive Service, Major N N N N
+21.B Commercial Vehicles - Automotive Service, Minor N N N N
+21.C Commercial Vehicles - Bulk Fuel Dealerships N N N N
+21.D Commercial Vehicles - Sales or Lease N N N N
+21.E Commercial Vehicles - Rental C7 C7 C7 N
+22. Commercial Food Cart Pods5 P P P N
+23.A Civic Commercial Schools P P P N
+23.B Civic Educational Institutions P P P C
+24. Civic Places of Worship P P P P
+25. Civic Public Buildings, Services and Uses P P P P
+26.A Civic Railroad Tracks and Facilities - Passenger P P P P
+26.A Civic Railroad Tracks and Facilities - Freight P P P N
+27.A Civic Public Parks, Parkways, Playgrounds, and
+Related Facilities15 P P P P
+27.B Civic Public Dog Parks or Dog Runs15 P P P P
+27.C Civic Recreational Facilities P P P P12
+27.D Civic Community Gardens15 P P P P
+28.A Civic Domestic Violence Shelter P P P P
+28.B Civic Emergency Shelter P14 P14 P14 P14
+28.C Civic Mass Shelter P P P P
+29. Civic Social Organizations P2 P2 P2 N
+30. Civic Transit Centers15 P P P N
+31.A Civic
+Utilities - Utility Substations and
+Related Facilities other than Transmission
+Lines15
+C C C C
+31.B Civic Utilities - Transmission Lines15 P P P P
+32. Civic Wireless Communications Facilities15 P P P P
+33. Industrial Manufacturing, Fabricating, Assembly,
+Processing, and Packing13 P C6 P C6 P C6 N
+34. Industrial Marijuana Processing N N N N
+35. Industrial Warehousing11 P P P N
+36. Industrial Laboratory13 P P3 P N
+[ORD 4804; August 2021] [ORD 4822; June 2022] [ORD 4838; March 2023] [ORD 4857; October 2024] [ORD 4876;
+January 2026]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-22
+Footnotes:
+1. Detached dwellings in existence as of September 19, 2002, are Permitted. Replacement of detached dwelling
+permitted.
+2. Buildings larger than 10,000 square feet are subject to approval of a Conditional Use.
+3. Uses limited to 10,000 square feet per site.
+4. Limited to uses of Boarding, Rooming, and Lodging House.
+5. Food Cart Pods are exempt from the Site Development Standards of 70.15 but are subject to regulations
+in 60.11 of the Development Code.
+6. Uses up to 10,000 square feet are permitted. Uses larger than 10,000 square feet are subject to a Conditional
+Use Permit.
+7. Only as an accessory uses with no on-site storage of vehicle inventory.
+8. Drive-through uses are Prohibited; walk-ups Permitted.
+9. This activity is conducted wholly within an enclosed structure. Accessory open air sales or display related to
+the principal use may be permitted, provided that the outdoor space devoted to these uses does not occupy an
+area greater than the equivalent of 15 percent of the gross floor area. No outdoor sales or outdoor storage of
+animals or livestock are allowed with this use.
+10. The maximum building footprint size for a building involving a single use shall be 10,000 square feet. In
+addition, the maximum square footage for these uses within a multiple use development shall be 25 percent of
+the total square footage of the development.
+11. As an accessory use, not to exceed 25 percent of the primary use.
+12. Indoor uses are limited to 10,000 square feet per site.
+13. Uses subject to additional restrictions below.
+A. Outdoor manufacturing activity, including but not limited to testing of products or processes, is
+prohibited.
+B. Outdoor storage is prohibited, including both raw materials and finished products.
+C. Movement of heavy equipment on and off the site, except truck deliveries, is prohibited.
+D. Exterior display or storage of industrial equipment, such as tools, equipment, vehicles, products,
+materials, or other objects that are part of or used for the business operation is prohibited.
+E. Processes involving live animals or the waste or by product of dead animals is prohibited.
+F. Electrical disturbances that interfere with the normal operation of equipment or instruments
+on adjacent properties are prohibited.
+G. Processes involving highly combustible, explosive or hazardous materials or waste is prohibited.
+H. Potential nuisances are subject to Beaverton Code Chapter 5.05.IV Nuisances Affecting Public Health.
+14. Emergency Shelters may occur where allowed pursuant to Section 10.70.10. [ORD 4838; March 2023]
+15. Exempt from minimum Floor Area Ratio requirements. [ORD 4857; October 2024]
+[ORD 4799, 01/08/2021; ORD 4804, 08/13/2021; ORD 4822, 06/30/2022; ORD 4838, 03/09/2023; ORD 4857,
+10/03/2024; ORD 4876, 01/20/2026]
+Effective on: 8/21/2026
+70.15.25. Active Ground-floor Land Use Regulations
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-23
+Buildings fronting on streets identified in Figure 70.15.25.1 shall have uses occupying ground-floor spaces consistent
+with the designated frontage type. Only tenant spaces fronting the designated streets shall be subject to these rules. For
+a tenant space to be considered fronting a street, the facade must be located within the minimum and maximum
+setback as defined by the underlying zone. Ground-floor spaces not fronting on streets designated in Figure 70.15.25.1,
+as well as all upper-floor and below-grade uses, shall be regulated by the underlying zone.
+Buildings subject to the Active Ground-floor Land Use Regulations shall comply with the following provisions:
+1. Ground floor uses in buildings with facades within the maximum setback of frontages identified in Figure 70.15.25.1
+shall be consistent with the land uses listed per each frontage type.
+2. Active ground floor uses shall occupy the minimum percentage of the building frontage for each frontage type
+identified.
+3. Active ground floor uses shall have a minimum depth of 25 feet measured from the street-facing facade.
+4. Buildings with facades within the maximum setback of frontages identified in Figure 70.15.25.1 shall meet all
+applicable regulations of Section 70.20.10.6 Active Ground Floor Design.
+5. Tax lots 1S110CC00400, 1S110CC01300, and 1S110CC01303 are designated Area D and shall be subject to the rules
+of Table 70.15.25.A Active Frontages Table.
+6. Tax lots 1S110CD00900, 1S110CD01300, 1S110CD00790, 1S110CD01301, 1S115BB00203, and 1S115BB00200 are
+designated Area E and shall be subject to the rules of Table 70.15.25.A Active Frontages Table.
+7. Mixed-use buildings with multiple frontages designated as Type A, Type B, or Type C streets, in any combination, as
+identified in Figure 70.15.25.1 Active Frontage Use Map, shall be permitted to have residential units on the ground
+floor on all except one frontage that is within 20 feet of the street. All other frontages shall provide ground floor
+uses consistent with Table 70.15.25.A Active Frontages Table. The ground floor residential units within mixed-use
+buildings with multiple frontages along Type A, Type B, or Type C streets shall be located along the least active
+street designation, with Type A being the most active street designation and Type C being the least active. For
+example, if a mixed-use building has frontage on a Type B street and Type C street, the ground floor residential
+units shall face the Type C street. [ORD 4857; October 2024]
+ Active Residential Frontage (Portland, OR)
+Ground floor residential units create an active ground floor. Units are elevated from the sidewalk grade and include
+individual entries, landscaping to create privacy and a transition from the street and weather protected front porches.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-24
+Active Restaurant Frontage (Seattle, WA)
+Non-Residential buildings can create active ground floors through using transparent glazing and locating uses that
+provide visual interest to enhance the pedestrian experience through visual connections between inside and outside
+spaces.
+Figure 70.15.25.1 Active Frontage Use Map
+Table 70.15.25.A Active Frontages Table
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-25
+Street Type
+Minimum
+Active Use
+Frontage
+Allowed Ground Floor Uses
+Type A 80%
+Eating and drinking establishments, retail trade, personal service businesses, food cart
+pods, brewery/distillery/winery with tasting room, and primary lobby access to other
+parts of the building.
+Type B 60%
+Type A allowed ground floor uses, commercial amusements, medical clinics, office,
+meeting facilities, places of worship, service business/professional services, financial
+institutions, public services and uses, residential amenity spaces, hotels/temporary living
+quarters, recreational facilities, and commercial schools.
+Type C 60%
+Uses allowed under Type A and Type B allowed ground floor uses and ground floor
+residential uses with primary access facing the right of way, served by a porch, stoop,
+patio, terrace, forecourt, or similar design element, elevated or at grade.
+Area D N/A
+At the time of development, a Type B frontage must be assigned along a public right of
+way or other publicly accessible space on the site that is equal in length to 1/2 of the
+longest diagonal measurement of the site.
+Area E N/A When dedicated, the future extension of SW Millikan Way shall be designated a Type B
+frontage.
+[ORD 4800, 01/08/2021; ORD 4857, 10/03/2024]
+Effective on: 8/10/2026
+70.20 Downtown Design Guidelines and Standards
+
+The Design Guidelines and Standards provide a framework for the implementation of the Downtown Design Principles.
+Design Guidelines and Standards are organized under two main categories - Site Design and Building Design - which
+further address relevant topics and sub-topics. For each topic, an Intent Statement and list of applicable Design
+Principles are provided, along with one or more Guideline and Standard for each sub-topic. Each Design Guideline is a
+discretionary criterion that describes a design concept and/or design goal. The corresponding Design Standard is a clear
+and objective criterion that provides a measurable path to meet the design concept and/or design goal.
+Contents:
+70.20.05. Site Design
+70.20.10. Building Design
+[ORD 4799, 01/08/2021]
+70.20.05 Site Design
+
+Contents:
+70.20.05.1 Purpose
+70.20.05.2 Topics
+70.20.05.3 Block Design
+70.20.05.4 Building Frontage and Placement
+70.20.05.5 Setback Design
+70.20.05.6 Pedestrian Circulation
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-26
+70.20.05.7 Parking, Loading and Service Areas
+70.20.05.8 Landscaping
+70.20.05.9 Lighting
+[ORD 4799, 01/08/2021]
+70.20.05.1 Purpose
+
+The Site Design Guidelines and Standards along with the Development Standards set the location of buildings, frontage
+character, and landscaping.
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.20.05.2 Topics
+
+A. Block Design (70.20.05.3)
+B. Building Frontage and Placement (70.20.05.4)
+C. Setback Design (70.20.05.5)
+D. Pedestrian Circulation (70.20.05.6)
+E. Parking, Loading and Service Areas (70.20.05.7)
+F. Landscaping (70.20.05.8)
+G. Lighting (70.20.05.9)
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.20.05.3 Block Design
+
+A. Intent. To ensure walkability, connectivity, and appropriately scaled buildings through creating pedestrian-scaled
+blocks with streets, paths, and open spaces for people to gather and connect throughout the district.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+C. Design Guideline and Standards
+
+Table 70.20.05.3.A Design Guidelines and Standards: Block Design
+
+Block Size
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-27
+Block Size - Design Standard Block Size - Design Guideline
+S1. Streets or public paths shall be constructed consistent
+with Figure 70.20.05.3.1 Future Connections.
+G1. Streets or public paths shall be constructed consistent
+with Figure 70.20.05.3.1 unless the decision-making
+authority determines that an applicant has demonstrated
+that walkability, connectivity and pedestrian-scaled blocks
+on identified blocks has been achieved through existing
+connections or that the proposed project achieves
+connectivity goals in another
+manner that meets the intent of this section.
+S2. Public streets and multi-use paths shall be dedicated as
+right of way. G2. Design Standard S2 must be met.
+S3. New public streets shall be classified as local streets
+unless otherwise determined by the Transportation
+System Plan, and the design shall be consistent with the
+Engineering Design Manual, unless an Engineering Design
+Manual Exception is granted by the City Engineer.
+G3. Design Standard S3 must be met
+Figure 70.20.05.3 .1 Future Connections
+Table 70.20.05.3.A Design Guidelines and Standards: Block Design
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-28
+Block Size (Cont.)
+
+Block Size - Design Standard Block Size - Design Guideline
+S4. New multi-use paths shall be a minimum of 14 feet wide
+unobstructed, located within a minimum 20-foot-wide right
+of way
+G4. New multi-use paths shall provide generous,
+unobstructed space for active transportation through
+the site, provide clear indication that the facility allows
+passage through the block and have sufficient room for
+landscaping and/or pedestrian amenities along its
+length.
+ S5. New public streets and multi-use paths shall be aligned
+with existing or planned intersections. Where there is no
+planned or existing intersection to align with, the connection
+shall be within 25 feet of the location identified on the map.
+ G5. The Design Standard must be met.
+S6. Where new connections follow property lines, the new
+connection shall have the full width constructed abutting
+the property line. Exceptions include:
+a. Where development is proposed on only one side of
+the property line, the applicant shall dedicate and
+construct:
+I. For public streets, half-street improvements, plus
+sufficient width for opposite direction vehicle
+travel.
+II. Multi-use paths shall be constructed at the width
+described in S4.
+III. For both connection types, more or all of the
+connection width may be located on the abutting
+property if authorized by the abutting property
+owner. In this case, the full width must be
+dedicated and improved with development.
+ G6. The Design Standard must be met.
+S7. Where a new connection follows a stream corridor,
+buried or daylit, the new connection may be located on
+either side of the stream corridor. Additionally:
+a. If the stream is daylit, the stream-side edge of path
+shall be no greater than 50 feet horizontal from the
+path side two year ordinary high water mark.
+b. If the stream is underground, the path centerline shall
+be no greater than 25 feet from the stream centerline.
+ G7. The Design Standard must be met.
+S8. The location of the Millikan Way extension shall be
+consistent with Transportation System Plan.  G8. The Design Standard must be met.
+ S9. The location, design and classification of new
+connections in the area bounded by SW Center, SW Hall, SW
+Lombard, and Beaverton Creek shall be regulated by the
+applicable policies of the Transportation System Plan and
+the Engineering Design Manual.
+ G9. The Design Standard must be met.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-29
+[ORD 4799, 01/08/2021]
+Effective on: 8/21/2026
+70.20.05.4 Building Frontage and Placement
+
+A. Intent. To promote quality site design that reinforces the urban character of Downtown by making buildings more
+prominent by siting buildings near streets and ensuring attractive, comfortable and convenient areas for
+pedestrians to wait near Major Street intersections.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.05.4.A Design Guidelines and Standards: Building Frontage and Placement
+
+Minimum Building Frontage Along Streets
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-30
+Minimum Building Frontage Along Streets - Design
+Standard
+Minimum Building Frontage Along Streets -
+Design Guideline
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-31
+Minimum Building Frontage Along Streets - Design
+Standard
+Minimum Building Frontage Along Streets -
+Design Guideline
+S1. Buildings shall occupy a minimum percentage of the site
+frontage between the minimum setback and the maximum
+setback. Minimums are based on street typology as identified in
+Figure 70.15.15.1 and as described below (accessory structures,
+non-habitable buildings and structures of up to and including
+1,000 square feet in floor area, not considered buildings shall
+not be used to satisfy this standard): [ORD 4857; October 2024]
+a. Loop Streets:
+I. Hall and Watson North of Canyon: 75 percent; and
+II. Hall and Watson between Canyon and Fourth Street:
+90 percent; and
+III. Hall and Watson south of Fourth Street: 75 percent;
+and
+IV. Fourth Street and Fifth Streets: 75 percent;
+b. Commercial Streets: 90 percent
+c. Major streets:
+I. Canyon between Rose Biggi and East: 70 percent; and
+II. Farmington between Main and Tucker: 70 percent:
+and
+III. Cedar Hills between Beaverton Creek and Millikan: 60
+percent; and
+IV. All other Major Street frontages: 50 percent.
+d. Connector Streets:
+I. Millikan between Cedar Hills and East: 75 percent; and
+II. All other Connector Street frontages: 60 percent.
+e. Local Streets: 75 percent.
+f. In addition to the amount of building facade between the
+minimum and maximum setback, the following features
+also can be applied toward the minimum building frontage
+requirement:
+I. The linear frontage of recesses incorporated to comply
+with facade articulation requirements in Sections
+70.20.10.3 and 70.20.10.4 if the recesses do not
+exceed 2 feet beyond the maximum setback; and
+II. On all streets types except Major Streets, publicly
+accessible paths with widths satisfying Section
+70.20.05.3 Block Size requirements and required
+Publicly Accessible Open Space (PAOS) may count
+toward a combined maximum 10 percent of the
+frontage requirement. Publicly Accessible Open Spaces
+shall only be eligible to count toward the building
+frontage requirement if they are between the right of
+way and a building facade, as long as the building
+facade is not more than 40 feet from the right of way.
+g. The following shall be subtracted from the calculation of
+total street frontage:
+I. The width of driveways occupying the frontage (except
+for attached units with separate garage entries for
+each unit); and [ORD 4857; October 2024]
+II. Areas determined to be unbuildable due to sight
+clearance and sight distance requirements in the
+Engineering Design Manual; and
+III. Areas determined to be unbuildable due to required
+easements. [ORD 4857; October 2024]
+G1. and G2. Sufficient building facades shall be
+present near each street frontage to promote a
+continuous street wall and limit gaps in pedestrian
+interest while allowing necessary site access. The
+amount of building frontage shall be greatest on the
+highest level streets as identified in Figure
+70.15.15.1 Street Typology Diagram. Buildings may
+be set back to accommodate plazas, outdoor dining,
+entry forecourts or similar spaces provided that
+pedestrian interest along the frontage is
+incorporated into the design of these spaces.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-32
+Minimum Building Frontage Along Streets - Design
+Standard
+Minimum Building Frontage Along Streets -
+Design Guideline
+S2. If the development has multiple frontages, the minimum
+percentage of street frontage required to be occupied by a
+building facade shall be met on the primary frontage but may be
+reduced by 25 percent on one non-primary street frontage,
+except if the non-primary frontage is a Major Street. For
+example, a requirement that 75 percent of the frontage shall be
+occupied by a building facade could be reduced to 50 percent of
+the frontage on one non-primary street frontage.
+G1. and G2. Sufficient building facades shall be
+present near each street frontage to promote a
+continuous street wall and limit gaps in pedestrian
+interest while allowing necessary site access. The
+amount of building frontage shall be greatest on the
+highest level streets as identified in Figure
+70.15.15.1 Street Typology Diagram. Buildings may
+be set back to accommodate plazas, outdoor dining,
+entry forecourts or similar spaces provided that
+pedestrian interest along the frontage is
+incorporated into the design of these spaces.
+Figure 70.20.05.4 .1 Street Wall Diagram
+Table 70.20.05.4.A Design Guidelines and Standards: Building Frontage and Placement
+
+Minimum Building Separation for Residential-only Buildings
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-33
+Minimum Building Separation for Residential-
+only Buildings - Design Standard
+Minimum Building Separation for Residential-only
+Buildings - Design Guideline
+S3. New buildings containing ground-floor dwelling
+units shall be set back 10 feet from other buildings
+on the site that contain ground-floor dwelling units.
+G3. Adequate separation shall be provided between buildings
+where ground floor residential units have exterior entries to
+provide usable space between the buildings and avoid narrow,
+dark passageways.
+Table 70.20.05.4.A Design Guidelines and Standards: Building Frontage and Placement
+
+Pedestrian Enhancements Adjacent to Major Intersections
+
+Pedestrian Enhancements Adjacent to Major Intersections - Design
+Standard
+Pedestrian Enhancements Adjacent
+to Major Intersections - Design
+Guideline
+S4. Pedestrian enhancements shall be integrated into the site and building
+design at key pedestrian connections across major streets. The pedestrian
+enhancements shall front Watson, Hall, Millikan and Westgate and provide
+areas of refuge for pedestrians as they wait to cross major streets.
+Pedestrian enhancements shall be provided at the following intersections:
+●Canyon and Watson
+●Canyon and Hall
+●Farmington and Watson (south side only)
+●Farmington and Hall (south side only)
+●Cedar Hills and Canyon
+●Cedar Hills and Millikan
+●Cedar Hills and Westgate/Dawson
+●Cedar Hills and Hall
+Pedestrian enhancements shall include at least one of the following:
+a. A hardscaped area, excluding asphalt, at the intersection, no
+smaller than 10 feet by 10 feet measured from the property
+corner, and a footprint of 400 square feet including the
+immediately abutting sidewalk in the right of way.
+b. Publicly Accessible Open Space (PAOS) that meets the
+Standards in 70.20.10.7 placed at the intersection corner.
+c. A setback, chamfer, ground-floor cutout or other method that
+ensures a 20-foot distance between any building and the curb at
+the intersection corner. The on-site area shall be hardscaped,
+excluding asphalt, and accessible to the public.
+G4. Pedestrian enhancements that
+provide refuge while waiting to cross
+Major Streets shall be integrated into the
+site design at key intersections identified
+in the S3 standard.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-34
+Figure 70.20.05.4.2 Pedestrian Enhancement Locations
+[ORD 4799, 01/08/2021; ORD 4857, 10/03/2024]
+Effective on: 8/21/2026
+70.20.05.5 Setback Design
+
+A. Intent. To promote setback areas designed to add pedestrian interest; create safe, attractive and varied areas
+between buildings and sidewalks; and ensure setback areas are appropriate for and supportive of the adjacent
+ground-floor building uses.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.05.5.A Design Guidelines and Standards: Setback Design
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-35
+Setback Design
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-36
+Setback Design - Design Standard Setback Design - Design Guideline
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-37
+Setback Design - Design Standard Setback Design - Design Guideline
+S1. Where the building facade is between the
+minimum and maximum setback from the right of
+way, the area between the building facade and the
+property line shall be designed in the following
+manner:
+a. For ground-floor building facades designed
+for non-residential occupancy with an entry
+or entries that face the street:
+I. The setback area between any entry
+doors and public rights of way shall be
+paved; and
+II. If the area between the building facade
+and right of way is less than 24 inches,
+the setback area shall be paved; or
+III. If the area between the building facade
+and lot line is greater than 24 inches, at
+least 50 percent of the setback area shall
+be paved. Any areas not paved in the
+setback area shall be landscaped with:
+1. A combination of shrubs, ground
+cover and perennials. A minimum of
+one 3-gallon shrub for every 3 lineal
+feet of plant bed must be provided.
+Ground cover must fully cover the
+remainder of the landscaped area; or
+2. Raised landscape planters a
+minimum of 18 inches in height and
+a maximum of 30 inches in height
+with a minimum horizontal depth of
+2 feet that contain living plant
+material. Raised planters shall not
+reduce the pedestrian way to
+narrower than 5 feet and shall not
+obstruct Americans with Disabilities
+Act access; or
+3. Some combination of 1 and 2.
+IV. One of the following pedestrian
+amenities must be provided for each 100
+sq ft of hardscape between the building
+and the street - Bench, tree, planter,
+drinking fountain
+b. For ground-floor building facades designed
+for non- residential occupancy with no
+entries facing the street, setback areas
+greater than 24 inches in depth shall have a
+minimum of 20 percent landscaping.
+Landscaping shall include:
+I. A combination of shrubs, ground cover
+and perennials. A minimum of one 3-
+gallon shrub for every 3 lineal feet of
+plant bed must be provided. Ground
+cover must fully cover the remainder of
+the landscaped area; or
+II. Raised landscape planters a minimum of
+18 inches in height and a maximum of 30
+inches in height with a minimum
+horizontal depth of 2 feet that contain
+living plant material. Raised planters
+shall not reduce the pedestrian way to
+narrower than 5 feet and shall not
+obstruct Americans with Disabilities Act
+access; or
+III. Some combination of i and ii.
+c. For ground-floor building facades designed
+for residential uses that have individual unit
+entries facing the street not subject to
+Section 70.20.10.6 Active Ground-floor
+Design Regulations, the setback area shall
+have a minimum of 60 percent landscaping.
+Landscaping shall include:
+I. A combination of shrubs, ground cover
+and perennials. A minimum of one 3-
+gallon shrub for every 3 lineal feet of
+plant bed must be provided. Ground
+cover must fully cover the remainder of
+the landscaped area; or
+II. Raised landscape planters a minimum of
+18 inches in height and a maximum of 30
+inches in height with a minimum
+horizontal depth of 2 feet that contain
+living plant material. Raised planters
+shall not reduce the pedestrian way to
+narrower than 5 feet and shall not
+obstruct Americans with Disabilities Act
+access; or
+III. Some combination of i and ii.
+d. For building facades designed for ground-
+floor residential uses that have individual
+unit entries facing the street that are subject
+to the rules of Section 70.20.10.6 Active
+Ground-floor Design, those provisions shall
+be met.
+e. For building facades designed for ground-
+floor residential uses that do not have
+individual unit entries, a minimum of 60
+percent of the setback area shall be
+landscaped consistent with Section
+70.20.05.8.S1 Site Landscaping.
+G1. Where there is space between the building facade and the
+right of way, the space shall be designed with paving, landscaping,
+and other design elements appropriate for the ground-floor
+building use. Setback spaces shall incorporate one or more of the
+following to provide quality connections from the building to the
+street while providing an appropriate transition between the
+public realm and the private realm:
+●Provide an extension of the sidewalk for use by pedestrians;
+●Provide additional space for building entries;
+●Increase frontage activity with outdoor seating or terraces;
+●Provide opportunities for landscaping.
+Extension of Public Realm (Walnut Creek, CA)
+Deeper building setbacks along a commercial storefront facade
+allows for wider sidewalks and pedestrian amenities.
+Residential Setback Character (Portland, OR)
+A transition between the public sidewalk and private residential
+units is created with landscape plantings, stoop entries and
+terraced planters.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-38
+Table 70.20.05.5.A Design Guidelines and Standards: Setback Design
+
+Setback Area (Allowed Encroachments)
+
+Setback Area (Allowed Encroachments) - Design Standard Setback Area (Allowed Encroachments) -
+Design Guideline
+S2. The following elements are allowed to encroach within the setback
+areas between building facades and right of way:
+a. Architectural projections, building modulations, occupiable
+projections, or other similar features approved by the decision-
+making authority. The bottom of the architectural feature shall
+be no lower than eight feet above on-site pedestrian walkways
+to allow for pedestrian clearance. No more than 50% of the
+facade may have these elements project into the setback;
+b. Weather protection structures such as canopies, sunshades or
+other similar features approved by the decision-making
+authority. The bottom of the architectural feature shall be no
+lower than eight feet above sidewalk grade to allow for
+pedestrian clearance;
+c. Terraces, porches, or balconies;
+d. Stoops and/or stairs to building entrances;
+e. Handrails;
+f. Fences or railings meeting the requirements of 70.20.05.5.S3
+g. Landscape planters and low walls not exceeding 30 inches in
+height from sidewalk grade;
+h. Bicycle parking;
+i. Permanent seating;
+j. Public art;
+k. Other elements as approved by the decision-making authority.
+G2. Buildings and landscape elements may
+encroach within setback areas between the
+building facade and right of way to enhance
+the pedestrian experience and increase
+activity along building frontages.
+Table 70.20.05.5.A Design Guidelines and Standards: Setback Design
+
+Fences Adjacent to Streets
+
+Fences Adjacent to Streets - Design Standard Fences Adjacent to Streets - Design
+Guideline
+S3. Fences within 10 feet of any right of way shall be no taller than 42
+inches and shall be at least 40% transparent. Retaining walls, as well as
+fencing utilized to satisfy screening requirements in Section 70.20.05.7
+Parking, Loading, and Service Areas are exempt.
+G3. Fencing along public streets shall allow
+for views into the site and shall not detract
+from the pedestrian experience along site
+frontages.
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.05.6 Pedestrian Circulation
+
+A. Intent. To create a safe, comfortable, well-connected pedestrian circulation network that links private
+development, open spaces and the public realm.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-39
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High Quality Design (Section 70.10.3)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+C. Design Guideline and Standards
+
+Table 70.20.05.6.A Design Guidelines and Standards: Pedestrian Circulation
+
+Pedestrian Connections
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-40
+Pedestrian Connections - Design Standard Pedestrian Connections - Design Guideline
+S1. At least one pedestrian connection to the public
+street network shall be provided for every 300 feet
+of street frontage. On-site pedestrian connections
+shall link to abutting streets, planned accessways in
+the Comprehensive Plan Transportation Element;
+multi-use paths on or adjacent to the site, including
+those required to meet Block Design standards
+identified in Figure 70.20.05.3.1 Future
+Connections; transit stops; building entries;
+automobile and bicycle parking; loading areas, solid
+waste facilities and similar improvements; and
+outdoor open spaces. Connections that are not
+feasible because of topographic features; buildings
+or other man-made structures; natural areas; or
+similar obstacles may be waived as approved by the
+decision- making authority.
+G1. On-site pedestrian connections shall provide sufficient and
+high- quality connections among important destinations on a site
+and to off-site transportation routes and facilities.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-41
+Pedestrian Connections - Design Standard Pedestrian Connections - Design Guideline
+S2. On-site pedestrian walkways shall be at least 5
+feet in width with 5 feet of unobstructed clearance,
+shall be paved with scored concrete, modular
+paving material, or other high quality hard surfaced
+material approved by the decision-making
+authority, and be compliant with Americans with
+Disabilities Act standards. In addition, development
+shall incorporate one of the following sustainability
+features:
+a. At least 30 percent of paving material shall be
+permeable pavement; or
+b. At least 30 percent of the paving material
+shall be made from recycled content; or
+c. At least 50 percent of the pedestrian walkway
+pavement shall have a solar reflective index
+rating of a least 29; or
+d. Provide shading for at least 50 percent of the
+total pedestrian walkway surfaces on the site.
+Shade can be provided by current or
+proposed buildings that shade the paving
+material at 3 p.m. June 21 and current or
+proposed trees, with the amount of shade
+included for each planted tree to be
+measured by the diameter of the Mature Tree
+Canopy stated for the species of the tree.
+[ORD 485; January 2025]
+e. Walkways or other pedestrian connections
+within 25 feet of a creek as measured from
+top of bank shall meet Section
+70.20.05.6.S2.d and one of the sustainability
+features in 70.20.05.6.S2.a through c. [ORD
+4876; January 2026]
+G2. On-site pedestrian walkways shall be of adequate width and
+design to provide
+unobstructed walking areas that accommodate the anticipated
+amount of pedestrian traffic, be Americans with Disabilities Act
+compliant, and incorporate high- quality and attractive materials
+that promote sustainability and reduce heat island effect.
+On-site Pedestrian Walkways Shaded by Tree Canopy (Portland,
+OR)
+S3. Pedestrian walkways that abut the head of
+vehicle parking spaces shall be 7 feet wide unless
+wheel stops or curbs are used to ensure a minimum
+unobstructed width of 5 feet.
+G3. Pedestrian walkways abutting parking areas shall be of
+adequate width and design to provide unobstructed walking
+areas and accommodate the anticipated amount of pedestrian
+traffic.
+S4. Where a pedestrian walkway crosses driveways
+or vehicular access aisles, a continuous 5-foot
+walkway shall be provided and shall be composed of
+a different paving material that utilizes texture,
+color, or both, to contrast visually from the
+adjoining driving/parking surface. Paint may not be
+used to satisfy this requirement.
+G4. Pedestrian walkways that cross driveways or vehicular access
+aisles shall meet standards S4.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-42
+Pedestrian Connections - Design Standard Pedestrian Connections - Design Guideline
+S5. Pedestrian connections through parking lots
+shall be physically separated from adjacent vehicle
+parking and parallel vehicle traffic through the use
+of curbs, landscaping, trees and lighting, if not
+otherwise provided in the parking lot design.
+Parking lots with six or fewer spaces are not
+required to physically separate connections from
+vehicle parking and circulation but they must
+comply with the rules of Section 70.20.05.6.S4.
+G5. Pedestrian connections through parking lots shall be evenly
+spaced and separated from vehicles. Parking lots with six or
+fewer spaces are exempt.
+S6. Fences between buildings and creeks shall not
+be taller than 4 feet in height and shall be at least
+70 percent transparent to allow views of creeks and
+natural areas from building fenestration and
+pedestrian circulation areas between the building
+and the creek.
+G6. Fences between buildings and creeks shall be designed and
+installed to allow views of the creeks and/or creekside natural
+areas from ground-floor viewpoints on buildings (including doors
+and windows) and allow views from pedestrian circulation areas
+between buildings and the creek.
+[ORD 4799, 01/08/2021; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+70.20.05.7 Parking, Loading and Service Areas
+
+A. Intent. To minimize the visual impact of parking, loading and service areas, support pedestrian interest along public
+rights of way and other pedestrian ways, and minimize conflicts between pedestrians and vehicles along key
+streets.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High Quality Design (Section 70.10.3)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+C. Design Guideline and Standards
+
+Table 70.20.05.7.A Design Guidelines and Standards: Parking, Loading and Service Areas
+
+Vehicle and Parking Access
+
+Vehicle and Parking Access - Design Standard Vehicle and Parking Access - Design
+Guideline
+S1. Curb cuts permitted under this section are subject to the applicable
+minimum standards within the adopted Engineering Design Manual.
+G1. Curb cuts shall meet S1.
+S2. No additional driveways accessed from public streets shall be
+permitted, except where the Development Code requires the
+development to provide on-site loading, or where structured parking or
+on-site parking is provided. [ORD 4844; August 2023]
+G2. Driveways accessed from public streets
+shall be minimized in order to promote
+pedestrian safety and walkability, ensure
+safe vehicle maneuvering, and maximize
+on-street parking.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-43
+Vehicle and Parking Access - Design Standard Vehicle and Parking Access - Design
+Guideline
+S3. Sites with multiple frontages shall construct driveways on the lower
+hierarchy street, based on the street typology identified in Figure
+70.15.15.1 Street Typology. Hierarchy is determined by the list of streets
+below, with streets listed first higher in the hierarchy:
+●Major Street
+●Loop Street
+●Commercial Street
+●Connector Street
+●Local Street
+Where frontages are of equal hierarchy, the applicant may select the
+single frontage to take access from. Sites with frontage directly adjacent
+to both streets at the below intersections are exempt from complying
+with this standard:
+●SW Lombard and SW 1st; and
+●SW Lombard and SW Broadway
+Additionally, where the Engineering Design Manual requirements conflict
+with this Standard, the requirements of the Engineering Design Manual
+will supersede this Standard. In this scenario, complying with the
+Engineering Design Manual will be regarded as meeting this
+Standard. [ORD 4876; January 2026]
+G3. Sites with multiple frontages shall
+construct driveways in locations that result
+in significant lengths of site frontage
+occupied by buildings and other active uses
+along key streets.
+Table 70.20.05.7.A Design Guidelines and Standards: Parking, Loading and Service Areas
+
+Sight Clearance
+
+Sight Clearance - Design Standard Sight Clearance -
+Design Guideline
+S4. To ensure visibility at intersections and driveways, all improvements adjacent to public
+streets, accessways, and driveways shall comply with BDC 60.55.35.3 Intersection Standards.
+G4. S4 shall be met.
+Table 70.20.05.7.A Design Guidelines and Standards: Parking, Loading and Service Areas
+
+Surface Parking
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-44
+Surface Parking - Design Standard Surface Parking - Design Guideline
+S5. Surface parking shall be located as follows:
+a. Surface parking shall not be located along the primary
+frontage between the building facade and the street.
+b. Surface parking shall not be located within any front
+minimum setback area.
+c. Surface parking shall be set back a minimum 5 feet from all
+property lines.
+d. Alley frontages are exempt from Section 70.20.05.7.S5.a
+through 70.20.05.7.S5.c above.
+G5. The visual impact of surface parking and
+vehicles on the pedestrian experience shall be
+minimized by locating parking in less prominent
+locations on site.
+S6. Surface parking shall be screened from view of the right of way
+as follows:
+a. Evergreen shrubs that will grow to a minimum height of 30
+inches within two years and form continuous screening.
+Areas within the vision clearance triangle shall include
+plantings that do not exceed 3 feet; and
+b. One tree for every 30 linear feet; and
+c. Evergreen ground cover shall cover the remaining landscape
+area.
+d. A minimum 30 inch tall architecturally treated wall may be
+substituted for the evergreen shrubs required by
+70.20.05.7.S6.a. Trees and ground cover required in
+70.20.05.7.S6.b and 70.20.05.7.S6.c must be provided.
+e. Alley frontages are exempt from Section 70.20.05.7.S6.a
+through 70.20.05.7.S6.d above.
+G6. Surface parking shall be screened and
+landscaped to reduce the impact on the
+pedestrian experience.
+S7. Surface parking along creekside paths shall be screened as
+follows:
+a. One tree for every 30 linear feet between the path and the
+parking lot, spaced evenly, and
+b. Evergreen shrubs that will grow to a minimum height of 30
+inches within two years and form continuous screening,
+planted between the path and the parking lot, and
+c. Evergreen ground cover planted at a density that will cover
+the entire area within two years of planting, and
+d. Where the parking lot is designed so parked cars face the
+creek, an architecturally treated wall between 30 and 36
+inches in height. Required landscaping shall be located on
+the side of the wall closest to the creekside path.
+G7. Surface parking along creekside paths shall be
+landscaped with a minimum width and density of
+landscape materials to minimize the visual
+impacts to users of the creekside path.
+Table 70.20.05.7.A Design Guidelines and Standards: Parking, Loading and Service Areas
+
+Utility, Loading and Service Areas
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-45
+Utility, Loading and Service Areas - Design Standard Utility, Loading and Service Areas -
+Design Guideline
+S8. Utilities and service areas shall be designed to minimize impact on
+the pedestrian experience by following the standards below:
+a. All on-site service areas, outdoor storage areas, waste storage,
+disposal facilities, recycling containers, transformer and utility
+vaults and similar activities shall be located in an area not visible
+from a public street, or shall be fully screened from view from a
+public street.
+b. Screening from public view for service areas, loading docks,
+loading zones and outdoor storage areas, waste storage, disposal
+facilities, recycling containers, transformer and utility vaults and
+similar activities shall be fully sight-obscuring, shall be
+constructed a minimum of one foot higher than the feature to be
+screened, and shall be accomplished by one or more of the
+following methods:
+I. Solid screen wall constructed of primary exterior finish
+materials utilized on primary buildings,
+II. Evergreen hedge wall that will grow one foot taller that the
+feature to be screened and reach 95 percent opacity within
+two years.
+III. Solid wood fence
+c. All loading docks and loading zones shall be located in an area not
+visible from a public street, or shall be fully screened from view
+from a public street. Screening of loading zones may be waived in
+if the applicant demonstrates the type and size of loading
+vehicles will not detract from the project’s aesthetic appearance
+and the timing of loading will not conflict with the operations of
+the expected businesses during business hours.
+G8. Utilities, loading, and service areas shall
+be screened, integrated into building and
+landscape design and/or located in less
+prominent locations to minimize the visual
+impact on the pedestrian experience.
+S9. Ramps constructed in the right of way to accommodate solid waste
+container access shall be allowed if all of the following thresholds are
+met:
+a. The proposed ramp is no wider than 5-feet; and
+b. The site does not have off-street parking or off-street loading
+facilities (whether required in BDC 60.25 Off Street Loading and
+60.30 Off Street Parking, or not); and
+c. The site does not have direct and reasonably access to an alley;
+and
+d. The solid waste containers needed to serve the proposed
+developed are 1-cubic yard or larger; and
+e. There are no existing ramps or driveways with 150-feet along the
+same block face. For the purposes of this threshold, pedestrian
+ramps at cross-walks or intersections are not considered existing
+ramps.
+G9. Ramps constructed in the right of way for
+purposes of solid waste container access shall
+minimize impacts to the pedestrian
+environment by promoting pedestrian safety
+and walkability, and ensure there are limited
+impacts to on-street parking.
+[ORD 4799, 01/08/2021; ORD 4844, 08/18/2023; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-46
+70.20.05.8 Landscaping
+
+A. Intent. To use landscape design to create character and identity; enhance the appearance and function of outdoor
+spaces; encourage pedestrian activity; promote social interaction; enhance or integrate new natural systems; add
+shade to the urban environment; and provide stormwater management. Landscaping should feasibly further
+sustainability goals and incorporate solutions that are appropriate to the climate, region and local conditions.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Site Landscaping
+
+Site Landscaping - Design Standard Site Landscaping - Design Guideline
+S1. Sites one acre and larger shall have landscaped areas
+with live plantings equal to 10 percent of the site area. Up
+to 50 percent of the landscaping required by this provision
+may be met by areas with live plantings provided to satisfy
+the requirements of 70.20.10.7 Usable Open Space and
+70.20.10.8 Roof Elements. Landscaping with plantings that
+is provided to meet other requirements of this code,
+including, but not limited to, screening requirements,
+buffering requirements, parking lot island requirements,
+and setback design requirements, may be used to meet up
+to 100 percent of the landscaping required by this
+provision. Sites under one acre do not have minimum
+landscaping requirement, but must still meet all other
+applicable provisions of this code.
+G1. Sites shall be landscaped with live plantings to soften
+the edges of buildings and paved areas, add visual interest,
+and increase the attractiveness of the development.
+Landscaped areas may be at-grade or integrated with
+structures. and shall provide options for storm water
+management and/or provide shade to on-site hardscaped
+areas. Sites one acre and larger in particular shall ensure a
+balance of hardscape and landscape features where
+structures are not present.
+S2. All site areas not planted with trees, shrubs or other
+vegetated landscaping and also not occupied by
+structures, hardscaped areas (including paved areas), and
+sensitive natural areas shall be planted with live ground
+cover plants or other plants identified 70.20.05.8.S4 Plant
+Specifications, subsection e-f, as well as turf grasses.
+Mulch, as a ground cover, shall be composed of a naturally
+occurring material, have a natural color, and confined to
+areas underneath plants and within areas expected to be
+underneath plants at maturity. Mulch is not a substitute
+for ground cover plants.
+G2. Landscaped areas shall be fully planted or hardscaped
+to create sustainable, attractive developments that are
+consistent with the uses on site, prevent erosion and
+preserve and enhance nature. Mulch shall be used
+sparingly, and shall have a material and color that is
+appropriate for the uses on site and contributes to site
+aesthetics.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-47
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Establishment
+
+Establishment - Design Standard Establishment - Design Guideline
+S3. Irrigation shall be provided to ensure plants will survive their
+establishment period. Applications shall provide establishment period
+irrigation through one of the following options or a combination of options
+as long as the options cover all site plantings:
+a. A permanent, in-ground irrigation system with an automatic
+controller.
+b. An irrigation system designed and certified by a licensed landscape
+architect this is part of a landscape plan that provides sufficient
+water to ensure that the plants will become established. The system
+does not have to be permanent if a licensed landscape architect
+certifies that the plants chosen can survive.
+c. Irrigation by hand for a maximum of 500 square feet per site.
+G3. Irrigation shall be provided as
+appropriate, based on plant species and
+site conditions, to ensure proper
+establishment of plantings in all
+landscaped areas.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Plant Specifications
+
+Plant Specifications - Design Standard Plant Specifications -
+Design Guideline
+S4. Unless specified elsewhere in CHAPTER 70, all landscaping shall be planted at sizes no less
+than the following (measures shall be taken based on the American Standard for Nursery
+Stock ANSI standards). In the case of a code conflict, the higher requirement shall be met.
+a. Deciduous canopy trees shall be a minimum of 2-inch caliper size, balled and
+burlapped; and
+b. Deciduous ornamental trees shall be a minimum of 2-inch caliper size, balled and
+burlapped; and
+c. Evergreen trees shall be a minimum of 8 feet in height, balled and burlapped; and
+d. Evergreen and deciduous shrubs shall be a minimum of 24 inches high from finished
+grade and a minimum of 1 gallon in size, except dwarf shrubs such as boxwood, which
+have no minimum size; and
+e. Ferns and perennials shall be at least 1 gallon in size; and
+f. Ground-covers plants including ornamental grasses shall be at least 4-inch pot size.
+g. Areas subject to Clean Water Services regulations including stormwater facilities,
+vegetated corridors, and sensitive natural areas shall be planted consistent with Clean
+Water Services requirements.
+G4. Standard S4 shall be
+met.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Plant Variety and Density
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-48
+Plant Variety and Density - Design Standard Plant Variety and Density - Design
+Guideline
+S5. Unless specified by other requirements in this Code, landscaped
+areas will be planted based on the following specifications:
+a. Landscaped areas will include plants from the following
+categories at the specified densities:
+I. Deciduous or evergreen trees that are able to reach a
+height of 20 feet and a canopy width of 20 feet at maturity.
+If 25 square feet of surface soil area is not available for each
+tree, or if an existing or proposed structure would prevent
+full Mature Tree Canopy, ornamental, dwarf, columnar and
+similar species are permitted as determined by the
+decision- making authority. [ORD 4859; January 2025]
+1. Sites under one acre shall provide one tree per 1,000
+square feet of site area not occupied by a structure.
+2. Sites one acre and greater shall provide one tree per
+3,000 square feet of total site area.
+3. All trees planted or preserved on-site to meet any
+provisions of this code may count toward the density
+requirements of this sub-section, providing that they
+meet the size requirements of this subsection.
+II. Shrubs and perennials.
+III. Ground cover, including ornamental grasses, shall be
+planted at a density such that the plants will cover the
+entire area within two years of planting. Applicants shall
+provide an objective source of information about the
+plant’s spacing requirements.
+b. Plant diversity:
+I. If more than 10 trees are provided on a site, no more than
+40 percent of the trees can be of one species; and
+II. If more than 25 shrubs are provided on a site, no more than
+75 percent can be of one species.
+G5. Site landscaping shall be planted with a
+variety that provides visual interest, including in
+color, seasonal color and scale, and shall be
+planted at a density that provides sufficient
+opportunities for shade and fully cover areas
+not occupied by structures, paving or
+hardscaped areas.
+S6. A minimum of 25 percent of landscape plantings shall be drought-
+resistant species.
+G6. Drought-resistant landscaping shall be
+incorporated where possible to reduce the
+need for irrigated water.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Tree Planting and Preservation
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-49
+Tree Planting and Preservation - Design Standard
+Tree Planting and
+Preservation - Design
+Guideline
+S7. Existing Surveyed Trees that are preserved in the proposal may be counted as
+two required site trees when calculating required trees in 70.20.05.8.S5.a.I. For
+Surveyed Trees to counted toward the site tree requirement, they shall be
+confirmed as healthy as determined by a certified arborist or city arborist.
+G7. Existing trees on-site that
+provide shade or visual interest
+shall be preserved where
+possible.
+S8. New trees shall be supported (by use of stakes, wires or similar material) for at
+least one year. Trees may be staked for less than one year if based on the
+recommendation of a certified arborist.
+G8. Standard S8 shall be met.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Residential Zone Buffers
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-50
+Residential Zone Buffers - Design Standard Residential Zone Buffers - Design
+Guideline
+S9. Development on sites that abut a residentially zoned property
+located outside of the Regional Center shall provide a 10 foot
+landscape buffer, measured from the shared property line. Only
+landscaping shall be allowed in the landscape buffer area. The buffer
+areas shall extend the length of the shared property line.
+a. The buffer shall consist of the following:
+I. Live ground cover consisting of low-height plants, or
+shrubs, ornamental grasses, or turf; and
+II. 1 evergreen tree having a minimum planting height of 8
+feet, and that will reach 20 feet in height and a canopy
+width of 20 feet at maturity, for every 30 lineal feet of
+buffer width; and
+III. Evergreen shrubs which reach a minimum height of 4
+feet within 2 years of planting, planted evenly between
+the required evergreen trees.
+IV. Ground cover and shrubs shall be spaced and located
+dependent on the mature spread of the selected
+vegetation to create a fully vegetated screen at maturity.
+Bare gravel, rock, bark or other similar materials may be
+used, as a ground cover, but shall be confined to areas
+underneath plants and within areas expected to be
+underneath plants at maturity, and is not a substitute for
+ground cover plants.
+b. The buffer standards shall not apply to the following:
+I. Single-detached dwellings on individual parcels. [ORD
+4822; June 2022]
+II. Areas where emergency access is required.
+III. Areas where a public utility easement exists. This
+exemption only applies to trees and does not exempt
+the requirement of shrubs and ground cover.
+IV. Areas required for visual access purposes as
+determined by the City Traffic Engineer or City Police.
+This exemption only applies to trees and shrubs and
+does not exempt the requirement of ground cover.
+G9. Development on sites that abut a
+residentially zoned property located outside of
+the Regional Center shall provide a landscape
+buffer consisting of trees, shrubs, and ground
+cover along the shared property line to
+provide screening and horizontal separation.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Surface Parking Landscaping
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-51
+Surface Parking Landscaping - Design Standard Surface Parking Landscaping -
+Design Guideline
+S10. Surface parking shall be landscaped according to the following
+provisions.
+a. Landscape islands shall be provided at a rate of one for every 10
+contiguous parking spaces and at the end of each parking row.
+b. The island shall have a minimum area of 70 square feet, shall be
+curbed, and a minimum width of 6 feet, measured from the interior
+curb face. Curbs separating landscaped areas from parking areas may
+allow stormwater runoff to pass through them. The landscaped island
+shall be planted with a tree having a minimum mature height of 20
+feet. If a pole-mounted light is proposed to be installed within a
+landscaped planter island, and an applicant demonstrates that there is
+a physical conflict for siting the tree and the pole-mounted light
+together, the decision-making authority may waive the planting of the
+tree, provided that at least seventy-five (75) percent of the required
+islands contain trees.
+c. Raised pedestrian walkways within the parking area connecting the
+parking spaces and on-site building(s) may be counted towards the
+total required number of landscaped islands, provided that the
+following is met:
+I. Trees are spaced a maximum of 30 feet on center on a minimum of
+one side of the walkway. [ORD 4876; January 2026]
+II. The minimum unobstructed walkway width is five feet. [ORD 4876;
+January 2026]
+III. The walkway is separated from the parking area by curbs, bollards,
+or other means on both sides. [ORD 4876; January 2026]
+IV. Trees are located in planting area with ground cover or planted in
+covered tree wells.
+V. Trees within the linear walkway area shall constitute no more than
+50 percent of the total number of trees within required landscaped
+islands. All remaining required trees shall be located within
+landscaped islands. [ORD 4876; January 2026]
+d. Trees planted within required landscaped islands or the linear walkway
+shall be of a type and species identified by the City of Beaverton Tree
+List or an alternative approved by the City Arborist. [ORD 4859; January
+2025] [ORD 4876; January 2026]
+e. Areas of parking and vehicle circulation covered by upper-floor
+structures are exempt from these requirements.
+G10. Surface parking areas shall be
+landscaped to provide shade, afford
+permeable areas for water runoff
+management, and reduce continuous
+areas of parking.
+[ORD 4799, 01/08/2021; ORD 4822, 06/30/2022; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+70.20.05.9 Lighting
+
+1. Intent. To create safe, welcoming, well-lighted areas, including building entries, pedestrian pathways and plazas,
+parking lots and vehicle maneuvering areas; and to minimize excessive illumination on adjoining properties.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-52
+2. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+3. Design Guideline and Standards
+
+Table 70.20.05.9.A Design Guidelines and Standards: Lighting
+
+Lighting - Design Standard Lighting - Design Guideline
+S1. On-site lighting shall meet the standards of
+Development Code Section 60.05.30.
+G1. On-site lighting shall meet the Guidelines of
+Development Code Section 60.05.50.
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.10. Building Design
+
+Contents:
+70.20.10.1 Purpose
+70.20.10.2 Topics
+70.20.10.3 Massing and Articulation
+70.20.10.4 Facade Design
+70.20.10.5 Gateways
+70.20.10.6 Active Ground Floor Design
+70.20.10.7 Usable Open Space
+70.20.10.8 Roof Elements
+70.20.10.9 Structured Parking
+70.20.10.10 Materials
+70.20.10.11 Historic Overlay Design
+[ORD 4799, 01/08/2021]
+70.20.10.1 Purpose
+
+1.Purpose. The Building Design Guidelines and Standards along with the Development Standards set the building
+massing, facade articulation, usable open space requirements, and design details that are required.
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.20.10.2 Topics
+
+A. Massing and Articulation (70.20.10.3)
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-53
+B. Facade Design (70.20.10.4)
+C. Gateways (70.20.10.5)
+D. Active Ground Floor Design (70.20.10.6)
+E. Usable Open Space (70.20.10.7)
+F. Roof Elements (70.20.10.8)
+G. Structured Parking (70.20.10.9)
+H. Materials (70.20.10.10)
+I. Historic Overlay Design (70.20.10.11)
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.20.10.3 Massing and Articulation
+
+A. Intent. To guide building massing to respond to the scale of people and the building’s context; avoid overly massive
+or monolithic structures; and encourage variation on large facades to promote pedestrian interest.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Support an Intensely Developed, Mixed-income, Mixed-use Downtown (Section 70.10.2)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+C. Design Guideline and Standards
+
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Break for Long Facades
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-54
+Break for Long Facades - Design Standard Break for Long Facades -
+Design Guideline
+S1. All building facades longer than 200 feet facing the right of way, any internal drive
+or any internal accessway shall have at least one major break for every 200 feet in
+facade length. A major break shall be a vertical recess with a horizontal width of no
+less than fifteen feet and a footprint of 400 square feet. The recess shall extend from
+the roofline to grade or to an open space / landscaped area no greater than 5 feet
+above grade. If upper floors are set back a minimum of 6 feet from the primary facade
+plane, the major break does not have to extend through those upper floors. Major
+breaks shall not be within 20 feet of the horizontal facade edge.
+Figure 70.20.10.3.1 Break for Long Facades
+G1. Building facades longer
+than 200 feet facing the right
+of way, any internal drive or
+any internal accessway shall
+include massing breaks and/ or
+facade modulation to reduce
+the perceived length of
+building, reduce the bulk of
+the building, provide
+pedestrian interest, introduce
+architectural variety and
+include high quality materials.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Facade Modulation
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-55
+Facade Modulation - Design Standard Facade Modulation -
+Design Guideline
+S2. For buildings taller than 30 feet, measured from grade plane to eave or top of parapet,
+whichever is higher, facades greater than 100 feet facing the right of way, any internal drive
+or any internal accessway shall be modulated to provide visual interest and break up facade
+planes by using at least one of the following facade modulation elements:
+a. One or more vertical and/or horizontal recess(es) and/ or projection(s) with a
+minimum average depth of 12 inches that changes the primary plane of the facade
+for a minimum of 20 percent of the facade. Ground-floor and upper-floor step backs,
+as well as major breaks used to satisfy other Design Standards, may not be used to
+satisfy this requirement.
+b. A step back of upper-floor facades with a minimum depth of 6 feet from the primary
+plane of the facade for a minimum of 70 percent of the facade length. Buildings
+providing an upper-floor step back to satisfy 70.20.10.3. Design Standards S3-S9 may
+not use upper floor step backs to satisfy 70.20.10.3.S2.
+c. A step back of the ground-floor facade with a minimum depth of 2 feet from the
+primary plane of the facade for a minimum 70 percent of the length of the facade.
+Ground- floor step backs that exceed the maximum setback of the zone do not satisfy
+this standard.
+d. Angular sloped or faceted surfaces that extends at least two-thirds of the height of
+the facade plane along a facade with a minimum average depth of 12 inches and a
+maximum 40 feet in length before a shift in the plane.
+G2. Building facades that
+are taller than 30 feet,
+measured from grade
+plane to eave or top of
+parapet, whichever is
+higher, and longer than
+100 feet facing the right
+of way, any internal drive
+or any internal accessway
+shall have facade
+modulations that create
+a distinct change in
+facade plane to create
+visual interest. Variation
+can be achieved through
+a combination of vertical
+shifts, horizontal shifts,
+upper-floor step backs,
+ground-floor step backs,
+angular shifts, exposed or
+emphasized structural
+elements, or other
+similar approach.
+Figure 70.20.10.3.2 Facade Modulation Diagrams
+Vertical Shifts Horizontal Shifts
+Upper-floor Stepbacks Ground-floor Stepbacks
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-56
+Figure 70.20.10.3.2 Facade Modulation Diagrams
+Angular Shifts
+Facade Modulation Diagrams are illustrative only
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Regional Center - Beaverton Central (RC-BC)
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-57
+Regional Center - Beaverton Central (RC-BC) - Design Standard Regional Center - Beaverton
+Central (RC-BC) - Design Guideline
+S3. In RC-BC, buildings with a building footprint greater than 20,000 square feet
+with a street-facing facade longer than 150 feet shall:
+a. Provide a 6-foot building stepback on all street-facing facades within the
+maximum setback on all floors entirely above 75 feet; and
+b. Reduce the building bulk for all floors entirely above 75 so that no street-
+facing facade within the maximum setback is longer than 150 feet for
+buildings with any portion of the facade within the maximum setback.
+Massing Reductions in RC-BC
+One approach to satisfying 70.20.10.3.S3
+G3. In RC-BC, buildings with a
+footprint greater than 20,000 square
+feet shall reduce the overall scale and
+bulk of the building by reducing the
+floor area for portions of the building
+between 75 and 120 feet in height.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-58
+Regional Center - Beaverton Central (RC-BC) - Design Standard Regional Center - Beaverton
+Central (RC-BC) - Design Guideline
+S4. In RC-BC, buildings exceeding the 120-foot height limit can only respond to
+the G4 Guideline. There is no Design Standard.
+G4. In RC-BC, buildings may exceed
+the 120-foot height limit by reducing
+the building mass of upper floors to
+minimize impacts on surrounding
+streets and buildings, and by
+providing at-grade pedestrian
+improvements. The building mass of
+upper floors shall be reduced by
+stepping back facades, shortening
+facade lengths, or other methods that
+reduces the massing compared to
+lower floors which results in:
+a. Reduce the sense of enclosure
+for pedestrians along at least
+one street;
+b. Increase access to light or sky
+views for people on abutting
+streets; and
+c. Increase access to light for
+people inside current or future
+buildings across the street from
+the proposed development.
+Development applying for this Design
+Guideline shall also provide at-grade
+publicly accessible open space or on-
+site creek access and enhancements
+to improve the pedestrian
+experience.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Regional Center - Old Town (RC-OT)
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-59
+Regional Center - Old Town (RC-OT) - Design Standard Regional Center - Old Town (RC-
+OT) - Design Guideline
+S5. In RC-OT, buildings greater than 45 feet in height shall reduce the overall
+scale and bulk of buildings and provide variety in building heights by reducing
+mass of upper floors over certain heights by meeting the following standards:
+a. All building floors entirely above 45 feet in height shall have a floor area
+less than 75 percent of the average floor area of the floors below 45 feet;
+and
+b. Street-facing facades of floors above 45 feet that are within the maximum
+setback shall be a maximum of 66 percent of the average facade length of
+the floors below 45 feet; or
+c. Floors above 45 feet in height shall be stepped back by a minimum of 6
+feet on the facade facing the primary frontage.
+Massing Reductions in RC-OT
+One approach to satisfying 70.20.10.3.S5
+G5. In RC-OT, buildings greater than
+45 feet in height shall reduce the
+overall scale and bulk of buildings
+and provide variety in building
+heights by reducing mass of upper
+floors.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-60
+Regional Center - Old Town (RC-OT) - Design Standard Regional Center - Old Town (RC-
+OT) - Design Guideline
+S6. In RC-OT, buildings exceeding the 65-foot height limit can only respond to
+the G6 Guideline. There is no Design Standard.
+G6. In RC-OT, buildings may exceed
+the 65-foot height limit, up to 75
+feet, reducing the building mass of
+upper floors to minimize impacts on
+surrounding streets and buildings.
+The building mass of upper floors
+shall be reduced by stepping back
+facades, shortening facade lengths,
+or other methods that reduces the
+massing compared to lower floors
+which results in:
+a. Reduce the sense of enclosure
+for pedestrians along at least
+one street; and
+b. Increase access to light or sky
+views for people on abutting
+streets.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Building Height and Massing (RC-MU)
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-61
+Building Height and Massing (RC-MU) - Design Standard Building Height and Massing (RC-
+MU) - Design Guideline
+S7. In RC-MU, buildings greater than 55 feet in height shall reduce the overall
+scale and bulk of buildings and provide variety in building heights by reducing
+mass of upper floors over certain heights by meeting the following standards:
+a. All building floors entirely above 55 feet in height shall have a floor area
+less than 75 percent of the average floor area of the floors below 55 feet;
+and.
+b. Street-facing facades of floors entirely above 55 feet that are within the
+maximum setback shall be a maximum of 66 percent of the average
+facade length of the floors below 55 feet; or
+c. Floors entirely above 55 feet in height shall be stepped back by a
+minimum of 6 feet on the facade facing the primary frontage.
+Massing Reductions in RC-MU
+One approach to satisfying 70.20.10.3.S7
+G7. In RC-MU, buildings greater than
+55 feet in height shall reduce the
+overall scale and bulk of buildings
+and provide variety in building
+heights by reducing mass of upper
+floors.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-62
+Building Height and Massing (RC-MU) - Design Standard Building Height and Massing (RC-
+MU) - Design Guideline
+S8. In RC-MU, buildings exceeding the 75-foot height limit can only respond to
+the G8 Guideline. There is no Design Standard.
+G8. In RC-MU, buildings may exceed
+the 75-foot height limit, up to 120
+feet, by reducing the building mass of
+upper floors to minimize impacts on
+surrounding streets and buildings,
+and by providing at-grade pedestrian
+improvements. The building mass of
+upper floors shall be reduced by
+stepping back facades, shortening
+facade lengths, or other methods
+that reduces the massing compared
+to lower floors which results in:
+a. Reduce the sense of enclosure
+for pedestrians along at least
+one street;
+b. Increase access to light or sky
+views for people on abutting
+streets; and
+c. Increase access to light for
+people inside current or future
+buildings across the street
+from the proposed
+development or, if the
+property abuts a creek, provide
+on-site creek access and
+enhancements that improve
+the pedestrian experience.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Building Height and Massing (RC-DT)
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-63
+Building Height and Massing (RC-DT) - Design Standard
+Building Height and
+Massing (RC-DT) - Design
+Guideline
+S9. Buildings greater than 45 feet in height shall reduce the overall scale and bulk of
+buildings and provide variety in building heights by reducing mass of upper floors over
+certain heights by meeting the following standards:
+a. All building floors entirely above 45 feet in height shall have a floor area less than
+75 percent of the average floor area of the floors below 45 feet; and.
+b. Street-facing facades of floors above 45 feet that are within the maximum setback
+shall be a maximum of 66 percent of the average facade length of the floors
+below 45 feet; or
+c. Floors above 45 feet in height shall be stepped back by a minimum of 6 feet on
+the facade facing the primary frontage.
+Massing Reductions in RC-DT
+One approach to satisfying 70.20.10.3.S9
+G9. Buildings greater than 45
+feet in height shall reduce
+the overall scale and bulk of
+buildings and provide variety
+in building heights by
+reducing mass of upper
+floors.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Height Transitions (All Zones)
+
+Height Transitions (All Zones) - Design Standard Height Transitions (All Zones) - Design Guideline
+S10. On the portion of a site less than or equal to 30 feet
+from a property line shared with a lot outside of the Regional
+Center zoned RMA, RMB or RMC or a comparable
+Washington County zone, the maximum building height shall
+be the same height of that abutting zone. [ORD 4857;
+October 2024]
+G10. Development on lots abutting outside of the
+Regional Center zoned RMA, RMB or RMC or a
+comparable Washington County zone, shall be stepped
+back to reduce the visual and solar impact on
+neighboring residentially zoned lots. [ORD 4857;
+October 2024]
+[ORD 4799, 01/08/2021; ORD 4857, 10/03/2024]
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-64
+Effective on: 9/14/2026
+70.20.10.4 Facade Design
+
+A. Intent. To create cohesive and well-crafted building facades with human-scaled details that provide visual interest
+to pedestrians, incorporate passive green design elements, and promote high-quality design.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+C. Design Guideline and Standards
+
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+General
+
+General - Design Standard General - Design Guideline
+S1. All facades facing a public right of way, publicly
+accessible open space, or publicly accessible pathway shall
+meet all Standards in sections Section 70.20.10.4 Facade
+Design. Site identified in Figure 70.20.10.6.1 Active
+Frontages Map shall also be subject to facade design and
+rules in 70.20.10.6 Active Ground Floor Design. Building
+facades built at shared property lines are exempt. [ORD
+4857; October 2024]
+G1. All facades facing a public right of way, publicly
+accessible open space, or publicly accessible pathway shall
+meet all Guidelines in sections Section 70.20.10.4 Facade
+Design. Sites identified in Figure 70.20.10.6.1 Active
+Frontages Map shall also be subject to facade design rules
+in 70.20.10.6 Active Ground Floor Design. Building facades
+built at shared property lines are exempt. [ORD 4857;
+October 2024]
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Facade Articulation
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-65
+Facade Articulation - Design Standard Facade Articulation - Design Guideline
+S2. Building facades facing the right of way, any internal drive or any
+internal accessway shall utilize at least one of the following facade
+articulation strategies to create visual interest.
+a. Recesses and/or projections that are a minimum depth of four
+inches that changes the primary plane of the facade for a
+minimum of 30 percent of the facade; or
+b. Datum lines that continue the length of the facades, including
+one at the top of the building and, if the building has more
+than one story, a datum line between the first and second
+floor. Datum lines shall have a minimum 4 inches in depth and
+height or a minimum 2 inches in depth and height with a
+change in material. Alternative datum line locations may be
+approved by the decision-making authority; or
+c. Balconies projected and/or recessed, large enough to fit a 5-
+foot by 6-foot rectangle inside of them on every floor above
+the ground-floor level for at least 50% of the units or tenant
+spaces on that facade, or a minimum of one balcony for every
+50 linear feet of building on each floor, whichever is greater.
+Each balcony shall have direct access via a door from at least
+one dwelling unit or tenant space on that floor.
+G2. Building facades facing the right of way, any
+internal drive or any internal accessway shall be
+articulated using recesses, projections,
+balconies, or similar strategies to provide visual
+interest, surface relief, depth, and shadows to
+the facade.
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Defined Base and Top
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-66
+Defined Base and Top - Design Standard Defined Base and Top - Design Guideline
+S3. For buildings taller than 30 feet, measured from grade plane
+to eave or top of parapet, with ground-floor commercial and
+upper-floor residential or office, building facades facing the right
+of way, any internal drive or any internal accessway shall be
+designed to have a defined base and a defined top, as described
+below.
+a. A building will meet the requirement of a defined base by
+meeting one of the following strategies:
+I. Floor-to-floor height of the ground floor is a minimum
+of 3 feet taller than the average of the remainder of
+the floor-to-floor heights.
+II. Ground-floor level is set back a minimum of 2 feet
+from the primary building facade for 70 percent of the
+street facing facade.
+III. All floors above the ground-floor level are set back a
+minimum of 2 feet from the ground floor level for 70
+percent of the street facing facade.
+IV. A datum line that is provided between the ground
+floor and second floor. The datum line may project or
+be recessed. The datum line shall be a minimum of 4
+inches in depth and height. The datum line shall be a
+minimum of 2 inches and depth and height if the
+predominant exterior building material, excluding
+windows, changes between the first and second floor.
+b. A building will meet the requirement of a defined top by
+meeting one of the following strategies:
+I. A cornice that projects between 1 foot and 2 feet from
+the primary facade plane with a height of no less than
+2 feet; or
+II. The top is set back a minimum of 2 feet from the
+primary building facade for 70 percent of the street-
+facing facade for a minimum height of 2 feet. At least
+50% of the top element must be visible from a
+viewpoint of five feet above grade plane at a distance
+of 50 feet away, measured from the primary facade
+plane; or
+III. A change in material with a minimum height of 2 feet,
+located at or above the top floor; or
+IV. A sloped roof with a slope of 4:12 or greater with
+eaves that project at least 12 inches.
+G3. For buildings taller than 30 feet, measured from
+grade plane to eave or top of parapet, with ground-
+floor commercial uses, building facades facing the
+right of way, any internal drive or any internal
+accessway shall be designed with a top and base
+that establish depth and visual interest, are visually
+distinctive, are proportional to the scale of the
+building, and are integrated into the building design.
+A clearly defined ground-floor “base” and corniced
+top (Portland, OR)
+Photo Credit: Dan Carter/DJC
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Fenestration
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-67
+Fenestration - Design Standard Fenestration - Design Guideline
+S4. All fenestration shall meet the following standards:
+a. Windows shall be recessed a minimum of 2 inches.
+Facades or portions of facades utilizing a curtain
+wall are exempt from this standard.
+b. Windows that are flat or “flush” with the facade
+are prohibited unless applied to a portion of a
+building that is part of a recessed facade
+modulation with a minimum 4 inches in depth.
+Facades or portions of facades utilizing curtain
+walls are exempt from this standard.
+G4. Windows shall be appropriately recessed or trimmed to
+created shadow and highlight fenestration.
+S5. Facades visible from a public street or primary
+internal drive shall meet the minimum glazing
+requirements below. Building facades built at shared
+property lines are exempt.
+a. Non-residential uses:
+I. Ground-floor: Unless another standard requires
+greater glazing, a minimum of 40% of the
+ground- floor facade shall be glazed; and
+II. Upper-floors: Unless another standard requires
+greater glazing, minimum of 25% of the upper-
+floor facade area shall be glazed, excluding roof
+shapes and a parapets.
+b. Residential uses:
+I. Unless another standard requires greater
+glazing, a minimum of 25% of the ground floor
+facade and 25% of the total facade shall be
+glazed, excluding roof shapes and parapets.
+G5. Facades visible from a right of way, primary internal
+drive, or primary accessway shall provide adequate levels of
+clear glazing to ensure articulation on the facade,
+daylighting of interior spaces, and visibility into the street.
+Street-level glazing shall be inviting and enhance the
+pedestrian experience. Buildings abutting pedestrian
+walkways shall provide views of the walkway to promote
+pedestrian safety. Building facades built at shared property
+lines are exempt.
+S6. For all facades not visible from a public street or
+primary internal drive, a minimum of 20% of the total
+facade area shall be glazed. Building facades built at
+shared property lines are exempt.
+G6. Facades not visible from a street or internal drive or
+internal accessway shall provide sufficient transparency to
+ensure daylighting of interior spaces and visual interest on
+the facade, but may provide lower levels of transparency
+than street-facing facades.
+S7. Unless another standard requires greater glazing,
+facades within 15 feet of an on-site pedestrian
+connection shall a minimum of 20% of the ground floor
+facade and 20% of the total facade area shall be glazed,
+excluding roof shapes and parapets.
+G7. Buildings abutting pedestrian walkways shall provide
+views of the walkway to promote pedestrian safety.
+S8. Windows up to 60 feet above the ground floor shall
+be treated with one of the following bird-safe design
+techniques:
+a. Fritted glass
+b. Etched glass
+c. UV coated glass
+d. Permanent stencil or frosting
+e. Exterior apparatus
+G8. Window treatments shall be incorporated to reduce the
+likelihood of bird collisions.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-68
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Building Entries
+
+Building Entries - Design Standard Building Entries - Design Guideline
+S9. Buildings entries shall be provided as follows:
+a. At least one primary building entrance shall face the primary
+frontage. Primary frontage is determined by the following hierarchy
+using Figure 70.15.15.1 Street Typology, with the streets listed first
+being higher priority than the streets listed after:
+I. Loop Street
+II. Commercial Street
+III. Connector Street
+IV. Major Street
+V. Local Street
+If all abutting streets are of the same typology, the primary street may be
+determined by the applicant.
+G9. Primary building entries shall be
+placed in a prominent location toward a
+public street or other pedestrian way.
+S10. Primary building entrances shall be at or above the back of sidewalk or
+walkway grade. Building entries shall be located on a public right of way,
+open space, internal drive, or internal accessway. Building entries inclusive
+of doorway, framing, and accompanying fenestration shall meet the
+following minimum dimensions: [ORD 4876; January 2026]
+a. Individual residential entries: 5 feet in width
+b. Shared residential entries: 10 feet in width
+c. Individual non-residential entries serving tenants spaces less than
+5,000 square feet: 6 feet in width
+d. Shared non-residential entries and Individual non-residential entries
+serving tenants spaces greater than 5,000 square feet: 20 feet in
+width
+G10. Building entries shall be easily
+identifiable, scaled proportionally to the
+number of people served (amount of
+floor-area or number of units accessed),
+and integrated into the overall facade
+composition.
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Blank Walls
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-69
+Blank Walls - Design Standard Blank Walls - Design Guideline
+S11. Where ground floor facades have gaps between doors
+and/or windows greater than 40 feet in horizontal length, a
+minimum of one of the following shall be incorporated
+throughout the length of the blank wall. Building facades built
+at shared property lines are exempt from this standard.
+a. A trellis or trellises that covers the blank wall with vines
+planted that will grow vertically of sufficient density,
+height and width so that they provide coverage of 40
+percent of the blank wall within two years. The plantings
+shall be at least 4 feet tall or cover at least 50 percent of
+each trellis at time of planting.
+b. Landscape screening incorporating the following:
+I. Ornamental or other short trees every 10 feet along
+the blank wall section.
+II. Evergreen shrubs planted 3 feet on center between
+the trees with a minimum of 2 feet in height at time
+of planting.
+This option shall only be available if there is 4 feet of
+space to plant the trees between the building facade and
+the sidewalk or other hardscaped area or sufficient width
+as determined by a licensed landscape architect to
+ensure that the plantings will not encroach into the
+abutting pedestrian walkways.
+c. Decorative tile work, composed of ceramic, stone, or
+similar material that covers at least 40 percent of the
+blank wall of the ground floor story.
+d. Decorative metal work or metal panels that covers at
+least 40 percent of the blank wall of the ground floor
+story.
+e. Decorative brickwork that projects or is recessed at least
+one inch, which covers at least 25 percent of the blank
+wall of the ground floor story.
+f. A green living wall that covers 40 percent of the blank
+wall of the ground floor story. The green living wall shall
+be fully planted at construction.
+G11. Where ground floor facades have gaps between
+doors and/ or windows greater than 40 feet in
+horizontal length, articulation methods shall be
+included to enhance the blank wall, including trellises,
+landscape screening, living green walls, decorative tile
+work, metal work, wood work, or concrete work, or
+other similar methods as approved by the decision-
+making authority. Building facades built at shared
+property lines are exempt.
+[ORD 4799, 01/08/2021; ORD 4857, 10/03/2024; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+70.20.10.5 Gateways
+
+A. Intent. To create a sense of arrival in Downtown at key intersections with site or building design elements to help
+identify the intersection as an entry to the Downtown Core.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-70
+●Consider Development Context (Section 70.10.4)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.10.5.A Design Guidelines and Standards: Gateways
+
+Gateway/Design Elements
+
+Gateway/Design Elements - Design Standard Gateway/Design Elements - Design
+Guideline
+S1. Sites located at the corners of each intersection described below
+shall incorporate design elements into site and building design that
+signify the importance of the intersection as a gateway to Downtown:
+●Millikan and Rose Biggi
+●Millikan and Lombard
+●Canyon and Rose Biggi
+●Canyon and Lombard
+Site subject to this standard shall:
+a. Locate building massing at the corner or within 30 feet of the
+corner along either street frontage with one double- door entry
+entirely within the first 20 feet of the building’s facade as
+measured from the point closest to the intersection; and
+b. New buildings shall include at least two of the following:
+I. Provide overhang canopy or awning above the main double-
+door entry or provide a recessed entry;
+II. Provide a minimum building height of at least 45 feet with
+occupiable building floor area for at least 20 feet along each
+street frontage within 50 feet of the intersection;
+III. Provide windows within 30 feet of the corner of the building
+closest to the intersection that are at least one-third larger
+pane than the rest of the ground level-facade windows;
+IV. Provide Publicly Accessible Open Space (PAOS) at the corner
+that meets the Standards in Section 70.20.10.7.S4.
+G1. A design element or strategy that signifies
+a gateway to Downtown shall be integrated
+with the site and building design at the
+intersections specified in S1.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-71
+Figure 70.20.10.5.1 Gateways
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.10.6 Active Ground Floor Design
+
+A. Intent. To create inviting and interesting ground floors that enhance the pedestrian realm and to create places for
+people to gather and spend time outdoors.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Support an Intensely Developed, Mixed-income, Mixed-use Downtown (Section 70.10.2)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.10.6.A Design Guidelines and Standards: Active Ground Floor Design
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-72
+Non-Residential Active Ground Floor Design
+
+Non-Residential Active Ground Floor Design - Design
+Standard
+Non-Residential Active Ground Floor Design -
+Design Guideline
+S1. Buildings subject to the Active Ground-floor Design rules
+as identified in Figure 70.20.10.6.2 Active Frontages Map shall
+be designed to activate the public realm, create interesting
+and inviting ground-floor spaces, increase transparency into
+ground-floor spaces, and provide weather protection for
+ground-floor entrances, and shall meet the following
+requirements:
+a. Floor Height: The minimum floor-to-floor height of the
+ground floor shall be 16 feet.
+b. Transparency: Active frontage areas shall include a
+minimum 60 percent transparent glazing between 2
+and 10 feet in height from sidewalk, walkway or terrace
+grade, providing unobstructed views into the
+commercial space. Transparent glazing shall have
+minimum Visible Transmittance (VT) value of 0.60. A
+lighted display zone 4 feet in depth from the windows
+may qualify as unobstructed views into the commercial
+space for up to 50 percent of the combined storefront
+window width on each storefront on primary frontages
+and on the entirety of secondary frontages. [ORD 4876;
+January 2026]
+c. Entrances: Primary ground-floor entrances serving
+active uses shall include weather protection that is a
+minimum 6 feet wide and 4 feet deep by recessing the
+entry, providing an awning or other projecting element,
+or using a combination of those methods.
+d. Blank Walls: Walls without fenestration or doors shall
+not exceed 15 feet in length.
+e. Awnings, canopies and weather protection, where
+provided:
+I. When transom windows are above display
+windows, awnings, canopies and similar weather
+protection elements shall be installed between
+transom windows and display windows to allow for
+light to enter the storefront through the transom
+windows and allow the weather protection feature
+to shade the display window.
+II. Awnings may be fixed or retractable.
+G1. Buildings subject to the Active Ground-floor Design
+rules as identified in Figure 70.20.10.6.2 Active
+Frontages Map shall be designed to create an
+interesting and inviting environment for people.
+a. Floor heights shall be adequate to accommodate
+multiple allowed non-residential uses
+b. Window transparency shall be adequate to
+create visibility between the building and publicly
+accessible paths, streets and open spaces.
+c. Ground-floor designs shall provide clear and
+comfortable entrances for pedestrians.
+d. Ground-floor designs shall incorporate elements
+to avoid large blank wall areas, such as
+incorporating vegetation, trellis structures,
+artwork, architectural detailing, reveals,
+contrasting materials or other elements to
+provide visual interest. The elements shall be
+used in a manner consistent with the building’s
+design and other facade composition elements.
+e. Awnings shall be integrated into the building
+design and provide regularly spaced shade and
+weather protection.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-73
+Figure 70.20.10.6.1 Active ground floor design
+
+Table 70.20.10.6.A Design Guidelines and Standards: Active Ground Floor Design
+
+Active Ground-floor Residential Design
+
+Active Ground-floor Residential Design - Design
+Standard
+Active Ground-floor Residential Design - Design
+Guideline
+S2. Ground floor residential units subject to the Active
+Ground- floor Use rules as identified in Figure 70.20.10.6.2
+Active Frontages Map shall be designed to provide an
+adequate level of privacy to the unit while providing
+pedestrian interest and the opportunity for interaction
+between the public and private realms by complying with
+the following requirements:
+a. Ground-floor units, shall provide one of the Active
+Ground Floor Residential Unit Entry Types consistent
+with Section 70.20.10.6.S3.
+b. Ground floor height shall be a maximum four feet
+floor height above sidewalk or walkway grade. [ORD
+4876; January 2026]
+c. The ground floor shall have a minimum floor-to-floor
+height of 12 feet.
+G2. Buildings subject to the Active Ground-floor Use
+rules as identified in Figure 70.20.10.6.2 Active
+Frontages Map with ground floor residential uses shall
+enhance the pedestrian experience; give individual
+identity to ground-floor units; define the transition
+between public and private space; provide spaces for
+people to gather and spend time outdoors; and provide
+adequate level of resident privacy.
+Table 70.20.10.6.A Design Guidelines and Standards: Active Ground Floor Design
+
+Active Ground-floor Residential Unit Entry Types
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-74
+Active Ground-floor Residential Unit Entry Types - Design
+Standard
+Active Ground-floor Residential Unit
+Entry Types - Design Guideline
+S3. Where Active Ground Floor Residential Private Entry Types are
+required, one or more of the following entry types shall be provided.
+G3. Private entries into ground- floor
+residential units shall be designed to provide
+human-scaled detailing; enhance the
+pedestrian experience; define the transition
+between public and private space; provide
+spaces for residents to gather and spend time
+outdoors; and provide adequate level of
+resident privacy.
+a. Stoop:
+I. Stoops shall provide entry access for a maximum of two
+units; and
+II. Stoop entry landings shall be large enough so a four-foot by
+four-foot square can fit inside of the stoop for each unit
+served; and
+III. Stoop entry landings shall be a minimum of twenty-five
+square feet for each unit served
+IV. The minimum stoop height from the back of sidewalk or
+walkway grade shall be two feet; and [ORD 4876; January
+206]
+V. The maximum stoop height from the back of sidewalk or
+walkway grade shall be four feet. [ORD 4876; January 2026]
+Diagram of Stoop
+b. Porch:
+I. Porches shall provide entry access for a maximum of one
+unit; and
+II. Porches shall be large enough so a six-foot by six-foot square
+can fit inside of a porch for each unit; and
+III. The minimum porch height from the back of sidewalk or
+walkway grade shall be two feet; and [ORD 4876; January
+2026]
+IV. The maximum porch floor height from the back of sidewalk
+or walkway grade shall be four feet. [ORD 4876; January
+2026] Diagram of Porch
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-75
+Active Ground-floor Residential Unit Entry Types - Design
+Standard
+Active Ground-floor Residential Unit
+Entry Types - Design Guideline
+c. Patio:
+I. Patios shall provide entry access for a maximum of one unit;
+and
+II. Patios shall provide accessible access between the street or
+pedestrian path and the unit’s front door via a route that
+does not have any stairs between it and the street lot line.
+The slope of the route shall not exceed 1:8; and
+III. The Patio shall include at least one of the following features
+to define the transition between public and private space:
+1. A row of shrubs not exceeding 30 inches in height
+located between the sidewalk or walkway and the patio
+that assists with defining the edge between public and
+private space. Shrubs shall be at least one gallon in size
+and be planted a maximum of three feet on center; or
+[ORD 4876; January 2026]
+2. A fence not to exceed 30 inches in height located
+between the sidewalk or walkway and the patio that
+assists with defining the edge between public and private
+space, with a gate or fence opening to provide access to
+the pedestrian route between the pedestrian way and
+the front door; or [ORD 4876; January 2026]
+3. A metal, wood or stone wall not to exceed 30 inches in
+height located between the sidewalk or walkway and the
+patio that assists with defining the edge between public
+and private space with a gate or wall opening to provide
+access to the pedestrian route between the pedestrian
+way and the front door. A minimum 18-inch landscape
+strip shall be located between the wall and the abutting
+pedestrian way and entirely landscaped with ground
+cover, shrubs or other landscape living plant material;
+[ORD 4876; January 2026]
+IV. The Patio shall have a different paving material, paving color,
+paving pattern and/or paving texture from the paving used
+in the adjacent or abutting pedestrian way (street, private
+street or required pedestrian path);and
+V. Shall be large enough to fit a 6-foot wide by 8-foot deep
+rectangle inside of it, including the screening required in
+subsection S3.c.iii above.
+Diagram of Patio
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-76
+Active Ground-floor Residential Unit Entry Types - Design
+Standard
+Active Ground-floor Residential Unit
+Entry Types - Design Guideline
+d. Terrace:
+I. A Terrace may serve multiple unit entries; and
+II. The maximum Terrace height shall be 30 inches above the
+grade of the back of the adjacent sidewalk or accessway; and
+III. Walls, fences and hedges on Terraces shall be a maximum of
+42 inches tall and have a minimum transparency of 40
+percent; and
+Diagram of Terrace
+e. Frontage Court:
+I. A Frontage Court may serve multiple unit entries; and
+II. The minimum Frontage Court width along a primary frontage
+shall be 25 feet; and
+III. The maximum Frontage Court width along a primary
+frontage shall be 50 percent of the facade length or 80 feet,
+whichever is less; and
+IV. The minimum Frontage Court depth shall be 20 feet; and
+V. The maximum Frontage Court depth shall be 50 feet; and;
+VI. The maximum Frontage Court height shall be 30 inches
+above the grade of the back of the adjacent sidewalk or
+accessway.
+Diagram of Frontage Court
+D. Applicability of Active Ground Floor Design Regulations
+1. Building facades fronting on streets identified in Figure 70.20.10.6.2 shall meet the design rules of 70.20.10.6.
+Only building facades fronting the designated streets shall be subject to these rules. For a building to be
+considered fronting a street, the facade must be located within the minimum and maximum setback as
+defined by the underlying zone. Building facades not fronting on streets designated in Figure 70.20.10.6.2,
+are exempt for these rules.
+2. Frontages identified as Type A must comply with the Non-residential Active Ground Floor Design regulations
+specified in 70.20.10.6 G1/S1.
+3. Frontages identified as Type B may either comply with the Non-residential Active Ground Floor Design
+specified in 70.20.10.6 G1/S1, or the Residential Active Ground Floor Design regulations specified in
+70.20.10.6 G2/S2 and G3/S3.
+4. Sites lacking internal street networks, identified as Areas C and D in Figure 70.20.10.6.2, shall comply with the
+following Active Ground Floor Design rules:
+a. Area C: Tax lots 1S110CC00400, 1S110CC01300, and 1S110CC01303. At the time of development, a Type
+A frontage must be assigned along a public right of way or other publicly accessible space visible from
+the right of way on the site that is equal in length to 1/2 of the longest diagonal measurement of the
+site.
+b. Area D: Tax lots 1S110CD00900, 1S110CD01300, 1S110CD00790, 1S110CD01301, 1S115BB00203, and
+1S115BB00200. When dedicated, the future extension of SW Millikan Way shall be designated a Type A
+frontage.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-77
+Figure 70.20.10.6.2 Active Frontage Design Map
+[ORD 4799, 01/08/2021; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+70.20.10.7 Usable Open Space
+
+A. Intent. To ensure that employees, visitors, and residents have adequate access to usable open space and common
+facilities that enhances the experience of living, working, and visiting in Downtown Beaverton.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Support an Intensely Developed, Mixed-income, Mixed-use Downtown (Section 70.10.2)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.10.7.A Design Guidelines and Standards: Usable Open Space
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-78
+Usable Open Space
+
+Usable Open Space - Design Standard Usable Open Space - Design Guideline
+S1. Non-residential buildings shall provide a minimum of 5
+percent of the site area as Usable Open Space that may be met
+through any combination of the following open space types.
+a. Publicly Accessible Open Spaces (PAOS). Each square foot
+of a PAOS counts as 1.33 square per toward the total
+requirement.
+b. Shared Open Space.
+G1. Non-residential buildings shall give users access
+to high-quality Usable Open Space appropriate for
+the size, density of uses and tenants on the site.
+S2. All residential-only buildings shall provide a minimum area of
+Usable Open Space equal to 48 square feet per residential unit.
+a. For sites with 11 units or fewer, the minimum requirement
+shall be met by complying with one of the following:
+I. Shared Open Space; or
+II. Private Open Space; or
+III. Some combination of Shared Open Space and Private
+Open Space.
+b. For sites with 12 units or more, the minimum requirement
+shall be met by complying with one of the following:
+I. Publicly Accessible Open Spaces (PAOS). Each square
+foot of a PAOS counts as 1.33 square per toward the
+total requirement; or
+II. Shared Open Space; or
+III. Common Community Room that abuts and is
+accessible from a Shared Open Space, PAOS, or public
+street (a Common Community Room cannot be
+counted for more than 20 percent of the required
+Usable Open Space); or
+IV. Private Open Space; or
+V. Some combination of b1 through b4.
+G2. Residential-only buildings shall provide residents
+access to high- quality, usable open spaces that
+provides areas to gather, and may include a
+combination of PAOS, Shared Open Spaces, Private
+Open Spaces, and Common Community Room.
+S3. Mixed-use buildings that contain residential uses shall
+provide a minimum area of Usable Open Space equal to 10
+percent of parcel area or 48 square feet per residential unit,
+whichever is greater. The minimum Usable Open Space area
+shall be met by complying with one of the following:
+a. Publicly Accessible Open Spaces (PAOS). Each square foot
+of a PAOS counts as 1.33 square per toward the total
+requirement; or
+b. Shared Open Space; or
+c. Common Community Room that abuts and is accessible
+from a Shared Open Space, PAOS, or public street (a
+Common Community Room cannot be counted for more
+than 20 percent of the required Usable Open Space); or
+d. Private Open Space; or
+e. Some combination of a through d.
+G3. Mixed use buildings that contain residential uses
+shall provide tenants and residents access to high-
+quality, usable open spaces that provides areas to
+gather, and may include a combination of PAOS,
+Shared Open Spaces, Private Open Spaces, and
+Common Community Room.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-79
+Figure 70.20.10.7.1 Usable Open Space: Non-Residential Uses
+
+Figure 70.20.10.7.2 Usable Open Space: Residential Uses
+Table 70.20.10.7.A Design Guidelines and Standards: Usable Open Space
+
+Publicly Accessible Open Spaces (PAOS)
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-80
+Publicly Accessible Open Spaces (PAOS) - Design
+Standard
+Publicly Accessible Open Spaces (PAOS) - Design
+Guideline
+S4. Publicly Accessible Open Spaces (PAOS) shall be designed
+to create usable open space for public use. PAOS shall:
+a. Be large enough to fit a 20-foot by 20-foot square
+inside of it; and
+b. If located between a building and public sidewalk, be
+bordered on two sides by building facades with some
+combination of commercial uses, primary residential
+entrances or primary office entrances with at least one
+door and windows facing the PAOS and providing the
+ability to view the PAOS from inside the building; and
+c. Provide at least 60 percent of the total PAOS area as
+open to the sky free of permanent weather
+protection; and
+d. Include at least one bench or ledge at seating height
+per 200 square feet that can seat two people side by
+side; and
+e. Include landscaping on at least 20 percent of its area.
+Spaces 800 square feet or larger shall provide one tree
+per 800 square feet of open space; and
+f. Be directly accessible from a public right of way; and
+g. Be publicly accessible for a minimum of 12 consecutive
+hours per day.
+G4. Publicly Accessible Open Spaces (PAOS) shall be
+designed to create usable open space for public use.
+PAOS may include pedestrian paths, pedestrian refuge
+area, landscaped gardens, places to rest and relax,
+places to play, and places to gather and socialize.
+S5. Shared Open Spaces, such as courtyards, rooftop open
+spaces, terraces and frontage Courts, shall:
+a. Be large enough to fit a 20-foot by 20-foot square
+inside of it if enclosed on three sides or fewer and be
+large enough to fit a 40-foot by 40-foot square inside
+of it if enclosed on four sides. If enclosed on all four
+sides, the space does not qualify as a Shared Open
+Space if all walls bordering the open space have a
+building height more than 1.5 times the Shared Open
+Space perpendicular to that wall; and
+b. Provide at least 60 percent of the total Shared Open
+Space area as open to the sky free of permanent
+weather protection; and
+c. Include at least one bench or ledge at seating height
+per 200 square feet that can seat two people side by
+side; and
+d. Include landscaping on at least 20 percent of its area.
+Spaces at grade that are 500 square feet or larger shall
+provide one tree per 500 square feet of open space.
+G5. Shared Open Spaces shall be open to the sky and be
+designed to be usable for tenants for a variety of
+communal activities and uses. Shared Open Spaces may
+include pedestrian paths, landscaped gardens, places to
+rest and relax, places to play, and places to gather and
+socialize. Shared Open Spaces shall be open to the sky
+and be designed to be usable for residents for a variety
+of communal activities and uses. Shared Open Spaces
+may include pedestrian paths, landscaped gardens,
+places to rest and relax, places to play, and places to
+gather and socialize.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-81
+PAOS Example (Hillsboro, OR)
+Table 70.20.10.7.A Design Guidelines and Standards: Usable Open Space
+
+Common Community Room
+
+Common Community Room - Design Standard Common Community Room - Design Guideline
+S6. Common Community Rooms shall be accessible to
+building occupants and designed to serve as gathering
+places. Common Community Rooms may include lounges,
+fitness rooms, shared kitchens, dining areas, co-working
+spaces, game rooms, or other spaces that provide
+opportunities for shared experiences. Common Community
+Rooms shall meet the following standards:
+a. Common Community Rooms shall be large enough so
+a 15-foot by 15-foot square will fit inside it; and
+b. The Common Community Room shall have a minimum
+floor-to-floor height of 12 feet; and
+c. The Common Community Room shall have one wall
+along an exterior facade of the building and shall have
+30% glazing measured from the interior: or
+d. Common Community Rooms shall have direct access
+to a shared open space or PAOS.
+G6. Common Community Rooms shall be easily
+accessible by building occupants and designed to serve
+as gathering places and accessory spaces to Shared Open
+Spaces or PAOS. Common Community Rooms may
+include lounges, fitness rooms, shared kitchens, dining
+areas, co-working spaces, game rooms, or other spaces
+that provide opportunities for shared experiences.
+Table 70.20.10.7.A Design Guidelines and Standards: Usable Open Space
+
+Private Open Spaces
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-82
+Private Open Spaces - Design Standard Private Open Spaces - Design Guideline
+S7. Private Open Spaces shall meet the following
+design standards:
+a. Shall be attached to and directly accessible
+from an individual residential unit; and
+b. Shall be large enough to fit a 5-foot by 6-foot
+rectangle inside of it; and
+c. Shall be screened a minimum 50% from
+abutting units to provide privacy; and
+d. Shall have a minimum clear height dimension
+of 8 feet 6 inches.
+G7. Private Open Spaces shall be designed to create usable
+outdoor space for residents to spend time outdoors.
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.10.8 Roof Elements
+
+A. Intent. To create rooftops that integrate sustainability features and, screen mechanical equipment.
+B. Applicable Design Principles
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.10.8.A Design Guidelines and Standards: Roof Elements
+
+Rooftop Equipment and Screening
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-83
+Rooftop Equipment and Screening - Design Standard Rooftop Equipment and Screening - Design
+Guideline
+S1. On new buildings larger than 20,000 square feet of total floor
+area, roof areas with less than or equal to a 2:12 slope shall
+incorporate at least one of the following:
+a. A roofing material with a Solar Reflectance Index of 78 or
+higher on 90 percent of the roof, except for space
+dedicated to mechanical systems, vents, elevator
+enclosures, Eco-Roof, solar energy systems, skylights,
+tenant amenity areas (such as patios or recreational
+activity areas).
+b. An Eco-Roof or Rooftop Garden surface comprising a
+minimum of 30 percent of the total roof area.
+c. Solar energy panels comprising an area equivalent to a
+minimum of 30 percent of the total roof area.
+d. A system that collects rainwater for reuse from a minimum
+of 50 percent of the total roof area.
+G1. Roofs on new buildings larger than 20,000
+square feet in total floor area shall include
+sustainability features while allowing other rooftop
+uses essential to the building function and tenant
+needs.
+S2. Rooftop mechanical, electrical and communications
+equipment and components shall be screened and/or located so
+it is not visible from the ground-level public rights of way that are
+within 100 feet of the site.
+a. Screening shall be made of a primary exterior finish
+material allowed in Section 70.20.10.10 and used on other
+portions of the building; architectural grade wood or
+masonry; or metal.
+b. Other rooftop elements, including solar panels, wind
+generators, roof access and elevator or green roof features
+are exempt from rooftop screening requirements.
+c. Roof access, weather protection for rooftop open spaces,
+and elevator equipment shall not exceed 16 feet in height
+above the roof structure.
+d. Wireless telecommunications facilities are exempt from
+this standard and shall meet applicable requirements of
+Section 60.70: Wireless Communications
+G2. Views of roof-mounted mechanical, electrical
+and communications equipment, except wireless
+communications facilities, and components shall be
+located and screened to minimize views from public
+rights of way near the building.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-84
+Rooftop Garden Example (Portland, OR)
+
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.10.9 Structured Parking
+
+A. Intent. To ensure parking structures are efficient in design and integrated into the urban fabric of Downtown
+Beaverton, add visual interest into the pedestrian experience, include human-scaled details, and minimize the
+impact of vehicles on the public right of way and adjacent buildings.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Support an Intensely Developed, Mixed-income, Mixed-use Downtown (Section 70.10.2)
+●Promote High-quality Design (Section 70.10.3)
+C. Design Guideline and Standards
+
+Table 70.20.10.9 Design Guidelines and Standards: Structured Parking
+
+Structured Parking
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-85
+Structured Parking - Design Standard Structured Parking - Design Guideline
+S1. The location of structured parking shall be limited to the
+following:
+a. Parking structures subject to the Active Ground-floor
+Design rules as identified in Figure 70.20.10.6.1 Active
+Frontages Map shall:
+I. Be constructed with a finished ceiling entirely
+underground or have the parking area’s lowest floor 12
+feet or more above grade; or
+II. Provide ground-floor facades on the street facing
+elevations that comply with the provisions of 70.20.10.6
+Active Ground Floor Design for at least 50% of the width
+of the facade.
+b. On other streets, structured parking shall:
+I. Provide ground-floor facades on the street facing
+elevations that comply with the provisions of 70.20.10.6
+Active Ground Floor Design for at least 50% of the width
+of the facade; or
+II. Provide a building a minimum 5-foot building setback
+from all street-facing property lines and provide the
+following landscaping within that setback:
+1. One 1.5-inch caliper tree for every 15 linear feet
+from the City of Beaverton Tree List, with trees of
+different sizes being acceptable; and [ORD 4859;
+January 2025]
+2. Evergreen shrubs a maximum of 30 inches high from
+finished grade and a minimum 1 gallon in size
+planted next to each other to form a screen.
+Additional shrubs in excess of those necessary to
+form a screen are allowed; and
+3. Ground cover plants shall fully cover the remainder
+of the landscaped areas.
+G1. Structured parking facing rights of way and
+multi-use paths way are discouraged. Below grade
+and structured parking spaces above ground level
+are encouraged. Parking facilities shall be placed
+toward the rear or interior of the property. Where
+structured parking is located adjacent to street, the
+street facing facades shall provide ground-floor
+active uses, whether residential or commercial,
+especially at corners, or be sufficiently screened to
+minimize visual impacts to pedestrians.
+S2. Screening shall be designed to minimize light trespass on
+adjacent public rights-of-way and buildings:
+a. Solid screening and/or building walls shall extend a
+minimum 3 feet from top of parking slab so vehicle
+headlights do not trespass beyond the building facade.
+b. Interior building lighting shall be screened and directed
+away from exterior walls to reduce light trespass and glare.
+G2. Parking structures shall be designed to
+minimize light trespass from vehicle headlights and
+interior lighting when viewed from public rights-of-
+way and adjacent buildings.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-86
+Structured Parking - Design Standard Structured Parking - Design Guideline
+S3. Structured parking on upper floors facing the right of way, any
+internal drive or any internal accessway are exempt from Section
+70.20.10. Building Design guidelines and standards except for the
+following standards.
+a. Section 70.20.10.4. S10; and
+b. Section 70.20.10.4 S11; and
+c. Section 70.20.10.5 S1 through S3; and
+d. Section 70.20.10.7 S2; and
+e. Section 70.20.10.9 standards; and
+f. Section 70.20.10.10 standards.
+g. In addition, parking structures shall provide facade
+modulation and architectural interest through:
+I. Vertical and/or horizontal recess(es) and/or
+projection(s) with a minimum average depth of 12
+inches that changes the primary plane of the facade at a
+minimum of one recess or projection every 50 feet
+distributed in a consistent pattern along the facade; and
+II. One of the following:
+1. Prominent emphasis of vertical stairwells or
+elevator columns that incorporate at least two of
+the following features:
+(A) Change of material from the primary material
+used on the facade; or
+(B) The entire elevator column or stairwell projects
+at least 2 feet from the rest of the facade.
+(C) Windows or openings provide at least 60
+percent transparency; or
+2. Parking garage decorative metal screening that
+cover at least 40 percent of the facade and does not
+obscure more than 50 percent of any opening that
+allows visibility into areas where cars will be parked.
+G3. Parking structures facades facing the right of
+way, any internal drive or any internal accessway
+shall provide facade modulations and articulation
+that create visual interest, surface relief, depth,
+and shadows to the facade. Upper floors facing
+streets shall meet the guidelines corresponding to
+the standards required in S3 a through f:
+a. Section 70.20.10.4. G10; and
+b. Section 70.20.10.4 G11; and
+c. Section 70.20.10.5 G1 through G3; and
+d. Section 70.20.10.7 G2; and
+e. Section 70.20.10.9 guidelines; and
+f. Section 70.20.10.10 guidelines.
+[ORD 4799, 01/08/2021; ORD 4859, 01/02/2025]
+Effective on: 9/14/2026
+70.20.10.10 Materials
+
+A. Intent. To promote the use of high quality, durable, and attractive materials that exhibit a sense of permanence and
+contribute to the aesthetic quality of the development and to the urban design fabric of the community.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+C. Design Guideline and Standards
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-87
+
+Table 70.20.10.10.A Design Guidelines and Standards: Materials
+
+Materials
+
+Materials - Design Standard Materials - Design Guideline
+S1. Refer to Table 70.20.10.10.B Materials:
+a. Buildings shall utilize primary materials
+for no less than 65 percent of each
+building facade.
+b. Secondary materials are prohibited as
+primary cladding on building facades
+and shall not be allowed on more than
+35 percent of each building facade.
+c. Accent materials are permitted on no
+greater than 5 percent of each facade
+as trims or accents (e.g. flashing,
+projecting features, ornamentation,
+etc.).
+d. Buildings 30 feet and shorter,
+measured from grade plane to eave or
+top of parapet, whichever is higher,
+with elevations 50 feet or narrower
+may utilize any secondary material as a
+primary material.
+G1. Refer to Table 70.20.10.10.B Materials:
+a. The predominant building material(s) shall be high quality,
+durable, and attractive.
+b. The predominant building material(s) may be complemented
+with other secondary materials that may not be appropriate on
+large areas of the facade.
+c. Accent materials that would generally not be acceptable on large
+areas of the facade may be used in limited areas of the facade to
+highlight architectural features.
+S2. Materials identified as prohibited in Table
+70.20.10.10.B
+G2. Standard S2 shall be met, except for residential-only buildings or
+mixed-use residential buildings where at least 75 percent of the floor
+area will be used for residential uses, up to 10 percent of the non-
+street-facing elevations may apply materials identified as prohibited in
+Table 70.20.10.10.B or other materials not listed in Table
+70.20.10.10.B. [ORD 4857; October 2024]
+
+Table 70.20.10.10.B Materials
+
+●P: Primary Material
+●S: Secondary Material
+●A: Accent Material
+●N: Prohibited Material or Fencing Type
+Material Commercial, Industrial,
+Institutional, or Mixed-Use
+Multi-Dwelling and Middle
+Housing
+Brick (full dimensional) P P
+Stone/masonry P P
+Stucco S1 P
+Glass (transparent, spandrel) P P
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-88
+Material Commercial, Industrial,
+Institutional, or Mixed-Use
+Multi-Dwelling and Middle
+Housing
+Finished wood, wood veneers, and wood siding P P
+Factory or naturally finished flat, profiled, fluted, or
+ribbed metal panels P P
+Fiber reinforced cement siding and panels S1 P
+Concrete blocks with integral color (ground, polished,
+or glazed finishes) S1 S1
+Concrete (poured in place or precast) P P
+Concrete blocks with integral color (split face finish) S1 S1
+Ceramic tile S1 S1
+Standing seam metal S1 S1
+Other material as approved by the Planning
+Commission P/S P/S
+Glass block A A
+Corrugated metal A A
+Vegetated wall panels or trellises A A
+Vinyl siding N N
+T-111 Plywood N N
+Exterior Insulation Finishing System (EIFS) N N
+Plastic or vinyl fencing N N
+Chain link fencing2 N N
+[ORD 4822; June 2022]
+Footnotes:
+1. Smaller scale buildings may use this as a primary material. See 70.20.10.10.S1.d
+2. Existing chain link fencing may be replaced on sites 10,000 square feet and smaller
+[ORD 4799, 01/08/2021; ORD 4822, 06/30/2022; ORD 4857, 10/03/2024]
+Effective on: 9/14/2026
+70.20.10.11 Historic Overlay Design
+
+A. Intent. To encourage new development that is compatible with existing historic resources in the Downtown
+Beaverton Historic District that have identified historic architectural elements.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+C. Context. Beaverton’s Downtown Historic District contains historic resources designated by the 1984 Historic
+Resources Inventory. Several of these buildings have been identified as being appropriate precedents for informing
+building design. Buildings developed adjacent to these historic structures shall respond to specific design elements
+in these buildings. The identified buildings include:
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-89
+●Rossi Building, 12505 SW Broadway
+●Fisher Building, 12440 - 12580 SW Broadway
+●Thrifty Market, 12408 SW Broadway
+●Keils & Holbrook, 12400 SW Broadway
+●Cady Building, 12610 SW Broadway
+●Beaverton Post Office, 4545 SW Watson
+●Dr. Mason Building, 4590 SW Watson
+D. Applicability
+Subsection 70.20.10.11 shall apply to construction of new buildings on properties identified in Figure 70.20.10.11.1
+where any portion of the building is within 20 feet of the historic building identified in this section and the buildings
+share a street frontage. The design standards and guidelines in Section 70.20.10.11 shall only apply to facades on
+new buildings that share the same street frontage as the historic building.
+If a new building is subject to design rules of two historic landmarks as described above, the applicant shall choose
+which historic landmark to respond to. In that case, the standards and guidelines related to the historic landmark
+not chosen would not be applicable to that new building.
+Modifications of Historic Landmark, Demolition of Historic Landmarks, and Emergency Demolition of Historic
+Landmarks shall be subject to the provisions of in Chapter 40.35 Historic Review.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-90
+Figure 70.20.10.11.1 Applicable Historic Resources and Lots Where Overlay Standards for New
+Construction Standards May Apply
+E. Rossi Building (12505 SW Broadway)
+New construction west of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.A Historic Design Guidelines and Standards: Rossi Building (12505 SW Broadway)
+
+Facade Rhythm and Pattern
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-91
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline
+S1. New buildings shall use facade articulation and
+modulation strategies consistent with the Broadway
+facade of the Rossi Building as follows:
+a. Column placement. Columns shall be expressed on
+the building facade; and
+b. Column spacing. Columns shall be spaced 25 to 35
+feet on center in a consistent fashion for the length
+of the facade; and
+c. Horizontal datum. A horizontal datum shall be
+incorporated on the new structure to line up with
+the Rossi Building’s canopy using one of the
+following methods:
+I. The horizontal line of a canopy; or
+II. The top of transom windows; or
+III. The bottom of an awning; or
+IV. Other horizontal datum as approved by the
+decision-making authority.
+G1. New buildings shall architecturally respond to the
+Rossi Building through architectural facade rhythm and
+pattern, including through architectural expressions that
+address the Rossi Building’s column expression and
+spacing on the Broadway facade and by acknowledging
+the horizontal datum of the Rossi Building’s canopy.
+Figure 70.20.10.11.2 Rossi Building
+F. Fisher Building (12440 - 12580 SW Broadway)
+New construction east and west of this building shall be subject to the design guidelines and standards in this
+section.
+
+Table 70.20.10.11.F Historic Design Guidelines and Standards: Fisher Building (12440 - 12580 SW Broadway)
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-92
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline
+S1. New buildings along Southwest Broadway shall be
+placed in line with the Fisher Building facade along
+Southwest Broadway.
+G1. New buildings along Southwest Broadway shall be placed to
+contribute to and extend the street wall established by the
+Fisher Building along SW Broadway.
+S2. New buildings shall establish one horizontal
+datum to line up with the Fisher Building’s metal
+cornice and one horizontal datum to line up with the
+top of the Fisher Building’s transom windows.
+G2. Buildings shall use facade articulation and modulation
+strategies consistent with the Fisher Building and acknowledge
+the horizontal datum established by the tops of the transom
+windows or metal cornice of the Fisher Building.
+Figure 70.20.10.11.3 Fisher Building
+G. Thrifty Market (12408 SW Broadway)
+New construction east and west of this building shall be subject to the design guidelines and standards in this
+section.
+
+Table 70.20.10.11.G Historic Design Guidelines and Standards: Thrifty Market (12408 SW Broadway)
+
+Facade Rhythm and Pattern
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-93
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline
+S1. New buildings shall be placed to line up with the
+Thrifty Market building facade along Southwest Broadway.
+G1. New buildings shall be placed to contribute to and
+extend the street wall established by the Thrifty Market
+building along Southwest Broadway.
+S2. New buildings shall use facade articulation and
+modulation strategies consistent with the Thrifty Market
+building by incorporating a horizontal datum on a new
+structure to line up with the Thrifty Market building’s sign
+band using one of the following methods:
+a. A sign band; or
+b. A cornice; or
+c. The top of transom windows; or
+d. Other horizontal datum as approved by the
+decision-making authority.
+G2. Buildings shall use facade articulation and modulation
+strategies consistent with the Thrifty Market building and
+acknowledge the horizontal datum established by the
+Thrifty Market building’s sign band. Buildings shall ensure
+that the also design of ground-floor facades to
+acknowledges the rhythm of recessed entries and
+storefront windows on the Thrifty Market building.
+Figure 70.20.10.11.4 Thrifty Market Building
+H. Keils & Holbrook Building (12400 SW Broadway)
+New construction west of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.H Historic Design Guidelines and Standards: Keils & Holbrook Building (12400 SW
+Broadway)
+
+Facade Rhythm and Pattern
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-94
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline
+S1. New buildings shall use facade articulation and
+modulation strategies on Southwest Broadway
+facades consistent with the Keils & Holbrook
+building’s as follows:
+a. Display windows on new buildings shall line up
+with both the bottom and the top of the Keils &
+Holbrook Building’s display windows. Once this
+standard is satisfied, additional windows, such
+as transom windows, are allowed above the
+display windows; and
+b. A horizontal datum shall be established to line
+up with the top of the Kiel & Holbrook Building’s
+curved parapet wall.
+G1. New buildings shall use facade articulation and modulation
+strategies consistent with the Keils & Holbrook building by
+lining up with a horizontal line or lines established by the Keils
+& Holbrook building’s display windows and including a
+horizontal datum that acknowledges important horizontal
+features of the historic building.
+Figure 70.20.10.11.5 Keils & Holbrook Building
+I. Cady Building (12610 SW Broadway)
+New construction south of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.I Historic Design Guidelines and Standards: Cady Building (12610 SW Broadway)
+
+Facade Rhythm and Pattern
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-95
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline
+S1. New buildings shall use facade articulation and
+modulation strategies consistent with the Cady Building by
+establishing horizontal data that line up with a minimum of
+two of the following features on the Cady Building: upper
+cornice, upper edge of transom windows, datum line
+separating the first floor from the second floor. Each datum
+shall be established using one of the following features:
+a. For the top of the transom window or datum line
+separating the first floor from the second floor: a sign
+band, a datum line between floors, the top of transom
+windows; or other horizontal datum as approved by the
+decision-making authority; or
+b. For the upper cornice on top of the Cady building, a
+cornice, a datum line between floors, the top of a
+parapet wall, or other horizontal datum as approved by
+the decision-making authority.
+G1. New buildings shall use facade articulation and
+modulation strategies consistent with the Cady Building
+that acknowledge a horizontal element or elements of
+the building, such as the upper cornice, the upper edge
+of the transom windows, or the datum line separating
+the first floor from the second floor.
+Figure 70.20.10.11.6 Cady Building
+J. Beaverton Post Office (4545 SW Watson)
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-96
+New construction north or south of this building shall be subject to the design guidelines and standards in this
+section.
+
+Table 70.20.10.11.J Historic Design Guidelines and Standards: Beaverton Post Office (4545 SW Watson)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline
+S1. New buildings shall use facade articulation and modulation
+strategies consistent with the Beaverton Post Office building
+by establishing horizontal data that line up with a minimum of
+one of the following features on the Beaverton Post Office
+Buildings: roof cornice, upper edge of transom window line,
+upper edge of the display windows. Each datum shall be
+established using one of the following features:
+a. For the top of the transom window or top of the display
+windows: a sign band, a horizontal datum line between
+floors, the top of transom windows; or other horizontal
+datum as approved by the decision-making authority; or
+b. For the upper cornice, a cornice, a datum line between
+floors, or other horizontal datum as approved by the
+decision-making authority.
+G1. New buildings shall use facade articulation and
+modulation strategies consistent with the Beaverton
+Post Office building that acknowledge a horizontal
+element or elements of the building, such as the roof
+cornice, upper edge of the transom window line or
+upper edge of the display windows.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-97
+Figure 70.20.10.11.7 Beaverton Post Office
+K. Dr. Mason Building (4590 SW Watson)
+New construction north and east of this building shall be subject to the design guidelines and standards in this
+section.
+
+Table 70.20.10.11.K Historic Design Guidelines and Standards: Dr. Mason Building (4590 SW Watson)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design
+Guideline
+S1. New buildings shall use facade articulation and modulation strategies
+consistent with the Dr. Mason Building by incorporating a horizontal
+datum on a new structure to line up with curved roof cornice using one
+of the following methods:
+a. A cornice; or
+b. A datum line between two floors of a new building; or
+c. The top of transom windows; or
+d. Other horizontal datum as approved by the decision-making
+authority.
+G1. Buildings shall use facade articulation
+and modulation strategies to acknowledge
+the curved parapet of the Dr. Mason
+building.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 70, DD-98
+Figure 70.20.10.11.8 Dr. Mason Building
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+
+Beaverton Development Code
+Date Printed: September 28, 2026

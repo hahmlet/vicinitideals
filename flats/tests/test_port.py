@@ -495,7 +495,14 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # is valid. Round-tripping is the whole point of doing this as a port.
     rules = RuleSet(load_rules())
 
-    assert len(rules.layers) == 21  # 20 jurisdictions + the state layer
+    assert len(rules.layers) == 22  # 21 jurisdictions + the state layer
+    # 379 as of 2026-09-29, later again: Beaverton, the third Washington
+    # County layer, from the same cloud session. Its 28 zones are the 28
+    # districts BDC 10.25 classifies (SC-E for its "SC-E1 & 3"): 22 admit
+    # the pod on one lot, and OI, OI-NC, IND, SC-E and the two Washington
+    # Square districts OI-WS and C-WS refuse. "WAcnty", county zoning the
+    # city keeps on land it annexed, and "ROW" are ruled in the layer.
+    #
     # 351 as of 2026-09-29, later the same day: Hillsboro, the second
     # Washington County layer, from the same cloud session. Its 37 zones are
     # every zone the Community Development Code prints a Housing Types
@@ -564,7 +571,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 351
+    assert sum(len(l.zones) for l in rules.layers.values()) == 379
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

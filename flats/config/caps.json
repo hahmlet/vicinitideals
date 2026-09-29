@@ -1544,5 +1544,230 @@
         "site_specific_limitation"
       ]
     }
+  },
+  "or/washington/beaverton": {
+    "CM-CS": {
+      "max_far": [
+        "site_specific_limitation"
+      ],
+      "max_height_ft": [
+        "site_specific_limitation"
+      ],
+      "min_density_du_per_acre": [
+        "site_specific_limitation"
+      ],
+      "min_lot_sqft": [
+        "site_specific_limitation"
+      ],
+      "setback_front_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_rear_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_side_ft": [
+        "site_specific_limitation"
+      ]
+    },
+    "CM-HDR": {
+      "max_far": [
+        "site_specific_limitation"
+      ],
+      "max_height_ft": [
+        "site_specific_limitation"
+      ],
+      "min_density_du_per_acre": [
+        "site_specific_limitation"
+      ],
+      "min_lot_sqft": [
+        "site_specific_limitation"
+      ],
+      "setback_front_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_rear_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_side_ft": [
+        "site_specific_limitation"
+      ]
+    },
+    "CM-MR": {
+      "max_far": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "min_density_du_per_acre": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "setback_rear_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ]
+    },
+    "CM-RM": {
+      "max_far": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "min_density_du_per_acre": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "setback_rear_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "site_specific_limitation",
+        "utility_easement"
+      ]
+    },
+    "MR": {
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_density_du_per_acre": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_front_max_ft": [
+        "utility_easement"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ]
+    },
+    "NS": {
+      "quadplex_allowed": [
+        "site_specific_limitation"
+      ]
+    },
+    "RMA": {
+      "max_far": [
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_density_du_per_acre": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ]
+    },
+    "RMB": {
+      "max_far": [
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_density_du_per_acre": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ]
+    },
+    "RMC": {
+      "max_far": [
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_density_du_per_acre": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ]
+    }
   }
 }

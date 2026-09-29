@@ -1,0 +1,898 @@
+20.22. Cooper Mountain Zoning Districts
+
+[ORD 4859, 01/02/2025]
+20.22.05. Cooper Mountain Areas.
+
+[ORD 4859; January 2025]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-38
+The Cooper Mountain zoning districts provide zones to implement the Cooper Mountain Community Plan with a range
+of housing types, commercial opportunities, natural resource protection, parks, trails, and transportation. This section
+contains Residential, Commercial, and Multiple Use zoning districts. Refer to Section 10.25 for the classifications.
+[ORD 4859, 01/02/2025]
+Effective on: 1/2/2025
+20.22.10. Purpose.
+
+[ORD 4859; January 2025]
+1.Cooper Mountain – Community Service (CM-CS)
+The CM-CS District is intended to require a minimum amount of commercial uses to provide access to goods and
+services within Cooper Mountain while allowing significant residential development with a focus on Multi-Dwellings
+and Middle Housing.
+2.Cooper Mountain – High Density Residential (CM-HDR)
+The CM-HDR District is intended to be primarily a residential district with a focus on Multi-Dwellings and Middle
+Housing. Commercial uses also are allowed.
+3.Cooper Mountain – Multi-Unit Residential (CM-MR)
+The CM-MR District is intended to result in predominantly residential developments with a focus on Multi-
+Dwellings and Middle Housing.
+4.Cooper Mountain – Residential Mixed (CM-RM)
+The CM-RM District is intended to allow a mix of housing types, including detached and attached housing, at the
+lowest number of units per acre of Cooper Mountain's zones. It also allows small-scale commercial uses in some
+locations.
+[ORD 4859, 01/02/2025]
+Effective on: 1/2/2025
+20.22.15. Site Development Standards
+
+[ORD 4859; January 2025]
+Site Development Standards support implementing development consistent with the corresponding zoning district. All
+superscript notations refer to applicable regulations or clarifications as noted in footnotes below.
+
+Table 20.22.15 Cooper Mountain Site Development Standards
+
+Superscript Refers to Footnotes
+# Standard CM-
+CS
+CM-
+HDR
+CM-
+MR CM-RM Unit of
+Measurement
+A. Minimum Land Area N/A N/A N/A N/A Square Feet
+B.1. Minimum Lot Area1, 2 - Single-Detached
+and Duplex
+N/A N/A N/A 3,000 Square Feet
+B.2. Minimum Lot Area1, 2 - Triplex and
+Quadplex
+N/A N/A N/A 4,000 Square Feet
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-39
+# Standard CM-
+CS
+CM-
+HDR
+CM-
+MR CM-RM Unit of
+Measurement
+B.3. Minimum Lot Area1, 2 - Multi-Dwelling (5-6
+units)
+N/A N/A N/A 5,00023 Square Feet
+B.4. Minimum Lot Area1, 2 - Townhouse N/A N/A N/A 1,30016 Square Feet
+B.5. Minimum Lot Area1, 2 - Cottage Cluster N/A N/A N/A 7,000 Square Feet
+B.6. Minimum Lot Area1, 2 - Single-Room
+Occupancies
+N/A N/A N/A 3,000 Square Feet
+C. Maximum Lot Area N/A N/A N/A 6,0004 Square Feet
+D. Maximum Residential Density26 N/A N/A N/A N/A Units Per Acre
+E. Minimum Residential Density3, 27 34 34 34 10 Units Per Acre
+F. Minimum Lot Width2, 5 N/A N/A 14 2016 Feet
+G.1.a. Yard Setbacks2 - Front Minimum 0 0 10 10 Feet
+G.2.a. Yard Setbacks2 - Side Minimum22: Abutting
+Lot
+N/A N/A 0, 3 or
+57
+0, 3 or 57 Feet
+G.2.b. Yard Setbacks2 - Side Minimum22: Abutting
+Street (public or private)
+N/A N/A 0, 3 or
+57
+0, 3 or 57 Feet
+G.3. Yard Setbacks2 - Side Maximum N/A N/A N/A N/A Feet
+G.4. Yard Setbacks2 - Rear Minimum N/A N/A 10 158 Feet
+G.5. Yard Setbacks2 - Minimum Side or Rear
+Yards Abutting Property Zoned
+Residential9
+10 10 N/A N/A Feet
+G.6. Yard Setbacks2 - Minimum Side or Rear
+Yards Abutting Cooper Mountain Nature
+Park property25
+25 25 25 25 Feet
+G.7. Yard Setbacks2 - Garage and Carport
+Minimum10
+N/A N/A 5 or
+18.511
+18.5 Feet
+G.8. Yard Setbacks2 - Garage Door to Rear
+Minimum12
+N/A N/A 22 22 Feet
+G.9. Yard Setbacks2 - Minimum Between
+Buildings13
+N/A N/A 6 6 Feet
+H.1. Building Height - Minimum N/A N/A N/A N/A Feet
+H.2. Building Height - Maximum14 6515 65 65 45 Feet
+I.1. Floor Area Ratio (FAR) - Minimum 0.4 0.4 N/A N/A N/A
+I.2. Floor Area Ratio (FAR) - Minimum with
+Cooper Mountain Development Plan
+0.3 0.3 N/A N/A N/A
+J.0. Maximum Floor Area Ratio (FAR)2, 17, 18 2.024 2.024 1.524 Refer to Maximum
+FARfor each housing type
+in J.1. through J.6.
+N/A
+J.1. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+ Single-Detached Dwelling
+N/A N/A N/A 0.80 N/A
+J.2. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+ Duplex
+N/A N/A N/A 0.90 N/A
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-40
+# Standard CM-
+CS
+CM-
+HDR
+CM-
+MR CM-RM Unit of
+Measurement
+J.3. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+ Triplex and Quadplex
+N/A N/A N/A 1.20 N/A
+J.4. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+ Townhouse
+N/A N/A N/A N/A N/A
+J.5. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+ Cottage Cluster
+N/A N/A N/A N/A N/A
+J.6. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+ Multi-Dwelling (5 to 6 units)
+N/A N/A N/A 1.20 N/A
+J.7. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+ Non-Residential Uses and Conditional
+Uses
+N/A N/A N/A N/A N/A
+Table 20.22.15 Cooper Mountain Site Development Standards - Wireless Communication Facilities
+
+Superscript Refers to Footnotes
+# Standard CM-CS CM-HDR CM-MR CM-RM Unit of
+Measurement
+K.1. Maximum
+Height - WCF19
+80 80 80 80 Feet
+K.2. Maximum
+Height -
+ Equipment
+Shelters20
+12 12 12 12 Feet
+K.3. Maximum
+Height - Roof
+Mounted
+Antennas
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the
+height of any
+building which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the
+height of any
+building which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the
+height of any
+building which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the
+height of any
+building which is
+nonconforming
+due to height.
+N/A
+L.1. Yard
+Setbacks21 -
+ Requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+N/A
+L.2. Yard Setbacks21
+- Other
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+N/A
+Footnotes:
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-41
+1. Minimum lot area standards apply to land divisions, except middle housing land divisions. For middle housing,
+the standards also determine the minimum lot size needed for each middle housing type to be built on an
+existing lot.
+2. If a duplex, triplex, quadplex, or cottage cluster has been divided by a middle housing land division, the
+development standards that are applicable to the lot shall apply to the middle housing parent lot, not to the
+middle housing child lots.
+3. Refer to Section 20.25.05 for exceptions to minimum density standards in the CM-RM district.
+4. Only applies to lots with small-scale commercial uses in the CM-RM zone.
+5. Corner lots may need to provide a greater minimum lot width to accommodate the sight clearance areas
+specified in the Engineering Design Manual.
+6. Reserved.
+7. Side setbacks are 5 feet except when a different dimension is described in this footnote. For townhouses, the
+minimum side setback is zero for the attached side of the townhouse and 5 feet for sides that are not attached.
+For land divisions, except for townhouses or middle housing land divisions, the perimeter side setbacks are 5
+feet, but side setbacks internal to the land division may be reduced to 3 feet with a total of 6 feet between
+buildings. In no case shall a building encroach into a Public Utility Easement (PUE).
+8. The minimum rear setback to cottage cluster dwellings is 10 feet.
+9. The 10-foot setback is applicable only to any portion of a building taller than 40 feet. The setback for any
+portion of a building 40 feet or shorter is 5 feet. Rear yard setback is applicable to only the portion of the rear
+yard that abuts a residential zone; otherwise, the minimum rear yard setback is 0 feet. For the purposes of this
+standard, “residential zone” is any of the zones under Residential Districts in Section 10.25.
+10. Garage setbacks shall be measured from the elevation containing the garage door to the property line. Carport
+setbacks shall be measured from the elevation of the vehicle entrance of the carport to the property line. For all
+other garage and carport elevations besides the door/vehicle entrance, the building setbacks applies.
+11. Either no greater than 5 feet or a minimum of 18.5 feet.
+12. Measured from garage door elevation to opposite side of the alley right-of-way, common accessway, common
+driveway, or access easement line.
+13. Minimum spacing between buildings on the same lot or in the same development. In CM-CS and CM-HDR,
+residential accessory structures including detached Accessory Dwelling Units shall not be located within 6 feet
+of the main building. Required separation distances for commercial and industrial zoned lots shall be
+determined by the applicable Building Code.
+14. Maximum building height for all structures in a cottage cluster development is 25 feet.
+15. Maximum building height of a building or portion of a building within 35 feet of a residentially zoned property,
+measured from the residential property line, is 45 feet or the maximum height permitted in the residential
+district, whichever is greater.
+16. Townhouses in the CM-RM zone designed with rear-loaded parking areas, parking areas shared between two or
+more dwellings, or no off-street parking shall have a minimum lot size of 1,000 square feet and a minimum lot
+width of 14 feet. For the purpose of this footnote, parking areas may include driveways, parking spaces,
+garages, or carports.
+17. Single-detached, duplex, triplex, quadplex, or 5- to 6-unit multi-dwelling structures in existence as of January 2,
+2025, that exceed the applicable maximum FAR standard are allowed to expand up to 500 square feet in floor
+area above the maximum FAR permitted in the zone. If such existing structures are unintentionally destroyed,
+they may be rebuilt to exceed the maximum FAR by 500 square feet.
+18. Accessory dwelling units added to an existing single-detached dwelling as of January 2, 2025, are excluded from
+the maximum FAR limitations.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-42
+19. Inclusive of antenna.
+20. At-grade equipment shelters.
+21. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+22. For buildings in commercial zones not abutting a residential use in a residential zone, minimum setback does
+not apply. Under the thresholds in Section 40.30, an application may be made for zero side yard setbacks on
+parcels abutting residential use in a residential zone.
+23. In CM-RM, limited to one 5- or 6-unit multi-dwelling structure per lot.
+24. See Section 20.25.10 to determine if a site with Resource Overlay or other environmental constraints qualifies
+for a higher maximum FAR.
+25. This rear or side yard setback only applies for property lines shared with Cooper Mountain Nature Park. The
+setback shall be landscaped according to the landscape buffer Design Standards or Guidelines of Section
+60.05.25.17.C, 60.05.60.2.S9, 60.05.60.3.S9, 60.05.60.4.S22, or 60.05.65, as applicable to the proposed
+development.
+26. Up to six (6) single-room occupancy units on each lot or parcel are permitted within the CM-RM zoning district.
+This is not intended to exempt single-room occupancies from minimum density requirements of the underlying
+zone.
+27. Single-room occupancies shall have a minimum of 4 attached units, regardless of lot size. This is not intended to
+exempt single-room occupancies from minimum density requirements of the underlying zone.
+[ORD 4859, 01/02/2025]
+Effective on: 8/21/2026
+20.22.20. Land Uses
+
+[ORD 4859; January 2025]
+The following Land Uses are classified in the following three categories: Permitted (P) including their accessory uses and
+structures, Conditional Uses (C), or Prohibited (N) uses as identified in the table below for Cooper Mountain Zoning
+Districts.
+
+Table 20.22.20.A
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Refers to Use Restrictions
+Additional Requirements by District: See 20.22.30 through 20.22.40
+# Land Use
+Category Specific Use CM-
+CS
+CM-
+HDR
+CM-
+MR
+CM-
+RM
+1.A. Residential Care Facilities P P P P
+2.A. Residential Dwellings - Accessory Dwelling Units P P P P
+2.B. Residential Dwellings - Single-Detached Dwelling N1 N1 N1, 2 P2
+2.C. Residential Dwellings - Duplex P7 P7 P7 P
+2.D. Residential Dwellings - Triplex and Quadplex P7 P7 P7 P
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-43
+# Land Use
+Category Specific Use CM-
+CS
+CM-
+HDR
+CM-
+MR
+CM-
+RM
+2.E. Residential Dwellings - Townhouse P P P P
+2.F. Residential Dwellings - Cottage Cluster N N N P
+2.G. Residential Dwellings - Multi-Dwelling P P P P27
+2.H. Residential Dwellings - Home Occupation P P P P
+2.I. Residential Dwellings - Manufactured and Mobile Homes4 P P P P
+2.J. Residential Dwellings - Manufactured Home Parks N N N P
+2.K. Residential Dwellings - Home Testing of Consumer Electronic Products10 N N P P
+2.L. Residential Dwellings - Single-Room Occupancies P P P P
+3.A. Commercial3 Animal Care, Major C C C11 C11
+3.B. Commercial3 Animal Care, Minor P P C11 C11
+4.A. Commercial3 Hospitals P P C C
+4.B. Commercial3 Medical Clinics P P C C
+4.C. Commercial3 Child Care Centers P P P P5, 31
+4.D. Commercial3 Residential Care Facilities P P C P30 C
+5. Commercial3 Commercial Amusement C C N N
+6. Commercial3 Drive-Up Window Facilities N9 N9 N9 N9
+7. Commercial3 Eating and Drinking Establishments P P N P5
+8. Commercial3 Financial Institutions P P N N
+9. Commercial3 Food Cart Pods16 P P N N
+10. Commercial3 Live/Work Uses14 P P N N29
+11.A. Commercial3 Marijuana Dispensary18 P N N N
+11.B. Commercial3 Marijuana Processing N N N N
+11.C. Commercial3 Retail Marijuana Sales8 P N N N
+11.D. Commercial3 Wholesale Marijuana Sales N N N N
+12. Commercial3 Meeting Facilities P C19 P C19 N N
+13. Commercial3 Office P P N P5
+14.A. Commercial3 Parking as the Principal Use - Structures C C N N
+14.B. Commercial3 Parking as the Principal Use - Surface C C N N
+15.A. Commercial3 Bulk Retail15 P N N N
+15.B. Commercial3 Retail Trade15 P P N P5
+16. Commercial3 Rental Business P21, 26 P21, 26 N N
+17. Commercial3 Service Business/Professional Services P21 P21 N P5
+18.A. Commercial3 Cold Storage Plants N N N N
+18.B. Commercial3 Self Storage Facilities N N N N
+18.C. Commercial3 Storage Yards N N C28 C28
+18.D. Commercial3 Storage Yard for Building Materials N N N N
+19. Commercial3 Temporary Living Quarters P P C6 P20 C6
+20.A. Commercial3 Auto, Truck and Trailer Rental N N N N
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-44
+# Land Use
+Category Specific Use CM-
+CS
+CM-
+HDR
+CM-
+MR
+CM-
+RM
+20.B. Commercial3 Automotive Service, Major N N N N
+20.C. Commercial3 Automotive Service, Minor P N N N
+20.D. Commercial3 Bulk Fuel Dealerships N N N N
+20.E. Commercial3 Heavy Equipment Sales N N N N
+20.F. Commercial3 Vehicle Rental C21, 22 C21, 22 N N
+20.G. Commercial3 Vehicle Sales or Lease N N N N
+20.H. Commercial3 Trailer, Recreational Vehicle or Boat Storage N N N N
+20.I. Commercial3 Trailer Sales or Repair N N N N
+20.J. Commercial3 Vehicle Storage Yard N N N N
+21. Civic3, 12 Cemetery N N C C
+22.A. Civic3, 12 Commercial Schools P P22 N N
+22.B. Civic3, 12 Educational Institutions P P C C
+22.C. Civic3, 12 Job Training and Vocational Rehabilitation Services P22 P22 N N
+23. Civic3, 12 Places of Worship P P C C
+24.A. Civic3, 12 Public Buildings and Uses - Non-Profit Public Services in Public
+Buildings
+P P C C
+24.B. Civic3, 12 Public Buildings and Uses - Public Buildings P P C C
+24.C. Civic3, 12 Public Buildings and Uses - Public Sewer and Water and Utility
+Transmission Lines
+P P P P
+24.D. Civic3, 12 Public Buildings and Uses - Public Sewer, Water Supply, Water
+Conservation and Flood Control Facilities Other than
+Transmission Lines
+C C C C
+25.A. Civic3, 12 Railroad Tracks and Facilities - Passenger P P C C
+25.B. Civic3, 12 Railroad Tracks and Facilities - Freight N N N N
+26.A. Civic3, 12 Public Park P P P P
+26.B. Civic3, 12 Public Dog Parks or Dog Runs P P P P
+26.C. Civic3, 12 Public Recreational Facilities P P C C
+26.D. Civic3, 12 Private Recreational Facilities17 P P C C
+26.E. Civic3, 12 Community Gardens P P P P
+27.A. Civic3, 12 Domestic Violence Shelters P P P P
+27.B. Civic3, 12 Emergency Shelters P25 P25 P25 P25
+27.C. Civic3, 12 Mass Shelters P P P P
+28. Civic3, 12 Social Organizations P P C C
+29. Civic3, 12 Transit Centers P P N N
+30.A. Civic3, 12 Utilities - Utility Substations and Related Facilities other than
+Transmission Lines
+C C C C
+30.B. Civic3, 12 Utilities - Transmission Lines P P P P
+31. Civic3, 12 Vehicle Camping13 P P P P
+32. Civic3, 12 Wireless Communications Facilities P P P P
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-45
+# Land Use
+Category Specific Use CM-
+CS
+CM-
+HDR
+CM-
+MR
+CM-
+RM
+33. Industrial3 Laboratory P23, 24 P23, 24 N N
+34. Industrial3 Manufacturing, Fabricating, Assembly, Processing, and Packing P23, 24 N N N
+35. Other Planned Unit Development C C C C
+Footnotes:
+1. Existing single-detached dwellings as of January 2, 2025 and their accessory uses are Permitted uses and can be
+expanded or can be rebuilt if destroyed. New single-detached dwellings are Prohibited.
+2. Compact Detached Dwellings are prohibited.
+3. Uses may be open to the public between the hours of 7:00 a.m. and 10:00 p.m., and staff may occupy the
+premises between the hours of 6:00 a.m. and 11:00 p.m. with the following exceptions:
+a. Office, Domestic Violence Shelter, Emergency Shelter, Mass Shelter, and Vehicle Camping uses may
+operate at any time.
+b. See footnote 8 for restrictions on Retail Marijuana Sales and footnote 18 for restrictions on Marijuana
+Dispensary uses.
+c. In the CM-CS zoning district:
+i. Uses located in a building or portion thereof that is 500 feet or greater from a Residential zone may
+be open to the public between the hours of 10:00 p.m. and 7:00 a.m. with staff on the premises up
+to 60 minutes before and after public hours of operation.
+ii. Uses located in a building or portion thereof that is less than 500 feet from a Residential zone
+require a Conditional Use to be open to the public between the hours of 10:00 p.m. and 7:00 a.m.
+With Conditional Use approval, staff may occupy the premises up to 60 minutes before and after
+public hours of operation, unless otherwise approved by the decision-making authority.
+4. The placement of a manufactured home is subject to the design and placement criteria found in Section
+60.20.20. In Cooper Mountain districts where single-detached dwellings are prohibited, manufactured homes
+are not allowed on individual lots by themselves.
+5. These permitted uses shall only be allowed consistent with Section 20.22.35 rules for small-scale commercial
+uses in CM-RM, except as allowed in footnote 31 for Child Care Centers. [ORD 4876; January 2026]
+6. Limited to uses of Boarding, Rooming, or Lodging House uses
+7. All units of a duplex, triplex, or quadplex must be attached.
+8. Retail Marijuana Sales shall:
+a. be subject to the provisions of ORS 475B.109-119 and OAR Chapter 845, division 25;
+b. be located 1,000 feet from any existing Marijuana Dispensary or Retail Marijuana Sales use, except for
+instances of colocation within the same premises of Marijuana Dispensary and Retail Marijuana Sales
+uses when such colocation is permitted by state law; and
+c. be allowed to operate only between the hours of 7:00 AM and 10:00 PM. Hours of operation may not be
+extended through the Conditional Use process as identified in this Code.
+9. Drive-through uses are Prohibited; walk-ups Permitted. In CM-RM, walk-up windows are only allowed as an
+accessory to a small-scale commercial use allowed in Section 20.22.35.
+10. Home Testing of Consumer Electronic Products uses shall:
+a. be limited to the hours of 7:00 AM and 7:00 PM, Monday through Saturday, in which technicians are
+allowed to occupy the residence;
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-46
+b. have at least two off-street parking spaces for technicians, so no on-street parking would occur with the
+use;
+c. be limited to two vehicles on-site at any one time;
+d. have a 24-hour on-site security system;
+e. have a contract for landscape and maintenance services to ensure that the home testing properties are
+well maintained for the neighborhood;
+f. be limited to no more than three home testing dwelling units within a quarter mile radius at any time;
+g. be limited to single-detached dwelling units; and
+h. comply with the noise and odor limits contained in the City Code.
+11. Animal Care uses provided as a private amenity to residents in multi-dwellings or on a common area serving
+multiple households.
+12. Public Art shall be permitted pursuant to Section 60.50.25.13.
+13. Vehicle Camping may occur only where allowed through a program established by Council resolution and
+administered by the City Manager. The use is subject to the special requirements found in Section 60.50.25.14.
+14. Non-residential uses that are part of a Live/Work use shall be uses that are permitted in the zone.
+15. No outdoor storage or sales of animals or livestock are allowed with this use.
+16. Food Cart Pods and their amenities, as described in Section 60.11, are exempt from the Site Development
+Standards of 20.22.15 but are subject to the standards of 60.11 of the Development Code.
+17. Privately owned facilities, such as fitness clubs, racquetball or handball clubs, tennis courts or swimming pools
+exclusive of spectator sports facilities.
+18. Marijuana dispensary shall:
+a. be subject to the provisions of ORS 475B.858; and
+b. be allowed to operate only between the hours of 7:00 AM and 10:00 PM. Hours of operation may not be
+extended through the Conditional Use process as identified in this Code.
+19. Buildings larger than 10,000 square feet, for a single use, are subject to approval of a Conditional Use.
+20. Limited to single-room occupancy structures in CM-RM. Single-room occupancy structures are residential
+developments with no fewer than four attached units that are independently rented, lockable, and provide
+living and sleeping space for the exclusive use of an occupant but that require the occupant share sanitary or
+food preparation facilities with other units in the occupancy. Single-room occupancy structures shall be limited
+to six units per lot.
+21. This activity shall be conducted wholly within an enclosed structure. Accessory open air sales or display related
+to the principal use may be permitted, provided that the outdoor space devoted to these uses does not occupy
+an area greater than the equivalent of 15 percent of the building gross floor area, excluding activities associated
+with a Temporary Use Permit. No outdoor sales or outdoor storage of animals or livestock are allowed with this
+use.
+22. The maximum building footprint size for a building involving a single use shall be 10,000 square feet. In
+addition, the maximum square footage for these uses within a multiple use development shall be 25 percent of
+the total square footage of the development.
+23. Permitted only within multiple use developments, as long as the floor area of this use does not exceed 50
+percent of the total proposed floor area within a multiple use development.
+24. Uses subject to additional restrictions below.
+a. Outdoor manufacturing activity, including but not limited to testing of products or processes, is
+prohibited.
+b. Outdoor storage is prohibited, including both raw materials and finished products.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-47
+c. Movement of heavy equipment on and off the site, except truck deliveries, is prohibited.
+d. Exterior display or storage of industrial equipment, such as tools, equipment, vehicles, products,
+materials, or other objects that are part of or used for the business operation is prohibited.
+e. Processes involving live animals or the waste or by product of dead animals is prohibited.
+f. Electrical disturbances that interfere with the normal operation of equipment or instruments
+on adjacent properties are prohibited.
+g. Processes involving highly combustible, explosive or hazardous materials or waste is prohibited.
+h. Potential nuisances are subject to Beaverton Code Chapter 5.05.IV Nuisances Affecting Public Health.
+25. Emergency Shelters may occur where allowed pursuant to Section 10.70.10.
+26. The maximum floor area for this use shall be 5,000 square feet. This use shall be conducted wholly within an
+enclosed structure.
+27. Limited to one five- or six-unit multi-dwelling structure, and no other dwellings, per lot.
+28. Storage yards for recreational vehicles, boats, and trailers owned by residents in a residential development or
+Planned Unit Development.
+29. Live/work uses shall only be allowed in CM-RM consistent with the small-scale commercial standards in Section
+20.22.35.
+30. Residential Care Facility is a Permitted use in CM-RM within a Planned Unit Development – Cooper Mountain
+consistent with Section 40.15.15.6 and Section 60.36.
+31. Permitted anywhere in the zone when collocated with a legally established institutional use, including public
+buildings, public recreation facilities, public parks, places of worship, and educational institutions. Collocated
+use is not subject to the provisions of Section 20.22.35. [ORD 4876; January 2026]
+[ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 8/10/2026
+20.22.25. Cooper Mountain Resource Overlay
+
+[ORD 4859; January 2025]
+1.Resource Overlay
+A. The Resource Overlay provides a framework for protection of Metro Title 13 lands and Statewide Planning
+Goal 5 resources within Cooper Mountain. Properties that contain the Resource Overlay shall be subject to
+the rules in Section 60.37.
+[ORD 4859, 01/02/2025]
+Effective on: 1/2/2025
+20.22.30. CM-CS Commercial Requirements
+
+[ORD 4859; January 2025]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-48
+Minimum commercial requirement within CM-CS district. New development on sites within the CM-CS district shall
+include commercial square footage consistent with the following requirements. For the purposes of this Subsection, land
+uses in the Commercial section of Table 20.22.20.A count toward the commercial square footage minimum
+requirements, except for Food Cart Pods; Hospitals and Residential Care Facilities under Care; Parking as a Principal Use;
+and Temporary Living Quarters. Live/Work Uses may count toward the commercial square footage minimum
+requirements if the commercial component of the Live/Work unit is on the ground floor, satisfies the standards of the
+Oregon Structural Specialty Code for Commercial Structures, and has an entry within 30 feet of and visible from a public
+street right of way.
+1.Minimum commercial square footage: Each site shall provide a minimum of 6,000 square feet of leasable
+commercial square footage per gross acre of land zoned CM-CS on the site, with the minimum required square
+footage on any site being 6,000 square feet and the maximum required leasable commercial square footage
+required on any one site being 30,000 square feet.
+A. Commercial square footage in Live/Work units may only count for a maximum of 5 percent of the minimum
+square footage requirement. (For example, if the minimum square footage requirement for a site were
+10,000 square feet, a maximum of 500 square feet of Live/Work commercial square footage could count
+toward that minimum requirement.)
+B. If 30,000 square feet of leasable commercial space with a certificate of occupancy is present within 600 feet
+of the site at the time of a development application, no minimum commercial square footage requirement
+applies to the site. Distance from the site shall be measured from the outer edge of the site boundary and
+shall include all commercial square footage consistent with Section 20.22.30 that is entirely within 600 feet of
+the site boundary.
+2.Commercial square footage timing: Required minimum commercial square footage shall be provided with the first
+phase of development on each site. Non-commercial development is allowed concurrent with commercial
+development meeting the minimum requirement or after the minimum commercial square footage minimum
+standard has been met. Phased developments that do not provide the required minimum commercial square
+footage with the first phase of development shall meet the requirements of the Cooper Mountain Development
+Plan in Section 40.20.10.5.C which is subject to review through a Design Review Three application.
+[ORD 4859, 01/02/2025]
+Effective on: 1/2/2025
+20.22.35. CM-RM Small-scale Commercial
+
+[ORD 4859; January 2025]
+Limited small-scale commercial uses shall be Permitted within the Cooper Mountain – Residential Mixed (CM-RM)
+zoning district consistent with the provisions of this Subsection.
+1.Allowed uses.
+A.Permitted Uses. The following uses shall be Permitted within CM-RM:
+1. Child Care Facilities
+2. Eating and Drinking Establishments
+3. Office
+4. Retail Trade
+5. Service Business/Professional Service
+B.Location: The Permitted Uses in Section 20.22.35.1.A shall be allowed within CM-RM only on lots that do not
+contain a Multi-Dwelling and where any part of the lot is:
+1. Within 100 feet of a Tualatin Hills Park & Recreation District Neighborhood Park; or
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-49
+2. Within 300 feet of private property zoned CM-MR; or
+3. Within 100 feet of a street right of way within the CM-RM zone that is designated a Neighborhood Route
+in Beaverton’s Transportation System Plan.
+C.Multiple uses: Other uses allowed in CM-RM and uses allowed consistent with Section 20.22.35.1.A and 1.B
+may occupy the same site. Live/work uses are allowed consistent with this section.
+2.Site development standards. The site development standards of Section 20.22.15 apply. If standards in this
+Subsection conflict with the standards in Section 20.22.15, standards specified here supersede the standards in
+Section 20.22.15.
+A. Maximum site size on which uses listed in Section 20.22.35.1.A are allowed: 6,000 square feet.
+B. Maximum square footage, not including square footage for outdoor activities allowed in Section 20.22.35.4,
+that can be occupied by a small-scale commercial use shall be:
+1. For Child Care Facilities, the maximum floor area occupied on a site shall be the maximum square
+footage allowed under the floor area ratio calculation for a quadplex based on the Site Development
+Standards in Section 20.22.15. Only one Child Care Facility is allowed per site.
+2. For all other uses:
+a. On a site with zero or one residential units: 1,800 square feet.
+b. On a site with two or more residential units: 1,800 square feet per residential unit, with a maximum
+of 1,800 square feet within any individual residential unit on the site.
+C.Density and dwelling types: A stand-alone small-scale commercial use occupying a structure that does not
+contain a residential use shall count as a residential unit for the purposes of calculating minimum density and
+for the purposes of determining the dwelling type on the site. For example, a stand-alone small-scale
+commercial use occupying a structure that does not contain a residential use plus one other building with a
+residential unit in it would be considered a duplex for the dwelling type and two units for the purposes of
+calculating density.
+D.Applying floor area ratio maximums on sites with small-scale commercial: The maximum floor area ratio on
+a site with small-scale commercial use(s) shall be:
+1. For a proposed development where no residential use exists or is proposed on the site: the maximum
+floor area ratio for a quadplex from Section 20.22.15.
+2. For a proposed development with a combination of residential and small-scale commercial uses: the
+maximum floor area ratio for the residential use(s) on the site from Section 20.22.15.
+3.Limitations on permitted uses in Section 20.22.35.1.A. In addition to meeting the other relevant standards of the
+Development Code, the uses shall be limited by the following standards:
+A. Small-scale commercial uses shall not occupy any structure that is part of a Cottage Cluster, except Child Care
+Facilities in common buildings associated with a Cottage Cluster.
+B. Small-scale commercial uses shall not occupy any structure that contains a Care Facilities; Manufactured and
+Mobile Homes; Multi-dwellings; or Temporary Living Quarters use.
+C. Limitations on Home Occupations in buildings or units with both residential and small-scale commercial.
+1. If a structure with only one residential unit contains both a residential use and a small-scale commercial
+use allowed by this Subsection, a separate Home Occupation shall not be allowed. Administrative
+functions related to the small-scale commercial business in the building shall be allowed within the
+residential unit, even if the space used for those administrative duties would cause the small-scale
+commercial use to exceed the size limitation in Section 20.22.35.2.B. No other activities related to the
+permitted uses allowed in 20.22.35.1.A shall be allowed within the residential unit, including but not
+limited to retail sales, child care, and provision of services.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-50
+2. If a structure with more than one residential unit, such as a plex with two to four units, contains a
+residential use and a small-scale commercial use allowed by this Subsection, a separate Home
+Occupation shall not be allowed for the unit/space occupied by the small-scale commercial use.
+Administrative functions related to the small-scale commercial business shall be allowed only within the
+residential unit associated with and physically connected to that small-scale commercial use by a shared
+entrance or an internal connection. The administrative functions are allowed even if the space used for
+those administrative duties would cause the small-scale commercial use to exceed the size limitation in
+Section 20.22.35.2.B. No other activities related to the permitted uses allowed in 20.22.35.1.A shall be
+allowed within the residential unit, including but not limited to retail sales, child care, and provision of
+services. A separate residential unit in that same structure that does not contain a small-scale
+commercial use may apply for a Home Occupation.
+D. No stand-alone small-scale commercial uses shall be allowed on a townhome lot or any lot less than 3,000
+square feet. Small-scale commercial uses are allowed on Middle Housing Land Division Child Lots only if a
+dwelling unit exists on the lot and remains a dwelling unit during the operation of any small-scale commercial
+use on that lot.
+E. No on-site use or storage of dry cleaning chemicals is allowed.
+F. Hours of operation.
+1. Except for Child Care Facilities, hours of operation may not be extended past 10 p.m. through the
+Conditional Use process as identified in this Code. The conditional use applications are allowed for
+extending the hours of operation for businesses before 7 a.m.
+2. Except for Child Care Facilities, in no case shall small-scale commercial uses operate between 10 p.m.
+and 7 a.m., including staff activities.
+3. No outdoor activities unrelated to the picking up and dropping off of children shall occur at Child Care
+Facilities between 10 p.m. and 7 a.m.
+G. For Child Care Facilities, Section 60.50.25.7 shall apply.
+4.Outdoor activity. On-site outdoor activity associated with small-scale commercial uses shall be limited to the
+following:
+A. Outdoor breaks for small-scale commercial employees. No smoking or vaping shall be allowed within 20 feet
+of any adjacent property containing a residential use or within 20 feet of any on-site or off-site building air
+intakes including entrances, exits, windows that open, or ventilation intakes that serve an enclosed area.
+B. Outdoor play areas for children associated with Child Care Facilities.
+C. Outdoor dining areas associated with Eating and Drinking Establishments. Outdoor dining shall be allowed in
+the front setback. Outdoor dining areas, or portions thereof, outside the front setback shall be allowed
+subject to the following restrictions:
+1. The outdoor dining area outside of the front setback shall not exceed 600 square feet.
+2. The outdoor dining area shall be set back at least 15 feet from the rear property line and 5 feet from all
+side property lines, as measured from the edge of the dining area surface or the edge of the roofline of
+an associated shade structure, if present, whichever point is closest to the property line.
+3. The outdoor dining area shall be closed to the public between the hours of 9 p.m. and 7:00 a.m. Light
+fixtures illuminating the outdoor dining area must be turned off between 9:30 p.m. and 7 a.m.
+4. An outdoor dining area outside of the front setback that does not comply with C.1 through C.3 above is
+a Conditional Use.
+D. Accessory open air sales and/or display associated with Retail Trade uses shall be allowed only within the
+front setback and shall not exceed 150 square feet per site. No outdoor sales or outdoor storage of animals
+or livestock are allowed with this use.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-51
+5.Additional standards.
+A. If any outdoor activity associated with the small-scale commercial use is located outside the front setback. a
+fully sight obscuring fence or wall of at least 5 feet tall but not taller than 6 feet shall be provided to screen
+the outdoor activity from view from all abutting lots. Chain link fences with slats are prohibited.
+B. Amplified sound of any kind is prohibited outdoors.
+C. Minimum Required Solid Waste Facilities and Location. Residential uses on the lot shall provide Solid Waste
+Facilities and screening consistent with Section 60.05.60, as applicable to the proposed dwelling type. For
+commercial uses allowed in this Subsection, additional Solid Waste Facilities capacity shall be provided in a
+way that ensures waste storage, disposal facilities, recycling containers and associated materials outside of a
+building are fully screened from view in accordance with Sections 60.05.60.2.S17, 60.05.60.3.S18, or
+60.06.60.4.S36, as applicable.
+[ORD 4859, 01/02/2025]
+Effective on: 1/2/2025
+20.22.40. CM-RM Housing Variety and Integration Requirements
+
+[ORD 4859; January 2025]
+Development in the CM-RM zoning district shall be subject to the housing variety and integration requirements of this
+Subsection.
+1.Applicability.
+A. Minimum requirements for housing variety and integration apply when the net acreage of a Parent Parcel is 3
+acres or larger, unless exempted by Section 20.22.40.1.B below. If the net acreage of a Parent Parcel is less
+than 3 acres, Section 20.22.40 does not apply. For the purposes of Section 20.22.40, areas designated as
+“Cooper Landslide Hazard” on Figure 8.6.1 of Comprehensive Plan Volume 1, Chapter 8, may be subtracted
+from gross acreage for the purposes of determining net acreage. [ORD 4876; January 2026]
+B. Development applications for a Public Facilities Preliminary Partition (Section 40.45.15.12) and a Large Lot
+Land Division (Partition or Subdivision) (Section 40.45.15.13) are not subject to the housing variety and
+integration requirements of this Section. [ORD 4876; January 2026]
+2.General Provisions.
+A. Minimum requirements for housing variety and integration in Section 20.22.40 provide a clear and objective
+standard. Deviations from the standards of this Subsection shall be subject to review through a Planned Unit
+Development application.
+B. If the minimum percentage of units required at any development phase does not result in a whole number of
+units, then the value shall be rounded as follows: If the value ends with a decimal that is equal to or greater
+than 0.5, then the value is rounded up to the nearest whole number. If the value ends with a decimal that is
+less than 0.5, then the value is rounded down to the nearest whole number.
+C. For the purposes of this Subsection, sites designated for small-scale commercial consistent with Section
+20.22.35 with no existing or proposed residential use on a property shall not count toward the minimum
+housing variety or minimum housing integration requirements.
+D.Multi-phase Development. If an application to develop a Parent Parcel that is greater than 3 net acres
+proposes to do so over multiple phases, then that development shall meet the housing variety requirements
+of Section 20.22.40.3 using one of the two methods below. Each phase shall meet the housing integration
+requirements of Section 20.22.40.4.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-52
+1. Each phase of the development shall independently comply with the requirements of Section
+20.22.40.3. The minimum required number of dwelling categories for each phase shall be based on the
+size of the Parent Parcel pursuant to Section 20.22.40.3.A; or
+2. The development shall provide in each phase of development:
+a. At least one of the dwelling categories in Section 20.22.40.3.A until the minimum number of
+categories required is reached for the Parent Parcel; and
+b. At least 30 percent of the total units in the phase shall be from one of the dwelling categories in
+Section 20.22.40.3.A consistent with Section 20.22.40.3.
+3.Minimum Requirements for Housing Variety. At least 30 percent of housing units in each development shall be
+one or more of the following dwelling types: Duplex, Triplex, Quadplex, Townhouse, Cottage Cluster, or Multi-
+dwelling with five or six units.
+A.Categories: In meeting the 30 percent standard, developments 3 to 15 net acres shall provide dwelling types
+from at least two of the categories below, and developments larger than 15 net acres shall provide dwelling
+types from at least three of the categories below.
+1. Triplex or Quadplex
+2. Duplex or Townhouse
+3. Cottage Cluster
+4. Multi-dwelling with five or six units
+B.Amount from each category: For each category selected to meet this standard, at least 5 percent of the total
+housing units in that development must be from that category.
+C.Visitability Option: A development may count visitable units that are consistent with Section 60.50.25.16
+toward the 30 percent minimum requirement in Section 20.22.40.3, up to a maximum of 5 percent of total
+units.
+1. Visitable single-detached homes shall count as 1 unit in the 30 percent calculation and when
+determining the 5 percent of total units.
+2. Visitable duplexes, townhomes, cottage cluster units, detached triplex units, and detached quadplex
+units shall count as 0.5 units in the 30 percent calculation and when determining the 5 percent of total
+units. The 0.5 unit is in addition to the 1 unit already counting toward the 30 percent calculation
+because these dwelling types are in the categories in Section 20.22.40.3.A.
+4.Minimum Requirements for Housing Integration. A development shall provide integrated housing types by
+meeting the requirements of this Subsection.
+A. For the purposes of this Subsection, the term “Housing Variety Grouping” means at least three abutting lots
+designated for a Duplex, Triplex, Quadplex, Townhouse, Cottage Cluster, or Multi-dwelling with five or six
+units. The three abutting lots may be designated for any combination of those housing types.
+B. Applications shall designate which groups of abutting housing types are considered a Housing Variety
+Grouping to meet this standard.
+1. Housing Variety Groupings designated to meet this standard shall be separated from each other by least
+50 feet as measured by the shortest distance between the perimeter lot lines of the two groupings.
+2. Housing Variety Groupings shall be located such that 75 percent of lots designated for Single-Detached
+Dwellings and Manufactured and Mobile Homes are within 300 feet of the Housing Variety Groupings
+within the site or, in the case of multi-phase development, within the boundaries of each phase. Lots
+designated for Single-Detached Dwellings or Manufactured or Mobile Homes are considered within 300
+feet of a Housing Variety Grouping if any part of the lot is within 300 feet.
+3. Units from the housing categories in Section 20.22.40.3.A that exceed the required percentages in
+Section 20.22.40.3 are allowed outside Housing Variety Groupings. There is no limit on the number of
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-53
+Housing Variety Groupings in an application. In addition, additional abutting groupings of the housing
+types in Section 20.22.40.3.A as well as other permitted housing types not within a Housing Variety
+Grouping are allowed.
+ Figure 20.22.40.1 Example of how to meet the housing integration standards
+
+Four Housing Variety Groupings are shown with lots filled in with black. Four buffers are shown with a thin black line to indicate 300 feet from
+the outer edges of the Housing Variety Groupings. Lots within 300 feet of those groupings in the proposed development are filled in with gray.
+Other lots remain filled in with white. This graphic is intended to be illustrative to explain the Development Code standards and is not regulatory.
+[ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 1/20/2026
+20.22.45. Cooper Mountain Parks Overlay
+
+[ORD 4859; January 2025]
+1.Purpose. The Cooper Mountain Parks Overlay indicates the desired locations for new parks/open space, consistent
+with the Comprehensive Plan. The Cooper Mountain Parks Overlay promotes parks/open space in areas throughout
+Cooper Mountain in locations feasible for development of park amenities. The overlay also designates a Community
+Park to provide park/open space opportunities that require more space.
+2.Exceptions. This Section does not apply to the Cooper Mountain Nature Park or Winkelman Park.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-54
+3.Location of Parks Overlay open space.
+A.Neighborhood Parks. A 2- to 3-acre area designated for open space as indicated by the Cooper Mountain
+Parks Overlay.
+B.Community Park. An area designated for open space as indicated by the Cooper Mountain Parks Overlay.
+C.Alternative Parks Overlay open space locations. An applicant may propose an alternative Parks Overlay open
+space location through the discretionary review processes in Section 40.45.15.4 Preliminary Partition or
+Section 40.45.15.5 Preliminary Subdivision. The alternative location shall meet the following standards:
+1. For Neighborhood Parks, the alternative location shall:
+a. Have at least 75 percent Parks Overlay Open Space Developable Area with minimum length and
+width dimensions of 200 feet.
+b. Serve a similar geographic area.
+2. For Community Parks, the alternative location shall:
+a. Have at least 75 percent Parks Overlay Open Space Developable Area with minimum length and
+width dimensions of 500 feet.
+b. Be within one-quarter mile of a planned or existing trail identified in Figure 6.2b of Comprehensive
+Plan Volume 1, Chapter 6.
+c. Be south of McKernan Creek and Winkelman Park and west of SW 175 th Avenue.
+d. Balance community active and passive recreation needs with the ecological health of sensitive
+natural resources on site, while also considering compatibility and integration with adjacent land
+uses.
+3. For all Neighborhood Parks and Community Parks, the alternative location shall:
+a. Maintain one contiguous area.
+b. Be easily accessible via neighborhood streets, sidewalks, and/or trails, and have at least one non-
+auto route connecting the open space to the surrounding neighborhood that is accessible to people
+with disabilities.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-55
+ Figure 20.22.45.1: Cooper Mountain Parks Overlay park sizes
+4.Requirements. If a property includes Parks Overlay, required open space shall first be placed inside the Parks
+Overlay according to these provisions.
+A. At the time of Initial Development, Public Facilities Preliminary Partition (Section 40.45.15.12), or Large Lot
+Land Division (Section 40.45.15.13), required open space shall be provided within the Parks Overlay
+geography or geographies on the site in the amount shown in Figure 20.22.45.1 but not to exceed the Cooper
+Mountain Open Space requirements of the following sections, notwithstanding the applicability of those
+sections:
+1. Section 60.05.25.17.A;
+2. Section 60.05.60.2.S8;
+3. Section 60.05.60.3.S8;
+4. Section 60.05.60.4.S21;
+5. Section 60.05.65.1.S6. [ORD 4876; January 2026]
+B. If less open space is required than the size of the Parks Overlay on the property, the open space shall be
+located within the Parks Overlay so that it maintains one contiguous open space area with any Parks Overlay
+open space areas mapped on abutting properties along at least 80 percent of the portion of the shared
+property line where the Parks Overlay is shown on the abutting property.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-56
+C. If more open space is required than the size of the Parks Overlay on the property, the additional open space
+shall be located elsewhere on the site and may be placed inside the Resource Overlay. Public Facilities
+Preliminary Partition and Large Lot Land Division applications are exempt from this standard and shall
+provide an Open Space Allocation Statement or Plan that identifies the amount of open space to be credited
+to new lots within the subject site. Future development of lots created through a Public Facilities Preliminary
+Partition or Large Lot Land Division shall demonstrate compliance with applicable open space requirements
+at that time. [ORD 4876; January 2026]
+D. The open space shall be set aside in a tract. [ORD 4876; January 2026]
+E. Except for open space dedicated to a public parks or open space provider consistent with Section 20.22.45.5
+below, open space shall meet the special use regulations in Section 60.50.25.15 Parks Overlay Open Space in
+the Cooper Mountain Community Plan area, including construction of park components required by Section
+60.50.25.15.C. Open space dedicated to a public parks or open space provider shall be subject to the
+requirements of Section 60.50.25.15 at the time the public agency submits an application for development of
+the open space tract for public parks or open space purposes. [ORD 4876; January 2026]
+5.Dedication option.
+A. Property owners are not required to dedicate open space in the Parks Overlay but may do so voluntarily.
+B. Open space in the Parks Overlay that is dedicated to the Tualatin Hills Park & Recreation District or other
+public agency consistent with Section 60.15.15.3 shall count 150 percent toward the applicable Cooper
+Mountain Open Space requirement. The additional credit shall not be used to reduce the open space
+required to be within the Parks Overlay but may be used to meet requirements for open space outside the
+Parks Overlay. When an Open Space Allocation Statement or Plan is required, this additional credit shall be
+calculated and incorporated into the open space credits allocated to new lots within the site. [ORD 4876;
+January 2026]
+[ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 1/20/2026

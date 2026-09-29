@@ -4,12 +4,25 @@ Branch `flats/washington-draft`. Written for the local agent, who has not
 seen the cloud session. Scope and traps: [counties/washington.md](../counties/washington.md).
 Rules: [ENCODING_RULEBOOK.md](../ENCODING_RULEBOOK.md), [CLOUD_COUNTY_BRIEF.md](../CLOUD_COUNTY_BRIEF.md).
 
-Last updated: 2026-09-29, checkpoint 5. Two layers are finished as drafts,
-rulebook steps 1-10 and 12 done for each: the unincorporated county (all 42
-codes on the county's zoning map) and Hillsboro (all 37 zones of Table
-12.01.200-1, plus four rulings for the map's other codes). The other seven
-cities have not been started; section 1 says what the scout found for each.
-Every value is `draft`; nothing is `verified`.
+Last updated: 2026-09-29, checkpoint 6. Three layers are finished as
+drafts, with rulebook steps 1-10 and 12 done for each:
+
+- the unincorporated county (all 42 codes on the county's zoning map);
+- Hillsboro (all 37 zones of Table 12.01.200-1, plus four rulings for the
+  map's other codes);
+- Beaverton (all 28 districts of BDC 10.25, plus two rulings for the map's
+  other codes).
+
+The other six cities have not been started; section 1 says what the scout
+found for each. Every value is `draft`; nothing is `verified`.
+
+**Read this first about Beaverton.** No Beaverton lot can come back GREEN
+as drafted. The county brief asks for the annexation condition (UPAA §V.D)
+to be declared rather than guessed, and it is declared on every admitting
+zone's setbacks, lot size and height. The fact it turns on
+(`site_specific_limitation`) is one nothing measures and the registry does
+not assume, so every lot the pod otherwise fits reads UNKNOWN. That is
+deliberate; see Questions for Steph.
 
 ## 1. Cities
 
@@ -17,7 +30,7 @@ Every value is `draft`; nothing is `verified`.
 |---|---|
 | Unincorporated (county CDC) | Draft done, steps 1-10 and 12. 34 documents, 42 zones. Step 8 (footnote rulings) could not be run by the tool; the notes were read by hand, see Documents |
 | Hillsboro | Draft done, steps 1-10 and 12. 23 documents, 37 zones, 4 map codes ruled (ANX, CO, SID I-P, SC-BP). Community Development Code, Municode publication 4450 |
-| Beaverton | Not started. Code found: the Development Code on encodeplus, a whole-code PDF of 820 pages through Ord. 4879 of 2026-04-02 (`https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf`, generated on request). City zoning layer `gisweb.beavertonoregon.gov/server/rest/services/Public_SharedServices/pubZoning/MapServer/0`, field `ZONE_NAME`, including 90 `WAcnty` features (county zoning kept under BDC 10.40.1). `apps2.beavertonoregon.gov` refused (CONNECT 502) |
+| Beaverton | Draft done, steps 1-10 and 12. 17 documents (16 slices of the Development Code and the county's Urban Planning Area Agreement), 28 zones, 2 map codes ruled (WAcnty, ROW). Development Code as the encodeplus export printed it on 2026-09-28, through Ord. 4879 of April 2026. `apps2.beavertonoregon.gov` refused (CONNECT 502); nothing needed was there |
 | Tigard | Not started. **Refused:** the code is on eCode360 (`https://ecode360.com/43691505`), which answered 403 (Cloudflare) to curl and WebFetch; the city site answered 403 (Akamai). City GIS unreachable: `maps.tigard-or.gov` and `svr.tigardmaps.com` fail TLS (legacy renegotiation, then an untrusted chain), `gis.tigard-or.gov` CONNECT 502. No workaround was tried. Metro's regional zoning layer (`CITY='Tigard'`) carries the current code names |
 | Forest Grove | Not started. **Refused:** the code is only on American Legal (`https://codelibrary.amlegal.com/codes/forestgrove/latest/forestgrovedev_or/0-0-0-4`), which answered 403 to curl and WebFetch; there is no whole-code PDF. City zoning layer reachable (`maps.forestgrove-or.gov/server/rest/services/ForestGrove/Zoning/FeatureServer/16`, field `zoning_code`) |
 | Sherwood | Not started. Code found: Municode publication 3865, Supplement 24, through Ord. 2026-001 (932 pages). City zoning layer `services5.arcgis.com/ikEzR7lqVIlrcVFn/.../Planning/FeatureServer/2`, field `CODE`, with interim `UGA` and `Unannex` and county codes on unannexed land |
@@ -25,7 +38,7 @@ Every value is `draft`; nothing is `verified`.
 | King City | Not started. Code found: Municode publication 3913, Supplement 16, August 2026 (742 pages). City zoning layer on AGOL (`King_City_Current_and_Future_Zoning_Map_WFL1/FeatureServer/1`, field `ZONECLASS`); the `(WC)` codes are county zoning kept. The single-use residential table (16.84.010) has no triplex or fourplex row; Kingston Terrace (16.114) does |
 | Durham | Not started. Code found: Development Code revised 2025-11-13, a 137-page PDF (`https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf`). No city GIS; Metro has five codes. Middle housing is permitted in SDR with no quadplex rows |
 
-The seven "not started" rows come from a scout run on 2026-09-29 that
+The six "not started" rows come from a scout run on 2026-09-29 that
 looked for each city's code and zoning map. It committed nothing. The
 copies it downloaded were in the cloud session's scratchpad and are not on
 the branch. The refusals in the table were recorded, not worked around.
@@ -144,6 +157,133 @@ stored as �. All three were found and none is cited:
   Hillsboro Industrial.
 
 Failed fetches for Hillsboro: none.
+
+**Beaverton.** 17 documents, stored under
+`flats/provenance/docs/or/washington/beaverton/`. All are `extraction:
+plain`.
+
+Sixteen are slices of one PDF, the whole Beaverton Development Code (BDC).
+encodeplus generates it on request from
+`https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf`,
+and the city's own development-code page links to that address. Every page
+footer reads "Date Printed: September 28, 2026". The latest ordinance
+cited is 4879, of April 2026.
+
+The seventeenth is the Washington County - City of Beaverton Urban
+Planning Area Agreement (UPAA), as amended by county Ordinance 839A in
+2018. It comes from the county's Land Use & Transportation site
+(`https://www.washingtoncountyor.gov/lut/planning/documents/beaverton-upaa/download?inline`).
+It is stored for its §V.B (quoted by BDC 10.40.3.A) and §V.D (the
+annexation condition).
+
+Slices held:
+
+- Chapter 10 (general provisions: the zone list at 10.25, the map at 10.30,
+  annexation at 10.40);
+- the zoning chapters 20.05 (residential), 20.10 (commercial), 20.15
+  (employment and industrial), 20.20 (multiple use) and 20.22 (Cooper
+  Mountain);
+- 20.25 and 20.30 together (density and bulk; the RMB and RMC height
+  plane);
+- 40.21 (single-detached and middle housing design review) and 40.45
+  (land division);
+- 60.05 (design review standards, including the 60.05.60 middle housing
+  standards), 60.15 (land division standards), 60.30 (parking), 60.50
+  (special uses) and 60.55 (transportation);
+- Chapter 70 (the Downtown Design District: RC-BC, RC-OT, RC-MU, RC-DT);
+- Chapter 90 (definitions).
+
+How the slices are cut:
+
+- The PDF prints a table of contents first, so every heading appears
+  twice. Each slice takes `nth: 2`, the body copy. Chapter 90 is printed
+  three times (the contents, its own contents page and the body), so it
+  takes `nth: 3`.
+- Chapter 70 has no following chapter heading in the body (Chapter 80 is
+  reserved and not printed). Its slice ends at the running footer of the
+  first Chapter 90 page, "Chapter 90, DF-1".
+- Chapter 90 ends at "ADDITIONAL ORDINANCES - PART 1". After the last
+  definition, the export prints tables of zoning map amendments by
+  ordinance number. Read as part of the glossary, they made it "skimmed"
+  (see Reader changes).
+- `glued_markers: true` on 20.05, 20.10, 20.20, 20.22 and 70. Their tables
+  print a footnote marker hard against the figure: "158" is 15 feet with
+  note 8, and "2018" is 20 feet with note 18.
+- `allow_thin: true` on Chapter 90 and on the UPAA. The fetch check counts
+  regulatory verbs, and a glossary or an intergovernmental agreement has
+  few. Both were read whole before the flag went on.
+
+Warnings from the fetcher:
+
+- `fetch.py` printed "unknown source — a lead, not evidence. No value
+  citing this may be verified." for every document it fetched. The
+  `OFFICIAL` set in `flats/provenance/sources.py` lists neither
+  `encodeplus.com` nor `washingtoncountyor.gov` (the UPAA's host). The
+  export is the city's own code, linked from the city's page, so this is
+  a list to extend, not a doubt about the text. Until it is extended, no
+  Beaverton value can be promoted to `verified`. That file is off limits
+  here; see Owed locally.
+- No character came out unmapped (no �).
+
+Not stored:
+
+- Chapter 30 (nonconforming uses);
+- the rest of Chapter 40, including 40.10 (adjustment), 40.30 (zero yard
+  setbacks), 40.55 (parking determination) and 40.95 (variance);
+- the other Chapter 60 sections: 60.07 (drive-through), 60.10
+  (floodplain), 60.11 (food cart pods), 60.12 (habitat friendly
+  development), 60.20 (manufactured homes), 60.25 (loading), 60.33 (parks),
+  60.35 and 60.36 (planned unit development), 60.37 (Resource Overlay),
+  60.40 (signs), 60.60 and 60.61 (trees), 60.65 (utility undergrounding),
+  60.67 (significant natural resources) and 60.70 (wireless);
+- the Comprehensive Plan;
+- the Engineering Design Manual, which 60.30.15 note 8(b) (driveways)
+  and a 20.05 note (corner sight clearance) send the reader to;
+- the Clean Water Services Design and Construction Standards.
+
+None of these sets a base-zone figure the pod is screened on. The
+references into them are listed under Ledgers.
+
+Figures the layer cannot read, all drawings:
+
+- Figure 70.15.10.2.3 (where RC-OT's minimum density is 18 instead of 24);
+- the Chapter 70 setback figures (70.15.10.1.1 and the like);
+- the parking zone map behind the Zone A and Zone B columns of Table
+  60.30.10.5.A. Both columns print the same quadplex figures, so the map
+  does not move the pod.
+
+**The footnote census.** It found 305 notes in the Beaverton documents,
+254 distinct sentences, after four reader changes (see Reader changes;
+before them it found 14). Every one is ruled in
+`flats/config/footnotes/or/washington/beaverton.yaml`:
+
+- 229 dismissed, with a reason each;
+- 21 encoded, and every one confirms against the layer (`applied`);
+- 4 unmeasured:
+  - 20.05 note 7 and 20.22 note 7, "In no case shall a building encroach
+    into a Public Utility Easement", on `utility_easement` (MR, RMA, RMB,
+    RMC, CM-MR, CM-RM), ruled as Oregon City's easement notes were;
+  - 20.10 note 1, the NS district's 50 percent residential share, on
+    `site_specific_limitation` (NS);
+  - 20.22 note 25, the setback from Cooper Mountain Nature Park, on
+    `site_specific_limitation` (CM-CS, CM-HDR, CM-MR, CM-RM).
+
+`qualified --write-caps` wrote a Beaverton block into
+`flats/config/caps.json` from those four.
+
+The file's header lists what the census still misses. None of it
+reaches the pod:
+
+- 20.15 use notes 15 to 26: note 14 runs across a page and restarts its
+  own list, and the block ends there. They are about uses in OI, OI-NC and
+  IND, which have no dwelling row.
+- Chapter 70 use notes 14 and 15 of Table 70.15.20.A (emergency shelters;
+  exempt from minimum FAR). Note 16, which the ADU row cites, is not
+  printed at all.
+- The UPAA's "Page II ofl2", a page number read as a marker.
+
+Failed fetches for Beaverton: none. `apps2.beavertonoregon.gov` refused
+the scout (CONNECT 502) and was not needed.
 
 ## 3. Zones
 
@@ -292,6 +432,153 @@ The zoning layer's other tokens are ruled in `test_districts.py` `RULINGS`:
 - overlays: CRO, RFO, SID and SNRO;
 - not zones: FAR, GFA, ROW, TIA, UC, WHVS and ZC.
 
+### Beaverton
+
+The zone list is BDC 10.25, which classifies 28 districts, and all 28 are
+encoded. The keys are the spellings on the city's own zoning layer
+(`gisweb.beavertonoregon.gov/server/rest/services/Public_SharedServices/pubZoning/MapServer/0`,
+field `ZONE_NAME`). That layer prints `SC-E` where 10.25 lists "SC-E1 &
+3", and both SC-E columns of the use table print N, so one key serves.
+Lots reach the layer by the taxlots' `JURIS_CITY` = `BEAVERTON`.
+
+What the pod is here. Chapter 90 defines a Quadplex as "Four dwelling units
+total on a single lot in any configuration", or on four child lots of a
+middle housing land division, so the pod is a Quadplex everywhere. In MR,
+CM-MR and the commercial and multiple-use districts it is also a
+Multi-Dwelling ("attached dwellings in any number or configuration"). In
+RMA, RMB, RMC and CM-RM a multi-dwelling starts at five units. Every zone
+cites its own use table's Triplex and Quadplex row.
+
+Every density is per net acre. Chapter 90 "Acreage, Net" deducts streets,
+common driveways, environmentally constrained land (including water
+quality facilities and wetlands), public tracts and steep slopes, so each
+density carries `measured_on: net_developable_area`.
+
+Layer-wide values (`defaults`):
+
+- no parking minimum (60.30.10.3.A.1, "No minimum parking is required for
+  any use");
+- a parking maximum of 1.8 a unit (Table 60.30.10.5.A, the one-bedroom
+  row of "Duplex, Triplex, Quadplex, or Townhouse in Other Zone"; Zone A
+  and Zone B print the same). For four units that is 7.2, rounded to 7
+  stalls under note 4;
+- stalls 8.5 by 18.5 ft (60.30.10.7);
+- aisles 24 ft two-way and 20 ft one-way (60.30.15 note 5). Note 8(c)
+  gives middle housing 22 and 20 in RMA, RMB, RMC and CM-RM, which
+  override the default there;
+- the front lot line of a corner lot is the owner's choice (Chapter 90
+  "Lot Line, Front", "as determined by the applicant").
+
+A corner lot is defined (Chapter 90 "Lot, Corner": two streets, or a
+curved street whose lines meet at an interior angle "of less than 135
+degrees"). It is encoded as `intersecting_frontages` with
+`curve_at_or_below_deg: 135`; see Doubts.
+
+**The pod on one lot (22).** `quadplex_allowed: true`, with no variants:
+
+- Residential (20.05): MR, RMA, RMB, RMC.
+  - RMA, RMB and RMC need 3,000, 4,000 and 5,000 sq ft and 14, 20 and 20 ft
+    of width. Yards are 10 / 5 / 15. Heights are 40, 35 and 35 ft, and
+    FAR 1.60, 1.20 and 0.90 on net area.
+  - RMB and RMC carry the 20.30 height plane as a step-back: 25 ft at the
+    rear setback line (RMC also the front), rising 1:1.
+  - MR admits the pod only with its units attached (note 8). It has no
+    minimum lot, no height limit (60 ft by a residential lot line) and
+    FAR 4.0.
+- Cooper Mountain (20.22): CM-RM (4,000 sq ft, 45 ft), CM-MR, CM-HDR and
+  CM-CS. The last three admit the pod with its units attached.
+- Commercial (20.10): NS, CS, CC, GC, with units attached (note 11).
+  **NS** also carries note 1: only half of the contiguous area of any NS
+  district may be developed residentially. That is a share of the whole
+  district, which nothing measures, so the footnote ruling holds it
+  unmeasured and every NS lot is capped at UNKNOWN.
+- Multiple Use (20.20): RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR, SC-S. No row
+  states a minimum lot, a width or a height.
+- Downtown (Chapter 70): RC-BC, RC-OT, RC-MU, RC-DT. 70.05.15.7 exempts
+  Downtown development from Chapter 20 except 20.25, and from 60.05 except
+  lighting, so only Chapter 70's own tables and 60.30 reach these four.
+  The pod has ground-floor units, so the "with ground floor residential
+  units" rows are read.
+
+The middle housing standards of 60.05.60 are encoded in RMA, RMB, RMC and
+CM-RM:
+
+- S4, open area by lot size;
+- S11, parking at most 50 percent of the street frontage;
+- S13, 32 ft of driveway approach a frontage, and access from the street
+  of lowest classification.
+
+The commercial and multiple-use districts carry the 60.05 design standards
+instead:
+
+- parking kept out of the Primary Frontage and 20 ft off the right-of-way;
+- vehicle areas on at most 35 percent of the frontage;
+- 15 percent open space;
+- a 16-ft front maximum where the zone lists none (60.05.15.6.A).
+
+Beside a residential zone, 21 values take a stricter figure behind
+`abuts_residential_zone`: 10 side and rear setbacks, and 11 heights
+(60 ft by a residential lot line where the zone has no limit, 60.05.15.7,
+and 45 ft in CM-CS). Downtown runs the other way round. RC-BC, RC-OT and
+RC-MU owe side 10 and rear 20 (RC-OT rear 10) beside "property zoned
+residential and/or Downtown Transition (DT)", and no condition says "the
+neighbour is zoned RC-DT". So that stricter row is the base value, and
+the interior 0 is a variant behind `abuts_nonresidential_zone`, as
+Fairview holds its C zones. RC-DT's own table names only residential
+and keeps the first shape.
+
+**Minimum density is where most of these zones stop the pod.** Every
+admitting zone prints a minimum density, and the draft holds it as a
+hard floor (see Doubts). Four units meet it only on a net lot no larger
+than:
+
+| Minimum (du per net acre) | Zones | Largest net lot for four units |
+|---|---|---|
+| 7 | RMC | 24,891 sq ft |
+| 10 | RMB, CM-RM | 17,424 sq ft |
+| 12 | RC-E | 14,520 sq ft |
+| 17 | RMA | 10,249 sq ft |
+| 24 | TC-MU, TC-HDR, RC-OT | 7,260 sq ft |
+| 30 | SC-MU, SC-HDR, SC-S, RC-DT | 5,808 sq ft |
+| 34 | MR, CM-MR, CM-HDR, CM-CS, NS, CS, CC, GC | 5,125 sq ft |
+| 43 | RC-MU | 4,052 sq ft |
+| 60 | RC-BC | 2,904 sq ft |
+
+In the twelve zones at 30 and above, few lots big enough for the pod and
+its parking court will pass.
+
+**Refused (6).** `quadplex_allowed: false` with the use row's cite and no
+dimensions:
+
+- OI, OI-NC and IND: the Employment/Industrial use table (20.15) has no
+  dwelling row at all.
+- SC-E: N in both the SC-E1 and SC-E3 columns of Table 20.20.20.A.
+- **OI-WS and C-WS**, the two Washington Square districts. Row 1.C
+  (Triplex and Quadplex) prints N. Row 1.F (Multi-Dwelling) prints P with
+  a note: note 2 (OI-WS) admits only units on the "second story and
+  above" of a non-residential building, and note 3 (C-WS) only "in
+  conjunction with mixed-use developments" that are majority commercial
+  at the ground. The pod is neither. The Chapter 90 multi-dwelling
+  definition also excludes a number of units "prohibited in that zoning
+  district", which row 1.C does. Pinned in `test_washington_beaverton.py`.
+
+**Ruled, not encoded (2)**, under `zone_rulings`:
+
+- **WAcnty** (90 features, 646.4 acres) is a `pocket` of
+  `or/washington/_unincorporated`, with the zone read off the county's
+  own map. It marks annexed land that keeps its county zoning until the
+  city rezones it (BDC 10.40.1). Two doubts go with it; see Doubts.
+- **ROW** (29 features, 73.2 acres) is `unencodable`: right-of-way, which
+  10.35.1 zones as the land beside it to the centreline.
+
+The code's other district-like tokens are ruled in `test_districts.py`
+`RULINGS`, all not-a-zone:
+
+- the prefixes and fragments C-, CM-, HDR, MU, RM, SC-, TC- and WS;
+- FB-5, FB-10, FBN-10 and FBN-20, landscape buffer types of Table
+  60.05.25.13.D;
+- THPRD, the Tualatin Hills Park & Recreation District.
+
 ## 4. Refusals and absences
 
 Layer-wide NOT ENCODED entries in `_unincorporated.yaml`, each with its quote
@@ -385,6 +672,100 @@ middle-housing zones also list it as L (limited), not N.
 "The code states nothing": Zone B in Table 12.50.320-1 has no parking
 maximum for a quadplex, and UC-NC's Lot Frontage row has a blank
 Requirement cell.
+
+### Beaverton
+
+Layer-wide entries in `beaverton.yaml`, each quoted in a comment between
+`defaults` and `zones`:
+
+- NOT ENCODED: minimum FAR (Multiple Use row B.1, 0.30 to 0.60; Cooper
+  Mountain row I.1, 0.4 in CM-CS and CM-HDR). No field holds a floor on
+  FAR.
+- NOT ENCODED: the frontage occupancy of 60.05.15.6.A, "At least 60
+  percent of the site's Primary Frontage ... shall be occupied by a
+  building", and the lower shares after it. No field holds it.
+- Held as a hard floor: minimum density, without the 20.25.05.1.A escape
+  for a project that shows how the site could later reach the minimum,
+  or the three routes D.2 gives RMA, RMB, RMC and CM-RM. See Doubts and
+  Questions.
+- NOT ENCODED: rounding of the minimum unit count (20.25.05, up at 0.5).
+  The screen compares density, not a rounded count.
+- NOT ENCODED: the choice 60.05.11.3 gives between the design standards
+  (60.05.15 to 60.05.30) and the guidelines (60.05.35 to 60.05.50). The
+  guidelines have no numbers; the standards, the stricter track, are
+  encoded.
+- NOT ENCODED: garage setbacks. The pod has no garage.
+- NOT ENCODED: the 60.05.60 middle housing design rules beyond the
+  figures encoded (entries, windows, articulation).
+- NOT ENCODED: unit lots. A quadplex split by a middle housing land
+  division keeps the parent lot's standards (20.05 and 20.22), so the pod
+  is screened as a quadplex on one lot. The townhouse lot rows are a
+  different path.
+- NOT ENCODED: the 10.32 overlays, Historic (HO), Resource (RO) and
+  Cooper Mountain Parks (CMPO). They are not in `ZONE_NAME`, so they are
+  overlay data.
+- Clean Water Services: the net acre deducts water quality facilities,
+  wetlands and natural resource areas. The vegetated corridors behind
+  them are in Clean Water Services' standards, not the BDC. Overlay work.
+- Declared, not encoded: UPAA §V.D, as `qualified_by:
+  site_specific_limitation` on every admitting zone's setbacks, minimum
+  lot and height. Beaverton prints no lot coverage standard, so the
+  coverage clause has nothing to qualify.
+
+In the zones:
+
+- the FAR bonuses: 6.0 near Frequent Transit Service in MR, the
+  commercial zones and the multiple-use zones (20.05.16, 20.10.16,
+  20.20.16), and 20 percent more on heavily constrained sites (note 24,
+  20.25.10.3). The base 4.0 is held;
+- 60.05.60 S4.b (the outdoor area as a 12-ft square reachable from every
+  unit, and not in a front setback) and S11.a (cul-de-sac frontage
+  measured 20 ft back), in RMA, RMB, RMC and CM-RM;
+- the share of frontage a building must occupy (60.05.15.6.A), in every
+  commercial and multiple-use zone; only its 16-ft front maximum is held;
+- the 25-ft setback from Cooper Mountain Nature Park (Table 20.22.15 G.6
+  and note 25). It is ruled unmeasured, which caps CM-CS, CM-HDR, CM-MR
+  and CM-RM;
+- the NS district's 50 percent residential share (20.10 note 1), ruled
+  unmeasured, which caps NS;
+- the lower density rows that turn on distance: SC's 24 beyond 400 ft of
+  a light-rail platform, and RC-OT's 18 where Figure 70.15.10.2.3 says so;
+- in Chapter 70:
+  - S5.c, surface parking 5 ft from all property lines, on side and rear
+    lines;
+  - the street-facing side maximums;
+  - the reduced minimums for small sites of before 1999 (70.15.10.5).
+
+Step 10, the prohibition grep for "quadplex", "plex" and "middle housing"
+over all 17 documents. The hits are:
+
+- the use tables (20.05, 20.10, 20.20, Chapter 70);
+- the definitions;
+- the parking tables and yard rules of 60.30;
+- the middle housing standards of 20.22 and 60.05;
+- the procedures of 40.21 and 40.45.
+
+None prohibits the pod in a zone this layer admits it in. The only N is
+the use-table cell each refusing zone cites. The OI-WS and C-WS
+Multi-Dwelling rows admit dwellings only above or within a commercial use
+(see Zones).
+
+"The code states nothing":
+
+- No lot coverage standard in any district.
+- No side setback row for a quadplex on one lot in 20.05. The rows are
+  written for townhouses and for land divisions, and the perimeter figure
+  (5 ft) is held.
+- No minimum lot area in 18 zones: MR, CM-MR, CM-HDR, CM-CS, the four
+  commercial, the six multiple-use and the four downtown districts
+  (downtown through 70.05.15.7, which takes Chapter 20 away). These are
+  held `exempt`. Some still print a width (MR and CM-MR 14 ft, NS 70 by
+  100).
+- No height limit in MR, CS, CC, GC, RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR
+  and SC-S. They are held `exempt`, with the 60-ft figure by a residential
+  lot line as the variant.
+- No parking maximum ("N/A") for a quadplex in RMA, RMB, RMC and CM-RM.
+  These are held `exempt`.
 
 ## 5. Doubts
 
@@ -575,6 +956,138 @@ Map and ledger:
 - **The footnote census** found only the three misread flag-lot rows; see
   Documents.
 
+### Beaverton
+
+Each doubt is written the conservative way, with a comment at its line in
+`beaverton.yaml` or its ruling in the footnote file.
+
+The ones that decide the most lots:
+
+- **UPAA §V.D, declared on every admitting zone.** When a partly built
+  development approved by the county is annexed, the city "may, at its
+  discretion, continue to apply the COUNTY's development standards relating
+  to setbacks, lot sizes, lot coverage and heights". Nothing measures which
+  lots those are. The brief says to declare it, so every admitting zone's
+  setbacks, minimum lot and height carry `qualified_by:
+  site_specific_limitation`, citing §V.D. The effect is that no Beaverton
+  lot screens GREEN; one the pod otherwise fits reads UNKNOWN. A list of
+  those developments, from the city or the county, would lift it.
+- **Minimum density as a hard floor.** 20.25.05.1.A lets a project below
+  minimum density proceed if it shows "how, in all aspects, future
+  intensification of the site to the minimum density or greater can be
+  achieved". D.2 gives RMA, RMB, RMC and CM-RM three routes, one of them a
+  plan for future partitioning. No field holds a "may fall short if it
+  shows" path, so every minimum is a floor. With minimums of 30 to 60 an
+  acre in twelve zones, this fails the pod on most lots there (see the
+  table under Zones). Rounding (up at 0.5) is not encoded either; on
+  small lots it can lower the floor.
+- **NS 50 percent.** Note 1 caps residential development at half the
+  contiguous area of each NS district. `site_specific_limitation` is the
+  nearest registered fact, though the share belongs to the district, not
+  the parcel. The ruling is unmeasured, so NS lots cap at UNKNOWN.
+- **Public utility easements.** 20.05 note 7 and 20.22 note 7: "In no case
+  shall a building encroach into a Public Utility Easement". Ruled as
+  Oregon City's were, on `utility_easement`, which caps MR, RMA, RMB, RMC,
+  CM-MR and CM-RM. Without an easement layer those zones cannot reach
+  GREEN either, which the UPAA already does to every zone.
+- **The parking maximum, 1.8 a unit.** The "Other Zone" row rises with
+  bedrooms (1.8 for one, 2.0 for two or more), and the pod's bedroom count
+  is not a site fact. The lowest row is held: 7.2, rounded to 7 stalls
+  (note 4). A design that draws 8 stalls would be over the cap if its
+  units have one bedroom and within it if they have two.
+
+Rows that turn on something the screen does not measure. In each case the
+stricter figure is held everywhere:
+
+- **SC-MU, SC-HDR, SC-S minimum density:** 30 within 400 ft of a
+  light-rail platform, 24 beyond (note 2). 30 is held.
+- **RC-OT minimum density:** "18 or 24" by Figure 70.15.10.2.3, a map.
+  24 is held.
+- **The commercial front maximum (20.10 note 2).** The 16-ft maximum is
+  limited to parcels over 60,000 sq ft "pursuant to Section 60.05.15.6",
+  but 60.05.15.6.A states no such threshold. It is held on every lot.
+- **The 60-ft height by a residential lot line** (60.05.15.7.A) applies
+  "within 30 feet"; it is held behind `abuts_residential_zone`, which is
+  about the neighbour, not the distance.
+- **Downtown beside RC-DT.** The RC-BC, RC-OT and RC-MU setback tables
+  add a side and rear setback on "property zoned residential and/or
+  Downtown Transition (DT)". No condition says "the neighbour is zoned
+  RC-DT", so the stricter row is held as the base on every lot in those
+  three zones, and the interior 0 sits behind `abuts_nonresidential_zone`.
+  Beaverton declares no neighbour lists yet, so every such lot screens at
+  the stricter row until one is declared, and that list must leave both
+  the residential zones and RC-DT off the condition. RC-MU's row reads
+  "residential and Downtown Transition" without the "or"; it is read as
+  RC-BC's "and/or", the stricter reading. (An earlier draft of this layer
+  had it the other way round, the 0 as the base, and was corrected before
+  commit.)
+- **RC-DT maximum density on net acres.** 20.25.05 speaks only of the
+  minimum; the maximum is read on net like the minimum beside it, the
+  stricter reading.
+
+Readings of the text:
+
+- **The side setback row (20.05).** F.2 is written for townhouses and for
+  land divisions; a quadplex on one lot has no row. The perimeter figure
+  (5 ft) is held.
+- **Corner lot "less than 135 degrees".** The field takes the figure as
+  at-or-below, so a curve of exactly 135 degrees counts as a corner here
+  and not in the code. A one-degree gap.
+- **Corner sight clearance.** A 20.05 note says corner lots "may need" a
+  greater width for the Engineering Design Manual's sight clearance
+  areas. The manual was not fetched and no figure is stated, so the note
+  is dismissed. On a small corner lot the sight triangle may reach into
+  the pod's footprint.
+- **Driveways (60.30.15 note 8(b))** go to the Engineering Design Manual.
+  Not read.
+- **Standards or guidelines (60.05.11.3).** An applicant may take the
+  guidelines track instead of the standards. The standards are encoded;
+  a guidelines application could pass where the screen fails it.
+- **Minimum FAR** is not held, so a small pod on a large Multiple Use or
+  Cooper Mountain lot passes the screen and may fail the code.
+- **C-WS beside a commercial building.** If the pod were part of a larger
+  development that is majority commercial at the ground, note 3 might
+  admit it as a multi-dwelling. The pod on its own lot is not that, so C-WS
+  refuses.
+- **20.05.16.1.b** refers to "20.10.16.1.a", which looks like a misprint
+  for 20.05.16.1.a. MR's FAR of 4.0 is the same either way.
+- **The 20.20 WCF marker.** The tower-height row of the Multiple Use
+  wireless table carries the marker of the OI-WS yard note before it,
+  apparently misnumbered for note 6 ("Inclusive of antenna"). A wireless
+  tower is not the pod; dismissed.
+
+Annexed county land (WAcnty):
+
+- **Supersession.** BDC 10.40.1 keeps the county's zoning on annexed land
+  "except that the provisions of Chapters 30 through 80 of this Code shall
+  supersede comparable provisions". So the city's parking (60.30) and
+  design review (60.05) replace the county's on these lots. The pocket
+  screens them under the unincorporated layer, county figures and all.
+  Which of those give way is not ruled.
+- **Map coverage.** Whether the county's zoning map still shows a district
+  on a lot after annexation was not checked. If it does not, the pocket
+  resolves to nothing.
+
+Ledgers and readers:
+
+- **Attribution.** `python -m flats.encode.attribution --layer
+  or/washington/beaverton` reports that 80 of 341 values cite a section
+  their text is not in. A throwaway script (not committed) checked every
+  one. It looked for the nearest encodeplus section heading above each
+  quoted span (the shape "60.05.15. Building Design and Orientation
+  Standards.") and compared it with the sections the cite names. All 80
+  sit under a cited section, so the reader's idea of which section a line
+  is in does not fit this layout. Why was not traced. The blind re-read
+  should look again.
+- **The census's misses** (Documents): 20.15 notes 15 to 26, Chapter 70
+  notes 14 to 16, and the UPAA's page number. None reaches the pod.
+- **A false close in the routing ledger.** `test_routing.py` `FOLLOWED`
+  pins `70.15.10 -> 70.15.10.5` as followed. It is not: a wrapped "See
+  Section / 70.15.10.5 ..." in RC-OT's Table 70.15.10.2.A note 2 is read
+  as a heading, because a number from the chapter's own series skips the
+  wrapped-line guard. 70.15.10.5 (small sites of before 1999) was not
+  read. Pinned so it is seen; the reader fix is under Owed locally.
+
 ## 6. Questions for Steph
 
 - **North Bethany R-25+.** The county's densest North Bethany district allows
@@ -643,18 +1156,60 @@ Map and ledger:
   Adding "borders a named zone" would be a change to the rules, which this
   session could not make. Is it worth making?
 
+### Beaverton
+
+- **Developments the county had partly approved.** Beaverton's agreement
+  with the county says that when the city annexes a development the county
+  had already approved and part-built, the city may keep applying the
+  county's setbacks, lot sizes and heights to it. Nothing in the data says
+  which lots those are. So the draft never passes a Beaverton lot outright:
+  a lot the building fits comes back as "needs a closer look", never as a
+  plain yes. Does the city or county keep a list of these developments? With
+  one, those lots could be marked and every other lot could pass normally.
+- **The minimum number of homes per acre.** Every Beaverton zone that
+  allows the building also sets a minimum number of homes per acre. Four
+  homes meet it only on a small lot: at most about 5,100 sq ft in most of
+  the apartment and commercial zones, 2,900 sq ft downtown, and about
+  25,000 sq ft in the lowest-density zone. The draft fails anything larger.
+  The code lets a project fall short if it shows how the site could reach
+  the minimum later, for example by leaving room to split off more lots.
+  Should a larger lot where that is plausible count as a fit, or is failing
+  it the right starting point?
+- **The neighbourhood service zone (NS).** Only half of each NS district's
+  area may be used for homes, and whether that share is already taken
+  depends on the neighbours, not the lot. The draft never passes an NS lot
+  outright. Is that acceptable, or should NS be left out entirely?
+- **Utility easements.** In six residential zones (the multi-unit and
+  mixed residential zones, two of them at Cooper Mountain) the code says a
+  building may never sit on a public utility easement. There is no easement
+  map, so those lots cannot pass outright either. Is there an easement
+  source worth buying or asking the county for?
+- **County zoning kept after annexation.** About 650 acres inside Beaverton
+  still carry county zoning, which the city keeps after annexation. The
+  city's own parking and design rules replace the county's on that land;
+  the rest is the county's. The draft screens these lots under the county's
+  rules, and has not worked out which of those the city's rules replace. Is
+  screening them under the county's rules good enough for now?
+- **Next to the downtown transition zone.** In three downtown zones the
+  side and rear setbacks are 10 or 20 feet next to houses or the downtown
+  transition zone, and nothing next to anything else. The screen cannot yet
+  tell which neighbour a lot has, so it uses the larger figures everywhere.
+  This is the same question as Hillsboro's SCR-DNC above.
+
 ## 7. Tests
 
-Last full run before the Hillsboro commit (`uv run pytest flats/tests -q
--n auto`, both layers, 2026-09-29):
+Last full run before the Beaverton commit (`uv run pytest flats/tests -q
+-n auto`, all three layers, 2026-09-29):
 
-**1 failed, 3620 passed, 5 skipped in 320 s.** `uv run ruff check flats/`:
-all checks passed.
+**1 failed, 3641 passed, 5 skipped in 354 s.** `uv run ruff check flats/
+scripts/`: all checks passed. (Before the Hillsboro commit it was 1 failed,
+3620 passed, 5 skipped.)
 
 The one failure is expected and is not fixed here:
 
 - `test_unweighed_layers.py::test_no_encoded_layer_is_outside_the_corpus_that_ranks_the_work`
-  lists `or/washington/_unincorporated` and `or/washington/hillsboro`. The
+  lists `or/washington/_unincorporated`, `or/washington/hillsboro` and
+  `or/washington/beaverton`. The
   coverage ledger that ranks the work has no Washington County lots, because
   building it needs the county map and quadfit, which are local work (Owed
   locally). It will fail for every Washington layer this branch adds, until
@@ -690,22 +1245,38 @@ this session, so none was edited:
 The unincorporated layer adds no corner variant, so these four are
 Hillsboro's alone. See Owed locally.
 
+Re-run on the Beaverton tree (2026-09-29): **4 failed, 312 passed.** The
+same four tests, failing on the same Hillsboro rows. Beaverton adds no
+corner variant and no new failure.
+
 ### Pinned counts and sets moved on this branch
 
-- `test_port.py`: 21 layers (20 jurisdictions and the state layer), 351
-  zones. Unincorporated took it to 20 and 314; Hillsboro to 21 and 351.
-- `test_refusals.py`: notes 129, comments 194, tests 18 (unincorporated
-  had taken comments from 127 to 148 and notes to 122).
-- `test_exemptions.py`: stated 338, numeric 55, marker 0, dash 2, silent 2
-  (272 after unincorporated).
+- `test_port.py`: 22 layers (21 jurisdictions and the state layer), 379
+  zones. Unincorporated took it to 20 and 314; Hillsboro to 21 and 351;
+  Beaverton to 22 and 379.
+- `test_refusals.py`: notes 134, comments 215, tests 18 (unincorporated
+  had taken comments from 127 to 148 and notes to 122; Hillsboro to 194
+  and 129; Beaverton added 21 comments and 5 notes, listed in the test).
+- `test_exemptions.py`: stated 370, numeric 55, marker 0, dash 2, silent 2
+  (272 after unincorporated, 338 after Hillsboro). Beaverton's 32 are all
+  `stated`: 18 minimum lot areas, 10 maximum heights, 4 parking maximums.
 - `test_districts.py`: four unincorporated rulings (ASC 2 overlay; RPZ,
   THPRD, TVWD not zones), TO:R80-120 in `BY_HAND`, and the Hillsboro
   rulings (ANX, CO, and the two alias spellings "SID I-P" and "SC-BP").
+  Beaverton adds 13 `RULINGS`: eight halves of column heads the encodeplus
+  export breaks across two lines ("C-" over "WS", "CM-", "SC-", "TC-",
+  "HDR", "MU", "RM", "WS"), four landscape buffer types of Table
+  60.05.25.13.D (FB-5, FB-10, FBN-10, FBN-20), and THPRD, the park district.
 - `test_alley.py`: lines keyed to the rear line 28 + 19 + 1 (Hillsboro
   SCR-OTC's rear-loaded yard), and Hillsboro added to the layers whose
   alley access is required (12.50.715 C.2.c.i).
 - `test_routing.py` `OPEN`: two Hillsboro rows, 12.61.400 to 12.23.300 and
   12.61.400 to 12.50.845. Why they stay open is under Owed locally.
+  Beaverton adds two: 20.05.15 to 20.25.05 (the single-room-occupancy
+  note, not the pod's path) and 20.15.15 to 60.50.05 (accessory structures
+  in the three zones that refuse). `FOLLOWED` gains five Beaverton rows:
+  the four food-cart notes pointing at their own tables, and
+  70.15.10 to 70.15.10.5, a false close pinned so it is seen (Doubts).
 - `test_height.py`: `STOREY_FLOOR_ABOVE_TWO` = Hillsboro MU-VTC (3 stories
   inside a Center Core, held everywhere).
 - `test_min_height.py`: `FLOORS_ABOVE_THE_POD` pins the five Hillsboro
@@ -713,18 +1284,47 @@ Hillsboro's alone. See Owed locally.
   UC-MU and UC-AC 35 ft, MU-VTC 3 stories. It is pinned both ways, so a new
   floor fails it, and so does one of these that stops binding. A ceiling
   held as exempt (UC-AC's "None") is skipped as no ceiling.
-- `test_gresham_last_notes.py`: the silent-maximum pair is now Wilsonville
-  OTR and Hillsboro SCC-DT (Figure 12.61.400-D).
+- `test_clackamas_unincorporated_height.py`: the silent-maximum pair is
+  now Wilsonville OTR and Hillsboro SCC-DT (Figure 12.61.400-D).
 - `test_definitions_register.py`: Hillsboro added to the layers that define
-  a corner lot (12.01.500, not greater than 135 degrees).
-- `test_clackamas_unincorporated_height.py`: the parking-ceiling layers are
-  now four, with Hillsboro (Table 12.50.320-1, "Quadplex 2" in Zone A).
-  The test was renamed from "the three" to "the four".
-- `test_readiness.py`: 42 passed, with the new
-  `test_a_city_that_has_no_standards_requiring_parking_states_zero` (see
-  Reader changes).
+  a corner lot (12.01.500, not greater than 135 degrees), then Beaverton
+  (Chapter 90, "less than 135 degrees"; the one-degree gap is a doubt).
+- `test_gresham_last_notes.py`: the parking-ceiling layers are now four,
+  with Hillsboro (Table 12.50.320-1, "Quadplex 2" in Zone A). The test was
+  renamed from "the three" to "the four", and to "the five" with
+  Beaverton (Table 60.30.10.5.A, 1.8 a unit on the "Other Zone" row).
+  (Checkpoint 5 of this note named these two files the wrong way round;
+  corrected at checkpoint 6.)
+- `test_readiness.py`: 43 tests, with the new
+  `test_a_city_that_has_no_standards_requiring_parking_states_zero`
+  (Hillsboro) and `test_a_two_digit_marker_is_cut_only_where_its_note_is_quoted`
+  (Beaverton). See Reader changes.
+- `test_footnotes.py`: five new tests for the Beaverton reader changes:
+  `test_footnotes_is_a_notes_heading`,
+  `test_the_beaverton_page_footer_does_not_end_a_notes_list`,
+  `test_a_lead_line_may_name_the_section_instead_of_the_table`,
+  `test_a_number_wrapped_to_the_start_of_a_line_is_not_the_next_note`,
+  `test_a_list_that_goes_back_further_than_one_still_ends`.
+- `test_applied.py`: 60 to 85 rows, Beaverton's 21 encoded sentences in
+  25 printings, every one confirmed. Three first read `broken` or
+  `unreadable` and their claims were rewritten (the test says which).
+- `test_crossrefs.py`: the Washington County-Beaverton Urban Planning Area
+  Agreement joins the documents that answer for no code section (it numbers
+  its parts in Roman numerals).
 - `flats/config/gaps.json` and `data/flats/exemptions.csv` regenerated with
-  both layers.
+  all three layers. `gaps.json` gains a Beaverton section with 80
+  `misattributed` rows and no gaps (Hillsboro's section, committed earlier,
+  has 121). That ledger guesses a quote's section from the nearest heading
+  above each span, so a quote that pairs a table row with its note, or a
+  heading with a paragraph under it, reads as naming two sections. One row
+  was checked by hand (NS `setback_front_max_ft`, cited 60.05.15, "found"
+  60.05.35): the quoted lines are 60.05.15.6, and the cite is right. The
+  rest are unread; a reviewer signing a value should check its row.
+- `data/flats/crossrefs.csv` regenerated over the whole corpus (`python -m
+  flats.encode.crossrefs --binding`). Besides the Washington rows it
+  rewrites some Clackamas, Fairview and Portland rows. Those come from
+  store text that changed on main before this branch; none of those layers
+  is edited here.
 
 ### New test files
 
@@ -739,6 +1339,14 @@ Hillsboro's alone. See Owed locally.
   flag lot (SCR-OTC and MU-VTC, two parametrised cases), refusals carrying
   the use row and nothing else, the ruled map codes, no parking minimum,
   and nothing `verified`.
+- `test_washington_beaverton.py` (11 tests, 15 cases): the 28 districts
+  10.25 classifies, the pod on one lot in 22 zones, the two Washington
+  Square districts refusing though Multi-Dwelling says P, refusals carrying
+  the use row only, NS capped by its district share, WAcnty and ROW
+  ruled, the UPAA qualifier on every admitting zone's setbacks, lot and
+  height, the parking maximum (1.8 and the four N/A zones), RMB and RMC's
+  height plane, downtown holding the setback owed beside RC-DT, and nothing
+  `verified`.
 
 ### Ledgers (step 9)
 
@@ -779,6 +1387,50 @@ Hillsboro:
   12.40 (MR-1, MU-C, MU-N, R-10, R-4.5, R-6, R-7, R-8.5, SCR-DNC, SCR-HD,
   SCR-MD, UC-AC, UC-MU, UC-RM), each "0 unread of 3".
   `qualified --write-caps` left `caps.json` unchanged.
+
+Beaverton (all run on 2026-09-29, before the downtown setback fix, which
+moves quotes between two lines of the same tables and changes no count
+below):
+
+- `crossrefs --binding`: 40 unfetched, all beside a number the screen
+  uses, 35 of them beside a distance. Checked one by one:
+  - 19 are in stored documents. encodeplus prints a heading as
+    "60.05.15. Building Design…" and numbers subsections inside the
+    text, and the ledger does not see that as the section: 20.10.16.1,
+    20.25.10.4, 60.05.15.6 and .7, 60.05.25.4 and .17, 60.05.35.5,
+    60.30.10.5 and .11, 60.55.35.3, 70.10.1, .2, .6, .7 and .8, and the
+    four downtown tables 70.15.10.1 to .4.
+  - 10 are figures, drawings nobody has read: the eight Chapter 70
+    setback figures (70.15.10.1.1 to 70.15.10.4.2), Figure 70.15.10.2.3
+    (RC-OT's density), and Figure 70.20.10.6.2 (Active Frontages Map).
+  - 11 are not stored: 40.30 (zero yard setbacks), 40.55.15.1 (parking
+    determination), 60.35.10 (more FAR with a planned unit development),
+    60.11 (food carts), 60.20.20 (manufactured homes), 60.50.25.14
+    (vehicle camping), 60.70.35.14 (wireless), 10.70.10 (emergency
+    shelters), OAR 845, the Comprehensive Plan's 1.5.2, and "30", which
+    is 10.40.1's "Chapters 30 through 80". None is on the pod's path;
+    40.30, 40.55.15.1 and 60.35.10 are reliefs an applicant could ask for.
+- `uncited`: 160 statements of 607 measured lines not quoted by any value.
+  Mostly standards on paths the pod does not take (detached and townhouse
+  lots, single-room occupancy, commercial buildings, wireless towers).
+- `missed`: 160 statements naming a screened field; 37 state a figure the
+  corpus has never held (the ledger's own caution: most are another use's
+  column).
+- `applied`: encoded 25, confirmed 25.
+- `qualified`: 315 Beaverton rows, none unread. `qualified --write-caps`
+  wrote the Beaverton caps into `caps.json` (Zones).
+- `attribution`: 80 of 341 values cite a section their text is not in. All
+  80 were checked by hand against the section headings above the quoted
+  lines, and all sit under a cited section (Doubts).
+- `waved`: 258 Beaverton dismissal cards over 3,753 qualified values, in
+  the corpus-wide set of 1,049. None was re-read blind; that is the local
+  second reading.
+- `stale`, `travelled`, `unheld`: no Washington rows (run after the fix).
+- `consumed` (corpus-wide, by field): 70 Beaverton values sit in fields the
+  screen does not read, so none of them can change an answer today: front
+  maximums (16), parking kept off the frontage (17) and off the street
+  (17), vehicle frontage share (16), and driveway approach widths (4). They
+  are the 60.05 and Chapter 70 design standards; a wrong one would not show.
 
 ## 8. Owed locally
 
@@ -861,6 +1513,66 @@ Hillsboro:
   (`FLOORS_ABOVE_THE_POD`, see Tests). The plan's sentence is stale. It was
   not edited here, because that file is off limits to this session.
 
+### Beaverton
+
+- **`flats/provenance/sources.py` `OFFICIAL`.** Add `online.encodeplus.com`
+  (the city's published code) and `www.washingtoncountyor.gov` (the UPAA).
+  Until then every Beaverton document fetches with "unknown source", and
+  no value citing one can be verified. Not edited here (off limits).
+- **`flats/provenance/fetch.py`: the encodeplus page footer.** Every page
+  of the export ends "Beaverton Development Code" and "Date Printed: …
+  Chapter NN, XX-NN". The footnote reader now skips both (Reader changes),
+  but a fetch-time strip would keep them out of every reader. Proposed,
+  not made.
+- **`DECLARED_OWING`: nothing.** The resolver was run on every Beaverton
+  zone on 2026-09-29, and none owes a required field.
+- **The coverage ledger with Beaverton lots**, which `test_unweighed_layers`
+  waits on (Tests).
+- **The UPAA development list.** Until someone has the list of developments
+  annexed after county approval, `site_specific_limitation` caps every
+  admitting zone. Question for Steph.
+- **Neighbour lists (`neighbours:` in the layer).** Beaverton declares
+  none, so `abuts_residential_zone` and `abuts_nonresidential_zone` stay
+  unstated on every lot. A local reader declaring them must keep every
+  residential zone and RC-DT off `abuts_nonresidential_zone`'s `true_for`
+  (RC-BC, RC-OT and RC-MU owe a setback beside both), and must decide
+  whether WAcnty counts as residential (it is whatever county zone the map
+  shows, so probably neither list).
+- **Registry facts the layer had to approximate** (a `flats/rules/` change,
+  not made):
+  - a district-share fact for NS's 50 percent residential cap (held on
+    `site_specific_limitation`);
+  - the Cooper Mountain Nature Park boundary for the park setback in the
+    Cooper Mountain zones (held on `site_specific_limitation`);
+  - a named-neighbour-zone fact ("borders RC-DT"), the same ask as
+    Hillsboro's SCR-DNC.
+- **An easement layer** for `utility_easement` (MR, RMA, RMB, RMC, CM-RM,
+  CM-MR).
+- **Map data the stricter figures wait on:** distance to a light-rail
+  platform (400 ft, SC-MU, SC-HDR, SC-S density), Figure 70.15.10.2.3
+  (RC-OT's 18 or 24), and the parking zone map (it does not move the
+  quadplex maximum, but it moves other rows).
+- **WAcnty.** Whether the county's zoning map still carries a district on
+  annexed lots (the pocket resolves through it), and which county standards
+  10.40.1 lets the city's Chapters 30 to 80 replace.
+- **Documents not stored** (listed under Documents), of which the
+  Engineering Design Manual matters most: driveways and corner sight
+  clearance both point there.
+- **Clean Water Services.** The net acre deducts water quality facilities,
+  wetlands and natural resource areas, and the natural area definition
+  names CWS vegetated corridors. Overlay work, as for the county.
+- **Readers, proposed not made:**
+  - `crossrefs`: recognise encodeplus's "60.05.15. Title." heading shape
+    and its in-text subsections; 19 of the 40 unfetched BINDING rows are
+    in stored documents.
+  - `routing`: the wrapped-line guard is skipped for a number from the
+    document's own chapter, which falsely closes `70.15.10 -> 70.15.10.5`
+    (pinned in `FOLLOWED`).
+  - `attribution`: why 80 values read as citing a section their text is
+    not in, when a hand check puts all 80 under a cited section.
+- **The blind second reading, re-screen and promotion**, including the 258
+  Beaverton `waved` cards.
+
 ## Reader changes (before and after)
 
 - `flats/encode/glossary.py` learned the CDC's hyphenated section numbers
@@ -887,3 +1599,40 @@ Hillsboro:
   12.01.500. Before: 344 entries, 28 out of order, and the chapter was read
   as skimmed. After: 308 entries, 11 out of order, read whole.
   `glossary.py` itself is unchanged.
+
+Beaverton (all figures from 2026-09-29, over the whole corpus):
+
+- `flats/encode/footnotes.py`, four changes, made one at a time so each
+  can be judged. Counts are notes captured, unread, and blocking across
+  the corpus, with Beaverton's captured count in brackets:
+
+  | Step | Change | Captured / unread / blocking [Beaverton] |
+  |---|---|---|
+  | Before | — | 1180 / 112 / 112 [14] |
+  | 1 | `NOTES_HEAD` takes "Footnotes:" (`(?:foot)?notes?`) | 1328 / 260 / 260 [162] |
+  | 2 | `FURNITURE` drops the page footer: `^Beaverton Development Code$` and `^Date Printed: … Chapter NN, XX-NN$`, both anchored whole | 1373 / 305 / 305 [207] |
+  | 3 | `NOTES_LEAD` takes "refer to superscripts found in Section 20.10.20" (`(?:table\|section)`) | 1464 / 396 / 396 [298] |
+  | 4 | `_skipped_back`: a list that runs N, N+2, N+1 puts the N+2 back into note N | 1471 / 403 / 403 [305] |
+
+  Every new unread note is Beaverton's, and all were then read and ruled
+  (Documents). At every step the corpus moved by exactly Beaverton's
+  change, so no other layer's notes moved.
+  Step 4 fixes Table 20.05.15, where "If footnote 16 and / 17 apply" wraps
+  a 17 to the start of a line: before, the reader took that 17 as note 17
+  and stopped, losing notes 16 to 23 (`bdc.20.05.residential.txt`
+  L406-L425); after, it reads them.
+  Five new tests in `test_footnotes.py` (Tests).
+- `flats/encode/readiness.py`: `_NOTE_BODY` and `_unmarked_by_notes`.
+  Beaverton glues two-digit note markers onto the figures ("2018" is 20 ft
+  with note 18, "3514" is 35 with note 14). The existing `_unmarked` cuts
+  only one digit. The new function cuts a two-digit tail only when the
+  quoted text also carries that note's own line ("18. …"), so Gresham's
+  "12.458" is not read as 12.4. Before: 5 misquotes across the corpus, all
+  Beaverton (MR `setback_front_max_ft`, RMB `max_height_ft`, RMC
+  `max_height_ft`, CM-RM `min_lot_width_ft`, CM-MR `max_far`). After: none,
+  and still none after the downtown setback fix. New test
+  `test_a_two_digit_marker_is_cut_only_where_its_note_is_quoted`.
+- Not a reader change: Beaverton's Chapter 90 slice ends at "ADDITIONAL
+  ORDINANCES - PART 1", so the glossary reads only the definitions. Before:
+  873 entries, 75 out of order, read as skimmed. After: 522 entries, 6 out
+  of order, read whole.

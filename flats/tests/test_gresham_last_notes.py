@@ -107,7 +107,7 @@ def test_gresham_states_an_auto_parking_maximum_and_none_is_encoded() -> None:
         assert design.parking.stalls_per_unit.preferred <= 2.0, design.id
 
 
-def test_the_layers_that_state_a_parking_ceiling_are_the_four_that_state_one() -> None:
+def test_the_layers_that_state_a_parking_ceiling_are_the_five_that_state_one() -> None:
     """Portland was the only one until 2026-08-27, and Milwaukie is the second.
 
     Milwaukie's is the tighter of the two and it is aimed at this housing type
@@ -136,6 +136,15 @@ def test_the_layers_that_state_a_parking_ceiling_are_the_four_that_state_one() -
     Zone A figure citywide because the zone map is a figure nothing reads.
     The test was renamed from "the three" the same day.
 
+    Beaverton is the fifth, from 2026-09-29, a cloud draft: Table
+    60.30.10.5.A prints a maximum on the row "Duplex, Triplex, Quadplex, or
+    Townhouse in Other Zone" by bedroom count -- 1.8 a unit for one bedroom,
+    2.0 for two or more -- and its Zone A and Zone B columns print the same
+    figures, so the unread parking zone map does not move it. The draft holds
+    1.8, the lowest, as the layer default (seven stalls for the pod after note
+    4's rounding). RMA, RMB, RMC and CM-RM print N/A on their own row and are
+    held exempt. Renamed from "the four" the same day.
+
     A stated absence is not a ceiling. Portland writes `exempt: true` on the
     fifteen zones whose cell reads "No maximum", Wilsonville writes it on the
     whole layer because Table 5's middle housing row reads "No Limit", and
@@ -162,4 +171,5 @@ def test_the_layers_that_state_a_parking_ceiling_are_the_four_that_state_one() -
         "or/clackamas/milwaukie",
         "or/clackamas/west-linn",
         "or/washington/hillsboro",
+        "or/washington/beaverton",
     }

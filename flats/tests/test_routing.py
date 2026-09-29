@@ -193,6 +193,18 @@ def rows() -> list[Routing]:
 #: SCC-DT", hands nothing on: it switches the city's step-back standard off
 #: in the zone, and nothing in the layer cites 12.50.845 because there is
 #: nothing there to hold.
+#:
+#: *Two from Beaverton, 2026-09-29*, the same cloud session. Table 20.05.15
+#: note 22 lets up to six single-room occupancy units on a lot "except for
+#: in the MR zone where minimum and maximum density requirements are subject
+#: to Section 20.25.05". 20.25.05 is stored, and the layer names 20.25.05.1.A
+#: in every minimum density's `measured_on` cite, but those quote the
+#: Chapter 90 net acreage definition, so no value is read from inside
+#: 20.25.05 and the row stays open. It is the single-room-occupancy path,
+#: not the pod's. The second is Table 20.15.15 note 3, "Except as provided
+#: by Section 60.50.05 (Accessory Uses and Structures)", beside the setbacks
+#: of OI, OI-NC and IND -- zones that refuse -- which is the Clackamas shape
+#: above.
 OPEN = {
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",
@@ -226,6 +238,8 @@ OPEN = {
     "or/multnomah/portland 33.140.210 -> 33.140.215",
     "or/washington/hillsboro 12.61.400 -> 12.23.300",
     "or/washington/hillsboro 12.61.400 -> 12.50.845",
+    "or/washington/beaverton 20.05.15 -> 20.25.05",
+    "or/washington/beaverton 20.15.15 -> 60.50.05",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
@@ -292,6 +306,29 @@ FOLLOWED = {
     # 2026-09-25: the alley back-out room, quoted from inside 130 (see the
     # note on OPEN).
     "or/multnomah/portland 33.266.120 -> 33.266.130",
+    # 2026-09-29, Beaverton (a cloud draft). Four use tables print the same
+    # note: food cart pods "are exempt from the Site Development Standards of
+    # 20.10.15 but are subject to the standards of 60.11". The ledger reads
+    # the pointer as one into the standards table, which the layer reads for
+    # every zone it encodes; 60.11 is not stored and is counted by the
+    # crossrefs ledger instead. Nothing the pod needs is in either.
+    "or/washington/beaverton 20.10.20 -> 20.10.15",
+    "or/washington/beaverton 20.15.20 -> 20.15.15",
+    "or/washington/beaverton 20.20.20 -> 20.20.15",
+    "or/washington/beaverton 20.22.20 -> 20.22.15",
+    # A FALSE CLOSE, pinned so it is seen. The row is RC-BC's Table
+    # 70.15.10.1.A note 2 (L230). RC-OT's Table 70.15.10.2.A prints the same
+    # note, and there "See Section" / "70.15.10.5 Supplemental Density and
+    # Intensity Standards" wraps across two lines; the second
+    # (bdc.70.downtown.txt L298) reads as a heading, because a number under
+    # the document's own chapter skips the wrapped-line guard. Every line
+    # quoted below it in 70.15.10 -- RC-OT's setbacks onward -- then counts
+    # as read from 70.15.10.5, which nobody opened: the layer's Chapter 70
+    # comment says the reduced minimums for small pre-1999 sites are not
+    # encoded. It is a relief from the
+    # minimum density, so the pod's answer does not move; the reader fix is
+    # proposed in the Washington handoff rather than made here.
+    "or/washington/beaverton 70.15.10 -> 70.15.10.5",
 }
 
 

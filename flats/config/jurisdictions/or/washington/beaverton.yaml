@@ -1,0 +1,3064 @@
+label: Beaverton
+kind: city
+eligible: true
+notes: >-
+  DRAFT, cloud session 2026-09-29. Read from the Beaverton Development Code
+  (BDC) as the city's encodeplus host exports it whole ("Date Printed:
+  September 28, 2026"), with the Washington County - Beaverton Urban
+  Planning Area Agreement (UPAA) for the annexation rules. Every value is
+  draft. The zone keys are the district abbreviations of BDC 10.25 and
+  Chapter 20 as the city's own zoning layer spells them
+  (gisweb.beavertonoregon.gov Public_SharedServices/pubZoning MapServer
+  layer 0, field ZONE_NAME); lots reach this layer by the taxlots'
+  JURIS_CITY BEAVERTON. The two layer values that are not districts,
+  WAcnty and ROW, are ruled under zone_rulings at the end of the file.
+ingest:
+  geoid: null
+  juris_city_codes:
+  - BEAVERTON
+code:
+# The whole BDC as one PDF from the encodeplus export endpoint (the city's
+# own development-code page links to it). Plain extraction throughout. The
+# PDF prints a table of contents first, so every chapter and section
+# heading appears once there and once in the body: nth: 2 selects the body
+# copy. Chapter 90 is printed three times (the contents list, the Chapter
+# 90 contents page and the body), hence nth: 3. Every slice runs from its
+# heading to the next heading the code prints.
+- id: "bdc.10.general-provisions"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC Chapter 10 - General Provisions (zone list 10.25, zoning map 10.30, annexation 10.40)"
+  start: "CHAPTER 10 - GENERAL PROVISIONS"
+  nth: 2
+  end: "CHAPTER 20 - ZONING DISTRICTS"
+  extraction: plain
+# The Chapter 20 tables print footnote markers hard against the numbers
+# ("158" is 15 feet with note 8); glued_markers declares it.
+- id: "bdc.20.05.residential"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 20.05 - Residential Zoning Districts (Table 20.05.15, Table 20.05.20.A)"
+  start: "20.05. Residential Zoning Districts"
+  nth: 2
+  end: "20.10. Commercial Zoning Districts"
+  extraction: plain
+  glued_markers: true
+- id: "bdc.20.10.commercial"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 20.10 - Commercial Zoning Districts"
+  start: "20.10. Commercial Zoning Districts"
+  nth: 2
+  end: "20.15. Employment/Industrial Zoning Districts"
+  extraction: plain
+  glued_markers: true
+- id: "bdc.20.15.employment-industrial"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 20.15 - Employment/Industrial Zoning Districts"
+  start: "20.15. Employment/Industrial Zoning Districts"
+  nth: 2
+  end: "20.20. Multiple Use Zoning Districts"
+  extraction: plain
+- id: "bdc.20.20.multiple-use"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 20.20 - Multiple Use Zoning Districts"
+  start: "20.20. Multiple Use Zoning Districts"
+  nth: 2
+  end: "20.22. Cooper Mountain Zoning Districts"
+  extraction: plain
+  glued_markers: true
+- id: "bdc.20.22.cooper-mountain"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 20.22 - Cooper Mountain Zoning Districts"
+  start: "20.22. Cooper Mountain Zoning Districts"
+  nth: 2
+  end: "20.25. Density and Bulk"
+  extraction: plain
+  glued_markers: true
+- id: "bdc.20.25-30.density-height"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 20.25 - Density and Bulk; 20.30 - Additional Height Limitations in RMB and RMC"
+  start: "20.25. Density and Bulk"
+  nth: 2
+  end: "CHAPTER 30 - NONCONFORMING USES"
+  extraction: plain
+- id: "bdc.40.21.middle-housing-design-review"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 40.21 - Single-Detached and Middle Housing Design Review"
+  start: "40.21. Single-Detached and Middle Housing Design Review"
+  nth: 2
+  end: "40.23. Downtown Design Review"
+  extraction: plain
+- id: "bdc.40.45.land-division"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 40.45 - Land Division and Reconfiguration"
+  start: "40.45. Land Division and Reconfiguration"
+  nth: 2
+  end: "40.47. Legal Lot Determination"
+  extraction: plain
+- id: "bdc.60.05.design-review-standards"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 60.05 - Design Review Design Principles, Standards and Guidelines"
+  start: "60.05. Design Review Design Principles, Standards and Guidelines"
+  nth: 2
+  end: "60.07. Drive-Through Facilities"
+  extraction: plain
+- id: "bdc.60.15.land-division-standards"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 60.15 - Land Division Standards"
+  start: "60.15. Land Division Standards"
+  nth: 2
+  end: "60.20. Manufactured Home Regulations"
+  extraction: plain
+- id: "bdc.60.30.parking"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 60.30 - Off-Street Parking"
+  start: "60.30. Off-Street Parking"
+  nth: 2
+  end: "60.33. Park and Recreation"
+  extraction: plain
+- id: "bdc.60.50.special-uses"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 60.50 - Special Use Regulations"
+  start: "60.50. Special Use Regulations"
+  nth: 2
+  end: "60.55. Transportation Facilities"
+  extraction: plain
+- id: "bdc.60.55.transportation"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 60.55 - Transportation Facilities"
+  start: "60.55. Transportation Facilities"
+  nth: 2
+  end: "60.60. Trees and Vegetation"
+  extraction: plain
+# Chapter 70 has no following chapter heading in the body (Chapter 80 is
+# reserved and not printed); the slice ends at the running footer of the
+# first Chapter 90 page.
+- id: "bdc.70.downtown"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC Chapter 70 - Downtown Design District (RC-BC, RC-OT, RC-MU, RC-DT)"
+  start: "CHAPTER 70 - DOWNTOWN DESIGN DISTRICT"
+  nth: 2
+  end: "Chapter 90, DF-1"
+  extraction: plain
+  glued_markers: true
+# Chapter 90 is the glossary: one term per paragraph, alphabetical, with
+# "Effective on:" dates between. allow_thin because the fetch check counts
+# regulatory verbs and a glossary carries few. The slice ends at the
+# Additional Ordinances tables (zoning map amendments by ordinance number),
+# which follow the last definition in the export; kept, their rows read as
+# 75 out-of-order glossary entries.
+- id: "bdc.90.definitions"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC Chapter 90 - Definitions"
+  start: "CHAPTER 90 - DEFINITIONS"
+  nth: 3
+  end: "ADDITIONAL ORDINANCES - PART 1"
+  extraction: plain
+  allow_thin: true
+# The UPAA as Washington County Land Use & Transportation publishes it
+# (the 2018 amendment, Ordinance 839A). BDC 10.40.3.A quotes its §V.B; §V.D
+# is the per-lot condition the zones below declare. allow_thin because the
+# fetch check reads an intergovernmental agreement's "shall" count as thin;
+# the text was read whole before it was kept.
+- id: "wc.beaverton-upaa"
+  url: https://www.washingtoncountyor.gov/lut/planning/documents/beaverton-upaa/download?inline
+  title: "Washington County - City of Beaverton Urban Planning Area Agreement (as amended by Ordinance 839A, 2018)"
+  extraction: plain
+  allow_thin: true
+definitions:
+  # Read 2026-09-29 from BDC Chapter 90, which is on disk whole.
+  #
+  # THE NOUN. "Quadplex. Four dwelling units total on a single lot in any
+  # configuration ... The units may also be located on four child lots
+  # created through a middle housing land division" (L790-L792). The pod is
+  # a Quadplex, and "Dwelling, Attached" names "attached configurations of
+  # duplexes, triplexes, and quadplexes" (L728-L729). In MR, CM-MR, the
+  # Commercial districts and the Multiple Use districts a Multi-Dwelling is
+  # "attached dwellings in any number or configuration" (L781-L787), so the
+  # pod is also a multi-dwelling there; in RMA, RMB, RMC and CM-RM a
+  # multi-dwelling starts at five units, so the pod is only a Quadplex.
+  # Each zone below cites the use-table row that names it.
+  #
+  # FRONT LOT LINE. "for a corner lot, a lot line abutting either street, as
+  # determined by the applicant at the time of initial construction"
+  # (L1420-L1422). Encoded as front_lot_line_corner: owner under defaults.
+  #
+  # NET ACRE. "Acreage, Net" deducts street dedications and common
+  # driveways, "Environmentally constrained lands, such as open water areas,
+  # floodplains, water quality facilities, wetlands, natural resource
+  # areas", public tracts, and steep landslide-hazard slopes (L41-L53).
+  # 20.25.05.1.A multiplies the net acreage by the zone's figure, so every
+  # minimum and maximum density in this layer carries measured_on:
+  # net_developable_area. The water quality facilities and wetlands are
+  # Clean Water Services' ground; overlay data and local work.
+  corner_lot:
+    # "A lot located at the intersection of two or more streets. A lot
+    # abutting on a curved street or streets shall be considered a corner lot
+    # if straight lines drawn from the foremost points of the side lot lines
+    # to the foremost point of the lot meet at an interior angle of less than
+    # 135 degrees." "Less than 135" excludes 135 itself; the field takes the
+    # figure as at-or-below, a one-degree gap recorded as a doubt. The
+    # definition says nothing of alleys; alleys_count stays at its default.
+    test: intersecting_frontages
+    curve_at_or_below_deg: 135.0
+    quote: "or/washington/beaverton/bdc.90.definitions.txt#L1412-L1414"
+    cite: "Beaverton BDC Chapter 90, Lot, Corner"
+
+defaults:
+  # PARKING COUNT. 60.30.10.3.A.1: "No minimum parking is required for any
+  # use." Encoded as zero rather than left out, because an omitted minimum
+  # lets the state cap resolve as though it were a requirement.
+  parking_min_per_unit:
+    value: 0
+    cite: Beaverton BDC 60.30.10.3.A.1, no minimum parking is required for any use
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.60.30.parking.txt#L59-L60,L63-L64"
+  # PARKING MAXIMUM. Table 60.30.10.5.A row 4.A, "Duplex, Triplex, Quadplex,
+  # or Townhouse in Other Zone - One bedroom (per unit)", 1.8 in Zone A and
+  # Zone B alike. Rows 4.B onward raise the figure with bedroom count, and
+  # the pod's bedroom count is not a site fact: the one-bedroom row is the
+  # lowest and the conservative reading. The RMA, RMB, RMC and CM-RM zones
+  # print N/A (row 2) and override this below. 1.8 per unit is 7.2 stalls
+  # for four units; a doubt for the pod's parking count.
+  parking_max_per_unit:
+    value: 1.8
+    cite: Beaverton BDC Table 60.30.10.5.A, row 4.A Quadplex in Other Zone, one bedroom
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.60.30.parking.txt#L105,L109-L116,L129-L132"
+  # STALLS. 60.30.10.7: "For all residential uses, any provided parking
+  # space shall not be less than 8 1/2 feet wide and 18 1/2 feet long", which
+  # is also the 90-degree row of the 60.30.15 table.
+  parking_stall_width_ft:
+    value: 8.5
+    cite: Beaverton BDC 60.30.10.7, Residential Parking Dimensions; 60.30.15 table, 90 degrees
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.60.30.parking.txt#L583-L584,L652,L689,L693"
+  parking_stall_depth_ft:
+    value: 18.5
+    cite: Beaverton BDC 60.30.10.7, Residential Parking Dimensions; 60.30.15 table, 90 degrees
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.60.30.parking.txt#L583-L584,L652,L689,L693"
+  # AISLES. 60.30.15 note 5: "The minimum aisle width for two-way traffic
+  # ... is 24 feet. The minimum aisle width for emergency vehicle access
+  # (one way traffic) is 20 feet. Except as permitted in Section 60.30.15.
+  # Note 8(c)." Note 8(c) (22 two-way, 20 one-way) governs middle housing
+  # in RMA, RMB, RMC and CM-RM and overrides these below.
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: Beaverton BDC 60.30.15 note 5 and table, 90 degrees
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L674-L676,L689,L693"
+  parking_aisle_one_way_ft:
+    value: 20
+    cite: Beaverton BDC 60.30.15 note 5, one-way aisle
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L674-L676"
+  front_lot_line_corner:
+    value: owner
+    cite: Beaverton BDC Chapter 90, Lot Line, Front (corner lot, either street, as determined by the applicant)
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.90.definitions.txt#L1420-L1422"
+
+# THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29. Each applies
+# in every zone below unless the zone says otherwise.
+#
+# NOT ENCODED: minimum FAR. The Multiple Use table prints a minimum floor
+# area ratio (row B.1, 0.30 to 0.60; bdc.20.20.multiple-use.txt#L106-L108)
+# and the Cooper Mountain table one for CM-CS and CM-HDR (row I.1, 0.4;
+# bdc.20.22.cooper-mountain.txt#L111). No field holds a floor on FAR. A
+# four-unit pod on a large lot can fall under it; a doubt.
+#
+# NOT ENCODED: the frontage occupancy of 60.05.15.6.A, "At least 60
+# percent of the site's Primary Frontage ... shall be occupied by a
+# building" (bdc.60.05.design-review-standards.txt#L272-L273), and the
+# lower percentages that follow. No field holds a building share of
+# frontage. The pod's 26-foot-deep building across a 30-to-40-foot
+# frontage may meet it; nothing checks it.
+#
+# THE MINIMUM-DENSITY ESCAPE. 20.25.05.1.A lets a project below minimum
+# density proceed if it shows "how, in all aspects, future intensification
+# of the site to the minimum density or greater can be achieved"
+# (bdc.20.25-30.density-height.txt#L6-L13), and D.2 gives RMA, RMB, RMC and
+# CM-RM three ways through, one of them a plan for future partitioning
+# (L47-L61). No field holds a "may fall short if it shows" path. Every
+# minimum density is encoded as a hard floor, the conservative reading; a
+# doubt and a question for Steph, because on a large lot it turns the pod
+# RED where the code may allow it.
+#
+# NOT ENCODED: rounding. The minimum unit count is net acres times the
+# figure, "rounded up" at 0.5 and down below (L20-L24). The engine compares
+# density, not a rounded unit count; on small lots the rounding can lower
+# the floor below what the density figure implies.
+#
+# NOT ENCODED: 60.05.11.3, the choice between the design STANDARDS
+# (60.05.15 to 60.05.30) and the GUIDELINES (60.05.35 to 60.05.50)
+# (bdc.60.05.design-review-standards.txt#L46-L56). The guidelines track has
+# no numbers to encode; the standards track is encoded, the stricter one.
+#
+# NOT ENCODED: garage setbacks. The residential tables print separate
+# garage setbacks (F.1.c and the like); the pod has no garage.
+#
+# NOT ENCODED: the middle housing design rules of 60.05.60 beyond the
+# figures encoded in the RMA, RMB, RMC and CM-RM zones (entry orientation,
+# windows, articulation). They are design review items nothing measures.
+#
+# NOT ENCODED: unit lots. A quadplex divided by a middle housing land
+# division keeps the parent lot's standards: "the development standards that
+# are applicable to the lot shall apply to the middle housing parent lot,
+# not to the middle housing child lots" (bdc.20.05.residential.txt
+# #L382-L384; bdc.20.22.cooper-mountain.txt#L245-L247). The townhouse
+# minimum lots (B.3 of each table) are a different path and are not encoded
+# as variants; the pod is screened as a quadplex on one lot.
+#
+# NOT ENCODED: the overlays of 10.32, Historic (HO), Resource (RO) and
+# Cooper Mountain Parks (CMPO) (bdc.10.general-provisions.txt#L244-L253).
+# They are not in ZONE_NAME; each is overlay data and local work.
+#
+# CLEAN WATER SERVICES. The net acreage definition deducts water quality
+# facilities, wetlands and natural resource areas
+# (bdc.90.definitions.txt#L44-L46); the vegetated corridors behind them are
+# Clean Water Services' Design and Construction Standards, not the BDC.
+# Overlay work.
+#
+# THE ANNEXATION CONDITION (UPAA §V.D). "When partially completed
+# developments ... are annexed to the CITY after receiving development
+# approval from the COUNTY, the CITY may, at its discretion, continue to
+# apply the COUNTY's development standards relating to setbacks, lot sizes,
+# lot coverage and heights" (wc.beaverton-upaa.txt#L282-L287). Nothing
+# measures whether a lot sits in such a development, so every zone that
+# admits the pod declares it as qualified_by: site_specific_limitation on
+# the setbacks, the minimum lot and the height. Lot coverage is not encoded
+# in Beaverton, so the coverage clause has nothing to qualify.
+#
+# STEP 10, the prohibition grep: every stored document was searched for
+# "quadplex", "plex" and "middle housing". The hits are the use tables
+# (20.05, 20.10, 20.20, Chapter 70), the definitions, the parking tables
+# and yard rules of 60.30, the middle housing standards of 20.22 and 60.05,
+# and the land-division and design-review procedures of 40.21 and 40.45.
+# None prohibits the pod in a zone this layer admits it in; the one "N" is
+# the use-table cell each refusing zone below cites.
+
+zones:
+  # ------------------------------------------------------------------
+  # BDC 20.05, Residential Zoning Districts. Table 20.05.15 (site
+  # development standards, columns MR RMA RMB RMC) and Table 20.05.20.A
+  # (land uses). The tables print footnote markers hard against the
+  # numbers ("158" is 15 feet with note 8), which the code entry declares.
+  # The side setback rows (F.2) are written for townhouses and for land
+  # divisions; a quadplex on one lot has no row of its own, and the
+  # perimeter figure (5) is taken as the conservative reading. A doubt.
+  # ------------------------------------------------------------------
+  MR:
+    cite_default:
+      cite: "Beaverton BDC 20.05 (MR Multi-Unit Residential), Tables 20.05.15 and 20.05.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # P8: note 8, "In the MR zone, all units of a duplex, triplex, or
+      # quadplex must be attached". The pod is attached.
+      value: true
+      cite: "Beaverton BDC Table 20.05.20.A, 2.D Residential Dwellings - Triplex and Quadplex (MR P8)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L461,L469,L474,L533"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex (MR N/A)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 34
+      cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L62"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    min_lot_width_ft:
+      value: 14
+      cite: "Beaverton BDC Table 20.05.15, E. Minimum Lot Width"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L63"
+    setback_front_ft:
+      value: 10
+      cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      # Note 18: the maximum applies to all development other than
+      # townhouses, on the portion of the site subject to the frontage
+      # requirement of 60.05.15.6.
+      value: 20
+      cite: "Beaverton BDC Table 20.05.15, F.1.b Front Yard Maximum (MR 20, note 18)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L65,L415-L417"
+    setback_side_ft:
+      # MR prints "0 internal, 5 external" for townhouses and N/A for
+      # land divisions; 5 is the external figure.
+      value: 5
+      cite: "Beaverton BDC Table 20.05.15, F.2.a Side Yard Minimum (MR, 5 external)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L66-L69"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      value: 15
+      cite: "Beaverton BDC Table 20.05.15, F.3 Rear Yard Minimum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      # G.1 prints N/A for MR and G.2 applies the 60.05.15.7 transition,
+      # encoded as the variant. Neither binds a 26-foot building.
+      exempt: true
+      cite: "Beaverton BDC Table 20.05.15, G.1 Building Height - Maximum (MR N/A)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113-L116"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    max_far:
+      # 20.05.16: 6.0 near Frequent Transit Service, 4.0 otherwise, and in
+      # the Allen Boulevard quarter mile 6.0 only with 30 percent regulated
+      # affordable units. 4.0 is the figure in every branch that does not
+      # turn on transit distance or an affordability election; the 6.0 is
+      # NOT ENCODED (no measured transit-distance fact). Gross site area
+      # (20.25.10.1.B).
+      value: 4.0
+      cite: "Beaverton BDC 20.05.16.2.b, Floor Area Ratio in MR (4.0 where not near frequent transit)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L435,L437,L444-L447"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted (units attached). No minimum lot; 14 ft wide;
+      min 34 du/net acre; front 10 (max 20), side 5, rear 15; height none (60
+      by a residential lot line); FAR 4.0. Parking kept 20 ft off the right-
+      of-way and out of the Primary Frontage; 15% open space.
+  RMA:
+    cite_default:
+      cite: "Beaverton BDC 20.05 (RMA), Tables 20.05.15 and 20.05.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.05.20.A, 2.D Residential Dwellings - Triplex and Quadplex (RMA P)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L461,L469,L474"
+    min_lot_sqft:
+      # Note 2: for middle housing the standard sets "the minimum lot size
+      # needed for each middle housing type to be built on an existing lot".
+      value: 3000
+      cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 17
+      cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L62"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    min_lot_width_ft:
+      value: 14
+      cite: "Beaverton BDC Table 20.05.15, E. Minimum Lot Width"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L63"
+    setback_front_ft:
+      value: 10
+      cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      value: 5
+      cite: "Beaverton BDC Table 20.05.15, F.2.b Side Yard Minimum, Land Divisions (Perimeter)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # Note 8 (10 feet) is for cottage cluster dwellings only.
+      value: 15
+      cite: "Beaverton BDC Table 20.05.15, F.3 Rear Yard Minimum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      value: 40
+      cite: "Beaverton BDC Table 20.05.15, G.1 Building Height - Maximum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_far:
+      value: 1.6
+      cite: "Beaverton BDC Table 20.05.15, H.3 Maximum Floor Area Ratio - Triplex and Quadplex"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L172"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
+        quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
+    parking_max_per_unit:
+      # Table 60.30.10.5.A row 2 prints N/A in both parking zones for a
+      # triplex or quadplex in RMA, RMB, RMC or CM-RM; the layer default
+      # (1.8) is the "Other Zone" row and does not reach this zone.
+      exempt: true
+      cite: "Beaverton BDC Table 60.30.10.5.A, row 2, Triplex or Quadplex in RMA, RMB, RMC, or CM-RM Zone (N/A)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L105,L109-L116,L124-L126"
+    parking_aisle_two_way_ft:
+      value: 22
+      cite: "Beaverton BDC 60.30.15 Note 8(c), middle housing drive aisles in RMA, RMB, RMC and CM-RM (22 feet two-way)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L682-L683,L688"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: "Beaverton BDC 60.30.15 Note 8(c), middle housing drive aisles in RMA, RMB, RMC and CM-RM (20 feet one-way)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L682-L683,L688"
+    parking_area_max_frontage_pct:
+      # 60.05.60.2 S11. S11.a (cul-de-sac frontage measured 20 feet back
+      # from the right-of-way) is NOT ENCODED; fronts_cul_de_sac holds the
+      # lot fact, and nothing states where along the lot the share is read.
+      value: 50
+      cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
+    driveway_approach_max_width_ft:
+      value: 32
+      cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136-L3143"
+    corner_access_street:
+      # S13.b.1. The alley sentence is permissive ("access may be taken
+      # from the alley"), so parking_alley_access_required is not set.
+      value: lowest_class
+      cite: "Beaverton BDC Table 60.05.60.2 S13.b.1, lots with more than one street frontage access the street of lowest functional classification"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136,L3144-L3152"
+    open_space_min_sqft:
+      # S4.a bands the outdoor open area on lot size: under 3,000 square
+      # feet 200, 3,000 to under 7,000 300, 7,000 and up 500, "per lot".
+      # The bands are written with whole-foot ends, so a lot of 2,999.5 or
+      # 6,999.5 square feet falls to the 500 base, the stricter figure.
+      # NOT ENCODED: S4.b.1 (a 12 by 12 foot square accessible to all
+      # units) and S4.b.2 (not in front yard setbacks).
+      value: 500
+      cite: "Beaverton BDC Table 60.05.60.2 S4.a.3, lots of 7,000 square feet or greater, 500 square feet of outdoor open area per lot"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604-L2627"
+      variants:
+        - value: 200
+          band: {measure: lot_sqft, at_most: 2999}
+          cite: "Beaverton BDC Table 60.05.60.2 S4.a.1, lots of less than 3,000 square feet"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2620"
+        - value: 300
+          band: {measure: lot_sqft, at_least: 3000, at_most: 6999}
+          cite: "Beaverton BDC Table 60.05.60.2 S4.a.2, lots of 3,000 to less than 7,000 square feet"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2617,L2621-L2624"
+    notes: >-
+      DRAFT. Quadplex permitted. 3,000 sq ft lot, 14 ft wide; min 17 du/net
+      acre; yards 10 / 5 / 15; 40 ft; FAR 1.60 on net area. No parking
+      maximum; 60.05.60 middle housing standards (S4 open area by lot size,
+      S11 50% frontage, S13 32 ft of driveway approach, lowest-class access).
+  RMB:
+    cite_default:
+      cite: "Beaverton BDC 20.05 (RMB), Tables 20.05.15 and 20.05.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.05.20.A, 2.D Residential Dwellings - Triplex and Quadplex (RMB P)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L461,L469,L474"
+    min_lot_sqft:
+      # Note 2: for middle housing the standard sets "the minimum lot size
+      # needed for each middle housing type to be built on an existing lot".
+      value: 4000
+      cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 10
+      cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L62"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    min_lot_width_ft:
+      value: 20
+      cite: "Beaverton BDC Table 20.05.15, E. Minimum Lot Width"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L63"
+    setback_front_ft:
+      value: 10
+      cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      value: 5
+      cite: "Beaverton BDC Table 20.05.15, F.2.b Side Yard Minimum, Land Divisions (Perimeter)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # Note 8 (10 feet) is for cottage cluster dwellings only.
+      value: 15
+      cite: "Beaverton BDC Table 20.05.15, F.3 Rear Yard Minimum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      step_back:
+        height_ft: 25
+        rise_per_ft: 1
+        cite: "Beaverton BDC 20.30.10.A, 25 feet at the rear setback line in RMB, rising at 45 degrees to 35"
+        quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L124,L130,L138-L140,L142-L143"
+    max_height_ft:
+      # Note 14 sends the zone to 20.30: 25 feet at the rear setback line,
+      # rising 1:1 toward the centre of the lot to 35. Carried on the rear
+      # setback as a step-back. Townhouses are outside 20.30.05, so the
+      # unit-lot path would escape the plane; applied to every pod.
+      value: 35
+      cite: "Beaverton BDC Table 20.05.15, G.1 Building Height - Maximum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113,L402"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_far:
+      value: 1.2
+      cite: "Beaverton BDC Table 20.05.15, H.3 Maximum Floor Area Ratio - Triplex and Quadplex"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L173-L178"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
+        quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
+    parking_max_per_unit:
+      # Table 60.30.10.5.A row 2 prints N/A in both parking zones for a
+      # triplex or quadplex in RMA, RMB, RMC or CM-RM; the layer default
+      # (1.8) is the "Other Zone" row and does not reach this zone.
+      exempt: true
+      cite: "Beaverton BDC Table 60.30.10.5.A, row 2, Triplex or Quadplex in RMA, RMB, RMC, or CM-RM Zone (N/A)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L105,L109-L116,L124-L126"
+    parking_aisle_two_way_ft:
+      value: 22
+      cite: "Beaverton BDC 60.30.15 Note 8(c), middle housing drive aisles in RMA, RMB, RMC and CM-RM (22 feet two-way)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L682-L683,L688"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: "Beaverton BDC 60.30.15 Note 8(c), middle housing drive aisles in RMA, RMB, RMC and CM-RM (20 feet one-way)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L682-L683,L688"
+    parking_area_max_frontage_pct:
+      # 60.05.60.2 S11. S11.a (cul-de-sac frontage measured 20 feet back
+      # from the right-of-way) is NOT ENCODED; fronts_cul_de_sac holds the
+      # lot fact, and nothing states where along the lot the share is read.
+      value: 50
+      cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
+    driveway_approach_max_width_ft:
+      value: 32
+      cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136-L3143"
+    corner_access_street:
+      # S13.b.1. The alley sentence is permissive ("access may be taken
+      # from the alley"), so parking_alley_access_required is not set.
+      value: lowest_class
+      cite: "Beaverton BDC Table 60.05.60.2 S13.b.1, lots with more than one street frontage access the street of lowest functional classification"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136,L3144-L3152"
+    open_space_min_sqft:
+      # S4.a bands the outdoor open area on lot size: under 3,000 square
+      # feet 200, 3,000 to under 7,000 300, 7,000 and up 500, "per lot".
+      # The bands are written with whole-foot ends, so a lot of 2,999.5 or
+      # 6,999.5 square feet falls to the 500 base, the stricter figure.
+      # NOT ENCODED: S4.b.1 (a 12 by 12 foot square accessible to all
+      # units) and S4.b.2 (not in front yard setbacks).
+      value: 500
+      cite: "Beaverton BDC Table 60.05.60.2 S4.a.3, lots of 7,000 square feet or greater, 500 square feet of outdoor open area per lot"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604-L2627"
+      variants:
+        - value: 200
+          band: {measure: lot_sqft, at_most: 2999}
+          cite: "Beaverton BDC Table 60.05.60.2 S4.a.1, lots of less than 3,000 square feet"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2620"
+        - value: 300
+          band: {measure: lot_sqft, at_least: 3000, at_most: 6999}
+          cite: "Beaverton BDC Table 60.05.60.2 S4.a.2, lots of 3,000 to less than 7,000 square feet"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2617,L2621-L2624"
+    notes: >-
+      DRAFT. Quadplex permitted. 4,000 sq ft lot, 20 ft wide; min 10 du/net
+      acre; yards 10 / 5 / 15; 35 ft with the 20.30 plane at the rear (25 ft
+      at the setback line, 1:1); FAR 1.20 on net area. 60.05.60 standards as
+      RMA.
+  RMC:
+    cite_default:
+      cite: "Beaverton BDC 20.05 (RMC), Tables 20.05.15 and 20.05.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.05.20.A, 2.D Residential Dwellings - Triplex and Quadplex (RMC P)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L461,L469,L474"
+    min_lot_sqft:
+      # Note 2: for middle housing the standard sets "the minimum lot size
+      # needed for each middle housing type to be built on an existing lot".
+      value: 5000
+      cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 7
+      cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L62"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    min_lot_width_ft:
+      value: 20
+      cite: "Beaverton BDC Table 20.05.15, E. Minimum Lot Width"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L63"
+    setback_front_ft:
+      value: 10
+      cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      step_back:
+        height_ft: 25
+        rise_per_ft: 1
+        cite: "Beaverton BDC 20.30.10.B, 25 feet at the front and rear setback lines in RMC, rising at 45 degrees to 35"
+        quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L124,L130,L138-L139,L141-L143"
+    setback_side_ft:
+      value: 5
+      cite: "Beaverton BDC Table 20.05.15, F.2.b Side Yard Minimum, Land Divisions (Perimeter)"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # Note 8 (10 feet) is for cottage cluster dwellings only.
+      value: 15
+      cite: "Beaverton BDC Table 20.05.15, F.3 Rear Yard Minimum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      step_back:
+        height_ft: 25
+        rise_per_ft: 1
+        cite: "Beaverton BDC 20.30.10.B, 25 feet at the front and rear setback lines in RMC, rising at 45 degrees to 35"
+        quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L124,L130,L138-L139,L141-L143"
+    max_height_ft:
+      # Note 14 sends the zone to 20.30: 25 feet at the front and rear setback lines,
+      # rising 1:1 toward the centre of the lot to 35. Carried on the front and
+      # rear setbacks as a step-back. Townhouses are outside 20.30.05, so the
+      # unit-lot path would escape the plane; applied to every pod.
+      value: 35
+      cite: "Beaverton BDC Table 20.05.15, G.1 Building Height - Maximum"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113,L402"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_far:
+      value: 0.9
+      cite: "Beaverton BDC Table 20.05.15, H.3 Maximum Floor Area Ratio - Triplex and Quadplex"
+      quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L179-L184"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
+        quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
+    parking_max_per_unit:
+      # Table 60.30.10.5.A row 2 prints N/A in both parking zones for a
+      # triplex or quadplex in RMA, RMB, RMC or CM-RM; the layer default
+      # (1.8) is the "Other Zone" row and does not reach this zone.
+      exempt: true
+      cite: "Beaverton BDC Table 60.30.10.5.A, row 2, Triplex or Quadplex in RMA, RMB, RMC, or CM-RM Zone (N/A)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L105,L109-L116,L124-L126"
+    parking_aisle_two_way_ft:
+      value: 22
+      cite: "Beaverton BDC 60.30.15 Note 8(c), middle housing drive aisles in RMA, RMB, RMC and CM-RM (22 feet two-way)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L682-L683,L688"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: "Beaverton BDC 60.30.15 Note 8(c), middle housing drive aisles in RMA, RMB, RMC and CM-RM (20 feet one-way)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L682-L683,L688"
+    parking_area_max_frontage_pct:
+      # 60.05.60.2 S11. S11.a (cul-de-sac frontage measured 20 feet back
+      # from the right-of-way) is NOT ENCODED; fronts_cul_de_sac holds the
+      # lot fact, and nothing states where along the lot the share is read.
+      value: 50
+      cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
+    driveway_approach_max_width_ft:
+      value: 32
+      cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136-L3143"
+    corner_access_street:
+      # S13.b.1. The alley sentence is permissive ("access may be taken
+      # from the alley"), so parking_alley_access_required is not set.
+      value: lowest_class
+      cite: "Beaverton BDC Table 60.05.60.2 S13.b.1, lots with more than one street frontage access the street of lowest functional classification"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136,L3144-L3152"
+    open_space_min_sqft:
+      # S4.a bands the outdoor open area on lot size: under 3,000 square
+      # feet 200, 3,000 to under 7,000 300, 7,000 and up 500, "per lot".
+      # The bands are written with whole-foot ends, so a lot of 2,999.5 or
+      # 6,999.5 square feet falls to the 500 base, the stricter figure.
+      # NOT ENCODED: S4.b.1 (a 12 by 12 foot square accessible to all
+      # units) and S4.b.2 (not in front yard setbacks).
+      value: 500
+      cite: "Beaverton BDC Table 60.05.60.2 S4.a.3, lots of 7,000 square feet or greater, 500 square feet of outdoor open area per lot"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604-L2627"
+      variants:
+        - value: 200
+          band: {measure: lot_sqft, at_most: 2999}
+          cite: "Beaverton BDC Table 60.05.60.2 S4.a.1, lots of less than 3,000 square feet"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2620"
+        - value: 300
+          band: {measure: lot_sqft, at_least: 3000, at_most: 6999}
+          cite: "Beaverton BDC Table 60.05.60.2 S4.a.2, lots of 3,000 to less than 7,000 square feet"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2617,L2621-L2624"
+    notes: >-
+      DRAFT. Quadplex permitted. 5,000 sq ft lot, 20 ft wide; min 7 du/net
+      acre; yards 10 / 5 / 15; 35 ft with the 20.30 plane at front and rear
+      (25 ft at the setback lines, 1:1); FAR 0.90 on net area. 60.05.60
+      standards as RMA.
+  # ------------------------------------------------------------------
+  # BDC 20.22, Cooper Mountain Zoning Districts. Table 20.22.15 (columns
+  # CM-CS CM-HDR CM-MR CM-RM, reprinted at each page break) and Table
+  # 20.22.20.A. 10.25 lists CM-MR and CM-RM as Residential, CM-CS as
+  # Commercial and CM-HDR as Multiple Use, which decides which of the
+  # 60.05 standards reach each. NOT ENCODED in all four: G.6, 25 feet
+  # from Cooper Mountain Nature Park (no condition holds that boundary),
+  # and I.1 minimum FAR (no field).
+  # ------------------------------------------------------------------
+  CM-RM:
+    cite_default:
+      cite: "Beaverton BDC 20.22 (CM-RM Cooper Mountain Residential Mixed), Tables 20.22.15 and 20.22.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.22.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CM-RM P)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L316,L323-L331,L336"
+    min_lot_sqft:
+      # Note 1, the same sentence as 20.05 note 2. C. Maximum Lot Area
+      # (6,000) is note 4, lots with small-scale commercial uses only.
+      value: 4000
+      cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55,L242-L244"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 10
+      cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L75"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    min_lot_width_ft:
+      # Note 16 (14 feet) is for townhouses only.
+      value: 20
+      cite: "Beaverton BDC Table 20.22.15, F. Minimum Lot Width"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L76,L277-L279"
+    setback_front_ft:
+      value: 10
+      cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      # "0, 3 or 5" with note 7: 5 feet except townhouse attached sides
+      # and land-division internal lines.
+      value: 5
+      cite: "Beaverton BDC Table 20.22.15, G.2.a Side Minimum and note 7"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L82,L253-L257"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # Note 8 (10 feet) is for cottage cluster dwellings only.
+      value: 15
+      cite: "Beaverton BDC Table 20.22.15, G.4 Rear Minimum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89,L258"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      value: 45
+      cite: "Beaverton BDC Table 20.22.15, H.2 Building Height - Maximum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_far:
+      value: 1.2
+      cite: "Beaverton BDC Table 20.22.15, J.3 Maximum Floor Area Ratio - Triplex and Quadplex"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L127-L136"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
+        quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
+    parking_max_per_unit:
+      # Table 60.30.10.5.A row 2 prints N/A in both parking zones for a
+      # triplex or quadplex in RMA, RMB, RMC or CM-RM; the layer default
+      # (1.8) is the "Other Zone" row and does not reach this zone.
+      exempt: true
+      cite: "Beaverton BDC Table 60.30.10.5.A, row 2, Triplex or Quadplex in RMA, RMB, RMC, or CM-RM Zone (N/A)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L105,L109-L116,L124-L126"
+    parking_aisle_two_way_ft:
+      value: 22
+      cite: "Beaverton BDC 60.30.15 Note 8(c), middle housing drive aisles in RMA, RMB, RMC and CM-RM (22 feet two-way)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L682-L683,L688"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: "Beaverton BDC 60.30.15 Note 8(c), middle housing drive aisles in RMA, RMB, RMC and CM-RM (20 feet one-way)"
+      quote: "or/washington/beaverton/bdc.60.30.parking.txt#L652,L682-L683,L688"
+    parking_area_max_frontage_pct:
+      # 60.05.60.2 S11. S11.a (cul-de-sac frontage measured 20 feet back
+      # from the right-of-way) is NOT ENCODED; fronts_cul_de_sac holds the
+      # lot fact, and nothing states where along the lot the share is read.
+      value: 50
+      cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
+    driveway_approach_max_width_ft:
+      value: 32
+      cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136-L3143"
+    corner_access_street:
+      # S13.b.1. The alley sentence is permissive ("access may be taken
+      # from the alley"), so parking_alley_access_required is not set.
+      value: lowest_class
+      cite: "Beaverton BDC Table 60.05.60.2 S13.b.1, lots with more than one street frontage access the street of lowest functional classification"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136,L3144-L3152"
+    open_space_min_sqft:
+      # S4.a bands the outdoor open area on lot size: under 3,000 square
+      # feet 200, 3,000 to under 7,000 300, 7,000 and up 500, "per lot".
+      # The bands are written with whole-foot ends, so a lot of 2,999.5 or
+      # 6,999.5 square feet falls to the 500 base, the stricter figure.
+      # NOT ENCODED: S4.b.1 (a 12 by 12 foot square accessible to all
+      # units) and S4.b.2 (not in front yard setbacks).
+      value: 500
+      cite: "Beaverton BDC Table 60.05.60.2 S4.a.3, lots of 7,000 square feet or greater, 500 square feet of outdoor open area per lot"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604-L2627"
+      variants:
+        - value: 200
+          band: {measure: lot_sqft, at_most: 2999}
+          cite: "Beaverton BDC Table 60.05.60.2 S4.a.1, lots of less than 3,000 square feet"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2620"
+        - value: 300
+          band: {measure: lot_sqft, at_least: 3000, at_most: 6999}
+          cite: "Beaverton BDC Table 60.05.60.2 S4.a.2, lots of 3,000 to less than 7,000 square feet"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2617,L2621-L2624"
+    notes: >-
+      DRAFT. Quadplex permitted. 4,000 sq ft lot, 20 ft wide; min 10 du/net
+      acre; yards 10 / 5 / 15; 45 ft; FAR 1.20 on net area. No parking
+      maximum; 60.05.60 middle housing standards as RMA.
+  CM-MR:
+    cite_default:
+      cite: "Beaverton BDC 20.22 (CM-MR Cooper Mountain Multi-Unit Residential), Tables 20.22.15 and 20.22.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # P7: note 7, "All units of a duplex, triplex, or quadplex must be
+      # attached."
+      value: true
+      cite: "Beaverton BDC Table 20.22.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CM-MR P7)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L316,L323-L331,L336,L478"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex (CM-MR N/A)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 34
+      cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L75"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    min_lot_width_ft:
+      value: 14
+      cite: "Beaverton BDC Table 20.22.15, F. Minimum Lot Width"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L76"
+    setback_front_ft:
+      value: 10
+      cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      # "0, 3 or 5" with note 7, as CM-RM.
+      value: 5
+      cite: "Beaverton BDC Table 20.22.15, G.2.a Side Minimum and note 7"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L82,L253-L257"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      value: 10
+      cite: "Beaverton BDC Table 20.22.15, G.4 Rear Minimum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      value: 65
+      cite: "Beaverton BDC Table 20.22.15, H.2 Building Height - Maximum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_far:
+      # Note 24 and 20.25.10.3: 20 percent more on a site at least 30
+      # percent Resource Overlay or constrained land; NOT ENCODED (a
+      # relief). Gross site area.
+      value: 1.5
+      cite: "Beaverton BDC Table 20.22.15, J.0 Maximum Floor Area Ratio"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted (units attached). No minimum lot; 14 ft wide;
+      min 34 du/net acre; yards 10 / 5 / 10; 65 ft; FAR 1.5. A Residential
+      district under 10.25, so none of the Commercial and Multiple Use parking
+      or frontage rules; 15% open space (60.05.25.2.A).
+  CM-HDR:
+    cite_default:
+      cite: "Beaverton BDC 20.22 (CM-HDR Cooper Mountain High Density Residential), Tables 20.22.15 and 20.22.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # P7: note 7, "All units of a duplex, triplex, or quadplex must be
+      # attached."
+      value: true
+      cite: "Beaverton BDC Table 20.22.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CM-HDR P7)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L316,L323-L331,L336,L478"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex (CM-HDR N/A)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 34
+      cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L75"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      # G.2 prints N/A; the setback is G.5, beside a residential zone.
+      value: 0
+      cite: "Beaverton BDC Table 20.22.15, G.2.a Side Minimum (N/A)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L80"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 5
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.22.15, G.5 Side or Rear Yards Abutting Property Zoned Residential, note 9 (5 feet at 40 feet and under)"
+          quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L90-L93,L259-L262"
+    setback_rear_ft:
+      # Note 9: the 10-foot figure is for the portion of a building taller than
+      # 40 feet; at 40 feet or shorter it is 5, and the rear figure reaches only
+      # the part of the rear yard abutting a 10.25 Residential zone. The pod is
+      # 26 feet, so 5 is the figure it owes.
+      value: 0
+      cite: "Beaverton BDC Table 20.22.15, G.4 Rear Minimum (N/A)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 5
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.22.15, G.5 Side or Rear Yards Abutting Property Zoned Residential, note 9 (5 feet at 40 feet and under)"
+          quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L90-L93,L259-L262"
+    max_height_ft:
+      value: 65
+      cite: "Beaverton BDC Table 20.22.15, H.2 Building Height - Maximum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_far:
+      # Note 24 and 20.25.10.3: 20 percent more on a heavily constrained
+      # site; NOT ENCODED (a relief). Gross site area.
+      value: 2.0
+      cite: "Beaverton BDC Table 20.22.15, J.0 Maximum Floor Area Ratio"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+    setback_front_max_ft:
+      # 60.05.15.6.A: buildings occupy a share of the frontage "between the
+      # minimum setback and the maximum setback ... or 16 feet if there is
+      # no maximum setback listed". NOT ENCODED: the share itself (60
+      # percent of the Primary Frontage, 35 percent of a secondary one);
+      # no field holds a frontage-occupancy percentage.
+      value: 16
+      cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted (units attached). No minimum lot or width; min
+      34 du/net acre; front 0 (max 16 under 60.05.15.6.A for residential
+      buildings), side and rear 0 (5 beside a residential zone); 65 ft; FAR
+      2.0. A Multiple Use district: parking out of the Primary Frontage and 20
+      ft off the right-of-way, 35% vehicle frontage, 15% open space.
+  CM-CS:
+    cite_default:
+      cite: "Beaverton BDC 20.22 (CM-CS Cooper Mountain Community Service), Tables 20.22.15 and 20.22.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # P7: note 7, "All units of a duplex, triplex, or quadplex must be
+      # attached."
+      value: true
+      cite: "Beaverton BDC Table 20.22.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CM-CS P7)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L316,L323-L331,L336,L478"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex (CM-CS N/A)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 34
+      cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L75"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      # G.2 prints N/A; the setback is G.5, beside a residential zone.
+      value: 0
+      cite: "Beaverton BDC Table 20.22.15, G.2.a Side Minimum (N/A)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L80"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 5
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.22.15, G.5 Side or Rear Yards Abutting Property Zoned Residential, note 9 (5 feet at 40 feet and under)"
+          quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L90-L93,L259-L262"
+    setback_rear_ft:
+      # Note 9: the 10-foot figure is for the portion of a building taller than
+      # 40 feet; at 40 feet or shorter it is 5, and the rear figure reaches only
+      # the part of the rear yard abutting a 10.25 Residential zone. The pod is
+      # 26 feet, so 5 is the figure it owes.
+      value: 0
+      cite: "Beaverton BDC Table 20.22.15, G.4 Rear Minimum (N/A)"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 5
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.22.15, G.5 Side or Rear Yards Abutting Property Zoned Residential, note 9 (5 feet at 40 feet and under)"
+          quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L90-L93,L259-L262"
+    max_height_ft:
+      # Note 15: within 35 feet of residentially zoned property, 45 feet or
+      # the residential zone's maximum, whichever is greater.
+      value: 65
+      cite: "Beaverton BDC Table 20.22.15, H.2 Building Height - Maximum"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 45
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.22.15, note 15, 45 feet within 35 feet of residentially zoned property"
+          quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110,L274-L276"
+    max_far:
+      # Note 24 and 20.25.10.3: 20 percent more on a heavily constrained
+      # site; NOT ENCODED (a relief). Gross site area.
+      value: 2.0
+      cite: "Beaverton BDC Table 20.22.15, J.0 Maximum Floor Area Ratio"
+      quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted (units attached). No minimum lot or width; min
+      34 du/net acre; yards 0 (side and rear 5 beside a residential zone); 65
+      ft (45 near a residential zone); FAR 2.0. 60.05.15.6.B, not A, so no
+      maximum setback; parking and open space as CM-HDR.
+  # ------------------------------------------------------------------
+  # BDC 20.10, Commercial Zoning Districts. Table 20.10.15 (columns NS CS
+  # CC GC) and Table 20.10.20.A. No row states a minimum lot area. The
+  # side and rear figures reach only a lot beside a residential use in a
+  # residential zone (notes 3 and 4), encoded as variants on
+  # abuts_residential_zone; the rear figure is further limited to the part
+  # of the rear yard abutting RMA, RMB or RMC, and abuts_residential_zone
+  # answers for any residential zone, which is the stricter reading.
+  # ------------------------------------------------------------------
+  NS:
+    cite_default:
+      cite: "Beaverton BDC 20.10 (NS Neighborhood Service), Tables 20.10.15 and 20.10.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # P1: note 1, only 50 percent of the contiguous area of any NS zone may
+      # be developed residentially (residential above non-residential uses
+      # excepted). NOT ENCODED: a share of the whole NS district nothing
+      # measures; a doubt and a question for Steph. The footnote ruling holds
+      # note 1 unmeasured on site_specific_limitation, so an NS lot comes back
+      # UNKNOWN rather than GREEN. Note 11: units attached.
+      value: true
+      cite: "Beaverton BDC Table 20.10.20.A, 2.D Residential Dwellings - Triplex and Quadplex (NS P1)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L209,L223,L228,L293-L295,L316"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L58"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 34
+      cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L43"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      value: 3.0
+      cite: "Beaverton BDC Table 20.10.15, B. Maximum Floor Area Ratio (NS 3.0)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L44"
+    min_lot_width_ft:
+      value: 70
+      cite: "Beaverton BDC Table 20.10.15, C.1 Lot Dimensions - Minimum Width"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L51"
+    min_lot_depth_ft:
+      value: 100
+      cite: "Beaverton BDC Table 20.10.15, C.2 Lot Dimensions - Minimum Depth"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L52"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.1 Minimum Yard Setbacks - Front (None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      # 60.05.15.6.A: buildings occupy a share of the frontage "between the
+      # minimum setback and the maximum setback ... or 16 feet if there is
+      # no maximum setback listed". NOT ENCODED: the share itself (60
+      # percent of the Primary Frontage, 35 percent of a secondary one);
+      # no field holds a frontage-occupancy percentage.
+      # Table 20.10.15 D prints None for NS, so the 16 feet of 60.05.15.6.A.
+      value: 16
+      cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+    setback_side_ft:
+      # Note 3: "minimum setback does not apply" away from a residential
+      # use in a residential zone.
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot and note 3"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L163"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 10
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot (NS 10), note 3"
+          quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L165"
+    setback_rear_ft:
+      # Note 4: the rear figure reaches only the part of the rear yard
+      # abutting RMA, RMB or RMC; "otherwise the minimum rear yard setback is
+      # 0 feet".
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.4 Rear and note 4"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 15
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.10.15, E.4 Rear (NS 15), note 4"
+          quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+    max_height_ft:
+      value: 40
+      cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (NS 40)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted (units attached; the 50% residential share of
+      the NS district not encoded). No minimum lot; 70 x 100; min 34 du/net
+      acre; front 0 (max 16), side and rear 0 (10 and 15 beside a residential
+      zone); 40 ft; FAR 3.0. Parking out of the Primary Frontage and 20 ft off
+      the right-of-way, 35% vehicle frontage, 15% open space.
+  CS:
+    cite_default:
+      cite: "Beaverton BDC 20.10 (CS Community Service), Tables 20.10.15 and 20.10.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # Note 11: all units of a quadplex attached.
+      value: true
+      cite: "Beaverton BDC Table 20.10.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CS P)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L209,L223,L228,L316"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L58"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 34
+      cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L43"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      # 20.10.16: 4.0 is the figure in every branch that does not turn on
+      # Frequent Transit Service or regulated affordable housing; the 6.0
+      # is NOT ENCODED. Gross site area.
+      value: 4.0
+      cite: "Beaverton BDC 20.10.16.B.2, Floor Area Ratio in CS, CC, GC (4.0 where not near Frequent Transit Service)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.1 Minimum Yard Setbacks - Front (None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      # Note 2 limits the table's maximum to parcels over 60,000 square feet
+      # "pursuant to Section 60.05.15.6", and 60.05.15.6.A states no such
+      # threshold (16 feet wherever the zone lists no maximum). Encoded on
+      # every lot, the stricter reading; a doubt.
+      value: 16
+      cite: "Beaverton BDC Table 20.10.15, D. Maximum Yard Setback (16) and note 2"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot (None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # Note 4: the rear figure reaches only the part of the rear yard
+      # abutting RMA, RMB or RMC; "otherwise the minimum rear yard setback is
+      # 0 feet".
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.4 Rear and note 4"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 15
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.10.15, E.4 Rear (CS 15), note 4"
+          quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+    max_height_ft:
+      # F.1 None; F.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (CS None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
+      du/net acre; front 0 (max 16), side 0, rear 0 (15 beside a residential
+      zone); no height limit (60 by a residential lot line); FAR 4.0. Parking
+      and open space as NS.
+  CC:
+    cite_default:
+      cite: "Beaverton BDC 20.10 (CC Corridor Commercial), Tables 20.10.15 and 20.10.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # Note 11: all units of a quadplex attached.
+      value: true
+      cite: "Beaverton BDC Table 20.10.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CC P)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L209,L223,L228,L316"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L58"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 34
+      cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L43"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      # 20.10.16: 4.0 is the figure in every branch that does not turn on
+      # Frequent Transit Service or regulated affordable housing; the 6.0
+      # is NOT ENCODED. Gross site area.
+      value: 4.0
+      cite: "Beaverton BDC 20.10.16.B.2, Floor Area Ratio in CS, CC, GC (4.0 where not near Frequent Transit Service)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.1 Minimum Yard Setbacks - Front (None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      # Note 2 limits the table's maximum to parcels over 60,000 square feet
+      # "pursuant to Section 60.05.15.6", and 60.05.15.6.A states no such
+      # threshold (16 feet wherever the zone lists no maximum). Encoded on
+      # every lot, the stricter reading; a doubt.
+      value: 16
+      cite: "Beaverton BDC Table 20.10.15, D. Maximum Yard Setback (16) and note 2"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot (None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.4 Rear (CC None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      # F.1 None; F.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (CC None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
+      du/net acre; front 0 (max 16), side 0, rear 0; no height limit (60 by a
+      residential lot line); FAR 4.0. Parking and open space as NS.
+  GC:
+    cite_default:
+      cite: "Beaverton BDC 20.10 (GC General Commercial), Tables 20.10.15 and 20.10.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # Note 11: all units of a quadplex attached.
+      value: true
+      cite: "Beaverton BDC Table 20.10.20.A, 2.D Residential Dwellings - Triplex and Quadplex (GC P)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L209,L223,L228,L316"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L58"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 34
+      cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L43"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      # 20.10.16: 4.0 is the figure in every branch that does not turn on
+      # Frequent Transit Service or regulated affordable housing; the 6.0
+      # is NOT ENCODED. Gross site area.
+      value: 4.0
+      cite: "Beaverton BDC 20.10.16.B.2, Floor Area Ratio in CS, CC, GC (4.0 where not near Frequent Transit Service)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.1 Minimum Yard Setbacks - Front (None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      # Note 2 limits the table's maximum to parcels over 60,000 square feet
+      # "pursuant to Section 60.05.15.6", and 60.05.15.6.A states no such
+      # threshold (16 feet wherever the zone lists no maximum). Encoded on
+      # every lot, the stricter reading; a doubt.
+      value: 16
+      cite: "Beaverton BDC Table 20.10.15, D. Maximum Yard Setback (16) and note 2"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot (None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # Note 4: the rear figure reaches only the part of the rear yard
+      # abutting RMA, RMB or RMC; "otherwise the minimum rear yard setback is
+      # 0 feet".
+      value: 0
+      cite: "Beaverton BDC Table 20.10.15, E.4 Rear and note 4"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 15
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 20.10.15, E.4 Rear (GC 15), note 4"
+          quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+    max_height_ft:
+      # F.1 None; F.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (GC None)"
+      quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
+      du/net acre; front 0 (max 16), side 0, rear 0 (15 beside a residential
+      zone); no height limit (60 by a residential lot line); FAR 4.0. Parking
+      and open space as NS.
+  # ------------------------------------------------------------------
+  # BDC 20.20, Multiple Use Zoning Districts. Table 20.20.15 (columns
+  # RC-E OI-WS C-WS TC-MU TC-HDR SC-MU SC-HDR SC-S SC-E1 SC-E3) and Table
+  # 20.20.20.A. No row states a minimum lot area, a lot width or a height
+  # for the zones that admit the pod. NOT ENCODED: B.1 minimum FAR (no
+  # field). Note 70 (the South Cooper Mountain housing-variety rule) asks
+  # one housing type of a site up to 15 acres, which the pod is.
+  # ------------------------------------------------------------------
+  RC-E:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (RC-E Regional Center - East), Tables 20.20.15 and 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-E P)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L507,L512"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 12
+      cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
+      # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
+      # 4.0 is the stricter figure. Gross site area.
+      value: 4.0
+      cite: "Beaverton BDC 20.20.16.2, Floor Area Ratio (4.0 when no part of the site is within half a mile of Frequent Transit Service)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # C.5, side or rear yards abutting property zoned residential, is
+      # also None in this column.
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (RC-E None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    setback_front_max_ft:
+      # 60.05.15.6.A: buildings occupy a share of the frontage "between the
+      # minimum setback and the maximum setback ... or 16 feet if there is
+      # no maximum setback listed". NOT ENCODED: the share itself (60
+      # percent of the Primary Frontage, 35 percent of a secondary one);
+      # no field holds a frontage-occupancy percentage.
+      # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
+      value: 16
+      cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 12 du/net acre; yards 0
+      (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
+      Parking out of the Primary Frontage and 20 ft off the right-of-way, 35%
+      vehicle frontage, 15% open space.
+  TC-MU:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (TC-MU Town Center - Multiple Use), Tables 20.20.15 and 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (TC-MU P)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L507,L512"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 24
+      cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
+      # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
+      # 4.0 is the stricter figure. Gross site area.
+      value: 4.0
+      cite: "Beaverton BDC 20.20.16.2, Floor Area Ratio (4.0 when no part of the site is within half a mile of Frequent Transit Service)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # C.5, side or rear yards abutting property zoned residential, is
+      # also None in this column.
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (TC-MU None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    setback_front_max_ft:
+      # 60.05.15.6.A: buildings occupy a share of the frontage "between the
+      # minimum setback and the maximum setback ... or 16 feet if there is
+      # no maximum setback listed". NOT ENCODED: the share itself (60
+      # percent of the Primary Frontage, 35 percent of a secondary one);
+      # no field holds a frontage-occupancy percentage.
+      # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
+      value: 16
+      cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
+      (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
+      Parking out of the Primary Frontage and 20 ft off the right-of-way, 35%
+      vehicle frontage, 15% open space.
+  TC-HDR:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (TC-HDR Town Center - High Density Residential), Tables 20.20.15 and 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (TC-HDR P)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L507,L512"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 24
+      cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
+      # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
+      # 4.0 is the stricter figure. Gross site area.
+      value: 4.0
+      cite: "Beaverton BDC 20.20.16.2, Floor Area Ratio (4.0 when no part of the site is within half a mile of Frequent Transit Service)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # C.5, side or rear yards abutting property zoned residential, is
+      # also None in this column.
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (TC-HDR None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    setback_front_max_ft:
+      # 60.05.15.6.A: buildings occupy a share of the frontage "between the
+      # minimum setback and the maximum setback ... or 16 feet if there is
+      # no maximum setback listed". NOT ENCODED: the share itself (60
+      # percent of the Primary Frontage, 35 percent of a secondary one);
+      # no field holds a frontage-occupancy percentage.
+      # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
+      value: 16
+      cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
+      (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
+      Parking out of the Primary Frontage and 20 ft off the right-of-way, 35%
+      vehicle frontage, 15% open space.
+  SC-MU:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (SC-MU Station Community - Multiple Use), Tables 20.20.15 and 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-MU P)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L507,L512"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      # Note 2: "30 units within 400 feet of LRT station platform, 24
+      # beyond 400 feet". Nothing measures the platform distance; 30 is
+      # the stricter floor. A doubt.
+      value: 30
+      cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
+      # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
+      # 4.0 is the stricter figure. Gross site area.
+      value: 4.0
+      cite: "Beaverton BDC 20.20.16.2, Floor Area Ratio (4.0 when no part of the site is within half a mile of Frequent Transit Service)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # C.5, side or rear yards abutting property zoned residential, is
+      # also None in this column.
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (SC-MU None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    setback_front_max_ft:
+      # 60.05.15.6.A: buildings occupy a share of the frontage "between the
+      # minimum setback and the maximum setback ... or 16 feet if there is
+      # no maximum setback listed". NOT ENCODED: the share itself (60
+      # percent of the Primary Frontage, 35 percent of a secondary one);
+      # no field holds a frontage-occupancy percentage.
+      # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
+      value: 16
+      cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
+      platform, not encoded) du/net acre; yards 0 (front max 16); no height
+      limit (60 by a residential lot line); FAR 4.0. Parking out of the
+      Primary Frontage and 20 ft off the right-of-way, 35% vehicle frontage,
+      15% open space.
+  SC-HDR:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (SC-HDR Station Community - High Density Residential), Tables 20.20.15 and 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-HDR P)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L507,L512"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      # Note 2: "30 units within 400 feet of LRT station platform, 24
+      # beyond 400 feet". Nothing measures the platform distance; 30 is
+      # the stricter floor. A doubt.
+      value: 30
+      cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
+      # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
+      # 4.0 is the stricter figure. Gross site area.
+      value: 4.0
+      cite: "Beaverton BDC 20.20.16.2, Floor Area Ratio (4.0 when no part of the site is within half a mile of Frequent Transit Service)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # C.5, side or rear yards abutting property zoned residential, is
+      # also None in this column.
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (SC-HDR None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    setback_front_max_ft:
+      # 60.05.15.6.A: buildings occupy a share of the frontage "between the
+      # minimum setback and the maximum setback ... or 16 feet if there is
+      # no maximum setback listed". NOT ENCODED: the share itself (60
+      # percent of the Primary Frontage, 35 percent of a secondary one);
+      # no field holds a frontage-occupancy percentage.
+      # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
+      value: 16
+      cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
+      platform, not encoded) du/net acre; yards 0 (front max 16); no height
+      limit (60 by a residential lot line); FAR 4.0. Parking out of the
+      Primary Frontage and 20 ft off the right-of-way, 35% vehicle frontage,
+      15% open space.
+  SC-S:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (SC-S Station Community - Sunset), Tables 20.20.15 and 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # P66; note 66 is repealed and reserved.
+      value: true
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-S P66)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L507,L512,L865"
+    min_lot_sqft:
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      # Note 2: "30 units within 400 feet of LRT station platform, 24
+      # beyond 400 feet". Nothing measures the platform distance; 30 is
+      # the stricter floor. A doubt.
+      value: 30
+      cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_far:
+      value: 7.0
+      cite: "Beaverton BDC Table 20.20.15, B.3 Floor Area Ratio - Maximum (SC-S 7.0)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127"
+    setback_front_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_rear_ft:
+      # C.5, side or rear yards abutting property zoned residential, is
+      # also None in this column.
+      value: 0
+      cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    max_height_ft:
+      # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
+      exempt: true
+      cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (SC-S None)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 60
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
+          quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
+    setback_front_max_ft:
+      # 60.05.15.6.A: buildings occupy a share of the frontage "between the
+      # minimum setback and the maximum setback ... or 16 feet if there is
+      # no maximum setback listed". NOT ENCODED: the share itself (60
+      # percent of the Primary Frontage, 35 percent of a secondary one);
+      # no field holds a frontage-occupancy percentage.
+      # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
+      value: 16
+      cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+    parking_area_max_frontage_pct:
+      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
+      # feet of a street lot line at 35 percent of that line's length; read
+      # as the share of frontage vehicle area may take, which is how the
+      # field is measured.
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671"
+    parking_street_setback_ft:
+      # 60.05.20.6.A.1 and .2: never closer than 20 feet to the right-of-way,
+      # on the Primary Frontage and on every other frontage.
+      value: 20
+      cite: "Beaverton BDC 60.05.20.6.A.1-2, parking no closer than 20 feet to the right-of-way"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676"
+    open_space_min_pct:
+      # 60.05.25.2.A, residential developments of 4 to 7 units of Attached
+      # Housing; reached through 60.05.11.3 ("all other districts").
+      value: 15
+      cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
+      platform, not encoded) du/net acre; yards 0 (front max 16); no height
+      limit (60 by a residential lot line); FAR 7.0. Parking out of the
+      Primary Frontage and 20 ft off the right-of-way, 35% vehicle frontage,
+      15% open space.
+  # ------------------------------------------------------------------
+  # BDC Chapter 70, Downtown Design District (RC-BC, RC-OT, RC-MU,
+  # RC-DT). 70.05.15.7 exempts Downtown development from Chapter 20
+  # except 20.25 and from 60.05 except lighting, so none of the 20.xx or
+  # 60.05 rules above reach these four zones; 60.30 (parking ratios and
+  # stall and aisle dimensions) still does. Each zone prints a height and
+  # density table and a setback table; the pod has ground-floor units, so
+  # the "with ground floor residential units" rows are read. Surface
+  # parking is Table 70.20.05.7.A S5: not along the primary frontage
+  # between facade and street (a), not in the front minimum setback (b),
+  # 5 feet from all property lines (c), alleys exempt (d). NOT ENCODED:
+  # S5.c on side and rear lines (no field); the street-facing side
+  # maximums; minimum FAR (no field); the reduced minimums for small
+  # pre-1999 sites (70.15.10.5). RC-BC, RC-OT and RC-MU owe their side
+  # and rear setback beside "property zoned residential and/or Downtown
+  # Transition (DT)"; that stricter row is the base value and the interior
+  # 0 is the variant (see RC-BC). RC-DT's own row names only residential.
+  # ------------------------------------------------------------------
+  RC-BC:
+    cite_default:
+      cite: "Beaverton BDC 70.15.10 (RC-BC Beaverton Central), Tables 70.15.10.1.A and 70.15.10.1.B"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 70.15.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-BC P)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L530,L536,L539"
+    min_lot_sqft:
+      # Neither Chapter 70 table states a lot area, and 70.05.15.7 takes
+      # Chapter 20 away.
+      exempt: true
+      cite: "Beaverton BDC Table 70.15.10.1.A (no minimum lot area) and 70.05.15.7"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L129-L130,L220,L222-L223"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      # Note 3: minimum density applies only to 100% residential
+      # development, which the pod is.
+      value: 60
+      cite: "Beaverton BDC Table 70.15.10.1.A, Density (Units/Acre) minimum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L220,L222,L225,L232"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_height_ft:
+      value: 120
+      cite: "Beaverton BDC Table 70.15.10.1.A, Height maximum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L220,L222-L223"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_ft:
+      value: 6
+      cite: "Beaverton BDC Table 70.15.10.1.B, Front setback with ground floor residential units (minimum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L247"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      value: 12
+      cite: "Beaverton BDC Table 70.15.10.1.B, Front setback with ground floor residential units (maximum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L247"
+    setback_side_ft:
+      # The row that binds is "Setback abutting property zoned residential
+      # and/or Downtown Transition (DT)". abuts_residential_zone answers
+      # only its first half -- an RC-DT neighbour is not a residential zone
+      # -- so the strict figure is the base and the interior 0 sits behind
+      # abuts_nonresidential_zone, Fairview's shape for the same pair.
+      # Whoever declares this layer's neighbours: must keep every
+      # residential zone AND RC-DT off that condition's true_for.
+      value: 10
+      cite: "Beaverton BDC Table 70.15.10.1.B, Setback abutting property zoned residential and/or Downtown Transition (DT), Side minimum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L246,L253-L254"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          cite: "Beaverton BDC Table 70.15.10.1.B, Interior side or rear setback"
+          quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L246,L249"
+    setback_rear_ft:
+      value: 20
+      cite: "Beaverton BDC Table 70.15.10.1.B, Setback abutting property zoned residential and/or Downtown Transition (DT), Rear minimum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L246,L253-L254"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          cite: "Beaverton BDC Table 70.15.10.1.B, Interior side or rear setback"
+          quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L246,L249"
+    setback_street_side_ft:
+      value: 6
+      cite: "Beaverton BDC Table 70.15.10.1.B, Street facing side or rear setback with ground floor residential units (minimum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L246,L250"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC Table 70.20.05.7.A S5.a, surface parking not along the primary frontage between the building facade and the street"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L1431,L1437-L1440"
+    parking_street_setback_ft:
+      # S5.b keeps surface parking out of the front minimum setback (6 feet)
+      # and S5.c 5 feet from every property line; the larger is the figure.
+      value: 6
+      cite: "Beaverton BDC Table 70.20.05.7.A S5.b-c, surface parking outside the front minimum setback and 5 feet from all property lines; front minimum setback from Table 70.15.10.1.B"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L239-L247,L1431,L1437-L1444"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 60 du/net acre (all-
+      residential development); 120 ft; front 6 (max 12), street side 6,
+      side 10 and rear 20 (0 only where every interior line abuts a zone
+      neither residential nor RC-DT). Surface parking out of the primary
+      frontage and 6 ft off the street; 48 sq ft of open space a unit.
+  RC-OT:
+    cite_default:
+      cite: "Beaverton BDC 70.15.10 (RC-OT Old Town), Tables 70.15.10.2.A and 70.15.10.2.B"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 70.15.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-OT P)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L530,L536,L539"
+    min_lot_sqft:
+      # Neither Chapter 70 table states a lot area, and 70.05.15.7 takes
+      # Chapter 20 away.
+      exempt: true
+      cite: "Beaverton BDC Table 70.15.10.2.A (no minimum lot area) and 70.05.15.7"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L129-L130,L287,L289-L290"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      # "18 or 24" by Figure 70.15.10.2.3 (note 4), a map nothing reads; 24
+      # is the stricter floor. A doubt.
+      value: 24
+      cite: "Beaverton BDC Table 70.15.10.2.A, Density (Units/Acre) minimum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L287,L289,L292,L300"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_height_ft:
+      value: 65
+      cite: "Beaverton BDC Table 70.15.10.2.A, Height maximum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L287,L289-L290"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_ft:
+      value: 6
+      cite: "Beaverton BDC Table 70.15.10.2.B, Front setback with ground floor residential units (minimum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307-L308"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      value: 16
+      cite: "Beaverton BDC Table 70.15.10.2.B, Front setback with ground floor residential units (maximum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307-L308"
+    setback_side_ft:
+      # As RC-BC: the residential-and/or-DT row is the base.
+      value: 10
+      cite: "Beaverton BDC Table 70.15.10.2.B, Setback abutting property zoned residential and/or Downtown Transition (DT) - Side"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307,L313"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          cite: "Beaverton BDC Table 70.15.10.2.B, Interior side or rear setback"
+          quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307,L310"
+    setback_rear_ft:
+      value: 10
+      cite: "Beaverton BDC Table 70.15.10.2.B, Setback abutting property zoned residential and/or Downtown Transition (DT) - Rear"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307,L314"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          cite: "Beaverton BDC Table 70.15.10.2.B, Interior side or rear setback"
+          quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307,L310"
+    setback_street_side_ft:
+      value: 6
+      cite: "Beaverton BDC Table 70.15.10.2.B, Street facing side or rear setback with ground floor residential units (minimum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307,L311"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC Table 70.20.05.7.A S5.a, surface parking not along the primary frontage between the building facade and the street"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L1431,L1437-L1440"
+    parking_street_setback_ft:
+      # S5.b keeps surface parking out of the front minimum setback (6 feet)
+      # and S5.c 5 feet from every property line; the larger is the figure.
+      value: 6
+      cite: "Beaverton BDC Table 70.20.05.7.A S5.b-c, surface parking outside the front minimum setback and 5 feet from all property lines; front minimum setback from Table 70.15.10.2.B"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L307-L308,L1431,L1437-L1444"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre (18 where
+      Figure 70.15.10.2.3 says so, not encoded); 65 ft; front 6 (max 16),
+      street side 6, side and rear 10 (0 as RC-BC). Parking and open space
+      as RC-BC.
+  RC-MU:
+    cite_default:
+      cite: "Beaverton BDC 70.15.10 (RC-MU Mixed Use), Tables 70.15.10.3.A and 70.15.10.3.B"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 70.15.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-MU P)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L530,L536,L539"
+    min_lot_sqft:
+      # Neither Chapter 70 table states a lot area, and 70.05.15.7 takes
+      # Chapter 20 away.
+      exempt: true
+      cite: "Beaverton BDC Table 70.15.10.3.A (no minimum lot area) and 70.05.15.7"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L129-L130,L353,L355-L356"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 43
+      cite: "Beaverton BDC Table 70.15.10.3.A, Density (Units/Acre) minimum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L353,L355,L358"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_height_ft:
+      value: 75
+      cite: "Beaverton BDC Table 70.15.10.3.A, Height maximum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L353,L355-L356"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_ft:
+      value: 6
+      cite: "Beaverton BDC Table 70.15.10.3.B, Front setback with ground floor residential units (minimum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372-L373"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      value: 16
+      cite: "Beaverton BDC Table 70.15.10.3.B, Front setback with ground floor residential units (maximum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372-L373"
+    setback_side_ft:
+      # As RC-BC. RC-MU's row reads "residential and Downtown Transition
+      # (DT)", without the "or"; read as RC-BC's "and/or", the stricter
+      # of the two readings (a doubt).
+      value: 10
+      cite: "Beaverton BDC Table 70.15.10.3.B, Setback abutting property zoned residential and Downtown Transition (DT) - Side"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372,L378"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          cite: "Beaverton BDC Table 70.15.10.3.B, Interior side or rear setback"
+          quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372,L375"
+    setback_rear_ft:
+      value: 20
+      cite: "Beaverton BDC Table 70.15.10.3.B, Setback abutting property zoned residential and Downtown Transition (DT) - Rear"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372,L379"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          cite: "Beaverton BDC Table 70.15.10.3.B, Interior side or rear setback"
+          quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372,L375"
+    setback_street_side_ft:
+      value: 6
+      cite: "Beaverton BDC Table 70.15.10.3.B, Street facing side or rear setback with ground floor residential units (minimum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372,L376"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC Table 70.20.05.7.A S5.a, surface parking not along the primary frontage between the building facade and the street"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L1431,L1437-L1440"
+    parking_street_setback_ft:
+      # S5.b keeps surface parking out of the front minimum setback (6 feet)
+      # and S5.c 5 feet from every property line; the larger is the figure.
+      value: 6
+      cite: "Beaverton BDC Table 70.20.05.7.A S5.b-c, surface parking outside the front minimum setback and 5 feet from all property lines; front minimum setback from Table 70.15.10.3.B"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L372-L373,L1431,L1437-L1444"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; min 43 du/net acre; 75 ft;
+      front 6 (max 16), street side 6, side 10 and rear 20 (0 as RC-BC).
+      Parking and open space as RC-BC.
+  RC-DT:
+    cite_default:
+      cite: "Beaverton BDC 70.15.10 (RC-DT Downtown Transition), Tables 70.15.10.4.A and 70.15.10.4.B"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: "Beaverton BDC Table 70.15.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-DT P)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L530,L536,L539"
+    min_lot_sqft:
+      # Neither Chapter 70 table states a lot area, and 70.05.15.7 takes
+      # Chapter 20 away.
+      exempt: true
+      cite: "Beaverton BDC Table 70.15.10.4.A (no minimum lot area) and 70.05.15.7"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L129-L130,L414,L416-L417"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    min_density_du_per_acre:
+      value: 30
+      cite: "Beaverton BDC Table 70.15.10.4.A, Density (Units/Acre) minimum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L414,L416,L419"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_density_du_per_acre:
+      # Measured on net acreage like the minimum beside it, which is the
+      # stricter reading; 20.25.05 speaks only of the minimum. A doubt.
+      value: 60
+      cite: "Beaverton BDC Table 70.15.10.4.A, Density (Units/Acre) maximum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L414,L416,L419"
+      measured_on:
+        fact: net_developable_area
+        cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
+        quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+    max_height_ft:
+      value: 60
+      cite: "Beaverton BDC Table 70.15.10.4.A, Height maximum"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L414,L416-L417"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_ft:
+      value: 10
+      cite: "Beaverton BDC Table 70.15.10.4.B, Front setback with ground floor residential units (minimum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432-L433"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+    setback_front_max_ft:
+      value: 20
+      cite: "Beaverton BDC Table 70.15.10.4.B, Front setback with ground floor residential units (maximum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432-L433"
+    setback_side_ft:
+      value: 0
+      cite: "Beaverton BDC Table 70.15.10.4.B, Interior side or rear setback"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432,L435"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 10
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 70.15.10.4.B, Setback abutting property zoned residential - Side"
+          quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432,L438"
+    setback_rear_ft:
+      value: 0
+      cite: "Beaverton BDC Table 70.15.10.4.B, Interior side or rear setback"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432,L435"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
+        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: "Beaverton BDC Table 70.15.10.4.B, Setback abutting property zoned residential - Rear"
+          quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432,L439"
+    setback_street_side_ft:
+      value: 10
+      cite: "Beaverton BDC Table 70.15.10.4.B, Street facing side or rear setback with ground floor residential units (minimum)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432,L436"
+    parking_front_prohibited:
+      value: true
+      cite: "Beaverton BDC Table 70.20.05.7.A S5.a, surface parking not along the primary frontage between the building facade and the street"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L1431,L1437-L1440"
+    parking_street_setback_ft:
+      # S5.b keeps surface parking out of the front minimum setback (10 feet)
+      # and S5.c 5 feet from every property line; the larger is the figure.
+      value: 10
+      cite: "Beaverton BDC Table 70.20.05.7.A S5.b-c, surface parking outside the front minimum setback and 5 feet from all property lines; front minimum setback from Table 70.15.10.4.B"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L432-L433,L1431,L1437-L1444"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    notes: >-
+      DRAFT. Quadplex permitted. No minimum lot; 30 to 60 du/net acre; 60 ft;
+      front 10 (max 20), street side 10, interior 0 (side 10 and rear 20
+      beside a residential zone). Surface parking 10 ft off the street; open
+      space as RC-BC.
+  # ------------------------------------------------------------------
+  # Zones whose use tables do not admit a quadplex. A settled refusal owes
+  # no dimensions.
+  # ------------------------------------------------------------------
+  OI:
+    cite_default:
+      cite: "Beaverton BDC 20.15 (OI Office Industrial), Tables 20.15.15 and 20.15.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # Table 20.15.20.A lists no dwelling use, and B.1 of Table 20.15.15
+      # prints residential density N/A. 10.50 lets the Director permit an
+      # unlisted use but "may not permit a use already allowed in any other
+      # zoning district", which a quadplex is.
+      value: false
+      cite: "Beaverton BDC Tables 20.15.15 B.1 and 20.15.20.A (no residential dwelling use in OI)"
+      quote: "or/washington/beaverton/bdc.20.15.employment-industrial.txt#L41,L44,L47,L146,L148-L149,L153,L159"
+    notes: >-
+      DRAFT. Quadplex not permitted (no dwelling use in the
+      Employment/Industrial table).
+  OI-NC:
+    cite_default:
+      cite: "Beaverton BDC 20.15 (OI-NC Office Industrial - Nike Campus), Tables 20.15.15 and 20.15.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # Table 20.15.20.A lists no dwelling use, and B.1 of Table 20.15.15
+      # prints residential density N/A. 10.50 lets the Director permit an
+      # unlisted use but "may not permit a use already allowed in any other
+      # zoning district", which a quadplex is.
+      value: false
+      cite: "Beaverton BDC Tables 20.15.15 B.1 and 20.15.20.A (no residential dwelling use in OI-NC)"
+      quote: "or/washington/beaverton/bdc.20.15.employment-industrial.txt#L41,L44,L47,L146,L148-L149,L153,L159"
+    notes: >-
+      DRAFT. Quadplex not permitted (no dwelling use in the
+      Employment/Industrial table).
+  IND:
+    cite_default:
+      cite: "Beaverton BDC 20.15 (IND Industrial), Tables 20.15.15 and 20.15.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # Table 20.15.20.A lists no dwelling use, and B.1 of Table 20.15.15
+      # prints residential density N/A. 10.50 lets the Director permit an
+      # unlisted use but "may not permit a use already allowed in any other
+      # zoning district", which a quadplex is.
+      value: false
+      cite: "Beaverton BDC Tables 20.15.15 B.1 and 20.15.20.A (no residential dwelling use in IND)"
+      quote: "or/washington/beaverton/bdc.20.15.employment-industrial.txt#L41,L44,L47,L146,L148-L149,L153,L159"
+    notes: >-
+      DRAFT. Quadplex not permitted (no dwelling use in the
+      Employment/Industrial table).
+  OI-WS:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (OI-WS Office Industrial - Washington Square), Table 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # Row 1.C prints N. Row 1.F, Multi-Dwelling, prints P2, and in a
+      # Multiple Use district Chapter 90 makes any number of attached units a
+      # multi-dwelling, so the pod could claim that row -- but note 2 permits
+      # it only "above a Permitted or Conditionally approved non-residential
+      # use (second story and above)" and says "Multi-dwelling" here "means
+      # one or more units above a non-residential use". The pod has nothing
+      # under it. And the definition itself shuts the door: attached dwellings
+      # in any number "unless that number or configuration is prohibited in
+      # that zoning district" (bdc.90.definitions.txt#L781-L783), and four
+      # units are prohibited here by row 1.C. Refused.
+      value: false
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Triplex and Quadplex (OI-WS N) and 1.F Multi-Dwelling (OI-WS P2), note 2"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L495,L512,L515,L707-L710"
+    notes: >-
+      DRAFT. Quadplex not permitted (N in Table 20.20.20.A; the Multi-Dwelling
+      row admits only units above a non-residential use).
+  C-WS:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (C-WS Commercial - Washington Square), Table 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # Row 1.C prints N. Row 1.F, Multi-Dwelling, prints P3, and in a
+      # Multiple Use district the pod's attached units are a multi-dwelling
+      # under Chapter 90 -- but note 3 permits it only "in conjunction with
+      # mixed-use developments" where at least 51 percent of the site's
+      # ground-floor uses are commercial or civic and 75 percent of the street
+      # footage is fronted by them. An all-residential pod is neither. And
+      # the definition itself shuts the door: attached dwellings in any number
+      # "unless that number or configuration is prohibited in that zoning
+      # district" (bdc.90.definitions.txt#L781-L783), and four units are
+      # prohibited here by row 1.C. Refused.
+      value: false
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Triplex and Quadplex (C-WS N) and 1.F Multi-Dwelling (C-WS P3), note 3"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L495,L512,L515,L711-L715"
+    notes: >-
+      DRAFT. Quadplex not permitted (N in Table 20.20.20.A; the Multi-Dwelling
+      row admits dwellings only within a mixed-use development).
+  SC-E:
+    cite_default:
+      cite: "Beaverton BDC 20.20 (SC-E1 and SC-E3 Station Community - Employment), Table 20.20.20.A"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # The zoning map prints SC-E; 10.25 lists "Station Community - Employment
+      # Sub Area 1 & 3, SC-E1 & 3" and the tables carry an SC-E1 and an SC-E3
+      # column. Both print N, so the one map code needs no split.
+      value: false
+      cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-E1 N, SC-E3 N)"
+      quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L482,L488-L507,L512"
+    notes: >-
+      DRAFT. Quadplex not permitted (N in both the SC-E1 and SC-E3 columns).
+
+zone_rulings:
+  WAcnty:
+    outcome: pocket
+    of: or/washington/_unincorporated
+    zone: map
+    note: >-
+      "WAcnty", the value the city's zoning layer (pubZoning layer 0,
+      ZONE_NAME) gives 90 features on 2026-09-29, 646.4 acres between them
+      by the layer's own area field. It is not a Beaverton district: it marks land annexed to
+      the city that still carries the county's zoning. BDC 10.40.1: "Any
+      area annexed to the City shall retain the zoning classification of its
+      former jurisdiction until changed by the City. In the interim period,
+      the City shall enforce the zoning regulations of the former
+      jurisdiction ... except that the provisions of Chapters 30 through 80
+      of this Code shall supersede comparable provisions"
+      (bdc.10.general-provisions.txt L284-L290); 10.40.3.A quotes UPAA §V.B,
+      under which the city rezones "corresponding as closely as possible to
+      designations already adopted by the County" (L297-L300). So the lot
+      screens under the unincorporated layer, with the district read off the
+      county's own map. Two doubts go with it. First, the supersession: the
+      city's Chapter 60 (parking, design review) replaces the county's
+      comparable rules on these lots, and the unincorporated layer carries
+      the county's; which of its parking and design figures give way is not
+      ruled here. Second, whether the county's zoning map still shows a
+      district on a lot after annexation was not checked; if it does not,
+      the pocket resolves to nothing. Both are in the handoff.
+  ROW:
+    outcome: unencodable
+    note: >-
+      "ROW", the value the city's zoning layer gives 29 features on
+      2026-09-29, 73.2 acres between them. Right-of-way, not a district:
+      BDC 10.35.1, "When bordering a public right-of-way, all zoning district
+      boundaries shall extend to the centerline of the right-of-way"
+      (bdc.10.general-provisions.txt L260, L264-L265), so the code zones a
+      street as the land beside it and prints no ROW district. No lot
+      stands on a street; nothing to screen.

@@ -1,0 +1,525 @@
+60.55. Transportation Facilities
+
+[ORD 4061, 10/15/1999; ORD 4224, 09/19/2002]
+60.55.05. Purpose and Intent.
+
+It is the purpose and intent of this chapter to establish design standards and performance requirements for all streets
+and other transportation facilities constructed or reconstructed within the City of Beaverton.
+[ORD 3238, 01/28/1982; ORD 3494, 03/27/1986; ORD 4061, 10/15/1999; ORD 4224, 09/19/2002; ORD 4302,
+06/10/2004]
+Effective on: 6/10/2004
+60.55.10. General Provisions.
+
+[ORD 4302; June 2004]
+1. All public and private transportation facilities shall be designed and improved in accordance with the standards of
+this code and the Engineering Design Manual and Standard Drawings. In addition, when development abuts or
+impacts a transportation facility under the jurisdiction of one or more other governmental agencies, the City shall
+condition the development to obtain permits required by the other agencies. [ORD 4782; April 2020]
+2. In order to protect the public from potentially adverse impacts of the proposal, to fulfill an identified need for
+public services related to the development, or both, development shall provide traffic capacity, traffic safety, and
+transportation improvements in rough proportion to the identified impacts of the development. [ORD 4103; May
+2000]
+3. For applications that meet the threshold criteria of section 60.55.15. (Traffic Management Plan) or of section
+60.55.20. (Traffic Impact Analysis), these analyses or limited elements thereof may be required.
+4. The decision-making authority may impose development conditions of approval per Section 10.65.1. of this code.
+Conditions of approval may be based on the Traffic Management Plan and Traffic Impact Analysis. Additional street,
+bicycle, and pedestrian connections may also be required per 60.55.25. (Street and Bicycle and Pedestrian
+Connection Requirements).
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-242
+5. Dedication of right-of-way shall be determined by the decision-making authority.
+6. Traffic calming may be approved or required by the decision-making authority in a design of the proposed and/or
+existing streets within the Area of Influence or any additional locations identified by the City Engineer. Traffic
+calming measures shall be designed to City standards.
+7. Intersection performance shall be determined using the Highway Capacity Manual 2000 published by the
+Transportation Research Board. The City Engineer may approve a different intersection analysis method prior to
+use when the different method can be justified. Terms used in this subsection are defined in the Highway Capacity
+Manual 2000.
+At a minimum, the impacts of development on a signalized intersection shall be mitigated to peak hour average
+control delay no greater than 65 seconds per vehicle using a signal cycle length not to exceed 120 seconds. The
+volume-to-capacity ratio for each lane group for each movement shall be identified and considered in the
+determination of intersection performance. The peak hour volume-to-capacity (V/C) ratio for each lane group shall
+be no greater than 0.98. Signal progression shall also be considered. If the intersection is under County or ODOT
+jurisdiction, the V/C ratio for each lane group shall not exceed the V/C ratio imposed by that jurisdiction. [ORD
+4706; May 2017]
+At a minimum, the impacts of development on a two-way or an all-way stop-controlled intersection shall be
+mitigated to a peak hour average control delay of no greater than 45 seconds per vehicle.
+If the existing control delay or volume-to-capacity ratio of an intersection is greater than the standards of this
+subsection, the impacts of development shall be mitigated to maintain or reduce the respective control delay or
+volume-to-capacity ratio.
+[ORD 4061, 10/15/1999; ORD 4103, 05/04/2000; ORD 4224, 09/19/2002; ORD 4302, 06/10/2004; ORD 4418,
+02/22/2007; ORD 4706, 05/19/2017; ORD 4782, 04/17/2020]
+Effective on: 4/17/2020
+60.55.15. Traffic Management Plan.
+
+[ORD 4302; June 2004]
+Where development will add 20 or more trips in any hour on a residential street, a Traffic Management Plan acceptable
+to the City Engineer shall be submitted in order to complete the application. A residential street is any portion of a street
+classified as a Local Street or Neighborhood Route and having abutting property zoned RMA, RMB, RMC, or CM-RM.
+[ORD 4584; June 2012] [ORD 4822; June 2022] [ORD 4859; January 2025]
+1. For each development application that requires a Traffic Management Plan, the Plan shall identify:
+A. The hours when the added trips from the development will be 20 or more vehicles per hour.
+B. The existing volume of trips on the residential street during each of those same hours.
+C. The volume of trips that the development will add on the residential street during each of those same hours.
+D. Recommended traffic management strategies designed to City standards to mitigate the impacts of the
+increased trips attributed to the development. Potential traffic management strategies include, but are not
+limited to, any combination of speed humps, curb extensions, intersection treatments, and traffic control
+devices.
+2. The Traffic Management Plan shall discuss whether the recommended improvements both on-site and off-site are
+justified, reasonably related to, and roughly proportional to the impacts of the proposed development and shall
+include information sufficient for the City to assess whether the proposed mitigation strategies are reasonably
+related and roughly proportional to the level of impact. [ORD 4103; May 2000]
+[ORD 3238, 01/28/1982; ORD 3494, 03/27/1986; ORD 4061, 10/15/1999; ORD 4103, 05/04/2000; ORD 4224,
+09/19/2002; ORD 4302, 06/10/2004; ORD 4584, 06/01/2012; ORD 4822, 06/30/2022; ORD 4859, 01/02/2025]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-243
+Effective on: 1/2/2025
+60.55.20. Traffic Impact Analysis.
+
+[ORD 4103; May 2000] [ORD 4302; June 2004]
+For each development proposal that exceeds the Analysis Threshold of 60.55.20.2, the application for land use or design
+review approval shall include a Traffic Impact Analysis as required by this code. The Traffic Impact Analysis shall be based
+on the type and intensity of the proposed land use change or development and its estimated level of impact to the
+existing and future local and regional transportation systems.
+1.Engineer Certification. The Traffic Impact Analysis shall be prepared and certified by a traffic engineer or civil
+engineer licensed in the State of Oregon.
+2.Analysis Threshold.
+A. A Traffic Impact Analysis is required when the proposed land use change or development will generate 300
+vehicles or more per day (vpd) in average weekday trips as determined by the City Engineer. [ORD 4706; May
+2017]
+B. A Traffic Impact Analysis or some elements of a Traffic Impact Analysis may be required when the volume
+threshold under subsection A. of this section is not met but the City Engineer finds that the traffic impacts
+attributable to the development have the potential to significantly impact the safe and efficient operation of
+the existing public transportation system.
+3.Study Area. The Traffic Impact Analysis shall evaluate the Area of Influence of the proposed development and all
+segments of the surrounding transportation system where users are likely to experience a change in the quality of
+traffic flow. The City Engineer may identify additional locations for study if existing traffic operation, safety, or
+performance is marginal or substandard. Prior to report preparation, the applicant shall submit the proposed scope
+and analysis assumptions of the Traffic Impact Analysis. The City Engineer shall determine whether the scope and
+analysis assumptions are adequate.
+4.Contents of the Traffic Impact Analysis Report. The Traffic Impact Analysis report shall contain the following
+information organized in a logical format:
+A. Executive Summary
+B. Description of Proposed Development
+C. Existing Conditions
+D. Traffic Forecasts
+E. Traffic Impacts
+F. Mitigation Identification
+G. Recommendations
+A. Executive Summary. An Executive Summary of no more than three single-sided pages shall be included at the
+beginning of the Traffic Impact Analysis report. The Executive Summary shall summarize the analysis and
+conclusions and identify recommended transportation improvements.
+B. Description of Proposed Development. The Traffic Impact Analysis shall provide a comprehensive project
+description including but not limited to the following:
+1. Vicinity map.
+2. Site plan.
+3. Project phasing.
+4. Time schedule.
+5. Intended use of the site, including the range of uses allowed without additional land-use approvals.
+6. Intensity of use.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-244
+C. Existing Conditions. The Traffic Impact Analysis shall provide a complete evaluation of existing conditions and
+include maps and/or tables displaying the following information for the Area of Influence and any additional
+locations previously identified by the City Engineer:
+1. Street system including street names and functional classifications.
+2. Pavement and shoulder widths.
+3. Striping and channelization.
+4. Driveways.
+5. Freight access and loading areas.
+6. Intersections.
+7. Traffic volumes.
+a. Existing traffic shall be measured within the previous twelve months.
+b. Traffic volumes shall be based on data from a minimum of two typical weekdays (Tuesday through
+Thursday). In addition, data shall be provided for weekends if weekends are the peak traffic period
+for either the existing street or the proposed development. [ORD 4706; May 2017]
+c. Seasonal variations in traffic volumes shall be considered.
+8. Existing intersection performance indicators including volume-to-capacity ratio and control delay.
+9. Transit information including stop and shelter locations, route numbers, headways, passenger loading,
+pull outs, and times of service.
+10. Bicycle ways, sidewalks, and accessways.
+11. Collision data for the most recent three-year period for which collision data is available.
+D. Traffic Forecasts. The Traffic Impact Analysis report shall provide forecasts of future traffic within the Area of
+Influence and any additional locations previously identified by the City Engineer. Traffic forecasts shall be
+provided for both the Buildout Year and the Long-Range Forecast Year. The report shall include complete
+documentation of trip generation calculations including Institute of Transportation Engineers (ITE) Trip
+Generation (latest published edition) use code(s) or an alternative basis of trip generation and the rationale
+for using the alternative.
+1. Buildout Year Analysis. Buildout Year forecasts shall be Total Traffic at the time of anticipated
+completion and occupancy of each phase of the development and at the time of completion and
+occupancy of the entire development. The City shall provide traffic information on other developments
+to consider in the calculation of Added Traffic.
+2. Long-Range Forecast Year Analysis. The Traffic Impact Analysis shall include an analysis of the potential
+worst-case long-range impacts to the local transportation system identified in the City’s Comprehensive
+Plan Transportation Element and the regional transportation system identified in Metro’s Regional
+Transportation Plan. The forecast year shall be the forecast year of the Comprehensive Plan
+Transportation Element or an alternate year approved by the City Engineer. The Traffic Impact Analysis
+shall include a prediction of whether any phase of the proposed development will change the long-range
+transportation needs identified in the Comprehensive Plan and the extent to which traffic from the
+proposed development contributes to the long-range improvement needs.
+3. Traffic Forecast Analysis Assumptions.
+a. Trip generation. Estimates of the proposed development’s trip generation shall be made for peak
+period traffic. Selection of the peak period used in the analysis shall be justified and shall consider,
+at a minimum, the peak period for the proposed development and the peak period for surrounding
+streets. The City Engineer may require review of other time periods based on known or anticipated
+marginal or substandard traffic capacity or traffic safety. Trip generation estimates shall be based
+on ITE’s Trip Generation (latest published edition). The City Engineer may approve different trip
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-245
+generation rates when trip generation rates are not available in ITE’s Trip Generation or different
+rates are justified.
+b. Trip distribution and assignment. Traffic generated by the proposed development shall be logically
+distributed and assigned to the street system within the Area of Influence and any additional
+locations previously identified by the City Engineer. Trip distribution and assignment shall be based
+on trip distribution information from Washington County, ODOT, or Metro, on analysis of local
+traffic patterns based on data less than 12 months old, or on alternative data approved by the City
+Engineer.
+4. Intersection and Highway Interchange Analysis. Intersection and highway interchange analysis shall
+conform to the method for operations analysis described in the Highway Capacity Manual 2000
+published by the Transportation Research Board. The City Engineer may approve an alternative analysis
+method. The analysis shall document that the impacts of queuing from adjacent intersections or traffic
+restrictions has been addressed.
+E. Traffic Impacts. The Traffic Impact Analysis shall evaluate access, safety, operation, capacity, circulation, level
+of service, and performance of the transportation system within the proposed development’s Area of
+Influence and any additional locations previously identified by the City Engineer for both the Buildout Year
+and any phases thereof, and the Long-Range Forecast Year.
+Performance analysis shall be based on the standards of Section 60.55.10.7.
+1. Safety considerations shall be evaluated. Potential safety problems resulting from conflicting turning
+movements between and among driveways, intersections, and internal traffic shall be addressed.
+Distance to the nearest driveways on both sides of streets fronting the site and in both directions from
+site access points shall be shown. On-Site driveway stacking and queuing impacts shall be assessed. The
+potential for shared access with adjacent development shall be assessed.
+2. Geometric design and operational improvements including but not limited to acceleration lanes,
+deceleration lanes, turning lanes, traffic signals, and channelization shall be considered, evaluated, and
+recommended when determined necessary by standards and practices adopted by ODOT, Washington
+County, the City or approved by the City Engineer.
+3. Adequacy of sight distance shall be addressed at the proposed road access point(s) for both the. existing
+road configuration and for the ultimate road configuration based on improvements planned for the
+development and improvements identified in the Comprehensive Plan Transportation Element. Sight
+distance shall meet City standards.
+4. The analysis shall also identify and evaluate related impacts on bicycle, pedestrian, and transit access,
+circulation, and facilities.
+5. Other, operational, circulation, safety, and capacity issues shall be evaluated and addressed as required
+by this code and by the City Engineer.
+F. Mitigation Identification. In order to protect the public transportation system from potentially adverse
+impacts of the proposal, to fulfill an identified need for public services within the impacted area related to
+the development, or both, the Traffic Impact Analysis shall identify methods of mitigating on-site and off-site
+deficiencies for present and proposed phases of the development. The analysis shall make recommendations
+for improvements necessary for safe and efficient traffic flow and bicycle, pedestrian, and transit movement
+and access based on and roughly proportional to the identified impacts. Buildout Year, Long-Range Forecast
+Year, and project phasing impacts shall be considered. [ORD 4418; February 2007]
+The traffic impact analysis shall discuss the estimated levels of impact, improvements, and mitigations, and
+shall demonstrate how the recommended mitigations are roughly proportional to the identified
+impacts. [ORD 4418; February 2007]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-246
+Mitigation shall be consistent with improvements identified in the Comprehensive Plan Transportation
+Element. At a minimum, the Traffic Impact Analysis shall consider ultimate rights-of-way and additional
+streets, bicycle, and pedestrian connections and extensions and intersection improvements that are
+identified in the Comprehensive Plan Transportation Element Figures 6.1 through 6.23 and Tables 6.1
+through 6.6 and connections required by Section 60.55.25. of this code. Mitigation measures may also
+include, but are not limited to, additional street connections and street extensions, turn lanes, signalization,
+signal modifications, installation of medians, shared access and other access management strategies,
+geometric improvements such as lane geometry improvements, and intersection realignments.
+Where stop-controlled intersections do not meet the minimum performance standard of Section 60.55.10.7.,
+an additional street connection or a street extension shall be considered as a potential mitigation measure.
+G. Recommendations. The Traffic Impact Analysis report shall clearly state the mitigation measures
+recommended by the analysis and shall summarize how the recommended mitigations are roughly
+proportional to the identified impacts. The recommended street and highway mitigation measures shall be
+shown on a scaled drawing that depicts existing and recommended improvements. [ORD 4418; February
+2007]
+[ORD 4061, 10/15/1999; ORD 4103, 05/04/2000; ORD 4224, 09/19/2002; ORD 4302, 06/10/2004; ORD 4418,
+02/22/2007; ORD 4584, 06/01/2012; ORD 4706, 05/19/2017]
+Effective on: 5/19/2017
+60.55.25. Street and Bicycle and Pedestrian Connection Requirements.
+
+[ORD 4302; June 2004]
+1. All streets shall provide for safe and efficient circulation and access for motor vehicles, bicycles, pedestrians, and
+transit. Bicycle and pedestrian connections shall provide for safe and efficient circulation and access for bicycles
+and pedestrians.
+2. The Comprehensive Plan Transportation Element Figures 6.1 through 6.23 and Tables 6.1 through 6.6 shall be used
+to identify ultimate right-of-way width and future potential street, bicycle, and pedestrian connections in order to
+provide adequate multi-modal access to land uses, improve area circulation, and reduce out-of-direction travel. For
+properties within the South Cooper Mountain Community Plan area, Figure 10: Community Plan Street Framework
+and Figure 11: Community Plan Bicycle & Pedestrian Framework of the South Cooper Mountain Community Plan
+shall be used to identify functional classifications of streets, future streets, bicycle, and pedestrian connections.
+Streets and bicycle and pedestrian connections shall extend to the boundary of the parcel under development and
+shall be designed to connect the proposed development’s streets, bicycle connections, and pedestrian connections
+to existing and future streets, bicycle connections, and pedestrian connections. Trails identified in Figure 11:
+Community Plan Bicycle & Pedestrian Framework shall be designed to meet applicable Tualatin Hills Parks &
+Recreation (THPRD) District trail design standards, unless otherwise approved by THPRD. Deviations from Figure 10:
+Community Street Framework or Figure 11: Community Plan Bicycle & Pedestrian Framework shall be reviewed
+through the Planned Unit Development application. [ORD 4822; June 2022]
+3. Where a future street or bicycle and pedestrian connection location is not identified in the Comprehensive Plan
+Transportation Element, where abutting properties are undeveloped or can be expected to be redeveloped in the
+near term, and where a street or bicycle and pedestrian connection is necessary to enable reasonably direct access
+between and among neighboring properties, the applicant shall submit as part of a complete application, a future
+connections plan showing the potential arrangement of streets and bicycle and pedestrian connections that shall
+provide for the continuation or appropriate projection of these connections into surrounding areas.
+4. Streets and bicycle and pedestrian connections shall extend to the boundary of the parcel under development and
+shall be designed to connect the proposed development’s streets, bicycle connections, and pedestrian connections
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-247
+to existing and future streets, bicycle connections, and pedestrian connections. A closed-end street, bicycle
+connection, or pedestrian connection may be approved with a temporary design.
+5. Whenever existing streets and bicycle and pedestrian connections adjacent to or within a parcel of land are of
+inadequate width, additional right-of-way may be required by the decision-making authority.
+6. Where possible, bicycle and pedestrian connections shall converge with streets at traffic-controlled intersections
+for safe crossing.
+7. Bicycle and pedestrian connections shall connect the on-site circulation system to existing or proposed streets, to
+adjacent bicycle and pedestrian connections, and to driveways open to the public that abut the property.
+Connections may approach parking lots on adjoining properties if the adjoining property used for such connection
+is open to public pedestrian and bicycle use, is paved, and is unobstructed.
+8. To preserve the ability to provide transportation capacity, safety, and improvements, a special setback line may be
+established by the City for existing and future streets, street widths, and bicycle and pedestrian connections for
+which an alignment, improvement, or standard has been defined by the City. The special setback area shall be
+recorded on the plat.
+9. Accessways are one or more connections that provide bicycle and pedestrian passage between streets or a street
+and a destination. Accessways shall be provided as required by this code and where full street connections are not
+possible due to the conditions described in Section 60.55.25.14. [ORD 4397; August 2006] [ORD 4697, December
+2016]
+An accessway will not be required where the impacts from development, redevelopment, or both are low and do
+not provide reasonable justification for the estimated costs of such accessway.
+A. Accessways shall be provided as follows:
+1. In any block that is longer than 600 feet as measured from the near side right-of-way line of the subject
+street to the near side right-of-way line of the adjacent street, an accessway shall be required through
+and near the middle of the block.
+2. If any of the conditions described in Section 60.55.25.14. result in block lengths longer than 1200 feet as
+measured from the near side right-of-way line of the subject street to the near side right-of-way line of
+the adjacent street, then two or more accessways may be required through the block. [ORD 4397;
+August 2006] [ORD 4697; December 2016]
+3. Where a street connection is not feasible due to conditions described in Section 60.55.25.14. one or
+more new accessways to any or all of the following shall be provided as a component of the
+development if the accessway is reasonably direct: an existing transit stop, a planned transit route as
+identified by TriMet and the City, a school, a shopping center, or a neighborhood park. [ORD 4397;
+August 2006] [ORD 4697; December 2016]
+4. The City may require an accessway to connect from one cul-de-sac to an adjacent cul-de-sac or street.
+5. In a proposed development or where redevelopment potential exists and a street connection is not
+proposed, one or more accessways may be required to connect a cul-de-sac to public streets, to other
+accessways, or to the project boundary to allow for future connections.
+6. Within the South Cooper Mountain Community Plan area, the City may require an accessway to connect
+from multi-use paths or trails to streets, multi-use paths, or trails. [ORD 4652; March 2015]
+B. Accessway Design Standards.
+1. Accessways shall be as short as possible and wherever practical, straight enough to allow one end of the
+path to be visible from the other.
+2. Accessways shall be located to provide a reasonably direct connection between likely pedestrian and
+bicycle destinations. [ORD 4332; January 2005]
+10. Pedestrian Circulation. [ORD 4487; August 2008]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-248
+A. Standards for Single-Detached Dwellings and Middle Housing, Accessory Dwelling Units, and Multi-Dwelling
+Structures with Five or Six Units on One Lot in CM-RM. [ORD 4859; January 2025] [ORD 4876; January 2026]
+1. A walkway is required to connect at least one main entrance of each residential structure to at least one
+adjacent public street. [ORD 4876; January 2026]
+2. The pedestrian way required in subsection 1 shall be hard-surfaced and a minimum of 5 feet wide. Any
+hard-surface path connecting entrances to the street (including a driveway) could meet this
+standard. [ORD 4859; January 2025]
+3. In lieu of meeting the standards above, cottage clusters are subject to the pedestrian access standards in
+Section 60.05.60.3.
+[ORD 4822; June 2022]
+B. Standards for Other Development. [ORD 4822; June 2022]
+1. Walkways are required between parts of a development where the public is invited or allowed to walk.
+2. A walkway into the development shall be provided for every 300 feet of street frontage. A walkway shall
+also be provided to any accessway abutting the development.
+3. Walkways shall connect building entrances to one another and from building entrances to adjacent
+public streets and existing or planned transit stops. Walkways shall connect the development to
+walkways, sidewalks, bicycle facilities, alleyways and other bicycle or pedestrian connections on
+adjacent properties used or planned for commercial, multi-dwelling, institution or park use. The City
+may require connections to be constructed and extended to the property line at the time of
+development. [ORD 4822; June 2022]
+4. Walkways shall be reasonably direct between pedestrian destinations and minimize crossings where
+vehicles operate.
+5. Walkways shall be hard surfaced, except for Nature Trails, and shall maintain at least 5 feet of
+unobstructed width. Walkways bordering parking spaces shall be at least seven feet wide unless
+concrete wheel stops, bollards, curbing, landscaping, or other similar improvements are provided which
+prevent parked vehicles from obstructing the walkway. Stairs or ramps shall be provided where
+necessary to provide a reasonably direct route. The slope of walkways without stairs shall conform to
+City standards. Nature Trails may be soft surfaced. [ORD 4782; April 2020] [ORD 4859; January 2025]
+6. The Americans with Disabilities Act (ADA) contains different and stricter standards for some walkways.
+The ADA applies to the walkway that is the principal building entrance and walkways that connect
+transit stops and parking areas to building entrances. Where the ADA applies to a walkway, the stricter
+standards of ADA shall apply. [ORD 4857; October 2024]
+11. Pedestrian Connections at Major Transit Stops. Commercial and institution buildings at or near major transit stops
+shall provide for pedestrian access to transit through the following measures:
+A. For development within 200 feet of a Major Transit Stop:
+1. Either locate buildings within 20 feet of the property line closest to the transit stop, a transit route or an
+intersecting street, or provide a pedestrian plaza at the transit stop or a street intersection;
+2. Provide a transit passenger landing pad accessible to persons with disabilities if required by TriMet and
+the City;
+3. Provide a reasonably direct pedestrian connection between the transit stop and building entrances on
+the site;
+4. Where substantial evidence of projected transit ridership or other transit impacts is presented to
+conclude both that a nexus exists between the proposed development and public transit and that the
+degree of impact provides reasonable justification, the City may require the developer to grant a public
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-249
+easement or dedicate a portion of the parcel for transit passenger bench(es), shelter, or both, and, if
+appropriate, the construction of a transit passenger bench, shelter, or both; and,
+5. Provide lighting at the transit stop to City standards.
+B. Except as otherwise provided in subsection A. of this section, for development within 300 feet of a Major
+Transit Stop, provide walkways connecting building entrances and streets adjoining the site, and pedestrian
+connections to adjoining properties, except where such a connection is impracticable pursuant to subsection
+14. of this section.
+12. Assessment, review, and mitigation measures (including best management practices adopted by local agencies)
+shall be completed for bicycle and pedestrian connections located within the following areas: wetlands, streams,
+areas noted as Significant Natural Resources Overlay Zones, Significant Wetlands and Wetlands of Special
+Protection, and Significant Riparian Corridors within Volume III of the Comprehensive Plan Statewide Planning Goal
+5 Resource Inventory Documents and Significant Natural Resources Map, and areas identified in regional and/or
+intergovernmental resource protection programs.
+"Assessment" for the purposes of this section means to assess the site-specific development compatibility issues.
+Site-specific compatibility issues include but are not limited to lighting, construction methods, design elements, rare
+plants, and human/pet impacts on the resource. "Review" for the purposes of this section includes but is not
+limited to obtaining appropriate permits from appropriate resource agencies. Mitigation measures, including
+appropriate use restrictions, required by local, state, and federal agencies shall be completed as part of the
+construction project. If the project will irreparably destroy the resource, then the resource will take precedence
+over the proposed bicycle and pedestrian connection.
+13. New construction of bicycle and pedestrian connections along residential rear lot lines is discouraged unless no
+comparable substitute alignment is possible in the effort to connect common trip origins and destinations or
+existing segment links.
+14. Street and Bicycle and Pedestrian Connection Hindrances. Street, bicycle, and/or pedestrian connections are not
+required where one or more of the following conditions exist:
+A. Physical or topographic conditions make a general street, bicycle, or pedestrian connection impracticable.
+Such conditions include but are not limited to the alignments of existing connecting streets, freeways,
+railroads, slopes in excess of City standards for maximum slopes, wetlands or other bodies of water where a
+connection could not reasonably be provided;
+B. Existing buildings or other development on adjacent lands physically preclude a connection now and in the
+future, considering the potential for redevelopment; or,
+C. Where streets, bicycle, or pedestrian connections would violate provisions of leases, easements, covenants,
+or restrictions written and recorded as of May 1, 1995, which preclude a required street, bicycle, or
+pedestrian connection.
+[ORD 4061, 10/15/1999; ORD 4224, 09/19/2002; ORD 4302, 06/10/2004; ORD 4332, 01/01/2005; ORD 4397,
+08/10/2006; ORD 4487, 08/21/2008; ORD 4652, 03/06/2015; ORD 4697, 12/02/2016; ORD 4782, 04/17/2020; ORD
+4822, 06/30/2022; ORD 4857, 10/03/2024; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 1/20/2026
+60.55.30. Minimum Street Widths.
+
+[ORD 4302; June 2004] Minimum street widths are depicted in the Engineering Design Manual. [ORD 4418; February
+2007]
+1. Any project-specific modifications of the standards contained in the Engineering Design Manual regarding the
+widths of features relating to the movement of vehicles, including but not limited to rights of way, travel lanes,
+parking lanes, bike lanes, driveway aprons, curb radii, or other such features shall be processed in accordance with
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-250
+the provisions contained in the Section 145 Design Modifications of the Engineering Design Manual. [ORD 4418;
+February 2007]
+2. Any project-specific modifications of the standards of the Engineering Design Manual relating to the location and
+dimensions of required street landscaping and pedestrian features including, but not limited to, sidewalks, planter
+strips, street trees, street tree wells, street tree easements, or street furniture shall be processed in accordance
+with the provisions contained in the Section 145 Design Modifications of the Engineering Design Manual. [ORD
+4418; February 2007] [ORD 4876; January 2026]
+3. Street trees shall be planted at a maximum linear spacing of 30 feet along street frontages or in accordance with an
+approved street tree plan approved by the City Arborist. Proposed tree wells shall be designed to meet standards in
+the City Engineering Design Manual. [ORD 4782; April 2020]
+[ORD 3238, 01/28/1982; ORD 3494, 03/27/1986; ORD 3965, 11/07/1996; ORD 4061, 10/15/1999; ORD 4224,
+09/19/2002; ORD 4302, 06/10/2004; ORD 4365, 10/20/2005; ORD 4418, 02/22/2007; ORD 4782, 04/17/2020; ORD
+4876, 01/20/2026]
+Effective on: 1/20/2026
+60.55.35. Access Standards.
+
+[ORD 4302; June 2004]
+1. The development plan shall include street plans that demonstrate how safe access to and from the proposed
+development and the street system will be provided. The applicant shall also show how public and private access
+to, from, and within the proposed development will be preserved.
+2. No more than 25 dwelling units may have access onto a closed-end street or private alley system unless the
+decision-making authority finds that identified physical constraints preclude compliance with the standard and the
+proposed development is still found to be in compliance with the Facilities Review criteria of Section 40.03. [ORD
+4584; June 2012] [ORD 4859; January 2025]
+3. Intersection Standards.
+A. Visibility at Intersections. All work adjacent to public streets and accessways shall comply with the standards
+of the Engineering Design Manual except in Regional and Town Centers. [ORD 4462; January 2008]
+1. The sight clearance area requirements for Town Centers and Regional Centers shall be determined on a
+case-by-case basis by the decision-making authority. In making its determination, the decision-making
+authority shall consider the safety of the users of the intersection (including pedestrians, bicyclists, and
+motorists), design speeds, the intersection sight distance standards of the Engineering Design Manual
+and Standard Drawings, and other applicable criteria. [ORD 4111; July 2000]
+2. The requirements specified in 60.55.35.3.A. may be lessened or waived by the decision-making authority
+if the project will not result in an unsafe traffic situation. In making its determination, the decision -
+making authority shall consider the safety of the users of the intersection (including pedestrians,
+bicyclists and motorists), design speeds, the intersection sight distance standards of the Engineering
+Design Manual, and other applicable criteria.
+B. Intersection angles and alignment and intersection spacing along streets shall meet the standards of the
+Engineering Design Manual and Standard Drawings.
+1. When a highway interchange within the City is constructed or reconstructed, a park and ride lot shall be
+considered. [ORD 4782; April 2020]
+C. Driveways.
+1. Sight Distance for Driveways. Sight distance at signalized intersections and stop-controlled intersections,
+and spacing between driveways shall meet the standards of the Engineering Design Manual and
+Standard Drawings. [ORD 4859; January 2025]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-251
+2. Shared Driveway Access. Whenever practical, access to Arterials and Collectors shall serve more than
+one site through the use of driveways common to more than one development or to an on-site private
+circulation design that furthers this requirement.
+Consideration of shared access shall take into account at a minimum property ownership, surrounding
+land uses, and physical characteristics of the area. Where two or more lots share a common driveway,
+reciprocal access easements between adjacent lots may be required.
+3. No new driveways for single-detached dwellings shall be permitted to have direct access onto an Arterial
+or Collector street except in unusual circumstances where emergency access or an alternative access
+does not exist. Where single-detached dwelling access to a Local Street or Neighborhood Route is not
+practicable, the decision-making authority may approve access from a single-detached dwelling to an
+Arterial or Collector. [ORD 4859; January 2025] [ORD 4876; January 2026]
+D. Alleys. [ORD 4859; January 2025]
+1. When vehicle access for dwelling(s) on a lot is not provided via a direct vehicular access to a public
+street, a private alley may serve the lot as the primary vehicle access.
+2. Private alleys shall provide a minimum of 24 feet between buildings at the ground floor, a paved area at
+least 16 feet wide, and vertical clearance above the 24-foot-wide alley of at least 16 feet.
+3. A private alley may be up to 330 feet long, measured from the terminus of the alley to the near side of
+the intersecting street or driveway, although this standard does not supersede other Development Code
+standards that directly or indirectly limit alley length.
+4. Alleys exceeding 150 feet, with only one driveway or street connection, shall provide a turnaround.
+E. In the Cooper Mountain Community Plan area, vehicular access to Neighborhood Routes west of SW 175th
+Avenue shall be limited consistent with the following. For the purposes of this Subsection, the distance
+between intersections along a Neighborhood Route is the distance along a side of a Neighborhood Route
+between the rights of way of intersecting streets. The distance between intersections for each side of the
+Neighborhood Route shall be determined independently. [ORD 4859; January 2025]
+1. Vehicular access is not allowed between intersections if the distance between intersections is 350 feet
+or less.
+2. For situations where the distance between intersection is more than 350 feet, one vehicular access shall
+be allowed per 350 feet in distance between intersections.
+3. If an applicant receives approval of an Engineering Design Manual Design Exception that removes bicycle
+lanes from the abutting Neighborhood Route cross-section, the limitations in Subsection D.1 and D.2,
+above, are not applicable. If dedicated bicycle lanes consistent with the Engineering Design Manual
+cross-sections are not provided on the street, the development shall include a facility or facilities that
+accommodate bicycle travel (and may accommodate other non-vehicular modes), make the same
+connections, and clearly and safely connect with other bicycle facilities. If a facility that accommodates
+bicycle travel is within one of the segments indicated by brackets in Figure 60.55.35.E.3, it shall be
+provided consistently for the entire length of that segment. The facility or facilities that accommodates
+bicycle travel (and may accommodate other non-vehicular modes) shall:
+a. Be within 150 feet of the Neighborhood Route.
+b. Provide a paved area at least 14 feet wide consistent with Engineering Design Manual Typical
+Shared-Use Path.
+c. Provide the same or higher level of safety and comfort as the bicycle facilities specified in the
+standard Engineering Design Manual cross-section for Neighborhood Routes.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-252
+Figure 60.55.35.3.E.3: Neighborhood Route Segments
+[ORD 4859; January 2025]
+
+[ORD 3494, 03/27/1986; ORD 4061, 10/15/1999; ORD 4103, 05/04/2000; ORD 4111, 07/14/2000; ORD 4224,
+09/19/2002; ORD 4302, 06/10/2004; ORD 4418, 02/22/2007; ORD 4462, 01/10/2008; ORD 4584, 06/01/2012; ORD
+4782, 04/17/2020; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 1/20/2026
+60.55.40. Transit Facilities.
+
+[ORD 4302; June 2004] Transit routes and transit facilities shall be designed to support transit use through provision of
+transit improvements. These improvements shall include passenger landing pads, accessways to the transit stop
+location, or some combination thereof, as required by TriMet and the City, and may also include shelters or a pad for a
+shelter. In addition, when required by TriMet and the City, major industrial, institution, retail, and office
+developments shall provide either a transit stop on site or a pedestrian connection to a transit stop adjacent to the site.
+1.Transit Shelters. [ORD 4332; January 2005]All transit shelters and sidewalk furniture shall meet the following
+standards.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-253
+A. The proposal is located entirely within the existing public right-of-way, public access easement, or property
+owned by a public agency.
+B. The proposal maintains an unobstructed path of travel of no less than six feet (6') unless a greater
+unobstructed path is required by this code for a specific sidewalk.
+C. The proposal is not located within eight feet (8') of a point of ingress or egress of an existing structure.
+D. The proposal is not located within a vision clearance area for a street, driveway, or other facility where
+vehicles regularly travel.
+E. The proposal is not located within twelve feet (12') of a window display area.
+F. The proposal does not consist of solid panels other than what is required to post transit schedules.
+[ORD 3965, 11/07/1996; ORD 4061, 10/15/1999; ORD 4224, 09/19/2002; ORD 4302, 06/10/2004; ORD 4332,
+01/01/2005]
+Effective on: 6/1/2012

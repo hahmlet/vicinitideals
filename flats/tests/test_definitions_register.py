@@ -95,6 +95,13 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
         "or/multnomah/portland",
         "or/multnomah/troutdale",
         "or/multnomah/wood-village",
+        # 2026-09-29: Beaverton, a draft from the cloud session that drafted
+        # Hillsboro below. Chapter 90 "Lot, Corner": the intersection of two or more streets, and on a curved street an
+        # interior angle "less than 135 degrees". The registry's nearest test
+        # is "at or below", so exactly 135 degrees reads as a corner here and
+        # not in the code; a doubt in the handoff, and it errs toward the
+        # corner, which the screen assumes false anyway.
+        "or/washington/beaverton",
         # 2026-09-29: Hillsboro, a draft from a cloud session. 12.01.500
         # "Lot, Corner" counts two street frontages meeting at an angle not
         # greater than 135 degrees, and says lots on an alley are not

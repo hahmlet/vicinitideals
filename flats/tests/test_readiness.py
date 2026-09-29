@@ -713,6 +713,35 @@ def test_a_marker_glued_to_a_decimal_is_read_the_same_way() -> None:
     assert not quotes_the_number("Minimum lot area 7,500", 750, glued=True)
 
 
+def test_a_two_digit_marker_is_cut_only_where_its_note_is_quoted() -> None:
+    """Beaverton's tables run past note 9 and glue those markers on too.
+
+    Table 20.05.15 prints the MR front maximum as "2018", twenty feet with
+    note 18, and Table 20.22.15 the CM-MR floor area ratio as "1.524", 1.5
+    with note 24. Cutting two digits everywhere would read Gresham's "12.458"
+    as 12.4, so the two-digit cut needs the note's own line in the quote.
+    (2026-09-29, Washington County draft.)
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    row = "F.1.b. Setbacks3, 18 - Front Yard Maximum 2018 None None None Feet"
+    note = "18. Applies to all development other than townhouses."
+    assert quotes_the_number(f"{row}\n{note}", 20, glued=True)
+    # Without the note in the quote, 2018 is not read as 20.
+    assert not quotes_the_number(row, 20, glued=True)
+    # Nor anywhere the document is not declared glued.
+    assert not quotes_the_number(f"{row}\n{note}", 20)
+    far = "J.0. Maximum Floor Area Ratio (FAR)2, 17, 18 2.024 2.024 1.524"
+    body = "24. See Section 20.25.10 to determine if a site ... qualifies"
+    assert quotes_the_number(f"{far}\n{body}", 1.5, glued=True)
+    # The cut takes off the quoted note and nothing else, so no 1.4 appears,
+    # and the figure as printed still reads.
+    assert not quotes_the_number(f"{far}\n{body}", 1.4, glued=True)
+    assert quotes_the_number(f"{far}\n{body}", 1.524, glued=True)
+    # Gresham's case is unchanged: no note 58 in the quote, no 12.4.
+    assert not quotes_the_number("Maximum 12.458", 12.4, glued=True)
+
+
 def test_a_decimal_printed_without_its_leading_zero_still_reads() -> None:
     """Wood Village's Table 210-3 gives its LR12 density floor as ".9 (25%)"
     and Table 220-3 gives a coverage as ".80". Both are how a table prints a

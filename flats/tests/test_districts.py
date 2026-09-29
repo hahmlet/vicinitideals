@@ -715,6 +715,74 @@ RULINGS: dict[str, dict[str, str]] = {
             "L2541), a procedure."
         ),
     },
+    "or/washington/beaverton": {
+        # Every district Chapter 20 and Chapter 70 print standards for is
+        # encoded (2026-09-29, draft, a cloud session), and the map's WAcnty
+        # and ROW are zone rulings in the layer. What the harvest still
+        # prints is the encodeplus export breaking a column head across two
+        # lines ("C-" over "WS"), four landscape buffer types, and a park
+        # district.
+        "C-": (
+            "not-a-zone: the first half of the C-WS column head of Table "
+            "20.20.20.A (20.20.multiple-use L491-L493), broken across two "
+            "lines; C-WS is encoded."
+        ),
+        "CM-": (
+            "not-a-zone: the first half of the CM-CS, CM-HDR and CM-MR column "
+            "heads of the 20.22 tables (20.22.cooper-mountain L44-L48); each "
+            "is encoded."
+        ),
+        "HDR": (
+            "not-a-zone: the second half of SC-HDR and TC-HDR, broken from "
+            "the prefix in the 20.20.16 heading (20.20.multiple-use L466) and "
+            "in the column heads of Table 20.20.20.A (L497); both are encoded."
+        ),
+        "MU": (
+            "not-a-zone: the second half of the TC-MU and SC-MU column heads "
+            "of Table 20.20.20.A (20.20.multiple-use L495, L499); both are "
+            "encoded."
+        ),
+        "RM": (
+            "not-a-zone: the second half of the CM-RM column head of Table "
+            "20.22.20.A (20.22.cooper-mountain L331); CM-RM is encoded."
+        ),
+        "SC-": (
+            "not-a-zone: the first half of the SC-MU and SC-HDR column heads "
+            "of Table 20.20.20.A (20.20.multiple-use L498-L501); both are "
+            "encoded."
+        ),
+        "TC-": (
+            "not-a-zone: the first half of the TC-MU and TC-HDR column heads "
+            "of Table 20.20.20.A (20.20.multiple-use L494-L497); both are "
+            "encoded."
+        ),
+        "WS": (
+            "not-a-zone: the second half of the OI-WS and C-WS column heads "
+            "of Table 20.20.20.A (20.20.multiple-use L491, L493); both are "
+            "encoded."
+        ),
+        "FB-5": (
+            "not-a-zone: a landscape buffer type (full buffer, 5 feet) of "
+            "Table 60.05.25.13.D, Landscape Buffers (60.05 L1323, L1445)."
+        ),
+        "FB-10": (
+            "not-a-zone: a landscape buffer type (full buffer, 10 feet) of "
+            "Table 60.05.25.13.D (60.05 L1466)."
+        ),
+        "FBN-10": (
+            "not-a-zone: a landscape buffer type (full screen with noise "
+            "attenuation, 60.05.25.13.E.3 at 60.05 L1275) of Table "
+            "60.05.25.13.D (60.05 L1467)."
+        ),
+        "FBN-20": (
+            "not-a-zone: a landscape buffer type (full screen with noise "
+            "attenuation) of Table 60.05.25.13.D (60.05 L1493)."
+        ),
+        "THPRD": (
+            "not-a-zone: the Tualatin Hills Park & Recreation District, a "
+            "service provider named in 60.50 (60.50.special-uses L290)."
+        ),
+    },
 }
 
 #: Designations found by hand while ruling the rows above, which the ledger

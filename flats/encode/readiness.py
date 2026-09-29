@@ -690,6 +690,35 @@ def _unmarked(text: str) -> str:
     return _GLUED.sub(cut, text)
 
 
+#: A note's body as a table prints it under the grid, at the start of a line:
+#: "18. Applies to all development other than townhouses."
+_NOTE_BODY = re.compile(r"^\s*([1-9]\d)\.\s", re.M)
+
+
+def _unmarked_by_notes(text: str) -> str:
+    """The same text with a two-digit marker dropped, where its note is quoted.
+
+    Beaverton's tables run past note 9 and glue those markers on too: "2018"
+    is 20 feet with note 18, "3514" is 35 with note 14, "1.524" is 1.5 with
+    note 24. Cutting two digits off every number would read Gresham's
+    "12.458" as 12.4, a figure its table never printed, so a two-digit tail is
+    cut only when the cited text also carries that note's own line -- the
+    quote shows the marker is a marker, and the reader does not guess.
+    """
+    notes = set(_NOTE_BODY.findall(text))
+    if not notes:
+        return text
+
+    def cut(match: re.Match[str]) -> str:
+        token = match.group(0)
+        trimmed = token[:-2]
+        if token[-2:] in notes and trimmed and trimmed[-1].isdigit():
+            return trimmed
+        return token
+
+    return _GLUED.sub(cut, text)
+
+
 #: What follows a number, where anything does. Area before length on purpose:
 #: "square feet" ends in a length unit and is not one.
 _UNIT = re.compile(
@@ -773,7 +802,10 @@ def quotes_the_number(
     hay = _dehyphenate(_in_feet(_decimalise(repair_text(text) if spaced else text)))
     if _states(hay, float(value)) or _says(hay, float(value), spaced=spaced):
         return True
-    if glued and _states(_unmarked(hay), float(value)):
+    if glued and (
+        _states(_unmarked(hay), float(value))
+        or _states(_unmarked_by_notes(hay), float(value))
+    ):
         return True
     if value != 0:
         return False

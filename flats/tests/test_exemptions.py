@@ -129,7 +129,17 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 338, "numeric": 55, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 370, "numeric": 55, "marker": 0, "dash": 2, "silent": 2}
+# 338 -> 370 stated on 2026-09-29, later again: Beaverton, the third
+# Washington County draft from the same cloud session, thirty-two
+# exemptions and every one `stated`. Eighteen are "None" or "N/A" in a
+# minimum lot area cell (MR, the commercial, Multiple Use and Cooper
+# Mountain tables, and the four downtown districts, whose tables print none
+# and whose 70.05.15.7 exempts downtown development from Chapter 20); ten
+# are "None" or "N/A" in a maximum height cell (CS, CC, GC, MR, RC-E and
+# the Town Center and Station Community districts); four are Table
+# 60.30.10.5.A's "N/A" parking maximum for a quadplex in RMA, RMB, RMC and
+# CM-RM.
 # 272 -> 338 stated on 2026-09-29, later the same day: Hillsboro, the second
 # Washington County draft from the same cloud session, sixty-six exemptions
 # and every one `stated`. Seventeen are the multi-dwelling and station-

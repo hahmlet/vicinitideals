@@ -1,5 +1,5 @@
 {
-  "digest": "e9bd5a8a8d1d00798100fc9df139fedd1699bffee40d6bfbfac4759bfa6c7873",
+  "digest": "b7a941ef67d7408806cd016d82083ff6f6edc85e4b73fdfa59728856af836608",
   "layers": {
     "or": {
       "misattributed": [],
@@ -470,6 +470,573 @@
     "or/washington/_unincorporated": {
       "misattributed": [],
       "label": "Washington Unincorporated",
+      "counts": {},
+      "gaps": []
+    },
+    "or/washington/beaverton": {
+      "misattributed": [
+        {
+          "zone": "CC",
+          "field": "max_far",
+          "claimed": "20.10.16",
+          "found": "20.10.15",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+        },
+        {
+          "zone": "CC",
+          "field": "max_height_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+        },
+        {
+          "zone": "CC",
+          "field": "setback_front_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+        },
+        {
+          "zone": "CC",
+          "field": "setback_front_max_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+        },
+        {
+          "zone": "CC",
+          "field": "setback_rear_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57"
+        },
+        {
+          "zone": "CC",
+          "field": "setback_side_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+        },
+        {
+          "zone": "CM-CS",
+          "field": "max_far",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+        },
+        {
+          "zone": "CM-CS",
+          "field": "max_height_ft",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+        },
+        {
+          "zone": "CM-CS",
+          "field": "max_height_ft [abuts_residential_zone]",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110,L274-L276"
+        },
+        {
+          "zone": "CM-HDR",
+          "field": "max_far",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+        },
+        {
+          "zone": "CM-HDR",
+          "field": "max_height_ft",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+        },
+        {
+          "zone": "CM-HDR",
+          "field": "setback_front_max_ft",
+          "claimed": "60.05.15",
+          "found": "60.05.35",
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+        },
+        {
+          "zone": "CM-MR",
+          "field": "max_far",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+        },
+        {
+          "zone": "CM-MR",
+          "field": "max_height_ft",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+        },
+        {
+          "zone": "CM-RM",
+          "field": "max_far",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L127-L136"
+        },
+        {
+          "zone": "CM-RM",
+          "field": "max_height_ft",
+          "claimed": "20.22.15",
+          "found": "18.511",
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+        },
+        {
+          "zone": "CS",
+          "field": "max_far",
+          "claimed": "20.10.16",
+          "found": "20.10.15",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+        },
+        {
+          "zone": "CS",
+          "field": "max_height_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+        },
+        {
+          "zone": "CS",
+          "field": "setback_front_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+        },
+        {
+          "zone": "CS",
+          "field": "setback_front_max_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+        },
+        {
+          "zone": "CS",
+          "field": "setback_rear_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+        },
+        {
+          "zone": "CS",
+          "field": "setback_rear_ft [abuts_residential_zone]",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+        },
+        {
+          "zone": "CS",
+          "field": "setback_side_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+        },
+        {
+          "zone": "GC",
+          "field": "max_far",
+          "claimed": "20.10.16",
+          "found": "20.10.15",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+        },
+        {
+          "zone": "GC",
+          "field": "max_height_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+        },
+        {
+          "zone": "GC",
+          "field": "setback_front_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+        },
+        {
+          "zone": "GC",
+          "field": "setback_front_max_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+        },
+        {
+          "zone": "GC",
+          "field": "setback_rear_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+        },
+        {
+          "zone": "GC",
+          "field": "setback_rear_ft [abuts_residential_zone]",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+        },
+        {
+          "zone": "GC",
+          "field": "setback_side_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+        },
+        {
+          "zone": "NS",
+          "field": "max_height_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58"
+        },
+        {
+          "zone": "NS",
+          "field": "min_lot_depth_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L52"
+        },
+        {
+          "zone": "NS",
+          "field": "min_lot_width_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L51"
+        },
+        {
+          "zone": "NS",
+          "field": "setback_front_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+        },
+        {
+          "zone": "NS",
+          "field": "setback_front_max_ft",
+          "claimed": "60.05.15",
+          "found": "60.05.35",
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+        },
+        {
+          "zone": "NS",
+          "field": "setback_rear_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+        },
+        {
+          "zone": "NS",
+          "field": "setback_rear_ft [abuts_residential_zone]",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+        },
+        {
+          "zone": "NS",
+          "field": "setback_side_ft",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L163"
+        },
+        {
+          "zone": "NS",
+          "field": "setback_side_ft [abuts_residential_zone]",
+          "claimed": "20.10.15",
+          "found": "20.10.15 20.10.16",
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L165"
+        },
+        {
+          "zone": "RC-E",
+          "field": "max_far",
+          "claimed": "20.20.16",
+          "found": "20.20.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+        },
+        {
+          "zone": "RC-E",
+          "field": "max_height_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+        },
+        {
+          "zone": "RC-E",
+          "field": "setback_front_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.35.10",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+        },
+        {
+          "zone": "RC-E",
+          "field": "setback_front_max_ft",
+          "claimed": "60.05.15",
+          "found": "60.05.35",
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+        },
+        {
+          "zone": "RC-E",
+          "field": "setback_rear_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+        },
+        {
+          "zone": "RC-E",
+          "field": "setback_side_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+        },
+        {
+          "zone": "RMA",
+          "field": "max_far",
+          "claimed": "20.05.15",
+          "found": "20.05.15 20.25.15",
+          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L172"
+        },
+        {
+          "zone": "RMB",
+          "field": "max_far",
+          "claimed": "20.05.15",
+          "found": "20.05.15 20.25.15",
+          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L173-L178"
+        },
+        {
+          "zone": "RMC",
+          "field": "max_far",
+          "claimed": "20.05.15",
+          "found": "20.05.15 20.25.15",
+          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L179-L184"
+        },
+        {
+          "zone": "SC-HDR",
+          "field": "max_far",
+          "claimed": "20.20.16",
+          "found": "20.20.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+        },
+        {
+          "zone": "SC-HDR",
+          "field": "max_height_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+        },
+        {
+          "zone": "SC-HDR",
+          "field": "min_density_du_per_acre",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+        },
+        {
+          "zone": "SC-HDR",
+          "field": "setback_front_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.35.10",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+        },
+        {
+          "zone": "SC-HDR",
+          "field": "setback_front_max_ft",
+          "claimed": "60.05.15",
+          "found": "60.05.35",
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+        },
+        {
+          "zone": "SC-HDR",
+          "field": "setback_rear_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+        },
+        {
+          "zone": "SC-HDR",
+          "field": "setback_side_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+        },
+        {
+          "zone": "SC-MU",
+          "field": "max_far",
+          "claimed": "20.20.16",
+          "found": "20.20.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+        },
+        {
+          "zone": "SC-MU",
+          "field": "max_height_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+        },
+        {
+          "zone": "SC-MU",
+          "field": "min_density_du_per_acre",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+        },
+        {
+          "zone": "SC-MU",
+          "field": "setback_front_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.35.10",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+        },
+        {
+          "zone": "SC-MU",
+          "field": "setback_front_max_ft",
+          "claimed": "60.05.15",
+          "found": "60.05.35",
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+        },
+        {
+          "zone": "SC-MU",
+          "field": "setback_rear_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+        },
+        {
+          "zone": "SC-MU",
+          "field": "setback_side_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+        },
+        {
+          "zone": "SC-S",
+          "field": "max_height_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+        },
+        {
+          "zone": "SC-S",
+          "field": "min_density_du_per_acre",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+        },
+        {
+          "zone": "SC-S",
+          "field": "setback_front_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.35.10",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+        },
+        {
+          "zone": "SC-S",
+          "field": "setback_front_max_ft",
+          "claimed": "60.05.15",
+          "found": "60.05.35",
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+        },
+        {
+          "zone": "SC-S",
+          "field": "setback_rear_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+        },
+        {
+          "zone": "SC-S",
+          "field": "setback_side_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+        },
+        {
+          "zone": "TC-HDR",
+          "field": "max_far",
+          "claimed": "20.20.16",
+          "found": "20.20.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+        },
+        {
+          "zone": "TC-HDR",
+          "field": "max_height_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+        },
+        {
+          "zone": "TC-HDR",
+          "field": "setback_front_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.35.10",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+        },
+        {
+          "zone": "TC-HDR",
+          "field": "setback_front_max_ft",
+          "claimed": "60.05.15",
+          "found": "60.05.35",
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+        },
+        {
+          "zone": "TC-HDR",
+          "field": "setback_rear_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+        },
+        {
+          "zone": "TC-HDR",
+          "field": "setback_side_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+        },
+        {
+          "zone": "TC-MU",
+          "field": "max_far",
+          "claimed": "20.20.16",
+          "found": "20.20.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+        },
+        {
+          "zone": "TC-MU",
+          "field": "max_height_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+        },
+        {
+          "zone": "TC-MU",
+          "field": "setback_front_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.35.10",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+        },
+        {
+          "zone": "TC-MU",
+          "field": "setback_front_max_ft",
+          "claimed": "60.05.15",
+          "found": "60.05.35",
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+        },
+        {
+          "zone": "TC-MU",
+          "field": "setback_rear_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+        },
+        {
+          "zone": "TC-MU",
+          "field": "setback_side_ft",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+        }
+      ],
+      "label": "Beaverton",
       "counts": {},
       "gaps": []
     },

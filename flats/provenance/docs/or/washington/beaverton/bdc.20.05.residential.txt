@@ -1,0 +1,577 @@
+20.05. Residential Zoning Districts
+
+[ORD 4857, 10/03/2024]
+20.05.05. Residential Areas.
+
+The areas of the City that are designated as residential densities implement the policies of the City's Comprehensive Plan
+and are identified on the City's Zoning Map. Full urban services are to be provided.
+Four residential zones establish varied levels of residential densities and uses. [ORD 4822; June 2022]
+[ORD 3184, 08/06/1980; ORD 3494, 03/27/1986; ORD 3899, 06/02/1994; ORD 4036, 04/02/1999; ORD 4048,
+07/08/1999; ORD 4111, 07/14/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD
+4542, 06/17/2010; ORD 4822, 06/30/2022]
+Effective on: 6/30/2022
+20.05.10. Purpose.
+
+1.MR Multi-Unit Residential
+The MR District is intended to result in predominantly attached residential developments with the highest number
+of units per acre of Beaverton's residential zones. [ORD 4584; June 2012] [ORD 4822; June 2022]
+2.RMA Residential Mixed A
+The RMA District is intended to allow a mix of housing types, including detached and attached housing at the
+second-highest number of units per acre of Beaverton's residential zones. [ORD 4584; June 2012] [ORD 4822; June
+2022]
+3.RMB Residential Mixed B
+The RMB District is intended to allow a mix of housing types, including detached and attached housing, at the third-
+highest number of units per acre of Beaverton's residential zones. [ORD 4584; June 2012] [ORD 4822; June 2022]
+4.RMC Residential Mixed C
+The RMC District is intended to allow a mix of housing types, including detached and attached housing, at the
+lowest number of units per acre of Beaverton's residential zones. [ORD 4584; June 2012] [ORD 4822; June 2022]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-2
+[ORD 3184, 08/06/1980; ORD 3236, 01/28/1982; ORD 3293, 11/25/1982; ORD 3899, 06/02/1994; ORD 4036,
+04/02/1999; ORD 4048, 07/08/1999; ORD 4079, 12/09/1999; ORD 4102, 05/04/2000; ORD 4107, 05/02/2000; ORD
+4111, 07/14/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4365, 10/20/2005;
+ORD 4487, 08/21/2008; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4822, 06/30/2022]
+Effective on: 6/30/2022
+20.05.15. Site Development Standards
+
+Site Development Standards support implementing development consistent with the corresponding zoning district. All
+superscript notations refer to applicable regulations or clarifications as noted in footnotes below. [ORD 4584; June 2012]
+[ORD 4652; March 2015] [ORD 4697; December 2016]
+
+20.05.15 Residential Site Development Standards
+
+Superscript Refers to Footnotes
+# Standard MR RMA RMB RMC Unit of
+Measurement
+A. Minimum Land Area N/A N/A N/A N/A Square Feet
+B.1. Minimum Lot Area2, 3 - Single-
+Detached and Duplex
+N/A 1,500 3,000 5,000 Square Feet
+B.2. Minimum Lot Area2, 3 - Triplex and
+Quadplex
+N/A 3,000 4,000 5,000 Square Feet
+B.3. Minimum Lot Area2, 3 - Townhouse N/A 1,100 1,300 1,500 Square Feet
+B.4 Minimum Lot Area2, 3 - Cottage Cluster N/A 7,000 7,000 7,000 Square Feet
+B.5. Minimum Lot Area2, 3 - Single-Room
+Occupancies
+1,000 1,500 3,000 5,000 Square Feet
+C. Maximum Residential Density22 N/A 22 for multi-
+dwellings
+only
+N/A N/A Units Per Acre
+D. Minimum Residential Density4, 22, 23 34 17 10 7 Units Per Acre
+E. Minimum Lot Width3, 6 14 14 20 20 Feet
+F.1.a. Setbacks3, 18 - Front Yard Minimum 10 10 10 10 Feet
+F.1.b. Setbacks3, 18 - Front Yard Maximum 2018 None None None Feet
+F.2.a. Setbacks3, 18 - Side Yard
+Minimum7: Townhouse
+0 internal, 5
+external
+0 internal, 5
+external
+0 internal, 5
+external
+0 internal, 5
+external
+Feet
+F.2.b. Setbacks3, 18 - Side Yard
+Minimum7: Land Divisions
+(Perimeter7)
+N/A 5 5 5 Feet
+F.2.c. Setbacks3, 18 - Side Yard
+Minimum7: Land Divisions (Internal7)
+N/A 3 3 3 Feet
+F.3. Setbacks3, 18 - Rear Yard Minimum 15 158 158 158 Feet
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-3
+# Standard MR RMA RMB RMC Unit of
+Measurement
+F.4.a. Setbacks3, 18 -
+ Garage Minimum9: Townhouse
+No more
+than 5 or no
+less than
+18.5
+No more
+than 5 or no
+less than
+18.5
+18.5 18.5 Feet
+F.4.b. Setbacks3, 18 - Garage Minimum9:  All
+other development
+20 No more
+than 5 or no
+less than
+18.5
+18.5 18.5 Feet
+F.5. Setbacks3, 18 - Garage Door to Rear
+Minimum11
+22 22 22 22 Feet
+F.6.a. Setbacks3, 18 - Minimum Between
+Buildings12
+65 1018 6 6 6 Feet
+G.1. Building Height - Maximum13 N/A 40 3514 3514 Feet
+G.2. Building Height - Height Transition
+Standards of 60.05.15.7 Apply
+Yes No No No N/A
+H.1. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Single-Detached Dwelling
+N/A,
+Refer to
+20.05.16
+1.40,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.80,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+0.60,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A
+H.2. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Duplex
+N/A,
+Refer to
+20.05.16
+1.60,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.90,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+0.65,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A
+H.3. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Triplex and Quadplex
+N/A,
+Refer to
+20.05.16
+1.60,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+1.20,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+0.90,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A
+H.4. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Townhouse
+N/A, Refer to
+20.05.16
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-4
+# Standard MR RMA RMB RMC Unit of
+Measurement
+H.5. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Cottage Cluster
+N/A,
+Refer to
+20.05.16
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A
+H.6. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Single-Room Occupancies
+N/A,
+Refer to
+20.05.16
+1.40,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.80,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+0.60,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A
+H.7. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Non-Residential Uses and
+Conditional uses
+Refer to
+20.05.16
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10
+and
+20.25.15
+N/A
+20.05.15 Residential Site Development Standards - Wireless Communication Facilities
+Superscript Refers to Footnotes
+# Standard MR RMA RMB RMC Unit of
+Measurement
+I.1. Maximum
+Height - WCF19
+80 80 80 80 Feet
+I.2. Maximum
+Height -
+ Equipment
+Shelters20
+12 12 12 12 Feet
+I.3. Maximum
+Height - Roof
+Mounted
+Antennas
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the height
+of any building
+which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the height
+of any building
+which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the height
+of any building
+which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the height
+of any building
+which is
+nonconforming
+due to height.
+N/A
+J.1. Yard
+Setbacks21 -
+Requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+N/A
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-5
+# Standard MR RMA RMB RMC Unit of
+Measurement
+J.2. Yard
+Setbacks21 -
+Other
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+N/A
+[ORD 4652; March 2015] [ORD 4654; March 2015] [ORD 4659; July 2015] [ORD 4697; December 2016] [ORD 4702;
+January 2017] [ORD 4804; August 2021] [ORD 4822; June 2022] [ORD 4857; October 2024] [ORD 4879; April 2026]
+Footnotes:
+1. [Footnote repealed and reserved.] [ORD 4584; June 2012] [ORD 4822; June 022] [ORD 4879; April 2026]
+2. Minimum land area per lot in the RMA, RMB, and RMC zones. Minimum lot area standards apply to land
+divisions, except middle housing land divisions. For middle housing, the standards also determine the minimum
+lot size needed for each middle housing type to be built on an existing lot. [ORD 4822; June 2022] [ORD 4879;
+April 2026]
+3. If a duplex, triplex, quadplex, or cottage cluster has been divided by a middle housing land division, the
+development standards that are applicable to the lot shall apply to the middle housing parent lot, not to the
+middle housing child lots. [ORD 4822; June 2022]
+4. Refer to Section 20.25.05.D for exceptions to minimum density standards in the RMA, RMB, and RMC
+districts. [ORD 4822; June 2022]
+5. Applies to townhouse development. [ORD 4822; June 2022] [ORD 4879; April 2026]
+6. Corner lots may need to provide a greater minimum lot width to accommodate the sight clearance areas
+specified in the Engineering Design Manual. [ORD 4822; June 2022]
+7. Perimeter setbacks are those from lot lines external to the land division. Internal setbacks are those from lot
+lines within the land division.  In no case shall a building encroach into a Public Utility Easement (PUE). [ORD
+4822; June 2022] [ORD 4879; April 2026]
+8. The minimum rear setback to cottage cluster dwellings is 10 feet. [ORD 4822; June 2022]
+9. Carports shall meet the same yard setbacks as the dwelling. Garage setbacks shall be measured from the
+elevation containing the garage door and vehicle entrance of carports to the property line. For all other garage
+elevations, the building setback applies.
+10. [Footnote repealed and reserved.] [ORD 4879; April 2026]
+11. Measured from garage door elevation to opposite side of the alley right-of-way, common accessway, or access
+easement line. [ORD 4857; October 2024]
+12. Minimum spacing between buildings on the same lot or in the same development. [ORD 4822; June 2022]
+13. Maximum building height for all structures in a cottage cluster development is 25 feet. [ORD 4822; June 2022]
+14. Also subject to additional height limitations in Section 20.30. [ORD 4822; June 2022]
+15. Additional FAR may be available if existing trees are preserved, per Table 60.05.60.2.S4.c.2. If footnote 16 and
+17 apply to a site, then the combined additional FAR from both scenarios shall not exceed 600 square feet.
+Cottage clusters are not subject to any FAR standards or FAR incentives. [ORD 4822; June 2022]
+16. Single-detached, duplex, triplex, or quadplex structures in existence as of June 30, 2022 that exceed the
+applicable maximum FAR standard are allowed to expand up to 500 square feet in floor area above the
+maximum FAR permitted in the zone. If such existing structures are unintentionally destroyed, they may be
+rebuilt to exceed the maximum FAR by 500 square feet. If footnote 16 and 17 apply to a site, then the combined
+additional FAR from both scenarios shall not exceed 600 square feet. [ORD 4822; June 2022]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-6
+17. Accessory dwelling units added to an existing single-detached dwelling as of June 30, 2022 are excluded from
+the maximum FAR limitations. [ORD 4822; June 2022]
+18. Applies to all development other than townhouses. Maximum setbacks apply to the portion(s) of the site
+subject to the frontage requirement of 60.05.15.6. [ORD 4822; June 2022] [ORD 4857; October 2024] [ORD
+4879; April 2026]
+19. Inclusive of antenna.
+20. At-grade equipment shelters.
+21. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+22. Up to 6 single-room occupancy units on each lot or parcel are permitted except for in the MR zone where
+minimum and maximum density requirements are subject to Section 20.25.05. This is not intended to exempt
+single-room occupancies from minimum density requirements of the underlying zone. [ORD 4857; October
+2024]
+23. Single-room occupancies shall have a minimum of 4 attached units, regardless of lot size. This is not intended to
+exempt single-room occupancies from minimum density requirements of the underlying zone. [ORD 4857;
+October 2024]
+[ORD 3184, 08/06/1980; ORD 3236, 01/28/1982; ORD 3293, 11/25/1982; ORD 3899, 06/02/1994; ORD 4036,
+04/02/1999; ORD 4048, 07/08/1999; ORD 4079, 12/09/1999; ORD 4102, 05/04/2000; ORD 4107, 05/02/2000; ORD
+4111, 07/14/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4365, 10/20/2005;
+ORD 4397, 08/10/2006; ORD 4487, 08/21/2008; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4652,
+03/06/2015; ORD 4654, 03/25/2015; ORD 4659, 07/10/2015; ORD 4697, 12/02/2016; ORD 4702, 01/04/2017; ORD
+4804, 08/13/2021; ORD 4822, 06/30/2022; ORD 4857, 10/03/2024; ORD 4879, 04/02/2026]
+Effective on: 9/14/2026
+20.05.16. Floor Area Ratio in MR
+
+Development shall have a maximum Floor Area Ratio as follows:
+1. Within one-quarter mile north or south of lot lines abutting Allen Boulevard between Highway 217 and Murray
+Boulevard:
+a. Maximum 6.0 if the site is near Frequent Transit Service and the site contains or the proposed development
+provides Regulated Affordable Housing. A minimum of 30 percent of the residential units shall meet the
+definition of Regulated Affordable Housing; or
+b. Maximum 4.0 if the site and development do not meet the thresholds in Section 20.10.16.1.a.
+2. Not within one-quarter mile north or south of lot lines abutting Allen Boulevard between Highway 217 and Murray
+Boulevard:
+a. Maximum 6.0 if the site is near frequent transit; or
+b. Maximum 4.0 if the site is not near frequent transit.
+3. For the purposes of this sub-section, “near frequent transit” means that any portion of the site is within one-half
+mile of the property lines abutting streets with Frequent Transit Service or the center of tracks with Frequent
+Transit Service.
+[ORD 4879, 04/02/2026]
+Effective on: 4/2/2026
+20.05.20. Land Uses
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-7
+The following Land Uses are classified in the following three categories: Permitted (P) including their accessory uses and
+structures, Conditional Uses (C), or Prohibited (N) uses as identified in the table below for Residential Zoning
+Districts. [ORD 4584; June 2012]
+
+Table 20.05.20.A
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Refers to Use Restrictions
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-8
+# CATEGORY SPECIFIC USE MR RMA RMB RMC
+1.A Residential Care Facilities P P P P
+2.A. Residential Dwellings17 - Accessory Dwelling Units P P P P
+2.B. Residential Dwellings17 - Single-Detached Dwelling12 N1 P P P
+2.C. Residential Dwellings17 - Duplex P8 P P P
+2.D. Residential Dwellings17 - Triplex and Quadplex P8 P P P
+2.E. Residential Dwellings17 - Townhouse P P P P
+2.F. Residential Dwellings17 - Cottage Cluster N P P P
+2.G. Residential Dwellings17 - Multi-Dwelling P P N N
+2.H. Residential Dwellings17 - Home Occupation P P P P
+2.I. Residential Dwellings17 - Manufactured and Mobile Homes3 N P4 P P
+2.J. Residential Dwellings17 - Manufactured Home Parks N P P N
+2.K. Residential Dwellings17 - Planned Unit Development C C C C
+2.L. Residential Dwellings17 - Home Testing of Consumer Electronic Products13 P P P P
+2.M. Residential Dwellings17 - Single-Room Occupancies P P P P
+3.A. Commercial Hospitals C C C C
+3.B. Commercial Medical Clinics C C C C
+3.C. Commercial Child Care Centers P P P18 C P18 C
+3.D. Commercial Residential Care Facilities C C C C
+4.A. Commercial Lodging - Temporary Living Quarters C5 C5 C5 N
+5.A. Commercial Animal Care14 - Major C C C C
+5.B. Commercial Animal Care14 - Minor C C C C
+6.A. Commercial Self Storage Facilities C C N9 N
+6.B. Commercial Storage Yards6 C C C C
+7. Commercial Marijuana Dispensary, Retail Marijuana Sales, Wholesale Marijuana Sales,
+Marijuana Processing
+N N N N
+8. Civic15 Cemetery C C C C
+9.A. Civic15 Educational Institutions C C C C
+9.B. Civic15 Commercial Schools N N N N
+10. Civic15 Places of Worship C C C C
+11.A. Civic15 Public Buildings and Uses - Non-Profit Public Services in Public Buildings P7 N N N
+11.B. Civic15 Public Buildings and Uses - Public Buildings C C C C
+11.C. Civic15 Public Buildings and Uses - Public Sewer and Water and Utility
+Transmission Lines
+P P P P
+11.D. Civic15 Public Buildings and Uses - Public Sewer, Water Supply, Water
+Conservation and Flood Control Facilities Other than Transmission Lines
+C C C C
+12.A. Civic15 Public Park C C C C
+12.B. Civic15 Public Dog Parks or Dog Runs C C C C
+12.C. Civic15 Public Recreational Facilities C C C C
+12.D. Civic15 Community Gardens P P P P
+13.A. Civic15 Domestic Violence Shelters P P P P
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-9
+13.B. Civic15 Emergency Shelters P2 P2 P2 P2
+13.C. Civic15 Mass Shelters P P P P
+14.A. Civic15 Utilities - Utility Substations and Related Facilities other than
+Transmission Lines
+C C C C
+15. Civic15 Vehicle Camping16 P P P P
+16. Civic15 Wireless Communications Facilities P P P P
+Footnotes:
+1. Existing single-detached dwellings as of June 30, 2022 and their accessory uses and structures, are Permitted uses
+in the MR zone and can be expanded or can be rebuilt if destroyed. New single-detached dwellings are
+Prohibited. [ORD 4822; June 2022] [ORD 4857; October 2024]
+2. Emergency Shelters may occur where allowed pursuant to Section 10.70.10. [ORD 4838; March 2023]
+3. The placement of a manufactured home is subject to the design and placement criteria found in Section 60.20.20.
+4. [Footnote repealed and reserved.] [ORD 4822; June 2022]
+5. Limited to uses of Boarding, Rooming, and Lodging House.
+6. Storage yards for recreational vehicles, boats, and trailers owned by residents in a residential development or
+planned unit development.
+7. Only when abutting or directly across the street from Regional Center zones.
+8. In the MR zone, all units of a duplex, triplex, or quadplex must be attached. [ORD 4822; June 2022]
+9. Existing self-storage facilities as of June 30, 2022 are Conditional uses in the RMB zone. New self-storage facilities
+are Prohibited. [ORD 4822; June 2022]
+10. [Footnote repealed and reserved.] [ORD 4804; August 2021]
+11. [Footnote repealed and reserved.] [ORD 4822; June 2022]
+12. Compact Detached Dwellings on lots fronting common greens, shared courts, or public streets may be permitted on
+sites that are two acres or greater in size through the Conditional Use-Planned Unit Development process. [ORD
+4654; March 2015]
+13. Home Testing of Consumer Electronic Products uses shall: [ORD 4786; July 2020]
+a. be limited to the hours of 7:00 AM and 7:00 PM, Monday through Saturday, in which technicians are allowed
+to occupy the residence;
+b. have at least two off-street parking spaces for technicians, so no on-street parking would occur with the use;
+c. be limited to two vehicles on-site at any one time;
+d. have a 24-hour on-site security system;
+e. have a contract for landscape and maintenance services to ensure that the home testing properties are well
+maintained for the neighborhood;
+f. be limited to no more than three home testing dwelling units within a quarter mile radius at any time;
+g. be limited to single-detached dwelling units; and [ORD 4822; June 2022]
+h. comply with the noise and odor limits contained in the City Code.
+14. Animal Care uses provided as a private amenity to residents in multi-dwellings or on a common area serving
+multiple households. [ORD 4782; April 2020] [ORD 4822; June 2022]
+15. Public Art shall be permitted pursuant to Section 60.50.25.13. [ORD 4782; April 2020]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-10
+16. Vehicle Camping may occur only where allowed through a program established by Council resolution and
+administered by the Mayor. The use is subject to the special requirements found in Section 60.50.25.14. Vehicle
+Camping uses do not require Conditional Use for extended hours of operation. [ORD 4779; March 2020]
+17. Residential developments in the SCMCP area shall provide a variety of housing types consistent with the permitted
+and conditional uses of the applicable zone(s). The variety of housing shall be provided for sites: [ORD 4822; June
+2022]
+a. Up to 15-acres (gross), a minimum of one (1) housing type;
+b. Greater than 15-acres and up to 30-acres (gross), a minimum of two (2) housing types;
+c. Greater than 30-acres (gross), a minimum of three (3) housing types
+d. For bullets a-c above, a minimum of 10 percent of each housing type shall be provided.
+18. Permitted when collocated with a legally established institutional use, including public buildings, public recreation
+facilities, public parks, places of worship, and educational institutions. [ORD 4876; January 2026]
+[ORD 3166, 04/30/1980; ORD 3184, 08/06/1980; ORD 3236, 01/28/1982; ORD 3293, 11/25/1982; ORD 3899,
+06/02/1994; ORD 4036, 04/02/1999; ORD 4048, 07/08/1999; ORD 4079, 12/09/1999; ORD 4102, 05/04/2000; ORD
+4107, 05/02/2000; ORD 4111, 07/14/2000; ORD 4112, 07/14/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003;
+ORD 4332, 01/01/2005; ORD 4365, 10/20/2005; ORD 4397, 08/10/2006; ORD 4487, 08/21/2008; ORD 4542,
+06/17/2010; ORD 4584, 06/01/2012; ORD 4595, 02/08/2013; ORD 4654, 03/25/2015; ORD 4659, 07/10/2015; ORD
+4674, 02/10/2016; ORD 4702, 01/04/2017; ORD 4779, 03/06/2020; ORD 4782, 04/17/2020; ORD 4786, 07/03/2020;
+ORD 4804, 08/13/2021; ORD 4822, 06/30/2022; ORD 4838, 03/09/2023; ORD 4857, 10/03/2024; ORD 4859,
+01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026

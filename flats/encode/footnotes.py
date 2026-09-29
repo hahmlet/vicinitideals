@@ -70,10 +70,12 @@ _TABLE_ID = r"[\w.-]+(?:\s*\([\s\w.-]*\))*"
 
 #: A notes block announces itself. Tolerates the colspan repeat a caption cell
 #: makes when it spans the grid -- "NOTES:  NOTES:" -- and the identifier
-#: Gresham puts in front, "Table 4.0130 Notes:".
+#: Gresham puts in front, "Table 4.0130 Notes:". Beaverton heads every
+#: Chapter 20 and 70 notes block "Footnotes:", and the tables above them say
+#: "Superscript Refers to Footnotes"; the word is the same heading.
 NOTES_HEAD = re.compile(
-    rf"^(?:table\s+{_TABLE_ID}\s+)?(?:table\s+)?notes?\s*[:.]?"
-    rf"(?:\s+(?:table\s+{_TABLE_ID}\s+)?(?:table\s+)?notes?\s*[:.]?)*$",
+    rf"^(?:table\s+{_TABLE_ID}\s+)?(?:table\s+)?(?:foot)?notes?\s*[:.]?"
+    rf"(?:\s+(?:table\s+{_TABLE_ID}\s+)?(?:table\s+)?(?:foot)?notes?\s*[:.]?)*$",
     re.I,
 )
 
@@ -92,7 +94,15 @@ NOTES_HEAD = re.compile(
 #: Exactly one line in the corpus wears this shape, and behind it are
 #: twenty-four notes to a use table -- including the one that lets a plex into
 #: DTM and DMU on a lot of record of 6,500 square feet or smaller.
-NOTES_LEAD = re.compile(r"(?=.*\bthe following\b)(?=.*\btable\s+[\w.-]+)", re.I)
+#:
+#: Beaverton names the section its use table sits in rather than the table:
+#: "The following Use Restrictions refer to superscripts found in Section
+#: 20.10.20." Behind that line in each of its zoning chapters is the use
+#: table's whole list of notes, including the NS zone's cap on residential
+#: area; the section number is accepted where the table number is.
+NOTES_LEAD = re.compile(
+    r"(?=.*\bthe following\b)(?=.*\b(?:table|section)\s+[\w.-]+)", re.I
+)
 
 #: A line of the permission legend, which a table prints under the same
 #: "Notes:" heading as its footnotes and before them: "P = Permitted.", "CSU =
@@ -581,6 +591,12 @@ FURNITURE = re.compile(
     # the Community Development Code" is a sentence, not the head of a page.
     r"|^City of [A-Z][\w ]{2,20} Development Code$"
     r"|^\(\d{1,2}/\d{2,4}\)$"
+    # Beaverton's encodeplus export prints "Beaverton Development Code" over
+    # "Date Printed: September 28, 2026 Chapter 20, ZD-23" at the foot of
+    # every page, and the break falls between a "Footnotes:" heading and its
+    # note 1 as often as inside a note. Both lines are anchored whole.
+    r"|^Beaverton Development Code$"
+    r"|^Date Printed: [A-Z][a-z]+ \d{1,2}, \d{4}\s+Chapter \d{1,2}, [A-Z]{2}-\d{1,3}$"
     # Portland stamps the page with the chapter number and the page across
     # the gutter. The column gap is load-bearing: without it this claims
     # Milwaukie's ordinance numbers -- "45-90", "10-301", printed alone on a
@@ -1092,6 +1108,20 @@ def _order(mark: str) -> tuple[int, int]:
     return (0, int(mark)) if mark.isdigit() else (1, ord(mark))
 
 
+def _skipped_back(bodies: Sequence[Body], mark: str) -> bool:
+    """Whether ``mark`` is the number the last note skipped: N, N+2, then N+1.
+
+    Only that exact shape. A list that restarts, or repeats a number, or goes
+    back further than one is a new table or a caption and still ends the block.
+    """
+    if len(bodies) < 2 or not mark.isdigit():
+        return False
+    last, before = bodies[-1].mark, bodies[-2].mark
+    if not (last.isdigit() and before.isdigit()):
+        return False
+    return int(last) == int(before) + 2 and int(mark) == int(before) + 1
+
+
 def _next_content(lines: Sequence[str], i: int) -> str:
     """The next line with anything on it, stripped, or "" at the end."""
     for raw in lines[i : i + 4]:
@@ -1513,7 +1543,22 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
                     texts[-1].append(stripped)
                     i += 1
                     continue
-                break
+                if _skipped_back(bodies, mark):
+                    # The last "note" jumped one number and this line is the
+                    # number it jumped: 15, 17, 16. That 17 was a numeral in
+                    # note 15's sentence that wrapped to the start of a line --
+                    # Beaverton's "If footnote 16 and / 17 apply to a site" --
+                    # and ending here lost notes 16 through 23 of Table
+                    # 20.05.15. It goes back into the note it came from, and
+                    # the line in hand is read as the note it is.
+                    wrapped = bodies.pop()
+                    tail = texts.pop()
+                    cols.pop()
+                    texts[-1].append(lines[wrapped.line - 1].strip())
+                    texts[-1].extend(tail[1:] if wrapped.text else tail)
+                    highest = _order(bodies[-1].mark)
+                else:
+                    break
             col = len(lines[i]) - len(lines[i].lstrip())
             if (
                 len(cols) >= MARK_COLUMN_MIN

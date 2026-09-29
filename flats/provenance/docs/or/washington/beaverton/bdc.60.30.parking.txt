@@ -1,0 +1,816 @@
+60.30. Off-Street Parking
+
+[ORD 4224, 09/19/2002]
+60.30.05. Off-Street Parking Requirements.
+
+When provided, parking spaces shall be designed and maintained by the owner of the property in accordance with the
+requirements of Sections 60.30.05 to 60.30.20. [ORD 4844; August 2023]
+1. Open Air Beaverton. Businesses that are approved pursuant to the Open Air Beaverton program and are not
+located in RC-MU, RC-BC, RC-DT, nor RC-OT may utilize a minimum of two off-street parking spaces, or up to
+one off-street parking space per 1,000 square feet of interior floor area occupied by the business, whichever is
+greater, for the program. In calculating the number of parking spaces, fractions equal to or more than 0.5 shall
+be rounded up to the nearest whole number. Businesses that are approved pursuant to the Open Air Beaverton
+program and are located in RC-MU, RC-BC, RC-DT or RC-OT may utilize an unlimited number of off-street
+parking spaces for the program, with the parking lot owner’s permission. [ORD 4819; January 2022] [ORD 4844;
+August 2023]
+2. Bicycle Parking. [ORD 3965; November 1996] Bicycle parking shall be required for all development proposed for
+approval unless exempted by this ordinance. The number of required bicycle parking spaces shall be provided
+according to Section 60.30.10.5. All bike parking facilities shall meet the specifications, design and locational
+criteria as delineated in this section and the Engineering Design Manual. [ORD 4397; August 2006] [ORD 4822;
+June 2022] [ORD 4876; January 2026]
+3. Vehicle parking shall be paved with an asphalt, concrete, or pervious paving surface. [ORD 4857; October 2024]
+[ORD 4107; May 2000]
+[ORD 4079, 12/09/1999; ORD 4107, 05/02/2000; ORD 4224, 09/19/2002; ORD 4397, 08/10/2006; ORD 4819,
+01/14/2022; ORD 4822, 06/30/2022; ORD 4844, 08/18/2023; ORD 4857, 10/03/2024; ORD 4876, 01/20/2026]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-168
+Effective on: 1/20/2026
+60.30.10. Number of Parking Spaces.
+
+Except as otherwise provided under Section 60.30.10.11., off-street vehicle, bicycle, or both parking spaces shall be
+provided as follows:
+1.Parking Calculation for Maximum Parking. Parking ratios are based on spaces per 1,000 square feet of gross floor
+area, unless otherwise noted. Non-surface parking, such as tuck-under parking, underground and subsurface
+parking, and parking structures shall be exempted from the calculations in this section. [ORD 4844; August 2023]
+2.Climate-Friendly and Equitable Communities (CFEC) Parking Maximums. For developments on parcels where any
+part of the parcel is within a Metro Title 6 Regional Center, within a Metro Title 6 Town Center, within three-
+quarters mile of a rail transit stop, or within one-half mile of the centerline of a frequent transit corridor shall
+comply with the applicable limits in Section 60.30.10.2.A through C. A frequent transit corridor is a corridor with
+bus service, considering all bus routes that travel along that corridor, arriving with a scheduled frequency of at least
+four times an hour during peak service. If Table 60.30.10.5.A and Section 60.30.10.2.A through C have different
+parking maximums, the stricter, lower number of maximum permitted vehicle parking spaces allowed shall apply.
+A. Parking maximums shall be no higher than 1.2 off-street parking spaces per studio dwelling unit and two off-
+street parking spaces per non-studio dwelling unit in a multi-dwelling development. These maximums shall
+include visitor parking; and
+B. Parking maximums for the following commercial and retail uses listed in Sections 20.05.20, 20.10.20,
+20.15.20, 20.20.20, 20.22.20, and 70.15.20, regardless of the use categories listed in Table 60.30.10.5.A, shall
+be no higher than 5 spaces per 1,000 square feet of floor area: Animal Care; Care, except for Residential Care
+Facilities; Financial Institutions; Marijuana uses, except Marijuana Processing; Meeting Facilities; Office;
+Retail, except for Eating and Drinking Establishments; Rental Business; Personal Service Business; Service
+Business/Professional Services; Vehicles, except major Automotive Service, Minor Automotive Service, Heavy
+Equipment Sales, Sales or Lease, Trailer, Recreational Vehicle or Boat Storage, Trailer Sales or Repair, and
+Vehicle Storage Yard; and [ORD 4859; January 2025]
+C. For each individual lot with a building or buildings totaling more than 65,000 square feet of floor area,
+surface parking shall not consist of more area than the floor area of the building or buildings. For the
+purposes of this standard, the surface parking area shall include parking spaces, drive aisles, drive-through
+lanes, and maneuvering areas for passenger vehicles but shall not include paved areas not for use by
+passenger vehicles, such as loading areas or outdoor storage of goods and materials.
+[ORD 4844; August 2023]
+3.Parking Categories.
+A. Vehicle Categories. Contained in the table at Section 60.30.10.5. are vehicle parking ratios for maximum
+permitted number of vehicle parking spaces that may be provided for each land use. [ORD 4471; February
+2008] [ORD 4584; June 2012] [ORD 4686; July 2016] [ORD 4844; August 2023]
+1. Minimum number of required parking spaces. No minimum parking is required for any use. [ORD 4844;
+August 2023]
+2. Parking Zone A. Parking Zone A reflects the maximum number of permitted vehicle parking spaces
+allowed for each listed land use. Parking Zone A areas include those parcels that are located within one-
+quarter mile walking distance of bus transit stops that have 20-minute peak hour transit service or one-
+half mile walking distance of light rail station platforms that have 20-minute peak hour transit service.
+3. Parking Zone B. Parking Zone B reflects the maximum number of permitted vehicle parking spaces
+allowed for each listed land use. Parking Zone B areas include those parcels that are located within one-
+quarter mile walking distance of bus transit stops, one-half mile walking distance of light rail station
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-169
+platforms, or both, or that have a greater than 20 minute peak hour transit service. Parking Zone B areas
+also include those parcels that are located at a distance greater than one-quarter mile walking distance
+of bus transit stops, one-half mile walking distance of light rail station platforms, or both.
+4. Dual parking zones. If a parcel is partially located within Parking Zone A, then the use(s) located on the
+entire parcel shall observe the Parking Zone A parking ratios. Specifically exempted from this
+requirement are parcels located within the Regional Center - East zoning district. In the cases in the
+Regional Center - East zoning district where parcels are bisected by the boundary of Parking Zones A and
+B, the applicable maximum parking ratios may be averaged, and that average may be applied over the
+whole parcel. [ORD 4107; May 2000]
+B. Bicycle Categories. The required minimum number of short-term and long-term bicycle parking spaces for
+each land use is listed in Section 60.30.10.5.
+1. Short-Term parking. Short-term bicycle parking spaces accommodate persons that can be expected to
+depart within two hours. Short-term bicycle parking shall be located on site within 50 feet of a primary
+entrance, or if there are site, setback, building design, or other constraints, bicycle parking shall be
+located no more than 100 feet from a primary entrance in the closest available area to the primary
+entrance as determined by the decision-making authority. [ORD 4844; August 2023]
+2. Long-Term parking. Long-term bicycle parking spaces accommodate persons that can be expected to
+leave their bicycle parked longer than two hours. Cover or shelter for long-term bicycle parking shall be
+provided. School buildings are exempted from the requirement to cover long-term bicycle parking.
+3. Bicycle parking shall be designed, covered, located, and lighted to the standards of the Engineering
+Design Manual and Standard Drawings. [ORD 4302; June 2004]
+4.Ratios. In calculating the required number of bicycle parking spaces or maximum number of vehicle parking spaces,
+fractions equal to or more than 0.5 shall be rounded up to the nearest whole number and fractions less than 0.5
+shall be rounded down to the nearest whole number. [ORD 3965; November 1996] [ORD 4844; August 2023]
+5.Uses Not Listed. For uses not specifically mentioned in this section, the requirements for off-street parking facilities
+for motor vehicles shall be determined with a Parking Requirement Determination (Section 40.55.15.1.). [ORD
+4224; August 2002] [ORD 4844; August 2023] [ORD 4876; January 2026]
+6.Parking Tables. The following tables list the maximum permitted vehicle (Table 60.30.10.5.A) and required
+minimum bicycle parking requirements (Table 60.30.10.5.B) for listed land use types. [ORD 4584; June 2012] [ORD
+4782; April 2020] [ORD 4844; August 2023]
+
+Table 60.30.10.5.A. - Parking Ratio Requirements For Motor Vehicles
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-170
+# Land Use
+Category Specific Use
+Maximum Permitted
+Parking Spaces - Zone
+A
+Maximum Permitted
+Parking Spaces - Zone
+B
+1. Residential
+Uses
+Single-Detached Dwellings, Duplex, or
+Townhouse in RMA, RMB,  RMC, or CM-RM
+Zone (per unit)
+N/A N/A
+2. Residential
+Uses
+Triplex or Quadplex in RMA, RMB, RMC, or
+CM-RM Zone (per unit) N/A N/A
+3. Residential
+Uses Cottage Cluster (per unit) N/A N/A
+4.A. Residential
+Uses
+Duplex, Triplex, Quadplex, or Townhouse in
+Other Zone - One bedroom (per unit) 1.8 1.8
+4.B. Residential
+Uses
+Duplex, Triplex, Quadplex, or Townhouse in
+Other Zone - Two bedrooms (per unit) 2.0 2.0
+4.C. Residential
+Uses
+Duplex, Triplex, Quadplex, or Townhouse in
+Other Zone - Three or more bedrooms (per
+unit)
+2.0 2.0
+5.A. Residential
+Uses Multi-Dwelling - One bedroom (per unit) 1.8 1.8
+5.B. Residential
+Uses Multi-Dwelling - Two bedrooms (per unit) 2.0 2.0
+5.C. Residential
+Uses
+Multi-Dwelling - Three or more bedrooms
+(per unit) 2.0 2.0
+6. Residential
+Uses Dwelling, Accessory Unit 1.8 1.8
+7. Residential
+Uses Mobile Homes (per unit) 2.0 2.0
+8. Commercial
+Amusements
+Arena/Stadium (per seat, maximum
+occupancy) 0.25 0.25
+9. Commercial
+Amusements
+Movie Theaters (per seat, maximum
+occupancy) 0.4 0.5
+10. Commercial
+Amusements Sports Clubs/Recreational Facilities 5.4 6.5
+11. Commercial
+Amusements Tennis/Racquetball Courts 1.3 1.5
+12. Institutions Hospital (per bed) 3.0 4.0
+13. Institutions Public Buildings or other Structures 3.4 4.1
+14. Institutions Welfare or Correctional Institution (per bed) 0.5 0.75
+15. Institutions Fire Station 2.0 2.0
+16. Institutions Shelters: Domestic Violence, Emergency, or
+Mass N/A N/A
+17. Commercial
+Uses Retail, including shopping centers5 5.1 6.2
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-171
+18. Commercial
+Uses Offices, Administrative Facilities5 3.4 4.1
+19. Commercial
+Uses Bank, Financial Institutions5 5.4 6.5
+20. Commercial
+Uses Service Businesses5 5.1 6.2
+21. Commercial
+Uses
+Rental Businesses, including vehicle and
+trailer rental 3.5 4.1
+22. Commercial
+Uses Medical, Dental Clinics5 4.9 5.9
+23. Commercial
+Uses Mortuaries (per seat, maximum occupancy) 0.5 0.75
+24.A. Commercial
+Uses
+Eating, Drinking Establishments5 - Fast Food
+with drive-through service in the, SC-MU,
+and SC-HDR zones.
+12.4 14.9
+24.B. Commercial
+Uses
+Eating, Drinking Establishments5 - Fast Food
+with drive-through service in all other zones. 12.4 14.9
+24.C. Commercial
+Uses
+Eating, Drinking Establishments5 - Other
+eating, drinking establishments in the, SC-
+MU, and SC-HDR zones.
+19.1 23.0
+24.D. Commercial
+Uses
+Eating, Drinking Establishments5 - Other
+eating, drinking establishments in all other
+zones.
+19.1 23.0
+25. Commercial
+Uses Temporary Living Quarters (per guest room) 1.25 1.5
+26. Commercial
+Uses Dwelling, Live/Work (per unit)5 1.8 1.8
+27. Commercial
+Uses
+Residential Care Facilities (per bed,
+maximum capacity) 0.5 0.5
+28. Commercial
+Uses
+Rooming, Boarding, or Lodging Houses (per
+guest room) 1.25 1.5
+29. Places of
+Assembly
+Places of Worship (per seat at maximum
+occupancy) 0.6 0.8
+30. Places of
+Assembly
+Auditoria, meeting facilities; Social or
+Fraternal Organizations (per seat, maximum
+occupancy)
+0.5 0.5
+31. Places of
+Assembly
+Educational Institutions: College, University,
+High School, Commercial School
+(spaces/number of FTE students and FTE
+staff)
+0.3 0.3
+32. Places of
+Assembly
+Educational Institutions: Middle School,
+Elementary School (spaces/number of FTE
+staff)
+1.5 1.5
+33. Places of
+Assembly
+Nursery Schools, Day or Child Care Facilities
+(spaces/number of FTE staff)5 2.0 2.0
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-172
+34. Places of
+Assembly Library, museum, art gallery 4.0 6.0
+35. Places of
+Assembly Park and Ride facilities N/A N/A
+36. Places of
+Assembly Transit Centers N/A N/A
+37. Industrial Manufacturing 2.0 2.0
+38. Industrial
+Storage warehouse, wholesale
+establishment, rail or trucking terminal,
+vehicle or trailer storage.
+0.4 0.5
+39. Limited
+Industrial Research Facilities 3.4 3.4
+[ORD 4107; May 2000] [ORD 4224; August 2002] [ORD 4462; January 2008] [ORD 4584; June 2012] [ORD 4659; July
+2015] [ORD 4782; April 2020] [ORD 4822; June 2022] [ORD 4838; March 2023] [ORD 4844; August 2023] [ORD 4859;
+January 2025]
+Footnotes:
+1. Parking ratios are based on number of spaces per 1,000 square feet of gross floor area unless otherwise noted.
+2. Refer to Section 60.30.10.4. for uses not listed in Section 60.30.10.5.
+3. Refer to Section 60.30.10.11. for exceptions.
+4. In calculating the maximum number of vehicle parking spaces, fractions equal to or more than 0.5 shall be
+rounded up to the nearest whole number. Fractions less than 0.5 shall be rounded down to the nearest whole
+number. [ORD 4844; August 2023]
+5. The maximum parking for motor vehicles associated with a small-scale commercial use approved consistent
+with Section 20.22.35, except for Child Care Facilities, shall be 2 spaces per 1,000 square feet of small-scale
+commercial floor area or the number for the use listed in Zone A per 1,000 square feet of small-scale
+commercial floor area, whichever results in fewer maximum motor vehicle parking spaces. Child Care Facilities
+approved consistent with Section 20.22.35 shall have the maximum parking for motor vehicles as shown in
+Table 60.30.10.5.A. [ORD 4859; January 2025]
+
+Table 60.30.10.5.B. - Parking Ratio Requirements For Bicycles
+
+# Land Use
+Category Specific Use
+Minimum
+Required
+Bicycle Parking
+Spaces - Short
+Term
+Minimum
+Required
+Bicycle Parking
+Spaces - Long
+Term
+1. Residential
+Uses Single-Detached Dwellings and Middle Housing 1 space per unit 1 space per unit
+2. Residential
+Uses Multi-Dwelling Structure
+2 spaces or 1
+space per 20
+dwelling units
+1 space per
+dwelling unit
+3. Residential
+Uses Residential Care Facilities (based upon maximum capacity) 1 space per 100
+beds
+1 space per 50
+beds
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-173
+# Land Use
+Category Specific Use
+Minimum
+Required
+Bicycle Parking
+Spaces - Short
+Term
+Minimum
+Required
+Bicycle Parking
+Spaces - Long
+Term
+4. Residential
+Uses Rooming, Boarding, or Lodging Houses (per guest room) Not required 1 space for every
+10 guest rooms
+5. Commercial
+Amusements5 Arena/Stadium/Theater
+2 spaces or 1
+space per 200
+seats
+2 spaces or 1
+space per 1,000
+seats
+6. Commercial
+Amusements5 Bowling Alley
+1 space per 4,000
+sq. ft. of floor
+area
+1 space per 4,000
+sq. ft. of floor
+area
+7. Commercial
+Amusements5 Dance Hall, Skating Rink
+1 space per 500
+sq. ft. of floor
+area
+1 space per 4,000
+sq. ft. of floor
+area
+8. Commercial
+Amusements5 Recreational Facility
+2 spaces, or
+spaces to meet
+the combined
+requirements of
+the uses being
+conducted
+2 spaces, or
+spaces to meet
+the combined
+requirements of
+the uses being
+conducted
+9. Commercial
+Uses5 Retail, including shopping centers
+2 spaces or 1
+space per 12,000
+sq. ft. of floor
+area
+2 spaces or 1
+space per 12,000
+sq. ft. of floor
+area
+10. Commercial
+Uses5 Offices, Administrative Facilities
+2 spaces or 1
+space per
+8,000 sq. ft. of
+floor area
+2 spaces or 1
+space per 8,000
+sq. ft. of floor
+area
+11. Commercial
+Uses5 Bank, Financial Institutions
+2 spaces or 1
+space per 8,000
+sq. ft. of floor
+area
+2 spaces or 1
+space per 8,000
+sq. ft. of floor
+area
+12. Commercial
+Uses5 Medical, Dental Clinics
+2 spaces or 1
+space per 20,000
+sq. ft. of floor
+area
+2 spaces or 1
+space per 10,000
+sq. ft. of floor
+area
+13. Commercial
+Uses5 Eating, Drinking Establishments
+2 spaces or 1
+space per 4,000
+sq. ft. of floor
+area
+2 spaces or 1
+space per 4,000
+sq. ft. of floor
+area
+14. Commercial
+Uses5 Mortuaries Not required 1 space
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-174
+# Land Use
+Category Specific Use
+Minimum
+Required
+Bicycle Parking
+Spaces - Short
+Term
+Minimum
+Required
+Bicycle Parking
+Spaces - Long
+Term
+15. Commercial
+Uses5 Automotive Service, Minor and Major
+2 spaces or 1
+space per 5,000
+sq. ft. of floor
+area
+2 spaces or 1
+space per 5,000
+sq. ft. of floor
+area
+16. Commercial
+Uses5 Truck, trailer, and automobile rental Not required 2 spaces
+17. Commercial
+Uses5 Temporary Living Quarters Not required 1 space per 50
+guest units
+18. Places of
+Assembly5 Auditoria, meeting facilities
+1 space per
+10,000 sq. ft. of
+floor area
+2 spaces
+19. Places of
+Assembly5 Places of Worship
+1 space per
+10,000 sq. ft. of
+floor area
+2 spaces
+20. Places of
+Assembly5 Social or Fraternal Organizations
+2 spaces, or
+spaces to meet
+the combined
+requirements of
+the uses being
+conducted
+2 spaces, or
+spaces to meet
+the combined
+requirements of
+the uses being
+conducted
+21. Places of
+Assembly5
+Educational Institutions: College, University, Commercial
+School Not required 4 spaces per
+classroom
+22. Places of
+Assembly5 Educational Institutions: High School Not required 1 space per 18
+students
+23. Places of
+Assembly5
+Educational Institutions: Middle School, Elementary
+School Not required 1 space per 9
+students
+24. Places of
+Assembly5 Nursery Schools, Day or Child Care Facilities Not required 1 space per
+classroom
+25. Places of
+Assembly5 Library, museum, art gallery
+1 space per 2,500
+sq. ft. of floor
+area
+1 space per
+10,000 sq. ft. of
+floor area
+26. Places of
+Assembly5 Park and Ride Facilities Not required 5% of auto spaces
+27. Places of
+Assembly5 Public Park
+2 spaces, or
+spaces to meet
+the combined
+requirements of
+the uses being
+conducted
+2 spaces, or
+spaces to meet
+the combined
+requirements of
+the uses being
+conducted
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-175
+# Land Use
+Category Specific Use
+Minimum
+Required
+Bicycle Parking
+Spaces - Short
+Term
+Minimum
+Required
+Bicycle Parking
+Spaces - Long
+Term
+28.A. Places of
+Assembly5 Transit Centers - Bus Not required 2 spaces per bus
+bay
+28.B. Places of
+Assembly5 Transit Centers - Light Rail (per station) Not required 10 spaces
+29. Institutions Hospital 1 space per 100
+beds
+1 space per 50
+beds
+30. Institutions Welfare or Correctional Institution 1 space per 100
+beds
+1 space per 50
+beds
+31. Institutions Shelters: Domestic Violence, Emergency, or Mass Not required Not required
+32. Industrial Manufacturing Not required
+2 spaces, or 1
+space per 20,000
+sq. ft. of floor
+area
+33. Industrial Storage warehouse, wholesale establishment, rail or
+trucking terminal, vehicle or trailer storage. Not required
+2 spaces, or 1
+space per 80,000
+sq. ft. of floor
+area
+34. Other Other uses not listed
+2 spaces, or 1
+space per 10,000
+sq. ft. of floor
+area
+2 spaces, or 1
+space per 10, 000
+sq. ft. of floor
+area
+[ORD 4224; August 2002] [ORD 4584; June 2012] [ORD 4659; July 2015] [ORD 4782; April 2020] [ORD 4822; June 2022]
+[ORD 4838; March 2023] [ORD 4859; January 2025] [ORD 4876; January 2026]
+Footnotes:
+1. Parking ratios are based on number of spaces per 1,000 square feet of gross floor area unless otherwise noted.
+2. Refer to Section 60.30.10.4. for uses not listed in Section 60.30.10.5.A [ORD 4876; January 2026]
+3. In calculating the required number of bicycle parking spaces, fractions equal or more than 0.5 shall be rounded
+up to the nearest whole number. Fractions less than 0.5 shall be rounded down to the nearest whole number.
+4. Where an option is provided under bicycle parking, whichever standard results in the greater number of bicycle
+parking spaces is the minimum number required. "Not required" means that the provision of bicycle parking is
+at the option of the property owner.
+5. The minimum parking ratio requirement for bicycles for small-scale commercial uses approved consistent with
+Section 20.22.35, except for Child Care Facilities, shall be the amount of short-term parking required for use in
+Table 60.30.10.5.A. No long-term parking is required for commercial uses approved consistent with Section
+20.22.35 that are not Child Care Facilities. Child Care Facilities approved consistent with Section 20.22.35 shall
+provide the minimum parking ratio requirement for bicycle parking as shown in Table 60.30.10.5.A. [ORD 4859;
+January 2025]
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-176
+
+7.Residential Parking Dimensions. For all residential uses, any provided parking space shall not be less than 8 1/2
+feet wide and 18 1/2 feet long. In RMA, RMB, RMC and CM-RM, parallel parking spaces may also be used to
+meet minimum required parking spaces and shall not be less than 8 feet wide and 20 feet long. (See also
+Section 60.30.15. (Off-Street Parking Lot Design) for other standards.) [ORD 4312; July 2004] [ORD 4822; June
+2022] [ORD 4844; August 2023] [ORD 4859; January 2025]
+8.Parking Space Calculation.
+A. Multiple Uses. In the case of multiple uses, the total minimum required bicycle parking and the total
+maximum permitted off-street vehicle parking shall be the sum of the requirements for the various uses
+computed separately. [ORD 4844; August 2023]
+B. Bicycle spaces which only meet the requirements of one establishment may serve more than one
+establishment on the same site, with the approval of a Shared Bicycle Parking application, provided that
+sufficient evidence is presented which shows that the times of peak bicycle parking demand for the
+various establishments do not coincide, and that adequate bicycle parking will be available at all times
+when the various establishments are in operation. [ORD 4844; August 2023]
+9Location of Vehicle Parking.
+A. For parking areas that meet one of the thresholds in subsections 1 or 2, below, parking spaces shall be so
+located and served by an access that their use will require no backing movements or other maneuvering
+within a street or right-of-way other than an alley. [ORD 4822; June 2022]
+1. Residential dwellings: Tandem spaces that can be accommodated within the driveway do not count
+in calculation provided the number of parking spaces backing out into the street or right of way does
+not exceed two. All other development: More than two parking spaces.
+2. All parking spaces shall meet minimum standards outlined in Section 60.30.15 unless otherwise
+approved through a Major Adjustment or Major Adjustment – Affordable Housing.
+[ORD 4822; June 2022]
+B. In the RMA, RMB, RMC, and CM-RM zones parking and loading spaces for single-detached dwellings,
+middle housing, and Multi-dwelling with five or six units may be located in side and rear yards and up to
+two parking spaces may be located in the front yard of each lot. [ORD 4584; June 2012] [ORD 4822; June
+2022] [ORD 4859; January 2025]
+C. For middle housing outside the RMA, RMB, RMC, and CM-RM zones, and other types of housing in any
+zone, parking in the front yard is allowed for each dwelling unit in the driveway area. [ORD 4822; June
+2022] [ORD 4857; October 2024] [ORD 4859; January 2025]
+10.Open Air Beaverton. [ORD 4819, January 2022]
+A. Businesses that are approved pursuant to the Open Air Beaverton program may utilize an unlimited
+number of off-street parking spaces for the program, with the parking lot owner’s permission. [ORD 4844;
+August 2023]
+11.Compact Cars. Compact car parking spaces may be allowed as follows:
+A. For residential uses, proposed vehicle parking spaces shall be provided at standard size pursuant to
+Section 60.30.10.7. [ORD 4844; August 2023]
+B. For uses other than residential uses, twenty percent (20%) of the provided vehicle parking spaces for long
+term or designated employee parking lots may be compact spaces. The Facilities Review Committee may
+recommend allowing more than twenty percent (20%) of the provided parking spaces to be used
+for compact car parking when the applicant shows that more compact car spaces are appropriate. [ORD
+4224; August 2002] [ORD 4844; August 2023]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-177
+C. Compact car parking spaces shall be generally grouped together and designated as such. [ORD 3228;
+December 1981]
+12.Carpool and Vanpool Parking Requirements. [ORD 3965; November 1996]
+A. In industrial, institution, and office developments, including government offices, with 50 or more
+employee parking spaces, at least three percent of the employee parking spaces provided shall be
+designated for carpool and/or vanpool parking. For the purposes of this section, carpool is defined as two
+or more persons per car, and vanpool is defined as five or more persons per van. The carpool/vanpool
+spaces shall be clearly marked and signed for reserved carpool and/or vanpool parking. The reserved
+carpool/vanpool parking time may be specified so that the reserved spaces may be used for general
+parking if the reserved spaces are not occupied after a specific time period, which shall be clearly posted
+on the sign. [ORD 4844; August 2023]
+B. Location. Designated carpool/vanpool spaces shall be the closest employee motor vehicle parking spaces
+to the building entrance normally used by employees, except for the motor vehicle parking spaces
+designated for persons with disabilities, which shall be the closest to the building entrance. [ORD 4107;
+May 2000] [ORD 4302, June 2004]
+[ORD 3108, 04/03/1979; ORD 3181, 07/16/1980; ORD 3228, 12/10/1981; ORD 3293, 11/25/1982; ORD 3494,
+03/27/1986; ORD 3739, 09/08/1990; ORD 3958, 06/11/1996; ORD 3965, 11/07/1996; ORD 4036, 04/02/1999; ORD
+4071, 11/25/1999; ORD 4079, 12/09/1999; ORD 4107, 05/02/2000; ORD 4224, 09/19/2002; ORD 4302, 06/10/2004;
+ORD 4312, 07/22/2004; ORD 4365, 10/20/2005; ORD 4418, 02/22/2007; ORD 4462, 01/10/2008; ORD 4471,
+02/28/2008; ORD 4498, 01/15/2009; ORD 4584, 06/01/2012; ORD 4659, 07/10/2015; ORD 4686, 07/15/2016; ORD
+4706, 05/19/2017; ORD 4757, 03/15/2019; ORD 4782, 04/17/2020; ORD 4799, 01/08/2021; ORD 4819, 01/14/2022;
+ORD 4822, 06/30/2022; ORD 4838, 03/09/2023; ORD 4844, 08/18/2023; ORD 4857, 10/03/2024; ORD 4859,
+01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+60.30.15. Off-Street Parking Lot Design.
+
+All off-street parking lots shall be designed in accordance with City Standards for stalls and aisles as set forth in the
+following drawings and tables:
+A = Parking Angle
+B = Stall Width
+C = Stall Depth (no bumper overhang)
+D = Aisle Width
+E = Stall Width (parallel to aisle)
+F = Module Width (no bumper overhang)
+G = Bumper Overhang
+H = Backing Area
+I = Module Intermesh
+NOTE:
+1) For one (1) row of stalls use "C" plus "D" as minimum bay width.
+2) Public alley width may be included as part of dimension "D", but all parking stalls must be on private property, off
+the public right-of-way.
+3) For estimating available parking area, use 350 sq. ft. per vehicle for stall, aisle and access areas.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-178
+4) The stall width for self-parking of long duration is 8.5 feet; for higher turnover self-parking is 9.0 feet; and for
+supermarkets and similar facilities (shoppers and packages) is 9.5-10 feet.
+5) The minimum aisle width for two-way traffic and for emergency vehicle operations area is 24 feet. The minimum
+aisle width for emergency vehicle access (one way traffic) is 20 feet. Except as permitted in Section 60.30.15. Note
+8(c). [ORD 4822; June 2022]
+6) Where appropriate, bumper overhang area is provided (extruded curbs), "G" can be subtracted from "C" to
+determine stall depth. Dimensions of required recreational vehicle spaces are 10 feet by 25 feet.
+7) Parking lots in conjunction with government and public buildings, as defined by Chapter 11 of the International
+Building Code, are to include parking for the handicapped as required in that chapter. [ORD 3494; March 1986]
+[ORD 4365; October 2005] [ORD 4697; December 2016] [ORD 4844; August 2023]
+8) Single Detached, Middle Housing, and Multi-dwelling with five or six units in RMA, RMB, RMC, and CM-RM
+zones: [ORD 4822; June 2022] [ORD 4859; January 2025]
+a. Parallel parking spaces shall be a minimum of 8 feet wide and 20 feet long. For parallel parking spaces located
+within the driveway, the driveway width shall conform to drive aisle widths, outlined in Section 60.30.15.
+Note 8(c). Parallel parking spaces count towards parking maximums. [ORD 4844; August 2023]
+b. Driveways shall meet the minimum driveway standards in the Engineering Design Manual.
+c. Drive aisles shall have a minimum width of 22 feet for two-way traffic or 20 feet for one-way traffic.
+A B C D E F G H I
+45 degrees 8.5 18.7 12.0 12.0 49.4 2.0 5.0 43.4
+60 degrees 8.5 19.8 14.5 9.8 54.1 2.5 5.0 49.9
+75 degrees 8.5 19.6 23.0 8.8 62.2 2.5 5.0 60.0
+90 degrees 8.5 18.5 24.0 8.5 61.0 3.0 5.0 61.0
+90 degrees* 7.5 15.0 24.0 7.5 58.0 2.0 5.0 58.0
+ * "Compact" Car (Section 60.30.10.11.)
+
+[ORD 4584; June 2012]
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-179
+ANGLE TWO-WAY
+90° DEAD END TWO-WAY
+
+9) Newly constructed multi-dwelling residential buildings with five or more residential dwelling units and newly
+constructed multiple-use buildings consisting of privately owned commercial space and five or more residential
+dwelling units shall provide sufficient electrical service capacity, as defined in ORS 455.417, to accommodate no less
+than 40 percent of all vehicle parking spaces serving the residential units. For the purposes of calculating which
+spaces serve residential units, applicants shall provide sufficient electrical capacity to 40 percent of parking spaces
+on the entire site or designate which vehicle parking spaces will be dedicated for residential use, install signage
+indicating that those spaces are for residential use only, and provide sufficient electrical capacity to 40 percent of
+the parking spaces designated for residential use. Townhouses are not included for purposes of determining the
+applicability of this regulation. [ORD 4844; August 2023]
+10) A new development that adds more than one-half acre of new surface parking (newly constructed parking and/or
+paved parking area that was removed and replaced) to a lot or parcel shall provide one of the features in a through
+c below. Surface parking area to determine the one-half acre threshold shall be measured around the perimeter of
+all parking spaces, vehicle maneuvering areas, and interior parking lot landscaping. The parking area calculation
+shall be a cumulative calculation for all parking areas on the lot or parcel:
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-180
+a. Installation of solar panels with a generation capacity of at least 0.5 kilowatt per new parking space. Existing
+solar panels present on the site that will be retained on the site after development may count toward this
+requirement if they meet this standard. Panels may be located anywhere on the site. In lieu of installing solar
+panels on site, the developers may pay $1,500 per new parking space in the development into a previously
+established city or county fund dedicated to equitable solar or wind energy development or a fund at the
+Oregon Department of Energy designated for such purpose if such a fund exists;
+b. Actions to comply with OAR 330-135-0010; or
+c. Tree Canopy covering at least 40 percent of the additional parking lot area at maturity but no more than 15
+years after planting. For the purposes of this Tree Canopy standard, the parking lot area shall include the area
+of parking stalls and vehicle maneuvering areas (including but not limited to all drive aisles and drive-through
+lanes) and shall not include loading areas, areas designated for outdoor storage (except outdoor storage of
+vehicles related to Vehicle Sales, Lease or Rental uses), and parking lot area covered with solar panels). The
+following standards apply: [ORD 4859; January 2025]
+i. Tree Canopy coverage shall be calculated based on the total Tree Canopy of existing trees to remain on
+the site after development plus proposed trees to be planted within the parking area. For existing trees
+that will remain on the site after development, the calculation may use the actual Tree Canopy of any
+existing trees or the anticipated Mature Tree Canopy of any existing trees but no more than 15 years
+after planting. For proposed trees, the calculation shall use the anticipated Mature Tree Canopy of
+proposed trees but no more than 15 years after planting. For the purposes of the calculation, Tree
+Canopy that covers fully enclosed buildings shall not count toward the canopy coverage. Tree Canopy
+over the parking lot area defined above, interior parking lot landscaping, perimeter parking lot
+landscaping, and carports shall count toward canopy coverage. For the purposes of the calculation,
+when expected and/or existing canopies overlap they can be counted twice when the overlap is 5 feet or
+less. The measurement is the length of the line segment within the overlap area between Tree Canopy
+centers. For areas that overlap more than 5 feet, applicants may count toward the Tree Canopy total the
+overlap that would exist if the two tree canopies for those two trees had an overlap length of exactly 5
+feet. In no case, including if more than two trees are overlapping, can any part of overlapping Tree
+Canopy be counted three times when calculating the total Tree Canopy coverage area (see Figure
+60.30.15.10, Tree Canopy Overlap Measurement). [ORD 4859; January 2025]
+ii. Development of a Tree Canopy plan under this section shall be done in coordination with the local
+electric utility, including pre-design, design, building and maintenance phases. [ORD 4859; January 2025]
+iii. Trees planted to meet this standard shall be planted and maintained consistent with the American
+National Standards Institute (ANSI) A300 Tree Care Standards (2023). [ORD 4859; January 2025]
+iv. Trees planted to meet this standard within the Cooper Mountain Community Plan area shall be selected
+from trees designated as appropriate for parking lot trees or street trees in the City of Beaverton Tree
+List. [ORD 4859; January 2025]
+[ORD 4844; August 2023]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-181
+  Figure 60.30.15.10 Tree Canopy Overlap Measurement
+Step 1:
+Establish a straight line between the two center points of trees of overlapping tree canopies.
+
+Step 2:
+Measure the distance of the overlapped canopies along the previously established straight line to find the overlap
+length.
+Step 3:
+If the overlap length established in Step 2 is 5 feet or less, the Tree Canopy counted toward the canopy coverage
+requirement shall be the sum of the entire Tree Canopy of each individual tree. If the overlap length is longer than 5
+feet, continue to Step 4.
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-182
+  Figure 60.30.15.10 Tree Canopy Overlap Measurement
+The graphic above shows that the actual overlap length is more than 5 feet in length.
+Step 4:
+If the overlap length is greater than 5 feet for any two trees, applicants may count toward the Tree Canopy total the
+overlap that would exist if the two tree canopies for those two trees had an overlap length of exactly 5 feet. In no case,
+including if more than two trees are overlapping, can any part of overlapping Tree Canopy be counted three times
+when calculating the total Tree Canopy coverage area.
+Applicants may calculate the overlap area that would exist if the Tree Canopy areas had a 5-foot overlap, as shown in
+the hatched area above. This calculation may be counted toward the Tree Canopy coverage total.
+[ORD 3228, 12/10/1981; ORD 3494, 03/27/1986; ORD 4079, 12/09/1999; ORD 4107, 05/02/2000; ORD 4224,
+09/19/2002; ORD 4365, 10/20/2005; ORD 4498, 01/15/2009; ORD 4584, 06/01/2012; ORD 4697, 12/02/2016; ORD
+4822, 06/30/2022; ORD 4844, 08/18/2023; ORD 4859, 01/02/2025]
+Effective on: 8/21/2026
+60.30.20. Off-Street Parking Lot Construction.
+
+Every parcel or portion of parcel of land hereinafter developed for use as a parking area shall conform to the
+requirements of the Engineering Design Manual and Standard Drawings. [ORD 3293; November 1982] [ORD 4302; June
+2004] [ORD 4332; January 2005] [ORD 4876; January 2026]
+[ORD 3241, 01/28/1982; ORD 3293, 11/25/1982; ORD 3358, 03/13/1984; ORD 3494, 03/27/1986; ORD 3700,
+12/22/1989; ORD 3739, 09/08/1990; ORD 3965, 11/07/1996; ORD 4061, 10/15/1999; ORD 4071, 11/25/1999; ORD
+4079, 12/09/1999; ORD 4107, 05/02/2000; ORD 4224, 09/19/2002; ORD 4302, 06/10/2004; ORD 4332, 01/01/2005;
+ORD 4418, 02/22/2007; ORD 4876, 01/20/2026]
+Effective on: 1/20/2026
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 60, SR-183
+60.30.25. Enforcement.
+
+The Director is authorized to suspend any permit if the usage of parking by the original use or temporary use or both
+increases beyond the capacity of the on-site parking or that the use is causing a nuisance to the public or surrounding
+properties. The Director shall notify the applicant of the Director's intent to suspend the permit and shall provide an
+opportunity for a hearing prior to suspension. However, in any case where the Director, or any Code Enforcement
+Officer designated by the City Manager, finds a serious danger to the public health or safety, the Director or Code
+Enforcement Officer may suspend the permit without a hearing. Upon suspension of a permit, the Director or Code
+Enforcement Officer may require that the temporary use or structure vacate the site within five working days or can
+require the use to discontinue operation. The Director shall notify the applicant of the reasons for the action, and the
+Director shall afford the applicant the opportunity for a hearing within five days from the date of the suspension. The
+Director may reinstate a suspended permit upon a showing by the applicant that the cause of the suspension has been
+corrected. Appeal of any decision of the Director shall be pursuant to Section 50.75. of this Code. [ORD 4224; August
+2002] [ORD 4809; September 2021]
+[ORD 3293, 11/25/1982; ORD 3958, 06/11/1996; ORD 4036, 04/01/1999; ORD 4224, 09/19/2002; ORD 4809,
+09/16/2021]
+Effective on: 9/16/2021

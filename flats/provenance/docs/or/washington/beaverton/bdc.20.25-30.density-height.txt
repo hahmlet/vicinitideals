@@ -1,0 +1,154 @@
+20.25. Density and Bulk
+
+[ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4822, 06/30/2022]
+20.25.05. Residential Density.
+
+1.Minimum Residential Density [ORD 4857; October 2024]
+A. New residential development in all Residential, Commercial, and Multiple Use districts that permit residential
+development must achieve at least the minimum density for the zoning district in which they are located,
+unless otherwise permitted by this Code. [ORD 4857; October 2024] [ORD 4879; April 2026]
+Except for projects in the Downtown Design District, projects proposed at less than the minimum density
+must demonstrate on a site plan or through other means, how, in all aspects, future intensification of the site
+to the minimum density or greater can be achieved without an adjustment or variance. [ORD 4799; January
+2021] [ORD 4879; April 2026]
+For the purposes of this section, new residential development in all zones shall mean intensification of the
+site by adding new primary dwelling(s) or land division of the property. New residential development is not
+intended to refer to additions to existing structures, rehabilitation, renovation, remodeling, or other building
+modifications or reconstruction of existing structures. [ORD 4799; January 2021]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-57
+Minimum residential density is calculated by multiplying the net acreage by the minimum residential density
+provided in the relevant site development standards for the applicable zoning district. If the resulting number
+is not a whole number, the number shall be rounded to the nearest whole number as follows: If the decimal
+is equal to or greater than 0.5, then the number is rounded up to the nearest whole number. If the decimal is
+less than 0.5, then the number shall be rounded down to the nearest whole number. [ORD 4822; June 2022]
+[ORD 4879; April 2026]
+B.Residential Density Averaging. Minimum residential density averaging may occur consistent with the
+following: [ORD 4857; October 2024]
+1. Except in RMA, RMB, RMC, and CM-RM, residential densities may be averaged across a site if the entire
+site is within a single zoning district and within a single, contiguous ownership. [ORD 4584; June
+2012] [ORD 4822; June 2022] [ORD 4857; October 2024] [ORD 4859; January 2025]
+2. For sites entirely within the Cooper Mountain Community Plan area including sites that include CM-RM,
+residential densities may be averaged across a site if the entire site is within a single, contiguous
+ownership regardless of the number of zones applied to the site. The development in all zones on the
+site shall meet the land use and site development standards for that zone, including allowed uses and
+minimum lot size. [ORD 4859; January 2025]
+3. For sites that do not qualify for residential averaging in Section 20.25.05.1.B.1 or 2, residential density
+averaging may be allowed through the Planned Unit Development process if consistent with applicable
+provisions in Section 60.35. [ORD 4857; October 2024] [ORD 4859; January 2025]
+4. For the purposes of Sections 20.25.05.1.B.1 and 20.25.05.1.B.2, properties within a single, contiguous
+ownership may also include those properties separated only by a street. [ORD 4857; October 2024]
+[ORD 4859; January 2025]
+C.South Cooper Mountain Community Plan. Within the South Cooper Mountain Community Plan Table 2: Land
+Use Designations and Capacity Estimates outlines the density capacity expectations for development of land
+within the South Cooper Mountain Community Plan Area. The Land Use Implementation Policies of the
+Community Plan include policies that outline application of zoning and deviations from the capacity estimates
+of Table 2. [ORD 4652; March 2015]
+D.Exceptions to Minimum Density Standards in the RMA, RMB, RMC, and CM-RM districts. [ORD 4822; June
+2022] [ORD 4859; January 2025]
+1. An existing single-detached dwelling, as of June 30, 2022 for RMA, RMB, and RMC and as of January 2,
+2025 for CM-RM, that is at least 1,200 square feet in floor area, may count as two units for the purpose
+of calculating minimum density. [ORD 4859; January 2025]
+2. For an existing or proposed lot that does not meet minimum density, applications for development must
+meet one of the following: [ORD 4876; January 2026]
+a. Meet minimum density by constructing enough units on the lot;
+b. Meet minimum density by dividing the lot; and/or
+c. Demonstrate the potential for future partitioning, subdividing or development of the lot in
+accordance with the requirements of the Development Code. Plans must demonstrate how
+driveways, pedestrian ways, and utilities can adequately serve future potential development on the
+lot. Easements and rights-of-way shall either exist or be proposed to be created such that future
+partitioning or subdividing is not precluded or hindered, for either the lot or any affected adjacent
+lot. [ORD 4857; October 2024] [ORD 4859; January 2025]
+[ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4652, 03/06/2015; ORD 4799, 01/08/2021; ORD 4822,
+06/30/2022; ORD 4857, 10/03/2024; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026; ORD 4879, 04/02/2026]
+Effective on: 4/2/2026
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-58
+20.25.10. Floor Area Ratio
+
+1.Floor Area. [ORD 4857; October 2024]
+A.Minimum Floor Area Ratio: Unless otherwise specified, minimum Floor Area Ratio is the ratio of gross floor
+area in square feet to net square footage on a site. [ORD 4857; October 2024]
+B.Maximum Floor Area Ratio: Except in RMA, RMB, RMC, and CM-RM, maximum Floor Area Ratio is the ratio
+of gross floor area in square feet to gross square footage on the site. In RMA, RMB, RMC, and CM-RM,
+maximum Floor Area Ratio is the ratio of gross floor area in square feet to net square footage on a lot. [ORD
+4857; October 2024] [ORD 4859; January 2025] [ORD 4879; April 2026]
+C.Floor Area Ratios for Multiple Use Developments: Multiple Use Developments with single-use residential
+buildings are governed by residential density and FAR provisions, as calculated by Section 20.25.10.4,
+below. [ORD 4857; October 2024] [ORD 4859; January 2025]
+2.Permitted Floor Area Ratio. Except as otherwise approved through the Planned Unit Development process, phased
+development may be proposed so long as each phase complies with the minimum Floor Area Ratio requirements.
+[ORD 4857; October 2024]
+3.Accommodating Floor Area. Outside the Cooper Mountain Community Plan area, Floor Area may be
+accommodated on a site where undevelopable areas cannot practicably allow development. The Floor Area
+allowance may be transferred from undevelopable areas to developable areas. Where higher Floor Area is
+proposed greater than the Code allowance, Planned Unit Development approval is necessary. In the Cooper
+Mountain Community Plan area, sites in CM-CS, CM-HDR, and CM-MR that have Resource Overlay and
+environmentally constrained lands as identified in the Net Acreage definition that combined are equal to or greater
+than 30 percent of the site shall have a maximum Floor Area Ratio that is 20 percent higher than that identified in
+Section 20.22.15. [ORD 4859; January 2025]
+4.Method of Calculating Minimum Development Intensity for Multiple Use Development with Single-use
+Residential Buildings. [ORD 4584; June 2012] [ORD 4799; January 2021]
+For Multiple Use Developments with single-use residential buildings, minimum residential densities and non-
+residential minimum FARs shall be implemented as follows: [ORD 4584; June 2012] [ORD 4879; April 2026]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-59
+Figure 20.25.10.A Development Intensity Calculations
+[ORD 4799; January 2021]
+5.Multiple Buildings. For developments or phases that involve multiple buildings, the minimum Floor Area Ratio may
+be averaged by totaling the square footage of the buildings divided by the square footage of the net acreage of land
+within such development or phase. [ORD 4857; October 2024]
+6.Phased Development. Projects may use the Planned Unit Development (PUD); Design Review Build-Out Concept
+Plan (DRBCP) process, as outlined in Section 40.20.10; or the Cooper Mountain Development Plan (CMDP) process,
+as outlined in Section 40.20.10.5.C, to develop a site in phases to achieve the minimum FAR established in this
+section. Such projects must demonstrate in the submittal plans how future development of the site, to the
+minimum development standards established in this ordinance or greater, can be achieved at ultimate build out of
+the PUD, DRBCP, or CMDP. The DRBCP may be used if the only Site Development Requirement being phased,
+altered, or otherwise varied is the minimum FAR. If any other Site Development Requirement is being phased,
+altered, or otherwise varied, the PUD process is to be used. [ORD 4822; June 2022] [ORD 4859; January 2025]
+[ORD 4584; June 2012]
+[ORD 4224, 09/19/2002; ORD 4332, 01/01/2005; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4799,
+01/08/2021; ORD 4822, 06/30/2022; ORD 4857, 10/03/2024; ORD 4859, 01/02/2025; ORD 4879, 04/02/2026]
+Effective on: 4/2/2026
+20.25.15. [Repealed]
+
+[ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4857, 10/03/2024]
+Effective on: 10/3/2024
+20.25.20. [Repealed]
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-60
+[ORD 4224, 09/19/2002; ORD 4259, 09/04/2003; ORD 4312, 07/22/2004; ORD 4542, 06/17/2010; ORD 4584,
+06/01/2012; ORD 4799, 01/08/2021; ORD 4879, 04/02/2026]
+Effective on: 4/2/2026
+20.30. Additional Height Limitations in RMB and RMC
+
+[ORD 4822, 06/30/2022]
+20.30.05. Purpose and Applicability.
+
+[ORD 4822; June 2022]
+In the RMB and RMC zoning districts, all new development except for townhouses and cottage clusters is subject to the
+additional height limitations in Section 20.30.10. The purpose of these additional height limitations is to help new
+development respond to the scale and form of existing neighborhoods.
+[ORD 4822, 06/30/2022]
+Effective on: 8/10/2026
+20.30.10. Additional Height Limitations.
+
+[ORD 4822; June 2022]
+Buildings in the RMB and RMC districts can be built up to the maximum height in the zone (35 feet), except near the
+front and/or rear setback. Additional height limitations apply as follows:
+A. In the RMB district, the maximum building height at the rear setback line is 25 feet.
+B. In the RMC district, the maximum building height at both the front and rear setback lines is 25 feet.
+From the applicable setback line specified in A. or B., the maximum height rises at a 45-degree angle (a rate of 1 foot
+vertically for every 1 foot horizontally) toward the center of the lot until it reaches a maximum of 35 feet. See Figure
+20.30.10).
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-61
+Figure 20.30.10.
+ Additional Height Limitations
+
+[ORD 4822, 06/30/2022]
+Effective on: 6/30/2022
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 30, NU-1

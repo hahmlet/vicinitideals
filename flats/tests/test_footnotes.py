@@ -640,3 +640,97 @@ def test_a_column_gap_beats_the_sentence_rule():
     text = "Accessory Dwelling Units      P3      One per lot. See 19.490."
 
     assert {m.mark for m in census(text, doc="d.txt").markers} == {"3"}
+
+
+# --- Beaverton (encodeplus export), 2026-09-29 ----------------------------
+
+
+def test_footnotes_is_a_notes_heading():
+    """Beaverton heads every Chapter 20 and 70 notes block "Footnotes:".
+
+    Read as prose, the heading hid every note in eight chapters, among them
+    the one letting a quadplex into MR only with its units attached.
+    """
+    text = "\n".join(
+        [
+            "Footnotes:",
+            "1. Existing single-detached dwellings are Permitted uses in the MR zone.",
+            "2. Emergency Shelters may occur where allowed pursuant to Section 10.70.10.",
+        ]
+    )
+
+    assert [b.mark for b in census(text, doc="d.txt").bodies] == ["1", "2"]
+
+
+def test_the_beaverton_page_footer_does_not_end_a_notes_list():
+    """The export prints two lines of footer at every page break.
+
+    They fall between a note and the next one as often as not, and read as
+    the note's text they cut the list off at the page.
+    """
+    text = "\n".join(
+        [
+            "Footnotes:",
+            "1. Applies to townhouse development.",
+            "Beaverton Development Code",
+            "Date Printed: September 28, 2026 Chapter 20, ZD-6",
+            "2. Applies to all development other than townhouses.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["1", "2"]
+    assert seen.bodies[0].text == "Applies to townhouse development."
+
+
+def test_a_lead_line_may_name_the_section_instead_of_the_table():
+    """"The following Use Restrictions refer to superscripts found in Section
+    20.10.20." is the one line between Beaverton's heading and its note 1."""
+    text = "\n".join(
+        [
+            "Footnotes:",
+            "The following Use Restrictions refer to superscripts found in Section 20.10.20.",
+            "1. Only 50% of the contiguous area within any NS zone may be developed residentially.",
+            "2. Permitted when collocated with a legally established institutional use.",
+        ]
+    )
+
+    assert [b.mark for b in census(text, doc="d.txt").bodies] == ["1", "2"]
+
+
+def test_a_number_wrapped_to_the_start_of_a_line_is_not_the_next_note():
+    """Beaverton Table 20.05.15, note 15: "If footnote 16 and / 17 apply to a
+    site". Read as note 17, the real 16 that follows looked like a restart and
+    ended the list, losing notes 16 through 23 -- 18 among them, the front
+    setback maximum that applies to all development other than townhouses."""
+    text = "\n".join(
+        [
+            "Footnotes:",
+            "15. Additional FAR may be available if existing trees are preserved. If footnote 16 and",
+            "17 apply to a site, then the combined additional FAR shall not exceed 600 square feet.",
+            "16. Existing structures may expand up to 500 square feet above the maximum FAR.",
+            "17. Accessory dwelling units are excluded from the maximum FAR limitations.",
+            "18. Applies to all development other than townhouses.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["15", "16", "17", "18"]
+    assert seen.bodies[0].text.endswith("shall not exceed 600 square feet.")
+    assert "footnote 16 and 17 apply" in seen.bodies[0].text
+
+
+def test_a_list_that_goes_back_further_than_one_still_ends():
+    """Only N, N+2, N+1 is a wrapped number. 3, 5, 2 is something else."""
+    text = "\n".join(
+        [
+            "Notes:",
+            "3. First note.",
+            "5. Second note.",
+            "2. Not this list's.",
+        ]
+    )
+
+    assert [b.mark for b in census(text, doc="d.txt").bodies] == ["3", "5"]

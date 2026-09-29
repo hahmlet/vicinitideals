@@ -1,0 +1,401 @@
+20.10. Commercial Zoning Districts
+
+[ORD 3290, 10/05/1982; ORD 4857, 10/03/2024]
+20.10.05. Corridor and Main Street Areas.
+
+These areas of the City implement the Corridor and Main Street policies of the City's Comprehensive Plan and are
+identified on the City's Zoning Map. Full urban services are to be provided.
+Four commercial zones establish varied levels of commercial uses and residential densities.
+[ORD 3290, 10/05/1982; ORD 3352, 01/19/1984; ORD 3739, 09/08/1990; ORD 3969, 12/03/1996; ORD 3975,
+03/07/1997; ORD 4036, 04/02/1999; ORD 4048, 07/08/1999; ORD 4071, 11/25/1999; ORD 4079, 12/09/1999; ORD
+4107, 05/02/2000; ORD 4111, 07/14/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005;
+ORD 4542, 06/17/2010]
+Effective on: 6/17/2010
+20.10.10. Purpose.
+
+1.Neighborhood Service (NS)
+The NS District is intended to provide minimal areas of service and convenience uses to meet the frequent needs of
+nearby residents.
+2.Community Service (CS)
+The CS District is intended to provide for a variety of business types compatible with and of similar scale to
+commercial activities found principally along the City's major streets.
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-11
+3.Corridor Commercial (CC)
+The CC District is intended to provide Corridors to develop into multiple use employment and service centers.
+4.General Commercial (GC)
+The GC District is intended to provide businesses requiring extensive land intensive outdoor storage and/or display
+of merchandise, equipment, or inventory.
+[ORD 3136, 10/29/1979; ORD 3290, 10/05/1982; ORD 3352, 01/19/1984; ORD 3739, 09/08/1990; ORD 3975,
+03/07/1997; ORD 4071, 11/25/1999; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4542, 06/17/2010]
+Effective on: 6/17/2010
+20.10.15. Site Development Standards
+
+Site Development Standards support implementing development consistent with the corresponding zoning district. All
+superscript notations refer to applicable regulations or clarifications as noted in footnotes below. [ORD 4584; June 2012]
+[ORD 4782; April 2020]
+
+20.10.15 Commercial Site Development Standards
+
+Superscript Numbers Refer to Footnote
+# Standard NS CS CC GC Unit of
+Measurement
+A. Minimum Density1 34 34 34 34 Units Per Acre
+B. Maximum Floor Area Ratio10 3.0 See
+20.10.16
+See
+20.10.16
+See
+20.10.16
+N/A
+C.1. Lot Dimensions - Minimum Width 70 None None None Feet
+C.2. Lot Dimensions - Minimum Depth 100 None None None Feet
+D. Maximum Yard Setback2 None 16 16 16 Feet
+E.1. Minimum Yard Setbacks - Front None None None None Feet
+E.2. Minimum Yard Setbacks - Side Abutting Lot3 10 None None None Feet
+E.3. Minimum Yard Setbacks - Open Air Display 155 155 None 15 Feet
+E.4. Minimum Yard Setbacks - Rear4 15 15 None 15 Feet
+F.1. Building Height - Maximum 40 None None None Feet
+F.2. Building Height - Height Transition Standards of
+60.05.15.7 Apply
+No Yes Yes Yes N/A
+20.10.15 Commercial Site Development Standards - Wireless Communication Facilities
+
+Superscript Numbers Refer to Footnote
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-12
+# Standards NS CS CC GC Unit of
+Measurement
+G.1. Maximum
+Height - WCF7
+80 80 80 80 Feet
+G.2. Maximum
+Height -
+ Equipment
+Shelters8
+12 12 12 12 Feet
+G.3. Maximum
+Height - Roof
+Mounted
+Antennas
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the
+height of any
+building which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the
+height of any
+building which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the
+height of any
+building which is
+nonconforming
+due to height.
+Shall not extend
+above maximum
+height of
+underlying zone or
+increase the
+height of any
+building which is
+nonconforming
+due to height.
+N/A
+H.1. Yard
+Setbacks9 -
+Requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+Shall comply with
+underlying zoning
+district
+requirements
+N/A
+H.2. Yard Setbacks9
+- Other
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+N/A
+[ORD 4702; January 2017] [ORD 4782; April 2020] [ORD 4804; August 2021] [ORD 4822; June 2022] [ORD 4879; April
+2026]
+Footnotes:
+1. Refer to 20.25.05 for information about calculating density and 20.25.10.4 for calculating intensity in multiple
+use development with single-use residential buildings. [ORD 4822; June 2022] [ORD 4879; April 2026]
+2. Maximum front and side yard setback applies to buildings in commercial zones located on parcels that exceed
+60,000 square feet pursuant to Section 60.05.15.6. Any deviation from that standard shall be reviewed through
+the appropriate Design Review application process and the corresponding Design Review Design Guideline.
+[ORD 4879; April 2026]
+3. For buildings in commercial zones not abutting a residential use in a residential zone, minimum setback does
+not apply. Under the thresholds outlined in Section 40.30., application may be made for zero side yard setbacks
+on parcels abutting residential use in a residential zone in conjunction with a land division application. [ORD
+4879; April 2026]
+4. For buildings in commercial zones not abutting a residential use in a residential zone, minimum setback does
+not apply. Rear yard setback is applicable to only the portion of the rear yard which abuts land designated RMA,
+RMB or RMC; otherwise the minimum rear yard setback is 0 feet. [ORD 4879; April 2026]
+5. Where permitted, open air sales / display / storage of vehicles for sale or lease shall be setback at least 20 feet
+from the front property line. The area shall be designated and subject to Decision Maker approval. [ORD 4879;
+April 2026]
+6. Repealed and reserved. [ORD 4879; April 2026]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-13
+7. Inclusive of antenna.
+8. At-grade equipment shelters.
+9. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+10. See 20.25.10.4 for calculating intensity in multiple use development with single-use residential buildings. [ORD
+4879; April 2026]
+[ORD 3277, 09/08/1982; ORD 3290, 10/05/1982; ORD 3352, 01/19/1984; ORD 3739, 09/08/1990; ORD 3975,
+03/07/1997; ORD 4036, 04/02/1999; ORD 4048, 07/08/1999; ORD 4071, 11/25/1999; ORD 4111, 07/14/2000; ORD
+4224, 09/19/2002; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4354, 07/14/2005; ORD 4542, 06/17/2010;
+ORD 4584, 06/01/2012; ORD 4702, 01/04/2017; ORD 4782, 04/17/2020; ORD 4804, 08/13/2021; ORD 4822,
+06/30/2022; ORD 4879, 04/02/2026]
+Effective on: 9/14/2026
+20.10.16. Floor Area Ratio in CS, CC, GC
+
+Development shall have a maximum Floor Area Ratio as follows:
+A. Within one-quarter mile north or south of lot lines abutting Allen Boulevard between Highway 217 and Murray
+Boulevard:
+1. Maximum 6.0 if the site is near Frequent Transit Service and the site contains or the proposed development
+provides Regulated Affordable Housing. A minimum of 30 percent of the residential units shall meet the
+definition of Regulated Affordable Housing; or
+2. Maximum 4.0 if the site and development do not meet the thresholds in Section 20.10.16.A.1.
+B. Not within one-quarter mile north or south of lot lines abutting Allen Boulevard between Highway 217 and Murray
+Boulevard:
+1. Maximum 6.0 if the site is near Frequent Transit Service; or
+2. Maximum 4.0 if the site is not near Frequent Transit Service.
+C. For the purposes of this sub-section, “near Frequent Transit Service” means that any portion of the site is within
+one-half mile of the edge of right of way o streets with Frequent Transit Service or the center of tracks with
+Frequent Transit Service.
+[ORD 4879, 04/02/2026]
+Effective on: 4/2/2026
+20.10.20. Land Uses
+
+The following Land Uses are Permitted (P), allowed with a Conditional Use (C) approval, or Prohibited (N) as identified in
+the following table for the Commercial Zoning Districts.
+
+Table 20.10.20.A
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Refers to Use Restrictions
+Additional Requirements by Districts:
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-14
+●NS: See 20.10.30
+●CS: See 20.10.35
+●CC: See 20.10.40
+●GC: N/A
+[ORD 4782; April 2020]
+# Category Specific Use NS CS CC GC
+1.A. Residential Care Facilities P P P P
+2.A. Residential Dwellings19 - Accessory Dwelling Units P P P P
+2.B. Residential Dwellings19 - Single-Detached Dwelling10 N N N N
+2.C. Residential Dwellings19 - Duplex11 P1 P P P
+2.D. Residential Dwellings19 - Triplex and Quadplex11 P1 P P P
+2.E. Residential Dwellings19 - Townhouse P1 P P P
+2.F. Residential Dwellings19 - Cottage Cluster N N N N
+2.G. Residential Dwellings19 - Multi-Dwelling P1 P P P
+2.H. Residential Dwellings19 - Home Occupation P P P P
+2.I. Residential Dwellings19 - Manufactured and Mobile Homes N N N N
+2.J. Residential Dwellings19 - Manufactured Home Parks N N N N
+2.K. Residential Dwellings19 - Planned Unit Development C C C C
+2.L. Residential Dwellings19 - Single-Room Occupancies P1 P P P
+3.A. Commercial Animal Care, Major C C C C
+3.B. Commercial Animal Care, Minor P P P P
+4.A. Commercial Hospitals C C C C
+4.B. Commercial Medical Clinics C C C C
+4.C. Commercial Child Care Centers P P P P
+4.D. Commercial Residential Care Facilities C C C C
+5. Commercial Eating and Drinking Establishment P P P P
+6. Commercial Financial Institutions P P P P
+7. Commercial Live/Work Uses P P P P
+8. Commercial Office P2 P P P
+9. Commercial Parking as the Principal Use N N C P
+10. Commercial Retail Trade3 P P P P
+11. Commercial Meeting Facilities C P C7 P P
+12. Commercial Marijuana Dispensary13 N P P P
+13. Commercial Retail Marijuana Sales16 N P P P
+14. Commercial Service Business/ Professional Services P P P P
+15.A. Commercial Self Storage Facilities N N C P
+15.B. Commercial Storage Yards N N C P
+16. Commercial Temporary Living Quarters N C P P
+17.A. Commercial Automotive Service, Major C C N C
+17.B. Commercial Automotive Service, Minor C P C P
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-15
+# Category Specific Use NS CS CC GC
+17.C. Commercial Bulk Fuel Dealerships C P C P
+17.D. Commercial Vehicle Sales or Lease N N N P20
+17.E. Commercial Vehicle Rental N C C P
+18. Commercial Drive-Through Facilities P P P P
+19. Commercial Food Cart Pods14 P15 P P P
+20. Civic17 Cemetery N N N N
+21.A. Civic17 Commercial Schools C P P P
+21.B. Civic17 Educational Institutions P P P P
+22. Civic17 Places of Worship C P C7 P P
+23. Civic17 Public Buildings, Services and Uses C C C C
+24.A. Civic17 Public Park P P P P
+24.B. Civic17 Public Dog Parks or Dog Runs C C C C
+24.C. Civic17 Recreational Facilities P P P P
+25.A. Civic17 Domestic Violence Shelters P P P P
+25.B. Civic17 Emergency Shelters P12 P12 P12 P12
+25.C. Civic17 Mass Shelters P P P P
+26. Civic17 Social Organizations C P C7 P P
+27. Civic17 Transit Centers N C C N
+28.A. Civic17 Utilities - Utility Substations and Related Facilities other than
+Transmission Lines C C C C
+28.B. Civic17 Utilities - Transmission Lines P P P P
+29. Civic17 Vehicle Camping18 P P P P
+30. Civic17 Wireless Communications Facilities P P P P
+31. Hours of
+Operation Uses Operating between 10:00 p.m. and 7:00 a.m.5, 13, 16 P
+C6
+P C6,
+7 P P
+C8
+[ORD 4879; April 2026]
+Footnotes:
+The following Use Restrictions refer to superscripts found in Section 20.10.20.
+1. Only 50% of the contiguous area, excluding public right-of-way and private streets, within any NS zone may be
+developed residentially. Residential uses in a building above non-residential uses are not subject to the 50%
+maximum. [ORD 4822; June 2022] [ORD 4857; October 2024]
+2. No freestanding office structure or group of office structures shall exceed a combined total of 15,000 square feet.
+3. No sales or outdoor storage of animals or livestock are allowed with this use.
+4. [Repealed ORD 4673; March 2016]
+5. Applicable to all uses, excluding marijuana dispensaries and retail marijuana sales. [ORD 4648; November 2014]
+[ORD 4674; February 2016]
+6. Office, Domestic Violence Shelter, Emergency Shelter, Child Care Center, and Mass Shelter uses do not require a
+Conditional Use for extended hours of operation. [ORD 4838; March 2023] [ORD 4876; January 2026]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-16
+7. If property is greater than 500 feet from an existing Residential use in a Residential zone the use is Permitted. If
+property is within 500 feet from an existing Residential use in a Residential zone the use requires Conditional Use
+approval except for Domestic Violence Shelter, Emergency Shelter, Child Care Center, and Mass Shelter uses. [ORD
+4838; March 2023] [ORD 4876; January 2026]
+8. Conditional Use required when abutting a Residential Zone except for Domestic Violence Shelter, Emergency
+Shelter, and Mass Shelter uses. [ORD 4838; March 2023]
+9. On a location containing an existing tower supporting one carrier and shall be consistent with other approvals.
+[ORD 4595; February 2013]
+10. Existing single-detached dwellings as of June 30, 2022 and their accessory uses and structures are Permitted uses
+and can be rebuilt if destroyed. Building additions of up to 500 square feet of an existing single-detached dwelling
+are Permitted. New single-detached dwellings are Prohibited. [ORD 4822; June 2022] [ORD 4857; October 2024]
+11. All units of a duplex, triplex, or quadplex must be attached.
+12. Emergency Shelters may occur where allowed pursuant to Section 10.70.10. [ORD 4838; March 2023]
+13. Marijuana dispensary shall:
+a. be subject to the provisions of ORS 475B.858; and [ORD 4697; December 2016] [ORD 4782; April 2020]
+b. be allowed to operate only between the hours of 7:00 AM and 10:00 PM. Hours of operation may not be
+extended through the Conditional Use process as identified in this Code. [ORD 4648; November 2014]
+14. Food Cart Pods, and their amenities, as described in Section 60.11, are exempt from the Site Development
+Standards of 20.10.15 but are subject to the standards of 60.11 of the Development Code. [ORD 4662; September
+2015] [ORD 4857; October 2024]
+15. Permitted only when abutting a Collector or higher street classification. [ORD 4662; September 2015]
+16. Retail Marijuana Sales shall:
+a. be subject to the provisions of ORS 475B.109-119 and OAR Chapter 845, division 25; [ORD 4782; April 2020]
+b. be located 1,000 feet from any existing Marijuana Dispensary or Retail Marijuana Sales use, except for
+instances of colocation within the same premises of Marijuana Dispensary and Retail Marijuana Sales uses
+when such colocation is permitted by state law; and
+c. be allowed to operate only between the hours of 7:00 AM and 10:00 PM. Hours of operation may not be
+extended through the Conditional Use process as identified in this Code. [ORD 4674; February 2016]
+17. Public Art shall be permitted pursuant to Section 60.50.25.13. [ORD 4782; April 2020]
+18. Vehicle Camping may occur only where allowed through a program established by Council resolution and
+administered by the Mayor. The use is subject to the special requirements found in Section 60.50.25.14. [ORD
+4779; March 2020]
+19. Residential developments in the SCMCP area shall provide a variety of housing types consistent with the permitted
+and conditional uses of the applicable zone(s). The variety of housing shall be provided for site: [ORD 4822; June
+2022]
+a. Up to 15-acres (gross), a minimum of one (1) housing type;
+b. Greater than 15-acres and up to 30-acres (gross), a minimum of two (2) housing types;
+c. Greater than 30-acres (gross), a minimum of three (3) housing types.
+20. Open air sales / display / storage of vehicles for sale or lease shall be setback at least 20 feet from the front
+property line. [ORD 4879; April 2026]
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-17
+[ORD 3136, 10/29/1979; ORD 3162, 04/03/1980; ORD 3184, 08/06/1980; ORD 3185, 09/17/1980; ORD 3204,
+02/26/1981; ORD 3231, 12/08/1981; ORD 3290, 10/05/1982; ORD 3352, 01/19/1984; ORD 3739, 09/08/1990; ORD
+3975, 03/07/1997; ORD 4071, 11/25/1999; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4542, 06/17/2010;
+ORD 4595, 02/08/2013; ORD 4648, 11/28/2014; ORD 4659, 07/10/2015; ORD 4662, 09/11/2015; ORD 4674,
+02/10/2016; ORD 4702, 01/04/2017; ORD 4779, 03/06/2020; ORD 4782, 04/17/2020; ORD 4804, 08/13/2021; ORD
+4822, 06/30/2022; ORD 4838, 03/09/2023; ORD 4857, 10/03/2024; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026;
+ORD 4879, 04/02/2026]
+Effective on: 8/10/2026
+20.10.30. Other NS Zoning Requirements
+
+Uses shall be subject to the following (excludes food cart pods, parks, recreational facilities, playgrounds, domestic
+violence shelters, emergency shelters, mass shelters, Open Air Beaverton, vehicle camping, and animal care, major):
+[ORD 4662; September 2015] [ORD 4779; March 2020] [ORD 4782; April 2020] [ORD 4819; January 2022] [ORD 4838;
+March 2023] [ORD 4857; October 2024]
+1. Activity is conducted wholly within an enclosed structure, except for outside play areas for child care and
+educational facilities and as allowed in items 2 through 4, below. [ORD 4782; April 2020] [ORD 4876; January 2026]
+2. Accessory open air sales / display / storage shall constitute no more than 5% of the gross building floor area of any
+individual establishment.
+3. Excluding food stores, individual establishments shall not exceed 15,000 square feet gross floor area.
+4. Outdoor seating for Eating and Drinking Establishments is permitted. [ORD 4876; January 2026]
+[ORD 4023, 10/15/1998; ORD 4048, 07/08/1999; ORD 4075, 12/09/1999; ORD 4111, 07/14/2000; ORD 4224,
+09/19/2002; ORD 4248, 05/08/2003; ORD 4265, 10/09/2003; ORD 4542, 06/17/2010; ORD 4662, 09/11/2015; ORD
+4779, 03/06/2020; ORD 4782, 04/17/2020; ORD 4819, 01/14/2022; ORD 4838, 03/09/2023; ORD 4857, 10/03/2024;
+ORD 4876, 01/20/2026]
+Effective on: 1/20/2026
+20.10.35. Other CS Zoning Requirements
+
+Uses shall be subject to the following (excludes food cart pods, parks, recreational facilities, playgrounds, domestic
+violence shelters, emergency shelters, mass shelters, Open Air Beaverton, vehicle camping, and animal care, major):
+[ORD 4662; September 2015] [ORD 4779; March 2020] [ORD 4782; April 2020] [ORD 4819; January 2022] [ORD 4838;
+March 2023] [ORD 4857; October 2024]
+1. Activity is conducted wholly within an enclosed structure, except for outside play areas for child care and
+educational facilities and as allowed in items 2 and 3, below. [ORD 4782; April 2020] [ORD 4876; January 2026]
+2. Accessory open air sales / display / storage shall constitute no more than 5% of the gross building floor area of any
+individual establishment.
+3. Outdoor seating for Eating and Drinking Establishments is permitted. [ORD 4876; January 2026]
+[ORD 4542, 06/17/2010; ORD 4662, 09/11/2015; ORD 4779, 03/06/2020; ORD 4782, 04/17/2020; ORD 4819,
+01/14/2022; ORD 4838, 03/09/2023; ORD 4857, 10/03/2024; ORD 4876, 01/20/2026]
+Effective on: 1/20/2026
+20.10.40. Other CC Zoning Requirements
+
+Beaverton Development Code
+Date Printed: September 28, 2026 Chapter 20, ZD-18
+Uses shall be subject to the following (excludes food cart pods, parks, recreational facilities, playgrounds, domestic
+violence shelters, emergency shelters, mass shelters, Open Air Beaverton, vehicle camping, and animal care, major):
+[ORD 4662; September 2015] [ORD 4779; March 2020] [ORD 4782; April 2020] [ORD 4819; January 2022] [ORD 4838;
+March 2023] [ORD 4857; October 2024]
+1. Activity is conducted wholly within an enclosed structure, except for outside play areas for child care and
+educational facilities, transit centers and as allowed in items 2 and 3 below.
+2. Accessory open air sales / display / storage shall be Permitted for horticultural and food merchandise only and shall
+constitute no more than 5% of the gross building floor area of any individual establishment.
+3. Outdoor seating for Eating and Drinking Establishments is permitted. [ORD 4876; January 2026]
+[ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4662, 09/11/2015; ORD 4779, 03/06/2020; ORD 4782,
+04/17/2020; ORD 4819, 01/14/2022; ORD 4838, 03/09/2023; ORD 4857, 10/03/2024; ORD 4876, 01/20/2026]
+Effective on: 1/20/2026
