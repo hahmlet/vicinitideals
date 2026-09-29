@@ -2049,7 +2049,9 @@ async def delete_scenario_template(
 ) -> HTMLResponse:
     from app.models.scenario_template import ScenarioTemplate as _ST
     user = await _get_user(session, request)
-    if user is None or user.org_id is None:
+    # Org admins only (Steph 2026-09-29): a template is shared by the whole
+    # org, and deleting the org default clears an admin-only setting.
+    if user is None or user.org_id is None or not user.is_org_admin:
         return HTMLResponse("", status_code=403)
     row = (await session.execute(
         select(_ST).where(_ST.id == template_id, _ST.org_id == user.org_id)

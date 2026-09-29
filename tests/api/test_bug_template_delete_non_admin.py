@@ -1,15 +1,8 @@
-"""Open question (xfail): a non-admin member can delete the org-default template.
+"""A non-admin member cannot delete an org scenario template.
 
-``set-org-default`` is admin-only, and ``User.is_org_admin=False`` is
-documented as "read-only org access", yet POST
-/ui/settings/scenario-templates/{id}/delete has no admin check: any member
-can delete any template in their org -- including the org default, which
-also clears the org's default pointer (an admin-only setting). Members may
-legitimately create templates (Save as Template has no admin check), so the
-intended rule for deleting is a product decision: admin-only, creator-or-
-admin, or anyone. This test pins the narrowest reading -- a non-admin must
-not be able to delete the template that is the ORG default -- and is
-strict-xfail until that is decided.
+Ruled by Steph 2026-09-29: deleting a template is for org admins only (a
+template is shared by the whole org, and deleting the org default also
+clears an admin-only setting). Members may still create templates.
 """
 from __future__ import annotations
 
@@ -28,10 +21,6 @@ from tests.conftest import seed_org, set_client_auth
 pytestmark = pytest.mark.asyncio
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="Product decision pending: who may delete an org scenario template",
-)
 async def test_non_admin_cannot_delete_org_default_template(
     client: AsyncClient, session: AsyncSession
 ) -> None:
