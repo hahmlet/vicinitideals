@@ -91,6 +91,46 @@ most lots, and each is held at the strict reading:
 Durham has no GIS of its own. Its lots take their zoning from Metro's
 regional zoning layer, which carries none of the three overlays.
 
+## Local review, 2026-09-29
+
+Done by the local session after checkpoint 9. The sections below are the
+cloud session's and are left as written.
+
+- **Merged with main** (744f71f7). Conflicts in `test_refusals.py`
+  (EXPECTED now 134 / 261 / 18: main added two comments meanwhile) and
+  `test_routing.py` (both paragraphs kept); `gaps.json` and
+  `crossrefs.csv` regenerated on the merged tree.
+- **Blind second reading: 886 cards, no wrong number.** 837 agree, 10
+  agree with an alternative, 15 unscored (corner and access rulings, not
+  numbers). Every one of the 14 disagreements and 10 unread cards was
+  checked against the layer and the stored text. All are one of:
+  a per-unit figure read as the total (Hillsboro MR-2 2,000 a unit = 8,000,
+  SCR-HD 1,500 = 6,000); square feet a unit read as units an acre (Durham
+  SDR 10,000 = 4.36); a step-back's height read as a setback (Sherwood's
+  24 ft, Beaverton RMC's 25 ft plane); a neighbour-zone variant read as the
+  base (Beaverton NS/CS rear 15, NS side 10); "None" or "N/A" left unread
+  (Beaverton CS, CC, CM-HDR); or the draft holding the stricter of two
+  printed figures (Beaverton SC-HDR 30 near a platform, 24 beyond; the
+  county's 24 ft aisle, the 15 being an emergency lane). Scored
+  cards and answers are not committed; the method is `flats.encode.reread`.
+- **quadfit's four corner-variant failures, read and pinned**
+  (`test_corner_variants.py`). Hillsboro's by-right corner coverage bonus
+  is the first loosening corner rule with no `unit_lots` gate; it is
+  pinned as `BY_RIGHT_GAINS`, and the reachable corner setbacks go from
+  12 to 14 with Hillsboro as a third jurisdiction.
+- **`test_unweighed_layers.py`** now names the six Washington layers as
+  `OWED_A_COUNTY`, compared as a set both ways, until the county map exists.
+- **Held for one batch after Steph's answers** (the same files, one ledger
+  regeneration): Hillsboro SCC-DT refused on 12.50.350 D.1 (parking inside
+  the building; the pod's court is surface parking), and anything the
+  answers to section 6 change.
+- **Main's private-drive rulings arrived after the drafts** (a731c661,
+  merged f2feb55e). No Washington layer declares `private_drives:`, so a
+  drive line there is screened both ways, the conservative default. Each
+  code's "street" definition is owed before the county map runs; Sherwood's
+  already says "A public or private road" (16.10.020, quoted in the layer's
+  corner-lot block).
+
 ## 1. Cities
 
 | Jurisdiction | State |

@@ -23,6 +23,17 @@ These tests exist so the finding survives the next person to read the
 work list, and so a newly encoded city that adds a REACHABLE loosening corner
 rule -- which would genuinely change the calculation -- fails loudly instead of
 quietly making the docstring above wrong.
+
+*The first one, 2026-09-29.* Hillsboro's single-dwelling tables print a corner
+lot's coverage five points above a standard lot's -- R-10 40 to 45, R-7 and
+R-8.5 45 to 50, R-6 and R-4.5 55 to 60 (Tables 12.21.150-1 to 12.21.550-1,
+"45% for standard lot / 50% for corner lot") -- with no land-division gate.
+That is real upside, and it is small in kind: coverage decides whether a pod
+is allowed onto a lot a few hundred square feet short of the standard figure,
+and it moves no wall. It is pinned below as `BY_RIGHT_GAINS` so the next one
+still fails loudly. Hillsboro also adds two corner rules that tighten a
+setback (MR-1's front 15 to 20, R-8.5's side 6 to 8). How many Hillsboro lots
+either set touches is unmeasured until the Washington County map exists.
 """
 
 from __future__ import annotations
@@ -30,6 +41,17 @@ from __future__ import annotations
 import pytest
 
 pytestmark = pytest.mark.unit
+
+#: The corner rules that loosen BY RIGHT -- no `unit_lots` gate -- and that
+#: the screen would reach once corner status is computed. Hillsboro's
+#: coverage rows, read 2026-09-29; see the module docstring.
+BY_RIGHT_GAINS = {
+    "or/washington/hillsboro/R-10.max_coverage_pct",
+    "or/washington/hillsboro/R-8.5.max_coverage_pct",
+    "or/washington/hillsboro/R-7.max_coverage_pct",
+    "or/washington/hillsboro/R-6.max_coverage_pct",
+    "or/washington/hillsboro/R-4.5.max_coverage_pct",
+}
 
 
 def _audit():
@@ -40,17 +62,18 @@ def _audit():
     return audit_corner_variants
 
 
-def test_no_corner_rule_the_screen_could_reach_adds_buildable_room() -> None:
+def test_no_corner_rule_the_screen_could_reach_adds_room_but_hillsboros_coverage() -> None:
     """The whole finding, in one assertion.
 
     If this ever fails it is good news and the docstring above is out of date:
     somebody encoded a city whose corner rule loosens by right. Read it before
     changing the test -- a corner-lot computation with real upside is scheduled
-    differently to one without.
+    differently to one without. It failed once, for Hillsboro's coverage, and
+    was read (module docstring).
     """
     audit = _audit()
-    gain = [v for v in audit.scan() if v.reachable and v.direction == "loosens"]
-    assert gain == [], [str(v) for v in gain]
+    gain = {v.key for v in audit.scan() if v.reachable and v.direction == "loosens"}
+    assert gain == BY_RIGHT_GAINS, sorted(gain ^ BY_RIGHT_GAINS)
 
 
 def test_every_loosening_corner_rule_is_gated_behind_a_plat_we_do_not_draw() -> None:
@@ -60,9 +83,12 @@ def test_every_loosening_corner_rule_is_gated_behind_a_plat_we_do_not_draw() -> 
     `unit_lots`. That is the middle-housing land-division path: four lots under
     one building. The site plan places a pod on one lot, so the condition is
     never set, and corner status is not what is holding these back.
+
+    Except `BY_RIGHT_GAINS`, which are not gated at all.
     """
     audit = _audit()
-    loosening = [v for v in audit.scan() if v.direction == "loosens"]
+    loosening = [v for v in audit.scan()
+                 if v.direction == "loosens" and v.key not in BY_RIGHT_GAINS]
     assert len(loosening) > 20, len(loosening)
     for v in loosening:
         assert "unit_lots" in v.when, str(v)
@@ -71,9 +97,10 @@ def test_every_loosening_corner_rule_is_gated_behind_a_plat_we_do_not_draw() -> 
 def test_the_reachable_corner_rules_are_the_ones_that_take_room_away() -> None:
     """Same population from the other side, so the count is not zero by
     accident: there ARE corner rules the screen would pick up today, and every
-    one of them makes a lot harder to build on."""
+    one of them makes a lot harder to build on, `BY_RIGHT_GAINS` aside."""
     audit = _audit()
-    reachable = [v for v in audit.scan() if v.reachable]
+    reachable = [v for v in audit.scan()
+                 if v.reachable and v.key not in BY_RIGHT_GAINS]
     assert len(reachable) > 30, len(reachable)
 
     directions = {v.direction for v in reachable}
@@ -103,7 +130,7 @@ def test_the_ten_feet_in_the_old_note_is_wood_village_and_it_is_a_cost() -> None
     assert rear.direction == "tightens"
 
 
-def test_only_twelve_reachable_corner_rules_can_move_a_building() -> None:
+def test_only_fourteen_reachable_corner_rules_can_move_a_building() -> None:
     """How much the unbuilt feature is actually worth, pinned.
 
     Twenty-nine corner rules would fire, but a lot-width or frontage minimum
@@ -125,14 +152,21 @@ def test_only_twelve_reachable_corner_rules_can_move_a_building() -> None:
     lot the larger of the front and the street side, where the over-10,000
     front is 20 -- more than 20 percent of any width under 100 -- so the
     pipeline's corner lots were being cut at least that deep already.
+
+    Two joined 2026-09-29 in a NEW jurisdiction, which is the case this test
+    was written to flag: Hillsboro's MR-1 front yard, 15 ft to 20 on a corner,
+    and R-8.5's side yard, 6 to 8 (Tables 12.22.150-1 and 12.21.250-1). Both
+    are drafts, and how many Hillsboro greens they would cost waits on the
+    Washington County map -- measure it then, before deferring again.
     """
     audit = _audit()
     setbacky = [v for v in audit.scan()
                 if v.reachable and v.direction == "tightens"
                 and v.field.startswith("setback_")]
-    assert len(setbacky) == 12, [str(v) for v in setbacky]
+    assert len(setbacky) == 14, [str(v) for v in setbacky]
     assert {v.layer for v in setbacky} == {
         "or/multnomah/wood-village", "or/clackamas/wilsonville",
+        "or/washington/hillsboro",
     }, sorted({v.layer for v in setbacky})
     shares = [v for v in setbacky if getattr(v.alt, "pct", None) is not None]
     assert len(shares) == 8 and {v.field for v in shares} == {"setback_street_side_ft"}

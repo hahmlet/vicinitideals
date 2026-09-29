@@ -54,6 +54,22 @@ SWITCHED_OFF = {
 }
 
 
+#: Encoded on purpose ahead of the county that counts them, and named here so
+#: the warning stays armed for every other layer. Washington County's six
+#: drafts came back from a cloud session 2026-09-29 (docs/flats/handoff/
+#: washington.md); nothing ranks them until the county map is built on the
+#: home network and the ledger is regenerated over it (FOLLOWUPS 17). This
+#: set is meant to empty the same way the Clackamas ten did.
+OWED_A_COUNTY = {
+    "or/washington/_unincorporated",
+    "or/washington/hillsboro",
+    "or/washington/beaverton",
+    "or/washington/sherwood",
+    "or/washington/king-city",
+    "or/washington/durham",
+}
+
+
 @pytest.fixture(scope="module")
 def rules() -> RuleSet:
     return RuleSet(load_rules())
@@ -68,10 +84,14 @@ def test_no_encoded_layer_is_outside_the_corpus_that_ranks_the_work(
     the moment somebody encodes a jurisdiction in a county nobody has counted
     -- which is the warning worth having, because that encoding will look
     finished and rank nowhere, exactly as Oregon City's R-2 did on the day it
-    was written."""
+    was written.
+
+    It grew again 2026-09-29, knowingly: `OWED_A_COUNTY`. Compared as a set
+    both ways, so a Washington layer that starts to rank fails here too and
+    the set is emptied rather than left to go stale."""
     blind = unweighed(read_coverage(), rules)
 
-    assert [u.jurisdiction for u in blind] == []
+    assert {u.jurisdiction for u in blind} == OWED_A_COUNTY
 
 
 def test_the_ledger_now_spans_both_counties(rules: RuleSet) -> None:
