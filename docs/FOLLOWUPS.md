@@ -649,11 +649,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Steph 2026-09-29: no decisions today. Steph's questions are HUMAN_TODO 25
    (A second cloud round, B pod facade rules, C city emails, D North
    Plains/Banks/Gaston). Agent work, in order:
-   (a) PUBLISH. Worktree ../vicinitideals-worktrees/washington-draft, main
-   merged twice (f2feb55e, 2bb19114), gaps + crossrefs regenerating, then
-   flats + quadfit suites -> push to main -> deploy. Before the first
-   merge: 886 numbers re-read blind, none wrong (handoff "Local review");
-   quadfit corner pins (BY_RIGHT_GAINS, 14); unweighed OWED_A_COUNTY.
+   (a) PUBLISHED 2026-09-29: 0e45ffd5 on main, deployed (smoke PASS), CI
+   green (light + full gate); flats 3,861 + quadfit 347 passed locally.
+   886 numbers re-read blind, none wrong (handoff "Local review"). The
+   worktree ../vicinitideals-worktrees/washington-draft stays for (b).
    (b) FIX BATCH, one ledger regen, before the first Washington screen:
    Hillsboro SCC-DT refused on 12.50.350 D.1 (parking inside the
    building); private_drives rulings for the six layers (Sherwood's street
