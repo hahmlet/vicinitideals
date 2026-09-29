@@ -64,6 +64,18 @@ def test_a_count_is_not_a_measurement() -> None:
     assert orphans(["The ratio of the total amount", "of acres in the parcel"]) == []
 
 
+def test_a_comparison_is_not_a_measurement() -> None:
+    """Sherwood 16.12.030 note 3 names two measures, not a number in either.
+
+    The row it notes prints "35 feet or 2.5 stories"; the note says which of
+    the two governs. Added 2026-09-29 with the Sherwood draft.
+    """
+    assert orphans(["3. Maximum height is the lesser of feet or stories."]) == []
+    assert orphans(["the height is the greater", "of feet or stories"]) == []
+    # The comparison word has to govern the "of"; a hole after it is a hole.
+    assert orphans(["the lesser setback, not to exceed a height of feet."]) == [1]
+
+
 def test_the_hole_itself_is_found() -> None:
     assert orphans(["and does not exceed a height of feet."]) == [1]
     assert orphans(["shall be no less than percent of the lot"]) == [1]

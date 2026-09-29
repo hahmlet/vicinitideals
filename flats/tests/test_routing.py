@@ -205,6 +205,15 @@ def rows() -> list[Routing]:
 #: by Section 60.50.05 (Accessory Uses and Structures)", beside the setbacks
 #: of OI, OI-NC and IND -- zones that refuse -- which is the Clackamas shape
 #: above.
+#:
+#: *One from Sherwood, 2026-09-29*, the same cloud session. 16.40.050 C.1
+#: sets a Residential PUD's density at the underlying zone's "except as
+#: provided in Sections 16.40.040.D and 16.40.050.C.2": the density of a PUD
+#: that spans several zones may be pooled and clustered. 16.40.040 is
+#: stored and read, but no value quotes it -- the PUD blocks take the base
+#: zone's figures, the density they would move is exempt for a quadplex
+#: (16.12.010 F.1), and every PUD block's use is qualified on the approved
+#: plan -- so the row stays open.
 OPEN = {
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",
@@ -240,6 +249,7 @@ OPEN = {
     "or/washington/hillsboro 12.61.400 -> 12.50.845",
     "or/washington/beaverton 20.05.15 -> 20.25.05",
     "or/washington/beaverton 20.15.15 -> 60.50.05",
+    "or/washington/sherwood 16.40.050 -> 16.40.040",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth

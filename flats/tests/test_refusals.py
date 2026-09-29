@@ -345,7 +345,18 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 134, "comments": 215, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 227, "tests": 18}
+#
+# 367 -> 379 on 2026-09-29, later again: Sherwood, the fourth Washington
+# County draft from the same cloud session. 12 comments, no note or test.
+# They are the code's standards no field or measured fact holds: the alley
+# as a front lot line, the CFEC parking relief near transit (16.94.020 A),
+# the driveways' 50 percent share of frontage and their spacing (16.14.030
+# A.2, A.4, A.5.b), the Sufficient Infrastructure report a middle housing
+# permit needs (16.12.030 B.3), the 60 percent garage width of 16.14.010,
+# the side elevation planes and garage orientation of 16.68.030 B.2 and
+# C, the cul-de-sac lot width note, the 16.58 clear vision area, the 16.68
+# infill relaxations, 16.106 right-of-way dedication, and 16.50 projections.
 #
 # 341 -> 367 on 2026-09-29, later again: Beaverton, the third Washington
 # County draft from the same cloud session. 21 comments and 5 notes, no

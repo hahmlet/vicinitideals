@@ -126,8 +126,16 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     their sentences named figures the layer holds only in a reason (the 25
     feet of the 20.30 plane, RC-OT's alternative 18, the 7.2 stalls); the
     claims were rewritten to name the field and the figure the layer holds.
+
+    85 -> 87 on 2026-09-29, Sherwood (draft, the same cloud session): notes
+    3 and 6 of the 16.12.030 table. Note 3, "Maximum height is the lesser of
+    feet or stories", is the feet and stories held together; note 6 forbids
+    adjusting the 5-foot interior side yard, and is quoted on it. Note 3
+    first read `broken`: its claim named MDRH's two and a half stories as a
+    figure, which the layer holds nowhere (the stories field takes whole
+    numbers), and was rewritten in words.
     """
-    assert len(rows) == 85
+    assert len(rows) == 87
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

@@ -317,7 +317,10 @@ def test_an_encoded_definition_lands_on_a_captured_entry(corpus: list[Chapter]) 
         doc, _, ref = defn.quote.partition("#L")
         if doc != chapter_read.doc:
             continue
-        line = int(ref.split("-")[0])
+        # 2026-09-29: Sherwood's quote is a comma list ("L488,L885-L886", the
+        # corner-lot definition and then the street definition its drives
+        # count comes from); the definition is the first span.
+        line = int(ref.split(",")[0].split("-")[0])
         if any(abs(e.line - line) <= 2 for e in chapter_read.entries):
             agreed += 1
         else:

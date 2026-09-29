@@ -783,6 +783,29 @@ RULINGS: dict[str, dict[str, str]] = {
             "service provider named in 60.50 (60.50.special-uses L290)."
         ),
     },
+    "or/washington/sherwood": {
+        # Every district the city's map prints and the code sets standards
+        # for is encoded (2026-09-29, draft, a cloud session); the map's
+        # Old Town, OS, UGA and unannexed codes are zone rulings in the
+        # layer. What the harvest still prints is the overlay's own
+        # abbreviation, a use-table heading and a plan area.
+        "OT": (
+            "overlay: the Old Town (OT) Overlay District of Chapter 16.162 "
+            "(16.162.old-town L1, L17), over RC, HDR and MDRL. The map "
+            "prints it as \"Old Town\" with no base zone, and the layer "
+            "rules that code unencodable."
+        ),
+        "CIVIC": (
+            "not-a-zone: a use-category heading of the industrial and "
+            "institutional use tables (16.31.industrial L65, "
+            "16.36.institutional-public L30)."
+        ),
+        "TEA": (
+            "not-a-zone: the Tonquin Employment Area, a plan area named in "
+            "note 1 of the industrial use table for the EI zone's special "
+            "criteria (16.31.industrial L247-L248); EI is encoded."
+        ),
+    },
 }
 
 #: Designations found by hand while ruling the rows above, which the ledger

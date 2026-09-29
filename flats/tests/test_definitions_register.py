@@ -108,6 +108,11 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
         # corners. Unincorporated Washington County, drafted the same day,
         # holds no corner definition and is not here.
         "or/washington/hillsboro",
+        # 2026-09-29: Sherwood, the same cloud session. 16.10.020 "Lot,
+        # Corner: A lot situated at the intersection of two or more streets,
+        # other than an alley", and "Street" includes a private road or
+        # easement, so private drives count and alleys do not. No angle test.
+        "or/washington/sherwood",
     ]
 
 

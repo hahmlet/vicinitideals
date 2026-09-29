@@ -778,6 +778,27 @@ def test_the_tail_of_a_citation_is_not_a_number_the_line_states() -> None:
     assert quotes_the_number("a floor of .070", 0.07)
 
 
+def test_a_ratio_printed_as_a_percent_still_reads() -> None:
+    """Sherwood's 16.68.030 A caps floor area at "50% of lot area" in LDR.
+
+    The field is a ratio, so the value is 0.5, and the line never prints 0.5.
+    Added 2026-09-29 with the Sherwood draft, whose four floor area ratios
+    read as misquoted for that reason alone.
+    """
+    from flats.encode.readiness import states_as_percent
+
+    line = "1. Low Density Residential (LDR): 50% of lot area"
+    assert states_as_percent(line, "max_far", 0.5)
+    assert states_as_percent("Medium Density Residential Low (MDRL): 55 percent", "max_far", 0.55)
+    # Only with the mark after it: a bare 50 is still not 0.5.
+    assert not states_as_percent("LDR 50", "max_far", 0.5)
+    # Only for a ratio field. A coverage is held in percent and reads as such.
+    assert not states_as_percent(line, "max_coverage_pct", 0.5)
+    # And only the number it is.
+    assert not states_as_percent(line, "max_far", 0.55)
+    assert not states_as_percent(line, "max_far", 5)
+
+
 def test_no_value_anywhere_in_the_corpus_is_misquoted() -> None:
     """A ratchet, in the shape the footnote gate already uses.
 

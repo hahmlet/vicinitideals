@@ -1,0 +1,659 @@
+Chapter 16.22
+ COMMERCIAL LAND USE
+DISTRICTS*
+Sections:
+16.22.010  Purpose
+16.22.020  Uses
+16.22.030  Development Standards
+16.22.040  Community Design
+16.22.050  NC Special Criteria
+16.22.060  Floodplain
+16.22.010 Purpose
+A. Office Commercial (OC) - The OC
+zoning district provides areas for business
+and professional offices and related uses in
+locations where they can be closely associ-
+ated with residential areas and adequate
+major streets.
+B. Neighborhood Commercial (NC) -
+The NC zoning district provides for small
+scale, retail and service uses, located in or
+near residential areas and enhancing the
+residential character of those neighbor-
+hoods.
+C. Retail Commercial (RC) - The RC
+zoning district provides areas for general
+retail and service uses that neither require
+larger parcels of land, nor produce exces-
+sive environmental impacts as per Division
+VIII.
+D. General Commercial (GC) - The
+GC zoning district provides for commercial
+uses which require larger parcels of land,
+and/or uses which involve products or ac-
+tivities which require special attention to
+environmental impacts as per Division VIII.
+(Ord. No. 2012-011, § 2, 8-7-2012)
+16.22.020 Uses
+A. The table below identifies the land
+uses that are permitted outright (P), permit-
+ted conditionally (C), and not permitted
+(N) in the Commercial Districts. The spe-
+cific land use categories are described and
+defined in Chapter 16.88 Use Classifica-
+tions and Interpretations.
+B. Uses listed in other sections of this
+code, but not within this specific table are
+prohibited.
+C. Any use not otherwise listed that
+can be shown to be consistent or associated
+with the uses permitted outright or condi-
+tionally in the commercial zones or contrib-
+ute to the achievement of the objectives of
+the commercial zones may be permitted out-
+right or conditionally, utilizing the provi-
+sions of Chapter 16.88 Use Classifications
+and Interpretations.
+D. Additional limitations for specific
+uses are identified in the footnotes of this
+table.
+ OCNC1RC GC
+RESIDENTIAL
+*Editor’s note— Ord. No. 2012-011, adopted August 7,
+2012, amended the Code by consolidating the provisions of
+Chs. 16.22, 16.26, 16.28 and 16.30. Former Ch. 16.22,
+§§ 16.22.010—16.22.080, pertained to the Office Commer-
+cial district, and derived from Ord. 90-921, § 1; Ord. 2000-
+1092, § 3; Ord. No. 2009-009, adopted July 21, 2009; Ord.
+No. 2010-015, adopted October 5, 2010. See Chs. 16.26,
+16.28 and 16.30 for specific derivation.
+ 16.22.020
+307 Supp. No. 23
+OCNC1RC GC
+• Multi-Family dwelling
+housing, subject to all
+of the following:
+1. Multi-family hous-
+ing is only permitted on
+one or more of the up-
+per floors of a building
+and only when a non-
+residential use that is
+permitted in the under-
+lying zone is located on
+the ground floor. Park-
+ing is not a permitted
+ground floor use. The
+ground floor non-resi-
+dential use must oc-
+cupy the entire ground
+floor, with the excep-
+tion of a
+lobby, utilities, stair-
+ways, elevators, and
+similar facilities.
+2. Site plan review pro-
+cess in section
+16.90.020.D.6.
+3. Maximum density
+limits of the High Den-
+sity Residential (HDR)
+zone.
+4. Dimensional stan-
+dards of the underlying
+zone.
+5. The minimum ceil-
+ing height shall be 12
+feet measured from the
+finished floor to the
+lowest point of the sur-
+face of the ceiling.
+6. If any part of a
+structure is within 100
+feet of a residential
+zone, the height limits
+of the HDR zone shall
+apply.
+7. A building with
+multi-family housing is
+limited to two stair-
+wells that can be en-
+tered from the ground
+floor of the building.
+There are no limits on
+the number of stair-
+wells that are not able
+to be entered from the
+ground floor except as
+provided by this code.
+8. The required park-
+ing for the multi-family
+housing use shall be in
+addition to the mini-
+mum required for the
+non-residential use(s).
+P P P P
+OCNC1RC GC
+• Residential care facili-
+ties
+N N C C
+• Dwelling unit, includ-
+ing a manufactured
+home, for one (1) security
+person employed on the
+premises and their imme-
+diate family, and other
+forms of residence nor-
+mally associated with a
+conditional use, as deter-
+mined by the City.
+P P P P
+CIVIC
+• Hospitals N N C C
+• Correctional institu-
+tions
+N N N C
+• Cemeteries and crema-
+tory mausoleums.
+N N C C
+• Police and fire stations
+and other emergency ser-
+vices
+N C C C
+• Vehicle testing stations N N N C
+• Postal services - Public N C C C
+• Postal substations
+when located entirely
+within and incidental to a
+use permitted outright.
+P P P P
+• Public use buildings,
+including but not limited
+to libraries, museums,
+community centers, and
+senior centers, but ex-
+cluding offices
+C C C C
+• Public and private util-
+ity structures, including
+but not limited to tele-
+phone exchanges, electric
+substations, gas regulator
+stations, treatment plants,
+water wells, and public
+work yards.
+N N C C
+• Small-scale power gen-
+eration facilities.
+P P P P
+16.22.020
+308Supp. No. 23
+OCNC1RC GC
+• Large-scale power gen-
+eration facilities.
+N N N C
+• Public recreational fa-
+cilities including parks,
+trails, playfields and
+sports and racquet
+courts on publicly owned
+property or under power
+line easements
+C N C C
+• Religious institutions,
+private fraternal organi-
+zations, lodges and sec-
+ondary uses
+C N P P
+• Public and private
+schools providing educa-
+tion at the elementary
+school level or higher
+C C C C
+COMMERCIAL
+• Commercial trade
+schools, commercial edu-
+cational services and
+training facilities
+C N P P
+Entertainment/recreation
+• Adult entertainment
+business, subject to Sec-
+tion 16.54.010
+N N N P
+• Motion picture and live
+theaters within enclosed
+building
+N N P P
+• Drive-in motion picture
+theaters
+N N N N
+• Country clubs, sports
+and racquet clubs and
+other similar clubs.
+N N C C
+• Golf courses N N N N
+• Indoor recreation facil-
+ities such as arcades,
+mini-golf, or bounce
+house facilities
+4
+N N P P
+Hotels and motels C N P P
+Motor Vehicle related
+OCNC1RC GC
+• Motorized vehicle and
+sport craft repairs and
+service
+N C C P
+• Motorized vehicle and
+sport craft repair and
+service clearly incidental
+and secondary to and
+customarily associated
+with a use permitted out-
+right or conditionally.
+C C P P
+• Motorized vehicle,
+sport craft and farm
+equipment rental or sales
+and display area with
+more than 5% external
+sales and display area, up
+to a maximum of 5,000
+square
+feet.
+N N N C
+• Motorized vehicle,
+sport craft and farm
+equipment rental or sales
+and display area primar-
+ily within entirely en-
+closed building with no
+more than 5% or 5,000
+square feet of
+outdoor display area,
+whichever is less.
+N N C P
+• Automotive, boat,
+trailer and recreational
+vehicle storage
+N N N N
+• Vehicle fueling stations
+or car wash facilities
+N N C P
+• junkyards and salvage
+yards
+N N N N
+• Manufactures home
+sales and display area
+N N N N
+Office and Professional Support services
+• Business and profes-
+sional offices.
+P P P P
+• Medical and dental
+offices and urgent care
+facilities
+P P P P
+ 16.22.020
+309 Supp. No. 23
+OCNC1RC GC
+• Business support ser-
+vices such as duplicating,
+photocopying, mailing
+services, fax and com-
+puter facilities
+P P P P
+• Any incidental busi-
+ness, service, processing,
+storage or display, not
+otherwise permitted, that
+is essential to and cus-
+tomarily associated with
+a use permitted outright,
+provided said incidental
+use is conducted entirely
+within an enclosed build-
+ing
+C C C C
+Childcare
+• Day cares, preschools,
+and kindergartens, when
+clearly secondary to a
+permitted use
+P P P P
+• Day cares, preschools,
+and kindergartens as a
+stand-alone use.
+N P P P
+General Retail - sales oriented
+• General retail trade,
+not exceeding 10,000
+square feet of gross
+square footage.
+P P P P
+• General retail trade
+greater than 10,000
+square feet of gross
+square footage
+N P P P
+• Tool and Equipment
+Rental and Sales, Includ-
+ing Truck Rental
+N N C P
+• Retail plant nurseries
+and garden supply stores
+(excluding wholesale
+plant nurseries)
+N N P P
+• Wholesale building
+material sales and service
+N N N P
+• Retail building material
+sales and lumberyards.
+N N C
+5 P
+OCNC1RC GC
+Personal Services
+• Health clubs and stu-
+dios less than 5,000
+square feet in size.
+P P P P
+• Health clubs and stu-
+dios greater than 5,000
+square feet in size
+N N C P
+• Personal services cater-
+ing to daily customers
+where patrons pay for or
+receive a service rather
+than goods or materials,
+including but not limited
+to financial, beauty, pet
+grooming, and similar
+services.
+N P P P
+• Public or commercial
+parking (non-accessory)
+C C P P
+• Veterinarian offices and
+animal hospitals.
+N N C P
+• Animal boarding/Ken-
+nels and daycare facilities
+with outdoor recreation
+areas
+6
+N N C C
+Eating and Drinking establishments
+• Restaurants, taverns,
+and lounges without
+drive-thru
+7
+P C P P
+• Restaurants with drive-
+thru services
+N N P P
+• Food Cart Pods
+8 N N C C
+INDUSTRIAL
+• Limited manufacturing
+entirely within an en-
+closed building that is
+generally secondary to a
+permitted or conditional
+commercial use
+N C C P
+• Medical or dental labo-
+ratories
+N N C P
+WIRELESS COMMUNICATION FA-
+CILITIES
+16.22.020
+310Supp. No. 23
+OCNC1RC GC
+• Radio, television, and
+similar communication
+stations, including associ-
+ated transmitters.
+N N N C
+• Wireless communica-
+tion towers and transmit-
+ters
+9
+C C C C
+• Wireless communica-
+tion facilities on City-
+owned property
+P P P P
+• Wireless communica-
+tion antennas co-located
+on an existing tower or
+on an existing
+building or structure not
+exceeding the roof of the
+structure
+P P P P
+OTHER
+Agricultural uses includ-
+ing but not limited to:
+• Farm equipment sales
+and rentals
+• Farming and horticul-
+ture
+N N P P
+• Truck and bus yards N N N P
+
+1 See special Criteria for the NC zone,
+16.22.050.
+2 Reserved.
+3 Reserved.
+4 If use is mixed with another, such as a
+restaurant, it is considered secondary to
+that use and permitted, provided it occupies
+less than fifty (50) percent of the total area.
+5 All activities are required to be within
+an enclosed building.
+6 Animal boarding/kennels and daycare
+facilities entirely within an enclosed build-
+ing are considered "other personal service."
+7 Limited to no more than ten (10) per-
+cent of the square footage of each develop-
+ment in the Adams Avenue Concept Plan
+area.
+8 See standard and criteria for Food
+Cart Pods in Chapter 16.39.
+9 Except for towers located within one
+thousand (1,000) feet of the Old Town Dis-
+trict which are prohibited.
+(Ord. No. 2024-004, § 2, 10-15-2024; Ord.
+No. 2021-010, § 2, 12-7-2021; Ord. No. 2021-
+008, § 2, 9-21-2021; Ord. No. 2012-011, § 2,
+8-7-2012)
+16.22.030 Development Standards
+A. Generally
+No lot area, setback, yard, landscaped area,
+open space, off-street parking or loading
+area, or other site dimension or require-
+ment, existing on, or after, the effective date
+of this Code shall be reduced below the
+minimum required by this Code. Nor shall
+the conveyance of any portion of a lot for
+other than a public use or right-of-way,
+leave a lot or structure on the remainder of
+said lot with less than minimum Code di-
+mensions, area, setbacks or other require-
+ments, except as permitted by Chapter 16.84.
+(Variance and Adjustments)
+B. Development Standards
+Except as otherwise provided, required min-
+imum lot areas, dimensions and setbacks
+shall be provided in the following table
+ OC NC RC GC
+Lot area 10,000
+sq. ft
+1
+acre
+(for
+sin-
+gle
+dis-
+trict)
+5,000
+sq. ft
+10,000
+sq. ft
+Lot width
+at front
+property
+line
+60 ft 85 ft 40 ft 70 ft
+Lot width
+at build-
+ing line
+60 ft 100
+ft
+40 ft 70 ft
+ 16.22.030
+311 Supp. No. 23
+OC NC RC GC
+Front
+yard set-
+back
+9
+0 20 ft 0 0
+When
+abutting
+residen-
+tial zone
+0 0 Same
+as
+abut-
+ting
+resi-
+dential
+zone
+Same
+as
+abut-
+ting
+resi-
+dential
+zone
+Side yard
+setback
+9
+0 0 0 0
+when
+abutting
+residen-
+tial zone
+or public
+park
+10 ft Same
+as
+abut-
+ting
+resi-
+dential
+zone
+10 ft 20
+Rear yard
+setback
+9
+0 0 0 0
+when
+abutting
+residen-
+tial zone
+or public
+park
+20 10 ft 10 ft 20 ft
+Corner
+lot
+9
+0 20 ft
+on
+any
+side
+fac-
+ing
+street
+Height
+10,11 2
+sto-
+ries
+or
+30 ft
+Least
+re-
+stric-
+tive
+height
+of
+abut-
+ting
+resi-
+dential
+zone
+50
+ft
+13,14
+50
+ft
+13,14
+9 Existing residential uses shall main-
+tain setbacks specified in the High Den-
+sity Residential Zone (16.12.030).
+10 Maximum height is the lessor of feet
+or stories.
+11 Solar and wind energy devices and
+similar structures attached to buildings
+and accessory buildings, may exceed this
+height limitation by up to twenty (20)
+feet.
+13 Structures within one-hundred (100)
+feet of a residential zone shall be lim-
+ited to the height requirements of that
+residential area.
+14 Structures over fifty (50) feet in height
+may be permitted as conditional uses,
+subject to Chapter 16.82.
+(Ord. No. 2012-011, § 2, 8-7-2012)
+16.22.030
+312Supp. No. 23
+16.22.060
+16.22.040 Community Design
+A. For standards relating to off-street parking and loading, energy conservation, historic
+resources, environmental resources, landscaping, access and egress, signs, parks and open
+space, on-site storage, and site design, see Divisions V, VIII and IX.
+(Ord. No. 2012-011, § 2, 8-7-2012)
+16.22.050 NC Special Criteria
+All permitted and conditional uses shall be found by the Commission to conform to the
+purpose of the NC zone, and:
+A. Shall be conducted entirely within enclosed buildings, except for:
+1. Exterior sales, display and storage for horticultural and food merchandise provided
+said exterior area does not exceed five (5) percent of the gross floor area of each
+individual business establishment.
+2. Circumstances where the nature of the permitted or conditional use clearly makes
+total enclosure impracticable, such as in the case of automotive service stations,
+provided that the exterior area shall be the minimum necessary to effectively
+conduct the use, as determined by the Commission.
+B. No more than four (4) permitted or conditional uses may be established within any
+single NC zoning district, and each use or establishment may occupy a maximum of
+four thousand (4,000) square feet of gross floor area, including any permitted exterior
+business areas.
+C. No single NC zoning district shall be greater than one ( 1) acre in area, and each district
+shall have a minimum width of eighty-five (85) feet at the front property line, and one
+hundred (100) feet at the building line.
+D. Permitted and conditional uses may operate only between the hours of 7:00 a.m. and
+10:00 p.m.
+(Ord. No. 2012-011, § 2, 8-7-2012)
+16.22.060 Floodplain
+Except as otherwise provided, Section 16.134.020 shall apply.
+(Ord. No. 2012-011, § 2, 8-7-2012)
+..
+313 Supp No. 20
+
+16.24

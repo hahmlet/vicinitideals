@@ -129,7 +129,22 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 370, "numeric": 55, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 375, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+# 370 / 55 -> 375 / 63 on 2026-09-29, later again: Sherwood, the fourth
+# Washington County draft from the same cloud session, thirteen exemptions.
+# Twelve are density: 16.12.010 F.1, "Maximum density standards shall not
+# be applied to duplex, triplex, quadplex or cottage cluster development",
+# on the maximum in all six residential zone blocks, and the zone purpose
+# clauses' "(except middle housing types pursuant to 16.12.010.F)" on the
+# minimum in all six, since F sets a minimum for cottage clusters only. The
+# eight `numeric` are the six maximums, whose span has no phrase the
+# classifier knows and whose only figure is F.1's own list number, and
+# VLDR's and VLDR_PUD's minimums, whose purpose clauses print the density
+# range the clause excepts the pod from. Four minimums read `stated`, but
+# on a neighbouring sentence ("Minor land partitions shall be exempt from
+# the minimum density requirement"), not on the clause that does the work:
+# a reviewer signing them should read the clause. The thirteenth is
+# 16.94.020's quadplex parking maximum, which Table 1 prints as None.
 # 338 -> 370 stated on 2026-09-29, later again: Beaverton, the third
 # Washington County draft from the same cloud session, thirty-two
 # exemptions and every one `stated`. Eighteen are "None" or "N/A" in a

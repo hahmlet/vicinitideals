@@ -1,0 +1,1377 @@
+label: Sherwood
+kind: city
+eligible: true
+notes: >-
+  DRAFT, cloud session 2026-09-29. Read from the Sherwood Zoning and
+  Community Development Code (Municipal Code Title 16) as Municode publishes
+  it, publication 3865, Supplement No. 24 (updated 2026-05-05, through
+  Ordinance 2026-001). The Municode PDF leaves out printed pages 296.1-296.2
+  and 296.18.1-296.18.10; the text they carry (16.12.030 A and B, and the
+  rest of 16.14.030 A) is read from Ordinance 2022-004, Exhibit 1, the
+  ordinance that adopted it, as the city publishes it. Every value is
+  draft. The zone keys are the codes of the city's own zoning layer
+  (services5.arcgis.com/ikEzR7lqVIlrcVFn Planning FeatureServer layer 2,
+  field CODE); lots reach this layer by the taxlots' JURIS_CITY SHERWOOD.
+  The map's codes that are not districts of 16.04.010 -- Old Town, OS, UGA,
+  Unannex and the county and neighbouring-city codes on unannexed land --
+  are ruled under zone_rulings at the end of the file.
+ingest:
+  geoid: null
+  juris_city_codes:
+  - SHERWOOD
+# The unfetched references the crossrefs ledger ranked BINDING on
+# 2026-09-29, each read where it is printed. None is on the pod's path in a
+# way that moves a figure the layer holds; the floodplain chapter is the
+# one that can take ground from a lot, and it only narrows.
+crossrefs:
+  "16.46":
+    outcome: other_building
+    note: >-
+      Manufactured Home Parks. The 16.12.020 use table prints "Manufactured
+      Home Park-subject to Chapter 16.46" (sdc.16.12.residential.txt
+      L120-L122), and 16.14 names the chapter for manufactured homes
+      (sdc.16.14.residential-design.txt L37). A park of manufactured homes
+      is not a factory-built quadplex on one lot; it ranked beside the
+      height and lot rows only because the use table sits above them.
+  "16.68.020A":
+    note: >-
+      In the store. "the development conforms to Section 16.68.020A, above"
+      (sdc.16.68.infill.txt L63-L66) points at the same slice: 16.68.020 is
+      printed at L19, and its A is the landscape plan an undersized infill
+      lot owes before a building permit. The ledger did not match the
+      letter to the heading. The reduction the sentence allows (16.68.020 B,
+      lot dimensions below the zone's minimum through a land division) is a
+      relief the layer does not take, a layer-wide NOT ENCODED comment.
+  "46":
+    outcome: preempted
+    note: >-
+      OAR 660 Division 46, the state's middle housing rule, named in the
+      16.94.020 parking table: "ADU standards are per OAR Division 46"
+      (sdc.16.94.parking.txt L371-L373). The rule is state law, which the
+      ledger counts apart, and it caps what a city may require; the table's
+      own quadplex row (1 space a unit, no maximum) is read in the layer and
+      is no stricter than the state's cap on a lot this size.
+  "2022106.13.2022":
+    outcome: misread
+    note: >-
+      Not a reference: a file path in the page header of the scanned
+      ordinance, "Sherwood City Council Electronic Packets 2022\06.13.2022
+      WIP", printed on every page of Ordinance 2022-004 and read by OCR as
+      a number (ord.2022-004.16.14.030.txt).
+  "06.13.2022":
+    outcome: misread
+    note: >-
+      Not a reference: the date in the file path of the scanned ordinance's
+      page header ("Electronic Packets 2022\06.13.2022 WIP"), the council
+      meeting of 13 June 2022, read as a section number.
+  "16.134.020":
+    outcome: narrows_only
+    note: >-
+      The floodplain standards of the Special Resource Zones. 16.12.050
+      applies them to residential land (sdc.16.12.residential.txt L485-L486),
+      and the VLDR density bonus asks for floodplains to be dedicated (L27).
+      They reach only land inside the floodplain and can only take ground or
+      permission away; the layer's density figures are exempt for middle
+      housing anyway (16.12.010 F). The screen's hazard constraints are
+      read from their own layers, not this code.
+  "16.88":
+    outcome: procedure
+    note: >-
+      Use Classifications and Interpretations. The use tables send a use
+      the table does not list to a case-by-case determination under Chapter
+      16.88 (sdc.16.22.commercial.txt L41-L56). It is a process with no
+      figure in it; the refusals stand on the table's own rows, which
+      permit multi-family housing in the commercial districts only above a
+      ground floor non-residential use, and the conservative reading takes
+      no interpretation the city has not made.
+  "16.89":
+    outcome: procedure
+    note: >-
+      The Residential Design Checklist, the review process an applicant may
+      use instead of meeting a 16.14 design standard as written
+      (sdc.16.14.residential-design.txt). The layer holds the standards as
+      written (front-yard parking, the 20-foot approach); the checklist can
+      only relax them case by case, so ignoring it cannot pass a lot the
+      code would refuse.
+  "16.89.020":
+    outcome: procedure
+    note: >-
+      The checklist's own review criteria, "these standards per 16.14.010.C
+      and 16.89.020.A through D" (sdc.16.14.residential-design.txt). The
+      same discretionary path as Chapter 16.89: a relief an applicant can
+      ask for, with no figure the screen would hold.
+  "16.90":
+    outcome: other_building
+    note: >-
+      Site Plan Review, named in 16.14 to exclude "Multi-Family Housing that
+      is Subject to the Provisions of Chapter 16.90" from the residential
+      design standards (sdc.16.14.residential-design.txt). Sherwood defines
+      a quadplex apart from multi-family housing (16.10.020), so 16.14 is
+      the pod's chapter and the exclusion is another building's.
+  "16.82":
+    outcome: procedure
+    note: >-
+      Conditional Uses, named in the definition of the term
+      (sdc.16.10.definitions.txt L127-L128). The layer admits the pod only
+      where a table prints P and refuses it where it prints C or N, so the
+      conditional-use process is never the path taken.
+  "16.90.020":
+    outcome: other_building
+    note: >-
+      The commercial design review matrix of Site Plan Review, which the
+      Light Industrial zone applies to hotels and motels
+      (sdc.16.31.industrial.txt L326-L332). A hotel is not the pod, and LI
+      refuses the pod.
+  "16.22.080":
+    outcome: misread
+    note: >-
+      Not a reference: the editor's note on Chapter 16.22's derivation,
+      "Former Ch. 16.22, §§ 16.22.010-16.22.080, pertained to the Office
+      Commercial district" (sdc.16.22.commercial.txt L62-L69). A repealed
+      chapter's history.
+  "16.31.100":
+    outcome: misread
+    note: >-
+      Not a reference: the editor's note on the industrial chapter's
+      derivation, "Former Ch. 16.31, §§ 16.31.010-16.31.100, pertained to
+      the Employment Industrial district" (sdc.16.31.industrial.txt). A
+      repealed chapter's history.
+code:
+# Municode client Sherwood, publication 3865 ("Zoning and Community
+# Development Code"). The unsigned publication endpoint, per
+# flats/provenance/municode.py. Plain extraction throughout. The PDF prints
+# the whole municipal code; Title 16 starts near page 267. Each slice runs
+# from a chapter heading the PDF prints once to the next chapter's heading.
+# Plain chapter numbers ("Chapter 16.12") are not unique -- "Chapter 16.120"
+# contains them and the text cites chapters by number -- so most slices
+# start on the chapter's title line, which is printed once.
+- id: "sdc.16.04.districts"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.04 - Establishment of Zoning Districts (district list 16.04.010, urban growth area 16.04.040)"
+  start: "Chapter 16.04"
+  end: "Chapter 16.06"
+  extraction: plain
+  # Sixty lines: a list of district names and four short paragraphs on the
+  # map and the urban growth area. Read whole; thin is what it is.
+  allow_thin: true
+- id: "sdc.16.10.definitions"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.10 - Definitions"
+  start: "16.10.010 Generally"
+  end: "Chapter 16.12"
+  extraction: plain
+- id: "sdc.16.12.residential"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.12 - Residential Land Use Districts (uses 16.12.020, standards 16.12.030)"
+  start: "RESIDENTIAL LAND USE DISTRICTS*"
+  end: "RESIDENTIAL BUILDING DESIGN*"
+  extraction: plain
+- id: "sdc.16.14.residential-design"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.14 - Residential Building Design (as far as the PDF prints it)"
+  start: "RESIDENTIAL BUILDING DESIGN*"
+  end: "Chapter 16.22"
+  extraction: plain
+- id: "sdc.16.22.commercial"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.22 - Commercial Land Use Districts"
+  start: "Chapter 16.22"
+  end: "Chapter 16.24"
+  extraction: plain
+- id: "sdc.16.31.industrial"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.31 - Industrial Land Use Districts"
+  start: "INDUSTRIAL LAND USE DISTRICTS*"
+  end: "Chapter 16.32"
+  extraction: plain
+- id: "sdc.16.36.institutional-public"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.36 - Institutional and Public (IP) Land Use District"
+  start: "Chapter 16.36"
+  end: "SPECIAL USES"
+  extraction: plain
+- id: "sdc.16.40.pud"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.40 - Planned Unit Development (PUD)"
+  start: "PLANNED UNIT DEVELOPMENT (PUD)*"
+  end: "HOME OCCUPATIONS"
+  extraction: plain
+- id: "sdc.16.50.accessory-structures"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.50 - Accessory Structures, Architectural Features and Decks"
+  start: "ACCESSORY STRUCTURES, ARCHITECTURAL FEATURES AND DECKS*"
+  end: "ACCESSORY DWELLING UNITS"
+  extraction: plain
+- id: "sdc.16.58.vision-clearance"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.58 - Vision Clearance and Fence Standards"
+  start: "VISION CLEARANCE AND FENCE STANDARDS*"
+  end: "Chapter 16.60"
+  extraction: plain
+- id: "sdc.16.68.infill"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.68 - Infill Development Standards"
+  start: "INFILL DEVELOPMENT STANDARDS*"
+  end: "Chapter 16.70"
+  extraction: plain
+- id: "sdc.16.94.parking"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.94 - Off-Street Parking and Loading"
+  start: "Chapter 16.94"
+  end: "ON-SITE CIRCULATION"
+  extraction: plain
+  # The chapter is printed in two narrow columns and its parking table
+  # breaks every cell to a word a line ("Mini- / mum / Park- / ing"), so
+  # few lines carry a number beside a unit. Read whole: it is the chapter
+  # text, not a landing page.
+  allow_thin: true
+- id: "sdc.16.96.circulation"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.96 - On-Site Circulation"
+  start: "ON-SITE CIRCULATION"
+  end: "Chapter 16.98"
+  extraction: plain
+- id: "sdc.16.106.transportation"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.106 - Transportation Facilities"
+  start: "TRANSPORTATION FACILITIES*"
+  end: "IMPROVEMENT PLAN REVIEW*"
+  extraction: plain
+- id: "sdc.16.162.old-town"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.162 - Old Town (OT) Overlay District"
+  start: "OLD TOWN (OT) OVERLAY DISTRICT*"
+  end: "LANDMARK REVIEW*"
+  extraction: plain
+# Ordinance 2022-004, "Amending Code Housing Choices", Exhibit 1 (the clean
+# text), as the city publishes it. The Municode PDF drops the pages that
+# carry 16.12.030 A and B and the second half of 16.14.030 A; this is the
+# ordinance that adopted both, and the Municode history notes name it as
+# their latest amendment (16.12.030 and 16.14.010). The PDF is a scan with
+# an OCR text layer, so quotes carry OCR artefacts ("lnfrastructure",
+# "sta¡rs"); the words are the ordinance's. Each slice starts on a section
+# heading printed once and ends on the next heading.
+- id: "ord.2022-004.16.12.030"
+  url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+  title: "Ordinance 2022-004 Exhibit 1 - SZCDC 16.12.030 A and B (Generally; Development Standards; Sufficient Infrastructure)"
+  start: "16.12.030 - Residential Land Use Development Standards"
+  end: "C. Development Standards per Residential Zone"
+  extraction: plain
+  # Two paragraphs of prose; few numbers is what this slice is.
+  allow_thin: true
+- id: "ord.2022-004.16.12.030-c"
+  url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+  title: "Ordinance 2022-004 Exhibit 1 - SZCDC 16.12.030 C, first rows (Minimum lot areas)"
+  start: "C. Development Standards per Residential Zone"
+  end: "Development Standard by Residential Zone-"
+  extraction: plain
+  # The table's first page, up to the next page's repeated header: the
+  # "Minimum lot areas" row heading and the rows under it, which the
+  # Municode PDF prints without the heading (it is on page 296.2, one of the
+  # pages it drops). Ten lines; read whole.
+  allow_thin: true
+- id: "ord.2022-004.16.14.030"
+  url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+  title: "Ordinance 2022-004 Exhibit 1 - SZCDC 16.14.030 Additional Triplex and Quadplex Design Standards"
+  start: "16.14.030 - Additional Triplex and Quadplex Design Standards"
+  end: "Additional Cottage Cluster Development and Design Standards"
+  extraction: plain
+definitions:
+  # Read 2026-09-29 from SZCDC 16.10.020, which is on disk whole
+  # (sdc.16.10.definitions.txt runs from 16.10.010 to the Chapter 16.12
+  # heading).
+  #
+  # THE NOUN. "Quadplex: Four (4) attached dwelling units, in any
+  # configuration, located on a single lot or parcel" (L221-L222). The pod
+  # is a Quadplex. A Multi-Family dwelling starts at "five (5) or more
+  # dwelling units" (L206-L209), and a Townhome is a unit "located on an
+  # individual lot or parcel" (L210-L212), the unit-lot path. Middle Housing
+  # names quadplexes (L568-L569).
+  #
+  # FRONT LOT LINE. "The line separating a lot from any street, provided
+  # that for corner lots, there shall be as many front lines as there are
+  # street frontages" (L505-L506). Encoded as front_lot_line_corner: both
+  # under defaults. The residential table still prints a "Corner lot street
+  # side" setback, 15 feet in MDRL, MDRH and HDR against a 14-foot front
+  # yard; both are held, and the envelope gives a corner lot's street lines
+  # the stricter of the two. A street includes an alley ("Categories of
+  # streets include: A. Alley", L885-L888), so by these words an alley line
+  # is a front line as well. NOT ENCODED, as in Hillsboro: the envelope
+  # reads an alley line as a rear or side line. A doubt.
+  #
+  # REAR LOT LINE. The line "opposite and most distant from the front lot
+  # line"; on an irregular lot a ten-foot line inside the lot; "On a corner
+  # lot, the shortest lot line abutting adjacent property that is not a
+  # street" (L507-L510). The residential table's footnote sends irregular
+  # lots here (sdc.16.12.residential.txt#L441-L442). The envelope's own rear.
+  #
+  # DENSITY. "the number of dwelling units per net buildable acre", net of
+  # "present and future rights-of-way and environmentally constrained areas"
+  # (L154-L156; Net Buildable Acre, L583-L589). No density figure reaches
+  # the pod: 16.12.010 F sets middle housing apart (see the zones).
+  #
+  # HEIGHT. Measured to the highest point of a flat roof, the deck line of a
+  # mansard roof, or the average height of the highest gable of a pitched
+  # roof (L77-L81). Story and Half Story at L873-L884.
+  corner_lot:
+    # "A lot situated at the intersection of two or more streets, other than
+    # an alley." A street is "A public or private road, easement or
+    # right-of-way that is created to provide access to one (1) or more
+    # lots" (L885-L886), so a private drive counts; the alley is excluded by
+    # the definition's own words, which is the default alleys_count: false.
+    test: intersecting_frontages
+    drives_count: true
+    quote: "or/washington/sherwood/sdc.16.10.definitions.txt#L488,L885-L886"
+    cite: "Sherwood SZCDC 16.10.020, Lot, Corner; Street"
+
+defaults:
+  # PARKING COUNT. Table 1 of 16.94.020 counts a quadplex's stalls by lot
+  # area: "1 space total" under 3,000 square feet, 2 under 5,000, 3 under
+  # 7,000 and "4 spaces total" at 7,000 or more, with "None" as the maximum
+  # in both Metro parking zones. Every zone below asks 7,000 square feet or
+  # more of a quadplex lot, so a lot that can hold the pod is on the last
+  # row: one stall a unit.
+  #
+  # NOT ENCODED: the Climate-Friendly and Equitable Communities relief in
+  # 16.94.020 A. "Per OAR 660-012-0440 Parking Reform Near Transit Corridors
+  # no off-street parking is required for developments on a lot or parcel
+  # that includes lands within one-half (1/2) mile of a frequent transit
+  # corridor", and per OAR 660-012-0435 none "within the Sherwood Town
+  # Center and one-quarter mile of the area (see CFEC Parking Delineated
+  # Area Map at the end of this section)" (sdc.16.94.parking.txt#L354-
+  # L367). Table 1 is headed "for lots or parcels not within the CFEC
+  # Parking Delineated Area" (L368-L370). No registered condition carries
+  # either distance and the map is a figure, so the stricter figure is held
+  # everywhere. The handoff proposes a condition.
+  parking_min_per_unit:
+    value: 1
+    cite: Sherwood SZCDC 16.94.020 Table 1, Quadplex on a lot of 7,000 SF or more (4 spaces total)
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L375-L398,L490,L502-L525,L560-L571"
+  parking_max_per_unit:
+    exempt: true
+    cite: Sherwood SZCDC 16.94.020 Table 1, Quadplex maximum permitted parking (None in Zone A and Zone B)
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L490,L502-L525,L560-L571"
+  # DRIVEWAY APPROACH. 16.14.030 A: "Each individual driveway approach must
+  # not exceed 12 feet in width per dwelling served by the driveway" (A.1);
+  # shared driveways, "a single driveway serving two units", are required
+  # unless access comes from a public alley, and "A shared driveway approach
+  # must not exceed 20 feet in width unless a minimum of 20 feet of spacing
+  # can be achieved between driveways" (A.3). Four units take two shared
+  # driveways, and 20 is the width that holds without the spacing, which
+  # nothing measures. 16.96.050 A.4 sends a quadplex's on-site vehicle
+  # circulation to the same section (sdc.16.96.circulation.txt#L162,L180).
+  # The Municode PDF prints A.1 and A.2 and drops the rest with page
+  # 296.18.1 (sdc.16.14.residential-design.txt#L443-L448); the ordinance
+  # prints all of it.
+  #
+  # NOT ENCODED: A.2, "Total width of all driveways shall not exceed 50
+  # percent of the street frontage". A driveway share of frontage, which is
+  # not parking_area_max_frontage_pct (garages, parking and maneuvering
+  # area); no field holds it. Two 20-foot approaches on the 25-foot minimum
+  # frontage are over it, and one shared 20-foot approach needs 40 feet of
+  # frontage. The handoff proposes a field.
+  #
+  # NOT ENCODED: A.4, "applicable driveway spacing standards for local
+  # streets", and A.5.b, the collector and arterial access standards. Both
+  # turn on the street's class and the neighbours' driveways.
+  driveway_approach_max_width_ft:
+    value: 20
+    cite: Sherwood SZCDC 16.14.030 A.3, shared driveway approach no wider than 20 feet (Ordinance 2022-004 Exhibit 1)
+    url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/ord.2022-004.16.14.030.txt#L1-L11"
+  # CORNER ACCESS AND THE ALLEY. A.5: "lots or parcels with more than one
+  # frontage must comply with the following: a. Lots or parcels must access
+  # the street with the lowest classification. For lots or parcels abutting
+  # an alley, access must be taken from the alley." An alley is a street in
+  # this code (16.10.020 Street, A), so an alley-backed lot is a lot with
+  # more than one frontage, and A.3 already excuses the shared driveway
+  # where "access is obtained from a public alley".
+  corner_access_street:
+    value: lowest_class
+    cite: Sherwood SZCDC 16.14.030 A.5.a, access from the street with the lowest classification (Ordinance 2022-004 Exhibit 1)
+    url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/ord.2022-004.16.14.030.txt#L1-L3,L13-L16"
+  parking_alley_access_required:
+    value: true
+    cite: Sherwood SZCDC 16.14.030 A.5.a, access must be taken from an abutting alley (Ordinance 2022-004 Exhibit 1)
+    url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/ord.2022-004.16.14.030.txt#L1-L3,L7-L8,L13-L16"
+  # FRONT-YARD PARKING. 16.14.010 F: "Off-street parking is not allowed
+  # within the front yard of a dwelling except within a designated driveway
+  # or garage or per the provisions of 16.14.020 and 16.14.030", and a front
+  # yard runs "between the front lot line and the nearest line or point of
+  # the building" (16.10.020 Yard, A; sdc.16.10.definitions.txt#L1051-
+  # L1052), which is the whole ground in front of the building, not the
+  # setback. 16.14.030 grants no front-yard parking of its own. 16.14.010
+  # applies "to all new residential development" (C.1), and the guideline
+  # printed beside the standard is the discretionary Type IV design review
+  # (B.3), not a right.
+  parking_front_prohibited:
+    value: true
+    cite: Sherwood SZCDC 16.14.010 F, Limitation on parking (front yard per 16.10.020 Yard, A)
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.14.residential-design.txt#L9-L11,L33-L35,L285-L288"
+  front_lot_line_corner:
+    value: both
+    cite: Sherwood SZCDC 16.10.020, Lot Line, Front (as many front lines as there are street frontages)
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.10.definitions.txt#L505-L506"
+
+# THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29. Each applies
+# in every zone below unless the zone says otherwise.
+#
+# NOT ENCODED: Sufficient Infrastructure. 16.12.030 B.3: before a building
+# permit for "any new middle housing structure", the applicant "must submit
+# a request for verification of Sufficient lnfrastructure ... and receive
+# approval from the City Engineer or designee" (ord.2022-004.16.12.030.txt
+# #L15-L18, the ordinance's OCR). 16.10.020 defines it as public sewer,
+# public water, street access meeting emergency vehicle standards, and storm
+# drainage (sdc.16.10.definitions.txt#L978-L988). As in the county layer,
+# the applicant may provide it; not a use gate. A doubt for lots far from a
+# main.
+#
+# NOT ENCODED: 16.14.010 B.2, "The width of all garages on the
+# street-facing elevation shall not exceed 60 percent of the total width of
+# that elevation" (sdc.16.14.residential-design.txt#L110-L125). A share of
+# the building's own elevation, not of the lot's frontage; no field holds
+# it, and the pod parks in a rear court. The rest of Table 16.14-1
+# (windows, entrances, detailed design) is design, not placement.
+#
+# NOT ENCODED: note 2 of the residential table, "Minimum lot width at the
+# building line on cul-de-sac lots may be less than that required in this
+# Code if a lesser width is necessary to provide for a minimum rear yard"
+# (sdc.16.12.residential.txt#L446-L447). It states no figure; the table's
+# width is held on every lot.
+#
+# NOT ENCODED: 16.58.010, the clear vision area: 20 feet along each street
+# line from a corner, and "the minimum distance from corner curb to any
+# driveway shall be twenty-five (25) feet" (sdc.16.58.vision-clearance.txt
+# #L5-L24). The triangle's hypotenuse runs from 20 feet up one line to 20
+# up the other, and the smallest pair of street yards below (14 and 15)
+# puts the building corner 29 feet out along that diagonal, so the triangle
+# never reaches the pod. The 25-foot driveway spacing places the curb cut,
+# which nothing draws.
+#
+# NOT ENCODED: 16.68.020 and 16.68.050, the infill relaxations of lot area,
+# lot dimensions and yards to 85 percent of the zone's standard, and of the
+# front yard by up to six feet. Each is an Approval Authority's finding on
+# a land division, not a right (sdc.16.68.infill.txt#L19-L39,L133-L162).
+#
+# THE INFILL BUILDING STANDARDS ARE HELD, the stricter reading. 16.68.030:
+# "Structures exceeding twenty four (24) feet in height shall conform to
+# the following standards" -- a floor area ratio by zone (A: LDR 50%, MDRL
+# 55%, MDRH 60%, HDR 65% of lot area) and an interior side setback plane (B:
+# five feet, plus half a foot for every foot over 24) (sdc.16.68.infill.txt
+# #L74-L85,L89-L95). The section is headed "Building Design on Infill Lots"
+# and 16.68.020 A.5 names it for lots under the zone's minimum area, which
+# reads narrower; but its first sentence names every structure over 24
+# feet, and the residential table sends multi-family side yards over 24
+# feet to "§ 16.68 Infill" in MDRH and HDR with no infill test
+# (sdc.16.12.residential.txt#L273-L286). The pod is 26 feet. Held as
+# max_far in LDR, MDRL, MDRH and HDR and as a step-back on the interior
+# side setback in every residential zone. At the 7,000-square-foot minimum
+# lot the ratio allows 3,500 square feet of floor in LDR and 3,850 in MDRL.
+# A doubt and a question for Steph. NOT ENCODED from the same section:
+# B.2's 750-square-foot side elevation planes and C's garage orientation on
+# lots 60 feet wide or less, which are design.
+#
+# NOT ENCODED: 16.106 right-of-way dedication and street improvements on
+# frontage (sdc.16.106.transportation.txt). They push the building back by
+# a width the TSP sets per street, which nothing measures; the same kind of
+# rule as in the county layer. A doubt.
+#
+# NOT ENCODED: 16.50 projections into yards. Note 5 of the residential
+# table refuses front-yard reductions for architectural features in MDRL,
+# MDRH and HDR (sdc.16.12.residential.txt#L452-L453), and nothing here
+# reads a projection allowance in any zone.
+zones:
+  # ------------------------------------------------------------------
+  # CHAPTER 16.12, the five residential districts and the VLDR-PUD column.
+  # 16.12.020 A prints "Triplex and Quadplex P" in every one (the use table
+  # has no VLDR-PUD column; the VLDR row governs it). The dimensional table
+  # of 16.12.030 C runs over four printed pages; the Municode PDF drops the
+  # first two (296.1 and 296.2), so its lot-area rows print without their
+  # heading. Ordinance 2022-004 prints that heading, "Minimum lot areas",
+  # over the same figures (ord.2022-004.16.12.030-c.txt), and the lot area
+  # values quote it; the column order is the Municode reprint's header,
+  # "VLDR VLDR-PUD LDR MDRL MDRH HDR" (sdc.16.12.residential.txt#L132-
+  # L135). In the setback rows a leading digit is a note marker, not a
+  # column: "5 30 20 20 14 14 14" is note 5 and six front yards.
+  #
+  # Height is "30 feet or 2 stories" and note 3 reads "Maximum height is the
+  # lesser of feet or stories", so both are held. MDRH's "35 feet or 2.5
+  # stories" holds the feet only: max_height_stories takes whole numbers,
+  # and the pod is two stories (the Hillsboro and Fairview precedent).
+  #
+  # DENSITY. Each district's range is stated "except middle housing types
+  # pursuant to 16.12.010.F", and F.1 reads "Maximum density standards
+  # shall not be applied to duplex, triplex, quadplex or cottage cluster
+  # development"; F sets a minimum for cottage clusters only. Both density
+  # fields are exempt.
+  # ------------------------------------------------------------------
+  VLDR:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.12 (VLDR Very Low Density Residential), 16.12.020 A and 16.12.030 C
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+    min_lot_sqft:
+      value: 40000
+      cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
+      url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+      quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 A.1 and F, middle housing excepted from the district's density
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L12-L18,L88-L93"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    min_frontage_ft:
+      value: 25
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+    min_lot_width_ft:
+      value: 60
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at building line (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+    min_lot_depth_ft:
+      value: 80
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot Depth
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+    max_height_ft:
+      value: 30
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L227-L229,L448"
+    max_height_stories:
+      value: 2
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L227-L229,L448"
+    setback_front_ft:
+      value: 30
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L259"
+    setback_garage_entrance_ft:
+      value: 35
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Face of garage
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L263"
+    setback_side_ft:
+      value: 5
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Interior side yard (Quadplex; note 6, no adjustments or variances)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L264-L270,L454-L455"
+      step_back:
+        height_ft: 24
+        rise_per_ft: 2
+        cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
+        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+    setback_street_side_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+    setback_rear_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Rear yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+    notes: >-
+      DRAFT. Quadplex permitted. 40,000 sq ft lot, 60 wide at the building
+      line, 25 at the street, 80 deep; density off for quadplexes; yards 30
+      (garage 35) / 5 / 20, street side 20; 30 ft and 2 stories; no floor
+      area ratio (16.68.030 A names no VLDR figure).
+  VLDR_PUD:
+    cite_default:
+      cite: Sherwood SZCDC 16.12.010 A.2 and 16.12.030 C (VLDR-PUD column), Chapter 16.40
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # The map's VLDR land developed as a Planned Unit Development
+      # (16.12.010 A.2), which the table gives its own column. A Residential
+      # PUD permits "middle housing dwelling types" and every use of the
+      # underlying zone "when approved as part of a Final Development Plan"
+      # (16.40.050 A), and a change of use in an approved plan is a major
+      # change, "the same as a new application" (16.40.040 C). Whether a
+      # given PUD lot's plan allows the pod is the plan's, which nothing
+      # here holds: qualified on site_specific_limitation, so the lot comes
+      # back UNKNOWN rather than GREEN.
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in VLDR) and 16.40.050 A (Residential PUD uses)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
+        quote: "or/washington/sherwood/sdc.16.40.pud.txt#L184-L192,L199-L204,L209-L210"
+    min_lot_sqft:
+      value: 10000
+      cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex, VLDR-PUD column (Ordinance 2022-004 Exhibit 1)
+      url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+      quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 A.2 and F, middle housing excepted from the PUD density
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L19-L24,L88-L93"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    min_frontage_ft:
+      value: 25
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+    min_lot_width_ft:
+      value: 60
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at building line (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+    min_lot_depth_ft:
+      value: 80
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot Depth
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+    max_height_ft:
+      value: 30
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448"
+    max_height_stories:
+      value: 2
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448"
+    setback_front_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L259"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Face of garage
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L263"
+    setback_side_ft:
+      value: 5
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Interior side yard (Quadplex; note 6, no adjustments or variances)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L264-L270,L454-L455"
+      step_back:
+        height_ft: 24
+        rise_per_ft: 2
+        cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
+        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+    setback_street_side_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+    setback_rear_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Rear yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+    notes: >-
+      DRAFT. VLDR under a Planned Unit Development: quadplex permitted as
+      the approved plan allows (UNKNOWN until it is read). 10,000 sq ft lot,
+      60 wide, 25 at the street, 80 deep; yards 20 / 5 / 20, street side
+      20; 30 ft and 2 stories.
+  LDR:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.12 (LDR Low Density Residential), 16.12.020 A and 16.12.030 C
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+    min_lot_sqft:
+      value: 7000
+      cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
+      url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+      quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 B and F, middle housing excepted from the district's density
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L69-L72,L88-L93"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    min_frontage_ft:
+      value: 25
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+    min_lot_width_ft:
+      value: 60
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at building line (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+    min_lot_depth_ft:
+      value: 80
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot Depth
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+    max_height_ft:
+      value: 30
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L233-L235,L448"
+    max_height_stories:
+      value: 2
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L233-L235,L448"
+    max_far:
+      value: 0.5
+      cite: "Sherwood SZCDC 16.68.030 A.1, floor area in a dwelling over 24 feet no more than 50% of lot area (LDR; the stricter reading of its reach)"
+      quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L82"
+    setback_front_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L259"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Face of garage
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L263"
+    setback_side_ft:
+      value: 5
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Interior side yard (Quadplex; note 6, no adjustments or variances)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L264-L270,L454-L455"
+      step_back:
+        height_ft: 24
+        rise_per_ft: 2
+        cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
+        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+    setback_street_side_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+    setback_rear_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Rear yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+    notes: >-
+      DRAFT. Quadplex permitted. 7,000 sq ft lot, 60 wide, 25 at the
+      street, 80 deep; density off for quadplexes; yards 20 / 5 / 20,
+      street side 20; 30 ft and 2 stories; FAR 0.5 over 24 ft (16.68.030,
+      the stricter reading).
+  MDRL:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.12 (MDRL Medium Density Residential Low), 16.12.020 A and 16.12.030 C
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+    min_lot_sqft:
+      value: 7000
+      cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
+      url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+      quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 C and F, middle housing excepted from the district's density
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L73-L77,L88-L93"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    min_frontage_ft:
+      value: 25
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+    min_lot_width_ft:
+      value: 50
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at building line (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+    min_lot_depth_ft:
+      value: 80
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot Depth
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+    max_height_ft:
+      value: 30
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L236-L238,L448"
+    max_height_stories:
+      value: 2
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L236-L238,L448"
+    max_far:
+      value: 0.55
+      cite: "Sherwood SZCDC 16.68.030 A.2, floor area in a dwelling over 24 feet no more than 55% of lot area (MDRL; the stricter reading of its reach)"
+      quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L83"
+    setback_front_ft:
+      value: 14
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L259"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Face of garage
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L263"
+    setback_side_ft:
+      value: 5
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Interior side yard (Quadplex; note 6, no adjustments or variances)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L264-L270,L454-L455"
+      step_back:
+        height_ft: 24
+        rise_per_ft: 2
+        cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
+        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+    setback_street_side_ft:
+      value: 15
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+    setback_rear_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Rear yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+    notes: >-
+      DRAFT. Quadplex permitted. 7,000 sq ft lot, 50 wide, 25 at the
+      street, 80 deep; density off for quadplexes; yards 14 (garage 20) / 5
+      / 20, street side 15; 30 ft and 2 stories; FAR 0.55 over 24 ft
+      (16.68.030, the stricter reading).
+  MDRH:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.12 (MDRH Medium Density Residential High), 16.12.020 A and 16.12.030 C
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+    min_lot_sqft:
+      value: 7000
+      cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
+      url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+      quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 D and F, middle housing excepted from the district's density
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L78-L81,L88-L93"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    min_frontage_ft:
+      value: 25
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+    min_lot_width_ft:
+      value: 50
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at building line (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+    min_lot_depth_ft:
+      value: 80
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot Depth
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+    max_height_ft:
+      # "35 feet or 2.5 stories", the lesser (note 3). The feet only; the
+      # half story is past what max_height_stories can hold, and the pod is
+      # two stories.
+      value: 35
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L239-L241,L448"
+    max_far:
+      value: 0.6
+      cite: "Sherwood SZCDC 16.68.030 A.3, floor area in a dwelling over 24 feet no more than 60% of lot area (MDRH; the stricter reading of its reach)"
+      quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L84"
+    setback_front_ft:
+      value: 14
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L259"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Face of garage
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L263"
+    setback_side_ft:
+      value: 5
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Interior side yard (Quadplex; note 6, no adjustments or variances)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L264-L270,L454-L455"
+      step_back:
+        height_ft: 24
+        rise_per_ft: 2
+        cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
+        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+    setback_street_side_ft:
+      value: 15
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+    setback_rear_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Rear yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+    notes: >-
+      DRAFT. Quadplex permitted. 7,000 sq ft lot, 50 wide, 25 at the
+      street, 80 deep; density off for quadplexes; yards 14 (garage 20) / 5
+      / 20, street side 15; 35 ft (2.5 stories not held); FAR 0.6 over 24
+      ft (16.68.030, the stricter reading).
+  HDR:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.12 (HDR High Density Residential), 16.12.020 A and 16.12.030 C
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+    min_lot_sqft:
+      value: 7000
+      cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
+      url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+      quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 E and F, middle housing excepted from the district's density
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L82,L85-L93"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    min_frontage_ft:
+      value: 25
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+    min_lot_width_ft:
+      value: 50
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at building line (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+    min_lot_depth_ft:
+      value: 80
+      cite: Sherwood SZCDC 16.12.030 C, Minimum Lot Depth
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+    max_height_ft:
+      value: 40
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L242-L244,L448"
+    max_height_stories:
+      value: 3
+      cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L242-L244,L448"
+    max_far:
+      value: 0.65
+      cite: "Sherwood SZCDC 16.68.030 A.4, floor area in a dwelling over 24 feet no more than 65% of lot area (HDR; the stricter reading of its reach)"
+      quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L85"
+    setback_front_ft:
+      value: 14
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L259"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Face of garage
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L263"
+    setback_side_ft:
+      value: 5
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Interior side yard (Quadplex; note 6, no adjustments or variances)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L264-L270,L454-L455"
+      step_back:
+        height_ft: 24
+        rise_per_ft: 2
+        cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
+        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+    setback_street_side_ft:
+      value: 15
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+    setback_rear_ft:
+      value: 20
+      cite: Sherwood SZCDC 16.12.030 C, Setbacks, Rear yard
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+    notes: >-
+      DRAFT. Quadplex permitted. 7,000 sq ft lot, 50 wide, 25 at the
+      street, 80 deep; density off for quadplexes; yards 14 (garage 20) / 5
+      / 20, street side 15; 40 ft and 3 stories; FAR 0.65 over 24 ft
+      (16.68.030, the stricter reading).
+  # ------------------------------------------------------------------
+  # RESIDENTIAL PUDs. The map marks land developed as a Planned Unit
+  # Development with the base code and "_PUD" (MDRH's is "MDRH-PUD"). Lot
+  # size and setbacks are "consistent with the provisions in the
+  # underlying zone" (16.40.050 C.3; sdc.16.40.pud.txt#L228-L230), so each
+  # takes its base zone's standards. The use is qualified as VLDR_PUD's is:
+  # PUD uses are those "approved as part of a Final Development Plan", and a
+  # change of use is a major change. A lot on the perimeter of a
+  # multi-zone PUD keeps the underlying zone's figures and an interior lot
+  # may average them (C.3.a), which nothing measures; the base figures are
+  # held. Only VLDR has a PUD column of its own.
+  # ------------------------------------------------------------------
+  LDR_PUD:
+    cite_default:
+      cite: Sherwood SZCDC 16.40.050 (Residential PUD) over LDR
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    like:
+      zone: LDR
+      wins: local
+      cite: Sherwood SZCDC 16.40.050 C.3, minimum lot size and setbacks consistent with the underlying zone
+      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230"
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in LDR) and 16.40.050 A (Residential PUD uses)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
+        quote: "or/washington/sherwood/sdc.16.40.pud.txt#L184-L192,L199-L204,L209-L210"
+    notes: >-
+      DRAFT. LDR under a Planned Unit Development: LDR's standards, with the
+      quadplex permitted as the approved plan allows (UNKNOWN until it is
+      read).
+  MDRL_PUD:
+    cite_default:
+      cite: Sherwood SZCDC 16.40.050 (Residential PUD) over MDRL
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    like:
+      zone: MDRL
+      wins: local
+      cite: Sherwood SZCDC 16.40.050 C.3, minimum lot size and setbacks consistent with the underlying zone
+      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230"
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in MDRL) and 16.40.050 A (Residential PUD uses)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
+        quote: "or/washington/sherwood/sdc.16.40.pud.txt#L184-L192,L199-L204,L209-L210"
+    notes: >-
+      DRAFT. MDRL under a Planned Unit Development: MDRL's standards, with
+      the quadplex permitted as the approved plan allows (UNKNOWN until it
+      is read).
+  MDRH-PUD:
+    cite_default:
+      cite: Sherwood SZCDC 16.40.050 (Residential PUD) over MDRH
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    like:
+      zone: MDRH
+      wins: local
+      cite: Sherwood SZCDC 16.40.050 C.3, minimum lot size and setbacks consistent with the underlying zone
+      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230"
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in MDRH) and 16.40.050 A (Residential PUD uses)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
+        quote: "or/washington/sherwood/sdc.16.40.pud.txt#L184-L192,L199-L204,L209-L210"
+    notes: >-
+      DRAFT. MDRH under a Planned Unit Development: MDRH's standards, with
+      the quadplex permitted as the approved plan allows (UNKNOWN until it
+      is read).
+  HDR_PUD:
+    cite_default:
+      cite: Sherwood SZCDC 16.40.050 (Residential PUD) over HDR
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    like:
+      zone: HDR
+      wins: local
+      cite: Sherwood SZCDC 16.40.050 C.3, minimum lot size and setbacks consistent with the underlying zone
+      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230"
+    quadplex_allowed:
+      value: true
+      cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in HDR) and 16.40.050 A (Residential PUD uses)
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      qualified_by:
+        fact: site_specific_limitation
+        cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
+        quote: "or/washington/sherwood/sdc.16.40.pud.txt#L184-L192,L199-L204,L209-L210"
+    notes: >-
+      DRAFT. HDR under a Planned Unit Development: HDR's standards, with the
+      quadplex permitted as the approved plan allows (UNKNOWN until it is
+      read).
+  # ------------------------------------------------------------------
+  # THE DISTRICTS THAT REFUSE. Each use table closes its list: "Uses listed
+  # in other sections of this code, but not within this specific table are
+  # prohibited" (16.22.020 B, 16.31.020 B, 16.36.020 B). The triplex and
+  # quadplex row is in 16.12 and in none of these tables. C in each lets
+  # the city admit an unlisted use "consistent or associated with" the
+  # listed ones through Chapter 16.88, a discretionary interpretation, not
+  # a right. The commercial table's Multi-Family row (five or more units)
+  # is "only permitted on one or more of the upper floors of a building and
+  # only when a non-residential use ... is located on the ground floor",
+  # which the pod is not. The non-residential PUDs permit what the
+  # underlying zone permits outright (16.40.060 A); C.2 lets the Final
+  # Development Plan waive "type of dwelling unit ... and use
+  # restrictions", which is the plan's, not the lot's.
+  # ------------------------------------------------------------------
+  OC:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.22 (OC Office Commercial), 16.22.020
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
+      quote: "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135"
+    notes: >-
+      DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
+  OC_PUD:
+    cite_default:
+      cite: Sherwood SZCDC 16.40.060 (Non-Residential PUD) over OC
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (OC, which lists no triplex or quadplex)
+      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256"
+    notes: >-
+      DRAFT. Refuses: OC's uses; a waiver of dwelling type is the approved
+      plan's, not the lot's.
+  NC:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.22 (NC Neighborhood Commercial), 16.22.020
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
+      quote: "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135"
+    notes: >-
+      DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
+  RC:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.22 (RC Retail Commercial), 16.22.020
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
+      quote: "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135"
+    notes: >-
+      DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
+  RC_PUD:
+    cite_default:
+      cite: Sherwood SZCDC 16.40.060 (Non-Residential PUD) over RC
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (RC, which lists no triplex or quadplex)
+      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256"
+    notes: >-
+      DRAFT. Refuses: RC's uses; a waiver of dwelling type is the approved
+      plan's, not the lot's.
+  GC:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.22 (GC General Commercial), 16.22.020
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
+      quote: "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135"
+    notes: >-
+      DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
+  LI:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.31 (LI Light Industrial), 16.31.020
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)
+      quote: "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64"
+    notes: >-
+      DRAFT. Refuses: the only dwelling is one for a security person.
+  LI_PUD:
+    cite_default:
+      cite: Sherwood SZCDC 16.40.060 (Non-Residential PUD) over LI
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (LI, which lists one security dwelling only)
+      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256"
+    notes: >-
+      DRAFT. Refuses: LI's uses; a waiver of dwelling type is the approved
+      plan's, not the lot's.
+  GI:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.31 (GI General Industrial), 16.31.020
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)
+      quote: "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64"
+    notes: >-
+      DRAFT. Refuses: the only dwelling is one for a security person.
+  EI:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.31 (EI Employment Industrial), 16.31.020
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      # EI is a column of the industrial table and a district of 16.31.010,
+      # but not in the 16.04.010 district list, which is printed from a 2007
+      # supplement and was not updated; the map prints it.
+      value: false
+      cite: Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)
+      quote: "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64"
+    notes: >-
+      DRAFT. Refuses: the only dwelling is one for a security person.
+  IP:
+    cite_default:
+      cite: Sherwood SZCDC Chapter 16.36 (IP Institutional and Public), 16.36.020
+      url: https://api.municode.com/PublicationPdfDownload/3865
+      retrieved: '2026-09-29'
+    quadplex_allowed:
+      value: false
+      cite: Sherwood SZCDC 16.36.020 A-B and the IP use table (one security dwelling, conditional; unlisted uses prohibited)
+      quote: "or/washington/sherwood/sdc.16.36.institutional-public.txt#L14-L19,L25-L29"
+    notes: >-
+      DRAFT. Refuses: the only dwelling is a conditional one for a security
+      person.
+# Map codes that are not districts of this code. The city's zoning layer
+# (services5.arcgis.com/ikEzR7lqVIlrcVFn Planning FeatureServer layer 2,
+# field CODE) was counted on 2026-09-29; acreages are the layer's own
+# Shape__Area in square feet over 43,560. Eleven codes carry the layer's
+# own DESCRIPTION "Unannexed Area-Inside UGB": land the city has planned
+# and not annexed. 16.04.040 (sdc.16.04.districts.txt L50-L59) puts that
+# land under the Urban Planning Area Agreement, not this code, and gives an
+# annexed lot an interim city zone "consistent with the Official Plan and
+# Zoning Map" -- which this map does not print. So a lot the county's
+# JURIS_CITY field calls Sherwood and this map calls unannexed is either
+# not in the city (the county's field and the city's map disagree) or in it
+# under an interim zone nobody has drawn. Neither is a pocket of the county
+# layer: unlike Beaverton (BDC 10.40.1), Sherwood's code does not keep the
+# county's zoning after annexation. All eleven are unencodable, and the
+# disagreement is in the handoff.
+zone_rulings:
+  Old Town:
+    outcome: unencodable
+    note: >-
+      "Old Town Overlay", one feature of 44.7 acres on the city's zoning
+      layer on 2026-09-29. OT is an overlay district of 16.04.010
+      (sdc.16.04.districts.txt L25), not a base zone: 16.162.030 A permits
+      the uses "permitted outright in the RC zone ... the HDR zone ... and
+      the MDRL zone ... limited to those permitted in the underlying zoning
+      district" (sdc.16.162.old-town.txt L49-L53), and 16.162.060 applies
+      "the dimensional standards of the underlying RC, HDR and MDRL zones"
+      with exceptions (L102-L104). The map paints the overlay over its
+      whole area and prints no underlying zone, so which of the three
+      governs a lot cannot be read from it. Chapter 16.162 is stored whole
+      (16.162.010-16.162.100), but none of its use, height or design
+      exceptions is encoded; a lot here stays open until the base zone is
+      mapped.
+  OS:
+    outcome: unencodable
+    note: >-
+      "Open Space-OS", one feature of 4.3 acres on the city's zoning layer
+      on 2026-09-29. OS is not among the districts 16.04.010 lists
+      (sdc.16.04.districts.txt L10-L25) and no chapter of the code sliced
+      here sets its uses or standards. The list is printed from a 2007
+      supplement and is stale (it also omits EI, which Chapter 16.31
+      creates), so OS may be a district the code adds elsewhere; it was
+      not found this session and is not guessed.
+  UGA:
+    outcome: unencodable
+    note: >-
+      "Urban Growth Area-Concept Plan Required", two features of 14.0 acres
+      on the city's zoning layer on 2026-09-29. No district of 16.04.010
+      (sdc.16.04.districts.txt L10-L25); by 16.04.040 (L50-L59) land inside
+      the UGB and outside the city is regulated under the Urban Planning
+      Area Agreement with Washington County, and the description says a
+      concept plan comes before any zone. Nothing here can say what an
+      annexed lot would be zoned.
+  Unannex:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" with no county code at all, 34 features of
+      190.3 acres on the city's zoning layer on 2026-09-29. 16.04.040
+      (sdc.16.04.districts.txt L50-L59) leaves this land to the Urban
+      Planning Area Agreement and gives it, once annexed, an interim zone
+      consistent with the Official Plan and Zoning Map, which this layer
+      does not print. The county's code governs until annexation; Sherwood's
+      code does not keep it afterwards, so the lot is neither this layer's
+      nor a pocket of the county's.
+  AF-5:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under the county code AF-5, 11 features of
+      272.0 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
+      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      county's under 16.04.040 (L50-L59); an annexed lot takes an interim
+      city zone the map does not print, and the county's AF-5 does not
+      survive annexation in this code. See the comment above zone_rulings.
+  AF-10:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under the county code AF-10, 5 features of
+      219.2 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
+      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      county's under 16.04.040 (L50-L59); an annexed lot takes an interim
+      city zone the map does not print, and the county's AF-10 does not
+      survive annexation in this code. See the comment above zone_rulings.
+  AF-20:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under the county code AF-20, 5 features of
+      560.0 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
+      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      county's under 16.04.040 (L50-L59); an annexed lot takes an interim
+      city zone the map does not print, and the county's AF-20 does not
+      survive annexation in this code. See the comment above zone_rulings.
+  EFU:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under the county code EFU, one feature of
+      106.1 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
+      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      county's under 16.04.040 (L50-L59); an annexed lot takes an interim
+      city zone the map does not print, and the county's EFU does not
+      survive annexation in this code. See the comment above zone_rulings.
+  FD-10:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under the county code FD-10, 5 features of
+      6.0 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
+      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      county's under 16.04.040 (L50-L59); an annexed lot takes an interim
+      city zone the map does not print, and the county's FD-10 does not
+      survive annexation in this code. See the comment above zone_rulings.
+  FD-20:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under the county code FD-20, 8 features of
+      325.1 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
+      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      county's under 16.04.040 (L50-L59); an annexed lot takes an interim
+      city zone the map does not print, and the county's FD-20 does not
+      survive annexation in this code. See the comment above zone_rulings.
+  R-9:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under the county code R-9, one feature of
+      5.9 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
+      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      county's under 16.04.040 (L50-L59); an annexed lot takes an interim
+      city zone the map does not print, and the county's R-9 does not
+      survive annexation in this code. See the comment above zone_rulings.
+  RRFF5:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under RRFF5, 2 features of 31.0 acres on
+      the city's zoning layer on 2026-09-29. RRFF-5 is a Clackamas County
+      district, not Washington County's, and not a Sherwood district
+      (sdc.16.04.districts.txt L10-L25). Unannexed land is regulated under
+      the Urban Planning Area Agreement by 16.04.040 (L50-L59); an annexed
+      lot takes an interim city zone the map does not print.
+  MG:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under MG, one feature of 1156.0 acres on
+      the city's zoning layer on 2026-09-29 -- the largest single feature on
+      the map. MG reads as Tualatin's General Manufacturing district, not a
+      county or Sherwood code (sdc.16.04.districts.txt L10-L25); the
+      feature likely draws land in or planned by the neighbouring city.
+      Unannexed land is regulated under the Urban Planning Area Agreement
+      by 16.04.040 (L50-L59); nothing here zones it.
+  MBP:
+    outcome: unencodable
+    note: >-
+      "Unannexed Area-Inside UGB" under MBP, 2 features of 50.2 acres on the
+      city's zoning layer on 2026-09-29. MBP reads as Tualatin's
+      Manufacturing Business Park district, not a county or Sherwood code
+      (sdc.16.04.districts.txt L10-L25). Unannexed land is regulated under
+      the Urban Planning Area Agreement by 16.04.040 (L50-L59); nothing
+      here zones it.

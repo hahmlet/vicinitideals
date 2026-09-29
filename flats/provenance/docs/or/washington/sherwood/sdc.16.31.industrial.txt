@@ -1,0 +1,399 @@
+INDUSTRIAL LAND USE DISTRICTS*
+Sections:
+16.31.010 Purpose
+16.31.020 Uses
+16.31.030 Development Standards
+16.31.040 Special Standards for Hospitality and Lodging Uses Within the Light
+Industrial Zone
+16.31.050 Employment Industrial (El) Restrictions
+16.31.060 Tonquin Employment Area (TEA) Commercial Nodes Use Restrictions
+16.31.070 Community Design
+16.31.080 Floodplain
+16.31.010 Purpose
+A. Employment Industrial (El) - The EI zoning district provides employment areas that are
+suitable for, and attractive to, key industries and industry clusters that have been identified
+by the State of Oregon and the City's economic development strategy as important to the
+state and local economy. The following are preferred industry sectors for areas zoned EI:
+Clean Technology; Technology and Advanced Manufacturing; and Outdoor Gear and
+Active Wear.
+Land zoned EI shall provide for large and medium-sized parcels for industrial campuses
+and other industrial sites that can accommodate a variety of industrial companies and
+related businesses. Areas zoned EI are also intended to provide the opportunity for flex
+building space within small- and medium-sized industrial campuses and business parks to
+accommodate research and development companies, incubator/emerging technology busi­
+nesses, related materials and equipment suppliers, and/or spin-off companies and other
+businesses that derive from, or are extensions of, larger campus users and developments.
+Retail and commercial uses are allowed only when directly supporting area employers and
+employees.
+Industrial establishments and support services shall not have objectionable external fea­
+tures and shall feature well-landscaped sites and attractive architectural design, as deter­
+mined by the Hearing Authority.
+B. Light Industrial (LI) - The LI zoning district provides for the manufacturing, processing,
+assembling, packaging and treatment of products which have been previously prepared
+from raw materials. Industrial establishments shall not have objectionable external features
+and shall feature well- landscaped sites and attractive architectural design, as determined by
+the Commission.
+*Editor's note-Ord. No. 2012-011, adopted August 7. 2012. amended the Code by consolidatmg the prov1s1on, of Chs. 16.31.
+16.32 and 16.34 Former Ch. 16.31. ~ 16.31.010--16.31.100, pertained to the Employment Industnal district, and derived from
+Ord. 2010-014, adopted October 5, 2010. See Chs. 16.32 and 16.34 for specific derivation.
+Supp No. 19 318
+
+C. General Industrial (GI) - The GI zoning district provides for the manufacturing, process-
+ing, assembling, packaging and treatment of products from previously prepared or raw
+materials, providing such activities can meet and maintain minimum environmental quality
+standards and are situated so as not to create significant adverse effects to residential and
+commercial areas of the City. The minimum contiguous area of any GI zoning district shall
+be fifty (50) acres.
+(Ord. No. 2020-006, § 2, 7-21-2020; Ord. No. 2016-008, § 2, 6-21-2016; Ord. No. 2012-011, § 2,
+8-7-2012)
+16.31.020 Uses
+A. The table below identifies the land uses that are permitted outright (P), permitted condi-
+tionally (C) and not permitted (N) in the industrial zoning districts. The specific land use
+categories are described and defined in Chapter 16.88.
+B. Uses listed in other sections of this Code, but not within this specific table are prohibited.
+C. Any use not otherwise listed that can be shown to be consistent or associated with the uses
+permitted outright or conditionally in the industrial zones or contribute to the achievement
+of the objectives of the industrial zones may be permitted outright or conditionally,
+utilizing the provisions of Chapter 16.88.
+D. Additional limitations for specific uses are identified in the footnotes of this table.
+ Uses LI GI EI 1
+ RESIDENTIAL
+• Single dwelling unit, including a manufactured home, for one (1)
+security person employed on the premises and their immediate fam-
+ily
+P P P
+ CIVIC
+• Hospitals C N N
+• Police and fire stations and other emergency services C C C
+• Vehicle testing stations C C C
+• Postal services - Public C C C
+• Postal substations when located entirely within and incidental to a
+use permitted outright
+C C C
+• Public and private utility structures, including but not limited to
+telephone exchanges, electric substations, gas regulator stations,
+treatment plants, water wells, and public work yards
+P P C
+• Small-scale power generation facilities P P P
+• Large-scale power generation facilities C P C
+• Public recreational facilities including parks, trails, playfields and
+sports and racquet courts on publicly owned property or under
+power line easements
+C C C
+ COMMERCIAL
+• Commercial Trade Schools, commercial educational services and
+training facilities
+P P C
+ 16.31.020
+319 Supp. No. 22
+Uses LI GI EI 1
+ Entertainment/recreation
+• Country clubs, sports and racquet clubs and other similar clubs C C C
+• Indoor recreation facilities such as arcades, mini-golf, or bounce
+house facilities
+2,3
+C C C
+ Hospitality and lodging
+• Hotel/Motel CU
+12 N N
+ Motor vehicle related
+• Motorized vehicle and sport craft repairs and service C C N
+• Motorized vehicle and sport craft repair and service clearly inci-
+dental and secondary to and customarily associated with a use per-
+mitted outright or conditionally
+P P P
+• Automotive, boat, trailer and recreational vehicle storage C C C
+4
+• Vehicle fueling stations or car wash facilities5 C C C
+• Junkyards and salvage yards N N N
+• Manufactured home sales and display area N N N
+ Office and professional support services
+• Business and professional offices
+3 P P P
+• Business support services such as duplicating, photocopying, mail-
+ing services, fax and computer facilities3
+P P P
+• Any incidental business, service, processing, storage or display, not
+otherwise permitted, that is essential to and customarily associated
+with a use permitted outright, provided said incidental use is con-
+ducted entirely within an enclosed building
+P P P
+ Childcare
+• Day cares, preschools, and kindergartens, when clearly secondary
+to a permitted use
+P P P
+• Day cares, preschools, and kindergartens as a stand-alone use
+3 C C C
+ General retail - sales oriented
+• Incidental retail sales or display/showroom directly associated with
+a permitted use and limited to a maximum of 10% of the total
+floor area of the business
+3
+P P P
+• Medical and recreational marijuana facilities P 6 P6 N
+• Tool and equipment repair, rental and sales, including truck rental7 P P P
+• Retail plant nurseries and garden supply stores (excluding whole-
+sale plant nurseries)
+P P N
+• Wholesale building material sales and service C P N
+• Retail building material sales and lumber yards
+3 C P N
+ Personal services
+• Health clubs and studios less than 5,000 square feet in size P P P
+16.31.020
+320Supp. No. 22
+Uses LI GI EI 1
+• Psilocybin Service Centers N P 13 N
+• Personal services catering to daily customers where patrons pay for
+or receive a service rather than goods or materials, including but
+not limited to financial, beauty, pet grooming, and similar services
+8
+C C C
+• Public or commercial parking (non-accessory) N N N
+• Veterinarian offices and animal hospitals C C C
+• Animal boarding/kennels and pet daycare facilities with outdoor
+recreation areas
+8
+C C C
+ Eating and drinking establishments:
+• Restaurants, taverns, and lounges without drive-thru
+3 C C C
+• Restaurants with drive-thru services N N N
+• On-site cafeteria that is secondary to, and serving employees of, a
+permitted use
+P P P
+ INDUSTRIAL
+• Manufacture, compounding, processing, assembling, packaging,
+treatment, fabrication of products contained wholly within an en-
+closed building provided exterior odor and noise is consistent with
+municipal code standards and there is no unscreened storage and
+not otherwise regulated elsewhere in the code
+P P P
+• Manufacture, compounding, processing, assembling, packaging,
+treatment, fabrication of products not otherwise prohibited else-
+where in the code provided other off-site impacts are compliant
+with local, state and federal regulations
+C P C
+• Manufacture, compounding, processing, assembling, packaging,
+treatment, or fabrication of acids, paints, dyes, soaps, ammonia,
+chlorine, sodium compounds, fertilizer, herbicides, insecticides and
+similar chemicals
+N C N
+• Psilocybin Manufacturing Facilities N P
+13 N
+• Distribution, warehousing and storage associated with a permitted
+use operating on the same site
+P P P
+• Distribution and warehousing up to 150,000 square feet, provided
+product(s) are stored within an enclosed building9
+P P P
+• Distribution and warehousing greater than 150,000 square feet pro-
+vided product(s) are stored within an enclosed building9
+N P C
+• Mini-warehousing or self-storage N P N
+• Medical or dental laboratories, including biomedical compounding P P P
+• Laboratories (not medical or dental) P P P
+• Research and development and associated manufacturing P P P
+• Contractors' storage and equipment yards C P C
+4
+• Building, heating, plumbing or electrical contractors and suppliers,
+building maintenance services, and similar uses10
+P P P
+ 16.31.020
+321 Supp. No. 22
+Uses LI GI EI 1
+• Industrial laundry, dry cleaning, dyeing, or rug cleaning plants C P N
+• Sawmills C C N
+• Sand and gravel pits, rock crushing facilities, aggregate storage and
+distribution facilities or concrete or asphalt batch plants
+N C N
+• Solid waste transfer stations N C N
+The following uses are specifically prohibited in all industrial zones because they have been
+determined to have adverse environmental, public and aesthetic impacts and are not suit-
+able for location in any of the industrial zones in the City
+• Manufacture, compounding, processing, assembling, packaging,
+treatment, or fabrication of toxins or explosive materials, or any
+product or compound determined by a public health official to be
+detrimental to the health, safety and welfare of the community
+N N N
+• Pulp and paper mills N N N
+• Distillation of oil, coal, wood or tar compounds and the creosote
+treatment of any products
+N N N
+• Metal rolling and extraction mills, forge plants, smelters and blast
+furnaces
+N N N
+• Meat, fish, poultry and tannery processing N N N
+• General purpose solid waste landfills, incinerators, and other solid
+waste facilities not otherwise permitted in this Code
+N N N
+ WIRELESS COMMUNICATION FACILITIES
+• Radio, television, and similar communication stations, including
+associated transmitters
+C C C
+• Wireless communication towers
+11 and transmitters C C C
+• Wireless communication facilities on City-owned property C C C
+• Wireless communication antennas co-located on an existing tower
+or on an existing building or structure not exceeding the roof of the
+structure
+P P P
+ OTHER
+Agricultural uses including but not limited to:
+• Farm equipment sales and rentals N N N
+• Farming and horticulture P P P
+• Raising of animals other than household pets N N N
+• Truck and bus yards N P N
+1 See special criteria for the EI zone, 16.31.050 and the Tonquin Employment Area (TEA),
+16.31.060.
+2 If use is mixed with another, such as a restaurant, it is considered secondary to that use and
+permitted, provided it occupies less than fifty (50) percent of the total area.
+3 Limited in size to five thousand (5,000) square feet in a single outlet and no more than
+twenty thousand (20,000) square feet in multiple outlets in the same development project.
+16.31.020
+322Supp. No. 22
+4 On constrained land where structures would not otherwise be permitted, provided that no
+natural resources such as wetland or floodplains are impacted.
+5 Limited to Cardlock, wholesale or facilities incidental to and solely serving an associated
+permitted or conditional use - no public retail fuel sales.
+6 See Special Criteria for Medical and Recreational Marijuana Facilities in Chapter 16.38,
+Special Uses.
+7 Sales and rental area Limited in size to five thousand (5,000) square feet in a single outlet
+and no more than twenty thousand (20,000) square feet in multiple outlets in the same
+development project.
+8 Animal boarding/kennels and pet daycare facilities entirely within an enclosed building are
+considered "other personal service."
+9 For standalone warehousing and distribution only. Warehousing and distribution associ-
+ated with another approved use is ancillary and permitted without size limitations.
+10 These businesses are involved in the servicing and supplying of materials and equipment
+primarily intended for industrial, institutional, or commercial businesses. On-site sales are
+limited as most activity occurs electronically or off-site. Businesses may or may not be open
+to the general public, but sales to the general public are limited as a result of the way in which
+the firm operates. Products are generally delivered to the customer. Few customers, especially
+the general public, come to the site.
+11 Except for towers located within one thousand (1,000) feet of the Old Town District which
+are prohibited.
+12 See special standard criteria for hospitality and lodging uses within the Light Industrial
+Land Use District SZCDC 16.31.040.
+13 See Special Criteria for Psilocybin Service Centers and manufacturing facilities under
+Section 16.38.040.
+(Ord. No. 2023-002, § 2, 3-7-2023; Ord. No. 2022-002, § 2, 3-15-2022; Ord. No. 2020-006, § 2,
+7-21-2020; Ord. No. 2016-008, § 2, 6-21-2016; Ord. No. 2015-005, § 2, 5-5-2015; Ord. No.
+2015-003, § 2, 3-17-2015; Ord. No. 2012-011, § 2, 8-7-2012)
+16.31.030 Development Standards
+A. Generally
+No lot area, setback, yard, landscaped area, open space, off-street parking or loading area, or
+other site dimension or requirement, existing on, or after, the effective date of this Code shall
+be reduced below the minimum required by this Code. Nor shall the conveyance of any
+portion of a lot, for other than a public use or right-of-way, leave a lot or structure on the
+remainder of said lot with less than minimum Code dimensions, area, setbacks or other
+requirements, except as permitted by Chapter 16.84 (Variances and Adjustments).
+ 16.31.030
+323 Supp. No. 22
+B. Development Standards
+Except as otherwise provided, required minimum lot areas and dimensions and setbacks
+shall be:
+ Development Standards by Zone LI GI EI
+Lot area - industrial uses: 10,000 SF 20,000 SF 3 acres
+9
+Lot area - commercial uses (sub-
+ject to Section 16.31.050):
+10,000 SF 20,000 SF 10,000 SF
+Lot width at front property line: 100 feet
+Lot width at building line: 100 feet
+Front yard setback
+11 20 feet None 20 feet
+Side yard setback10 None None None
+Rear yard setback11 None None None
+Corner lot street side 11 20 feet None 20 feet
+Height11 50 feet
+9 Lots within the EI zone that were legal lots of record prior to October 5, 2010 and smaller
+than the minimum lot size required in the table below may be developed if found consistent
+with other applicable requirements of Chapter 16.31 and this Code. Further subdivision of
+lots smaller than three acres shall be prohibited unless Section 16.31.050 applies.
+10 When a yard is abutting a residential zone or public park, there shall be a minimum setback
+of forty (40) feet provided for properties zoned Employment Industrial and Light Industrial
+zones, and a minimum setback of fifty (50) feet provided for properties zoned General
+Industrial.
+11 Structures located within one hundred (100) feet of a residential zone shall be limited to
+the height requirements of that residential zone.
+(Ord. No. 2020-006, § 2, 7-21-2020; Ord. No. 2016-008, § 2, 6-21-2016)
+16.31.040 Special Standards Hospitality and Lodging Uses Within the Light Industrial
+Zone
+A. Siting
+1. Hotels/motels within the Light Industrial zone must be sited within 1/4 mile from the
+General Commercial and/or Retail Commercial zone.
+B. Development and Design
+1. The development of hotels/motels in the Light Industrial zone shall use the urban
+design standards in SZCDC Section 16.90.20.D.6.a—c. As an alternative to the stan-
+dards in Section 16.90.20.D.6.a—c the commercial design review matrix may be applied
+(Section 16.90.020.D.6.d). A development must propose a minimum of sixty (60)
+percent of the total possible points to be eligible for exemption from the standards in
+Section 16.90.020.D.6.a—c.
+2. A hotel/motel shall provide a minimum of 200 square feet of interior floor area for
+conference and/or meeting rooms, exclusive of dining, breakfast and lobby areas.
+(Ord. No. 2020-006, § 2, 7-21-2020)
+Editor’s note— Ord. No. 2020-006, § 2, adopted July 21, 2020, amended the Code by renumbering former §§ 16.31.040—
+16.31.070 as §§ 16.31.050—16.31.080, and adding a new § 16.31.040.
+16.31.030
+324Supp. No. 22
+16.31.060
+16.31.050 Employment Industrial (EI) Restrictions
+A. Use Restrictions
+1. Retail and professional services that cater to daily customers, such as restaurants and
+financial, insurance, real estate, legal, medical and dental offices, shall be limited in the
+EI zone.
+a. New buildings for stores, branches, agencies or other retail uses and services shall
+not occupy more than five thousand (5,000) square feet of sales or service area in a
+single outlet and no more than twenty thousand (20,000) square feet of sales or
+service area in multiple outlets in the same development project, and
+b. New buildings for stores, branches, agencies or other retail uses and services shall
+not be located on lots or parcels smaller than five acres in size. A "development
+project" includes all improvements proposed through a site plan application.
+2. Notwithstanding the provisions of Section 16.31.050 "Commercial Nodes Use Restric­
+tions," commercial development permitted under 16.31.050(l)(a) may only be pro­
+posed concurrent with or after industrial development on the same parcel. Commercial
+development may not occur prior to industrial development on the same parcel.
+B. Land Division Restrictions
+1. Lots of record prior to October 5, 2010 that are smaller than the minimum lot size
+required in the EI zone may be developed if found consistent with other applicable
+requirements of Chapter 16.31 and this Code. Further subdivision of lots smaller than
+three acres shall be prohibited unless Section 16.31.050 applies.
+2. Lots or parcels larger than fifty (50) acres may be divided into smaller lots and parcels
+pursuant to a planned unit development approved by the city so long as the resulting
+division yields at least one lot or parcel of at least fifty (50) acres in size.
+3. Lots or parcels fifty (50) acres or larger, including those created pursuant to subsection
+(2) above, may be divided into any number of smaller lots or parcels pursuant to a
+planned unit development approved by the city so long as at least forty (40) percent of
+the area of the lot or parcel has been developed with industrial uses or uses accessory to
+industrial use.
+(Ord. No. 2020-006, § 2, 7-21-2020; Ord. No. 2016-008, § 2, 6-21-2016; Ord. No. 2012-011, § 2,
+8-7-2012)
+Note-Former§ 16.31 040. See editor's note,§ 16 31.040
+16.31.060 Tonquin Employment Area (TEA) Commercial Nodes Use Restrictions
+A. Within the Tonquin Employment Area (TEA), only commercial uses that directly support
+industrial uses located within the TEA are permitted as conditional uses.
+B. Commercial development, not to exceed a total of five contiguous acres in size, may be
+permitted.
+C. Commercial development may not be located within three hundred (300) feet of SW 124th
+Avenue or SW Oregon Street, and must be adjacent to the proposed east-west collector
+street.
+(Ord. No. 2020-006, § 2, 7-21-2020; Ord. No. 2016-008, § 2, 6-21-2016; Ord. No. 2012-011, § 2,
+8-7-2012)
+Note-Former§ 16.31.050. See editor's note,§ 16.31.040.
+325 Supp. No 19
+
+16.31.070
+16.31.070 Community Design
+For standards relating to off-street parking and loading, energy conservation, historic
+resources, environmental resources, landscaping, access and egress, signs, parks and open space,
+on-site storage, and site design, the applicable provisions of Divisions V, VIII and IX will apply.
+(Ord. No. 2020-006, § 2, 7-21-2020; Ord. No. 2016-008, § 2, 6-21-2016; Ord. No. 2012-011, § 2,
+8-7-2012)
+Note-Former§ 16.31.060. See editor's note.§ 16.31.040.
+16.31.080 Floodplain
+Except as otherwise provided, Section 16.134.020 shall apply.
+(Ord. No. 2020-006, § 2, 7-21-2020; Ord. No. 2016-008, § 2, 6-21-2016; Ord. No. 2012-011, § 2,
+8-7-2012)
+Note-Former 9 16.31.070. See editor's note,§ 16.31.040
+Supp No. 19 326

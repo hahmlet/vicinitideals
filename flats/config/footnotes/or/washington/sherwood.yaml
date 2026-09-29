@@ -1,0 +1,99 @@
+# Sherwood Zoning and Community Development Code (Municode publication 3865,
+# Supplement No. 24) and Ordinance 2022-004, Exhibit 1. Draft, cloud session
+# 2026-09-29. Nothing here is verified.
+#
+# The census finds one notes block in the Sherwood documents: the seven
+# notes under the 16.12.030 residential standards table. Their markers are
+# printed at the head of the row they qualify ("5 30 20 20 14 14 14" is the
+# front yard row under note 5), so the census counts the bodies as unmarked;
+# the rows each note sits on were read off the table by eye and are named
+# in the rulings.
+#
+# WHAT THE CENSUS STILL MISSES, none of which reaches the pod:
+# - sdc.16.22.commercial L448-L469 and L606-L622: the notes of the
+#   commercial use table and the commercial dimensional table. The use-table
+#   markers are glued to the column heads ("OCNC1RC GC") and the rows, and
+#   the census sees neither block. Note 1 sends NC to the NC special
+#   criteria (16.22.050); the others qualify non-dwelling uses and the
+#   commercial heights. The multi-family row the layer quotes carries its
+#   own numbered conditions in the cell and is read there.
+# - sdc.16.31.industrial L107-L200: markers 3, 5, 6, 7, 9 and 10 in the
+#   industrial use table, on fueling stations, business services,
+#   marijuana facilities, tool rental, storage and building maintenance.
+#   The bodies were not found by the census. No dwelling row carries one.
+# - sdc.16.14.residential-design L169: "D. Detailed design1", a heading's
+#   footnote marker in the design standards. The standards the layer holds
+#   from 16.14 are 16.14.010 F (front-yard parking) and the garage limit
+#   comment; neither is under D.
+# - ord.2022-004.16.14.030 L42 and L101: "{X1+X2}" and "width x1 width x2"
+#   in the driveway figure, read as markers. They are the figure's labels.
+notes:
+
+  # --- sdc.16.12.residential.txt (16.12.030 table notes) ---
+  - quote: "or/washington/sherwood/sdc.16.12.residential.txt#L444"
+    digest: "be33eb6c0d9a"
+    state: dismissed
+    reason: >-
+      Note 1 sits on the Townhome row of minimum lot area and lets interior
+      townhome lots differ in size so long as the lots average no more than
+      1,500 square feet. Townhomes, each unit on its own lot, are not the
+      pod, which is screened as a quadplex on one lot under the Quadplex row.
+  - quote: "or/washington/sherwood/sdc.16.12.residential.txt#L446"
+    digest: "97f6f4355a04"
+    state: dismissed
+    reason: >-
+      Note 2 sits on the minimum lot width at the building line and lets a
+      cul-de-sac lot be narrower where that is needed for the rear yard. It
+      relaxes a minimum the layer holds as a hard figure, so ignoring it can
+      only turn a lot RED that the code might pass, never the reverse. The
+      layer has no cul-de-sac fact; the note is a layer-wide NOT ENCODED
+      comment.
+  - quote: "or/washington/sherwood/sdc.16.12.residential.txt#L448"
+    digest: "4575ae5dddf0"
+    state: encoded
+    encoded_as: >-
+      max_height_ft and max_height_stories held together in VLDR, VLDR_PUD,
+      LDR, MDRL and HDR (30 feet or 2 stories; 40 feet or 3 stories), each
+      of which the screen applies, so the lesser governs; MDRH holds the 35
+      feet only, since its story figure is two and a half and the stories
+      field takes whole numbers
+    reason: >-
+      Note 3 says the maximum height is the lesser of the feet and the
+      stories the row prints.
+  - quote: "or/washington/sherwood/sdc.16.12.residential.txt#L449"
+    digest: "7378fe85f9a6"
+    state: dismissed
+    reason: >-
+      Note 4 sits on the row for chimneys, solar or wind devices and aerials
+      and lets such structures exceed the height limits with a conditional
+      use permit under Chapter 16.62. Not the pod; the dwelling height row
+      is read in the layer.
+  - quote: "or/washington/sherwood/sdc.16.12.residential.txt#L452"
+    digest: "c781e9defaf7"
+    state: dismissed
+    reason: >-
+      Note 5 sits on the front yard row and bars, in MDRL, MDRH and HDR, the
+      reductions for architectural features that 16.50.050 would otherwise
+      allow. The layer encodes no projection allowance in any zone, so the
+      front setback is already held whole; the note takes away a relief the
+      layer never gives.
+  - quote: "or/washington/sherwood/sdc.16.12.residential.txt#L454"
+    digest: "4d725cdb32ef"
+    state: encoded
+    encoded_as: >-
+      setback_side_ft 5 in the six residential zones, whose quote carries
+      this note beside the row
+    reason: >-
+      Note 6 sits on the interior side yard row and says no adjustment or
+      variance to it is allowed. The screen applies neither anywhere, so the
+      note changes nothing the layer does; it is quoted so a reviewer sees
+      the 5 feet cannot be argued down.
+  - quote: "or/washington/sherwood/sdc.16.12.residential.txt#L456"
+    digest: "75e933a0690d"
+    state: dismissed
+    reason: >-
+      Note 7 sits on the Townhome row of the interior side yard and waives
+      the side yard between attached townhomes in one townhome block. The
+      pod is a quadplex on one lot, whose side yard is the row above it (5
+      feet), and a quadplex has no neighbouring unit on another lot to be
+      attached to.

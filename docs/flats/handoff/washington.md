@@ -4,16 +4,18 @@ Branch `flats/washington-draft`. Written for the local agent, who has not
 seen the cloud session. Scope and traps: [counties/washington.md](../counties/washington.md).
 Rules: [ENCODING_RULEBOOK.md](../ENCODING_RULEBOOK.md), [CLOUD_COUNTY_BRIEF.md](../CLOUD_COUNTY_BRIEF.md).
 
-Last updated: 2026-09-29, checkpoint 6. Three layers are finished as
+Last updated: 2026-09-29, checkpoint 7. Four layers are finished as
 drafts, with rulebook steps 1-10 and 12 done for each:
 
 - the unincorporated county (all 42 codes on the county's zoning map);
 - Hillsboro (all 37 zones of Table 12.01.200-1, plus four rulings for the
   map's other codes);
 - Beaverton (all 28 districts of BDC 10.25, plus two rulings for the map's
-  other codes).
+  other codes);
+- Sherwood (21 zones, the codes on the city's zoning map that the code sets
+  standards for, plus 14 rulings for the map's other codes).
 
-The other six cities have not been started; section 1 says what the scout
+The other five cities have not been started; section 1 says what the scout
 found for each. Every value is `draft`; nothing is `verified`.
 
 **Read this first about Beaverton.** No Beaverton lot can come back GREEN
@@ -24,6 +26,20 @@ zone's setbacks, lot size and height. The fact it turns on
 not assume, so every lot the pod otherwise fits reads UNKNOWN. That is
 deliberate; see Questions for Steph.
 
+**Read this first about Sherwood.** Two readings decide most Sherwood
+lots, and both are the strict one:
+
+- 16.68.030 ("Building Design on Infill Lots") is applied to every lot,
+  not only to infill lots. Its first sentence names every structure over
+  24 feet, and the pod is 26. That brings a floor area ratio in LDR, MDRL,
+  MDRH and HDR, and a side setback of 6 feet instead of 5. At LDR's
+  7,000 sq ft minimum lot the ratio allows 3,500 sq ft of floor, and the
+  pod has 4,000 to 4,032, so an LDR lot needs about 8,064 sq ft.
+- A lot in a residential PUD never comes back GREEN. The PUD permits middle
+  housing only as its approved plan allows, and nothing reads the plan.
+
+See Doubts and Questions for Steph.
+
 ## 1. Cities
 
 | Jurisdiction | State |
@@ -33,12 +49,12 @@ deliberate; see Questions for Steph.
 | Beaverton | Draft done, steps 1-10 and 12. 17 documents (16 slices of the Development Code and the county's Urban Planning Area Agreement), 28 zones, 2 map codes ruled (WAcnty, ROW). Development Code as the encodeplus export printed it on 2026-09-28, through Ord. 4879 of April 2026. `apps2.beavertonoregon.gov` refused (CONNECT 502); nothing needed was there |
 | Tigard | Not started. **Refused:** the code is on eCode360 (`https://ecode360.com/43691505`), which answered 403 (Cloudflare) to curl and WebFetch; the city site answered 403 (Akamai). City GIS unreachable: `maps.tigard-or.gov` and `svr.tigardmaps.com` fail TLS (legacy renegotiation, then an untrusted chain), `gis.tigard-or.gov` CONNECT 502. No workaround was tried. Metro's regional zoning layer (`CITY='Tigard'`) carries the current code names |
 | Forest Grove | Not started. **Refused:** the code is only on American Legal (`https://codelibrary.amlegal.com/codes/forestgrove/latest/forestgrovedev_or/0-0-0-4`), which answered 403 to curl and WebFetch; there is no whole-code PDF. City zoning layer reachable (`maps.forestgrove-or.gov/server/rest/services/ForestGrove/Zoning/FeatureServer/16`, field `zoning_code`) |
-| Sherwood | Not started. Code found: Municode publication 3865, Supplement 24, through Ord. 2026-001 (932 pages). City zoning layer `services5.arcgis.com/ikEzR7lqVIlrcVFn/.../Planning/FeatureServer/2`, field `CODE`, with interim `UGA` and `Unannex` and county codes on unannexed land |
+| Sherwood | Draft done, steps 1-10 and 12. 18 documents (15 slices of the Zoning and Community Development Code, Municode publication 3865, Supplement 24, through Ord. 2026-001; 3 slices of Ordinance 2022-004, for pages the Municode PDF drops), 21 zones, 14 map codes ruled (Old Town, OS, UGA, Unannex and ten county or neighbouring-city codes on unannexed land). City zoning layer `services5.arcgis.com/ikEzR7lqVIlrcVFn/.../Planning/FeatureServer/2`, field `CODE`. Nothing refused |
 | Cornelius | Not started. **Refused:** Code Publishing now points to eCode360 (`https://ecode360.com/CO4396`), which answered 403 (Cloudflare); `www.ci.cornelius.or.us` failed TLS. No city zoning layer; Metro's is stale (no R-10). The city's Zoning Map 2025 PDF is reachable. The AGOL "Cornelius Zoning Map" is Cornelius, North Carolina |
 | King City | Not started. Code found: Municode publication 3913, Supplement 16, August 2026 (742 pages). City zoning layer on AGOL (`King_City_Current_and_Future_Zoning_Map_WFL1/FeatureServer/1`, field `ZONECLASS`); the `(WC)` codes are county zoning kept. The single-use residential table (16.84.010) has no triplex or fourplex row; Kingston Terrace (16.114) does |
 | Durham | Not started. Code found: Development Code revised 2025-11-13, a 137-page PDF (`https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf`). No city GIS; Metro has five codes. Middle housing is permitted in SDR with no quadplex rows |
 
-The six "not started" rows come from a scout run on 2026-09-29 that
+The five "not started" rows come from a scout run on 2026-09-29 that
 looked for each city's code and zoning map. It committed nothing. The
 copies it downloaded were in the cloud session's scratchpad and are not on
 the branch. The refusals in the table were recorded, not worked around.
@@ -284,6 +300,123 @@ reaches the pod:
 
 Failed fetches for Beaverton: none. `apps2.beavertonoregon.gov` refused
 the scout (CONNECT 502) and was not needed.
+
+### Sherwood
+
+Eighteen documents, stored under
+`flats/provenance/docs/or/washington/sherwood/`, all `extraction: plain`,
+all retrieved 2026-09-29.
+
+Fifteen are slices of the Sherwood Zoning and Community Development Code
+(Municipal Code Title 16), Municode publication 3865
+(`https://api.municode.com/PublicationPdfDownload/3865`), Supplement No. 24,
+May 2026, "Covering Ordinances through 2026-001, passed February 3, 2026".
+The PDF is the whole municipal code (932 pages); Title 16 starts near page
+267. Slices held:
+
+- 16.04 (the district list at 16.04.010, the urban growth area at
+  16.04.040) and 16.10 (definitions);
+- 16.12 (residential: uses 16.12.020, standards 16.12.030) and 16.14
+  (residential building design);
+- 16.22 (commercial), 16.31 (industrial) and 16.36 (institutional and
+  public);
+- 16.40 (planned unit development);
+- 16.50 (accessory structures), 16.58 (vision clearance) and 16.68
+  (infill);
+- 16.94 (parking), 16.96 (on-site circulation) and 16.106
+  (transportation facilities);
+- 16.162 (the Old Town overlay).
+
+**The Municode PDF drops pages.** It leaves out printed pages 296.1-296.2
+and 296.18.1-296.18.10. They carry 16.12.030 A and B (the general standards
+and the Sufficient Infrastructure rule), the "Minimum lot areas" heading of
+the 16.12.030 C table, and all of 16.14.030 A after A.2 (the triplex and
+quadplex driveway and access rules). The Municode history notes name
+Ordinance 2022-004 as the latest amendment to both sections. So the other
+three documents are slices of Ordinance 2022-004, "Amending Code Housing
+Choices", Exhibit 1 (the clean text), from the city's own site
+(`https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf`):
+
+- `ord.2022-004.16.12.030` (16.12.030 A and B);
+- `ord.2022-004.16.12.030-c` (the first page of the C table, with its
+  "Minimum lot areas" heading);
+- `ord.2022-004.16.14.030` (16.14.030, the additional triplex and quadplex
+  design standards).
+
+The ordinance PDF is a scan with an OCR text layer, so the quotes carry OCR
+artefacts ("lnfrastructure", "sta¡rs"). The words are the ordinance's. It
+is the text as adopted in 2022, not as it stands now; whether anything
+later amended those pages is a doubt.
+
+How the slices are cut:
+
+- Each Municode slice runs from a chapter heading the PDF prints once to
+  the next chapter's. A plain "Chapter 16.12" is not unique ("Chapter
+  16.120" contains it, and the text cites chapters by number), so most
+  slices start on the chapter's title line in capitals.
+- `allow_thin: true` on four slices, each read whole before the flag went
+  on: 16.04 (sixty lines, a list of district names), 16.94 (a two-column
+  table that breaks every cell to a word a line), and the two short
+  ordinance slices of 16.12.030.
+
+Warnings from the fetcher:
+
+- `api.municode.com` is in `OFFICIAL`. `www.sherwoodoregon.gov` is not:
+  `authority_for` returns `unknown` for the ordinance URL, so the values
+  quoting the three ordinance slices (the driveway, corner-access and
+  alley-access defaults, and every minimum lot area) cannot be promoted
+  to `verified` until it is added. `sources.py` is off limits here; see
+  Owed locally.
+
+Not stored:
+
+- 16.46 (manufactured home parks), 16.82 (conditional uses), 16.88 (use
+  classifications and interpretations), 16.89 (the residential design
+  checklist) and 16.90 (site planning). Each is ruled in the layer's
+  `crossrefs:` block; none sets a figure the pod is screened on.
+- 16.134 (floodplain). Ruled `narrows_only`: it can take ground from a lot,
+  not give it.
+- The Transportation System Plan, which the street definitions of 16.10
+  defer to for street classes, and which sets the right-of-way widths
+  16.106 dedicates.
+- The Sherwood Comprehensive Plan, named in the definitions.
+
+Figures the layer cannot read:
+
+- the CFEC Parking Delineated Area map at the end of 16.94.020;
+- the 16.68.030 side yard plane drawing ("see example below"), whose text
+  is read;
+- the 16.14.030 driveway figure.
+
+**The footnote census.** It found 7 notes in the Sherwood documents, all
+in one block, under the 16.12.030 residential standards table. Every one is
+ruled in `flats/config/footnotes/or/washington/sherwood.yaml`:
+
+- 5 dismissed, with a reason each: note 1 (townhome lot averaging), note 2
+  (narrower cul-de-sac lots, a relief), note 4 (chimneys and similar over
+  the height), note 5 (no front-yard reduction for architectural features
+  in MDRL, MDRH and HDR), note 7 (townhome side yards);
+- 2 encoded, and both confirm against the layer (`applied`): note 3 ("the
+  lesser of feet or stories", so both are held) and note 6 (no adjustment or
+  variance to the interior side yard, quoted on it);
+- none unmeasured, so Sherwood adds nothing to `caps.json`.
+
+The table prints each note's marker at the head of the row it qualifies
+("5 30 20 20 14 14 14" is note 5 and six front yards), so the census reads
+the bodies as unmarked. The row each note sits on was read off the table
+by eye, and the ruling names it.
+
+The file's header lists what the census still misses. None of it reaches
+the pod:
+
+- the notes of the commercial use and dimensional tables (16.22, L448-L469
+  and L606-L622). Their markers are glued to the column heads ("OCNC1RC");
+- six markers in the industrial use table (16.31, L107-L200), none on a
+  dwelling row;
+- "D. Detailed design1" in 16.14, a heading's marker;
+- two labels of the 16.14.030 driveway figure read as markers.
+
+Failed fetches for Sherwood: none.
 
 ## 3. Zones
 
@@ -579,6 +712,122 @@ The code's other district-like tokens are ruled in `test_districts.py`
   60.05.25.13.D;
 - THPRD, the Tualatin Hills Park & Recreation District.
 
+### Sherwood
+
+The zone keys are the codes on the city's own zoning layer
+(`services5.arcgis.com/ikEzR7lqVIlrcVFn` Planning FeatureServer layer 2,
+field `CODE`), spelled as the layer spells them (`LDR_PUD` but
+`MDRH-PUD`). The layer prints 35 codes: 21 are encoded as zones and 14 are
+ruled. Lots reach the layer by the taxlots' `JURIS_CITY` = `SHERWOOD`.
+
+What the pod is here. 16.10.020 defines a Quadplex as "Four (4) attached
+dwelling units, in any configuration, located on a single lot or parcel".
+The residential use table (16.12.020 A) prints "Triplex and Quadplex P" in
+all five residential districts. The commercial, industrial and IP use tables
+have no such row, and each ends "Uses listed in other sections of this
+code, but not within this specific table are prohibited".
+
+Layer-wide values (`defaults`):
+
+- a parking minimum of 1 a unit. 16.94.020 Table 1 counts a quadplex's
+  stalls by lot area, "4 spaces total" at 7,000 sq ft or more, and every
+  residential zone asks at least 7,000 sq ft of a quadplex lot;
+- no parking maximum: Table 1 prints "None" for a quadplex in both parking
+  zones, held `exempt`;
+- a driveway approach of at most 20 ft (16.14.030 A.3, a shared approach);
+- access from the street of lowest classification, and from the alley
+  where there is one (16.14.030 A.5.a);
+- no parking in the front yard (16.14.010 F). The front yard is the whole
+  ground between the front lot line and the building (16.10.020 "Yard"), not
+  just the setback;
+- a corner lot has as many front lot lines as it has street frontages
+  (16.10.020 "Lot Line, Front"), held as `front_lot_line_corner: both`.
+
+A corner lot is defined (16.10.020 "Lot, Corner": "at the intersection of
+two or more streets, other than an alley"). A street includes "a public or
+private road, easement or right-of-way", so a private drive counts
+(`drives_count: true`) and an alley does not. No angle test.
+
+**The pod on one lot (10).** `quadplex_allowed: true`, with no variants:
+
+- VLDR, LDR, MDRL, MDRH, HDR, and VLDR_PUD, which the dimensional table
+  prints as a column of its own:
+
+  | Zone | Min lot (sq ft) | Width / frontage / depth (ft) | Front / street side / garage / rear (ft) | Height | Max FAR |
+  |---|---|---|---|---|---|
+  | VLDR | 40,000 | 60 / 25 / 80 | 30 / 20 / 35 / 20 | 30 ft or 2 stories | none |
+  | VLDR_PUD | 10,000 | 60 / 25 / 80 | 20 / 20 / 20 / 20 | 30 ft or 2 stories | none |
+  | LDR | 7,000 | 60 / 25 / 80 | 20 / 20 / 20 / 20 | 30 ft or 2 stories | 0.50 |
+  | MDRL | 7,000 | 50 / 25 / 80 | 14 / 15 / 20 / 20 | 30 ft or 2 stories | 0.55 |
+  | MDRH | 7,000 | 50 / 25 / 80 | 14 / 15 / 20 / 20 | 35 ft | 0.60 |
+  | HDR | 7,000 | 50 / 25 / 80 | 14 / 15 / 20 / 20 | 40 ft or 3 stories | 0.65 |
+
+- The interior side setback is 5 ft in the table and **loads as 6**. It
+  carries 16.68.030 B.1 as a step-back: half a foot further in for every
+  foot over 24 ft (`height_ft: 24`, `rise_per_ft: 2`), and the loader
+  applies it to the pod's 26 ft (`before_step_back` keeps the 5). Note 6
+  forbids adjusting or varying the side yard, and is quoted on it.
+- MDRH prints "35 feet or 2.5 stories" and holds the 35 ft only. The stories
+  field takes whole numbers, and the pod is two stories (the Hillsboro
+  precedent).
+- The floor area ratios are 16.68.030 A's, which VLDR is not on. The pod's
+  4,000 to 4,032 sq ft of floor needs a lot of about 8,064 sq ft in LDR and
+  7,331 sq ft in MDRL. In MDRH and HDR the 7,000 sq ft minimum lot is
+  larger than the ratio needs.
+- No density figure reaches the pod. 16.12.010 F.1: "Maximum density
+  standards shall not be applied to duplex, triplex, quadplex or cottage
+  cluster development", and each district's minimum is stated "except
+  middle housing types". Both density fields are `exempt` in every zone.
+
+**Only as a PUD's plan allows (5).** VLDR_PUD, LDR_PUD, MDRL_PUD,
+MDRH-PUD and HDR_PUD admit the pod, with the permission qualified by
+`site_specific_limitation`. 16.40.050 A permits "middle housing dwelling
+types" in a Residential PUD "when approved as part of a Final Development
+Plan", and 16.40.040 C makes a change of use a major change, heard as a new
+application. Nothing measures what a plan approved, so no PUD lot comes back
+GREEN. LDR_PUD, MDRL_PUD, MDRH-PUD and HDR_PUD are `like:` their base zone
+(16.40.050 C.3: lot size and setbacks "consistent with" the underlying
+zone) and carry only the use row. VLDR_PUD has its own column in the table.
+
+**Refused (11).** `quadplex_allowed: false` with the use table's cite and
+no dimensions:
+
+- Commercial (16.22): OC, NC, RC, GC. No triplex or quadplex row; the
+  Multi-Family row (five or more units) is "only permitted on one or more of
+  the upper floors of a building and only when a non-residential use ... is
+  located on the ground floor".
+- Industrial (16.31): LI, GI, EI. One dwelling for security only.
+- IP (16.36): one security dwelling, conditional.
+- Non-residential PUDs: OC_PUD, RC_PUD, LI_PUD. 16.40.060 A permits what the
+  underlying zone permits outright. C.2 lets the plan waive "type of
+  dwelling unit ... and use restrictions", which is the plan's choice, not
+  the lot's right. The refusal quotes both.
+
+**Ruled, not encoded (14)**, under `zone_rulings`, all `unencodable`:
+
+- **Old Town** (1 feature, 44.7 acres): the Old Town Overlay (16.162) over
+  RC, HDR and MDRL. The map prints no base zone under it, so which of the
+  three governs a lot cannot be read.
+- **OS** (1 feature, 4.3 acres): open space, not a district of 16.04.010.
+- **UGA** (2 features, 14.0 acres) and **Unannex** (34 features, 190.3
+  acres): unannexed land inside the growth boundary, with no code.
+- Ten codes painted on unannexed land: county AF-5 (11 features, 272.0
+  acres), AF-10 (5, 219.2), AF-20 (5, 560.0), EFU (1, 106.1), FD-10 (5,
+  6.0), FD-20 (8, 325.1) and R-9 (1, 5.9); Clackamas County's RRFF5 (2,
+  31.0); and Tualatin's MG (1, 1,156.0) and MBP (2, 50.2).
+
+None is a `pocket` of the county layer. Beaverton keeps the county's
+zoning after annexation (BDC 10.40.1); Sherwood does not. 16.04.040 leaves
+unannexed land to the Urban Planning Area Agreement and gives annexed land
+an interim city zone. So a lot under one of these codes is either outside
+the city (and not this layer's) or waiting for a zone. See Doubts and
+Questions.
+
+The code's other district-like tokens are ruled in `test_districts.py`
+`RULINGS`: OT (the overlay's own abbreviation), CIVIC (a use-table heading)
+and TEA (the Tonquin Employment Area, a plan area named in an industrial
+note).
+
 ## 4. Refusals and absences
 
 Layer-wide NOT ENCODED entries in `_unincorporated.yaml`, each with its quote
@@ -766,6 +1015,81 @@ Multi-Dwelling rows admit dwellings only above or within a commercial use
   lot line as the variant.
 - No parking maximum ("N/A") for a quadplex in RMA, RMB, RMC and CM-RM.
   These are held `exempt`.
+
+### Sherwood
+
+Layer-wide NOT ENCODED entries in `sherwood.yaml`, each quoted in a comment
+beside `definitions` or `defaults`, or between `defaults` and `zones`:
+
+- **The alley as a front lot line.** A corner lot has as many front lines as
+  street frontages, and a street includes an alley, so by the words an alley
+  line is a front line too. The envelope reads an alley line as a rear or
+  side line, as in Hillsboro. A doubt.
+- **The CFEC parking relief** (16.94.020 A). No parking is required within
+  half a mile of a frequent transit corridor, or in the Sherwood Town Center
+  and a quarter mile around it (a map). No condition carries either
+  distance, so the stricter Table 1 minimum is held everywhere.
+- **Driveways at most 50 percent of the street frontage** (16.14.030 A.2).
+  No field holds a driveway share of frontage. `parking_area_max_frontage_pct`
+  counts garages, parking and manoeuvring together, which is a different
+  measure. Two 20 ft approaches on the 25 ft minimum frontage are over it,
+  and one shared 20 ft approach needs 40 ft of frontage.
+- **Driveway spacing** (16.14.030 A.4) and the collector and arterial
+  access standards (A.5.b). Both turn on the street's class and the
+  neighbours' driveways.
+- **Sufficient Infrastructure** (16.12.030 B.3). A middle housing building
+  permit needs the City Engineer's verification of sewer, water, emergency
+  access and storm drainage. As in the county layer, the applicant may
+  provide it; it is not a use gate. A doubt for lots far from a main.
+- **Garages at most 60 percent of the street-facing elevation** (16.14.010
+  B.2). A share of the building's own face, and the pod parks in a rear
+  court. The rest of Table 16.14-1 (windows, entrances, detail) is design.
+- **The cul-de-sac lot width note** (note 2). It states no figure, and the
+  table's width is held on every lot.
+- **The clear vision area** (16.58.010, 20 ft along each street from a
+  corner). The smallest pair of street yards (14 and 15 ft) puts the
+  building's corner outside the triangle, so it never reaches the pod.
+  The 25 ft between a corner curb and a driveway places the curb cut, which
+  nothing draws.
+- **The infill relaxations** (16.68.020 and 16.68.050: lot area and
+  dimensions to 85 percent, the front yard by up to 6 ft). Each is the
+  Approval Authority's finding on a land division, not a right.
+- **16.68.030 B.2 and C**: side elevations over 750 sq ft broken into
+  planes, and garage orientation on lots 60 ft wide or less. Design.
+- **Right-of-way dedication and street improvements** (16.106). They push
+  the building back by a width the Transportation System Plan sets, which
+  nothing measures. A doubt, as in the county layer.
+- **Projections into yards** (16.50). Nothing here reads a projection
+  allowance, and note 5 refuses front-yard reductions for architectural
+  features in MDRL, MDRH and HDR.
+
+Held, the strict reading: 16.68.030 A and B.1 on every lot, not only on
+infill lots (Zones, Doubts, Questions).
+
+Step 10, the prohibition grep for "quadplex", "fourplex", "plex" and
+"middle housing" over all 18 documents. The hits are:
+
+- the residential use table and dimensional table (16.12);
+- the definitions (16.10);
+- the residential design standards (16.14 and the 16.14.030 ordinance
+  slice);
+- the parking table (16.94) and on-site circulation (16.96);
+- one line each in 16.40 (the Residential PUD's permitted uses), 16.106
+  (street improvements) and the ordinance's 16.12.030 (Sufficient
+  Infrastructure);
+- three "complex" in 16.162, which are not the word.
+
+None prohibits the pod in a zone this layer admits it in. The commercial,
+industrial and IP chapters never name it; their refusal is the closing
+"not within this specific table are prohibited".
+
+"The code states nothing":
+
+- No lot coverage standard in any residential district.
+- No density figure for a quadplex (16.12.010 F). Both density fields are
+  held `exempt`.
+- No parking maximum for a quadplex ("None"). Held `exempt`.
+- No floor area ratio in VLDR or VLDR_PUD (16.68.030 A lists LDR to HDR).
 
 ## 5. Doubts
 
@@ -1088,6 +1412,110 @@ Ledgers and readers:
   wrapped-line guard. 70.15.10.5 (small sites of before 1999) was not
   read. Pinned so it is seen; the reader fix is under Owed locally.
 
+### Sherwood
+
+Reading the code:
+
+- **How far 16.68.030 reaches.** The chapter is "Infill Development
+  Standards" and the section "Building Design on Infill Lots". 16.68.020
+  A.5 names it for lots created below the zone's minimum area in a
+  land division of under five acres, which reads narrower. But the
+  section's own first sentence is "Structures exceeding twenty four (24)
+  feet in height shall conform to the following standards", and the
+  residential table sends MDRH and HDR multi-family side yards over 24 ft to
+  "§ 16.68 Infill" with no infill test. The layer takes the wide reading:
+  the floor area ratio in LDR, MDRL, MDRH and HDR, and the side yard plane
+  in every residential zone. If the narrow reading is right, the ratio
+  goes, and the side setback is 5 ft, not 6. The ratio is the one that
+  decides lots: in LDR it needs about 8,064 sq ft where the zone asks
+  7,000, and in MDRL about 7,331. Question for Steph.
+- **The ordinance text may not be current.** 16.12.030 A and B, the
+  "Minimum lot areas" heading, and 16.14.030 A.3 onward are read from
+  Ordinance 2022-004 as adopted. The Municode history notes name 2022-004 as
+  the latest amendment to 16.12.030 and 16.14.010. 16.14.030's own history
+  note is on a dropped page, so a later amendment to it cannot be ruled out
+  from what was fetched.
+- **The district list in 16.04.010 is stale.** It was printed in Supplement
+  6 (April 2007). It still lists Office Retail (OR), which the 2012
+  consolidation of 16.22 removed (the commercial table has OC, NC, RC and
+  GC columns only), and it omits EI, which 16.31 and the map both carry.
+  The zone list was taken from the map and the chapters instead.
+- **Reading the dimensional table.** In the setback rows a leading digit is
+  a note marker, not a column: "5 30 20 20 14 14 14" is note 5 and six front
+  yards, in the column order "VLDR VLDR-PUD LDR MDRL MDRH HDR" that the
+  Municode reprint's header prints. The Municode PDF drops the table's first
+  page, so its lot-area rows print without their heading. The heading and
+  the rows were matched against the ordinance's copy.
+- **MDRH's "35 feet or 2.5 stories".** Only the 35 ft is held. The pod's two
+  stories are under 2.5 either way, so this moves no lot.
+- **The alley as a front lot line** (Refusals). If an alley line is a front
+  line, an alley-backed lot owes a front yard at the back as well, and the
+  screen passes lots the code might not.
+- **Driveways at most 50 percent of frontage** is not held, so a lot on a
+  frontage under 40 ft can pass the screen and fail the code.
+- **CFEC.** The stricter parking minimum is held everywhere. Lots near a
+  frequent transit corridor or in the Town Center may owe no parking at all,
+  so the screen can fail a lot the code passes. Never the reverse.
+- **Sufficient Infrastructure** (16.12.030 B.3) is not a use gate here. A
+  lot far from a sewer or water main may not get a permit.
+- **Similar-use interpretations.** 16.22.020 C, 16.31.020 C and 16.36.020 C
+  let the city admit an unlisted use "consistent or associated with" the
+  listed ones through Chapter 16.88. That is a discretionary finding, not a
+  right, and the refusals stand.
+
+PUDs:
+
+- **Final Development Plans.** Every residential PUD admits the pod only as
+  its plan allows, so no PUD lot comes back GREEN. A plan may name the
+  housing types it allows. Nobody has read one.
+- **16.40.050 C.3** lets interior PUD lots use the development's average lot
+  size, and C.1 lets density pool across a PUD that spans zones. Neither is
+  encoded; the PUD blocks take the base zone's figures.
+- **16.40.060 C.2** lets a non-residential PUD's plan waive "type of
+  dwelling unit ... and use restrictions". The three non-residential PUDs
+  refuse. A plan that did waive them would be the plan's, not the lot's.
+
+The map's other codes:
+
+- **Unannexed land and `JURIS_CITY`.** The 14 ruled codes include 11 painted
+  on land the city's map calls unannexed (Unannex, and ten county and
+  neighbouring-city codes). If those taxlots' `JURIS_CITY` is not
+  `SHERWOOD`, this layer never sees them and the rulings are never reached;
+  the county layer screens them. If it is `SHERWOOD`, they stay open. Not
+  checked against the taxlots; that is county-map work.
+- **MG, 1,156 acres,** is the largest feature on the map. It reads as
+  Tualatin's General Manufacturing code, which suggests land the
+  neighbouring city plans for. It is not Sherwood's code.
+- **Old Town** (44.7 acres) covers downtown HDR and MDRL lots the pod might
+  fit. The map prints no base zone under the overlay, so they stay open
+  until the base zone is mapped. 16.162's own use and height exceptions are
+  not encoded.
+
+Ledgers and readers:
+
+- **Exemptions stated on the wrong sentence.** The exemptions ledger reads
+  four of the twelve density exemptions as `stated`, but on a neighbouring
+  sentence ("Minor land partitions shall be exempt from the minimum density
+  requirement"), not on the clause that does the work. The other eight read
+  `numeric`. A reviewer signing a density exemption should read 16.12.010 F
+  and the zone's purpose clause, not the ledger's line.
+- **Attribution.** `attribution --layer or/washington/sherwood` reports that
+  44 of 109 values cite a section their text is not in. All 44 were checked
+  by hand, and none is a wrong cite:
+  - 29 cite 16.12.030 and are read as 16.12.010. The reader goes by the
+    page's running header, and the one printed above the table
+    (`sdc.16.12.residential.txt` L130) reads "16.12.010". The 16.12.030
+    heading itself is on a page the Municode PDF drops (296.1);
+  - 12 are read as 16.12.030 and 16.68, because the setback rows print "§
+    16.68 Infill" in their cells;
+  - 2 parking values quote across the 16.94.010 and 16.94.020 boundary;
+  - 1, `parking_front_prohibited`, is read as "296.11", a page number the
+    reader takes for a section.
+- **Fractions printed as digits.** The PDF prints "one-half (1/2)" with the
+  "1/2)" on the next line, and "two and one-half (21/2) feet" in 16.58.010.
+  The `missed` ledger reads the second as a 2 ft height. Neither is a
+  figure the layer holds.
+
 ## 6. Questions for Steph
 
 - **North Bethany R-25+.** The county's densest North Bethany district allows
@@ -1196,20 +1624,79 @@ Ledgers and readers:
   tell which neighbour a lot has, so it uses the larger figures everywhere.
   This is the same question as Hillsboro's SCR-DNC above.
 
+### Sherwood
+
+- **The infill design section: every lot, or only infill lots?** Sherwood
+  has a section headed "Building Design on Infill Lots". Its first sentence
+  applies it to every building over 24 feet tall, but the section before it
+  says it is for small lots created in small land divisions. The draft
+  applies it to every residential lot. That has two effects. The side yard
+  grows from 5 feet to 6, because the pod is 26 feet tall. And the section's
+  cap on floor area to lot area applies: the pod's two floors need a lot of
+  about 8,064 sq ft in LDR, where the zone's own minimum is 7,000, and
+  about 7,331 sq ft in MDRL. If the section only covers infill lots, lots
+  between 7,000 sq ft and those figures would pass. Which reading does the
+  city use?
+- **Planned developments.** Every residential planned development on the
+  map allows middle housing only if its approved plan does. Nobody has read
+  those plans, so the draft never passes a lot in one outright: a lot the
+  building fits comes back as "needs a closer look". Does the city keep the
+  approved plans somewhere they could be read, or a list of which allow
+  four-unit buildings?
+- **Parking near transit.** Under the state's climate rules, Sherwood
+  requires no parking within half a mile of a frequent transit corridor, or
+  in and around the Town Center. The draft asks for one space per home
+  everywhere, so it can fail a lot near transit that the city would pass,
+  never the reverse. Is there a map of those corridors and the Town Center
+  worth drawing for the screen?
+- **Driveways and narrow lots.** Driveways may take up at most half of a
+  lot's street frontage. A shared 20-foot driveway needs 40 feet of
+  frontage, and the zones allow lots as narrow as 25 feet along the street.
+  The screen cannot yet say this, so it will pass some narrow lots the city
+  would not. Is it worth adding, or is this rare enough to leave for the
+  closer look?
+- **An alley as a front.** Read word for word, Sherwood's code makes a lot
+  line along an alley a front line, so a lot backed by an alley would owe
+  a front yard on both sides. The draft treats an alley line as a side or
+  rear, as in Hillsboro. Is that how the city reads it?
+- **Land the city's map shows but has not annexed.** Sherwood's zoning map
+  paints county zones, and the codes of neighbouring cities, on land it
+  marks as not yet annexed. The largest piece, about 1,156 acres, carries
+  what looks like Tualatin's industrial code. The draft leaves those lots to
+  the county's rules if the county's records put them outside Sherwood,
+  and unscreened if they put them inside. Nobody has checked which. Is that
+  the right approach?
+- **Sewer and water.** A middle housing permit in Sherwood needs the city
+  engineer to confirm the lot has enough sewer, water, storm drainage and
+  emergency access. The draft does not screen for this. Is there a utility
+  map worth adding, or is this left for the closer look, as in the county?
+- **Old Town.** About 45 acres of downtown are in the Old Town overlay. The
+  map shows the overlay but not the residential zones under it, so those
+  lots are left unscreened for now. Does the city have a map of the zones
+  under Old Town?
+
 ## 7. Tests
 
-Last full run before the Beaverton commit (`uv run pytest flats/tests -q
--n auto`, all three layers, 2026-09-29):
+Last full run before the Sherwood commit (`uv run pytest flats/tests -q
+-n auto`, all four layers, 2026-09-29):
 
-**1 failed, 3641 passed, 5 skipped in 354 s.** `uv run ruff check flats/
-scripts/`: all checks passed. (Before the Hillsboro commit it was 1 failed,
-3620 passed, 5 skipped.)
+**1 failed, 3668 passed, 5 skipped in 405 s.** `uv run ruff check flats/
+scripts/`: all checks passed. (Before the Beaverton commit it was 1 failed,
+3641 passed, 5 skipped; before the Hillsboro commit 1 failed, 3620 passed,
+5 skipped.)
+
+The first Sherwood run had 4 failed, 3663 passed: the expected one below,
+the alley pin (Sherwood is a sixth city that sends the drive to an alley),
+and two reader checks that misread Sherwood's text (a floor area ratio
+printed as a percent, and "the lesser of feet or stories" read as a lost
+number). Those three were closed by the pin update and two reader changes;
+see Pinned counts and Reader changes.
 
 The one failure is expected and is not fixed here:
 
 - `test_unweighed_layers.py::test_no_encoded_layer_is_outside_the_corpus_that_ranks_the_work`
-  lists `or/washington/_unincorporated`, `or/washington/hillsboro` and
-  `or/washington/beaverton`. The
+  lists `or/washington/_unincorporated`, `or/washington/hillsboro`,
+  `or/washington/beaverton` and `or/washington/sherwood`. The
   coverage ledger that ranks the work has no Washington County lots, because
   building it needs the county map and quadfit, which are local work (Owed
   locally). It will fail for every Washington layer this branch adds, until
@@ -1249,17 +1736,27 @@ Re-run on the Beaverton tree (2026-09-29): **4 failed, 312 passed.** The
 same four tests, failing on the same Hillsboro rows. Beaverton adds no
 corner variant and no new failure.
 
+Re-run on the Sherwood tree (2026-09-29): **4 failed, 312 passed in 247 s.**
+The same four tests, failing on the same Hillsboro rows. Sherwood holds no
+corner variant (its corner lot changes no figure) and adds no failure.
+
 ### Pinned counts and sets moved on this branch
 
-- `test_port.py`: 22 layers (21 jurisdictions and the state layer), 379
+- `test_port.py`: 23 layers (22 jurisdictions and the state layer), 400
   zones. Unincorporated took it to 20 and 314; Hillsboro to 21 and 351;
-  Beaverton to 22 and 379.
-- `test_refusals.py`: notes 134, comments 215, tests 18 (unincorporated
+  Beaverton to 22 and 379; Sherwood to 23 and 400.
+- `test_refusals.py`: notes 134, comments 227, tests 18 (unincorporated
   had taken comments from 127 to 148 and notes to 122; Hillsboro to 194
-  and 129; Beaverton added 21 comments and 5 notes, listed in the test).
-- `test_exemptions.py`: stated 370, numeric 55, marker 0, dash 2, silent 2
+  and 129; Beaverton added 21 comments and 5 notes; Sherwood 12 comments,
+  each listed in the test).
+- `test_exemptions.py`: stated 375, numeric 63, marker 0, dash 2, silent 2
   (272 after unincorporated, 338 after Hillsboro). Beaverton's 32 are all
   `stated`: 18 minimum lot areas, 10 maximum heights, 4 parking maximums.
+  Sherwood's 13 are 12 densities and the quadplex parking maximum. The 8
+  `numeric` are the six density maximums and VLDR's and VLDR_PUD's
+  minimums; the 5 `stated` are the parking maximum and four density
+  minimums, and those four are stated on a neighbouring sentence, not the
+  one that does the work (Doubts).
 - `test_districts.py`: four unincorporated rulings (ASC 2 overlay; RPZ,
   THPRD, TVWD not zones), TO:R80-120 in `BY_HAND`, and the Hillsboro
   rulings (ANX, CO, and the two alias spellings "SID I-P" and "SC-BP").
@@ -1267,9 +1764,14 @@ corner variant and no new failure.
   export breaks across two lines ("C-" over "WS", "CM-", "SC-", "TC-",
   "HDR", "MU", "RM", "WS"), four landscape buffer types of Table
   60.05.25.13.D (FB-5, FB-10, FBN-10, FBN-20), and THPRD, the park district.
+  Sherwood adds three: OT (the Old Town overlay's own abbreviation), CIVIC
+  (a use-table heading) and TEA (the Tonquin Employment Area, a plan area
+  in the industrial table's note 1).
 - `test_alley.py`: lines keyed to the rear line 28 + 19 + 1 (Hillsboro
   SCR-OTC's rear-loaded yard), and Hillsboro added to the layers whose
-  alley access is required (12.50.715 C.2.c.i).
+  alley access is required (12.50.715 C.2.c.i). Sherwood joined that set
+  as the sixth (16.14.030 A.5.a, Ordinance 2022-004: "For lots or parcels
+  abutting an alley, access must be taken from the alley").
 - `test_routing.py` `OPEN`: two Hillsboro rows, 12.61.400 to 12.23.300 and
   12.61.400 to 12.50.845. Why they stay open is under Owed locally.
   Beaverton adds two: 20.05.15 to 20.25.05 (the single-room-occupancy
@@ -1277,6 +1779,10 @@ corner variant and no new failure.
   in the three zones that refuse). `FOLLOWED` gains five Beaverton rows:
   the four food-cart notes pointing at their own tables, and
   70.15.10 to 70.15.10.5, a false close pinned so it is seen (Doubts).
+  Sherwood adds one `OPEN` row, 16.40.050 to 16.40.040: a Residential PUD's
+  density may be pooled across the zones it spans (16.40.040 D). The PUD
+  blocks take the base zone's figures, a quadplex's density is exempt, and
+  every PUD lot is qualified on its plan, so no value quotes it.
 - `test_height.py`: `STOREY_FLOOR_ABOVE_TWO` = Hillsboro MU-VTC (3 stories
   inside a Center Core, held everywhere).
 - `test_min_height.py`: `FLOORS_ABOVE_THE_POD` pins the five Hillsboro
@@ -1288,17 +1794,23 @@ corner variant and no new failure.
   now Wilsonville OTR and Hillsboro SCC-DT (Figure 12.61.400-D).
 - `test_definitions_register.py`: Hillsboro added to the layers that define
   a corner lot (12.01.500, not greater than 135 degrees), then Beaverton
-  (Chapter 90, "less than 135 degrees"; the one-degree gap is a doubt).
+  (Chapter 90, "less than 135 degrees"; the one-degree gap is a doubt),
+  then Sherwood (16.10.020, two or more streets "other than an alley"; no
+  angle test).
 - `test_gresham_last_notes.py`: the parking-ceiling layers are now four,
   with Hillsboro (Table 12.50.320-1, "Quadplex 2" in Zone A). The test was
   renamed from "the three" to "the four", and to "the five" with
   Beaverton (Table 60.30.10.5.A, 1.8 a unit on the "Other Zone" row).
   (Checkpoint 5 of this note named these two files the wrong way round;
   corrected at checkpoint 6.)
-- `test_readiness.py`: 43 tests, with the new
+- `test_readiness.py`: 44 tests, with the new
   `test_a_city_that_has_no_standards_requiring_parking_states_zero`
-  (Hillsboro) and `test_a_two_digit_marker_is_cut_only_where_its_note_is_quoted`
-  (Beaverton). See Reader changes.
+  (Hillsboro), `test_a_two_digit_marker_is_cut_only_where_its_note_is_quoted`
+  (Beaverton) and `test_a_ratio_printed_as_a_percent_still_reads`
+  (Sherwood). See Reader changes.
+- `test_orphaned.py`: 5 tests, with the new
+  `test_a_comparison_is_not_a_measurement` (Sherwood). The pinned orphan is
+  still Happy Valley's line alone. See Reader changes.
 - `test_footnotes.py`: five new tests for the Beaverton reader changes:
   `test_footnotes_is_a_notes_heading`,
   `test_the_beaverton_page_footer_does_not_end_a_notes_list`,
@@ -1308,6 +1820,14 @@ corner variant and no new failure.
 - `test_applied.py`: 60 to 85 rows, Beaverton's 21 encoded sentences in
   25 printings, every one confirmed. Three first read `broken` or
   `unreadable` and their claims were rewritten (the test says which).
+  Then 87 with Sherwood's notes 3 and 6. Note 3 first read `broken`, because
+  its claim named MDRH's 2.5 stories, which the layer holds nowhere; the
+  claim was rewritten in words.
+- `test_glossary.py`: `test_an_encoded_definition_lands_on_a_captured_entry`
+  now takes the first span of a comma-separated quote. Sherwood's corner-lot
+  quote is "L488,L885-L886" (the definition, then the street definition its
+  private drives come from), and the test's `int()` failed on the comma. A
+  test change, not a reader change.
 - `test_crossrefs.py`: the Washington County-Beaverton Urban Planning Area
   Agreement joins the documents that answer for no code section (it numbers
   its parts in Roman numerals).
@@ -1320,6 +1840,17 @@ corner variant and no new failure.
   was checked by hand (NS `setback_front_max_ft`, cited 60.05.15, "found"
   60.05.35): the quoted lines are 60.05.15.6, and the cite is right. The
   rest are unread; a reviewer signing a value should check its row.
+- Sherwood commit (2026-09-29): `gaps.json` and `exemptions.csv`
+  regenerated again. `gaps.json` gains a Sherwood section with 44
+  `misattributed` rows and no gaps; nothing else in the file moved but the
+  digest. The run reports 3 gaps across 23 layers, all `unmapped`, all
+  from before this branch. One row was checked by hand (HDR
+  `max_height_ft`, cited 16.12.030, "found" 16.12.010): the `16.12.010` the
+  ledger found is the Municode page running head printed at line 130 of
+  the 16.12 document, directly above the table, and the table is 16.12.030's.
+  The cite is right. Most of the Sherwood rows are this running head or a
+  quote that joins a table row to a note in 16.68 or 16.94; the rest are
+  unread.
 - `data/flats/crossrefs.csv` regenerated over the whole corpus (`python -m
   flats.encode.crossrefs --binding`). Besides the Washington rows it
   rewrites some Clackamas, Fairview and Portland rows. Those come from
@@ -1347,6 +1878,15 @@ corner variant and no new failure.
   height, the parking maximum (1.8 and the four N/A zones), RMB and RMC's
   height plane, downtown holding the setback owed beside RC-DT, and nothing
   `verified`.
+- `test_washington_sherwood.py` (13 tests, 25 cases): the 35 map codes as
+  21 zones and 14 rulings, the pod on one lot in the five residential zones
+  and their PUDs, each PUD admitting it only as its plan allows (five
+  parametrised cases), each PUD taking its base zone's standards (four
+  cases), the base zones not qualified, refusals carrying the use row only,
+  the 5 ft side yard loading as 6 under 16.68.030 B.1 (six cases), the
+  floor area ratios, MDRH holding feet only, the quadplex parking minimum
+  and exempt maximum, the corner lot, no map code sent to the county, and
+  nothing `verified`.
 
 ### Ledgers (step 9)
 
@@ -1431,6 +1971,55 @@ below):
   maximums (16), parking kept off the frontage (17) and off the street
   (17), vehicle frontage share (16), and driveway approach widths (4). They
   are the 60.05 and Chapter 70 design standards; a wrong one would not show.
+
+Sherwood (all run on 2026-09-29):
+
+- `crossrefs --binding`: none open. The first run found 14 beside a number
+  the screen uses; all 14 are closed in the layer's `crossrefs` block, each
+  with a note:
+  - 4 are not references: "2022106.13.2022" and "06.13.2022" are the file
+    path printed in the ordinance's page footer, and 16.22.080 and
+    16.31.100 are editor's notes on repealed chapters;
+  - 46 is OAR 660 Division 46, the state's middle housing rule, which
+    caps what the city may require;
+  - 16.68.020 A is in the store; the ledger did not match the letter to
+    its heading. It is the infill land division's own test (Refusals);
+  - 16.82, 16.88, 16.89 and 16.89.020 are procedure (conditional uses,
+    use classification and interpretation, and the Residential Design
+    Checklist, which can only relax a design standard case by case);
+  - 16.46, 16.90 and 16.90.020 are about another building (manufactured
+    home parks, the site plan review that multi-family housing gets, and
+    the commercial design matrix LI applies to hotels);
+  - 16.134.020 (floodplain) only narrows a lot.
+  Unfiltered, 42 stay open, none beside a figure the screen uses.
+- `uncited`: 35 statements of 257 measured lines not quoted by any value.
+  Mostly Old Town's design heights (16.162), the telecommunication tower's
+  70 ft, accessory structures, townhouse frontages, and the driveway 50
+  percent (Refusals).
+- `missed`: 35 statements naming a screened field; 16 state a figure the
+  corpus has never held. 22 sit in sections nothing has been quoted from,
+  one in a section read for something else (16.40.050's "within one
+  hundred (100) feet of a residential zone", a distance, not a height).
+  The rest are Old Town's cornice and arcade heights, 16.50's accessory
+  structures, the clear vision area and the industrial lot width, none on
+  the pod's path.
+- `applied`: encoded 2, confirmed 2 (notes 3 and 6). Note 3 first read
+  `broken`; its claim was rewritten (Tests, `test_applied.py`).
+- `qualified`: 81 Sherwood rows, none unread. The first run showed every
+  row "7 unread of 7" until the footnote file's census was completed.
+  `qualified --write-caps` left `caps.json` unchanged: no Sherwood note is
+  ruled `unmeasured`.
+- `attribution`: 44 of 109 values cite a section their text is not in. All
+  44 were checked by hand and none is a wrong cite (Doubts).
+- `waved`: 5 Sherwood dismissal cards over 405 qualified values, in the
+  corpus-wide set of 1,054. None was re-read blind; that is the local
+  second reading.
+- `stale`, `travelled`, `unheld`: no Sherwood rows.
+- `consumed` (corpus-wide, by field): two Sherwood values sit in fields
+  the screen does not read, `parking_front_prohibited` and
+  `driveway_approach_max_width_ft` (16.14.030's 20 ft approach), and the
+  six residential zones' 20 ft garage entrance setbacks are in a field the
+  screen declares it leaves out. None of them can change an answer today.
 
 ## 8. Owed locally
 
@@ -1573,6 +2162,68 @@ below):
 - **The blind second reading, re-screen and promotion**, including the 258
   Beaverton `waved` cards.
 
+### Sherwood
+
+- **`flats/provenance/sources.py` `OFFICIAL`.** Add
+  `www.sherwoodoregon.gov`, the city's own site, which holds Ordinance
+  2022-004. Until then the three ordinance slices fetch as "unknown
+  source", and every value quoting one (every minimum lot area, the
+  driveway, corner-access and alley-access defaults) cannot be verified.
+  Not edited here (off limits).
+- **`DECLARED_OWING`: nothing.** The resolver was run on every Sherwood
+  zone on 2026-09-29, and none owes a required field.
+- **The coverage ledger with Sherwood lots**, which `test_unweighed_layers`
+  waits on (Tests).
+- **The pages the Municode PDF drops** (296.1-296.2, 296.18.1-296.18.10).
+  The layer reads them from Ordinance 2022-004 as adopted. Someone with
+  the city's current code (Municode's web page for 16.12.030 and 16.14.030,
+  or the city's own copy) should confirm nothing later amended them
+  (Doubts).
+- **Planned development plans.** Until someone has the Final Development
+  Plans, or a list of which allow a quadplex, `site_specific_limitation`
+  caps every residential PUD lot (VLDR_PUD, LDR_PUD, MDRL_PUD, MDRH-PUD,
+  HDR_PUD). Question for Steph.
+- **Map ingest for the 14 ruled codes**, and a check of `JURIS_CITY` on the
+  taxlots under them. If the unannexed codes (Unannex, AF-5, AF-10, AF-20,
+  EFU, FD-10, FD-20, R-9, RRFF5, MG, MBP) sit on taxlots the county does
+  not call `SHERWOOD`, this layer never sees them and whichever layer the
+  taxlot's jurisdiction names screens them. MG and MBP read as Tualatin's
+  codes and RRFF5 as Clackamas County's, so some of that land may not be in
+  Washington County's unincorporated layer either. UGA (a concept plan comes
+  first) and OS (no chapter sets its standards) need the same check.
+- **Old Town.** A map of the base zones under the overlay (HDR, MDRL and
+  RC by 16.162), so those lots can screen under their base zone. 16.162's
+  own use and height exceptions are not encoded.
+- **Registry facts the layer had to approximate** (a `flats/rules/` change,
+  not made):
+  - a transit distance or delineated-area fact for CFEC (half a mile of a
+    frequent transit corridor; the Town Center and a quarter mile around
+    it), so the parking minimum can go to zero there;
+  - a driveway share of frontage field (16.14.030 A.2, 50 percent), apart
+    from `parking_area_max_frontage_pct`;
+  - an alley-as-front-line reading of `front_lot_line_corner`, if Steph's
+    answer is that the city reads the words that way;
+  - if the narrow reading of 16.68.030 is right, an "infill lot" fact
+    (created below the zone's minimum in a land division under five acres)
+    to gate the floor area ratio and the side yard plane.
+- **Documents not stored** (listed under Documents). The Transportation
+  System Plan matters most: street classes decide the corner access street
+  and the right-of-way a lot dedicates. The CFEC map, the 16.68.030 drawing
+  and the 16.14.030 driveway figure are unread.
+- **Utilities.** Sufficient Infrastructure (16.12.030 B.3) needs sewer,
+  water and storm mains, which no screen layer has. Question for Steph.
+- **Readers, proposed not made:**
+  - `attribution`: a section read off the page's running header is wrong
+    where the heading's own page is missing (29 values read as 16.12.010),
+    and a page number ("296.11") is taken for a section (Doubts);
+  - `crossrefs`: the ordinance's scanned page footer prints a file path
+    ("2022106.13.2022", "06.13.2022") that reads as two section numbers. A
+    fetch-time strip in `fetch.py` would be the cleaner fix; off limits here;
+  - `missed`: a fraction the PDF prints as digits ("two and one-half (21/2)
+    feet") is read as the whole number before it.
+- **The blind second reading, re-screen and promotion**, including the 5
+  Sherwood `waved` cards.
+
 ## Reader changes (before and after)
 
 - `flats/encode/glossary.py` learned the CDC's hyphenated section numbers
@@ -1636,3 +2287,38 @@ Beaverton (all figures from 2026-09-29, over the whole corpus):
   ORDINANCES - PART 1", so the glossary reads only the definitions. Before:
   873 entries, 75 out of order, read as skimmed. After: 522 entries, 6 out
   of order, read whole.
+
+Sherwood (all figures from 2026-09-29, over the whole corpus of 23
+layers):
+
+- `flats/encode/readiness.py`: a new `states_as_percent`. Sherwood's
+  16.68.030 A caps floor area at "50% of lot area" in LDR (55, 60 and 65
+  percent in MDRL, MDRH and HDR). The field `max_far` is a ratio, so the
+  values are 0.5 to 0.65, and the quoted lines never print 0.5, so the
+  misquote check flagged all four. The new function accepts a line that
+  prints the value times 100 with a percent sign or word straight after
+  it, and only for a field whose kind is `ratio`, and only for a positive
+  value. A bare 50 still does not evidence 0.5, and a coverage (held in
+  percent already) is not touched. The different-unit check still runs
+  after it. Before: 4 misquotes across the corpus, all Sherwood (LDR,
+  MDRL, MDRH and HDR `max_far`), and Sherwood stood at the `misquoted`
+  rung. After: none, and Sherwood moves to `unsigned`, the rung the other
+  three Washington drafts stand on. No other layer's rung or misquote list
+  moved (a per-layer diff of all 23 before and after). New test
+  `test_a_ratio_printed_as_a_percent_still_reads`.
+- `flats/encode/orphaned.py`: a fourth exclusion, a comparison. Sherwood's
+  16.12.030 note 3 reads "Maximum height is the lesser of feet or
+  stories." That is the code's own wording (the row it notes prints "35
+  feet or 2.5 stories"), and no number is missing, but "of feet" read as a
+  lost numeral. `lesser` and `greater` now exclude the "of" they govern,
+  the way a counting noun ("the number of stories") already did, and the
+  module docstring says so. Before: 2 orphans across the corpus, Happy
+  Valley's pinned `16.22.residential.txt#L1138` and
+  `sdc.16.12.residential.txt#L448`. After: Happy Valley's alone. No phrase
+  "lesser of" or "greater of" followed by a unit word appears anywhere
+  else in the store, so nothing else could move. New test
+  `test_a_comparison_is_not_a_measurement`, which also checks that a
+  comparison word earlier in a line does not hide a real hole after it.
+- Not a reader change: `test_glossary.py`'s comma-separated quote is a
+  test change (Tests); the glossary reader already read Sherwood's
+  definitions.

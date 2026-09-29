@@ -1,0 +1,512 @@
+RESIDENTIAL LAND USE DISTRICTS*
+The residential districts are intended to promote the livability, stability and improvement of
+the City's neighborhoods.
+Sections:
+16.12.010  Purpose and Density Requirements
+16.12.020  Allowed Residential Land Uses
+16.12.030  Residential Land Use Development Standards
+16.12.040  Community Design
+16.12.050  Flood Plain
+16.12.060  Amateur Radio Towers/Facilities
+16.12.010 Purpose and Density Requirements
+A. Very Low Density Residential (VLDR)
+1. Standard Density
+The VLDR zoning district provides for low density, larger lot single-family housing and
+other related uses in natural resource and environmentally sensitive areas that warrant
+preservation but are otherwise deemed suitable for limited development. Standard
+density in the VLDR zone is 0.7 to 1 dwelling unit per acre (except middle housing types
+pursuant to 16.12.010.F).
+2. VLDR Planned Unit Development Density Standards
+Property in the VLDR zone that is developed through the Planned Unit Development
+(PUD) process under Chapter 16.40, if all floodplain, wetlands, and other natural
+resource areas are dedicated or remain in common open space, may develop to a density
+of 1.4 to 2.0 dwelling units per net buildable acre (except middle housing types pursuant
+to 16.12.010.F) under the following conditions:
+a. The minimum lot size is not less than 10,000 square feet;
+b. The following areas are dedicated to the public or preserved as common open space:
+floodplains under Section 16.134.020 (Special Resource Zones); natural resources
+areas as shown on the Natural Resources and Recreation Plan Map, attached as
+Appendix C, or as specified in Chapter 5 of the Community Development Plan;
+and wetlands defined and regulated under current Federal regulation and Division
+VIII of this Code; and
+c. The higher density development will better preserve natural resources as compared
+to one (1) unit per acre.
+*Editor’s note— Ord. No. 2011-03, § 2, adopted April 5, 2011, amended the Code by repealing former Ch. 16.12, §§ 16.12.010—
+16.12.070, in its entirety, and added a new Ch. 16.12. Former Ch. 16.12 pertained to the Very Low Density Residential zoning
+district, and derived from Ords. 86-851, 87-857, 88-919, 90-921, 1997-1019, 2000-1092, 2000-1108, 2003-1153, and 2006-021; and
+Ord. No. 2010-015, adopted October 5, 2010.
+
+294Supp. No. 22
+3. Southeast Sherwood Master Planned Unit Development
+a. Property in the VLDR zone that is developed through the Planned Unit Develop-
+ment process under Chapter 16.40 and is based on, and generally conforms to the
+concepts, goals and objectives of the SE Sherwood Master Plan may develop to a
+maximum density of four (4.0) dwelling units per net buildable acre (except middle
+housing types pursuant to 16.12.010.F).
+b. Development under Section 16.12.010.A.3 must generally follow the development
+pattern shown as Alternative B/C in the SE Sherwood Master Plan (2006) and
+address the following factors:
+(1) Varied lot sizes are allowed with a minimum lot area of 10,000 square feet if it
+can be shown that adequate buffering exists adjacent to developed properties
+with screening, landscaping, roadways or open space.
+(2) The open space areas as required by Chapter 16.40 (Planned Unit Develop-
+ment), where feasible, should include parks and pathways that are located
+within the general vicinity of Alternative B/C in the SE Sherwood Master Plan.
+(3) There is a pedestrian-friendly transportation system that links the site with
+nearby residential developments, schools, parks, commercial areas and other
+destinations.
+(4) The unique environmental opportunities and constraints identified in the SE
+Sherwood Master Plan.
+(5) The view corridors identified in the SE Sherwood Master Plan.
+(6) The housing design types that are compatible with both surrounding and
+existing development.
+c. A density transfer under Chapter 16.40.050.C.2. is not permitted for development
+under this Section 16.12.010.A.3.
+d. The Planning Commission will consider the specific housing design types identified
+and the preservation of the identified view corridors at the time of final develop-
+ment review to ensure compatibility with the existing and surrounding develop-
+ment.
+B. Low Density Residential (LDR)
+The LDR zoning district provides for single-family housing and other related uses with a
+density of 3.5 to 5 dwelling units per acre (except middle housing types pursuant to 16.12.010.F).
+Minor land partitions shall be exempt from the minimum density requirement.
+C. Medium Density Residential (MDRL)
+The MDRL zoning district provides for single-family and duplex housing, manufactured
+housing and other related uses with a density of 5.6 to 8 dwelling units per acre (except middle
+housing types pursuant to 16.12.010.F). Minor land partitions shall be exempt from the
+minimum density requirements.
+D. Medium Density Residential High (MDRH)
+The MDRH zoning district provides for housing and other related uses with a density of 5.5
+to 11 dwelling units per acre (except middle housing types pursuant to 16.12.010.F). Minor land
+partitions are exempt from the minimum density requirement.
+E. High Density Residential (HDR)
+16.12.010
+295 Supp. No. 21
+The HDR zoning district provides for higher density multi-family housing and other related
+uses with density of 16.8 to 24 dwelling units per acre (except middle housing types pursuant to
+16.12.010.F). Minor land partitions shall be exempt from the minimum density requirement.
+F . Density Standards for Middle Housing
+In the residential zones, density standards shall be applied to middle housing types as
+established here.
+1. Maximum density standards shall not be applied to duplex, triplex, quadplex or cottage
+cluster development.
+2. Cottage clusters must meet a minimum density of four (4) units per net buildable acre.
+3. For townhome development, the follow maximum densities shall apply:
+a. VLDR Zone: 4 units/acre
+b. VLDR PUD Zone: 8 units/acre
+c. SE Sherwood Master PUD Zone: 16 units/acre
+d. LDR Zone: 20 units/acre
+e. MDRL Zone: 25 units/acre
+f. MDRH Zone: 25 units/acre
+g. HDR Zone: 25 units/acre
+(Ord. No. 2022-004, § 2, 6-13-2022; Ord. No. 2021-010, § 2, 12-7-2021; Ord. No. 2015-003, § 2,
+3-17-2015; Ord. No. 2013-003, § 2, 9-3-2013; Ord. No. 2011-003, § 2, 4-5-2011)
+16.12.020 Allowed Residential Land Uses
+A. Residential Land Uses
+The table below identifies the land uses that are allowed in the Residential Districts. The
+specific land use categories are described and defined in Chapter 16.10.
+USES VLDR LDR MDRL MDRH HDR
+RESIDENTIAL
+• Single-Family Detached Dwellings P P P P P
+• Duplex P P P P P
+• Triplex and Quadplex P P P P P
+• Cottage Cluster P P P P P
+• Multi-Family Dwellings N N N P P
+• T ownhomes P P P P P
+• Planned Unit Developments (PUDs)-sub-
+ject to Chapter 16.40
+P P P P P
+• Manufactured Homes on Individual Lots P P P P P
+• Manufactured Home Park-subject to
+Chapter 16.46
+N N P P N
+• Accessory Dwelling Unit-subject to Chap-
+ter 16.52
+P P P P P
+• Group Homes
+1 P P P P P
+• Government-Assisted housing 2 P P P P P
+ACCESSOR Y USES
+16.12.010
+296Supp. No. 21
+Development Standard by
+Residential Zone- VLDR
+VLDR-
+PUD LDR MDRL MDRH HDR
+• Duplex 40,000 10,000 7,000 5,000 5,000 5,000
+• Triplex 40,000 10,000 7,000 5,000 5,000 5,000
+• Quadplex 40,000 10,000 7,000 7,000 7,000 7,000
+• Cottage Cluster 40,000 10,000 7,000 7,000 7,000 7,000
+• T ownhome
+1: A ver-
+age of
+1,500
+SF per
+unit
+A ver-
+age of
+1,500
+SF per
+unit
+A ver-
+age of
+1,500
+SF per
+unit
+A ver-
+age of
+1,500
+SF per
+unit
+A ver-
+age of
+1,500
+SF per
+unit
+A ver-
+age of
+1,500
+SF per
+unit
+• Multi-FamilyDwelling: for
+the first 2 units
+X X X X 8,000 8,000
+• Multi-Family Dwelling:
+each additional unit after
+first 2
+X X X X 3,200 1,500
+Minimum Lot width at
+front property line: (in feet)
+25 25 25 25 25 25
+Minimum Lot width at
+front property line: (in
+feet)—T ownhomes only
+20 20 20 20 20 20
+Minimum Lot width at
+building line
+2: (in feet)
+• Single Family Detached;
+Duplex; Triplex; Quadplex
+and Cottage Cluster
+60 60 60 50 50 50
+• T ownhome 20 20 20 20 20 20
+• Multi-Family dwelling X X X X 60 60
+Minimum Lot Depth 80 80 80 80 80 80
+Maximum Height (in feet)
+3
+• Cottage Clusters 1.5 sto-
+ries not
+to ex-
+ceed 25
+feet
+1.5 sto-
+ries not
+to ex-
+ceed 25
+feet
+1.5 sto-
+ries not
+to ex-
+ceed 25
+feet
+1.5 sto-
+ries not
+to ex-
+ceed 25
+feet
+1.5 sto-
+ries not
+to ex-
+ceed 25
+feet
+1.5 sto-
+ries not
+to ex-
+ceed 25
+feet
+All other dwelling types 30 feet
+or 2
+stories
+30 feet
+or 2
+stories
+30 feet
+or 2
+stories
+30 feet
+or 2
+stories
+35 feet
+or 2.5
+stories
+40 feet
+or 3
+stories
+• Amateur Radio T ower 70 70 70 70 70 70
+• Chimneys, Solar or Wind
+Devices, Radio and TV
+aerials
+4
+50 50 50 50 55 60
+16.12.030
+296.3 Supp. No. 21
+Development Standard by
+Residential Zone- VLDR
+VLDR-
+PUD LDR MDRL MDRH HDR
+Setbacks (in feet)
+• Front yard
+5 30 20 20 14 14 14
+• Front yard - Cottage Clus-
+ters only
+10 10 10 10 10 10
+• Face of garage 35 20 20 20 20 20
+• Interior side yard
+6
+• Single-Family De-
+tached; Duplex; Tri-
+plex; Quadplex; Cot-
+tage Cluster
+5 5 5 5 5 5
+• T ownhome
+7 5 5 5 5 5 5
+• Multi-Family Dwell-
+ing
+• 18 ft. or less in
+height
+X X X X 5 5
+• Between 18—24
+ft. in height
+X X X X 7 7
+• If over 24 ft. in
+height
+X X X X § 16.68
+Infill
+§ 16.68
+Infill
+• Corner lot street side
+• Single-Family De-
+tached; Duplex; Tri-
+plex; Quadplex;
+T ownhome
+20 20 20 15 15 15
+• Cottage Cluster 10 10 10 10 10 10
+• Multi-Family Dwell-
+ing
+X X X X 20 30
+• Rear yard 20 20 20 20 20 20
+• Rear yard - Cottage Clus-
+ters only
+10 10 10 10 10 10
+16.12.030
+296.4Supp. No. 21
+Development Standard by
+Residential Zone- VLDR
+VLDR-
+PUD LDR MDRL MDRH HDR
+Floor Area
+• Cottage Cluster 1
+st
+floor
+build-
+ing foot
+print
+less
+than
+900 sq.
+ft.
+2
+nd
+floor
+shall
+not
+exceed
+50% of
+square
+footage
+of the
+1
+st
+floor.
+1st
+floor
+build-
+ing foot
+print
+less
+than
+900 sq.
+ft.
+2
+nd
+floor
+shall
+not
+exceed
+50% of
+square
+footage
+of the
+1
+st
+floor.
+1st
+floor
+build-
+ing foot
+print
+less
+than
+900 sq.
+ft.
+2
+nd
+floor
+shall
+not
+exceed
+50% of
+square
+footage
+of the
+1
+st
+floor.
+1st
+floor
+build-
+ing foot
+print
+less
+than
+900 sq.
+ft.
+2
+nd
+floor
+shall
+not
+exceed
+50% of
+square
+footage
+of the
+1
+st
+floor.
+1st
+floor
+build-
+ing foot
+print
+less
+than
+900 sq.
+ft.
+2
+nd
+floor
+shall
+not
+exceed
+50% of
+square
+footage
+of the
+1
+st
+floor.
+1st
+floor
+build-
+ing foot
+print
+less
+than
+900 sq.
+ft.
+2
+nd
+floor
+shall
+not
+exceed
+50% of
+square
+footage
+of the
+1
+st
+floor.
+Footnote: If the lot is an irregular shape see definition for Lot Line, Rear, Section 16.10
+Definitions
+Notes:
+1. For townhomes, interior units may have different lot sizes than exterior or corner units,
+as long as the average of all lots is not greater than 1,500 square feet.
+2. Minimum lot width at the building line on cul-de-sac lots may be less than that required
+in this Code if a lesser width is necessary to provide for a minimum rear yard.
+3. Maximum height is the lesser of feet or stories.
+4. Some accessory structures, such as chimneys, stacks, water towers, radio or television
+antennas, etc. may exceed these height limits with a conditional use permit, per Chapter
+16.62 (Chimneys, Spires, Antennas and Similar Structures).
+5. Reductions in front yard setbacks for architectural features as described in 16.50.050
+are not permitted in the MDRL, MDRH, or HDR zoning districts.
+6. Adjustments and Variances to interior side yard setbacks for all housing types are not
+allowed.
+7. No side yard setback is required between attached townhomes within the same townhome
+block. The side yard setbacks in this table refer to the setbacks for the townhomes at
+each end of the townhome block on the side that is not attached to another townhome
+within the same townhome block.
+(Ord. No. 2022-004, § 2, 6-13-2022; Ord. No. 2021-010, § 2, 12-7-2021; Ord. No. 2018-007, § 2,
+10-2-2018; Ord. No. 2015-003, § 2, 3-17-2015; Ord. No. 2014-006, § 2, 3-4-2014; Ord. No.
+2012-006, § 2, 3-6-2012; Ord. No. 2011-003, § 2, 4-5-2011)
+16.12.030
+296.5 Supp. No. 21
+16.12.040 Community Design
+A. Residential garages shall meet the minimum design standards listed on the table below:
+Minimum Width Minimum Depth
+Minimum Garage
+Door Width
+One (1) Car Garage 12 ft. 20 ft. 8 ft.
+Two (2) Car Garage 18 ft. 20 ft. 16 ft.
+Three (3) Car Garage 26 ft. 20 ft. Single Door—8 ft.
+Double Door—16 ft.
+B. The vehicle parking area(s) shall be functional based on the minimum design standards
+listed on the table above, 16.12.040.A. Furnaces, stairs, etc. shall not be located within the
+garage designated parking areas.
+C. Residential Front-Y ard Landscaping—The front-yard area of a lot shall be fully land-
+scaped excluding paved off-street parking areas, paved pedestrian paths, and utility areas.
+Landscaping materials shall meet standards identified in Section 16.92.020 Landscaping
+Materials.
+D. For additional standards relating to off-street parking and loading, energy conservation,
+historic resources, environmental resources, landscaping, access and egress, signs, parks
+and open space, on-site storage, and site design, see Divisions V , VIII, IX.
+(Ord. No. 2021-010, § 2, 12-7-2021; Ord. No. 2011-003, § 2, 4-5-2011)
+16.12.050 Flood Plain
+Except as otherwise provided, Section 16.134.020 shall apply .
+(Ord. No. 2011-003, § 2, 4-5-2011)
+16.12.060 Amateur Radio Towers/Facilities
+A. All of the following are exempt from the regulations contained in this section of the Code:
+1. Amateur radio facility antennas, or a combination of antennas and support structures
+seventy (70) feet or less in height as measured from the base of the support structure
+consistent with ORS § 221.295.
+2. This includes antennas attached to towers capable of telescoping or otherwise being
+extended by mechanical device to a height greater than 70 feet so long as the amateur
+radio facility is capable of being lowered to 70 feet or less. This exemption applies only
+to the Sherwood Development Code and does not apply to the City of Sherwood
+Building Code or other applicable city, state, and federal regulations. Amateur radio
+facilities not meeting the requirements of this section must comply with Chapter
+16.12.030.C.
+B. Definitions
+1. Amateur Radio Services: Radio communication services, including amateur-satellite
+service, which are for the purpose of self-training, intercommunication, and technical
+investigations carried out by duly licensed amateur radio operators solely for personal
+aims and without pecuniary interest, as defined in Title 47, Code of Federal Regula-
+tions, Part 97 and regulated there under.
+2. Amateur Radio Facilities: The external, outdoor structures associated with an opera-
+tor's amateur radio service. This includes antennae, masts, towers, and other antenna
+support structures.
+(Ord. No. 2012-006, § 2, 3-6-2012)
+16.12.040
+296.6Supp. No. 21
+Chapter 16.14

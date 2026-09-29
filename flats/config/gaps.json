@@ -1,5 +1,5 @@
 {
-  "digest": "b7a941ef67d7408806cd016d82083ff6f6edc85e4b73fdfa59728856af836608",
+  "digest": "8611a38056184f8730e7da3a92397b49c75de4a4253c6362f9bb721fe140bd62",
   "layers": {
     "or": {
       "misattributed": [],
@@ -1891,6 +1891,321 @@
         }
       ],
       "label": "Hillsboro",
+      "counts": {},
+      "gaps": []
+    },
+    "or/washington/sherwood": {
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "parking_min_per_unit",
+          "claimed": "16.94.020",
+          "found": "16.94.010 16.94.020",
+          "quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L375-L398,L490,L502-L525,L560-L571"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "parking_max_per_unit",
+          "claimed": "16.94.020",
+          "found": "16.94.010 16.94.020",
+          "quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L490,L502-L525,L560-L571"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "parking_front_prohibited",
+          "claimed": "16.14.010 16.10.020",
+          "found": "16.14.010 296.11",
+          "quote": "or/washington/sherwood/sdc.16.14.residential-design.txt#L9-L11,L33-L35,L285-L288"
+        },
+        {
+          "zone": "HDR",
+          "field": "max_height_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L242-L244,L448"
+        },
+        {
+          "zone": "HDR",
+          "field": "max_height_stories",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L242-L244,L448"
+        },
+        {
+          "zone": "HDR",
+          "field": "min_frontage_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+        },
+        {
+          "zone": "HDR",
+          "field": "min_lot_depth_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+        },
+        {
+          "zone": "HDR",
+          "field": "min_lot_width_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_street_side_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+        },
+        {
+          "zone": "LDR",
+          "field": "max_height_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L233-L235,L448"
+        },
+        {
+          "zone": "LDR",
+          "field": "max_height_stories",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L233-L235,L448"
+        },
+        {
+          "zone": "LDR",
+          "field": "min_frontage_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+        },
+        {
+          "zone": "LDR",
+          "field": "min_lot_depth_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+        },
+        {
+          "zone": "LDR",
+          "field": "min_lot_width_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+        },
+        {
+          "zone": "LDR",
+          "field": "setback_rear_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+        },
+        {
+          "zone": "LDR",
+          "field": "setback_street_side_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+        },
+        {
+          "zone": "MDRH",
+          "field": "max_height_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L239-L241,L448"
+        },
+        {
+          "zone": "MDRH",
+          "field": "min_frontage_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+        },
+        {
+          "zone": "MDRH",
+          "field": "min_lot_depth_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+        },
+        {
+          "zone": "MDRH",
+          "field": "min_lot_width_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+        },
+        {
+          "zone": "MDRH",
+          "field": "setback_rear_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+        },
+        {
+          "zone": "MDRH",
+          "field": "setback_street_side_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+        },
+        {
+          "zone": "MDRL",
+          "field": "max_height_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L236-L238,L448"
+        },
+        {
+          "zone": "MDRL",
+          "field": "max_height_stories",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L236-L238,L448"
+        },
+        {
+          "zone": "MDRL",
+          "field": "min_frontage_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+        },
+        {
+          "zone": "MDRL",
+          "field": "min_lot_depth_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+        },
+        {
+          "zone": "MDRL",
+          "field": "min_lot_width_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+        },
+        {
+          "zone": "MDRL",
+          "field": "setback_rear_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+        },
+        {
+          "zone": "MDRL",
+          "field": "setback_street_side_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+        },
+        {
+          "zone": "VLDR",
+          "field": "max_height_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L227-L229,L448"
+        },
+        {
+          "zone": "VLDR",
+          "field": "max_height_stories",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L227-L229,L448"
+        },
+        {
+          "zone": "VLDR",
+          "field": "min_frontage_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+        },
+        {
+          "zone": "VLDR",
+          "field": "min_lot_depth_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+        },
+        {
+          "zone": "VLDR",
+          "field": "min_lot_width_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+        },
+        {
+          "zone": "VLDR",
+          "field": "setback_rear_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+        },
+        {
+          "zone": "VLDR",
+          "field": "setback_street_side_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+        },
+        {
+          "zone": "VLDR_PUD",
+          "field": "max_height_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448"
+        },
+        {
+          "zone": "VLDR_PUD",
+          "field": "max_height_stories",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448"
+        },
+        {
+          "zone": "VLDR_PUD",
+          "field": "min_frontage_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+        },
+        {
+          "zone": "VLDR_PUD",
+          "field": "min_lot_depth_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+        },
+        {
+          "zone": "VLDR_PUD",
+          "field": "min_lot_width_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.010",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+        },
+        {
+          "zone": "VLDR_PUD",
+          "field": "setback_rear_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+        },
+        {
+          "zone": "VLDR_PUD",
+          "field": "setback_street_side_ft",
+          "claimed": "16.12.030",
+          "found": "16.12.030 16.68",
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+        }
+      ],
+      "label": "Sherwood",
       "counts": {},
       "gaps": []
     }

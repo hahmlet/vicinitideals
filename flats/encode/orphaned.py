@@ -23,7 +23,7 @@ standard in it instead of two.
 What makes this checkable is that a code never writes a bare unit after a word
 that introduces a measurement. "of feet", "than feet", "at least percent",
 "exceed inches" are not English a drafter produces; they are English a lost
-numeral produces. Three things have to be excluded before that is true, and
+numeral produces. Four things have to be excluded before that is true, and
 each of them is a real sentence in this corpus rather than a hypothetical:
 
 **A number at the end of the line above.** Gresham's downtown and civic-
@@ -43,9 +43,15 @@ this check from one hit to 132, every one of them a sentence about how many
 dwellings or stalls something has. Only words that can *only* be a dimension
 earn a place: feet, inches, percent, stories, acres.
 
+**A comparison between units.** Sherwood's 16.12.030 note 3, added on
+2026-09-29: "Maximum height is the lesser of feet or stories." The row above
+it prints "35 feet or 2.5 stories", and the note names the two measures
+rather than a number in either. "lesser" and "greater" govern it the way a
+counting noun does, and are excluded the same way.
+
 The corpus separates as cleanly as it does for ragged tables -- exactly one
-document, and every other candidate excluded by one of the three rules above
--- which is why this can be a test rather than a report.
+document, and every other candidate excluded by one of the rules above --
+which is why this can be a test rather than a report.
 """
 
 from __future__ import annotations
@@ -68,6 +74,10 @@ _LEAD = r"(?:of|than|least|exceed|exceeds)"
 #: Nouns after which "of <unit>" is a count and not a measurement.
 _COUNT = r"(?:number|amount|total|quantity|percentage|share|count|fraction|variety|types?)"
 
+#: Words after which "of <unit>" chooses between measures, as in "the lesser
+#: of feet or stories".
+_COMPARE = r"(?:lesser|greater)"
+
 ORPHAN = re.compile(rf"\b({_LEAD})\s+({_UNIT})\b", re.IGNORECASE)
 
 #: A magnitude at the end of a line. Spelled numbers stop at ``hundred`` on
@@ -79,7 +89,7 @@ _TRAILING = re.compile(
     re.IGNORECASE,
 )
 
-_COUNTING = re.compile(rf"\b{_COUNT}\s*$", re.IGNORECASE)
+_COUNTING = re.compile(rf"\b(?:{_COUNT}|{_COMPARE})\s*$", re.IGNORECASE)
 
 
 @dataclass(frozen=True)

@@ -776,6 +776,40 @@ def cites_a_different_unit(text: str, field: str, value) -> bool:
     return seen
 
 
+#: A percent sign or word straight after a number.
+_PERCENT_AFTER = re.compile(r"\s*(?:%|percent\b|per\s*cent\b)", re.I)
+
+
+def states_as_percent(text: str, field: str, value) -> bool:
+    """Whether the line prints a ratio field's value as a percent of it.
+
+    Sherwood's 16.68.030 A caps floor area at "50% of lot area" in LDR: a
+    floor area ratio of 0.5, held as one because the field is a ratio. The
+    line never prints 0.5, so the four values it sets read as misquoted --
+    the check disagreeing with the typography, as it did for ".80", rather
+    than with the encoding.
+
+    Narrow on purpose. Only a ``ratio`` field, only a positive value, and only
+    a printing with the percent mark after it: a bare 50 in a ratio's quote
+    is still a misquote.
+    """
+    kind = FIELDS[field].kind if field in FIELDS else None
+    if kind != "ratio" or isinstance(value, bool):
+        return False
+    if not isinstance(value, (int, float)) or value <= 0:
+        return False
+    share = round(float(value) * 100, 6)
+    for found in _NUMBER.finditer(text):
+        try:
+            if float(found.group(0).replace(",", "")) != share:
+                continue
+        except ValueError:
+            continue
+        if _PERCENT_AFTER.match(text, found.end()):
+            return True
+    return False
+
+
 def quotes_the_number(
     text: str, value, *, spaced: bool = False, glued: bool = False
 ) -> bool:
@@ -869,9 +903,10 @@ def readiness_for(
             no_evidence.append((zone_code, name))
             continue
         doc_id = quote.split("#", 1)[0]
-        if not quotes_the_number(
+        states = quotes_the_number(
             cited, number, spaced=doc_id in spaced, glued=doc_id in glued
-        ) or cites_a_different_unit(cited, name, number):
+        ) or states_as_percent(cited, name, number)
+        if not states or cites_a_different_unit(cited, name, number):
             misquoted.append((zone_code, name))
 
     if not parts:

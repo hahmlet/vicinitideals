@@ -358,10 +358,13 @@ def test_four_cities_send_the_driveway_to_the_alley_in_the_corpus(layers) -> Non
     # 12.50.715 C.2.c.i takes a middle-housing lot's access "from an
     # improved abutting alley" where there is one. No quadfit jurisdiction
     # carries Washington County yet, so its id is written out.
+    # A sixth the same day, Sherwood, the same session: 16.14.030 A.5.a
+    # (Ordinance 2022-004) says "For lots or parcels abutting an alley,
+    # access must be taken from the alley".
     assert says_true == {
         layer_id_for("portland"), layer_id_for("gresham"),
         layer_id_for("wilsonville"), layer_id_for("west_linn"),
-        "or/washington/hillsboro",
+        "or/washington/hillsboro", "or/washington/sherwood",
     }
     # Milwaukie's alley sentence places a stall; it does not route the drive.
     assert layers[layer_id_for("milwaukie")].defaults.get("parking_alley_access_required") is None
