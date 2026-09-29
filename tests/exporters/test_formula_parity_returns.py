@@ -230,6 +230,17 @@ async def test_return_dollars_evaluates_to_engine_value(
     assert checked > 0, "expected ≥1 row to be checked"
 
 
+@pytest.mark.xfail(
+    strict=True,
+    reason=(
+        "DEGENERATE FIXTURE found 2026-09-28: the seed has zero Uses, so "
+        "the workbook's Levered Cash Flow has no negative year (Y0 = "
+        "+$500k debt proceeds, no acquisition outflow) and IRR / equity "
+        "multiple fall to 0 through IFERROR, while the engine reports IRR "
+        "341.26%. Give the seed a real acquisition Use, then re-check "
+        "parity before removing this xfail."
+    ),
+)
 async def test_combined_irr_evaluates_close_to_engine_value(
     session: AsyncSession, tmp_path: Path
 ):
