@@ -571,6 +571,12 @@ _NO_STANDARD = tuple(
         r"\bnot\s+required\b",
         r"\bno\s+[a-z][a-z ]{0,24}?\s+(?:is|are)\s+required\b",
         r"\bthere\s+is\s+no\s+[a-z]+\s+requirement\b",
+        # "Development inside the UGB is exempt from minimum parking
+        # standards" -- Washington County CDC 413-6.1, which says it in the
+        # heading of the only table that states a count. Scoped to "exempt
+        # from minimum" rather than to "exempt", which reaches sentences that
+        # take something off a list without removing a floor.
+        r"\bexempt\s+from\s+minimum\b",
         # "may be reduced to zero" -- Happy Valley's townhouse footnote, and
         # the one spelled number `_says` cannot see, because it is not
         # followed by a unit the way "five feet" is.

@@ -1,0 +1,1733 @@
+label: Washington Unincorporated
+kind: unincorporated
+eligible: true
+notes: >-
+  DRAFT, cloud session 2026-09-28. Read from the Washington County Community
+  Development Code (CDC) as Municode publishes it, publication 3090,
+  Supplement No. 3 (September 2026, through Ordinance No. 914). Every value
+  is draft. The layer is chosen by JURIS_CITY, never by the mailing city: about
+  68,000 county-governed lots carry a Portland or Beaverton address.
+ingest:
+  geoid: null
+  juris_city_codes:
+  - UNINCORPORATED
+  - ''
+code:
+# Municode client 11326, publication 3090 ("Community Development Code",
+# updated 2026-09-08). The unsigned publication endpoint, per
+# flats/provenance/municode.py; the signed blob URL it returns expires.
+# Plain extraction throughout: the county PDF is one column of prose with
+# numbered subsections, and layout mode drops the rotated text on fifteen
+# pages (pypdf's warning on the first extraction), which is where table
+# headers usually sit.
+- id: "cdc.106.definitions"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 106 - Definitions"
+  start: "106-1 The definitions contained in this Code"
+  end: "107 PLANNING PARTICIPANTS"
+  extraction: plain
+  # Prose about words, few dimensioned standards. The plausibility gate also cannot see this code's section
+  # numbers: the CDC writes "302-7.1", and fetch._SECTION_NO counts only
+  # dotted forms like "19.30.010". Every thin refusal here was that.
+  allow_thin: true
+- id: "cdc.300.introduction"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 300 - Land Use Districts, Introduction (density calculation)"
+  start: "300-1 Intent and Purpose"
+  end: "302 R-5 DISTRICT (RESIDENTIAL 5 UNITS PER ACRE*)"
+  extraction: plain
+  # Density-calculation prose; its numbers are worked examples. The plausibility gate also cannot see this code's section
+  # numbers: the CDC writes "302-7.1", and fetch._SECTION_NO counts only
+  # dotted forms like "19.30.010". Every thin refusal here was that.
+  allow_thin: true
+- id: "cdc.302.r-5"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 302 - R-5 District"
+  start: "302 R-5 DISTRICT (RESIDENTIAL 5 UNITS PER ACRE*)"
+  end: "303 R-6 DISTRICT (RESIDENTIAL 6 UNITS PER ACRE*)"
+  extraction: plain
+- id: "cdc.303.r-6"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 303 - R-6 District"
+  start: "303 R-6 DISTRICT (RESIDENTIAL 6 UNITS PER ACRE*)"
+  end: "304 R-9 DISTRICT (RESIDENTIAL 9 UNITS PER ACRE*)"
+  extraction: plain
+- id: "cdc.304.r-9"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 304 - R-9 District"
+  start: "304 R-9 DISTRICT (RESIDENTIAL 9 UNITS PER ACRE*)"
+  end: "305 R-15 DISTRICT (RESIDENTIAL 15 UNITS PER ACRE*)"
+  extraction: plain
+- id: "cdc.305.r-15"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 305 - R-15 District"
+  start: "305 R-15 DISTRICT (RESIDENTIAL 15 UNITS PER ACRE*)"
+  end: "306 R-24 DISTRICT (RESIDENTIAL 24 UNITS PER ACRE*)"
+  extraction: plain
+- id: "cdc.306.r-24"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 306 - R-24 District"
+  start: "306 R-24 DISTRICT (RESIDENTIAL 24 UNITS PER ACRE*)"
+  end: "307 R-25+ DISTRICT (RESIDENTIAL 25 UNITS OR MORE PER ACRE*)"
+  extraction: plain
+- id: "cdc.307.r-25plus"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 307 - R-25+ District"
+  start: "307 R-25+ DISTRICT (RESIDENTIAL 25 UNITS OR MORE PER ACRE*)"
+  end: "308-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.308.fd-20"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 308 - Future Development 20-Acre District (FD-20)"
+  start: "308-1 Intent and Purpose"
+  end: "309-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.309.fd-10"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 309 - Future Development 10-Acre District (FD-10)"
+  start: "309-1 Intent and Purpose"
+  end: "311-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.311.nc"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 311 - Neighborhood Commercial District (NC)"
+  start: "311-1 Intent and Purpose"
+  end: "312-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.312.oc"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 312 - Office Commercial District (OC)"
+  start: "312-1 Intent and Purpose"
+  end: "313-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.313.cbd"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 313 - Community Business District (CBD)"
+  start: "313-1 Intent and Purpose"
+  end: "314-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.314.gc"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 314 - General Commercial District (GC)"
+  start: "314-1 Intent and Purpose"
+  end: "320-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.320.ind"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 320 - Industrial District (IND)"
+  start: "320-1 Intent and Purpose"
+  end: "330-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.330.inst"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 330 - Institutional District (INST)"
+  start: "330-1 Intent and Purpose"
+  end: "340-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.340.efu"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 340 - Exclusive Farm Use District (EFU)"
+  start: "340-1 Intent and Purpose"
+  end: "342-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.342.efc"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 342 - Exclusive Forest and Conservation District (EFC)"
+  start: "342-1 Intent and Purpose"
+  end: "344-1 Intent and Purpose"
+  extraction: plain
+  # A rural use list, read 2026-09-28; few dimensions. The plausibility gate also cannot see this code's section
+  # numbers: the CDC writes "302-7.1", and fetch._SECTION_NO counts only
+  # dotted forms like "19.30.010". Every thin refusal here was that.
+  allow_thin: true
+- id: "cdc.344.af-20"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 344 - Agriculture and Forest District (AF-20)"
+  start: "344-1 Intent and Purpose"
+  end: "346-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.346.af-10"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 346 - Agriculture and Forest District (AF-10)"
+  start: "346-1 Intent and Purpose"
+  end: "348-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.348.af-5"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 348 - Agriculture and Forest District (AF-5)"
+  start: "348-1 Intent and Purpose"
+  end: "350-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.350.rr-5"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 350 - Rural Residential Five Acre Minimum District (RR-5)"
+  start: "350-1 Intent and Purpose"
+  end: "352-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.352.r-com"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 352 - Rural Commercial District (R-COM)"
+  start: "352-1 Intent and Purpose"
+  end: "354-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.354.r-ind"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 354 - Rural Industrial District (R-IND)"
+  start: "354-1 Intent and Purpose"
+  end: "356-1 Intent and Purpose"
+  extraction: plain
+  # A rural use list, read 2026-09-28; few dimensions. The plausibility gate also cannot see this code's section
+  # numbers: the CDC writes "302-7.1", and fetch._SECTION_NO counts only
+  # dotted forms like "19.30.010". Every thin refusal here was that.
+  allow_thin: true
+- id: "cdc.356.mae"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 356 - Land Extensive Industrial District (MAE)"
+  start: "356-1 Intent and Purpose"
+  end: "373-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.375.transit-oriented"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 375 - Transit Oriented Districts"
+  start: "375-1 Intent and Purpose"
+  end: "377-1 Purpose and Intent"
+  extraction: plain
+# SID is an overlay applied over IND, but the county's zoning layer carries it
+# as its own LUD code, so it needs its own ruling. The first occurrence of the
+# heading is the table of contents; the section itself is the second.
+- id: "cdc.377.sid"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 377 - Special Industrial Overlay District (SID)"
+  start: "377 SPECIAL INDUSTRIAL OVERLAY DISTRICT (SID)"
+  nth: 2
+  end: "379 MINERAL AND AGGREGATE OVERLAY DISTRICT"
+  extraction: plain
+  # Purpose, tiers and lot-size options; few dimensioned standards. Read
+  # 2026-09-29 before the flag went on. The plausibility gate also cannot see
+  # this code's section numbers: the CDC writes "377-4.3", and
+  # fetch._SECTION_NO counts only dotted forms like "19.30.010".
+  allow_thin: true
+- id: "cdc.390.north-bethany"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 390 - North Bethany Subarea Overlay District"
+  start: "390-1 Intent and Purpose"
+  end: "391-1 Intent and Purpose"
+  extraction: plain
+- id: "cdc.391.bonny-slope-west"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 391 - Bonny Slope West Subarea Overlay District"
+  start: "391-1 Intent and Purpose"
+  end: "392-1 Intent and Purpose"
+  extraction: plain
+  # Applicability prose and map references, read 2026-09-28. The plausibility gate also cannot see this code's section
+  # numbers: the CDC writes "302-7.1", and fetch._SECTION_NO counts only
+  # dotted forms like "19.30.010". Every thin refusal here was that.
+  allow_thin: true
+- id: "cdc.392.mixed-use"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 392 - Pedestrian-Oriented Mixed-Use Districts"
+  start: "392-1 Intent and Purpose"
+  end: "ARTICLE IV"
+  extraction: plain
+- id: "cdc.413.parking"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 413 - Parking and Loading"
+  start: "413-1 Development Permit for Parking Areas"
+  end: "414-1 Residential Districts"
+  extraction: plain
+- id: "cdc.418-419.setbacks-height"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Sections 418 (Setbacks) and 419 (Height)"
+  start: "418-1 Obstruction in Required Yards"
+  end: "420-1 Placement of the dwelling units"
+  extraction: plain
+- id: "cdc.430-84.middle-housing"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 430-84 - Middle Housing"
+  start: "430-84 Middle Housing"
+  end: "430-85 Nonfarm Detached Dwelling Unit"
+  extraction: plain
+  # Read end to end 2026-09-28: design standards written as figures and prose. The plausibility gate also cannot see this code's section
+  # numbers: the CDC writes "302-7.1", and fetch._SECTION_NO counts only
+  # dotted forms like "19.30.010". Every thin refusal here was that.
+  allow_thin: true
+- id: "cdc.501.public-facilities"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 501 - Public Facility and Service Requirements"
+  start: "501-1 Intent and Purpose"
+  end: "502-1 Intent, Purpose, Application, Authority, Requirement"
+  extraction: plain
+  # Service-provider prose; the access-spacing numbers sit in tables. The plausibility gate also cannot see this code's section
+  # numbers: the CDC writes "302-7.1", and fetch._SECTION_NO counts only
+  # dotted forms like "19.30.010". Every thin refusal here was that.
+  allow_thin: true
+definitions:
+  # Read 2026-09-29 from CDC Section 106, which is on disk whole
+  # (cdc.106.definitions.txt runs from 106-1 to the Section 107 heading).
+  #
+  # CORNER LOT: SILENT. Section 106 defines no corner lot. The CDC uses the
+  # term -- 106-113.1 names the front lot line "for corner lots", the
+  # commercial and industrial districts give "a corner lot" a 20-foot street
+  # yard, 430-84.3 B(3) adds a facade feature "on a corner lot" -- and never
+  # says what one is. A grep of all 34 stored chapters for "corner lot",
+  # "lot, corner" and "corner parcel" finds uses and no definition. 418-3
+  # defines a "street corner" for the vision triangle only (the point where
+  # two road edges meet), which is a point and not a class of lot. So the
+  # term is left out: a corner question in this layer answers UNKNOWN, and no
+  # other jurisdiction's test is borrowed.
+  #
+  # THE NOUN. 106-173: a Quadplex is "Four primary dwelling units each of
+  # which, unless Middle Housing Quadplex units, shares at least one common
+  # building wall or a common floor/ceiling with another dwelling unit". The
+  # pod is a Quadplex. 106-143 Multi-Dwelling Structure starts at "Five or
+  # more attached primary dwelling units", so the pod is outside it. 106-211
+  # Townhouses ("attached dwelling units on separate lots") is the unit-lot
+  # path. 106-124 makes Middle Housing a district list: "Residential
+  # development in the R-5, R-6, R-9, R-15, R-24, R-25+, R-6 NB, R-9 NB,
+  # R-15 NB, TO: R9-12, TO: R12-18 or TO: R18-24 district". 430-84 says the
+  # same thing from the other side: in any other district a four-unit
+  # building "is not Middle Housing", so its use gate is read from that
+  # district's own list (usually an "Attached Dwelling Units" row).
+  # (or/washington/_unincorporated/cdc.106.definitions.txt#L676-L686,L782-L786,L852-L857,L1104-L1107)
+  #
+  # SUFFICIENT INFRASTRUCTURE. 106-124 B lets a Quadplex be Middle Housing
+  # only where "Sufficient Infrastructure" exists or the applicant provides
+  # it; 106-210 defines that as connection to public sewer and public water
+  # (L1086-L1092). The applicant may provide it, so it is not a use-gate
+  # condition here; it is a doubt in the handoff for lots far from a main.
+  #
+  # FRONT LOT LINE. 106-113.1: "For corner lots, the line separating the
+  # narrowest frontage from the street right-of-way" (L627-L629) -- encoded
+  # as front_lot_line_corner: shortest under defaults.
+  #
+  # HEIGHT. 106-101.1 measures from "the adjoining curb level" to the mean
+  # height between eaves and ridge of a pitched roof, and from building grade
+  # where the building sits back further than required (L594-L601). The
+  # design height is a dial (fields.DESIGN_HEIGHT_FT); nothing here bakes it.
+  #
+  # NET ACRE. 300-2.1 counts site size net of land "currently dedicated for
+  # public right-of-way" (cdc.300.introduction.txt#L59-L60). Middle Housing
+  # density "is not a consideration" in every district that allows it, so
+  # this denominator decides no number this layer holds for the pod.
+
+defaults:
+  # PARKING COUNT. 413-6.1 is headed "Minimum Off-Street Parking Spaces
+  # Required outside the UGB" and says in the heading itself: "Development
+  # inside the UGB is exempt from minimum parking standards". Every district
+  # that can take the pod is an urban district inside the UGB, and the rural
+  # districts are refused at the use gate below, so the layer default is the
+  # inside-the-UGB answer. Encoded as zero rather than left out, because an
+  # omitted minimum lets the state cap resolve as though it were a
+  # requirement.
+  parking_min_per_unit:
+    value: 0
+    cite: Washington County CDC 413-6.1, development inside the UGB is exempt from minimum parking standards
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.413.parking.txt#L223-L226,L232-L233"
+  # NOT ENCODED: a parking maximum. 413-6.3 caps surface parking inside the
+  # UGB and its residential rows are "Studio Unit 1.2" and "Non-studio
+  # residential unit in a multi-unit housing development with 5 or more units
+  # 2.0" (cdc.413.parking.txt#L409-L420). The pod is four non-studio units,
+  # so neither row reaches it. 413-6 sends an unlisted use to "the most
+  # similar listed use as determined by the Review Authority", which is a
+  # discretionary choice, not a stated number. Either candidate row would
+  # allow at least 1.2 per unit, above the four-stall floor the pod charges,
+  # so the absence costs no lot a colour.
+  #
+  # STALL AND AISLE. 413-3: "All off-street parking lots ... shall be
+  # designed in accordance with County standards for stalls and aisles
+  # dimensions as set forth in the following drawings and tables". The
+  # standard 90-degree row reads 8.5 ft stall width, 18 ft stall depth and
+  # 24 ft aisle; 413-3.2 makes 24 ft the minimum two-way aisle. 413-3.2's
+  # 15-foot one-way figure is for emergency vehicles ("The minimum aisle width
+  # for emergency vehicle (one-way traffic) is 15 feet"), and the 90-degree
+  # row prints 24 for its aisle regardless of direction, so the one-way aisle
+  # is held at 24 too. Figure 1 is "for illustrative purposes only" and is
+  # not read.
+  parking_stall_width_ft:
+    value: 8.5
+    cite: Washington County CDC 413-3, standard 90-degree row, stall width
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.413.parking.txt#L55-L58,L65-L76,L97"
+  parking_stall_depth_ft:
+    value: 18
+    cite: Washington County CDC 413-3, standard 90-degree row, stall depth
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.413.parking.txt#L55-L58,L65-L76,L97"
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: Washington County CDC 413-3.2, minimum two-way aisle, and the 90-degree row of 413-3
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.413.parking.txt#L65-L76,L97,L103-L105"
+  parking_aisle_one_way_ft:
+    value: 24
+    cite: Washington County CDC 413-3, 90-degree row aisle width (the 15-foot figure in 413-3.2 is an emergency-vehicle lane)
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.413.parking.txt#L65-L76,L97,L103-L105"
+  # DRIVEWAY APPROACH. 430-84.3 B(4)(a) is the state model code's sentence:
+  # "The total width of all driveway approaches must not exceed 32 feet per
+  # total frontage of the parent lot". B(4)(d) makes it prevail over 413.
+  # NOT ENCODED from the rest of B(4): separated approaches must meet the
+  # 501-8.5 spacing for the road class; a lot fronting only collectors or
+  # arterials meets 501-8.5 B spacing; a lot fronting only local streets or
+  # neighborhood routes may have two approaches totalling 32 feet on one
+  # frontage or one 16-foot approach per frontage. Each turns on the class of
+  # the abutting street, which nothing measures.
+  driveway_approach_max_width_ft:
+    value: 32
+    cite: Washington County CDC 430-84.3 B(4)(a), total width of all driveway approaches per total frontage of the parent lot
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L219-L224,L246-L247"
+  # CORNER ACCESS. The CDC names no street for a corner lot's driveway. What
+  # it says is conditional on street class: 430-84.3 B(4)(c)(iii) lets a lot
+  # fronting only local streets or neighborhood routes put approaches on
+  # either frontage, (c)(ii) sends a lot fronting only collectors or
+  # arterials to the 501-8.5 B spacing, and 501-8.5 B(3) grants direct
+  # collector access only to "commercial, industrial and institutional uses
+  # with 150 feet or more of frontage". A lot on one local street and one
+  # collector is therefore steered to the local street. `lowest_class` is
+  # the reading that holds in every combination; `any` would be right only
+  # where both streets are local, which nothing measures. A doubt in the
+  # handoff.
+  corner_access_street:
+    value: lowest_class
+    cite: Washington County CDC 430-84.3 B(4)(c) + 501-8.5 B(3), collector access only for non-residential uses with 150 ft of frontage
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L229-L245"
+  front_lot_line_corner:
+    value: shortest
+    cite: Washington County CDC 106-113.1, Front Lot Line, the narrowest frontage on a corner lot
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L627-L629"
+  # PARKING PLACEMENT, left absent on purpose. 430-84.3 (Triplex and
+  # Quadplex Standards) regulates entry orientation, windows, a corner-lot
+  # facade feature and driveway approaches (cdc.430-84.middle-housing.txt
+  # #L90-L247), and says nothing about where on the lot parking may stand.
+  # 413-4 and 413-3 dimension a lot and its landscaping without a front- or
+  # side-yard ban. The townhouse rules in 430-84.4 B(5) keep front-yard
+  # parking off lots fronting only collectors or arterials, which is the
+  # unit-lot path on a street class nothing measures; recorded as a doubt.
+
+# THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29. Each applies in
+# every urban R district below (R-5 to R-25+) and, where noted, beyond.
+#
+# NOT ENCODED: the porch figure in each district's front-yard rule (12 ft in
+# R-5 and R-6, 9 in R-9, 6 in R-15, R-24 and R-25+ "to porch or other covered
+# or enclosed entryway"). It is a lesser setback for an entry feature, and
+# the front-wall figure is the one that places the building.
+#
+# NOT ENCODED: where yards are measured from. Each district's 7.1 B says
+# "Yards shall be measured from the property line, sidewalk, or easement
+# for public travel, whichever is closest to the building line" (R-5 at
+# cdc.302.r-5.txt#L352-L354). Where a sidewalk or public-travel easement
+# runs inside the lot, every yard starts at its edge. No easement layer is
+# held; the `sidewalk_easement` condition names the fact and nothing measures
+# it. A doubt in the handoff.
+#
+# NOT ENCODED: right-of-way dedication. 30X-2 C (Type I) requires, on a
+# public street, right-of-way of 25 ft to centreline on a local street, 30 on
+# a neighborhood route, 37 on a collector and 45 on an arterial, or a Type II
+# exemption under 501-8.4 (R-5 at cdc.302.r-5.txt#L94-L111). Lot area is
+# measured before the dedication (7.1 A), but yards run from the new line.
+# How much a lot gives up depends on the existing half-width, which nothing
+# measures. 418-2's future-right-of-way setback does not apply to Middle
+# Housing (cdc.418-419.setbacks-height.txt#L34-L36).
+#
+# NOT ENCODED: 419-1, "Within 20 feet of another primary district with a
+# lower height restriction, the height restriction of the adjacent district
+# shall apply", with a 1:1 slope beyond (419-2)
+# (cdc.418-419.setbacks-height.txt#L116-L121). A neighbour-height condition
+# no registered site fact names. Every urban R district allows 35 ft and the
+# design height is 26, so it bites only beside a district capped under 26.
+#
+# NOT ENCODED: 419-7, airport heights under FAA regulations
+# (cdc.418-419.setbacks-height.txt#L147-L149). Overlay data.
+#
+# NOT ENCODED: 30X-5.6, which prohibits "high density residential
+# development in airport approach zones" and says such uses "shall be
+# avoided within any existing June, 1983 airport year 2000 LDN 55 contour"
+# (R-5 at cdc.302.r-5.txt#L236-L239). The CDC does not define "high density
+# residential" and no airport-approach layer is held. Overlay data and a
+# doubt.
+#
+# NOT ENCODED: the future-development plan. A Type II Middle Housing
+# application on a large lot must show that it "will not preclude feasible
+# future development of the subject lot or parcel to the minimum density of
+# the district" (430-37.1 B(1), reached through 30X-3 and 430-84.3 A(7)),
+# with a shadow plat of the lots that could follow. It can push the pod
+# toward one end of a big lot; it states no dimension of its own, and
+# 430-37 is not stored.
+#
+# NOT ENCODED: the Community Plans. 300-1 makes "all development" comply
+# with the applicable Community Plan's subarea provisions, "including the
+# Design Elements and Area of Special Concern" (cdc.300.introduction.txt
+# #L7-L14). The county has eleven community plans; none is stored or read,
+# and nothing maps an Area of Special Concern to a lot. A per-area standard
+# would be a variant behind a condition nothing measures; which standards
+# they change is unknown until the plans are read. Owed locally, and a
+# question for Steph.
+#
+# Clean Water Services. The CDC points at CWS twice in what is stored:
+# 106-214 defines a Vegetated Corridor by the CWS "Design and Construction
+# Standards" (cdc.106.definitions.txt#L1130-L1134), and 300-3.1 counts
+# Water Quality Sensitive Areas and Vegetated Corridors as unbuildable
+# (cdc.300.introduction.txt#L105-L117), which is the "buildable area" the
+# Type I Middle Housing test in each R district measures. The corridors
+# themselves are overlay data and local work.
+zones:
+  R-5:
+    cite_default:
+      cite: Washington County CDC 302 (R-5 District), 302-7.1 Middle Housing dimensional requirements
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 302-2 permits Middle Housing (430-84) on an existing lot through a
+      # Type I procedure, and 302-3 takes the rest through Type II; both
+      # are headed "Uses Permitted", neither is the Type III list. The pod is
+      # a Quadplex (106-173), and 106-124 names this district as one where a
+      # Quadplex is Middle Housing. Type II is administrative with notice,
+      # which is recorded as a doubt in the handoff rather than as a refusal.
+      value: true
+      cite: Washington County CDC 302-2 and 302-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L14,L87-L93,L124,L174-L183"
+    max_units:
+      value: 4
+      cite: Washington County CDC 302-6.1 A(3), Quadplex - maximum four units per lot
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L251-L253,L256"
+    max_density_du_per_acre:
+      # 302-6.1 A: "Density is not a consideration" for a Quadplex; the
+      # parent-lot unit cap above is the whole limit. The townhouse path
+      # (units on lots of their own) has a maximum density.
+      exempt: true
+      cite: Washington County CDC 302-6.1 A, density is not a consideration for Middle Housing plexes
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L251-L253"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Washington County CDC 302-6.1 C(3), Townhouses provided as Middle Housing
+          quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L270,L274"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 302-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L251-L253,L270,L273"
+    min_lot_sqft:
+      # 302-7.1 A measures the parent lot before any right-of-way
+      # dedication. Townhouse lots are an average, not a floor on each lot;
+      # the variant holds the average.
+      value: 7000
+      cite: Washington County CDC 302-7.1 A(3), Quadplex minimum lot area (parent lot)
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L340-L345,L348"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Washington County CDC 302-7.1 A(5), townhouse lots must average no less than 1,500 square feet
+          quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L350-L351"
+    setback_front_ft:
+      # To the front building wall. The 12-foot figure for a porch or
+      # other covered or enclosed entryway is one of the layer-wide refusals
+      # listed above the zones.
+      value: 15
+      cite: Washington County CDC 302-7.1 B(1), front yard to front building wall
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L352-L354,L356-L358"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 302-7.1 B(2)(a), garage vehicle entrance from front or street side yard
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L361-L362"
+    setback_street_side_ft:
+      value: 8
+      cite: Washington County CDC 302-7.1 B(3), street side yard
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L367"
+    setback_side_ft:
+      # Five feet where the yard abuts offsite land, which on the pod's own
+      # lot every side line does. The three-foot figure in B(4)(c) is for a
+      # line that does not abut offsite land -- a line inside one site --
+      # and on this building the only such lines carry the party walls,
+      # which B(4)(a) already puts at zero.
+      value: 5
+      cite: Washington County CDC 302-7.1 B(4)(b), non-street side yard abutting offsite land
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L368,L370-L371"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Washington County CDC 302-7.1 B(4)(a), zero feet where units attach
+          quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L368-L369"
+    setback_rear_ft:
+      value: 15
+      cite: Washington County CDC 302-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L396-L397"
+    min_building_separation_ft:
+      value: 6
+      cite: Washington County CDC 302-7.1 C, separation between buildings on the same lot
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L405-L406"
+    max_height_ft:
+      value: 35
+      cite: Washington County CDC 302-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L412,L414"
+    min_frontage_ft:
+      exempt: true
+      cite: Washington County CDC 302-7.1 E(2), all other Middle Housing - no minimum
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L419,L423"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Washington County CDC 302-7.1 E(1), 15 feet for each townhouse lot
+          quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L419-L422"
+    notes: >-
+      DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
+      7,000 sq ft parent lot, density not a consideration, max four units;
+      yards 15 front / 5 side / 8 street side / 15 rear; 35 ft.
+  R-6:
+    cite_default:
+      cite: Washington County CDC 303 (R-6 District), 303-7.1 Middle Housing dimensional requirements
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 303-2 permits Middle Housing (430-84) on an existing lot through a
+      # Type I procedure, and 303-3 takes the rest through Type II; both
+      # are headed "Uses Permitted", neither is the Type III list. The pod is
+      # a Quadplex (106-173), and 106-124 names this district as one where a
+      # Quadplex is Middle Housing. Type II is administrative with notice,
+      # which is recorded as a doubt in the handoff rather than as a refusal.
+      value: true
+      cite: Washington County CDC 303-2 and 303-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L14,L86-L92,L123,L179-L188"
+    max_units:
+      value: 4
+      cite: Washington County CDC 303-6.1 A(3), Quadplex - maximum four units per lot
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L254-L256,L259"
+    max_density_du_per_acre:
+      # 303-6.1 A: "Density is not a consideration" for a Quadplex; the
+      # parent-lot unit cap above is the whole limit. The townhouse path
+      # (units on lots of their own) has a maximum density.
+      exempt: true
+      cite: Washington County CDC 303-6.1 A, density is not a consideration for Middle Housing plexes
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L254-L256"
+      variants:
+        - value: 24
+          when: [unit_lots]
+          cite: Washington County CDC 303-6.1 C(3), Townhouses provided as Middle Housing
+          quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L271,L275"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 303-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L254-L256,L271,L274"
+    min_lot_sqft:
+      # 303-7.1 A measures the parent lot before any right-of-way
+      # dedication. Townhouse lots are an average, not a floor on each lot;
+      # the variant holds the average.
+      value: 7000
+      cite: Washington County CDC 303-7.1 A(3), Quadplex minimum lot area (parent lot)
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L342-L347,L350"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Washington County CDC 303-7.1 A(5), townhouse lots must average no less than 1,500 square feet
+          quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L352-L353"
+    setback_front_ft:
+      # To the front building wall. The 12-foot figure for a porch or
+      # other covered or enclosed entryway is one of the layer-wide refusals
+      # listed above the zones.
+      value: 15
+      cite: Washington County CDC 303-7.1 B(1), front yard to front building wall
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L356-L358,L360-L362"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 303-7.1 B(2)(a), garage vehicle entrance from front or street side yard
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L365-L366"
+    setback_street_side_ft:
+      value: 8
+      cite: Washington County CDC 303-7.1 B(3), street side yard
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L371"
+    setback_side_ft:
+      # Five feet where the yard abuts offsite land, which on the pod's own
+      # lot every side line does. The three-foot figure in B(4)(c) is for a
+      # line that does not abut offsite land -- a line inside one site --
+      # and on this building the only such lines carry the party walls,
+      # which B(4)(a) already puts at zero.
+      value: 5
+      cite: Washington County CDC 303-7.1 B(4)(b), non-street side yard abutting offsite land
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L372,L374-L375"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Washington County CDC 303-7.1 B(4)(a), zero feet where units attach
+          quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L372-L373"
+    setback_rear_ft:
+      value: 15
+      cite: Washington County CDC 303-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L400-L401"
+    min_building_separation_ft:
+      value: 6
+      cite: Washington County CDC 303-7.1 C, separation between buildings on the same lot
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L409-L410"
+    max_height_ft:
+      value: 35
+      cite: Washington County CDC 303-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L414,L416"
+    min_frontage_ft:
+      exempt: true
+      cite: Washington County CDC 303-7.1 E(2), all other Middle Housing - no minimum
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L421,L425"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Washington County CDC 303-7.1 E(1), 15 feet for each townhouse lot
+          quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L421-L424"
+    notes: >-
+      DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
+      7,000 sq ft parent lot, density not a consideration, max four units;
+      yards 15 front / 5 side / 8 street side / 15 rear; 35 ft.
+  R-9:
+    cite_default:
+      cite: Washington County CDC 304 (R-9 District), 304-7.1 Middle Housing dimensional requirements
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 304-2 permits Middle Housing (430-84) on an existing lot through a
+      # Type I procedure, and 304-3 takes the rest through Type II; both
+      # are headed "Uses Permitted", neither is the Type III list. The pod is
+      # a Quadplex (106-173), and 106-124 names this district as one where a
+      # Quadplex is Middle Housing. Type II is administrative with notice,
+      # which is recorded as a doubt in the handoff rather than as a refusal.
+      value: true
+      cite: Washington County CDC 304-2 and 304-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L17,L92-L100,L131,L185-L194"
+    max_units:
+      value: 4
+      cite: Washington County CDC 304-6.1 A(3), Quadplex - maximum four units per lot
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L260-L262,L265"
+    max_density_du_per_acre:
+      # 304-6.1 A: "Density is not a consideration" for a Quadplex; the
+      # parent-lot unit cap above is the whole limit. The townhouse path
+      # (units on lots of their own) has a maximum density.
+      exempt: true
+      cite: Washington County CDC 304-6.1 A, density is not a consideration for Middle Housing plexes
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L260-L262"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: Washington County CDC 304-6.1 C(3), Townhouses provided as Middle Housing
+          quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L279,L283"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 304-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L260-L262,L279,L282"
+    min_lot_sqft:
+      # 304-7.1 A measures the parent lot before any right-of-way
+      # dedication. Townhouse lots are an average, not a floor on each lot;
+      # the variant holds the average.
+      value: 7000
+      cite: Washington County CDC 304-7.1 A(3), Quadplex minimum lot area (parent lot)
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L303-L308,L311"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Washington County CDC 304-7.1 A(5), townhouse lots must average no less than 1,500 square feet
+          quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L313-L314"
+    setback_front_ft:
+      # To the front building wall. The 9-foot figure for a porch or
+      # other covered or enclosed entryway is one of the layer-wide refusals
+      # listed above the zones.
+      value: 12
+      cite: Washington County CDC 304-7.1 B(1), front yard to front building wall
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L315-L317,L319-L321"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 304-7.1 B(2)(a), garage vehicle entrance from front or street side yard
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L324-L325"
+    setback_street_side_ft:
+      value: 8
+      cite: Washington County CDC 304-7.1 B(3), street side yard
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L330"
+    setback_side_ft:
+      # Five feet where the yard abuts offsite land, which on the pod's own
+      # lot every side line does. The three-foot figure in B(4)(c) is for a
+      # line that does not abut offsite land -- a line inside one site --
+      # and on this building the only such lines carry the party walls,
+      # which B(4)(a) already puts at zero.
+      value: 5
+      cite: Washington County CDC 304-7.1 B(4)(b), non-street side yard abutting offsite land
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L331,L333-L334"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Washington County CDC 304-7.1 B(4)(a), zero feet where units attach
+          quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L331-L332"
+    setback_rear_ft:
+      value: 15
+      cite: Washington County CDC 304-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L359-L360"
+    min_building_separation_ft:
+      value: 6
+      cite: Washington County CDC 304-7.1 C, separation between buildings on the same lot
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L377-L378"
+    max_height_ft:
+      value: 35
+      cite: Washington County CDC 304-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L382,L384"
+    min_frontage_ft:
+      exempt: true
+      cite: Washington County CDC 304-7.1 E(2), all other Middle Housing - no minimum
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L389,L393"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Washington County CDC 304-7.1 E(1), 15 feet for each townhouse lot
+          quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L389-L392"
+    notes: >-
+      DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
+      7,000 sq ft parent lot, density not a consideration, max four units;
+      yards 12 front / 5 side / 8 street side / 15 rear; 35 ft.
+  R-15:
+    cite_default:
+      cite: Washington County CDC 305 (R-15 District), 305-7.1 Middle Housing dimensional requirements
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 305-2 permits Middle Housing (430-84) on an existing lot through a
+      # Type I procedure, and 305-3 takes the rest through Type II; both
+      # are headed "Uses Permitted", neither is the Type III list. The pod is
+      # a Quadplex (106-173), and 106-124 names this district as one where a
+      # Quadplex is Middle Housing. Type II is administrative with notice,
+      # which is recorded as a doubt in the handoff rather than as a refusal.
+      value: true
+      cite: Washington County CDC 305-2 and 305-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L12,L88-L95,L127,L182-L191"
+    max_units:
+      value: 4
+      cite: Washington County CDC 305-6.1 A(3), Quadplex - maximum four units per lot
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L257-L259,L262"
+    max_density_du_per_acre:
+      # 305-6.1 A: "Density is not a consideration" for a Quadplex; the
+      # parent-lot unit cap above is the whole limit. The townhouse path
+      # (units on lots of their own) has a maximum density.
+      exempt: true
+      cite: Washington County CDC 305-6.1 A, density is not a consideration for Middle Housing plexes
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L257-L259"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: Washington County CDC 305-6.1 C(3), Townhouses provided as Middle Housing
+          quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L274,L278"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 305-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L257-L259,L274,L277"
+    min_lot_sqft:
+      # 305-7.1 A measures the parent lot before any right-of-way
+      # dedication. Townhouse lots are an average, not a floor on each lot;
+      # the variant holds the average.
+      value: 7000
+      cite: Washington County CDC 305-7.1 A(3), Quadplex minimum lot area (parent lot)
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L298-L303,L306"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Washington County CDC 305-7.1 A(5), townhouse lots must average no less than 1,500 square feet
+          quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L308-L309"
+    setback_front_ft:
+      # To the front building wall. The 6-foot figure for a porch or
+      # other covered or enclosed entryway is one of the layer-wide refusals
+      # listed above the zones.
+      value: 10
+      cite: Washington County CDC 305-7.1 B(1), front yard to front building wall
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 305-7.1 B(2)(a), garage vehicle entrance from front or street side yard
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L321-L322"
+    setback_street_side_ft:
+      value: 8
+      cite: Washington County CDC 305-7.1 B(3), street side yard
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L327"
+    setback_side_ft:
+      # Five feet where the yard abuts offsite land, which on the pod's own
+      # lot every side line does. The three-foot figure in B(4)(c) is for a
+      # line that does not abut offsite land -- a line inside one site --
+      # and on this building the only such lines carry the party walls,
+      # which B(4)(a) already puts at zero.
+      value: 5
+      cite: Washington County CDC 305-7.1 B(4)(b), non-street side yard abutting offsite land
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L328,L330-L331"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Washington County CDC 305-7.1 B(4)(a), zero feet where units attach
+          quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L328-L329"
+    setback_rear_ft:
+      value: 12
+      cite: Washington County CDC 305-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L354-L355"
+    min_building_separation_ft:
+      value: 6
+      cite: Washington County CDC 305-7.1 C, separation between buildings on the same lot
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L371-L372"
+    max_height_ft:
+      value: 35
+      cite: Washington County CDC 305-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L376,L378"
+    min_frontage_ft:
+      exempt: true
+      cite: Washington County CDC 305-7.1 E(2), all other Middle Housing - no minimum
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L383,L387"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Washington County CDC 305-7.1 E(1), 15 feet for each townhouse lot
+          quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L383-L386"
+    notes: >-
+      DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
+      7,000 sq ft parent lot, density not a consideration, max four units;
+      yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+  R-24:
+    cite_default:
+      cite: Washington County CDC 306 (R-24 District), 306-7.1 Middle Housing dimensional requirements
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 306-2 permits Middle Housing (430-84) on an existing lot through a
+      # Type I procedure, and 306-3 takes the rest through Type II; both
+      # are headed "Uses Permitted", neither is the Type III list. The pod is
+      # a Quadplex (106-173), and 106-124 names this district as one where a
+      # Quadplex is Middle Housing. Type II is administrative with notice,
+      # which is recorded as a doubt in the handoff rather than as a refusal.
+      value: true
+      cite: Washington County CDC 306-2 and 306-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L12,L87-L94,L125,L177-L186"
+    max_units:
+      value: 4
+      cite: Washington County CDC 306-6.1 A(3), Quadplex - maximum four units per lot
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L243-L245,L250"
+    max_density_du_per_acre:
+      # 306-6.1 A: "Density is not a consideration" for a Quadplex; the
+      # parent-lot unit cap above is the whole limit. The townhouse path
+      # (units on lots of their own) has a maximum density.
+      exempt: true
+      cite: Washington County CDC 306-6.1 A, density is not a consideration for Middle Housing plexes
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L243-L245"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: Washington County CDC 306-6.1 C(3), Townhouses provided as Middle Housing
+          quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L262,L266"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 306-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L243-L245,L262,L265"
+    min_lot_sqft:
+      # 306-7.1 A measures the parent lot before any right-of-way
+      # dedication. Townhouse lots are an average, not a floor on each lot;
+      # the variant holds the average.
+      value: 7000
+      cite: Washington County CDC 306-7.1 A(3), Quadplex minimum lot area (parent lot)
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L286-L291,L294"
+      variants:
+        - value: 1300
+          when: [unit_lots]
+          cite: Washington County CDC 306-7.1 A(5), townhouse lots must average no less than 1,300 square feet
+          quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L296-L297"
+    setback_front_ft:
+      # To the front building wall. The 6-foot figure for a porch or
+      # other covered or enclosed entryway is one of the layer-wide refusals
+      # listed above the zones.
+      value: 10
+      cite: Washington County CDC 306-7.1 B(1), front yard to front building wall
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L298-L300,L302-L303"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 306-7.1 B(2)(a), garage vehicle entrance from front or street side yard
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L304-L305"
+    setback_street_side_ft:
+      value: 8
+      cite: Washington County CDC 306-7.1 B(3), street side yard
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L310"
+    setback_side_ft:
+      # Five feet where the yard abuts offsite land, which on the pod's own
+      # lot every side line does. The three-foot figure in B(4)(c) is for a
+      # line that does not abut offsite land -- a line inside one site --
+      # and on this building the only such lines carry the party walls,
+      # which B(4)(a) already puts at zero.
+      value: 5
+      cite: Washington County CDC 306-7.1 B(4)(b), non-street side yard abutting offsite land
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L311,L313-L314"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Washington County CDC 306-7.1 B(4)(a), zero feet where units attach
+          quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L311-L312"
+    setback_rear_ft:
+      value: 12
+      cite: Washington County CDC 306-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L339-L340"
+    min_building_separation_ft:
+      value: 6
+      cite: Washington County CDC 306-7.1 C, separation between buildings on the same lot
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L354-L355"
+    max_height_ft:
+      value: 35
+      cite: Washington County CDC 306-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L361,L363"
+    min_frontage_ft:
+      exempt: true
+      cite: Washington County CDC 306-7.1 E(2), all other Middle Housing - no minimum
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L368,L372"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Washington County CDC 306-7.1 E(1), 15 feet for each townhouse lot
+          quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L368-L371"
+    notes: >-
+      DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
+      7,000 sq ft parent lot, density not a consideration, max four units;
+      yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+  R-25+:
+    cite_default:
+      cite: Washington County CDC 307 (R-25+ District), 307-7.1 Middle Housing dimensional requirements
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 307-2 permits Middle Housing (430-84) on an existing lot through a
+      # Type I procedure, and 307-3 takes the rest through Type II; both
+      # are headed "Uses Permitted", neither is the Type III list. The pod is
+      # a Quadplex (106-173), and 106-124 names this district as one where a
+      # Quadplex is Middle Housing. Type II is administrative with notice,
+      # which is recorded as a doubt in the handoff rather than as a refusal.
+      value: true
+      cite: Washington County CDC 307-2 and 307-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L13,L87-L95,L126,L179-L188"
+    max_units:
+      value: 4
+      cite: Washington County CDC 307-6.1 A(3), Quadplex - maximum four units per lot
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L249-L251,L254"
+    max_density_du_per_acre:
+      # 307-6.1 A: "Density is not a consideration" for a Quadplex; the
+      # parent-lot unit cap above is the whole limit. The townhouse path
+      # (units on lots of their own) has a maximum density.
+      exempt: true
+      cite: Washington County CDC 307-6.1 A, density is not a consideration for Middle Housing plexes
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L249-L251"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: Washington County CDC 307-6.1 C(3), Townhouses provided as Middle Housing
+          quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L266,L270"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 307-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L249-L251,L266,L269"
+    min_lot_sqft:
+      # 307-7.1 A measures the parent lot before any right-of-way
+      # dedication. Townhouse lots are an average, not a floor on each lot;
+      # the variant holds the average.
+      value: 7000
+      cite: Washington County CDC 307-7.1 A(3), Quadplex minimum lot area (parent lot)
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L316-L321,L324"
+      variants:
+        - value: 1300
+          when: [unit_lots]
+          cite: Washington County CDC 307-7.1 A(5), townhouse lots must average no less than 1,300 square feet
+          quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L326-L327"
+    setback_front_ft:
+      # To the front building wall. The 6-foot figure for a porch or
+      # other covered or enclosed entryway is one of the layer-wide refusals
+      # listed above the zones.
+      value: 10
+      cite: Washington County CDC 307-7.1 B(1), front yard to front building wall
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L328-L330,L332-L333"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 307-7.1 B(2)(a), garage vehicle entrance from front or street side yard
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L334-L335"
+    setback_street_side_ft:
+      value: 8
+      cite: Washington County CDC 307-7.1 B(3), street side yard
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L340"
+    setback_side_ft:
+      # Five feet where the yard abuts offsite land, which on the pod's own
+      # lot every side line does. The three-foot figure in B(4)(c) is for a
+      # line that does not abut offsite land -- a line inside one site --
+      # and on this building the only such lines carry the party walls,
+      # which B(4)(a) already puts at zero.
+      value: 5
+      cite: Washington County CDC 307-7.1 B(4)(b), non-street side yard abutting offsite land
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L341,L343-L344"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Washington County CDC 307-7.1 B(4)(a), zero feet where units attach
+          quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L341-L342"
+    setback_rear_ft:
+      value: 12
+      cite: Washington County CDC 307-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L369-L370"
+    min_building_separation_ft:
+      value: 6
+      cite: Washington County CDC 307-7.1 C, separation between buildings on the same lot
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L384-L385"
+    max_height_ft:
+      value: 35
+      cite: Washington County CDC 307-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L391,L393"
+    min_frontage_ft:
+      exempt: true
+      cite: Washington County CDC 307-7.1 E(2), all other Middle Housing - no minimum
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L398,L402"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Washington County CDC 307-7.1 E(1), 15 feet for each townhouse lot
+          quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L398-L401"
+    notes: >-
+      DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
+      7,000 sq ft parent lot, density not a consideration, max four units;
+      yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+  # --- North Bethany (Section 390) ---------------------------------------
+  #
+  # 390-3 makes the North Bethany Subarea Plan (Chapter 2 of the Bethany
+  # Community Plan) control where it and Section 390 conflict, and the plan
+  # is not stored; see the Community Plans refusal above the zones. 390-6.1
+  # repeats the airport-approach prohibition for every residential NB
+  # district (cdc.390.north-bethany.txt#L83-L86), refused above with 30X-5.6.
+  # Parking is Section 413 (390-7), which the layer defaults hold.
+  R-6 NB:
+    cite_default:
+      cite: Washington County CDC 390-8 (R-6 North Bethany District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    like:
+      # 390-8.7 adopts 303-7 whole. 303-7.1 is the Middle Housing block the
+      # R-6 zone reads, and the pod is Middle Housing here (106-124 names
+      # R-6 NB), so the borrowed numbers are the right rows.
+      zone: R-6
+      wins: local
+      cite: Washington County CDC 390-8.7, Dimensional Requirements (Section 303-7 applies)
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L381-L383"
+    quadplex_allowed:
+      # 390-8.2 E permits Middle Housing (430-84) on an existing lot through
+      # a Type I procedure; 390-8.3 B takes a large lot whose units fall
+      # short of five per acre through Type II. Both headed "Uses Permitted".
+      # 106-124 lists R-6 NB among the Middle Housing districts. The Type II
+      # doubt is the same as in the urban R districts.
+      value: true
+      cite: Washington County CDC 390-8.2 E and 390-8.3 B (Middle Housing, Type I and Type II) + 106-124
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L131,L184-L191,L234,L245-L251"
+    max_units:
+      value: 4
+      cite: Washington County CDC 390-8.5 A(1)(c), Quadplex - maximum four units per lot
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L316-L321,L324"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 390-8.5 A(1), density is not a consideration for Middle Housing plexes
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L316-L321"
+      variants:
+        - value: 24
+          when: [unit_lots]
+          cite: Washington County CDC 390-8.5 A(3)(c), Townhouses provided as Middle Housing
+          quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L330,L334"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 390-8.5 A(1) (plexes) and A(3)(b) (townhouses), minimum density does not apply
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L319-L321,L330,L333"
+    notes: >-
+      DRAFT. North Bethany R-6: the Middle Housing uses and density of
+      390-8, the dimensions of R-6 (303-7) by 390-8.7.
+  R-9 NB:
+    cite_default:
+      cite: Washington County CDC 390-9 (R-9 North Bethany District), 304-7.2 by 390-9.6
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # Not the Middle Housing path. 390-9.2 E and 390-9.3 B permit Middle
+      # Housing only "on a lot or parcel that was approved for the
+      # construction of a Single Detached Dwelling Unit through a Standard
+      # Subdivision or Standard Partition" (#L457-L460, L517-L519), and no
+      # registered site fact says which lots those are. What reaches every
+      # R-9 NB lot is 390-9.3 A, Attached Dwelling Units under 390-16.2:
+      # "two or more dwelling units with a common building wall ... on ... a
+      # single lot, commonly known as ... multiplexes", at most six to a
+      # building in R-6 NB and R-9 NB. The pod is that (106-70.1 B, Dwelling
+      # Unit, Attached). So the zone is read as "other housing" throughout:
+      # the density of 390-9.5 B and the dimensions of 304-7.2. The Middle
+      # Housing numbers (304-7.1: a 7,000 sq ft parent lot, density not a
+      # consideration) are what a subdivision lot could claim instead; they
+      # are left off rather than put behind a condition nothing answers,
+      # and the handoff lists them.
+      value: true
+      cite: Washington County CDC 390-9.3 A (Attached Dwelling Units, Type II) + 390-16.2 A-B + 106-70.1 B
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L510,L516,L1525-L1531,L1536-L1537"
+    max_density_du_per_acre:
+      # The Planned Development bonus in B(2) is a Type III application and
+      # is not carried.
+      value: 9
+      cite: Washington County CDC 390-9.5 B(1), other housing - no more than nine units per acre
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L616-L620"
+    min_density_du_per_acre:
+      value: 7
+      cite: Washington County CDC 390-9.5 B(1), other housing - no less than seven units per acre
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L616-L620"
+    # min_lot_sqft is absent on purpose, and the zone owes it. 304-7.2 A
+    # states an area for detached units and for "attached dwelling units on
+    # individual lots" (2,400 square feet per unit, #L401-L402 of 304) and
+    # none for attached units sharing one lot, which is the pod. The
+    # nine-per-acre maximum above is what sizes the lot; borrowing the
+    # individual-lot row would be the neighbouring noun's number.
+    setback_front_ft:
+      # Yards are measured from the property line, sidewalk or public-travel
+      # easement, whichever is closest (the layer-wide refusal above). The
+      # nine-foot porch figure is the other refusal listed there.
+      value: 12
+      cite: Washington County CDC 304-7.2 B(1) (by 390-9.6), front yard to the front building wall
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L405-L411"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 304-7.2 B(2) (by 390-9.6), front or street side yard to garage vehicle entrance
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L414-L415"
+    setback_street_side_ft:
+      value: 10
+      cite: Washington County CDC 304-7.2 B(3) (by 390-9.6), street side yard
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L419"
+    setback_side_ft:
+      # The reduction to zero in B(4) is for a lot created by a land division
+      # beside another lot of the same site, with a six-foot combined yard
+      # and an easement; it is not the pod's one-lot case.
+      value: 5
+      cite: Washington County CDC 304-7.2 B(4) (by 390-9.6), five-foot side yard
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L420"
+    setback_rear_ft:
+      value: 15
+      cite: Washington County CDC 304-7.2 B(5) (by 390-9.6), fifteen-foot rear yard
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L437"
+    max_height_ft:
+      # C(1)'s 35 feet is for "detached dwelling units and attached dwelling
+      # units on individual lots"; attached units sharing a lot are "all
+      # other structures" under C(3).
+      value: 40
+      cite: Washington County CDC 304-7.2 C(3) (by 390-9.6), all other structures
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L456,L462-L463"
+      variants:
+        - value: 35
+          when: [unit_lots]
+          cite: Washington County CDC 304-7.2 C(1), attached dwelling units on individual lots
+          quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L456-L459"
+    notes: >-
+      DRAFT. North Bethany R-9, read as other housing (Attached Dwelling
+      Units, Type II): 7 to 9 units per acre, yards 12 front / 5 side /
+      10 street side / 15 rear, 40 ft. Owes min_lot_sqft. The Middle
+      Housing path is open only on lots a subdivision approved for a
+      detached house.
+  R-15 NB:
+    cite_default:
+      cite: Washington County CDC 390-10 (R-15 North Bethany District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    like:
+      # 390-10.6 adopts 305-7 whole; 305-7.1 is the Middle Housing block the
+      # R-15 zone reads, and 106-124 names R-15 NB a Middle Housing district.
+      zone: R-15
+      wins: local
+      cite: Washington County CDC 390-10.6, Dimensional Requirements (Section 305-7 applies)
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L834-L836"
+    quadplex_allowed:
+      # 390-10.2 K permits Middle Housing (430-84) on a lot where the units
+      # meet the district's other-housing minimum of 12 per acre, through a
+      # Type I procedure; 390-10.3 B takes the rest through Type II.
+      value: true
+      cite: Washington County CDC 390-10.2 K and 390-10.3 B (Middle Housing, Type I and Type II) + 106-124
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L657,L707-L711,L734,L741-L746"
+    max_units:
+      value: 4
+      cite: Washington County CDC 390-10.5 A(1)(c), Quadplex - maximum four units per lot
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L794-L799,L802"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 390-10.5 A(1), density is not a consideration for Middle Housing plexes
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L794-L799"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: Washington County CDC 390-10.5 A(3)(c), Townhouses provided as Middle Housing
+          quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L816,L820"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 390-10.5 A(1) (plexes) and A(3)(b) (townhouses), minimum density does not apply
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L797-L799,L816,L819"
+    notes: >-
+      DRAFT. North Bethany R-15: the Middle Housing uses and density of
+      390-10, the dimensions of R-15 (305-7) by 390-10.6.
+  R-24 NB:
+    cite_default:
+      cite: Washington County CDC 390-11 (R-24 North Bethany District), 306-7.2 by 390-11.6
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # Not a Middle Housing district: 106-124 lists R-6 NB, R-9 NB and
+      # R-15 NB and stops. 390-11.3 A permits Attached Dwelling Units under
+      # 390-16.2 through a Type II procedure, and 390-16.2 names "two or more
+      # dwelling units with a common building wall ... on ... a single lot,
+      # commonly known as ... multiplexes". The pod is that (106-70.1 B).
+      value: true
+      cite: Washington County CDC 390-11.3 A (Attached Dwelling Units, Type II) + 390-16.2 + 106-70.1 B
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L887,L893,L1525-L1530"
+    max_density_du_per_acre:
+      value: 24
+      cite: Washington County CDC 390-11.5, no more than 24 units per acre
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L929-L932"
+    min_density_du_per_acre:
+      value: 19
+      cite: Washington County CDC 390-11.5, no less than 19 units per acre
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L929-L932"
+    # min_lot_sqft is absent on purpose, and the zone owes it: 306-7.2 A
+    # states an area for detached units and for attached units "on individual
+    # lots" (1,300 square feet, 306 #L379-L382) and none for attached units on
+    # one lot. The density above is what sizes the lot.
+    #
+    # Which yard row. 306-7.2 B(2) is attached units on individual lots, B(3)
+    # is "multi-dwelling attached units, not on individual lots" -- the
+    # county's Multi-Dwelling Structure, five units or more (106-143) -- and
+    # B(4) is "all other uses". Four attached units on one lot are neither of
+    # the first two, so B(4) is the row, and it is also the strictest.
+    #
+    # The Main Street area of Area of Special Concern Road Corridor 2 takes
+    # its Kaiser Road setbacks from ASC 2 of the North Bethany Subarea Plan
+    # (390-11.6 A, cdc.390.north-bethany.txt#L933-L938). Neither the plan nor
+    # a map of the area is held; see the Community Plans refusal.
+    setback_front_ft:
+      value: 10
+      cite: Washington County CDC 306-7.2 B(4)(a) (by 390-11.6), front yard 20 feet except 10 feet in North Bethany
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L383-L385,L498-L501"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 306-7.2 B(4)(b) (by 390-11.6), yard to garage vehicle entrance
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L503"
+    setback_rear_ft:
+      value: 20
+      cite: Washington County CDC 306-7.2 B(4)(c) (by 390-11.6), rear yard
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L500,L504"
+    setback_side_ft:
+      # Seven feet for two stories, "or 10-foot when adjacent to lower
+      # density district", and (vii) ten feet on every yard when the site
+      # abuts a different primary district. The code does not list which
+      # districts are lower density than R-24 NB, and no neighbours block
+      # here could name them from the page, so the ten is the base and the
+      # seven is not offered. Recorded as a doubt.
+      value: 10
+      cite: Washington County CDC 306-7.2 B(4)(d)(ii) and (vii) (by 390-11.6), side yard
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L500,L505-L508,L514-L516"
+    setback_street_side_ft:
+      value: 10
+      cite: Washington County CDC 306-7.2 B(4)(d)(vi) (by 390-11.6), street side yard
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L500,L512-L513"
+    max_height_ft:
+      value: 50
+      cite: Washington County CDC 306-7.2 C(3) (by 390-11.6), all other structures
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L523,L528-L529"
+    notes: >-
+      DRAFT. North Bethany R-24 is not a Middle Housing district; the pod is
+      Attached Dwelling Units (Type II): 19 to 24 units per acre, yards
+      10 front / 10 side / 10 street side / 20 rear, 50 ft. Owes
+      min_lot_sqft.
+  R-25+ NB:
+    cite_default:
+      cite: Washington County CDC 390-12 (R-25+ North Bethany District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # No Type I row houses anyone. The one residential row is 390-12.3 A,
+      # "Attached Dwelling Units - Multi-dwelling (limited to attached
+      # multi-dwelling residential, e.g., apartments, condominiums, senior
+      # housing)", and a Multi-Dwelling Structure is "Five or more attached
+      # primary dwelling units" (106-143, cdc.106.definitions.txt#L782-L786).
+      # Four units are not five. Live/Work Housing (390-12.3 G, 390-16.7)
+      # needs a ground-floor business space in each unit, which the pod
+      # does not have. 106-124 does not name R-25+ NB. The conservative
+      # reading, and a question for Steph: the base R-25+ district admits
+      # the pod as Middle Housing, and a reader could take "multi-dwelling"
+      # loosely.
+      value: false
+      cite: Washington County CDC 390-12.2 and 390-12.3 A (multi-dwelling only) + 106-143
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L964,L995,L1001-L1002"
+    notes: >-
+      DRAFT. North Bethany R-25+ admits attached multi-dwelling residential
+      of five units or more and no Middle Housing; the pod is refused.
+  NCC NB:
+    cite_default:
+      cite: Washington County CDC 390-13 (Neighborhood Corner Commercial District, NCC NB)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 390-6.2 C prohibits new residential uses in every nonresidential NB
+      # district except 390-13.3 H and 390-14.3 G and K. 390-13.3 H admits
+      # dwellings only on upper floors over a non-residential ground floor.
+      value: false
+      cite: Washington County CDC 390-6.2 C + 390-13.3 H (upper-floor dwellings over non-residential ground floor)
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L98-L99,L104-L106,L1116,L1137-L1141"
+    notes: >-
+      DRAFT. Dwellings only above a non-residential ground floor.
+  NCMU NB:
+    cite_default:
+      cite: Washington County CDC 390-14 (Neighborhood Commercial Mixed Use District, NCMU NB)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 390-6.2 C as above. 390-14.3 G admits dwellings on upper floors over
+      # a non-residential ground floor; K admits Live/Work Housing, whose
+      # units each carry a ground-floor business space (390-16.7). The pod
+      # is neither.
+      value: false
+      cite: Washington County CDC 390-6.2 C + 390-14.3 G and K + 390-16.7
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L98-L99,L104-L106,L1258,L1278-L1282,L1289,L1717-L1723"
+    notes: >-
+      DRAFT. Dwellings only above a non-residential ground floor, or as
+      Live/Work units.
+  INST NB:
+    cite_default:
+      cite: Washington County CDC 390-15 (Institutional North Bethany District)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 390-6.2 C, new residential uses prohibited in nonresidential NB districts
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L98-L99,L104-L106"
+    notes: >-
+      DRAFT. No residential use.
+  # --- Transit Oriented Districts (Section 375) ----------------------------
+  #
+  # Table A is the use table for all nine TO districts; Tables B(1) and C(1)
+  # hold Middle Housing, which 375 and 106-124 allow only in TO:R9-12,
+  # TO:R12-18 and TO:R18-24; B(2) and C(2) hold "all Other Development".
+  # Table A's key sends Middle Housing to the design standards of 430-84, not
+  # Section 431 (cdc.375.transit-oriented.txt#L885-L887). Everything else in
+  # a TO district is reviewed against 431, which is not stored.
+  #
+  # The pod in the three denser residential districts and TO:BUS is not
+  # Middle Housing, and Table A has no row for four units on one lot there:
+  # "Duplexes and Triplexes that are not Middle Housing" stops at three, and
+  # the apartment rows are multi-dwelling structures, which 106-143 starts at
+  # five ("Examples include apartments and condominiums"). 375-5.2 prohibits
+  # "Structures or uses not specifically authorized by the applicable Transit
+  # Oriented District" unless the Review Authority finds them similar under
+  # 202-2.2, a discretionary finding. What those districts do list is
+  # "Townhouses and Rowhouses that are not Middle Housing" (Type II), which is
+  # the pod split onto lots of its own: the `unit_lots` variant.
+  #
+  # NOT ENCODED: the 40-foot (TO:R9-12, TO:R12-18) and 50-foot (TO:R18-24)
+  # Middle Housing height. Table B(1) gives those figures "or 35 feet if
+  # abutting R-5 or R-6" (L941-L942). The lenient figure needs "does not abut
+  # R-5 or R-6", a negation `when:` cannot say, so every lot is held at 35.
+  # The design height is 26, so the pod does not feel the difference.
+  #
+  # NOT ENCODED: minimum floor area ratio. C(2) sets a minimum FAR for TO:RC,
+  # TO:BUS and TO:EMP (0.25 to 1.0 by distance from a station platform or
+  # transit center) and offers FAR as the alternative to minimum density in
+  # the residential districts ("24 d.u./ac. or .65 FAR"). No minimum-FAR
+  # field is held, and the distance to a station platform is not measured.
+  # Where the residential districts carry a minimum density below, the
+  # density figure is held and the FAR alternative is not, which can only
+  # refuse a lot the FAR route would have saved. A doubt in the handoff.
+  #
+  # NOT ENCODED: the Section 431 design standards for the non-Middle-Housing
+  # paths (375-4.1, 375-4.2: a Type I or II use that misses them is heard as
+  # Type III). 431 is not stored. It is also why the yards of those paths are
+  # left owed rather than read from B(2)'s "None": B(2)'s footnotes send the
+  # frontage minimum to Section 418 and the interior minimum to the screening
+  # and buffering of Sections 411 and 431 (L1025, L1030-L1032).
+  TO:R9-12:
+    cite_default:
+      cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # Table A, "Middle Housing - Section 430-84 (Use is distinct from
+      # others in this table) (30.c.)": I/II in TO:R9-12, TO:R12-18 and
+      # TO:R18-24, N everywhere else. 30.c. is the Type I path on an existing
+      # platted lot of up to 10,000 sq ft buildable; the rest is Type II. The
+      # Type II doubt is the one the urban R districts carry.
+      value: true
+      cite: Washington County CDC 375 Table A, Middle Housing row (I/II), and 375-7 30.c. + 106-124
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L684,L695,L697-L700,L885-L888"
+    max_units:
+      value: 4
+      cite: Washington County CDC 375 Table C(1), Quadplex - four units per parent lot
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1036,L1040,L1042-L1043,L1047"
+    max_density_du_per_acre:
+      # C(1) prints "N/A" once, in the density column beside the Duplex row,
+      # and the Triplex and Quadplex rows print unit counts and no density.
+      # Read as one cell merged across the three plex rows -- the only
+      # reading under which the table states a plex density at all. A doubt
+      # in the handoff. Townhouses carry "Maximum = 25 u/acre".
+      exempt: true
+      cite: Washington County CDC 375 Table C(1), density requirement N/A for plexes
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1036,L1042-L1047"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: Washington County CDC 375 Table C(1), Townhouses maximum 25 u/acre
+          quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1052-L1053"
+    min_density_du_per_acre:
+      exempt: true
+      cite: Washington County CDC 375 Table C(1), density requirement N/A for plexes, Townhouses minimum N/A
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1042-L1045,L1052"
+    min_lot_sqft:
+      # B(1) measures the parent lot before any right-of-way dedication
+      # (footnote *). Townhouse lots are an average.
+      value: 7000
+      cite: Washington County CDC 375 Table B(1), Quadplex minimum lot area (parent lot)
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901-L903,L907,L909,L919-L920"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Washington County CDC 375 Table B(1), Townhouses minimum average 1,500 sq ft in TO:R9-12 and TO:R12-18
+          quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L921-L927"
+    min_frontage_ft:
+      exempt: true
+      cite: Washington County CDC 375 Table B(1), minimum frontage N/A for plexes
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L933-L936"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Washington County CDC 375 Table B(1), 15 feet, applies to separate townhouse lots
+          quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L933-L939"
+    setback_front_ft:
+      value: 10
+      cite: Washington County CDC 375 Table B(1), Front Yard - minimum 10 feet
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L946-L947"
+    setback_front_max_ft:
+      value: 15
+      cite: Washington County CDC 375 Table B(1), Front Yard - maximum 15 feet
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L948-L949"
+    min_building_separation_ft:
+      value: 6
+      cite: Washington County CDC 375 Table B(1), minimum separation between buildings on the same lot
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L950-L955"
+    max_height_ft:
+      value: 35
+      cite: Washington County CDC 375 Table B(1), Maximum Building Height, 35 feet if abutting R-5 or R-6
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L941-L942"
+    # setback_side_ft and setback_rear_ft are absent on purpose. Table B(1)
+    # is the Middle Housing table and prints a front yard and a building
+    # separation and no side or rear yard. B(2)'s "No minimum interior yard
+    # setback is required for transit oriented district" (L1030-L1032) is a
+    # footnote to the table for "all Other Development", and it keeps the
+    # screening and buffering of Section 411 (not stored). So the zone owes
+    # both, the lot answers UNKNOWN on them, and the handoff asks Steph
+    # whether B(2)'s sentence reaches Middle Housing.
+    notes: >-
+      DRAFT. Transit Oriented Middle Housing district: Quadplex permitted
+      (Type I or II), 7,000 sq ft parent lot, max four units, front yard 10 to
+      15 ft, 35 ft held. Side and rear yards owed (the Middle Housing table
+      states none).
+  TO:R12-18:
+    cite_default:
+      cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    like:
+      # Tables B(1) and C(1) are one set of Middle Housing standards for the
+      # three districts, headed "(Allowed only in TO:R9-12, TO:R12-18,
+      # TO:R18-24)"; the one cell that splits them (the 40/50-foot height) is
+      # refused above, and the townhouse lot average names TO:R12-18 with
+      # TO:R9-12.
+      zone: TO:R9-12
+      wins: local
+      cite: Washington County CDC 375 Tables B(1) and C(1), one Middle Housing standard for TO:R9-12, TO:R12-18 and TO:R18-24
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901-L902,L921-L927,L1040-L1041"
+    quadplex_allowed:
+      value: true
+      cite: Washington County CDC 375 Table A, Middle Housing row (I/II), and 375-7 30.c. + 106-124
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L684,L695,L697-L700,L885-L888"
+    notes: >-
+      DRAFT. As TO:R9-12 (one Middle Housing table for the three districts).
+  TO:R18-24:
+    cite_default:
+      cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    like:
+      zone: TO:R9-12
+      wins: local
+      cite: Washington County CDC 375 Tables B(1) and C(1), one Middle Housing standard for TO:R9-12, TO:R12-18 and TO:R18-24
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901-L902,L1040-L1041"
+    quadplex_allowed:
+      value: true
+      cite: Washington County CDC 375 Table A, Middle Housing row (I/II), and 375-7 30.c. + 106-124
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L684,L695,L697-L700,L885-L888"
+    min_lot_sqft:
+      # The one B(1) cell that differs: townhouse lots in TO:R18-24 have "No
+      # minimum" average.
+      value: 7000
+      cite: Washington County CDC 375 Table B(1), Quadplex minimum lot area (parent lot)
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901-L903,L907,L909,L919-L920"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          cite: Washington County CDC 375 Table B(1), Townhouses in TO:R18-24, no minimum
+          quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L921-L924,L929-L930"
+    notes: >-
+      DRAFT. As TO:R9-12, except that townhouse lots carry no minimum
+      average.
+  TO:R24-40:
+    cite_default:
+      cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(2) and Table C(2) (all other development)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # Middle Housing N, Duplexes and Triplexes that are not Middle Housing
+      # N, no row for four units on one lot, and 375-5.2 prohibits what is
+      # not listed. Townhouses and Rowhouses that are not Middle Housing: II.
+      value: false
+      cite: Washington County CDC 375 Table A (Middle Housing N; no four-unit row) + 375-5.2 + 106-143
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L139-L145,L679-L686,L695,L697-L702,L892"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Washington County CDC 375 Table A, Townhouses and Rowhouses that are not Middle Housing (II)
+          quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L686,L703-L704,L888"
+    max_height_ft:
+      value: 60
+      cite: Washington County CDC 375 Table B(2), Maximum Building Height, TO:R24-40
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969,L997-L1006"
+    min_lot_sqft:
+      exempt: true
+      cite: Washington County CDC 375 Table B(2), Minimum Lot Area None in TO:R24-40
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969-L974"
+    setback_front_max_ft:
+      value: 10
+      cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:R24-40
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L969,L1010-L1011"
+    min_density_du_per_acre:
+      # "24 d.u./ac. or .65 FAR"; the FAR alternative is refused above.
+      value: 24
+      cite: Washington County CDC 375 Table C(2), minimum density TO:R24-40
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1070-L1071,L1087-L1088,L1093,L1106-L1108,L1117"
+    max_density_du_per_acre:
+      value: 40
+      cite: Washington County CDC 375 Table C(2), maximum density TO:R24-40
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1087-L1088,L1130,L1140-L1141,L1149"
+    # setback_front_ft, setback_side_ft and setback_rear_ft are owed: B(2)
+    # prints "None" and its footnotes (E) and (H) keep Sections 418, 411 and
+    # 431, of which only 418 is stored. They matter only on the townhouse
+    # variant; the four-units-on-one-lot answer is settled false.
+    notes: >-
+      DRAFT. Transit Oriented residential district: four units on one lot
+      not listed (false); townhouses on their own lots Type II, 60 ft,
+      24 to 40 units per acre. Yards owed.
+  TO:R40-80:
+    cite_default:
+      cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(2) and Table C(2) (all other development)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 375 Table A (Middle Housing N; no four-unit row) + 375-5.2 + 106-143
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L139-L145,L679-L688,L695,L697-L702,L892"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Washington County CDC 375 Table A, Townhouses and Rowhouses that are not Middle Housing (II)
+          quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L688,L703-L704,L888"
+    max_height_ft:
+      value: 80
+      cite: Washington County CDC 375 Table B(2), Maximum Building Height, TO:R40-80
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969,L997-L1007"
+    min_lot_sqft:
+      exempt: true
+      cite: Washington County CDC 375 Table B(2), Minimum Lot Area None in TO:R40-80
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969-L974"
+    setback_front_max_ft:
+      value: 10
+      cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:R40-80
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L969,L1010-L1012"
+    min_density_du_per_acre:
+      value: 40
+      cite: Washington County CDC 375 Table C(2), minimum density TO:R40-80
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1070-L1071,L1089-L1090,L1093,L1109-L1111,L1117"
+    max_density_du_per_acre:
+      value: 80
+      cite: Washington County CDC 375 Table C(2), maximum density TO:R40-80
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1089-L1090,L1130,L1142-L1143,L1149"
+    # Yards owed, as in TO:R24-40.
+    notes: >-
+      DRAFT. Transit Oriented residential district: four units on one lot
+      not listed (false); townhouses on their own lots Type II, 80 ft,
+      40 to 80 units per acre. Yards owed.
+  TO:BUS:
+    cite_default:
+      cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(2) and 375-7 (15)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # 375-7 (15): "Townhouses, rowhouses, apartments, and group residences,
+      # are allowed in the TO:BUS District." Middle Housing is N, and the
+      # apartments are multi-dwelling (five or more, 106-143), so four units
+      # on one lot is unlisted; the townhouse row is II.
+      value: false
+      cite: Washington County CDC 375 Table A (Middle Housing N; no four-unit row) + 375-5.2 + 106-143
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L139-L145,L681,L695,L697-L700,L892"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Washington County CDC 375 Table A, Townhouses and Rowhouses that are not Middle Housing (II), and 375-7 (15)
+          quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L281-L284,L681,L703-L704,L888"
+    max_height_ft:
+      # (B): "Except where a community plan specifies a higher maximum
+      # height" -- a lenient reading behind a plan nobody has read.
+      value: 80
+      cite: Washington County CDC 375 Table B(2), Maximum Building Height, TO:BUS
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969,L997-L998,L1019"
+    min_building_height_ft:
+      # 20 feet within 1,300 feet of a station platform, in a Regional Center
+      # or in a Town Center Core; none beyond. The distance is not measured,
+      # so the minimum is held on every lot -- the tighter reading. The pod's
+      # design height clears it.
+      value: 20
+      cite: Washington County CDC 375 Table B(2), Minimum Building Height, TO:BUS
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L969,L977-L981,L985-L991"
+    min_lot_sqft:
+      exempt: true
+      cite: Washington County CDC 375 Table B(2), Minimum Lot Area None in TO:BUS
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969-L970"
+    setback_front_max_ft:
+      value: 10
+      cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:BUS
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L969,L1010"
+    # Yards owed, as in TO:R24-40. 375-7 (15) also lets the community plan
+    # require a minimum number of dwelling units on a TO:BUS site; not read.
+    notes: >-
+      DRAFT. Transit Oriented business district: four units on one lot not
+      listed (false); townhouses on their own lots Type II, 20 to 80 ft.
+      Minimum FAR and yards not held.
+  TO:RC:
+    cite_default:
+      cite: Washington County CDC 375 (Transit Oriented Districts), Table A and 375-7 (14)
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      # Middle Housing N and townhouses N. 375-7 (14) admits dwellings only as
+      # multi-dwelling units above the ground floor of a mixed-use building:
+      # "Buildings that are solely residential are prohibited."
+      value: false
+      cite: Washington County CDC 375 Table A (Middle Housing N, Townhouses N) + 375-7 (14)
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L275-L280,L681,L695,L697-L704,L892"
+    notes: >-
+      DRAFT. Transit Oriented retail commercial: no residential building
+      the pod can be.
+  TO:EMP:
+    cite_default:
+      cite: Washington County CDC 375 (Transit Oriented Districts), Table A
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+    quadplex_allowed:
+      value: false
+      cite: Washington County CDC 375 Table A, every dwelling row N in TO:EMP
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L681,L695-L709,L892"
+    notes: >-
+      DRAFT. Transit Oriented employment district: no dwelling row permits
+      anything.

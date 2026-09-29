@@ -48,6 +48,14 @@ from flats.encode.definitions import CHAPTER, _stored
 from flats.rules.loader import load_rules
 from flats.rules.model import CodeDocument, Layer
 
+#: A section number heading an entry. Most codifiers dot it ("17.04.808");
+#: Washington County's Community Development Code hyphenates it ("106-173",
+#: "106-10.1"), and a reader that knew only the dotted form found 24 of the
+#: county's 225 numbered entries (it now finds 204) -- quadplex and corner lot
+#: not among the 24. The hyphenated form wants a three-digit section so a
+#: range like "12-18" in prose does not open an entry.
+_SECTION = r"(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?|\d{3}-\d{1,3}(?:\.\d{1,3})?)"
+
 #: An entry opens its own line: an optional bullet or list marker, the term,
 #: a separator, then the body. The term is a noun phrase, so it is bounded --
 #: a line of prose that happens to contain a period is not an entry, and the
@@ -69,7 +77,7 @@ ENTRY = re.compile(
     # which is most of a code. The quote is what says a word is being named.
     r"(?:\((?:[0-9]{1,3}|[A-Za-z]{1,3})\)\s+|[A-Za-z]{1,2}[.)]\s+(?=[\"“])"
     r"|\(?[0-9ivxIVX]{1,5}[.)]\s+)?"
-    r"(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+)?"  # or a section number
+    rf"(?:{_SECTION}\s+)?"  # or a section number
     r"[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})[\"”]?"
     r"(?P<sep>\s*[.:]\s+|\s*[–—-]\s+|\s+(?:means|shall mean|refers to|is defined as)\s+)"
     r"(?P<body>\S.*)$"
@@ -79,7 +87,7 @@ ENTRY = re.compile(
 #: and Happy Valley's codifier sets every entry this way, and a rule that only
 #: knows the inline form reads their entire chapters as prose.
 STACKED = re.compile(
-    r"^(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+)?[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})"
+    rf"^(?:{_SECTION}\s+)?" r"[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})"
     r"[\"”]?\s*[.:]?$"
 )
 
@@ -126,7 +134,17 @@ APPARATUS = re.compile(
 
 #: The codifier's page stamp, which sits between entries and looks like a body
 #: once the column padding is collapsed out of it.
-FURNITURE = re.compile(r"^\[[^\]]*\]$|^\(\d+\)$|^Page \d+", re.I)
+#: Municode's print of Washington County's code stamps each page "I:18" or
+#: "I:19Supp. No. 2" and runs a header in capitals over it -- "106 WASHINGTON
+#: COUNTY COMMUNITY DEVELOPMENT CODE", " 106INTRODUCTION AND GENERAL
+#: PROVISIONS". A figure caption above one read as a term defined by the page
+#: header.
+FURNITURE = re.compile(
+    r"^\[[^\]]*\]$|^\(\d+\)$|^Page \d+"
+    r"|^[IVX]{1,4}:\d{1,3}(?:Supp\. No\. \d+)?$"
+    r"|^\d{3} ?[A-Z][A-Z ,&'-]{15,}$",
+    re.I,
+)
 
 #: Where a publisher's page stops being the code and starts being the site.
 #: oregon.public.law prints the same footer under every rule -- a newsletter
@@ -157,6 +175,14 @@ _CROSS_REFERENCE = re.compile(r"^(?:see|also|and|or|of|the)\b", re.I)
 #: without it "-5 ft" and "-- see below" are bullets, and a hyphen touching its
 #: word is a compound rather than a marker.
 _BULLETED = re.compile(r"^(?:[•·▪◦]|-\s)")
+
+#: A decimal of another entry's number, which is where Washington County
+#: files a term under its parent: "106-113 Lot Line", then "106-113.1 Front
+#: Lot Line" to ".3 Side Lot Line"; "106-10 Airport", then ".1 Aircraft" to
+#: ".10 Federal Aviation Administration". The children are ordered by their
+#: parent, the same statement Portland makes with a bullet. Hyphenated form
+#: only: a dotted code's third number is the section itself.
+_SUBSECTION = re.compile(r"^\d{3}-\d{1,3}\.\d{1,3}\s")
 
 #: A list marker alone on the line above an entry, which is the same nesting
 #: said with a letter instead of a bullet. Milwaukie writes "Garage" at the
@@ -289,7 +315,11 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
         stripped = raw.strip()
         if not stripped or i in spoken_for:
             continue
-        nested = bool(_BULLETED.match(stripped)) or _under_a_marker(lines, i)
+        nested = (
+            bool(_BULLETED.match(stripped))
+            or bool(_SUBSECTION.match(stripped))
+            or _under_a_marker(lines, i)
+        )
         if PUBLISHER_FOOTER.match(stripped):
             # Everything below is the website, not the chapter.
             break
