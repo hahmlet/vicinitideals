@@ -9,7 +9,7 @@ from uuid import UUID
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import HTTPException as FastAPIHTTPException, RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 import app as _pkg
@@ -221,6 +221,21 @@ def create_app() -> FastAPI:
                 None,
             ),
         )
+
+    # Redis / the Celery broker is down: a plain sentence, not a stack trace.
+    # Registered per class so Starlette's MRO lookup picks it over Exception.
+    from app.api.queue_errors import (
+        BROKER_ERRORS,
+        log_queue_unavailable,
+        queue_unavailable_response,
+    )
+
+    async def handle_queue_unavailable(request: Request, exc: Exception) -> Response:
+        log_queue_unavailable(request, exc)
+        return queue_unavailable_response(request)
+
+    for _broker_exc in BROKER_ERRORS:
+        app.add_exception_handler(_broker_exc, handle_queue_unavailable)
 
     @app.exception_handler(FastAPIHTTPException)
     async def handle_http_exception(request: Request, exc: FastAPIHTTPException) -> JSONResponse:

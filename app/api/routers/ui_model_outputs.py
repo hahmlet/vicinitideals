@@ -20,6 +20,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.api.deps import DBSession
+from app.api.queue_errors import (
+    BROKER_ERRORS,
+    QUEUE_UNAVAILABLE_MESSAGE,
+    log_queue_unavailable,
+    queue_unavailable_response,
+)
 from app.config import settings
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.deal import (
@@ -146,12 +152,26 @@ async def preflight_investor_export(
     )
 
 
+async def _fail_unqueued_export(
+    request: Request, session: Any, job: Any, exc: Exception,
+) -> Response:
+    """The broker refused the export job: mark the row failed (so the history
+    and the poller never show it stuck at "queued") and say why in plain words."""
+    from app.models.export_job import ExportJobStatus
+
+    log_queue_unavailable(request, exc)
+    job.status = ExportJobStatus.failed
+    job.error_message = QUEUE_UNAVAILABLE_MESSAGE
+    await session.commit()
+    return queue_unavailable_response(request)
+
+
 @router.post("/ui/models/{model_id}/investor-export/async")
 async def start_investor_export_async(
     model_id: UUID,
     session: DBSession,
     request: Request,
-) -> JSONResponse:
+) -> Response:
     """Enqueue a fresh-build investor-export job and return its id.
 
     Caller (UI) is expected to have hit ``/preflight`` first to decide
@@ -187,7 +207,10 @@ async def start_investor_export_async(
     await session.commit()
     await session.refresh(job)
 
-    _celery.send_task(RUN_EXPORT_TASK, args=[str(job.id)])
+    try:
+        _celery.send_task(RUN_EXPORT_TASK, args=[str(job.id)])
+    except BROKER_ERRORS as exc:
+        return await _fail_unqueued_export(request, session, job, exc)
 
     return JSONResponse(
         {
@@ -229,7 +252,7 @@ async def resend_investor_export_endpoint(
     job_id: UUID,
     session: DBSession,
     request: Request,
-) -> JSONResponse:
+) -> Response:
     """Re-send a previously-completed export from cached xlsx_bytes.
 
     Spawns a fresh ``ExportJob`` row pointing at the same scenario; the
@@ -261,7 +284,10 @@ async def resend_investor_export_endpoint(
     await session.commit()
     await session.refresh(new_job)
 
-    _celery.send_task(RESEND_EXPORT_TASK, args=[str(new_job.id)])
+    try:
+        _celery.send_task(RESEND_EXPORT_TASK, args=[str(new_job.id)])
+    except BROKER_ERRORS as exc:
+        return await _fail_unqueued_export(request, session, new_job, exc)
     return JSONResponse(
         {
             "job_id": str(new_job.id),

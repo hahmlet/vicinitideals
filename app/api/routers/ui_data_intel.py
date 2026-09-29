@@ -890,13 +890,26 @@ async def broker_oregon_update(
     )
     if broker is None:
         return HTMLResponse("<p class='text-muted'>Not found.</p>")
+    previous_status = broker.oregon_lookup_status
     broker.oregon_lookup_status = "pending"
     await session.commit()
     # Local import keeps Celery out of the router import path in unit tests
     # that don't load celery_app.
+    from app.api.queue_errors import (  # noqa: PLC0415
+        BROKER_ERRORS,
+        log_queue_unavailable,
+        queue_unavailable_response,
+    )
     from app.tasks.oregon_elicense import enrich_broker_oregon  # noqa: PLC0415
 
-    enrich_broker_oregon.delay(str(broker_id))
+    try:
+        enrich_broker_oregon.delay(str(broker_id))
+    except BROKER_ERRORS as exc:
+        # Nothing was queued: don't leave the broker showing "pending" forever.
+        log_queue_unavailable(request, exc)
+        broker.oregon_lookup_status = previous_status
+        await session.commit()
+        return queue_unavailable_response(request)
     await session.refresh(broker)
     b = _build_broker_detail(broker, broker.scraped_listings)
     return templates.TemplateResponse(request, "partials/broker_detail.html", {"b": b})
