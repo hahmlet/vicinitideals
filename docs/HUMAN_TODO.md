@@ -2445,6 +2445,35 @@ open up the square. The screen does not search for that today.
 - **B — Leave them yellow.** Accept that these need Portland's exception;
   no work.
 
+## 28. A 15-minute favour: save six chapters of Forest Grove's code as PDFs
+
+**Added 2026-09-30.** Forest Grove (7,756 lots in Washington County) is the
+one city left whose rules the agent cannot read. Its code lives only on the
+American Legal website, and that site now puts a "prove you are human" check
+in front of every chapter — the agent got the table of contents once and was
+stopped on every chapter after it. The agent will not try to get around that
+check. A person with a normal browser passes it without noticing.
+
+**What to do:** open the link below, click into each of the six chapters,
+and use the browser's Print → *Save as PDF* on each. Put the six PDFs in a
+folder called `Forest Grove` anywhere on this computer and tell the agent
+where. The agent does the rest (reads, encodes, double-checks every number).
+
+Link: https://codelibrary.amlegal.com/codes/forestgrove/latest/forestgrovedev_or/0-0-0-4
+
+The six chapters (the other six only cover procedure and signs):
+- Article 3: Zoning Districts
+- Article 4: Overlay Districts
+- Article 5: Special Provisions
+- Article 6: Land Divisions
+- Article 8: General Development Standards
+- Article 12: Use Categories and Definitions
+
+If a chapter only prints its first page, scroll to the bottom of the chapter
+before printing so the whole thing has loaded. Nothing changes on the map
+until Washington County's map is built (the agent's item 17(d)), so there is
+no rush.
+
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
 - **The lot ledger could not see Clackamas County, and it nearly hid item 15's

@@ -691,8 +691,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    "illustrates"; the city's open data holds 2020 gallery symbols, not the
    cores), so 3 stories stays held on every MU-VTC lot (hillsboro.yaml). Not in the layers: SMART, CAT,
    SAM, SCTD (reads as far from transit -- conservative for relief).
-   (c) FOREST GROVE (7,756 lots): American Legal 403s from home too. Try the
-   scrapling stealthy browser; if refused, ask Steph to save the PDFs.
+   (c) FOREST GROVE (7,756 lots): REFUSED 2026-09-30 -- curl gets only the
+   script shell; a local headless browser got the contents page once, then
+   a Cloudflare Turnstile on every chapter (not to be bypassed); the
+   scrapling MCP's proxy is down. Asked Steph to save the six articles as
+   PDFs (HUMAN_TODO 28); store them from the files, then rulebook 1-14.
    (d) COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
    county's LUD layer + city layers (King City layer 4 = Kingston Terrace);
    overlays incl. Clean Water Services; send Tualatin/Portland/Wilsonville/
