@@ -825,3 +825,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    a second app, login and export plumbing. Recommended: build it inside
    the existing signing page. Pending Steph (build it? which first: the
    ~2,000 signed numbers, or only unsigned ones?).
+   Page coverage (measured 2026-09-30): 227 cited docs, 16 mapped = 1,441
+   distinct pages; ~5,400 pages est. in all. All 105 Municode docs (73
+   cited) are already the official PDF (`PublicationPdfDownload`,
+   municode.py) with printed labels ("TDC49:1", "Supp. No."), but only 5
+   are mapped -- run `pages.py` over the rest, fetching each book once,
+   not once per chapter as `main()` does now (publication 3090 backs 34
+   slices).
+   Truly page-less: 92 cited HTML docs -- Clackamas ZDO 16, West Linn 19,
+   Gladstone 6 (Code Publishing), Happy Valley 9, Lake Oswego 2, Milwaukie
+   5, Fairview 18 (ecode360), Wood Village 15, ORS 92.031, OAR
+   660-046-0220 (public.law).
+   Offered: check each codifier for an official PDF edition (Clackamas's
+   zdo1012 page links none, checked 2026-09-30).
