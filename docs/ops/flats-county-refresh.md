@@ -180,8 +180,14 @@ edited after the copy was taken.
 | # | Step | Where | Command | Done when |
 |---|---|---|---|---|
 | T1 | Acquire the three layers | 137 | `python -m flats.ingest.acquire --snapshot <date> --keys transit_rail_stations transit_stops transit_routes` | all three `acquired` in the manifest, with a `data_edited` date |
-| T2 | Measure | 137 | `python -m flats.ingest.transit --s4 data/quadfit_<date>/s4_lots.parquet --sources data/flats/sources/<date> --out data/flats/transit/<date> --reuse data/flats/transit/<prev>/distances.parquet` | seconds; `distances.json` names the `transit_version` and how many lots were `reused` / `measured`. Same version as `<prev>` = a republish, nothing moved |
-| T3 | Screen with it | 137 | every bridge run (step 8, P1) adds `--transit data/flats/transit/<date>/distances.parquet` | `meta.json` names the file |
+| T2 | Measure | 137 | `python -m flats.ingest.transit --lots data/flats/normalized/<date>/lots.parquet --sources data/flats/sources/<date> --out data/flats/transit/<date> --reuse data/flats/transit/<prev>/distances.parquet` | seconds; `distances.json` names the `transit_version` and how many lots were `reused` / `measured`. Same version as `<prev>` = a republish, nothing moved |
+| T3 | Screen with it | 137 | every bridge run (step 8, P1) adds `--transit data/flats/transit/<date>/distances.parquet`; assign carries it in `meta.json` and the export reads it from there (or `export --transit …`) | `meta.json` names the file; the bundle's lots carry `facts.transit` |
+
+The normalized table is every lot of the copy, measured by quadfit or not,
+so every lot page can show its distances and whether the state parking
+reform's transit reach covers it (OAR 660-012-0440: 3/4 mile of rail, 1/2
+mile of a frequent line). Shown, not screened (Steph, 2026-09-30: _"show it,
+don't screen it"_) -- the pod parks four either way.
 
 A bridge run **without** `--transit` leaves every lot unmeasured, and a
 standard banded on a distance (Hillsboro's and Beaverton's station

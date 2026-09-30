@@ -240,6 +240,27 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
     assert json.loads(green["checks"])["stalls"] == {"charged": 4, "seated": 5, "band": "minimum"}
 
 
+def test_a_lot_the_distance_file_holds_carries_its_distance_to_transit(tmp_path: Path) -> None:
+    """The lot page shows it (Steph 2026-09-30: "show it, don't screen it")."""
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    near = tmp_path / "transit" / "distances.parquet"
+    near.parent.mkdir()
+    pd.DataFrame(
+        [{"TLID": LOT_A, "geom_hash": "x", "rail_stop_ft": 5_000.0, "lrt_station_ft": 5_000.0,
+          "transit_stop_ft": 300.0, "frequent_route_ft": 1_200.0}]
+    ).to_parquet(near, index=False)
+    (near.parent / "distances.json").write_text(json.dumps({"transit_version": "6d3a528e4091692b"}), encoding="utf-8")
+
+    export(run_dir, tmp_path / "bundle", s4=s4, s5o=s5o, quadfit_results=results, code_version="abc1234", transit=near)
+
+    lots = {r["tlid"]: json.loads(r["facts"]) for r in _read(tmp_path / "bundle" / LOTS_FILE)}
+    assert lots[LOT_A]["transit"] == {
+        "rail_stop_ft": 5_000.0, "lrt_station_ft": 5_000.0, "transit_stop_ft": 300.0,
+        "frequent_route_ft": 1_200.0, "parking_reform": True, "version": "6d3a528e4091692b",
+    }
+    assert "transit" not in lots[LOT_B], "a lot the file does not hold has no distance, not a far one"
+
+
 def test_the_binding_list_is_the_head_first_and_each_check_once() -> None:
     assert result_binding({"head": "fit_ft", "failing": "lot_width_ft,fit_ft"}) == ["fit_ft", "lot_width_ft"]
     assert result_binding({"head": None, "failing": ""}) == []

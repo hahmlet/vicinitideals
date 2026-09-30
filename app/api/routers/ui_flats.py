@@ -3447,6 +3447,7 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
     slope = facts.get("slope") or {}
     sewer = facts.get("sewer") or {}
     flood = facts.get("flood") or {}
+    transit = facts.get("transit") or {}
     roll = facts.get("assessor") or {}
     condo = facts.get("condo") or {}
     unmeasured = facts.get("unmeasured") or {}
@@ -3493,6 +3494,12 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Nearest sewer main", ft(sewer.get("main_dist_ft"))),
         ("In a flood hazard area", yes(flood.get("sfha"))),
         ("In a floodway", yes(flood.get("floodway"))),
+        # Distance to transit, measured once per TriMet release. Shown, not
+        # screened (Steph 2026-09-30): the pod parks four either way.
+        ("Near transit: no parking can be required", _reform_said(transit.get("parking_reform")) if transit else ""),
+        ("Nearest MAX / streetcar / WES station", ft(transit.get("rail_stop_ft"))),
+        ("Nearest frequent bus or rail line", ft(transit.get("frequent_route_ft"))),
+        ("Nearest transit stop", ft(transit.get("transit_stop_ft"))),
         # The assessor's roll, adopted from the county copy on every refresh.
         ("Condo", f"{condo['verdict']}" + (f" ({condo['reason']})" if condo.get("reason") else "") if condo.get("verdict") and condo["verdict"] != "land" else ""),
         ("Assessed value", money(roll.get("assessed_value"))),
@@ -3504,6 +3511,16 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Land use", str(roll["land_use"]) if roll.get("land_use") else ""),
     ]
     return [(label, value) for label, value in rows if value]
+
+
+def _reform_said(reach: bool | None) -> str:
+    """The state parking reform's transit reach (OAR 660-012-0440), in words.
+    A "no" is only as wide as TriMet's own Frequent Service flag."""
+    if reach is True:
+        return "yes -- within 3/4 mile of rail or 1/2 mile of a frequent line (OAR 660-012-0440)"
+    if reach is False:
+        return "no -- beyond TriMet's rail and frequent lines"
+    return "too close to the line to say"
 
 
 def _roll_date(value: Any) -> str:

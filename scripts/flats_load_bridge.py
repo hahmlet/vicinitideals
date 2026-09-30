@@ -308,6 +308,28 @@ def lot_county(s4: dict[str, Any]) -> str:
     return COUNTY.get(str(s4.get("jurisdiction")), "unknown")
 
 
+def transit_rows(path: Path, tlids: list[str]) -> dict[str, dict[str, Any]]:
+    """Each lot's ``facts.transit``: its four distances, whether the state
+    parking reform's transit reach covers it, and the transit version."""
+    import pandas as pd
+
+    from flats.geom.transit import MEASURES, parking_reform_reach
+
+    version = None
+    meta = path.with_name("distances.json")
+    if meta.is_file():
+        version = json.loads(meta.read_text(encoding="utf-8")).get("transit_version")
+    frame = pd.read_parquet(path, columns=["TLID", *MEASURES])
+    frame = frame[frame["TLID"].isin(set(tlids))].drop_duplicates("TLID")
+    out: dict[str, dict[str, Any]] = {}
+    for row in frame.to_dict("records"):
+        got = {m: _num(_clean(row.get(m))) for m in MEASURES}
+        got["parking_reform"] = parking_reform_reach(got["rail_stop_ft"], got["frequent_route_ft"])
+        got["version"] = version
+        out[str(row["TLID"])] = got
+    return out
+
+
 def lot_facts(s4: dict[str, Any], s5o: dict[str, Any], observed: dict[str, Any], quadfit: dict[str, Any]) -> dict[str, Any]:
     """The design-independent record for one lot, from the four sources."""
     bearings_raw = _clean(s4.get("front_bearings_json"))
@@ -519,8 +541,14 @@ def export(
     rules_ver: str | None = None,
     source_id: str | None = None,
     screen_ver: str | None = None,
+    transit: Path | None = None,
 ) -> dict[str, Any]:
     """Write the bundle for one run; returns ``run.json``'s content.
+
+    ``transit`` (or ``meta.json``'s ``transit``, the file the bridge joined)
+    is the distance file :mod:`flats.ingest.transit` wrote; each lot it holds
+    gains ``facts.transit``, which the lot page shows. Without it no lot
+    carries a distance.
 
     ``normalized`` (or ``meta.json``'s ``normalized``) is the normalize stage's
     directory; with it, a lot the run carries that s4 lacks takes its record
@@ -596,6 +624,9 @@ def export(
             raise SystemExit(f"{normalized}: a TLID names lots in two counties: {twice[:5]}")
         n_rows = n.to_dict("index")
 
+    transit = transit or (Path(meta["transit"]) if meta.get("transit") else None)
+    near = transit_rows(transit, tlids) if transit is not None else {}
+
     missing = [t for t in tlids if t not in s4_rows and t not in n_rows]
     if missing:
         where = f"{s4}" if normalized is None else f"{s4} or {normalized}"
@@ -661,6 +692,8 @@ def export(
                     # A pocket: the layer whose zoning the lot carries.
                     "of": _clean(nr.get("rules_layer")),
                 }
+            if tlid in near:
+                facts["transit"] = near[tlid]
             county_of[tlid] = county
             counties[county] += 1
             w.writerow(
@@ -1227,6 +1260,7 @@ def main(argv: list[str] | None = None) -> int:
     ex.add_argument("--rules-version", default=None, help="rules hash the run was screened under (default: this checkout's)")
     ex.add_argument("--screen-version", default=None, help="hash of the screen's files the run was screened with (default: this checkout's)")
     ex.add_argument("--normalized", type=Path, default=None, help="the normalize stage's directory (default: meta.json's)")
+    ex.add_argument("--transit", type=Path, default=None, help="distances.parquet from flats.ingest.transit (default: meta.json's)")
     ex.add_argument(
         "--source-id",
         default=None,
@@ -1261,6 +1295,7 @@ def main(argv: list[str] | None = None) -> int:
             rules_ver=args.rules_version,
             source_id=args.source_id,
             screen_ver=args.screen_version,
+            transit=args.transit,
         )
         keys = ("source_id", "status", "snapshot_date", "code_version", "rules_version", "screen_version", "design_keys", "counties", "counts")
         print(json.dumps({k: run.get(k) for k in keys}, indent=2))

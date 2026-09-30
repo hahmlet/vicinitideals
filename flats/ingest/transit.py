@@ -41,6 +41,20 @@ def _meta_for(parquet: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
 
 
+def read_lots(path: Path) -> Any:
+    """TLID and lot polygon from quadfit's s4 file (``TLID``) or the
+    normalize stage's table (``tlid``, every lot of the copy, measured or
+    not -- the lot page shows the distance on both)."""
+    import pandas as pd
+    import pyarrow.parquet as pq
+
+    names = set(pq.read_schema(path).names)
+    key = "TLID" if "TLID" in names else "tlid"
+    lots = pd.read_parquet(path, columns=[key, "wkb"]).rename(columns={key: "TLID"})
+    lots["TLID"] = lots["TLID"].astype(str).str.rstrip()
+    return lots
+
+
 def measure(
     lots: Any,
     transit: TransitSet,
@@ -105,7 +119,7 @@ def run(
             f"{sources}: the snapshot does not hold all three transit layers -- "
             f"acquire transit_rail_stations, transit_stops and transit_routes together"
         )
-    lots = pd.read_parquet(s4, columns=["TLID", "wkb"])
+    lots = read_lots(s4)
     old = old_version = None
     if reuse is not None and reuse.is_file():
         old = pd.read_parquet(reuse)
@@ -135,7 +149,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     import argparse
 
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--s4", type=Path, required=True, help="the lot fabric (TLID, wkb)")
+    ap.add_argument(
+        "--s4", "--lots", dest="s4", type=Path, required=True,
+        help="the lot fabric: quadfit's s4_lots.parquet or data/flats/normalized/<date>/lots.parquet",
+    )
     ap.add_argument("--sources", type=Path, required=True, help="snapshot holding the transit layers")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--reuse", type=Path, help="the last distances.parquet")

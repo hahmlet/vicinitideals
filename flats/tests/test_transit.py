@@ -334,3 +334,29 @@ def test_beaverton_station_community_density_steps_down_beyond_400_ft(rules: Rul
         assert rules.resolve(BEAVERTON, zone, lot=_at(200)).values["min_density_du_per_acre"].value == 30, zone
         assert rules.resolve(BEAVERTON, zone, lot=_at(1_000)).values["min_density_du_per_acre"].value == 24, zone
         assert "min_density_du_per_acre" in rules.resolve(BEAVERTON, zone, lot=_at(450)).ambiguous, zone
+
+
+# --- the state parking reform's reach, shown on the lot page ------------------------
+
+
+def test_the_parking_reform_reach_is_yes_no_or_cannot_say() -> None:
+    from flats.geom.transit import parking_reform_reach
+
+    assert parking_reform_reach(3_900.0, None) is True  # inside 3/4 mile of rail
+    assert parking_reform_reach(None, 2_600.0) is True  # inside 1/2 mile of a frequent line
+    assert parking_reform_reach(9_000.0, 5_000.0) is False
+    # The station point may be 100 ft from the platform's end: no "no" there.
+    assert parking_reform_reach(4_000.0, 5_000.0) is None
+    assert parking_reform_reach(9_000.0, None) is None
+
+
+def test_every_lot_of_the_copy_can_be_measured_from_the_normalized_table(tmp_path: Path) -> None:
+    from flats.ingest.transit import read_lots
+
+    path = tmp_path / "lots.parquet"
+    pd.DataFrame({"tlid": ["1S1E01AA  -00100  "], "wkb": [shapely.to_wkb(box(0, 0, 10, 10))]}).to_parquet(path)
+
+    lots = read_lots(path)
+
+    assert list(lots.columns) == ["TLID", "wkb"]
+    assert list(lots["TLID"]) == ["1S1E01AA  -00100"]

@@ -59,6 +59,40 @@ from typing import Any, Iterable, Sequence
 from flats.rules.model import MEASURE_SLACK as MEASURE_SLACK_FT
 from flats.rules.model import TRANSIT_MEASURES as MEASURES
 
+#: OAR 660-012-0440(2): a city may not mandate parking on "a lot or parcel
+#: that includes lands within" three-quarters of a mile of a rail stop or
+#: one-half mile of a frequent transit corridor.
+RAIL_REACH_FT = 3_960.0
+FREQUENT_REACH_FT = 2_640.0
+
+
+def parking_reform_reach(rail_ft: float | None, frequent_ft: float | None) -> bool | None:
+    """Is the lot inside the state parking reform's transit reach?
+
+    True when either measured distance is inside its reach -- the true
+    distance is never farther than the measured one, so that is certain.
+    False when both were measured and both are beyond reach by more than the
+    measurement's doubt -- beyond TriMet's rail and TriMet's Frequent Service
+    lines, which is narrower than the state's "four times an hour", so a
+    False means "not shown by these layers", never "the rule cannot reach
+    it". None when a distance is missing or sits within the doubt.
+
+    Shown on the lot page (Steph, 2026-09-30: "show it, don't screen it");
+    the screen does not read it -- the pod parks four either way.
+    """
+    if rail_ft is not None and rail_ft <= RAIL_REACH_FT:
+        return True
+    if frequent_ft is not None and frequent_ft <= FREQUENT_REACH_FT:
+        return True
+    if rail_ft is None or frequent_ft is None:
+        return None
+    if rail_ft - MEASURE_SLACK_FT["rail_stop_ft"] > RAIL_REACH_FT and (
+        frequent_ft - MEASURE_SLACK_FT["frequent_route_ft"] > FREQUENT_REACH_FT
+    ):
+        return False
+    return None
+
+
 #: Registry keys (flats/config/pipeline.yaml).
 STATIONS_KEY = "transit_rail_stations"
 STOPS_KEY = "transit_stops"
@@ -215,8 +249,11 @@ def distances(lots: Sequence[Any], transit: TransitSet) -> dict[str, list[float 
 
 
 __all__ = [
+    "FREQUENT_REACH_FT",
     "MEASURES",
     "MEASURE_SLACK_FT",
+    "RAIL_REACH_FT",
+    "parking_reform_reach",
     "TransitSet",
     "build",
     "distances",

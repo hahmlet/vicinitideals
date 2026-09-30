@@ -682,9 +682,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (run 44, best design per lot, station points, no slack): 213,006 of
    400,032 lots lie within 3/4 mi of rail or 1/2 mi of a TriMet frequent
    line (35,518 green / 156,257 yellow / 9,410 red / 11,821 unknown;
-   Portland 170,645 of 194,056). ASKED Steph whether to screen a
-   fewer-than-4-stall pod there (state reform OAR 660-012-0440, still NOT
-   ENCODED in or/_state.yaml); (3) MU-VTC 3 stories inside the Center
+   Portland 170,645 of 194,056). Steph 2026-09-30: "SHOW IT, DON'T SCREEN
+   IT" -- the lot page shows the distances and the reform's reach
+   (facts.transit, export --transit / meta); the pod keeps 4 stalls. The
+   state reform (OAR 660-012-0440) stays NOT ENCODED in or/_state.yaml.
+   The lot page is empty of it until (1) runs; (3) MU-VTC 3 stories inside the Center
    Cores needs the 12.65.030 map polygons. Not in the layers: SMART, CAT,
    SAM, SCTD (reads as far from transit -- conservative for relief).
    (c) FOREST GROVE (7,756 lots): American Legal 403s from home too. Try the
