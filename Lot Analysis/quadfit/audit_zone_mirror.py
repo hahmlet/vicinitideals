@@ -696,9 +696,15 @@ def permission_splits() -> list[str]:
             v.value is True and "conditional_use" in (v.when or ())
             for v in allowed.variants
         )
+        state_path = any(
+            v.value is True and "state_middle_housing" in (v.when or ())
+            for v in allowed.variants
+        )
         reads = (
             "conditionally permitted, hearing required"
             if conditional
+            else "permitted only by the state middle housing law"
+            if state_path
             else str(bool(allowed.value))
         )
         capped = str(z.get("confidence", "")) == "needs_verification"

@@ -79,11 +79,18 @@ KNOWN_PERMISSION_BLOCKED: frozenset[str] = frozenset({
 })
 
 #: Zones where the two files disagree about whether a quadplex is permitted.
-#: Both of these have rules.yaml saying yes and the corpus saying no, which is
-#: the dangerous direction -- if the corpus is right, every lot in the zone is
-#: being screened for a building the code does not allow.
+#: All of these have rules.yaml saying yes and the corpus's base value saying
+#: no, which is the dangerous direction -- if the corpus is right, every lot in
+#: the zone is being screened for a building the code does not allow. Four of
+#: the five are not really disputes: the corpus allows the pod there through a
+#: relief (LR7's conditional use; the state middle housing law for Portland
+#: RF and the county's RF and LR5, opened 2026-09-30), and rules.yaml says yes
+#: so the lots are measured at all. Only Wilsonville RN is a live question.
 KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
+    "multnomah_unincorporated/LR5",
     "multnomah_unincorporated/LR7",
+    "multnomah_unincorporated/RF",
+    "portland/RF",
     "wilsonville/RN",
 })
 
@@ -269,21 +276,39 @@ def test_a_collapsed_combined_side_yard_is_not_a_mistake() -> None:
             assert d.shipped > d.corpus[0]
 
 
-def test_the_two_files_disagree_about_the_use_in_exactly_two_zones() -> None:
+def test_the_two_files_disagree_about_the_use_in_exactly_the_known_zones() -> None:
     """The worst kind of divergence, and the shortest list.
 
     A setback that is five feet out moves a lot between green and review. A
     `quadplex_allowed` that is out decides whether the zone is screened at all,
-    and both of these have the pipeline screening a zone the corpus reads as
-    closed to the pod. Neither is resolved: unincorporated Multnomah never
-    wrote HB 2001 into MCC, and Wilsonville's RN was flipped to false on
-    4.127(.02)B.1.a.ii, "quadplexes are not permitted", against a state
-    preemption argument that is real but untested.
+    and each of these has the pipeline screening a zone the corpus's base value
+    reads as closed to the pod. LR7 is open through a conditional use, Portland
+    RF and the county's RF and LR5 through the state middle housing law
+    (2026-09-30); Wilsonville's RN was flipped to false on 4.127(.02)B.1.a.ii,
+    "quadplexes are not permitted", against a state preemption argument that is
+    real but untested.
     """
     audit = _audit()
     splits = audit.permission_splits()
     keys = {s.split(":")[0] for s in splits}
     assert keys == KNOWN_PERMISSION_SPLITS, splits
+
+
+def test_every_split_but_rn_is_a_path_the_corpus_holds() -> None:
+    """A split that is really a relief says so in the audit line.
+
+    The state-law rows were opened because the corpus carries a
+    `state_middle_housing` path for them, and LR7 because it carries a
+    conditional use. If one of those paths is ever removed from the corpus,
+    the line falls back to a bare "False" and this goes red -- the row is
+    then screening a zone the corpus closes outright.
+    """
+    audit = _audit()
+    for s in audit.permission_splits():
+        if s.startswith("wilsonville/RN:"):
+            continue
+        assert ("conditionally permitted" in s
+                or "permitted only by the state middle housing law" in s), s
 
 
 def test_neither_disputed_permission_can_reach_a_green() -> None:

@@ -89,9 +89,9 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
     made into a number s5 can cut with. The corpus read the sentence first and
     holds it -- on `setback_garage_entrance_ft`, as an exemption switched by
     `abuts_alley`, with the quote -- so every quadfit zone that states the
-    zero has to be a zone where that variant already stands. Thirteen zones:
-    Portland's five R and four RM, and the county's four Portland-administered
-    R zones, whose copy of 33.110 prints the same sentence at the same lines.
+    zero has to be a zone where that variant already stands. Fifteen zones:
+    Portland's six R (RF since 2026-09-30) and four RM, and the county's five
+    Portland-administered R zones, whose copy of 33.110 prints the same sentence at the same lines.
 
     Since 2026-09-13 the zero also has to be the REAR half of the sentence:
     an `alley_at_rear` exemption on `setback_rear_ft` on every one of those
@@ -184,9 +184,11 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
             assert {float(v.value) for v in alone} == {stated + plane}, (jname, row["zone"])
             assert stated < float(held.before_step_back or held.value), (jname, row["zone"])
             numbers[(jname, row["zone"])] = stated
-    assert zeros == {("portland", z) for z in ("R20", "R10", "R7", "R5", "R2.5",
+    # RF in both since 2026-09-30: opened by the state middle housing law,
+    # and 33.110.220.D.9 is a single-dwelling-zone sentence that covers it.
+    assert zeros == {("portland", z) for z in ("RF", "R20", "R10", "R7", "R5", "R2.5",
                                                 "RM1", "RM2", "RM3", "RM4")} | {
-        ("multnomah_unincorporated", z) for z in ("R20", "R10", "R7", "R5")}
+        ("multnomah_unincorporated", z) for z in ("RF", "R20", "R10", "R7", "R5")}
     assert numbers == {("gresham", z): 8.0 for z in ("LDR-5", "LDR-7", "TLDR", "TR",
                                                      "LDR-PV", "MDR-PV", "LDR-SW",
                                                      "VLDR-SW")} | {
@@ -401,6 +403,9 @@ def test_a_backported_band_has_to_already_be_here() -> None:
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
+    # 138 as of 2026-09-30: Multnomah unincorporated LR5, opened by the state
+    # middle housing law (FOLLOWUPS 21(b)) so quadfit measures its lots.
+    #
     # 137 as of 2026-09-23: the nine AHEAD_OF_QUADFIT zones ported the other
     # way, corpus to rules.yaml -- Clackamas MR1/MR2/PMD/VA and Oregon City
     # C/MUC-1/MUC-2/MUD/WFDD (0504ef84).
@@ -415,7 +420,7 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # of, worth 76,752 lots that were dropped before anything was measured.
     # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
     # false` by owner decision, so its rows are reference rather than debt.
-    assert dry["stats"]["zones"] == 137
+    assert dry["stats"]["zones"] == 138
     assert dry["stats"]["layers"] == len(COUNTY) == 18
 
 

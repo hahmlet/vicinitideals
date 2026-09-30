@@ -76,12 +76,26 @@ jurisdictions:
       # Citywide building-coverage formula (Table 110-5), all residential
       # zones: <3,000 sf lot -> 50%; 3,000-4,999 -> 1,500 + 37.5% over 3,000;
       # 5,000-19,999 -> 2,250 + 15% over 5,000; >=20,000 -> 4,500 + 7.5% over.
+      # Opened 2026-09-30 by the state middle housing law (FOLLOWUPS 21(b),
+      # Steph chose A): PCC still refuses the fourplex here, the corpus reads
+      # it as allowed only through the `state_middle_housing` relief, so the
+      # row is measured and capped at review, never green.
       - zone: RF
-        quadplex_allowed: false
-        source: "PCC 33.110.200 Table 110-2 — fourplex prohibited in RF (RIP2 extended middle housing to R10/R20 only)"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        #   or/multnomah/portland/33.110.txt#L746-L747
+        setback_alley_ft: 0
+        # Table 610-2, "All other lots", RF: the house's minimum, which the
+        # state rule caps the quadplex's at.
+        #   or/multnomah/portland/33.610.txt#L162-L168
+        min_lot_sqft: 52000
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "PCC 33.110.200 Table 110-2 (fourplex prohibited in RF); 33.610 Table 610-2; ORS 197A.420 / OAR 660-046 (state middle housing path)"
         source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
-        confidence: verified
-        notes: "Only house/ADU/manufactured home/houseboat/congregate allowed."
+        confidence: needs_verification
+        notes: "The city's code allows only a house/ADU/manufactured home/houseboat/congregate here. Measured since 2026-09-30 because the state middle housing law requires a quadplex wherever a detached house is allowed in a city this size; FLATS reads that as a discretionary relief (yellow at best). needs_verification caps every lot at review."
       - zone: R20
         quadplex_allowed: true
         setback_front_ft: 20
@@ -1377,12 +1391,44 @@ jurisdictions:
         source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
         confidence: verified
         notes: "Fourplex min lot 12,000 sf. z overlay gated in s3."
+      # Opened 2026-09-30 (FOLLOWUPS 21(b)): the corpus allows the pod here
+      # only through `state_middle_housing` + `in_sewer_district` -- county
+      # land counts as "urban unincorporated" only where a sewer district
+      # serves it, and that fact is not measured in Multnomah yet, so FLATS
+      # answers these lots UNKNOWN until it is. Measured now so the sewer
+      # layer is all that is left.
       - zone: RF
-        quadplex_allowed: false
-        source: "Portland Zoning Code 33.110 Table 110-2 — fourplex prohibited in RF"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        setback_alley_ft: 0
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "Portland Zoning Code 33.110 Table 110-2 (fourplex prohibited in RF); ORS 197A.420 / 197A.015(12) (state middle housing path, urban unincorporated land)"
         source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
-        confidence: verified
-        notes: "House + ADU only. Whether the state Model Code could override RF in county pockets is unresolved — treated as no-quadplex."
+        confidence: needs_verification
+        notes: "House + ADU only under the code. Measured since 2026-09-30 on the state middle housing path (discretionary, never green); needs_verification caps at review. No minimum lot is carried: the corpus holds none for the county's RF (Portland's 52,000 comes from 33.610, not stored for the county layer)."
+      # Opened 2026-09-30 (FOLLOWUPS 21(b)), same path and sewer condition as
+      # RF above. MCC 39.4820 / 39.4826(C) / 39.4828 / 39.4830, per the
+      # corpus's reading.
+      #   or/multnomah/_unincorporated/39.lr-5.txt
+      - zone: LR5
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 18000
+        min_frontage_ft: 20
+        # 45 ft; a corner lot asks 50. Carried at the larger limb, as every
+        # conditioned port is (the lot is not known to be interior here).
+        min_lot_width_ft: 50
+        max_coverage_pct: 50
+        source: "MCC 39.4820 (Uses), 39.4826(C), 39.4828, 39.4830 (Dimensional Requirements), per the FLATS corpus reading; ORS 197A.420 / 197A.015(12)"
+        source_url: "https://multco.us/file/chapter_39_-_zoning_code/download"
+        confidence: needs_verification
+        notes: "The code allows a multiplex here only as a conditional use on a corner or flag lot; the state middle housing path opens it on sewered urban land. Both are discretionary -- needs_verification caps every lot at review."
       - zone: R7
         quadplex_allowed: true
         setback_front_ft: 15

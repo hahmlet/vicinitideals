@@ -710,6 +710,9 @@ siteplan:
       parking_front_yard_max_pct: 40
       parking_street_setback_ft: 10
       open_space_sqft_by_zone:
+        # RF since 2026-09-30, opened by the state middle housing law; Table
+        # 110-4 prints the same 250 for it.
+        RF: 250
         R20: 250
         R10: 250
         R7: 250
@@ -1054,6 +1057,10 @@ siteplan:
         # table.
         MR4: 20
         R5: 10
+        # Added 2026-09-30 with the state middle housing path: 39.6580(A) is
+        # the county's sentence for every zone, and both fronts are 20.
+        RF: 20
+        LR5: 20
       open_space_sqft_by_zone:
         R20: null
         R10: null
@@ -1064,6 +1071,10 @@ siteplan:
         # other district. An absence read, not a field left blank.
         MR4: null
         R5: null
+        # 2026-09-30: neither states an outdoor area; the shared recreation
+        # area of 39.8045(A)(2) rides on LR-7's design review only.
+        RF: null
+        LR5: null
       front_lot_line_corner: shortest
       corner_access_street: any
       cite: MCC 39.6560(A) driveway width; 39.6580(A) street setback; 39.8045(A)(2) shared outdoor recreation

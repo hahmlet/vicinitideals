@@ -96,11 +96,16 @@ def test_gresham_rules_merged():
     assert g.rule_for("CMF").min_frontage_ft == 100
 
 
-def test_portland_min_lots_and_rf_exclusion():
+def test_portland_min_lots_and_rf_on_the_state_path():
     from common import load_rules
 
     pdx = load_rules().jurisdictions["portland"]
-    assert pdx.rule_for("RF").quadplex_allowed is False
+    # RF is measured since 2026-09-30 (state middle housing path) but can
+    # never be green here: needs_verification caps it at review.
+    rf = pdx.rule_for("RF")
+    assert rf.quadplex_allowed is True
+    assert rf.confidence == "needs_verification"
+    assert rf.min_lot_sqft == 52000
     assert pdx.rule_for("R20").min_lot_sqft == 12000
     assert pdx.rule_for("R10").min_lot_sqft == 6000
     assert pdx.rule_for("R7").setback_front_ft == 15
@@ -466,9 +471,10 @@ def test_the_zones_that_waive_the_setback_from_an_alley_are_the_ones_that_say_so
     rules = load_rules()
     zero = {(jn, z.zone) for jn, j in rules.jurisdictions.items()
             for z in j.zones if z.setback_alley_ft == 0}
-    assert zero == {("portland", z) for z in ("R20", "R10", "R7", "R5", "R2.5",
+    # RF in both since 2026-09-30 (state middle housing path).
+    assert zero == {("portland", z) for z in ("RF", "R20", "R10", "R7", "R5", "R2.5",
                                                "RM1", "RM2", "RM3", "RM4")} | {
-        ("multnomah_unincorporated", z) for z in ("R20", "R10", "R7", "R5")}
+        ("multnomah_unincorporated", z) for z in ("RF", "R20", "R10", "R7", "R5")}
     nonzero = {(jn, z.zone, z.setback_alley_ft) for jn, j in rules.jurisdictions.items()
                for z in j.zones if z.setback_alley_ft not in (None, 0)}
     assert nonzero == {("gresham", z, 8.0) for z in ("LDR-5", "LDR-7", "TLDR", "TR",

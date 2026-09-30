@@ -2556,6 +2556,15 @@ zones:
       value: 20
       cite: MCC 39.4830(H)
       quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+    # 39.6580(A), stated as equal to the building setback -- see the note in
+    # `defaults:`. Added 2026-09-30 when the state middle housing path opened
+    # this zone and the pipeline began laying out a court here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
     setback_side_ft:
       value: 5
       cite: MCC 39.4830(H)
@@ -3123,6 +3132,15 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    # 39.6580(A), stated as equal to the building setback -- see the note in
+    # `defaults:`. Added 2026-09-30 when the state middle housing path opened
+    # this zone and the pipeline began laying out a court here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
     setback_garage_entrance_ft:
       # 33.110.220.D.9 in the county's copy of the chapter, the same sentence
       # at the same lines as Portland's: "Alley. No side, rear, or garage
