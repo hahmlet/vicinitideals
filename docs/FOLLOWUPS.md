@@ -199,10 +199,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    not), a drive over the lot or across another lot screened both ways,
    worse kept. Bound (09-28 data): of 2,526 drive greens 1,594 stay,
    358 -> yellow, 574 -> unknown (565 have no real street without the
-   drive), 0 gained. ASKED STEPH 2026-09-29, pending: Fairview (code
-   contradicts itself; 157 lots, 4 greens) and Clackamas County (front
-   only if access is taken from it; 327 lots, 46 greens) -- both screened
-   both ways until ruled. RLIS road types 1700/1800 read from the data.
+   drive), 0 gained. RULED by Steph 2026-09-30, BUILT dbc2cc40 (rides
+   the next re-screen): a private road is a way in for the parking
+   everywhere (`QuadfitLot.access`), the yards follow the city --
+   Gresham/Tualatin ordinary line, Fairview (two definitions) both ways
+   worse kept, Clackamas ZDO 202 exc. 2 `access_choice` (both, better
+   kept; drive-only lots read with the drive as front). Drives on other
+   land give no way in. RLIS road types 1700/1800 read from the data.
    (FLATS's own envelope: DONE, item 12.) (`steep_slope` struck
    2026-09-27: no standard in the corpus is conditioned on it, so its
    False assumption leans on no lot; the hillside rules ride the overlay
@@ -439,9 +442,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    whole room's exposure -- trim it to its stall row + back-out depth;
    (i) DONE 67402fea (rides the next full run) -- `front_lot_line_through`
    per city; bound 17 Clackamas-uninc green-if-signed -> yellow, Gresham
-   862 / Fairview 84 envelopes shrink, Milwaukie 8 grow; rulings for Steph
-   pending (Gresham/Clackamas strict until street class is mapped;
-   Tualatin/Fairview silent -> worst end);
+   862 / Fairview 84 envelopes shrink, Milwaukie 8 grow; RULED by Steph
+   2026-09-30 as built (city governs -> follow it, unmeasured -> worst:
+   Gresham/Clackamas access control, Tualatin/Fairview lowest-class
+   access; free choice -> the end that fits); street class per edge would
+   loosen them;
    (j) COUNTED, not built: in a ban city the side court is drawn on ONE
    side of a through-lot pod -- a court on both sides would help 8 lots;
    (k) DONE 4a3cc09c -- s6s reserves a lane's
