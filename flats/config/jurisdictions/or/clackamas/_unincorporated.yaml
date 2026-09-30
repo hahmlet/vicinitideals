@@ -3217,6 +3217,28 @@ zones:
       resources". A caretaker's dwelling is the one residence the district
       admits and it is accessory to a park.
 
+# Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
+# ruled by Steph 2026-09-30): s4 reads a line within 50 ft of a private road
+# as a street line.
+private_drives:
+  street: true
+  access_choice: true
+  quote: "or/clackamas/_unincorporated/zdo.202.definitions.txt#L289"
+  says: "from which motor vehicle access is taken is a front lot line"
+  cite: "ZDO 202 (Lot Line, Front, and exceptions 2 and 4; Road)"
+  note: >-
+    A front lot line is "any boundary line separating a lot from a County,
+    public, state, or private road, or from an access drive" (L285), and a
+    road includes "street" and "access drive" (L469). Exception 2 narrows it
+    on a lot that also has a public road: a private road or access drive
+    line is a front only where "motor vehicle access is taken" from it, and
+    otherwise a side line; exception 4 lets such a line be a side line
+    outside the drive's travel and parking areas. Where the car comes in is
+    the applicant's to choose, so the lot is read both ways -- the drive a
+    front, and the drive an ordinary line with the car in off the public
+    road -- and the better kept. A lot the drive alone reaches has no
+    exception to take: the drive is its front.
+
 # Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
 # Steph's rule: read every code, write the reason down, never show it again;
 # only a code nobody has seen warns). A ruled code gates ZONE_POCKET,

@@ -393,6 +393,19 @@ class PrivateDriveRuling(BaseModel):
     land, or through the lot itself, is a street by no code and is screened
     both ways whatever this says.
 
+    ``access_choice: true`` (with ``street: true``) -- the drive line is a
+    front only where the car comes in from it, and an ordinary lot line
+    otherwise (Clackamas ZDO 202, Lot Line, Front, exception 2): the
+    applicant chooses, so the lot is screened both ways and the BETTER
+    answer kept; with no street left without the drive it is the front.
+
+    Whatever the code says of the yards, the car may come in off a private
+    road the lot abuts (Steph, 2026-09-30: "treat private roads as streets
+    for purpose of where parking should be. But we shouldn't use it for
+    governing setbacks etc unless that's how the city handles it"): where
+    the line is an ordinary lot line it is still a line the court's drive
+    may reach (:attr:`flats.ingest.quadfit.QuadfitLot.access`).
+
     ``quote`` points at the line (``path#Lnn``) and ``says`` is words that
     line holds verbatim, checked against the store; ``note`` is the
     argument. Declared per layer and never inherited.
@@ -401,6 +414,7 @@ class PrivateDriveRuling(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     street: bool
+    access_choice: bool = False
     quote: str
     says: str
     cite: str | None = None

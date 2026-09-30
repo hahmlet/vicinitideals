@@ -560,8 +560,19 @@ class QuadfitLot:
     rear_runs: tuple[Any, ...] = ()
     #: The same lot read without the street lines only a private drive
     #: makes (:func:`drive_reading`): :func:`screen_lot` screens both and
-    #: keeps the worse answer. None where no drive's standing is in doubt.
+    #: keeps the worse answer -- the better where ``second_better``. None
+    #: where no drive's standing is in doubt.
     second: "QuadfitLot | None" = None
+    #: The applicant chooses between the two readings (``private_drives.
+    #: access_choice``), so :func:`screen_lot` keeps the better.
+    second_better: bool = False
+    #: Lines the car may come in from that are not front lot lines: a
+    #: private road the code does not count as a street for the yards
+    #: (Steph, 2026-09-30), as ``(x1, y1, x2, y2)``; and their directions,
+    #: which the court beside the building is searched at. Empty on every
+    #: other lot.
+    access: tuple[tuple[float, float, float, float], ...] = ()
+    access_bearings: tuple[float, ...] = ()
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -931,9 +942,11 @@ def _street_kinds(row: Mapping[str, Any]) -> list[Any] | None:
 
 def drive_reading(
     row: Mapping[str, Any], layers: Mapping[str, Layer] | None
-) -> tuple[str | None, bool]:
+) -> tuple[str | None, str | None]:
     """Which of s4's second readings (``sans_drive_json``) this lot is
-    screened on, and whether it REPLACES the first.
+    screened on, and how it stands to the first: ``worse`` (both screened,
+    the worse kept), ``replace`` (the only reading) or ``better`` (both
+    screened, the better kept).
 
     * A street line only a drive on other land makes (``drive_on_lot`` /
       ``drive_off_lot``) is a street by no code, but the reading could be
@@ -944,26 +957,33 @@ def drive_reading(
       more is asked; where the code says a street is a public way
       (``street: false``) the line is an ordinary lot line, and the lot is
       screened on that reading alone; where the code is silent (no
-      ``private_drives``), both ways, the worse kept.
+      ``private_drives``), both ways, the worse kept. Where the line is a
+      front only if the car comes in from it (``access_choice``), both
+      ways, the better kept.
 
-    ``(None, False)``: one reading, s4's own. The key is ``drives`` where
+    ``(None, None)``: one reading, s4's own. The key is ``drives`` where
     the drives go too and s4 wrote a separate reading for that, else
     ``doubtful``.
     """
     kinds = _street_kinds(row)
     if not kinds:
-        return None, False
+        return None, None
     doubtful = any(k in DOUBTFUL_STREET_KINDS for k in kinds)
     drives = any(k == "drive" for k in kinds)
     if not (doubtful or drives):
-        return None, False
+        return None, None
     home = _home_layer(row, layers) if layers is not None else None
     ruling = home.private_drives if home is not None else None
-    if ruling is not None and ruling.street:
-        return ("doubtful" if doubtful else None), False
-    if not drives:
-        return "doubtful", False
-    return "drives", ruling is not None and not doubtful
+    if doubtful:
+        counted = ruling is not None and ruling.street
+        return ("doubtful" if not drives or counted else "drives"), "worse"
+    if ruling is None:
+        return "drives", "worse"
+    if not ruling.street:
+        return "drives", "replace"
+    if getattr(ruling, "access_choice", False):
+        return "drives", "better"
+    return None, None
 
 
 def _sans_row(row: Mapping[str, Any], key: str) -> dict[str, Any] | None:
@@ -1015,21 +1035,30 @@ def lot_from_row(
     """
     import shapely
 
-    key, replace = drive_reading(row, layers)
+    key, how = drive_reading(row, layers)
     second: QuadfitLot | None = None
     unconfirmed = False
     if key is not None:
         alt = _sans_row(row, key)
-        if replace and alt is not None:
+        if how == "replace" and alt is not None:
             # The code says a private drive is not a street: that reading
-            # is the lot's only one.
-            return lot_from_row(alt, layers, corridors)
-        if alt is None or alt["tier"] == "D":
+            # is the lot's only one, and the car may still come in off it.
+            return _with_access(lot_from_row(alt, layers, corridors), row)
+        if how == "better":
+            # The drive line is a front only where the car comes in from
+            # it: the lot as s4 read it, and -- where a street is left --
+            # the lot without it, the better kept. With none left the drive
+            # is the lot's only way in, and so its front.
+            if alt is not None and alt["tier"] != "D":
+                second = lot_from_row(alt, layers, corridors)
+        elif alt is None or alt["tier"] == "D":
             # No second reading to screen, or no street left without the
             # drive: nobody can say this lot fronts a street.
             unconfirmed = True
         else:
             second = lot_from_row(alt, layers, corridors)
+            if key == "drives":
+                second = _with_access(second, row)
 
     tier = TIER.get(str(row.get("tier")), Tier.irregular)
     frontage = _finite(row.get("frontage_ft"))
@@ -1105,7 +1134,39 @@ def lot_from_row(
             else ()
         ),
         second=second,
+        second_better=how == "better" and second is not None,
     )
+
+
+def _with_access(lot: QuadfitLot, row: Mapping[str, Any]) -> QuadfitLot:
+    """``lot`` -- read with a private road as an ordinary lot line -- with
+    the road given back as a way in (:attr:`QuadfitLot.access`): every
+    street line and direction s4 read on ``row``, the drive's among them.
+    The yards stay as ``lot`` cuts them; only where the court's drive may
+    come from changes (Steph, 2026-09-30)."""
+    raw = json.loads(row.get("edges_json") or "[]")
+    kinds = _street_kinds(row) or []
+    # A line only a drive on other land (or across the lot itself) makes is
+    # no road the lot abuts, and no way in.
+    doubtful = [i < len(kinds) and kinds[i] in DOUBTFUL_STREET_KINDS for i in range(len(raw))]
+    lines = tuple(
+        (float(e[0]), float(e[1]), float(e[2]), float(e[3]))
+        for e, bad in zip(raw, doubtful)
+        if len(e) >= 5 and e[4] == "F" and not bad
+    )
+    bearings = ()
+    if not any(doubtful):
+        bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
+    return dataclasses.replace(lot, access=lines, access_bearings=bearings)
+
+
+def _street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], ...]:
+    """The lines the car may come in from: the front lot lines, and a
+    private road the yards do not count (:attr:`QuadfitLot.access`)."""
+    fronts: tuple[tuple[float, float, float, float], ...] = ()
+    if lot.edges is not None:
+        fronts = tuple((e.x1, e.y1, e.x2, e.y2) for e in lot.edges.of_class(EdgeClass.front))
+    return fronts + tuple(a for a in lot.access if a not in fronts)
 
 
 def iter_rows(
@@ -1233,6 +1294,16 @@ def _rear_ft(env: Envelope, rules: ZoneResolution) -> float:
     return float(held) if isinstance(held, (int, float)) else 0.0
 
 
+def _access_deg(here: QuadfitLot, front: float | None) -> tuple[float, ...]:
+    """The street directions the court beside the building is searched at:
+    the named front, or every street direction and a private road's."""
+    if front is not None:
+        return (front,)
+    return here.front_bearings + tuple(
+        b for b in here.access_bearings if b not in here.front_bearings
+    )
+
+
 def _screen_on(
     here: QuadfitLot,
     design: Design,
@@ -1272,7 +1343,7 @@ def _screen_on(
         alley=facts.alley,
         corner=facts.corner,
         frontage_ft=facts.frontage_ft,
-        street_deg=here.front_bearings if front is None else (front,),
+        street_deg=_access_deg(here, front),
     )
     if fit.beside and not beside_reaches_street(here, design, got, fit, fitters[key], env):
         # The court beside the building has its aisle in from the street;
@@ -1353,6 +1424,19 @@ def _worse(first: Screened, second: Screened) -> Screened:
     return first
 
 
+def _better(first: Screened, second: Screened) -> Screened:
+    """The better of one design's two readings where the applicant chooses
+    between them (``private_drives.access_choice``): each is the lot as the
+    code reads it for one way in, so either is a lawful plan. A second
+    reading fitted on s5o's envelope was not computed (s5o cut it with the
+    drive as a street) and is not offered."""
+    if second.envelope is not None and second.envelope.source == "quadfit":
+        return first
+    if _WORSE[second.signed.triage] < _WORSE[first.signed.triage]:
+        return second
+    return first
+
+
 def screen_lot(
     lot: QuadfitLot,
     designs: Sequence[Design],
@@ -1374,6 +1458,8 @@ def screen_lot(
     alt = _screen_lot_once(
         lot.second, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg
     )
+    if lot.second_better:
+        return [_better(a, b) for a, b in zip(got, alt)]
     return [_worse(a, b) for a, b in zip(got, alt)]
 
 
@@ -1536,7 +1622,7 @@ def _beside_drawn(
         lane_ft=0.0,
         court_depth_ft=0.0,
         court_beyond_ft=beyond,
-        street=tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front)),
+        street=_street_lines(here),
         beside_band_ft=beside.band_ft,
         beside_len_ft=beside.length_ft,
     )
@@ -1566,10 +1652,7 @@ def beside_reaches_street(
 
     if here.edges is None or env.geom is None:
         return False
-    fronts = [
-        shapely.LineString([(e.x1, e.y1), (e.x2, e.y2)])
-        for e in here.edges.of_class(EdgeClass.front)
-    ]
+    fronts = [shapely.LineString([(x1, y1), (x2, y2)]) for x1, y1, x2, y2 in _street_lines(here)]
     if not fronts:
         return False
     drawn = _beside_drawn(here, design, got, fit, fitter, env)
@@ -1704,9 +1787,7 @@ def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
     rear = s.envelope.rear_cut_ft if s.envelope else None
-    street = ()
-    if s.lot.edges is not None:
-        street = tuple((e.x1, e.y1, e.x2, e.y2) for e in s.lot.edges.of_class(EdgeClass.front))
+    street = _street_lines(s.lot)
     if s.fit.beside:
         beside = side_court(
             s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.frontage_ft

@@ -1259,16 +1259,20 @@ def test_a_second_reading_on_s5s_envelope_was_never_computed(corpus, policies) -
 
 
 class _Ruled:
-    def __init__(self, street: bool) -> None:
-        self.private_drives = type("R", (), {"street": street})()
+    def __init__(self, street: bool, access_choice: bool = False) -> None:
+        self.private_drives = type(
+            "R", (), {"street": street, "access_choice": access_choice}
+        )()
 
 
 def test_what_the_code_says_of_a_private_drive_the_lot_abuts_decides_the_readings() -> None:
     """A private drive on its own tract that the lot abuts: a street where
     the code counts it (one reading, s4's), an ordinary lot line where the
     code says a street is a public way (the reading without it, alone), and
-    both ways where the code is silent. A drive on other land is read both
-    ways whatever the code says of drives."""
+    both ways where the code is silent, and both ways with the better kept
+    where the line is a front only if the car comes in from it (Clackamas
+    ZDO 202). A drive on other land is read both ways whatever the code
+    says of drives."""
     from flats.ingest.quadfit import drive_reading
 
     tract = row(street_kind_json=json.dumps(["street", None, "drive", None]))
@@ -1276,14 +1280,16 @@ def test_what_the_code_says_of_a_private_drive_the_lot_abuts_decides_the_reading
     mixed = row(street_kind_json=json.dumps(["drive", None, "drive_off_lot", None]))
     where = "or/multnomah/portland"
     counts, excluded, silent = {where: _Ruled(True)}, {where: _Ruled(False)}, {}
-    assert drive_reading(tract, counts) == (None, False)
-    assert drive_reading(tract, excluded) == ("drives", True)
-    assert drive_reading(tract, silent) == ("drives", False)
-    assert drive_reading(tract, None) == ("drives", False)
-    for layers in (counts, excluded, silent):
-        assert drive_reading(school, layers) == ("doubtful", False)
-    assert drive_reading(mixed, counts) == ("doubtful", False)
-    assert drive_reading(mixed, excluded) == ("drives", False)
+    chosen = {where: _Ruled(True, access_choice=True)}
+    assert drive_reading(tract, counts) == (None, None)
+    assert drive_reading(tract, excluded) == ("drives", "replace")
+    assert drive_reading(tract, silent) == ("drives", "worse")
+    assert drive_reading(tract, None) == ("drives", "worse")
+    assert drive_reading(tract, chosen) == ("drives", "better")
+    for layers in (counts, excluded, silent, chosen):
+        assert drive_reading(school, layers) == ("doubtful", "worse")
+    assert drive_reading(mixed, counts) == ("doubtful", "worse")
+    assert drive_reading(mixed, excluded) == ("drives", "worse")
 
 
 def test_where_the_code_says_a_street_is_public_the_drive_line_is_an_ordinary_line(layers) -> None:
@@ -1301,10 +1307,13 @@ def test_where_the_code_says_a_street_is_public_the_drive_line_is_an_ordinary_li
         street_kind_json=json.dumps(["street", None, "drive", None]),
         sans_drive_json=json.dumps({"drives": json.loads(_sans())["doubtful"]}),
     )
-    assert drive_reading(row(**tract), layers) == ("drives", True)
+    assert drive_reading(row(**tract), layers) == ("drives", "replace")
     alone = lot_from_row(behind(**tract), layers)
     assert alone.second is None and not alone.facts.street_unconfirmed
     assert sum(1 for e in alone.edges.edges if e.cls is EdgeClass.front) == 1
+    # The yards read the drive as an ordinary line, but the car may still
+    # come in off it (Steph 2026-09-30): both street lines are ways in.
+    assert len(alone.access) == 2 and alone.access_bearings == (0.0,)
     # In Wilsonville the same drive is a street, and s4's reading stands.
     wilsonville = lot_from_row(behind(**{**tract, "jurisdiction": "wilsonville", "zone": "R"}), layers)
     assert wilsonville.second is None
@@ -1323,7 +1332,7 @@ def test_every_private_drive_ruling_quotes_the_line_it_points_at(layers) -> None
         return " ".join(t.replace("–", "-").replace("- ", "-").split())
 
     ruled = {k: v.private_drives for k, v in layers.items() if v.private_drives is not None}
-    assert len(ruled) == 12
+    assert len(ruled) == 13
     for layer_id, r in ruled.items():
         doc, _, rng = r.quote.partition("#L")
         a, _, b = rng.partition("-L")
@@ -1332,8 +1341,68 @@ def test_every_private_drive_ruling_quotes_the_line_it_points_at(layers) -> None
     assert {k for k, r in ruled.items() if not r.street} == {
         "or/multnomah/gresham", "or/clackamas/tualatin",
     }
-    for silent in ("or/multnomah/fairview", "or/clackamas/_unincorporated"):
-        assert layers[silent].private_drives is None
+    assert {k for k, r in ruled.items() if r.access_choice} == {"or/clackamas/_unincorporated"}
+    assert layers["or/multnomah/fairview"].private_drives is None
+
+
+def test_where_the_car_chooses_the_front_the_better_reading_is_kept(layers, corpus, policies) -> None:
+    """Clackamas ZDO 202 exception 2: a private road line is a front only
+    where the car comes in from it, else a side line. The applicant
+    chooses, so the lot is read both ways and the better kept; a lot the
+    drive alone reaches has no exception to take and is read as s4 read it,
+    no question asked (Steph 2026-09-30)."""
+    from flats.ingest.quadfit import _better
+
+    tract = dict(
+        jurisdiction="clackamas_unincorporated", zone="R7",
+        street_kind_json=json.dumps(["street", None, "drive", None]),
+        sans_drive_json=json.dumps({"drives": json.loads(_sans())["doubtful"]}),
+    )
+    lot = lot_from_row(behind(**tract), layers)
+    assert lot.second is not None and lot.second_better
+    assert not lot.facts.street_unconfirmed
+    # The drive-less reading is the car in off the public road: no way in
+    # off the drive rides with it.
+    assert lot.second.access == ()
+    only = lot_from_row(
+        behind(**{**tract, "sans_drive_json": json.dumps(
+            {"drives": json.loads(_sans(tier="D", edges=[]))["doubtful"]}
+        )}),
+        layers,
+    )
+    assert only.second is None and not only.facts.street_unconfirmed
+    kw = dict(rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (a,) = screen_lot(dataclasses.replace(lot, second=None), [pod()], **kw)
+    (b,) = screen_lot(lot.second, [pod()], **kw)
+    (both,) = screen_lot(lot, [pod()], **kw)
+    rank = {Triage.green: 0, Triage.yellow: 1, Triage.unknown: 2, Triage.red: 3}
+    assert rank[both.signed.triage] == min(rank[a.signed.triage], rank[b.signed.triage])
+    red = dataclasses.replace(a, signed=dataclasses.replace(a.signed, triage=Triage.red))
+    green = dataclasses.replace(b, signed=dataclasses.replace(b.signed, triage=Triage.green))
+    assert _better(red, green) is green and _better(green, red) is green
+    # A second reading fitted on s5o's envelope was never computed.
+    assert _better(red, dataclasses.replace(green, envelope=dataclasses.replace(
+        green.envelope, source="quadfit"))) is red
+
+
+def test_where_the_code_is_silent_the_drive_is_still_a_way_in(layers) -> None:
+    """Fairview, silent: the lot is read with the drive a street and with
+    it an ordinary line, the worse kept -- and on the second reading the
+    car may still come in off the drive (Steph 2026-09-30). A drive on other
+    land gives no way in."""
+    from flats.ingest.quadfit import _street_lines
+
+    tract = dict(
+        jurisdiction="fairview", zone="R-7.5",
+        street_kind_json=json.dumps(["street", None, "drive", None]),
+        sans_drive_json=json.dumps({"drives": json.loads(_sans())["doubtful"]}),
+    )
+    lot = lot_from_row(behind(**tract), layers)
+    assert lot.second is not None and not lot.second_better
+    assert len(_street_lines(lot.second)) == 2
+    assert len(_street_lines(lot)) == 2
+    school = lot_from_row(behind(), layers)
+    assert school.second is not None and school.second.access == ()
 
 
 def test_an_s4_that_never_read_road_types_keeps_every_street_a_street() -> None:
@@ -1399,3 +1468,25 @@ def test_a_court_fed_from_the_side_street_is_measured_with_its_drive_band_paved(
     # line to the one opposite: over the street side yard to the street.
     x0, y0, x1, y1 = on_lot.bounds
     assert (x1 - x0 == pytest.approx(50.0)) or (y1 - y0 == pytest.approx(100.0))
+
+
+def test_a_front_chosen_by_the_car_needs_the_drive_to_be_a_street() -> None:
+    """``access_choice`` says the drive line is a front where the car comes
+    in from it; on a code that says a private drive is no street at all it
+    means nothing, and the loader refuses it."""
+    from flats.rules.loader import _parse_private_drives
+
+    base = {
+        "quote": "or/clackamas/_unincorporated/zdo.202.definitions.txt#L289",
+        "says": "from which motor vehicle access is taken is a front lot line",
+        "note": "x" * 200,
+    }
+    problems: list[str] = []
+    got = _parse_private_drives(
+        {**base, "street": True, "access_choice": True}, where="t", problems=problems
+    )
+    assert got is not None and got.access_choice and not problems
+    for bad in ({"street": False, "access_choice": True}, {"street": True, "access_choice": "yes"}):
+        problems = []
+        assert _parse_private_drives({**base, **bad}, where="t", problems=problems) is None
+        assert problems and "access_choice" in problems[0]

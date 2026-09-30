@@ -1547,7 +1547,7 @@ def _parse_private_drives(
     if not isinstance(raw, dict):
         problems.append(f"{at}: expected street, quote, says and note")
         return None
-    extra = set(raw) - {"street", "quote", "says", "cite", "note"}
+    extra = set(raw) - {"street", "access_choice", "quote", "says", "cite", "note"}
     if extra:
         problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
         return None
@@ -1565,9 +1565,13 @@ def _parse_private_drives(
     if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
         problems.append(f"{at}: a note of at least {MIN_RULING} characters")
         return None
+    choice = raw.get("access_choice", False)
+    if not isinstance(choice, bool) or (choice and not street):
+        problems.append(f"{at}.access_choice: true or false, and only with street: true")
+        return None
     cite = raw.get("cite")
     return PrivateDriveRuling(
-        street=street, quote=quote.strip(), says=says.strip(),
+        street=street, access_choice=choice, quote=quote.strip(), says=says.strip(),
         cite=None if cite is None else str(cite), note=note.strip(),
     )
 
