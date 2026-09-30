@@ -646,9 +646,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Steph. Exporter = app/exporters/investor_export.py (not the engine).
 
 17. **Washington County: drafts reviewed; publish, then the county map.**
-   Steph 2026-09-29: no decisions today. Steph's questions are HUMAN_TODO 25
-   (A second cloud round, B pod facade rules, C city emails, D North
-   Plains/Banks/Gaston). Agent work, in order:
+   Steph 2026-09-29 (evening) answered HUMAN_TODO 25: A NO second cloud
+   round -- Tigard, Cornelius and the 11 community plans are done LOCALLY
+   (usage reset, 'go hard on data processing'); B design rules are catalogued
+   and encoded (item 20); C the 19 city questions printed for Steph to send;
+   D HB 2138 read (enrolled text): North Plains owes duplexes only, Banks and
+   Gaston nothing -- they stay out. Agent work, in order:
    (a) PUBLISHED 2026-09-29: 0e45ffd5 on main, deployed (smoke PASS), CI
    green (light + full gate); flats 3,861 + quadfit 347 passed locally.
    886 numbers re-read blind, none wrong (handoff "Local review"). The
@@ -672,6 +675,26 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    number); the bigger next-to-a-named-zone setback (Hillsboro SCR-DNC,
    Beaverton downtown); Hillsboro's corner coverage bonus + two corner
    setbacks (test_corner_variants: measure before deferring again).
-   (f) IF STEPH SAYS YES TO 25A: store Tigard (ecode360.com/43691505) and
-   Cornelius (ecode360.com/CO4396) on a branch, then brief the cloud:
-   Tigard, Cornelius, the county's 11 community plans.
+   (f) LOCAL, no cloud (25A answered no): store Tigard
+   (ecode360.com/43691505) and Cornelius (ecode360.com/CO4396), draft both
+   layers here with the same blind re-read; read the county's 11 community
+   plans (Aloha, Bethany, Cedar Mill, ...) into the county layer as
+   neighbourhood variants. Worktree per city, confirm with Steph first.
+   (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
+   middle-housing code (cottage clusters by 2028); a city that misses it
+   gets the state model code directly. Run the drift check on every layer
+   in early 2027 -- expect amendments across the board.
+20. **Design-standards catalog (Steph 2026-09-29, HUMAN_TODO 25B).** Record
+   and encode every rule about how the building LOOKS -- front windows
+   share, entry facing the street, garage placement and width, siding and
+   roof materials, articulation/offsets, eaves, porch, height transitions --
+   systematically across every encoded jurisdiction (Multnomah, Clackamas,
+   Washington), not just North Bethany. The pod's own design data does not
+   exist yet, so screening stays held back; the deliverable is a catalog an
+   ARCHITECT can design the pod against: per rule the citation, quote, the
+   zones and lots it reaches, and whether it is a menu or a must. Start by
+   harvesting the design-standards chapters the ledgers already point at
+   (crossrefs.py/triage.py name several, e.g. Gresham 7.0420, ZDO 1005,
+   Fairview VA menu). HB 2138 asks LCDC to strip design standards that
+   'prevent or discourage' housing by 2028 -- the catalog is also the
+   baseline to see what that removes. Plan first; ask Steph before a worktree.

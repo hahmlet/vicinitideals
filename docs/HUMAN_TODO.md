@@ -2331,68 +2331,32 @@ but it greys out lots that are almost certainly fine.
 and accessway map we could measure against, then decide. Slower, and the
 map may not exist.
 
-## 25. Washington County is drafted — four things waiting on you, no rush
+## 25. Washington County is drafted — answered 2026-09-29
 
 A cloud session drafted the rules for six of the nine governments in
-Washington County: the county itself (about 85,000 lots, the biggest
-share), Hillsboro, Beaverton, Sherwood, King City and Durham. Separate
-readers re-read all 886 numbers from the codes without seeing the draft,
-and none were wrong. No Washington lot has a colour yet. The county map
-has to be built on the home server first (agent work, FOLLOWUPS 17), and
-nothing turns green until you sign. You said no decisions on 2026-09-29,
-so these wait until you are ready. Until you answer, the draft uses the
-safe reading everywhere.
+Washington County: the county itself (about 85,000 lots), Hillsboro,
+Beaverton, Sherwood, King City and Durham. 886 numbers were re-read blind
+and none were wrong. No Washington lot has a colour yet; the county map is
+agent work (FOLLOWUPS 17), and nothing turns green until you sign.
 
-**A. Send the cloud back for a second round? Recommended: yes.**
+**A. Second cloud round — ANSWERED no.** The credit is spent. Tigard,
+Cornelius and the county's 11 community plans get done here at home
+(FOLLOWUPS 17f).
 
-- Tigard (about 19,900 lots) and Cornelius (about 4,300) blocked the
-  cloud's downloads. Their codes open fine from home, so I would save them
-  here first. A second cloud session would then draft both cities.
-- The same session would read the county's 11 community plans (Aloha,
-  Bethany, Cedar Mill and others). They can change setbacks neighbourhood
-  by neighbourhood. The first session did not read them, and the county
-  is the largest share of lots.
-- It uses the $250 cloud credit, which expires in November, not your plan.
-- The other way: screen the county now and read the plans later. That is
-  faster, but some lots in those neighbourhoods could show a false yes.
+**B. Rules about how the front of the building looks — ANSWERED: record and
+encode them all, systematically, well enough to hand to an architect.** The
+pod's design does not exist yet, so districts with those rules stay held
+back until it does (FOLLOWUPS 20).
 
-**B. Can the pod meet rules about how the front of the building looks?**
-North Bethany and two county mixed-use districts set rules for how much of
-the front is windows, where the garage goes, and what the siding is made
-of. If the pod can be ordered to meet them, those districts screen
-normally. If not, or if you are unsure, they stay held back. Only you know
-what the factory can build.
+**C. The planning-department questions — PRINTED 2026-09-29 (19, not 18).**
+Waiting on you to send them. The list is section 6 of
+`docs/flats/handoff/washington.md`; say the word and I will draft one email
+per department. Until answers come back, the draft keeps the safe reading.
 
-**C. Eighteen questions only the planning departments can answer.**
-There are six governments. Say the word and I will draft one short email per
-department for you to send. The ones with the most lots behind them:
-
-- **Beaverton:** is there a list of developments the county had approved
-  before the city annexed them? Until there is, no Beaverton lot can show
-  green, only "needs a closer look".
-- **Hillsboro:** does "2½ stories" mean 25 feet? The pod is 26. And is the
-  45-foot minimum building height in its MU-C zone real or a misprint?
-- **Sherwood:** does its "infill lots" design section apply to every lot?
-  If it does, bigger side yards and a floor-area cap apply. Is a lot line
-  along an alley a front? Does the city keep the approved plans for its
-  planned developments?
-- **King City:** should its older neighbourhoods allow a fourplex? The city
-  adopted its own middle-housing rules in 2021, and they allow fourplexes
-  only in the new Kingston Terrace area. State law says a city this size
-  must allow them wherever a house is allowed.
-- **The county:** does a four-unit building count as "multi-dwelling" in
-  North Bethany's densest district?
-- **Durham** (446 lots): six small questions about its density rule,
-  driveway width and setbacks.
-
-The full list, with what each answer would change, is in section 6 of the
-Washington handoff note (`docs/flats/handoff/washington.md`).
-
-**D. Three small cities left out: North Plains, Banks and Gaston**
-(about 3,000 lots together). They are outside Metro. State law requires
-North Plains to allow only duplexes, and Banks and Gaston are exempt. A
-2025 law (HB 2138) may bring them in from January 2027. Recommended:
-leave them out until then.
+**D. North Plains, Banks and Gaston — EXPLAINED.** The 2025 law (HB 2138)
+does not change who must allow fourplexes: outside Metro only cities of
+25,000+ must. North Plains still owes duplexes only; Banks and Gaston owe
+nothing. They stay out.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
