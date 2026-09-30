@@ -196,6 +196,17 @@ fabric refresh alone needs T2 only (it re-measures the lots whose shape
 changed). The station distance carries 100 ft of doubt (the station is a
 point mid-platform), so a lot that close to a band's edge is also `unknown`.
 
+**Filling the lot pages without a re-screen** (first done 2026-09-30, run
+48): copy the assign dir of the run in use under a new name (`cp -a
+/root/assign_<tag> /root/assign_<tag>_transit` -- the new path is a new
+`source_id`, so the load makes a new run instead of refusing the complete
+one), export it with `--transit <distances.parquet>` and the run in use's own
+`--code-version` / `--rules-version` / `--screen-version` (from its
+`run.json`: the answers ARE that run's), then R4-R7. The drift must read 0
+moves with the same three versions on both sides; run 48 did (400,032 lots,
+213,011 within the reform's reach). Measuring every lot took ~10 min on 137
+(T2 without `--reuse`).
+
 A `code` move in a same-copy drift is read from `screen_version` when both
 runs carry one: the screen's own files changed between the exports. Two runs
 with the same `screen_version` and a different `code_version` that still

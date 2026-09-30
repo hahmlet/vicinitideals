@@ -675,10 +675,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Service line (flats/geom/transit.py, flats/ingest/transit.py, runbook
    §4d); the probe flags new_release when TriMet edits a layer. Banded on
    it: Hillsboro SCC-SC min height + SCC-SC/SCR-DNC/SCR-V densities,
-   Beaverton SC 400 ft density. NEXT: (1) on 137 acquire the three
-   transit_* keys, measure every M+C lot, add --transit to the next bridge
-   run (Washington lots need it too once (d) lands -- without it those
-   station zones screen unknown); (2) COUNTED 2026-09-30 in PostGIS on 114
+   Beaverton SC 400 ft density. (1) DONE 2026-09-30: measured on 137
+   (data/flats/transit/2026-09-30, version 6d3a528e4091692b, 400,032 lots)
+   and re-exported as run 48 (0 moves, PROMOTED) -- every lot page shows
+   it; every later bridge run passes --transit (Washington lots too once
+   (d) lands -- without it those station zones screen unknown); (2) COUNTED 2026-09-30 in PostGIS on 114
    (run 44, best design per lot, station points, no slack): 213,006 of
    400,032 lots lie within 3/4 mi of rail or 1/2 mi of a TriMet frequent
    line (35,518 green / 156,257 yellow / 9,410 red / 11,821 unknown;
@@ -686,7 +687,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    IT" -- the lot page shows the distances and the reform's reach
    (facts.transit, export --transit / meta); the pod keeps 4 stalls. The
    state reform (OAR 660-012-0440) stays NOT ENCODED in or/_state.yaml.
-   The lot page is empty of it until (1) runs; (3) CLOSED 2026-09-30: the
+   (3) CLOSED 2026-09-30: the
    MU-VTC Center Cores have no drawn boundary (Figure 12.65.930-A only
    "illustrates"; the city's open data holds 2020 gallery symbols, not the
    cores), so 3 stories stays held on every MU-VTC lot (hillsboro.yaml). Not in the layers: SMART, CAT,

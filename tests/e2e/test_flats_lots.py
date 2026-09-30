@@ -172,6 +172,25 @@ def test_a_lot_page_draws_where_the_building_and_parking_stand(
     expect(plan).to_contain_text("One way it could stand, not a site plan.")
 
 
+
+def test_a_lot_page_says_how_far_it_is_from_transit(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """FOLLOWUPS 17(b2), Steph 2026-09-30: "show it, don't screen it". The
+    facts table says whether the state parking reform's transit reach covers
+    the lot and how far the nearest station, frequent line and stop are
+    (run 48: 7,117 / 2,095 / 886 ft for this lot)."""
+    page = logged_in_page
+    page.goto(f"{base_url}{CORNER_LOT}")
+    if page.locator("#lot-verdict").count() == 0:
+        pytest.skip("the corner lot is not in this run")
+    facts = page.locator("#lot-facts")
+    expect(facts).to_contain_text("Near transit: no parking can be required")
+    expect(facts).to_contain_text("yes -- within 3/4 mile of rail or 1/2 mile of a frequent line")
+    for label in ("Nearest MAX / streetcar / WES station", "Nearest frequent bus or rail line", "Nearest transit stop"):
+        row = facts.locator("tr", has_text=label)
+        expect(row).to_contain_text(" ft")
+
 #: a county-zoned island inside Happy Valley's line (FOLLOWUPS 8, run 33):
 #: RRFF5 is Clackamas County's code, so it is screened under the county's rules.
 POCKET_LOT = "/flats/lots/clackamas/12E35D%2000900"
