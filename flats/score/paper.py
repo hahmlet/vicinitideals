@@ -484,8 +484,11 @@ def court_depth(
         used.append("parking_stall_depth_ft")
         stall = max(stall, stated)
     if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
+        # The city's aisle governs, narrower than the design's assumed
+        # floor or wider (Steph 2026-09-29: a stated number governs); the
+        # design's figure stands in only where the code states none.
         used.append("parking_aisle_two_way_ft")
-        aisle = max(aisle, stated)
+        aisle = stated
     # THE ALLEY AS THE AISLE (FOLLOWUPS 4(b)). On a lot the code sends to its
     # rear alley, where the code also lets the alley serve as the aisle
     # (``parking_alley_backout_ft``), the row of stalls along the alley backs
@@ -784,8 +787,11 @@ def side_court(
         used.append("parking_stall_depth_ft")
         stall = max(stall, stated)
     if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
+        # The city's aisle governs, narrower than the design's assumed
+        # floor or wider (Steph 2026-09-29: a stated number governs); the
+        # design's figure stands in only where the code states none.
         used.append("parking_aisle_two_way_ft")
-        aisle = max(aisle, stated)
+        aisle = stated
     if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
         used.append("driveway_min_width_two_way_ft")
         drive = max(drive, stated)
@@ -918,7 +924,7 @@ def paved(
         stall = max(stall, stated)
     aisle = parking.aisle_ft
     if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
-        aisle = max(aisle, stated)
+        aisle = stated
     row = across.width_ft
     shortfall = _backout_shortfall(rules, alley)
     if column:

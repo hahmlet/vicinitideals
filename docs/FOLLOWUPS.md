@@ -750,12 +750,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (e) WATCH: Housing Choices rulemaking (HB 2138 §22: siting/design of
    prefabricated middle housing; RAC 1 on 2026-10-07, adoption ~2027-12-02)
    -- item 20's catalog is the baseline; January 2027 drift run (17g).
-22. **Portland aisle: 24 ft assumed vs the city's own 20 ft (ASKED Steph
-   2026-09-30, HUMAN_TODO 3).** PCC 33.266.130 Table 266-4 prints a 20 ft
-   two-way aisle at 90 deg (8.5 x 16 stall), but 130.B excludes "residential
-   vehicle areas subject to the standards of 33.266.120" -- our one-lot
-   fourplex -- so Portland states no aisle for us (portland.yaml L1800-1870)
-   and s6s/FLATS assume the 24 ft national floor. Pending: keep 24 (court
-   18+24 = 42 ft) or adopt 20 as Portland's own figure (38 ft; more greens;
-   also makes the Portland planning email mostly moot). Separately, the
-   `unit_lots` variant carries Table 266-4's stall but not its 20 ft aisle.
+22. **Portland aisle 20 ft -- DECIDED by Steph 2026-09-30 ("Use 20 for
+   Portland"), BUILT, awaiting the re-screen.** portland.yaml now holds
+   `parking_aisle_two_way_ft`/`one_way` = 20 (Table 266-4, cited as Steph's
+   adoption since 130.B excepts our fourplex), and flats/score/paper.py lets a
+   stated aisle govern at all three sites (was max(24, stated)), so West Linn
+   also moves 24 -> 23. Stall depth keeps the design's 18 floor. Remaining:
+   a Portland + West Linn partial re-screen (splice onto the reach/drv base),
+   read the moves (expect only gains, court 4 ft shallower), promote, E2E.
+   quadfit's s6s drawing still uses 24 in Portland (FLATS is the product;
+   not changed). **Milwaukie, pending Steph:** the ecode360 link Steph sent
+   (guid 43863200) is 19.606.1, Table 19.606.1 -- 90 deg: 9 x 18 stall, 22 ft
+   aisle -- which we already hold; 19.606's purpose sentence excepts middle
+   housing, so it is refused today (milwaukie.yaml ~L948) and the court is
+   drawn at 24. Asked: adopt 22 as Portland's 20 was adopted? Wilsonville's
+   planning email (HUMAN_TODO 3) still open.

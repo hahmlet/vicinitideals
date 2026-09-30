@@ -1867,19 +1867,34 @@ defaults:
         retrieved: '2026-09-01'
         quote: "or/multnomah/portland/33.266.txt#L275-L278,L516-L525"
 
-  # NOT ENCODED: an aisle width, because Portland states none for this building.
-  # Section 33.266.120 is five subsections -- purpose, structures, locations,
-  # space sizes, paving -- and the word "aisle" does not occur in any of them,
-  # nor does a pointer to Table 266-4. The table lives in 33.266.130, whose own
-  # applicability sentence excludes "residential vehicle areas subject to the
-  # standards of 33.266.120".
+  # THE AISLE: Portland states none for this building. Section 33.266.120 is
+  # five subsections -- purpose, structures, locations, space sizes, paving --
+  # and the word "aisle" does not occur in any of them, nor does a pointer to
+  # Table 266-4. The table lives in 33.266.130, whose own applicability
+  # sentence excludes "residential vehicle areas subject to the standards of
+  # 33.266.120". So the aisle below is NOT a standard the code applies to this
+  # fourplex (ORS 197A.400 -- the ground Milwaukie's 22-foot table was refused
+  # on), and nothing in the code can ask for a wider one.
   #
-  # Twenty feet, one way and two way alike, is what 266-4 prints at 90 degrees.
-  # It is not borrowed. A number the code excepts this building from is not a
-  # clear and objective standard applicable to it (ORS 197A.400), which is the
-  # same ground Milwaukie's 22-foot table was refused on -- and refusing the
-  # city's own narrower figure costs lots rather than saving them, which is how
-  # you can tell it is a reading and not a convenience.
+  # ADOPTED BY STEPH, 2026-09-30 (HUMAN_TODO 3, FOLLOWUPS 22): "Use 20 for
+  # Portland." Twenty feet, one way and two way alike, is what 266-4 prints at
+  # 90 degrees for every other parking area in the city -- the narrowest aisle
+  # Portland accepts anywhere, and so the figure a Portland reviewer is least
+  # able to call too narrow. It replaces the 24 ft national floor the design
+  # otherwise assumes, and is held here so the screen draws it and the quote
+  # can be signed like any number; the cite says whose figure it is.
+  parking_aisle_two_way_ft:
+    value: 20
+    cite: PCC Table 266-4 (33.266.130), 90 degrees, 2-way aisle; adopted for the fourplex by Steph 2026-09-30 (33.266.120 states no aisle)
+    url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+    retrieved: '2026-09-01'
+    quote: "or/multnomah/portland/33.266.txt#L385-L386,L516-L525"
+  parking_aisle_one_way_ft:
+    value: 20
+    cite: PCC Table 266-4 (33.266.130), 90 degrees, 1-way aisle; adopted for the fourplex by Steph 2026-09-30 (33.266.120 states no aisle)
+    url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+    retrieved: '2026-09-01'
+    quote: "or/multnomah/portland/33.266.txt#L385-L386,L516-L525"
   # (or/multnomah/portland/33.266.txt#L268,L317-L326,L349,L385-L386,L516-L525)
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27. All of it is Section
   # 33.266.120, and 33.266.120.B is why it is in `defaults` rather than in the

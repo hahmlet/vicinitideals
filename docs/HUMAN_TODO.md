@@ -380,7 +380,24 @@ a small chance of wasted diligence for a large amount of pipeline. The error it
 buys is cheap and self-correcting — one wasted site visit, discovered on that
 visit — which is what made yes the cheaper mistake than holding 7,360 lots.
 
-## 3. Three short emails: confirm the assumed 24 ft aisle — **13,353 greens, which is 81% of all of them**
+## 3. ~~Three~~ Two short emails: confirm the assumed 24 ft aisle — **13,353 greens, which is 81% of all of them**
+
+> **Update 2026-09-30.** **Portland — DECIDED: use 20 ft** (your words: "Use
+> 20 for Portland"). Portland's own parking table prints 20 ft for every
+> other kind of parking lot; the screen now draws Portland's courts with it,
+> 4 ft shallower than before, so no email to Portland is needed. The change
+> goes live with the next re-screen.
+>
+> **Milwaukie — one question back to you.** The page you sent is Milwaukie's
+> parking-size table (22 ft aisle). We already had it; the reason it was not
+> used is the sentence just above it, which says the table does not apply to
+> middle housing — so Milwaukie, like Portland, states nothing for a
+> fourplex. Today the screen uses 24 ft there. If you want Milwaukie handled
+> the way Portland now is — "use the city's own number for everything else"
+> — say so and it becomes 22 ft (slightly more lots fit). If not, the email
+> to Milwaukie stands.
+>
+> **Wilsonville** — the email is still open.
 
 **This entry said 985 greens until 2026-09-01. It was counting two of the three
 cities.** Portland carries the identical assumption and had been left off.

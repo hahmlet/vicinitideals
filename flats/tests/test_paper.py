@@ -418,14 +418,14 @@ def test_a_city_that_asks_for_more_raises_the_court(tmp_path: Path) -> None:
     assert "parking_aisle_two_way_ft" in got.unsigned or got.complete
 
 
-def test_a_city_that_asks_for_less_does_not_shrink_the_court(tmp_path: Path) -> None:
+def test_a_city_that_states_a_narrower_aisle_is_followed(tmp_path: Path) -> None:
     # Portland's Table 266-4 prints a 20 ft aisle and a 16 ft stall at 90
-    # degrees. Even where such a figure applied, it is a legal minimum and not
-    # a statement that six cars fit in 36 ft -- the design's own geometry is
-    # the floor.
+    # degrees. A stated aisle governs, narrower than the design's 24 or wider
+    # (Steph 2026-09-29/30: "Use 20 for Portland"); the stall keeps the
+    # design's 18 as its floor, which nobody has ruled to give up.
     got = fit(tmp_path, parking_stall_depth_ft=16, parking_aisle_two_way_ft=20)
 
-    assert got.parking_depth_ft == 47
+    assert got.parking_depth_ft == 5 + 18 + 20
 
 
 def test_the_court_stands_off_the_rear_wall(tmp_path: Path) -> None:
@@ -463,9 +463,10 @@ def test_fairviews_four_foot_buffer_does_not_narrow_the_standoff(tmp_path: Path)
 
 
 def test_a_city_that_states_no_aisle_is_not_an_unanswered_lot(tmp_path: Path) -> None:
-    """Portland, Milwaukie and Wilsonville each dimension a parking space for
-    this building and state no aisle at all, every one on the record with the
-    exclusion sentence quoted. Refusing to answer for them would be the wrong
+    """Milwaukie and Wilsonville each dimension a parking space for this
+    building and state no aisle at all, each on the record with the exclusion
+    sentence quoted (Portland was a third until Steph adopted its 20 ft,
+    2026-09-30). Refusing to answer for them would be the wrong
     caution: the pod still has to turn round, and ORS 197A.400 means a width
     nobody published is not a standard a court can fail against."""
     got = fit(tmp_path)

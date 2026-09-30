@@ -88,12 +88,17 @@ def test_the_court_is_the_row_turned_along_the_lot() -> None:
     assert "parking_side_prohibited" in got.from_code
 
 
-def test_a_city_asking_more_widens_it_and_less_does_not_shrink_it() -> None:
+def test_a_city_asking_more_widens_it_and_less_narrows_it_to_the_drive() -> None:
+    # A stated aisle governs either way (Steph 2026-09-29/30); it can narrow
+    # the court no further than the drive in from the street, and the stall
+    # keeps the design's depth.
     base = side_court(pod(), Rules(OPEN))
     more = side_court(pod(), Rules(OPEN, parking_aisle_two_way_ft=30, parking_building_buffer_ft=8))
     less = side_court(pod(), Rules(OPEN, parking_aisle_two_way_ft=10, parking_stall_depth_ft=12))
     assert more.band_ft - base.band_ft == pytest.approx((30 - base.aisle_ft) + (8 - 5))
-    assert less.band_ft == pytest.approx(base.band_ft)
+    assert less.aisle_ft == pytest.approx(less.drive_ft)
+    assert less.stall_depth_ft == pytest.approx(base.stall_depth_ft)
+    assert less.band_ft == pytest.approx(base.band_ft - (base.aisle_ft - less.drive_ft))
 
 
 def test_a_parking_setback_from_the_street_pushes_the_row_back() -> None:

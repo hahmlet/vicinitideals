@@ -936,7 +936,9 @@ def test_an_alley_behind_the_lot_reaches_the_court_with_its_measured_width(corpu
                 alley_cover_json=json.dumps([None, None, "1" * 9 + "0", None])),
         corpus.layers,
     )
-    assert asked4(unmeasured) - asked4(long) == pytest.approx(18.0)
+    # Portland's court aisle is 20 ft (Table 266-4, adopted by Steph
+    # 2026-09-30): the 14 ft alley standing in for it saves 14 ft of depth.
+    assert asked4(unmeasured) - asked4(long) == pytest.approx(14.0)
     assert asked4(long, pod()) == pytest.approx(asked4(unmeasured, pod()))
     short = lot_from_row(
         cut_row(zone="R5", edges_json=json.dumps(BEHIND), alley_width_ft=14.0,
@@ -1006,8 +1008,9 @@ def test_a_real_alley_stub_long_enough_for_the_row_is_its_aisle(corpus, policies
     _, short = screened("1" * 6 + "0" * 12)
     _, plain = screened(None)
     # A 13 ft alley leaves 7 ft of the 20 ft back-out room to pave, where
-    # the court's own aisle is 24: the stretch long enough is 17 ft shallower.
-    assert asked(plain) - asked(got) == pytest.approx(17.0)
+    # the court's own aisle is Portland's 20: the stretch long enough is 13 ft
+    # shallower.
+    assert asked(plain) - asked(got) == pytest.approx(13.0)
     assert asked(short) == pytest.approx(asked(plain))
     # The 1.5-a-home pod's six stalls are a 54 ft row: longer than the stub.
     _, six = screened("1" * 10 + "0" * 8, pod())

@@ -345,7 +345,11 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 133, "comments": 256, "tests": 18}
+EXPECTED = {"notes": 133, "comments": 255, "tests": 18}
+#
+# 256 -> 255 comments on 2026-09-30: Steph adopted Table 266-4's 20 ft aisle
+# for Portland ("Use 20 for Portland"), so the "NOT ENCODED: an aisle width"
+# comment is now the note on an encoded value.
 #
 # 134 -> 133 notes and 260 -> 256 comments on 2026-09-29, night: Steph's
 # answers to the first five Washington city questions retired five "NOT
