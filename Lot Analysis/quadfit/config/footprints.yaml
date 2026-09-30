@@ -147,30 +147,22 @@ siteplan:
     # as the building is not one, and on `plat: one_lot`, which is the only path
     # this spec will draw, Table 266-4 is expressly not reached.
     #
-    # So the rectangle is the city's own 9 x 18 and the AISLE IS ASSUMED, for
-    # the same reason and to the same figure as Milwaukie and Wilsonville below:
-    # the one table Portland publishes excepts this building by name, a standard
-    # a city excepts you from is not one it may apply to housing (ORS 197A.400),
-    # and 24 ft is the national floor rather than anybody's comfort number. It
-    # costs greens -- a 42 ft court against the old 36 -- which is the tell that
-    # it is a reading and not a convenience.
+    # So the rectangle is the city's own 9 x 18. The aisle was ASSUMED at the
+    # 24 ft national floor from 2026-09-01, the same way as Milwaukie and
+    # Wilsonville below, because the one table Portland publishes excepts this
+    # building by name. On 2026-09-30 Steph ruled "Use 20 for Portland": the
+    # corpus now holds Table 266-4's 90-degree 20 ft as the city's own figure
+    # adopted for the fourplex, and this file mirrors it like any other
+    # published number (a 38 ft court, 18 + 20, against the assumed 42).
     portland:
       stall_width_ft: 9            # 33.266.120.D.1
       stall_depth_ft: 18.0
-      aisle_one_way_ft: 24
-      aisle_two_way_ft: 24
-      aisle_assumed: true
-      aisle_cite: >-
-        ASSUMED. Iowa SUDAS Design Manual 8B-1 Table 8B-1.02 (adapted from
-        Urban Land Institute / National Parking Association, The Dimensions of
-        Parking), 90 degrees, two-way, 85th-percentile design vehicle. PCC
-        33.266.120 states a 9 x 18 space and a 9 ft driveway for this building
-        and no aisle at any angle; Table 266-4's 20 ft belongs to 33.266.130,
-        which excludes "residential vehicle areas subject to the standards of
-        33.266.120". Overturned the day Portland dimensions an aisle in .120,
-        or the day this spec moves to `unit_lots`, where the tract branch and
-        its 8.5 x 16 / 20 ft row are the standard.
-      cite: PCC 33.266.120.D.1, a parking space must be at least 9 feet by 18 feet
+      aisle_one_way_ft: 20         # Table 266-4, 90 deg; adopted by Steph 2026-09-30
+      aisle_two_way_ft: 20
+      cite: >-
+        PCC 33.266.120.D.1, a parking space must be at least 9 feet by 18 feet;
+        aisle PCC Table 266-4 (33.266.130), 90 degrees, 20 ft, adopted for the
+        fourplex by Steph 2026-09-30 (33.266.120 states no aisle)
       # PCC 33.266.115 exempts this building from the maximum tables. The 1.35
       # per unit in Tables 266-1/266-2 is real and belongs to RM1-RM4, RX,
       # RMP and the commercial zones — none of which is in this inventory,

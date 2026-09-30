@@ -863,9 +863,11 @@ def test_a_lot_too_narrow_for_a_side_lane_lays_out_off_its_alley():
     """The direction the rule cuts most often. 48 ft of frontage seats the
     pod and leaves no room for a lane beside it, which is `no_side_lane` from
     the street in every city -- and on a Portland lot with an alley behind it
-    there is no lane beside the pod to draw, so the plan stands."""
+    there is no lane beside the pod to draw, so the plan stands. (146 ft
+    deep: at 150 Portland's 20 ft aisle, adopted 2026-09-30, lets the
+    street-fed court fit too.)"""
     s6s = _sp_setup_cities()
-    env, fe, ae, area = _alley_lot(48.0, 150.0, "rear")
+    env, fe, ae, area = _alley_lot(48.0, 146.0, "rear")
     r = _run_pdx(s6s, env, fe, [], area)
     assert r["site_plan_ok"] is False and r["layout_fail"] == "no_side_lane"
     r = _run_pdx(s6s, env, fe, ae, area)
@@ -1127,7 +1129,8 @@ def test_a_tier_c_lot_is_told_the_setback_its_envelope_was_cut_to():
 
 def test_with_no_setback_from_the_alley_the_court_stands_on_the_alley_line():
     """PCC 33.110.220.D.9: no rear setback from a lot line abutting an alley.
-    A 100 x 85 Portland R5 lot is too shallow for a court behind the pod
+    A 100 x 81 Portland R5 lot (85 before Portland's aisle went from an
+    assumed 24 ft to its own 20 on 2026-09-30) is too shallow for a court behind the pod
     when the envelope stops the rear setback short of the alley, and holds
     eight stalls when it runs to the alley line -- the court stands on the
     line, the lane is nothing, and nothing drawn leaves the lot. Five feet is
@@ -1140,7 +1143,7 @@ def test_with_no_setback_from_the_alley_the_court_stands_on_the_alley_line():
     from common import load_rules
     from s5_envelope import build_envelope, lot_setbacks
 
-    W, D = 100.0, 85.0
+    W, D = 100.0, 81.0
     lot = box(0.0, 0.0, W, D)
     edges = [[0, 0, W, 0, "F"], [W, 0, W, D, "S"], [W, D, 0, D, "A"], [0, D, 0, 0, "S"]]
     fe, ae = [[0.0, 0.0, W, 0.0]], [[0.0, D, W, D]]
@@ -1397,12 +1400,13 @@ def test_a_court_deep_enough_for_its_own_aisle_keeps_it():
 def test_a_side_alley_seats_the_row_along_the_courts_side():
     """A lot that fronts the cross street backs into the alley sideways: the
     stalls stand along the court's alley-side edge, turned so a car's length
-    points into the lot and its width runs along the alley. 80 x 105 leaves
-    39 ft behind the pod -- no aisle fits, and four cars fit end to end along
-    the 39 ft of alley edge. Either side."""
+    points into the lot and its width runs along the alley. 80 x 103 leaves
+    37 ft behind the pod -- no aisle fits (18 + Portland's 20 is 38; the lot
+    was 105 deep before the 20 was adopted on 2026-09-30), and four cars fit
+    end to end along the 37 ft of alley edge. Either side."""
     s6s = _sp_setup_cities()
     for where in ("right", "left"):
-        env, fe, ae, area = _alley_lot(80.0, 105.0, where)
+        env, fe, ae, area = _alley_lot(80.0, 103.0, where)
         r0 = _run_pdx(s6s, env, fe, [], area)
         assert r0["layout_fail"] == "court_too_shallow", where
         r = _run_pdx(s6s, env, fe, ae, area)
@@ -1930,13 +1934,14 @@ def test_a_through_lot_in_a_ban_city_parks_beside_the_building_or_not_at_all():
     assert c[0] >= b[2] + 5.0 - 0.6 or c[2] <= b[0] - 5.0 + 0.6
     # its stalls stand against the side lot line, one row, the aisle by the wall
     assert c[2] == pytest.approx(84.0 - SIDE_S, abs=0.6) or c[0] == pytest.approx(SIDE_S, abs=0.6)
-    assert c[2] - c[0] == pytest.approx(18.0 + 24.0, abs=0.6)
+    aisle = s6s._CFG["cells"]["portland"]["aisle_two"]      # 20 since 2026-09-30
+    assert c[2] - c[0] == pytest.approx(18.0 + aisle, abs=0.6)
     d = r["geoms"]["driveway"].bounds
     assert d[1] <= FRONT_S + 1.0 and d[3] >= c[1] - 0.6        # from the street to the court
     assert d[0] >= c[0] - 0.6 and d[2] <= c[2] + 0.6            # into the aisle
     assert r["driveway_len_ft"] == pytest.approx(FRONT_S + (c[1] - FRONT_S), abs=0.6)
-    assert r["parking_area_sqft"] == pytest.approx(8 * 9.0 * 18.0 + 24.0 * (c[3] - c[1]), abs=1.0)
-    assert r["court_street_ft"] >= 40.0                          # its front edge on the near street
+    assert r["parking_area_sqft"] == pytest.approx(8 * 9.0 * 18.0 + aisle * (c[3] - c[1]), abs=1.0)
+    assert r["court_street_ft"] >= 18.0 + aisle                  # its front edge on the near street
     # too narrow beside the pod: refused, where the rear court used to be drawn
     env, fe, bearings, area, xy = _through_lot(70.0, 160.0)
     r = _run(s6s, env, fe, area, bearings=bearings, jurisdiction="portland",

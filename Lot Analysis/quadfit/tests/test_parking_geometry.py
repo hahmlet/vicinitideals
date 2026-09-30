@@ -260,12 +260,14 @@ def test_portland_takes_the_branch_a_lot_reaches_and_not_the_tract_one():
 
     geom = load_footprints().siteplan.geometry["portland"]
     assert (geom.stall_width_ft, geom.stall_depth_ft) == (9.0, 18.0)
-    # No aisle in 33.266.120 at any angle, so Portland is drawn on the same
-    # assumption as Milwaukie and Wilsonville rather than on 266-4's 20 ft.
-    assert geom.aisle_assumed
-    assert geom.aisle_one_way_ft == 24.0
-    assert geom.aisle_two_way_ft == 24.0
-    assert "33.266.120" in geom.aisle_cite and "266-4" in geom.aisle_cite
+    # No aisle in 33.266.120 at any angle. From 2026-09-01 Portland was drawn on
+    # the same assumed 24 ft as Milwaukie and Wilsonville; on 2026-09-30 Steph
+    # adopted 266-4's 20 ft ("Use 20 for Portland"), so it is mirrored, not
+    # assumed.
+    assert not geom.aisle_assumed
+    assert geom.aisle_one_way_ft == 20.0
+    assert geom.aisle_two_way_ft == 20.0
+    assert "33.266.120" in geom.cite and "266-4" in geom.cite
     assert geom.lays_out()
 
 
