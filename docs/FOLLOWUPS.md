@@ -686,8 +686,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    IT" -- the lot page shows the distances and the reform's reach
    (facts.transit, export --transit / meta); the pod keeps 4 stalls. The
    state reform (OAR 660-012-0440) stays NOT ENCODED in or/_state.yaml.
-   The lot page is empty of it until (1) runs; (3) MU-VTC 3 stories inside the Center
-   Cores needs the 12.65.030 map polygons. Not in the layers: SMART, CAT,
+   The lot page is empty of it until (1) runs; (3) CLOSED 2026-09-30: the
+   MU-VTC Center Cores have no drawn boundary (Figure 12.65.930-A only
+   "illustrates"; the city's open data holds 2020 gallery symbols, not the
+   cores), so 3 stories stays held on every MU-VTC lot (hillsboro.yaml). Not in the layers: SMART, CAT,
    SAM, SCTD (reads as far from transit -- conservative for relief).
    (c) FOREST GROVE (7,756 lots): American Legal 403s from home too. Try the
    scrapling stealthy browser; if refused, ask Steph to save the PDFs.

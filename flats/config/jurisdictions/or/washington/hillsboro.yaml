@@ -2328,9 +2328,16 @@ zones:
       # Residential: 3 stories inside the Center Cores, 2 outside. The
       # outside-core row is an EXPRESS exception, so under Steph's rule of
       # 2026-09-29 the pod's two stories pass outside a core. The cores
-      # are drawn under 12.65.030 and no condition says a lot is OUTSIDE
-      # one yet (FOLLOWUPS 17: draw the cores), so the 3 binds everywhere
-      # -- the tighter reading.
+      # are placed by 12.65.030, whose Figure 12.65.930-A only
+      # "illustrate[s] the size, location and orientation of these areas"
+      # (L106-L107): no lot line is drawn, so no lot can be shown to lie
+      # OUTSIDE a core. Looked for a drawn boundary 2026-09-30: the city's
+      # open data (services1.arcgis.com/eQ2vvbCvmxlIgo3a, LandUseGallery_Prod
+      # layers 5-6) holds a 2020 "SoHi" Town Center and a Village Center
+      # polygon of about 4 and 2 acres -- planning-gallery symbols, not the
+      # code's core areas, and the MU-VTC zone they sit in is ~59 acres. So
+      # the 3 binds everywhere -- the tighter reading -- until the city
+      # publishes the core boundaries.
       value: 3
       cite: Hillsboro CDC Table 12.24.360-1, Minimum Building Height, inside Center Cores, residential
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1302,L1342,L1346,L1355"
