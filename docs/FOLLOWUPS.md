@@ -669,26 +669,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    15; King City impervious cap (max_impervious_pct); city questions 6-19
    settled by the reading rules. Left for the cities (HUMAN_TODO 25C):
    Sherwood PD plans + Old Town zones, King City NMU patch, Durham MDR.
-   (b2) MEASURE TWO EXPRESS EXCEPTIONS the screen holds against the pod
-   today: Hillsboro SCC-SC min height 30 ft only within 800 ft of a light-rail
-   station (none beyond) and MU-VTC 3 stories only inside the Center Cores
-   (12.65.030 map; 2 outside). Needs a distance-to-LRT-station fact (TriMet
-   stops in RLIS; also serves county TO:BUS 20 ft within 1,300 ft and SCR-V
-   / SCR-OTC rows) and the Center Core polygons. WIDEN (Steph 2026-09-30,
-   "X distance to transit means no parking"): the same stop-distance fact
-   feeds the state parking reform near frequent transit (OAR 660-012-0400
-   to -0450, NOT ENCODED in or/_state.yaml L160 -- rule text never stored),
-   and Sherwood 16.94.020 / Troutdale restate it. It changes a colour only
-   if the pod may park fewer than 4 near transit; today the design's floor
-   is 4 by Steph's 2026-09-18 ruling ("4 is enough to sell").
-   DECIDED Steph 2026-09-30: "if we're building it for one, it's worth
-   building it for all and making it a standard part of our data
-   collection/processing" -- a per-lot transit-distance fact for EVERY lot,
-   measured once and re-measured only when the transit source changes
-   ("bus stops update every 1-2 years"), watched by the refresh probe.
-   Still open: screening a fewer-stall pod near transit (ask when built).
-   A city asking 2 a home is already capped by OAR 660-046-0220(2)(e)(B)
-   (1-4 total by lot size) -- no transit fact needed for that.
+   (b2) TRANSIT DISTANCE BUILT ceb6693d 2026-09-30 (Steph: "build it for
+   all", measure once, re-measure only when stops change): every lot gets
+   its distance to a rail stop, a MAX station, any stop and a Frequent
+   Service line (flats/geom/transit.py, flats/ingest/transit.py, runbook
+   §4d); the probe flags new_release when TriMet edits a layer. Banded on
+   it: Hillsboro SCC-SC min height + SCC-SC/SCR-DNC/SCR-V densities,
+   Beaverton SC 400 ft density. NEXT: (1) on 137 acquire the three
+   transit_* keys, measure every M+C lot, add --transit to the next bridge
+   run (Washington lots need it too once (d) lands -- without it those
+   station zones screen unknown); (2) count M+C lots within 3/4 mi of rail
+   or 1/2 mi of a frequent line and ASK Steph whether to screen a
+   fewer-than-4-stall pod there (state reform OAR 660-012-0440, still NOT
+   ENCODED in or/_state.yaml); (3) MU-VTC 3 stories inside the Center
+   Cores needs the 12.65.030 map polygons. Not in the layers: SMART, CAT,
+   SAM, SCTD (reads as far from transit -- conservative for relief).
    (c) FOREST GROVE (7,756 lots): American Legal 403s from home too. Try the
    scrapling stealthy browser; if refused, ask Steph to save the PDFs.
    (d) COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
