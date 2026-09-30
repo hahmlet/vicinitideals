@@ -2415,6 +2415,29 @@ paperwork and cost on your side, and it could open far more lots than any
 city code does. The agent will add it to the screen as a second path once
 it is final (FOLLOWUPS 21c).
 
+## 27. One decision: 3,056 Portland lots miss only on the shape of their yard — worth chasing the near misses?
+
+**Added 2026-09-30.** Portland makes a fourplex lot keep an outdoor area
+(250 sq ft in R5) *and* says a square — 12 ft × 12 ft (10 × 10 in R2.5) —
+must fit entirely inside it, so the yard is a usable patch and not a strip.
+Until 2026-09-29 the screen checked only the square footage; since run 42
+(live 2026-09-30) it checks the square too. **3,056 Portland lots now fail on
+that one thing and nothing else**: the building and parking fit, the area is
+there in total, but what is left is all narrow pieces with no spot for the
+square. They went from green to yellow — Portland can grant an exception,
+but it decides case by case, so it is not something to count on.
+
+Some of these are surely a few feet short, and a small change in layout
+(shifting the building, a narrower court, parking on the other side) might
+open up the square. The screen does not search for that today.
+
+**Your call:**
+- **A — Pull the near-miss list.** The agent measures how far short each lot
+  is and gives you the ones within a few feet, so you can see whether it is
+  worth teaching the screen to rearrange for the yard. A few hours of work.
+- **B — Leave them yellow.** Accept that these need Portland's exception;
+  no work.
+
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
 - **The lot ledger could not see Clackamas County, and it nearly hid item 15's
