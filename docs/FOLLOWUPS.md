@@ -825,19 +825,15 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    housing, so it is refused today (milwaukie.yaml ~L948) and the court is
    drawn at 24. Asked: adopt 22 as Portland's 20 was adopted? Wilsonville's
    planning email (HUMAN_TODO 3) still open.
-23. **Sign the number against the page, not the text copy (Steph
-   2026-09-30).** Today signing checks our extracted text; the thing to
-   verify is encoded value == what the printed page says. Offered: a review
-   card that renders the source page (pdf.js in the browser; HTML sources
-   from the stored snapshot), draws a box on the cell the quote came from
-   (PDF text-layer word coordinates -- most sources have a text layer, no
-   OCR needed; `flats/provenance/pages.py` already maps lines to pages for
-   16 documents, extend to all), and asks "Is this 52,000 -- RF, minimum lot
-   area, All other lots?" Yes / No / wrong cell, then one card per footnote
-   or modifier marking that cell ("does note [1] change it?"). A No drops
-   back to the text copy to find why. Catches the right-number-wrong-row/
-   column class (column ledger) the text view hides. Alternative: Label
-   Studio (open source, self-hosted) fed our tasks -- solved-problem UI but
-   a second app, login and export plumbing. Recommended: build it inside
-   the existing signing page. Pending Steph (build it? which first: the
-   ~2,000 signed numbers, or only unsigned ones?).
+23. **Page check -- SHIPPED 2026-09-30 (a203e9f1).** `/flats/check`: the
+   printed page with a box on the number, signed numbers first, then one card
+   per footnote on it; "no" answers form the problems list
+   (`/flats/check/problems.txt`, stamps `bundled_at`). Page maps now cover
+   190 PDF documents; 1,742 of 2,129 numbers get a box (362 get their line
+   highlighted, 25 nothing). Still open: (a) web-published codes (Happy
+   Valley, Lake Oswego, Clackamas ZDO, Fairview, Wood Village, ~1,100
+   numbers) have no printed page -- draw them from the stored HTML snapshot
+   instead; (b) nothing reads the problems list yet -- wire a "differs" into
+   the signing disputes so the number reopens there; (c) Gresham
+   4.1400.pleasant-valley's page map no longer matches its source -- re-fetch
+   then re-map.
