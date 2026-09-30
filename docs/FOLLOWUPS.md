@@ -741,7 +741,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    master-planned-community clause 0205(2)(b). Ambiguous 9: Clackamas FF10;
    Multnomah MUA20, RR, OR, GGR2 (mostly outside the UGB); Fairview VTH;
    Portland RMP; Milwaukie R-MD (unit-lot + flag variant); Wilsonville
-   FDAHV. Happy Valley's child-lot refusals look allowed by the state rule. From 2027-01-01 the
+   FDAHV. Happy Valley's child-lot refusals look allowed by the state rule.
+   OFFERED 2026-09-30 (Steph asked "isn't there a law that a house zone
+   must allow a quadplex?" -- yes, ORS 197A.420 since 2019): (A) read each
+   of the 14 against the exceptions and, where none applies, screen the
+   zone as the state model code (a possible false RED today, not just in
+   2027); (B) leave them red until 2027. Pending Steph. From 2027-01-01 the
    Div 46 model code applies directly (0040(4), "completely replaces"): audit
    the corpus, switch them to allowed under the city's middle-housing
    standards or the model code (2020 Exhibit B: front/rear setbacks > 10 ft
