@@ -663,14 +663,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    green (light + full gate); flats 3,861 + quadfit 347 passed locally.
    886 numbers re-read blind, none wrong (handoff "Local review"). The
    worktree ../vicinitideals-worktrees/washington-draft stays for (b).
-   (b) FIX BATCH. Steph's rulings on city questions 1-5 plus SCC-DT are
-   ENCODED 2026-09-29 (handoff §6 "Rulings"; memory
-   feedback_flats_reading_rules_2026_09_29). Still owed: private_drives
-   rulings for the six layers (Sherwood's street includes private roads,
-   16.10.020); Sherwood driveways <= 50% of frontage (new field; narrow lots
-   pass today); Durham's 5 ft walk beside the drive; then propose answers to
-   city questions 6-19 by the same reading rules, and bring Steph only the
-   genuinely two-way ones.
+   (b) DONE b53873cf 2026-09-30 (handoff §6 "Rulings, 2026-09-30"):
+   private_drives street:true in all six layers; Sherwood driveway share
+   (driveway_max_frontage_pct); Durham walk (driveway_walkway_ft) and rear
+   15; King City impervious cap (max_impervious_pct); city questions 6-19
+   settled by the reading rules. Left for the cities (HUMAN_TODO 25C):
+   Sherwood PD plans + Old Town zones, King City NMU patch, Durham MDR.
    (b2) MEASURE TWO EXPRESS EXCEPTIONS the screen holds against the pod
    today: Hillsboro SCC-SC min height 30 ft only within 800 ft of a light-rail
    station (none beyond) and MU-VTC 3 stories only inside the Center Cores
