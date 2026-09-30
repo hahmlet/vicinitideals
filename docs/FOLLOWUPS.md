@@ -674,7 +674,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    station (none beyond) and MU-VTC 3 stories only inside the Center Cores
    (12.65.030 map; 2 outside). Needs a distance-to-LRT-station fact (TriMet
    stops in RLIS; also serves county TO:BUS 20 ft within 1,300 ft and SCR-V
-   / SCR-OTC rows) and the Center Core polygons.
+   / SCR-OTC rows) and the Center Core polygons. WIDEN (Steph 2026-09-30,
+   "X distance to transit means no parking"): the same stop-distance fact
+   feeds the state parking reform near frequent transit (OAR 660-012-0400
+   to -0450, NOT ENCODED in or/_state.yaml L160 -- rule text never stored),
+   and Sherwood 16.94.020 / Troutdale restate it. It changes a colour only
+   if the pod may park fewer than 4 near transit; today the design's floor
+   is 4 by Steph's 2026-09-18 ruling ("4 is enough to sell"). Asked Steph
+   2026-09-30: would a fewer-stall pod near transit be worth screening?
+   A city asking 2 a home is already capped by OAR 660-046-0220(2)(e)(B)
+   (1-4 total by lot size) -- no transit fact needed for that.
    (c) FOREST GROVE (7,756 lots): American Legal 403s from home too. Try the
    scrapling stealthy browser; if refused, ask Steph to save the PDFs.
    (d) COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
