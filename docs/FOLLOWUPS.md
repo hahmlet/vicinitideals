@@ -809,3 +809,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    housing, so it is refused today (milwaukie.yaml ~L948) and the court is
    drawn at 24. Asked: adopt 22 as Portland's 20 was adopted? Wilsonville's
    planning email (HUMAN_TODO 3) still open.
+23. **Sign the number against the page, not the text copy (Steph
+   2026-09-30).** Today signing checks our extracted text; the thing to
+   verify is encoded value == what the printed page says. Offered: a review
+   card that renders the source page (pdf.js in the browser; HTML sources
+   from the stored snapshot), draws a box on the cell the quote came from
+   (PDF text-layer word coordinates -- most sources have a text layer, no
+   OCR needed; `flats/provenance/pages.py` already maps lines to pages for
+   16 documents, extend to all), and asks "Is this 52,000 -- RF, minimum lot
+   area, All other lots?" Yes / No / wrong cell, then one card per footnote
+   or modifier marking that cell ("does note [1] change it?"). A No drops
+   back to the text copy to find why. Catches the right-number-wrong-row/
+   column class (column ledger) the text view hides. Alternative: Label
+   Studio (open source, self-hosted) fed our tasks -- solved-problem UI but
+   a second app, login and export plumbing. Recommended: build it inside
+   the existing signing page. Pending Steph (build it? which first: the
+   ~2,000 signed numbers, or only unsigned ones?).
