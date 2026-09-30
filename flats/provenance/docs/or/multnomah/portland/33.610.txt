@@ -1,0 +1,323 @@
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Chapter 33.610
+1/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Lots in RF Through R2.5 Zones
+
+33.610 Lots in RF Through R2.5 Zones                                                                                                                                                                                                                    610
+
+Sections:
+          33.610.010                                                                           Purpose
+          33.610.020                                                                          Where These Regulations Apply
+          33.610.100                                                                           Density Standards
+          33.610.200                                                                           Lot Dimension Regulations
+          33.610.300                                                                           Through Lots
+          33.610.400                                                                           Flag Lots
+          33.610.500                                                                           Split Zoned Lots
+33.610.010 Purpose
+This chapter contains the density and lot dimension requirements for approval of a Preliminary Plan
+for a land division in the RF through R2.5 zones. These requirements ensure that lots are consistent
+with the desired character of each zone while allowing lots to vary in size and shape provided the
+planned intensity of each zone is respected. This chapter works in conjunction with other chapters
+of this Title to ensure that land divisions create lots that can support appropriate uses and
+development.
+
+33.610.020 Where These Regulations                                      Apply
+The regulations of this chapter apply to land divisions in the RF through R2.5 zones.
+
+33.610.100 Density Standards
+          A.                                                           Purpose. Density standards match housing density with the availability of services and with
+                        the carrying capacity of the land in order to promote efficient use of land, and maximize
+                        the benefits to the public from investment in infrastructure and services.            These standards
+                        promote development opportunities for housing and promote urban densities in less
+                        developed areas. Maximum densities ensure that the number of lots created does not
+                        exceed the intensity planned for the area, given the base zone, overlay zone, and plan
+                        district regulations. Minimum densities ensure that enough dwelling units can be
+                        developed to accommodate the projected need for housing.
+
+          B.                                                Generally.
+                        1.                                                    The method used to calculate density depends on whether a street is created as part
+                                      of the land division.             As used in this chapter, creation of a street means a full street on
+                                      the site, creating the first stage of a partial width street on the site, or extending an
+                                      existing street onto the site. It does not include additional stages of a partial width
+                                      street, or dedicating right-of-way to widen an existing right              -of              -way.
+                        2.                                                    To be eligible for maximum density A, the site being divided must qualify for a primary
+                                      structure in conformance with 33.110.202, When Primary Structures are Allowed.
+                        3.                                                    When lots will be created using more than one maximum density, maximum density is
+                                      calculated separately for the area being divided under each maximum density. When
+                                      streets are created, density is calculated separately after deducting for streets.
+
+                                                                                                                                  610-                                                            1
+Chapter 33.610                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Title 33, Planning and Zoning
+Lots in RF Through R2.5 Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1/1/25
+
+           C.                                                                                         No street created. Where no street will be created as part of the land division, the
+                         following maximum and minimum density standards apply.            Adjustments to this subsection
+                         are prohibited:
+
+                         1.                                                    Maximum density.             Maximum density is based on the zone and the size of the site.                                    The
+                                       following formula is used to determine the maximum number of lots allowed on the
+                                       site:
+                                       Square footage of site;
+                                                   ÷ Maximum density A, B, or C from Table 610-1;
+                                                                    = Maximum number of lots allowed.
+                         2.                                                    Minimum density.             Minimum density is based on the zone and size of the site, and
+                                       whether there are physical constraints. The following formula is used to determine
+                                       the minimum number of lots required on the site.                                     Exceptions to minimum density are
+                                       allowed under the provisions of Subsection 33.610.100.E:
+                                       Square footage of site;
+                                             -               Square footage of site within an Environmental or River Environmental, or Pleasant
+                                                 Valley Natural Resources overlay zone, potential landslide hazard area, or
+                                                 combined flood hazard area;
+                                                   x 0.80;
+                                                                    ÷ Maximum density C from Table 610-                                                                                     1;
+                                                                                     = Minimum number of lots required.
+           D.                                             Street created. Where a street will be created as part of the land division, the following
+                         maximum and minimum density standards apply. Pedestrian connections that are self-
+                         contained streets created solely for the use of pedestrians and bicyclists are not considered
+                         streets for the purposes of calculating density under this subsection. Adjustments to this
+                         subsection are prohibited:
+                         1.                                                    Maximum density.             Maximum density is based on the zone, the size of the site and
+                                       whether a street is being created. The following formula is used to determine the
+                                       maximum number of lots allowed on the site:
+                                       Square footage of site;
+                                                   x 0.85;
+                                                                    ÷ Maximum density A,                             B, or C from Table 610-1;
+                                                                                     = Maximum number of lots allowed.
+                         2.                                                    Minimum density.             Minimum density is based on the zone, the size of the site, whether
+                                       there are physical constraints, and whether a street is being created.  The following
+                                       formula is used to determine the minimum number of lots required on the site.
+                                       Exceptions to minimum density are allowed under the provisions of Subsection
+                                       33.610.100.E:
+                                       Square footage of site
+                                             -               Square footage of site within an Environmental or River Environmental, or Pleasant
+                                                 Valley Natural Resources overlay zone, potential landslide hazard area, or
+                                                 combined flood hazard area;
+                                                                    x 0.68
+                                                                                     ÷ Maximum density C            from Table 610-                                                                                     1
+                                                                                                           = Minimum number of lots required.
+
+                                                                                                                                       610-                                                            2
+        Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Chapter 33.610
+        1/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Lots in RF Through R2.5 Zones
+
+                    E.                                                    Exceptions to minimum density. Exceptions to minimum density standards are allowed in
+                                  the following situations. Adjustments to this subsection are prohibited:
+                                  1.                                                    If the minimum required density is equal to the maximum allowed density, then the
+                                                 minimum is automatically reduced by one;
+                                  2.                                                    If the minimum required density is larger than the maximum allowed density, then the
+                                                 minimum density is automatically reduced to one less than the maximum;
+
+                                  3.                                                    The portion of the site that has a conditional use or Conditional Use Master Plan is not
+                                                 included in the site for calculations of minimum density.
+
+                                                                                                                                    Table 610-1
+                                                                                                        Maximum Density Standards
+                                                                                           RF                                  R20                                  R10                                 R7                                   R5                                  R2.5
+Maximum Density A:                                                                         NA                                  1 lot per                            1 lot per                           1 lot per                            1 lot per                           1 lot per
+Maximum density for lots that                                                                                                  5,000                                2,500                               1,750                                1,500                               1,500
+•                  Will be developed with                                                                                      sq. ft.                              sq. ft.                             sq. ft.                              sq. ft.                             sq. ft.
+       attached houses;
+•                  Will be located entirely
+       outside the Constrained
+       Sites overlay zone; and
+•                  Will have frontage on a
+       maintained street, a private
+       street that connects to a
+       maintained street, or a self-
+       contained pedestrian
+       connection created solely
+       for pedestrians and bicycles.
+
+Maximum Density B:                                                                         NA                                  1 lot per                            1 lot per                           1 lot per                            1 lot per                           1 lot per
+Maximum density for lots that                                                                                                  10,000                               5,000                               3,500                                2,500                               2,000
+will be developed with                                                                                                         sq. ft.                              sq. ft.                             sq. ft.                              sq. ft.                             sq. ft.
+attached houses.
+Maximum Density C:                                                                         1 lot per                           1 lot per                            1 lot per                           1 lot per                            1 lot per                           1 lot per
+Maximum density for all other                                                              87,120                              20,000                               10,000                              7,000                                5,000                               2,500
+lots                                                                                       sq. ft.                             sq. ft.                              sq. ft.                             sq. ft.                              sq. ft.                             sq. ft.
+
+        33.610.200 Lot Dimension Regulations
+        Lots in the RF through R2.5 zones must meet the lot dimension regulations           of this section.
+
+                    A.                                                           Purpose. The lot dimension regulations           ensure that:
+                                 •                                             Each lot has enough room for a reasonably-sized house;
+                                 •                                             Lots are of a size and shape that development on each lot can meet the development
+                                             standards of the zoning code;
+                                 •                                             Lots are not so large that they seem to be able to be further divided to exceed the
+                                             maximum allowed density of the site in the future;
+                                 •                                             Lots that can be divided in the future without exceeding the maximum allowed density
+                                             for the original land division site are of a size and shape to reasonably be divided;
+
+                                                                                                                                                    610-                                                            3
+Chapter 33.610                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Title 33, Planning and Zoning
+Lots in RF Through R2.5 Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1/1/25
+
+                        •                                             Each lot has room for at least a small, private outdoor area;
+                        •                                             Lots are compatible with the planned intensity of the zone;
+                        •                                             Lots are wide enough to allow development to orient toward the street;
+                        •                                             Lots don’t narrow to an unbuildable width close to the street
+                        •                                             Each lot has adequate access from the street;
+                        •                                             Each lot has access for utilities and services;
+                        •                                             Lots are not landlocked; and
+                        •                                             Lots are regularly shaped.
+
+                                                                                                                                  Table 610-2
+                                                                                                             Lot Dimension Standards
+                                                                              RF                                  R20                                  R10                                  R7                                   R5                                   R2.5
+      Minimum Lot Area
+          Attached house lots [1]                                             NA                                  1,500                                1,500                                1,500                                1,500                                1,500
+                                                                                                                  sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.
+          All other lots                                                      52,000                              12,000                               6,000                                4,200                                3,000                                1,500
+                                                                              sq. ft.                             sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.
+      Maximum Lot Area
+          Cottage cluster lots [2]                                            NA                                  43,560                               43,560                               43,560                               43,560                               43,560
+                                                                                                                  sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.
+          All other lots                                                      151,000                             34,500                               17,000                               12,000                               8,500                                NA
+                                                                              sq. ft.                             sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.
+      Minimum Lot Width [3]
+          Attached house lots [1]                                             NA                                  15 ft.                               15 ft.                               15 ft.                               15 ft.                               15 ft.
+          All other lots                                                      60 ft.                              60 ft.                               50 ft.                               40 ft.                               36 ft.                               25 ft.
+      Minimum Front Lot Line
+          Attached house lots [1]                                             NA                                  15 ft.                               15 ft.                               15 ft.                               15 ft.                               15 ft.
+          All other lots                                                      30 ft.                              30 ft.                               30 ft.                               30 ft.                               30 ft.                               20 ft.
+      Minimum Lot Depth                                                       60 ft.                              60 ft.                               60 ft.                               55 ft.                               50 ft.                               40 ft.
+  Notes:
+  [1] This dimensional standard is only allowed for lots that will be developed with attached houses.
+  [2] This dimensional standard is only allowed for lots that are located entirely outside the Constrained Sites
+  overlay zone, have frontage on a maintained street or a private street that connects to a maintained street or
+  a self-contained pedestrian connection created solely for pedestrians and bicycles, and will be developed
+  with cottage clusters.
+  [3] See 33.930.100.A for how lot width is measured.
+
+           B.                                                Minimum lot area. Each lot must meet the minimum lot area standard stated in Table 610-
+                         2. Lots that do not meet the minimum lot area standard may be requested through
+                         Planned Development Review or, when the site is in an environmental overlay zone, as a
+                         modification through environmental review. Until January 2, 2032, adjustments to reduce
+                         the minimum lot area standard by up to 10 percent may be requested. Other than as
+                         specified in this Subsection, adjustments are prohibited.
+           C.                                                                                         Maximum lot area. Lots larger than the maximum lot area standards stated in Table 610-2
+                         are not allowed. Lots with a conditional use or Conditional Use Master Plan are exempt
+                         from the maximum lot area standard.
+
+                                                                                                                                        610-                                                            4
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Chapter 33.610
+1/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Lots in RF Through R2.5 Zones
+
+          D.                                             Minimum lot width. Each lot must meet the minimum lot width standard stated in Table
+                      610-2                                                                                         . Lots that do not meet the standard may be requested through Planned
+                      Development Review or, when the site is in an environmental overlay zone, as a
+                      modification through environmental review. Until January 2, 2032, adjustments to reduce
+                      the minimum lot width standard by up to 10 percent may be requested. Other than as
+                      specified in this Subsection, adjustments are prohibited.
+
+          E.                                                    Minimum front lot line. Each lot must have a front lot line that meets the minimum front
+                      lot line standard stated in Table 610-2.                Lots that do not meet the minimum front lot line
+                      standard may be requested through Planned Development Review or, when the site is in an
+                      environmental overlay zone, as a modification through environmental review. Until January
+                      2, 2032, adjustments to reduce the minimum front lot line standard by up to 10 percent
+                      may be requested. Other than as specified in this Subsection, a                                    djustments to this standard
+                      are prohibited.
+
+          F.                                                     Minimum lot depth. Each lot must meet the minimum lot depth standard stated in Table
+                      610-2.                                                                                         Lots that do not meet the minimum lot depth standard may be requested through
+                      Planned Development Review or, when the site is in an environmental overlay zone, as a
+                      modification through environmental review. Until January 2, 2032, adjustments to reduce
+                      the minimum lot depth standard by up to 10 percent may be requested. Other than as
+                      specified in this Subsection, adjustments                                   to this standard are prohibited.
+          G.                                             Regular lot lines. Proposed lot lines in the R10 through R2.5 zones must meet one of the
+                      following regulations. Adjustments are prohibited.
+                       1.                                                                                         Standard. All lot lines must be straight and traverse in a single uniform direction
+                                   except for lot lines that follow a zoning line, right of way, or boundary of a tract.
+                       2.                                                                                         Approval criterion. As far as is practical, all lot lines must be straight and traverse in a
+                                   uniform direction taking into consideration topography and other natural features,
+                                   existing development, zoning, or other clearly identifiable boundary markers such as
+                                   fences or hedgerows.
+
+33.610.300 Through Lots
+          A.                                                           Purpose. This standard ensures that lots are configured in a way that development can be
+                      oriented toward streets to increase the safety and enjoyment of pedestrians and bicyclists.
+                      The standard also ensures that development does not “turn its back” on a collector or
+                      major city traffic street.
+
+          B.                                                Standard. Through lots are allowed only where both front lot lines are on local service
+                      streets. The minimum front lot line and minimum width standards apply to one frontage of
+                      the through lot.
+
+33.610.400 Flag Lots
+          A.                                                           Purpose. These regulations allow the creation of flag lots in limited circumstances. The
+                      limitations:
+                     •                                            Minimize the negative impacts of flag lots and additional driveways;
+                     •                                            Allow land to be divided when other options are not achievable;
+                     •                                             Ensure that flag lots have adequate access from the street; and
+
+                                                                                                                          610-                                                            5
+Chapter 33.610                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Title 33, Planning and Zoning
+Lots in RF Through R2.5 Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1/1/25
+
+                         •                                             Ensure that flag lots have access to utilities and services.
+            B.                                                When a flag lot is allowed. A flag lot is allowed only when the following are met:
+
+                           1.                                                    One of the following are met:
+                                          a.                                                     An existing dwelling unit or attached garage on the site is located so that it
+                                                         precludes a land division that meets the minimum lot width standard of
+                                                         Paragraph 33.610.200.D.1. The dwelling unit and attached garage must have
+                                                         been on the site for at least five years; or
+
+                                          b.                                                  The site has dimensions that preclude a land division that meets the minimum lot
+                                                         width standard of Paragraph 33.610.200.D.1;
+
+                           2.                                                    Up to three lots are proposed, only one of which is a flag lot; and
+                           3.                                                    Minimum density requirements for the site will be met.
+
+            C.                                                                                         Flag lot access pole. The pole portion of the flag lot must meet the following standards.
+                           Except as allowed by Subparagraph C.2, adjustments are prohibited:
+                           1.                                                    The pole must connect to a street;
+
+                           2.                                                    The pole must be at least 12 feet wide for its entire length.                          Until January 2, 2032,
+                                          adjustments to reduce the pole width by up to 10 percent may be requested; and
+
+                           3.                                                    The pole must be part of the flag lot and must be under the same ownership as the
+                                          flag portion.
+
+            D.                                            Lot area.                        Only the area of the flag portion is included when calculating the minimum and
+                           maximum lot area. The area of the pole portion of the lot is not included.
+            E.                                                    Minimum lot dimensions.
+
+                           1.                                                    Flag lots are exempt from the minimum front lot line standard.
+                           2.                                                    The minimum lot width and minimum lot depth required                                                  for each flag lot is 40 feet.
+
+                           3.                                                    For the purposes of this subsection width and depth are                                    measured at the midpoints of
+                                          the opposite lot lines of the flag portion of the lot. All other lot dimension standards
+                                          must be met.
+            F.                                                     Vehicle access. Flag lot vehicle access must meet one of the following regulations:
+                           1.                                                    Vehicle access standard. V                       ehicle access must be shared between the                        flag lot and the
+                                          lots between the flag portion of the lot and the street.            Access easements may be used.
+                                          Adjustments are prohibited. For proposals that cannot meet this standard, the
+                                          approval criterion stated in Paragraph F.2. applies.
+                           2.                                                    Vehicle access approval criterion. Separate access may be allowed when                          the location
+                                          of existing garages, driveways including driveways on abutting lots, alleys,                                  curb cuts,
+                                          stormwater management needs, or           tree preservation                          make shared access impractical .
+
+                                                                                                                                                 610-                                                            6
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Chapter 33.610
+1/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Lots in RF Through R2.5 Zones
+
+33.610.500 Split Zoned Lots
+                A.                                                           Purpose. This standard ensures that lots do not have more than one zone.Lots that are
+                                    split by more than one zone present practical problems related to the applicability of use
+                                    and development standards.
+
+                B.                                                Standard. On sites with more than one base zone, each lot must be entirely within one
+                                    zone. The creation of lots that are in more than one zone is not allowed.
+
+(Added by:              Ord. Nos. 175965 and 176333, effective 7/1/02.  Amended by:             Ord. No. 177422, effective
+6/7/03; Ord. No. 177701, effective 8/30/03; Ord. No. 178657, effective 9/3/04; Ord. No. 179994,
+effective 4/22/06; Ord. No. 182429, effective 1/16/09; Ord. No. 184235, effective 11/26/10; Ord. No.
+188259, effective 3/31/17; Ord. No. 190241, effective 3/1/21; Ord. No. 190093, effective 8/1/21;
+Ord. No. 190851, effective 6/30/22; Ord. No. 191310, effective 6/30/23; Ord. No. 191477, effective
+3/1/24; Ord. No. 191609, effective 3/1/24; Ord. No.                                                                                                                                                                                                                                                                                           191848, effective 10/1/24; Ord. No. 191942,
+effective 1/1/25.)
+
+                                                                                                                                                                                                 610-7
+Chapter 33.610                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Title 33, Planning and Zoning
+Lots in RF Through R2.5 Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1/1/25
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  610-                                                            8

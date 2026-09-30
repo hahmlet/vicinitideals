@@ -1662,6 +1662,14 @@ code:
   - id: "33.110"
     url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
     title: Chapter 33.110 Single-Dwelling Zones
+  # Land division in the single-dwelling zones. Read for one number: Table
+  # 110-3 lets a house stand on an RF lot that meets Table 610-2's minimum
+  # lot area, and the state's middle housing law caps a fourplex's minimum lot
+  # at the house's (OAR 660-046-0220(2)(a)(B)) -- so RF's figure for the
+  # state path lives here (Steph 2026-09-30, FOLLOWUPS 21(b)).
+  - id: "33.610"
+    url: https://www.portland.gov/sites/default/files/code/610-rf-r2.5-lots_0.pdf
+    title: Chapter 33.610 Lots in the RF through R2.5 Zones
   - id: "33.120"
     url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
     title: Chapter 33.120 Multi-Dwelling Zones
@@ -2131,7 +2139,32 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/portland/33.110.txt#L302-L313"
+      variants:
+        # State law over the city's table (Steph 2026-09-30, FOLLOWUPS 21(b)):
+        # ORS 197A.420(2) has a city over 1,000 inside Metro allow every
+        # middle housing type "on each lot or parcel zoned for residential
+        # use", and this zone is that by (1)(j) -- inside the UGB, residential,
+        # a detached house allowed, not primarily commercial, industrial,
+        # agricultural or public, incorporated. No exception in OAR 660-046-
+        # 0010(3) is zone-wide here; overlays still screen as overlays. The
+        # city's own code still says no, so it is relief, never GREEN.
+        - value: true
+          when: [state_middle_housing]
+          cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
+          quote: "or/hb.2138.2025.txt#L62-L71"
     notes: 'quadfit confidence: verified | Only house/ADU/manufactured home/houseboat/congregate allowed.'
+    min_lot_sqft:
+      # The house's minimum, which is the fourplex's on the state path: Table
+      # 110-3 lets a house stand on an RF lot that "meets the minimum lot area
+      # requirement for all other lots stated in Table 610-2", 52,000 sq ft
+      # in RF, and OAR 660-046-0220(2)(a)(B) caps a quadplex's minimum lot at
+      # the detached house's. No reduction is carried: 33.610.200.B's 10
+      # percent adjustment is for a land division, not for building on a lot.
+      value: 52000
+      cite: PCC 33.110 Table 110-3; 33.610 Table 610-2 (All other lots, RF)
+      url: https://www.portland.gov/sites/default/files/code/610-rf-r2.5-lots_0.pdf
+      retrieved: '2026-09-30'
+      quote: "or/multnomah/portland/33.610.txt#L162-L168"
     max_height_ft:
       value: 30
       quote: "or/multnomah/portland/33.110.txt#L435,L454"

@@ -3166,6 +3166,21 @@ zones:
       # from the same table on 2026-09-08 as FU-10; the map spells it FU10.
       value: false
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L27,L29,L31-L45"
+      variants:
+        # State law over the city's table (Steph 2026-09-30, FOLLOWUPS 21(b)):
+        # ORS 197A.420(2) has a city over 1,000 inside Metro allow every
+        # middle housing type "on each lot or parcel zoned for residential
+        # use", and this zone is that by (1)(j) -- inside the UGB, residential,
+        # a detached house allowed, not primarily commercial, industrial,
+        # agricultural or public, incorporated. No exception in OAR 660-046-
+        # 0010(3) is zone-wide here; overlays still screen as overlays. The
+        # city's own code still says no, so it is relief, never GREEN. The
+        # holding-zone exclusion (ORS 197A.015(12)(e)) is written for county
+        # land; this is incorporated land, read literally.
+        - value: true
+          when: [state_middle_housing]
+          cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
+          quote: "or/hb.2138.2025.txt#L62-L71"
     notes: >-
       Encoded 2026-09-20 from Table 16.22.010-1. One house per lot is the
       whole of household living in the zone; 16.67.070 note * says an

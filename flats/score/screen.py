@@ -59,7 +59,7 @@ from typing import Any, Sequence
 from flats.designs.model import Design, Orientation, Plat
 from flats.fit.rectangle import Fit, Fitter
 from flats.geom.edges import Tier as GeometryTier
-from flats.rules.conditions import Tier
+from flats.rules.conditions import CONDITIONS, Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
@@ -952,6 +952,42 @@ def _outdoor_shape(
         proven("private_open_space_shape", got, patio)
 
 
+def _use_path(
+    rules: ZoneResolution, config: Configuration | None, policy: ReliefOutcome
+) -> tuple[ReliefOutcome, bool]:
+    """The cheapest way past a use prohibition, and whether one turns on a
+    fact nobody measured.
+
+    Two sources. The relief policy (``policy``, :meth:`ReliefPolicy.for_use`)
+    and the zone's own encoding: an exception to ``quadplex_allowed`` that
+    names a relief -- LR-7's conditional use, the state's middle housing law
+    over a code that has not caught up (Steph 2026-09-30) -- is the code
+    enumerating the path. It opens only where every other condition it
+    names holds; one resting on a site fact in ``config.unknown`` makes the
+    lot a question rather than a RED. A variant that needs an election or a
+    design this run did not make opens nothing.
+    """
+    held = set(rules.conditions)
+    unknown = set(config.unknown) if config is not None else set()
+    best = policy
+    pending = False
+    r = rules.values.get("quadplex_allowed")
+    for when, value, cite in r.relief if r is not None else ():
+        if value is not True:
+            continue
+        asks = [c for c in when if CONDITIONS[c].kind == "relief"]
+        rest = set(when) - set(asks) - held
+        if rest:
+            pending = pending or rest <= unknown
+            continue
+        tier = max((CONDITIONS[c].tier for c in asks), key=lambda t: t.rank)
+        if best.available and best.tier.rank <= tier.rank:
+            continue
+        # Read: the path is quoted from the code or statute that grants it.
+        best = ReliefOutcome(best.check, tier, "+".join(sorted(asks)), cite, confirmed=True)
+    return best, pending and not best.available
+
+
 def _unconfirmed(outcomes: Sequence[ReliefOutcome]) -> tuple[str, ...]:
     """Whether this answer leans on a relief path nobody has read.
 
@@ -1370,11 +1406,15 @@ def screen(
 
     # The use gate is categorical, not a margin: a zone that forbids fourplexes
     # forbids them by any amount of slack. Its only exit is a conditional use,
-    # and unlike an adjustment that exit has to be enumerated to exist.
+    # and unlike an adjustment that exit has to be enumerated to exist -- in
+    # the relief policy, or in the zone's own encoding (:func:`_use_path`).
     allowed = rules.get("quadplex_allowed")
     use_blocked = allowed is False and rules.trusted
+    use_path: ReliefOutcome | None = None
+    use_pending = False
     if use_blocked:
-        outcomes.append(paths.for_use(where))
+        use_path, use_pending = _use_path(rules, config, paths.for_use(where))
+        outcomes.append(use_path)
 
     hardest = _hardest_ask(outcomes)
     common: dict[str, Any] = {
@@ -1408,12 +1448,19 @@ def screen(
         ),
     }
 
+    if use_blocked and use_path is not None and not use_path.available:
+        if use_pending:
+            # The zone's own path turns on a site fact nobody measured: RED
+            # if it is false, a hearing if it is true. Not an answer.
+            return Screening(
+                triage=Triage.unknown, reasons=(USE_PROHIBITED, FACT_UNOBSERVED), **common
+            )
+        return Screening(triage=Triage.red, reasons=(USE_PROHIBITED,), **common)
     if use_blocked:
-        if not paths.for_use(where).available:
-            return Screening(triage=Triage.red, reasons=(USE_PROHIBITED,), **common)
-        return Screening(
-            triage=Triage.yellow, reasons=(USE_PROHIBITED, *_unconfirmed(outcomes)), **common
-        )
+        # A path exists, so the building is an application -- and the lot
+        # still has to hold it. The dimensional checks run as for any lot;
+        # the use outcome already in ``outcomes`` keeps the answer off GREEN.
+        reasons.append(USE_PROHIBITED)
 
     if not rules.trusted:
         # An unverified standard may not delete a lot, and a failure measured

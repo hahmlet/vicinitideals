@@ -2510,6 +2510,12 @@ zones:
           when: [conditional_use, flag_lot]
           cite: MCC 39.4826(C) and 39.4828(A)(2)
           quote: "or/multnomah/_unincorporated/39.lr-5.txt#L259-L261,L283-L287"
+        # State law over the county's locational rule on every other lot
+        # (Steph 2026-09-30, FOLLOWUPS 21(b)); see the RF pocket's variant.
+        - value: true
+          when: [state_middle_housing, in_sewer_district]
+          cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
+          quote: "or/hb.2138.2025.txt#L62-L71,L203-L214"
     min_lot_sqft:
       # 39.4830(C): 4,500 square feet for EACH dwelling unit in a multiplex
       # dwelling structure, so 18,000 for the pod. Stated per dwelling because
@@ -2654,6 +2660,20 @@ zones:
       # Developed Neighborhood. Neither reaches four.
       value: false
       quote: "or/multnomah/_unincorporated/39.lr-10.txt#L13-L19,L22,L242-L256"
+      variants:
+        # State law over the county's table (Steph 2026-09-30, FOLLOWUPS
+        # 21(b)): ORS 197A.420(2) has each county allow every middle housing
+        # type on each lot "zoned for residential use", and on county land
+        # that means URBAN UNINCORPORATED land (1)(j)(E), ORS 197A.015(12):
+        # urban zoning, no future-urbanization holding designation, inside a
+        # sanitary district and a water provider's service area. The sewer
+        # district is the fact asked; the water district is not measured and
+        # rides in the relief's uncertainty. Never GREEN: the county's code
+        # still says no.
+        - value: true
+          when: [state_middle_housing, in_sewer_district]
+          cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
+          quote: "or/hb.2138.2025.txt#L62-L71,L203-L214"
     notes: >-
       Minimum lot size 10,000 square feet for a single family detached dwelling
       and 12,000 for a two-unit dwelling; front lot line 30 feet, lot width 70,
@@ -3079,6 +3099,20 @@ zones:
       # R20 and R10, which is the check that the column was counted.
       value: false
       quote: "or/multnomah/_unincorporated/33.110.txt#L300-L302,L313-L314"
+      variants:
+        # State law over the county's table (Steph 2026-09-30, FOLLOWUPS
+        # 21(b)): ORS 197A.420(2) has each county allow every middle housing
+        # type on each lot "zoned for residential use", and on county land
+        # that means URBAN UNINCORPORATED land (1)(j)(E), ORS 197A.015(12):
+        # urban zoning, no future-urbanization holding designation, inside a
+        # sanitary district and a water provider's service area. The sewer
+        # district is the fact asked; the water district is not measured and
+        # rides in the relief's uncertainty. Never GREEN: the county's code
+        # still says no.
+        - value: true
+          when: [state_middle_housing, in_sewer_district]
+          cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
+          quote: "or/hb.2138.2025.txt#L62-L71,L203-L214"
     notes: 'quadfit confidence: verified. House and ADU only, and the prohibition is quoted as of
       2026-08-16 rather than asserted. Whether the state Model Code could override RF in county
       pockets is unresolved -- treated as no-quadplex, which is the direction that cannot invent a

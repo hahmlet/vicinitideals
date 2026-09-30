@@ -195,7 +195,10 @@ def test_the_use_table_limitation_that_decides_two_zones(
 
 
 def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
-    """A hundred and nineteen notes, all of them ruled, none blocking.
+    """A hundred and twenty-two notes, all of them ruled, none blocking.
+
+    The last three are Table 610-2's, read 2026-09-30 for RF's minimum lot
+    area on the state middle housing path; none marks the row encoded.
 
     One more note than there used to be, and no document left unread.
     Portland's running footer used to end a block at its page break, so note
@@ -211,7 +214,7 @@ def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
     Household Living row starts at five units on site. See
     test_portland_parking_max."""
     ruled = list(dispositions(PORTLAND))
-    assert len(ruled) == 119
+    assert len(ruled) == 122
     assert [row for row in ruled if row.state == "unread"] == []
     assert not [row for row in qualified() if row.blocking]
 

@@ -69,6 +69,10 @@ def test_relief_is_a_condition_like_any_other() -> None:
         # attached dwelling for a rural residential zone, and it is inside that
         # overlay rather than inside any zone's use list.
         "planned_development",
+        # And the state's middle housing law read over a code that has not
+        # caught up with it (ORS 197A.420(2); Steph 2026-09-30): an argument
+        # with the city, then LUBA -- a path, never a permit.
+        "state_middle_housing",
     }
 
 

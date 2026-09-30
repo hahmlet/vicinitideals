@@ -272,6 +272,68 @@ def test_a_conditional_use_path_turns_a_prohibition_yellow() -> None:
     assert USE_PROHIBITED in result.reasons
 
 
+def _forbids_but(*relief, held=()) -> ZoneResolution:
+    """A zone saying no, with exceptions only an application reaches."""
+    base = rules(quadplex_allowed=False)
+    use = replace(base.values["quadplex_allowed"], relief=tuple(relief))
+    return replace(base, values={**base.values, "quadplex_allowed": use}, conditions=held)
+
+
+STATE = (("state_middle_housing",), True, "ORS 197A.420(2)")
+COUNTY = (("in_sewer_district", "state_middle_housing"), True, "ORS 197A.420(2)")
+
+
+def test_a_path_the_zone_itself_encodes_turns_a_prohibition_yellow() -> None:
+    # LR-7's conditional use, the state law over a code that has not caught
+    # up: the zone's own encoding enumerates the path, and the use gate has
+    # to read it (Steph 2026-09-30). A hearing, never a GREEN.
+    result = run(_forbids_but(STATE))
+
+    assert result.triage is Triage.yellow
+    assert result.ask is Tier.discretionary
+    assert USE_PROHIBITED in result.reasons
+    assert RELIEF_UNCONFIRMED not in result.reasons  # quoted, so read
+
+
+def test_an_opened_use_still_has_to_fit_the_lot() -> None:
+    # The path makes the building an application; it does not make a lot
+    # big enough. A verified miss with no procedure is still RED.
+    base = _forbids_but(STATE)
+    small = replace(base, values={**base.values, **rules(min_lot_sqft=10000).values})
+    small.values["quadplex_allowed"] = base.values["quadplex_allowed"]
+    result = run(small, relief=NO_RELIEF)
+
+    assert result.triage is Triage.red
+
+
+def test_a_zone_path_on_an_unmeasured_fact_is_a_question() -> None:
+    # County land counts only inside a sewer district; where nobody
+    # measured that, RED would be a guess in one direction.
+    unknown = configure(LOT, DESIGN)
+    assert "in_sewer_district" in unknown.unknown
+    result = screen(
+        _forbids_but(COUNTY), LOT, DESIGN, fit(), policy=POLICY, config=unknown
+    )
+
+    assert result.triage is Triage.unknown
+    assert FACT_UNOBSERVED in result.reasons
+
+
+def test_a_zone_path_on_a_fact_measured_false_stays_red() -> None:
+    outside = configure(LOT, DESIGN, observed={"in_sewer_district": False})
+    result = screen(
+        _forbids_but(COUNTY), LOT, DESIGN, fit(), policy=POLICY, config=outside
+    )
+
+    assert result.triage is Triage.red
+
+
+def test_a_zone_path_on_a_fact_measured_true_opens() -> None:
+    result = run(_forbids_but(COUNTY, held=("in_sewer_district",)))
+
+    assert result.triage is Triage.yellow
+
+
 def test_a_prohibition_nobody_verified_is_still_only_unknown() -> None:
     result = run(rules(RuleVerdict.unverified, quadplex_allowed=False))
 

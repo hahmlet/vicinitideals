@@ -1331,3 +1331,28 @@ notes:
     reason: >-
       note 3 sends stacked bicycle parking staggers to the manufacturer's
       design. Same rack, same absence
+
+  # Table 610-2, read 2026-09-30 for one cell: RF's minimum lot area for "All
+  # other lots", which the state's middle housing path carries as the
+  # fourplex's (FOLLOWUPS 21(b)). None of its three notes reaches that cell.
+  - quote: "or/multnomah/portland/33.610.txt#L183"
+    digest: "c2b0081db48f"
+    state: dismissed
+    reason: >-
+      note 1 limits the 1,500 sq ft attached-house row to lots developed with
+      attached houses. RF prints NA in that row, and the value encoded is
+      the "All other lots" row, which the note does not mark
+
+  - quote: "or/multnomah/portland/33.610.txt#L184"
+    digest: "5481b46763e8"
+    state: dismissed
+    reason: >-
+      note 2 limits the cottage-cluster maximum lot area row. A maximum lot
+      area is a land-division standard and RF prints NA in that row
+
+  - quote: "or/multnomah/portland/33.610.txt#L188"
+    digest: "27c6bbd64af6"
+    state: dismissed
+    reason: >-
+      note 3 sends lot width to 33.930.100.A for how it is measured. The value
+      encoded from this table is an area, not a width

@@ -51,7 +51,9 @@ def test_neither_zone_opens_without_an_application(rules: RuleSet) -> None:
     for zone in ("LR5", "LR10"):
         res = rules.resolve(UNINC, zone, POD)
         assert res.values["quadplex_allowed"].value is False, zone
-        assert res.missing_required == (), zone
+    # LR-5's own numbers are read; LR-10's are not yet, because until the
+    # state's middle housing path (2026-09-30) nothing could open it.
+    assert rules.resolve(UNINC, "LR5", POD).missing_required == ()
 
 
 def test_the_permit_alone_does_not_open_the_smaller_zone(rules: RuleSet) -> None:
@@ -99,7 +101,11 @@ def test_the_locational_rule_is_quoted_with_the_permission(uninc: Layer) -> None
     established was allowed. Neither is the rule.
     """
     store = ProvenanceStore()
-    variants = uninc.zones["LR5"].values["quadplex_allowed"].variants
+    variants = [
+        v
+        for v in uninc.zones["LR5"].values["quadplex_allowed"].variants
+        if "conditional_use" in v.when
+    ]
     assert len(variants) == 2
 
     for variant in variants:
@@ -166,7 +172,11 @@ def test_the_larger_zone_tops_out_at_two_units(uninc: Layer) -> None:
     """
     held = uninc.zones["LR10"].values["quadplex_allowed"]
     assert held.value is False
-    assert held.variants == ()
+    # The county's own code opens nothing; the one path is the state's
+    # middle housing law, on urban unincorporated land (Steph 2026-09-30).
+    assert [frozenset(v.when) for v in held.variants] == [
+        frozenset({"state_middle_housing", "in_sewer_district"})
+    ]
 
     text = ProvenanceStore().quote(held.prov.quote)
     assert "Single family detached dwelling" in text

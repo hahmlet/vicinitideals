@@ -42,6 +42,7 @@ from dataclasses import dataclass, field as _dc_field, replace
 from typing import Any, Collection, Mapping
 
 from flats.rules.caps import caps_for
+from flats.rules.conditions import CONDITIONS
 from flats.rules.definitions import Boundary, Definition, decide, unread
 from flats.rules.fields import REQUIRED_FIELDS, field
 
@@ -120,6 +121,14 @@ class Resolved:
     #: -- because this says the comparison cannot be run at all, and the screen
     #: has to be able to tell those two apart.
     measured_on: str | None = None
+    #: What an application would turn this standard into: every exception
+    #: whose conditions name a relief, as ``(when, value, cite)``. A relief
+    #: is never folded into ``when`` -- it is priced after the standard is
+    #: missed -- so without this the screen could not see a path the code
+    #: itself states. LR-7's conditional use is the case: "false, or true
+    #: on a conditional use" was encoded and read by nothing, and every lot
+    #: in the zone screened RED as if the sentence did not exist.
+    relief: tuple[tuple[tuple[str, ...], Any, str], ...] = ()
 
     @property
     def trusted(self) -> bool:
@@ -190,6 +199,20 @@ class ZoneResolution:
     def get(self, name: str, default: Any = None) -> Any:
         r = self.values.get(name)
         return default if r is None else r.value
+
+
+def _relief_of(val: Value) -> tuple[tuple[tuple[str, ...], Any, str], ...]:
+    """The exceptions of ``val`` an application reaches (:attr:`Resolved.relief`).
+
+    A banded or exempting exception is left out: neither is a value an
+    application grants, and nothing reads one here."""
+    return tuple(
+        (tuple(v.when), v.value, v.prov.cite)
+        for v in val.variants
+        if not v.bands
+        and not v.exempt
+        and any(CONDITIONS[c].kind == "relief" for c in v.when if c in CONDITIONS)
+    )
 
 
 def _looser(name: str, local: Any, ceiling: Any) -> bool:
@@ -436,6 +459,7 @@ class RuleSet:
                             name, eff.value, eff.status, eff.prov, layer, origin,
                             via=via, when=eff.when, levers=val.levers,
                             ambiguous=eff.ambiguous, measured_on=val.measured_on,
+                            relief=_relief_of(val),
                         )
                         continue
                     # Either the ancestor wins outright, or the local number is
@@ -445,7 +469,7 @@ class RuleSet:
                         prev.name, prev.value, prev.status, prev.prov, prev.layer,
                         prev.origin, preempted=True, shadowed=eff.value, via=prev.via,
                         when=prev.when, levers=prev.levers, ambiguous=prev.ambiguous,
-                        measured_on=prev.measured_on,
+                        measured_on=prev.measured_on, relief=prev.relief,
                     )
                     continue
                 resolved[name] = Resolved(
@@ -460,6 +484,7 @@ class RuleSet:
                     levers=val.levers,
                     ambiguous=eff.ambiguous,
                     measured_on=val.measured_on,
+                    relief=_relief_of(val),
                 )
                 if val.preempts.binds:
                     locked[name] = (val.preempts, eff.value)

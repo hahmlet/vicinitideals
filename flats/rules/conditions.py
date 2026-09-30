@@ -859,6 +859,28 @@ _C: tuple[ConditionDef, ...] = (
         evidence="a Planning Commission decision on a PD development plan and program",
         tier=Tier.discretionary,
     ),
+    ConditionDef(
+        "state_middle_housing",
+        "relief",
+        "The state's middle housing law read over a city or county code that "
+        "has not caught up with it. ORS 197A.420(2), as HB 2138 (2025) words "
+        "it, has every county, every city of 25,000 or more and every city "
+        "over 1,000 inside Metro allow all middle housing types \"on each lot "
+        "or parcel zoned for residential use\" -- inside a UGB, residential "
+        "base zoning, a detached house allowed, not primarily commercial, "
+        "industrial, agricultural or public, and incorporated or urban "
+        "unincorporated land (ORS 197A.015(12): sewer and water district, "
+        "urban zoning, no future-urbanization holding designation). Where a "
+        "zone meets that and its own code still refuses a quadplex, the "
+        "permit is an argument with the local government, and a denial goes "
+        "to LUBA; from 2027-01-01 the state model code replaces conflicting "
+        "provisions of a government that has not acted (OAR 660-046-0040). "
+        "Offered only on zones read against every exception (Steph "
+        "2026-09-30, FOLLOWUPS 21(b)). Tiered discretionary: a real path, "
+        "slow and uncertain, never a GREEN.",
+        evidence="the city or county's middle housing ordinance or DLCD's compliance finding",
+        tier=Tier.discretionary,
+    ),
 )
 
 CONDITIONS: dict[str, ConditionDef] = {c.name: c for c in _C}

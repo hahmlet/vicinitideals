@@ -326,12 +326,13 @@ def test_a_zone_that_forbids_the_building_asks_for_no_dimensions() -> None:
 
     Seven zones reported missing dimensional standards for exactly this
     reason, which is how an encoding queue quietly fills with lookups nobody
-    should do. Portland's RF is the plain case -- 33.110.265.E allows
-    triplexes and fourplexes "in the R20 through R2.5 zones" and Table 110-7
-    prints no RF row at all.
+    should do. Clackamas County's FU-10 is the plain case: a holding zone the
+    state's middle housing law does not reach (ORS 197A.015(12)(e)), so no
+    path opens it. (Portland's RF was, until 2026-09-30: the state law's
+    path now asks for its minimum lot.)
     """
     rules = RuleSet(load_rules())
-    resolved = rules.resolve(PORTLAND, "RF")
+    resolved = rules.resolve("or/clackamas/_unincorporated", "FU10")
 
     assert resolved.values["quadplex_allowed"].value is False
     assert resolved.missing_required == ()
