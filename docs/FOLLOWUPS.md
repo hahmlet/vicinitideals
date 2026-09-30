@@ -146,8 +146,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    bound 3,551 lots: 0 losses, 152 yellow->green if signed (Portland 137),
    228 yellow->unknown (no variance now, an unmeasured fact left). Still
    open: an L/T-shaped search for the other 339 quadfit-fits lots; two-row
-   stall count; the fit never checks the parking rectangle reaches the
-   street (Gresham 1S3E10AD -05300, L-shaped). Original note: `court_across` draws one row of stalls across the lot behind
+   stall count. FIXED cef95109: the beside court must come within 3 ft of
+   the envelope's front (full run 0930 had 61 greens with the court up to
+   151 ft back on L-shaped and flag lots, e.g. 1N1E13DC -00600, Gresham
+   1S3E10AD -05300); splice run 0930_reach re-screens 63,331 lots. Original note: `court_across` draws one row of stalls across the lot behind
    the building (six at 9 ft = 54 ft), quadfit's s6s lays the stalls in the
    largest rectangle behind the building whichever way round fits, so a
    63-ft-wide Portland R5 lot seats eight along its depth where the 54-ft
