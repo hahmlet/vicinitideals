@@ -656,12 +656,20 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    green (light + full gate); flats 3,861 + quadfit 347 passed locally.
    886 numbers re-read blind, none wrong (handoff "Local review"). The
    worktree ../vicinitideals-worktrees/washington-draft stays for (b).
-   (b) FIX BATCH, one ledger regen, before the first Washington screen:
-   Hillsboro SCC-DT refused on 12.50.350 D.1 (parking inside the
-   building); private_drives rulings for the six layers (Sherwood's street
-   includes private roads, 16.10.020); Sherwood driveways <= 50% of
-   frontage (new field; narrow lots pass today); Durham's 5 ft walk beside
-   the drive; whatever HUMAN_TODO 25 answers change.
+   (b) FIX BATCH. Steph's rulings on city questions 1-5 plus SCC-DT are
+   ENCODED 2026-09-29 (handoff §6 "Rulings"; memory
+   feedback_flats_reading_rules_2026_09_29). Still owed: private_drives
+   rulings for the six layers (Sherwood's street includes private roads,
+   16.10.020); Sherwood driveways <= 50% of frontage (new field; narrow lots
+   pass today); Durham's 5 ft walk beside the drive; then propose answers to
+   city questions 6-19 by the same reading rules, and bring Steph only the
+   genuinely two-way ones.
+   (b2) MEASURE TWO EXPRESS EXCEPTIONS the screen holds against the pod
+   today: Hillsboro SCC-SC min height 30 ft only within 800 ft of a light-rail
+   station (none beyond) and MU-VTC 3 stories only inside the Center Cores
+   (12.65.030 map; 2 outside). Needs a distance-to-LRT-station fact (TriMet
+   stops in RLIS; also serves county TO:BUS 20 ft within 1,300 ft and SCR-V
+   / SCR-OTC rows) and the Center Core polygons.
    (c) FOREST GROVE (7,756 lots): American Legal 403s from home too. Try the
    scrapling stealthy browser; if refused, ask Steph to save the PDFs.
    (d) COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
@@ -698,3 +706,40 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Fairview VA menu). HB 2138 asks LCDC to strip design standards that
    'prevent or discourage' housing by 2028 -- the catalog is also the
    baseline to see what that removes. Plan first; ask Steph before a worktree.
+21. **Post-2027 world (Steph 2026-09-29: "design the system for a post-2027
+   world... retroactively apply that throughout our corpus").** Sources in the
+   2026-09-29 session scratchpad `oar46/` -- store them in provenance first:
+   HB 2138 enrolled; Division 46 AS ADOPTED 2026-08-27 (DLCD
+   Div46_Proposed_Rules_August_LCDC_Final.pdf; OARD's filed text LCDD 11-2026 is
+   WRONG, correction hearing 2026-10-22, re-fetch after); Div 47 Oregon Homes
+   draft v5 (2026-09-22). Worktree, confirm with Steph first. In order:
+   (a) STATE LAYER TO ADOPTED DIV 46: quadplex min lot <= the zone's
+   detached-house min lot (0220(2)(a)(B)), townhouse likewise (0220(3)(a)) --
+   needs a per-zone detached-house minimum lot field read from every zone
+   table and a preemption shape "cap at another field's value"; "zoned for
+   residential use" (ORS 197A.420(1)(j)) as the scope limit the state layer
+   has flagged NOT ENCODED since August; 0205(3) percentage option deleted --
+   check whether any corpus city used it. Height floor (2)(d) unchanged; see
+   the 2026-09-29 note in _state.yaml (SCR-OTC 20 ft not lifted).
+   (b) OUT-OF-COMPLIANCE ZONES: residential zones that allow a detached house
+   but refuse a quadplex (King City's older zones first). From 2027-01-01 the
+   Div 46 model code applies directly (0040(4), "completely replaces"): audit
+   the corpus, switch them to allowed under the city's middle-housing
+   standards or the model code (2020 Exhibit B: front/rear setbacks > 10 ft
+   invalid, height < 35 ft / 3 stories invalid, coverage limits invalid).
+   (c) OREGON HOMES PATH (HB 2258, OAR 660-047, DRAFT until LCDC's October
+   2026 meeting): lots 1,500-20,000 sq ft, residential zone, slope <= 15%,
+   outside mapped resource/hazard areas, vacant (teardown < 5 years only with
+   DCBS-approved plans); ministerial; 5 ft setbacks, no height cap, parking
+   none/<=1 per unit, garage/parking <= 50% frontage, 15% outdoor area, 10%
+   slack, min density still applies, <= 2,200 sq ft a unit. A second screen
+   path beside the zone path once adopted. Steph's side: HUMAN_TODO 26.
+   (d) ELECTIVE LEVERS, recorded not screened: bonus units (+2 on a quadplex
+   with one Type A accessible or <=120% AMI for-sale unit; they stay middle
+   housing, ORS 197A.420(1)(e)(B); commensurate floor area/height/density, not
+   setbacks); keeping an existing house (197A.420(4)); covenants banning
+   middle housing void 2027-01-01 (ORS 93.277, 94.776); no traffic study or
+   traffic exaction for <= 12 units (197A.420(6)).
+   (e) WATCH: Housing Choices rulemaking (HB 2138 §22: siting/design of
+   prefabricated middle housing; RAC 1 on 2026-10-07, adoption ~2027-12-02)
+   -- item 20's catalog is the baseline; January 2027 drift run (17g).

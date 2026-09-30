@@ -2349,14 +2349,44 @@ pod's design does not exist yet, so districts with those rules stay held
 back until it does (FOLLOWUPS 20).
 
 **C. The planning-department questions — PRINTED 2026-09-29 (19, not 18).**
-Waiting on you to send them. The list is section 6 of
-`docs/flats/handoff/washington.md`; say the word and I will draft one email
-per department. Until answers come back, the draft keeps the safe reading.
+You answered the first five yourself the same evening, and they are encoded:
+four homes are not "five or more"; a table that states no side or rear yard
+sets none; a stated minimum height is real unless the code gives an express
+exception; "2½ stories" is 25 feet; Beaverton's old county-approval clause
+does not hold the city back. Questions 6-19 (Sherwood, King City, Durham)
+are still open. Most can be settled by the same rules; the agent will
+propose answers before any email goes out.
 
 **D. North Plains, Banks and Gaston — EXPLAINED.** The 2025 law (HB 2138)
 does not change who must allow fourplexes: outside Metro only cities of
 25,000+ must. North Plains still owes duplexes only; Banks and Gaston owe
 nothing. They stay out.
+You also said to build the screen for the world after January 2027, as if
+the law were already in force (FOLLOWUPS 21).
+
+## 26. Get the pod's plans approved by the state? A possible fast lane from 2027
+
+A state rule being written now ("Oregon Homes", from the 2025 law HB 2258)
+would let a small home project skip most of a city's own rules on a flat,
+small residential lot (1,500 to 20,000 square feet, outside flood, landslide
+and protected-nature maps). The city would have to approve it through a
+simple checklist, not a hearing. The rules would be 5-foot setbacks all
+round, no height limit, little or no parking, and 15% of the lot as outdoor
+space. It names factory-built housing outright and allows up to 2,200
+square feet a home.
+
+The catch that matters to you: the lot must be empty. A lot where a house
+was torn down in the last five years counts only if the new building uses
+plans the state building agency (DCBS) has approved. So a pod with
+state-approved plans could use this lane on a teardown lot; a pod without
+them could use it only on lots that were already empty.
+
+It is a draft. The state expects to adopt it in October 2026, and it must
+be in force by January 2027. Nothing to do yet. When it is adopted, the
+question will be whether to get the pod's plans state-approved. That is
+paperwork and cost on your side, and it could open far more lots than any
+city code does. The agent will add it to the screen as a second path once
+it is final (FOLLOWUPS 21c).
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
