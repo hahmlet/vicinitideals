@@ -678,8 +678,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Beaverton SC 400 ft density. NEXT: (1) on 137 acquire the three
    transit_* keys, measure every M+C lot, add --transit to the next bridge
    run (Washington lots need it too once (d) lands -- without it those
-   station zones screen unknown); (2) count M+C lots within 3/4 mi of rail
-   or 1/2 mi of a frequent line and ASK Steph whether to screen a
+   station zones screen unknown); (2) COUNTED 2026-09-30 in PostGIS on 114
+   (run 44, best design per lot, station points, no slack): 213,006 of
+   400,032 lots lie within 3/4 mi of rail or 1/2 mi of a TriMet frequent
+   line (35,518 green / 156,257 yellow / 9,410 red / 11,821 unknown;
+   Portland 170,645 of 194,056). ASKED Steph whether to screen a
    fewer-than-4-stall pod there (state reform OAR 660-012-0440, still NOT
    ENCODED in or/_state.yaml); (3) MU-VTC 3 stories inside the Center
    Cores needs the 12.65.030 map polygons. Not in the layers: SMART, CAT,
