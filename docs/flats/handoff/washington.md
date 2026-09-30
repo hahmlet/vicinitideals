@@ -2576,6 +2576,59 @@ after HB 2138 takes full effect (January 2027).
   projects). The qualification is removed from every value; the clause's
   "any new construction" wording is recorded as a known unknown.
 
+### Rulings, 2026-09-30 (agent, by Steph's reading rules; encoded)
+
+Built the same day:
+
+- **Private roads** (Steph's 2026-09-30 rule, dbc2cc40): all six layers
+  declare `private_drives: street: true`, each quoting its own definition
+  (county R-5, Hillsboro 12.01, Beaverton 90, Sherwood 16.10, King City
+  16.24, Durham 3). Hillsboro's corner test counts a private street too
+  (a street is "a right-of-way or tract"); Beaverton's and King City's
+  corner definitions stay public-only.
+- **Sherwood driveways at most half the frontage** (16.14.030 A.2):
+  new field `driveway_max_frontage_pct`, checked against the pod's one
+  drive where it meets the street.
+- **Durham's 5 ft walk beside the access way** (3.7.1.6): new field
+  `driveway_walkway_ft`; the lane beside the building is 35 ft.
+- **Durham rear yard 15 ft** (question D5): the code defines a quadplex as
+  "four attached dwelling units" (12.2.29), and the definition is literal.
+- **King City paving counts against coverage** (question K3): new field
+  `max_impervious_pct`, read against the pod plus its court and drive.
+- **Sherwood alley as a front** (question S5): settled by the Alley
+  definition, "typically abutting to the rear lot or property line"; the
+  alley line stays a rear or side line.
+
+Settled by the rules without a question:
+
+- **Sherwood infill section (S1):** its first sentence reaches every
+  building over 24 ft; literal, kept on every residential lot.
+- **Sherwood parking near transit (S3):** the one-a-home minimum can only
+  fail a lot the city would pass, never the reverse; kept until the
+  corridor map is measured (a data task, not a question).
+- **Sherwood sewer and water (S7):** a closer look, as in the county.
+- **Sherwood unannexed land (S6):** answered by the county map (FOLLOWUPS
+  17(d)), lot by lot.
+- **King City older zones (K1) and the similar-uses list (K5):** after
+  January 2027 the state rule allows a fourplex wherever a house is
+  allowed, and a city that has not re-conformed gets the model code
+  (FOLLOWUPS 21); K5 is moot with it. Until 21 is built the refusal stands.
+- **King City minimum density (K2) and Durham minimum density (D2):**
+  "each development" and "minimum" read literally; kept as floors.
+- **Durham driveway width (D3):** the stated 30 ft governs, plus the walk.
+- **Durham corner setback (D4):** the code's text beats the 2021 handout.
+- **Durham site design review (D6):** the staff check the code names.
+
+Left for the city, because only the city holds the answer:
+
+- **Sherwood planned-development plans (S2)** and **the zones under Old
+  Town (S8)** -- data only the city has.
+- **King City's Neighborhood Mixed Use patch (K4)** -- a map label the
+  code does not define; the patch stays unscreened.
+- **Durham MDR (D1)** -- "multiple residential units within a
+  commonly-owned structure" reads both ways, and the zone is 11.5 acres;
+  the refusal stands.
+
 The questions below are kept as the record of what was asked.
 
 

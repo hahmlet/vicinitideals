@@ -13,10 +13,10 @@ quick look, so a later edit has to argue with it.
   structure, including but not limited to residential condominia", reads as
   condominium, and Table 9.10.9 sends MDR development to a Type 2 review on
   a discretionary criterion. A question for the owner, not a settled answer.
-- **The rear yard is 20 feet on one lot**, the code's figure for "detached
-  dwelling units", held conservatively though 12.2.29 calls a quadplex's
-  units attached (a question for the owner). Townhouse lots take the 15
-  for "attached units".
+- **The rear yard is 15 feet**, 3.1.3's figure for "attached units",
+  because 12.2.29 calls a quadplex "four attached dwelling units" (Steph's
+  rule of 2026-09-29: definitions are read literally). The draft had held
+  the detached 20.
 - **"Minimum base density" is read as a floor**: one dwelling per 10,000
   square feet, held as ``sqft_per_unit``.
 - **The drive is 30 feet two-way or 20 one-way**, 3.7.1.4.2's row for 3 to
@@ -140,22 +140,23 @@ def test_the_yards(durham: Layer) -> None:
     assert "shall be 10 feet from the side and 20 feet from the corner" in text
 
 
-def test_the_rear_yard_is_the_detached_figure_until_the_owner_says(
+def test_the_rear_yard_is_the_attached_figure_because_a_quadplex_is_attached(
     durham: Layer,
 ) -> None:
-    """20 on one lot, the stricter of 3.1.3's two figures; the 15 for
-    "attached units" is the reading a quadplex's definition invites, and it
-    is put to the owner rather than taken."""
+    """15, 3.1.3's figure for "attached units": 12.2.29 defines a
+    Quadplex as "four attached dwelling units on a lot", and Steph ruled
+    2026-09-29 that definitions are read literally."""
     rear = durham.zones["SDR"].values["setback_rear_ft"]
-    assert rear.value == 20
+    assert rear.value == 15
+    assert rear.variants == ()
     assert (
         "shall be 20 feet for detached dwelling units and 15 feet for attached units"
         in _text(rear.prov.quote)
     )
-    assert "conservatively" in rear.prov.cite
-    (lots,) = rear.variants
-    assert (lots.value, lots.when) == (15, ("unit_lots",))
-    assert "7.12.8" in lots.prov.cite
+    assert "12.2.29" in rear.prov.cite
+    assert "four attached dwelling units on a lot" in _text(
+        "or/washington/durham/ddc.12.definitions.txt#L116"
+    )
 
 
 def test_parking_is_one_a_unit_and_no_maximum(durham: Layer) -> None:

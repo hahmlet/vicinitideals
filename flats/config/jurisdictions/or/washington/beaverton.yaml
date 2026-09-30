@@ -202,6 +202,29 @@ definitions:
     quote: "or/washington/beaverton/bdc.90.definitions.txt#L1412-L1414"
     cite: "Beaverton BDC Chapter 90, Lot, Corner"
 
+# Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
+# 17(b); Steph's rule of 2026-09-30: a private road is a way in for the
+# parking everywhere, and governs the yards only where the city's code
+# makes it a street, as this one does).
+private_drives:
+  street: true
+  quote: "or/washington/beaverton/bdc.90.definitions.txt#L1424-L1426"
+  says: "the front lot line shall be the boundary of the private"
+  cite: "BDC Chapter 90 (Lot Line, Front; Frontage; Through Lot)"
+  note: >-
+    Chapter 90 defines a street as "A public way which affords the principal
+    means of access to abutting property" (L2484), but the lot-line
+    definitions override it for private streets in express words: "In the
+    case of frontage on a private street, or access easement, the front lot
+    line shall be the boundary of the private street or the access easement"
+    (L1424-L1426). Frontage is the part of a parcel "which abuts a public or
+    private street" (L1095), and a through lot has frontage "on more than
+    one public or private street", where "each street has a front lot line"
+    (L2618-L2619). The express lot-line rule governs over the general
+    definition of Street, so the private street line is a front lot line.
+    On a corner lot the applicant picks which street line is the front
+    (L1421-L1422), but that choice is not tied to where the car comes in.
+
 defaults:
   # PARKING COUNT. 60.30.10.3.A.1: "No minimum parking is required for any
   # use." Encoded as zero rather than left out, because an omitted minimum

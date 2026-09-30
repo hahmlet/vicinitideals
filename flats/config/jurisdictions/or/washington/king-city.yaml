@@ -257,6 +257,31 @@ definitions:
     quote: "or/washington/king-city/kcc.16.24.definitions.txt#L448-L450,L575-L577"
     cite: "King City KCMC 16.24.020, Lot, corner; Reserve strip"
 
+# Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
+# 17(b); Steph's rule of 2026-09-30: a private road is a way in for the
+# parking everywhere, and governs the yards only where the city's code
+# makes it a street, as this one does).
+private_drives:
+  street: true
+  quote: "or/washington/king-city/kcc.16.24.definitions.txt#L589-L591"
+  says: "means a public or private"
+  cite: "KCMC 16.24.020 (Road or street; Lot line; Setback)"
+  note: >-
+    "'Road' or 'street' means a public or private way that is created to
+    provide access for persons to one or more lots, parcels or tracts of
+    land" (L589-L591). A front lot line is "a lot line that abuts a street"
+    (L464-L465), and the "Street setback" is measured "from a side lot line
+    which abuts a street" (L608-L609), so a private way sets both the front
+    and the street-side setbacks. A corner lot is narrower: it must sit at
+    the intersection of two or more "public street rights-of-way"
+    (L448-L450), and the corner_lot block keeps drives_count false.
+    Through lots follow access: where a lot has street frontage on opposing
+    sides, the rear lot line is the one "where vehicular access is not
+    allowed or provided" (L470-L472).
+    Recorded, not held: the through-lot rule (L470-L472) makes the line
+    with no vehicle access the rear, which the model cannot follow when the
+    car comes in off the private way; and the corner test stays public-only.
+
 defaults:
   # EVERY VALUE BELOW IS KINGSTON TERRACE'S. Only the four Kingston Terrace
   # zones admit the pod, and Table 16.114-1 sends new development there to
@@ -606,11 +631,10 @@ zones:
   #   ridge.
   # - COVERAGE. "Maximum coverage of buildings and impervious surfaces 90%
   #   90% 90% 80%", note 24 (not cottage clusters), and 16.24.020 counts
-  #   "buildings, driveways, sidewalks and parking areas". max_coverage_pct
-  #   is building coverage, so holding the figure there is LOOSER than the
-  #   code: the pod's court, drive and walks count against the same cap. No
-  #   field holds an impervious share; the handoff proposes one and lists it
-  #   as a doubt.
+  #   "buildings, driveways, sidewalks and parking areas": max_impervious_pct,
+  #   read against the pod's footprint plus the court and drive the screen
+  #   draws (2026-09-30). Walks it does not draw are not counted, a few
+  #   square feet looser than the code.
   # - NOT ENCODED: note 14, "building setbacks for each type of structure
   #   must comply with the current Oregon Building Code". A building-code
   #   separation, not a zoning yard.
@@ -695,15 +719,15 @@ zones:
       exempt: true
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height (N/A in Town Center)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280"
-    max_coverage_pct:
+    max_impervious_pct:
       value: 90
-      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces (held as building coverage, looser than the code)
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
     notes: >-
       DRAFT. Fourplex allowed outright. 1,500 sq ft lot, 20 wide, 45 deep;
       at least 22 units per net acre; front 10 to 26, garage 18, side 3,
       street side 8, rear 10; no height limit; coverage 90 percent of
-      buildings and paving, held as building coverage only.
+      buildings and paving, the pod's court and drive counted.
   KTBB:
     cite_default:
       cite: King City KCMC Chapter 16.114 (KTBB Kingston Terrace Beef Bend Neighborhood), 16.114.040 and 16.114.050
@@ -757,15 +781,15 @@ zones:
       value: 45
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280"
-    max_coverage_pct:
+    max_impervious_pct:
       value: 90
-      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces (held as building coverage, looser than the code)
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
     notes: >-
       DRAFT. Fourplex allowed outright. 1,500 sq ft lot, 20 wide, 45 deep;
       at least 18 units per net acre; front 10 to 26, garage 18, side 3,
       street side 8, rear 10; 45 ft; coverage 90 percent of buildings and
-      paving, held as building coverage only.
+      paving, the pod's court and drive counted.
   KTC:
     cite_default:
       cite: King City KCMC Chapter 16.114 (KTC Kingston Terrace Central Neighborhood), 16.114.040 and 16.114.050
@@ -819,15 +843,15 @@ zones:
       value: 35
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280"
-    max_coverage_pct:
+    max_impervious_pct:
       value: 90
-      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces (held as building coverage, looser than the code)
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
     notes: >-
       DRAFT. Fourplex allowed outright. 2,400 sq ft lot, 20 wide, 60 deep;
       at least 10 units per net acre; front 10 to 26, garage 18, side 3,
       street side 8, rear 10; 35 ft; coverage 90 percent of buildings and
-      paving, held as building coverage only.
+      paving, the pod's court and drive counted.
   KTRC:
     cite_default:
       cite: King City KCMC Chapter 16.114 (KTRC Kingston Terrace Rural Character Neighborhood), 16.114.040 and 16.114.050
@@ -881,16 +905,16 @@ zones:
       value: 35
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280"
-    max_coverage_pct:
+    max_impervious_pct:
       value: 80
-      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces (held as building coverage, looser than the code)
+      cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
     notes: >-
       DRAFT. Fourplex allowed outright (multi-dwelling only as a
       conditional use here). 2,400 sq ft lot, 20 wide, 60 deep; at least 8
       units per net acre; front 10 to 26, garage 18, side 10 for a
       two-story building, street side 8, rear 10; 35 ft; coverage 80
-      percent of buildings and paving, held as building coverage only.
+      percent of buildings and paving, the pod's court and drive counted.
 
 # THE MAP'S OTHER CODES. Layer 1 spells two districts without their hyphen
 # and carries five county codes marked "(WC)"; layer 4 names the Kingston

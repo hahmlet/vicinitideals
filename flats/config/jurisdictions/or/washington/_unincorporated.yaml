@@ -310,6 +310,32 @@ definitions:
   # density "is not a consideration" in every district that allows it, so
   # this denominator decides no number this layer holds for the pod.
 
+# Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
+# 17(b); Steph's rule of 2026-09-30: a private road is a way in for the
+# parking everywhere, and governs the yards only where the city's code
+# makes it a street, as this one does).
+private_drives:
+  street: true
+  quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L419"
+  says: "Minimum frontage on a public or private street"
+  cite: "CDC 302-7.1 E (and 303-307 E); CDC 106-93, 106-113.1, 106-183, 501-8.1"
+  note: >-
+    Section 106 defines no Street (whole-folder grep for a Street, Road or
+    Corner Lot definition finds only Street Plug and Street Tree, L1070,
+    L1073). A front lot line is "a line separating the lot from the street
+    right-of-way" (106-113.1, L627), a right-of-way is "the area between the
+    platted boundary lines of a street or public easement" (L931), and
+    frontage is the portion of a lot "which abuts a street or road" (L587).
+    The code's own usage makes a private street a street: every urban
+    residential district sets "Minimum frontage on a public or private
+    street" for middle housing (R-5 L419; R-6 L421, R-9 L389, R-15 L383,
+    R-24 L368, R-25+ L398), and 501-8.1 speaks of a site that "fronts only
+    private street(s)" (501 L443). So a line on a private street is a
+    street line. Yards are measured from the property line, sidewalk "or
+    easement for public travel, whichever is closest" (106-221, L1169), and
+    such an easement includes a "private street, or private drive"
+    (106-71.1, L508-L510).
+
 defaults:
   # PARKING COUNT. 413-6.1 is headed "Minimum Off-Street Parking Spaces
   # Required outside the UGB" and says in the heading itself: "Development

@@ -2381,8 +2381,15 @@ four homes are not "five or more"; a table that states no side or rear yard
 sets none; a stated minimum height is real unless the code gives an express
 exception; "2½ stories" is 25 feet; Beaverton's old county-approval clause
 does not hold the city back. Questions 6-19 (Sherwood, King City, Durham)
-are still open. Most can be settled by the same rules; the agent will
-propose answers before any email goes out.
+were settled by the agent on 2026-09-30 using your rules, and the answers are
+built: private roads count as streets in all six places; Sherwood's driveway
+may use at most half the street frontage; Durham's driveway carries its 5 ft
+walkway; Durham's back yard is 15 ft (the code calls a fourplex "attached");
+King City counts the parking court and driveway against its coverage cap.
+Four questions only the cities can answer are still worth sending: Sherwood's
+planned-development plans and the zones under Old Town, King City's unnamed
+mixed-use patch, and whether Durham's small apartment zone takes a fourplex.
+Lots in those areas are held back from a plain yes until then.
 
 **D. North Plains, Banks and Gaston — EXPLAINED.** The 2025 law (HB 2138)
 does not change who must allow fourplexes: outside Metro only cities of

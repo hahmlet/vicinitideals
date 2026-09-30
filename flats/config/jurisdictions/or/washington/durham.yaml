@@ -122,6 +122,30 @@ code:
 # buildable area ("has the meaning set out in", ORS 446.003 and Metro's
 # functional plan).
 
+# Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
+# 17(b); Steph's rule of 2026-09-30: a private road is a way in for the
+# parking everywhere, and governs the yards only where the city's code
+# makes it a street, as this one does).
+private_drives:
+  street: true
+  quote: "or/washington/durham/ddc.3.site-design.txt#L24-L25"
+  says: "minimum lot frontage on a public or private street"
+  cite: "Durham Development Code 3.1.5, 3.1.3, 3.9.5, 12.1"
+  note: >-
+    Chapter 12 defines none of Street, Right of Way, Lot Line, Corner Lot or
+    Frontage (whole-folder grep: none of those terms appears among the
+    12.2.x entries). Words carry their "ordinary meaning" (12.1, defs
+    L4-L7), and a private street is a street in ordinary speech. The
+    residential standards treat it as one: "The minimum lot frontage on a
+    public or private street shall be 20 feet for all residential uses"
+    (3.1.5, L24-L25), and the front setback runs "from the edge of the
+    street right of way" (3.1.3, L15), with no word "public". Private
+    streets are allowed to City Engineer standards (3.9.5, L658-L663). So a
+    lot that fronts a private street takes its front, and its corner, from
+    that street. Where the code means public it says so: the OP district's
+    corner-lot setback applies to a corner lot "abutting public right of way"
+    (L223), and it does not reach the residential districts.
+
 defaults:
   # PARKING COUNT. Table 3.7.5: "Single Dwelling and Middle Housing,
   # Attached or Detached 1 / No maximum" (L436-L437). The pod is Middle
@@ -163,11 +187,10 @@ defaults:
   # count the pod's units. A question for Steph; on the table's reading the
   # drive is 10 to 30 feet.
   #
-  # NOT ENCODED: 3.7.1.6, "shall include a pedestrian access on one side at
-  # least an additional 5 feet wide" (L350-L352). No field holds a walkway
-  # beside a drive; the lane the code asks for is 35 feet, not 30, so the
-  # screen is LOOSER than the code by five feet. A doubt; the handoff
-  # proposes a field. 80 percent paving (L333-L334) is surface, not width.
+  # 3.7.1.6, "shall include a pedestrian access on one side at least an
+  # additional 5 feet wide" (L350-L352): driveway_walkway_ft, below, so the
+  # lane beside the building is 35 feet, not 30. 80 percent paving
+  # (L350-L351) is surface, not width.
   driveway_min_width_two_way_ft:
     value: 30
     cite: Durham Development Code 3.7.1.4.2, vehicle access way to a multi-unit residential development of 3 to 49 dwelling units (one two-way at least 30 feet)
@@ -180,6 +203,12 @@ defaults:
     url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
     retrieved: '2026-09-29'
     quote: "or/washington/durham/ddc.3.site-design.txt#L333-L339"
+  driveway_walkway_ft:
+    value: 5
+    cite: Durham Development Code 3.7.1.6, a vehicle access way for all land uses except a detached single dwelling includes a pedestrian access on one side at least an additional 5 feet wide
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L350-L352"
   # 3.7.1.7, in all zoning districts: the part of the access way "within
   # public right of way, e.g., the driveway apron, shall not be wider than
   # 40 feet" (L354-L359). Held. Under the table's SDR row the drive itself
@@ -430,14 +459,15 @@ zones:
       cite: Durham Development Code 3.1.3, 20 feet from the corner of a residential structure in the SDR district
       quote: "or/washington/durham/ddc.3.site-design.txt#L15-L17"
     setback_rear_ft:
-      value: 20
-      cite: Durham Development Code 3.1.3, rear setback 20 feet for detached dwelling units (held for the quadplex on one lot, conservatively; 15 for attached units is the other reading)
+      # "20 feet for detached dwelling units and 15 feet for attached
+      # units", and 12.2.29: a Quadplex "means four attached dwelling units
+      # on a lot" (ddc.12.definitions.txt L116). Steph's rule of 2026-09-29,
+      # definitions read literally: the pod's units are attached, so 15, on
+      # one lot and on townhouse lots alike (7.12.8; a townhouse is one of a
+      # row of attached dwelling units, 12.2.39). The draft had held 20.
+      value: 15
+      cite: Durham Development Code 3.1.3, rear setback 15 feet for attached units (a quadplex is four attached dwelling units, 12.2.29)
       quote: "or/washington/durham/ddc.3.site-design.txt#L17-L18"
-      variants:
-        - value: 15
-          when: [unit_lots]
-          cite: Durham Development Code 3.1.3, rear setback 15 feet for attached units, through 7.12.8 (townhouse lots meet the SDR rear setback; a townhouse is one of a row of attached dwelling units, 12.2.39)
-          quote: "or/washington/durham/ddc.3.site-design.txt#L17-L18"
     max_height_ft:
       value: 35
       cite: Durham Development Code 3.1.4, maximum building height 35 feet above average grade
@@ -458,8 +488,8 @@ zones:
     notes: >-
       DRAFT. Middle housing permitted outright (ministerial). 10,000 sq ft
       lot and at least one unit per 10,000 sq ft; front 20, side 10, street
-      side 20, rear 20 (the detached figure, conservatively; 15 for attached
-      units is a question); 35 ft; 20 ft frontage; 5 percent common open
+      side 20, rear 15 (attached units, 12.2.29; Steph's literal-definition
+      rule); 35 ft; 20 ft frontage; 5 percent common open
       space. Townhouse lots 1,500 averaged, 18 units per gross acre, zero
       internal sides, rear 15.
   # ------------------------------------------------------------------

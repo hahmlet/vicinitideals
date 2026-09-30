@@ -68,6 +68,7 @@ from flats.score.paper import (
     Beside,
     court_across,
     court_depth,
+    drive_at_street,
     lot_standard,
     paved,
     side_column,
@@ -160,11 +161,13 @@ UNSHAPED = "outdoor_area_shape"
 CHECK_FIELD: dict[str, str] = {
     "min_lot_area_sqft": "min_lot_sqft",
     "min_frontage_ft": "min_frontage_ft",
+    "driveway_frontage_share": "driveway_max_frontage_pct",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
     "min_lot_depth_ft": "min_lot_depth_ft",
     "max_lot_depth_ratio": "max_lot_depth_ratio",
     "coverage_pct": "max_coverage_pct",
+    "impervious_pct": "max_impervious_pct",
     "far": "max_far",
     "height_ft": "max_height_ft",
     "stories": "max_height_stories",
@@ -523,6 +526,26 @@ def _checks(
         unchecked.append("min_frontage_ft")
     else:
         check("min_frontage_ft", lot.frontage_ft, rules.get("min_frontage_ft"), is_maximum=False)
+    # The driveway's share of the street frontage (Sherwood 16.14.030 A.2,
+    # "Total width of all driveways shall not exceed 50 percent of the street
+    # frontage"). The pod has one drive, so its width at the street against
+    # the share of the frontage the code allows. `frontage_ft` is the sum of
+    # every street edge, so on a corner lot this is the looser reading of
+    # "the street frontage"; unmeasured frontage leaves it unchecked.
+    share = rules.get("driveway_max_frontage_pct")
+    if share is not None:
+        drive = drive_at_street(
+            design, rules, lot.alley, corner=lot.corner, beside=beside
+        )
+        if lot.landlocked:
+            unchecked.append("driveway_frontage_share")
+        elif drive:
+            check(
+                "driveway_frontage_share",
+                drive,
+                share / 100.0 * lot.frontage_ft,
+                is_maximum=True,
+            )
     min_width, width_answered = lot_standard(
         rules, "min_lot_width_ft", per_unit=per_unit, lots=design.units
     )
@@ -776,6 +799,28 @@ def _checks(
     # written. A per-dwelling figure arrives multiplied out by the loader, so
     # the threshold is what the four homes owe together.
     leftover("open_space_sqft", "open_space_min_sqft", share=False)
+
+    # The same ground from the other side: a cap on buildings AND paving
+    # together (King City Table 16.114-4, "Maximum coverage of buildings and
+    # impervious surfaces"). The building alone is a LOWER bound on what is
+    # covered, so the bargain above runs mirrored: a cap the building alone
+    # breaks is broken whatever is paved, and stands; a pass with the
+    # pavement unknown is no evidence and goes unrun.
+    cap = rules.get("max_impervious_pct")
+    if cap is not None:
+        covered = design.ground_sqft + (pavement or 0.0)
+        result = policy.evaluate(
+            "impervious_pct",
+            covered / lot.lot_sqft * 100.0,
+            float(cap),
+            is_maximum=True,
+            jurisdiction=where,
+        )
+        if pavement is None and result.verdict is not Verdict.fails:
+            unchecked.append("impervious_pct")
+            unmeasured.add(UNPAVED)
+        else:
+            out.append(result)
     _outdoor_shape(rules, lot, design, fit, fitted, policy, out, unchecked, unmeasured)
 
     return out, unchecked, unmeasured

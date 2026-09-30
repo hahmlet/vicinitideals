@@ -207,11 +207,39 @@ definitions:
     # "A lot abutting 2 streets intersecting at an angle not greater than 135
     # degrees. Exception: lots with frontage on both a street and an alley
     # are not considered corner lots." Not greater than includes 135; the
-    # alley exception is the default alleys_count: false.
+    # alley exception is the default alleys_count: false. A street is "a
+    # right-of-way or tract" (L1428), and a private street sits on a tract
+    # (12.50.540), so a private street counts: drives_count (2026-09-30,
+    # with the private_drives ruling below).
     test: intersecting_frontages
     max_intersection_angle_deg: 135.0
+    drives_count: true
     quote: "or/washington/hillsboro/cdc.12.01.general.txt#L961-L962"
     cite: "Hillsboro CDC 12.01.500, Lot, Corner"
+
+# Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
+# 17(b); Steph's rule of 2026-09-30: a private road is a way in for the
+# parking everywhere, and governs the yards only where the city's code
+# makes it a street, as this one does).
+private_drives:
+  street: true
+  quote: "or/washington/hillsboro/cdc.12.01.general.txt#L798-L799"
+  says: "or platted Private street or alley"
+  cite: "Hillsboro CDC 12.01.500 (Frontage; Street; Tract; Lot Line, Front)"
+  note: >-
+    Frontage is the front lot line that "abuts a public street or alley, or
+    platted Private street or alley" (L798-L799). A street is "a
+    right-of-way or tract intended for motor vehicle, pedestrian or bicycle
+    travel and/or access to abutting property" (L1428), and a tract is land
+    set aside for "a specific use, including but not limited to access"
+    (L1513-L1514). A right-of-way alone is public-only ("dedicated, deeded
+    or granted to the public", L1338), but the "or tract" limb takes in the
+    private street, and 12.50.540 requires a private street to sit on a
+    "private street tract" (circulation L880). The front lot line reaches
+    even further, to the line separating a lot "from a street, alley, or
+    access tract" (L1009-L1010), and a corner lot has two front lot lines
+    (L1010). A shared driveway on an easement, with no tract, is none of
+    these.
 
 defaults:
   # PARKING COUNT. 12.50.310 A.2: "The City of Hillsboro does not have

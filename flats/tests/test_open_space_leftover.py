@@ -357,3 +357,35 @@ def test_the_lane_is_as_long_as_the_building_stands_deep_in_the_orientation_that
     end_on = paved(DESIGN, rules(), deep_ft=56.0)
 
     assert end_on - broadside == pytest.approx(DESIGN.parking.lane_ft * 20)
+
+
+# --- a cap on buildings AND paving (King City Table 16.114-4) ------------
+
+COVERED_SQFT = DESIGN.ground_sqft + PAVED_SQFT
+
+
+def test_the_court_and_its_lane_count_against_a_cap_on_paving() -> None:
+    # 2,016 of building and 2,124 of court and lane is 69 percent of 6,000:
+    # under a 60 percent building-coverage cap it is a pass, under a 60
+    # percent cap on buildings and paving a miss.
+    assert COVERED_SQFT == 4140
+    short = run(rules(max_impervious_pct=60), relief=NO_RELIEF)
+    ok = run(rules(max_impervious_pct=80))
+
+    got = check(short, "impervious_pct")
+    assert got.observed == pytest.approx(69.0)
+    assert got.verdict is Verdict.fails
+    assert short.triage is Triage.red
+    assert check(ok, "impervious_pct").verdict is Verdict.passes
+    assert ok.triage is Triage.green
+
+
+def test_unknown_paving_certifies_no_cap_but_a_building_over_it_fails() -> None:
+    design = _side_drive()
+    loose = run(rules(max_impervious_pct=80), design=design)
+    tight = run(rules(max_impervious_pct=30), design=design, relief=NO_RELIEF)
+
+    assert "impervious_pct" in loose.unchecked
+    assert loose.triage is Triage.unknown
+    # 2,016 of building alone is 33.6 percent: over 30 whatever is paved.
+    assert check(tight, "impervious_pct").verdict is Verdict.fails

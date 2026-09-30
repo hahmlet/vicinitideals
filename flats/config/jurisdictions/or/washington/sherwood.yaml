@@ -295,9 +295,12 @@ definitions:
   # side" setback, 15 feet in MDRL, MDRH and HDR against a 14-foot front
   # yard; both are held, and the envelope gives a corner lot's street lines
   # the stricter of the two. A street includes an alley ("Categories of
-  # streets include: A. Alley", L885-L888), so by these words an alley line
-  # is a front line as well. NOT ENCODED, as in Hillsboro: the envelope
-  # reads an alley line as a rear or side line. A doubt.
+  # streets include: A. Alley", L885-L888), which could make an alley line a
+  # front line too -- but the same definition places the alley: "A narrow
+  # street, typically abutting to the rear lot or property line" (L887-L888).
+  # Read literally, the code's own words put an alley line at the rear, and
+  # the envelope reads it as a rear or side line, as in Hillsboro. Settled
+  # 2026-09-30 by Steph's literal-reading rule; not a question for the city.
   #
   # REAR LOT LINE. The line "opposite and most distant from the front lot
   # line"; on an irregular lot a ten-foot line inside the lot; "On a corner
@@ -323,6 +326,29 @@ definitions:
     drives_count: true
     quote: "or/washington/sherwood/sdc.16.10.definitions.txt#L488,L885-L886"
     cite: "Sherwood SZCDC 16.10.020, Lot, Corner; Street"
+
+# Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
+# 17(b); Steph's rule of 2026-09-30: a private road is a way in for the
+# parking everywhere, and governs the yards only where the city's code
+# makes it a street, as this one does).
+private_drives:
+  street: true
+  quote: "or/washington/sherwood/sdc.16.10.definitions.txt#L885-L886"
+  says: "A public or private road, easement or right-of-way"
+  cite: "Sherwood SZCDC 16.10.020 (Street; Lot Line, Front; Lot, Corner)"
+  note: >-
+    A street is "A public or private road, easement or right-of-way that is
+    created to provide access to one (1) or more lots, parcels, areas or
+    tracts of land" (L885-L886). The front lot line is "The line separating
+    a lot from any street", and a corner lot has "as many front lines as
+    there are street frontages" (L505-L506). A corner lot is one "situated
+    at the intersection of two or more streets, other than an alley"
+    (L488). The layer's corner_lot block already reads it this way
+    (drives_count: true). Only the alley is excluded by the code's own
+    words.
+    Recorded: the infill rule for rear lots calls the neighbours' lines
+    along a flag lot's access drive side lot lines (sdc.16.68.infill.txt
+    L170); a drive through the lot itself is screened both ways anyway.
 
 defaults:
   # PARKING COUNT. Table 1 of 16.94.020 counts a quadplex's stalls by lot
@@ -368,12 +394,11 @@ defaults:
   # 296.18.1 (sdc.16.14.residential-design.txt#L443-L448); the ordinance
   # prints all of it.
   #
-  # NOT ENCODED: A.2, "Total width of all driveways shall not exceed 50
-  # percent of the street frontage". A driveway share of frontage, which is
-  # not parking_area_max_frontage_pct (garages, parking and maneuvering
-  # area); no field holds it. Two 20-foot approaches on the 25-foot minimum
-  # frontage are over it, and one shared 20-foot approach needs 40 feet of
-  # frontage. The handoff proposes a field.
+  # A.2, "Total width of all driveways shall not exceed 50 percent of the
+  # street frontage": driveway_max_frontage_pct, below. The pod's one lane
+  # (12 ft, the design's) needs 24 ft of frontage; it is not
+  # parking_area_max_frontage_pct (garages, parking and maneuvering area),
+  # which a rear court's lane never touches.
   #
   # NOT ENCODED: A.4, "applicable driveway spacing standards for local
   # streets", and A.5.b, the collector and arterial access standards. Both
@@ -384,6 +409,12 @@ defaults:
     url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
     retrieved: '2026-09-29'
     quote: "or/washington/sherwood/ord.2022-004.16.14.030.txt#L1-L11"
+  driveway_max_frontage_pct:
+    value: 50
+    cite: Sherwood SZCDC 16.14.030 A.2, total width of all driveways not over 50 percent of the street frontage (Ordinance 2022-004 Exhibit 1)
+    url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/ord.2022-004.16.14.030.txt#L1-L3,L6"
   # CORNER ACCESS AND THE ALLEY. A.5: "lots or parcels with more than one
   # frontage must comply with the following: a. Lots or parcels must access
   # the street with the lowest classification. For lots or parcels abutting

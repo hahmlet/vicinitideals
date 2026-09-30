@@ -635,6 +635,12 @@ def court_across(
     elif (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
         used.append("driveway_min_width_two_way_ft")
         lane = max(lane, stated)
+    if lane and (walk := _number(rules, "driveway_walkway_ft")) is not None:
+        # Durham 3.7.1.6: the access way carries "a pedestrian access on one
+        # side at least an additional 5 feet wide", so the lane down the
+        # building's flank is that much wider than the drive in it.
+        used.append("driveway_walkway_ft")
+        lane += walk
     return Across(
         stalls=stalls,
         width_ft=stalls * stall,
@@ -796,6 +802,12 @@ def side_court(
         used.append("driveway_min_width_two_way_ft")
         drive = max(drive, stated)
     aisle = max(aisle, drive)
+    if (walk := _number(rules, "driveway_walkway_ft")) is not None:
+        # The aisle is the way in, and the standoff between it and the wall
+        # is already a walk (see `paved`): the code's walk beside the drive
+        # widens it only where it asks for more than the standoff gives.
+        used.append("driveway_walkway_ft")
+        gap = max(gap, walk)
     # How far back from the building's front line the first stall stands: a
     # parking setback from the street past the building's own. Unread front
     # against a stated parking setback is a distance nobody can compute.
@@ -1184,3 +1196,34 @@ def _worse(current: PaperFit, other: PaperFit) -> bool:
     if current.min_area_sqft is None:
         return True
     return other.min_area_sqft < current.min_area_sqft
+
+
+def drive_at_street(
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
+    beside: "Beside | None" = None,
+) -> float | None:
+    """Width of the pod's driveway where it meets a street, in feet.
+
+    What a cap on the driveways' share of the frontage (Sherwood 16.14.030
+    A.2) is measured against: the lane beside the building, the aisle of a
+    court beside it (which is its own way in), or the drive across the
+    street-side yard to a court fed off the side street -- the drive itself,
+    not the walk beside it, which is not a driveway. 0.0 where the car comes
+    in off the alley, or the design drives nowhere. ``None`` never: a lane
+    this design would draw always has a width.
+    """
+    if beside is not None:
+        return beside.aisle_ft
+    parking = design.parking
+    if not parking.court_depth_ft or parking.config not in _COURT_CONFIGS:
+        return 0.0
+    if alley_fed(rules, alley):
+        return 0.0
+    drive = parking.lane_ft
+    if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
+        drive = max(drive, stated)
+    return drive

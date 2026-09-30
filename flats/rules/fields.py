@@ -90,9 +90,12 @@ _LABELS: dict[str, str] = {
     "driveway_approach_min_width_ft": "min. driveway approach width",
     "driveway_min_width_one_way_ft": "min. driveway width (one-way)",
     "driveway_min_width_two_way_ft": "min. driveway width (two-way)",
+    "driveway_max_frontage_pct": "max. driveway share of frontage",
+    "driveway_walkway_ft": "walkway beside the driveway",
     "land_division_parent_standards": "parent-lot standards apply",
     "max_building_width_ft": "max. building width",
     "max_coverage_pct": "max. lot coverage %",
+    "max_impervious_pct": "max. coverage of buildings and paving %",
     "max_density_du_per_acre": "max. density (units/acre)",
     "max_far": "max. floor area ratio",
     "max_height_ft": "max. height",
@@ -357,6 +360,20 @@ _F: tuple[FieldDef, ...] = (
     FieldDef("max_far", "ratio", "Maximum floor area ratio.", True, "max_far"),
     FieldDef("max_coverage_pct", "percent", "Maximum building coverage, flat percentage.", True, "max_lot_coverage"),
     FieldDef(
+        "max_impervious_pct",
+        "percent",
+        "Most of the lot that buildings AND paved surfaces may cover together. "
+        "King City Table 16.114-4 (Kingston Terrace): \"Maximum coverage of "
+        "buildings and impervious surfaces\", 90 percent (80 in Rural "
+        "Character), impervious meaning \"buildings, driveways, sidewalks and "
+        "parking areas\". Read against the building's footprint plus the "
+        "pavement its parking takes (`flats.score.paper.paved`); walks the "
+        "screen does not draw are not in it. Not `max_coverage_pct`, which is "
+        "the building alone.",
+        True,
+        "max_lot_coverage",
+    ),
+    FieldDef(
         "coverage_curve",
         "curve",
         "Lot-size-tiered coverage table: [[lot_sqft_floor, base_sqft, pct_over_floor], ...]. "
@@ -534,6 +551,30 @@ _F: tuple[FieldDef, ...] = (
         "states 20, which is wider than the pod's whole side yard on a narrow "
         "lot and is the difference between a plan and no plan.",
         False,
+    ),
+    FieldDef(
+        "driveway_walkway_ft",
+        "length_ft",
+        "A pedestrian way the code puts BESIDE the driveway, in addition to "
+        "its width. Durham 3.7.1.6: a vehicle access way for anything but a "
+        "detached house \"shall include a pedestrian access on one side at "
+        "least an additional 5 feet wide\". The lane beside the building is "
+        "that much wider; beside a court whose aisle is the way in, the "
+        "standoff off the wall already is a walk of its own width, so the "
+        "wider of the two is charged, not both.",
+        False,
+    ),
+    FieldDef(
+        "driveway_max_frontage_pct",
+        "percent",
+        "Most of the street frontage the driveways together may take, measured "
+        "as their width at the street. Sherwood 16.14.030 A.2: \"Total width "
+        "of all driveways shall not exceed 50 percent of the street "
+        "frontage.\" Not `parking_area_max_frontage_pct`, which counts "
+        "garages, parking and manoeuvring together along the street; a rear "
+        "court's lane passes that one untouched and can still fail this on a "
+        "narrow lot.",
+        True,
     ),
     FieldDef(
         "parking_maneuvering_max_width_ft",
@@ -1073,6 +1114,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "land_division_parent_standards",
         "max_far",
         "max_coverage_pct",
+        "max_impervious_pct",
         "coverage_curve",
         "max_units",
         "min_density_trigger_lot_sqft",
@@ -1108,6 +1150,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "driveway_approach_max_width_ft",
         "driveway_min_width_one_way_ft",
         "driveway_min_width_two_way_ft",
+        "driveway_walkway_ft",
+        "driveway_max_frontage_pct",
         "parking_maneuvering_max_width_ft",
         "parking_area_max_frontage_pct",
         "parking_area_max_width_ft",

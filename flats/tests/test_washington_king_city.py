@@ -20,8 +20,9 @@ has to argue with it.
   10 feet for a two-story building, and the pod is two stories.
 - **There is no parking minimum and no maximum** in Kingston Terrace
   (16.114.130 C.1 and Table 16.114-13).
-- **Coverage is held as building coverage**, which is looser than the code:
-  King City's cap counts buildings and impervious surfaces together.
+- **Coverage counts the paving** (2026-09-30): King City's cap is on
+  buildings and impervious surfaces together, held as `max_impervious_pct`
+  and read against the pod plus its court and drive.
 - **The five county codes on the city's map are pockets of the county
   layer.** 16.80.050 A keeps an annexed area's county zoning until the city
   rezones it.
@@ -172,11 +173,11 @@ def test_density_and_height(king_city: Layer) -> None:
         assert king_city.zones[zone].values["max_height_ft"].value == feet, zone
 
 
-def test_coverage_is_held_as_building_coverage(king_city: Layer) -> None:
+def test_coverage_counts_buildings_and_paving_together(king_city: Layer) -> None:
     for zone, cap in (("KTTC", 90), ("KTBB", 90), ("KTC", 90), ("KTRC", 80)):
-        held = king_city.zones[zone].values["max_coverage_pct"]
+        assert "max_coverage_pct" not in king_city.zones[zone].values, zone
+        held = king_city.zones[zone].values["max_impervious_pct"]
         assert held.value == cap, zone
-        assert "looser than the code" in held.prov.cite, zone
         assert "buildings and impervious surfaces" in _text(held.prov.quote), zone
 
 
