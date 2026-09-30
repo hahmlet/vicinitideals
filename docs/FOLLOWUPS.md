@@ -750,3 +750,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (e) WATCH: Housing Choices rulemaking (HB 2138 §22: siting/design of
    prefabricated middle housing; RAC 1 on 2026-10-07, adoption ~2027-12-02)
    -- item 20's catalog is the baseline; January 2027 drift run (17g).
+22. **Portland aisle: 24 ft assumed vs the city's own 20 ft (ASKED Steph
+   2026-09-30, HUMAN_TODO 3).** PCC 33.266.130 Table 266-4 prints a 20 ft
+   two-way aisle at 90 deg (8.5 x 16 stall), but 130.B excludes "residential
+   vehicle areas subject to the standards of 33.266.120" -- our one-lot
+   fourplex -- so Portland states no aisle for us (portland.yaml L1800-1870)
+   and s6s/FLATS assume the 24 ft national floor. Pending: keep 24 (court
+   18+24 = 42 ft) or adopt 20 as Portland's own figure (38 ft; more greens;
+   also makes the Portland planning email mostly moot). Separately, the
+   `unit_lots` variant carries Table 266-4's stall but not its 20 ft aisle.

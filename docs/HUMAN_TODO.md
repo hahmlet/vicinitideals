@@ -1667,7 +1667,7 @@ decision it is making.
 
 ---
 
-## 17. One decision: two cities ban our building outright on some lots, and we cannot yet tell which lots — **Portland's 12,678 greens are the stake**
+## ~~17. One decision: two cities ban our building outright on some lots, and we cannot yet tell which lots~~ — **DECIDED 2026-09-30: assume every lot qualifies, on the record**
 
 Found 2026-09-09. Everything the screen checks is a *measurement* — how tall,
 how far back, how many stalls. Two places in the codes we hold do something
@@ -1714,6 +1714,16 @@ so nothing here is hidden. What is needed is a choice about how to carry them.
 the second — because a rule that disqualifies a minority should not blank out
 the majority while we wait for a map. If you disagree, the third option is the
 one to overturn, and it is one line to change.
+
+**Your ruling (30 September), in your words:** *"assume every lot qualifies.
+The only lots that wouldn't would be islanded private streets which is silly.
+All private streets we care about are connected to maintained streets."* So the
+third option stands as the answer, not an interim: every Portland lot is
+treated as fronting a maintained street (a private street counts when it joins
+one, and the ones we screen do), and every unincorporated Clackamas lot as
+outside the Floodplain Management District. Neither rule is encoded; both
+assumptions are written here and in the city files. Fetching the county's
+district map stays on the agent's queue as the check, not as a blocker.
 
 ---
 
