@@ -838,3 +838,20 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    660-046-0220 (public.law).
    Offered: check each codifier for an official PDF edition (Clackamas's
    zdo1012 page links none, checked 2026-09-30).
+24. **Commercial OCR (Nanonets) -- scoped pilot, not an overhaul (Steph
+   2026-09-30).** FLATS runs no OCR today: pypdf reads the publisher's text
+   layer, HTML is read as served, so ~90% of the corpus is exact text and
+   OCR would only add error. The scans are Oregon City Title 17 (466 pp,
+   Municode's own OCR: letter-spaced, "19.0" read as "19.o", header
+   "17.5 2 .030", six sections refused for shredded columns in
+   oregon-city.yaml), Sherwood Ord. 2022-004, King City's solar figures,
+   and the Clackamas P100/P200 drawings (no text; `drawn: true`). Offered:
+   run those ~500 pp through Nanonets (free credits) or its open-weight
+   model (HF nanonets/Nanonets-OCR2-3B) and score against those known
+   failures. If adopted: a declared per-document `extraction`, output
+   stored and hashed once, drift keyed on the source PDF's bytes so a
+   re-check never re-OCRs (staleness re-extracts today). Pending Steph:
+   may our own OCR back a `quote:`? (_unincorporated.yaml ~L1233 says no;
+   item 23's page-image check would make it safe.) Pricing unconfirmed:
+   nanonets.com/pricing shows $0.02-$0.30 per block run, not the
+   10k-free / $0.01 per page Steph saw.
