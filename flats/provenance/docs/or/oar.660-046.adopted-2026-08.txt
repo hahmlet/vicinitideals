@@ -1,0 +1,1283 @@
+Oregon Administrative Rules Chapter 660, Division 046 – Middle Housing in
+Medium and Large Cities
+Proposed   August     2026
+
+Table of Contents
+660-                                                                  046-                                                                 0000 Purpose .......................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    4
+                 660-                                                                  046-                                                                                    0010 Applicability ...............................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   4
+                 660-                                                                  046-                                                                 0020 Definitions.................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          7
+                 660-                                                                  046-                                                                 0030 Implementation of Middle Housing Ordinances .........................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             9
+                 660-                                                                  046-                                                                 0040 Compliance                    ............................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         10
+                 660-                                                                  046-                                                                 0050 Eligible Local Governments .....................................................................................11
+                 660-                                                                  046-                                                                 0100 Purpose of Middle Housing in Medium Cities ...........................................................11
+                 660-                                                                  046-                                                                 0105 Applicability of Middle Housing in Medium Cities .....................................................11
+                 660-                                                                  046-                                                                 0110 Provisions Applicable to Duplexes in Medium Cities ...............................................                                                                                                                                                                                                                                                                                                                                                                                  12
+                 660-                                                                  046-                                                                 0115 Permitted Uses and Approval Process ....................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       12
+                 660-                                                                  046-                                                                 0120 Duplex Siting Standards in Medium Cities ..............................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        13
+                 660-                                                                  046-                                                                 0125 Duplex Design Standards in Medium Cities ............................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               13
+                 660-                                                                  046-                                                                 0130 Duplex Conversions ...............................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  14
+                 660-                                                                  046-                                                                 0200 Purpose of Middle Housing in Large Cities .............................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                             14
+                  660-                                                                  046-                                                                 0205 Applicability of Middle Housing in Large Cities ........................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  14
+                  660-                                                                  046-                                                                 0210 Provisions Applicable to Middle Housing in Large Cities .........................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                          16
+                  660-                                                                  046-                                                                 0215 Permitted Uses and Approval Process ....................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          17
+                  660-                                                                  046-                                                                 0220 Middle Housing Siting Standards in Large Cities ....................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   17
+                  660-                                                                  046-                                                                 0225 Middle Housing Design Standards in Large Cities ..................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               21
+                  660-                                                                  046-                                                                 0226 Residential Design Standards.................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         21
+                  660-                                                                  046-                                                                 0230 Middle Housing Conversions ..................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       21
+                  660-                                                                  046-                                                                 0235 Alternative Siting or Design Standards ....................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        22
+                  660-                                                                  046-                                                                 0300 Purpose of Infrastructure-                    Based Time Extension Request Process ........................                                                                                                                                                                                                                                                                           23
+                  660-                                                                  046-                                                                 0310 Entities Eligible to Apply ..........................................................................................                                                                                                                                                                                                                                                                                                                                                                                             23
+                  660-                                                                  046-                                                                 0320 Definitions...............................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           23
+                 660-                                                                  046-                                                                 0330 Parameters .............................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         24
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            1
+                      660-                                                                  046-                                                                 0340 Infrastructure-                           Specific Application   Thresholds ........................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       26
+                      660-                                                                  046-                                                                 0350 Application Submittal Timeline and Requirements ..................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               27
+                      660-                                                                  046-                                                                 0360 Review Process, Review Criteria and Appeal Process ............................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           30
+                      660-                                                                  046-                                                                 0370 Duration of Time Extension                                  .....................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      32
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            2
+Chapter 660, Division 46, Middle Housing in Medium and Large Cities
+
+660-046-                                                                  0010, 0020, 0040, 0105          -0130,                                                                                       0205, 0215-                                           0230, 0320-                                           0330, 0350
+Rules Summary: This Division includes rules for regulating middle housing types. The rule
+amendments below update the definitions of middle housing types and definitions of large and
+medium cities to include local governments with jurisdiction over urban unincorporated land. The
+deadline for local governments to comply is also updated.
+Other conforming amendments are proposed to align with changes to statute, including from House
+Bill 3395 (2023) and Senate Bill 406 (2023). These bills expanded obligations for cities over 2,500 in
+population and for cities and unincorporated communities in Tillamook County.
+Additionally, HB 2138 (2025) and HB 2347 (2025) replaced the term “detached single-family dwelling”
+with “detached single-unit dwelling” and “multifamily” with “multi-unit” in ORS 197 and ORS 197A,
+and the proposed amendments make the same change to Division 046.
+Commentary: Rulemaking                                            direction in HB 2138 asks LCDC to adopt rules that further clarify and
+implement the term “small footprint or floor area” as part of the new cottage cluster definition. Rule
+clarifying “small footprint or floor area” considers outcomes that provide more opportunities for
+cottage cluster developments.
+Section 4 of HB 2138 requires applicable local governments to comply with Section 1 of the bill
+(related to definitions), except the changes related to cottage clusters, by January 1, 2027. To meet
+this deadline and ensure consistency with the bill, amendments are proposed in the rules to conform
+with the bill language. Amendments to the Middle Housing Model Codes will be adopted at a later
+time in conformance with the rules.
+Updates from the previous draft: In response to public comments received by August 7,2026,
+changes are proposed below to provide clarity and consistency with statutory language that was
+amended by HB 2138, including requiring that middle housing                                           be allowed                                                 on each lot or parcel zoned
+for residential use. Per ORS 197A.420(1)(j), ‘“Zoned for residential use’ means land that:
+      (A) Is within an urban growth boundary;
+      (B) Has base zoning for, or is designated to allow, residential uses;
+      (C) Allows the development of a detached single-                    unit dwelling;
+      (D) Is not zoned primarily for commercial, industrial, agricultural or public uses; and
+      (E) Is incorporated or urban unincorporated land.”
+Changes are also proposed to the Middle Housing Siting Standards in 046-0220 to be consistent with
+the amendments to the definition of “Cottage Cluster.” The language in definition itself is also updated
+for clarity.
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            3
+660-                                                                        046-0000                                                 Purpose
+The purpose of this division is to prescribe standards guiding the development of Middle Housing
+types as provided in Oregon Laws 2019, chapter 639. OAR 660-                                                                           046-                                                                 0010 to OAR 660-                                           046-0235
+establish standards related to the siting and design of Middle Housing                                         types in urban growth
+boundaries. OAR 660-046-0300 to OAR 660-046-                                                                0370 establish the form and substance of an
+application and the review process to delay the enactment of standards related to the siting and
+design of Middle Housing types in areas with significant infrastructure deficiencies.
+Statutory/Other Authority: ORS 197.040
+STATUTES/OTHER IMPLEMENTED: ORS 197A.420
+History:
+LCDD 18-2020, amend filed 12/29/2020, effective 12/31/2020
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0010                                               Applicability
+(1) A local government that is a Medium City or Large City must comply with this division.
+(2) Notwithstanding section (1), a Medium or Large City need not comply with this division for
+Lots or Parcels that are not zoned for residential use.
+(3) A Medium or Large City may regulate Middle Housing to comply with protective measures
+(including plans, policies, and regulations) adopted and acknowledged pursuant to statewide land use
+planning goals. Where Medium and Large Cities have adopted, or shall adopt, regulations
+implementing the following statewide planning goals, the following provisions provide direction as to
+how those regulations shall be implemented in relation to Middle Housing, as required by this rule.
+(a) Goal 5: Natural Resources, Scenic, and Historic Areas –          OAR chapter 660, division 23, prescribes
+procedures, and in some cases, standards, for complying with Goal 5. OAR chapter 660, division 16
+directed implementation of Goal 5 prior to division 23. Local protection measures adopted pursuant to
+divisions 23 and 16 are applicable to Middle Housing.
+(A) Goal 5 Natural Resources –          Pursuant to OAR 660-                                                                             023-0050 through OAR 660-                                                                 023-0110, Medium
+and Large Cities must adopt land use regulations to protect water quality, aquatic habitat, and the
+habitat of threatened, endangered and sensitive species. This includes regulations applicable to
+Middle Housing to comply with protective measures adopted pursuant to Goal 5:
+(i) Medium and Large Cities may apply regulations to Duplexes that apply to detached single                                                                                                                                           -unit
+dwellings in the same zone;
+(ii) Medium and Large Cities may limit the development of Middle Housing other than Duplexes in
+significant resource sites identified and protected pursuant to Goal 5; and
+(iii) If a Medium or Large City has not adopted land use regulations pursuant to OAR 660-023-                                                                 0090, it
+must apply a 100-                                                                           foot setback to Middle Housing developed along a riparian corridor.
+(B) Goal 5: Historic Resources –          Pursuant to OAR 660-                                                                             023-0200(7), Medium and Large Cities must
+adopt land use regulations to protect locally significant historic resources. This includes regulations
+applicable to Middle Housing to comply with protective measures as it relates to the integrity of a
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            4
+historic resource or district. Protective measures shall be adopted and applied as provided in OAR
+660-                                                                  023-                                                                 0200. Medium and Large Cities may apply regulations adopted under OAR 660-                                                                          023-0200 to
+Middle Housing that apply to detached single-                     unit dwellings in the same zone, except as provided
+below. If a Medium or Large City has not adopted land use regulations to protect significant historic
+resources listed on the National Register of Historic Places, it must apply protective measures to
+Middle Housing as provided in OAR 660-                                                                            023-0200(8)(a) until the Medium or Large City adopts land
+use regulations in compliance with OAR 660-023-                                                                0200. Medium or Large Cities may not apply the
+following types of regulations specific to Middle Housing:
+(i) Use, density, and occupancy restrictions that prohibit the development of Middle Housing on
+historic properties or districts that otherwise permit the development of detached                                          single-unit dwellings;
+and
+(ii) Standards that prohibit the development of Middle Housing on historic properties or districts that
+otherwise permit the development of detached single-                               unit dwellings.
+(b) Goal 6: Air, Water and Land Resources Quality –          Pursuant to OAR 660-015-                                                                 0000(6), a Medium or
+Large City may limit development within an urban growth boundary to support attainment of federal
+and state air, water, and land quality requirements. Medium and Large Cities may apply regulations
+adopted pursuant to Goal 6 to the development of Middle Housing.
+(c) Goal 7: Areas Subject to Natural Hazards –          Pursuant to OAR 660-                                                                             015-0000(7), Medium and Large
+Cities must adopt comprehensive plans (inventories, policies, and implementing measures) to reduce
+risk to people and property from natural hazards. Such protective measures adopted pursuant to Goal
+7 apply to Middle Housing, including, but not limited to, restrictions on use, density, and occupancy in
+the following areas:
+(A) Special Flood Hazard Areas as identified on the applicable Federal Emergency Management
+Agency Flood Insurance Rate Map; and
+(B) Other hazard areas identified in an adopted comprehensive plan or development code, provided
+the Medium or Large City determines that the development of Middle Housing presents a greater risk
+to life or property than the development of detached single                                                     -unit dwellings from the identified hazard.
+Greater risk includes but is not limited to actions or effects such as:
+(i) Increasing the number of people exposed to a hazard;
+(ii) Increasing risk of damage to property, built, or natural infrastructure; and
+(iii) Exacerbating the risk by altering the natural landscape, hydraulics, or hydrology.
+(d) Goal 9: Economic Development -           Pursuant to OAR 660-                                                                 009-0025, Medium and Large Cities must
+adopt measures adequate to implement industrial and other employment development policies,
+including comprehensive plan designations. Medium and Large Cities may limit the development of
+Middle Housing on Lots or Parcels Zoned For Residential Use designated for future industrial or
+employment uses.
+(e) Goal 11: Public Facilities and Services -           Pursuant to OAR 660-0   11-0020(2), a public facility plan
+must identify significant public facility projects which are to support the land uses designated in the
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            5
+acknowledged comprehensive plan. This includes public facility projects to support the development
+of Middle Housing in areas zoned for residential use that allow for the development of detached
+single-unit dwellings. Following adoption of Middle Housing allowances by a Large City, the Large
+City shall work to ensure that infrastructure serving undeveloped or underdeveloped areas, as defined
+in OAR 660-046-                                                                 0320(8), where Middle Housing is allowed is appropriately designed and sized to
+serve Middle Housing.
+(f) Goal 15: Willamette Greenway –          Pursuant to OAR 660-                                                                 015-                                                                 0005, Medium and Large Cities must
+review intensifications, changes of use or developments to insure their compatibility with the
+Willamette River Greenway. Medium and Large Cities may allow and regulate the development of
+Middle Housing in the Willamette Greenway, provided that applicable regulations adopted pursuant to
+Goal 15 comply with ORS 197A                                                                            .400.
+(g) Goal 16: Estuarine Resources –           Pursuant to OAR 660-                                                                             015-0010(1) and OAR chapter 660,
+division 17, Medium and Large Cities must apply land use regulations that protect the estuarine
+ecosystem, including its natural biological productivity, habitat, diversity, unique features, and water
+quality. Medium and Large Cities may prohibit Middle Housing in areas regulated to protect estuarine
+resources under Goal 16 in the same manner as the Medium or Large City prohibits detached single       -
+unit dwellings to protect estuarine resources under Goal 16.
+(h) Goal 17: Coastal Shorelands –           Pursuant to OAR 660-                                                                 015-                                                                 0010(2) and OAR 660-037-                                                                 0080, local
+governments must apply land use regulations that protect shorelands for water-dependent
+recreational, commercial, and industrial uses.                  This includes regulations applicable to Middle
+Housing to comply with protective measures adopted pursuant to Goal 17. Local governments may
+apply regulations to Middle Housing that apply to detached single                                                                           -unit dwellings in the same zone.
+(i) Goal 18: Beaches and Dunes –          Pursuant to OAR 660-                                                                 015-                                                                 0010(3), Medium and Large Cities must
+apply land use regulations to residential developments to mitigate hazards to life, public and private
+property, and the natural environment in areas identified as Beaches and Dunes under Goal 18. This
+includes regulations applicable to Middle Housing to comply with protective measures adopted
+pursuant to Goal 18 including but not limited to restrictions on use, density, and occupancy; provided
+the development of Middle Housing presents a greater risk to life or property than development of
+detached single-unit dwellings. Greater risk includes but is not limited to actions or effects such as:
+(A) Increasing the number of people exposed to a hazard;
+(B) Increasing risk of damage to property, built or natural infrastructure; and
+(C) Exacerbating the risk by altering the natural landscape, hydraulics, or hydrology.
+(4) For the purposes of assisting local jurisdictions in adopting reasonable siting and design standards
+for Middle Housing, the applicable Model Code adopted in this section will be applied to A Local
+Government That Has Not Acted to comply with the provisions of ORS 197A                     .420 and this division.
+For such Medium and Large Cities, the applicable Model Code completely replaces and pre-empts
+any provisions of those Medium and Large Cities’ development codes that conflict with the Model
+Code. The Commission adopts the following Middle Housing Model Codes:
+(a) The Medium City Model Code as provided in Exhibit A; and
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            6
+(b) The Large City Model Code as provided in Exhibit B.
+(5) This division does not prohibit Medium of Large Cities from allowing:
+(a) Single-unit dwellings in areas zoned to allow for single         -unit dwellings; or
+(b) Middle Housing in areas not required under this division.
+[ED. NOTE: To view attachments referenced in rule text, click here to view rule.]
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 3-2021, amend filed 06/02/2021, effective 06/05/2021
+LCDD 18-2020, amend filed 12/29/2020, effective 12/31/2020
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0020                                                 Definitions
+As used in this division, the definitions in ORS 197.015 and ORS 197A                                                                          .420 apply, unless the context
+requires otherwise.                  In addition, the following definitions apply:
+(1) “A Local Government That Has Not Acted” means a Medium or Large City that has not adopted
+acknowledged land use regulations that are in compliance with ORS 197A                                                                          .420 and this division.
+(2) “Cottage Cluster” means a grouping of dwelling units that:
+(a) Are attached in subgroupings of up to four units or detached in any configuration;
+(b) Have a common courtyard; and
+(c) Have an average floor area of                                                                 up to 1,400 square                                                      feet                                           ;
+(A) To    be calculated excluding porches, carports, and garages; and
+(B) Nothing in this subsection prohibits a local government from regulating renovations, remodels,
+additions, or nonconforming uses after development occurs.
+(3) “Department” means the Department of Land Conservation and Development.
+(4) “Design Standard” means a standard related to the arrangement, orientation, materials,
+appearance, articulation, or aesthetic of features on a dwelling unit or accessory elements on a site.
+Design standards include, but are not limited to, standards that regulate entry and dwelling
+orientation, façade materials and appearance, window coverage, driveways, parking configuration,
+pedestrian access, screening, landscaping, and private, open, shared, community, or courtyard
+spaces.
+(5) “Detached single-unit dwelling” means a detached structure on a Lot or Parcel that is comprised of
+a single dwelling unit.
+(6) “Duplex” has the same meaning as provided in ORS 197A.420(1)(d)
+(7) “Goal Protected Lands” means lands protected or designated pursuant to any one of the following
+statewide planning goals:
+(a) Goal 5 Natural Resources, Scenic and Historic Areas, and Open Spaces;
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            7
+(b) Goal 6 Air, Water and Land Resource Quality;
+(c) Goal 7 Areas Subject to Natural Hazards;
+(d) Goal 9 Economic Development;
+(e) Goal 15 Willamette River Greenway;
+(f) Goal 16 Estuarine Resources;
+(g) Goal 17 Coastal Shorelands; and
+(h) Goal 18 Beaches and Dunes.
+(8) “Large City” means a city with a certified Portland State University Population Research Center
+estimated population of 25,000 or more, or a city with a population over 1,000 within                     Metro. A Large
+City includes:
+(a) Regardless of size, any city within Tillamook County and the communities of Barview/Twin
+Rocks/Watseco, Cloverdale, Hebo, Neahkahnie, Neskowin, Netarts, Oceanside and Pacific
+City/Woods; and
+(b) Urban unincorporated lands as defined in ORS 197A.015(12) of a county.
+(9) “Lot or Parcel” means any legally created unit of land.
+(10) “Master Planned Community” means a site that is any one of the following:
+(a) Greater than 20 acres in size within a Large City or adjacent to the Large City within the urban
+growth boundary that is zoned for or proposed to be Zoned For Residential Use, and which is not
+currently developed with urban residential uses, for which a Large City proposes to adopt, by
+resolution or ordinance, a master plan or a plan that functions in the same manner as a master plan;
+(b) Greater than 20 acres in size within a Large City or adjacent to the Large City within the urban
+growth boundary for which a Large City adopted, by resolution or ordinance, a master plan or a plan
+that functions in the same manner as a master plan after the site was incorporated into the urban
+growth boundary; or
+(c) Added to the Large City’s urban growth boundary after January 1, 2021 for which the Large City
+proposes to adopt, by resolution or ordinance, a master plan or a plan that functions in the same
+manner as a master plan.
+(11) “Medium City” means a city with a certified Portland State University Population Research Center
+estimated population more than 2,500                                                                                                                                             and less than 25,000 and not within Metro.
+(12) “Middle Housing” has the same meaning as provided in ORS 197A.420(1)(e)        .
+(13) “Model Code” means the applicable Model Code developed by the Department and contained in
+the exhibits in OAR 660-                                                                            046-                                                                  0010(4).
+(14) “Quadplex” has the same meaning as provided in ORS 197A.420(        1)(g).
+(15) “Siting Standard” means a standard related to the position, bulk, scale, or form of a structure or a
+standard that makes land suitable for development. Siting standards include, but are not limited to,
+standards that regulate perimeter setbacks, dimensions, bulk, scale, coverage, minimum and
+maximum parking requirements, utilities, and public facilities.
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            8
+(16) “Sufficient Infrastructure” means the following level of public services to serve new Triplexes,
+Quadplexes, Townhouses, or Cottage Cluster development:
+(a) Connection to a public sewer system capable of meeting established service levels;
+(b) Connection to a public water system capable of meeting established service levels;
+(c) Access via public or private streets meeting adopted emergency vehicle access standards to a
+city’s public street system; and
+(d) Storm drainage facilities capable of meeting established service levels for storm drainage.
+(17) “Townhouse”                                                                                      has the same meaning as provided in ORS 197A.420(1)(h).
+(18) “Townhouse Project” means one or more townhouse structures constructed, or proposed to be
+constructed, together with the development site where the land has been divided, or is proposed to be
+divided, to reflect the Townhouse property lines and the any commonly owned property.
+(19) “Triplex” has the same meaning as provided in ORS 197A.420(1)(i).
+(20) “Zoned for Residential Use” has the same meaning as provided in ORS 197A.420(1)(j).
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, amend filed 12/29/2020, effective 12/31/2020
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0030                                                Implementation of Middle Housing Ordinances
+(1) Before a local government amends an acknowledged comprehensive plan or a land use regulation
+to allow Middle Housing, the local government must submit the proposed amendment to the
+Department for review and comment pursuant to OAR chapter 660, division                                           18.
+(2) In adopting or amending regulations or amending a comprehensive plan to allow Middle Housing,
+a local government must include findings demonstrating consideration, as part of the post-
+acknowledgement plan amendment process, of methods to increase the affordability of Middle
+Housing through ordinances or policies that include but are not limited to:
+(a) Waiving or deferring system development charges;
+(b) Adopting or amending criteria for property tax exemptions under ORS 307.515 to ORS 307.523,
+ORS 307.540 to ORS 307.548 or ORS 307.651 to ORS 307.687 or property tax freezes under ORS
+308.450 to ORS 308.481; and
+(c) Assessing a construction tax under ORS 320.192 and ORS 320.195.
+(3) When a local government amends its comprehensive plan or land use regulations to allow Middle
+Housing, the local government is not required to consider whether the amendments significantly affect
+an existing or planned transportation facility.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.                                                                             420
+History:
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            9
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0040                                                 Compliance
+(1) A Medium or Large City may adopt land use regulations or amend its comprehensive plan to
+comply with ORS                           197A.420                                            and the provisions of this division.
+(2) A Medium or Large City may request from the Department an extension of the time allowed to
+complete the action under section (1) pursuant to the applicable sections of OAR 660-                                                                          046-0300
+through OAR 660-                                           046-0370.
+(3) A Medium City which is A Local Government That Has Not Acted by January 1, 2027, or within one
+year of qualifying as a Medium City pursuant to OAR 660-                                                                           046-                                                                 0050 and has not received an
+extension under section (2), shall directly apply the applicable Model Code contained in OAR 660-
+046-                                                                 0010(4) until such time as the Medium City has adopted provisions under section (1).
+(4) A Large City which is A Local Government That Has Not Acted by January 1, 2027, or within two
+years of qualifying as a Large City pursuant to OAR 660-                                                                           046-                                                                 0050 and has not received an extension
+under section (2), shall directly apply the applicable Model Code contained in OAR 660-                                                                          046-0010(4)
+for the specific Middle Housing type that is not in compliance with the relevant rules in this division to
+all proposed development applications for that specific Middle Housing type until such time as the
+Large City has adopted provisions under section (1).
+(5) If a Medium or Large City has adopted land use regulations or amended its comprehensive plan
+by the date provided under sections (3) and (4) and the Medium or Large City’s land use regulations
+or comprehensive plan changes are subsequently remanded by the Land Use Board of Appeals or an
+appellate court solely on procedural grounds, the Medium or Large City is deemed to have acted.
+Accordingly, the Medium or Large City may continue to apply its own land use regulations and
+comprehensive plan as they existed prior to the adoption of land use regulations or comprehensive
+plan amendments that were the subject of procedural remand until the first of the two options:
+(a) The Medium or Large City has adopted land use regulations or amended its comprehensive plan
+in response to the remand; or
+(b) 120 days after the date of the remand. If the Medium or Large City has not adopted land use
+regulations or amended its comprehensive plan within 120 days of the date of the remand, the
+Medium or Large City is deemed not to have acted under sections (3) and (4).
+(6) If a Medium or Large City has adopted land use regulations or amended its comprehensive plan
+by the date provided under sections (3) and (4) and the Medium or Large city’s land use regulations
+or comprehensive plan changes are subsequently remanded by the Land Use Board of Appeals or an
+appellate court on any substantive grounds, the Medium or Large City is deemed to have not acted
+under sections (3) and (4).
+(7) If a Medium or Large City acknowledged to be in compliance with this division subsequently
+amends its land use regulations or comprehensive plan, and those amendments are remanded by the
+Land Use Board of Appeals or an appellate court, the Medium or Large City shall continue to apply its
+land use regulations and comprehensive plan as they existed prior to the amendments until the
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        10
+amendments are acknowledged.
+(8) Where a Medium or Large City directly applies the Model Code in accordance with sections (3),
+(4) and (5), the Model Code completely replaces and pre-empts any provisions of that Medium or
+Large City’s development code that conflict with the applicable                    sections of the Model Code.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, amend filed 12/29/2020, effective 12/31/2020
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0050                                                Eligible Local Governments
+(1) If a local government was not previously a Medium City and a certified Portland State University
+Population Research Center population estimate qualifies it as a Medium City, the local government
+must comply with this division within one year of its qualification as a Medium City.
+(2) If a local government was not previously a Large City and a certified Portland State University
+Population Research Center population estimate qualifies it as a Large City, the local government
+must comply with this division within two years of its qualification as a Large City.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, amend filed 12/29/2020, effective 12/31/2020
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0100                                                Purpose of Middle Housing in Medium Cities
+OAR 660-                                                                             046-0105 through OAR 660-046-                                                                   0130 are intended to measure compliance with ORS
+197A.420                                                                 et seq and Goal 10 Housing for Medium Cities.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0105                                               Applicability of Middle Housing in Medium Cities
+(1) A Medium City must allow for the development of a Duplex, including those Duplexes created
+through conversion of an existing detached single-unit dwelling, on each Lot or Parcel zoned for
+residential use.
+(2) OAR 660-046-                                                                   0105 through OAR 660-                                                                 046-0130 do not require a Medium City to allow more than
+two dwellings units on a Lot or Parcel, including any accessory dwelling units.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          11
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0  11  0 Provisions Applicable to Duplexes in Medium Cities
+(1) Medium Cities may regulate Duplexes to comply with protective measures, including plans,
+policies and regulations, as provided in OAR 660-                                                                           046-                                                                  0010(3).
+(2) Medium Cities may regulate siting and design of Duplexes, provided that the regulations:
+(a) Are clear and objective standards, conditions, or procedures consistent with ORS 197A.400       ; and
+(b) Do not, individually or cumulatively, discourage the development of Duplexes through
+unreasonable costs or delay.
+(3) Siting and design standards that create unreasonable cost and delay include any standards
+applied to Duplex development that are more restrictive than those applicable to detached single-unit
+dwellings in the same zone.
+(4) Siting and design standards that do not, individually or cumulatively, discourage the development
+of Duplexes through unreasonable cost and delay include only the following:
+(a) Regulations to comply with protective measures adopted pursuant to statewide land use planning
+goals provided in OAR 660-                                           046-                                                                  0010(3);
+(b) Permitted uses and approval process provided in OAR 660-                                                                           046-0115;
+(c) Siting standards provided in OAR 660-                                                                            046-0120;
+(d) Design standards in Medium Cities provided in OAR 660-046-                                                                  0125;
+(e) Duplex Conversions provided in OAR 660-                                                                            046-0130; and
+(f) Any siting and design standards in the Model Code contained in section OAR 660-                                                                          046-0010(4)(a).
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, amend filed 12/29/2020, effective 12/31/2020
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0  11  5 Permitted Uses and Approval Process
+Medium Cities must apply the same approval process to Duplexes as detached single                                                                          -unit dwellings
+in the same zone. Pursuant to OAR 660-008-                                                                 0015, and ORS 197A.400         , Medium Cities may adopt
+and apply only clear and objective standards, conditions, and procedures regulating the development
+of Duplexes. Nothing in this rule prohibits a Medium City from adopting an alternative approval
+process for applications and permits for Middle Housing based on approval criteria that are not clear
+and objective as provided in OAR 660-                                                                            008-0015(2) and ORS 197A.400(6).
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, amend filed 12/29/2020, effective 12/31/2020
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        12
+660-                                                                        046-0120                                                 Duplex Siting Standards in Medium Cities
+The following standards apply to all Duplexes:
+(1) Minimum Lot or Parcel Size: A Medium City may not require a minimum Lot or Parcel size that is
+greater than the minimum Lot or Parcel size required for a detached                                                                 single-                      unit dwelling in the same
+zone. Additionally, Medium Cities shall allow the development of a Duplex on any lot or parcel        zoned
+for residential use, which was legally created prior to the Medium City’s current lot size minimum for
+detached single-unit dwellings in the same zone.
+(2) Density: If a Medium City applies density maximums in a zone, it may not apply those maximums
+to the development of Duplexes.
+(3) Setbacks: A Medium City may not require setbacks to be greater than those applicable to
+detached single-unit dwellings in the same zone.
+(4) Height: A Medium City may not apply lower maximum height standards than those applicable to
+detached single-unit dwellings in the same zone.
+(5) Parking:
+(a) A Medium City may not require more than a total of two off-street parking spaces for a Duplex.
+(b) Nothing in this section precludes a Medium City from allowing on-                                                                                               street parking credits to satisfy
+off-street parking requirements.
+(6) Lot Coverage and Floor Area Ratio: Medium Cities are not required to apply lot coverage or floor
+area ratio standards to new Duplexes. However, if the Medium City chooses to apply lot coverage or
+floor area ratio standards, it may not establish a cumulative lot coverage or floor area ratio for a
+Duplex that is less than established for detached single         -unit dwelling in the same zone.
+(7) A Medium City or other utility service provider that grants clear and objective exceptions to public
+works standards to detached single                                                                            -unit dwelling development must allow the granting of the same
+exceptions to Duplexes.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, amend filed 12/29/2020, effective 12/31/2020
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0125                                                 Duplex Design Standards in Medium Cities
+(1) Medium Cities are not required to apply design standards to new Duplexes. However, if the
+Medium City chooses to apply design standards to new Duplexes, it may only apply the same clear
+and objective design standards that the Medium City applies to detached single-unit structures in the
+same zone.
+(2) A Medium City may not apply design standards to Duplexes created as provided in OAR 660-                  046-
+0130.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        13
+History:
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0130                                                   Duplex Conversions
+Conversion of an existing detached single         -unit dwelling to a Duplex is allowed, pursuant to OAR 660-
+046-                                                                  0105(1), provided that the conversion does not increase nonconformance with applicable clear
+and objective standards in the Medium City’s development code, unless increasing nonconformance
+is otherwise allowed by the Medium City.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 12-2020, adopt filed 07/31/2020, effective 08/03/2020
+
+660-                                                                        046-0200                                                Purpose of Middle Housing in Large Cities
+OAR 660-                                                                             046-0205 through OAR 660-046-                                                                   0235 are intended to measure compliance with ORS
+197A.420                                                                 and Goal 10 Housing for Large Cities.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, adopt filed 12/29/2020, effective 12/31/2020
+
+660-                                                                        046-0205                                               Applicability of Middle Housing in Large Cities
+(1) A Large City must allow for the development of Duplexes in the same manner as required for
+Medium Cities in OAR 660-046-                                                                 0100 through OAR 660-                                                                 046-                                                                  0130.
+(2) A Large City must allow for the development of Triplexes, Quadplexes, Townhouses, and Cottage
+Clusters, including those created through additions to or conversions of existing detached single                                                                          -unit
+dwellings, on each lot or parcel zoned for residential use. A Large City may regulate or limit
+development of these types of Middle Housing on the following types of lands:
+(a) Goal-Protected Lands: Large Cities may regulate Middle Housing on Goal-Protected Lands as
+provided in OAR 660-                                                                            046-0010(3);
+(b) Master Planned Communities: Large Cities may regulate the development of Middle Housing in
+Master Planned Communities as follows:
+(A) A Large City may regulate Middle Housing in Master Planned Communities created through the
+adoption, by resolution or ordinance, of a master plan, or plan that functions in the same manner as a
+master plan, after January 1, 2021, by either allowing the                                          development of all Middle Housing types as
+provided in OAR 660-                                                                            046-0205 through OAR 660-                     046-                                                                 0235, or through implementation of one or
+more of the following actions:
+(i) Plan to provide urban water, sanitary sewer, stormwater, and transportation systems that
+accommodate at least 20 dwelling units per net acre if located within a metropolitan service district
+boundary, and 15 dwelling units per net acre if located outside of a metropolitan service district
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        14
+boundary. The Large City may require the applicant demonstrate, through an amended public facility
+plan or similar mechanism, the sufficient provision of public services needed to serve the proposed
+development, if a proposed Middle Housing development exceeds the planned public service capacity
+of a master plan. A Large City may require a mix of two or more Middle Housing types within an
+adopted master plan or portions of a master plan. A Large City may designate areas within the
+adopted master plan exclusively for other housing types, such as multi-        unit residential structures of
+five dwelling units or more or manufactured home parks; or,
+(ii) Plan to provide urban water, sanitary sewer, stormwater, and transportation systems based on the
+implementation of a variable rate infrastructure fee or system development charge or impact fee that
+more accurately reflects the actual cost of providing                                          urban services to Middle Housing and other
+housing types in an adopted master plan and which incentivize the development of Middle Housing
+and smaller and more affordable housing types generally by reducing development cost. Pursuant to
+ORS 223.304, a Large City, or other service provider, may establish a variable rate system
+development charge, comprised of reimbursement fees or improvement fees, or a combination, to
+residential development in a Master Planned Community. The charge or fee may be calculated by
+total square footage, anticipated occupancy of housing types, by unit type, or other metric as defined
+by the service provider; or,
+(iii) Require applications for residential development within a Master Planned Community to develop a
+mix of residential types, including at least two Middle Housing types other than Duplexes. A Large City
+may adopt a master plan or a plan that functions in the same manner as a master plan which
+designates areas within the Master Planned Community exclusively for housing types other than
+detached single-unit dwellings, such as single          -unit residential structures of five dwelling units or more
+or manufactured home parks.
+(B) If a Large City has adopted a master plan or a plan that functions in the same manner as a master
+plan before January 1, 2021, it may limit the development of Middle Housing other than Duplexes
+provided it authorizes in the entire master plan area a net residential density of at least eight dwelling
+units per acre and allows all dwelling units, at minimum, to be detached single                                                                          -unit dwellings or
+Duplexes. A Large City may only apply this restriction to portions of the area not developed as of
+January 1, 2021, and may not apply this restriction after the initial development of any area of the
+master plan or a plan that functions in the same manner as a master plan, except that a Large City
+may prohibit redevelopment of other housing types, such as multi         -unit residential structures and
+manufactured home parks.
+(c) Impacted by State or Federal Law: A Large City must demonstrate that regulations or limitations of
+Middle Housing other than Duplexes are necessary to implement or comply with an established state
+or federal law or regulation on these types of lands.
+(3) Pursuant to OAR 660-046-                                                                   0205 through OAR 660-                                                                            046-                                                                   0235, the following numerical standards
+related to Middle Housing types apply:
+(a) Duplexes –           Large Cities may allow more than two dwellings units on a Lot or Parcel, including any
+accessory dwelling units.
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        15
+(b) Triplexes and Quadplexes –           Large Cities may allow more than four dwelling units on a Lot or
+Parcel, including any accessory dwelling units.
+(c) Townhouses – Large Cities must require at least two attached Townhouse dwelling units and must
+allow up to four attached Townhouse units subject to applicable siting or design standards as
+provided in OAR 660-                                                                            046-0220 through OAR 660-                     046-                                                                                    0235. A    Large   City may allow five or more
+attached Townhouse dwelling units.
+(d) Cottage Clusters –
+(A) A Large City is not required to set a minimum number of dwelling units in a Cottage Cluster, but if
+it chooses to, it may require a minimum of three, four, or five dwelling units in a Cottage Cluster. A
+Large City may allow, but may not require, greater than five units in a Cottage Cluster.
+(B) A Large City must allow up to eight cottages per common courtyard subject to applicable siting or
+design standards as provided in OAR 660-046-                                                                 0220 through OAR 660-046-0235. Nothing in this
+section precludes a Large City from permitting greater than eight dwelling units per common
+courtyard.
+(4) A Large City may require that applicants for a partition, subdivision, replat, property line
+adjustment, or planned unit development not meeting the definition of a Master Planned Community
+specify, for the purpose of public facilities planning, the anticipated development of Middle Housing on
+Lots or Parcels resulting from the partition, subdivision, replat, property line adjustment, or planned
+unit development. Should an applicant subsequently submit a proposal for residential development
+exceeding the planned public facilities as specified in the partition, subdivision, replat, property line
+adjustment, or planned unit development approval, the city may withhold issuance of building permits
+until the public facility deficiency is remediated. This subsection does not apply to Middle Housing
+Land Divisions as provided in ORS 92.031.
+(5) A Large City may require applicants of Middle Housing to provide the same right-of-way
+dedications, frontage improvements, and connectivity standards that would apply to detached single-
+unit dwellings on the same Lot or Parcel, including applicable exemptions related to proportionality.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 5-2022, amend filed 10/21/2022, effective 10/31/2022
+LCDD 18-2020, adopt filed 12/29/2020, effective 12/31/2020
+
+660-                                                                        046-0210                                                Provisions Applicable to Middle Housing in Large Cities
+(1) Large Cities may regulate Middle Housing to comply with protective measures, including plans,
+policies and regulations, as provided in OAR 660-                                                                           046-                                                                  0010(3).
+(2) Large Cities may regulate siting and design of Middle Housing, provided that the regulations:
+(a) Are clear and objective standards, conditions, or procedures consistent with the requirements of
+ORS 197A.400; and
+(b) Do not, individually or cumulatively, discourage the development of Middle Housing through
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        16
+unreasonable costs or delay.
+(3) Siting and design standards that do not, individually or cumulatively, discourage the development
+of Middle Housing through unreasonable cost and delay include only the following:
+(a) Regulations to comply with protective measures adopted pursuant to statewide land use planning
+goals provided in OAR 660-                                           046-                                                                  0010(3);
+(b) Permitted uses and approval processes provided in OAR 660-                                                                           046-0215;
+(c) Siting standards provided in OAR 660-                                                                            046-0220;
+(d) Design standards in Large Cities provided in OAR 660-                                                                           046-0225;
+(e) Middle Housing Conversions provided in OAR 660-                                                                046-                                                                  0230;
+(f) Alternative siting or design standards provided in OAR 660-046-                                                                 0235; and
+(g) Any siting and design standards in the Model Code contained in OAR 660-                                                               046-                                                                  0010(4)(b).
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, adopt filed 12/29/2020, effective 12/31/2020
+
+660-                                                                        046-0215                                                Permitted Uses and Approval Process
+Large Cities must apply the same approval process to Middle Housing as detached                                                                single-unit
+dwellings in the same zone. Pursuant to OAR 660-                    008-                                                                   0015 and ORS 197A.400, Large Cities may
+adopt and apply only clear and objective standards, conditions, and procedures regulating the
+development of Middle Housing consistent with the requirements of ORS 197A.400. Nothing in this
+rule prohibits a Large City from adopting an alternative approval process for applications and permits
+for Middle Housing based on approval criteria that are not clear and objective as provided in OAR
+660-                                                                  008-                                                                 0015(2), and ORS 197A.400(6).
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.400, 197A.420
+History:
+LCDD 18-2020, adopt filed 12/29/2020, effective 12/31/2020
+
+660-                                                                        046-0220                                                 Middle Housing Siting Standards in Large Cities
+(1) Large Cities must apply siting standards to Duplexes in the same manner as required for Medium
+Cities in OAR 660-046-                                                                  0120.
+(2) The following governs Large Cities’ regulation of siting standards related to Triplexes and
+Quadplexes:
+(a) Minimum Lot or Parcel Size:
+(A) For Triplexes, the minimum Lot or Parcel size for a Triplex may be no greater than the minimum
+Lot or Parcel size for a detached single                                                                           -unit dwelling.
+(B) For Quadplexes, the minimum Lot or Parcel size for a Quadplex may be no greater than the
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        17
+minimum Lot or Parcel size for a detached single                                                                           -unit dwelling.
+(b) Density: If a Large City applies density maximums in a zone, it may not apply those maximums to
+the development of Quadplex and Triplexes.
+(c) Setbacks: A Large City may not require setbacks greater than those applicable to detached single                              -
+unit dwellings in the same zone.
+(d) Height: A Large City may not apply lower maximum height standards than those applicable to
+detached single-unit dwellings in the same zone, except a maximum height may not be less than 25
+feet or two stories.
+(e) Parking:
+(A) For Triplexes, a Large City may require up to the following off-street parking spaces:
+(i) For Lots or Parcels of less than 3,000 square feet: one space in total;
+(ii) For Lots or Parcels greater than or equal to 3,000 square feet and less than 5,000 square feet: two
+spaces in total; and
+(iii) For Lots or Parcels greater than or equal to 5,000 square feet: three spaces in total.
+(B) For Quadplexes, a Large City may require up to the following off-street parking spaces:
+(i) For Lots or Parcels of less than 3,000 square feet: one space in total;
+(ii) For Lots or Parcels greater than or equal to 3,000 square feet and less than 5,000 square feet: two
+spaces in total;
+(iii) For Lots or Parcels greater than or equal to 5,000 square feet and less than 7,000 square feet:
+three spaces in total; and
+(iv) For Lots or Parcels greater than or equal to 7,000 square feet: four spaces in total.
+(C) A Large City may allow on-                                                     street parking credits to satisfy off-street parking requirements.
+(D) A Large City may allow, but may not require, off-street parking to be provided as a garage or
+carport.
+(E) A Large City must apply the same off-street parking surfacing, dimensional, landscaping, access,
+and circulation standards that apply to single         -unit detached dwellings in the same zone.
+(F) A Large City may not apply additional minimum parking requirements to Middle Housing created
+as provided in OAR 660-                                                                            046-                                                                  0230.
+(f) Lot or Parcel Coverage and Floor Area Ratio: Large Cities are not required to apply Lot or Parcel
+coverage or floor area ratio standards to Triplexes or Quadplexes. However, if the Large City applies
+Lot or Parcel coverage or floor area ratio standards, it may not establish a cumulative Lot or Parcel
+coverage or floor area ratio for Triplexes or Quadplexes that is less than established for detached
+single-unit dwelling in the same zone.
+(g) A Large City shall work with an applicant for development to determine whether Sufficient
+Infrastructure will be provided, or can be provided, upon submittal of a Triplex or Quadplex
+development application.
+(3) The following governs Large Cities’ regulation of siting standards related to Townhouses:
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        18
+(a) Minimum Lot or Parcel Size: A Large City is not required to apply a minimum Lot or Parcel size to
+Townhouses, but if it applies those standards, the average minimum Lot or Parcel size for Lot or
+Parcels in a Townhouse Project may not be greater than 1,500 square feet. A Large City may apply
+separate minimum Lot or Parcel sizes for internal, external, and corner Townhouse Lots or Parcels
+provided that they average 1,500 square feet, or less. The minimum Lot or Parcel size for a
+Townhouse may be no greater than the minimum Lot or Parcel size for a detached single-                   unit
+dwelling.
+(b) Minimum Street Frontage: A Large City is not required to apply a minimum street frontage
+standard to Townhouses, but if it applies those standards, the minimum street frontage standard must
+not exceed 20 feet. A Large City may allow frontage on public and private streets or alleys; and on
+shared or common drives. If a Large City allows flag Lots or Parcels, it is not required to allow
+Townhouses on those Lots or Parcels.
+(c) Density: If a Large City applies density maximums in a zone, it must allow four times the maximum
+density allowed for detached single                                                                            -unit dwellings in the same zone for the development of
+Townhouses or 25 dwelling units per acre, whichever is less.
+(d) Setbacks: A Large City may not require front, side, or rear setbacks to be greater than those
+applicable to detached single-                                                                                                  unit structures in the same zone and must allow zero-                     foot side setbacks
+for Lot or Parcel lines where Townhouse units are attached.
+(e) Height: A Large City may not apply lower maximum height standards than those applicable to
+detached single-unit dwellings in the same zone.                  If a Large City requires covered or structured
+parking for townhouses, the applicable height standards must allow construction of at least three
+stories. If a Large City does not require covered or structured parking, the applicable height standards
+must allow construction of at least two stories.
+(f) Parking:
+(A) A Large City may not require more than one off-street parking space per Townhouse dwelling unit.
+(B) Nothing in this section precludes a Large City from allowing on-                                                                                               street parking credits to satisfy off-
+street parking requirements.
+(C) A Large City must apply the same off-street parking surfacing, dimensional, landscaping, access,
+and circulation standards that apply to single         -unit detached dwellings in the same zone.
+(g) Bulk and Scale: A Large City is not required to apply standards to control bulk and scale to new
+Townhouses. However, if a Large City chooses to regulate scale and bulk, including but not limited to
+provisions including Lot or Parcel coverage, floor area ratio, and maximum unit size, those standards
+cannot cumulatively or individually limit the bulk and scale of the cumulative Townhouse project
+greater than that of a single                               -unit detached dwelling.
+(h) A Large City shall work with an applicant for development to determine whether Sufficient
+Infrastructure will be provided, or can be provided, upon submittal of a Townhouse development
+application.
+(4) The following governs Large Cities’ regulation of siting standards related to Cottage Clusters:
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        19
+(a) Minimum Lot or Parcel Size: A Large City is           not required to apply minimum Lot or Parcel size
+standards to new Cottage Clusters. However, if a Large City applies standards to regulate minimum
+Lot or Parcel size for Cottage Clusters on a single Lot or Parcel, the minimum Lot or Parcel size for a
+Cottage Cluster may not be greater than the minimum Lot or Parcel size for a detached single                  -unit
+dwelling.
+(b) Minimum Lot or Parcel Width: A Large City is not required to apply minimum Lot or Parcel width
+standards to Cottage Clusters. However, if a Large City applies standards to regulate minimum Lot or
+Parcel width for Cottage Clusters, it may not require a minimum Lot or Parcel width that is greater
+than the standard for a single-                    unit detached dwelling in the same zone.
+(c) Density: A Large City may not apply density maximums to the development of Cottage Clusters. A
+Cottage Cluster development must meet a minimum density of at least four units per acre.
+(d) Setbacks: A Large City may not require perimeter setbacks to be greater than those applicable to
+detached single-unit dwellings in the same zone. Additionally, perimeter setbacks applicable to
+Cottage Cluster dwelling units may not be greater than ten feet. The minimum distance between
+structures may not be greater than what is required by applicable building code requirements or 10
+feet.
+(e) Dwelling Unit Size: A Large City must allow        Cottage Cluster units to have an average floor area of
+up to 1,400 square feet per dwelling unit. A Large City may not include accessory structures                                                                           in the
+calculation of floor area average.                                                                  Nothing in this subsection prohibits a Large City from regulating
+renovations, remodels, additions, or nonconforming uses after development occurs.
+(f) Parking:
+(A) A Large City may not require more than one off-street parking space per dwelling unit in a Cottage
+Cluster.
+(B) A Large City may allow but may not require off-street parking to be provided as a garage or
+carport.
+(C) Nothing in this section precludes a Large City from allowing on-                                                                                               street parking credits to satisfy off-
+street parking requirements.
+(g) Lot or Parcel Coverage and Floor Area Ratio: A Large City may not apply Lot or Parcel coverage
+or floor area ratio standards to Cottage Clusters.
+(h) Nothing in this division precludes a Large City from allowing Cottage Cluster dwelling units on
+individual Lots or Parcels within the Cottage Cluster development.
+(i) A Large City shall work with an applicant for development to determine whether Sufficient
+Infrastructure will be provided, or can be provided, upon submittal of a Cottage Cluster development
+application.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, adopt filed 12/29/2020, effective 12/31/2020
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        20
+660-                                                                        046-0225                                                 Middle Housing Design Standards in Large Cities
+(1) A Large City is not required to apply design standards to Middle Housing. However, if a Large City
+chooses to apply design standards to Middle Housing, it may only apply the following:
+(a) Design standards in the Model Code for Large Cities as provided in OAR 660-                                                                          046-                                                                  0010(4)(b);
+(b) Design standards that are less restrictive than those in the Model Code for Large Cities as
+provided in OAR 660-                                                                            046-0010(4)(b);
+(c) The same clear and objective design standards that the Large City applies to detached single-unit
+structures in the same zone. Design standards may not scale by the number of dwelling units or other
+features that scale with the number of dwelling units, such as primary entrances. Design standards
+may scale with form-based attributes, including but not limited to floor area, street     -facing façade,
+height, bulk, and scale; or
+(d) Alternative design standards as provided in OAR 660-                                                                           046-                                                                  0235.
+(2) A Large City may not apply design standards to Middle Housing created as provided in OAR 660-
+046-                                                                  0230.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, adopt filed 12/29/2020, effective 12/31/2020
+
+660-                                                                        046-0226                                                   Residential Design Standards
+(1) A local government may not apply residential design standards as defined in Oregon Laws 2025,
+chapter 330, section 8(3)(a), compiled as a note after ORS 197A.400 to an application for the
+development of housing within an urban growth boundary unless the application is for the
+development of a multi-unit structure as defined in ORS 197A.465 or fewer than 20 residential units
+as defined in Oregon Laws 2025, chapter 330, section 8(3)(b), compiled as a note after ORS
+197A.400.
+(2) This rule is repealed on January 2, 2033.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: Or Laws 2025, ch 330, §§ 8 and 9, compiled as a note after ORS
+197A.400
+History:
+LCDD 5-2026, adopt filed 05/07/2026, effective 05/18/2026
+
+660-                                                                        046-0230                                                   Middle Housing Conversions
+(1) Additions to, or conversions of, an existing detached single                                                                           -unit dwelling into Middle Housing is
+allowed in a Large City pursuant to OAR 660-                                                                           046-0205(2), provided that the addition or conversion
+does not increase nonconformance with applicable clear and objective standards, unless increasing
+nonconformance is otherwise permitted by the Large City’s development code.
+(2) If Middle Housing is created through the addition to, or conversion of, an existing detached single       -
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        21
+unit dwelling, a Large City or other utility service provider that grants clear and objective exceptions to
+public works standards to detached single         -unit dwelling development must allow the granting of the
+same exceptions to Middle Housing.
+(3) An existing detached single-unit dwelling may remain on a Lot or Parcel with a Cottage Cluster as
+described below:
+(a) The existing single-unit dwelling may be nonconforming with respect to the requirements of the
+applicable code;
+(b) The existing single-unit dwelling may be expanded up to the maximum height, footprint, or unit
+size required by the applicable code; however, an existing single                                                     -unit dwelling that exceeds the
+maximum height, footprint, or unit size of the applicable code may not be expanded;
+(c) The existing single-unit dwelling shall count as a unit in the Cottage Cluster;
+(d) The floor area of the existing single                                                      -unit dwelling shall not count towards any Cottage Cluster
+average or Cottage Cluster project average or total unit size limits; and
+(e) A Large City may apply a time limit on the conversion of a single        -unit dwelling to a Cottage Cluster
+not to exceed five years.
+Statutory/Other Authority: ORS 197.040
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, adopt filed 12/29/2020, effective 12/31/2020
+
+660-                                                                        046-0235                                               Alternative Siting or Design Standards
+A Large City may adopt Siting or Design Standards not authorized by OAR 660-                                                                          046-                                                                   0220 or OAR
+660-                                                                  046-                                                                 0225 as allowed if the city can demonstrate that it meets the applicable criteria in this
+section. Alternative Siting or Design standards do not include minimum Lot or Parcel size and
+maximum density requirements. If a Large City proposes to adopt alternative Siting or Design
+Standards, the Large City must submit to the Department findings and analysis demonstrating that
+the proposed standard or standards will not, individually or cumulatively, cause unreasonable cost or
+delay to the development of Middle Housing. To demonstrate that, the Large City must consider how
+a standard or standards, individually and cumulatively, affect the following factors in comparison to
+what is would otherwise be required under OAR 660-                                                                046-                                                                 0220 or OAR 660-                                           046-                                                                  0225:
+(1) The total time and cost of construction, including design, labor, and materials;
+(2) The total cost of land;
+(3) The availability and acquisition of land, including in areas with existing development;
+(4) The total time and cost of permitting and fees required to make land suitable for development;
+(5) The cumulative livable floor area that can be produced; and
+(6) The proportionality of cumulative time and cost imposed by the proposed standard or standards in
+relationship to the public need or interest the standard or standards fulfill.
+Statutory/Other Authority: ORS 197.040
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        22
+Statutes/Other Implemented: ORS 197A.420
+History:
+LCDD 18-2020, adopt filed 12/29/2020, effective 12/31/2020
+
+660-                                                                        046-0300                                                Purpose of Infrastructure-Based Time Extension Request Process
+OAR 660-                                                                             046-0300 to OAR 660-                                                                             046-                                                                 0370 establish the form and substance of the IBTER application
+and review process. The purpose of these rules is to provide submittal requirements, including
+required data and analyses that a local government must submit with an IBTER, prescribe when a
+local government is eligible for a time extension in response to an IBTER, and to provide the
+evaluation process and criteria that the department will use to review IBTERs and issue Time
+Extensions.
+Statutory/Other Authority: ORS 197.040 & OR Laws 2019, chapter 639, section 4(6), compiled as a
+note after ORS 197A.420
+Statutes/Other Implemented: ORS 197A.420                                                                 & OR Laws 2019, chapter 639, sections 3 and 4,
+compiled as note after           ORS 197A.420
+History:
+LCDD 14-2020, adopt filed 08/07/2020, effective 08/07/2020
+
+660-                                                                        046-0310                                                Entities Eligible to Apply
+Local governments, as defined in OAR 660-                                                                            046-0320, may submit an IBTER.
+Statutory/Other Authority: ORS 197.040 & ORS 197A.420, OR Laws 2019, chapter 639, section
+4(6), compiled as a note after ORS 197A.420
+Statutes/Other Implemented: ORS 197A.420                                                                 & OR Laws 2019, chapter 639, sections 3 and 4,
+compiled as a note after ORS 197A.420
+History:
+LCDD 14-2020, adopt filed 08/07/2020, effective 08/07/2020
+
+660-                                                                        046-0320                                                 Definitions
+In addition to the definitions in OAR 660-                                                                            046-0020 and in ORS 197.015 and ORS 197A.420,                                                                  the
+following definitions apply to OAR 660-                                                                            046-0300 to OAR 660-046-                                                                  0370.                  In the event of a conflict,
+these definitions will take precedence.
+(1) “Acceptable service levels” means measures of public facility adequacy defined by common
+engineering standards of practice, adopted as a policy for a utility, identified by designated authority
+from the decision-                                          making body of a local government, identified in an adopted utility master plan or
+special area utility plan, or as necessary to comply with state or federal law.
+(2) “IBTER” means an infrastructure-                     based time extension request submitted by a local government
+for an extension of time to adopt land use regulations or amend a comprehensive plan as provided for
+under Oregon Laws 2019, chapter 639, section 4.
+(3) “Infill and redevelopment areas” means areas with lot sizes of less than one-                                                                         half an acre that are
+zoned to allow detached single-unit dwellings and that are either vacant or developed with detached
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        23
+single-unit dwellings.
+(4) “Infrastructure” means urban water, sanitary sewer, stormwater, and transportation systems.
+(5) “Local governments” means a city outside a metropolitan service district, with a population of more
+than 2,500                                                                  and less than 25,000; a city inside a metropolitan service district, with a population of more
+than 1,000 and less than 25,000; any city with a population of 25,000 or more; or urban
+unincorporated lands of a county.
+(6) “Significant infrastructure deficiency” means a local government has met the burden of proof to
+demonstrate a situation or situations where the following exists:
+(a) A local government or service provider is unable to provide acceptable service levels within a
+developed, or developing, area zoned to allow detached single                                                                          -unit dwellings; or
+(b) A local government or service provider anticipates that it will be unable to provide acceptable
+service levels by December 31, 2023, based either on extrapolated current development rates alone,
+or based on extrapolated current rates and additional anticipated middle housing development.
+(c) There is no single service level for demonstrating a significant infrastructure deficiency for
+transportation infrastructure. Supporting information regarding the magnitude and severity of the
+deficiency must support a determination that the deficiency has a significant impact on transportation
+function or safety in the affected area. Higher street classifications, traffic volumes, and impacts to the
+function of transportation corridors, rather than a single intersection, will help to support the
+significance of the transportation deficiency. The severity of safety issues may be supported with
+information such as crash data, posted speed limits, sight distance at intersections, or similar
+information.
+(7) "Time extension” is an IBTER as granted by the department.
+(8) “Undeveloped or underdeveloped areas” means areas with lot sizes greater than one-                                                                           half an acre
+that are zoned to allow single-                                unit detached dwellings and are currently developed at a density of two
+dwelling units per acre or less.
+Statutory/Other Authority: ORS 197.040 & ORS 197A.420, OR Laws 2019, chapter 639, section
+4(6), compiled as a note after ORS 197A.420
+Statutes/Other Implemented: ORS 197A.420                                                                 & OR Laws 2019, chapter 639, sections 3 and 4,
+compiled as a note after ORS 197A.420
+History:
+LCDD 14-2020, adopt filed 08/07/2020, effective 08/07/2020
+
+660-                                                                        046-0330                                                 Parameters
+(1) Infrastructure, as defined in OAR 660-                                                                            046-0320(4) and as described in more detail in OAR 660-
+046-                                                                 0340, is eligible as a basis for an IBTER application. An infrastructure deficiency is not significant
+if it would be addressed with infrastructure improvements required in conjunction with the
+development of a single                                           -unit dwelling.
+(2) If a local government is currently unable to issue any new permits for residential development due
+to a jurisdiction-wide significant infrastructure deficiency, the local government must address that
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        24
+situation through the moratorium process provided in ORS 197.505 through ORS 197.540. The
+department will not approve IBTER applications that address this type of situation.
+(3) If a local government intends to continue permitting new single        -unit detached dwellings or other
+development allowed by the current zoning within the area that has a significant infrastructure
+deficiency while deferring middle housing development within the area, the local government shall
+demonstrate that the additional infrastructure demand created by middle housing development would
+cause an unacceptable service level of the infrastructure, or shall provide other valid justification for
+allowing other development in the subject area while prohibiting middle housing development until the
+significant infrastructure deficiency is addressed.
+(4) For the purpose of estimating the additional impacts of middle housing development on
+infrastructure, the local government may assume the following increases in residential development
+that would create additional impacts upon an area that is significantly infrastructure deficient over the
+period ending December 31, 2023:
+(a) The local government shall prepare the baseline estimate for the number of dwelling units per acre
+produced within a residential zoning district by following the process described in ORS
+197A.350(5)(a)(A). A local government may add units produced by middle housing allowances, as
+described in subsections (b) through (f) to estimate residential infrastructure demand within a
+specified area. A local government may include additional infrastructure demand from other existing
+uses within the service area, such as higher density housing, schools, businesses, industrial uses, or
+other uses to estimate a total infrastructure service demand within the area that has a significant
+infrastructure deficiency.
+(b) Infill and redevelopment areas may assume a one percent increase in the number of dwelling
+units produced due to middle housing allowances within the specified residential zone(s), above the
+baseline estimate described in subsection (a) prior to adoption of middle housing allowances. If some
+types of middle housing are currently allowed in a residential zone, the local government must adjust
+the anticipated increase for that area to an estimated fraction of one percent representing additional
+housing production from the middle housing types that are not currently allowed.
+(c) Undeveloped and underdeveloped areas may assume a three percent increase in the number of
+dwelling units produced due to middle housing allowances within the specified residential zone(s),
+above the baseline estimate described in subsection (a) prior to adoption of middle housing
+allowances. If some types of middle housing are currently allowed in a residential zone, the local
+government must adjust the anticipated increase to an estimated fraction of three percent
+representing additional housing production from the middle housing types that are not currently
+allowed.
+(d) The local government may project an increase in anticipated middle housing residential
+development above the thresholds identified in subsections (b) or (c) if it provides quantifiable
+validation of such an increase. For local governments located outside a metropolitan service district,
+the standards for demonstration of a quantifiable validation are provided in subsection (e). For local
+governments within a metropolitan service district, the standards for demonstration of a quantifiable
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        25
+validation are provided in subsection (f).
+(e) A local government located outside a metropolitan service district may provide a quantifiable
+validation by demonstrating an actual increase in residential dwelling units produced above the rates
+anticipated in subsections (b) and (c), within a zone that allows densities that are no higher than those
+that would be allowed with adopted middle housing provisions. The evidence may be derived from an
+existing zone within the local government’s jurisdiction, or from another local government within 25
+miles of the subject local government.
+(f) A local government located inside a metropolitan service district may provide a quantifiable
+validation by demonstrating an actual increase in residential dwelling units produced above the rates
+anticipated in subsections (b) and (c), within a zone that allows densities that are no higher than those
+that would be allowed with adopted middle housing provisions. The evidence may be derived from an
+existing zone within the local government’s jurisdiction, or from another local government within the
+metropolitan service district.
+Statutory/Other Authority: ORS 197.040 & ORS 197A.420, OR Laws 2019, chapter 639, section
+4(6), compiled as a note after ORS 197A.420
+Statutes/Other Implemented: ORS 197A.420                                                                                    & OR Laws 2019, chapter 639, sections 3 and 4,
+compiled as a note after ORS 197A.420
+History:
+LCDD 14-2020, adopt filed 08/07/2020, effective 08/07/2020
+
+660-                                                                        046-0340                                                 Infrastructure-Specific Application   Thresholds
+This rule specifies the circumstances that would justify a time extension for each infrastructure type.
+(1) Transportation. A local government may use the following circumstances to justify a transportation-
+based IBTER:
+(a) Areas where the supporting roadways, intersections, or both are operating or anticipated to
+operate over capacity, not meet currently acceptable service levels, or have existing geometric/safety
+limitations. Supporting information regarding the magnitude and severity of the deficiency must
+support a determination that the deficiency has a significant impact on transportation function or
+safety in the affected area. This type of transportation IBTER applies only to areas where mitigation is
+planned and is either within the jurisdiction and financial capacity of the local government, or is
+planned, financed, and scheduled in partnership with county, state, or other governmental or private
+partners.
+(b) Areas that lack adequate emergency vehicle access per current adopted Fire Code standards,
+and for which mitigation in conjunction with development is not feasible.
+(2) Stormwater. A local government may use the following circumstances to justify a stormwater-
+based IBTER:
+(a) Lack of stormwater infrastructure, or adequately-sized stormwater infrastructure, such as storm
+drainage pipes, curb and gutters, catch basins and inlets, lateral storm connections, regional
+stormwater facilities, and discharge outfalls that results in                     not meeting an acceptable service level. An
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        26
+acceptable service level may include metrics for water quantity discharge, water quality, or both.
+(b) A downstream stormwater conveyance system deficiency, resulting in localized ponding or
+flooding and storm pipe back-ups caused by pipes, culverts, or catch basins in disrepair; these
+problems may be compounded by high groundwater; compacted underlying                                         soils; or backwater from
+nearby waterways during high flows; any of which that results in not meeting an acceptable service
+level.
+(3) Water and Sewer. A local government may use the following circumstances to justify a water or
+sanitary sewer IBTER:
+(a) A significant infrastructure deficiency in localized (not citywide) water or sanitary sewer service that
+results in unacceptable service levels for water or sewer services. For example, maintaining minimum
+water pressure in a water system or exceeding the capacity of existing infrastructure within a sanitary
+sewer system.
+(b) A localized (not citywide) combined sewer/stormwater system that will exceed capacity as a result
+of new middle housing units. As further justification the local government shall demonstrate how it
+would mitigate the deficiency with respect to wastewater capacity and stormwater controls, if both
+aspects would not meet acceptable service levels. In this case, the local government shall include
+descriptions and justifications for the IBTER consistent with the requirements for each of the
+infrastructure types.
+Statutory/Other Authority: ORS 197.040 & ORS 197A.420, OR Laws 2019, chapter 639, section
+4(6), compiled as a note after ORS 197A.420
+Statutes/Other Implemented: ORS 197A.420                                                                 & OR Laws 2019, chapter 639, sections 3 and 4,
+compiled as a note after ORS 197A.420
+History:
+LCDD 14-2020, adopt filed 08/07/2020, effective 08/07/2020
+
+660-                                                                        046-0350                                               Application Submittal Timeline and Requirements
+(1) Local governments requesting a time extension must file IBTER applications with the department
+as follows:
+(a) By December 31, 2020,                                            for local governments subject to ORS 197A.420(3)                                                      as in effect on January
+1, 2023.
+(b) By June 30, 2021,                                                                                                   for local governments subject to ORS 197A.420(2) as in effect on January 1,
+2023.
+(c) By June 3          0, 2026, only for unincorporated urban lands.
+(2) Completeness review. Upon receipt of an IBTER application, the department will conduct a
+preliminary completeness review within 30 calendar days of receipt and notify the local government of
+any additional materials from section (3) that are required to make a complete application. Within one
+week of receiving notification of an incomplete application, the local government shall notify the
+department if it will provide all, some, or none of the requested additional information. If no additional
+information will be provided by the local government, the review period specified in OAR 660-                                                                          046-
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        27
+0360(2) will begin upon receipt of the notification from the local government. If additional information
+is to be provided, the review period specified in OAR 660-                                                                           046-                                                                 0360(2) will begin on the date of receipt
+of the additional information. The local government must submit all requested materials within 60
+calendar days of receipt of a request for additional materials. If the local government does not submit
+some or all of the requested completeness materials within the 60-                                                      day period, the review period
+specified in OAR 660-                                                                             046-0360(2) will begin on the 61st day from the notification of incompleteness,
+and the department will evaluate the application based on the information that the local government
+has submitted by the end of the 60-                                                     day period.
+(3) Required materials. A complete IBTER application from a local government shall include the
+information described in subsections (a) through (g):
+(a) A narrative, graphics, tabular data, and other information as necessary to provide a general
+description of the significant infrastructure deficiency, including:
+(A) A description of the infrastructure and the current system capacity. Relevant information from
+adopted utility master plans, special area utility plans, capital improvement plans, or similar
+documents and studies. Also, an identification of the service level that will not be met, including
+identification of the adopted utility master plan or other authority which establishes the service level.
+(B) A description of the significant infrastructure deficiency. The application shall clarify if capacity is
+exceeded currently, or is anticipated by December 31, 2023, based on current development trends; or
+if the infrastructure is only expected to exceed capacity based on additional impacts from middle
+housing development pursuant to OAR 660-                                                                            046-0330(4).
+(C) If the local government finds significant infrastructure deficiency would be caused only by
+additional middle housing development in the area and plans to continue issuing permits for other
+types of development within the area, a detailed analysis of how and why existing infrastructure can
+continue to meet the needs of other types of development, but not middle housing.
+(D) A description of assumptions used to calculate or estimate system capacity. This includes analysis
+of current impacts on the infrastructure system; impacts from additional development anticipated to
+occur based on current zoning; and impacts anticipated from the allowance for middle housing in the
+areas where it is not currently allowed, as more fully described in OAR 660-046-                                                                  0330(4).
+(E) Documentation of the significant infrastructure deficiency sufficient to allow the department to
+verify that the deficiency exists, including (but not necessarily limited to) items such as; maintenance
+and complaint records, photographs, modeling results (if available), crash data, a deficiency
+documented in an adopted utility master plan, or other evidence of deficiency.
+(b) The name of the service provider if the Infrastructure is owned or operated by another provider,
+along with a description of any agreements between the local government and service provider for
+infrastructure improvements.
+(c) A vicinity map showing the boundary of the impacted areas for which the IBTER is requested. If
+the local government identifies more than one significant infrastructure deficiency (sewer and
+transportation, for example), the map should show the boundary of each deficiency separately and
+any areas of overlap.
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        28
+(d) A regional map, if applicable, showing the significant infrastructure deficiency that otherwise
+provides service to the area where an IBTER is being requested.
+(e) If the local government is subject to ORS 197A.420(2), a description of the local government’s
+plan for middle housing implementation in the impacted area, including identification of areas
+intended for duplex-only provisions, and, as applicable, standards to be applied in goal-protected and
+constrained areas, and areas intended to accommodate triplexes, quadplexes, townhomes, and
+cottage cluster developments.
+(f) A remediation plan that describes the proposed infrastructure improvement(s) intended to remedy
+the significant infrastructure deficiency so that the local government may implement middle housing
+provisions. For each infrastructure improvement project, the description should include, at a minimum:
+(A) The proposed period of time needed to address the significant infrastructure deficiency, including
+phasing and contingencies, if applicable.
+(B) A discussion of the options initially considered for addressing the significant infrastructure
+deficiency, along with an explanation of how the proposed approach is the most expeditiously feasible
+approach available to address the deficiency.
+(C) Explanation of how the improvement project will provide acceptable service levels to anticipated
+middle housing.
+(D) Potential funding source(s), including funding commitments from other governmental agencies or
+private parties, and schedule for project completion.
+(E) Depiction of the area that will be remedied by the project.
+(F) Proposed timeline and associated mapping to demonstrate any phasing of the remediation plan
+where there are several improvement projects identified.
+(G) A map of all other areas within the local government where middle housing will be implemented
+during the extension period.
+(H) If a local government proposes a bond measure or similar financial mechanism that requires voter
+approval as a means to fund an infrastructure improvement project, a local government may also
+propose a contingency plan for funding the infrastructure improvement.
+(g) A narrative detailing how the application is in compliance with the Review Criteria in OAR 660-                                        046-
+0360(5). In response to criterion in OAR 660-046-                                                                0360(5)(d), the local government shall provide a
+map of the local government’s jurisdictional area, depicting US Census tract scores based on the
+Oregon Housing and Community Services Department’s Notice of Funding Availability Scoring
+Criteria
+Map:           (https://geo.maps.arcgis.com/apps/webappviewer/index.html?id=2cb211dbdd3d4cf497d8190
+283f1402f).                   The map identifies census tracts within communities that score low, medium, or high in
+relation to access to opportunity. Those tracts identified as high opportunity areas have a relatively
+low poverty rate, high labor market engagement index, and a low unemployment rate. Low
+opportunity areas have a relatively high poverty rate, low labor market engagement index, and a high
+unemployment rate. The narrative addressing criterion in OAR 660-                                                                           046-0360(5)(d) must refer to the
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        29
+mapped areas in relation to the review criterion.
+Statutory/Other Authority: ORS 197.040 & ORS 197A.420, OR Laws 2019, chapter 639, section
+4(6), compiled as a note after ORS 197A.420
+Statutes/Other Implemented: ORS 197A.420                                                                 & OR Laws 2019, chapter 639, sections 3 and 4,
+compiled as a note after ORS 197A.420
+History:
+LCDD 1-2021, minor correction filed 01/29/2021, effective 01/29/2021
+LCDD 14-2020, adopt filed 08/07/2020, effective 08/07/2020
+
+660-                                                                        046-0360                                                 Review Process, Review Criteria and Appeal Process
+(1) Review and decision-                                          making authority. The department reviews IBTERs for consistency with the
+review criteria and compliance with the procedural requirements in OAR 660-                   046-                                                                      0360. The
+department will deny an IBTER that does not meet either the review criteria or comply with the
+procedural requirements. The department has final decision-                                         making authority for IBTERs. The Land
+Conservation and Development Commission has decision-                                         making authority for appeals of the
+department’s decision.
+(2) Posting for Public Comment. The department will post a timely and complete IBTER on the
+department’s website along with the review criteria provided in section (5) and a statement that any
+person may file a comment regarding the IBTER no more than 21 days after the posting of the
+IBTER.
+(3) Valid Comments. Any person may file a comment with the Department. In order to be considered
+valid, a comment must:
+(a) Be in writing and filed with the Department no more than 21 days after the Department posting of
+the IBTER on the department’s website;
+(b) Address one or more of the five review criteria in section (5); and
+(c) Provide the person’s mailing address.
+(4) Department Decision. The Department shall review the IBTER along with any valid comments and
+shall approve, approve with conditions of approval under section (7), or deny an IBTER. The
+department will mail the decision to the local government submitting the IBTER and any person that
+submitted valid comments. The department will issue a decision on an IBTER as follows:
+(a) Within 90 days of receipt of a complete application for local governments subject to ORS
+197A.420(3);
+(b) Within 120 days of receipt of a complete application for local governments subject to ORS
+197A.420(2).
+(5) Review criteria. The department shall consider the following criteria in the review of IBTERs:
+(a) Whether the identified deficiency is a significant infrastructure deficiency, consistent with the
+parameters and infrastructure-specific thresholds established in OAR 660-                                                                           046-                                                                 0330 and OAR 660-
+046-                                                                  0340.
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        30
+(b) Whether the IBTER has adequately described and documented the identified significant
+infrastructure deficiency and has established a boundary for the requested extension area(s), as
+required by OAR 660-                                                                            046-0350.                   The boundary for the requested time extension is a specific area
+where there is an identified significant infrastructure deficiency.
+(c) Whether the proposed remediation plan is likely to be effective and presents the most
+expeditiously feasible course of action to enable implementation of middle housing provisions.
+(d) Whether, in relation to the opportunity area map provided per OAR 660-                   046-                                                                 0350(3)(g) and any
+other available data sources regarding income, race, or ethnicity within the jurisdiction, the local
+government has demonstrated that correction of the significant infrastructure deficiency will either
+help to overcome patterns of segregation by income, race, or ethnicity, and foster inclusive
+communities free from barriers that restrict access to opportunity based on protected characteristics,
+or, at minimum, will not serve to perpetuate these inequities. To assist with this evaluation, local
+governments may demonstrate that the IBTER is consistent with a plan of actions over time by the
+local government and community partners that will reduce barriers to opportunity for all community
+residents, in all areas within the local government’s jurisdiction.
+(e) Whether the time period proposed for the IBTER is the minimum necessary to remedy the
+significant infrastructure deficiency.
+(6) Response to Comments. The department’s decision under section (4) shall include a response to
+each valid comment.
+(7) Conditions of Approval. The department may impose conditions in time extensions that it deems
+necessary to satisfy the review criteria or to ensure the time extension is consistent with the intent of
+OAR chapter 660, division 46, ORS 197A.420, and Oregon Laws 2019, chapter 639, section 4.
+(8) Appeals.
+(a) Within 21 days of the mailing of the department’s decision the local government submitting the
+IBTER or a person that submitted a valid comment may file an appeal, in writing, of the decision to
+the Land Conservation and Development Commission. The appellant shall simultaneously provide a
+copy of the appeal to each recipient of the department’s decision as indicated by the department’s
+certificate of service.
+(b) Appeals must identify the specific findings and analysis that are alleged to be made in error in
+relation to the applicable criterion or criteria. A challenge to a condition of approval under section (7)
+must specify how the condition is inconsistent with the intent of OAR chapter 660, division 46, ORS
+197A.420,                                                                  and Oregon Laws 2019, chapter 639, section 4.                  An appellant may submit written
+materials in support of the appeal.
+(c) The local jurisdiction or a party that submitted a valid comment may file a written response to the
+appeal with the Department within 21 days of the filing of the appeal.
+(d) The Commission shall hold an appeal hearing within 120 days of the filing of the appeal. The
+appeal hearing shall be a contested case hearing. In making its decision the Commission may
+consider:
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        31
+(A) All materials in the record that led to the Department decision under section (4);
+(B) Any written materials submitted in support of the appeal under subsection (8)(b);
+(C) Any timely written responses filed in response to the appeal under subsection(8)(c);
+(D) The department staff report and recommendation to the Commission; and
+(E) Oral arguments and evidence presented at the appeal hearing.
+(e) The Commission shall issue a final order rejecting or upholding the appeal within 30 days of the
+appeal hearing.
+Statutory/Other Authority: ORS 197.040 & ORS 197A.420, OR Laws 2019, chapter 639, section
+4(6), compiled as a note after ORS 197A.420
+Statutes/Other Implemented: ORS 197A.420                                                                 & OR Laws 2019, chapter 639, sections 3 and 4,
+compiled as a note after ORS 197A.420
+History:
+LCDD 14-2020, adopt filed 08/07/2020, effective 08/07/2020
+
+660-                                                                        046-0370                                                 Duration of Time Extension
+(1) As provided in OAR 660-                                           046-                                                                 0350(3)(f)(A), the IBTER must specify when the local government
+intends to correct the significant infrastructure deficiency. The IBTER must provide a detailed timeline
+for a complete plan of action that will remedy the significant infrastructure deficiency, which may
+include phased infrastructure improvements and contingent actions and timelines based on
+circumstances outside the control of the local government.
+(2) If, for reasons beyond the control of the local government, the local government cannot complete
+an approved remediation plan by the deadline specified in the time extension decision, the local
+government, prior to the expiration date of a time extension, may prepare an amended remediation
+plan and submit the plan for department consideration. With the exception of application deadlines
+specified in OAR 660-                                                                             046-0350(1), the amended remediation plan must be consistent with the
+provisions of OAR 660-                                                                            046-0300 through OAR 660-                                           046-                                                                 0370. The amended remediation plan must
+explain why the initial approved plan could not be completed on schedule. Department review of the
+amended remediation plan is not subject to the completeness review period specified in OAR 660                                                   -
+046-                                                                 0350(2), nor the required decision timelines in OAR 660-046-                                                                 0360(4). Otherwise, the review
+process and criteria for the amended remediation plan must be consistent with the requirements of
+OAR 660-                                                                             046-0360. Additionally, the department shall evaluate                     the following considerations in review
+of any amended remediation plan:
+(a) Whether the local government anticipated or reasonably should have anticipated the
+contingencies causing delay in the initial remediation plan;
+(b) Whether additional delay in the enactment of middle housing allowances is warranted; and
+(c) Whether the allowance for middle housing in the subject area would provide an opportunity for
+other parties to construct the necessary infrastructure as needed in association with middle housing
+development.
+(3) Upon the expiration date of a time extension, the local government must either enact development
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        32
+code regulations implementing middle housing or apply the model code, as applicable, per OAR 660-
+046-                                                                 0100 or OAR 660-046-0200.
+Statutory/Other Authority: ORS 197.040 & ORS 197A.420, OR Laws 2019, chapter 639, section
+4(6), compiled as a note after ORS 197A.420
+Statutes/Other Implemented: ORS 197A.420                                                                 & OR Laws 2019, chapter 639, sections 3 and 4,
+compiled as a note after ORS 197A.420
+History:
+LCDD 14-2020, adopt filed 08/07/2020, effective 08/07/2020
+
+Draft Amendments   – Division 46
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        33

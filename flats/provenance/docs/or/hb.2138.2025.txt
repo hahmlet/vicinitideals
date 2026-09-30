@@ -1,0 +1,2338 @@
+83rd OREGON LEGISLATIVE ASSEMBLY--2025 Regular Session
+
+                                                   Enrolled
+                                       House Bill 2138
+Introduced and printed pursuant to House Rule 12.00. Presession filed (at the request of Governor
+    Tina Kotek for Office of the Governor)
+
+                                        CHAPTER .................................................
+
+                                                       AN ACT
+
+Relating to land use; creating new provisions; amending ORS 34.020, 34.102, 92.031, 92.044, 92.325,
+    93.277, 94.776, 184.453, 184.633, 197.015, 197.090, 197.200, 197.245, 197.360, 197.365, 197.724,
+    197.794, 197.796, 197.825, 197.830, 197A.015, 197A.400, 197A.420, 197A.430, 197A.465, 197A.470,
+    215.402, 215.416, 215.427, 215.429, 223.299, 227.160, 227.173, 227.175, 227.178, 227.179, 227.184,
+    421.649 and 476.394 and sections 3 and 4, chapter 639, Oregon Laws 2019, and section 1, chapter
+    110, Oregon Laws 2024; repealing ORS 92.377, 197.370, 197.375, 197.380, 197.726 and 197.727; and
+    declaring an emergency.
+
+Be It Enacted by the People of the State of Oregon:
+
+                                               MIDDLE HOUSING
+
+    SECTION 1. ORS 197A.420 is amended to read:
+    197A.420. (1) As used in this section and section 3 of this 2025 Act:
+    (a) “City” [or] includes a local government with jurisdiction over unincorporated lands
+within an urban growth boundary.
+    (b) “City with a population of 25,000 or greater” includes,   regardless of size, any city within
+Tillamook County and the communities of Barview/Twin Rocks/Watseco, Cloverdale, Hebo,
+Neahkahnie, Neskowin, Netarts, Oceanside and Pacific City/Woods.
+    [(b) “Cottage clusters” means groupings of no fewer   than four detached housing units per acre with
+a footprint of less than 900 square feet each and that include a common courtyard.]
+    [(c) “Middle housing” means: ]
+    [(A) Duplexes;]
+    [(B) Triplexes;]
+    [(C) Quadplexes;]
+    [(D) Cottage clusters; and]
+    [(E) Townhouses.]
+    (c) “Cottage cluster” means a grouping of dwelling units:
+    (A) That are detached or attached in subgroupings of up to four units in any configura-
+tion;
+    (B) That have a common courtyard; and
+    (C) That each have a small footprint or floor area.
+    (d) “Duplex” means two attached or detached dwellings in any configuration on a lot or
+parcel, other than a lot or parcel created by a middle housing land division.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 1
+    (e)(A) “Middle housing” means housing that consists of duplexes, triplexes, quadplexes,
+cottage clusters or townhouses.
+    (B) “Middle housing” includes dwelling units that are:
+    (i) Additional units allowed under section 3 of this 2025 Act; and
+    (ii) Existing dwelling units to which additional units are added under subsection (4) of
+thissection.
+    (f) “Middle housing land division” has the meaning given that term in ORS 92.031.
+    (g) “Quadplex” means four attached or detached dwellings in any configuration on a lot
+or parcel, other than a lot or parcel created by a middle housing land division.
+    [(d)] (h) [“Townhouses” ] “Townhouse” means a dwelling unit constructed in a row of two or
+more attached units, where each dwelling  unit is located on an individual lot or parcel and shares
+at least one common wall with an adjacent unit.
+    (i) “Triplex” means three attached or detached dwellings in any configuration on a lot
+or parcel, other than a lot or parcel created by a middle housing land division.
+    (j) “Zoned for residential use” means land that:
+    (A) Is within an urban growth boundary;
+    (B) Has base zoning for, or is designated to allow, residential uses;
+    (C) Allows the development of a detached single-unit dwelling;
+    (D) Is not zoned primarily for commercial, industrial, agricultural or public uses; and
+    (E) Is incorporated or urban unincorporated land.
+    (2) Except as provided in subsection (4) of this section, each county, each city with a popu-
+lation of 25,000 or greater, and each [county or] city with a population of 1,000 or greater within
+[a metropolitan service district] Metro, shall allow the development of[:]
+    [(a)] all middle housing types [in areas] on each lot or parcel zoned for residential use. [that
+allow for the development of detached single-family dwellings; and]
+    [(b) A duplex on each lot or parcel zoned for residential use  that allows for the development of
+detached single-family dwellings.]
+    (3) [Except as provided in subsection (4) of this section,] Each city not within [a metropolitan
+service district] Metro with a population of 2,500 or greater and less than 25,000 shall allow the
+development of a duplex on each lot  or parcel zoned for residential use . [that allows for the devel-
+opment of detached single-family dwellings. Nothing in this subsection prohibits a local government
+from allowing middle housing types in addition to duplexes.]
+    [(4)(a) Except within Tillamook County, this section does not apply to:]
+    [(A) Cities with a population of 1,000 or fewer, except inside of Tillamook County; ]
+    [(B) Lands not within an urban growth boundary;]
+    [(C) Lands that are not incorporated and also lack sufficient urban services, as defined in ORS
+195.065;or]
+    [(D) Lands that are not incorporated and are zoned under an interim zoning designation that
+maintains the land’s potential for planned urban development.]
+    [(b) This section does not apply to lands that are not zoned for residential use, including lands
+zoned primarily for commercial, industrial, agricultural or public uses.]
+    (4)(a) Each city required to allow middle housing under subsection (2) or (3) of this sec-
+tion, excluding urban unincorporated land not within Metro, shall allow the lot or parcel to
+include existing housing consisting of:
+    (A) One single-unit dwelling;
+    (B) One single-unit dwelling plus one accessory dwelling unit; or
+    (C) One duplex.
+    (b) The city may require only the new units, and not the existing units, to comply with
+siting and design standards adopted under subsection (5) of this section.
+    (c) Existing units on the lot or parcel may be separated from the new units by a middle
+housing land division and are considered a single unit for the purposes of such division.
+    (5) Local governments:
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 2
+    (a) May regulate siting and design of middle housing required to be permitted under this sec-
+tion, provided that the regulations do not[,] individually or cumulatively[,] discourage, through
+unreasonable costs or delay, the development of all middle housing types permitted in the area
+[through unreasonable costs or delay].
+    (b) [Local governments] May regulate middle housing to comply with protective measures
+adopted pursuant to statewide land use planning goals.
+    (6)(a) A local government may not, based on traffic impacts from any individual middle
+housing development allowed under this section or section 3 of this 2025 Act:
+    (A) Require a traffic impact analysis; or
+    (B) Attribute an exaction other than a generally applicable system development charge
+or fee-in-lieu variance charge or a development requirement specific to the lot or parcel or
+itsfrontage.
+    (b) This subsection does not apply to:
+    (A) Developments of townhouses or cottage clusters with more than twelve units.
+    (B) Lots or parcels created by a division of land, other than a middle housing land divi-
+sion, that occurred within the previous five years.
+    [(6)] (7) This section does not prohibit local governments from permitting:
+    (a) [Single-family] Single-unit dwellings in areas zoned to allow for [single-family] single-unit
+dwellings;or
+    (b) Middle housing in areas not required under this section.
+    [(7)] (8) A local government that amends its comprehensive plan  or land use regulations relating
+to allowing additional middle housing is not required  to consider whether the amendments signif-
+icantly affect an existing or planned transportation facility.
+    SECTION 2.      Section 3 of this 2025 Act is added to and made a part of ORS chapter 197A.
+    SECTION 3.      (1) As used in this section:
+    (a) “Accessible unit” means a unit of housing that complies with the “Type A” require-
+ments applicable to units as set forth in the Standard for Accessible and Usable Buildings
+and Facilities published by the International Code Council and as referenced by the state
+buildingcode.
+    (b) “Affordable unit” means a unit of housing that is subject to an affordable housing
+covenant, as described in ORS 456.270 to 456.295, that:
+    (A) Makes the unit available to purchase for a maximum sales price and requires that
+the unit be purchased by a household with an income below 120 percent of median income,
+with both the maximum price and income threshold as published per region on an annual
+basis by the division of the Oregon Department of Administrative Services that serves as
+office of economic analysis; and
+    (B) Is enforceable for a duration of not less than 10 years from the date of the certificate
+of occupancy.
+    (2) The definitions in ORS 197A.420 apply to this section.
+    (3) On any lot or parcel on which middle housing may be sited under ORS 197A.420 (2)
+or (3), except for urban unincorporated land not within Metro, if one or more of the units
+of middle housing is an accessible or affordable unit, a city shall allow, subject to ORS
+197A.420 (5), the additional development of:
+    (a) For any allowable duplex or triplex, one additional attached or detached dwelling unit,
+resulting in a triplex or quadplex.
+    (b) For any allowable townhouse, quadplex or cottage cluster, up to two additional at-
+tached or detached dwelling units, resulting in additional townhouse or cottage cluster units
+or attached or detached five-unit or six-unit developments.
+    (4) The additional units under this section are subject to the regulations under ORS
+197A.420 (5), except that a city must allow commensurate increases to the developable area,
+floor area, height or density requirements to allow for the development of the units.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 3
+    (5) This section does not limit a local government from enacting density bonuses that
+provide a greater number of accessible or affordable units, or housing that is affordable to
+more families, than required by this section.
+    SECTION 3a. ORS 197A.015, as amended by section 1, chapter 102, Oregon Laws 2024, is
+amended to read:
+    197A.015. As used in this chapter:
+    (1) “Allocated housing need” means the housing need allocated to a city under    ORS 184.453 (2)
+as segmented by income level under ORS 184.453 (4).
+    (2) “Buildable lands” means lands in urban and urbanizable  areas that are suitable, available
+and necessary for the development of needed housing over a 20-year planning period, including both
+vacant land and developed land likely to be redeveloped.
+    (3) “City” and “city with a population of 10,000 or greater” includes, regardless of size:
+    (a) Any city within Tillamook County and the communities of Barview/Twin Rocks/Watseco,
+Cloverdale, Hebo, Neahkahnie, Neskowin, Netarts, Oceanside and Pacific City/Woods; and
+    (b) A county with respect to its jurisdiction over Metro urban unincorporated lands.
+    (4) “Development-ready lands” means buildable lands  that are likely to support the production
+of housing during the period of their housing production target under ORS 184.455 (1) because the
+lands are:
+    (a) Currently annexed and zoned to allow housing through clear and objective standards   and
+procedures;
+    (b) Readily served through adjacent public facilities or identified   for the near-term provision of
+public facilities through an adopted capital improvement plan; and
+    (c) Not encumbered by any applicable local, state or federal protective    regulations or have ap-
+propriate entitlements to prepare the land for development.
+    (5) “Government assisted housing” means housing that is financed in whole   or part by either a
+federal or state housing agency  or a housing authority as defined in ORS 456.005, or housing that
+is occupied by a tenant or tenants who  benefit from rent supplements or housing vouchers provided
+by either a federal or state housing agency or a local housing authority.
+    (6) “Housing capacity” means the  number of needed housing units that can be developed on
+buildable lands within the 20-year planning period based on the land’s comprehensive plan desig-
+nation and capacity for housing development and redevelopment.
+    (7) “Housing production  strategy” means a strategy adopted by a local government to promote
+housing production under ORS 197A.100.
+    (8) “Manufactured dwelling,” “manufactured dwelling park,” “manufactured     home” and “mobile
+home park” have the meanings given those terms in ORS 446.003.
+    (9) “Metro urban unincorporated lands” means [  lands] urban unincorporated lands within the
+Metro urban growth boundary . [that are identified by the county as:]
+    [(a) Not within a city;]
+    [(b) Zoned for urban development;]
+    [(c) Within the boundaries of a sanitary district or sanitary authority formed under ORS chapter
+450 or a district formed for the purposes of sewage works under ORS chapter 451; ]
+    [(d) Within the service boundaries of a water provider with a water system subject to regulation
+as described in ORS 448.119; and]
+    [(e) Not zoned with a designation that maintains the land’s potential for future urbanization.]
+    (10) “Periodic review”   means the process and procedures as set forth in ORS 197.628 to 197.651.
+    (11) “Prefabricated structure” means  a prefabricated structure, as defined in ORS 455.010, that
+is relocatable, more than eight and one-half feet wide and designed for use as a [single-family]
+single-unitdwelling.
+    (12) “Urban unincorporated lands” means lands within an urban growth boundary that
+are identified by the county as:
+    (a) Not within a city;
+    (b) Zoned for urban development;
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 4
+    (c) Within the boundaries of a sanitary district or sanitary authority formed under ORS
+chapter 450 or a district formed for the purposes of sewage works under ORS chapter 451;
+    (d) Within the service boundaries of a water provider with a water system subject to
+regulation as described in ORS 448.119; and
+    (e) Not zoned with a designation that maintains the land’s potential for future
+urbanization.
+    SECTION 4. Section 3, chapter 639, Oregon Laws 2019, as amended by section 21, chapter 223,
+Oregon Laws 2023, and section 3, chapter 283, Oregon Laws 2023, is amended to read:
+    Sec. 3. (1) Notwithstanding ORS 197.646, a local government shall adopt land use regulations
+or amend its comprehensive plan to implement ORS [197.758] 197A.420 or section 3 of this 2025
+Act no later than:
+    (a) June 30, 2021, for each city subject to ORS 197.758 (3) (2021 Edition) as in effect on Jan-
+uary 1, 2023;
+    (b) June 30, 2022, for each local government subject to ORS [ 197.758 (2)] 197A.420 (2), except
+as provided in [paragraph (d)] paragraphs (d) to (f) of this subsection;
+    (c) June 30, 2025, for each city subject to ORS [ 197.758 (3), as amended by section 20 of this 2023
+Act] 197A.420 (3) but not included in paragraph (a) of this subsection; [or]
+    (d) July 1, 2025, for each city, as defined in ORS [197.758] 197A.420, in Tillamook County[.];
+    (e) Except as provided in paragraph (f) of this subsection, January 1, 2027, for cities to
+conform with section 3 of this 2025 Act or the amendments to ORS 197A.420 by section 1 of
+this 2025 Act; or
+    (f) January 1, 2028, for cities to conform with amendments to ORS 197A.420 by section 1
+of this 2025 Act pertaining to changes relating to cottage clusters.
+    (2) The Land Conservation and Development Commission, with the assistance of the Building
+Codes Division of the Department of Consumer and  Business Services, shall develop a model middle
+housing ordinance no later than December 31, 2020.
+    (3) A local government that has not acted within the time provided under subsection (1) of this
+section shall directly apply the model ordinance developed by the commission under subsection (2)
+of this section [under] as provided by ORS 197.646 (3) until the local government acts as described
+in subsection (1) of this section.
+    (4) In adopting regulations or amending a comprehensive plan under this section, a local gov-
+ernment shall consider ways to increase the affordability of middle housing by considering ordi-
+nances and policies that include but are not limited to:
+    (a) Waiving or deferring system development charges;
+    (b) Adopting or amending criteria for property tax exemptions under ORS 307.515 to 307.523,
+307.540 to 307.548 or 307.651 to 307.687 or property tax freezes under ORS 308.450 to 308.481; and
+    (c) Assessing a construction tax under ORS 320.192 and 320.195.
+    SECTION 5. Section 4, chapter 639, Oregon Laws 2019, as amended by section 22, chapter 223,
+Oregon Laws 2023, is amended to read:
+    Sec. 4. (1) The Department of Land Conservation and Development may grant to a  local gov-
+ernment that is subject to ORS [197.758] 197A.420 an extension of the time allowed to adopt land
+use regulations or amend its comprehensive plan under section 3, chapter 639, Oregon Laws 2019.
+    (2) An extension under this section may be applied only to specific areas where the local gov-
+ernment has identified water, sewer, storm drainage or transportation services that   are significantly
+deficient and for which the local government has established a plan of actions that   will remedy the
+deficiency in those services that is approved by the department. The extension may not extend be-
+yond the date that the local government intends to correct the deficiency under the plan.
+    (3) In areas where the extension under this section does not apply, the local government shall
+apply its own land use regulations consistent with section 3 (1), chapter 639, Oregon Laws 2019, or
+the model ordinance developed under section 3 (2), chapter 639, Oregon Laws 2019.
+    (4) A request for an extension by a local government must be filed with the department no later
+than:
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 5
+     (a) December 31, 2020, for a city subject to ORS 197.758 (3) (2021 Edition), as in effect on
+January 1, 2023.
+     (b) June 30, 2021, for a local government subject to ORS [ 197.758 (2)] 197A.420 (2).
+     (c) June 30, 2024, for each city subject to ORS [ 197.758 (3), as amended by section 20 of this 2023
+Act] 197A.420 (3).
+     (d) June 30, 2026, only for unincorporated urban lands.
+     (5) The department shall grant or deny a request for an extension under this section:
+     (a) Within 90 days of receipt of a complete request from a city subject  to ORS [197.758 (3)]
+197A.420(3).
+     (b) Within 120 days of receipt of a complete request from a local  government subject to ORS
+[197.758 (2)] 197A.420 (2).
+     (6) The department shall adopt rules regarding the form and  substance of a local government’s
+application for an extension under this section. The department may include rules regarding:
+     (a) Defining the affected areas;
+     (b) Calculating deficiencies of water, sewer, storm drainage or transportation services;
+     (c) Service deficiency levels required to qualify for the extension;
+     (d) The components and timing of a remediation plan necessary to qualify for an extension;
+     (e) Standards for evaluating applications; and
+     (f) Establishing deadlines and components for the approval of a plan of action.
+     SECTION 5a. ORS 184.453, as amended by section 6, chapter 102, Oregon Laws 2024, is
+amended to read:
+     184.453. (1) On an annual basis the Oregon Department of Administrative Services  shall conduct
+a statewide housing analysis. The analysis must be conducted statewide and segmented into regions
+as determined by the department. The analysis shall estimate factors including, but not limited to:
+     (a) Projected needed housing units over the next 20 years;
+     (b) Current housing underproduction;
+     (c) Housing units needed for people experiencing homelessness; and
+     (d) Housing units projected to be converted into vacation homes or second   homes during the
+next 20 years.
+     (2) At the time the department performs the housing analysis under subsection (1) of this sec-
+tion, the department shall allocate a housing need for each city. For Metro   urban unincorporated
+lands, as defined in ORS 197A.015, the department shall make one allocation for each county in
+Metro.
+     (3) In making an allocation under subsection (2) of this section, the department shall consider:
+     (a) The forecasted population growth under ORS 195.033 or 195.036;
+     (b) The forecasted regional job growth;
+     (c) An equitable statewide distribution of housing for income levels described in subsection (4)
+of this section;
+     (d) The estimates made under subsection (1) of this section;
+     (e) For cities within Metro, the needed housing projected under ORS 197A.348 (2); and
+     (f) The purpose of the Oregon Housing Needs Analysis under ORS 184.451 (1).
+     (4) In estimating and allocating housing need under this section, the department shall segment
+need by the following income levels:
+     (a) Housing affordable to households making less than 30 percent of median family income;
+     (b) Housing affordable to households making 30 percent or more and less than 60 percent of
+median family income;
+     (c) Housing affordable to households making 60 percent or more and less than  80 percent of
+median family income;
+     (d) Housing affordable to households making 80 percent or more and less than 120 percent of
+median family income; and
+     (e) Housing affordable to households making 120 percent or more of median family income.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 6
+    (5) On an annual basis, the department shall publish maximum sales prices and income
+affordability requirements, by region, as described in section 3 (1) of this 2025 Act.
+
+                                      SINGLE ROOM OCCUPANCIES
+
+    SECTION 6. ORS 197A.430 is amended to read:
+    197A.430. (1) As used in this section, “single room occupancy” means a    residential development
+with no fewer than four attached  or detached units that are independently rented and lockable and
+provide living and sleeping space for  the exclusive use of an occupant, but require that the occupant
+share sanitary or food preparation facilities with other units in the occupancy.
+    (2) Within an urban growth boundary, each local government shall allow the development of a
+single room occupancy:
+    (a) With up to six units on each lot or parcel zoned to allow for the   development of a detached
+[single-family] single-unit dwelling; and
+    [(b) With the number of units consistent with the density standards of a lot or parcel zoned to allow
+for the development of residential dwellings with five or more units.]
+    (b) With up to three times the number of units allowed by the maximum density stand-
+ards of a lot or parcel on which is allowed multiunit housing with five or more dwelling units.
+    (3)(a) For a single room occupancy, a local government may not require more parking
+for every three single room occupancy units than the local government requires for:
+    (A) A single detached dwelling, if the single room occupancy development has six or
+fewer units; or
+    (B) A dwelling unit in a multiunit housing development, if the single room occupancy
+development has more than six units.
+    (b) This subsection does not apply to a single room occupancy used as a residential care
+facility as defined in ORS 443.400.
+    SECTION 6a.       A local government shall comply as described in ORS 197.646 (1) with the
+new requirements imposed under the amendments to ORS 197A.430 by section 6 of this 2025
+Act on or before January 1, 2027.
+
+                                    PROMOTING HOUSING DENSITY
+
+    SECTION 7. ORS 93.277 is amended to read:
+    93.277. A provision in a recorded instrument affecting  real property is [not enforceable if:] void
+and unenforceable, as being against the policy of this state of promoting housing availability
+and affordability and affirmatively furthering fair housing as defined in ORS 197A.100, if,
+within an urban growth boundary as defined in ORS 197.015,
+    [(1)] the provision would allow the development of a [ single-family] single-unit dwelling on the
+real property but would prohibit the development of, or the partitioning or subdividing of lands   un-
+der ORS 92.031 for:
+    [(a)] (1) Middle housing, as defined in ORS 197A.420; or
+    [(b)] (2) An accessory dwelling unit allowed under ORS 197A.425 [ (1); and].
+    [(2) The instrument was executed on or after January 1, 2021.]
+    SECTION 7a.       If House Bill 3144 becomes law, section 7 of this 2025 Act (amending ORS
+93.277) is repealed and ORS 93.277, as amended by section 1, chapter 274, Oregon Laws 2025
+(Enrolled House Bill 3144), is amended to read:
+    93.277. (1) A provision in a recorded instrument affecting real property is void and
+unenforceable, as being against the policy of this state of promoting housing availability and
+affordability and affirmatively furthering fair housing as defined in ORS 197A.100, if, within
+an urban growth boundary as defined in ORS 197.015, the provision would allow the develop-
+ment of a single-unit dwelling on the real property but would prohibit the development of,
+or the partitioning or subdividing of lands under ORS 92.031 for:
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 7
+    (a) Middle housing, as defined in ORS 197A.420; or
+    (b) An accessory dwelling unit allowed under ORS 197A.425.
+    [(1)] (2) A provision in a recorded instrument affecting real property is not enforceable if the
+provision would allow the development  of a [single-family] single-unit dwelling on the real property
+but would prohibit the development of[, or the partitioning or subdividing of lands under ORS 92.031
+for]:
+    [(a) Middle housing, as defined in ORS 197A.420;]
+    [(b) An accessory dwelling unit allowed under ORS 197A.425 (1); ]
+    [(c)] (a) A manufactured dwelling, as defined in ORS 446.003; or
+    [(d)] (b) A prefabricated structure, as defined in ORS 197A.015.
+    [(2)] (3) Subsection (2) of this section applies only [if the] to an instrument[:]
+    [(a) Contains a provision described under subsection (1)(a) or (b) of this section and was executed
+on or after January 1, 2021.]
+    [(b) Contains a provision described under subsection (1)(c) or (d) of this section and was ] executed
+on or after [effective date of this 2025 Act] January 1, 2026.
+    SECTION 8.        ORS 93.277 applies to instruments executed before, on or after January 1,
+2021.
+    SECTION 9. ORS 94.776 is amended to read:
+    94.776. (1) A provision in a governing document [ that is adopted or amended on or after January
+1, 2020,] is void and unenforceable, as being against the policy of this state of promoting
+housing availability and affordability and affirmatively furthering fair housing as defined in
+ORS 197A.100, to the extent that the provision would prohibit or have the effect of unreasonably
+restricting the development of, or the dividing of lands under  ORS 92.031 for, housing, including
+accessory dwelling units or middle housing, that is otherwise allowable under the maximum
+density of the zoning for the land.
+    (2) Lots or parcels [resulting], as those terms are defined in ORS 92.010, that result from the
+division of land in a planned community are subject to the governing documents of   the planned
+community [and]. Any resulting dwelling units are allocated assessments and voting rights on the
+same basis as existing units.
+    SECTION 10.        ORS 94.776 applies to governing documents that were adopted before, on
+or after January 1, 2020.
+    SECTION 11.        The amendments to ORS 93.277 and 94.776 by sections 7 and 9 of this 2025
+Act become operative on January 1, 2027.
+    SECTION 12.        The repeal of section 7 of this 2025 Act (amending ORS 93.277) by section
+7a of this 2025 Act and the amendments to ORS 93.277 by section 7a of this 2025 Act become
+operative on January 1, 2027.
+    SECTION 13. ORS 197A.400, as amended by section 2, chapter 533, Oregon Laws 2023, and
+section 4, chapter 111, Oregon Laws 2024, is amended to read:
+    197A.400. (1)(a) Except as provided in subsection (3) of this section, a local government   may
+adopt and apply only clear and objective standards, conditions and procedures regulating  :
+    (A) The development of housing[, including needed housing, on land within an urban growth
+boundary, unincorporated communities designated in a county’s acknowledged comprehensive plan after
+December 5, 1994, nonresource lands and areas zoned for rural residential use as defined in ORS
+215.501.];and
+    (B) Tree removal codes related to the development of housing.
+    (b) The standards, conditions and procedures:
+    [(a)] (A) May include, but are not limited to, one or more provisions regulating the density or
+height of a development.
+    [(b)] (B) May not have the effect, either in themselves or cumulatively, of discouraging needed
+housing through unreasonable cost or delay.
+    [(c)] (C) May be contained in a comprehensive plan, land use regulation or an ordinance relating
+to housing adopted by a city that adopts, including by reference, a model ordinance adopted by the
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 8
+Land Conservation and Development Commission that comports with any qualifications, conditions
+or applicability of the model ordinance.
+    (c) This subsection applies only within:
+    (A) An urban growth boundary;
+    (B) An unincorporated community designated in a county’s acknowledged comprehensive
+plan after December 5, 1994;
+    (C) Nonresource land; or
+    (D) An area zoned for rural residential use as defined in ORS 215.501.
+    (2) The provisions of subsection (1) of this section do not apply to:
+    (a) An application or permit for residential development in an area identified in  a formally
+adopted central city plan, or a regional center as defined by Metro, in a city with a population of
+500,000 or greater.
+    (b) An application or permit for residential development in historic areas designated for pro-
+tection under a land use planning goal protecting historic areas.
+    (3) In addition to an approval process for needed housing based on clear and objective   stand-
+ards, conditions and procedures as  provided in subsection (1) of this section, a local government may
+adopt and apply an alternative approval process for applications and permits for residential devel-
+opment based on approval criteria that are not clear and objective if:
+    (a) The applicant retains the option of proceeding under the approval process that meets the
+requirements of subsection (1) of this section;
+    (b) The approval criteria for the  alternative approval process comply with applicable statewide
+land use planning goals and rules; and
+    (c) The approval criteria for the alternative approval process authorize a density at   or above
+the density level authorized in the zone under  the approval process provided in subsection (1) of this
+section.
+    (4) Subject to subsection (1) of this section, this section does not infringe on a local
+government’s prerogative to:
+    (a) Set approval standards under which a particular housing type is permitted outright;
+    (b) Impose special conditions upon approval of a specific development proposal; or
+    (c) Establish approval procedures.
+
+                      EXPEDITED AND MIDDLE HOUSING LAND DIVISIONS
+
+    SECTION 14. ORS 92.031, as amended by section 10, chapter 102, Oregon Laws 2024, is
+amended to read:
+    92.031. (1) As used in this section, “middle housing land division” means a partition or subdivi-
+sion of a lot or parcel on which the development of middle housing is allowed   under ORS 197A.420
+(2) or (3) or section 3 of this 2025 Act.
+    (2) A city or county shall approve a tentative plan for a middle housing land division if the ap-
+plication includes:
+    [(a) A proposal for development of middle housing in compliance with the Oregon residential spe-
+cialty code and land use regulations applicable to the original lot or parcel allowed under ORS
+197A.420(5);]
+    [(b)] (a) Separate utilities, other than water or wastewater, for each dwelling unit;
+    (b) A proposal for development of middle housing that is in compliance or must comply
+with the Oregon residential specialty code and land use regulations under ORS 197A.420 (5)
+that are applicable to the original lot or parcel and which may consist of:
+    (A) A single duplex, triplex, quadplex, cottage cluster or structure containing
+townhouses;
+    (B) Additional units as allowed by section 3 (3) of this 2025 Act; and
+    (C) Retained or rehabilitated existing units allowed under ORS 197A.420 (4), if any;
+    (c) Proposed easements necessary for each dwelling unit on the plan for:
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 9
+    (A) Locating, accessing, replacing and servicing all utilities;
+    (B) Pedestrian access from each dwelling unit to a private or public road;
+    (C) Any common use areas or shared building elements;
+    (D) Any dedicated driveways or parking; and
+    (E) Any dedicated common area;
+    (d) Exactly one dwelling unit on each resulting lot or parcel, except for  :
+    (A) Lots, parcels or tracts used as common areas ; or
+    (B) Lots or parcels with a detached single-unit dwelling and accessory dwelling unit or
+a duplex as allowed under ORS 197A.420 (4); and
+    (e) Evidence demonstrating how buildings or structures on a resulting lot   or parcel will comply
+with applicable building codes provisions relating to new property lines and, notwithstanding the
+creation of new lots or parcels, how  structures or buildings located on the newly created lots or
+parcels will comply with the Oregon residential specialty code.
+    (3) A city or county may add conditions to the approval of a tentative plan for a    middle housing
+land division to:
+    (a) Subject to subsection (6) of this section, prohibit the further division of the resulting lots
+or parcels.
+    (b) Require that a notation appear on the final plat indicating that the approval was given under
+this section.
+    (4) In reviewing an application for a middle housing land division, a city or county:
+    (a) Shall apply the procedures [under ORS 197.360 to 197.380] applicable to an expedited land
+division under ORS 197.365, if requested by the applicant and without regard to the criteria
+in ORS 197.360 (1).
+    (b) May require street frontage improvements  where a resulting lot or parcel abuts the street
+consistent with land use regulations implementing ORS 197A.420.
+    (c) May not subject an application  to approval criteria except as provided in this section, in-
+cluding that a lot or parcel require driveways, vehicle access, parking or minimum or maximum
+streetfrontage.
+    (d) May not subject the application to procedures, ordinances or regulations adopted     under ORS
+92.044 or 92.046 that are inconsistent with this section or , only if requested by the applicant, ORS
+197.365 [ORS 197.360 to 197.380].
+    (e) [May] Shall allow the submission of an application for a tentative plan for a middle housing
+land division before, after or at the same time as the submission of an application for building
+permits for the middle housing.
+    (f) May require the dedication of right of way if the original parcel did not previously provide
+a dedication.
+    (g) May require separate water and wastewater utilities for each dwelling unit.
+    (h) Shall allow any existing units allowed under ORS 197A.420 (4) to be considered a single
+middle housing unit and allow for the unit to be allocated its own lot or parcel by the divi-
+sion.
+    (5) The type of middle housing developed on the original parcel is not altered by a middle
+housing land division.
+    [(6) Notwithstanding ORS 197A.425 (1), a city or county is not required to allow an accessory
+dwelling unit on a lot or parcel resulting from a middle housing land division.]
+    (6) Notwithstanding ORS 197A.425 (1) and subsection (4)(d) and (e) of this section, a city
+or county may prohibit or add approval criteria to the allowance of a new accessory dwelling
+unit on, or a subsequent middle housing land division of, a lot or parcel resulting from a
+middle housing land division:
+    (a) To the extent allowed under this section and ORS 197A.420; and
+    (b) Provided that the middle housing land division lots or parcels may be used to create
+housing that is at or above the minimum density for the zoning of the land.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 10
+     (7) Notwithstanding any other provision of ORS 92.010 to  92.192, within the same calendar year
+as an original partition that was not a middle housing land division, a city or county may allow
+one or more of the resulting vacant parcels to be further [ divided] partitioned into not more than
+three parcels through a middle housing land division .[, provided that:]
+     [(a) The original partition was not a middle housing land division; and]
+     [(b) The original parcel or parcels not divided will not be part of the resulting partition plat for
+the middle housing land division.]
+     (8) The tentative approval of a middle housing land division is void  if and only if a final subdi-
+vision or partition plat is not approved within three years of the tentative approval. Nothing in this
+section [or ORS 197.360 to 197.380] prohibits a city or county from requiring a  final plat before is-
+suing building permits.
+     SECTION 15. ORS 92.044 is amended to read:
+     92.044. (1)(a) The governing body of a county or  a city shall, by regulation or ordinance, adopt
+standards and procedures, in addition to those otherwise provided by  law, governing, in the area
+over which the county or the city has jurisdiction under ORS 92.042,  the submission and approval
+of tentative plans and plats of subdivisions[ ,] and tentative plans and plats of partitions [in exclusive
+farm use zones established under ORS 215.203].
+     (b) The standards [shall] must include, taking into consideration the location and surrounding
+area of the proposed subdivisions or partitions, requirements for:
+     (A) Placement of utilities subject to subsection (7) of this section, for the width and   location of
+streets or for minimum lot sizes and other requirements the governing body considers necessary for
+lessening congestion in the streets;
+     (B) Securing safety from fire, flood, slides, pollution or other dangers;
+     (C) Providing adequate light and air, including protection and assurance of  access to incident
+solar radiation for potential future use;
+     (D) Preventing overcrowding of land;
+     (E) Facilitating adequate provision of transportation, water supply, sewerage, drainage, educa-
+tion, recreation or other needs; and
+     (F) Protection and assurance of access to wind for potential electrical generation or mechanical
+application.
+     (c) The [ordinances or regulations shall establish] procedures must provide for:
+     (A) The form and contents of tentative plans of partitions and subdivisions  submitted for ap-
+proval.
+     [(d)] (B) [The procedures established by each ordinance or regulation shall provide for ] The co-
+ordination in the review of the tentative plan of  any subdivision or partition with all affected city,
+county, state and federal agencies and all affected special districts.
+     (C) A method by which the city or county may approve a plan or plat that includes fur-
+ther division of one or more of the resulting lots or parcels via concurrently submitted ap-
+plications for middle housing land divisions under ORS 92.031, all to be approved within the
+timelines provided under ORS 215.427 or 227.178.
+     (2)(a) The governing body of a city or county may provide for the delegation of any of its lawful
+functions with respect to subdivisions and partitions to the planning commission of the city or
+county or to an official of the city or county appointed by the governing body for such purpose.
+     (b) If an ordinance or regulation adopted under  this section includes the delegation to a plan-
+ning commission or appointed official of the power to take final action approving or disapproving
+a tentative plan for a subdivision or partition, such ordinance or regulation   may also provide for
+appeal to the governing body from such approval or disapproval.
+     (c) The governing body may establish, by ordinance or regulation, a fee to be charged for an
+appeal under ORS chapter 197, 197A, 215 or 227, except for an appeal under ORS  197.805 to 197.855.
+     (3) The governing body may, by ordinance or regulation, prescribe fees sufficient to defray the
+costs incurred in the review and investigation of and action upon proposed subdivisions   that are
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 11
+submitted for approval pursuant to this section. As used in this subsection, “costs” does not include
+costs for which fees are prescribed under ORS 92.100 and 205.350.
+     (4) The governing body may, by ordinance or regulation, prescribe fees sufficient to    defray the
+costs incurred in the review and investigation of and action upon   proposed partitions that are sub-
+mitted for approval pursuant to this section.
+     (5) Ordinances and regulations adopted under this section [ shall] must be adopted in accordance
+with ORS 92.048.
+     (6) Any ordinance or regulation adopted  under this section [shall] must comply with the com-
+prehensive plan for the city or county adopting the ordinance or regulation.
+     (7) Unless specifically requested by  a public or private utility provider, the governing body of
+a city or county may not require a utility easement except for a utility easement abutting a street.
+Utility infrastructure may not be placed within one foot of a survey monument location   noted on a
+subdivision or partition plat. The governing body of a city or county   may not place additional re-
+strictions or conditions on a utility easement granted under this chapter.
+     (8) For the purposes of this section:
+     (a) “Incident solar radiation” means solar energy falling upon a given surface area.
+     (b) “Wind” means the natural movement of air at an annual average speed measured   at a height
+of 10 meters of at least eight miles per hour.
+     SECTION 16. ORS 215.427, as amended by section 7, chapter 102, Oregon Laws 2024, and sec-
+tion 8, chapter 110, Oregon Laws 2024, is amended to read:
+     215.427. [(1) Except as provided in subsections (3), (5) and (10) of this section, for land within an
+urban growth boundary and applications for mineral aggregate extraction, the governing body of a
+county or its designee shall take final action on an application for a permit, limited land use decision
+or zone change, including resolution of all appeals under ORS 215.422, within 120 days after the ap-
+plication is deemed complete. The governing body of a county or its designee shall take final action on
+all other applications for a permit, limited land use decision or zone change, including resolution of
+all appeals under ORS 215.422, within 150 days after the application is deemed complete, except as
+provided in subsections (3), (5) and (10) of this section.]
+     (1) Except as provided in subsections (3), (5) and (10) of this section, the governing body
+of a county or its designee shall take final action on an application, including resolution of
+all appeals under ORS 215.422, within the shortest applicable period of the following periods,
+all of which begin on the date that the application is deemed complete:
+     (a) 150 days;
+     (b) 120 days, for land within an urban growth boundary or for applications for mineral
+aggregateextraction;
+     (c) 100 days, for an application for the development of affordable housing as provided in
+ORS 197A.470; or
+     (d) 63 days, for an expedited land division under ORS 197.365.
+     (2) If an application [for a permit, limited land use decision or zone change] is incomplete, the
+governing body or its designee shall  notify the applicant in writing of exactly what information is
+missing within 30 days of receipt of the application and  allow the applicant to submit the missing
+information. The application [shall be] is deemed complete for the purpose of subsection (1) of  this
+section [and ORS 197A.470] upon receipt by the governing body or its designee of:
+     (a) All of the missing information;
+     (b) Some of the missing information and written notice from  the applicant that no other infor-
+mation will be provided; or
+     (c) Written notice from the applicant that none of the missing information will be provided.
+     (3)(a) If the application was complete when first submitted  or the applicant submits additional
+information within 180 days of the date the application was first submitted, approval or denial of the
+application must be based:
+     (A) Upon the standards and criteria that were applicable at the  time the application was first
+submitted;or
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 12
+     (B) For an application relating to development of housing, upon the request  of the applicant,
+those standards and criteria that are operative at the time of the request.
+     (b) If an applicant requests review under different  standards as provided in paragraph (a)(B) of
+this subsection:
+     (A) For the purposes of this section, any applicable timelines for completeness review and   final
+decisions restart as if a new application were submitted on the date of the request;
+     (B) For the purposes of this section , [and ORS 197A.470] the application is not deemed complete
+until:
+     (i) The county determines that additional information is  not required under subsection (2) of this
+section; or
+     (ii) The applicant makes a submission under subsection (2) of this section in response to a
+county’srequest;
+     (C) A county may deny a request under paragraph (a)(B) of this subsection if:
+     (i) The county has issued a public notice of the application; or
+     (ii) A request under paragraph (a)(B) of this subsection was previously made; and
+     (D) The county may not require that the applicant:
+     (i) Pay a fee, except to cover additional costs incurred by the county to accommodate the re-
+quest;
+     (ii) Submit a new application or duplicative information, unless information resubmittal is  re-
+quired because the request affects or changes information in other locations in the application or
+additional narrative is required to understand the request in context; or
+     (iii) Repeat redundant processes or hearings that are inapplicable  to the change in standards
+orcriteria.
+     (4) On the 181st day after first being submitted, the application is void if the applicant has been
+notified of the missing information as required under subsection (2) of this section and has not
+submitted:
+     (a) All of the missing information;
+     (b) Some of the missing information and written notice that no other information will be pro-
+vided;or
+     (c) Written notice that none of the missing information will be provided.
+     (5) The period set in subsection (1) of this section [ or the 100-day period set in ORS 197A.470]
+may be extended for a specified period of time at the written request of the   applicant.  The total
+of all extensions, except as provided in subsection (10) of this section for mediation, may not exceed
+215 days.
+     (6) The period set in subsection (1) of this section applies:
+     (a) Only to decisions wholly within the authority and control of the governing body of the
+county;and
+     (b) Unless the parties have agreed to mediation as described  in subsection (10) of this section
+or ORS 197.319 (2)(b).
+     (7) Notwithstanding subsection (6) of this section, the period set in subsection (1) of this section
+[and the 100-day period set in ORS 197A.470 do] does not apply to:
+     (a) A decision of the county making a change to an acknowledged comprehensive plan or a land
+use regulation that is submitted to the Director of the Department of Land Conservation and De-
+velopment under ORS 197.610; or
+     (b) A decision of a county involving an application for the development of residential structures
+within an urban growth boundary, where the county has tentatively approved the application   and
+extends these periods by no more than seven days in order to assure  the sufficiency of its final or-
+der.
+     (8) [Except when an applicant requests an extension under subsection (5) of this section,] If the
+governing body of the county or its designee does not take final  action on an application [for a
+permit, limited land use decision or zone change within 120 days or 150 days, as applicable, after the
+application is deemed complete,] within the applicable periods allowed under subsections (1) and
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 13
+(5) of this section, the county shall refund to the applicant either the unexpended portion  of any
+application fees or deposits previously paid or 50  percent of the total amount of such fees or de-
+posits, whichever is greater. The applicant is not liable for additional  governmental fees incurred
+subsequent to the payment of such fees or deposits. However, the applicant is responsible for the
+costs of providing sufficient additional information to address relevant issues identified in the con-
+sideration of the application.
+     (9) A county may not compel an applicant to  waive the period set in subsection (1) of this sec-
+tion or to waive the provisions of subsection (8) of this section   or ORS [197A.470 or] 215.429 as a
+condition for taking any action on an application , [for a permit, limited land use decision or zone
+change] except when such applications are filed concurrently and considered jointly with a plan
+amendment.
+     (10) The periods set forth in subsections (1) and (5)  of this section [and ORS 197A.470] may be
+extended by up to 90 additional days, if the applicant and the county agree that a  dispute concern-
+ing the application will be mediated.
+     (11) As used in this section, “application” means an application for:
+     (a) A permit;
+     (b) A limited land use decision;
+     (c) A zone change;
+     (d) A consolidated zone change and permit described under ORS 215.416;
+     (e) An expedited land division under ORS 197.365; or
+     (f) A plat consisting of a land division and middle housing land division as described in
+ORS 92.044 (1)(c)(C).
+     SECTION 17. ORS 227.178, as amended by section 8, chapter 102, Oregon Laws 2024, and sec-
+tion 9, chapter 110, Oregon Laws 2024, is amended to read:
+     227.178. (1) Except as provided in subsections (3), (5) and (11) of this section, the governing body
+of a city or its designee shall take final action on an application [  for a permit, limited land use de-
+cision or zone change], including resolution of all appeals under ORS 227.180, within [120 days
+after] the shortest applicable period of the following periods, all of which begin on the date
+that the application is deemed complete[ .]:
+     (a) 120 days;
+     (b) 100 days, for an application for the development of affordable housing as provided in
+ORS 197A.470; or
+     (c) 63 days, for an expedited land division under ORS 197.365.
+     (2) If an application [for a permit, limited land use decision or zone change] is incomplete, the
+governing body or its designee shall notify the applicant in writing  of exactly what information is
+missing within 30 days of receipt of the application and allow the applicant to submit the missing
+information. The application [shall be] is deemed complete for the purpose of subsection (1) of this
+section [or ORS 197A.470] upon receipt by the governing body or its designee of:
+     (a) All of the missing information;
+     (b) Some of the missing information and written notice from the applicant that no other infor-
+mation will be provided; or
+     (c) Written notice from the applicant that none of the missing information will be provided.
+     (3)(a) If the application was complete when first submitted or the applicant submits the re-
+quested additional information within 180 days of the date the application was first submitted, ap-
+proval or denial of the application must be based:
+     (A) Upon the standards and criteria that were applicable at the  time the application was first
+submitted;or
+     (B) For an application relating to development of housing, upon the request  of the applicant,
+those standards and criteria that are operative at the time of the request.
+     (b) If an applicant requests review under different  standards as provided in paragraph (a)(B) of
+this subsection:
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 14
+     (A) For the purposes of this section, any applicable timelines for completeness review and final
+decisions restart as if a new application were submitted on the date of the request;
+     (B) For the purposes of this section , [and ORS 197A.470] the application is not deemed complete
+until:
+     (i) The city determines that additional information is not  required under subsection (2) of this
+section; or
+     (ii) The applicant makes a submission under subsection (2) of this section in response to a city’s
+request;
+     (C) A city may deny a request under paragraph (a)(B) of this subsection if:
+     (i) The city has issued a public notice of the application; or
+     (ii) A request under paragraph (a)(B) of this subsection was previously made; and
+     (D) The city may not require that the applicant:
+     (i) Pay a fee, except to cover additional costs incurred by the city    to accommodate the request;
+     (ii) Submit a new application or duplicative information, unless information resubmittal is re-
+quired because the request affects or changes information in other locations in the   application or
+additional narrative is required to understand the request in context; or
+     (iii) Repeat redundant processes or hearings  that are inapplicable to the change in standards
+orcriteria.
+     (4) On the 181st day after first being submitted, the application is void if the applicant has been
+notified of the missing information as required under subsection (2)  of this section and has not
+submitted:
+     (a) All of the missing information;
+     (b) Some of the missing information and written notice that no other information  will be pro-
+vided;or
+     (c) Written notice that none of the missing information will be provided.
+     (5) The [120-day] period set in subsection (1) of this section [ or the 100-day period set in ORS
+197A.470] may be extended for a specified period of time  at the written request of the applicant. The
+total of all extensions, except as provided in subsection (11) of this section for mediation, may not
+exceed 245 days.
+     (6) The [120-day] period set in subsection (1) of this section applies:
+     (a) Only to decisions wholly within the authority and control of the governing body of    the city;
+and
+     (b) Unless the parties have agreed to mediation as described  in subsection (11) of this section
+or ORS 197.319 (2)(b).
+     (7) Notwithstanding subsection (6) of this section, the [ 120-day] period set in subsection (1) of
+this section [and the 100-day period set in ORS 197A.470 do] does not apply to:
+     (a) A decision of the city making a change to an acknowledged   comprehensive plan or a land
+use regulation that is submitted to the Director of the Department of Land Conservation and De-
+velopment under ORS 197.610; or
+     (b) A decision of a city involving an application for the development of residential structures
+within an urban growth boundary, where the city has tentatively approved the application and ex-
+tends these periods by no more than seven days in order  to assure the sufficiency of its final order.
+     (8) [Except when an applicant requests an extension under subsection (5) of this section,] If the
+governing body of the city or its designee  does not take final action on an application [ for a permit,
+limited land use decision or zone change within 120 days after the application is deemed complete]
+within the period set in subsection (1) of this section, the city shall refund to the applicant,
+subject to the provisions of subsection (9)  of this section, either the unexpended portion of any ap-
+plication fees or deposits previously paid or 50 percent   of the total amount of such fees or deposits,
+whichever is greater. The applicant is not liable for  additional governmental fees incurred subse-
+quent to the payment of such fees or deposits.  However, the applicant is responsible for the costs
+of providing sufficient additional information  to address relevant issues identified in the consider-
+ation of the application.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 15
+     (9)(a) To obtain a refund under subsection (8) of this section, the applicant may either:
+     (A) Submit a written request for payment, either by mail or in person, to the city or its designee;
+or
+     (B) Include the amount claimed in a mandamus petition filed under  ORS 227.179. The court shall
+award an amount owed under this section in its final order on the petition.
+     (b) Within seven calendar days of receiving a request for a refund, the city or its designee shall
+determine the amount of any refund owed. Payment, or notice that no payment  is due, shall be made
+to the applicant within 30 calendar days of receiving the request. Any amount due and not paid
+within 30 calendar days of receipt of the request shall be subject to interest charges   at the rate of
+one percent per month, or a portion thereof.
+     (c) If payment due under paragraph (b) of this subsection is not paid within 120  days after the
+city or its designee receives the  refund request, the applicant may file an action for recovery of the
+unpaid refund. In an action brought by a person under this paragraph, the court shall award to a
+prevailing applicant, in addition to the relief provided  in this section, reasonable attorney fees and
+costs at trial and on appeal. If the city or its designee prevails, the court shall award reasonable
+attorney fees and costs at trial and on appeal if the court finds the petition to be frivolous.
+     (10) A city may not compel an applicant to waive the [ 120-day] period set in subsection (1) of
+this section or to waive the provisions of subsection (8) of this section or ORS [  197A.470 or] 227.179
+as a condition for taking any action on an  application, [for a permit, limited land use decision or
+zone change] except when such applications are filed concurrently and considered jointly with a plan
+amendment.
+     (11) The periods set forth in subsections (1) and (5)  of this section [and ORS 197A.470] may be
+extended by up to 90 additional days, if the applicant  and the city agree that a dispute concerning
+the application will be mediated.
+     (12) As used in this section, “application” means an application for:
+     (a) A permit;
+     (b) A limited land use decision;
+     (c) A zone change;
+     (d) A consolidated zone change and permit described under ORS 227.175;
+     (e) An expedited land division under ORS 197.365; or
+     (f) A plat consisting of a land division and middle housing land division as described in
+ORS 92.044 (1)(c)(C).
+     SECTION 18.       ORS 197.360 and 197.365 are added to and made a part of ORS chapter 197A.
+     SECTION 19. ORS 197.360 is amended to read:
+     197.360. (1) [As used in this section:]
+     [(a) “Expedited land division” means a division of land ] If requested by the applicant, a local
+government shall approve a partition or subdivision made under ORS 92.010 to 92.192, 92.205
+to 92.245 or 92.830 to 92.845 [by a local government that] as an expedited land division under ORS
+197.365 if the division:
+     [(A)] (a) Includes only land that is zoned for residential uses and is within an urban growth
+boundary.
+     [(B)] (b) Is solely for the purposes of residential use, including recreational or open space uses
+accessory to residential use.
+     [(C)] (c) Does not provide for dwellings or accessory buildings  to be located on land that is
+specifically mapped and designated in the comprehensive plan and land use  regulations for full or
+partial protection of natural features under the statewide planning goals that protect:
+     [(i)] (A) Open spaces, scenic and historic areas and natural resources;
+     [(ii)] (B) The Willamette River Greenway;
+     [(iii)] (C) Estuarine resources;
+     [(iv)] (D) Coastal shorelands; and
+     [(v)] (E) Beaches and dunes.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 16
+     [(D)] (d) Satisfies minimum street or other right-of-way connectivity standards established by
+acknowledged land use regulations or, if such standards are not contained in the applicable   regu-
+lations, as required by statewide planning goals or rules.
+     [(E)] (e) Will result in development that either:
+     [(i)] (A) Creates enough lots or parcels to allow building residential units at 80 percent or more
+of the maximum net density permitted by the zoning designation of the site; or
+     [(ii)] (B) Will be sold or rented to households with incomes below  120 percent of the median
+family income for the county in which the project is built.
+     [(b) “Expedited land division” includes  land divisions that create three or fewer parcels under ORS
+92.010 to 92.192 and meet the criteria set forth in paragraph (a) of this subsection.]
+     [(2) An expedited land division as described in this section is not a land use decision  or a limited
+land use decision under ORS 197.015 or a permit under ORS 215.402 or 227.160.]
+     [(3)] (2) [The provisions of ORS 197.360 to 197.380 apply] ORS 197.365 applies to all elements
+of a local government comprehensive plan and land use  regulations applicable to a land division,
+including any planned unit development standards and any procedures designed to regulate:
+     (a) The physical characteristics of permitted uses;
+     (b) The dimensions of the lots or parcels to be created; or
+     (c) Transportation, sewer, water, drainage and other facilities or services necessary for   the
+proposed development, including but not limited to  right-of-way standards, facility dimensions and
+on-site and off-site improvements.
+     [(4)] (3) An application [for an expedited land division submitted to a local government shall]
+under this section must describe the manner in which the proposed division complies with each
+of the provisions of subsection (1) of this section.
+     SECTION 20. ORS 197.365 is amended to read:
+     197.365. [Unless the applicant requests to use the procedure set forth in a comprehensive plan and
+land use regulations, a local government shall use the following procedure for  an expedited land divi-
+sion, as described in ORS 197.360, or a middle housing land division under ORS 92.031:]
+     [(1)(a) If the application for a land division is incomplete, the local government shall notify the
+applicant of exactly what information is missing within 21 days of receipt of the application and allow
+the applicant to submit the missing information. For purposes of computation of time under this section,
+the application shall be deemed complete on the date the applicant submits the requested information
+or refuses in writing to submit it.]
+     [(b) If the application was complete when first submitted or the applicant submits the requested
+additional information within 180 days of the date the application was first submitted, approval or
+denial of the application shall be based upon the standards and criteria that were applicable at the time
+the application was first submitted.]
+     [(2) The local government shall provide written notice of the receipt of the completed application
+for a land division to any state agency, local government or special district responsible  for providing
+public facilities or services to the development and to owners of property within 100 feet of the  entire
+contiguous site for which the application is made. The notification list shall be compiled from the most
+recent property tax assessment roll. For purposes of appeal to  the referee under ORS 197.375, this re-
+quirement shall be deemed met when the local government can provide an affidavit or other certification
+that such notice was given. Notice shall also be provided to any neighborhood or community planning
+organization recognized by the governing body and whose boundaries include the site. ]
+     [(3) The notice required under subsection (2) of this section shall:]
+     [(a) State:]
+     [(A) The deadline for submitting written comments;]
+     [(B) That issues that may provide the basis for an appeal to the referee must be raised in writing
+prior to the expiration of the comment period; and]
+     [(C) That issues must be raised with sufficient specificity to enable the local government  to respond
+to the issue.]
+     [(b) Set forth, by commonly used citation, the applicable criteria for the decision.]
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 17
+    [(c) Set forth the street address or other easily understood geographical reference to the  subject
+property.]
+    [(d) State the place, date and time that comments are due.]
+    [(e) State a time and place where copies of all evidence submitted by the applicant will be available
+for review.]
+    [(f) Include the name and telephone number of a local government contact person.]
+    [(g) Briefly summarize the local decision-making process for the land division decision being
+made.]
+    [(4) After notice under subsections (2) and (3) of this section, the local government shall: ]
+    [(a) Provide a 14-day period for submission of written comments prior to the decision.]
+    Notwithstanding any other requirement applicable to a land use decision under ORS
+chapter 197 or 197A, for an application that is reviewed as an expedited land division based
+on the request of the applicant:
+    (1) A decision is not subject to the requirements of ORS 197.797.
+    (2) A local government:
+    [(b)] (a) Shall make a decision to approve or deny  the application within 63 days of receiving
+a completed application as described in ORS 215.246 or 227.178, based on whether [it] the appli-
+cation satisfies the substantive requirements of the applicable land use  regulations. An approval
+may include conditions to ensure that the application meets the applicable  land use regulations.
+[For applications subject to this section, the local government:]
+    [(A)] (b) [Shall] May not hold a hearing on the application[ ; and] or allow any third party to
+intervene to oppose the application.
+    [(B)] (c) Shall issue a written determination of compliance or noncompliance with applicable
+land use regulations that includes a summary statement explaining the determination. The summary
+statement may be in any form reasonably intended to communicate the  local government’s basis for
+the determination. The determination must include an explanation of the applicant’s right to
+appeal the determination under ORS 197.830 to 197.855.
+    [(c) Provide notice of the decision to the applicant and to those who received notice under sub-
+section (2) of this section within 63 days of the date of a completed application. The notice of decision
+shall include:]
+    [(A) The summary statement described in paragraph (b)(B) of this subsection; and ]
+    [(B) An explanation of appeal rights under ORS 197.375.]
+    (d) Shall provide notice of the decision to the applicant but may not require that notice
+be given to any other person.
+    (e) May assess an application fee calculated to recover the estimated full cost of proc-
+essing an application based on the estimated average cost of such applications. Within one
+year of establishing a fee under this section, the city or county shall review and revise the
+fee, if necessary, to reflect actual experience in processing expedited land decisions.
+    (3) Only the applicant may appeal an expedited land division made under this section.
+    SECTION 21.       ORS 92.377, 197.370, 197.375, 197.380, 197.726 and 197.727 are repealed.
+
+                                                  RULEMAKING
+
+    SECTION 22.        (1) On or before January 1, 2028, the Land Conservation and Development
+Commission shall adopt rules that must include:
+    (a) Prohibiting or restricting siting and design standards that prevent or discourage, or
+have the effect of preventing or discouraging, the siting of middle housing that is manufac-
+tured, site-built or prefabricated;
+    (b) Establishing parameters on unreasonable cost or delay for siting and design standards
+for accessory dwelling units and single room occupancies under standards allowed under ORS
+197A.425 and 197A.430;
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 18
+    (c) Regulating cottage clusters for the purposes of incentivizing the provision of smaller,
+less expensive housing, shared community amenities and other public benefits and including
+regulations that implement the term “small footprint or floor area” as used within the defi-
+nition of cottage clusters in ORS 197A.420;
+    (d) Amending siting and design parameters for middle housing types;
+    (e) Amending permissible discretionary criteria applied by local government in evaluating
+housing under ORS 197A.400 (3);
+    (f) Developing model system development charges for residential development types for
+optional adoption or incorporation by local governments; and
+    (g) Establishing procedures to estimate the reasonable zoned housing capacity of an area
+as part of an inventory of buildable lands or housing capacity under ORS 197A.270, 197A.280
+and 197A.350.
+    (2) In adopting rules under this section, the commission shall:
+    (a) Emphasize improving the efficiency of the development process with a focus on in-
+creasing housing production, availability and affordability, especially that of middle housing,
+accessory dwelling units and single room occupancies.
+    (b) To the extent practicable, implement recommendations in the reports produced under
+section 5 (1) to (3), chapter 110, Oregon Laws 2024.
+    (c) Implement the principles in ORS 197A.025.
+    (d) Adopt operative and applicable dates for the rules, subject to section 3, chapter 639,
+Oregon Laws 2019.
+    (e) Provide a report on or before July 1, 2028, to the interim committees of the Legisla-
+tive Assembly relating to land use, in the manner provided in ORS 192.245, on the feasibility
+and advisability of providing safe harbor protections for cities that use the commission’s
+model system development charges under subsection (1)(f) of this section or otherwise
+incentivizing the use of the models.
+
+                                       CONFORMING AMENDMENTS
+
+    SECTION 23. ORS 34.020 is amended to read:
+    34.020. Except for a proceeding resulting in a  land use decision or limited land use decision as
+defined in ORS 197.015, for which review is provided in ORS 197.830 to 197.845, [or an expedited land
+division as described in ORS 197.360, for which review is provided in ORS 197.375 (8),] any party to
+any process or proceeding before or by any inferior court, officer, or tribunal may have     the decision
+or determination thereof reviewed for errors, as provided in ORS 34.010 to 34.100, and not otherwise.
+Upon a review, the court may review any  intermediate order involving the merits and necessarily
+affecting the decision or determination sought to be reviewed.
+    SECTION 24. ORS 34.102 is amended to read:
+    34.102. (1) As used in this section, “municipal corporation” means a county, city, district   or
+other municipal corporation or public corporation organized for a public purpose, including    a coop-
+erative body formed between municipal corporations.
+    (2) Except for a proceeding resulting in a land use decision or limited land   use decision as de-
+fined in ORS 197.015, for which review is provided in ORS 197.830 to 197.845, [or an expedited land
+division as described in ORS 197.360, for which review is provided in ORS 197.375 (8),] the decisions
+of the governing body of a  municipal corporation acting in a judicial or quasi-judicial capacity and
+made in the transaction of municipal corporation business shall be reviewed only as provided in ORS
+34.010 to 34.100, and not otherwise.
+    (3) A petition for writ of review filed in the circuit court and requesting   review of a land use
+decision or limited land use decision as defined  in ORS 197.015 of a municipal corporation shall be
+transferred to the Land Use Board of Appeals and treated as a notice of intent to appeal if   the pe-
+tition was filed within the time allowed for filing a notice of intent to appeal pursuant to ORS
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 19
+197.830. If the petition was not filed within the time allowed by ORS 197.830, the court shall dismiss
+the petition.
+     (4) A notice of intent to appeal filed with the Land Use  Board of Appeals pursuant to ORS
+197.830 and requesting review of a decision of a municipal corporation made in the transaction of
+municipal corporation business that is not reviewable as a land use decision or limited land use
+decision as defined in ORS 197.015 shall be transferred to the circuit court and treated as   a petition
+for writ of review. If the notice was not filed with the board within the time allowed for   filing a
+petition for writ of review pursuant to ORS 34.010 to 34.100, the court shall dismiss the petition.
+     (5) In any case in which the Land Use Board of Appeals or circuit court   to which a petition or
+notice is transferred under subsection (3) or (4) of this section disputes whether it has authority to
+review the decision with which the petition  or notice is concerned, the board or court before which
+the matter is pending shall refer the question of whether the board or court has authority   to review
+to the Court of Appeals, which shall decide the question in a summary manner.
+     SECTION 25. ORS 92.325, as amended by section 11, chapter 102, Oregon Laws 2024, is
+amended to read:
+     92.325. A person may not sell or lease any subdivided lands or series partitioned lands without
+having complied with all the applicable provisions of ORS 92.305 to 92.495 except that:
+     (1) ORS 92.305 to 92.495 do not apply to the sale or leasing of:
+     (a) Apartments or similar space within an apartment building;
+     (b) Cemetery lots, parcels or units in Oregon;
+     (c) Subdivided lands and series partitioned lands in Oregon that are not in unit ownership  or
+being developed as unit ownerships created under ORS chapter 100, to be used  for residential pur-
+poses and that qualify under ORS 92.337;
+     (d) Property submitted to the provisions of ORS chapter 100;
+     (e) Subdivided lands and series partitioned lands in Oregon expressly zoned for and limited in
+use to nonresidential industrial or nonresidential commercial purposes;
+     (f) Lands in this state sold by lots or parcels of not less than 160 acres each;
+     (g) Timeshares regulated or otherwise exempt under ORS 94.803 and 94.807 to 94.945;
+     (h) Mobile home or manufactured dwelling parks, as defined in ORS 446.003, located  in Oregon;
+     (i) Planned community subdivision of manufactured dwellings or mobile homes  created under
+ORS 92.830 to 92.845;
+     (j) Lots or parcels created [ from an expedited land division] under ORS 197.360; or
+     (k) Lots or parcels created from  a middle housing land division under ORS 92.031 or 92.044
+(1)(c)(C).
+     (2) The subdivider or series partitioner of subdivided and series partitioned lands in a   city or
+county which, at the time tentative approval of a subdivision plat and each partition map for those
+lands is given under ORS 92.040 or an ordinance adopted under ORS 92.046, has a comprehensive
+plan and implementing ordinances that have been acknowledged under ORS 197.251 must only com-
+ply with ORS 92.425, 92.427, 92.430, 92.433, 92.460 and 92.485 in the sale or leasing of such lands.
+     SECTION 26. ORS 184.633 is amended to read:
+     184.633. (1) Subject to policy direction by the Oregon Transportation   Commission, the Director
+of Transportation shall:
+     (a) Be the administrative head of the Department of Transportation;
+     (b) Have power, within applicable budgetary limitations, and in accordance with   ORS chapter
+240, to hire, assign, reassign and coordinate personnel of the department and prescribe their duties
+and fix their compensation, subject to the State Personnel Relations Law;
+     (c) Administer the laws of the state concerning transportation;
+     (d) Intervene, as authorized by the commission, pursuant to the rules of practice and procedure,
+in the proceedings of state and federal agencies which may  substantially affect the interest of the
+consumers and providers of transportation within Oregon; and
+     (e) Construct, coordinate and promote an integrated transportation system in cooperation with
+any city, county, district, port or private entity, as defined in ORS 367.802.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 20
+     (2) In addition to duties otherwise required by law, the director shall prescribe regulations for
+the government of the department, the conduct of its employees, the assignment and performance
+of its business and the custody, use and preservation of its records, papers and property in a manner
+consistent with applicable law.
+     (3) The director may delegate to any of the  employees of the department the exercise or dis-
+charge in the director’s name of any power, duty or function of whatever   character, vested in or
+imposed by law upon the director, including powers, duties or functions delegated to the director
+by the commission pursuant to ORS 184.635. The official act of any such person so acting in the
+director’s name and by the authority of the director shall be considered to be an official act of the
+director.
+     (4) The director shall have authority to require a fidelity bond of any officer or employee of the
+department who has charge of, handles or has access to any state money or property, and who is
+not otherwise required by law to give a bond. The amounts of the bond shall be fixed by the direc-
+tor, except as otherwise provided by law, and the sureties shall be approved by the director. The
+department shall pay the premiums on the bonds.
+     (5)(a) Subject to local government requirements and the provisions of ORS 197.830 to 197.845,
+the director may participate in and seek review of a land  use decision or limited land use decision
+as defined in ORS 197.015[, or an expedited land division as defined in ORS 197.360]. The director
+shall report to the commission on  each case in which the department participates and on the posi-
+tions taken by the director in each case.
+     (b) If a meeting of the commission is scheduled prior to the close of the period for seeking re-
+view of a land use decision[, expedited land division] or limited land use decision, the director  shall
+obtain formal approval from the commission prior to seeking review of the decision. However, if the
+land use decision[, expedited land division] or limited land use decision becomes final less than 15
+days before a meeting of the commission, the director shall proceed as provided in paragraph (c)    of
+this subsection. If the director requests approval from the commission, the applicant and the affected
+local government shall be notified in writing that the director is seeking commission approval. The
+director, the applicant and the affected local government shall be given   reasonable time to address
+the commission regarding the director’s request for approval to seek review. No other testimony
+shall be taken by the commission.
+     (c) If a meeting of the commission is not scheduled prior to the close of the period for seeking
+review of a land use decision[, expedited land division] or limited land use decision, at the next
+commission meeting the director shall report to the commission on each case for   which the depart-
+ment has sought review. The director shall request  formal approval to proceed with each appeal.
+The applicant and the affected local government shall  be notified of the commission meeting in
+writing by the director.  The director, the applicant and the affected local government shall be given
+reasonable time to address the commission regarding the director’s request for approval to proceed
+with the appeal. No other testimony shall be taken by the commission. If the commission does   not
+formally approve an appeal, the director shall file  a motion with the appropriate tribunal to dismiss
+the appeal.
+     (d) A decision by the commission under this subsection is not subject to appeal.
+     (e) For purposes of this subsection, “applicant” means a person seeking approval of    [a permit,
+as defined in ORS 215.402 or 227.160, expedited land division or limited land use decision] an appli-
+cation as defined in ORS 215.427 or 227.178.
+     (6) The director may intervene in an appeal of  a land use decision brought by another person
+in the manner provided for an appeal by the director under subsection (5) of this section.
+     SECTION 27. ORS 197.015, as amended by section 44, chapter 110, Oregon Laws 2024, is
+amended to read:
+     197.015. As used in ORS chapters 195, 196, 197 and 197A, unless the context requires otherwise:
+     (1) “Acknowledgment” means a  commission order that certifies that a comprehensive plan and
+land use regulations, land use regulation or plan or regulation amendment complies with the goals
+or certifies that Metro land use planning goals and objectives, Metro regional framework plan,
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 21
+amendments to Metro planning goals and objectives or amendments to the Metro regional frame-
+work plan comply with the goals.
+     (2) “Board” means the Land Use Board of Appeals.
+     (3) “Carport” means a stationary structure consisting of a roof with its supports    and not more
+than one wall, or storage cabinet substituting for a wall, and used for sheltering a motor vehicle.
+     (4) “Commission” means the Land Conservation and Development Commission.
+     (5) “Comprehensive plan” means a generalized, coordinated land use map and policy statement
+of the governing body of a local government that interrelates all functional and    natural systems and
+activities relating to the use of lands, including but not limited  to sewer and water systems, trans-
+portation systems, educational facilities, recreational  facilities, and natural resources and air and
+water quality management programs.  “Comprehensive” means all-inclusive, both in  terms of the
+geographic area covered and functional and natural activities and systems occurring   in the area
+covered by the plan. “General nature” means a summary of policies and proposals in broad catego-
+ries and does not necessarily indicate specific locations of any area,   activity or use. A plan is “co-
+ordinated” when the needs of all levels of governments, semipublic and private agencies and the
+citizens of Oregon have been considered and accommodated as much as possible. “Land”    includes
+water, both surface and subsurface, and the air.
+     (6) “Department” means the Department of Land Conservation and Development.
+     (7) “Director” means the Director of the Department of Land Conservation and Development.
+     (8) “Goals” means the mandatory statewide land use planning standards adopted by the   com-
+mission pursuant to ORS chapters 195, 196, 197 and 197A.
+     (9) “Guidelines” means suggested approaches designed to   aid cities and counties in preparation,
+adoption and implementation of comprehensive plans in compliance with goals and  to aid state
+agencies and special districts in the preparation, adoption  and implementation of plans, programs
+and regulations in compliance with goals. Guidelines are advisory and  do not limit state agencies,
+cities, counties and special districts to a single approach.
+     (10) “Land use decision”:
+     (a) Includes:
+     (A) A final decision or determination  made by a local government or special district that con-
+cerns the adoption, amendment or application of:
+     (i) The goals;
+     (ii) A comprehensive plan provision;
+     (iii) A land use regulation; or
+     (iv) A new land use regulation;
+     (B) A final decision or determination of a state agency other than the   commission with respect
+to which the agency is required to apply the goals; [ or]
+     (C) A decision of a county planning commission made under ORS 433.763;  or
+     (D) An expedited land division under ORS 197.365;
+     (b) Does not include a decision of a local government:
+     (A) That is made under land use standards that do not require interpretation or the exercise
+of policy or legal judgment;
+     (B) That approves or denies a building permit issued under clear and objective land use stand-
+ards;
+     (C) That is a limited land use decision;
+     (D) That determines final engineering design, construction, operation, maintenance,  repair or
+preservation of a transportation facility that is otherwise authorized by and consistent with   the
+comprehensive plan and land use regulations;
+     [(E) That is an expedited land division as described in ORS 197.360;]
+     [(F)] (E) That approves, pursuant to ORS 480.450 (7), the siting, installation, maintenance or
+removal of a liquefied petroleum gas container or receptacle regulated exclusively by the State Fire
+Marshal under ORS 480.410 to 480.460;
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 22
+     [(G)] (F) That approves or denies approval of a  final subdivision or partition plat or that de-
+termines whether a final subdivision or partition plat substantially conforms to the tentative subdi-
+vision or partition plan; or
+     [(H)] (G) That a proposed state agency action subject to ORS   197.180 (1) is compatible with the
+acknowledged comprehensive plan and land use regulations implementing the plan, if:
+     (i) The local government has already made a land use decision   authorizing a use or activity that
+encompasses the proposed state agency action;
+     (ii) The use or activity that would be authorized, funded or undertaken by the proposed   state
+agency action is allowed without review under the  acknowledged comprehensive plan and land use
+regulations implementing the plan; or
+     (iii) The use or activity that would be authorized, funded or undertaken by the proposed state
+agency action requires a future land use review under the acknowledged comprehensive   plan and
+land use regulations implementing the plan;
+     (c) Does not include a decision by a school district to close a school;
+     (d) Does not include, except as provided in ORS 215.213 (13)(c) or 215.283  (6)(c), authorization
+of an outdoor mass gathering as defined in ORS 433.735, or other gathering of fewer than 3,000
+persons that is not anticipated to continue for more than 120 hours in any three-month period; and
+     (e) Does not include:
+     (A) A writ of mandamus issued by a circuit court in accordance with ORS 215.429 or 227.179;
+     (B) Any local decision or action taken on an application subject to ORS 215.427 or 227.178 after
+a petition for a writ of mandamus has been filed under ORS 215.429 or 227.179; or
+     (C) A state agency action subject to ORS 197.180 (1), if:
+     (i) The local government with land use jurisdiction over a use or activity that would be au-
+thorized, funded or undertaken by the state agency as a result of the state  agency action has al-
+ready made a land use decision approving the use or activity; or
+     (ii) A use or activity that would be authorized, funded or undertaken by the state   agency as a
+result of the state agency action is allowed without review under the   acknowledged comprehensive
+plan and land use regulations implementing the plan.
+     (11) “Land use regulation” means any  local government zoning ordinance, land division ordi-
+nance adopted under ORS 92.044 or 92.046 or similar general ordinance establishing standards for
+implementing a comprehensive plan.
+     (12)(a) “Limited land use decision” means a final decision or determination made by a local
+government pertaining to a site within an urban growth boundary that concerns:
+     (A) The approval or denial of a tentative subdivision or partition plan, as described in ORS
+92.040(1).
+     (B) The approval or denial of an application based on discretionary standards designed to reg-
+ulate the physical characteristics of  a use permitted outright, including but not limited to site re-
+view and design review.
+     (C) The approval or denial of an application for a replat.
+     (D) The approval or denial of an application for a property line adjustment.
+     (E) The approval or denial of an application for an extension, alteration or expansion of a non-
+conforming use.
+     (b) “Limited land use decision” does not mean a final decision made by  a local government
+pertaining to a site within an urban growth boundary that concerns approval or denial of a final
+subdivision or partition plat or that determines whether a final subdivision or partition plat sub-
+stantially conforms to the tentative subdivision or partition plan.
+     (13) “Local government” means any city,  county or Metro or an association of local govern-
+ments performing land use planning functions under ORS 195.025.
+     (14) “Metro” means a metropolitan service district organized under ORS chapter 268.
+     (15) “Metro planning goals and objectives” means the land use goals and objectives that    Metro
+may adopt under ORS 268.380 (1)(a). The goals and objectives do not constitute a comprehensive
+plan.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 23
+     (16) “Metro regional framework plan” means the regional framework plan required    by the 1992
+Metro Charter or its separate components.  Neither the regional framework plan nor its individual
+components constitute a comprehensive plan.
+     (17) “New land use regulation” means a land use regulation other than an amendment to an
+acknowledged land use regulation adopted by a local government that already   has a comprehensive
+plan and land regulations acknowledged under ORS 197.251.
+     (18) “Person” means any individual, partnership,  corporation, association, governmental subdi-
+vision or agency or public  or private organization of any kind. The Land Conservation and Devel-
+opment Commission or its designee is considered a person for purposes of  appeal under ORS
+chapters 195, 197 and 197A.
+     (19) “Special district” means any unit of local government,   other than a city, county, Metro or
+an association of local governments performing land use planning functions   under ORS 195.025, au-
+thorized and regulated by statute and includes but is not limited to water control   districts, domestic
+water associations and water cooperatives,  irrigation districts, port districts, regional air quality
+control authorities, fire  districts, school districts, hospital districts, mass transit districts and sani-
+tary districts.
+     (20) “Urban growth boundary” means  an acknowledged urban growth boundary contained in a
+city or county comprehensive plan or adopted by Metro under ORS 268.390 (3).
+     (21) “Urban unincorporated community” means an area designated in a county’s acknowledged
+comprehensive plan as an urban unincorporated community after December 5, 1994.
+     (22) “Voluntary association of local governments” means a   regional planning agency in this
+state officially designated by the Governor pursuant to the federal Office of Management and Budget
+Circular A-95 as a regional clearinghouse.
+     (23) “Wetlands” means those areas that are inundated or saturated by surface   or ground water
+at a frequency and duration that are sufficient to support, and that under normal circumstances do
+support, a prevalence of vegetation typically adapted for life in saturated soil conditions.
+     SECTION 28. ORS 197.090 is amended to read:
+     197.090. (1) Subject to policies adopted by the Land Conservation and Development Commission,
+the Director of the Department of Land Conservation and Development shall:
+     (a) Be the administrative head of the Department of Land Conservation and Development.
+     (b) Coordinate the activities of the department in its  land conservation and development func-
+tions with such functions of federal agencies, other state  agencies, local governments and special
+districts.
+     (c) Appoint, reappoint, assign and reassign all subordinate officers and employees of the de-
+partment, prescribe their duties and fix their compensation, subject to the   State Personnel Relations
+Law.
+     (d) Represent this state before any agency of this state, any other  state or the United States
+with respect to land conservation and development within this state.
+     (2)(a) Subject to local government requirements and the provisions of ORS 197.830 to 197.845,
+the director may participate in and seek review of:
+     (A) A land use decision[, expedited land division] or limited land use decision involving the goals
+or involving an acknowledged  comprehensive plan and land use regulations implementing the plan;
+or
+     (B) Any other matter within the statutory authority of the department or commission under ORS
+chapters 195, 196, 197 and 197A.
+     (b) The director shall report to the commission on each case in which the department partic-
+ipates and on the positions taken by the director in each case.
+     (c) If a meeting of the commission is scheduled prior to the close of the period for seeking   re-
+view of a land use decision[, expedited land division] or limited land use decision, the director  shall
+obtain formal approval from the commission prior to seeking review of the decision. However, if the
+land use decision[, expedited land division] or limited land use decision becomes final less than 15
+days before a meeting of the commission, the director shall proceed as provided in paragraph    (d) of
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 24
+this subsection. If the director requests approval from the commission, the applicant and the affected
+local government shall be notified in writing that the director is seeking   commission approval. The
+director, the applicant and the affected local government shall be given reasonable time to address
+the commission regarding the director’s request for approval to seek review. The parties    shall limit
+their testimony to the factors established under subsection (3) of this section. No other   testimony
+shall be taken by the commission.
+     (d) If a meeting of the commission is not scheduled  prior to the close of the period for seeking
+review of a land use decision[, expedited land division] or limited land use decision, at the next
+commission meeting the director shall report to the commission on each case for   which the depart-
+ment has sought review. The director shall request  formal approval to proceed with each appeal.
+The applicant and the affected local government shall  be notified of the commission meeting in
+writing by the director.  The director, the applicant and the affected local government shall be given
+reasonable time to address the commission regarding the director’s request for approval to proceed
+with the appeal.  The parties shall limit their testimony to the factors established under   subsection
+(3) of this section. No other  testimony shall be taken by the commission. If the commission does not
+formally approve an appeal, the director shall file  a motion with the appropriate tribunal to dismiss
+the appeal.
+     (e) A decision by the commission under this subsection is not subject to appeal.
+     (f) For purposes of this subsection, “applicant” means a person   seeking approval of a permit, as
+defined in ORS 215.402 or 227.160, [expedited land division] or limited land use decision.
+     (3) The commission by rule shall adopt a set of factors for the commission to consider when
+determining whether to appeal or intervene in the appeal of a land use decision[  , expedited land di-
+vision] or limited land use decision that involves the application of the goals, acknowledged com-
+prehensive plan, land use regulation or other matter within the authority of the department or
+commission under ORS chapters 195, 196, 197 and 197A.
+     (4) The director may intervene in an appeal of a land use decision[ , expedited land division] or
+limited land use decision brought by another person in the manner provided for an appeal by the
+director under subsection (2)(c) and (d) of this section.
+     SECTION 29. ORS 197.200 is amended to read:
+     197.200. (1) A local government may convene a  land use proceeding to adopt a refinement plan
+for a neighborhood or community within its jurisdiction and inside the urban growth boundary as
+provided in this section.
+     (2) A refinement plan is more detailed than a comprehensive plan and applies to a specific ge-
+ographic area. A refinement plan shall:
+     (a) Establish efficient density ranges, including a  minimum and a maximum density for residen-
+tial land uses;
+     (b) Establish minimum and maximum floor area ratios or site coverage requirements for  non-
+residential uses;
+     (c) Be based on a planning process meeting statewide planning goals; and
+     (d) Include land use regulations to implement the plan.
+     (3) A refinement plan and associated land use regulations adopted prior to September 9, 1995,
+may qualify as a refinement plan if the local government holds a public hearing to gather public
+comment and decides to adopt the plan as a refinement plan under this section.
+     (4) A local government shall apply the procedures for expedited land divisions described in ORS
+[197.360 to 197.380] 197.365 to all applications for land division and site or design  review located in
+any area subject to an acknowledged refinement plan. The review shall include:
+     (a) All elements of a local government comprehensive plan and land use regulations   that must
+be applied in order to approve or deny any such application; and
+     (b) Any planned unit development standards and any procedures designed to regulate:
+     (A) The physical characteristics of permitted uses;
+     (B) The dimensions of the lots or parcels to be created; or
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 25
+     (C) Transportation, sewer, water, drainage and other facilities  or services necessary for the
+proposed development.
+     [(5) Any decision made on a refinement plan described in subsection (3) of this section shall be
+appealed only as provided for appeals of expedited land division decisions in ORS 197.375.]
+     [(6)] (5) Refinement plans and implementing ordinances may be adopted through the post-
+acknowledgment or periodic review process.
+     SECTION 30. ORS 197.245 is amended to read:
+     197.245. The Land Conservation and Development Commission may periodically amend the ini-
+tial goals and guidelines adopted under ORS 197.240 and adopt new goals and guidelines. The
+adoption of amendments to or of new goals shall be done in the manner provided in ORS 197.235
+and 197.240 and shall specify with particularity those goal provisions that are   applicable to land use
+decisions[, expedited land divisions] and limited land use decisions before plan revision. The com-
+mission shall establish the effective date  for application of a new or amended goal. Absent a com-
+pelling reason, the commission shall not require  a comprehensive plan, new or amended land use
+regulation, land use decision[, expedited land division] or limited land use decision to be consistent
+with a new or amended goal until one year after the date of adoption.
+     NOTE: Section 31 was deleted by amendment. Subsequent sections were not renumbered.
+     SECTION 32. ORS 197.724 is amended to read:
+     197.724. (1) An applicant for a new industrial use or the expansion of an existing  industrial use
+located within a regionally significant industrial area may request that   an application for a land use
+permit be reviewed as an application for an expedited industrial land use permit under  this section
+if the proposed use does not require:
+     (a) An exception taken under ORS 197.732 to a statewide land use planning goal;
+     (b) A change to the acknowledged comprehensive plan or land use regulations of the local gov-
+ernment within whose land use jurisdiction the new or expanded industrial use would occur; or
+     (c) A federal environmental impact statement under the National Environmental Policy Act.
+     (2) If the applicant makes a request that complies with subsection (1) of this section, the local
+government shall review the applications for land use permits for the proposed industrial use by
+applying the standards and criteria that otherwise apply to the review and   by using the procedures
+set forth for review of an expedited land division in ORS 197.365 [ and 197.370].
+     SECTION 33. ORS 197.794 is amended to read:
+     197.794. (1) As used in this section, “railroad company” has the meaning given   that term in ORS
+824.200.
+     (2) If a railroad-highway crossing provides or will provide the only access to land   that is the
+subject of an application for a land use decision[ ,] or a limited land use decision [or an expedited
+land division], the applicant must indicate that fact in the application submitted to the decision
+maker.
+     (3) The decision maker shall provide notice to the Department of  Transportation and the rail-
+road company whenever the decision maker receives the information described    under subsection (2)
+of this section.
+     SECTION 34. ORS 197.796 is amended to read:
+     197.796. (1) An applicant [for a land use decision, limited land use decision or expedited land di-
+vision or for a permit] under ORS 215.427 or 227.178 may accept a condition of approval imposed
+under ORS 215.416 or 227.175 and file a challenge to the condition under this section. Acceptance
+by an applicant [for a land use decision, limited land use decision, expedited land division or permit]
+under ORS 215.427 or 227.178 of a condition of approval imposed under ORS 215.416 or 227.175 does
+not constitute a waiver of the right to challenge the condition of approval.    Acceptance of a condi-
+tion may include but is not limited to paying a fee, performing an act or providing satisfactory evi-
+dence of arrangements to pay the fee or to ensure compliance with the condition.
+     (2) Any action for damages under this section shall  be filed in the circuit court of the county
+in which the application was submitted within 180 days of the date of the decision.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 26
+     (3)(a) A challenge filed pursuant to this section may not be  dismissed on the basis that the ap-
+plicant did not request a variance to the condition of approval or any other available form of re-
+consideration of the challenged condition. However, an applicant shall comply with ORS    197.797 (1)
+prior to appealing to the Land Use Board of Appeals or bringing an action for damages in circuit
+court and must exhaust all local appeals provided  in the local comprehensive plan and land use
+regulations before proceeding under this section.
+     (b) In addition to the requirements of ORS 197.797 (5), at the commencement of the initial public
+hearing, a statement shall be made to the applicant that the failure of the applicant to raise con-
+stitutional or other issues relating  to proposed conditions of approval with sufficient specificity to
+allow the local government or its designee to respond to the issue precludes an action for damages
+in circuit court.
+     (c) An applicant is not required to raise an issue under this subsection unless the condition of
+approval is stated with sufficient specificity to enable the applicant to respond to the condition prior
+to the close of the final local hearing.
+     (4) In any challenge to a condition of approval that is subject to the Takings Clause    of the Fifth
+Amendment to the United States Constitution, the local government shall have the burden of dem-
+onstrating compliance with the constitutional requirements for imposing the condition.
+     (5) In a proceeding in circuit court under this section, the court shall award costs and reason-
+able attorney fees to a prevailing  party. Notwithstanding ORS 197.830 (15), in a proceeding before
+the Land Use Board of Appeals under this section, the board shall award costs and reasonable at-
+torney fees to a prevailing party.
+     (6) This section applies to appeals by the applicant of a condition of approval and claims filed
+in state court seeking damages for the unlawful imposition  of conditions of approval [ in a land use
+decision, limited land use decision, expedited land division or permit] of an application made under
+ORS 215.427 or 227.178.
+     SECTION 35. ORS 197.825 is amended to read:
+     197.825. (1) Except as provided in ORS 197.320 and subsections (2) and (3) of this section, the
+Land Use Board of Appeals shall have exclusive jurisdiction  to review any land use decision or
+limited land use decision of a local government, special district or a state agency in the manner
+provided in ORS 197.830 to 197.845.
+     (2) The jurisdiction of the board:
+     (a) Is limited to those cases in which the petitioner has exhausted all remedies available by right
+before petitioning the board for review;
+     (b) Is subject to the provisions of ORS 197.850 relating to  judicial review by the Court of Ap-
+peals;
+     (c) Does not include a local government decision that is:
+     (A) Submitted to the Department of Land Conservation and Development for acknowledgment
+under ORS 197.251, 197.626 or 197.628 to 197.651 or a matter arising out of a local government de-
+cision submitted to the department for acknowledgment, unless the Director of the Department of
+Land Conservation and Development, in the director’s sole discretion, transfers the matter to the
+board;or
+     (B) Subject to the review authority of the department under ORS 197.412, 197.445, 197.450 or
+197.455 or a matter related to a local government decision subject to the review authority of the
+department under ORS 197.412, 197.445, 197.450 or 197.455;
+     (d) Does not include those land use decisions of a state agency over which the Court of    Appeals
+has jurisdiction for initial judicial review under ORS 183.400, 183.482 or other statutory provisions;
+     (e) Does not include any rules, programs, decisions, determinations or activities carried out un-
+der ORS 527.610 to 527.770, 527.990 (1) and 527.992; and
+     (f) Is subject to ORS 196.115 for any county land use decision that may be reviewed by the
+Columbia River Gorge Commission pursuant to sections 10(c) or 15(a)(2) of the Columbia River
+Gorge National Scenic Area Act, P.L. 99-663[ ; and].
+     [(g) Does not include review of expedited land divisions under ORS 197.360.]
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 27
+     (3) Notwithstanding subsection (1) of this section, the circuit  courts of this state retain juris-
+diction:
+     (a) To grant declaratory, injunctive or mandatory relief  in proceedings arising from decisions
+described in ORS 197.015 (10)(b) or proceedings brought to enforce the provisions of an adopted
+comprehensive plan or land use regulations; and
+     (b) To enforce orders of the board in appropriate proceedings brought by the board or    a party
+to the board proceeding resulting in the order.
+     SECTION 36. ORS 197.830 is amended to read:
+     197.830. (1) Review of land use decisions or limited land use decisions  under ORS 197.830 to
+197.845 shall be commenced by filing a notice of intent to appeal with the Land Use Board of Ap-
+peals.
+     (2) Except as provided in ORS 197.620, a person may petition the board for review of a land use
+decision or limited land use decision if the person:
+     (a) Filed a notice of intent to appeal the decision as provided in subsection (1) of this   section;
+and
+     (b) Appeared before the local government, special district or state agency orally or in writing.
+     (3) If a local government makes a land use decision without providing a hearing, except as
+provided under ORS 197.365 (2), 215.416 (11) or 227.175 (10), or the local government makes a land
+use decision that is different from the proposal described in the notice of hearing to such a degree
+that the notice of the proposed action did not reasonably describe the local government’s final
+actions, a person adversely affected by the decision may appeal the decision to the board under this
+section:
+     (a) Within 21 days of actual notice where notice is required; or
+     (b) Within 21 days of the date a person knew or should have known of the decision where no
+notice is required.
+     (4) If a local government makes a land use decision without a hearing pursuant to   ORS 215.416
+(11) or 227.175 (10):
+     (a) A person who was not provided notice of the decision as required   under ORS 215.416 (11)(c)
+or 227.175 (10)(c) may appeal the decision to the board under this section within 21 days of receiving
+actual notice of the decision.
+     (b) A person who is not entitled to notice under ORS 215.416 (11)(c) or 227.175 (10)(c) but who
+is adversely affected or aggrieved by the decision may appeal the decision to the board    under this
+section within 21 days after the expiration of the period for filing a local appeal of the decision es-
+tablished by the local government under ORS 215.416 (11)(a) or 227.175 (10)(a).
+     (c) A person who receives notice of  a decision made without a hearing under ORS 215.416 (11)
+or 227.175 (10) may appeal the decision to the board under this section within 21 days of receiving
+actual notice of the nature of the decision, if the notice of the decision did not    reasonably describe
+the nature of the decision.
+     (d) Except as provided in paragraph (c) of  this subsection, a person who receives notice of a
+decision made without a hearing under ORS  197.365 (2), 215.416 (11) or 227.175 (10) may not appeal
+the decision to the board under this section.
+     (5) If a local government makes a limited land use decision which is different from the proposal
+described in the notice to such a degree that the notice of the proposed action did not    reasonably
+describe the local government’s final  actions, a person adversely affected by the decision may appeal
+the decision to the board under this section:
+     (a) Within 21 days of actual notice where notice is required; or
+     (b) Within 21 days of the date a person knew or should have known of the decision where no
+notice is required.
+     (6) The appeal periods described in subsections (3), (4) and (5) of this section:
+     (a) May not exceed three years after the date of  the decision, except as provided in paragraph
+(b) of this subsection.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 28
+     (b) May not exceed 10 years after the date of the decision if notice of a hearing or an adminis-
+trative decision made pursuant to ORS 197.195 or 197.797 is required but has not been provided.
+     (7)(a) Within 21 days after a notice of intent to appeal has been filed with  the board under
+subsection (1) of this section, any person described   in paragraph (b) of this subsection may intervene
+in and be made a party to the review proceeding by filing a motion to intervene and by paying a
+filing fee of $100.
+     (b) Persons who may intervene in and be made a party to the review proceedings, as   set forth
+in subsection (1) of this section, are:
+     (A) The applicant who initiated the action before the local government,   special district or state
+agency; or
+     (B) Persons who appeared before the local  government, special district or state agency, orally
+or in writing.
+     (c) Failure to comply with the deadline or  to pay the filing fee set forth in paragraph (a) of this
+subsection shall result in denial of a motion to intervene.
+     (8) If a state agency whose order, rule, ruling, policy or other action is at   issue is not a party
+to the proceeding, it may file a brief with the board as if it were a party.   The brief shall be due on
+the same date the respondent’s brief is due and shall be accompanied by a filing fee of $100.
+     (9) A notice of intent to appeal a land use decision or limited land use decision shall be filed
+not later than 21 days after the date the decision sought to be reviewed becomes final. A notice of
+intent to appeal plan and land use regulation amendments processed pursuant to ORS 197.610 to
+197.625 shall be filed not later than 21 days after notice of the decision sought to be reviewed is
+mailed or otherwise submitted to parties entitled to notice under ORS 197.615. Failure  to include a
+statement identifying when, how and to whom notice was provided under ORS 197.615 does not
+render the notice defective.  Copies of the notice of intent to appeal shall be served upon the local
+government, special district or state agency and the applicant of  record, if any, in the local gov-
+ernment, special district or state agency proceeding. The   notice shall be served and filed in the form
+and manner prescribed by rule of the board and shall be  accompanied by a filing fee of $300. If a
+petition for review is not filed with the board as required   in subsections (10) and (11) of this section,
+the board shall award the filing fee to the local government, special district or state agency.
+     (10)(a) Within 21 days after service of the notice of intent to appeal, the local government, spe-
+cial district or state agency shall transmit to the board the original or a certified copy of the entire
+record of the proceeding under review. By stipulation  of all parties to the review proceeding the
+record may be shortened. The board may require or  permit subsequent corrections to the record;
+however, the board shall issue an order on a  motion objecting to the record within 60 days of re-
+ceiving the motion. If the board denies a petitioner’s objection to the record, the board may estab-
+lish a new deadline for the petition for review to  be filed that may not be less than 14 days from
+the later of the original deadline for the brief or the date of  denial of the petitioner’s record ob-
+jection.
+     (b) Within 10 days after service of a notice of intent to appeal, the board shall provide notice
+to the petitioner and the respondent of their option to enter into mediation pursuant to ORS 197.860.
+Any person moving to intervene  shall be provided such notice within seven days after a motion to
+intervene is filed. The notice required by this paragraph shall be  accompanied by a statement that
+mediation information or assistance may  be obtained from the Department of Land Conservation and
+Development.
+     (11) A petition for review of the land use decision or limited land use  decision and supporting
+brief shall be filed with the board as required by the board under subsection (13) of this section.
+     (12) The petition shall include a copy of the decision sought to be reviewed and shall state:
+     (a) The facts that establish that the petitioner has standing.
+     (b) The date of the decision.
+     (c) The issues the petitioner seeks to have reviewed.
+     (13)(a) The board shall adopt rules establishing deadlines for filing petitions and briefs and for
+oral argument.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 29
+     (b) The local government or state agency may withdraw its decision for purposes of reconsid-
+eration at any time:
+     (A) Subsequent to the filing of a notice of intent; and
+     (B) Prior to:
+     (i) The date set for filing the record; or
+     (ii) On appeal of a decision under ORS 197.610 to 197.625 or relating to the  development of a
+residential structure, the filing of the respondent’s brief.
+     (c) If a local government or state agency withdraws an order for purposes of reconsideration,
+it shall, within such time as the board may allow, affirm, modify or reverse its decision. If the
+petitioner is dissatisfied with the local government or agency action after withdrawal for purposes
+of reconsideration, the petitioner may refile  the notice of intent and the review shall proceed upon
+the revised order. An amended notice of intent is not required if the local government or state
+agency, on reconsideration, affirms the order or modifies the order with only minor changes.
+     (14) The board shall issue a final order within 77 days after the date of transmittal of the record.
+If the order is not issued within 77 days the applicant may apply in Marion County or the circuit
+court of the county where the application was filed for a writ of mandamus to compel the board   to
+issue a final order.
+     (15) Upon entry of its final order, the board:
+     (a) May, in its discretion, award costs to the prevailing party including the cost of preparation
+of the record if the prevailing party is the local government, special district or state agency whose
+decision is under review.
+     (b) Shall award reasonable attorney fees  and expenses to the prevailing party against any other
+party who the board finds presented  a position or filed any motion without probable cause to believe
+the position or motion was well-founded in law or on factually supported information.
+     (c) Shall award costs and attorney fees to a party as provided in ORS 197.843.
+     (16) Orders issued under this section may be enforced in appropriate judicial proceedings.
+     (17)(a) The board shall provide for the publication of its  orders that are of general public in-
+terest in the form it deems best adapted for public convenience. The publications shall constitute
+the official reports of the board.
+     (b) Any moneys collected or received from sales  by the board shall be paid into the Board
+Publications Account established by ORS 197.832.
+     (18) Except for any sums collected for publication of board opinions, all fees collected by the
+board under this section that are not awarded as costs shall be paid   over to the State Treasurer to
+be credited to the General Fund.
+     (19) The board shall track and report on its website:
+     (a) The number of reviews commenced, as described in subsection (1) of this   section, the number
+of reviews commenced for which  a petition is filed under subsection (2) of this section and, in re-
+lation to each of those numbers, the rate at which the  reviews result in a decision of the board to
+uphold, reverse or remand the land use decision or limited land use decision. The   board shall track
+and report reviews under this paragraph in categories established by the board.
+     (b) A list of petitioners, the  number of reviews commenced and the rate at which the petitioner’s
+reviews have resulted in decisions of the board to uphold,  reverse or remand the land use decision
+or limited land use decision.
+     (c) A list of respondents, the  number of reviews involving each respondent and the rate at which
+reviews involving the respondent have resulted in decisions of the   board to uphold, reverse or re-
+mand the land use decision or limited land use decision. Additionally, when a respondent is the local
+government that made the land use decision or limited land use decision, the board shall track
+whether the local government appears before the board.
+     (d) A list of reviews, and a brief summary of the circumstances in each review, under which the
+board exercises its discretion to require a  losing party to pay the attorney fees of the prevailing
+party.
+     SECTION 37. ORS 197A.465 is amended to read:
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 30
+     197A.465. (1) As used in this section:
+     (a) “Affordable housing” means housing that is affordable to households with incomes equal    to
+or higher than 80 percent of the median family income for  the county in which the housing is built.
+     (b) “Multifamily structure” means a structure that contains three or more housing     units sharing
+at least one wall, floor or ceiling surface in common with another unit within the same structure.
+     (2) Except as provided in subsection (3) of  this section, a metropolitan service district may not
+adopt a land use regulation or functional plan provision, or  impose as a condition for approving [ a
+permit] an application under ORS 215.427 or 227.178 a requirement, that has the effect of estab-
+lishing the sales or rental price for a housing unit or residential building lot or   parcel, or that re-
+quires a housing unit or residential building lot or parcel to be designated for sale or rent   to a
+particular class or group of purchasers or renters.
+     (3) The provisions of subsection (2) of this section do not limit the authority of a   metropolitan
+service district to:
+     (a) Adopt or enforce a use regulation, provision  or requirement creating or implementing an
+incentive, contract commitment, density bonus or other voluntary   regulation, provision or require-
+ment designed to increase the supply of moderate or lower cost housing units; or
+     (b) Enter into an affordable housing covenant as provided in ORS 456.270 to 456.295.
+     (4) Notwithstanding ORS 91.225, a city or county may adopt  a land use regulation or functional
+plan provision, or impose as a condition for approving [  a permit] an application under ORS 215.427
+or 227.178 a requirement, that has the effect of establishing the sales or rental price for a new
+multifamily structure, or that requires a new  multifamily structure to be designated for sale or rent
+as affordable housing.
+     (5) A regulation, provision or requirement adopted or imposed under subsection (4) of this   sec-
+tion:
+     (a) May not require more than 20 percent of housing units within a multifamily structure to be
+sold or rented as affordable housing.
+     (b) May apply only to multifamily structures containing at least 20 housing units.
+     (c) Must provide developers the option to pay an in-lieu fee, in an  amount determined by the
+city or county, in exchange for providing the requisite   number of housing units within the multi-
+family structure to be sold or rented at below-market rates.
+     (d) Must require the city or county to offer a developer   of multifamily structures, other than a
+developer that elects to pay an in-lieu fee pursuant to paragraph (c) of this subsection,   at least one
+of the following incentives:
+     (A) Whole or partial fee waivers or reductions.
+     (B) Whole or partial waivers of system development charges or impact fees set   by the city or
+county.
+     (C) Finance-based incentives.
+     (D) Full or partial exemption from ad valorem property taxes on the  terms described in this
+subparagraph. For purposes of any statute granting a full or partial exemption from  ad valorem
+property taxes that uses a definition of “low income” to mean    income at or below 60 percent of the
+area median income and for which the multifamily structure is otherwise eligible, the city   or county
+shall allow the multifamily structure of the developer  to qualify using a definition of “low income”
+to mean income at or below 80 percent of the area median income.
+     (e) Does not apply to a CCRC, as defined in ORS  101.020, that executes and records a covenant
+with the applicable city or county in which the CCRC agrees to operate all units within its structure
+as a CCRC. Units within a CCRC that are offered or converted  into residential units that are for
+sale or rent and are not subject to ORS chapter 101  must comply with regulations, provisions or
+requirements adopted by the city or county that are consistent with those applicable   to a new
+multifamily structure under subsection (3) or (4) of this section.
+     (6) A regulation, provision or requirement adopted or imposed under subsection (4) of this sec-
+tion may offer developers one or more of the following incentives:
+     (a) Density adjustments.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 31
+     (b) Expedited service for local permitting processes.
+     (c) Modification of height, floor area or other site-specific requirements.
+     (d) Other incentives as determined by the city or county.
+     (7) Subsection (4) of this section does not restrict  the authority of a city or county to offer de-
+velopers voluntary incentives, including incentives to:
+     (a) Increase the number of affordable housing units in a development.
+     (b) Decrease the sale or rental price of affordable housing units in a development.
+     (c) Build affordable housing units that are affordable to households with incomes equal to or
+lower than 80 percent of the median family income for the county in which the housing is built.
+     (8)(a) A city or county that adopts or  imposes a regulation, provision or requirement described
+in subsection (4) of this section may not apply the regulation, provision or requirement to any
+multifamily structure for which an application for a permit, as defined in ORS 215.402 or  227.160,
+has been submitted as provided in ORS 215.416 or 227.178 (3), or, if such a permit is not required,
+a building permit application has been submitted to the city or county prior to the effective date
+of the regulation, provision or requirement.
+     (b) If a multifamily structure described in paragraph (a) of this subsection has not been com-
+pleted within the period required by the permit issued  by the city or county, the developer of the
+multifamily structure shall resubmit an application for a permit, as defined in ORS  215.402 or
+227.160, as provided in ORS 215.416 or 227.178 (3), or, if such a permit is not required, a building
+permit application under the regulation, provision or requirement adopted by the city or county
+under subsection (4) of this section.
+     (9)(a) A city or county that adopts or imposes a regulation, provision or requirement under
+subsection (4) of this section shall adopt and apply only clear and  objective standards, conditions
+and procedures regulating the development of affordable housing units within its jurisdiction.   The
+standards, conditions and procedures may not have the effect, either individually or   cumulatively,
+of discouraging development of affordable housing units through unreasonable cost or delay.
+     (b) Paragraph (a) of this subsection does not apply to:
+     (A) An application or permit for residential development in an area identified in a formally
+adopted central city plan, or a regional center as defined by Metro, in a city with a population of
+500,000 or more.
+     (B) An application or permit for residential development in historic areas   designated for pro-
+tection under a land use planning goal protecting historic areas.
+     (c) In addition to an approval process for affordable housing based on clear and  objective
+standards, conditions and procedures as provided in  paragraph (a) of this subsection, a city or
+county may adopt and apply an alternative approval process for applications and permits for resi-
+dential development based on approval criteria regulating, in whole or in part, appearance or aes-
+thetics that are not clear and objective if:
+     (A) The developer retains the option of proceeding under the approval process that meets the
+requirements of paragraph (a) of this subsection;
+     (B) The approval criteria for the alternative approval process comply with applicable statewide
+land use planning goals and rules; and
+     (C) The approval criteria for the alternative approval process authorize a   density at or above
+the density level authorized in the zone under the approval process   provided in paragraph (a) of this
+subsection.
+     (10) If a regulation, provision or requirement adopted or imposed by a city or county under
+subsection (4) of this section requires  that a percentage of housing units in a new multifamily
+structure be designated as affordable housing, any incentives  offered under subsection (5)(d) or (6)
+of this section shall be related in a manner determined  by the city or county to the required per-
+centage of affordable housing units.
+     SECTION 38. ORS 197A.470 is amended to read:
+     197A.470. (1) As used in this section:
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 32
+     (a) “Affordable housing” means housing that is affordable to households with incomes equal to
+or less than 60 percent of the median family income for the county in which the development is built
+or for the state, whichever is greater, that is subject to an affordable housing covenant, as provided
+in ORS 456.270 to 456.295, that maintains the affordability for a period of not less than 60 years from
+the date of the certificate of occupancy.
+     (b) “Multifamily residential building” means a building in which three or more    residential units
+each have space for eating, living and sleeping  and permanent provisions for cooking and sanitation.
+     (2) [Notwithstanding ORS 215.427 (1) or 227.178 (1),] A city with a population greater than 5,000
+or a county with a population greater than 25,000 shall take final action on an application qualifying
+under subsection (3) of this section[, including resolution of all local appeals under ORS 215.422 or
+227.180,] within 100 days after the application is deemed complete  as provided in ORS 215.427 or
+227.178.
+     (3) An application qualifies for final action within the  timeline described in subsection (2) of this
+section if:
+     (a) The application is submitted to the city or the county under ORS 215.416 or 227.175;
+     (b) The application is for development of a multifamily residential  building containing five or
+more residential units within the urban growth boundary; and
+     (c) At least 50 percent of  the residential units included in the development will be sold or rented
+as affordable housing.
+     (4) A city or a county shall take final action within the time  allowed under ORS 215.427 or
+227.178 on any application [for a permit, limited land use decision or zone change] that does not
+qualify for review and decision under subsection (3) of this section, including resolution of all ap-
+peals under ORS 215.422 or 227.180, as provided by ORS 215.427 and 215.435 or by ORS 227.178 and
+227.181.
+     (5) With respect to property within an urban growth  boundary owned by a nonprofit corporation
+organized as a religious corporation, a local government:
+     (a) May apply only restrictions or conditions of approval to the development of affordable
+housing that are, notwithstanding ORS 197A.400 (2) or statewide land use planning goals relating
+to protections for historic areas:
+     (A) Clear and objective as described in ORS 197A.400 (1); or
+     (B) Discretionary standards related to health, safety, habitability or infrastructure.
+     (b) Shall approve the development of affordable housing on property not zoned for housing if:
+     (A) The property is not zoned for industrial uses; and
+     (B) The property is contiguous to property zoned to allow residential uses.
+     (6) Affordable housing allowed under  subsection (5)(b) of this section may be subject only to the
+restrictions applicable to the contiguously zoned residential property as limited by subsection (5)(a)
+of this section and without requiring that the property be rezoned for residential uses.   If there is
+more than one contiguous residential property, the zoning of the property with   the greatest density
+applies.
+     SECTION 39. ORS 215.402 is amended to read:
+     215.402. As used in ORS 215.402 to 215.438 and 215.700 to 215.780 unless the context requires
+otherwise:
+     (1) “Contested case” means a proceeding   in which the legal rights, duties or privileges of spe-
+cific parties under general rules  or policies provided under ORS 215.010 to 215.311, 215.317, 215.327,
+215.402 to 215.438 and 215.700 to 215.780, or any ordinance, rule or regulation adopted pursuant
+thereto, are required to be determined only after a hearing at which specific parties    are entitled to
+appear and be heard.
+     (2) “Hearing” means a quasi-judicial hearing, authorized  or required by the ordinances and
+regulations of a county adopted pursuant to ORS 215.010 to 215.311, 215.317, 215.327, 215.402 to
+215.438 and 215.700 to 215.780:
+     (a) To determine in accordance with such ordinances  and regulations if a permit shall be
+granted or denied; or
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 33
+     (b) To determine a contested case.
+     (3) “Hearings officer” means  a planning and zoning hearings officer appointed or designated by
+the governing body of a county under ORS 215.406.
+     (4) “Permit” means discretionary approval of a proposed development of    land under ORS 215.010
+to 215.311, 215.317, 215.327 and 215.402 to 215.438 and 215.700 to 215.780 or county legislation or
+regulation adopted pursuant thereto. “Permit” does not include:
+     (a) A limited land use decision as defined in ORS 197.015;
+     (b) A decision which determines the appropriate zoning classification for a particular use by
+applying criteria or performance standards defining the uses permitted within the zone, and the   de-
+termination applies only to land within an urban growth boundary;
+     (c) A decision which determines final  engineering design, construction, operation, maintenance,
+repair or preservation of a transportation facility which is otherwise   authorized by and consistent
+with the comprehensive plan and land use regulations; or
+     (d) An expedited land division, as described in ORS [ 197.360] 197.365.
+     SECTION 40. ORS 215.416 is amended to read:
+     215.416. (1) When required or authorized by the ordinances, rules and regulations of a county,
+an owner of land may apply in writing to such persons as the governing body designates, for a
+permit, in the manner prescribed by the governing body. The governing body shall establish fees
+charged for processing permits at an amount no more than  the actual or average cost of providing
+that service.
+     (2) The governing body shall establish a consolidated procedure by which an applicant may ap-
+ply at one time for all permits or zone changes needed for a development project. The   consolidated
+procedure shall be subject to the time limitations set out  in ORS 215.427. The consolidated proce-
+dure shall be available for use at the option of the applicant no later   than the time of the first pe-
+riodic review of the comprehensive plan and land use regulations.
+     (3) Except as provided in subsection (11) of this section, the hearings officer shall hold at least
+one public hearing on the application.
+     (4)(a) A county may not approve an application  if the proposed use of land is found to be in
+conflict with the comprehensive plan of the county and other applicable land use regulation    or or-
+dinance provisions. The approval may include such conditions as are authorized by statute or county
+legislation.
+     (b)(A) A county may not deny an application for a housing development located within the urban
+growth boundary if the development complies with clear and  objective standards, including but not
+limited to clear and objective design standards contained in the county comprehensive plan    or land
+use regulations.
+     (B) This paragraph does not apply to:
+     (i) Applications or permits for residential development in areas described in ORS 197A.400 (2);
+or
+     (ii) Applications or permits reviewed under an alternative approval process adopted under   ORS
+197A.400 (3).
+     (c) A county may not condition an application for a housing development on a reduction in
+densityif:
+     (A) The density applied for is at or below the authorized density level under the local land   use
+regulations; and
+     (B) At least 75 percent of the floor area applied for is reserved for housing.
+     (d) A county may not condition an application for a housing development on a reduction   in
+heightif:
+     (A) The height applied for is at or below the authorized height level under the local land use
+regulations;
+     (B) At least 75 percent of the floor area applied for is reserved for housing; and
+     (C) Reducing the height has the effect of reducing the authorized density   level under local land
+use regulations.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 34
+     (e) Notwithstanding paragraphs (c) and (d) of this subsection, a  county may condition an appli-
+cation for a housing development on a reduction in density  or height only if the reduction is nec-
+essary to resolve a health, safety or habitability issue or to comply with a protective measure
+adopted pursuant to a statewide land use planning goal. Notwithstanding ORS 197.350, the county
+must adopt findings supported by substantial evidence  demonstrating the necessity of the reduction.
+     (f) As used in this subsection:
+     (A) “Authorized density level” means the maximum number of lots  or dwelling units or the
+maximum floor area ratio that is permitted under local land use regulations.
+     (B) “Authorized height level” means the maximum height of a structure   that is permitted under
+local land use regulations.
+     (C) “Habitability” means being in  compliance with the applicable provisions of the state building
+code under ORS chapter 455 and the rules adopted thereunder.
+     (5) Hearings under this section shall be held only after notice to the applicant and also notice
+to other persons as otherwise provided by law and shall otherwise be conducted in conformance
+with the provisions of ORS 197.797.
+     (6) Notice of a public hearing on an application submitted under this section shall be provided
+to the owner of an airport defined by the Oregon Department of Aviation as a “public use airport”
+if:
+     (a) The name and address of the airport owner has been provided  by the Oregon Department
+of Aviation to the county planning authority; and
+     (b) The property subject to the land use hearing is:
+     (A) Within 5,000 feet of the side or end of a runway of an airport determined by the Oregon
+Department of Aviation to be a “visual airport”; or
+     (B) Within 10,000 feet of the side or end of the runway of an airport determined by the Oregon
+Department of Aviation to be an “instrument airport.”
+     (7) Notwithstanding the provisions of subsection (6) of this  section, notice of a land use hearing
+need not be provided as set forth in subsection (6)  of this section if the zoning permit would only
+allow a structure less than 35 feet in height and the property is located outside the runway “ap-
+proach surface” as defined by the Oregon Department of Aviation.
+     (8)(a) Approval or denial of a permit application [ shall] must be based on standards and criteria
+[which shall be] that are set forth in the zoning ordinance or other appropriate  ordinance or regu-
+lation of the county and which shall relate approval or denial of a permit application to    the zoning
+ordinance and comprehensive plan for  the area in which the proposed use of land would occur and
+to the zoning ordinance and comprehensive plan for the county as a whole.
+     (b) When an ordinance establishing approval standards is required under ORS [197A.200 and]
+197A.400 to provide only clear and objective standards, the  standards must be clear and objective
+on the face of the ordinance.
+     (9) Approval or denial of a permit [or expedited land division shall] must be based upon and
+accompanied by a brief statement  that explains the criteria and standards considered relevant to the
+decision, states the facts relied upon in rendering the decision and   explains the justification for the
+decision based on the criteria, standards and facts set forth.
+     (10) Written notice of the approval or denial [ shall] must be given to all parties to the pro-
+ceeding.
+     (11)(a)(A) The hearings officer or such other person  as the governing body designates may ap-
+prove or deny an application for a permit without a hearing if the hearings officer or other desig-
+nated person gives notice of the decision and provides an opportunity for any person who is
+adversely affected or aggrieved, or who is entitled to notice under paragraph (c) of this subsection,
+to file an appeal.
+     (B) Written notice of the decision shall be mailed to those persons described in paragraph (c)
+of this subsection.
+     (C) Notice under this subsection shall comply with ORS  197.797 (3)(a), (c), (g) and (h) and shall
+describe the nature of the decision. In addition, the notice shall state that any person who is   ad-
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 35
+versely affected or aggrieved or who is entitled to written notice under   paragraph (c) of this sub-
+section may appeal the decision by filing a written appeal in the manner and within the time period
+provided in the county’s land use regulations. A county may not establish an appeal period that is
+less than 12 days from the date the written notice of decision required by this  subsection was
+mailed. The notice shall state that the decision will not become final until the period   for filing a
+local appeal has expired. The notice also shall state that a person who is mailed written notice    of
+the decision cannot appeal the decision directly to the Land Use Board of Appeals under ORS
+197.830.
+     (D) An appeal from a hearings officer’s decision made without hearing under this subsection
+shall be to the planning commission or governing body of the county. An   appeal from such other
+person as the governing body designates shall be  to a hearings officer, the planning commission or
+the governing body. In either case, the appeal shall be to a de novo hearing.
+     (E) The de novo hearing required by subparagraph (D) of this paragraph shall be the initial
+evidentiary hearing required under ORS 197.797 as the basis for an appeal to the Land Use  Board
+of Appeals. At the de novo hearing:
+     (i) The applicant and other parties shall have the  same opportunity to present testimony, argu-
+ments and evidence as they would have had in a hearing under subsection  (3) of this section before
+the decision;
+     (ii) The presentation of testimony, arguments and evidence shall not be limited to issues raised
+in a notice of appeal; and
+     (iii) The decision maker shall consider all relevant testimony,  arguments and evidence that are
+accepted at the hearing.
+     (b) If a local government provides only a notice of the opportunity to request a   hearing, the
+local government may charge a fee for the initial hearing. The maximum fee for an initial hearing
+shall be the cost to the local government of preparing for and conducting the appeal, or   $250,
+whichever is less. If an appellant prevails at the hearing or upon  subsequent appeal, the fee for the
+initial hearing shall be refunded. The fee allowed in this paragraph  shall not apply to appeals made
+by neighborhood or community organizations recognized by the governing body and whose bounda-
+ries include the site.
+     (c)(A) Notice of a decision under paragraph (a) of this subsection shall be   provided to the ap-
+plicant and to the owners of record of property on the most recent property tax assessment roll
+where such property is located:
+     (i) Within 100 feet of the property that is the subject of  the notice when the subject property
+is wholly or in part within an urban growth boundary;
+     (ii) Within 250 feet of the property that is the subject of the notice when the subject   property
+is outside an urban growth boundary and not within a farm or forest zone; or
+     (iii) Within 750 feet of the property that is the subject of the notice when the subject property
+is within a farm or forest zone.
+     (B) Notice shall also be provided to any neighborhood or community organization recognized by
+the governing body and whose boundaries include the site.
+     (C) At the discretion of the applicant, the local government also shall provide notice to the
+Department of Land Conservation and Development.
+     (12) A decision described in ORS 215.402 (4)(b) shall:
+     (a) Be entered in a registry available to the public setting forth:
+     (A) The street address or other easily understood geographic reference to the subject property;
+     (B) The date of the decision; and
+     (C) A description of the decision made.
+     (b) Be subject to the jurisdiction of the Land Use Board of Appeals in the same manner   as a
+limited land use decision.
+     (c) Be subject to the appeal period described in ORS 197.830 (5)(b).
+     (13) At the option of the applicant, the local government shall provide notice of the decision
+described in ORS 215.402 (4)(b) in the manner required by ORS 197.797 (2), in which case an appeal
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 36
+to the board shall be filed within 21 days of the decision.   The notice shall include an explanation
+of appeal rights.
+     (14) Notwithstanding the requirements of this section, a limited land use decision shall   be sub-
+ject to the requirements set forth in ORS 197.195 and 197.828.
+     SECTION 41. ORS 215.429 is amended to read:
+     215.429. (1) [Except when an applicant requests an extension under ORS 215.427,] If the governing
+body of the county or its designee does not take final action   on an application [for a permit, limited
+land use decision or zone change within 120 days or 150 days, as appropriate, after the application is
+deemed complete,] within the period allowed under ORS 215.427, the applicant may file a petition
+for a writ of mandamus under ORS 34.130 in the circuit court of the county  where the application
+was submitted to compel the governing body or its designee to issue the approval.
+     (2) The governing body shall retain jurisdiction to make  a land use decision on the application
+until a petition for a writ of mandamus is filed. Upon filing a petition under  ORS 34.130, jurisdiction
+for all decisions regarding the application, including settlement, shall be with the circuit court.
+     (3) A person who files a petition for a writ  of mandamus under this section shall provide written
+notice of the filing to all persons who would be entitled to notice under ORS 197.797 and to any
+person who participated orally or in writing  in any evidentiary hearing on the application held prior
+to the filing of the petition. The notice shall be mailed or hand delivered on the same day the   peti-
+tion is filed.
+     (4) If the governing body does not take final action on an application   within [120 days or 150
+days, as appropriate, of the date the application is deemed complete,] the period allowed under ORS
+215.427, the applicant may elect to proceed with the application according to the applicable pro-
+visions of the county comprehensive plan and land use regulations or to file a petition for a   writ
+of mandamus under this section. If the applicant elects to proceed according to the local plan and
+regulations, the applicant may not file a petition for a  writ of mandamus within 14 days after the
+governing body makes a preliminary decision, provided a final written decision is issued   within 14
+days of the preliminary decision.
+     (5) The court shall issue a peremptory writ unless the governing body or any intervenor shows
+that the approval would violate a substantive provision of the county comprehensive plan or land
+use regulations as those terms are defined in ORS 197.015.  The writ may specify conditions of ap-
+proval that would otherwise be allowed by the county comprehensive plan or land use regulations.
+     SECTION 42. ORS 223.299 is amended to read:
+     223.299. As used in ORS 223.297 to 223.316:
+     (1)(a) “Capital improvement” means facilities or assets used for the following:
+     (A) Water supply, treatment and distribution;
+     (B) Waste water collection, transmission, treatment and disposal;
+     (C) Drainage and flood control;
+     (D) Transportation; or
+     (E) Parks and recreation.
+     (b) “Capital improvement” does not include costs of the operation   or routine maintenance of
+capitalimprovements.
+     (2) “Improvement fee” means a fee for costs associated with capital improvements to   be con-
+structed.
+     (3) “Reimbursement fee” means a fee for costs associated with capital improvements already
+constructed, or under construction when the fee is established, for which the local    government de-
+termines that capacity exists.
+     (4)(a) “System development charge” means a reimbursement fee, an improvement fee or a   com-
+bination thereof assessed or collected at the time of increased usage of a capital improvement or
+issuance of a development permit, building permit or connection  to the capital improvement. “Sys-
+tem development charge” includes that portion of a sewer or water system   connection charge that
+is greater than the amount necessary to reimburse  the local government for its average cost of in-
+specting and installing connections with water and sewer facilities.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 37
+     (b) “System development charge” does not include any fees assessed or collected as part of a
+local improvement district or  a charge in lieu of a local improvement district assessment, or the cost
+of complying with requirements or conditions  imposed upon a land use decision[, expedited land di-
+vision] or limited land use decision.
+     SECTION 43. ORS 227.160 is amended to read:
+     227.160. As used in ORS 227.160 to 227.186:
+     (1) “Hearings officer” means  a planning and zoning hearings officer appointed or designated by
+a city council under ORS 227.165.
+     (2) “Permit”  means discretionary approval of a proposed development of land, under ORS 227.215
+or city legislation or regulation. “Permit” does not include:
+     (a) A limited land use decision as defined in ORS 197.015;
+     (b) A decision which determines the appropriate zoning classification for   a particular use by
+applying criteria or performance standards defining the uses permitted within the zone, and the de-
+termination applies only to land within an urban growth boundary;
+     (c) A decision which determines final  engineering design, construction, operation, maintenance,
+repair or preservation of a  transportation facility which is otherwise authorized by and consistent
+with the comprehensive plan and land use regulations; or
+     (d) An expedited land division, as described in ORS [ 197.360] 197.365.
+     SECTION 44. ORS 227.173 is amended to read:
+     227.173. [(1) Approval or denial of a discretionary permit application shall be based on standards
+and criteria, which shall be set forth in the development ordinance and which shall relate approval or
+denial of a discretionary permit application to the development ordinance and to the comprehensive
+plan for the area in which the development would occur and to the development ordinance and com-
+prehensive plan for the city as a whole.]
+     (1) Approval or denial of a discretionary permit application must be based on standards
+and criteria that are set forth in the development ordinance and that relate approval or de-
+nial of a discretionary permit application to the development ordinance and the comprehen-
+sive plan for the area in which the development would occur and to the development
+ordinance and comprehensive plan for the city as a whole.
+     (2) When an ordinance establishing approval standards is required under  ORS [197A.200 and]
+197A.400 to provide only clear and objective  standards, the standards must be clear and objective
+on the face of the ordinance.
+     (3) Approval or denial of a permit application [or expedited land division shall be] must be based
+upon and accompanied by a brief statement that explains the criteria and standards considered rel-
+evant to the decision, states the facts relied upon in rendering the decision and explains the justi-
+fication for the decision based on the criteria, standards and facts set forth.
+     (4) Written notice of the approval or denial [ shall] must be given to all parties to the proceed-
+ing.
+     SECTION 44a. ORS 227.175, as amended by section 5, chapter 111, Oregon Laws 2024, is
+amended to read:
+     227.175. (1) When required or authorized by a city, an owner of land may  apply in writing to the
+hearings officer, or such other person as  the city council designates, for a permit or zone change,
+upon such forms and in such a manner as the city council prescribes. The  governing body shall es-
+tablish fees charged for processing permits at an amount no more than the actual or average cost
+of providing that service.
+     (2) The governing body of the city shall establish a consolidated procedure   by which an appli-
+cant may apply at one time for all permits or zone changes needed for a development project.    The
+consolidated procedure is subject to the time limitations set   out in ORS 227.178. The consolidated
+procedure shall be available for use at the option of the applicant no later than the time of the first
+periodic review of the comprehensive plan and land use regulations.
+     (3) Except as provided in subsection (10) of this section, the hearings officer shall   hold at least
+one public hearing on the application.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 38
+     (4)(a) A city may not approve an application unless the proposed development of land would be
+in compliance with the comprehensive plan for the city and other applicable land use regulation or
+ordinance provisions, including an ordinance  described in ORS 197A.400 [(1)(c)] (1)(b)(C). The ap-
+proval may include such conditions as are authorized by ORS 227.215 or any city legislation.
+     (b)(A) A city may not deny an application for a housing development located within the urban
+growth boundary if the development complies with clear and objective standards, including clear and
+objective design standards contained in the city comprehensive plan or land use regulations.
+     (B) This paragraph does not apply to:
+     (i) Applications or permits for residential development in areas described in   ORS 197A.400 (2);
+or
+     (ii) Applications or permits reviewed under an alternative approval process adopted under ORS
+197A.400 (3).
+     (c) A city may not condition an application for a housing development on a reduction in density
+if:
+     (A) The density applied for is at or below the authorized density level under the local land   use
+regulations; and
+     (B) At least 75 percent of the floor area applied for is reserved for housing.
+     (d) A city may not condition an application for a housing development on a reduction    in height
+if:
+     (A) The height applied for is at or below the authorized  height level under the local land use
+regulations;
+     (B) At least 75 percent of the floor area applied for is reserved for housing; and
+     (C) Reducing the height has the effect of reducing the authorized density   level under local land
+use regulations.
+     (e) Notwithstanding paragraphs (c) and (d) of this subsection, a  city may condition an applica-
+tion for a housing development on a reduction in  density or height only if the reduction is necessary
+to resolve a health, safety or habitability issue or to comply with  a protective measure adopted
+pursuant to a statewide land use planning goal. Notwithstanding ORS 197.350, the city must adopt
+findings supported by substantial evidence demonstrating the necessity of the reduction.
+     (f) As used in this subsection:
+     (A) “Authorized density level” means the maximum number of lots  or dwelling units or the
+maximum floor area ratio that is permitted under local land use regulations.
+     (B) “Authorized height level” means the maximum height of a structure   that is permitted under
+local land use regulations.
+     (C) “Habitability” means being in  compliance with the applicable provisions of the state building
+code under ORS chapter 455 and the rules adopted thereunder.
+     (5) Hearings under this section may be held only after notice to the applicant and other inter-
+ested persons and shall otherwise be conducted in conformance with the provisions    of ORS 197.797.
+     (6) Notice of a public hearing on a zone use application shall be provided to   the owner of an
+airport, defined by the Oregon Department of Aviation as a “public use airport” if:
+     (a) The name and address of the airport owner has been provided  by the Oregon Department
+of Aviation to the city planning authority; and
+     (b) The property subject to the zone use hearing is:
+     (A) Within 5,000 feet of the side or end of a runway of an airport determined by the Oregon
+Department of Aviation to be a “visual airport”; or
+     (B) Within 10,000 feet of the side or end of the runway of an airport determined by the Oregon
+Department of Aviation to be an “instrument airport.”
+     (7) Notwithstanding the provisions of subsection  (6) of this section, notice of a zone use hearing
+need only be provided as set forth in subsection (6) of this section if the permit or  zone change
+would only allow a structure less than 35 feet in height and the property is located outside   of the
+runway “approach surface” as defined by the Oregon Department of Aviation.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 39
+     (8) If an application would change the zone of property that includes all or part of a mobile
+home or manufactured dwelling park as defined in ORS 446.003, the governing body shall give
+written notice by first class mail to each existing mailing address for tenants of the mobile home
+or manufactured dwelling park at least 20 days but not more than 40 days before the date  of the
+first hearing on the application. The governing body may require an applicant for such a zone
+change to pay the costs of such notice.
+     (9) The failure of a tenant or an airport owner to receive a notice which was mailed does   not
+invalidate any zone change.
+     (10)(a)(A) The hearings officer or such other person  as the governing body designates may ap-
+prove or deny an application for a permit without a hearing if the hearings officer or   other desig-
+nated person gives notice of the decision and provides an opportunity for any person who   is
+adversely affected or aggrieved, or who is entitled to notice under paragraph (c) of this    subsection,
+to file an appeal.
+     (B) Written notice of the decision shall be mailed to those persons described in   paragraph (c)
+of this subsection.
+     (C) Notice under this subsection shall comply with ORS  197.797 (3)(a), (c), (g) and (h) and shall
+describe the nature of the decision. In addition, the notice shall state that any person who is ad-
+versely affected or aggrieved or who  is entitled to written notice under paragraph (c) of this sub-
+section may appeal the decision by filing a written appeal in the manner and within the time period
+provided in the city’s land use regulations. A city may not establish an appeal period   that is less
+than 12 days from the date the written notice of decision required by this subsection was mailed.
+The notice shall state that the decision will not become final until the period for filing    a local ap-
+peal has expired. The notice also shall state that a person who is mailed written notice of   the de-
+cision cannot appeal the decision directly to the Land Use Board of Appeals under ORS 197.830.
+     (D) An appeal from a hearings officer’s decision made without hearing under this subsection
+shall be to the planning commission or governing body of the city. An appeal from such other person
+as the governing body designates shall be to a hearings officer, the planning commission or the
+governing body. In either case, the appeal shall be to a de novo hearing.
+     (E) The de novo hearing required by subparagraph (D) of  this paragraph shall be the initial
+evidentiary hearing required under ORS 197.797 as the basis for an appeal to the Land Use Board
+of Appeals. At the de novo hearing:
+     (i) The applicant and other parties shall  have the same opportunity to present testimony, argu-
+ments and evidence as they would have had in a hearing under subsection  (3) of this section before
+the decision;
+     (ii) The presentation of testimony, arguments and evidence may not be limited to issues raised
+in a notice of appeal; and
+     (iii) The decision maker shall consider  all relevant testimony, arguments and evidence that are
+accepted at the hearing.
+     (b) If a local government provides only a notice of the opportunity to request a hearing, the
+local government may charge a fee for the initial hearing. The maximum fee for an initial hearing
+shall be the cost to the local government of preparing for and conducting the appeal, or $250,
+whichever is less. If an appellant prevails at the hearing or upon  subsequent appeal, the fee for the
+initial hearing shall be refunded. The fee allowed in this paragraph does not apply to appeals   made
+by neighborhood or community organizations recognized by the governing body    and whose bounda-
+ries include the site.
+     (c)(A) Notice of a decision  under paragraph (a) of this subsection shall be provided to the ap-
+plicant and to the owners of record of property on the most recent property tax assessment   roll
+where such property is located:
+     (i) Within 100 feet of the property that is the subject of the notice when the subject property
+is wholly or in part within an urban growth boundary;
+     (ii) Within 250 feet of the property that is the subject of the notice when the subject property
+is outside an urban growth boundary and not within a farm or forest zone; or
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 40
+     (iii) Within 750 feet of the property that is the subject of the notice when the subject property
+is within a farm or forest zone.
+     (B) Notice shall also be provided to any neighborhood or community organization recognized by
+the governing body and whose boundaries include the site.
+     (C) At the discretion of the applicant, the local government also shall   provide notice to the
+Department of Land Conservation and Development.
+     (11) A decision described in ORS 227.160 (2)(b) shall:
+     (a) Be entered in a registry available to the public setting forth:
+     (A) The street address or other easily understood geographic reference to the subject property;
+     (B) The date of the decision; and
+     (C) A description of the decision made.
+     (b) Be subject to the jurisdiction of the Land Use Board of Appeals in the same manner as a
+limited land use decision.
+     (c) Be subject to the appeal period described in ORS 197.830 (5)(b).
+     (12) At the option of the applicant, the local government shall provide  notice of the decision
+described in ORS 227.160 (2)(b) in the manner required by ORS 197.797 (2), in which case an appeal
+to the board shall be filed within 21 days of the decision.  The notice shall include an explanation
+of appeal rights.
+     (13) Notwithstanding other requirements of this section, limited  land use decisions are subject
+to the requirements set forth in ORS 197.195 and 197.828.
+     SECTION 44b.        The amendments to ORS 227.175 by section 44a of this 2025 Act become
+operative on July 1, 2025.
+     SECTION 45. ORS 227.179 is amended to read:
+     227.179. (1) [Except when an applicant requests an extension under ORS 227.178 (5),] If the gov-
+erning body of a city or its designee does not take final action on an application [   for a permit, lim-
+ited land use decision or zone change within 120 days after the application is deemed complete] within
+the period allowed under ORS 227.178, the applicant may file a petition for a writ of mandamus
+under ORS 34.130 in the circuit court of the county where the application was   submitted to compel
+the governing body or its designee to issue the approval.
+     (2) The governing body shall retain jurisdiction to make  a land use decision on the application
+until a petition for a writ of mandamus is filed. Upon filing a petition under  ORS 34.130, jurisdiction
+for all decisions regarding the application, including settlement, shall be with the circuit court.
+     (3) A person who files a petition for a writ  of mandamus under this section shall provide written
+notice of the filing to all persons who would be entitled to notice under ORS 197.797 and to any
+person who participated orally or in writing  in any evidentiary hearing on the application held prior
+to the filing of the petition. The notice shall be mailed or hand delivered on the same day the   peti-
+tion is filed.
+     (4) If the governing body does not take final action on an application within [  120 days of the date
+the application is deemed complete] the period allowed under ORS 227.178, the applicant may elect
+to proceed with the application according to the applicable provisions of the local comprehensive
+plan and land use regulations or to file a petition for a writ of mandamus under this section.   If the
+applicant elects to proceed according to the local plan and regulations,   the applicant may not file
+a petition for a writ of mandamus within 14 days after the governing body makes a preliminary de-
+cision, provided a final written decision is issued within 14 days of the preliminary decision.
+     (5) The court shall issue a peremptory writ unless the governing body or   any intervenor shows
+that the approval would violate a substantive provision  of the local comprehensive plan or land use
+regulations as those terms are defined in ORS 197.015. The writ may specify conditions of approval
+that would otherwise be allowed by the local comprehensive plan or land use regulations.
+     SECTION 46. ORS 227.184 is amended to read:
+     227.184. (1) A person whose application [for a permit] is denied by the governing body of a city
+or its designee under ORS 227.178 may submit to the city a supplemental application for any  or all
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 41
+other uses allowed under the city’s comprehensive plan and land use regulations in the zone   that
+was the subject of the denied application.
+     (2) The governing body of a city or its designee shall take final action on a supplemental ap-
+plication submitted under this section, including resolution of all appeals, within 240 days after   the
+application is deemed complete. Except that 240 days shall substitute for 120 days, all other appli-
+cable provisions of ORS 227.178 shall apply to a supplemental application submitted under  this sec-
+tion.
+     (3) A supplemental application submitted under this section shall include a request for any re-
+zoning or zoning variance that may be required to issue a  permit under the city’s comprehensive
+plan and land use regulations.
+     (4) The governing body of a city or its designee shall adopt specific findings describing the
+reasons for approving or denying:
+     (a) A use for which approval is sought under this section; and
+     (b) A rezoning or variance requested in the application.
+     SECTION 47. ORS 421.649 is amended to read:
+     421.649. (1) The Department of Corrections shall obtain public services necessary for the con-
+struction and operation of a women’s correctional facility and intake center    complex in the manner
+provided under ORS 421.628 (4) to (15).
+     (2) Regardless of the territorial  limits of the public body providing public services to the com-
+plex, and notwithstanding any other law, upon request or application  from the department, the
+public body shall provide any public service necessary for the construction and operation of the
+complex. During the pendency of any mediation, arbitration or judicial review    proceeding under this
+section, the public body shall provide any public service necessary for the continued construction
+and operation of the complex, as requested by the department.
+     (3) The existence of a public service provided to the complex [  shall] may not be a consideration
+in support of or in opposition to an application  for a land use decision[,] or limited land use decision
+[or expedited land division] under ORS chapter 197, 197A, 215 or 227.
+     SECTION 48. ORS 476.394 is amended to read:
+     476.394. (1) The minimum defensible space requirements established by the State Fire Marshal
+pursuant to ORS 476.392 may not be used as criteria to approve or deny:
+     (a) An amendment to a local government’s acknowledged  comprehensive plan or land use regu-
+lations.
+     (b) A permit, as defined in ORS 215.402 or 227.160.
+     (c) A limited land use decision, as defined in ORS 197.015.
+     (d) An expedited land division, as [defined in ORS 197.360] described in ORS 197.365.
+     (2) Notwithstanding subsection (1) of this section, a local government may:
+     (a) Amend the acknowledged comprehensive plan or land use  regulations of the local govern-
+ment to include the requirements; and
+     (b) Use the requirements that are included in the amended acknowledged comprehensive plan
+or land use regulations as a criterion for a land use decision.
+     SECTION 48a.        Notwithstanding section 48 of this 2025 Act (amending ORS 476.394), if
+Senate Bill 83 becomes law, ORS 476.394 is repealed by section 1, chapter ___, Oregon Laws
+2025 (Enrolled Senate Bill 83).
+     SECTION 49. Section 1, chapter 110, Oregon Laws 2024, is amended to read:
+     Sec. 1. (1) The Department of Land Conservation and Development and the Department of
+Consumer and Business Services shall enter into an interagency agreement  to establish and admin-
+ister the Housing Accountability and Production Office.
+     (2) The Housing Accountability and Production Office shall:
+     (a) Provide technical assistance, including assistance through grants, to local governments to:
+     (A) Comply with housing laws;
+     (B) Reduce permitting and land use barriers to housing production; and
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 42
+    (C) Support reliable and effective implementation of local procedures and   standards relating to
+the approval of residential development projects.
+    (b) Serve as a resource, which includes providing responses to requests   for technical assistance
+with complying with housing laws, to:
+    (A) Local governments, as defined in ORS 174.116; and
+    (B) Applicants for land use and building permits for residential development who are experi-
+encing permitting and land use barriers related to housing production.
+    (c) Investigate and respond to complaints of violations of housing laws under section 2   , chapter
+110, Oregon Laws 2024 [of this 2024 Act].
+    (d) Establish best practices related to model  codes, typical drawings and specifications as de-
+scribed in ORS 455.062, procedures and practices by which  local governments may comply with
+housinglaws.
+    (e) Provide optional mediation of active disputes relating to housing laws between a local gov-
+ernment and applicants for land use and building permits for residential  development, including
+mediation under ORS 197.860.
+    (f) Coordinate agencies  that are involved in the housing development process, including, but not
+limited to, the Department of Land Conservation and Development, Department of Consumer and
+Business Services, Housing and Community Services  Department and Oregon Business Development
+Department, to enable the agencies to support local governments and applicants for land use and
+building permits for residential development by identifying state agency technical and financial re-
+sources that can address identified housing development and feasibility barriers.
+    (g) Establish policy and funding priorities for state agency resources and programs for the pur-
+pose of addressing barriers to housing production, including, but not limited to, making recommen-
+dations for moneys needed for the purposes of  section 35, chapter 110, Oregon Laws 2024 [of this
+2024 Act].
+    (3) The Land Conservation and Development Commission and the Department  of Consumer and
+Business Services shall coordinate in adopting, amending or repealing rules for:
+    (a) Carrying out the respective responsibilities of the departments and   the office under sections
+1 to 5, chapter 110, Oregon Laws 2024 [of this 2024 Act].
+    (b) Model codes, development plans, procedures and practices   by which local governments may
+comply with housing laws.
+    (c) Establishing standards by which complaints are investigated and pursued.
+    (4) The office shall prioritize assisting local governments in voluntarily undertaking   changes to
+come into compliance with housing laws.
+    (5) As used in sections 1 to 5, chapter 110, Oregon Laws 2024 [of this 2024 Act]:
+    (a) “Housing law” means ORS chapter 197A and ORS  92.010 to 92.192, 92.830 to 92.845,
+197.360, 197.365 [to 197.380], 197.475 to 197.493, 197.505 to 197.540, 197.660 to 197.670, 197.748,
+215.402 to 215.438, 227.160 to 227.186, 455.148, 455.150, 455.152, 455.153, 455.156, 455.157, 455.165,
+455.170, 455.175, 455.180, 455.185 to 455.198, 455.200, 455.202 to 455.208, 455.210, 455.220, 455.465 and
+455.467 and administrative rules implementing those laws, to the extent  that the law or rule imposes
+a mandatory duty on a local government or its officers, employees or agents and   the application of
+the law or rule applies to residential development or pertains to  a permit for a residential use or
+a division of land for residential purposes.
+    (b) “Residential” includes mixed-use residential development.
+
+                                                APPROPRIATIONS
+
+    SECTION 50.       Notwithstanding any other provision of law, the General Fund appropriation
+made to the Department of Land Conservation and Development by section 1 (1), chapter ___,
+Oregon Laws 2025 (Enrolled Senate Bill 5528), for the biennium beginning July 1, 2025, for the
+planning program, is increased by $2,391,599 to support rulemaking and other work related
+to the development of middle housing.
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 43
+     SECTION 51.           Notwithstanding any other provision of law, the General Fund appropriation
+made to the Department of Land Conservation and Development by section 1 (2), chapter ___,
+Oregon Laws 2025 (Enrolled Senate Bill 5528), for the biennium beginning July 1, 2025, for
+grant programs, is increased by $1,500,000 for technical assistance grants related to middle
+housing.
+
+                                                          UNITCAPTIONS
+
+     SECTION 52.           The unit captions used in this 2025 Act are provided only for the conven-
+ience of the reader and do not become part of the statutory law of this state or express any
+legislative intent in the enactment of this 2025 Act.
+
+                                                      EMERGENCY CLAUSE
+
+     SECTION 53.           This 2025 Act being necessary for the immediate preservation of the public
+peace, health and safety, an emergency is declared to exist, and this 2025 Act takes effect
+on its passage.
+
+Passed by House June 18, 2025                                                 Received by Governor:
+
+Repassed by House June 26, 2025                                               ........................M.,........................................................., 2025
+
+                                                                              Approved:
+
+          ..........................................................................................................M.,........................................................., 2025
+            Timothy G. Sekerak, Chief Clerk of House
+
+          ....................................................................................................................................................................
+                           Julie Fahey, Speaker of House                                                             Tina Kotek, Governor
+
+                                                                              Filed in Office of Secretary of State:
+Passed by Senate June 24, 2025
+                                                                              ........................M.,........................................................., 2025
+
+          ..................................................................................
+                        Rob Wagner, President of Senate                                 ..................................................................................
+                                                                                                         Tobias Read, Secretary of State
+
+Enrolled House Bill 2138 (HB 2138-C)                                                                            Page 44

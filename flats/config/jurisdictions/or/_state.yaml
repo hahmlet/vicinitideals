@@ -116,6 +116,26 @@ code:
   # One section of statute is prose, not a table of dimensions, so it does not
   # read like code to the plausibility check. Read before storing.
   allow_thin: true
+# The post-2027 sources (FOLLOWUPS 21; Steph 2026-09-29: "design the system
+# for a post-2027 world"). Stored so they can be quoted and watched for
+# change; nothing cites them yet. HB 2138 (2025) rewrites ORS 197A.420 and
+# asks LCDC to rewrite Division 46 by 2027-01-01. Division 46 AS ADOPTED by
+# LCDC 2026-08-27 is DLCD's own copy: the text filed with the Secretary of
+# State (LCDD 11-2026) carries errors and a correction hearing is set for
+# 2026-10-22 -- re-fetch after it. Division 47 (Oregon Homes, HB 2258) is a
+# DRAFT until LCDC's October 2026 meeting; version 5 of 2026-09-22.
+- id: hb.2138.2025
+  url: https://www.oregon.gov/lcd/LAR/Documents/HB2138_2025_Enrolled.pdf
+  title: HB 2138 (2025) Enrolled -- middle housing, land division, Division 46 rewrite
+- id: oar.660-046.adopted-2026-08
+  url: https://www.oregon.gov/lcd/LAR/Documents/Div46_Proposed_Rules_August_LCDC_Final.pdf
+  title: OAR 660-046 as adopted by LCDC 2026-08-27 (DLCD copy; operative 2027-01-01)
+  # Rule prose with (1)(a)(A) numbering, not dimension tables: 55 of 1,233
+  # lines look like code to the plausibility guard. Read 2026-09-29.
+  allow_thin: true
+- id: oar.660-047.draft-v5
+  url: https://www.oregon.gov/lcd/LAR/Documents/Div47_Proposed_Rules_Interim_v5_9.22.26.pdf
+  title: OAR 660-047 Oregon Homes, proposed rules, interim version 5 (2026-09-22, DRAFT)
 defaults:
   # Splitting the four units onto four lots does not create four lots that each
   # have to meet the zone. ORS 92.031(2)(b) requires the plan to comply with the

@@ -714,12 +714,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    'prevent or discourage' housing by 2028 -- the catalog is also the
    baseline to see what that removes. Plan first; ask Steph before a worktree.
 21. **Post-2027 world (Steph 2026-09-29: "design the system for a post-2027
-   world... retroactively apply that throughout our corpus").** Sources in the
-   2026-09-29 session scratchpad `oar46/` -- store them in provenance first:
-   HB 2138 enrolled; Division 46 AS ADOPTED 2026-08-27 (DLCD
-   Div46_Proposed_Rules_August_LCDC_Final.pdf; OARD's filed text LCDD 11-2026 is
-   WRONG, correction hearing 2026-10-22, re-fetch after); Div 47 Oregon Homes
-   draft v5 (2026-09-22). Worktree, confirm with Steph first. In order:
+   world... retroactively apply that throughout our corpus").** Sources
+   STORED 2026-09-30 (declared in `_state.yaml`, cited by nothing yet):
+   `or/hb.2138.2025.txt` (enrolled); `or/oar.660-046.adopted-2026-08.txt`
+   (Division 46 AS ADOPTED 2026-08-27, DLCD's copy; OARD's filed text LCDD
+   11-2026 is WRONG, correction hearing 2026-10-22 -- re-fetch after);
+   `or/oar.660-047.draft-v5.txt` (Oregon Homes draft v5, 2026-09-22; re-fetch
+   after LCDC's October meeting). Worktree, confirm with Steph first. In order:
    (a) STATE LAYER TO ADOPTED DIV 46: quadplex min lot <= the zone's
    detached-house min lot (0220(2)(a)(B)), townhouse likewise (0220(3)(a)) --
    needs a per-zone detached-house minimum lot field read from every zone

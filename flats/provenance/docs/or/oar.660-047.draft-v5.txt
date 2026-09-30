@@ -1,0 +1,324 @@
+Proposed Language: Oregon Administrative Rules Chapter 660, Division 047 –
+Oregon Homes program
+Updated September 2026, Version 5
+
+Table of Contents
+                  660-                                                                  047-                                                                 0000 Purpose ....................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             2
+                  660-                                                                  047-                                                                 0010 Definitions.................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         2
+                  660-                                                                  047-                                                                 0020 Local Government Review Process ..........................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        5
+                  660-                                                                  047-                                                                 0030 Design Standards .....................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     7
+                  660-                                                                  047-                                                                 0040 Siting Standards .......................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           8
+                  660-                                                                  047-                                                                  005                                           0 Tree Standards .......................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           1
+660-                                                                        047-                                                0000                                                 Purpose
+The                                                                    purpose of this division is to          establish                       standards under which local governments shall approve
+development that meets specified residential development types, Oregon Homes Developments, on
+lots or parcels under specified conditions.
+
+STATUTORY/OTHER AUTHORITY: ORS 197A.408
+STATUTES/OTHER IMPLEMENTED: ORS 197A.400, ORS 197A.408, ORS 197A.420
+
+660-                                                                        047-                                                0010 Definitions
+As used in this division, the definitions in ORS 197A                    .420,                                                                  apply.
+In addition, the following definitions apply:
+(1) “Buildable area” means the floor area of an accessory dwelling unit, single unit dwelling; floor area
+of each unit in a duplex, triplex, quadplex or townhouse; or          the average floor area of dwelling units in
+a cottage cluster or multiunit dwelling. Buildable area excludes the area of a carport or garage, or
+other non-                                                                           habitable floor area of a structure.
+(2) “Building height” as defined in the Oregon Residential Specialty Code                                                                   or Oregon Structural
+Specialty Code,                                                                 whichever is applicable, including the applicable code’s definition of “Grade Plane”
+used to measure height.
+(3) “DBH”                             means the diameter of a standing tree          at breast height, which is measured                                            as the width of a
+standing tree at four and one-                                                                half feet above the ground on the uphill side, as defined in ORS 90.100.
+(4) “Design standard” means a standard related to the arrangement, orientation, materials,
+appearance, articulation, or aesthetic of features on a dwelling unit or accessory elements on a site.
+Design standards include, but are not limited to, standards that regulate entry and dwelling
+orientation, façade materials and appearance, window coverage, driveways, parking configuration,
+pedestrian access, screening, landscaping, and private, open, shared, community, or courtyard
+spaces.
+(5) “Environmentally sensitive area” means lands protected or designated pursuant to any one of the
+following statewide planning goals:
+(a) Goal 5 Natural Resources, Scenic and Historic Areas, and Open Spaces.
+(b) Goal 6 Air, Water and Land Resource Quality;
+(c) Goal 15 Willamette River Greenway;
+(d) Goal 16 Estuarine Resources;
+(e) Goal 17 Coastal Shorelands; and
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           2
+(f) Goal 18 Beaches and Dunes.
+(6) “Final engineering plans” means the detailed                                            engineering plans and reports for the design or
+construction of public and private infrastructure improvements that require review and approval
+following tentative plat approval by a local government before issuing site development permits,
+including plans and reports for the construction of public and private infrastructure improvements such
+as grading, water, sewer, stormwater, transportation systems, and utilities.
+(7) “Oregon Homes Development” means a residential development type approved to be placed on
+an Oregon Homes Lot including:
+(a) Allowed housing types:
+(A) Attached or detached housing, including accessory dwelling units or prefabricated or modular
+housing
+(B) A multiunit dwelling with more than six and fewer than twelve         units;
+(b) Types with a buildable area of:
+(A) A size of not more than 2,200 square feet per          dwelling unit for a single-unit dwelling, accessory
+dwelling unit, or per dwelling unit for           duplex, triplex, quadplex and townhouse;                      and
+(B) An average per-unit size of not more than 1,400 square feet for cottage clusters or a multiunit
+dwelling;
+(d) Housing that complies with the minimum density requirements of the applicable comprehensive
+plan or land use regulations for the lot or parcel; and
+(e) Housing types whose building plans have been approved by         Department of Consumer and
+Business Services pursuant to ORS 455.062,                                                                  ORS 455.685, or housing types that meet the criteria as
+provided in subsections (a) to (d) and approved through                                                                                       local building code review.
+(8) “Oregon Homes                      Lot” means a lot or parcel that is:
+(a) A lawfully established unit of land;
+(b) Within an urban growth boundary;
+(c) Zoned to allow residential use;
+(d) At least 1,500 square feet;
+(e) Not larger than 20,000 square feet;
+(f) Not covered by slopes averaging more than 15 percent;
+(g) Not within an area identified in an inventory or map that is part of the local government’s
+comprehensive plan or                                                       locally adopted ordinance or resolution as:
+(A) Environmentally sensitive or containing significant natural resources;
+(B) Open space or scenic areas; or
+(C) Natural hazard areas, including floodplains, river greenways, landslide zones, coastal erosion, or
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           3
+wildfire risk areas. Including areas identified                                           as one or more of the above                     referenced areas in
+DOGAMI Interpretive Map Series (IMS), Open-                                                                File Reports (OFR) and Statewide Landslide
+Information Database (SLIDO) and mapped Areas of Special Flood Hazard identified on adopted
+FEMA Flood Insurance Rate Maps; and
+(h) Vacant, including a lot or parcel:
+(A) Created by any lawful division of land, regardless of when the division occurred, in accordance
+with ORS chapter 92.
+(B) On which is sited a nonresidential structure that is nonconforming or not suitable for any lawful
+use.
+(C) For which residential units were demolished more than five years prior; or
+(D) For which residential units were demolished within the previous five years, provided that the
+approved development would create net additional units and would use a building construction plan
+approved under Department of Consumer and Business Services pursuant to         ORS 455.062, ORS
+455.685, or housing types that meet the criteria in section                                                                                                 (5) and approved through local building
+code review.
+(9) “Public facilities plan or engineering master plan” means a support document or documents to a
+comprehensive plan. The facility plan describes the water, sewer and transportation facilities which
+are to support the land uses designated in the appropriate acknowledged comprehensive plans within
+an urban growth boundary containing a population greater than 2,500.
+(10) “Public Facilities Requirements” refers to the development requirements applicable to public and
+private infrastructure improvements such as grading, water, sewer, stormwater, transportation
+systems, and utilities.
+(11) “Site p                                lan” means a site or development plan that is drawn accurately to scale and includes                                                                                      the
+following existing and proposed information                                            at a minimum:
+(a) All property lines with dimensions and total lot or parcel area;
+(b) North arrow and scale of drawing;
+(c) Adjacent streets, access (driveways), curbs, sidewalks, and bicycle routes;
+(d) Existing goal protected resources, if any are present on the site;
+(e) Existing and proposed e                               asements and on-site utilities;
+(f) Existing and proposed development with all dimensions, including floor area and building footprint;
+(g) Distances of all existing and proposed development to property lines;
+(h) Types and location of outdoor area(s)                                           and usable open space (if required);
+(i) Percentage of the site proposed for outdoor area coverage;
+(j) Motor vehicle and pedestrian access and circulation systems, including connections off-site, and
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           4
+associated dimensions; and
+(k) Motor vehicle and bicycle parking areas and design, number of spaces, and loading areas.
+(12) “Siting standards” means a standard related to the position, bulk, scale, or form of a structure.
+Siting standards include, but are not limited                                          to, standards that regulate perimeter setbacks,
+dimensions, bulk, scale, lot coverage, parking requirements, utilities, and public facilities.
+(13) “Traffic impact analysis           ” means a report prepared by a professional engineer that analyzes
+existing and future roadway conditions.
+(14) “Urban unincorporated lands” has the same meaning as provided in ORS 197A.015 (12).
+(15) “Utility easements” means an easement that allows a                                 public utility as defined in ORS 757.005 the
+right to use and access specific areas of another’s property for constructing or maintaining gas,
+electric, telecommunication, fiberoptic, water, stormwater, and sewer lines.
+
+STATUTORY/OTHER AUTHORITY: ORS 197A.408
+STATUTES/OTHER IMPLEMENTED: ORS 197A.400, ORS 197A.408, ORS 197A.420
+
+660-                                                                        047-                                                0020 Local Government Review Process
+A local government must follow the review process as provided          below for an Oregon Homes
+Development proposed on an Oregon Homes Lot.
+
+(1) Local governments must issue a decision notwithstanding any comprehensive plan or land use
+regulations or statewide land use planning goals, approving                                            the development of an Oregon Homes
+Development on an Oregon Homes L         ot if the development proposal meets the applicable standards
+provided in OAR 660-                                                                             047-0030 through OAR 660-                                                                 047-                                                                  005                                           0.
+(2) Local governments shall review applications for Oregon Homes Development on an Oregon
+Homes Lot through a completeness and compliance check and                                                                                                              shall be no more rigorous                                  than a
+ministerial review.                            Administration of this review shall only be to ensure compliance with standards
+provided in this division and shall not           require the use of discretion, interpretation, or the exercise of
+policy or legal judgment.
+(3) Nothing in this division prohibits an applicant from submitting an application for                                                     development on an
+eligible Oregon Home Lot that utilizes otherwise applicable standards and processes.
+(4)A local government shall deem a          n application                                            complete when the applicant provides the following
+information to the local government:
+(a) Site plan and exhibits that address                                                                  requirements provided in OAR 660-047-                                                                 0010, 660-                                                                             047-0030,
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           5
+660-                                                                  047-                                                                  004                                           0, and 660-                                                                            047-                                                                  005                                           0;
+(b) Building plans that:
+(A) Are approved by the Building Codes                                                                                      Division as meeting applicable building code standards; or
+(B) Meet the requirements of an Oregon Homes Development provided                                                                    in OAR 660-047-001                                           0(7); and
+(c)                    A tree mitigation plan                                           that meets the standards provided           in OAR 660-047-005                                           0, as applicable.
+(5) A local government shall deem an application submission that does                                            not include information
+required in                      this division incomplete.
+(6) Applicants shall bear the burden of proof to          provide information necessary to determine
+compliance with the applicable provisions of this division.
+(7) In reviewing or approving an application for Oregon Homes Development, a                               local government
+shall not provide                                             public notice or hold a public hearing.
+(8) Nothing in this rule           precludes a                                 local government from applying locally administered public
+facilities requirements, including,                                            but not limited to public works design standards, final engineering
+plans, or requirements resulting from a traffic impact analysis during the development          review
+processes for an Oregon Homes Development application.                                             The local government may determine the
+order in which it                                 applies these locally administered standards or plans during the application or review
+period is determined by the local government at their discretion.
+(9) A local government shall not require           public facilities requirements, final engineering plans, or traffic
+impact analysis requirements uniquely for an Oregon Homes Development that exceeds                                                                  the process
+or requirements applied to all other residential development of the same type.
+(10) Nothing in this rule limits or supersedes the authority of the State Fire Marshal or fire code official
+to administer and enforce the Oregon Fire Code.
+(11) Local governments that have adopted the Oregon State Fire Marshal’s defensible space model
+code where applicable according to ORS 476.392, can use defensible space code standards to
+review an Oregon Homes D          evelopment.
+(12) A local government may charge applications a review fee comparable to similar development
+applications.
+(13) If the application submitted under the Oregon Homes program does not meet the definitions of
+an Oregon Homes Lot and Oregon Homes Development provided          in OAR 660-                                                                  047-0010 and does
+not meet the requirements provided                                                                   in OAR 660-047-                                                                  0020 through OAR 660-                                                                  047-                                                                  005                                           0, the local
+government may deem the                                            application                                            as incomplete                      or reject the                                             application.
+(14) A local government is not required to grant a request for adjustment under Oregon Laws 2024,
+chapter 110, sections 38 to 41,                                                                  compiled as a note after ORS 197A.395 in approving an application
+for an Oregon Homes Development.
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           6
+(15) An approved Oregon Homes Development          is a conforming development for the purposes of local
+land use regulations. Nothing in this section prohibits a local government from regulating subsequent
+alterations, remodels, additions, or changes of use or occupancy in conformance with local
+regulations                     , unless a subsequent application for development on that lot is for an                               Oregon Homes
+Development.
+
+STATUTORY/OTHER AUTHORITY: ORS 197A.408
+STATUTES/OTHER IMPLEMENTED: ORS 197A.400, ORS 197A.408, ORS 197A.420
+
+660-                                                                        047-0030 Design Standards
+The following design                                                                                                                         standards required for the placement of an Oregon Homes Development on an
+Oregon Homes Lot address           essential safety and functional aspects                                            for residents and people that
+interact with the right-of-way.
+A local government shall           apply the following design standards in reviewing an application for         an
+Oregon Homes Development on an Oregon Homes Lot.
+
+(1) All units within the development, unless an attached or detached accessory dwelling unit, must
+have their pedestrian                                            entry orientation meet at least one of the following:
+(a) Face the street;
+(b) Be at an angle of up to 45 degrees from the street;
+(c)                    Face a common open space that is adjacent to the street; or
+(d) Open onto a covered porch or covered patio                    that is at least 25 square feet in area                                            and                                            have at
+least one entrance facing the street.
+(2) If there is on-                                                     street parking on                                                       the street frontage adjacent to an Oregon Homes Development,
+then no parking is required. If there is no on                                                                 -street parking on the street frontage adjacent to                     an
+Oregon Homes Development, then the                                                                                                                       Oregon Homes Development is required to meet either the
+local government parking requirement or one garage, carport, or onsite parking space per dwelling
+unit, whichever is less.
+(3) If proposed as part of an Oregon Home Development, the combined width of all garages and
+outdoor on-                                                      site parking and vehicle                                                      maneuvering areas, as measured at their widest dimension, shall
+not exceed a total of 50 percent of the street frontage. The following Oregon Homes                      Development
+scenarios are excluded from this standard:
+(a) Accessible and adaptable units;
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           7
+(b) Lots or parcels that receive vehicular access from an alley; and
+(c) Off-street parking areas that are separated from the street lot line by a dwelling.
+(4) Storage facilities for trash and recycling receptacles are not required.                                            For developments over four
+units with common storage areas that are located within 20 feet of a street lot line or a lot line abutting
+residential property shall meet the following standards:
+(a) The storage facility shall be screened from street lot lines and abutting residential properties by a
+wall, solid fence, or evergreen hedge. T                                                                                                                                                                he screen must be at least four           feet in height and located no
+more than three           feet from the storage facility.
+(b) The storage facility must be separated from the street lot line by at least five feet.
+(5) A local government shall approve an Oregon Homes Development application if the proposal
+varies not more than 10                                                       percent from the numerical           standards described in this section.
+
+STATUTORY/OTHER AUTHORITY: ORS 197A.408
+STATUTES/OTHER IMPLEMENTED: ORS 197A.400, ORS 197A.408, ORS 197A.420
+
+660-                                                                        047-                                                0040 Siting Standards
+A local government shall           apply only the following siting standards in reviewing an application for          an
+Oregon Homes Development on an Oregon Homes Lot.
+
+(1) Within areas incorporated into a city          , Oregon Homes Developments must provide a minimum
+setback of five feet on all sides of the building, the                                 distance of an existing                                            or proposed                                            utility
+easement, the minimum defensible space requirements as detailed in Oregon State Fire Marshal’s
+model code for defensible space in ORS 476.392, or the distance of an easement required in traffic
+impact analyses, whichever is greater.                  Oregon Homes Developments within urban unincorporated
+lands must provide                                            a minimum setback of fifteen feet along the street fron                    tage and ten                                            feet on all
+other sides of the building not along the street frontage, the distance of an existing or proposed utility
+easement, the minimum defensible space requirements as detailed in Oregon State Fire Marshal’s
+model code for defensible space in ORS 476.392, or the distance of an easement required in traffic
+impact analyses, whichever is greater.
+(2) For buildings greater than thirty-five feet in building height                                                       and within areas incorporated into a
+city                   , the setbacks must be ten feet along the street frontage and five feet on the          sides and rear.
+Building height i          s defined in OAR                                 660-                                                                  047-0010. The setback standards for buildings within urban
+unincorporated lands over thirty-five feet in building height remain the same as in 660-047-                                                                 0040 (1).
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           8
+(3) If an Oregon Homes Development includes a garage,                                                                 the face of the                                             garage                                                                  must be                                            setback
+twenty feet from the street frontage.
+(4) An Oregon Homes Development applicant may opt into the local government setback at the
+discretion of the applicant.
+(5) Nothing in OAR 660-047 exempts an Oregon Homes Development from requirements related to
+hazards to air navigation prohibitions provided in ORS 836.608(8) and OAR 660-                                                                             013-                                                                  0070.
+(6) To the extent that a local government has an established                                                                                                height limit for residential development
+due to limits of local aerial firefighting equipment, adopted by ordinance or resolution, an Oregon
+Homes Development is subject to the established limit.
+(7) Meet the minimum density requirements of the applicable comprehensive plan or land use
+regulations for the lot or parcel.
+(8) Provide outdoor area that is comprised of at least                                 15 percent of the gross site area, excluding the
+setback area. The outdoor area must be                                           at least a contiguous 10-                                                       foot by 10-                                                     foot square or greater,
+and containing                      one or more of the                                            following features:
+(a) Areas planted with vegetation (including natural areas and existing trees);
+(b) Private open space, including balconies and terraces attached to individual dwelling units;
+(c) Pedestrian hardscape;
+(d) Usable open space being one of the following:
+(A) Outdoor recreation area surfaced with lawn, groundcover, gravel, or hard surface. The area must
+be                                             at least a contiguous 10-                                                     foot by 10-                                                     foot square;
+(B) Balconies, terraces, and rooftop decks with seating areas that are available for use by all
+residents;
+(C) Tree groves of                      existing mature trees;
+(D)Turf or grass play fields;
+(E) Children’s play structure or play area;
+(F) Sports courts;
+(G) Swimming or wading pool or hot tub;
+(H) Walking fitness course;
+(I) Natural area with benches; or
+(J) Gardening area with at least 50 square feet of planting area.
+(9) For multi-unit buildings, the required 15 percent outdoor space area may alternatively be met with
+balconies attached to individual units and is not required to be a 10-                                                    foot by 10--                                           foot square.
+(10) A local government shall approve an Or                                          egon Homes Development application if the proposal
+varies not more than 10                                                       percent from the numerical           standards described in this section.
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           9
+STATUTORY/OTHER AUTHORITY: ORS 197A.408
+STATUTES/OTHER IMPLEMENTED: ORS 197A.400, ORS 197A.408, ORS 197A.420
+
+660-                                                                        047-                                                0050 Tree Standards
+A local government must require the applicant          to adhere to the following standards to guide the
+preservation                                            or replacement of trees on an Oregon Homes Lot         .
+
+(1) Approval of an Oregon Home Development may not result in the remov                                                     al of trees that are:
+(a) Designated by the local government as a heritage tree, or
+(b) 20 inches or greater           DBH.
+(2) An applicant for an Oregon Homes                                         Development on an Oregon Homes                    Lot may propose to
+remove eligible tree(                                           s)                    as part of the development application. The applicant shall                                           take mitigating
+measures provided in section (3) for each tree proposed to be removed that is:
+(a) Designated                                            by the local government through an                     adopted program, regulations, or ordinances                                           as a
+protected species;
+(b) Not deemed unhealthy by a certified arborist; and
+(c) Twelve inches or more                      DBH.
+(3) If all of the criteria                                                       listed in OAR           660-                                                                  047-005                                           0(2) are met, the applicant must conduct one of the
+following mitigation measures for tree removal:
+(a) The replanting                                             of the removed                                                       tree on or adjacent to the                                           Oregon Homes Lot;
+(b) The replacement of the removed tree with a tree of the same protected species; or
+(c)                    A payment of a fee-in-lieu as established by local ordinance.
+
+STATUTORY/OTHER AUTHORITY: ORS 197A.408
+STATUTES/OTHER IMPLEMENTED: ORS 197A.400, ORS 197A.408, ORS 197A.420
+
+OAR 660-                                                                             047 Draft Rules                                                                                                                                                                                          September 22                               , 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     10
