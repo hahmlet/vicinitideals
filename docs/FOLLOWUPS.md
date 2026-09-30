@@ -855,3 +855,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    item 23's page-image check would make it safe.) Pricing unconfirmed:
    nanonets.com/pricing shows $0.02-$0.30 per block run, not the
    10k-free / $0.01 per page Steph saw.
+25. **Tables as cells, not whitespace (Steph 2026-09-30).** Every table is
+   stored as text; columns survive only as spacing. Cited docs: 31 PDF in
+   layout mode (gaps kept), 103 PDF in plain mode (layout fuses words on
+   these, so the geometry is gone), 93 HTML (`fetch._Table` grids a
+   `<table>` unless it runs past `_GRID_LINE_MAX` = 400 chars, then one cell
+   per line -- Happy Valley Table 16.22.050-2). `columns.py` today: 3,670
+   citations, 820 on a table it can read by column, 405 compared, 0
+   mismatches; Fairview refused whole, Lake Oswego off (blank cells
+   dropped). Offered: a derived `<doc>.tables.json` sidecar like
+   `pages.json` -- each cell's caption, row label, column head, text,
+   stored line, page and box -- from PDF word coordinates (pdfplumber is
+   in uv.lock via markitdown; pin it as pdf_hold pins pypdf) and the HTML
+   DOM, bound to the text's sha, refused on disagreement. The column check
+   then reads cells, and item 23's review card gets its box. Vision/OCR
+   table extraction only for the scans (item 24). Pending Steph.
