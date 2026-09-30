@@ -228,6 +228,28 @@ def esri_polyline(geom: dict[str, Any] | None) -> dict[str, Any] | None:
     return {"type": "MultiLineString", "coordinates": paths} if paths else None
 
 
+def esri_point(geom: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not geom or geom.get("x") is None or geom.get("y") is None:
+        return None
+    return {"type": "Point", "coordinates": [geom["x"], geom["y"]]}
+
+
+_CONVERT = {Geometry.polygon: esri_polygon, Geometry.polyline: esri_polyline, Geometry.point: esri_point}
+
+
+def data_edited(meta: dict[str, Any]) -> int | None:
+    """When the layer's DATA last changed (epoch ms), as the service reports it.
+
+    ``editingInfo.dataLastEditDate`` moves when a feature is edited and not
+    when the service is merely republished or its schema touched, which is
+    the change a derived fact has to follow. None where the service does not
+    say (many county MapServers do not).
+    """
+    info = meta.get("editingInfo")
+    got = info.get("dataLastEditDate") if isinstance(info, dict) else None
+    return int(got) if isinstance(got, (int, float)) else None
+
+
 def _json(resp: httpx.Response) -> dict[str, Any]:
     resp.raise_for_status()
     doc = resp.json()
@@ -236,12 +258,20 @@ def _json(resp: httpx.Response) -> dict[str, Any]:
     return doc
 
 
-def _arcgis_fields(client: httpx.Client, ds: Dataset) -> list[str]:
-    """The layer's own field names, from its metadata document."""
+def _arcgis_meta(client: httpx.Client, ds: Dataset) -> dict[str, Any]:
     meta = _json(client.get(ds.url, params={"f": "json"}))
     if "error" in meta:
         raise AcquireError(f"layer metadata: {meta['error'].get('message', meta['error'])}")
+    return meta
+
+
+def _field_names(meta: dict[str, Any]) -> list[str]:
     return [f["name"] for f in meta.get("fields", []) if isinstance(f, dict) and "name" in f]
+
+
+def _arcgis_fields(client: httpx.Client, ds: Dataset) -> list[str]:
+    """The layer's own field names, from its metadata document."""
+    return _field_names(_arcgis_meta(client, ds))
 
 
 def _arcgis_ids(client: httpx.Client, ds: Dataset) -> tuple[str, list[int]]:
@@ -271,7 +301,7 @@ def _fetch_arcgis(
     if not oids:
         raise AcquireError("the id query returned no features; check the where clause")
     log(f"  {len(oids):,} features to fetch")
-    convert = esri_polygon if ds.geometry is Geometry.polygon else esri_polyline
+    convert = _CONVERT[ds.geometry]
     unfetched: list[int] = []
 
     def batch(ids: list[int], offset_ft: float = 0.0, retried: bool = False) -> None:
@@ -585,12 +615,16 @@ def acquire(
                     entry["status"] = "deferred"
                     entry["error"] = "terrain tiles are not a vector layer; the slope stage fetches them"
                 elif ds.kind is Kind.arcgis:
-                    names = _arcgis_fields(client, ds)
+                    meta = _arcgis_meta(client, ds)
+                    names = _field_names(meta)
                     if names:
                         _check_fields(ds, names)
                     # A server that publishes no field list cannot be checked;
                     # the manifest says so rather than claiming nothing is missing.
                     entry["fields"] = {"declared": list(ds.fields), "present": names, "checked": bool(names)}
+                    # What the monthly probe compares to say "new data here"
+                    # without downloading it (:func:`flats.ingest.probe.probe_arcgis`).
+                    entry["data_edited"] = data_edited(meta)
                     sink = _Sink(path, pipeline.working_srid)
                     unfetched = _fetch_arcgis(client, ds, pipeline.working_srid, sink, log)
                     entry["unfetched_ids"] = unfetched

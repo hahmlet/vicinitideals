@@ -660,7 +660,31 @@ def _check_drawn(prov: Provenance, who: str) -> None:
 #: reason conditions and fields are: "lot_size" beside "lot_sqft" would be two
 #: axes nobody can reconcile, and the units have to be unambiguous — a band
 #: read in square feet and applied in acres is off by 43,560.
-LOT_MEASURES: tuple[str, ...] = ("lot_sqft", "lot_width_ft", "lot_depth_ft")
+#:
+#: The four distances to transit (:mod:`flats.geom.transit`) are lot measures
+#: too: Hillsboro's station community zones set a minimum height within 800 ft
+#: of a light rail station and none beyond, which is a band on a distance the
+#: way Milwaukie's table is a band on an area.
+TRANSIT_MEASURES: tuple[str, ...] = (
+    "rail_stop_ft",
+    "lrt_station_ft",
+    "transit_stop_ft",
+    "frequent_route_ft",
+)
+LOT_MEASURES: tuple[str, ...] = ("lot_sqft", "lot_width_ft", "lot_depth_ft") + TRANSIT_MEASURES
+
+#: How much NEARER the true value may be than the measured one. A station is
+#: published as one point mid-platform and codes measure to the platform, up
+#: to ~100 ft nearer; a route is a centreline and some codes measure to the
+#: right-of-way edge. A band edge inside that interval cannot be told either
+#: way, and :meth:`Band.holds` says so rather than guessing -- the same rule
+#: tightens near a station in one zone and relaxes in the next, so either
+#: guess is somebody's false GREEN.
+MEASURE_SLACK: dict[str, float] = {
+    "rail_stop_ft": 100.0,
+    "lrt_station_ft": 100.0,
+    "frequent_route_ft": 50.0,
+}
 
 
 class Band(BaseModel):
@@ -806,6 +830,22 @@ class Band(BaseModel):
         if lot is None or self.measure not in lot:
             return None
         got = lot[self.measure]
+        slack = MEASURE_SLACK.get(self.measure, 0.0)
+        if not slack:
+            return self._contains(got)
+        # The true value lies somewhere in [got - slack, got]. In the band at
+        # both ends is in the band (a band is one interval); touching it
+        # anywhere else is a lot we cannot place.
+        near = max(0.0, got - slack)
+        if self._contains(near) and self._contains(got):
+            return True
+        low, low_closed = self.lower
+        high = self.upper
+        reaches_low = got >= low if low_closed else got > low
+        reaches_high = near <= high if self.upper_closed else near < high
+        return None if reaches_low and reaches_high else False
+
+    def _contains(self, got: float) -> bool:
         if self.at_least is not None and got < self.at_least:
             return False
         if self.more_than is not None and got <= self.more_than:

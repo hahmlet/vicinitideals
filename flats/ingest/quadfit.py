@@ -114,7 +114,7 @@ from flats.geom.neighbour import (
 from flats.geom.park import PARK_FACTS, observed_parks
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
-from flats.rules.model import Layer
+from flats.rules.model import TRANSIT_MEASURES, Layer
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
 from flats.score.relief import ReliefPolicy
@@ -1103,6 +1103,7 @@ def lot_from_row(
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
+        transit_ft=transit_from_row(row),
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -1169,10 +1170,26 @@ def _street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], .
     return fronts + tuple(a for a in lot.access if a not in fronts)
 
 
+def transit_from_row(row: Mapping[str, Any]) -> tuple[tuple[str, float], ...]:
+    """The lot's distances to transit, where the row carries them.
+
+    Joined from the per-release distance file (:mod:`flats.ingest.transit`,
+    ``--transit``). A measure the row lacks is left out, so a band on it
+    stays unplaceable rather than reading the lot as far from transit.
+    """
+    out = []
+    for name in TRANSIT_MEASURES:
+        got = _finite(row.get(name))
+        if got is not None and got >= 0:
+            out.append((name, got))
+    return tuple(out)
+
+
 def iter_rows(
     s4: Path = S4_LOTS,
     s5o: Path = S5O_LOTS,
     *,
+    transit: Path | None = None,
     limit: int | None = None,
     sample: int | None = None,
     seed: int = 0,
@@ -1202,6 +1219,11 @@ def iter_rows(
     left = left.rename(columns={"wkb": "lot_wkb"})
     right = pd.read_parquet(s5o, columns=[c for c in S5O_COLUMNS if c in have5])
     frame = left.merge(right, on="TLID", how="left")
+    if transit is not None:
+        # Measured once per transit release, keyed by TLID; a lot the file
+        # does not hold simply has no distance (:func:`transit_from_row`).
+        near = pd.read_parquet(transit, columns=["TLID", *TRANSIT_MEASURES])
+        frame = frame.merge(near.drop_duplicates("TLID"), on="TLID", how="left")
     keep = scope_mask(frame, jurisdictions, zones, tlids)
     if keep is not None:
         frame = frame[keep]
@@ -2114,6 +2136,7 @@ def run(
     step_deg: float = DEFAULT_STEP_DEG,
     chunk_size: int = 500,
     sources: Path | None = None,
+    transit: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -2123,6 +2146,8 @@ def run(
     first three hours. Re-running with the same ``out`` starts over.
     ``sources`` is a snapshot directory (``data/flats/sources/<date>``) whose
     corridor maps answer the corridor facts; without it they stay unasked.
+    ``transit`` is the distance file :mod:`flats.ingest.transit` wrote for
+    the transit release in use; without it no lot has a distance to transit.
     """
     import time
     from multiprocessing import Pool
@@ -2138,7 +2163,7 @@ def run(
     zones, tlids = sorted(zones), sorted(tlids)
     rows = list(
         iter_rows(
-            s4, s5o, limit=limit, sample=sample, seed=seed,
+            s4, s5o, transit=transit, limit=limit, sample=sample, seed=seed,
             jurisdictions=jurisdictions, zones=zones, tlids=tlids,
         )
     )
@@ -2186,6 +2211,7 @@ def run(
         "zones": zones,
         "tlids": tlids,
         "sources": str(sources) if sources is not None else None,
+        "transit": str(transit) if transit is not None else None,
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -2218,6 +2244,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--step-deg", type=float, default=DEFAULT_STEP_DEG)
     ap.add_argument("--chunk-size", type=int, default=500)
     ap.add_argument("--sources", type=Path, help="snapshot dir holding the corridor maps")
+    ap.add_argument("--transit", type=Path, help="distances.parquet from flats.ingest.transit")
     args = ap.parse_args(argv)
     run(
         args.out,
@@ -2234,6 +2261,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         step_deg=args.step_deg,
         chunk_size=args.chunk_size,
         sources=args.sources,
+        transit=args.transit,
     )
     return 0
 

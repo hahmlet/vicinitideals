@@ -1,5 +1,5 @@
 {
-  "digest": "635ec3084220005b0b5067ec81b9e79158ec19c9c34c675a474de5c9e92353e0",
+  "digest": "2e49eb25fe7f8a3767a0dd08a6f116dc0bec6927114e273177d1c3bfea93363c",
   "layers": {
     "or": {
       "misattributed": [],
@@ -842,6 +842,13 @@
         },
         {
           "zone": "SC-HDR",
+          "field": "min_density_du_per_acre [lrt_station_ft:>400+]",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+        },
+        {
+          "zone": "SC-HDR",
           "field": "setback_front_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.35.10",
@@ -891,6 +898,13 @@
         },
         {
           "zone": "SC-MU",
+          "field": "min_density_du_per_acre [lrt_station_ft:>400+]",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+        },
+        {
+          "zone": "SC-MU",
           "field": "setback_front_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.35.10",
@@ -927,6 +941,13 @@
         {
           "zone": "SC-S",
           "field": "min_density_du_per_acre",
+          "claimed": "20.20.15",
+          "found": "20.20.15 60.05.15",
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+        },
+        {
+          "zone": "SC-S",
+          "field": "min_density_du_per_acre [lrt_station_ft:>400+]",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
           "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
@@ -1657,6 +1678,20 @@
           "claimed": "12.24.460",
           "found": "12.24.450",
           "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618-L1619,L1629-L1631"
+        },
+        {
+          "zone": "SCR-V",
+          "field": "min_density_du_per_acre [lrt_station_ft:1301-2600]",
+          "claimed": "12.24.460",
+          "found": "12.24.450",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1629,L1632-L1633"
+        },
+        {
+          "zone": "SCR-V",
+          "field": "min_density_du_per_acre [lrt_station_ft:>2600+]",
+          "claimed": "12.24.460",
+          "found": "12.24.450",
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1629,L1634-L1635"
         },
         {
           "zone": "SCR-V",

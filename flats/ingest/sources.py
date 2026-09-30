@@ -61,11 +61,17 @@ class Provides(str, enum.Enum):
     #: The county's own list of what changed since the last release -- read
     #: to cross-check the delta, never to build the lot table.
     changelog = "changelog"
+    #: Stops, stations and route lines, for the per-lot distance to transit
+    #: (:mod:`flats.geom.transit`) -- measured once per transit release, not
+    #: once per screen.
+    transit = "transit"
 
 
 class Geometry(str, enum.Enum):
     polygon = "polygon"
     polyline = "polyline"
+    #: A stop or a station. ArcGIS layers only.
+    point = "point"
     #: Attribute rows with no shape (a ``.dbf`` on its own).
     table = "table"
 
@@ -117,6 +123,8 @@ class Dataset(BaseModel):
             )
         if self.kind is Kind.rlis_zip and not self.member:
             raise ValueError(f"{self.key}: an RLIS dataset must name the member to extract")
+        if self.geometry is Geometry.point and self.kind is not Kind.arcgis:
+            raise ValueError(f"{self.key}: points are fetched from an ArcGIS layer only")
         if self.geometry is Geometry.table and self.kind is not Kind.rlis_zip:
             raise ValueError(f"{self.key}: only an RLIS member can be a table; a layer has shapes")
         if self.geometry is Geometry.table and not str(self.member).lower().endswith(".dbf"):

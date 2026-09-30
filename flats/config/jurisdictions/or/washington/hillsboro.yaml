@@ -1151,13 +1151,18 @@ zones:
           cite: Hillsboro CDC Table 12.21.850-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L2111,L2114,L2119"
     min_density_du_per_acre:
-      # Within 1,300 feet of an LRT station 15 du/na, beyond it 9. Nothing
-      # measures the distance to a light-rail station, so the higher floor
-      # is held everywhere; the 9 du/na row (L2134-L2135) is NOT ENCODED and
-      # a doubt.
+      # Within 1,300 feet of an LRT station 15 du/na, beyond it 9, banded
+      # on the measured distance to a MAX station (flats.geom.transit). A
+      # lot with no measured distance, or within the station point's 100 ft
+      # of doubt of the line, cannot be placed and is not guessed.
       value: 15
       cite: Hillsboro CDC Table 12.21.850-1, Minimum Density, within 1,300 ft. of an LRT station
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L2124,L2131-L2133"
+      variants:
+        - value: 9
+          band: {measure: lrt_station_ft, more_than: 1300}
+          cite: Hillsboro CDC Table 12.21.850-1, Minimum Density, beyond 1,300 ft. of an LRT station
+          quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L2124,L2131,L2134-L2135"
       measured_on:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
@@ -1840,24 +1845,32 @@ zones:
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1097-L1100"
     min_density_du_per_acre:
       # Free-standing: 30 du/na within 1,300 feet of an LRT station, 24
-      # beyond. Nothing measures the distance to a station; the higher floor
-      # is held and the 24 is NOT ENCODED (a doubt).
+      # beyond, banded on the measured distance to a MAX station.
       value: 30
       cite: Hillsboro CDC Table 12.23.460-1, Minimum Density, free-standing, within 1,300 ft of an LRT station
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1097,L1102-L1105"
+      variants:
+        - value: 24
+          band: {measure: lrt_station_ft, more_than: 1300}
+          cite: Hillsboro CDC Table 12.23.460-1, Minimum Density, free-standing, beyond 1,300 ft from an LRT station
+          quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1097,L1102,L1106-L1107"
       measured_on:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
     max_density_du_per_acre:
-      # Free-standing: 36 du/na within 1,300 feet, 30 beyond. The lower
-      # ceiling is held and the 36 is NOT ENCODED. Held with the 30 floor
-      # above, the band collapses to exactly 30 du/na, which no lot faces
-      # (each branch is the binding one on its own row); a doubt. The
-      # 30-foot minimum height below refuses the pod near a station anyway.
+      # Free-standing: 36 du/na within 1,300 feet, 30 beyond, banded on the
+      # measured distance to a MAX station. The state removes a density
+      # ceiling for a quadplex (OAR 660-046-0220(2)(b)), so neither number
+      # reaches the pod; encoded so the table reads whole.
       value: 30
       cite: Hillsboro CDC Table 12.23.460-1, Maximum Density, free-standing, beyond 1,300 ft from an LRT station
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1097,L1109,L1113-L1116"
+      variants:
+        - value: 36
+          band: {measure: lrt_station_ft, at_most: 1300}
+          cite: Hillsboro CDC Table 12.23.460-1, Maximum Density, free-standing, within 1,300 ft of an LRT station
+          quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1097,L1109-L1112"
       measured_on:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
@@ -1892,12 +1905,17 @@ zones:
       # 30 feet within 800 feet of an LRT station, "None" beyond
       # (L1163-L1167). The beyond-800-ft row is an EXPRESS exception, so
       # under Steph's rule of 2026-09-29 lots beyond 800 ft owe no minimum.
-      # Nothing measures the distance yet (FOLLOWUPS 17: a distance-to-LRT
-      # station fact), so the 30 is held on every lot -- the tighter
-      # reading, which fails lots the code does not.
+      # Banded on the measured distance to a MAX station
+      # (flats.geom.transit, 2026-09-30); a lot within the station point's
+      # 100 ft of doubt of the line, or never measured, is not placed.
       value: 30
       cite: Hillsboro CDC Table 12.23.460-1, Minimum Building Height, within 800 ft of an LRT station
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1131,L1163-L1165"
+      variants:
+        - exempt: true
+          band: {measure: lrt_station_ft, more_than: 800}
+          cite: Hillsboro CDC Table 12.23.460-1, Minimum Building Height, beyond 800 ft of an LRT station, None
+          quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1131,L1163,L1166-L1167"
     max_height_ft:
       value: 75
       cite: Hillsboro CDC Table 12.23.460-1, Maximum Building Height
@@ -2343,12 +2361,22 @@ zones:
       cite: Hillsboro CDC Table 12.24.460-1, Minimum Lot Size, triplex, quadplex ... None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1605-L1606,L1608,L1611-L1614"
     min_density_du_per_acre:
-      # 24 within 1,300 feet of an LRT station, 15 to 2,600 feet, 7 beyond.
-      # No condition measures distance to a station; the 24 binds and is
-      # held everywhere, a doubt.
+      # 24 within 1,300 feet of an LRT station, 15 to 2,600 feet, 7 beyond,
+      # banded on the measured distance to a MAX station. The table writes
+      # "< 1,300" and "1,301-2,600": a lot between the two whole feet stays
+      # on the 24, the stricter row.
       value: 24
       cite: Hillsboro CDC Table 12.24.460-1, Minimum Density, < 1,300 feet from a LRT station
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618-L1619,L1629-L1631"
+      variants:
+        - value: 15
+          band: {measure: lrt_station_ft, at_least: 1301, at_most: 2600}
+          cite: Hillsboro CDC Table 12.24.460-1, Minimum Density, 1,301-2,600 feet from a LRT station
+          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1629,L1632-L1633"
+        - value: 7
+          band: {measure: lrt_station_ft, more_than: 2600}
+          cite: Hillsboro CDC Table 12.24.460-1, Minimum Density, > 2,600 feet from a LRT station
+          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1629,L1634-L1635"
       measured_on:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net

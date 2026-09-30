@@ -1889,11 +1889,17 @@ zones:
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
     min_density_du_per_acre:
       # Note 2: "30 units within 400 feet of LRT station platform, 24
-      # beyond 400 feet". Nothing measures the platform distance; 30 is
-      # the stricter floor. A doubt.
+      # beyond 400 feet", banded on the measured distance to a MAX station.
+      # The station is published as a point mid-platform; within 100 ft of
+      # the line the lot is not placed (flats.rules.model.MEASURE_SLACK).
       value: 30
       cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+      variants:
+        - value: 24
+          band: {measure: lrt_station_ft, more_than: 400}
+          cite: "Beaverton BDC Table 20.20.15, note 2, 24 units beyond 400 feet of LRT station platform"
+          quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
       measured_on:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
@@ -1984,11 +1990,17 @@ zones:
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
     min_density_du_per_acre:
       # Note 2: "30 units within 400 feet of LRT station platform, 24
-      # beyond 400 feet". Nothing measures the platform distance; 30 is
-      # the stricter floor. A doubt.
+      # beyond 400 feet", banded on the measured distance to a MAX station.
+      # The station is published as a point mid-platform; within 100 ft of
+      # the line the lot is not placed (flats.rules.model.MEASURE_SLACK).
       value: 30
       cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+      variants:
+        - value: 24
+          band: {measure: lrt_station_ft, more_than: 400}
+          cite: "Beaverton BDC Table 20.20.15, note 2, 24 units beyond 400 feet of LRT station platform"
+          quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
       measured_on:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
@@ -2080,11 +2092,17 @@ zones:
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
     min_density_du_per_acre:
       # Note 2: "30 units within 400 feet of LRT station platform, 24
-      # beyond 400 feet". Nothing measures the platform distance; 30 is
-      # the stricter floor. A doubt.
+      # beyond 400 feet", banded on the measured distance to a MAX station.
+      # The station is published as a point mid-platform; within 100 ft of
+      # the line the lot is not placed (flats.rules.model.MEASURE_SLACK).
       value: 30
       cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+      variants:
+        - value: 24
+          band: {measure: lrt_station_ft, more_than: 400}
+          cite: "Beaverton BDC Table 20.20.15, note 2, 24 units beyond 400 feet of LRT station platform"
+          quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
       measured_on:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"

@@ -279,6 +279,12 @@ class LotFacts:
     #: polygon, no front setback, no drawing), which leaves the shape a fact
     #: nobody observed rather than a miss.
     outdoor_square_ft: float | None = None
+    #: Distances to transit, feet, as ``(measure, ft)`` pairs
+    #: (:data:`flats.rules.model.TRANSIT_MEASURES`), measured once per
+    #: transit release by :mod:`flats.ingest.transit` and read by the rules
+    #: that band on them. Empty where nothing measured the lot, which leaves
+    #: every such band unplaceable rather than "far from transit".
+    transit_ft: tuple[tuple[str, float], ...] = ()
 
     @property
     def landlocked(self) -> bool:

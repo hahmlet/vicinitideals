@@ -129,7 +129,11 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 380, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 381, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+# 380 -> 381 stated on 2026-09-30: the distance to transit is measured, and
+# Hillsboro SCC-SC's "Beyond 800 ft. of an LRT Station None" minimum height
+# is a banded exemption quoting that row.
+#
 # 378 -> 380 stated on 2026-09-29, night: Steph ruled that a table which
 # states no minimum sets none, and the county's transit-oriented Middle
 # Housing table (CDC 375 Table B(1)) prints a front yard and no side or rear

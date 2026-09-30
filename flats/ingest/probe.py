@@ -40,7 +40,7 @@ from typing import Any, Callable
 
 import httpx
 
-from flats.ingest.acquire import _spec_sha
+from flats.ingest.acquire import _spec_sha, data_edited
 from flats.ingest.sources import Dataset, Kind, Pipeline, Provides
 
 #: Findings that mean the county's side changed, or ours did.
@@ -139,6 +139,16 @@ def probe_arcgis(client: httpx.Client, ds: Dataset, entry: dict[str, Any]) -> li
     then = int(entry.get("features") or 0) + len(entry.get("unfetched_ids") or [])
     if _drifted(then, now, _tolerance(ds)):
         out.append(Finding(ds.key, "count_drift", f"{then:,} features when the copy was taken, {now:,} now"))
+    # Edited features in the same number of rows -- a bus stop moved, a line's
+    # frequent flag flipped -- are invisible to the count. A layer that
+    # reports when its data last changed says so directly. Soft: new data is
+    # not wrong data, it is the cue to take a new copy and re-derive
+    # (the transit distances, :mod:`flats.ingest.transit`).
+    edited_then = entry.get("data_edited")
+    edited_now = data_edited(meta)
+    if edited_then is not None and edited_now is not None and edited_now != edited_then:
+        when = dt.datetime.fromtimestamp(edited_now / 1000, tz=dt.UTC).date().isoformat()
+        out.append(Finding(ds.key, "new_release", f"the layer's data was edited on {when}, after the copy was taken"))
     if not out:
         out.append(Finding(ds.key, "ok", f"{now:,} features, {len(names)} fields"))
     return out

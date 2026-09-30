@@ -30,6 +30,7 @@ The page for all of this is **County copy** (`/flats/refresh`).
 | A rules change that needs re-screening anyway | Refresh on that rules commit, so data and rules move together and the drift report can tell them apart. |
 | Steph asks | — |
 | 3rd of every month, 09:00 (Celery beat) | The probe only. It writes one `flats.probes` row; it downloads nothing and changes nothing. |
+| The probe says `new_release` on a `transit_*` layer | Re-measure the distance to transit (§4d). TriMet's stops change a few times a year. |
 
 A copy older than 120 days turns the banner red on its own.
 
@@ -164,6 +165,30 @@ Troutdale lot moved by a "Wood Village only" change). Out-of-scope moves are
 **accepted as known unknowns**, attributed to the batch of changes the
 report lists, and recorded with the promotion -- they do not block it, and
 nobody has to name the one change that caused each (Steph, 2026-09-25).
+
+### 4d. Distance to transit (once per transit release)
+
+Every lot's distance to transit -- nearest MAX / Streetcar / WES station,
+nearest MAX station, nearest stop, nearest Frequent Service line -- is
+measured once and kept in a file the bridge joins on TLID
+(`flats/geom/transit.py`, `flats/ingest/transit.py`; Steph, 2026-09-30: _"we
+don't need to re-run transit distance every single time"_). It is not a
+stage of the screen. It is re-measured when the transit changes: the monthly
+probe reports `new_release` on a `transit_*` key when TriMet's data was
+edited after the copy was taken.
+
+| # | Step | Where | Command | Done when |
+|---|---|---|---|---|
+| T1 | Acquire the three layers | 137 | `python -m flats.ingest.acquire --snapshot <date> --keys transit_rail_stations transit_stops transit_routes` | all three `acquired` in the manifest, with a `data_edited` date |
+| T2 | Measure | 137 | `python -m flats.ingest.transit --s4 data/quadfit_<date>/s4_lots.parquet --sources data/flats/sources/<date> --out data/flats/transit/<date> --reuse data/flats/transit/<prev>/distances.parquet` | seconds; `distances.json` names the `transit_version` and how many lots were `reused` / `measured`. Same version as `<prev>` = a republish, nothing moved |
+| T3 | Screen with it | 137 | every bridge run (step 8, P1) adds `--transit data/flats/transit/<date>/distances.parquet` | `meta.json` names the file |
+
+A bridge run **without** `--transit` leaves every lot unmeasured, and a
+standard banded on a distance (Hillsboro's and Beaverton's station
+communities) then screens its lots `unknown`, never green or red. A lot
+fabric refresh alone needs T2 only (it re-measures the lots whose shape
+changed). The station distance carries 100 ft of doubt (the station is a
+point mid-platform), so a lot that close to a band's edge is also `unknown`.
 
 A `code` move in a same-copy drift is read from `screen_version` when both
 runs carry one: the screen's own files changed between the exports. Two runs

@@ -339,6 +339,55 @@ datasets:
       read by the street each abuts), which carries the 20 ft maximum front
       setback the same map allows in place of 10 (33.130.215.C.1).
 
+  # --- transit (flats/geom/transit.py) ---------------------------------------
+  # Measured once per transit release into a per-lot distance file
+  # (flats/ingest/transit.py), not once per screen. Metro republishes these
+  # with each RLIS quarter; the probe compares each layer's dataLastEditDate
+  # so an edited stop or a flipped frequent flag is noticed without a
+  # download. TriMet only: SMART, CAT, SAM and SCTD are not in these layers.
+  # Never county-filtered: a stop across a county line serves the lot.
+
+  transit_rail_stations:
+    kind: arcgis
+    label: Metro RLIS Rail Transit Stations (MAX, Streetcar, WES)
+    provides: transit
+    url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Light_rail_stations/FeatureServer/0
+    geometry: point
+    where: STATUS = 'Existing'
+    fields: [STATION, STATUS, TYPE, LINE, SYMB_CAT]
+    serves: [or/multnomah, or/clackamas, or/washington]
+    notes: >-
+      169 existing stations of 189; the 20 "Planned MAX" are filtered out --
+      a station not built is not one a code measures to. TYPE is MAX,
+      Street Car or WES. One point per station, near the platform's middle.
+
+  transit_stops:
+    kind: arcgis
+    label: Metro RLIS TriMet Bus System stops
+    provides: transit
+    url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/TriMet_Bus_System_stops/FeatureServer/0
+    geometry: point
+    fields: [RTE, DIR, LOC_ID, TYPE, FREQUENT]
+    serves: [or/multnomah, or/clackamas, or/washington]
+    notes: >-
+      One row per route and stop (7,735 rows), so a stop two routes serve
+      appears twice. TYPE BUS, MAX, SC (streetcar), CR (WES), AT (tram);
+      FREQUENT is TriMet's Frequent Service flag.
+
+  transit_routes:
+    kind: arcgis
+    label: Metro RLIS TriMet Bus System routes
+    provides: transit
+    url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/TriMet_Bus_System_routes/FeatureServer/0
+    geometry: polyline
+    fields: [RTE, DIR, RTE_DESC, TYPE, FREQUENT]
+    serves: [or/multnomah, or/clackamas, or/washington]
+    notes: >-
+      178 route lines by direction; FREQUENT on 49. TriMet's Frequent Service
+      (every 15 minutes or better most of the day) is narrower than the
+      state's "four times an hour during peak service" (OAR 660-012-0440(3)),
+      so it can only under-count a corridor the state rule reaches.
+
   overlay_gresham_wetlands:
     kind: arcgis
     label: Gresham wetlands

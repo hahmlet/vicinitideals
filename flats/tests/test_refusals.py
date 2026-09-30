@@ -345,7 +345,11 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 133, "comments": 252, "tests": 18}
+EXPECTED = {"notes": 133, "comments": 250, "tests": 18}
+# 252 -> 250 comments on 2026-09-30, evening: the distance to a MAX station
+# is measured (flats.geom.transit), so Hillsboro's beyond-1,300-ft rows --
+# SCR-DNC's 9 du/na and SCC-SC's 36 du/na ceiling -- are encoded as bands.
+#
 #
 # 255 -> 252 comments on 2026-09-30, later: two fields now hold what the
 # Washington drafts could only describe -- Sherwood's driveways at most half

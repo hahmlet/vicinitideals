@@ -41,7 +41,7 @@ from typing import TYPE_CHECKING, Collection, Mapping
 
 from flats.designs.model import Design
 from flats.rules.conditions import CONDITIONS, close_entailed, condition
-from flats.rules.model import LOT_MEASURES
+from flats.rules.model import LOT_MEASURES, TRANSIT_MEASURES
 
 if TYPE_CHECKING:  # screen imports this module, so the arrow points one way
     from flats.score.screen import LotFacts
@@ -134,6 +134,9 @@ def configure(
     if lot.lot_width_ft is not None:
         measures["lot_width_ft"] = float(lot.lot_width_ft)
     measures = {k: v for k, v in measures.items() if k in LOT_MEASURES and v > 0}
+    # A distance of 0 is a measurement (the lot touches the stop), not a
+    # missing one, so the transit distances keep it.
+    measures.update((k, float(v)) for k, v in lot.transit_ft if k in TRANSIT_MEASURES and v >= 0)
 
     return Configuration(
         conditions=tuple(sorted(held)),
