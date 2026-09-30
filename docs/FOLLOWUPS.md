@@ -15,11 +15,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ends the September map found, queued not fixed: Happy Valley's layer
    carries both `MURM2` and `MURm2` (one lot; the source's casing, kept,
    both aliased to MURM);
-   quadfit s1 now reads the roll's property code with FLATS's own
-   `check_condo` and s3 drops the excluded records as `condo_excluded`
-   with the reason in `s3_dropped.csv` (e7217598, rides the next s1->s7
-   run; expect assign's measured-but-excluded ~2,001 -> ~0, no verdict
-   moves);
+   condo records: DONE e7217598, live in run 42 (assign 2026-09-30:
+   0 measured lots excluded, was ~2,001);
    Terrain (DEM tiles) stays `deferred` until the slope stage exists; no
    writer for lot decisions in `app/` yet (they are inserted by hand or by
    a future review page); a decision on a lot whose verdict moved in a
@@ -85,9 +82,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    blank-point class: `abuts_park` BUILT a89a3b9b from RLIS ORCA (per-city
    `parks:` block; Troutdale MU-3's 10 ft park row encoded, OS now
    non-residential; only Troutdale conditions on a park in the corpus).
-   NEEDS on 137: acquire `rlis_orca` into 2026-09-18, link into quadfit
-   raw/, re-run s4 (read the "s4 park across" line); expect ~0 moves (all
-   three MU-3 lots already unresolved on the neighbour fact). (d) Portland CI1/CI2: 33.150
+   Live in run 42 (s4 2026-09-30 carries `park_across_json`; ORCA sits
+   in quadfit raw/ but was never acquired into snapshot 2026-09-18 -- do
+   that at the next county refresh). (d) Portland CI1/CI2: 33.150
    gives a CI lot 10 ft against OS, so the shared Portland list is wrong
    for CI home lots -- safe only while CI stays capped on
    `site_specific_limitation` (guard test); a per-zone list and the
@@ -108,13 +105,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    no pod on 23 -- 15 because quadfit keeps the pod across the front while
    FLATS turns it (a wide shallow lot, court at the alley end), 3 an
    irregular block, the rest overlays; read, accepted; if Steph wants the
-   drawing to agree, quadfit's s6s needs the turned pod. (c) FIXED 8bf9a451 -- NEEDS an s4 re-run
-   (a bridge on an s4 without `alley_cover_json` drops all 904 side-alley
-   lots to the street-fed court): s4 fires a ray every 5 ft along each
+   drawing to agree, quadfit's s6s needs the turned pod. (c) FIXED 8bf9a451, live in run 42 (s4 2026-09-30 carries
+   `alley_cover_json`): s4 fires a ray every 5 ft along each
    alley line; the court uses a side alley only where it runs the whole
    side line (`flats.geom.alley.side_alley_along`). Expect 12 Portland
    lots (24 rows, <=3 green-if-signed) to go street-fed. Same over-read,
-   FIXED 59533da1 (also needs the s4 re-run): the alley is the
+   FIXED 59533da1 (live in run 42): the alley is the
    court's aisle only where it runs the whole rear line (a stub still
    reaches the court); rear alley waivers/numbers only on a whole-line
    alley; the side-alley number is cut per stretch in `buildable`. Probe:
@@ -149,7 +145,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    stall count. FIXED cef95109: the beside court must come within 3 ft of
    the envelope's front (full run 0930 had 61 greens with the court up to
    151 ft back on L-shaped and flag lots, e.g. 1N1E13DC -00600, Gresham
-   1S3E10AD -05300); splice run 0930_reach re-screens 63,331 lots. Original note: `court_across` draws one row of stalls across the lot behind
+   1S3E10AD -05300). LIVE: run 42 PROMOTED 2026-09-30 (full 0930 + reach
+   + private-drive splices; drift 39 -> 42 7,679 moved / 0 unexplained;
+   yellow->green 2,374 from the beside court). Original note: `court_across` draws one row of stalls across the lot behind
    the building (six at 9 ft = 54 ft), quadfit's s6s lays the stalls in the
    largest rectangle behind the building whichever way round fits, so a
    63-ft-wide Portland R5 lot seats eight along its depth where the 54-ft
@@ -199,8 +197,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    not), a drive over the lot or across another lot screened both ways,
    worse kept. Bound (09-28 data): of 2,526 drive greens 1,594 stay,
    358 -> yellow, 574 -> unknown (565 have no real street without the
-   drive), 0 gained. RULED by Steph 2026-09-30, BUILT dbc2cc40 (rides
-   the next re-screen): a private road is a way in for the parking
+   drive), 0 gained. RULED by Steph 2026-09-30, BUILT dbc2cc40 (live in
+   run 42): a private road is a way in for the parking
    everywhere (`QuadfitLot.access`), the yards follow the city --
    Gresham/Tualatin ordinary line, Fairview (two definitions) both ways
    worse kept, Clackamas ZDO 202 exc. 2 `access_choice` (both, better
@@ -522,7 +520,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    12x12 square (10x10 R2.5) measured on the lot's own ground -- lot less
    building, court, lane, paving, front setback, overlay carves; a
    side-fed court paves its whole band; a court beside the building is
-   measured where it stands (674208b6). Milwaukie's 96 sq ft / 5 ft patio
+   measured where it stands (674208b6). LIVE in run 42: 3,056 Portland
+   lots fail on the square alone (green->yellow); whether to chase the
+   near misses is HUMAN_TODO 27. Milwaukie's 96 sq ft / 5 ft patio
    encoded (no Milwaukie lot green). Bound on 7,029 Portland R lots: 569
    green -> yellow (mostly pod80 end-on on 50 ft lots), 0 unknown, 0 other
    moves. Open: a side-street court standing as a long side strip stays
