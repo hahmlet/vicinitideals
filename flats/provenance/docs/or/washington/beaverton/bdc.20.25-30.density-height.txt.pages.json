@@ -1,0 +1,42 @@
+{
+  "sha256": "c8f0478f7fff6fcd5e728dacf8d8140ab233428c2594bce704f7ab370461785f",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "f7af69342c4bf44571d9ea319d7aee994d0713d252da891aff49eb69a3f522a9",
+  "pages": [
+    {
+      "n": 73,
+      "line": 1,
+      "label": "ZD-56"
+    },
+    {
+      "n": 74,
+      "line": 18,
+      "label": "ZD-57"
+    },
+    {
+      "n": 75,
+      "line": 65,
+      "label": "ZD-58"
+    },
+    {
+      "n": 76,
+      "line": 94,
+      "label": "ZD-59"
+    },
+    {
+      "n": 77,
+      "line": 119,
+      "label": "ZD-60"
+    },
+    {
+      "n": 78,
+      "line": 145,
+      "label": "ZD-61"
+    },
+    {
+      "n": 79,
+      "line": 153,
+      "label": "NU-1"
+    }
+  ]
+}

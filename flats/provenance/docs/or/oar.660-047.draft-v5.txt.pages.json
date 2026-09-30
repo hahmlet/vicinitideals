@@ -1,0 +1,47 @@
+{
+  "sha256": "7bacf19becc5c36ecd2096f30fc22e7a535f7367d7d1ba184640202c6c9e075f",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "a5504049d8d7d753a99de630ccfc3354a7a0a43c6fb21a9a8699acf4c7363a1d",
+  "pages": [
+    {
+      "n": 1,
+      "line": 1
+    },
+    {
+      "n": 2,
+      "line": 14
+    },
+    {
+      "n": 3,
+      "line": 49
+    },
+    {
+      "n": 4,
+      "line": 85
+    },
+    {
+      "n": 5,
+      "line": 121
+    },
+    {
+      "n": 6,
+      "line": 156
+    },
+    {
+      "n": 7,
+      "line": 192
+    },
+    {
+      "n": 8,
+      "line": 227
+    },
+    {
+      "n": 9,
+      "line": 262
+    },
+    {
+      "n": 10,
+      "line": 298
+    }
+  ]
+}

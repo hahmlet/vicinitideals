@@ -1,0 +1,102 @@
+{
+  "sha256": "de74e932563c905b588161d5c9f43a0ec343a523d967259644275956189ee995",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "0772d8f5ce71963dda4cddf3bd87c1ece6c386d2a28261486619b35eddc31c05",
+  "pages": [
+    {
+      "n": 503,
+      "line": 1,
+      "label": "TDC71:1"
+    },
+    {
+      "n": 504,
+      "line": 22,
+      "label": "TDC71:2"
+    },
+    {
+      "n": 505,
+      "line": 64,
+      "label": "TDC71:3"
+    },
+    {
+      "n": 506,
+      "line": 99,
+      "label": "TDC71:4"
+    },
+    {
+      "n": 507,
+      "line": 135,
+      "label": "TDC71:5"
+    },
+    {
+      "n": 508,
+      "line": 175,
+      "label": "TDC71:6"
+    },
+    {
+      "n": 509,
+      "line": 213,
+      "label": "TDC71:7"
+    },
+    {
+      "n": 510,
+      "line": 252,
+      "label": "TDC71:8"
+    },
+    {
+      "n": 511,
+      "line": 292,
+      "label": "TDC71:9"
+    },
+    {
+      "n": 512,
+      "line": 330,
+      "label": "TDC71:10"
+    },
+    {
+      "n": 513,
+      "line": 369,
+      "label": "TDC71:11"
+    },
+    {
+      "n": 514,
+      "line": 404,
+      "label": "TDC71:12"
+    },
+    {
+      "n": 515,
+      "line": 443,
+      "label": "TDC71:13"
+    },
+    {
+      "n": 516,
+      "line": 497,
+      "label": "TDC71:14"
+    },
+    {
+      "n": 517,
+      "line": 560,
+      "label": "TDC71:15"
+    },
+    {
+      "n": 518,
+      "line": 628,
+      "label": "TDC71:16"
+    },
+    {
+      "n": 519,
+      "line": 693,
+      "label": "TDC71:17"
+    },
+    {
+      "n": 520,
+      "line": 748,
+      "label": "TDC71:18"
+    },
+    {
+      "n": 521,
+      "line": 795,
+      "label": "TDC71:19"
+    }
+  ]
+}

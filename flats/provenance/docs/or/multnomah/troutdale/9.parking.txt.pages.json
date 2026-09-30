@@ -1,0 +1,82 @@
+{
+  "sha256": "ac5d2b4d3a7ae3b17dd15ae0b1b7ee0367eea062b0c97bc7b0530203f3efc7df",
+  "extractor": "flats-html-text/7",
+  "source_sha256": "646a56b2925689d9625d2b83e5648c31794c30e94b4e12b5b4f78673b29c0206",
+  "pages": [
+    {
+      "n": 275,
+      "line": 1,
+      "label": "TDC9-1"
+    },
+    {
+      "n": 277,
+      "line": 34,
+      "label": "TDC9-3"
+    },
+    {
+      "n": 278,
+      "line": 80,
+      "label": "TDC9-4"
+    },
+    {
+      "n": 279,
+      "line": 125,
+      "label": "TDC9-5"
+    },
+    {
+      "n": 280,
+      "line": 171,
+      "label": "TDC9-6"
+    },
+    {
+      "n": 281,
+      "line": 222,
+      "label": "TDC9-7"
+    },
+    {
+      "n": 282,
+      "line": 274,
+      "label": "TDC9-8"
+    },
+    {
+      "n": 283,
+      "line": 325,
+      "label": "TDC9-9"
+    },
+    {
+      "n": 284,
+      "line": 375,
+      "label": "TDC9-10"
+    },
+    {
+      "n": 285,
+      "line": 426,
+      "label": "TDC9-11"
+    },
+    {
+      "n": 286,
+      "line": 473,
+      "label": "TDC9-12"
+    },
+    {
+      "n": 287,
+      "line": 522,
+      "label": "TDC9-13"
+    },
+    {
+      "n": 288,
+      "line": 572,
+      "label": "TDC9-14"
+    },
+    {
+      "n": 289,
+      "line": 627,
+      "label": "TDC9-15"
+    },
+    {
+      "n": 290,
+      "line": 680,
+      "label": "TDC9-16"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Page check — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar"></div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Page check</h2>
+      <p class="muted" style="margin:4px 0 0;max-width:80ch">
+        Signing compares each number with our text copy of the code. This compares it
+        with the printed page, where a number taken from the wrong row or column shows.
+      </p>
+    </div>
+  </div>
+
+  <div class="toolbar" style="gap:24px">
+    <div><span class="muted">Numbers with a printed page</span> <strong>{{ "{:,}".format(totals.numbers) }}</strong></div>
+    <div><span class="muted">Checked</span> <strong>{{ "{:,}".format(totals.checked) }}</strong></div>
+    <div><span class="muted">Problems open</span> <strong>{{ problems | length }}</strong></div>
+    <div title="published as web pages, not printed books"><span class="muted">Web-published</span> <strong>{{ "{:,}".format(totals.html) }}</strong></div>
+    <div title="a printed book we have not mapped to pages yet"><span class="muted">No page yet</span> <strong>{{ "{:,}".format(totals.no_map) }}</strong></div>
+  </div>
+
+  {% if problems %}
+  <h3 style="margin:18px 0 6px;font-size:15px">Problems raised</h3>
+  <p class="muted" style="font-size:12px;margin:0 0 8px;max-width:80ch">
+    Where the page and the rules disagree. Each one is traced back through our text copy to
+    find out why. <a href="/flats/check/problems.txt">The list as text, with the text copy</a>.
+  </p>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Where</th><th>Standard</th><th>We have</th><th>Answer</th><th>The page says</th><th>Note</th><th>By</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for p in problems %}
+        <tr>
+          <td>{{ p.layer_label }} · {{ p.zone }}</td>
+          <td>{{ p.field_label }}{% if p.when %} <span class="muted">when {{ p.when | replace("_", " ") }}</span>{% endif %}
+            {% if p.question != "value" %}<div class="muted" style="font-size:11px">{{ p.question | replace("note:", "note ") }}</div>{% endif %}</td>
+          <td>{{ p.value }}</td>
+          <td>{{ p.answer_words }}{% if p.handed_on %} <span class="badge badge-gray">handed on</span>{% endif %}</td>
+          <td>{{ p.says }}</td>
+          <td style="max-width:40ch">{{ p.note }}</td>
+          <td class="muted" style="font-size:11px">{{ p.by }}<br>{{ p.at.strftime("%Y-%m-%d") }}</td>
+          <td><a class="btn btn-secondary btn-sm"
+                 href="/flats/check/{{ p.layer_id }}?zone={{ p.zone | urlencode }}&field={{ p.field | urlencode }}&when={{ p.when | urlencode }}">Look again</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  <h3 style="margin:18px 0 6px;font-size:15px">By jurisdiction</h3>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Jurisdiction</th>
+          <th class="col-right">With a printed page</th>
+          <th class="col-right">Checked</th>
+          <th class="col-right">Problems</th>
+          <th class="col-right" title="published as web pages, not printed books">Web-published</th>
+          <th class="col-right" title="a printed book we have not mapped to pages yet">No page yet</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in table %}
+        <tr>
+          <td>{{ t.label }}<div class="muted" style="font-size:11px">{{ t.id }}</div></td>
+          <td class="col-right">{{ t.numbers }}</td>
+          <td class="col-right">{{ t.checked }}</td>
+          <td class="col-right">{{ t.problems or "" }}</td>
+          <td class="col-right">{{ t.html or "" }}</td>
+          <td class="col-right">{{ t.no_map or "" }}</td>
+          <td class="col-right">
+            {% if t.numbers %}<a class="btn btn-secondary btn-sm" href="/flats/check/{{ t.id }}">{% if t.left %}Check{% else %}Look back{% endif %}</a>{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

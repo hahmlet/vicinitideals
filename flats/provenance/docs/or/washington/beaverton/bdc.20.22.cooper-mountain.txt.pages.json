@@ -1,0 +1,107 @@
+{
+  "sha256": "6b21e4270f0ce47d79776cdbb0051873e2ee9069d04781eec2423651cb527ae2",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "f7af69342c4bf44571d9ea319d7aee994d0713d252da891aff49eb69a3f522a9",
+  "pages": [
+    {
+      "n": 54,
+      "line": 1,
+      "label": "ZD-37"
+    },
+    {
+      "n": 55,
+      "line": 7,
+      "label": "ZD-38"
+    },
+    {
+      "n": 56,
+      "line": 56,
+      "label": "ZD-39"
+    },
+    {
+      "n": 57,
+      "line": 125,
+      "label": "ZD-40"
+    },
+    {
+      "n": 58,
+      "line": 240,
+      "label": "ZD-41"
+    },
+    {
+      "n": 59,
+      "line": 287,
+      "label": "ZD-42"
+    },
+    {
+      "n": 60,
+      "line": 337,
+      "label": "ZD-43"
+    },
+    {
+      "n": 61,
+      "line": 386,
+      "label": "ZD-44"
+    },
+    {
+      "n": 62,
+      "line": 440,
+      "label": "ZD-45"
+    },
+    {
+      "n": 63,
+      "line": 491,
+      "label": "ZD-46"
+    },
+    {
+      "n": 64,
+      "line": 537,
+      "label": "ZD-47"
+    },
+    {
+      "n": 65,
+      "line": 574,
+      "label": "ZD-48"
+    },
+    {
+      "n": 66,
+      "line": 620,
+      "label": "ZD-49"
+    },
+    {
+      "n": 67,
+      "line": 666,
+      "label": "ZD-50"
+    },
+    {
+      "n": 68,
+      "line": 713,
+      "label": "ZD-51"
+    },
+    {
+      "n": 69,
+      "line": 757,
+      "label": "ZD-52"
+    },
+    {
+      "n": 70,
+      "line": 804,
+      "label": "ZD-53"
+    },
+    {
+      "n": 71,
+      "line": 825,
+      "label": "ZD-54"
+    },
+    {
+      "n": 72,
+      "line": 852,
+      "label": "ZD-55"
+    },
+    {
+      "n": 73,
+      "line": 872,
+      "label": "ZD-56"
+    }
+  ]
+}

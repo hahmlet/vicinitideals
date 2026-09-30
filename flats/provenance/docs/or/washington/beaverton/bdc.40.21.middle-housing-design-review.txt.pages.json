@@ -1,0 +1,37 @@
+{
+  "sha256": "9f3f05c324ed51a543f09367f81a3a055f3397dfbe8b79a41a127cd1d0aa004f",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "f7af69342c4bf44571d9ea319d7aee994d0713d252da891aff49eb69a3f522a9",
+  "pages": [
+    {
+      "n": 114,
+      "line": 1,
+      "label": "AP-31"
+    },
+    {
+      "n": 115,
+      "line": 35,
+      "label": "AP-32"
+    },
+    {
+      "n": 116,
+      "line": 80,
+      "label": "AP-33"
+    },
+    {
+      "n": 117,
+      "line": 126,
+      "label": "AP-34"
+    },
+    {
+      "n": 118,
+      "line": 173,
+      "label": "AP-35"
+    },
+    {
+      "n": 119,
+      "line": 220,
+      "label": "AP-36"
+    }
+  ]
+}

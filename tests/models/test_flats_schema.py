@@ -122,6 +122,9 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         "crossref_rulings",
         "reading_rulings",
         "word_rulings",
+        # The page check (0138): a reviewer's answer about one number, asked
+        # of the printed page rather than the text copy.
+        "page_checks",
         # A one-off property-tax impact snapshot (0136): what each green lot
         # of one jurisdiction pays today, as one new house, and as the pod.
         "tax_snapshots",

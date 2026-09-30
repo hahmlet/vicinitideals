@@ -1,0 +1,192 @@
+{
+  "sha256": "0e838ec43c2cf3cba4821491611745d7d9d88396355356d95d88903ef130092f",
+  "extractor": "flats-html-text/7",
+  "source_sha256": "646a56b2925689d9625d2b83e5648c31794c30e94b4e12b5b4f78673b29c0206",
+  "pages": [
+    {
+      "n": 11,
+      "line": 1,
+      "label": "TDC1-1"
+    },
+    {
+      "n": 13,
+      "line": 16,
+      "label": "TDC1-3"
+    },
+    {
+      "n": 14,
+      "line": 67,
+      "label": "TDC1-4"
+    },
+    {
+      "n": 15,
+      "line": 119,
+      "label": "TDC1-5"
+    },
+    {
+      "n": 16,
+      "line": 172,
+      "label": "TDC1-6"
+    },
+    {
+      "n": 17,
+      "line": 224,
+      "label": "TDC1-7"
+    },
+    {
+      "n": 18,
+      "line": 279,
+      "label": "TDC1-8"
+    },
+    {
+      "n": 19,
+      "line": 304,
+      "label": "TDC1-9"
+    },
+    {
+      "n": 20,
+      "line": 344,
+      "label": "TDC1-10"
+    },
+    {
+      "n": 21,
+      "line": 382,
+      "label": "TDC1-11"
+    },
+    {
+      "n": 22,
+      "line": 395,
+      "label": "TDC1-12"
+    },
+    {
+      "n": 23,
+      "line": 450,
+      "label": "TDC1-13"
+    },
+    {
+      "n": 24,
+      "line": 502,
+      "label": "TDC1-14"
+    },
+    {
+      "n": 25,
+      "line": 532,
+      "label": "TDC1-15"
+    },
+    {
+      "n": 26,
+      "line": 541,
+      "label": "TDC1-16"
+    },
+    {
+      "n": 27,
+      "line": 555,
+      "label": "TDC1-17"
+    },
+    {
+      "n": 28,
+      "line": 587,
+      "label": "TDC1-18"
+    },
+    {
+      "n": 29,
+      "line": 638,
+      "label": "TDC1-19"
+    },
+    {
+      "n": 30,
+      "line": 690,
+      "label": "TDC1-20"
+    },
+    {
+      "n": 31,
+      "line": 745,
+      "label": "TDC1-21"
+    },
+    {
+      "n": 32,
+      "line": 798,
+      "label": "TDC1-22"
+    },
+    {
+      "n": 33,
+      "line": 850,
+      "label": "TDC1-23"
+    },
+    {
+      "n": 34,
+      "line": 902,
+      "label": "TDC1-24"
+    },
+    {
+      "n": 35,
+      "line": 955,
+      "label": "TDC1-25"
+    },
+    {
+      "n": 36,
+      "line": 1009,
+      "label": "TDC1-26"
+    },
+    {
+      "n": 37,
+      "line": 1060,
+      "label": "TDC1-27"
+    },
+    {
+      "n": 38,
+      "line": 1111,
+      "label": "TDC1-28"
+    },
+    {
+      "n": 39,
+      "line": 1161,
+      "label": "TDC1-29"
+    },
+    {
+      "n": 40,
+      "line": 1214,
+      "label": "TDC1-30"
+    },
+    {
+      "n": 41,
+      "line": 1267,
+      "label": "TDC1-31"
+    },
+    {
+      "n": 42,
+      "line": 1318,
+      "label": "TDC1-32"
+    },
+    {
+      "n": 43,
+      "line": 1371,
+      "label": "TDC1-33"
+    },
+    {
+      "n": 44,
+      "line": 1422,
+      "label": "TDC1-34"
+    },
+    {
+      "n": 45,
+      "line": 1474,
+      "label": "TDC1-35"
+    },
+    {
+      "n": 46,
+      "line": 1528,
+      "label": "TDC1-36"
+    },
+    {
+      "n": 47,
+      "line": 1580,
+      "label": "TDC1-37"
+    },
+    {
+      "n": 48,
+      "line": 1632,
+      "label": "TDC1-38"
+    }
+  ]
+}

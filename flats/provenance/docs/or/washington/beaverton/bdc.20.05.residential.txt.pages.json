@@ -1,0 +1,57 @@
+{
+  "sha256": "c9473eb9e55269dd97069f6266bf9ac9bbe00be326a3e0d528f1ac65ffad7efd",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "f7af69342c4bf44571d9ea319d7aee994d0713d252da891aff49eb69a3f522a9",
+  "pages": [
+    {
+      "n": 18,
+      "line": 1,
+      "label": "ZD-1"
+    },
+    {
+      "n": 19,
+      "line": 28,
+      "label": "ZD-2"
+    },
+    {
+      "n": 20,
+      "line": 85,
+      "label": "ZD-3"
+    },
+    {
+      "n": 21,
+      "line": 208,
+      "label": "ZD-4"
+    },
+    {
+      "n": 22,
+      "line": 354,
+      "label": "ZD-5"
+    },
+    {
+      "n": 23,
+      "line": 411,
+      "label": "ZD-6"
+    },
+    {
+      "n": 24,
+      "line": 455,
+      "label": "ZD-7"
+    },
+    {
+      "n": 25,
+      "line": 467,
+      "label": "ZD-8"
+    },
+    {
+      "n": 26,
+      "line": 513,
+      "label": "ZD-9"
+    },
+    {
+      "n": 27,
+      "line": 555,
+      "label": "ZD-10"
+    }
+  ]
+}

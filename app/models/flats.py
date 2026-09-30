@@ -689,6 +689,76 @@ class FlatsRuleSignature(Base):
     bundled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+class FlatsPageCheck(Base):
+    """A reviewer's answer to one question about a number, asked of the page.
+
+    Signing (``rule_signatures``) compares a number to our *text copy* of the
+    code. This compares it to the printed page: the card shows the page as the
+    city publishes it with a box drawn where we read the number, and asks
+    whether it says what we encoded. The commonest real error -- the right
+    number taken from the wrong row or column -- is invisible in the text copy
+    and plain on the printed table.
+
+    One number is several questions. ``question`` is ``value`` for "does the
+    boxed cell say this?" and ``note:<mark>`` for each footnote printed on the
+    number, its row or its column ("does note 5 change it?").
+
+    An inbox, append-only, latest answer per (address, question) counts. Bound
+    to the number by ``fingerprint`` -- the signing fingerprint over value,
+    citation and quote -- so an answer about a number that has since been
+    corrected stops standing and the question comes back.
+    """
+
+    __tablename__ = "page_checks"
+    __table_args__ = (
+        Index("ix_flats_page_checks_value", "layer", "zone", "field", "when_key"),
+        Index("ix_flats_page_checks_fingerprint", "fingerprint"),
+        Index(
+            "ix_flats_page_checks_unbundled",
+            "decided_at",
+            postgresql_where=text("bundled_at IS NULL"),
+        ),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+
+    layer: Mapped[str] = mapped_column(String(120), nullable=False)
+    zone: Mapped[str] = mapped_column(String(40), nullable=False)
+    field: Mapped[str] = mapped_column(String(64), nullable=False)
+    when_key: Mapped[str] = mapped_column(String(200), nullable=False, server_default="")
+    #: The number as it stood when the page was looked at.
+    value: Mapped[Any] = mapped_column(JSONB, nullable=False)
+    fingerprint: Mapped[str] = mapped_column(String(64), nullable=False)
+
+    #: ``value`` or ``note:<mark>``.
+    question: Mapped[str] = mapped_column(String(40), nullable=False)
+    #: value: matches | differs | wrong_box | unclear.
+    #: note: no_change | have_it | missing | unclear.
+    answer: Mapped[str] = mapped_column(String(16), nullable=False)
+    #: What the page says instead, where the reviewer typed it.
+    says: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    note: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+
+    #: What the card showed: the citation, the PDF page, how the box was
+    #: placed (``flats.provenance.sheet.PLACED``) and the book's hash -- so an
+    #: answer can be re-read against the exact sheet it was given about.
+    quote: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    page: Mapped[int | None] = mapped_column(Integer)
+    placed: Mapped[str] = mapped_column(String(16), nullable=False, server_default="")
+    book_sha256: Mapped[str] = mapped_column(String(64), nullable=False, server_default="")
+
+    reviewer: Mapped[str] = mapped_column(String(80), nullable=False)
+    reviewer_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    decided_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    #: When a problem this answer raised was handed on to be fixed.
+    bundled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class FlatsCrossrefRuling(Base):
     """A reviewer's decision about a chapter the store cannot open.
 

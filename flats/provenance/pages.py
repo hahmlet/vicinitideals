@@ -155,14 +155,25 @@ def _pages_of(data: bytes, *, extraction: str) -> list[list[str]]:
 
     from pypdf import PdfReader
 
+    from flats.provenance.pdf_hold import held_extraction
+
     mode = {} if extraction == "plain" else {"extraction_mode": "layout"}
     out = []
-    for page in PdfReader(BytesIO(data)).pages:
-        if "/Contents" not in page:
-            out.append([])
-            continue
-        text = (page.extract_text(**mode) or "").replace("\r\n", "\n")
-        out.append([line.rstrip() for line in text.split("\n")])
+    # Under the same held extraction rules as the fetch that stored the text.
+    # Without the hold, pypdf 6.16's spacing changes made every mapped
+    # document "no longer match what the source serves" -- the text had not
+    # moved, the library had.
+    with held_extraction():
+        for page in PdfReader(BytesIO(data)).pages:
+            if "/Contents" not in page:
+                out.append([])
+                continue
+            text = (page.extract_text(**mode) or "").replace("\r\n", "\n")
+            # The glyphs no font maps to Unicode, stored as the replacement
+            # character by the fetch. Left as NUL here, every line holding one
+            # would disagree with its stored twin.
+            text = text.replace("\x00", "�")
+            out.append([line.rstrip() for line in text.split("\n")])
     return out
 
 
@@ -241,7 +252,15 @@ def index(path: str, data: bytes, text: str, *, extraction: str = "layout") -> P
 #: because Municode's PDF download endpoint is
 #: "api.municode.com/PublicationPdfDownload/1818" — no suffix at all — and
 #: filtering on ".pdf" would silently drop two of the corpus's ten books.
-_HTML_HOSTS = ("ecode360.com", "codepublishing.com", "public.law", "clackamas.us")
+_HTML_HOSTS = (
+    "ecode360.com",
+    "codepublishing.com",
+    "public.law",
+    "clackamas.us",
+    "municipal.codes",
+    "portland.gov/code/",
+    "oregonlegislature.gov",
+)
 
 
 def _is_html(url: str) -> bool:

@@ -1,0 +1,19 @@
+{
+  "sha256": "a201bfae41bbce8bde0a6c9851a4d073230d1d2a6201b08865dc5ec1a0474c0e",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "7b73447681baa747bc67b82fdf8a102075c5415e9903e331e9ef271dd9c9038f",
+  "pages": [
+    {
+      "n": 487,
+      "line": 1
+    },
+    {
+      "n": 488,
+      "line": 44
+    },
+    {
+      "n": 489,
+      "line": 70
+    }
+  ]
+}
