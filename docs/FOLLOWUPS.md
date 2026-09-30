@@ -730,7 +730,20 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    check whether any corpus city used it. Height floor (2)(d) unchanged; see
    the 2026-09-29 note in _state.yaml (SCR-OTC 20 ft not lifted).
    (b) OUT-OF-COMPLIANCE ZONES: residential zones that allow a detached house
-   but refuse a quadplex (King City's older zones first). From 2027-01-01 the
+   but refuse a quadplex (King City's older zones first). AUDITED for
+   Multnomah + Clackamas 2026-09-30 (read-only; `quadplex_allowed: false`
+   is the use gate, flats/score/screen.py ~L1320): 14 clear hits --
+   Portland RF; Multnomah uninc RF, LR5, LR7, LR10, UF20; Gresham LDR/GB;
+   Wilsonville RN (Frog Pond) and FDAHR; Happy Valley FU10; Clackamas
+   uninc FU10 (693 lots), RRFF5 (2,082), RA2 (491), RA1 (329). Traps:
+   Clackamas FU10's note leans on an "interim zoning" exemption
+   (0010(2)(c)) that the ADOPTED text no longer has; RRFF5/RA1/RA2 hinge
+   on ORS 197A.015 "urban unincorporated lands" (not stored); Gresham
+   LDR/GB may take a Goal 7 hazard carve-out; Wilsonville RN may take the
+   master-planned-community clause 0205(2)(b). Ambiguous 9: Clackamas FF10;
+   Multnomah MUA20, RR, OR, GGR2 (mostly outside the UGB); Fairview VTH;
+   Portland RMP; Milwaukie R-MD (unit-lot + flag variant); Wilsonville
+   FDAHV. Happy Valley's child-lot refusals look allowed by the state rule. From 2027-01-01 the
    Div 46 model code applies directly (0040(4), "completely replaces"): audit
    the corpus, switch them to allowed under the city's middle-housing
    standards or the model code (2020 Exhibit B: front/rear setbacks > 10 ft
