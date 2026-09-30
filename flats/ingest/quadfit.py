@@ -1274,6 +1274,22 @@ def _screen_on(
         frontage_ft=facts.frontage_ft,
         street_deg=here.front_bearings if front is None else (front,),
     )
+    if fit.beside and not beside_reaches_street(here, design, got, fit, fitters[key], env):
+        # The court beside the building has its aisle in from the street;
+        # where the only room for it stands back from the street (the wide
+        # back of an L-shaped lot, behind a flag pole) no drive reaches it,
+        # so the lot is read on the row behind the building as before.
+        fit = fit_for(
+            fitters[key],
+            design,
+            got,
+            placement=False,
+            carved_rear_ft=env.rear_cut_ft,
+            alley=facts.alley,
+            corner=facts.corner,
+            frontage_ft=facts.frontage_ft,
+            street_deg=(),
+        )
     result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
     if "open_space_shape" in result.unchecked:
         # The screen's window could not prove the outdoor square; measure it
@@ -1485,6 +1501,84 @@ def _screen_lot_once(
     return out
 
 
+#: How far past the envelope's street edge the court beside the building may
+#: start and still be the drive in from the street: a few grid cells and the
+#: sampling step along the street line (:data:`flats.fit.draw.STREET_STEP_FT`).
+BESIDE_REACH_TOL_FT = 3.0
+
+
+def _beside_drawn(
+    here: QuadfitLot,
+    design: Design,
+    got: ZoneResolution,
+    fit: Fit,
+    fitter: Fitter,
+    env: Envelope,
+) -> Any:
+    """The plan with its court beside the building, drawn where the lot page
+    draws it (nearest the street), or None where it cannot be drawn."""
+    if here.edges is None:
+        return None
+    facts = here.facts
+    beside = side_court(
+        design, got, facts.alley, corner=facts.corner, frontage_ft=facts.frontage_ft
+    )
+    beyond = None if beside is None else _beside_beyond(
+        beside, fit.required_ft, got, env.rear_cut_ft
+    )
+    if beside is None or beyond is None or math.isinf(beyond):
+        return None
+    return draw(
+        fitter,
+        fit,
+        width_ft=design.footprint.width_ft,
+        depth_ft=design.footprint.depth_ft,
+        lane_ft=0.0,
+        court_depth_ft=0.0,
+        court_beyond_ft=beyond,
+        street=tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front)),
+        beside_band_ft=beside.band_ft,
+        beside_len_ft=beside.length_ft,
+    )
+
+
+def beside_reaches_street(
+    here: QuadfitLot,
+    design: Design,
+    got: ZoneResolution,
+    fit: Fit,
+    fitter: Fitter,
+    env: Envelope,
+) -> bool:
+    """Whether the court beside the building (FOLLOWUPS 4(a)) starts at the
+    envelope's street edge, so that its aisle is the drive in from the street.
+
+    The search that found the fit asks only for a rectangle at the street's
+    directions, anywhere on the envelope; on an L-shaped lot, or behind a flag
+    lot's pole, the only such room can stand far back from the street with
+    nothing to reach it. The plan is drawn nearest the street (the drawing
+    tries every window that fits); where even that court starts further from
+    the front lines than the envelope does, plus :data:`BESIDE_REACH_TOL_FT`,
+    no window reaches the street. No lot polygon, no front lines, or no
+    drawing: not shown to reach, so not taken.
+    """
+    import shapely
+
+    if here.edges is None or env.geom is None:
+        return False
+    fronts = [
+        shapely.LineString([(e.x1, e.y1), (e.x2, e.y2)])
+        for e in here.edges.of_class(EdgeClass.front)
+    ]
+    if not fronts:
+        return False
+    drawn = _beside_drawn(here, design, got, fit, fitter, env)
+    if drawn is None or drawn.court is None:
+        return False
+    edge = max(env.geom.distance(f) for f in fronts)
+    return min(drawn.court.distance(f) for f in fronts) <= edge + BESIDE_REACH_TOL_FT
+
+
 def outdoor_square(
     here: QuadfitLot,
     design: Design,
@@ -1529,24 +1623,7 @@ def outdoor_square(
         # drive in from the street, so the building and that band are all
         # the plan paves -- drawn where the lot page draws them, never as a
         # court behind the building the plan does not have.
-        beside = side_court(design, got, alley, corner=corner, frontage_ft=facts.frontage_ft)
-        beyond = None if beside is None else _beside_beyond(
-            beside, fit.required_ft, got, env.rear_cut_ft
-        )
-        if beside is None or beyond is None or math.isinf(beyond):
-            return None
-        drawn = draw(
-            fitter,
-            fit,
-            width_ft=design.footprint.width_ft,
-            depth_ft=design.footprint.depth_ft,
-            lane_ft=0.0,
-            court_depth_ft=0.0,
-            court_beyond_ft=beyond,
-            street=street,
-            beside_band_ft=beside.band_ft,
-            beside_len_ft=beside.length_ft,
-        )
+        drawn = _beside_drawn(here, design, got, fit, fitter, env)
         if drawn is None or drawn.court is None:
             return None
         return _largest_left(here, got, side, street, front_ft, fit, [(drawn.building, drawn.court)])

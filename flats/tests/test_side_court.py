@@ -301,3 +301,52 @@ def test_the_outdoor_square_is_measured_beside_the_court_beside(corpus, monkeypa
     assert shape.observed == pytest.approx(square)
     behind = measure(*a[:3], dataclasses.replace(a[3], beside=False), *a[4:], **k)
     assert behind is not None and behind > square
+
+
+#: 1N1E13DC -00600, Portland R5, at real coordinates (quadfit_2026-09-30 s4):
+#: 50 ft of street on the east, the lot widening to 98 ft for its back 75 ft.
+#: Full run 0930 called it green with the court beside the pod standing in the
+#: wide back, 151 ft from the street, no drive reaching it.
+L_EDGES = [
+    [7657559.55, 699620.92, 7657633.39, 699619.45, "S"],
+    [7657633.39, 699619.45, 7657632.5, 699571.19, "R"],
+    [7657632.5, 699571.19, 7657778.75, 699567.96, "S"],
+    [7657778.75, 699567.96, 7657777.54, 699517.17, "F"],
+    [7657777.54, 699517.17, 7657557.18, 699522.63, "S"],
+    [7657557.18, 699522.63, 7657559.55, 699620.92, "R"],
+]
+L_LOT = shapely.Polygon([(e[0], e[1]) for e in L_EDGES])
+
+
+def test_a_court_beside_the_building_has_to_reach_the_street(corpus, monkeypatch) -> None:
+    """The beside search asks for room at the street's directions, anywhere
+    on the envelope (FOLLOWUPS 4(a)(iv)); the court's aisle is the drive in
+    from the street, so room only in the wide back of an L-shaped lot is no
+    court beside at all, and the lot is read on the row behind as before."""
+    from flats.ingest import quadfit
+
+    def lot():
+        return lot_from_row(
+            row(
+                TLID="1N1E13DC  -00600",
+                zone="R5",
+                area_sqft=float(L_LOT.area),
+                frontage_ft=50.8,
+                lot_width_ft=62.7,
+                lot_depth_ft=198.69,
+                edges_json=json.dumps(L_EDGES),
+                front_bearings_json="[88.63]",
+                lot_wkb=shapely.to_wkb(L_LOT),
+                wkb=shapely.to_wkb(L_LOT),
+            ),
+            corpus.layers,
+        )
+
+    kw = dict(rules=corpus, policy=slack.load_policy(), relief=relief.load_policy(), step_deg=1.0)
+    (s,) = screen_lot(lot(), [pod()], **kw)
+    assert s.fit.beside is False
+    assert s.signed.triage.value != "green"
+    # Without the reach test the same lot came back green on the court beside.
+    monkeypatch.setattr(quadfit, "beside_reaches_street", lambda *a, **k: True)
+    (loose,) = screen_lot(lot(), [pod()], **kw)
+    assert loose.fit.beside is True and loose.signed.triage.value == "green"
