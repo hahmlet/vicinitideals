@@ -680,8 +680,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    to -0450, NOT ENCODED in or/_state.yaml L160 -- rule text never stored),
    and Sherwood 16.94.020 / Troutdale restate it. It changes a colour only
    if the pod may park fewer than 4 near transit; today the design's floor
-   is 4 by Steph's 2026-09-18 ruling ("4 is enough to sell"). Asked Steph
-   2026-09-30: would a fewer-stall pod near transit be worth screening?
+   is 4 by Steph's 2026-09-18 ruling ("4 is enough to sell").
+   DECIDED Steph 2026-09-30: "if we're building it for one, it's worth
+   building it for all and making it a standard part of our data
+   collection/processing" -- a per-lot transit-distance fact for EVERY lot,
+   measured once and re-measured only when the transit source changes
+   ("bus stops update every 1-2 years"), watched by the refresh probe.
+   Still open: screening a fewer-stall pod near transit (ask when built).
    A city asking 2 a home is already capped by OAR 660-046-0220(2)(e)(B)
    (1-4 total by lot size) -- no transit fact needed for that.
    (c) FOREST GROVE (7,756 lots): American Legal 403s from home too. Try the
