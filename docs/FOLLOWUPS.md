@@ -772,8 +772,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `in_sewer_district` measured (only Clackamas has it) -- UNKNOWN till
    then; LR10 + Happy Valley FU10 dimensions not encoded (the state caps
    them at the house's; notes list LR10's); Wilsonville RN may allow the
-   building as townhouses (unit lots) -- unchecked. Re-screen scope: 137
-   /root/mh_scope.txt, 2,262 lots. From 2027-01-01 the
+   building as townhouses (unit lots) -- unchecked. RUN 46 PROMOTED
+   2026-09-30 (9096f164, scope 137 /root/mh_scope.txt, splice base now
+   /root/bridge_spliced_mh0930): drift 44 -> 46 316 moved / 0 unexplained,
+   all LR7 red->yellow if signed (its conditional use, read at last). The
+   opened zones' own lots moved red-if-signed -> "not measured": quadfit's
+   s3 filter drops a zone it thinks refuses the pod, so Portland RF (634),
+   Multnomah RF (225), LR10 (15) and Happy Valley FU10 (12) have no
+   measurement to screen. NEXT: have quadfit keep those zones (s3 rules
+   mirror) and measure them -- a quadfit s3->s5o re-run for those lots --
+   then a partial re-screen; only then can they turn yellow. From 2027-01-01 the
    Div 46 model code applies directly (0040(4), "completely replaces"): audit
    the corpus, switch them to allowed under the city's middle-housing
    standards or the model code (2020 Exhibit B: front/rear setbacks > 10 ft
