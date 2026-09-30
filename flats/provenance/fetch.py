@@ -1121,7 +1121,7 @@ def evidence(layers: dict[str, Layer], store: ProvenanceStore) -> Evidence:
                     # A Variant carries the number and its quote and nothing
                     # else -- the three below live on the Value it belongs to.
                     for name in ("step_back_quote", "measured_on_quote",
-                                 "qualified_quote"):
+                                 "qualified_quote", "story_ft_quote"):
                         _cite(getattr(part, name, None))
         for zone in layer.zones.values():
             if zone.like is not None:

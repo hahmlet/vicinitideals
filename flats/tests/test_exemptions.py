@@ -129,7 +129,12 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 378, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 380, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+# 378 -> 380 stated on 2026-09-29, night: Steph ruled that a table which
+# states no minimum sets none, and the county's transit-oriented Middle
+# Housing table (CDC 375 Table B(1)) prints a front yard and no side or rear
+# yard. TO:R9-12's side and rear yards are exempt, quoting the table and
+# note (H) of Table B(2); TO:R12-18 and TO:R18-24 inherit them by `like:`.
 # 377 -> 378 stated on 2026-09-29, later again: Durham, the sixth Washington
 # County draft from the same cloud session, one exemption: Table 3.7.5's
 # "No maximum" parking for residential uses, held as the layer default

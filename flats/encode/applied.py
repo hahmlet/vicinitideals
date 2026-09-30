@@ -168,6 +168,8 @@ _FIGURES = (
     "pct_of_lot_width",
     "reduce_pct",
     "before_step_back",
+    "stories",
+    "story_ft",
 )
 
 #: A band's bounds are figures a ruling quotes constantly -- "exempt below

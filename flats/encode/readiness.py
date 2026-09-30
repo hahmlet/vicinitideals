@@ -269,6 +269,11 @@ def _printed(value: object) -> object:
         # table prints. The other half gets its own row.
         else value.before_step_back
         if getattr(value, "before_step_back", None) is not None
+        # A height in stories is checked against the count the table prints;
+        # the feet a story may be get their own row below. Hillsboro prints
+        # "2 1/2 stories" and 10 feet and prints the 25 nowhere.
+        else value.stories
+        if getattr(value, "stories", None) is not None
         else getattr(value, "value", None)
     )
 
@@ -326,6 +331,10 @@ def _rows(
         # No number to corroborate -- what is being verified is that the
         # sentence is still where the file says it is.
         yield where, f"{name} <{value.measured_on}>", value.measured_on_quote, None, False
+    if getattr(value, "story_ft_quote", None):
+        # The other operand of a height in stories, printed in its own
+        # chapter, so checked against its own sentence like a step-back.
+        yield where, f"{name} [story]", value.story_ft_quote, value.story_ft, False
     if value.qualified_quote:
         # The rule that says this standard is not the whole rule. No figure
         # either -- what it states is a condition, and the citation exists so

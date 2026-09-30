@@ -2,8 +2,9 @@
 
 The Community Development Code (Municipal Code Title 12) prints a Housing
 Types Permitted table in every zone, and a Quadplex row in each. Twenty-two
-zones say P or L on one lot; four more say it only on some of their land; the
-commercial, industrial and institutional zones say N. The draft is pinned
+zones say P or L on one lot, and twenty-one admit the pod; four more say it
+only on some of their land; the commercial, industrial and institutional
+zones say N. The draft is pinned
 here where it reads against the grain of a quick look, so a later edit has to
 argue with it.
 
@@ -21,6 +22,14 @@ argue with it.
   prohibited within" MU-VTC (12.65.540). Both are read as reaching a flag
   lot that already exists: the two zones where a flag lot refuses the pod
   rather than widening its frontage.
+- **SCC-DT refuses the pod although its row says P.** 12.50.350 D.1:
+  "Parking for free-standing residential structures in the SCC-DT zone shall
+  be incorporated within the structure". The pod parks in an open court.
+- **Two and a half stories is 25 feet** (Steph 2026-09-29). 12.50.140 B.6
+  says a residential story is "not more than 10 feet", so the residential
+  tables' "2 1/2 stories or 35 feet, whichever is less" is 25, and SCR-OTC's
+  "2 stories or 35 feet" is 20. Held through the `stories` form, which
+  cites the table for the count and B.6 for the feet.
 - **The refusals** carry the use row and nothing else, like the county's.
 - **Four map codes are ruled, not encoded.** ANX, the city's label for land
   annexed and not yet zoned, is unencodable until the question of which code
@@ -50,10 +59,17 @@ ONE_LOT = (
     "R-10", "R-8.5", "R-7", "R-6", "R-4.5",
     "SCR-LD", "SCR-OTC", "SCR-DNC",
     "MR-1", "MR-2", "MR-3", "SCR-MD", "SCR-HD",
-    "SCC-DT", "SCC-SC", "SCC-MM",
+    "SCC-SC", "SCC-MM",
     "MU-N", "MU-VTC", "SCR-V",
     "UC-RM", "UC-MU", "UC-RP",
 )
+#: Quadplex P in the use table, refused by where the pod parks (12.50.350 D.1).
+PARKED_INSIDE = ("SCC-DT",)
+#: Height in stories at ten feet a story (12.50.140 B.6): zone -> stories.
+IN_STORIES = {
+    "R-10": 2.5, "R-8.5": 2.5, "R-7": 2.5, "R-6": 2.5, "R-4.5": 2.5,
+    "SCR-LD": 2.5, "SCR-DNC": 2.5, "MR-1": 2.5, "SCR-OTC": 2,
+}
 #: One-lot zones whose only variant refuses a flag lot.
 FLAG_LOT_REFUSED = ("SCR-OTC", "MU-VTC")
 #: The Retail Focus Frontage Area refusal (Figure 12.64.640-A).
@@ -77,14 +93,15 @@ def _use(layer: Layer, zone: str):
 
 def test_every_zone_the_code_lists_is_encoded(hillsboro: Layer) -> None:
     assert len(hillsboro.zones) == 37
-    assert set(hillsboro.zones) == set(ONE_LOT) | {"MU-C"} | set(RETAIL_FRONTAGE) | set(REFUSED)
+    assert set(hillsboro.zones) == set(ONE_LOT) | set(PARKED_INSIDE) | {"MU-C"} | set(RETAIL_FRONTAGE) | set(REFUSED)
     # The layer is chosen by JURIS_CITY, and HILLSBORO is the county's spelling.
     assert list(hillsboro.ingest["juris_city_codes"]) == ["HILLSBORO"]
 
 
-def test_the_pod_goes_on_one_lot_in_twenty_two_zones(hillsboro: Layer) -> None:
+def test_the_pod_goes_on_one_lot_in_twenty_one_zones(hillsboro: Layer) -> None:
     admitted = {z for z in hillsboro.zones if _use(hillsboro, z).value is True}
     assert admitted == set(ONE_LOT)
+    assert len(ONE_LOT) == 21
     for zone in ONE_LOT:
         if zone in FLAG_LOT_REFUSED:
             continue
@@ -169,3 +186,33 @@ def test_nothing_in_the_draft_is_verified(hillsboro: Layer) -> None:
             assert value.status is not Status.verified, (zone, field)
             for variant in value.variants:
                 assert variant.status is not Status.verified, (zone, field)
+
+
+def test_scc_dt_refuses_a_building_that_parks_outside_itself(hillsboro: Layer) -> None:
+    use = _use(hillsboro, "SCC-DT")
+    assert use.value is False
+    assert use.variants == ()
+    text = " ".join(ProvenanceStore().quote(use.prov.quote).split())
+    assert "shall be incorporated within the structure" in text
+
+
+@pytest.mark.parametrize(("zone", "stories"), sorted(IN_STORIES.items()))
+def test_two_and_a_half_stories_is_twenty_five_feet(
+    hillsboro: Layer, zone: str, stories: float
+) -> None:
+    height = hillsboro.zones[zone].values["max_height_ft"]
+    assert height.stories == stories
+    assert height.story_ft == 10
+    assert height.value == stories * 10
+    store = ProvenanceStore()
+    assert "not more than 10 feet" in " ".join(store.quote(height.story_ft_quote).split())
+    assert "stories" in store.quote(height.prov.quote)
+
+
+def test_the_commercial_half_story_keeps_its_feet(hillsboro: Layer) -> None:
+    # B.6 names the single-dwelling and multi-dwelling zones; the commercial
+    # "35 feet or 2½ stories" row is not one of them.
+    for zone, zone_rules in hillsboro.zones.items():
+        height = zone_rules.values.get("max_height_ft")
+        if height is not None and height.stories is not None:
+            assert zone in IN_STORIES, zone

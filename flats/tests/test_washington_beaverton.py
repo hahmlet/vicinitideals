@@ -21,11 +21,13 @@ has to argue with it.
 - **"WAcnty" is the county's zoning, kept after annexation (BDC 10.40.1),**
   and screens as a pocket of the unincorporated layer read off the county's
   own map. "ROW" is street, not a district.
-- **UPAA §V.D is declared, not guessed.** The city "may, at its discretion"
+- **UPAA §V.D is recorded, not held.** The city "may, at its discretion"
   keep the county's setbacks, lot sizes, coverage and heights on a partly
-  built development annexed after county approval. Nothing measures which
-  lots those are, so every standard the sentence names carries it as a
-  qualifier in every zone that admits the pod.
+  built development annexed after county approval. The first draft carried
+  it as a qualifier on every standard it names, which kept every Beaverton
+  lot off GREEN. Steph ruled 2026-09-29 that the Beaverton code governs a
+  new project, so the qualifier is gone and the clause is a known unknown in
+  the layer comment.
 - **The quadplex parking maximum is N/A in the four middle-housing zones,**
   and 1.8 a unit everywhere else, the lowest figure of the "Other Zone" row.
 - **RMB and RMC carry the 20.30 height plane** as a step-back on the rear
@@ -162,17 +164,24 @@ def test_annexed_county_land_screens_under_the_county_layer(
     assert rulings["ROW"].outcome == "unencodable"
 
 
-def test_the_upaa_annexation_condition_is_declared_not_guessed(
+def test_the_upaa_annexation_condition_is_recorded_not_held(
     beaverton: Layer,
 ) -> None:
+    # Steph 2026-09-29: "We don't care what developments the county approved
+    # before because we're doing a new one." No standard the clause names is
+    # qualified by it, so a Beaverton lot can come back GREEN.
     for zone in ONE_LOT:
         for field in UPAA_FIELDS:
-            value = beaverton.zones[zone].values[field]
-            assert value.qualified_by == "site_specific_limitation", (zone, field)
-            assert "§V.D" in value.qualified_cite, (zone, field)
-            assert "continue to apply the COUNTY's development standards" in _text(
-                value.qualified_quote
-            ), (zone, field)
+            value = beaverton.zones[zone].values.get(field)
+            if value is None:
+                continue
+            assert "upaa" not in (value.qualified_quote or ""), (zone, field)
+    # The clause stays in the store and in the layer comment as a known
+    # unknown: its own words say "any new construction taking place after
+    # annexation".
+    assert "continue to apply the COUNTY's development standards" in _text(
+        "or/washington/beaverton/wc.beaverton-upaa.txt#L282-L287"
+    )
     # No lot coverage field to qualify: the code prints none.
     for zone in ONE_LOT:
         held = beaverton.zones[zone].values

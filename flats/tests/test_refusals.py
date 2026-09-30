@@ -345,7 +345,15 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 134, "comments": 260, "tests": 18}
+EXPECTED = {"notes": 133, "comments": 256, "tests": 18}
+#
+# 134 -> 133 notes and 260 -> 256 comments on 2026-09-29, night: Steph's
+# answers to the first five Washington city questions retired five "NOT
+# ENCODED" doubts in the drafts. Hillsboro's story count ("2 1/2 stories" is
+# now held as 25 ft through the `stories` form), SCC-DT's surface parking
+# (now the zone's refusal, 12.50.350 D.1, in the layer comment, the zone
+# comment and the zone's note), and the county's transit-oriented side and
+# rear yards (now exempt: a table that states no minimum sets none).
 #
 # 129 -> 128 comments on 2026-09-29: a FIELD arrived. Portland RF's comment
 # "NOT ENCODED, in the row below it: the minimum DIMENSION, 12 ft. by 12 ft.

@@ -459,6 +459,7 @@ def _cited_lines(
         take(value.step_back_quote, name)
         take(value.measured_on_quote, name)
         take(value.qualified_quote, name)
+        take(value.story_ft_quote, name)
         for variant in value.variants:
             # Two questions are asked of this dictionary and only one of them
             # cares about the plat:

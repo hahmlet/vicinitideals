@@ -329,11 +329,17 @@ defaults:
 # developments ... are annexed to the CITY after receiving development
 # approval from the COUNTY, the CITY may, at its discretion, continue to
 # apply the COUNTY's development standards relating to setbacks, lot sizes,
-# lot coverage and heights" (wc.beaverton-upaa.txt#L282-L287). Nothing
-# measures whether a lot sits in such a development, so every zone that
-# admits the pod declares it as qualified_by: site_specific_limitation on
-# the setbacks, the minimum lot and the height. Lot coverage is not encoded
-# in Beaverton, so the coverage clause has nothing to qualify.
+# lot coverage and heights for buildings and accessory structures for any
+# new construction taking place after annexation" (wc.beaverton-upaa.txt
+# #L282-L287). The first draft qualified every setback, minimum lot and
+# height in the city by it, so no Beaverton lot could come back green.
+# Steph ruled 2026-09-29 that the BDC governs: the clause is discretionary
+# ("may"), it reaches only developments that were part-built when the city
+# took them over, and this screen is looking for new projects on finished
+# ground. The qualification is removed. Recorded, because the clause's own
+# words do say "any new construction": a lot inside a county-approved
+# subdivision annexed mid-build could still be held to county yards. A
+# known unknown, not a hold.
 #
 # STEP 10, the prohibition grep: every stored document was searched for
 # "quadplex", "plex" and "middle housing". The hits are the use tables
@@ -368,10 +374,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex (MR N/A)"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -388,10 +390,6 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       # Note 18: the maximum applies to all development other than
       # townhouses, on the portion of the site subject to the frontage
@@ -405,28 +403,16 @@ zones:
       value: 5
       cite: "Beaverton BDC Table 20.05.15, F.2.a Side Yard Minimum (MR, 5 external)"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L66-L69"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       value: 15
       cite: "Beaverton BDC Table 20.05.15, F.3 Rear Yard Minimum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       # G.1 prints N/A for MR and G.2 applies the 60.05.15.7 transition,
       # encoded as the variant. Neither binds a 26-foot building.
       exempt: true
       cite: "Beaverton BDC Table 20.05.15, G.1 Building Height - Maximum (MR N/A)"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113-L116"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -478,10 +464,6 @@ zones:
       value: 3000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 17
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -498,35 +480,19 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       value: 5
       cite: "Beaverton BDC Table 20.05.15, F.2.b Side Yard Minimum, Land Divisions (Perimeter)"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # Note 8 (10 feet) is for cottage cluster dwellings only.
       value: 15
       cite: "Beaverton BDC Table 20.05.15, F.3 Rear Yard Minimum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       value: 40
       cite: "Beaverton BDC Table 20.05.15, G.1 Building Height - Maximum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_far:
       value: 1.6
       cite: "Beaverton BDC Table 20.05.15, H.3 Maximum Floor Area Ratio - Triplex and Quadplex"
@@ -606,10 +572,6 @@ zones:
       value: 4000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 10
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -626,27 +588,15 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       value: 5
       cite: "Beaverton BDC Table 20.05.15, F.2.b Side Yard Minimum, Land Divisions (Perimeter)"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # Note 8 (10 feet) is for cottage cluster dwellings only.
       value: 15
       cite: "Beaverton BDC Table 20.05.15, F.3 Rear Yard Minimum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       step_back:
         height_ft: 25
         rise_per_ft: 1
@@ -660,10 +610,6 @@ zones:
       value: 35
       cite: "Beaverton BDC Table 20.05.15, G.1 Building Height - Maximum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113,L402"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_far:
       value: 1.2
       cite: "Beaverton BDC Table 20.05.15, H.3 Maximum Floor Area Ratio - Triplex and Quadplex"
@@ -743,10 +689,6 @@ zones:
       value: 5000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 7
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -763,10 +705,6 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       step_back:
         height_ft: 25
         rise_per_ft: 1
@@ -776,19 +714,11 @@ zones:
       value: 5
       cite: "Beaverton BDC Table 20.05.15, F.2.b Side Yard Minimum, Land Divisions (Perimeter)"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # Note 8 (10 feet) is for cottage cluster dwellings only.
       value: 15
       cite: "Beaverton BDC Table 20.05.15, F.3 Rear Yard Minimum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       step_back:
         height_ft: 25
         rise_per_ft: 1
@@ -802,10 +732,6 @@ zones:
       value: 35
       cite: "Beaverton BDC Table 20.05.15, G.1 Building Height - Maximum"
       quote: "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113,L402"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_far:
       value: 0.9
       cite: "Beaverton BDC Table 20.05.15, H.3 Maximum Floor Area Ratio - Triplex and Quadplex"
@@ -894,10 +820,6 @@ zones:
       value: 4000
       cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55,L242-L244"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 10
       cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
@@ -915,37 +837,21 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       # "0, 3 or 5" with note 7: 5 feet except townhouse attached sides
       # and land-division internal lines.
       value: 5
       cite: "Beaverton BDC Table 20.22.15, G.2.a Side Minimum and note 7"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L82,L253-L257"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # Note 8 (10 feet) is for cottage cluster dwellings only.
       value: 15
       cite: "Beaverton BDC Table 20.22.15, G.4 Rear Minimum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89,L258"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       value: 45
       cite: "Beaverton BDC Table 20.22.15, H.2 Building Height - Maximum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_far:
       value: 1.2
       cite: "Beaverton BDC Table 20.22.15, J.3 Maximum Floor Area Ratio - Triplex and Quadplex"
@@ -1024,10 +930,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex (CM-MR N/A)"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
@@ -1044,35 +946,19 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       # "0, 3 or 5" with note 7, as CM-RM.
       value: 5
       cite: "Beaverton BDC Table 20.22.15, G.2.a Side Minimum and note 7"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L82,L253-L257"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       value: 10
       cite: "Beaverton BDC Table 20.22.15, G.4 Rear Minimum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       value: 65
       cite: "Beaverton BDC Table 20.22.15, H.2 Building Height - Maximum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_far:
       # Note 24 and 20.25.10.3: 20 percent more on a site at least 30
       # percent Resource Overlay or constrained land; NOT ENCODED (a
@@ -1106,10 +992,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex (CM-HDR N/A)"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
@@ -1122,19 +1004,11 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       # G.2 prints N/A; the setback is G.5, beside a residential zone.
       value: 0
       cite: "Beaverton BDC Table 20.22.15, G.2.a Side Minimum (N/A)"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L80"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 5
           when: [abuts_residential_zone]
@@ -1148,10 +1022,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.22.15, G.4 Rear Minimum (N/A)"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 5
           when: [abuts_residential_zone]
@@ -1161,10 +1031,6 @@ zones:
       value: 65
       cite: "Beaverton BDC Table 20.22.15, H.2 Building Height - Maximum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_far:
       # Note 24 and 20.25.10.3: 20 percent more on a heavily constrained
       # site; NOT ENCODED (a relief). Gross site area.
@@ -1225,10 +1091,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex (CM-CS N/A)"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
@@ -1241,19 +1103,11 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       # G.2 prints N/A; the setback is G.5, beside a residential zone.
       value: 0
       cite: "Beaverton BDC Table 20.22.15, G.2.a Side Minimum (N/A)"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L80"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 5
           when: [abuts_residential_zone]
@@ -1267,10 +1121,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.22.15, G.4 Rear Minimum (N/A)"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 5
           when: [abuts_residential_zone]
@@ -1282,10 +1132,6 @@ zones:
       value: 65
       cite: "Beaverton BDC Table 20.22.15, H.2 Building Height - Maximum"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 45
           when: [abuts_residential_zone]
@@ -1354,10 +1200,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L58"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
@@ -1382,10 +1224,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.1 Minimum Yard Setbacks - Front (None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
@@ -1402,10 +1240,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot and note 3"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L163"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 10
           when: [abuts_residential_zone]
@@ -1418,10 +1252,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.4 Rear and note 4"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 15
           when: [abuts_residential_zone]
@@ -1431,10 +1261,6 @@ zones:
       value: 40
       cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (NS 40)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     parking_area_max_frontage_pct:
       # 60.05.15.6.C caps vehicle parking and circulation areas within 10
       # feet of a street lot line at 35 percent of that line's length; read
@@ -1479,10 +1305,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L58"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
@@ -1502,10 +1324,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.1 Minimum Yard Setbacks - Front (None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       # Note 2 limits the table's maximum to parcels over 60,000 square feet
       # "pursuant to Section 60.05.15.6", and 60.05.15.6.A states no such
@@ -1518,10 +1336,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot (None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # Note 4: the rear figure reaches only the part of the rear yard
       # abutting RMA, RMB or RMC; "otherwise the minimum rear yard setback is
@@ -1529,10 +1343,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.4 Rear and note 4"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 15
           when: [abuts_residential_zone]
@@ -1543,10 +1353,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (CS None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -1595,10 +1401,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L58"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
@@ -1618,10 +1420,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.1 Minimum Yard Setbacks - Front (None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       # Note 2 limits the table's maximum to parcels over 60,000 square feet
       # "pursuant to Section 60.05.15.6", and 60.05.15.6.A states no such
@@ -1634,27 +1432,15 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot (None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.4 Rear (CC None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       # F.1 None; F.2 applies the 60.05.15.7 transition, the variant.
       exempt: true
       cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (CC None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -1702,10 +1488,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L58"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
@@ -1725,10 +1507,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.1 Minimum Yard Setbacks - Front (None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       # Note 2 limits the table's maximum to parcels over 60,000 square feet
       # "pursuant to Section 60.05.15.6", and 60.05.15.6.A states no such
@@ -1741,10 +1519,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.2 Side Abutting Lot (None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # Note 4: the rear figure reaches only the part of the rear yard
       # abutting RMA, RMB or RMC; "otherwise the minimum rear yard setback is
@@ -1752,10 +1526,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.10.15, E.4 Rear and note 4"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 15
           when: [abuts_residential_zone]
@@ -1766,10 +1536,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (GC None)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -1825,10 +1591,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 12
       cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
@@ -1848,37 +1610,21 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # C.5, side or rear yards abutting property zoned residential, is
       # also None in this column.
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
       exempt: true
       cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (RC-E None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -1936,10 +1682,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 24
       cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
@@ -1959,37 +1701,21 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # C.5, side or rear yards abutting property zoned residential, is
       # also None in this column.
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
       exempt: true
       cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (TC-MU None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -2047,10 +1773,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 24
       cite: "Beaverton BDC Table 20.20.15, A.1 Residential Density - Minimum for residential only project"
@@ -2070,37 +1792,21 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # C.5, side or rear yards abutting property zoned residential, is
       # also None in this column.
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
       exempt: true
       cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (TC-HDR None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -2158,10 +1864,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       # Note 2: "30 units within 400 feet of LRT station platform, 24
       # beyond 400 feet". Nothing measures the platform distance; 30 is
@@ -2184,37 +1886,21 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # C.5, side or rear yards abutting property zoned residential, is
       # also None in this column.
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
       exempt: true
       cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (SC-MU None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -2273,10 +1959,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       # Note 2: "30 units within 400 feet of LRT station platform, 24
       # beyond 400 feet". Nothing measures the platform distance; 30 is
@@ -2299,37 +1981,21 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # C.5, side or rear yards abutting property zoned residential, is
       # also None in this column.
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
       exempt: true
       cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (SC-HDR None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -2389,10 +2055,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.20.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L108"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       # Note 2: "30 units within 400 feet of LRT station platform, 24
       # beyond 400 feet". Nothing measures the platform distance; 30 is
@@ -2412,37 +2074,21 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.1 Yard Setbacks - Front Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_side_ft:
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.3 Yard Setbacks - Side Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_rear_ft:
       # C.5, side or rear yards abutting property zoned residential, is
       # also None in this column.
       value: 0
       cite: "Beaverton BDC Table 20.20.15, C.4 and C.5 Rear Minimum (None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     max_height_ft:
       # D.1 None; D.2 applies the 60.05.15.7 transition, the variant.
       exempt: true
       cite: "Beaverton BDC Table 20.20.15, D.1 Building Height - Maximum (SC-S None)"
       quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 60
           when: [abuts_residential_zone]
@@ -2521,10 +2167,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 70.15.10.1.A (no minimum lot area) and 70.05.15.7"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L129-L130,L220,L222-L223"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       # Note 3: minimum density applies only to 100% residential
       # development, which the pod is.
@@ -2539,18 +2181,10 @@ zones:
       value: 120
       cite: "Beaverton BDC Table 70.15.10.1.A, Height maximum"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L220,L222-L223"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_ft:
       value: 6
       cite: "Beaverton BDC Table 70.15.10.1.B, Front setback with ground floor residential units (minimum)"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L247"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       value: 12
       cite: "Beaverton BDC Table 70.15.10.1.B, Front setback with ground floor residential units (maximum)"
@@ -2566,10 +2200,6 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 70.15.10.1.B, Setback abutting property zoned residential and/or Downtown Transition (DT), Side minimum"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L246,L253-L254"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
@@ -2579,10 +2209,6 @@ zones:
       value: 20
       cite: "Beaverton BDC Table 70.15.10.1.B, Setback abutting property zoned residential and/or Downtown Transition (DT), Rear minimum"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L237,L239-L246,L253-L254"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
@@ -2627,10 +2253,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 70.15.10.2.A (no minimum lot area) and 70.05.15.7"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L129-L130,L287,L289-L290"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       # "18 or 24" by Figure 70.15.10.2.3 (note 4), a map nothing reads; 24
       # is the stricter floor. A doubt.
@@ -2645,18 +2267,10 @@ zones:
       value: 65
       cite: "Beaverton BDC Table 70.15.10.2.A, Height maximum"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L287,L289-L290"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_ft:
       value: 6
       cite: "Beaverton BDC Table 70.15.10.2.B, Front setback with ground floor residential units (minimum)"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307-L308"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       value: 16
       cite: "Beaverton BDC Table 70.15.10.2.B, Front setback with ground floor residential units (maximum)"
@@ -2666,10 +2280,6 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 70.15.10.2.B, Setback abutting property zoned residential and/or Downtown Transition (DT) - Side"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307,L313"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
@@ -2679,10 +2289,6 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 70.15.10.2.B, Setback abutting property zoned residential and/or Downtown Transition (DT) - Rear"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L305,L307,L314"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
@@ -2726,10 +2332,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 70.15.10.3.A (no minimum lot area) and 70.05.15.7"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L129-L130,L353,L355-L356"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 43
       cite: "Beaverton BDC Table 70.15.10.3.A, Density (Units/Acre) minimum"
@@ -2742,18 +2344,10 @@ zones:
       value: 75
       cite: "Beaverton BDC Table 70.15.10.3.A, Height maximum"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L353,L355-L356"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_ft:
       value: 6
       cite: "Beaverton BDC Table 70.15.10.3.B, Front setback with ground floor residential units (minimum)"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372-L373"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       value: 16
       cite: "Beaverton BDC Table 70.15.10.3.B, Front setback with ground floor residential units (maximum)"
@@ -2765,10 +2359,6 @@ zones:
       value: 10
       cite: "Beaverton BDC Table 70.15.10.3.B, Setback abutting property zoned residential and Downtown Transition (DT) - Side"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372,L378"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
@@ -2778,10 +2368,6 @@ zones:
       value: 20
       cite: "Beaverton BDC Table 70.15.10.3.B, Setback abutting property zoned residential and Downtown Transition (DT) - Rear"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L370,L372,L379"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
@@ -2824,10 +2410,6 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 70.15.10.4.A (no minimum lot area) and 70.05.15.7"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L129-L130,L414,L416-L417"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     min_density_du_per_acre:
       value: 30
       cite: "Beaverton BDC Table 70.15.10.4.A, Density (Units/Acre) minimum"
@@ -2850,18 +2432,10 @@ zones:
       value: 60
       cite: "Beaverton BDC Table 70.15.10.4.A, Height maximum"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L414,L416-L417"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_ft:
       value: 10
       cite: "Beaverton BDC Table 70.15.10.4.B, Front setback with ground floor residential units (minimum)"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432-L433"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
     setback_front_max_ft:
       value: 20
       cite: "Beaverton BDC Table 70.15.10.4.B, Front setback with ground floor residential units (maximum)"
@@ -2870,10 +2444,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 70.15.10.4.B, Interior side or rear setback"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432,L435"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 10
           when: [abuts_residential_zone]
@@ -2883,10 +2453,6 @@ zones:
       value: 0
       cite: "Beaverton BDC Table 70.15.10.4.B, Interior side or rear setback"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L430,L432,L435"
-      qualified_by:
-        fact: site_specific_limitation
-        cite: "Washington County-Beaverton Urban Planning Area Agreement §V.D (as amended by Ordinance 839A, 2018), county standards kept for partially completed developments"
-        quote: "or/washington/beaverton/wc.beaverton-upaa.txt#L262,L282-L287"
       variants:
         - value: 20
           when: [abuts_residential_zone]

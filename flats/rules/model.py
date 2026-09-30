@@ -1406,6 +1406,19 @@ class Value(BaseModel):
     #: on different acres and each cites its own sentence.
     measured_on_cite: str | None = None
     measured_on_quote: str | None = None
+    #: A height stated in STORIES, where the code elsewhere fixes how tall a
+    #: story may be. Hillsboro's residential tables print "2 1/2 stories or 35
+    #: feet, whichever is less", and 12.50.140 B.6 says "a residential 'story'
+    #: is considered to be not more than 10 feet" -- so the limit is 25 feet,
+    #: and 25 is printed nowhere (Steph 2026-09-29: "Yes, that math holds").
+    #: Same bargain as `per_height_ft`: the file states only what the code
+    #: prints -- the story count against the table, the feet a story against
+    #: the sentence that sets them, each with its own citation -- and `value`
+    #: carries the product, because a building is checked against feet.
+    stories: float | None = None
+    story_ft: float | None = None
+    story_ft_cite: str | None = None
+    story_ft_quote: str | None = None
     #: A rule elsewhere in the code that changes this standard, turning on a
     #: fact nothing here measures. Fairview's Table 19.30.030.A prints 35 ft
     #: for a building height and 19.30.030(E) makes that conditional: a
@@ -1570,6 +1583,29 @@ class Value(BaseModel):
             raise ValueError(
                 f"{self.name}: acres_per_dwelling {self.acres_per_dwelling} "
                 f"is not an area"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _a_story_count_says_how_tall_a_story_is(self) -> Value:
+        if self.stories is None and self.story_ft is None:
+            return self
+        if self.name != "max_height_ft":
+            raise ValueError(
+                f"{self.name}: 'stories' states a height as a count of stories, "
+                f"and applies to max_height_ft"
+            )
+        if self.stories is None or self.story_ft is None:
+            raise ValueError(
+                f"{self.name}: a height in stories needs both the count and the "
+                f"feet a story may be"
+            )
+        if self.stories <= 0 or self.story_ft <= 0:
+            raise ValueError(f"{self.name}: stories and story_ft must be positive")
+        if not (self.story_ft_cite and self.story_ft_quote):
+            raise ValueError(
+                f"{self.name}: the feet a story may be is a rule somebody read; "
+                f"cite and quote it"
             )
         return self
 

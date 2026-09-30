@@ -206,6 +206,8 @@ def _evidence(layer: Layer) -> Iterable[tuple[str, str, str]]:
         for name, value in sorted(zone.values.items()):
             if value.measured_on_quote:
                 yield zone_code, f"{name} <{value.measured_on}>", value.measured_on_quote
+            if value.story_ft_quote:
+                yield zone_code, f"{name} [story]", value.story_ft_quote
 
 
 def tagged(layer_id: str | None = None, *, store: ProvenanceStore | None = None) -> list[Tagged]:

@@ -306,12 +306,12 @@ defaults:
 # spaces per unit" (cdc.12.50.300.parking.txt#L326-L330). The pod parks in a
 # rear court, so the sentence does not reach it.
 #
-# NOT ENCODED: 12.50.350 D.1, "Parking for free-standing residential
-# structures in the SCC-DT zone shall be incorporated within the structure"
-# (cdc.12.50.300.parking.txt#L338-L340). The pod's court is surface parking
-# and no field says "surface parking prohibited", so SCC-DT screens the
-# court as allowed where the code refuses it. A doubt and a question for
-# Steph; see the SCC-DT block.
+# 12.50.350 D.1, "Parking for free-standing residential structures in the
+# SCC-DT zone shall be incorporated within the structure"
+# (cdc.12.50.300.parking.txt#L338-L340). The pod parks in an open court and
+# is a free-standing residential structure, so SCC-DT refuses it: encoded
+# as quadplex_allowed false in the SCC-DT block (no field says "surface
+# parking prohibited", and the refusal is the whole of the answer).
 #
 # NOT ENCODED: setbacks subordinate to utility easements. 12.50.130 D.2:
 # "setbacks are subordinate to such easements if the easement is wider than
@@ -331,15 +331,17 @@ defaults:
 # nothing measures, and both only push the building back. The same kind of
 # rule as right-of-way dedication in the county layer; a doubt.
 #
-# NOT ENCODED: the story count behind "2 ½ stories or 35 feet, whichever is
-# less". 12.50.140 B.6 measures height in the single-dwelling and
-# multi-dwelling zones in stories, and "a residential 'story' is considered
-# to be not more than 10 feet" (cdc.12.50.100-270.lot-and-site.txt#L612-
-# L615). max_height_stories takes whole numbers only, so each such zone
-# holds the feet (the Fairview precedent). Read as a cap of ten feet a
-# story, 2 ½ stories is 25 feet, one foot under the 26-foot design height;
-# read as a counting rule, the pod is two stories and passes. A doubt and a
-# question for Steph.
+# THE STORY IS TEN FEET (Steph 2026-09-29: "Yes, that math holds").
+# 12.50.140 B.6 measures height in the single-dwelling and multi-dwelling
+# zones in stories, and "a residential 'story' is considered to be not more
+# than 10 feet" (cdc.12.50.100-270.lot-and-site.txt#L612-L615). So "2 ½
+# stories or 35 feet, whichever is less" is 25 feet in R-10, R-8.5, R-7,
+# R-6, R-4.5, SCR-LD, SCR-DNC (elsewhere) and MR-1, and SCR-OTC's "2
+# stories or 35 feet" is 20 feet (both limbs held, the stricter). The
+# quotes point at each table cell; the ten-foot story is B.6, cited in each
+# `cite`. The pod's height is a dial (flats.encode.height); these are the
+# first ceilings in the corpus under 26 feet. B.6 names residential zones
+# only, so the commercial "35 feet or 2½ stories" row keeps its feet.
 #
 # NOT ENCODED: 12.50.210 usable open space, "Variable" in the zone tables
 # (cdc.12.50.100-270.lot-and-site.txt#L744-L850), with an exemption list at
@@ -501,10 +503,14 @@ zones:
       cite: Hillsboro CDC Table 12.21.150-1, Minimum Setbacks, rear yard
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L339"
     max_height_ft:
-      # "2 ½ stories or 35 feet, whichever is less": the feet only; the
-      # half-story reading is in the layer-wide comment above.
-      value: 35
-      cite: Hillsboro CDC Table 12.21.150-1, Maximum Building Height
+      # "2 ½ stories or 35 feet, whichever is less", at ten feet a story
+      # (layer-wide comment above).
+      stories: 2.5
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.21.150-1, Maximum Building Height (2 ½ stories)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L344,L347-L348"
     max_coverage_pct:
       value: 40
@@ -592,8 +598,12 @@ zones:
       cite: Hillsboro CDC Table 12.21.250-1, Minimum Setbacks, rear yard
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L526,L557,L578"
     max_height_ft:
-      value: 35
-      cite: Hillsboro CDC Table 12.21.250-1, Maximum Building Height
+      stories: 2.5
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.21.250-1, Maximum Building Height (2 ½ stories)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L583,L586-L587"
     max_coverage_pct:
       value: 45
@@ -677,8 +687,12 @@ zones:
       cite: Hillsboro CDC Table 12.21.350-1, Minimum Setbacks, rear yard
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L766,L796,L814"
     max_height_ft:
-      value: 35
-      cite: Hillsboro CDC Table 12.21.350-1, Maximum Building Height
+      stories: 2.5
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.21.350-1, Maximum Building Height (2 ½ stories)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L819,L822-L823"
     max_coverage_pct:
       value: 45
@@ -771,8 +785,12 @@ zones:
       cite: Hillsboro CDC Table 12.21.450-1, Minimum Setbacks, rear yard
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1002,L1039,L1064"
     max_height_ft:
-      value: 35
-      cite: Hillsboro CDC Table 12.21.450-1, Maximum Building Height
+      stories: 2.5
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.21.450-1, Maximum Building Height (2 ½ stories)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1067,L1072-L1073"
     max_coverage_pct:
       value: 55
@@ -860,8 +878,12 @@ zones:
       cite: Hillsboro CDC Table 12.21.550-1, Minimum Setbacks, rear yard
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1287,L1290,L1322"
     max_height_ft:
-      value: 35
-      cite: Hillsboro CDC Table 12.21.550-1, Maximum Building Height
+      stories: 2.5
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.21.550-1, Maximum Building Height (2 ½ stories)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1287,L1325-L1326"
     max_coverage_pct:
       value: 55
@@ -950,8 +972,12 @@ zones:
       cite: Hillsboro CDC Table 12.21.650-1, Maximum Setbacks, front yard
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1579-L1582"
     max_height_ft:
-      value: 35
-      cite: Hillsboro CDC Table 12.21.650-1, Maximum Building Height
+      stories: 2.5
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.21.650-1, Maximum Building Height (2 ½ stories)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1592-L1593"
     max_coverage_pct:
       exempt: true
@@ -1056,9 +1082,14 @@ zones:
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1816,L1883-L1884"
     max_height_ft:
       # "2 stories or 35 feet", without "whichever is less": both are held,
-      # the stricter reading. The pod is two stories and 26 feet.
-      value: 35
-      cite: Hillsboro CDC Table 12.21.750-1, Maximum Building Height, Residential
+      # the stricter reading, and at ten feet a story (12.50.140 B.6) two
+      # stories is 20 feet. Steph ruled the story math 2026-09-29.
+      stories: 2
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.21.750-1, Maximum Building Height, Residential (2 stories)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1889,L1907,L1911"
     max_height_stories:
       value: 2
@@ -1168,8 +1199,12 @@ zones:
       cite: Hillsboro CDC Table 12.21.850-1, Maximum Setbacks, front yard
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L2184,L2204-L2205"
     max_height_ft:
-      value: 35
-      cite: Hillsboro CDC Table 12.21.850-1, Maximum Building Height, elsewhere
+      stories: 2.5
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.21.850-1, Maximum Building Height, elsewhere (2 ½ stories)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L2184,L2218,L2228-L2229"
     max_coverage_pct:
       exempt: true
@@ -1267,8 +1302,12 @@ zones:
       cite: Hillsboro CDC Table 12.22.150-1, Minimum Setbacks, rear yard to structure
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L310,L313,L341,L346-L347"
     max_height_ft:
-      value: 35
-      cite: Hillsboro CDC Table 12.22.150-1, Maximum Building Height
+      stories: 2.5
+      story_ft:
+        ft: 10
+        cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+        quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L612-L615"
+      cite: Hillsboro CDC Table 12.22.150-1, Maximum Building Height (2 ½ stories)
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L310,L354-L355"
     max_coverage_pct:
       value: 65
@@ -1656,14 +1695,14 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # Quadplex P. NOT ENCODED: 12.50.350 D.1, "Parking for free-standing
-      # residential structures in the SCC-DT zone shall be incorporated
-      # within the structure" (layer-wide comment). The pod's surface court
-      # is refused by that sentence and no field says so; a doubt and a
-      # question for Steph.
-      value: true
-      cite: Hillsboro CDC Table 12.23.320-1, Housing Types Permitted in the SCC-DT Zone (Quadplex P)
-      quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L694-L696,L703"
+      # Quadplex P in Table 12.23.320-1 (L694-L696, L703), but 12.50.350
+      # D.1 puts the parking of a free-standing residential structure
+      # inside it, and the pod parks in an open court (layer-wide
+      # comment). The building is permitted; this building, parked this
+      # way, is not.
+      value: false
+      cite: Hillsboro CDC 12.50.350 D.1, parking for free-standing residential structures in SCC-DT incorporated within the structure
+      quote: "or/washington/hillsboro/cdc.12.50.300.parking.txt#L338-L340"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.23.360-1, Minimum Lot Size None
@@ -1753,7 +1792,8 @@ zones:
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L874,L886"
     notes: >-
       DRAFT. Quadplex permitted, but 12.50.350 D.1 puts free-standing
-      residential parking inside the structure (not encoded). No lot
+      residential parking inside the structure, so the pod (open court) is
+      refused. No lot
       minimums; 30 to 36 du/na as held; no side or rear setback (10 against
       a residential zone); front setback and height by figure (not
       encoded); two-story minimum; no parking between building and street.
@@ -1821,9 +1861,12 @@ zones:
       cite: Hillsboro CDC Table 12.23.460-1, Maximum Setbacks, front yard, residential
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1131,L1141-L1142,L1149"
     min_building_height_ft:
-      # 30 feet within 800 feet of an LRT station, none beyond. Nothing
-      # measures the distance; the 30 is held and fails the 26-foot pod
-      # everywhere in this zone. A doubt.
+      # 30 feet within 800 feet of an LRT station, "None" beyond
+      # (L1163-L1167). The beyond-800-ft row is an EXPRESS exception, so
+      # under Steph's rule of 2026-09-29 lots beyond 800 ft owe no minimum.
+      # Nothing measures the distance yet (FOLLOWUPS 17: a distance-to-LRT
+      # station fact), so the 30 is held on every lot -- the tighter
+      # reading, which fails lots the code does not.
       value: 30
       cite: Hillsboro CDC Table 12.23.460-1, Minimum Building Height, within 800 ft of an LRT station
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1131,L1163-L1165"
@@ -2137,9 +2180,12 @@ zones:
     min_building_height_ft:
       # Forty-five feet, unqualified; the layout extraction of the page
       # (CDC12.24:24) puts "45 feet" in the Requirement column of the
-      # Minimum Building Height row. The pod (26 ft) fails it on every MU-C
-      # lot. A doubt: a 45-foot floor for every building in the zone reads
-      # like a misprint, and Steph may know the city's practice.
+      # Minimum Building Height row. The two clarifications beside it are
+      # not exceptions to the minimum: 12.50.140 D.4 stops structured
+      # parking counting toward the MAXIMUM, and 12.50.140 C steps the
+      # maximum down next to houses. Steph ruled 2026-09-29: the figure is
+      # real, and a stated minimum governs unless an express exception
+      # reaches the pod. The pod fails it on every MU-C lot. Settled.
       value: 45
       cite: Hillsboro CDC Table 12.24.260-1, Minimum Building Height
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L813,L875"
@@ -2234,9 +2280,11 @@ zones:
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1302,L1319,L1323,L1331-L1334"
     min_building_height_stories:
       # Residential: 3 stories inside the Center Cores, 2 outside. The
-      # cores are drawn under 12.65.030 and no condition says a lot is
-      # OUTSIDE one, so the 3 binds everywhere and the pod fails it. A
-      # doubt: outside a core the pod's two stories meet the minimum.
+      # outside-core row is an EXPRESS exception, so under Steph's rule of
+      # 2026-09-29 the pod's two stories pass outside a core. The cores
+      # are drawn under 12.65.030 and no condition says a lot is OUTSIDE
+      # one yet (FOLLOWUPS 17: draw the cores), so the 3 binds everywhere
+      # -- the tighter reading.
       value: 3
       cite: Hillsboro CDC Table 12.24.360-1, Minimum Building Height, inside Center Cores, residential
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1302,L1342,L1346,L1355"
@@ -2480,7 +2528,11 @@ zones:
       cite: Hillsboro CDC Table 12.24.660-1, Maximum Setbacks, front
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2237,L2282,L2286"
     min_building_height_ft:
-      # The base-height row; the pod (26 ft) fails it on every UC-MU lot.
+      # The base-height row; the pod fails it on every UC-MU lot. The
+      # AmberGlen standards it is "subject to" (12.64.830) cap maximums
+      # only; no exception reaches a small residential building. Settled by
+      # Steph's rule of 2026-09-29 (a stated minimum governs unless an
+      # express exception reaches the pod).
       value: 35
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Building Height, base height
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2290-L2291,L2293,L2296"
@@ -2576,7 +2628,8 @@ zones:
       cite: Hillsboro CDC Table 12.24.760-1, Maximum Setbacks, front
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2550,L2554"
     min_building_height_ft:
-      # The pod (26 ft) fails it on every UC-AC lot.
+      # The pod fails it on every UC-AC lot. As UC-MU: 12.64.830 caps
+      # maximums only, so Steph's rule of 2026-09-29 settles it.
       value: 35
       cite: Hillsboro CDC Table 12.24.760-1, Minimum Building Height
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2558-L2559,L2561"

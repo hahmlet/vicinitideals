@@ -1,5 +1,5 @@
 {
-  "digest": "1210c53823182f7611d970d69da69c100187dda301f085e43fbe00f681349399",
+  "digest": "e6ebd014b964a5b519f8c34f216514bbe201d25ed120c3f0d3e2513a08094a29",
   "layers": {
     "or": {
       "misattributed": [],
@@ -1398,13 +1398,6 @@
           "claimed": "12.23.360",
           "found": "12.23.360 12.61.400",
           "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L863-L865"
-        },
-        {
-          "zone": "SCC-DT",
-          "field": "quadplex_allowed",
-          "claimed": "12.23.320",
-          "found": "12.23.320 12.61.400",
-          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L694-L696,L703"
         },
         {
           "zone": "SCC-DT",

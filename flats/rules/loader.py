@@ -156,7 +156,8 @@ def _parse_values(
         if isinstance(node, dict) and (
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "per_units",
              "spaces_total", "acres", "acres_per_dwelling", "per_height_ft",
-             "floor_ft", "same_as", "step_back", "qualified_by"} & set(node)
+             "floor_ft", "same_as", "step_back", "qualified_by", "stories"}
+            & set(node)
         ):
             body = dict(node)
             value = body.pop("value", None)
@@ -178,6 +179,10 @@ def _parse_values(
             )
             qualified, qualified_cite, qualified_quote = _parse_qualified_by(
                 body.pop("qualified_by", None), f"{where}.{key}", problems
+            )
+            stories = body.pop("stories", None)
+            story_ft, story_ft_cite, story_ft_quote = _parse_story_ft(
+                body.pop("story_ft", None), f"{where}.{key}", problems
             )
             unless = body.pop("unless", ()) or ()
             raw_variants = body.pop("variants", None) or ()
@@ -360,6 +365,32 @@ def _parse_values(
                 value = _off_the_building(
                     float(per_height), None if floor_ft is None else float(floor_ft)
                 )
+            if stories is not None:
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states feet or a count of "
+                        f"stories, not both"
+                    )
+                    continue
+                if (
+                    not isinstance(stories, (int, float))
+                    or isinstance(stories, bool)
+                    or story_ft is None
+                ):
+                    problems.append(
+                        f"{where}.{key}: 'stories' expects a number and a "
+                        f"'story_ft' block saying how tall a story may be"
+                    )
+                    continue
+                # "2 1/2 stories" at "not more than 10 feet" a story is 25
+                # feet, and 25 is printed nowhere.
+                value = float(stories) * float(story_ft)
+            elif story_ft is not None:
+                problems.append(
+                    f"{where}.{key}: 'story_ft' says how tall a story is, and "
+                    f"there is no 'stories' here for it to multiply"
+                )
+                continue
             if same_as is not None:
                 if value is not None or exempt:
                     problems.append(
@@ -428,6 +459,8 @@ def _parse_values(
             acres_each = None
             measured_on = measured_on_cite = measured_on_quote = None
             qualified = qualified_cite = qualified_quote = None
+            stories = None
+            story_ft = story_ft_cite = story_ft_quote = None
             unless = ()
             raw_variants = ()
 
@@ -520,6 +553,10 @@ def _parse_values(
                 qualified_by=qualified,
                 qualified_cite=qualified_cite,
                 qualified_quote=qualified_quote,
+                stories=None if stories is None else float(stories),
+                story_ft=story_ft,
+                story_ft_cite=story_ft_cite,
+                story_ft_quote=story_ft_quote,
                 unless=tuple(unless),
                 prov=prov,
                 status=Status(declared),
@@ -1069,6 +1106,35 @@ def _parse_measured_on(
         )
         return None, None, None
     return str(fact), None if cite is None else str(cite), None if quote is None else str(quote)
+
+
+def _parse_story_ft(
+    raw: Any,
+    where: str,
+    problems: list[str],
+) -> tuple[float | None, str | None, str | None]:
+    """Parse how tall a story may be, and the sentence that says so.
+
+    A mapping with `ft`, `cite` and `quote`, because the feet a story may be
+    live in a different chapter from the table that counts the stories
+    (Hillsboro 12.50.140 B.6 against every residential district table), and a
+    number without its own citation is a number nobody can re-read.
+    """
+    if raw is None:
+        return None, None, None
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.story_ft: expected a mapping with ft, cite and quote")
+        return None, None, None
+    body = dict(raw)
+    ft = body.pop("ft", None)
+    cite = body.pop("cite", None)
+    quote = body.pop("quote", None)
+    if body:
+        problems.append(f"{where}.story_ft: unknown key(s) {sorted(body)}")
+    if not isinstance(ft, (int, float)) or isinstance(ft, bool) or ft <= 0:
+        problems.append(f"{where}.story_ft: 'ft' expects a positive number of feet")
+        return None, None, None
+    return float(ft), None if cite is None else str(cite), None if quote is None else str(quote)
 
 
 def _parse_qualified_by(

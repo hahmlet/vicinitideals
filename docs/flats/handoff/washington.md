@@ -2549,6 +2549,36 @@ Ledgers and readers:
 
 ## 6. Questions for Steph
 
+### Rulings, 2026-09-29 (Steph, encoded the same day)
+
+Steph answered the first five and set general reading rules with them
+(memory `feedback_flats_reading_rules_2026_09_29`): a stated number governs
+unless an express exception reaches the pod; a table that states no minimum
+sets none; definitions are literal; and the screen is built for the world
+after HB 2138 takes full effect (January 2027).
+
+- **North Bethany R-25+ and the dense transit districts:** four units are
+  not five. The refusal stands; the townhouse-on-own-lots path stays.
+- **Transit-oriented side and rear yards:** none. Exempt in TO:R9-12 (and
+  so TO:R12-18 and TO:R18-24 by `like:`); what note (H) keeps (buffering,
+  building code) is a known unknown.
+- **Hillsboro minimum heights:** real. MU-C 45 ft, UC-MU and UC-AC 35 ft
+  fail the pod, settled. SCC-SC (none beyond 800 ft of a light-rail
+  station) and MU-VTC (2 stories outside the Center Cores) carry express
+  exceptions the pod meets; they stay held on every lot until the station
+  distance and the core map are measured (FOLLOWUPS 17).
+- **"2½ stories":** 25 ft (ten-foot story, 12.50.140 B.6). R-10, R-8.5,
+  R-7, R-6, R-4.5, SCR-LD, SCR-DNC and MR-1 now hold 25 ft; SCR-OTC's
+  "2 stories or 35 feet" holds 20 ft. The pod height is a dial; the
+  corpus has 25-ft MINIMUMS too, so exactly 25 ft keeps the most land.
+- **SCC-DT:** refused on 12.50.350 D.1 (parking inside the building).
+- **Beaverton UPAA §V.D:** not a hold (Steph: the screen looks for new
+  projects). The qualification is removed from every value; the clause's
+  "any new construction" wording is recorded as a known unknown.
+
+The questions below are kept as the record of what was asked.
+
+
 - **North Bethany R-25+.** The county's densest North Bethany district allows
   only "multi-dwelling" housing, which the code defines as five or more units,
   and live/work units with a ground-floor business. A four-unit building fits

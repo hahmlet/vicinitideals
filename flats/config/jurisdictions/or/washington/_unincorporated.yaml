@@ -1388,10 +1388,9 @@ zones:
       # primary dwelling units" (106-143, cdc.106.definitions.txt#L782-L786).
       # Four units are not five. Live/Work Housing (390-12.3 G, 390-16.7)
       # needs a ground-floor business space in each unit, which the pod
-      # does not have. 106-124 does not name R-25+ NB. The conservative
-      # reading, and a question for Steph: the base R-25+ district admits
-      # the pod as Middle Housing, and a reader could take "multi-dwelling"
-      # loosely.
+      # does not have. 106-124 does not name R-25+ NB.
+      # Steph ruled 2026-09-29: four units are not five, so the pod is not
+      # multi-dwelling here. Settled, not a doubt.
       value: false
       cite: Washington County CDC 390-12.2 and 390-12.3 A (multi-dwelling only) + 106-143
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L964,L995,L1001-L1002"
@@ -1552,19 +1551,26 @@ zones:
       value: 35
       cite: Washington County CDC 375 Table B(1), Maximum Building Height, 35 feet if abutting R-5 or R-6
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L941-L942"
-    # setback_side_ft and setback_rear_ft are absent on purpose. Table B(1)
-    # is the Middle Housing table and prints a front yard and a building
-    # separation and no side or rear yard. B(2)'s "No minimum interior yard
-    # setback is required for transit oriented district" (L1030-L1032) is a
-    # footnote to the table for "all Other Development", and it keeps the
-    # screening and buffering of Section 411 (not stored). So the zone owes
-    # both, the lot answers UNKNOWN on them, and the handoff asks Steph
-    # whether B(2)'s sentence reaches Middle Housing.
+    # Side and rear: Steph ruled 2026-09-29 that a table which states no
+    # minimum sets none. Table B(1) is the Middle Housing table and prints a
+    # front yard and a building separation and no side or rear yard; B(2)'s
+    # note (H) says "No minimum interior yard setback is required for
+    # transit oriented district" (L1030-L1032). What (H) keeps -- the
+    # screening and buffering of Sections 411 and 431 and the building code
+    # -- is not stored and not held; a known unknown, not a hold.
+    setback_side_ft:
+      exempt: true
+      cite: Washington County CDC 375 Table B(1) (no side yard row) + Table B(2) note (H), no minimum interior yard (Steph ruling 2026-09-29)
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L946-L955,L1030-L1032"
+    setback_rear_ft:
+      exempt: true
+      cite: Washington County CDC 375 Table B(1) (no rear yard row) + Table B(2) note (H), no minimum interior yard (Steph ruling 2026-09-29)
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L946-L955,L1030-L1032"
     notes: >-
       DRAFT. Transit Oriented Middle Housing district: Quadplex permitted
       (Type I or II), 7,000 sq ft parent lot, max four units, front yard 10 to
-      15 ft, 35 ft held. Side and rear yards owed (the Middle Housing table
-      states none).
+      15 ft, 35 ft held. No side or rear yard (the Middle Housing table
+      states none; Steph 2026-09-29).
   TO:R12-18:
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)

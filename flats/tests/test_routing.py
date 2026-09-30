@@ -268,6 +268,13 @@ OPEN = {
     "or/multnomah/portland 33.140.210 -> 33.140.215",
     "or/washington/hillsboro 12.61.400 -> 12.23.300",
     "or/washington/hillsboro 12.61.400 -> 12.50.845",
+    # Arrived 2026-09-29 when SCC-DT's refusal was quoted from 12.50.350 D.1
+    # (parking of a free-standing residential structure inside it). The
+    # section's own pointers to 12.50.360 sit in 12.50.350 D.4, which lets
+    # NON-residential surface parking in SCC-MM, SCBP, SCI and SCFI sit in
+    # front of a building if its landscaping meets 12.50.360. The pod is
+    # residential and SCC-DT refuses it outright; open, and reaching nothing.
+    "or/washington/hillsboro 12.50.350 -> 12.50.360",
     "or/washington/beaverton 20.05.15 -> 20.25.05",
     "or/washington/beaverton 20.15.15 -> 60.50.05",
     "or/washington/sherwood 16.40.050 -> 16.40.040",

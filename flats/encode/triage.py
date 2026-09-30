@@ -635,6 +635,7 @@ def _cited_values(layer: Layer) -> dict[str, dict[int, list[tuple[str, str, str]
             take(value.step_back_quote, zone.zone, field, value)
             take(value.measured_on_quote, zone.zone, field, value)
             take(value.qualified_quote, zone.zone, field, value)
+            take(value.story_ft_quote, zone.zone, field, value)
             for variant in value.variants:
                 take(variant.prov.quote, zone.zone, field, value)
     return out
