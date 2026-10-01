@@ -321,6 +321,12 @@ class Design(BaseModel):
     units: int = Field(gt=0)
     stories: int = Field(gt=0)
     height_ft: float = Field(gt=0)
+    #: The ground storey, floor to the floor above, where the product states
+    #: one. Read only by a code that sets a floor under the ground storey
+    #: alone (Tigard TMU, "First story 12 feet (min.)"). ``None`` is "not
+    #: stated", and a screen asking it leaves the check unrun. Adding it
+    #: stated a fact about an unchanged building, so no version moved.
+    ground_story_ft: float | None = Field(default=None, gt=0)
     parking: Parking
     delivery: DeliverySpec
     #: Which plat path this entry is costed for. Defaults to the path the rule
@@ -338,6 +344,15 @@ class Design(BaseModel):
         if not v or not all(c.isalnum() or c in "-_" for c in v):
             raise ValueError(f"design id {v!r} must be alphanumeric with - or _")
         return v
+
+    @model_validator(mode="after")
+    def _ground_story_fits_under_the_roof(self) -> Design:
+        if self.ground_story_ft is not None and self.ground_story_ft > self.height_ft:
+            raise ValueError(
+                f"ground_story_ft {self.ground_story_ft} is taller than the "
+                f"building ({self.height_ft} ft)"
+            )
+        return self
 
     @property
     def key(self) -> str:

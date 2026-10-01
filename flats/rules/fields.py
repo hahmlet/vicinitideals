@@ -104,6 +104,7 @@ _LABELS: dict[str, str] = {
     "max_units": "max. units",
     "min_building_height_ft": "min. height",
     "min_building_height_stories": "min. height (storeys)",
+    "min_ground_story_ft": "min. ground storey height",
     "min_building_separation_ft": "min. building separation",
     "min_density_du_per_acre": "min. density (units/acre)",
     "min_density_trigger_lot_sqft": "lot size that triggers min. density",
@@ -355,6 +356,20 @@ _F: tuple[FieldDef, ...] = (
         "say it; its other mixed-use chapters write \"or\", which the value "
         "model has no form for and which is recorded in the zone note as the "
         "relaxation this encoding does not take.",
+        False,
+    ),
+    FieldDef(
+        "min_ground_story_ft",
+        "length_ft",
+        "MINIMUM height of the ground storey alone, not of the building. "
+        "Tigard's Triangle (TMU) writes \"First story 12 feet (min.)\" in "
+        "Table 18.660.7, beside a whole-building height in storeys, so it is "
+        "neither `min_building_height_ft` nor a storey count: a 26 ft "
+        "two-storey building can clear every building height and still have "
+        "a ground floor too low. Compared against the design's own "
+        "`ground_story_ft`, which is a stated product fact (Steph, "
+        "2026-10-01: the pod's ground floor is 12 ft or more), not a drawn "
+        "one; a design that states none leaves the check unrun.",
         False,
     ),
     FieldDef("max_far", "ratio", "Maximum floor area ratio.", True, "max_far"),
@@ -1067,6 +1082,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # a code that states feet is not incomplete for omitting storeys.
         "min_building_height_ft",
         "min_building_height_stories",
+        # The ground storey's own floor, written by one district in the
+        # corpus (Tigard TMU, Table 18.660.7). The same main-street standard
+        # as the two above, and silent everywhere else.
+        "min_ground_story_ft",
         "setback_street_side_ft",
         # A side setback stated for the side line on an alley, the way the
         # street-side one is stated for the side line on a street: two codes

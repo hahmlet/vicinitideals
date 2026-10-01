@@ -13,15 +13,22 @@ of a quick look, so a later edit has to argue with it.
 - **Nine zones admit it, four refuse.** RES-A to RES-E, MUR, MUC, MU-CBD and
   TMU allow it; COM and MUE allow housing only in mixed use and print
   Rowhouses N; IND and PR prohibit the Residential Use.
-- **Table 18.805.1 is read per rowhouse** (18.40.130.B): its minimum lot is
-  the density ceiling and its MAXIMUM lot the density floor.
-- **MUC owes its lot, yards and height.** Table 18.280.1 has no MUC column
-  and Table 18.805.1's MUC rowhouse cells are blank. Nothing is borrowed.
+- **A rowhouse is a state-law townhouse, each on its own lot** (18.30, by
+  way of ORS 197A.420(1)(h)). Steph, 2026-10-01: "If it's split lots, then
+  that's our answer." Table 18.805.1's Rowhouse rows size the rowhouses' own
+  lots: the minimum is kept on the one lot (18.40.130.B, 18.280.040.B) and on
+  the split path as a ``unit_lots`` variant, and the MAXIMUM lot bounds only
+  the unit lots, so the one lot carries no density floor from it.
+- **MUC's blank cells are no limit** (Steph, 2026-10-01: "Empty means no
+  limit"): Table 18.280.1 has no MUC column and Table 18.805.1's MUC rowhouse
+  cells are blank, so lot, width, yards and height are exempt. Nothing is
+  borrowed from another column.
 - **The sub-area refusals ride on ``inside_mapped_use_area``**, which no map
   held draws: MUR and MUC inside Washington Square, MU-CBD where the subarea
   asks a 15 ft first storey.
-- **TMU's 12 ft first storey is held nowhere** (no field holds a storey);
-  a question for Steph in the handoff.
+- **TMU's 12 ft first storey is held** as ``min_ground_story_ft``, against
+  the pod's stated 12 ft ground storey (Steph, 2026-10-01: "Yes, 12 ft or
+  more").
 """
 
 from __future__ import annotations
@@ -32,6 +39,7 @@ from flats.encode.dispositions import by_state, notes
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer, Status
+from flats.rules.resolver import RuleSet
 
 pytestmark = pytest.mark.unit
 
@@ -42,7 +50,9 @@ REFUSED = ("COM", "MUE", "IND", "PR")
 
 #: Table 18.805.1's Rowhouse rows and Table 18.280.1's columns, per zone:
 #: (min lot per rowhouse, max lot per rowhouse, width, front, street side,
-#: rear, height). ``None`` is a printed "None", held as ``exempt``.
+#: rear, height). ``None`` is a printed "None", held as ``exempt``. The
+#: maximum lot is the printed figure; it bounds each rowhouse's own lot and
+#: no field holds it (the 2026-10-01 ruling).
 RESIDENTIAL = {
     "RES-A": (1500, 3000, 25, 20, 20, 25, 35),
     "RES-B": (1500, 3000, 25, 20, 20, 25, 35),
@@ -122,7 +132,9 @@ def test_the_residential_rowhouse_rows(tigard: Layer, zone: str) -> None:
     else:
         assert held["min_lot_sqft"].per_dwelling == lot
         assert held["max_density_du_per_acre"].sqft_per_unit == lot
-    assert held["min_density_du_per_acre"].sqft_per_unit == most
+    # The maximum lot bounds each rowhouse's own lot, not the one lot.
+    assert most in (3000, 1750, 1250, 1000)
+    assert "min_density_du_per_acre" not in held
     if width is None:
         assert held["min_lot_width_ft"].exempt is True
     else:
@@ -136,6 +148,51 @@ def test_the_residential_rowhouse_rows(tigard: Layer, zone: str) -> None:
     assert held["min_frontage_ft"].value == 15
     assert held["max_impervious_pct"].value == 80
     assert held["min_landscaped_pct"].value == 20
+
+
+def test_a_rowhouse_is_a_townhouse_on_its_own_lot() -> None:
+    """The 2026-10-01 ruling's two sentences. Tigard defines no townhouse or
+    townhome; its Rowhouse takes the state's, and the state's puts each unit
+    on an individual lot or parcel."""
+    rowhouse = _text(f"{TIGARD}/tdc.18.30.definitions.txt#L1032-L1033")
+    assert (
+        "A rowhouse is considered the same as a townhouse within the meaning of state law."
+        in rowhouse
+    )
+    state = _text("or/hb.2138.2025.txt#L57-L59")
+    assert "each dwelling unit is located on an individual lot or parcel" in state
+    lots = _text(f"{TIGARD}/tdc.18.805.lot-standards.txt#L31")
+    assert (
+        "Dimensional standards for lots created or configured for residential" in lots
+    )
+
+
+@pytest.mark.parametrize("zone", ["RES-A", "RES-B", "RES-C", "RES-D"])
+def test_the_minimum_lot_is_each_rowhouses_own_on_the_split_path(
+    tigard: Layer, zone: str
+) -> None:
+    """One lot: the per-rowhouse product (18.40.130.B, 18.280.040.B). Split:
+    the per-rowhouse figure on each unit lot, Durham's pattern, which the
+    screen multiplies by the four lots -- the same parent area both ways."""
+    lot = RESIDENTIAL[zone][0]
+    held = tigard.zones[zone].values["min_lot_sqft"]
+    assert held.value == 4 * lot
+    (split,) = held.variants
+    assert (split.value, split.when) == (lot, ("unit_lots",))
+
+
+def test_the_one_lot_carries_no_density_floor_from_the_maximum_lot(
+    tigard: Layer,
+) -> None:
+    """Steph, 2026-10-01. The maximum lot was a cap of four times itself on
+    the one lot (12,000 sq ft in RES-A); it reaches only the unit lots now,
+    on the one lot and on the split path both."""
+    rules = RuleSet(load_rules())
+    for zone in ("RES-A", "RES-B", "RES-C", "RES-D", "RES-E", "MUR"):
+        assert "min_density_du_per_acre" not in tigard.zones[zone].values, zone
+        for conditions in ((), ("unit_lots",)):
+            got = rules.resolve(TIGARD, zone, conditions, lot={"lot_sqft": 40_000})
+            assert "min_density_du_per_acre" not in got.values, (zone, conditions)
 
 
 def test_the_lot_table_reads_as_printed() -> None:
@@ -167,22 +224,32 @@ def test_mur_holds_the_stricter_of_its_two_printed_columns(tigard: Layer) -> Non
     assert held["setback_street_side_ft"].value == 10
     assert held["max_height_ft"].value == 45
     assert held["min_lot_sqft"].exempt is True
-    assert held["min_density_du_per_acre"].sqft_per_unit == 870
+    assert "min_density_du_per_acre" not in held
     assert held["min_lot_width_ft"].value == 16
 
 
-def test_muc_owes_its_lot_yards_and_height(tigard: Layer) -> None:
-    """Nothing is carried across from another column (Happy Valley MURX)."""
+def test_mucs_blank_cells_are_no_limit(tigard: Layer) -> None:
+    """Steph, 2026-10-01: "Empty means no limit." Exempt, each cite naming
+    the ruling, and nothing carried across from another column (Happy Valley
+    MURX). The frontage is stated for every rowhouse lot and is kept."""
     held = tigard.zones["MUC"].values
     for field in (
         "max_height_ft",
         "min_lot_sqft",
-        "setback_front_ft",
-        "setback_rear_ft",
-        "setback_side_ft",
         "min_lot_width_ft",
+        "setback_front_ft",
+        "setback_street_side_ft",
+        "setback_side_ft",
+        "setback_rear_ft",
     ):
-        assert field not in held, field
+        assert held[field].exempt is True, field
+        assert "Steph's ruling 2026-10-01" in held[field].prov.cite, field
+    assert held["min_frontage_ft"].value == 15
+    header = _text(f"{TIGARD}/tdc.18.280.rowhouses.txt#L74")
+    assert "MUR-2" in header
+    assert "MUC" not in header
+    lot_row = _text(f"{TIGARD}/tdc.18.805.lot-standards.txt#L93-L100")
+    assert lot_row == "Rowhouse 1,500 1,500 1,250 750 None None None"
 
 
 def test_the_sub_area_refusals_wait_on_a_map(tigard: Layer) -> None:
@@ -214,6 +281,8 @@ def test_tmu_is_its_own_chapter(tigard: Layer) -> None:
     assert held["setback_rear_ft"].value == 0
     assert held["max_height_stories"].value == 4
     assert "max_height_ft" not in held
+    assert held["min_ground_story_ft"].value == 12
+    assert "First story 12 feet (min.)" in _text(held["min_ground_story_ft"].prov.quote)
     assert held["parking_min_per_unit"].value == 0
     assert (
         held["parking_stall_width_ft"].value,

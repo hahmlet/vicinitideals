@@ -354,7 +354,11 @@ def test_and_the_corpus_wide_height_gap_is_now_one_zone_wide(rules: RuleSet) -> 
     18.280.1 prints no MUC column, the commercial height table 18.320.4
     reaches only nonresidential and mixed-use development (18.320.020.A-B),
     and Table 18.805.1's MUC rowhouse cells come out of the extraction
-    blank. Owed until the printed table is read by eye."""
+    blank. Owed until the printed table is read by eye.
+
+    2026-10-01, later: one zone wide again. Steph ruled MUC's empty
+    rowhouse boxes "Empty means no limit", so its height is held exempt
+    with a cite naming the ruling."""
     silent = [
         (layer_id, zone)
         for layer_id, layer in sorted(rules.layers.items())
@@ -363,4 +367,4 @@ def test_and_the_corpus_wide_height_gap_is_now_one_zone_wide(rules: RuleSet) -> 
         and got.values["quadplex_allowed"].value
         and "max_height_ft" in got.missing_required
     ]
-    assert silent == [("or/clackamas/wilsonville", "OTR"), ("or/washington/tigard", "MUC")]
+    assert silent == [("or/clackamas/wilsonville", "OTR")]

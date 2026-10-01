@@ -1487,13 +1487,19 @@ the meaning of state law". Four side-by-side units sharing walls on one
 lot are a rowhouse development (18.280), and 18.280.040.A allows "at least
 two dwelling units", at most five a grouping in RES-A to RES-C.
 
-**Lot size and density, read per rowhouse.** 18.40.130.B sets rowhouse
-density from Table 18.805.1's lot sizes, and 18.280.040.B says rowhouse
-development "is not allowed on lots that do not meet the dimensional lot
-standards for the base zone". The table's minimum lot is held as
+**Lot size and density: each rowhouse on its own lot** (Steph's ruling,
+2026-10-01, under Questions). A rowhouse is "the same as a townhouse
+within the meaning of state law", and the state's townhouse is "located on
+an individual lot or parcel", so Table 18.805.1's Rowhouse rows size the
+rowhouses' own lots. The minimum lot is held on the one lot as
 `min_lot_sqft` `per_dwelling` and as the density ceiling
-(`sqft_per_unit`); its MAXIMUM lot is held as the density floor
-(`min_density_du_per_acre` `sqft_per_unit`). A question for Steph.
+(`sqft_per_unit`), because 18.40.130.B sets rowhouse density from the lot
+sizes and 18.280.040.B allows rowhouse development only on lots that
+"meet the dimensional lot standards for the base zone"; on the split path
+it is a `unit_lots` variant at the per-rowhouse figure (Durham's
+pattern), which the screen multiplies by the four lots. The MAXIMUM lot
+bounds each rowhouse's own lot only: the one lot carries no density floor
+from it, and no field holds a maximum lot (Refusals).
 
 Layer-wide values (`defaults`):
 
@@ -1522,7 +1528,7 @@ The zones:
   RES-E). Yards, height, coverage and landscape from Table 18.280.1;
   lot, width and density from Table 18.805.1:
 
-  | Zone | Lot per rowhouse (min / max) | Width | Front / street side / side / rear | Height |
+  | Zone | Rowhouse lot (min / max; the max bounds only each unit lot) | Width | Front / street side / side / rear | Height |
   |---|---|---|---|---|
   | RES-A, RES-B | 1,500 / 3,000 | 25 | 20 / 20 / 5 / 25 | 35 |
   | RES-C | 1,250 / 1,750 | 20 | 15 / 15 / 5 / 15 | 35 |
@@ -1537,16 +1543,21 @@ The zones:
   shared access (18.280.040.D.1.b, held for both one- and two-way),
   entrances facing the street (`axis_required`), and Table 18.410.2's
   90-degree stall (8.5 by 16) and 20 ft aisle.
-- **MUR** admits it (Table 18.120.1 A, Table 18.120.2 Y): no minimum lot,
-  at most 870 sq ft a rowhouse, 16 ft width, and the stricter of Table
-  18.280.1's MUR-1 and MUR-2 columns (front 10, street side 10, rear 15,
-  height 45). Refused inside Washington Square's Apartment Subdistrict
+- **MUR** admits it (Table 18.120.1 A, Table 18.120.2 Y): no minimum lot
+  and no density floor on the lot (the 870 sq ft maximum bounds each
+  rowhouse's own lot), 16 ft width, and the stricter of Table 18.280.1's
+  MUR-1 and MUR-2 columns (front 10, street side 10, rear 15, height 45;
+  Steph, 2026-10-01: keep the stricter). Refused inside Washington Square's Apartment Subdistrict
   (18.670.060.E.2), as a variant on `inside_mapped_use_area`.
-- **MUC** admits it (A and Y, and 18.280.020.A names MUC), but OWES its
-  lot, width, yards and height: Table 18.280.1 has no MUC column and
-  Table 18.805.1's MUC rowhouse cells are blank. Nothing is borrowed from
-  another column. Parking, drive and orientation are held as in the RES
-  zones. Refused inside Washington Square (four storeys and 20 percent
+- **MUC** admits it (A and Y, and 18.280.020.A names MUC). Table 18.280.1
+  has no MUC column and Table 18.805.1's MUC rowhouse cells are blank;
+  Steph, 2026-10-01: "Empty means no limit". So its lot size, lot width,
+  front, street side, side and rear yards and height are held `exempt`,
+  each cite naming the ruling, and nothing is borrowed from another
+  column. Coverage, landscape area and the maximum front setback, from
+  the same missing column, are left absent. The 15 ft rowhouse frontage
+  (18.805.030.C.1) is held. Parking, drive and orientation are held as in
+  the RES zones. Refused inside Washington Square (four storeys and 20 percent
   affordable in the Design Review Subdistrict; mixed use only in the
   Metzger Business Subdistrict), as a variant. Bridgeport Village, zoned
   MUC, has its own residential figures (18.620.040.B) "Except as
@@ -1567,8 +1578,10 @@ The zones:
   building or 35 ft from every street line (the 35 held); rowhouse
   driveways "10 feet or less in width" (held as
   `driveway_approach_max_width_ft`); an entrance for each residence
-  (`entrance_only`). Table 18.660.7's 12 ft first storey is not held
-  (Questions).
+  (`entrance_only`). Table 18.660.7's 12 ft first storey is held as
+  `min_ground_story_ft`, a field added for it, against the pod's
+  `ground_story_ft` of 12 (Steph, 2026-10-01: "Yes, 12 ft or more"); the
+  pod meets it.
 - **COM and MUE** refuse: residential only in a mixed-use development
   (COM) or with employment as a primary use (MUE), and Rowhouses N in
   Table 18.120.2.
@@ -2057,10 +2070,10 @@ None prohibits the pod in SDR. None admits it in a zone the layer refuses.
 
 ### Tigard
 
-Twelve NOT ENCODED comments in `tigard.yaml`, each quoting the code: one
-beside `defaults`, ten between `defaults` and `zones`, one in the TMU
-comment; and one in TMU's `notes` (the storey height again, counted as a
-note).
+Thirteen NOT ENCODED comments in `tigard.yaml`, each quoting the code: one
+beside `defaults`, eleven between `defaults` and `zones`, one in the TMU
+comment. TMU's `notes` no longer refuse anything (the 12 ft first storey
+is held since 2026-10-01).
 
 - **The through lot's front** (18.30, Front lot line): "the property line
   that abuts the street with the lowest classification". No value of
@@ -2095,8 +2108,16 @@ note).
   subdivision and to existing lots that are reconfigured" (18.805.020),
   and 18.280.040.B brings in only the dimensional standards. Found by the
   step-10 prohibition grep and added 2026-10-01.
-- **TMU's first storey** (Table 18.660.7, "First story 12 feet (min.)"):
-  no field holds a storey height (Questions).
+- **The Rowhouse maximum lot as a ceiling on each rowhouse's own lot**
+  (Table 18.805.1, L139-L146). Steph's ruling of 2026-10-01 puts each
+  rowhouse on its own lot, so the maximum bounds the unit lots, not the
+  lot the four stand on; no field holds a maximum lot area, and where the
+  unit lots' lines fall is the plat's choice. Added 2026-10-01.
+- **TMU's storey ceilings** (Table 18.660.7: the first storey at most 25
+  ft, the top storey at most 18): no field holds a storey ceiling. The
+  12 ft first-storey minimum is held (`min_ground_story_ft`). A 26 ft
+  two-storey pod whose ground storey is at least 12 ft has at most 14 ft
+  above it.
 
 The step-10 grep (every stored chapter, for "prohibit", "not allowed",
 "not permitted", "shall not", "may not", "must not", near a housing,
@@ -2109,14 +2130,16 @@ allowed within the tree preservation area", 15 ft beyond the drip line,
 may not be located within the area identified as future street or alley
 alignment", 18.650, L949). Bridgeport Village's "Parking and loading
 areas may not be located between the primary structures and the street"
-(18.620, L243) reaches MUC lots there, which owe their dimensions anyway.
+(18.620, L243) reaches MUC lots there; Bridgeport is not drawn, so it is
+not encoded.
 
 "The code states nothing":
 
 - No parking minimum anywhere on the pod's path (held 0) and no maximum
   for a rowhouse (held `exempt`).
 - No MUC column in Table 18.280.1, and blank MUC rowhouse cells in Table
-  18.805.1 (held as owed, not as "None").
+  18.805.1: held `exempt`, on Steph's ruling of 2026-10-01 that an empty
+  cell means no limit.
 - No coverage, landscape area or density in TMU.
 - No aisle width for TMU (18.410's table does not reach it).
 - No driveway width in MU-CBD (18.280 does not apply there, and Table
@@ -2822,18 +2845,21 @@ Ledgers and readers:
 
 Reading the code:
 
-- **Table 18.805.1 read per rowhouse.** 18.40.130.B makes rowhouse density
-  "determined by the minimum and maximum lot sizes provided in Chapter
-  18.805", and 18.280.040.B forbids rowhouse development on a lot that
-  misses "the dimensional lot standards for the base zone". The draft
-  reads each row per rowhouse on the pod's one lot: RES-A needs 6,000 sq
-  ft and allows at most 12,000. Two other readings exist: the figures
-  are for each rowhouse's own lot when lots are divided (18.805 applies
-  to "new lots ... and ... existing lots that are reconfigured"), and so
-  do not reach one lot at all; or the maximum lot is a cap on the lot,
-  not a density floor. Under the draft a big lot fails in every RES zone
-  (over 12,000 sq ft in RES-A and RES-B, 7,000 in RES-C, 5,000 in RES-D,
-  4,000 in RES-E, 3,480 in MUR). A question for Steph.
+- **Table 18.805.1's maximum lot, ruled split-lot (2026-10-01).** Steph
+  ruled by the definition: a rowhouse is a state-law townhouse, each on
+  its own lot, so the maximum lot bounds only the unit lots and a big lot
+  no longer fails (it did over 12,000 sq ft in RES-A and RES-B, 7,000 in
+  RES-C, 5,000 in RES-D, 4,000 in RES-E and 3,480 in MUR). What the
+  ruling leaves, recorded: Tigard's own text points the other way.
+  18.40.130.B states the minimum density in the same sentence as the
+  maximum ("determined by the minimum and maximum lot sizes"), and
+  18.840.030.B holds a sublot plat's sublots and tracts to be "a single
+  lot" to which "Lot standards such as size" and the "Allowed number of
+  dwelling units" continue to apply, while an 18.30 Sublot "is not
+  considered a lot". Read alone, those keep a floor on the parent lot.
+  The minimum lot is kept on the one lot, where 18.40.130.B and
+  18.280.040.B carry it; if the one-lot pod is not a rowhouse until it is
+  divided, that minimum is the parent's sum of four unit lots either way.
 - **The 15 ft frontage on an existing lot.** 18.805.030.C.1 gives rowhouse
   lots 15 ft; C.2 and C.3 print 20 ft for lots on a cul-de-sac or eyebrow
   and at the end of a private street. The draft holds 15 everywhere, so a
@@ -2842,18 +2868,22 @@ Reading the code:
 - **MUR-1 and MUR-2.** Table 18.280.1 prints two MUR columns; 18.120 and
   18.670 know one MUR zone, and no map held says which lot was which. The
   stricter is held: front 10 (MUR-1 0), street side 10 (5), height 45
-  (75). A question for Steph.
-- **MUC's blank cells** (Documents). Read as owed, not as "None": a blank
-  cell is silence about a figure the column was set up to state, and
-  Steph's rule that silence means none was not stretched to a table cell
-  the city left empty. If it meant "None", MUC would have no lot minimum
-  and no maximum, and still no yards or height (Table 18.280.1 has no
-  column). A question for Steph.
-- **TMU's first storey.** "First story 12 feet (min.) and 25 feet (max.)"
-  (Table 18.660.7). The pod is 26 ft over two storeys, so a 12 ft ground
-  storey is possible (12 + 14), but the catalog spec does not give its
-  storey heights. If it is under 12, every TMU lot is red. A question for
-  Steph.
+  (75). Steph, 2026-10-01: keep the stricter.
+- **MUC's blank cells, ruled no limit (2026-10-01).** Steph: "Empty means
+  no limit." Seven `exempt` values rest on it: lot size and width from
+  Table 18.805.1's blank cells, and the four yards and the height from a
+  Table 18.280.1 that prints no MUC column at all. Exempt is the value
+  that can buy a false GREEN, so each cite names the ruling. The blank
+  cells are known only from the raw HTML; the stored text drops them
+  (Documents), and the exemption ledger files the two lot rows as
+  `stated` because the "None" it reads is the neighbouring columns'.
+- **TMU's first storey, held on Steph's word (2026-10-01).** "First story
+  12 feet (min.) and 25 feet (max.)" (Table 18.660.7). Steph: the pod's
+  ground floor is "12 ft or more". Both catalog pods now state
+  `ground_story_ft: 12`, the least stated, not a drawn figure, and the
+  catalog version did not move (no dimension changed). MU-CBD's 15 ft
+  first storey in Main Street and 99W/Hall still refuses, because 12 "or
+  more" does not reach 15.
 - **TMU's four storeys.** Six storeys, or four on lots Map 18.660.A marks;
   the map is not held, so four is held. The pod is two. Harmless.
 - **TMU's parking minimum of zero** rests on silence: 18.660.070.D.1 gives
@@ -2900,8 +2930,9 @@ Reading the code:
   the footnote file; it changes no figure.
 - **Bridgeport Village** (MUC): 18.620.040.B's figures (no minimum lot
   or setback, 20 ft maximum front, 20 ft minimum height) are "Except as
-  determined in the architectural review process"; not encoded, and MUC
-  owes its dimensions anyway.
+  determined in the architectural review process"; not encoded. Bridgeport
+  is not drawn, and MUC's own blank cells are held as no limit, so a
+  Bridgeport lot is not held to the 20 ft maximum front.
 
 Reading the ledgers:
 
@@ -3025,6 +3056,62 @@ The questions below are kept as the record of what was asked.
   placement, siding materials. The screen has no way to describe the
   building's front. Should those districts screen now, with the design rules
   left for the building design to satisfy, or wait?
+
+### Rulings, 2026-10-01 (Steph)
+
+Four Tigard answers, encoded the same day on `flats/tigard-draft`.
+
+- **The largest lot.** Steph: "Read Tigard's definition of 'townhome'. If
+  it's split lots, then that's our answer." Tigard defines no townhome or
+  townhouse. Its lot table's term is Rowhouse, and 18.30 defines it
+  (`tdc.18.30.definitions.txt` L1032-L1033):
+
+  > "Rowhouse" - A type of attached housing that shares a common sidewall
+  > with one or more dwelling units, but excluding apartments, courtyard
+  > units, and quads. A rowhouse is considered the same as a townhouse
+  > within the meaning of state law.
+
+  The state law is ORS 197A.420(1)(h), as amended by HB 2138 (2025)
+  (`hb.2138.2025.txt` L57-L59, the bill's bracketed deletions left out):
+
+  > "Townhouse" means a dwelling unit constructed in a row of two or more
+  > attached units, where each dwelling unit is located on an individual
+  > lot or parcel and shares at least one common wall with an adjacent
+  > unit.
+
+  OAR 660-046-0020 says the same ("each unit is located on an individual
+  Lot or Parcel", `oar.660-046-0020.txt` L120). So it is split lots, and
+  the answer applies. Table 18.805.1 states its sizes "for lots created or
+  configured for residential development" (18.805.030.A, L31). Encoded:
+  - the one-lot density floor read from the MAXIMUM lot
+    (`min_density_du_per_acre` `sqft_per_unit` 3,000 / 3,000 / 1,750 /
+    1,250 / 1,000 / 870 in RES-A to RES-E and MUR) is removed. A big lot
+    no longer fails;
+  - the minimum lot stays on the one lot (`per_dwelling`, and the density
+    ceiling), where Tigard's own text carries it (18.40.130.B,
+    18.280.040.B), and gains a `unit_lots` variant at the per-rowhouse
+    figure in RES-A to RES-D (Durham's pattern). RES-E and MUR print no
+    minimum;
+  - the maximum lot as a ceiling on each unit lot is declared NOT ENCODED
+    (no field holds a maximum lot area);
+  - the doubt the ruling settles is kept under Doubts: 18.40.130.B and
+    18.840.030.B, read alone, would keep the floor.
+- **The ground floor in the Triangle.** Steph: "Yes, 12 ft or more." The
+  catalog had no floor height, so the smallest field the pattern
+  supports was added: the design states `ground_story_ft` (12 on both
+  pods, cited to Steph in their `assumptions`), the rule field is
+  `min_ground_story_ft` (optional), and the screen and the paper fit
+  compare the two. TMU holds 12; the pod meets it. A design that states
+  no ground storey leaves the check unrun. No other pod dimension was
+  added.
+- **MUR-1 or MUR-2.** Keep the stricter column. No change.
+- **MUC's empty boxes.** Steph: "Empty means no limit." MUC's lot size,
+  lot width, four yards and height are held `exempt`, each cite naming
+  the ruling and quoting the table's header and row lines. The 15 ft
+  rowhouse frontage (18.805.030.C.1), stated for every rowhouse lot and
+  not by column, is held. Nothing else in the code states a MUC limit on
+  the pod's path: Table 18.320.4's heights reach only nonresidential and
+  mixed-use development (18.320.020.A-B).
 
 ### Hillsboro
 
@@ -3246,33 +3333,9 @@ The questions below are kept as the record of what was asked.
 
 ### Tigard
 
-- **The ground floor height in the Triangle.** In the Tigard Triangle,
-  the ground floor of any building must be at least 12 ft tall. Our
-  building is about 26 ft over two floors, so it could meet
-  that, but the catalog does not say how tall each floor is. Is the
-  ground floor 12 ft or more? If it is less, every lot in the Triangle
-  fails.
-- **Is the "largest lot" a real limit?** Tigard's lot table gives each
-  townhome a smallest and a largest lot (in the two biggest residential
-  zones, 1,500 to 3,000 sq ft a home). The draft treats our four homes on
-  one lot as needing at least 6,000 sq ft and allowing at most 12,000, so
-  every bigger lot fails (smaller caps in the denser zones: 7,000, 5,000,
-  4,000 and 3,480 sq ft). The table may instead only apply when a lot is
-  being divided into one lot per home, in which case big lots would pass.
-  Should a big lot be turned away, or is the cap only about dividing land?
-- **Which of two mixed-use residential columns?** The city's townhome
-  table prints two columns for one zone, "MUR-1" and "MUR-2", though the
-  zone map and the rest of the code know only "MUR". The draft uses the
-  stricter of the two (10 ft from the street instead of 0, 45 ft tall
-  instead of 75). Is that right, or does the city treat the whole zone as
-  one of the two?
-- **The commercial mixed-use zone with blank boxes.** In the mixed-use
-  commercial zone (MUC) townhomes are allowed, but the city's lot table
-  leaves the townhome boxes for that zone empty, and its setback table
-  has no column for it. The draft says townhomes are allowed there but
-  cannot screen them, because there are no yard, height or lot numbers
-  to check. Should we ask the city what applies, or treat empty boxes as
-  "no limit"?
+- **Answered 2026-10-01** (Rulings, 2026-10-01, above): the ground floor
+  in the Triangle, the "largest lot", MUR-1 or MUR-2, and MUC's blank
+  boxes.
 - **Areas drawn only on separate maps.** In three mixed-use zones the
   city refuses our building in certain sub-areas (parts of downtown, and
   parts of the Washington Square area), but those sub-areas are drawn
@@ -4276,25 +4339,28 @@ or `flats/encode/` holds a control character or mixed line endings.
   MU-CBD's strictest-subarea figures to each subarea's own. River Terrace
   Boulevard's alignment (18.640) and Bridgeport Village's boundary
   (18.620) are the same kind of work.
-- **`DECLARED_OWING`: MUC**, once the ledger sees the county:
-  `max_height_ft`, `min_lot_sqft`, `setback_front_ft`, `setback_rear_ft`,
-  `setback_side_ft`. Drafted reason: Table 18.280.1 prints no MUC column
-  and Table 18.805.1's MUC rowhouse cells are blank.
-  `test_clackamas_unincorporated_height.py` lists MUC as the second zone
-  in the corpus with no height. TMU holds height in storeys only
+- **No `DECLARED_OWING`.** MUC owed its lot, yards and height until
+  Steph's ruling of 2026-10-01 made its blank cells no limit; they are
+  held `exempt`, and `test_clackamas_unincorporated_height.py` is back to
+  one zone with no height. TMU holds height in storeys only
   (`max_height_stories` 4).
 - **The coverage ledger with Tigard lots**, which `test_unweighed_layers`
   waits on (`OWED_A_COUNTY` now names Tigard).
 - **Fields the screen lacks** (a `flats/rules/` change, not made): a
   parking buffer from an interior lot line (S-3, 5 ft, RES-A to RES-C), a
-  storey height (TMU's 12 ft first storey, MU-CBD's 15 ft), and a
+  storey ceiling (TMU's 25 ft first and 18 ft top storey), a maximum lot
+  area (Table 18.805.1's Rowhouse maximum, on each unit lot), and a
   maximum drive width (18.280's 24 ft; TMU's 10 ft is held on the
-  approach).
+  approach). The ground storey's minimum is held since 2026-10-01
+  (`min_ground_story_ft`); MU-CBD's 15 ft still rides on the use.
 - **Overlay and site data**: sensitive lands (18.510, fetched to scratch,
   not stored), TMU's district trees, Downtown's future street
   alignments, vision clearance triangles.
-- **Steph's answers** to the Tigard questions, then one batch of edits
-  and one ledger regeneration.
+- **Steph's answers** to the Tigard questions still open (the sub-area
+  maps, TMU's 10 ft driveway), then one batch of edits and one ledger
+  regeneration. Four were answered and encoded 2026-10-01; the screened
+  parking edge was ruled the same day and is being built on the
+  Cornelius branch.
 - **The re-screen and promotion.**
 
 ## Reader changes (before and after)

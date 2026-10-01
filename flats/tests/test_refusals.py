@@ -345,7 +345,15 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 135, "comments": 262, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 263, "tests": 18}
+# 135 -> 134 notes and 262 -> 263 comments on 2026-10-01, later: Tigard, on
+# Steph's rulings that day. The note was TMU's 12 ft first storey, now held
+# as min_ground_story_ft against the pod's stated ground storey ("Yes, 12 ft
+# or more"); the storey comment stays, for the first storey's 25 ft and the
+# top storey's 18 ft maxima. The new comment is Table 18.805.1's Rowhouse
+# maximum lot as a ceiling on each rowhouse's own lot: a rowhouse is a
+# state-law townhouse on its own lot ("If it's split lots, then that's our
+# answer"), and no field holds a maximum lot area.
 # 134 -> 135 notes and 250 -> 262 comments on 2026-10-01: Tigard, a draft
 # from a cloud session. The note is TMU's first story of at least 12 ft
 # (18.660.080.B), a question for Steph. The twelve comments are the layer's

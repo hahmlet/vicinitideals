@@ -144,19 +144,27 @@ class PaperFit:
 
 
 def _height_ok(
-    design, ceiling: float | None, floor: float | None, storeys: float | None
+    design,
+    ceiling: float | None,
+    floor: float | None,
+    storeys: float | None,
+    ground: float | None = None,
 ) -> bool | None:
     """Whether the design clears every height standard the zone states.
 
-    ``None`` where it states none of the three, which is not the same as
+    ``None`` where it states none of the four, which is not the same as
     passing: a zone with no height on file has not been asked the question.
+    The ground storey's floor is cleared only by a design that states its
+    ground storey; one that states none has not met it.
     """
+    stated = getattr(design, "ground_story_ft", None)
     bounds = [
         ceiling is None or design.height_ft <= ceiling,
         floor is None or design.height_ft >= floor,
         storeys is None or float(design.stories) >= storeys,
+        ground is None or (stated is not None and stated >= ground),
     ]
-    if ceiling is None and floor is None and storeys is None:
+    if ceiling is None and floor is None and storeys is None and ground is None:
         return None
     return all(bounds)
 
@@ -1027,6 +1035,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     height = _number(rules, "max_height_ft")
     min_height = _number(rules, "min_building_height_ft")
     min_stories = _number(rules, "min_building_height_stories")
+    min_ground = _number(rules, "min_ground_story_ft")
     # A code that makes the building face the street has taken one of the
     # two orientations away, and the cheaper lot may have been that one.
     axis = rules.get("orientation_constraint") == "axis_required"
@@ -1067,6 +1076,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             ("max_height_ft", height),
             ("min_building_height_ft", min_height),
             ("min_building_height_stories", min_stories),
+            ("min_ground_story_ft", min_ground),
         )
         if got is not None
     ]
@@ -1125,7 +1135,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             width_binding=width_binding if needed_width is not None else "",
             min_area_sqft=area,
             binding=binding,
-            height_ok=_height_ok(design, height, min_height, min_stories),
+            height_ok=_height_ok(design, height, min_height, min_stories, min_ground),
             orientation=orientation.value,
             plat=design.plat.value,
             unknown=unknown,

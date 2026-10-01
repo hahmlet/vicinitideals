@@ -12,6 +12,10 @@ footprint: {width_ft: 80, depth_ft: 25}
 units: 4
 stories: 2
 height_ft: 26
+# Steph, 2026-10-01, asked whether the ground floor is at least 12 ft
+# (Tigard TMU's first-storey minimum): "Yes, 12 ft or more." The least
+# stated, not a drawn figure.
+ground_story_ft: 12
 parking:
   # The county map's bands: floor charged, target sells, preferred is where
   # the seat count stops. See pod56x36.yaml.
@@ -26,5 +30,7 @@ notes: >-
 assumptions:
   - "height_ft 26: two storeys at typical townhome floor-to-floor. Not from a
      drawing set — confirm before any height-binding result is trusted."
+  - "ground_story_ft 12: the ground storey, floor to the floor above, is 12 ft
+     or more (Steph, 2026-10-01). The least stated, not from a drawing set."
   - "Delivery method is the product intent (factory-built); module dimensions
      and crane needs are unspecified until the set-access stage (Phase 4)."

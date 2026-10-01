@@ -317,3 +317,52 @@ def test_a_zone_holding_a_floor_has_it_screened_rather_than_skipped() -> None:
         if field not in CHECK_FIELD.values()
     ]
     assert skipped == []
+
+
+# --- the ground storey's own floor ------------------------------------
+#
+# 2026-10-01: Tigard TMU's Table 18.660.7, "First story 12 feet (min.)".
+# A floor under one storey, not under the building, so it is compared with
+# what the design states its ground storey to be. Steph, the same day, on
+# the pod: "Yes, 12 ft or more." Both catalog pods state 12.
+
+
+def test_the_catalog_pods_state_a_twelve_foot_ground_storey() -> None:
+    for design in load_catalog().active():
+        assert design.ground_story_ft == 12, design.id
+        assert any("Steph, 2026-10-01" in a for a in design.assumptions), design.id
+
+
+def test_the_pod_meets_a_twelve_foot_first_storey() -> None:
+    result = run(rules(min_ground_story_ft=12))
+
+    assert check(result, "min_ground_story_ft").verdict is Verdict.passes
+    assert result.triage is Triage.green
+
+
+def test_a_first_storey_floor_above_the_pods_is_a_miss() -> None:
+    """MU-CBD's 15 ft first storey in two downtown subareas is the shape."""
+    result = run(rules(min_ground_story_ft=15))
+
+    assert check(result, "min_ground_story_ft").verdict is not Verdict.passes
+    assert result.triage is not Triage.green
+
+
+def test_a_design_that_states_no_ground_storey_has_not_answered() -> None:
+    """Unrun rather than passed: nothing stated is not twelve feet."""
+    silent = DESIGN.model_copy(update={"ground_story_ft": None})
+    result = run(rules(min_ground_story_ft=12), design=silent)
+
+    assert check(result, "min_ground_story_ft") is None
+    assert "min_ground_story_ft" in result.unchecked
+    assert _height_ok(silent, None, None, None, 12.0) is False
+
+
+def test_the_paper_answer_reads_the_ground_storey() -> None:
+    assert _height_ok(DESIGN, None, None, None, 12.0) is True
+    assert _height_ok(DESIGN, None, None, None, 15.0) is False
+
+
+def test_the_ground_storey_floor_is_optional_and_screened() -> None:
+    assert "min_ground_story_ft" in OPTIONAL_FIELDS
+    assert "min_ground_story_ft" in CHECK_FIELD.values()

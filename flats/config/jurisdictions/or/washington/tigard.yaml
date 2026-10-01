@@ -98,7 +98,10 @@ definitions:
   #
   # THE NOUN. "Rowhouse" - "A type of attached housing that shares a common
   # sidewall with one or more dwelling units, but excluding apartments,
-  # courtyard units, and quads" (L1032-L1033). A "Quad" is two units on a
+  # courtyard units, and quads. A rowhouse is considered the same as a
+  # townhouse within the meaning of state law" (L1032-L1033), and state law
+  # puts each townhouse "on an individual lot or parcel" (ORS
+  # 197A.420(1)(h)): the ruling above `zones:`. A "Quad" is two units on a
   # first story over two on a second (L1028-L1029), so the pod, four units
   # side by side, is a rowhouse development.
   #
@@ -256,6 +259,40 @@ defaults:
 # standards for the base zone" (tdc.18.280.rowhouses.txt L67), Table
 # 18.805.1. So it does not reach the pod on an existing lot, and no field
 # holds a shape test. It would reach a lot the pod needs created.
+#
+# THE LARGEST LOT, ruled 2026-10-01 (Steph: "Read Tigard's definition of
+# 'townhome'. If it's split lots, then that's our answer."). Tigard defines
+# no townhouse or townhome. Its Rowhouse is "considered the same as a
+# townhouse within the meaning of state law" (18.30,
+# tdc.18.30.definitions.txt L1032-L1033), and state law's Townhouse is a
+# unit "located on an individual lot or parcel" (ORS 197A.420(1)(h),
+# hb.2138.2025.txt L57-L59). Split lots. Table 18.805.1 states its
+# standards "for lots created or configured for residential development"
+# (18.805.030.A, tdc.18.805.lot-standards.txt L31), so its Rowhouse rows
+# are the sizes of the rowhouses' own lots, and the MAXIMUM lot (3,000 /
+# 3,000 / 1,750 / 1,250 / 1,000 / 870 sq ft, L139-L146) bounds each of
+# those, not the lot four rowhouses stand on. The one-lot density floor
+# 18.40.130.B would read from it is not held.
+#
+# The MINIMUM lot is kept on the one lot because Tigard's own text carries
+# it there: 18.40.130.B makes the rowhouse maximum density "determined by
+# the minimum and maximum lot sizes" (tdc.18.40.measurements.txt L300), and
+# 18.280.040.B allows rowhouse development only on lots that "meet the
+# dimensional lot standards for the base zone" (tdc.18.280.rowhouses.txt
+# L67). On the split path it is the `unit_lots` variant: each rowhouse's own
+# lot, four of them side by side (Durham's and Hillsboro's pattern).
+#
+# NOT ENCODED: the Rowhouse maximum lot as a ceiling on each rowhouse's own
+# lot (Table 18.805.1, L139-L146). No field holds a maximum lot area, and
+# where the unit lots' lines fall is the plat's choice, not the lot's.
+#
+# A doubt the ruling settles, recorded: 18.40.130.B states the minimum
+# density in the same sentence as the maximum, and 18.840.030.B holds a
+# sublot plat's sublots and tracts to be "a single lot" to which "Lot
+# standards such as size" and the "Allowed number of dwelling units"
+# continue to apply (tdc.18.840.sublot-plats.txt L77-L89), and an 18.30
+# Sublot "is not considered a lot" (L1308-L1309). Read alone, Tigard's own
+# text would keep the floor on the parent lot.
 zones:
   RES-A:
     cite_default:
@@ -270,14 +307,18 @@ zones:
       per_dwelling: 1500
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,500 sq ft in the RES-A column, applied per rowhouse through 18.40.130.B and 18.280.040.B
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,500 sq ft in the RES-A column, for each lot created for a rowhouse (18.805.030.A); a rowhouse is a state-law townhouse, each unit on its own lot (18.30, ORS 197A.420(1)(h))
+          quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94"
     max_density_du_per_acre:
       sqft_per_unit: 1500
       cite: Tigard CDC 18.40.130.B, maximum density for rowhouses determined by the 18.805 minimum lot size (1,500 sq ft per rowhouse in RES-A)
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94"
-    min_density_du_per_acre:
-      sqft_per_unit: 3000
-      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (3,000 sq ft per rowhouse in RES-A)
-      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L140"
+    # No density floor on the lot. Table 18.805.1's Rowhouse maximum lot
+    # (3,000 sq ft in RES-A) bounds each rowhouse's own lot, not the lot
+    # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 25
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 25 ft in the RES-A column
@@ -361,8 +402,9 @@ zones:
       cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
       quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
     notes: >-
-      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
-      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density ceiling
+      from Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B, the maximum
+      lot bounding only each rowhouse's own lot (ruled 2026-10-01); yards, height,
       coverage and landscape from Table 18.280.1's RES-A and RES-B column.
   RES-B:
     cite_default:
@@ -377,14 +419,18 @@ zones:
       per_dwelling: 1500
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,500 sq ft in the RES-B column, applied per rowhouse through 18.40.130.B and 18.280.040.B
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,500 sq ft in the RES-B column, for each lot created for a rowhouse (18.805.030.A); a rowhouse is a state-law townhouse, each unit on its own lot (18.30, ORS 197A.420(1)(h))
+          quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95"
     max_density_du_per_acre:
       sqft_per_unit: 1500
       cite: Tigard CDC 18.40.130.B, maximum density for rowhouses determined by the 18.805 minimum lot size (1,500 sq ft per rowhouse in RES-B)
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95"
-    min_density_du_per_acre:
-      sqft_per_unit: 3000
-      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (3,000 sq ft per rowhouse in RES-B)
-      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L141"
+    # No density floor on the lot. Table 18.805.1's Rowhouse maximum lot
+    # (3,000 sq ft in RES-B) bounds each rowhouse's own lot, not the lot
+    # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 25
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 25 ft in the RES-B column
@@ -468,8 +514,9 @@ zones:
       cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
       quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
     notes: >-
-      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
-      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density ceiling
+      from Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B, the maximum
+      lot bounding only each rowhouse's own lot (ruled 2026-10-01); yards, height,
       coverage and landscape from Table 18.280.1's RES-A and RES-B column.
   RES-C:
     cite_default:
@@ -484,14 +531,18 @@ zones:
       per_dwelling: 1250
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,250 sq ft in the RES-C column, applied per rowhouse through 18.40.130.B and 18.280.040.B
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96"
+      variants:
+        - value: 1250
+          when: [unit_lots]
+          cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,250 sq ft in the RES-C column, for each lot created for a rowhouse (18.805.030.A); a rowhouse is a state-law townhouse, each unit on its own lot (18.30, ORS 197A.420(1)(h))
+          quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96"
     max_density_du_per_acre:
       sqft_per_unit: 1250
       cite: Tigard CDC 18.40.130.B, maximum density for rowhouses determined by the 18.805 minimum lot size (1,250 sq ft per rowhouse in RES-C)
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96"
-    min_density_du_per_acre:
-      sqft_per_unit: 1750
-      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (1,750 sq ft per rowhouse in RES-C)
-      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L142"
+    # No density floor on the lot. Table 18.805.1's Rowhouse maximum lot
+    # (1,750 sq ft in RES-C) bounds each rowhouse's own lot, not the lot
+    # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 20
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 20 ft in the RES-C column
@@ -575,8 +626,9 @@ zones:
       cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
       quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
     notes: >-
-      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
-      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density ceiling
+      from Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B, the maximum
+      lot bounding only each rowhouse's own lot (ruled 2026-10-01); yards, height,
       coverage and landscape from Table 18.280.1's RES-C and RES-D column.
   RES-D:
     cite_default:
@@ -591,14 +643,18 @@ zones:
       per_dwelling: 750
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 750 sq ft in the RES-D column, applied per rowhouse through 18.40.130.B and 18.280.040.B
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97"
+      variants:
+        - value: 750
+          when: [unit_lots]
+          cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 750 sq ft in the RES-D column, for each lot created for a rowhouse (18.805.030.A); a rowhouse is a state-law townhouse, each unit on its own lot (18.30, ORS 197A.420(1)(h))
+          quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97"
     max_density_du_per_acre:
       sqft_per_unit: 750
       cite: Tigard CDC 18.40.130.B, maximum density for rowhouses determined by the 18.805 minimum lot size (750 sq ft per rowhouse in RES-D)
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97"
-    min_density_du_per_acre:
-      sqft_per_unit: 1250
-      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (1,250 sq ft per rowhouse in RES-D)
-      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L143"
+    # No density floor on the lot. Table 18.805.1's Rowhouse maximum lot
+    # (1,250 sq ft in RES-D) bounds each rowhouse's own lot, not the lot
+    # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       exempt: true
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width in the RES-D column (None)
@@ -682,8 +738,9 @@ zones:
       cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
       quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
     notes: >-
-      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
-      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density ceiling
+      from Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B, the maximum
+      lot bounding only each rowhouse's own lot (ruled 2026-10-01); yards, height,
       coverage and landscape from Table 18.280.1's RES-C and RES-D column.
   RES-E:
     cite_default:
@@ -702,10 +759,9 @@ zones:
       exempt: true
       cite: Tigard CDC 18.40.130.B (rowhouse density from the 18.805 lot sizes) and Table 18.805.1, Rowhouse minimum lot size in the RES-E column (None)
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98"
-    min_density_du_per_acre:
-      sqft_per_unit: 1000
-      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (1,000 sq ft per rowhouse in RES-E)
-      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L144"
+    # No density floor on the lot. Table 18.805.1's Rowhouse maximum lot
+    # (1,000 sq ft in RES-E) bounds each rowhouse's own lot, not the lot
+    # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 20
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 20 ft in the RES-E column
@@ -789,8 +845,9 @@ zones:
       cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
       quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
     notes: >-
-      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
-      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density ceiling
+      from Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B, the maximum
+      lot bounding only each rowhouse's own lot (ruled 2026-10-01); yards, height,
       coverage and landscape from Table 18.280.1's RES-E column.
   # ------------------------------------------------------------------
   # MUR, Mixed-Use Residential. Residential Use A (Table 18.120.1) and
@@ -834,10 +891,9 @@ zones:
       exempt: true
       cite: Tigard CDC 18.40.130.B (rowhouse density from the 18.805 lot sizes) and Table 18.805.1, Rowhouse minimum lot size in the MUR column (None)
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100"
-    min_density_du_per_acre:
-      sqft_per_unit: 870
-      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (870 sq ft per rowhouse in MUR)
-      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L146"
+    # No density floor on the lot. Table 18.805.1's Rowhouse maximum lot
+    # (870 sq ft in MUR) bounds each rowhouse's own lot, not the lot
+    # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 16
       cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 16 ft in the MUR column
@@ -921,9 +977,9 @@ zones:
       cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
       quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
     notes: >-
-      DRAFT. Rowhouses Y; no minimum lot, at most 870 sq ft per rowhouse (four rowhouses on at
-      most 3,480 sq ft), 16 ft width; the stricter of Table 18.280.1's MUR-1 and MUR-2
-      columns. Refused inside the WSRC Apartment Subdistrict, which no map held draws.
+      DRAFT. Rowhouses Y; no minimum lot and no density floor on the lot (the 870 sq ft
+      maximum bounds each rowhouse's own lot, ruled 2026-10-01), 16 ft width; the stricter of
+      Table 18.280.1's MUR-1 and MUR-2 columns. Refused inside the WSRC Apartment Subdistrict, which no map held draws.
   # ------------------------------------------------------------------
   # MUC, Mixed-Use Commercial. Residential Use A (Table 18.120.1),
   # Rowhouses Y (Table 18.120.2), and 18.280 "appl[ies] to rowhouse
@@ -931,9 +987,13 @@ zones:
   # 18.280.1 has no MUC column (RES-A and RES-B, RES-C and RES-D, RES-E,
   # MUR-1, MUR-2), and Table 18.805.1's MUC column is blank on the
   # Rowhouse rows (the HTML has the cell, empty; the stored text drops
-  # empty cells -- a reader doubt). So MUC OWES max_height_ft,
-  # min_lot_sqft, setback_front_ft, setback_rear_ft and setback_side_ft.
-  # Nothing from another column is carried across (Happy Valley MURX).
+  # empty cells -- a reader doubt). Steph, 2026-10-01: "Empty means no
+  # limit." So MUC's lot size, lot width, yards and height are held exempt,
+  # each cite naming the ruling; nothing is carried across from another
+  # column (Happy Valley MURX). Coverage, landscape area and the maximum
+  # front setback come from the same missing column and are left absent,
+  # which reads the same. The 15 ft rowhouse frontage (18.805.030.C.1) is
+  # stated for every rowhouse lot, not by column, and is held.
   # 18.805.040's "no minimum lot size ... for nonresidential or mixed-use
   # development" is not the pod's path. Table 18.320.1 is for
   # nonresidential and mixed-use development (18.320.020.A-B).
@@ -965,6 +1025,38 @@ zones:
           when: [inside_mapped_use_area]
           cite: Tigard CDC 18.670.060.E.1, rowhouses in WSRC MUC only in the Design Review Subdistrict (four storeys minimum, 18.670.090.B.4); only mixed use in the Metzger Business Subdistrict
           quote: "or/washington/tigard/tdc.18.670.wsrc.txt#L453-L454,L461,L471-L483,L773-L777"
+    min_lot_sqft:
+      exempt: true
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size, the MUC cell blank (seven figures under eight columns); Steph's ruling 2026-10-01 that an empty cell means no limit
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93-L100"
+    min_lot_width_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width, the MUC cell blank (seven figures under eight columns); Steph's ruling 2026-10-01 that an empty cell means no limit
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185-L192"
+    min_frontage_ft:
+      value: 15
+      cite: Tigard CDC 18.805.030.C.1, rowhouse lots have a minimum of 15 feet of frontage on a public or private right-of-way
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209"
+    setback_front_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.280.1, minimum front setback, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L76"
+    setback_street_side_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.280.1, minimum street side setback, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L77"
+    setback_side_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.280.1, minimum side setback, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L78"
+    setback_rear_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.280.1, minimum rear setback, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L79"
+    max_height_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.280.1, maximum height, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC); Table 18.320.4 reaches only nonresidential and mixed-use development (18.320.020.A-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L74,L83"
     parking_street_setback_ft:
       value: 20
       cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
@@ -998,9 +1090,10 @@ zones:
       cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
       quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
     notes: >-
-      DRAFT. Rowhouses Y, but Table 18.280.1 prints no MUC column and Table 18.805.1's MUC
-      rowhouse cells are blank: lot, yards and height OWED. Refused inside WSRC (four storeys)
-      and the Metzger Business Subdistrict, which no map held draws.
+      DRAFT. Rowhouses Y. Table 18.280.1 prints no MUC column and Table 18.805.1's MUC
+      rowhouse cells are blank, and an empty cell means no limit (Steph, 2026-10-01): lot,
+      width, yards and height exempt; 15 ft frontage. Refused inside WSRC (four storeys) and
+      the Metzger Business Subdistrict, which no map held draws.
   # ------------------------------------------------------------------
   # MU-CBD, Mixed-Use Central Business District, governed by 18.650 (18.280
   # "does not apply", 18.280.020.C). Residential Use A/R (Table 18.650.1;
@@ -1017,9 +1110,10 @@ zones:
   # refuse the pod is "First story minimum 15 ft." in MS and 99H: a
   # fifteen-foot ground floor inside a 26-foot two-storey building leaves
   # eleven feet for the floor above and the roof (the ZDO 1005.09 reading).
-  # No field holds a storey height, so it rides on the use: false where
-  # the subarea is MS or 99H (`inside_mapped_use_area`, unknown). The 20 ft
-  # height minimum is held; the pod clears it.
+  # The pod states its ground storey as 12 ft "or more" (Steph,
+  # 2026-10-01), which does not reach 15, so it rides on the use: false
+  # where the subarea is MS or 99H (`inside_mapped_use_area`, unknown). The
+  # 20 ft height minimum is held; the pod clears it.
   #
   # Min density 25 is MS, 99H and SC's (FB 15), "residential-only
   # development" (note [4]): four units on at most 6,969 sq ft. Max density
@@ -1037,7 +1131,7 @@ zones:
       variants:
         - value: false
           when: [inside_mapped_use_area]
-          cite: Tigard CDC Table 18.650.3, first story minimum 15 ft in the Main Street and 99W/Hall subareas (Map 18.650.A); a 26 ft two-storey pod does not have one
+          cite: Tigard CDC Table 18.650.3, first story minimum 15 ft in the Main Street and 99W/Hall subareas (Map 18.650.A); the pod states a 12 ft ground storey, not 15
           quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L471"
     min_lot_sqft:
       exempt: true
@@ -1136,12 +1230,16 @@ zones:
   # clear standards (18.660.040).
   #
   # THE FIRST STOREY. Table 18.660.7: "First story 12 feet (min.) and 25
-  # feet (max.)", top story 18 max (L945-L949). Not a whole-building
-  # minimum, so not min_building_height_ft. A 26 ft two-storey pod can
-  # have a 12 ft ground storey (12 + 14), but whether the catalog pod does
-  # is not in its spec ("Not from a drawing set"). NOT ENCODED: no field
-  # holds a storey height. A doubt and a question for Steph; if the pod's
-  # ground storey is under 12 ft, every TMU lot is red.
+  # feet (max.)", middle stories 14 max, top story 18 max (L945-L949). Not
+  # a whole-building minimum, so not min_building_height_ft: held as
+  # min_ground_story_ft, against the pod's ground_story_ft. Steph,
+  # 2026-10-01, asked whether the pod's ground floor is at least 12 ft:
+  # "Yes, 12 ft or more." The catalog pods state 12, so they meet it.
+  #
+  # NOT ENCODED: the first storey's 25 ft maximum and the top storey's
+  # 18 ft maximum. No field holds a storey ceiling, and the pod states no
+  # top-storey figure. A 26 ft two-storey building whose ground storey is
+  # at least 12 ft has at most 14 ft above it.
   #
   # Height is held in storeys: six, or four on lots Map 18.660.A marks
   # (L943). The map is not held, so 4. The pod is 2. No coverage, no
@@ -1195,6 +1293,10 @@ zones:
       value: 4
       cite: Tigard CDC 18.660.080.B, maximum six stories, or four on properties shown on Map 18.660.A (the map is not held; four held)
       quote: "or/washington/tigard/tdc.18.660.triangle.txt#L943"
+    min_ground_story_ft:
+      value: 12
+      cite: Tigard CDC 18.660.080.B and Table 18.660.7, first story 12 feet (min.)
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L943,L945-L947"
     parking_min_per_unit:
       value: 0
       cite: Tigard CDC 18.660.070.D.1, the maximum quantity standards for off-street parking are in Table 18.410.3 (no minimum stated)
@@ -1222,8 +1324,8 @@ zones:
     notes: >-
       DRAFT. Residential Use A under a stand-alone chapter. No lot minimum; 1 ft to the
       street, 12 ft maximum, nothing on interior lines; four storeys; 7.5 by 17.5 spaces,
-      parking 35 ft from streets; rowhouse driveways at most 10 ft wide. The 12 ft first
-      storey is not encoded (a question for Steph).
+      parking 35 ft from streets; rowhouse driveways at most 10 ft wide; a first storey of
+      at least 12 ft, which the pod meets (Steph, 2026-10-01).
   # ------------------------------------------------------------------
   # THE REFUSALS. COM and MUE: Residential Use R, limited to mixed-use
   # development (18.120.020, 18.120.030.D.1 and F.1), and Rowhouses N in

@@ -173,6 +173,7 @@ CHECK_FIELD: dict[str, str] = {
     "stories": "max_height_stories",
     "min_height_ft": "min_building_height_ft",
     "min_stories": "min_building_height_stories",
+    "min_ground_story_ft": "min_ground_story_ft",
     "max_units": "max_units",
     "min_units": "min_units_at_trigger",
     "density_du_per_acre": "max_density_du_per_acre",
@@ -651,6 +652,20 @@ def _checks(
         rules.get("min_building_height_stories"),
         is_maximum=False,
     )
+    # The ground storey on its own (Tigard TMU, "First story 12 feet
+    # (min.)"). Measured against what the design states its ground floor to
+    # be; a design that states nothing has not answered, which is unchecked
+    # rather than a pass.
+    ground_floor = rules.get("min_ground_story_ft")
+    if ground_floor is not None and design.ground_story_ft is None:
+        unchecked.append("min_ground_story_ft")
+    else:
+        check(
+            "min_ground_story_ft",
+            float(design.ground_story_ft or 0.0),
+            ground_floor,
+            is_maximum=False,
+        )
     check("max_units", float(design.units), rules.get("max_units"), is_maximum=True)
     # A ceiling on units per acre, measured on the lot in front of us. An acre
     # is 43,560 sq ft, and the arithmetic is done here rather than in the rule

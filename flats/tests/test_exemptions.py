@@ -129,7 +129,16 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 390, "numeric": 64, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 392, "numeric": 69, "marker": 0, "dash": 2, "silent": 2}
+# 390 -> 392 stated and 64 -> 69 numeric on 2026-10-01, all Tigard MUC, on
+# Steph's ruling that day that MUC's empty rowhouse boxes mean no limit
+# ("Empty means no limit"). The two `stated` are Table 18.805.1's lot size
+# and width, where the MUC cell is blank: the "None" the ledger reads is the
+# NEIGHBOURING columns' (MU-CBD, MUR), so a reviewer reads the cite, which
+# names the ruling. The five `numeric` are Table 18.280.1's front, street
+# side, side and rear yards and height, a table that prints no MUC column
+# at all: exemption by omission, quoted with 18.280.020.A, which applies the
+# chapter in MUC.
 # 381 -> 390 stated and 63 -> 64 numeric on 2026-10-01: Tigard, a draft from
 # a cloud session. Nine "None" cells: Table 18.805.1's rowhouse minimum lot
 # size and maximum density in RES-E and MUR and minimum width in RES-D,
