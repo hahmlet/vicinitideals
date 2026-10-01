@@ -941,4 +941,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    car, turning radii, inside-corner offset, end-stall width, dead-end
    extension, driveway spacing) from official/industry standards in a cited
    registry (research running); a review queue like the page check; zero
-   false fits before any promotion. Awaiting Steph's go.
+   false fits before any promotion. RESTRICTIONS ARE HARD LIMITS (Steph):
+   moving the building never licenses a drive or court the code forbids
+   (side-street-only entrance, front/side parking bans, frontage caps). GAP
+   that matters now:  corner lots (Clackamas, Milwaukie,
+   Oregon City, West Linn, Wilsonville, Fairview) -- no street's functional
+   class is measured (6(c)), so today's lane may sit on the busier street;
+   measure it per edge from RLIS street TYPE in s4 and re-check today's
+   greens there. Awaiting Steph's go.
