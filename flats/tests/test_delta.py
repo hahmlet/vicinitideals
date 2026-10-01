@@ -368,3 +368,11 @@ def test_a_county_the_old_copy_never_held_is_coverage_arriving_not_change(tmp_pa
     assert "washington" not in summary["crosscheck"]["counties"], "a county the old copy never held is not graded"
     assert summary["crosscheck"]["agrees"] is True
     assert "first covered, left out of the delta: washington" in said
+
+
+def test_two_copies_of_one_release_report_no_change_without_an_empty_table(tmp_path: Path) -> None:
+    before, _ = _block(tmp_path)
+    summary = run(before, before, tmp_path / "out", log=lambda _s: None)
+    text = (tmp_path / "out" / "report.md").read_text(encoding="utf-8")
+    assert summary["rows"] == 0
+    assert "No lot changed." in text and "| kind |" not in text

@@ -628,9 +628,14 @@ def report(
         "",
         "## What happened, by kind",
         "",
-        "| kind | " + " | ".join(sorted(by_county)) + " | total |",
-        "|---|" + "---|" * (len(by_county) + 1),
     ]
+    if not kinds:
+        lines.append("No lot changed.")
+    else:
+        lines += [
+            "| kind | " + " | ".join(sorted(by_county)) + " | total |",
+            "|---|" + "---|" * (len(by_county) + 1),
+        ]
     for kind in KINDS:
         if kind not in kinds:
             continue
