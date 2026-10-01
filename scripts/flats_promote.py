@@ -27,12 +27,15 @@ Usage (inside the api container):
     python scripts/flats_promote.py rollback --by "Steph" --reason "..." [--dry-run]
     python scripts/flats_promote.py rollback --run 12 --by "Steph" --reason "..." [--dry-run]
     python scripts/flats_promote.py prune [--keep 1] [--dry-run]
+    python scripts/flats_promote.py prune-runs [--keep 3] [--dry-run]
 
 ``drift`` stores its report on the candidate's snapshot (``report.drift``)
 and prints it; ``promote`` refuses a standing gate unless ``--override``
 says why; ``rollback`` puts the previous copy back in use; ``prune`` drops
 the lot rows of retired copies older than the ``--keep`` most recent, so the
-database holds the copy in use, the one before it, and any candidates.
+database holds the copy in use, the one before it, and any candidates;
+``prune-runs`` drops the results of every complete run but the ``--keep``
+newest (Steph, 2026-10-01: keep the last 3) and retires them.
 
 A re-screen of the copy in use (the rules or the screen changed, the ground
 did not) is a candidate RUN on the current copy, not a candidate copy:
@@ -68,6 +71,7 @@ from app.services.flats_refresh import (  # noqa: E402
     promote,
     promote_run,
     prune,
+    prune_runs,
     rollback,
     rollback_run,
 )
@@ -265,6 +269,22 @@ async def _prune(session: AsyncSession, args: argparse.Namespace) -> int:
     return 0
 
 
+async def _prune_runs(session: AsyncSession, args: argparse.Namespace) -> int:
+    pruned = await prune_runs(session, keep=args.keep)
+    if not pruned:
+        print("nothing to prune")
+    for row in pruned:
+        print(f"run {row['run_id']} (snapshot {row['snapshot_id']}): {row['results']:,} results dropped, retired")
+    if args.dry_run:
+        await session.rollback()
+        print("dry run, rolled back")
+    else:
+        await session.commit()
+        if pruned:
+            print("run VACUUM (FULL, ANALYZE) flats.lot_results; to give the space back")
+    return 0
+
+
 async def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--db-url", default=settings.database_url)
@@ -297,6 +317,10 @@ async def main(argv: list[str] | None = None) -> int:
     pn.add_argument("--keep", type=int, default=1, help="retired copies to keep whole (default 1: the one before the copy in use)")
     pn.add_argument("--dry-run", action="store_true")
 
+    pr_runs = sub.add_parser("prune-runs", help="drop the results of every complete run but the newest --keep")
+    pr_runs.add_argument("--keep", type=int, default=3, help="complete runs to keep whole (default 3, Steph 2026-10-01)")
+    pr_runs.add_argument("--dry-run", action="store_true")
+
     args = parser.parse_args(argv)
     engine = create_async_engine(args.db_url, echo=False, future=True)
     Session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
@@ -310,6 +334,8 @@ async def main(argv: list[str] | None = None) -> int:
                 return await _promote(session, args)
             if args.command == "rollback":
                 return await _rollback(session, args)
+            if args.command == "prune-runs":
+                return await _prune_runs(session, args)
             return await _prune(session, args)
     finally:
         await engine.dispose()

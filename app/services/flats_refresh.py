@@ -1169,3 +1169,33 @@ async def prune(session: AsyncSession, *, keep: int = 1) -> list[dict[str, Any]]
         pruned.append({"snapshot_id": snap.id, "snapshot_date": snap.snapshot_date.isoformat(), "lots": int(lots), "runs": int(runs.rowcount or 0)})
     await session.flush()
     return pruned
+
+
+async def prune_runs(session: AsyncSession, *, keep: int = 3) -> list[dict[str, Any]]:
+    """Drop the results of every complete run but the ``keep`` newest; flushed, not committed.
+
+    Every re-screen keeps its whole answer set, and a run is ~0.9 GB of
+    results, so superseded runs fill the server's disk (FOLLOWUPS 25).
+    Steph, 2026-10-01: "delete older runs ... keep the last 3". The newest
+    ``keep`` complete runs -- the run in use and the ones before it, which a
+    re-screen rollback falls back to -- and every candidate or running run
+    are never touched. A pruned run is marked ``retired`` so the Lots pages
+    stop listing it; the run row, its notes and the drift reports stored on
+    its copy stay. A retired copy whose only runs are pruned is pruned
+    whole by :func:`prune`.
+    """
+    if keep < 1:
+        raise PromotionError("keep at least the run in use (--keep 1 or more)")
+    complete = (
+        await session.execute(select(FlatsRun).where(FlatsRun.status == "complete").order_by(FlatsRun.id.desc()))
+    ).scalars().all()
+    stamp = dt.datetime.now(dt.UTC).date().isoformat()
+    pruned: list[dict[str, Any]] = []
+    for run in complete[keep:]:
+        gone = await session.execute(text("DELETE FROM flats.lot_results WHERE run_id = :id"), {"id": run.id})
+        run.status = "retired"
+        run.notes = _note(run.notes, f"pruned {stamp}: {int(gone.rowcount or 0):,} results dropped (kept the newest {keep} runs)")
+        session.add(run)
+        pruned.append({"run_id": run.id, "snapshot_id": run.snapshot_id, "results": int(gone.rowcount or 0)})
+    await session.flush()
+    return pruned

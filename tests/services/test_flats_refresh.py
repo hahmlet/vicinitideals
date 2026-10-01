@@ -53,6 +53,7 @@ from app.services.flats_refresh import (
     promote,
     promote_run,
     prune,
+    prune_runs,
     refresh_notices,
     register_snapshot,
     rollback,
@@ -999,3 +1000,40 @@ async def test_prune_drops_only_copies_older_than_the_previous_one(session: Asyn
         await prune(session, keep=0)
         await session.commit()
         await rollback(session, by="Steph", reason="try")
+
+
+async def test_prune_runs_keeps_the_newest_runs_whole_and_retires_the_rest(session: AsyncSession, tmp_path) -> None:
+    """Steph, 2026-10-01: superseded re-screens fill the disk -- keep the last 3."""
+    w = await _world(session, tmp_path)
+    await drift(session, from_run=2, to_run=4)
+    await promote(session, w["sept"].id, by="Steph")
+    sept_lots = (await session.execute(select(FlatsLot).where(FlatsLot.snapshot_id == w["sept"].id))).scalars().all()
+    for run_id, status in ((6, "complete"), (8, "complete"), (10, "candidate")):
+        session.add(FlatsRun(id=run_id, status=status, snapshot_id=w["sept"].id, design_keys=list(DESIGNS), counties=[]))
+        await session.flush()
+        session.add_all([_result(lot, FlatsRun(id=run_id), DESIGNS[0], "unknown", "green") for lot in sept_lots])
+    await session.commit()
+
+    def results(run_id: int):
+        return session.execute(select(func.count()).select_from(FlatsLotResult).where(FlatsLotResult.run_id == run_id))
+
+    with pytest.raises(PromotionError, match="keep at least"):
+        await prune_runs(session, keep=0)
+    pruned = await prune_runs(session, keep=3)
+    await session.commit()
+    session.expunge_all()
+
+    assert pruned == [{"run_id": 2, "snapshot_id": w["july"].id, "results": 8}]
+    assert (await session.get(FlatsRun, 2)).status == "retired"
+    assert "pruned" in (await session.get(FlatsRun, 2)).notes
+    assert (await results(2)).scalar_one() == 0
+    for kept in (4, 6, 8, 10):
+        assert (await results(kept)).scalar_one() > 0, f"run {kept} keeps its results"
+    assert (await session.get(FlatsRun, 10)).status == "candidate", "a candidate is never pruned"
+    assert await run_in_use(session) is not None and (await run_in_use(session)).id == 8
+    assert await prune_runs(session, keep=3) == []
+
+    # Fewer kept: the oldest complete run on the copy in use goes next, never the run in use.
+    assert [r["run_id"] for r in await prune_runs(session, keep=1)] == [6, 4]
+    await session.commit()
+    assert (await run_in_use(session)).id == 8
