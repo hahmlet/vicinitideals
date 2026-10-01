@@ -731,6 +731,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Remaining questions: handoff §6 Tigard + Cornelius. Merge both after
    flats/washington-map lands, then wire Tigard/Cornelius into the map
    (JURIS_CITY -> layer, Metro ZONE; Cornelius R-10 parcel by hand).
+   Rulings round 2 (all Steph 2026-10-01, applied on the two branches):
+   Tigard Triangle ground floor >= 12 ft (pod fact), MUR stricter column,
+   MUC blank cells = no limit, Triangle 10 ft one-lane drive OK; Cornelius
+   fourplex NOT multi-family, 9 ft stall, CR standalone only near
+   Adair/Baseline, sun shading = flag every R-7/R-10 lot, GMU townhome
+   path REVIEW (subdistrict figure traced later), corner front = narrower
+   side, pod has NO covered parking. Merge Cornelius first (it adds
+   parking_required_yard_prohibited / behind_wall_ft), then Tigard
+   reuses it for its 5 ft planted parking strip (RES-A/B/C).
+   HILLSBORO BUG (found by the Tigard draft): the townhouse min lot sits
+   per home inside a `unit_lots` variant, so the split path counts four
+   homes twice (R-8.5 asks 24,000 sq ft, should be 6,000). Nothing screens
+   the split path today, so no verdict moves; fix on hillsboro.yaml.
    (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
    middle-housing code (cottage clusters by 2028); a city that misses it
    gets the state model code directly. Run the drift check on every layer
