@@ -192,3 +192,70 @@ async def test_the_page_check_needs_a_signed_in_user(client, session):
     response = await client.get("/flats/check", follow_redirects=False)
 
     assert response.status_code in (302, 303, 401)
+
+
+async def test_other_rules_from_the_page_are_tinted_with_what_they_are(client, session, monkeypatch):
+    await _login(client, session)
+    row = _first_row()
+    other = sheet.Box(0.1, 0.6, 0.5, 0.62)
+    monkeypatch.setattr(
+        check,
+        "_encoded_on",
+        lambda document, page: (
+            (other, "TR · Rear setback = 20 ft", frozenset({"someone-else"})),
+            (_BOX, "the card's own number", frozenset({row["mark"]})),
+        ),
+    )
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert 'class="check-box check-box-encoded"' in response.text
+    assert 'title="TR · Rear setback = 20 ft"' in response.text
+    # The card's own number is boxed in red, not tinted as "another rule".
+    assert "the card&#39;s own number" not in response.text
+    assert "the card's own number" not in response.text
+
+
+async def test_something_missing_from_the_page_can_be_flagged(client, session):
+    await _login(client, session)
+    row = _first_row()
+    before = await client.get(f"/flats/check/{LAYER}")
+
+    response = await client.post(
+        "/ui/flats/check",
+        data=_form(row, question="page:839", answer="unmarked", says="F. one approach per two units"),
+    )
+
+    assert "flagged" in response.text
+    saved = (await session.execute(select(FlatsPageCheck))).scalars().one()
+    assert (saved.question, saved.page, saved.answer) == ("page:839", 839, "unmarked")
+    # A flag is not an answer to the card: the same question is still asked.
+    assert 'name="question" value="value"' in response.text
+    assert "Does the page say" in before.text and "Does the page say" in response.text
+    text = await client.get("/flats/check/problems.txt")
+    assert "the page says: F. one approach per two units" in text.text
+
+
+async def test_two_flags_on_one_page_are_two_problems(client, session):
+    await _login(client, session)
+    row = _first_row()
+    for says in ("first thing", "second thing"):
+        await client.post(
+            "/ui/flats/check", data=_form(row, question="page:3", answer="unmarked", says=says)
+        )
+
+    index = await client.get("/flats/check")
+
+    assert "first thing" in index.text and "second thing" in index.text
+
+
+async def test_a_flag_must_say_what_is_missing(client, session):
+    await _login(client, session)
+    row = _first_row()
+
+    response = await client.post(
+        "/ui/flats/check", data=_form(row, question="page:3", answer="unmarked", says="  ")
+    )
+
+    assert "say what on the page is missing" in response.text
+    assert (await session.execute(select(FlatsPageCheck))).first() is None

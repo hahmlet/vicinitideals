@@ -23,6 +23,7 @@ Registered ahead of ``ui_flats``: that router ends in a catch-all
 from __future__ import annotations
 
 import json
+from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -68,8 +69,12 @@ NOTE_ANSWERS = {
     "unclear": "Can't tell",
 }
 
+#: A flag on the page itself: something printed there that the rules do not
+#: hold. Not an answer to the card's question, so it never moves the queue.
+FLAG = "unmarked"
+
 #: Answers that mean something needs fixing. They make the problems list.
-PROBLEMS = frozenset({"differs", "wrong_box", "missing"})
+PROBLEMS = frozenset({"differs", "wrong_box", "missing", FLAG})
 
 #: Answers that end the questions about a number. A box on the wrong cell, or
 #: a number the page contradicts, has no footnotes worth asking about: they
@@ -85,7 +90,11 @@ _SAID = {
     "differs": "problem raised — it goes on the problems list to be traced back",
     "wrong_box": "problem raised — the box was wrong, so the reading is traced back",
     "missing": "problem raised — the footnote goes on the list as something to add",
+    FLAG: "flagged — it goes on the problems list as something the rules don't have",
 }
+
+#: Every answer's words, for the problems list.
+_WORDS = {**VALUE_ANSWERS, **NOTE_ANSWERS, FLAG: "Flagged: not in the rules"}
 
 #: Units by field-name suffix, for saying a number out loud.
 _UNITS = (("_sqft", "sq ft"), ("_ft", "ft"), ("_pct", "%"), ("_du_per_acre", "units per acre"))
@@ -178,7 +187,13 @@ async def _answers(session: DBSession, layer_id: str | None = None) -> dict[tupl
     if layer_id:
         stmt = stmt.where(FlatsPageCheck.layer == layer_id)
     rows = (await session.execute(stmt)).scalars()
-    return {(r.layer, r.zone, r.field, r.when_key, r.question): r for r in rows}
+    # Flags are keyed by their own id: two things flagged on one page are two
+    # findings, not a later answer replacing an earlier one.
+    return {(r.layer, r.zone, r.field, r.when_key, _flag_key(r)): r for r in rows}
+
+
+def _flag_key(r: FlatsPageCheck) -> str:
+    return f"{r.question}#{r.id}" if r.question.startswith("page:") else r.question
 
 
 async def _signed(session: DBSession, layer_id: str | None = None) -> set[tuple]:
@@ -274,17 +289,87 @@ def _focus(rows: list[dict[str, Any]], zone: str, field: str, when: str) -> _Ask
     return None
 
 
+# --- everything else we hold from a page ------------------------------------
+
+
+@lru_cache(maxsize=1)
+def _by_document() -> dict[str, list[dict[str, Any]]]:
+    """Every encoded number in every layer, grouped by the document it cites."""
+    out: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for layer_id, layer in _layers().items():
+        for row in _value_rows(layer):
+            document = (row["quote"] or "").partition("#L")[0]
+            if document:
+                out[document].append({**row, "layer_id": layer_id})
+    return out
+
+
+def _on_page(index: Any, quote: str, page: int) -> bool:
+    for a, b in _ranges(quote):
+        for n in range(a, b + 1):
+            where = index.at(n)
+            if where is not None and where.n == page:
+                return True
+    return False
+
+
+@lru_cache(maxsize=256)
+def _encoded_on(document: str, page: int) -> tuple[tuple[sheet.Box, str, frozenset], ...]:
+    """Where each rule we hold from this page is printed, and what it is.
+
+    Drawn faintly under the card's own box so the page reads as a map of what
+    the rules took from it: a clause with nothing on it is one nobody encoded,
+    which a reviewer can only see with the page in front of them. Each spot
+    carries the rules read from it and their marks, so a card can leave out
+    its own.
+    """
+    index = _page_index(document)
+    if index is None:
+        return ()
+    spots: dict[tuple, dict[str, Any]] = {}
+    for row in _by_document().get(document, []):
+        if not _on_page(index, row["quote"], page):
+            continue
+        try:
+            placed = _placed(row)
+        except Exception:  # noqa: BLE001 — a rule that cannot be placed is not drawn
+            continue
+        label = f"{row['zone']} · {_label(row['field'])} = {_said(row['value'], row['field'])}"
+        if row["when"]:
+            label += f" (when {row['when_label'].replace('_', ' ')})"
+        for box, _kind in placed.boxes.get(page, []):
+            key = tuple(round(v, 3) for v in (box.x0, box.y0, box.x1, box.y1))
+            spot = spots.setdefault(key, {"box": box, "labels": [], "marks": set()})
+            if label not in spot["labels"]:
+                spot["labels"].append(label)
+            spot["marks"].add(row["mark"])
+    out = []
+    for spot in spots.values():
+        labels = spot["labels"]
+        title = "\n".join(labels[:12]) + ("\n…" if len(labels) > 12 else "")
+        out.append((spot["box"], title, frozenset(spot["marks"])))
+    return tuple(out)
+
+
 # --- the card ---------------------------------------------------------------
 
 
-def _sheet_view(document: str, page: int, boxes: list[tuple[sheet.Box, str]]) -> dict[str, Any]:
+def _sheet_view(
+    document: str, page: int, boxes: list[tuple[sheet.Box, str]], mark: str = ""
+) -> dict[str, Any]:
     index = _page_index(document)
     printed = next((p for p in index.pages if p.n == page), None) if index else None
+    encoded = [
+        {"css": box.pad(0.002).css(), "title": title}
+        for box, title, marks in _encoded_on(document, page)
+        if marks != {mark}
+    ]
     return {
         "src": f"/flats/sheet/{document}?page={page}",
         "page": page,
         "cite": printed.cite if printed else f"PDF page {page}",
         "boxes": [{"css": box.css(), "kind": kind} for box, kind in boxes],
+        "encoded": encoded,
     }
 
 
@@ -342,7 +427,9 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
     }
     if ask.question == "value":
         for page in placed.pages[:2]:
-            card["sheets"].append(_sheet_view(document, page, placed.boxes.get(page, [])))
+            card["sheets"].append(
+                _sheet_view(document, page, placed.boxes.get(page, []), row["mark"])
+            )
         return card
 
     mark = ask.question.partition(":")[2]
@@ -363,9 +450,11 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         note_page = where.n if where else None
     if note_page == page:
         boxes += _note_box(document, note_page, body)
-    card["sheets"].append(_sheet_view(document, page, boxes))
+    card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
     if note_page and note_page != page:
-        card["sheets"].append(_sheet_view(document, note_page, _note_box(document, note_page, body)))
+        card["sheets"].append(
+            _sheet_view(document, note_page, _note_box(document, note_page, body), row["mark"])
+        )
     return card
 
 
@@ -497,9 +586,9 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
                         "field_label": _label(field),
                         "when": when,
                         "value": _said(row["value"], field),
-                        "question": question,
+                        "question": answer.question,
                         "answer": answer.answer,
-                        "answer_words": {**VALUE_ANSWERS, **NOTE_ANSWERS}.get(answer.answer, ""),
+                        "answer_words": _WORDS.get(answer.answer, ""),
                         "says": answer.says,
                         "note": answer.note,
                         "by": answer.reviewer,
@@ -631,9 +720,16 @@ async def flats_check_answer(
         return HTMLResponse("not a number we hold", status_code=400)
     if action == "skip":
         return await card(skipped=skipped + 1)
-    allowed = VALUE_ANSWERS if question == "value" else NOTE_ANSWERS
-    if answer not in allowed or not (question == "value" or question.startswith("note:")):
-        return await card(skipped=skipped, error="pick one of the answers")
+    flag_page = question.partition(":")[2] if question.startswith("page:") else ""
+    if flag_page:
+        if answer != FLAG or not flag_page.isdigit():
+            return await card(skipped=skipped, error="pick one of the answers")
+        if not says.strip():
+            return await card(skipped=skipped, error="say what on the page is missing from the rules")
+    else:
+        allowed = VALUE_ANSWERS if question == "value" else NOTE_ANSWERS
+        if answer not in allowed or not (question == "value" or question.startswith("note:")):
+            return await card(skipped=skipped, error="pick one of the answers")
     if user is None:
         return HTMLResponse("sign in first", status_code=401)
 
@@ -646,7 +742,12 @@ async def flats_check_answer(
     }
     placed = await run_in_threadpool(_placed, row)
     document = row["quote"].partition("#L")[0]
-    page = placed.first if question == "value" else (placed.marker_page or placed.first)
+    if flag_page:
+        page = int(flag_page)
+    elif question == "value":
+        page = placed.first
+    else:
+        page = placed.marker_page or placed.first
     session.add(
         FlatsPageCheck(
             layer=layer.layer,

@@ -39,7 +39,7 @@
         <tr>
           <td>{{ p.layer_label }} · {{ p.zone }}</td>
           <td>{{ p.field_label }}{% if p.when %} <span class="muted">when {{ p.when | replace("_", " ") }}</span>{% endif %}
-            {% if p.question != "value" %}<div class="muted" style="font-size:11px">{{ p.question | replace("note:", "note ") }}</div>{% endif %}</td>
+            {% if p.question != "value" %}<div class="muted" style="font-size:11px">{{ p.question | replace("note:", "note ") | replace("page:", "flagged on PDF page ") }}</div>{% endif %}</td>
           <td>{{ p.value }}</td>
           <td>{{ p.answer_words }}{% if p.handed_on %} <span class="badge badge-gray">handed on</span>{% endif %}</td>
           <td>{{ p.says }}</td>

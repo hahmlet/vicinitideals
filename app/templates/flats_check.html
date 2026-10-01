@@ -11,30 +11,38 @@
   .check-box-marker { outline: 3px solid #2563eb; outline-offset: 1px; border-radius: 50%; }
   /* The note itself, where it is printed. */
   .check-box-note { background: rgba(37, 99, 235, 0.14); outline: 1px solid #2563eb; }
+  /* Every other rule we hold from this page: present, not asked about. */
+  .check-box-encoded { background: rgba(22, 163, 74, 0.12); border-bottom: 2px solid rgba(22, 163, 74, 0.55); cursor: help; }
+  .check-box-encoded:hover { background: rgba(22, 163, 74, 0.28); }
+
+  /* Page on the left, the question pinned beside it. */
+  .check-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; align-items: start; }
+  .check-pages { max-width: 1000px; }
+  .check-panel { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow-y: auto;
+                 padding: 12px; border: 1px solid var(--line, #e5e7eb); border-radius: 4px; background: var(--card-bg, #fff); }
+  .check-legend { font-size: 11px; margin: 0 0 12px; display: grid; gap: 3px; }
+  .check-legend .swatch { display: inline-block; width: 14px; height: 10px; margin-right: 6px; vertical-align: middle; }
+  .check-flag { padding: 8px 0 0; border-top: 1px solid var(--line, #e5e7eb); }
+  @media (max-width: 1000px) {
+    .check-grid { grid-template-columns: minmax(0, 1fr); }
+    .check-panel { position: static; max-height: none; order: -1; }
+  }
 </style>
 <div class="topbar"></div>
 
 <div class="content">
-  <div class="toolbar">
+  <div class="toolbar" style="margin-bottom:10px">
     <div>
       <h2 style="margin:0">Page check · {{ layer.label }}</h2>
       <div class="muted" style="font-size:12px">
         <a href="/flats/check">All jurisdictions</a> ·
         <a href="/flats/review/{{ layer.id }}">Sign against the text</a> ·
         <a href="/flats/{{ layer.id }}">Full rules table</a> · {{ layer.id }}
+        <span title="Each card is the page as the city prints it, with a red box where we read the number. Signed numbers come first -- the ones the screen is already using. After a number checks out, you get one short card for each footnote printed on it."> · how this works ⓘ</span>
       </div>
     </div>
   </div>
 
-  <p class="muted" style="font-size:12px;margin:4px 0 14px;max-width:80ch">
-    Each card is the page as the city prints it, with a red box where we read the number.
-    Say whether the page says what we have. Signed numbers come first — those are the ones
-    the screen is already using. After a number checks out, you get one short card for each
-    footnote printed on it.
-  </p>
-
-  <div style="max-width:1100px">
-    {% include "partials/flats_check_card.html" %}
-  </div>
+  {% include "partials/flats_check_card.html" %}
 </div>
 {% endblock %}

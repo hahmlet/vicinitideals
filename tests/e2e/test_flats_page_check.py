@@ -33,7 +33,7 @@ LAYER = "or/multnomah/gresham"
 def _card_key(page: Page) -> tuple[str, str, str, str]:
     card = page.locator("#check-card")
     return tuple(
-        card.locator(f"input[name='{name}']").input_value()
+        card.locator(f"input[name='{name}']").first.input_value()
         for name in ("zone", "field", "when", "question")
     )
 
@@ -82,11 +82,29 @@ def test_skip_moves_to_another_question_without_answering(
     page = logged_in_page
     page.goto(f"{base_url}/flats/check/{LAYER}")
     before = _card_key(page)
-    skipped = page.locator("#check-card input[name='skipped']").input_value()
+    skipped = page.locator("#check-card input[name='skipped']").first.input_value()
 
     page.get_by_role("button", name="Skip").click()
     wait_for_htmx(page)
 
     # Assert on something the old card cannot show: the skip count moved on.
-    expect(page.locator("#check-card input[name='skipped']")).to_have_value(str(int(skipped) + 1))
+    expect(page.locator("#check-card input[name='skipped']").first).to_have_value(str(int(skipped) + 1))
     assert _card_key(page) != before
+
+
+def test_the_question_sits_beside_the_page_not_above_it(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Asked above the page, every card meant scrolling down to read the page
+    and back up to answer it."""
+    page = logged_in_page
+    page.set_viewport_size({"width": 1600, "height": 900})
+    page.goto(f"{base_url}/flats/check/{LAYER}")
+
+    sheet = page.locator(".check-pages").bounding_box()
+    panel = page.locator(".check-panel").bounding_box()
+
+    assert sheet and panel
+    assert panel["x"] >= sheet["x"] + sheet["width"] - 1, "the panel is to the right of the page"
+    assert panel["y"] < 400, "the answers are on screen without scrolling"
+    expect(page.locator("textarea[name='says']")).to_be_visible()
