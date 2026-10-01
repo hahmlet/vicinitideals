@@ -1,6 +1,17 @@
 label: Tigard
 kind: city
 eligible: true
+notes: >-
+  DRAFT, cloud session 2026-09-30. Read from Title 18 of the Tigard Municipal
+  Code, the Community Development Code, on eCode360 (TI5024), current through
+  Ordinance 26-13 of July 14, 2026. Every value is draft. Tigard's lots reach
+  this layer by the taxlots' JURIS_CITY TIGARD, and their zoning comes from
+  Metro's regional zoning layer, whose ZONE values are the code's own names
+  (RES-A to RES-E, COM, MUC, MUE, MUR, MU-CBD, TMU, IND, PR) and which draws
+  no plan district subarea or subdistrict. THE POD IS A ROWHOUSE here: a
+  "Quad" is two units stacked over two (18.30), and "Apartments" exclude
+  rowhouses, so four side-by-side units sharing sidewalls are a rowhouse
+  development (18.280).
 ingest:
   geoid: null
   juris_city_codes:
@@ -81,4 +92,1146 @@ code:
   url: https://ecode360.com/print/TI5024?guid=43709542
   title: Chapter 18.930 Vision Clearance Areas
   allow_thin: true
-zones: {}
+private_drives:
+  street: true
+  quote: "or/washington/tigard/tdc.18.30.definitions.txt#L1585"
+  says: "A public or private accessway that is created to provide ingress or egress for vehicles to three or more lots"
+  cite: "Tigard CDC 18.30, Street; Driveway; Frontage"
+  note: >-
+    18.30 defines a Street as "A public or private accessway that is created
+    to provide ingress or egress for vehicles to three or more lots"
+    (L1585), and Frontage as the part of a site "that abuts a public or
+    private street" (L1143-L1144). A private accessway serving three or more
+    lots is therefore a street here, and a lot on one takes its front and
+    its corner from it. One serving one or two units of land is a
+    "Driveway" (L978-L979), not a street. Nothing held counts how many lots
+    a private way serves, so the ruling is read as the definition's general
+    case: a private road is a street. 18.805.030.C asks frontage "on a
+    public or private right-of-way" in the same words.
+
+defaults:
+  # PARKING COUNT. Tigard prints vehicle parking MAXIMUMS only: 18.410.030.A
+  # "The ratios for the maximum number of off-street vehicle parking spaces
+  # allowed are provided in Table 18.410.3" (L77-L81), and the table's
+  # Residential row says "See applicable housing type development standards
+  # chapters in Part 18.200" (L397-L401). The rowhouse chapter says only that
+  # 18.410 applies (18.280.040.D, tdc.18.280.rowhouses.txt L93). Neither
+  # states a minimum or a maximum for a rowhouse: zero required, none capped.
+  # Zero is encoded rather than left absent so the state layer's banded cap
+  # is not read as a requirement (Hillsboro's precedent).
+  parking_min_per_unit:
+    value: 0
+    cite: Tigard CDC 18.410.030.A.1 and Table 18.410.3 (maximum ratios only; Residential Use sent to the housing type chapters, which state no minimum)
+    url: https://ecode360.com/print/TI5024?guid=43706464
+    retrieved: '2026-09-30'
+    quote: "or/washington/tigard/tdc.18.410.parking.txt#L77-L81,L397-L401"
+  parking_max_per_unit:
+    exempt: true
+    cite: Tigard CDC Table 18.410.3, Residential Use, See applicable housing type development standards chapters in Part 18.200 (18.280 states no maximum)
+    url: https://ecode360.com/print/TI5024?guid=43706464
+    retrieved: '2026-09-30'
+    quote: "or/washington/tigard/tdc.18.410.parking.txt#L385-L401"
+  # WHICH STREET IS THE FRONT on a corner lot. 18.30, Front lot line: "in the
+  # case of a corner lot, the shortest of the two property lines that abut
+  # the street, except a property owner may choose which property line to
+  # identify as the front lot line where both street property lines are 75
+  # feet or more in length" (L1244-L1245). `shortest`; the owner's choice on
+  # a corner with two long frontages is a relaxation nothing measures, and
+  # the shortest line is the stricter reading. A corner lot is at an
+  # intersection whose interior angle "does not exceed 135" degrees
+  # (L1236-L1237).
+  front_lot_line_corner:
+    value: shortest
+    cite: Tigard CDC 18.30, Front lot line (on a corner lot the shortest street line; the owner chooses where both are 75 feet or more)
+    url: https://ecode360.com/print/TI5024?guid=43704988
+    retrieved: '2026-09-30'
+    quote: "or/washington/tigard/tdc.18.30.definitions.txt#L1244-L1245"
+  # NOT ENCODED: front_lot_line_through. 18.30: "in the case of a through lot,
+  # the property line that abuts the street with the lowest classification"
+  # (L1245). The field holds both, both_unless_no_access and owner; none of
+  # them is "the street of lowest class", and nothing measures street class.
+  # Left unread, which the screen takes as the worst reading.
+  #
+  # WHICH STREET THE DRIVEWAY USES. No rule names one for a rowhouse
+  # development: 18.920 sends rowhouses to 18.280 (Table 18.920.1,
+  # tdc.18.920.access.txt L133-L141), and 18.280.040.D.1 lets access be
+  # taken through tandem driveways, shared access or an alley without
+  # naming a street (L97). 18.920.030's discouragement of access to arterial
+  # and collector streets is written for small form residential lots
+  # (L101).
+  corner_access_street:
+    value: any
+    cite: Tigard CDC 18.280.040.D.1 (access by tandem driveways, shared access or an alley; no street named) and Table 18.920.1
+    url: https://ecode360.com/print/TI5024?guid=43706147
+    retrieved: '2026-09-30'
+    quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L93-L97"
+
+# THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-30.
+#
+# NOT ENCODED: the rowhouse maximum shared access width, "the maximum width
+# is 24 feet" (18.280.040.D.1.b, tdc.18.280.rowhouses.txt L123). A ceiling
+# on the drive, not the approach; no field holds a maximum drive width. The
+# pod's drive is narrower than 24.
+#
+# NOT ENCODED: tandem driveways (18.280.040.D.1.a, L101-L117): a driveway
+# per two units, 15 ft minimum and 18 ft maximum, 18 ft apart. The pod
+# parks in a shared rear court, which is the shared-access path (D.1.b).
+#
+# NOT ENCODED: S-3 screening of side and rear parking from adjacent
+# properties in RES-A through RES-C (18.280.040.D.4, L159-L161; Table
+# 18.420.2). A planted buffer of a width Chapter 18.420 sets; not stored
+# beyond the chapter, and no field holds a parking-area buffer from an
+# interior lot line. A doubt: on a tight lot it can take court width.
+#
+# NOT ENCODED: detached garages 40 ft from a street (18.280.040.D.3.a,
+# L147-L157). The pod has none.
+#
+# NOT ENCODED: the rowhouse design standards, 18.280.040.E to I: a
+# pedestrian path only at five or more units (L165), service areas out of
+# setbacks (L185), a dormer, balcony, bay or 2 ft offset per unit (L189-L205),
+# and a 48 sq ft porch per unit, no dimension under 6 ft (L213). Design
+# items on the building, not where it stands. The porch can sit in the
+# front yard only as far as 18.210.030.B.5 lets an unroofed porch project
+# (3 ft).
+#
+# NOT ENCODED: vision clearance (18.930): a 30 ft triangle where a street
+# or driveway 24 ft or wider meets a non-arterial street, 35 ft on
+# arterials (tdc.18.930.vision-clearance.txt L53-L67). Obstructions above
+# a height; it can push a corner building back, and nothing draws it. TMU
+# is exempt (18.660.070.B.3).
+#
+# NOT ENCODED: 18.920.030 driveway spacing, 150 ft from a collector or
+# arterial intersection (tdc.18.920.access.txt L117), and the 150 ft
+# access drive turnaround (L156-L168). Nothing measures street class; the
+# pod's drive is far shorter than 150 ft.
+#
+# NOT ENCODED: River Terrace (18.640). The plan district applies in
+# addition to the base zones. Its funding gate (18.640.030.B,
+# tdc.18.640.river-terrace.txt L59) reaches "subdivisions, partitions,
+# planned developments, site development reviews, and conditional uses",
+# not a rowhouse development on one lot. Its River Terrace Boulevard
+# standards (18.640.060) reach rowhouse lots abutting the Boulevard (no
+# parking within 40 ft of it, no direct access, L299-L371); the Boulevard's
+# alignment is not held. Table 18.640.1's smaller lots are an elective
+# density bonus. A doubt for lots along the Boulevard.
+#
+# NOT ENCODED: 18.210.030.B.9, a front setback reduced to the average of
+# the abutting lots (tdc.18.210.residential-general.txt). A relief the
+# neighbours' houses decide.
+zones:
+  RES-A:
+    cite_default:
+      cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
+      url: https://ecode360.com/print/TI5024?guid=43706147
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-A and Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
+      quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+    min_lot_sqft:
+      per_dwelling: 1500
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,500 sq ft in the RES-A column, applied per rowhouse through 18.40.130.B and 18.280.040.B
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94"
+    max_density_du_per_acre:
+      sqft_per_unit: 1500
+      cite: Tigard CDC 18.40.130.B, maximum density for rowhouses determined by the 18.805 minimum lot size (1,500 sq ft per rowhouse in RES-A)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94"
+    min_density_du_per_acre:
+      sqft_per_unit: 3000
+      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (3,000 sq ft per rowhouse in RES-A)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L140"
+    min_lot_width_ft:
+      value: 25
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 25 ft in the RES-A column
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L186"
+    min_frontage_ft:
+      value: 15
+      cite: Tigard CDC 18.805.030.C.1, rowhouse lots have a minimum of 15 feet of frontage on a public or private right-of-way
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209"
+    setback_front_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum front setback 20 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+    setback_street_side_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum street side setback 20 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+    setback_side_ft:
+      value: 5
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum side setback 5 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Tigard CDC Table 18.280.1 note [1], the side setback does not apply to a common wall lot line where the dwelling units are attached
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+    setback_rear_ft:
+      value: 25
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum rear setback 25 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+      variants:
+        - value: 0
+          when: [alley_at_rear]
+          cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+    setback_front_max_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+    max_height_ft:
+      value: 35
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum height 35 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+    max_impervious_pct:
+      value: 80
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum lot coverage 80% (RES-A and RES-B); lot coverage counts structures, buildings and other impervious surfaces (18.30)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+    min_landscaped_pct:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum landscape area 20% (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+    parking_street_setback_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141"
+    driveway_min_width_two_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    driveway_min_width_one_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet (no one-way figure printed)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    orientation_constraint:
+      value: axis_required
+      cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209"
+    parking_stall_width_ft:
+      value: 8.5
+      cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_stall_depth_ft:
+      value: 16
+      cite: Tigard CDC Table 18.410.2, 90 degree stall depth 16 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree one-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_two_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    notes: >-
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
+      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      coverage and landscape from Table 18.280.1's RES-A and RES-B column.
+  RES-B:
+    cite_default:
+      cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
+      url: https://ecode360.com/print/TI5024?guid=43706147
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-B and Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
+      quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+    min_lot_sqft:
+      per_dwelling: 1500
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,500 sq ft in the RES-B column, applied per rowhouse through 18.40.130.B and 18.280.040.B
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95"
+    max_density_du_per_acre:
+      sqft_per_unit: 1500
+      cite: Tigard CDC 18.40.130.B, maximum density for rowhouses determined by the 18.805 minimum lot size (1,500 sq ft per rowhouse in RES-B)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95"
+    min_density_du_per_acre:
+      sqft_per_unit: 3000
+      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (3,000 sq ft per rowhouse in RES-B)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L141"
+    min_lot_width_ft:
+      value: 25
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 25 ft in the RES-B column
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L187"
+    min_frontage_ft:
+      value: 15
+      cite: Tigard CDC 18.805.030.C.1, rowhouse lots have a minimum of 15 feet of frontage on a public or private right-of-way
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209"
+    setback_front_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum front setback 20 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+    setback_street_side_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum street side setback 20 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+    setback_side_ft:
+      value: 5
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum side setback 5 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Tigard CDC Table 18.280.1 note [1], the side setback does not apply to a common wall lot line where the dwelling units are attached
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+    setback_rear_ft:
+      value: 25
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum rear setback 25 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+      variants:
+        - value: 0
+          when: [alley_at_rear]
+          cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+    setback_front_max_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+    max_height_ft:
+      value: 35
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum height 35 ft (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+    max_impervious_pct:
+      value: 80
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum lot coverage 80% (RES-A and RES-B); lot coverage counts structures, buildings and other impervious surfaces (18.30)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+    min_landscaped_pct:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum landscape area 20% (RES-A and RES-B)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+    parking_street_setback_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141"
+    driveway_min_width_two_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    driveway_min_width_one_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet (no one-way figure printed)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    orientation_constraint:
+      value: axis_required
+      cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209"
+    parking_stall_width_ft:
+      value: 8.5
+      cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_stall_depth_ft:
+      value: 16
+      cite: Tigard CDC Table 18.410.2, 90 degree stall depth 16 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree one-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_two_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    notes: >-
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
+      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      coverage and landscape from Table 18.280.1's RES-A and RES-B column.
+  RES-C:
+    cite_default:
+      cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
+      url: https://ecode360.com/print/TI5024?guid=43706147
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-C and Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
+      quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+    min_lot_sqft:
+      per_dwelling: 1250
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 1,250 sq ft in the RES-C column, applied per rowhouse through 18.40.130.B and 18.280.040.B
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96"
+    max_density_du_per_acre:
+      sqft_per_unit: 1250
+      cite: Tigard CDC 18.40.130.B, maximum density for rowhouses determined by the 18.805 minimum lot size (1,250 sq ft per rowhouse in RES-C)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96"
+    min_density_du_per_acre:
+      sqft_per_unit: 1750
+      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (1,750 sq ft per rowhouse in RES-C)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L142"
+    min_lot_width_ft:
+      value: 20
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 20 ft in the RES-C column
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L188"
+    min_frontage_ft:
+      value: 15
+      cite: Tigard CDC 18.805.030.C.1, rowhouse lots have a minimum of 15 feet of frontage on a public or private right-of-way
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209"
+    setback_front_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum front setback 15 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+    setback_street_side_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum street side setback 15 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+    setback_side_ft:
+      value: 5
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum side setback 5 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Tigard CDC Table 18.280.1 note [1], the side setback does not apply to a common wall lot line where the dwelling units are attached
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+    setback_rear_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum rear setback 15 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+      variants:
+        - value: 0
+          when: [alley_at_rear]
+          cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+    setback_front_max_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+    max_height_ft:
+      value: 35
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum height 35 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+    max_impervious_pct:
+      value: 80
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum lot coverage 80% (RES-C and RES-D); lot coverage counts structures, buildings and other impervious surfaces (18.30)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+    min_landscaped_pct:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum landscape area 20% (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+    parking_street_setback_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141"
+    driveway_min_width_two_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    driveway_min_width_one_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet (no one-way figure printed)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    orientation_constraint:
+      value: axis_required
+      cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209"
+    parking_stall_width_ft:
+      value: 8.5
+      cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_stall_depth_ft:
+      value: 16
+      cite: Tigard CDC Table 18.410.2, 90 degree stall depth 16 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree one-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_two_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    notes: >-
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
+      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      coverage and landscape from Table 18.280.1's RES-C and RES-D column.
+  RES-D:
+    cite_default:
+      cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
+      url: https://ecode360.com/print/TI5024?guid=43706147
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-D and Table 18.110.3, Rowhouses Y; a rowhouse shares a common sidewall (18.30)
+      quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208"
+    min_lot_sqft:
+      per_dwelling: 750
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size 750 sq ft in the RES-D column, applied per rowhouse through 18.40.130.B and 18.280.040.B
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97"
+    max_density_du_per_acre:
+      sqft_per_unit: 750
+      cite: Tigard CDC 18.40.130.B, maximum density for rowhouses determined by the 18.805 minimum lot size (750 sq ft per rowhouse in RES-D)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97"
+    min_density_du_per_acre:
+      sqft_per_unit: 1250
+      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (1,250 sq ft per rowhouse in RES-D)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L143"
+    min_lot_width_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width in the RES-D column (None)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L189"
+    min_frontage_ft:
+      value: 15
+      cite: Tigard CDC 18.805.030.C.1, rowhouse lots have a minimum of 15 feet of frontage on a public or private right-of-way
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209"
+    setback_front_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum front setback 15 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+    setback_street_side_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum street side setback 15 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+    setback_side_ft:
+      value: 5
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum side setback 5 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Tigard CDC Table 18.280.1 note [1], the side setback does not apply to a common wall lot line where the dwelling units are attached
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+    setback_rear_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum rear setback 15 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+      variants:
+        - value: 0
+          when: [alley_at_rear]
+          cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+    setback_front_max_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+    max_height_ft:
+      value: 35
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum height 35 ft (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+    max_impervious_pct:
+      value: 80
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum lot coverage 80% (RES-C and RES-D); lot coverage counts structures, buildings and other impervious surfaces (18.30)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+    min_landscaped_pct:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum landscape area 20% (RES-C and RES-D)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+    parking_street_setback_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141"
+    driveway_min_width_two_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    driveway_min_width_one_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet (no one-way figure printed)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    orientation_constraint:
+      value: axis_required
+      cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209"
+    parking_stall_width_ft:
+      value: 8.5
+      cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_stall_depth_ft:
+      value: 16
+      cite: Tigard CDC Table 18.410.2, 90 degree stall depth 16 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree one-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_two_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    notes: >-
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
+      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      coverage and landscape from Table 18.280.1's RES-C and RES-D column.
+  RES-E:
+    cite_default:
+      cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
+      url: https://ecode360.com/print/TI5024?guid=43706147
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-E and Table 18.110.3, Rowhouses Y; a rowhouse shares a common sidewall (18.30)
+      quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208"
+    min_lot_sqft:
+      exempt: true
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size in the RES-E column (None)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Tigard CDC 18.40.130.B (rowhouse density from the 18.805 lot sizes) and Table 18.805.1, Rowhouse minimum lot size in the RES-E column (None)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98"
+    min_density_du_per_acre:
+      sqft_per_unit: 1000
+      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (1,000 sq ft per rowhouse in RES-E)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L144"
+    min_lot_width_ft:
+      value: 20
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 20 ft in the RES-E column
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L190"
+    min_frontage_ft:
+      value: 15
+      cite: Tigard CDC 18.805.030.C.1, rowhouse lots have a minimum of 15 feet of frontage on a public or private right-of-way
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209"
+    setback_front_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum front setback 15 ft (RES-E)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+    setback_street_side_ft:
+      value: 10
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum street side setback 10 ft (RES-E)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+    setback_side_ft:
+      value: 5
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum side setback 5 ft (RES-E)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Tigard CDC Table 18.280.1 note [1], the side setback does not apply to a common wall lot line where the dwelling units are attached
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+    setback_rear_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum rear setback 15 ft (RES-E)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+      variants:
+        - value: 0
+          when: [alley_at_rear]
+          cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+    setback_front_max_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-E)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+    max_height_ft:
+      value: 45
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum height 45 ft (RES-E)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+    max_impervious_pct:
+      value: 80
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum lot coverage 80% (RES-E); lot coverage counts structures, buildings and other impervious surfaces (18.30)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+    min_landscaped_pct:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum landscape area 20% (RES-E)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+    parking_street_setback_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141"
+    driveway_min_width_two_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    driveway_min_width_one_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet (no one-way figure printed)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    orientation_constraint:
+      value: axis_required
+      cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209"
+    parking_stall_width_ft:
+      value: 8.5
+      cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_stall_depth_ft:
+      value: 16
+      cite: Tigard CDC Table 18.410.2, 90 degree stall depth 16 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree one-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_two_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    notes: >-
+      DRAFT. The pod as four rowhouses on one lot (18.280). Lot, width and density from
+      Table 18.805.1's Rowhouse rows read per rowhouse through 18.40.130.B; yards, height,
+      coverage and landscape from Table 18.280.1's RES-E column.
+  # ------------------------------------------------------------------
+  # MUR, Mixed-Use Residential. Residential Use A (Table 18.120.1) and
+  # Rowhouses Y (Table 18.120.2); 18.280 applies (18.280.020.A). Table
+  # 18.280.1 prints two columns, MUR-1 and MUR-2, for one zone: 18.120.020
+  # and 18.670 know only "MUR". Which lots were MUR-1 is not on any map
+  # held. Each figure is the stricter of the two columns: front 10 (MUR-1
+  # 0), street side 10 (5), rear 15 (both), height 45 (MUR-1 75). A doubt
+  # and a question for Steph.
+  #
+  # Inside the Washington Square Regional Center plan district, Table
+  # 18.670.2 makes Rowhouses L in MUR and 18.670.060.E.2 prohibits every
+  # housing type but apartments and mixed use in the Apartment Subdistrict
+  # (tdc.18.670.wsrc.txt L461, L485-L487). Subdistricts are drawn on Map
+  # 18.670.A only, "except for the subdistricts" on the zoning map (L71):
+  # `inside_mapped_use_area`, unknown on every lot. Table 18.670.4's MUR
+  # heights (12 min / 60 max) and the first-storey 12 ft rule
+  # (18.670.080.B) are building design standards for nonresidential and
+  # mixed-use development; residential development takes its housing type
+  # chapter (18.670.080.A.2, L640). Not read for the pod.
+  # ------------------------------------------------------------------
+  MUR:
+    cite_default:
+      cite: Tigard CDC 18.120 (Commercial Zones), 18.280 (Rowhouses), 18.805 (Lot Standards) and 18.670 (Washington Square Regional Center)
+      url: https://ecode360.com/print/TI5024?guid=43706147
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.120.1, Residential Use A in MUR, and Table 18.120.2, Rowhouses Y in MUR
+      quote: "or/washington/tigard/tdc.18.120.commercial-zones.txt#L53,L92-L94,L489,L496"
+      variants:
+        - value: false
+          when: [inside_mapped_use_area]
+          cite: Tigard CDC Table 18.670.2 and 18.670.060.E.2, only apartments and mixed-use development in the WSRC Apartment Subdistrict (Map 18.670.A)
+          quote: "or/washington/tigard/tdc.18.670.wsrc.txt#L453-L454,L461,L485-L487"
+    min_lot_sqft:
+      exempt: true
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot size in the MUR column (None)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Tigard CDC 18.40.130.B (rowhouse density from the 18.805 lot sizes) and Table 18.805.1, Rowhouse minimum lot size in the MUR column (None)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100"
+    min_density_du_per_acre:
+      sqft_per_unit: 870
+      cite: Tigard CDC 18.40.130.B, minimum density for rowhouses determined by the 18.805 maximum lot size (870 sq ft per rowhouse in MUR)
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L139,L146"
+    min_lot_width_ft:
+      value: 16
+      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 16 ft in the MUR column
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L192"
+    min_frontage_ft:
+      value: 15
+      cite: Tigard CDC 18.805.030.C.1, rowhouse lots have a minimum of 15 feet of frontage on a public or private right-of-way
+      quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209"
+    setback_front_ft:
+      value: 10
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum front setback, MUR-1 0 ft and MUR-2 10 ft; the stricter held
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+    setback_street_side_ft:
+      value: 10
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum street side setback, MUR-1 5 ft and MUR-2 10 ft; the stricter held
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+    setback_side_ft:
+      value: 5
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum side setback 5 ft (MUR-1 and MUR-2)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Tigard CDC Table 18.280.1 note [1], the side setback does not apply to a common wall lot line where the dwelling units are attached
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+    setback_rear_ft:
+      value: 15
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum rear setback 15 ft (MUR-1 and MUR-2)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+      variants:
+        - value: 0
+          when: [alley_at_rear]
+          cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
+          quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+    setback_front_max_ft:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (MUR-1 and MUR-2)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+    max_height_ft:
+      value: 45
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum height, MUR-1 75 ft and MUR-2 45 ft; the stricter held
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+    max_impervious_pct:
+      value: 80
+      cite: Tigard CDC Table 18.280.1, rowhouse maximum lot coverage 80% (MUR-1 and MUR-2); lot coverage counts structures, buildings and other impervious surfaces (18.30)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+    min_landscaped_pct:
+      value: 20
+      cite: Tigard CDC Table 18.280.1, rowhouse minimum landscape area 20% (MUR-1 and MUR-2)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+    parking_street_setback_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141"
+    driveway_min_width_two_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    driveway_min_width_one_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet (no one-way figure printed)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    orientation_constraint:
+      value: axis_required
+      cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209"
+    parking_stall_width_ft:
+      value: 8.5
+      cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_stall_depth_ft:
+      value: 16
+      cite: Tigard CDC Table 18.410.2, 90 degree stall depth 16 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree one-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_two_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    notes: >-
+      DRAFT. Rowhouses Y; no minimum lot, at most 870 sq ft per rowhouse (four rowhouses on at
+      most 3,480 sq ft), 16 ft width; the stricter of Table 18.280.1's MUR-1 and MUR-2
+      columns. Refused inside the WSRC Apartment Subdistrict, which no map held draws.
+  # ------------------------------------------------------------------
+  # MUC, Mixed-Use Commercial. Residential Use A (Table 18.120.1),
+  # Rowhouses Y (Table 18.120.2), and 18.280 "appl[ies] to rowhouse
+  # development in the ... MUC ... zones" (18.280.020.A). But Table
+  # 18.280.1 has no MUC column (RES-A and RES-B, RES-C and RES-D, RES-E,
+  # MUR-1, MUR-2), and Table 18.805.1's MUC column is blank on the
+  # Rowhouse rows (the HTML has the cell, empty; the stored text drops
+  # empty cells -- a reader doubt). So MUC OWES max_height_ft,
+  # min_lot_sqft, setback_front_ft, setback_rear_ft and setback_side_ft.
+  # Nothing from another column is carried across (Happy Valley MURX).
+  # 18.805.040's "no minimum lot size ... for nonresidential or mixed-use
+  # development" is not the pod's path. Table 18.320.1 is for
+  # nonresidential and mixed-use development (18.320.020.A-B).
+  #
+  # Two places draw MUC differently. Bridgeport Village (18.620) is zoned
+  # MUC and its 18.620.040.B prints residential figures (no minimum lot, no
+  # minimum setback, 20 ft maximum front, 20 ft minimum height), "Except as
+  # determined in the architectural review process"; rowhouses there take
+  # 18.620 (18.280.020.B). Inside the Washington Square Regional Center,
+  # Table 18.670.2 makes Rowhouses L and 18.670.060.E.1.a allows them "only
+  # in the Design Review Subdistrict", where residential development must
+  # be "a minimum four stories" and 20% affordable (18.670.090.B.3-4) or
+  # take a development design review (18.670.040.B.3.b); the Metzger
+  # Business Subdistrict allows only mixed use. A two-storey pod meets
+  # none of that: the variant below. Neither plan district nor subdistrict
+  # is on Metro's map.
+  # ------------------------------------------------------------------
+  MUC:
+    cite_default:
+      cite: Tigard CDC 18.120 (Commercial Zones), 18.280 (Rowhouses) and 18.670 (Washington Square Regional Center)
+      url: https://ecode360.com/print/TI5024?guid=43705535
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.120.1, Residential Use A in MUC, Table 18.120.2, Rowhouses Y in MUC, and 18.280.020.A
+      quote: "or/washington/tigard/tdc.18.120.commercial-zones.txt#L49,L92-L94,L489,L496"
+      variants:
+        - value: false
+          when: [inside_mapped_use_area]
+          cite: Tigard CDC 18.670.060.E.1, rowhouses in WSRC MUC only in the Design Review Subdistrict (four storeys minimum, 18.670.090.B.4); only mixed use in the Metzger Business Subdistrict
+          quote: "or/washington/tigard/tdc.18.670.wsrc.txt#L453-L454,L461,L471-L483,L773-L777"
+    parking_street_setback_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141"
+    driveway_min_width_two_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    driveway_min_width_one_way_ft:
+      value: 20
+      cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet (no one-way figure printed)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123"
+    orientation_constraint:
+      value: axis_required
+      cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209"
+    parking_stall_width_ft:
+      value: 8.5
+      cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_stall_depth_ft:
+      value: 16
+      cite: Tigard CDC Table 18.410.2, 90 degree stall depth 16 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree one-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_two_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    notes: >-
+      DRAFT. Rowhouses Y, but Table 18.280.1 prints no MUC column and Table 18.805.1's MUC
+      rowhouse cells are blank: lot, yards and height OWED. Refused inside WSRC (four storeys)
+      and the Metzger Business Subdistrict, which no map held draws.
+  # ------------------------------------------------------------------
+  # MU-CBD, Mixed-Use Central Business District, governed by 18.650 (18.280
+  # "does not apply", 18.280.020.C). Residential Use A/R (Table 18.650.1;
+  # the R is 18.650.050.B.1, residential and nonresidential on one site
+  # outside a mixed-use development, which the pod is not), Rowhouses Y
+  # (Table 18.650.2). All new development takes a Type II site development
+  # review whose criterion is compliance with the chapter's standards
+  # (18.650.030.B.2.a, 18.650.040.B.1): clear and objective.
+  #
+  # Table 18.650.3 prints four subareas, Main Street (MS), 99W/Hall (99H),
+  # Scoffins/Commercial (SC) and Fanno/Burnham (FB), drawn on Map 18.650.A
+  # only. Every figure below is the strictest of the four, so a lot in any
+  # subarea is held to at least its own standard. The one row that can
+  # refuse the pod is "First story minimum 15 ft." in MS and 99H: a
+  # fifteen-foot ground floor inside a 26-foot two-storey building leaves
+  # eleven feet for the floor above and the roof (the ZDO 1005.09 reading).
+  # No field holds a storey height, so it rides on the use: false where
+  # the subarea is MS or 99H (`inside_mapped_use_area`, unknown). The 20 ft
+  # height minimum is held; the pod clears it.
+  #
+  # Min density 25 is MS, 99H and SC's (FB 15), "residential-only
+  # development" (note [4]): four units on at most 6,969 sq ft. Max density
+  # 50 (80 in the station area overlay) the state layer strikes on one lot.
+  # ------------------------------------------------------------------
+  MU-CBD:
+    cite_default:
+      cite: Tigard CDC 18.650 (Tigard Downtown Plan District)
+      url: https://ecode360.com/print/TI5024?guid=43707834
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.650.1, Residential Use A/R in MU-CBD, Table 18.650.2, Rowhouses Y, and 18.650.030.B.2.a with 18.650.040.B.1 (Type II review on the chapter's standards)
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L211,L259,L305-L308,L345,L431-L432,L439"
+      variants:
+        - value: false
+          when: [inside_mapped_use_area]
+          cite: Tigard CDC Table 18.650.3, first story minimum 15 ft in the Main Street and 99W/Hall subareas (Map 18.650.A); a 26 ft two-storey pod does not have one
+          quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L471"
+    min_lot_sqft:
+      exempt: true
+      cite: Tigard CDC Table 18.650.3, Minimum Lot Size None in all four subareas
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L458"
+    min_lot_width_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.650.3, Minimum Lot Width None in all four subareas
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L459"
+    setback_front_ft:
+      value: 5
+      cite: Tigard CDC Table 18.650.3, minimum front setback 0 ft, or 5 ft for frontage on 99W in 99H; the strictest held
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460-L461"
+    setback_street_side_ft:
+      value: 0
+      cite: Tigard CDC Table 18.650.3, minimum street side setback 0 ft in all four subareas
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L462"
+    setback_side_ft:
+      value: 0
+      cite: Tigard CDC Table 18.650.3, minimum side setback 0 ft in all four subareas
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L463"
+    setback_rear_ft:
+      value: 5
+      cite: Tigard CDC Table 18.650.3, minimum rear setback 0 ft (MS) or 5 ft (99H, SC, FB); the strictest held
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L464"
+    setback_front_max_ft:
+      value: 10
+      cite: Tigard CDC Table 18.650.3, maximum front setback 10 ft (MS), 25 ft (99H), 20 ft (SC, FB); the strictest held
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L465-L466"
+    max_height_ft:
+      value: 45
+      cite: Tigard CDC Table 18.650.3, maximum height 45 ft in 99H, and in FB within 200 ft of Fanno Creek Park or 50 ft of RES-A through RES-D (note [2]); 80 ft elsewhere; the strictest held
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468,L470,L479,L481"
+    min_building_height_ft:
+      value: 20
+      cite: Tigard CDC Table 18.650.3, minimum building height 20 ft in all four subareas
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468-L469"
+    max_impervious_pct:
+      value: 80
+      cite: Tigard CDC Table 18.650.3, maximum lot coverage 100% (MS), 90% (99H, SC), 80% (FB); the strictest held, as coverage of buildings and other impervious surfaces (18.30)
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L472"
+    min_landscaped_pct:
+      value: 20
+      cite: Tigard CDC Table 18.650.3, minimum landscape area 0% (MS), 10% (99H, SC), 20% (FB); the strictest held
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L473"
+    min_density_du_per_acre:
+      value: 25
+      cite: Tigard CDC Table 18.650.3, minimum residential density 25 units per acre (MS, 99H, SC; FB 15) for residential-only development (note [4]); the strictest held
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475-L476,L479,L483"
+    max_density_du_per_acre:
+      value: 50
+      cite: Tigard CDC Table 18.650.3, maximum residential density 50 units per acre (80 in the station area overlay, note [5]); the strictest held
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475,L477,L479,L484"
+    orientation_constraint:
+      value: axis_required
+      cite: Tigard CDC 18.650.080.A, 50 percent of the first story front elevation within the maximum front setback, and individual entrances to rowhouse development oriented to the street
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L582,L614"
+    parking_front_prohibited:
+      value: true
+      cite: Tigard CDC 18.650.070.B.1, parking areas located on the side or rear of newly constructed buildings
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L488-L492"
+    parking_area_max_frontage_pct:
+      value: 50
+      cite: Tigard CDC 18.650.070.B.1, a parking area on the side may not exceed 50% of the total frontage of the site
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L488-L492"
+    parking_street_setback_ft:
+      value: 10
+      cite: Tigard CDC 18.650.070.B.2, parking areas set back a minimum of 10 feet from a street property line
+      quote: "or/washington/tigard/tdc.18.650.downtown.txt#L488,L496"
+    parking_stall_width_ft:
+      value: 8.5
+      cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.650 applies in addition to the rest of the title, 18.650.020.A)
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_stall_depth_ft:
+      value: 16
+      cite: Tigard CDC Table 18.410.2, 90 degree stall depth 16 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_one_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree one-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    parking_aisle_two_way_ft:
+      value: 20
+      cite: Tigard CDC Table 18.410.2, 90 degree two-way aisle width 20 ft.
+      quote: "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241"
+    notes: >-
+      DRAFT. Rowhouses Y by a clear and objective Type II review; the strictest of Table
+      18.650.3's four subareas on every row; refused where the subarea is Main Street or
+      99W/Hall (first story 15 ft), which no map held draws. No driveway width: 18.280 does
+      not apply and Table 18.920.1 sends rowhouses to it.
+  # ------------------------------------------------------------------
+  # TMU, Triangle Mixed-Use. 18.660 "appl[ies] in lieu of other provisions
+  # in this title" (18.660.030.A, L132), and 18.280 does not apply
+  # (18.280.020.C). Residential Use A (Table 18.660.4); the chapter has no
+  # housing type table and limits none. Review is development review on
+  # clear standards (18.660.040).
+  #
+  # THE FIRST STOREY. Table 18.660.7: "First story 12 feet (min.) and 25
+  # feet (max.)", top story 18 max (L945-L949). Not a whole-building
+  # minimum, so not min_building_height_ft. A 26 ft two-storey pod can
+  # have a 12 ft ground storey (12 + 14), but whether the catalog pod does
+  # is not in its spec ("Not from a drawing set"). NOT ENCODED: no field
+  # holds a storey height. A doubt and a question for Steph; if the pod's
+  # ground storey is under 12 ft, every TMU lot is red.
+  #
+  # Height is held in storeys: six, or four on lots Map 18.660.A marks
+  # (L943). The map is not held, so 4. The pod is 2. No coverage, no
+  # landscape area and no density are printed. Parking: no minimum, Table
+  # 18.410.3's maximums (18.660.070.D.1); 7.5 by 17.5 ft spaces (D.2);
+  # "behind a building or at least 35 feet away from all street property
+  # lines" (D.3), held as the 35, the stricter (the rear court is behind
+  # the building; on a corner lot it is not behind it from the side
+  # street). No aisle width: 18.410's table does not reach TMU. Driveways
+  # for rowhouses "must be 10 feet or less in width" (G.2). Vision
+  # clearance (18.930) does not apply (B.3).
+  # ------------------------------------------------------------------
+  TMU:
+    cite_default:
+      cite: Tigard CDC 18.660 (Tigard Triangle Plan District)
+      url: https://ecode360.com/print/TI5024?guid=43708038
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Tigard CDC Table 18.660.4, Residential Use A in TMU, and 18.660.030.A (the chapter applies in lieu of other provisions)
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L132,L536-L539"
+    min_lot_sqft:
+      exempt: true
+      cite: Tigard CDC 18.660.040.C.5.a, there is no minimum lot area, width, or depth standard in the TMU zone
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L351"
+    min_lot_width_ft:
+      exempt: true
+      cite: Tigard CDC 18.660.040.C.5.a, there is no minimum lot area, width, or depth standard in the TMU zone
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L351"
+    setback_front_ft:
+      value: 1
+      cite: Tigard CDC 18.660.070.B.1, minimum building setback one foot from the street property line
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L633"
+    setback_street_side_ft:
+      value: 1
+      cite: Tigard CDC 18.660.070.B.1, minimum building setback one foot from the street property line (every street line)
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L633"
+    setback_front_max_ft:
+      value: 12
+      cite: Tigard CDC 18.660.070.B.1, maximum building setback 12 feet, met when 70% of the street-facing facade is within 12 feet
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L633"
+    setback_side_ft:
+      value: 0
+      cite: Tigard CDC 18.660.070.B.2, no minimum or maximum building setback standard for interior property lines
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L665"
+    setback_rear_ft:
+      value: 0
+      cite: Tigard CDC 18.660.070.B.2, no minimum or maximum building setback standard for interior property lines
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L665"
+    max_height_stories:
+      value: 4
+      cite: Tigard CDC 18.660.080.B, maximum six stories, or four on properties shown on Map 18.660.A (the map is not held; four held)
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L943"
+    parking_min_per_unit:
+      value: 0
+      cite: Tigard CDC 18.660.070.D.1, the maximum quantity standards for off-street parking are in Table 18.410.3 (no minimum stated)
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L705-L707"
+    parking_stall_width_ft:
+      value: 7.5
+      cite: Tigard CDC 18.660.070.D.2, off-street parking spaces a minimum of seven and one-half feet in width
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L711"
+    parking_stall_depth_ft:
+      value: 17.5
+      cite: Tigard CDC 18.660.070.D.2, off-street parking spaces a minimum of 17.5 feet in length
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L711"
+    parking_street_setback_ft:
+      value: 35
+      cite: Tigard CDC 18.660.070.D.3, off-street parking behind a building or at least 35 feet from all street property lines (the 35 held)
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L715"
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: Tigard CDC 18.660.070.G.2, driveways for rowhouses and small form residential development must be 10 feet or less in width
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L875"
+    orientation_constraint:
+      value: entrance_only
+      cite: Tigard CDC 18.660.080.C.1.b, an entrance for each individual residence with a street-facing facade
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L953,L957,L975-L977"
+    notes: >-
+      DRAFT. Residential Use A under a stand-alone chapter. No lot minimum; 1 ft to the
+      street, 12 ft maximum, nothing on interior lines; four storeys; 7.5 by 17.5 spaces,
+      parking 35 ft from streets; rowhouse driveways at most 10 ft wide. The 12 ft first
+      storey is not encoded (a question for Steph).
+  # ------------------------------------------------------------------
+  # THE REFUSALS. COM and MUE: Residential Use R, limited to mixed-use
+  # development (18.120.020, 18.120.030.D.1 and F.1), and Rowhouses N in
+  # Table 18.120.2; the pod is not mixed use. IND and PR: Residential Use P.
+  # ------------------------------------------------------------------
+  COM:
+    cite_default:
+      cite: Tigard CDC 18.120.020 (residential uses limited to mixed-use developments)
+      url: https://ecode360.com/print/TI5024?guid=43705535
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Tigard CDC 18.120.020 (residential uses limited to mixed-use developments), Table 18.120.1 (Residential Use R) and Table 18.120.2 (Rowhouses N, Quads N, Apartments N in COM)
+      quote: "or/washington/tigard/tdc.18.120.commercial-zones.txt#L37,L92-L94,L136,L489-L496"
+    notes: >-
+      DRAFT. Refuses: residential only in a mixed-use development; Rowhouses N.
+  MUE:
+    cite_default:
+      cite: Tigard CDC 18.120.020 (residential uses only where employment is a primary use)
+      url: https://ecode360.com/print/TI5024?guid=43705535
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Tigard CDC 18.120.020 (residential uses only where employment is a primary use), Table 18.120.1 (Residential Use R), 18.120.030.F.1 and Table 18.120.2 (Rowhouses N in MUE)
+      quote: "or/washington/tigard/tdc.18.120.commercial-zones.txt#L45,L92-L94,L284-L296,L489-L496"
+    notes: >-
+      DRAFT. Refuses: residential only with employment; Rowhouses N.
+  IND:
+    cite_default:
+      cite: Tigard CDC Table 18.130.1
+      url: https://ecode360.com/print/TI5024?guid=43705552
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Tigard CDC Table 18.130.1, Residential Use P (prohibited) in IND
+      quote: "or/washington/tigard/tdc.18.130.industrial-zones.txt#L59,L66-L68"
+    notes: >-
+      DRAFT. Refuses: Residential Use prohibited.
+  PR:
+    cite_default:
+      cite: Tigard CDC Table 18.140.1
+      url: https://ecode360.com/print/TI5024?guid=43705577
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Tigard CDC Table 18.140.1, Residential Use P (prohibited) in PR
+      quote: "or/washington/tigard/tdc.18.140.parks.txt#L81,L84-L86"
+    notes: >-
+      DRAFT. Refuses: Residential Use prohibited.
