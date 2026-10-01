@@ -119,6 +119,13 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
         # other than an alley", and "Street" includes a private road or
         # easement, so private drives count and alleys do not. No angle test.
         "or/washington/sherwood",
+        # 2026-10-01: Tigard, a draft from a cloud session. 18.30 "Corner
+        # lot": at the intersection of two streets "where the interior angle
+        # of such intersection does not exceed 135º", so exactly 135 is a
+        # corner. A "Street" is a public or private accessway to three or
+        # more lots, so private drives count; an "Alley" is a minor way, not
+        # a street, so alleys do not.
+        "or/washington/tigard",
     ]
 
 

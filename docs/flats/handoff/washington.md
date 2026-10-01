@@ -3835,8 +3835,8 @@ Durham (all run on 2026-09-29, on the final layer):
 ### Tigard (branch `flats/tigard-draft`, 2026-10-01)
 
 **Full suite** (`uv run pytest flats/tests -q -n auto`), the final tree:
-FULL_SUITE_RESULT. `uv run ruff check flats/ scripts/`: RUFF_RESULT.
-`uv run python scripts/check_flats_firewall.py`: FIREWALL_RESULT.
+**3989 passed, 5 skipped in 238 s**, no failures. `uv run ruff check flats/ scripts/`: all checks passed.
+`uv run python scripts/check_flats_firewall.py`: OK, 65 changed files, FLATS-scoped.
 
 **quadfit's tests** (`uv run pytest "Lot Analysis/quadfit/tests" -q`),
 the same tree: **348 passed in 353 s.** Tigard holds no `corner_lot`
@@ -3867,6 +3867,9 @@ variant (its variants are `attached_wall`, `alley_at_rear` and
 - `test_unweighed_layers.py`: `OWED_A_COUNTY` adds `or/washington/tigard`.
 - `test_districts.py`: two `RULINGS` for Tigard, FAR and INST, both
   not-a-zone.
+- `test_definitions_register.py`: the jurisdictions with a corner-lot
+  definition add `or/washington/tigard`. The run before this pin had 1
+  failed, 3988 passed: this list.
 
 **New and extended tests**:
 
