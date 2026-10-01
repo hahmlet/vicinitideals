@@ -603,53 +603,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    bond / urban renewal as the Gresham file does) and its CPR row; Clackamas
    needs its own rate file and CPR table (a different county publication).
    Pending decision: which city next (the pitch is per-city).
-15. **Bond 1 model after Edgemont (rev13), Alcove Hollywood (rev14), Alcove
-    Northwest (rev15), financing removed (rev16), Edgemont rent timing (rev17)
-    management fees + payroll (rev18) and developer fees by rate (rev19) and
-    property codes renumbered (rev20, 2026-09-24).**
-    Latest: `docs/models/CDC of Oregon Bond 1 - Investor Pro Forma (no debt pricing) rev22.xlsx`.
-    Side case: `...Acquisition Only rev1.xlsx` (P3/P5/P6 only, from rev22; uses $24.675M, Y3 NOI $1.77M, YoC 7.17%).
-    rev22: 68-Unit (P4) rents = seller roll capped at 60% AMI (all 68 units),
-    heat-pump utility allowance ASSUMED (pending mech plans + PHB), PM 6.25%
-    of capped EGI, insurance $15K, tax $10,507 Y1 only, RAMP $9,176 from Y2
-    (Assumptions section L). P4 Y3 NOI $1,074,484 -> $894,906; portfolio
-    $2,664,729, YoC 6.74%, cumulative Y9 $26,942,864.
-    rev21: Alcoves' 5% fee is now the DEVELOPER FEE (rate x price, like Edgemont;
-    acq-fee line gone); 68-Unit $170K land acq fee folded into its dev fee
-    ($1,149,200 one number); dev fees $2,324,200; OFFERED: hide (not
-    delete) the 3 Operating/Rent Plan tabs -- 229 formulas feed off them;
-    Office+Tower sale proceeds
-    ($2,930,128) back on Cash Flow as Year-1 sponsor equity, cumulative Y9
-    $28,448,055.
-    rev20: codes shift down one (Office P1, Tower P2, Hollywood P3, 68-Unit P4,
-    Northwest P5, Edgemont P6) -- tabs, labels, notes, names; no number moved.
-    Glossary change-log items before rev20 keep the OLD codes; the "rev13/rev18
-    instruction" docs below still use old codes too.
-    rev19: Edgemont dev fee 5% of price, 68-Unit 12% of hard cost ($979,200),
-    rates in S&U col C; Alcoves' $275K acquisition fee IS the dev fee (none
-    added); 68-Unit land acq fee separate on purpose. Dev fees $1,604,200;
-    uses $39,524,200; YoC 7.20%. Carried in full on purpose (investor will cut).
-    rev18: third-party mgmt fees kept in opex (P4 $18,430, P6 $18,225 typical
-    month, P7 $55,307), P4/P6 payroll Feb-Jul run rate + maint T12; P7
-    reimbursements stay at 3%. Stabilized NOI $2,844,308, YoC 7.16%.
-    rev17: Edgemont rents reset each July on year-by-year limits (2027-29
-    typed estimates, 2030+ at 3%); stabilized NOI $2,889,669, YoC 7.28%,
-    cumulative Y9 $25,952,305; full-compliance switch built (default off).
-    Steph 2026-09-24: drop financing entirely -- no bond, fee, reserves,
-    sizing, DSCR, float earnings -- then the deferred developer fee too
-    (source + Y8 repayment). Uses $39,709,779; OR-MEP grant ($250K) is the
-    only committed source; the rest ($39,459,779) is "capital to be raised"
-    at closing; YoC 7.25%; cumulative Y9 $25,829,720; NOI unchanged. Also ruled: P2/P3/P5 zero tax,
-    half of move-ins get the concession, P6 tax $92,428, $5.5M on both
-    Alcoves, insurance + elevator separate per building. Still open: (c)
-    Separate Projects twin deliberately not updated (being reworked); (d)
-    confirm with PHB the NPLTE extension to 2033 (statute online ends June
-    2027) and the tenant-benefit statement (model assumes services); (e)
-    Northwest water/sewer $17,755 over Hollywood's -- City ledger (lag
-    billing vs leak); RAMP on the low-income share only -- confirm with the
-    Water Bureau; (g) legacy typed factors never re-derived: delivery
-    timing D116/D123/C120-121, P5 lease-up G79, P3 sale proceeds. Bond sizing figures from rev15 (1.20/1.15/1.10) are in
-    git history of this file if financing comes back.
+15. **Edgemont (P7) bond-model update -- waiting on Steph's answers.**
+    `docs/models/Edgemont_Model_Update_Instructions.md` (another agent's plan:
+    60% AMI rent plan for the Portland nonprofit tax exemption, P7 property
+    tax, RAMP credit, $500 concession policy, OpEx cuts, asset-mgmt fee, and
+    rebuilding the typed-in cash-flow rows on every property tab) was
+    reviewed 2026-09-23; the basis `CDC_of_Oregon_Bond_1_-_Investor_Pro_Forma.xlsx`
+    is byte-identical to `... (no debt pricing) rev12.xlsx`. Its per-unit
+    math re-checks exactly (84 units, 33/31/20, GPR $1,278,984). Open before
+    any edit: does the exemption require passing the tax savings to tenants;
+    who takes title (nonprofit?); do other properties rely on the same
+    exemption; AM fee rate; update the Separate Projects rev12 twin too?;
+    bond re-sizing (-$275K to -$435K par at 1.20x). Traps: the Pro Forma
+    page recomputes OpEx and revenue itself (section K + per-category rows),
+    so a change made only to the P7 roll-up leaves the portfolio pages
+    stale; keep P7 units split Studio/1BR/2BR. Deliver as rev13 via Excel COM.
 16. **Partial re-screen -- SHIPPED 50a0ecc2 2026-09-25 (runbook §4c).**
    Bridge `--zone "<city>:<zone>"` / `--tlid`; `python -m flats.ingest.splice
    splice|audit`. First use: the two Oregon City farm lots (f0418b49) in
@@ -931,3 +899,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    and submitted once at the end of the document; a per-document "read by a
    human" record so the corpus gets covered over time. Until it exists, keep
    "Flag something missing" on the card.
+27. **Parking layout generator (Steph 2026-10-01: "more parking flexibility
+   opens up more lots"; don't invent shapes; consider procedural).** PLANNED,
+   awaiting Steph's go + worktree OK. One grammar instead of a menu: a drive
+   from the access point, straight or with one right-angle turn, stalls hung
+   along it using only stall types the city's table publishes (90/60/45/
+   parallel) at the city's sizes; the turn at SLC's published radius. Covers
+   Steph's L 3+1 / 2+2 / mirror, all-parallel, mixed; T and tandem out
+   (tandem counts for one unit only). Pool (run 49): ~108k lots fail ONLY
+   on the court behind (Portland 78k) + ~32k ambiguous. Phases: 0 record
+   bare-building slack + prototype yield on 137; 1 encode parallel/angled/
+   backing-into-street fields (none exist; fix Happy Valley 16.43.030.I and
+   Sherwood 9x20 gaps); 2 generator `flats/fit/parking.py` on the failing
+   pool only; 3 stall boxes on the lot page; 4 bound, full re-screen,
+   promote. Supersedes the L/T note in 4(a).
