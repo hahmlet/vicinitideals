@@ -55,11 +55,18 @@ HALF_ROAD_FT = 10.0
 MAX_GAP_FT = 50.0
 #: RLIS STREETS TYPE codes a fire truck can stand on: highway, arterials,
 #: collectors, local streets and NAMED private roads (1700, built to street
-#: standard and signed off by the fire district with the subdivision).
+#: standard and signed off by the fire district with the subdivision); and
+#: the same classes where a streetcar or MAX line runs in the street (5301
+#: Grand, MLK, Broadway; 5401 Jefferson; 5451 NW 10th/11th, Moody; 5500;
+#: 5501 SW 5th/6th, Yamhill, Morrison) -- streets cars and trucks drive.
 #: Not freeways or ramps (11xx, x21-x23, x71), alleys (1600), unnamed drives
-#: (1800), trails, rail and unclassed lines -- a road left out can only send
+#: (1800), unimproved roads (2000: Leif Erikson Drive), 5402 (Tilikum
+#: Crossing and Harbor Viaduct, transit only, beside two streets), forest
+#: roads (9000), trails and unclassed lines -- a road left out can only send
 #: the truck to a farther one.
-TRUCK_TYPES: frozenset[int] = frozenset({1200, 1300, 1400, 1450, 1500, 1550, 1560, 1700})
+TRUCK_TYPES: frozenset[int] = frozenset(
+    {1200, 1300, 1400, 1450, 1500, 1550, 1560, 1700, 5301, 5401, 5451, 5500, 5501}
+)
 #: How often the street lot line is sampled for where the hose comes on.
 SOURCE_STEP_FT = 5.0
 #: Slack on "stays on the lot": a lot line traced to the tenth of a foot, and a
