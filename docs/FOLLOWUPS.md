@@ -929,5 +929,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    angled stalls or backing-into-street limits yet (Happy Valley 16.43.030.I
    exemption and Sherwood 9x20 unencoded). Steph sent 8 references (MDPI
    2075-5309/13/11/2898, arXiv 2407.01333, Grasshopper parking solvers,
-   IAAC, nvdomidi/ProceduralGenerator) -- digest pending. Next: Steph
-   approves scope -> Phase 0 prototype on 137 (yield + seconds per lot).
+   IAAC, nvdomidi/ProceduralGenerator) -- digested: none solves it, none
+   checks a turning path; lessons: access first, lot-edge angles first, an
+   independent validator, score against real approved site plans.
+   PROPOSED time box: simple shapes (1-2 sessions) + generator prototype on
+   137 (<= 2 sessions, 5,000 failing lots); continue only if it adds lots
+   beyond the shapes, zero false fits in hand review, <= ~3 s a lot.
+   HUMAN VERIFICATION (Steph): an annotated image per layout -- every
+   distance dimensioned and tagged, a table of required vs measured with the
+   citation behind each number; physical numbers no code states (design
+   car, turning radii, inside-corner offset, end-stall width, dead-end
+   extension, driveway spacing) from official/industry standards in a cited
+   registry (research running); a review queue like the page check; zero
+   false fits before any promotion. Awaiting Steph's go.
