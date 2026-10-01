@@ -213,7 +213,8 @@
   (function () {
     if (window.matchMedia("(max-width: 1000px)").matches) return;
     var cited = document.querySelector("#check-card [data-cited]");
-    if (cited) window.scrollTo(0, cited.getBoundingClientRect().top + window.scrollY - 12);
+    // scrollIntoView, not window.scrollTo: the layout scrolls its own pane.
+    if (cited) { cited.style.scrollMarginTop = "12px"; cited.scrollIntoView({ block: "start" }); }
   })();
 </script>
 {% endif %}
