@@ -612,3 +612,35 @@ def test_durhams_chapter_is_read_whole_with_its_nouns(corpus: list[Chapter]) -> 
     assert terms["Quadplex"] == "or/washington/durham/ddc.12.definitions.txt#L116"
     assert terms["Middle Housing"] == "or/washington/durham/ddc.12.definitions.txt#L93"
     assert terms["Townhouse"] == "or/washington/durham/ddc.12.definitions.txt#L176"
+
+
+def test_a_quoted_term_closed_by_a_dash_is_a_stacked_entry() -> None:
+    """Tigard sets '"Rowhouse" -' alone on its line and the meaning beneath.
+    The term is the quoted noun, without the dash."""
+    got = read(
+        "\n".join(
+            [
+                '"Rowhouse" -',
+                "A type of attached housing that shares a common sidewall with one or more dwelling units.",
+            ]
+        )
+    )
+
+    assert [(e.term, e.shape, e.line) for e in got] == [("Rowhouse", "stacked", 1)]
+    assert got[0].text.startswith("A type of attached housing")
+
+
+def test_tigards_chapter_is_read_whole_with_its_nouns(corpus: list[Chapter]) -> None:
+    """Before the dash was taught (2026-10-01), thirty-two entries out of 1,812
+    lines, seven out of order: skimmed and thin. After, 228 and none out of
+    order. "Front lot line" stays out: its body opens "In the case of", the
+    preposition guard's shape, and the layer quotes that line by hand."""
+    tigard = next(c for c in corpus if c.layer == "or/washington/tigard")
+    terms = {e.term: e.quote for e in tigard.entries}
+
+    assert tigard.read_whole
+    assert len(tigard.entries) == 228
+    assert terms["Rowhouse"] == "or/washington/tigard/tdc.18.30.definitions.txt#L1032"
+    assert terms["Quad"] == "or/washington/tigard/tdc.18.30.definitions.txt#L1028"
+    assert terms["Corner lot"] == "or/washington/tigard/tdc.18.30.definitions.txt#L1236"
+    assert terms["Driveway"] == "or/washington/tigard/tdc.18.30.definitions.txt#L978"

@@ -418,7 +418,11 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # feet against 10), and 12.50.715 C.2.c.i sends an alley-backed lot's
     # access to the alley, so the rear line's own fact is the key. It
     # tightens; nothing is waived.
-    assert keyed_to_line == 28 + 19 + 1
+    # + 6 on 2026-10-01: Tigard RES-A to RES-E and MUR, a draft from a
+    # cloud session. Table 18.280.1 note [2]: "There is no rear setback
+    # requirement when the rear property line abuts an alley" -- the rear
+    # line's own fact, as the note says.
+    assert keyed_to_line == 28 + 19 + 1 + 6
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:

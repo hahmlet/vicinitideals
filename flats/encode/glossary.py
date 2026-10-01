@@ -94,9 +94,15 @@ ENTRY = re.compile(
 #: The stacked form: the term alone on its line, the body beneath it. Milwaukie
 #: and Happy Valley's codifier sets every entry this way, and a rule that only
 #: knows the inline form reads their entire chapters as prose.
+#:
+#: Tigard's codifier closes the quoted term with a dash -- '"Driveway" -' on
+#: its own line, the meaning beneath -- and a rule that only knew a full stop
+#: or a colon read thirty-two of its entries out of 1,812 lines (2026-10-01).
+#: The dash is taken as the separator only after a closing quote, so the
+#: unquoted shape reads exactly as it did before.
 STACKED = re.compile(
     rf"^(?:{_SECTION}\s+)?" r"[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})"
-    r"[\"”]?\s*[.:]?$"
+    r"[\"”]?(?:\s*[.:]|(?<=[\"”])\s*[–—-])?\s*$"
 )
 
 #: What a body has to open with to be a meaning rather than a pointer or a

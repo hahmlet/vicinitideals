@@ -816,6 +816,23 @@ RULINGS: dict[str, dict[str, str]] = {
             "(ddc.3.site-design L476)."
         ),
     },
+    "or/washington/tigard": {
+        # All thirteen zones Metro's map prints for Tigard are zone blocks
+        # (2026-10-01, draft, a cloud session): nine admit the pod, four are
+        # refusals. What the harvest still prints is a measurement and a
+        # county district.
+        "FAR": (
+            "not-a-zone: floor area ratio, a measurement defined in 18.30 "
+            "(tdc.18.30.definitions L1131) and computed in 18.40 "
+            "(tdc.18.40.measurements L274)."
+        ),
+        "INST": (
+            "not-a-zone: Washington County's Institutional district, named "
+            "in the annexation conversion table, which maps it to the "
+            "equivalent of the adjacent county zone "
+            "(tdc.18.720.annexations L66). Not a Tigard zone."
+        ),
+    },
 }
 
 #: Designations found by hand while ruling the rows above, which the ledger

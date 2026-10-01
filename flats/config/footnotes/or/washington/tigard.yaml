@@ -1,0 +1,108 @@
+# Tigard Community Development Code (Title 18 of the Tigard Municipal Code,
+# eCode360 TI5024, current through Ordinance 26-13). Draft, cloud session
+# 2026-10-01. Nothing here is verified.
+#
+# The census finds four notes blocks and ten bodies in the Tigard documents:
+# Table 18.110.3 (residential housing types, two notes), Table 18.280.1
+# (rowhouse development standards, two), Table 18.640.1 (River Terrace
+# Boulevard reduced lots, one) and Table 18.650.3 (Downtown development
+# standards, five). Every body is ruled below.
+#
+# WHAT THE CENSUS MISSES. Read by eye on 2026-10-01: Tables 18.660.9 and
+# 18.660.10 (Triangle street elements) print a "Notes" COLUMN, not a notes
+# block; they describe street sections, which the layer does not read.
+# Tables 18.120.1, 18.120.2, 18.805.1 and 18.410.3 print no markers. No
+# other notes block was found in the stored chapters.
+notes:
+  - quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L214"
+    digest: "45d3fdf0ae77"
+    state: dismissed
+    reason: >-
+      Note 1 of Table 18.110.3 sits on one cell, Mobile Home Parks in RES-B
+      (L206), and says that use is allowed only as a conditional use. It
+      says nothing about rowhouses, which carry note 2.
+  - quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L215"
+    digest: "bcdcb31687f4"
+    state: encoded
+    encoded_as: >-
+      RES-A, RES-B and RES-C quadplex_allowed true, quoting the Rowhouses L[2]
+      row (L208) and this note
+    reason: >-
+      Note 2 limits rowhouses in RES-A, RES-B and RES-C to "up to 5 units per
+      grouping". The pod is four attached units, one grouping of four, so
+      the limit is met and the cells read as allowed.
+  - quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L88"
+    digest: "a709e20c9f77"
+    state: encoded
+    encoded_as: >-
+      RES-A to RES-E and MUR setback_side_ft, variant 0 when attached_wall
+    reason: >-
+      Note 1 of Table 18.280.1 lifts the side setback on "a common wall lot
+      line where the dwelling units are attached". Held as a variant on the
+      side setback keyed to the attached wall.
+  - quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L89"
+    digest: "d74f39916d66"
+    state: encoded
+    encoded_as: >-
+      RES-A to RES-E and MUR setback_rear_ft, variant 0 when alley_at_rear
+    reason: >-
+      Note 2 of Table 18.280.1: "There is no rear setback requirement when
+      the rear property line abuts an alley." Held as a variant on the rear
+      setback keyed to the rear line's own alley fact.
+  - quote: "or/washington/tigard/tdc.18.640.river-terrace.txt#L403"
+    digest: "c84d424e00cf"
+    state: dismissed
+    reason: >-
+      Note 1 of Table 18.640.1 says the reduced River Terrace lot sizes are
+      per dwelling unit for apartment and rowhouse developments. The whole
+      table is the 18.640.050.C density bonus for sites abutting River
+      Terrace Boulevard, an elective relaxation the layer does not encode
+      (a NOT ENCODED comment in the layer). The base-zone lot sizes are held.
+  - quote: "or/washington/tigard/tdc.18.650.downtown.txt#L480"
+    digest: "f624a46daa45"
+    state: dismissed
+    reason: >-
+      Note 1 of Table 18.650.3 sits on the maximum height and maximum density
+      rows and says "See Subsection 18.650.080.D." 18.650.080.D is now the
+      street-corner design standard for nonresidential and mixed-use
+      buildings (L777-L781). The affordable housing height and density
+      bonuses it once pointed at are at 18.650.100.C (L1011-L1045), whose own
+      text still cites 18.650.080.D.1 -- a stale number left by a
+      renumbering. Read either way it raises the maximums for qualified
+      affordable housing or does not reach a residential building; neither
+      tightens the values held, which are the unbonused maximums.
+  - quote: "or/washington/tigard/tdc.18.650.downtown.txt#L481"
+    digest: "20db109e383f"
+    state: encoded
+    encoded_as: "MU-CBD max_height_ft 45"
+    reason: >-
+      Note 2 lowers the Fanno/Burnham maximum height from 80 to 45 feet
+      within 200 feet of Fanno Creek Park or within 50 feet of the RES-A to
+      RES-D zones. No subarea is mapped, so the layer holds the strictest
+      subarea maximum, 45 feet (99W/Hall), which is also this note's figure.
+  - quote: "or/washington/tigard/tdc.18.650.downtown.txt#L482"
+    digest: "b04b6adb3a34"
+    state: dismissed
+    reason: >-
+      Note 3 lets required MU-CBD landscaping sit on roofs or in the abutting
+      right-of-way where a street improvement requires it. A relaxation of
+      where landscaping goes; the layer holds the full 20 percent on the lot
+      (the Fanno/Burnham figure, the strictest subarea), which is the
+      stricter reading.
+  - quote: "or/washington/tigard/tdc.18.650.downtown.txt#L483"
+    digest: "7e7cb6b80dde"
+    state: encoded
+    encoded_as: "MU-CBD min_density_du_per_acre 25"
+    reason: >-
+      Note 4 applies the minimum density to residential-only development.
+      The pod is residential only, so the minimum binds. The layer holds 25
+      units per acre, the minimum of three of the four subareas and the
+      stricter of the two printed figures.
+  - quote: "or/washington/tigard/tdc.18.650.downtown.txt#L484"
+    digest: "bbe77433825b"
+    state: dismissed
+    reason: >-
+      Note 5 raises the maximum density to 80 units per acre in the station
+      area overlay (Map 18.650.B). A relaxation of the 50 units per acre the
+      layer holds, keyed to an overlay that is not mapped; holding 50 is
+      the stricter reading.

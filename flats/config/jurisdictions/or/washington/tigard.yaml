@@ -277,7 +277,7 @@ zones:
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-A and RES-B)
-      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
     max_height_ft:
       value: 35
       cite: Tigard CDC Table 18.280.1, rowhouse maximum height 35 ft (RES-A and RES-B)
@@ -384,7 +384,7 @@ zones:
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-A and RES-B)
-      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
     max_height_ft:
       value: 35
       cite: Tigard CDC Table 18.280.1, rowhouse maximum height 35 ft (RES-A and RES-B)
@@ -491,7 +491,7 @@ zones:
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-C and RES-D)
-      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
     max_height_ft:
       value: 35
       cite: Tigard CDC Table 18.280.1, rowhouse maximum height 35 ft (RES-C and RES-D)
@@ -598,7 +598,7 @@ zones:
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-C and RES-D)
-      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
     max_height_ft:
       value: 35
       cite: Tigard CDC Table 18.280.1, rowhouse maximum height 35 ft (RES-C and RES-D)
@@ -705,7 +705,7 @@ zones:
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-E)
-      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
     max_height_ft:
       value: 45
       cite: Tigard CDC Table 18.280.1, rowhouse maximum height 45 ft (RES-E)
@@ -837,7 +837,7 @@ zones:
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (MUR-1 and MUR-2)
-      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L81,L80"
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
     max_height_ft:
       value: 45
       cite: Tigard CDC Table 18.280.1, rowhouse maximum height, MUR-1 75 ft and MUR-2 45 ft; the stricter held
