@@ -962,3 +962,15 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    distance from the street to the farthest wall corner in the fit drawing,
    count today's greens over 150 ft, then decide (red, or a "needs
    sprinklers" relief). Becomes binding for item 27's long drives.
+   SIZED 2026-10-01 (read-only, 137 /root/fire.py on run 49's base
+   /root/bridge_spliced_mhq0930 + s4 street edges; output
+   /root/fire_sizing.parquet): of 52,219 green-if-signed lots, 175 are
+   CERTAINLY past 150 ft (straight line from the street lot line to the
+   farthest wall of the drawn pod -- no route is shorter) and up to 304
+   possibly (nearest gap + half the pod's perimeter); 13 / 34 past 250 ft.
+   None is signed green yet, so no live false GREEN -- but each becomes one
+   on signing. Portland 92, Clackamas uninc 67, Mult uninc 6, small others;
+   109 of the 175 have under 30 ft of frontage (flag lots, median depth
+   305 ft). Median upper estimate on all greens 107 ft, so the rule only
+   bites deep lots. Decision for Steph: red, or yellow "needs sprinklers +
+   fire marshal" (a 20 ft fire lane cannot fit a 16-26 ft flag pole).
