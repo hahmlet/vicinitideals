@@ -130,6 +130,10 @@
           <tr id="tight-{{ r.design|replace('@', '-') }}"><td class="col-muted">Tight fit</td>
               <td><span class="badge badge-orange">tight fit</span> The building fits, or misses, by 6 inches or less. County lot lines are only good to about a foot, so this counts as green; the survey before an offer decides it.</td></tr>
           {% endif %}
+          {% if r.warnings %}
+          <tr id="warnings-{{ r.design|replace('@', '-') }}"><td class="col-muted">Check before an offer</td>
+              <td>{% for w in r.warnings %}<div class="screen-warning"><span class="badge badge-orange">warning</span> {{ w }}</div>{% endfor %}</td></tr>
+          {% endif %}
           {% if r.ask %}
           <tr><td class="col-muted">Path</td><td>{{ r.ask|replace('_', ' ') }}</td></tr>
           {% endif %}

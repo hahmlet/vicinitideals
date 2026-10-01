@@ -108,6 +108,7 @@ ROW_COLUMNS = (
     "stalls_seated",
     "parking_band",
     "tight_fit",
+    "warnings",
     "fit_column",
     "front_deg",
     "side_street_lane",

@@ -45,6 +45,7 @@ from flats.score.screen import (  # noqa: E402
     FACT_UNOBSERVED,
     GEOMETRY_UNREADABLE,
     NO_FRONTAGE,
+    SOLAR_SHADE,
     STANDARD_NOT_ENCODED,
     STREET_UNCONFIRMED,
     USE_NOT_ENCODED,
@@ -488,6 +489,24 @@ def test_tolerance_on_any_other_check_never_manufactures_a_green() -> None:
 def test_a_policy_with_no_fit_tolerance_flags_nothing_tight() -> None:
     result = screen(rules(), LOT, DESIGN, fit(over_ft=0.0), policy=SlackPolicy(), relief=None)
     assert result.triage is Triage.green and result.tight_fit is False
+
+
+def test_a_warning_rides_beside_the_colour_and_never_moves_it() -> None:
+    # Steph 2026-10-01 (Cornelius's sun-shading rule): "Green with a
+    # warning". A rule nothing checks, held as ``solar_shade_limit``, names
+    # itself in ``warnings`` and leaves the colour, reasons and binding as
+    # the rest of the screen made them -- green, yellow or red alike.
+    plain = run()
+    warned = run(rules(solar_shade_limit=True))
+    assert warned.triage is Triage.green and warned.reasons == ()
+    assert warned.warnings == (SOLAR_SHADE,)
+    assert plain.warnings == ()
+    assert (warned.binding, warned.ask) == (plain.binding, plain.ask)
+    assert run(rules(solar_shade_limit=False)).warnings == ()
+    failing = run(rules(min_lot_sqft=8000, solar_shade_limit=True), relief=READ)
+    assert failing.triage is Triage.yellow and failing.warnings == (SOLAR_SHADE,)
+    dead = run(rules(min_lot_sqft=8000, solar_shade_limit=True), relief=NO_RELIEF)
+    assert dead.triage is Triage.red and dead.warnings == (SOLAR_SHADE,)
 
 
 def test_a_definite_miss_outranks_a_fuzzy_one() -> None:

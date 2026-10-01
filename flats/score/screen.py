@@ -35,6 +35,11 @@ acquisition is surveyed and the county's lot lines are coarser than the
 tolerance (:attr:`Screening.tight_fit`). Every other tolerated check still
 holds the lot out of GREEN.
 
+*A warning rides beside the colour and never moves it.* Where a code states a
+rule nothing here measures and Steph has ruled that it must not hold a lot
+back, the screening names it in :attr:`Screening.warnings` instead of
+``reasons``: Cornelius's sun-shading rule, "Green with a warning" (2026-10-01).
+
 *A standard nobody encoded is not a standard that passes.* Skipping a check the
 code plainly imposes would manufacture GREENs. Any skipped check drops the lot
 out of GREEN and names itself, which is how the coverage ledger gets its work.
@@ -133,6 +138,14 @@ COURT_WIDTH_UNMEASURED = "COURT_WIDTH_UNMEASURED"
 #: is too big, and the corner, the lane and the side-street driveway it
 #: grants are not there. A person has to look at the lot (FOLLOWUPS 4).
 STREET_UNCONFIRMED = "STREET_UNCONFIRMED"
+
+#: The code caps the building's height by the shade it casts on the lot to
+#: the north, and nothing here knows which line faces north or where the
+#: roof's peak lands (``solar_shade_limit``; Cornelius 18.160). A WARNING,
+#: not a reason: Steph, 2026-10-01, "Green with a warning" -- the lot keeps
+#: whatever colour the rest of the screen gives it, and the lot page asks a
+#: person to check the shadow before an offer.
+SOLAR_SHADE = "solar_shade"
 
 #: Checks computed from a proxy that runs in the lot's favour. Empty since
 #: 2026-09-28 (FOLLOWUPS 7(a)): the two it held, open space and landscaping
@@ -370,6 +383,11 @@ class Screening:
     #: lot lines are good to about a foot, so the lot's survey decides it,
     #: and a colour that flipped on the next map's redraw would be noise.
     tight_fit: bool = False
+    #: Rules the code states that nothing here checks and that, by Steph's
+    #: ruling, must not hold the lot out of GREEN: named beside the colour
+    #: and never inside it (:func:`warnings_for`). Not ``reasons``, which
+    #: say why a lot is NOT green.
+    warnings: tuple[str, ...] = ()
 
     #: The blocker that most explains the outcome — largest proportional
     #: shortfall, not the tightest. This is what the rule-cost ledger counts;
@@ -408,6 +426,16 @@ def _coverage_allowed_sqft(rules: ZoneResolution, lot_sqft: float) -> tuple[floa
     if pct is not None:
         return lot_sqft * pct / 100.0, "max_coverage_pct"
     return None, ""
+
+
+def warnings_for(rules: ZoneResolution) -> tuple[str, ...]:
+    """What the lot page should ask a person to check, colour aside.
+
+    One today: :data:`SOLAR_SHADE` where the zone's height is capped by the
+    shade the building casts north (``solar_shade_limit``). Read whether or
+    not the rules are signed, so a draft zone's lot shows it too.
+    """
+    return (SOLAR_SHADE,) if rules.get("solar_shade_limit") is True else ()
 
 
 def covered_parking_check(
@@ -1454,7 +1482,11 @@ def screen(
     paths = relief if relief is not None else ReliefPolicy()
 
     if lot.lot_sqft <= 0:
-        return Screening(triage=Triage.unknown, reasons=(GEOMETRY_UNREADABLE,))
+        return Screening(
+            triage=Triage.unknown,
+            reasons=(GEOMETRY_UNREADABLE,),
+            warnings=warnings_for(rules),
+        )
 
     where = rules.jurisdiction
     across = court_across(design, rules, lot.alley, corner=lot.corner)
@@ -1515,6 +1547,7 @@ def screen(
             c.check == "fit_ft" and c.tolerance > 0 and abs(c.slack) <= c.tolerance
             for c in checks
         ),
+        "warnings": warnings_for(rules),
     }
 
     if use_blocked and use_path is not None and not use_path.available:

@@ -295,6 +295,16 @@ def test_the_checks_record_carries_the_tight_fit_and_side_column_flags() -> None
     assert result_checks(nan)["fit"]["column"] is False
 
 
+def test_the_checks_record_carries_the_screen_warnings() -> None:
+    # Steph 2026-10-01, Cornelius's sun-shading rule: "Green with a warning".
+    # The warning rides beside the colour; a bundle written before the
+    # column carries none.
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "warnings": "solar_shade"}
+    assert result_checks(row)["warnings"] == ["solar_shade"]
+    old = result_checks(_bridge_row(LOT_A, DESIGNS[0]))
+    assert not old.get("warnings")
+
+
 def test_the_checks_record_carries_the_corner_front_and_the_side_street_driveway() -> None:
     # FOLLOWUPS 4(e), Steph 2026-09-26: the street the code names the front
     # of a corner lot, and a court reached off the other street. A bundle

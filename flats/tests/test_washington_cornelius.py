@@ -28,24 +28,30 @@ against the grain of a quick look, so a later edit has to argue with it.
   image no layer places a lot in, so the path is held behind
   ``inside_mapped_use_area`` and never comes back green. Its density floor
   is 18 per net acre on 18.195's 43,560 sq ft acre: 9,680 sq ft for four.
-- **R-7 and R-10 are flagged for the sun** (Steph, 2026-10-01): each height
-  carries ``qualified_by: solar_shade_point`` (18.160), a fact nothing
-  measures, so every lot there is UNKNOWN, not GREEN. Covered parking is
-  pinned in ``test_covered_parking.py``.
+- **R-7 and R-10 carry a sun warning, not a sun hold** (Steph, 2026-10-01,
+  "Green with a warning"): ``solar_shade_limit`` (18.160) puts
+  ``solar_shade`` in the screening's warnings and never moves the colour,
+  so an R-7 lot that clears everything else is GREEN with the warning on
+  it. Covered parking is pinned in ``test_covered_parking.py``.
 """
 
 from __future__ import annotations
 
 import pytest
 
+import dataclasses
+
 from flats.designs.model import load_catalog
+from flats.encode.load import load_trusted
+from flats.fit.rectangle import Fit
 from flats.provenance.store import ProvenanceStore
-from flats.rules.conditions import condition
+from flats.rules.conditions import CONDITIONS, condition
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer, Status
-from flats.rules.resolver import RuleSet
+from flats.rules.resolver import Verdict as RuleVerdict
 from flats.score.configure import configure
-from flats.score.screen import LotFacts
+from flats.score.screen import SOLAR_SHADE, LotFacts, Triage, screen
+from flats.score.slack import SlackPolicy
 
 pytestmark = pytest.mark.unit
 
@@ -147,27 +153,65 @@ def test_gmu_density_is_per_the_43560_acre(cornelius: Layer) -> None:
 
 
 @pytest.mark.parametrize("zone", ["R-7", "R-10"])
-def test_the_single_family_zones_are_flagged_for_the_sun(zone: str) -> None:
+def test_the_single_family_zones_carry_the_sun_rule_as_a_warning(zone: str) -> None:
     """Steph, 2026-10-01: flag every R-7 and R-10 lot for the solar balance
-    point (18.160), build no shade check. The height is not changed; it is
-    qualified by a fact nothing measures, so a lot here leans on it and is
-    held out of GREEN with its name on it."""
+    point (18.160), build no shade check -- and then, "Green with a
+    warning". The rule is held as ``solar_shade_limit``, quoted from 18.160,
+    and the height is left as printed, with no fact behind it that a lot
+    could lean on."""
     cornelius = load_rules()[CORNELIUS]
-    height = cornelius.zones[zone].values["max_height_ft"]
-    assert height.value == 35
-    assert height.qualified_by == "solar_shade_point"
-    assert "all structures in all single-family zones" in _text(height.qualified_quote)
-    res = RuleSet(load_rules()).resolve(CORNELIUS, zone, ())
-    assert "solar_shade_point" in res.levers
-    design = max(load_catalog(), key=lambda d: d.height_ft)
-    config = configure(LotFacts(lot_sqft=9000), design)
-    assert "solar_shade_point" in config.unknown
-    assert "solar_shade_point" in config.leans_on(res.levers)
+    held = cornelius.zones[zone].values
+    assert held["max_height_ft"].value == 35
+    assert held["max_height_ft"].qualified_by is None
+    flag = held["solar_shade_limit"]
+    assert flag.value is True
+    assert "all structures in all single-family zones" in _text(flag.prov.quote)
+    assert "solar-balance-point" in flag.prov.quote
+    # The old carrier is gone, so nothing can lean on it.
+    assert "solar_shade_point" not in CONDITIONS
 
 
-def test_the_sun_flag_stops_at_the_single_family_zones(cornelius: Layer) -> None:
+def test_the_sun_warning_stops_at_the_single_family_zones(cornelius: Layer) -> None:
     for zone in ("A-2", "CR", "GMU"):
-        assert cornelius.zones[zone].values["max_height_ft"].qualified_by is None, zone
+        assert "solar_shade_limit" not in cornelius.zones[zone].values, zone
+
+
+def test_an_r7_lot_clearing_everything_else_is_green_with_the_sun_warning() -> None:
+    """The ruling's whole point: the warning rides beside the colour. A
+    generous R-7 lot, its draft rules signed as the bridge's "if signed"
+    column signs them, screens GREEN with no reasons and ``solar_shade`` in
+    its warnings; unsigned, it is UNKNOWN on the draft alone and carries the
+    same warning."""
+    rules = load_trusted(strict=False).rules
+    design = load_catalog().latest("pod56x36")
+    lot = LotFacts(lot_sqft=12000, frontage_ft=100, lot_width_ft=100, lot_depth_ft=120)
+    config = configure(lot, design)
+    draft = rules.resolve(CORNELIUS, "R-7", config.conditions, lot=config.measures)
+    assert draft.verdict is RuleVerdict.unverified
+    signed = dataclasses.replace(draft, verdict=RuleVerdict.trusted, untrusted=())
+    room = design.parking.court_depth_ft + 20.0
+    fit = Fit(
+        fits=True,
+        width_ft=56.0,
+        depth_ft=36.0,
+        best_depth_ft=36.0 + room,
+        slack_ft=room,
+        across_ft=120.0,
+    )
+    policy = SlackPolicy(tolerance={"fit_ft": 0.5})
+
+    got = screen(signed, lot, design, fit, policy=policy, relief=None, config=config)
+    assert got.triage is Triage.green
+    assert got.reasons == ()
+    assert got.warnings == (SOLAR_SHADE,)
+
+    unsigned = screen(draft, lot, design, fit, policy=policy, relief=None, config=config)
+    assert unsigned.triage is Triage.unknown
+    assert unsigned.warnings == (SOLAR_SHADE,)
+
+    # The same lot in A-2 carries no sun warning.
+    a2 = rules.resolve(CORNELIUS, "A-2", config.conditions, lot=config.measures)
+    assert screen(a2, lot, design, fit, policy=policy, relief=None, config=config).warnings == ()
 
 
 def test_r7_and_a2_density_floors_are_per_the_citys_own_acre(cornelius: Layer) -> None:

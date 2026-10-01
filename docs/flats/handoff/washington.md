@@ -1544,19 +1544,33 @@ the screen reports as YELLOW with an unconfirmed variance path, as for any
 standard whose relief chapter is unread. No shipped pod takes the
 unit-lot path, so no verdict moves today.
 
-**The solar balance point in R-7 and R-10** (18.160): flagged, not
-measured, on Steph's ruling. Each zone's height carries `qualified_by:
-solar_shade_point`, a new site fact (`assume=None`) that nothing measures,
-quoting 18.160.020's "all structures in all single-family zones" and the
-formula (L23, L33-L46). The height itself is unchanged. Every lot in the
-two zones leans on the fact, so it comes back UNKNOWN ("needs a closer
-look") with "solar_shade_point" under "Facts nobody measured", never GREEN.
-That is the mildest honest mark the corpus has: YELLOW is reserved for a
-definite miss with an application path, and nothing here is known to
-miss; no existing mechanism (caps, an `unmeasured` footnote, a variant on
-an unmeasured fact, `qualified_by`) yields YELLOW for an unmeasured
-condition. R-7 is about half the city's map, so this is the reading that
-holds the most Cornelius lots back.
+**The solar balance point in R-7 and R-10** (18.160): a warning beside
+the colour, never inside it. Steph, 2026-10-01, "Green with a warning",
+superseding the same day's "flag every lot", which the first draft held as
+`qualified_by: solar_shade_point` on each height and so kept every lot in
+the two zones at UNKNOWN ("needs a closer look"), never GREEN. Now each
+zone states `solar_shade_limit: true`, a new optional bool, quoting
+18.160.020's "all structures in all single-family zones" and the formula
+(L23, L33-L46) with 18.160's own url. The height is unchanged and carries
+no qualifier; the `solar_shade_point` site fact is deleted, so no lot
+leans on anything for it, and nothing feeds caps.
+
+What carries the flag: no existing channel fit. `tight_fit` is a bool
+about the fit alone, and "Facts nobody measured" lists facts that hold a
+lot back. So the smallest new one: `Screening.warnings`, a tuple of keys
+that `screen()` fills from the rules on every path (green, yellow, red,
+unknown, unreadable geometry) and that no triage branch reads. One key
+today, `solar_shade` (`flats.score.screen.SOLAR_SHADE`, from
+`warnings_for`). It travels as the bridge's `warnings` column
+(`row_for`, `assign.ROW_COLUMNS`), the loader's `checks.warnings`
+(`scripts/flats_load_bridge.py`), and the lot page's row "Check before an
+offer" (`ui_flats._WARNING_WORDS`, `flats_lot.html`, id
+`warnings-<design>`), which reads: "Cornelius's sun-shading rule (CMC
+18.160, solar balance point) is not checked here. It caps how high the
+roof may stand by the shadow it casts on the lot to the north. Confirm the
+building's shadow on the lot to the north before an offer." Not on the
+Lots list, and no "only warned" filter; a run screened before this carries
+no warnings, so it shows on the lot pages after the next re-screen.
 
 **GMU: the townhouse path only, behind an untraced figure** (Steph,
 2026-10-01). Four homes on one lot stays refused: the fourplex is not
@@ -2108,7 +2122,7 @@ code, besides the refused zones' own comments (`flats.encode.refusals`:
 22 comments, no notes or tests). There were 25; three became encoding on
 2026-10-01: parking out of the side and rear yards
 (`parking_required_yard_prohibited`), the solar balance point (a
-`qualified_by` flag on R-7's and R-10's heights) and covered parking
+warning, `solar_shade_limit`, in R-7 and R-10) and covered parking
 (`parking_covered_required`), all in section 3.
 
 - **Compact stalls** (25 percent may be 8 by 16) and **the aisle** ("of
@@ -2857,9 +2871,12 @@ Ledgers and readers:
 
 Places where the screen is LOOSER than the code:
 
-- **The solar balance point** (18.160) is flagged, not measured (Steph,
-  2026-10-01), so it is no longer looser: every R-7 and R-10 lot is held
-  at UNKNOWN on `solar_shade_point`. What the flag stands in for: the shade
+- **The solar balance point** (18.160) is warned of, not measured.
+  RULED 2026-10-01 (Steph): "Green with a warning". An R-7 or R-10 lot can
+  come out GREEN with the sun rule unchecked, and the lot page tells the
+  buyer to check the shadow before an offer. This is looser than the code
+  on every lot the rule would stop; which lots those are, nothing here
+  measures. What the warning stands in for: the shade
   point may be no higher than (2 x SRL - N + 150) / 5, SRL being its
   distance from the northern lot line and N the north-south lot dimension,
   counted at most 90 (L33-L46). A 26 ft shade point must sit 35 ft from the
@@ -2867,8 +2884,6 @@ Places where the screen is LOOSER than the code:
   ft. Exemptions in (C) (L286-L332) include one that points to an
   "18.155.020(E)" the stored 18.155 does not have (L21-L23), a stale
   pointer; (G) lets the yards be cut by up to half to comply (L566-L592).
-  It is also STRICTER than the code for every lot the rule would clear,
-  which is most lots whose street is on the south or that run east-west.
 - **100 ft from an intersection** in A-2 and CR (L302, L304) and GMU
   (L603), unless there is no reasonable alternative: nothing measures a
   curb return.
@@ -3064,12 +3079,12 @@ Six more Cornelius answers, the same day, encoded on the same branch:
 - **Corridor Commercial (CC) away from Adair and Baseline: keep the
   draft.** A fourplex on its own, with no business in front, stays
   refused. (Relayed as "CR"; the question was CC's.)
-- **The sun-shading rule in R-7 and R-10: flag every lot, build no shade
-  check.** Every lot in the two zones now comes back "needs a closer
-  look" with the sun rule named, never green. There is no milder honest
-  mark: a lot is marked "clears with an application" only when it
-  definitely misses a rule it can ask relief from, and nothing here is
-  known to miss.
+- **The sun-shading rule in R-7 and R-10: "Green with a warning".**
+  First ruled as "flag every lot, build no shade check"; the only flag
+  the screen had then held every lot in the two zones at "needs a closer
+  look". Shown that, Steph ruled the same day: green is allowed, and the
+  lot page carries a warning to check the building's shadow on the lot
+  to the north before an offer. Nothing measures the shadow.
 - **Gateway Mixed Use: four homes on one lot stays no; townhouses on their
   own lots open, but only in the part of the district the code's drawing
   marks for them.** Nothing can tell which part a lot is in until the
@@ -3381,7 +3396,7 @@ The questions below are kept as the record of what was asked.
   the design add carports (which must stay 6 ft from the building unless
   attached to it, and 3 ft from the lot lines), or should the screen
   treat this as something the design handles? Today the screen ignores it.
-- **The sun-shading rule in R-7 and R-10.** (Answered 2026-10-01: (a), flag every lot.) These two zones limit how
+- **The sun-shading rule in R-7 and R-10.** (Answered 2026-10-01: (a), flag every lot; then "Green with a warning".) These two zones limit how
   tall a building can be depending on how far it stands from the
   neighbour to the north, so it does not shade their roof. For our roof
   peak of about 26 ft, the tallest part must be about 35 ft from the
@@ -4057,10 +4072,10 @@ Cornelius is the only layer declaring it. `test_refusals` comments 275 ->
   quote holds "shall only be permitted within subdistrict A" and the
   subdistrict C ban), with its unit-lot lot size and width, height, yards,
   and the street side and depth owed; GMU's density floor is 18 on the
-  43,560 acre (9,680 net sq ft for four); R-7 and R-10 heights carry
-  `solar_shade_point`, a lever every lot leans on and an unknown fact
-  (resolver and `configure` exercised); A-2, CR and GMU heights carry no
-  sun flag. The refusals test now exempts GMU from "use row only".
+  43,560 acre (9,680 net sq ft for four); R-7 and R-10 heights carried
+  `solar_shade_point` (replaced by the warning below); A-2, CR and GMU
+  carry no sun flag. The refusals test now exempts GMU from "use row
+  only".
 - Pins moved: `test_refusals` comments 274 -> 272 (the solar and covered
   parking comments became encoding); `test_exemptions` stated 385 -> 388
   (GMU's "no maximum density" and the two moot one-lot defaults under its
@@ -4080,6 +4095,49 @@ Cornelius is the only layer declaring it. `test_refusals` comments 275 ->
 - Full suite after the last edit, once: `pytest flats/tests -n auto`, 4019
   passed, 5 skipped; `ruff check flats/ scripts/` clean; the firewall
   check OK.
+
+**"Green with a warning"** (the sun rule, 2026-10-01, the next commit):
+
+- `test_screen.py::test_a_warning_rides_beside_the_colour_and_never_moves_it`:
+  `solar_shade_limit: true` puts `solar_shade` in `warnings` and leaves a
+  green lot green with no reasons, the same binding and ask; a yellow and
+  a red lot keep their colour and carry it too; `false` and silence carry
+  none.
+- `test_washington_cornelius.py`, now 17 tests: R-7 and R-10 state
+  `solar_shade_limit` quoted from 18.160 and their heights carry no
+  qualifier, and `solar_shade_point` is no longer a condition; A-2, CR and
+  GMU state no sun rule; and
+  `test_an_r7_lot_clearing_everything_else_is_green_with_the_sun_warning`:
+  a generous R-7 lot (12,000 sq ft, 100 by 120) under the corpus's own R-7
+  rules, signed as the bridge's "if signed" column signs them, screens
+  GREEN with no reasons and `warnings == ("solar_shade",)`; unsigned it is
+  UNKNOWN on the draft alone with the same warning; in A-2 it carries none.
+- `tests/scripts/test_flats_load_bridge.py`: the checks record carries
+  `warnings`, and a bundle written before the column carries none.
+- `tests/api/test_ui_flats_lots.py`: the seeded green answer carries
+  `solar_shade`; the lot page shows the row for that design only, in
+  words (CMC 18.160, "shadow on the lot to the north"), never the key.
+  The whole file and the loader file pass (51) against the local test
+  database.
+- Owed: a Playwright check of the lot page row. The page change cannot
+  be checked on viciniti.deals until the branch is merged, deployed, and
+  a re-screen has written warnings.
+- The process slip once more: the Cornelius test replacement was written
+  by a Python script through a bash heredoc. The other test edits used
+  Edit.
+- Ledgers: `gaps.json` regenerated (digest only; still 3 gaps across 26
+  layers, all `unmapped`, all from before this branch); `crossrefs.csv`
+  rewritten by a whole-corpus run, one row changed: 11.40.34 now stands
+  beside `solar_shade_limit` rather than the height, and is no longer
+  binding; its `misread` ruling stays. `exemptions.csv` unchanged.
+- Full suite after the last code edit, once: `pytest flats/tests -n auto`,
+  4021 passed, 5 skipped; `ruff check app/ tests/ flats/ scripts/` clean;
+  the firewall check OK.
+- Merge note: `a0522c1d` on main (the fire truck reach) touches the same
+  five files on the bridge-to-page path (`row_for`, `ROW_COLUMNS`, the
+  loader's checks record, `_result_card`, `flats_lot.html`). The lines
+  here sit beside `tight_fit`, apart from its, but the merge should be
+  read there.
 
 **Ledgers** (step 9, on the final layer):
 
@@ -4450,8 +4508,9 @@ Cornelius is the only layer declaring it. `test_refusals` comments 275 ->
   was here; built 2026-10-01 as `parking_required_yard_prohibited`.
   - the solar balance point (18.160), a height that grows with the
     distance from the northern lot line, which needs the lot's
-    orientation. Flagged rather than built (Steph, 2026-10-01); a shade
-    check would release the R-7 and R-10 lots the rule clears;
+    orientation. A warning rather than a check (Steph, 2026-10-01,
+    "Green with a warning"); a shade check would turn the warning into a
+    colour for the lots the rule actually stops;
   - a driveway's distance from an intersection (A-2, CR and GMU, 100 ft);
   - the share of a lot one use may occupy (GMU's 50 percent townhouse
     cap).

@@ -347,8 +347,9 @@ pytestmark = pytest.mark.unit
 #: rules, middle-housing land divisions, and one about outdoor storage.
 EXPECTED = {"notes": 134, "comments": 272, "tests": 18}
 # 274 -> 272 the same day, two more Cornelius comments turned into encoding
-# by Steph's rulings: the solar balance point (18.160) is now a
-# `qualified_by: solar_shade_point` on R-7's and R-10's heights, and covered
+# by Steph's rulings: the solar balance point (18.160) is now
+# `solar_shade_limit` in R-7 and R-10, a warning beside the colour ("Green
+# with a warning"; first held as a `qualified_by`), and covered
 # parking is `parking_covered_required` (test_covered_parking).
 # 275 -> 274 later on 2026-10-01: Steph ruled "Yes, charge them" and
 # 18.145.010 (B)'s side-and-rear-yard comment became a field,

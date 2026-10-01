@@ -127,6 +127,7 @@ _LABELS: dict[str, str] = {
     "parking_side_prohibited": "parking banned beside the building",
     "parking_required_yard_prohibited": "parking banned in required yards",
     "parking_covered_required": "covered parking required",
+    "solar_shade_limit": "height capped by shade on the lot to the north",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
@@ -762,6 +763,23 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "solar_shade_limit",
+        "bool",
+        "True where the code caps a building's height by the shade it casts "
+        "on the lot to the north. Cornelius 18.160 applies \"to an "
+        "application for a building permit for all structures in all "
+        "single-family zones\" (R-7 and R-10) and caps the shade point -- "
+        "the peak of a roof pitched 5 in 12 or steeper, the eave of a flatter "
+        "one -- at H = (2 x SRL - N + 150) / 5, SRL its distance from the "
+        "northern lot line and N the north-south lot dimension, counted at "
+        "most 90. Nothing here knows which lot line faces north or where the "
+        "peak lands, so nothing checks it. It never moves a verdict: where "
+        "True the screening carries a `solar_shade` warning, which the lot "
+        "page shows beside the colour. Steph, 2026-10-01: \"Green with a "
+        "warning.\" Optional: absent means no such rule was read.",
+        None,
+    ),
+    FieldDef(
         "corner_access_street",
         "enum",
         "Which street a lot with frontage on more than one takes its "
@@ -1238,6 +1256,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_side_prohibited",
         "parking_required_yard_prohibited",
         "parking_covered_required",
+        "solar_shade_limit",
         "corner_access_street",
         "front_lot_line_corner",
         # Same argument as the corner line above it: a definition, not a row

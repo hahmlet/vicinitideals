@@ -18,8 +18,9 @@ notes: >-
   not multi-family here, and required parking stays out of every required
   yard (parking_required_yard_prohibited). Further rulings the same day:
   the stall stays 9 ft; CC stays refused away from Adair and Baseline; the
-  corner front is the narrower street side; every R-7 and R-10 lot is held
-  for a closer look on the solar balance point (18.160); GMU opens only to
+  corner front is the narrower street side; every R-7 and R-10 lot carries
+  a warning for the solar balance point (18.160), "Green with a warning"
+  (solar_shade_limit; it never moves the colour); GMU opens only to
   townhouses, behind an untraced subdistrict figure; and the pod has no
   covered parking, which fails the townhouse path wherever the code asks
   for it (parking_covered_required; the state spares the quadplex).
@@ -514,12 +515,14 @@ defaults:
 # glass. (G), L566-L592, cuts the yards by up to half where that is needed
 # to comply. No field holds a height that grows with the distance from one
 # named lot line, and the screen does not know which line faces north.
-# Steph, 2026-10-01: flag every R-7 and R-10 lot for now, build no shade
-# check. Held as `qualified_by: solar_shade_point` on each zone's height --
-# a site fact nothing measures -- so every lot there leans on it and comes
-# back UNKNOWN ("needs a closer look") with the fact named, never GREEN.
-# There is no milder honest mark: YELLOW is a definite miss with an
-# application path, and nothing here is known to miss.
+# Steph, 2026-10-01: flag every R-7 and R-10 lot, build no shade check --
+# and, on seeing that a flag held as an unmeasured fact would keep every lot
+# there at UNKNOWN, "Green with a warning". Held as `solar_shade_limit:
+# true` in each of the two zones: the screen names it in the screening's
+# warnings, the lot page asks a person to check the building's shadow on
+# the lot to the north, and the colour is whatever the rest of the screen
+# says. (It was briefly a `qualified_by` on the heights, which held the
+# lots at UNKNOWN; superseded the same day.)
 #
 # Chapter 18.165, the solar access permit, protects a solar feature from
 # vegetation only (cmc.18.165.solar-access-permit.txt L17); 18.155 governs
@@ -695,15 +698,18 @@ zones:
       value: 35
       cite: Cornelius CMC 18.20.050 (C), maximum height
       quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L172"
-      # 18.160, Solar Balance Point, reaches "all structures in all
-      # single-family zones" (L23), and this is one of the two (18.05, L53-L54).
-      # The shade point may stand no higher than (2 x SRL - N + 150) / 5 off
-      # the northern lot line (L33-L46); nothing here knows which line faces
-      # north. Steph, 2026-10-01: flag every lot, build no shade check.
-      qualified_by:
-        fact: solar_shade_point
-        cite: Cornelius CMC 18.160.020, applicability (all structures in all single-family zones) and (B)(1), maximum shade point height
-        quote: "or/washington/cornelius/cmc.18.160.solar-balance-point.txt#L23,L33-L46"
+    # 18.160, Solar Balance Point, reaches "all structures in all
+    # single-family zones" (L23), and this is one of the two (18.05, L53-L54).
+    # The shade point may stand no higher than (2 x SRL - N + 150) / 5 off
+    # the northern lot line (L33-L46); nothing here knows which line faces
+    # north. Steph, 2026-10-01: "Green with a warning" -- a warning on the
+    # lot page, never the colour.
+    solar_shade_limit:
+      value: true
+      cite: Cornelius CMC 18.160.020, applicability (all structures in all single-family zones) and (B)(1), maximum shade point height
+      url: https://ecode360.com/print/CO4396?guid=47339532
+      retrieved: '2026-09-30'
+      quote: "or/washington/cornelius/cmc.18.160.solar-balance-point.txt#L23,L33-L46"
     setback_front_ft:
       value: 10
       cite: Cornelius CMC 18.20.050 (D)(1), front yard from the furthest extension of the home
@@ -840,15 +846,18 @@ zones:
       value: 35
       cite: Cornelius CMC 18.25.050 (B), maximum height
       quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L159"
-      # 18.160, Solar Balance Point, reaches "all structures in all
-      # single-family zones" (L23), and this is one of the two (18.05, L53-L54).
-      # The shade point may stand no higher than (2 x SRL - N + 150) / 5 off
-      # the northern lot line (L33-L46); nothing here knows which line faces
-      # north. Steph, 2026-10-01: flag every lot, build no shade check.
-      qualified_by:
-        fact: solar_shade_point
-        cite: Cornelius CMC 18.160.020, applicability (all structures in all single-family zones) and (B)(1), maximum shade point height
-        quote: "or/washington/cornelius/cmc.18.160.solar-balance-point.txt#L23,L33-L46"
+    # 18.160, Solar Balance Point, reaches "all structures in all
+    # single-family zones" (L23), and this is one of the two (18.05, L53-L54).
+    # The shade point may stand no higher than (2 x SRL - N + 150) / 5 off
+    # the northern lot line (L33-L46); nothing here knows which line faces
+    # north. Steph, 2026-10-01: "Green with a warning" -- a warning on the
+    # lot page, never the colour.
+    solar_shade_limit:
+      value: true
+      cite: Cornelius CMC 18.160.020, applicability (all structures in all single-family zones) and (B)(1), maximum shade point height
+      url: https://ecode360.com/print/CO4396?guid=47339532
+      retrieved: '2026-09-30'
+      quote: "or/washington/cornelius/cmc.18.160.solar-balance-point.txt#L23,L33-L46"
     setback_front_ft:
       value: 25
       cite: Cornelius CMC 18.25.050 (C)(1), front yard from the furthest extension of the home

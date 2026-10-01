@@ -457,6 +457,9 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
             "if_signed": row.get("if_signed"),
             "reasons": _split(row.get("reasons")),
             "if_signed_reasons": _split(row.get("if_signed_reasons")),
+            # Rules nothing checks that must not move the colour: shown
+            # beside it (Cornelius's sun-shading rule, Steph 2026-10-01).
+            "warnings": _split(row.get("warnings")),
             "head": row.get("head") or None,
             "dominant": row.get("dominant") or None,
             "failing": _split(row.get("failing")),

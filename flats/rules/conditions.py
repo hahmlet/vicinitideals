@@ -427,28 +427,6 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
-        "solar_shade_point",
-        "site_fact",
-        "The building's shade point stands no higher than the code's solar "
-        "rule allows for its distance from the northern lot line. Cornelius "
-        "18.160 applies \"to an application for a building permit for all "
-        "structures in all single-family zones\" (R-7 and R-10) and caps the "
-        "shade point -- the peak of a roof pitched 5 in 12 or steeper, the "
-        "eave of a flatter one -- at H = (2 x SRL - N + 150) / 5, SRL its "
-        "distance from the northern lot line and N the north-south lot "
-        "dimension, counted at most 90. A 26 ft peak must then stand 35 ft "
-        "off the northern line on a lot 90 ft or more north to south. Two "
-        "facts nothing here holds: which lot line faces north, and where on "
-        "the lot the building's peak lands. Steph, 2026-10-01: flag every "
-        "lot the rule reaches rather than build the check. Assumed unknown, "
-        "which holds every such lot out of GREEN with this name on it.",
-        evidence=(
-            "the lot's bearing to true north and the pod's placed roof peak, "
-            "measured against the northern lot line -- not computed"
-        ),
-        assume=None,
-    ),
-    ConditionDef(
         "established_residential_area",
         "site_fact",
         "The lot sits in an area platted before a stated date, and an existing "

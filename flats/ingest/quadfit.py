@@ -1984,6 +1984,7 @@ def row_for(s: Screened) -> dict[str, Any]:
         "stalls_seated": s.screening.stalls_seated,
         "parking_band": s.screening.parking_band,
         "tight_fit": s.screening.tight_fit,
+        "warnings": ",".join(s.screening.warnings),
         "fit_column": s.fit.column,
         "front_deg": s.front_deg,
         "side_street_lane": side_street_fed(s.rules, s.lot.facts.alley, s.lot.facts.corner),

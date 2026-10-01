@@ -55,7 +55,7 @@ def _box(x: float, y: float, w: float, d: float) -> str:
 def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str = "preferred",
             colour_reasons: list[str] | None = None, unknown: list[str] | None = None,
             tight: bool = False, front_deg: float | None = None, side_street: bool = False,
-            drawing: dict | None = None) -> dict:
+            drawing: dict | None = None, warnings: list[str] | None = None) -> dict:
     out = {
         "verdict": "unknown",
         "if_signed": colour,
@@ -76,6 +76,8 @@ def _checks(colour: str, *, head: str | None = None, seated: int = 8, band: str 
     }
     if drawing is not None:
         out["drawing"] = drawing
+    if warnings is not None:
+        out["warnings"] = warnings
     return out
 
 
@@ -214,7 +216,7 @@ async def _seed(
     a, b, c = lots
 
     answers = [
-        (a, DESIGNS[0], _checks("green", tight=True)),
+        (a, DESIGNS[0], _checks("green", tight=True, warnings=["solar_shade"])),
         (a, DESIGNS[1], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"])),
         (b, DESIGNS[0], _checks("yellow", head="fit_ft", seated=4, band="minimum", colour_reasons=["RELIEF_UNCONFIRMED"],
                                 front_deg=90.0, side_street=True, drawing=LOT_B_DRAWING)),
@@ -570,6 +572,24 @@ async def test_the_lot_page_puts_the_verdict_first_and_the_colour_beside_it(
     assert "green" in pod56
     assert "4 cars charged, 8 seated" in pod56
     assert "a rule this rests on has not been signed" in pod56
+
+
+async def test_a_screen_warning_shows_beside_a_green_on_the_lot_page(
+    client: AsyncClient, session: AsyncSession
+):
+    # Steph 2026-10-01, Cornelius's sun-shading rule: "Green with a
+    # warning". Lot A's pod56x36 is green if signed and carries the warning;
+    # the page says it in words, and its pod80x25 carries none.
+    await _login(client, session)
+    await _seed(session)
+
+    page = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    assert 'id="warnings-pod56x36-2"' in page.text
+    assert 'id="warnings-pod80x25-2"' not in page.text
+    said = page.text.split('id="warnings-pod56x36-2"', 1)[1].split("</tr>", 1)[0]
+    assert "CMC 18.160" in said
+    assert "shadow on the lot to the north" in said
+    assert "solar_shade" not in said
 
 
 async def test_a_tight_fit_is_flagged_on_the_list_and_explained_on_the_lot_page(
