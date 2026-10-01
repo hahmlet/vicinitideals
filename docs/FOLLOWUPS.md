@@ -854,3 +854,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    asks two approaches for the four-unit pod on unit lots, where the plan
    draws one shared drive; read as a cap it never binds. Pending Steph:
    requirement or cap? Then encode or record the refusal.
+25. **Old screening runs fill the server's disk (found 2026-10-01).** Every
+   re-screen keeps its whole answer set: 21 runs on the copy in use, the
+   results table is 19 GB, VM 114 has ~20 GB free, so the full clean-up
+   after a load (VACUUM FULL) no longer fits and each new run adds ~0.9 GB
+   (~20 more before trouble). `flats_promote.py prune` drops only retired
+   COPIES, never superseded runs of the copy in use. Offered: a run-level
+   prune -- keep the run in use, the one before it and any candidate; mark
+   the rest retired and delete their results (drift reports already stored
+   on the snapshot). Deletes history Steph may want to look back at by
+   `?run=`, so ask before building; the disk grow recipe (reference_infra)
+   is the other way out.
