@@ -92,6 +92,23 @@ def test_skip_moves_to_another_question_without_answering(
     assert _card_key(page) != before
 
 
+
+def test_back_returns_to_the_skipped_card(logged_in_page: Page, base_url: str) -> None:
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}")
+    first = _card_key(page)
+    expect(page.locator("[data-back]")).to_have_count(0)
+
+    page.get_by_role("button", name="Skip").click()
+    wait_for_htmx(page)
+    expect(page.locator("[data-back]")).to_be_visible()
+    page.locator("[data-back]").click()
+    wait_for_htmx(page)
+
+    # The old card has a Back button; the card we came back to has none left.
+    expect(page.locator("[data-back]")).to_have_count(0)
+    assert _card_key(page) == first
+
 def test_the_question_sits_beside_the_page_not_above_it(
     logged_in_page: Page, base_url: str
 ) -> None:

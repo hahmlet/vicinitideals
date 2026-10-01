@@ -302,11 +302,56 @@ def _next(
     return None
 
 
-def _focus(rows: list[dict[str, Any]], zone: str, field: str, when: str) -> _Ask | None:
+def _focus(
+    rows: list[dict[str, Any]], zone: str, field: str, when: str, question: str = "value"
+) -> _Ask | None:
     for row in rows:
         if (row["zone"], row["field"], row["when"]) == (zone, field, when):
-            return _Ask(row, "value")
+            return _Ask(row, question)
     return None
+
+
+#: How many cards "Back" can walk through.
+_TRAIL = 30
+
+
+def _trail(raw: str) -> list[list[str]]:
+    """The cards already passed this session, oldest first.
+
+    Carried in the form rather than the server's memory, so Back walks the
+    reviewer's own path -- answered and skipped cards alike -- and a second
+    tab keeps its own.
+    """
+    try:
+        trail = json.loads(raw or "[]")
+    except ValueError:
+        return []
+    if not isinstance(trail, list):
+        return []
+    return [
+        t for t in trail
+        if isinstance(t, list) and len(t) == 4 and all(isinstance(x, str) for x in t)
+    ][-_TRAIL:]
+
+
+def _flags_on(
+    answers: dict[tuple, FlatsPageCheck], layer_id: str, document: str, pages: set[int]
+) -> list[dict[str, Any]]:
+    """What has been flagged on the pages this card shows, oldest first.
+
+    A flag is its own finding: a second one adds to the list, it does not
+    replace the first, and the card shows them so the reviewer can see that.
+    """
+    out = []
+    for r in answers.values():
+        if (
+            r.layer == layer_id
+            and r.answer == FLAG
+            and r.page in pages
+            and (r.quote or "").partition("#L")[0] == document
+        ):
+            out.append({"page": r.page, "says": r.says, "id": r.id})
+    return sorted(out, key=lambda f: f["id"])
 
 
 # --- everything else we hold from a page ------------------------------------
@@ -538,7 +583,8 @@ async def _card_ctx(
     layer: Layer,
     *,
     skipped: int = 0,
-    focus: tuple[str, str, str] | None = None,
+    focus: tuple[str, str, str, str] | None = None,
+    trail: list[list[str]] | None = None,
     said: str = "",
     error: str = "",
 ) -> dict[str, Any]:
@@ -549,17 +595,26 @@ async def _card_ctx(
     if ask is None:
         ask = await run_in_threadpool(_next, layer, rows, answers, skipped)
     card = await run_in_threadpool(_card, layer, ask) if ask else None
-    if card and ask.question == "value":
+    if card:
         before = _standing(
-            answers.get((layer.layer, ask.row["zone"], ask.row["field"], ask.row["when"], "value")),
+            answers.get(
+                (layer.layer, ask.row["zone"], ask.row["field"], ask.row["when"], ask.question)
+            ),
             ask.row,
         )
-        card["before"] = before.answer if before else ""
+        card["before"] = _WORDS.get(before.answer, before.answer) if before else ""
+        card["before_answer"] = before.answer if before else ""
+        # Coming back to change an answer starts from what was written.
+        card["before_comment"] = (before.says or before.note) if before else ""
+        card["flags"] = _flags_on(
+            answers, layer.layer, ask.row["document"], {sh["page"] for sh in card["sheets"]}
+        )
     return {
         "layer": {"id": layer.layer, "label": _layer_label(layer)},
         "card": card,
         "counts": _counts(layer, rows, answers),
         "skipped": skipped,
+        "trail": json.dumps(trail or []),
         "said": said,
         "error": error,
     }
@@ -728,7 +783,7 @@ async def flats_check(
     if layer is None:
         return HTMLResponse("no such jurisdiction", status_code=404)
     ctx = await _card_ctx(
-        session, layer, skipped=skipped, focus=(zone, field, when) if zone and field else None
+        session, layer, skipped=skipped, focus=(zone, field, when, "value") if zone and field else None
     )
     return templates.TemplateResponse(
         request,
@@ -742,8 +797,8 @@ async def flats_check_answer(
     request: Request,
     session: DBSession,
     layer_id: str = Form(...),
-    zone: str = Form(...),
-    field: str = Form(...),
+    zone: str = Form(""),
+    field: str = Form(""),
     when: str = Form(""),
     question: str = Form("value"),
     answer: str = Form(""),
@@ -753,6 +808,7 @@ async def flats_check_answer(
     flag_page: int = Form(0),
     action: str = Form("answer"),
     skipped: int = Form(0),
+    trail: str = Form("[]"),
 ) -> HTMLResponse:
     """Record one answer, or skip, and hand back the next card.
 
@@ -765,14 +821,29 @@ async def flats_check_answer(
     layer = _layers().get(layer_id.strip("/"))
     number = _number(layer, zone, field, when) if layer else None
 
+    passed = _trail(trail)
+
     async def card(**kw: Any) -> HTMLResponse:
+        kw.setdefault("trail", passed)
         ctx = await _card_ctx(session, layer, **kw)
         return templates.TemplateResponse(request, "partials/flats_check_card.html", ctx)
 
+    if action == "back" and layer is not None:
+        # The card before this one, shown again with its standing answer; a
+        # new answer to it is a later answer, and the latest one counts.
+        if not passed:
+            return await card(skipped=skipped)
+        *rest, last = passed
+        zone, field, when, question = last
+        if question.startswith("skip:"):
+            # Un-skipping: the queue's place moves back with the reviewer.
+            question, skipped = question.removeprefix("skip:"), max(skipped - 1, 0)
+        return await card(skipped=skipped, focus=(zone, field, when, question), trail=rest)
     if layer is None or number is None:
         return HTMLResponse("not a number we hold", status_code=400)
+    here = [zone, field, when, question]
     if action == "skip":
-        return await card(skipped=skipped + 1)
+        return await card(skipped=skipped + 1, trail=[*passed, [zone, field, when, f"skip:{question}"]][-_TRAIL:])
     # The card has one comment box. Under "No" it is what the page says;
     # with "Flag it" it is what the page has that the rules don't; under any
     # other answer it is a note.
@@ -831,4 +902,6 @@ async def flats_check_answer(
         )
     )
     await session.commit()
+    if answer != FLAG:
+        passed = [*passed, here][-_TRAIL:]
     return await card(skipped=skipped, said=_SAID.get(answer, "recorded"))

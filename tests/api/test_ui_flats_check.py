@@ -12,6 +12,9 @@ Placing a box reads a book, and a book is a download. The router's
 
 from __future__ import annotations
 
+import html
+import re
+
 import pytest
 from httpx import AsyncClient
 from sqlalchemy import select
@@ -322,3 +325,59 @@ def test_a_condition_is_named_in_words_not_by_its_key():
         "the four units are being platted onto lots of their own rather than sharing one"
     ]
     assert _condition_words("") == []
+
+
+async def test_back_returns_to_the_answered_card_to_change_it(client, session):
+    """Back shows the card just answered, with the answer and comment given;
+    a new answer to it is a later answer and the later one counts."""
+    await _login(client, session)
+    row = _first_row()
+    answered = await client.post(
+        "/ui/flats/check", data=_form(row, answer="differs", comment="7,500 sq ft")
+    )
+    trail = re.search(r'name="trail" value="([^"]*)"', answered.text).group(1)
+    assert "data-back" in answered.text
+
+    back = await client.post(
+        "/ui/flats/check",
+        data={"layer_id": LAYER, "action": "back", "trail": html.unescape(trail)},
+    )
+
+    assert f'name="field" value="{row["field"]}"' in back.text
+    assert "your answer: No" in back.text
+    assert ">7,500 sq ft</textarea>" in back.text
+    changed = await client.post("/ui/flats/check", data=_form(row, answer="matches"))
+    assert changed.status_code == 200
+    answers = await check._answers(session, LAYER)
+    key = (LAYER, row["zone"], row["field"], row["when"], "value")
+    assert answers[key].answer == "matches"
+
+
+async def test_back_after_a_skip_un_skips(client, session):
+    await _login(client, session)
+    row = _first_row()
+    skipped = await client.post("/ui/flats/check", data=_form(row, action="skip", skipped="0"))
+    trail = html.unescape(re.search(r'name="trail" value="([^"]*)"', skipped.text).group(1))
+
+    back = await client.post(
+        "/ui/flats/check",
+        data={"layer_id": LAYER, "action": "back", "trail": trail, "skipped": "1"},
+    )
+
+    assert f'name="field" value="{row["field"]}"' in back.text
+    assert 'name="skipped" value="0"' in back.text
+    assert "data-back" not in back.text
+
+
+async def test_a_second_flag_adds_to_the_first_and_both_show_on_the_card(client, session):
+    await _login(client, session)
+    row = _first_row()
+    page = check._card(check._layers()[LAYER], check._Ask(row, "value"))["sheets"][0]["page"]
+    for says in ("first thing", "second thing"):
+        response = await client.post(
+            "/ui/flats/check",
+            data=_form(row, action="flag", flag_page=str(page), comment=says),
+        )
+
+    assert "Flagged on this page (2)" in response.text
+    assert response.text.index("first thing") < response.text.index("second thing")
