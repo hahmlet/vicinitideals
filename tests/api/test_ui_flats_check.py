@@ -520,3 +520,37 @@ async def test_a_yes_or_no_is_asked_as_a_reading_with_where_it_was_read(client, 
 
     assert "Is that what the page says?" in response.text
     assert "Read from: OCMC 17.39.020 (permitted uses), with 17.06.010.A" in response.text
+
+
+async def test_a_reopened_no_is_asked_again_with_what_was_said_before(client, session):
+    """Steph 2026-10-01: a "No" whose fix moved a box or reworded the card
+    changes no fingerprint, so it would stand forever. Reopening puts it back
+    in the queue; a "Yes" stays done."""
+    import importlib.util
+    from pathlib import Path
+
+    spec = importlib.util.spec_from_file_location(
+        "reopen", Path(__file__).resolve().parents[2] / "scripts" / "flats_page_check_reopen.py"
+    )
+    reopen = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(reopen)
+
+    await _login(client, session)
+    rows = check._rows(check._layers()[LAYER], set())
+    no, yes = rows[0], rows[1]
+    await client.post("/ui/flats/check", data=_form(no, answer="differs", says="the page says 7,500"))
+    await client.post("/ui/flats/check", data=_form(yes, answer="matches"))
+
+    added = await reopen.reopen(session, LAYER)
+    assert [(r.zone, r.field, r.note) for r in added] == [(no["zone"], no["field"], "differs")]
+    session.add_all(added)
+    await session.commit()
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "data-asked-again" in response.text
+    assert "the page says 7,500" in response.text
+    assert "No, the page says something else" in response.text
+    # Off the problems list until answered again; the history keeps the "No".
+    assert f"{LAYER} | {no['zone']} | {no['field']}" not in (await client.get("/flats/check/problems.txt")).text
+    assert await reopen.reopen(session, LAYER) == [], "a reopened question is not reopened twice"

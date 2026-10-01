@@ -75,6 +75,12 @@ NOTE_ANSWERS = {
 #: hold. Not an answer to the card's question, so it never moves the queue.
 FLAG = "unmarked"
 
+#: Not a reviewer's answer: the question was put back after a fix that the
+#: fingerprint cannot see -- a box moved, a footnote read, a card reworded --
+#: so the fix is checked rather than assumed. ``note`` keeps what was said
+#: before, ``says`` the comment, so the card can show both.
+REOPENED = "reopened"
+
 #: Answers that mean something needs fixing. They make the problems list.
 PROBLEMS = frozenset({"differs", "wrong_box", "missing", FLAG})
 
@@ -234,7 +240,7 @@ def _standing(answer: FlatsPageCheck | None, row: dict[str, Any]) -> FlatsPageCh
     so the answer stops standing and the question comes back -- which is how a
     fix gets checked rather than assumed.
     """
-    if answer is None or answer.fingerprint != row["mark"]:
+    if answer is None or answer.fingerprint != row["mark"] or answer.answer == REOPENED:
         return None
     return answer
 
@@ -708,6 +714,14 @@ async def _card_ctx(
                 (layer.layer, ask.row["zone"], ask.row["field"], ask.row["when"], ask.question)
             ),
             ask.row,
+        )
+        latest = answers.get(
+            (layer.layer, ask.row["zone"], ask.row["field"], ask.row["when"], ask.question)
+        )
+        card["asked_again"] = (
+            {"answer": _WORDS.get(latest.note, latest.note), "says": latest.says}
+            if latest is not None and latest.answer == REOPENED
+            else None
         )
         card["before"] = _WORDS.get(before.answer, before.answer) if before else ""
         card["before_answer"] = before.answer if before else ""
