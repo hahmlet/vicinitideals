@@ -715,6 +715,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    layers here with the same blind re-read; read the county's 11 community
    plans (Aloha, Bethany, Cedar Mill, ...) into the county layer as
    neighbourhood variants. Worktree per city, confirm with Steph first.
+   STARTED 2026-10-01 (Steph: "both, in parallel"): worktrees
+   ../vicinitideals-worktrees/flats-tigard (flats/tigard-draft) and
+   flats-cornelius (flats/cornelius-draft), rules + documents + blind
+   re-read only; map wiring after flats/washington-map merges. eCode360
+   serves the real page to a browser User-Agent (no challenge solved).
    (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
    middle-housing code (cottage clusters by 2028); a city that misses it
    gets the state model code directly. Run the drift check on every layer
