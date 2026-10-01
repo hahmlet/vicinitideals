@@ -226,7 +226,7 @@ async def test_something_missing_from_the_page_can_be_flagged(client, session):
         data=_form(row, question="page:839", answer="unmarked", says="F. one approach per two units"),
     )
 
-    assert "flagged" in response.text
+    assert "flag saved" in response.text
     saved = (await session.execute(select(FlatsPageCheck))).scalars().one()
     assert (saved.question, saved.page, saved.answer) == ("page:839", 839, "unmarked")
     # A flag is not an answer to the card: the same question is still asked.

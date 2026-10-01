@@ -90,7 +90,7 @@ _SAID = {
     "differs": "problem raised — it goes on the problems list to be traced back",
     "wrong_box": "problem raised — the box was wrong, so the reading is traced back",
     "missing": "problem raised — the footnote goes on the list as something to add",
-    FLAG: "flagged — it goes on the problems list as something the rules don't have",
+    FLAG: "flag saved to the problems list — this card's own question is still open, answer it above",
 }
 
 #: Every answer's words, for the problems list.

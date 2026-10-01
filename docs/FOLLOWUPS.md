@@ -852,8 +852,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    encoded and not among the file's NOT ENCODED notes (E.1, the middle
    housing "may be allowed one per two units", is). Read as a requirement it
    asks two approaches for the four-unit pod on unit lots, where the plan
-   draws one shared drive; read as a cap it never binds. Pending Steph:
-   requirement or cap? Then encode or record the refusal.
+   draws one shared drive; read as a cap it never binds. RULED by Steph
+   2026-09-30 (page-check flag #1): a REQUIREMENT -- two separate approaches
+   for the pod; "I don't think we're counting for anything more than 1".
+   Next: a field for approaches required per N townhouses + the site plan
+   drawing (and charging frontage for) a second approach; check which other
+   cities state the same rule before building it for one.
 25. **Old screening runs fill the server's disk (found 2026-10-01).** Every
    re-screen keeps its whole answer set: 21 runs on the copy in use, the
    results table is 19 GB, VM 114 has ~20 GB free, so the full clean-up
