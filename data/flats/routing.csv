@@ -33,6 +33,14 @@ or/multnomah/gresham,or/multnomah/gresham/4.1400.pleasant-valley.txt,352,4.1415,
 or/multnomah/gresham,or/multnomah/gresham/4.1500.springwater.txt,311,4.1508,10.1700,,1. Minimum net density does not apply to affordable housing development. See Section 10.1700.
 or/multnomah/portland,or/multnomah/portland/33.130.txt,950,33.130.215,33.120.280,,structures are subject to the multi-dwelling zone standards of Section 33.120.280. The
 or/multnomah/portland,or/multnomah/portland/33.140.txt,631,33.140.210,33.140.215,,[1] Does not apply to lot lines that abut lots in the RX zone. See 33.140.215.B.
+or/washington/beaverton,or/washington/beaverton/bdc.20.05.residential.txt,422,20.05.15,20.25.05,,minimum and maximum density requirements are subject to Section 20.25.05. This is not intended to exempt
+or/washington/beaverton,or/washington/beaverton/bdc.20.15.employment-industrial.txt,129,20.15.15,60.50.05,,3. Except as provided by Section 60.50.05. (Accessory Uses and Structures).
+or/washington/hillsboro,or/washington/hillsboro/cdc.12.50.300.parking.txt,435,12.50.350,12.50.360,,3. Parking structures are subject to the design standards in Section 12.50.360.
+or/washington/hillsboro,or/washington/hillsboro/cdc.12.60-61.downtown.txt,276,12.61.400,12.23.300,,"The following standards apply in addition to, but supersede, the requirements of Section 12.23.300."
+or/washington/hillsboro,or/washington/hillsboro/cdc.12.60-61.downtown.txt,413,12.61.400,12.50.845,,H. Step-Back Requirements. The standards of Section 12.50.845 do not apply in the SCC-DT
+or/washington/king-city,or/washington/king-city/kcc.16.114.kingston-terrace.txt,173,16.114.040,16.84.060,,"2 Cottage clusters are subject to the development and design standards in 16.84.060, Cottage clusters."
+or/washington/king-city,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2537,16.114.130,16.132,,standards of Chapter 16.132 do not apply to new
+or/washington/sherwood,or/washington/sherwood/sdc.16.40.pud.txt,218,16.40.050,16.40.040,,"allowed in the underlying zoning district, except as provided in Sections 16.40.040.D"
 or/clackamas/_unincorporated,or/clackamas/_unincorporated/zdo.315.txt,1104,315.04,845,yes,"[9] The development of a triplex, quadplex, townhouse, or cottage cluster is subject to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters."
 or/clackamas/_unincorporated,or/clackamas/_unincorporated/zdo.315.txt,1504,315.04,845,yes,"[12] The minimum and maximum setback standards do not apply in a Resource Protection Area shown on Comprehensive Plan Map X-SV-1, Sunnyside Village Plan Land Use Plan Map. The maximum setback standard"
 or/clackamas/_unincorporated,or/clackamas/_unincorporated/zdo.316.txt,31,316.03,316.04,yes,"3 Permitted uses are subject to the applicable provisions of Subsection 316.04, Dimensional Standards; Section 1000, Development Standards; and Section 1100, Development Review Process."
@@ -51,3 +59,8 @@ or/multnomah/fairview,or/multnomah/fairview/19.115.txt,31,19.115.020,19.30,yes,"
 or/multnomah/fairview,or/multnomah/fairview/19.115.txt,49,19.115.040,19.30.030,yes,"Lot Size. All VSF lots shall be no less than 4,000 square feet. The 4,000-square-foot-minimum lot size does not apply to townhomes, which lot size is regulated by FMC 19.30.030. Lots with single-unit "
 or/multnomah/gresham,or/multnomah/gresham/9.0800.parking.txt,66,9.0802,9.0822,yes,"F. By definition, parking lot design standards (Sections 9.0822 to 9.0840) do not apply to single detached"
 or/multnomah/portland,or/multnomah/portland/33.266.txt,275,33.266.120,33.266.130,yes,1. Parking that is in a parking tract is subject to the standards of Section 33.266.130
+or/washington/beaverton,or/washington/beaverton/bdc.20.10.commercial.txt,323,20.10.20,20.10.15,yes,Standards of 20.10.15 but are subject to the standards of 60.11 of the Development Code. [ORD 4662; September
+or/washington/beaverton,or/washington/beaverton/bdc.20.15.employment-industrial.txt,308,20.15.20,20.15.15,yes,Standards of 20.15.15 but are subject to the standards of 60.11 of the Development Code. [ORD 4662; September
+or/washington/beaverton,or/washington/beaverton/bdc.20.20.multiple-use.txt,869,20.20.20,20.20.15,yes,Standards of 20.20.15 but are subject to the standards of 60.11 of the Development Code. [ORD 4662; September
+or/washington/beaverton,or/washington/beaverton/bdc.20.22.cooper-mountain.txt,510,20.22.20,20.22.15,yes,Standards of 20.22.15 but are subject to the standards of 60.11 of the Development Code.
+or/washington/beaverton,or/washington/beaverton/bdc.70.downtown.txt,230,70.15.10,70.15.10.5,yes,"9, 1999, shall be subject to reduced minimum density and intensity standards. See Section 70.15.10.5 Supplemental"

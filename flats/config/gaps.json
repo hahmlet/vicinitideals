@@ -1,5 +1,5 @@
 {
-  "digest": "b884bc7523a8a030badd01f5927c1b992945b2ef9828443ae3fe572c8d1d72c6",
+  "digest": "651f8ba096cbd18ccd061eb52a72edc10617f34102c68beb272904faf480a6cc",
   "layers": {
     "or": {
       "misattributed": [],
@@ -1066,12 +1066,6 @@
         }
       ],
       "label": "Beaverton",
-      "counts": {},
-      "gaps": []
-    },
-    "or/washington/cornelius": {
-      "misattributed": [],
-      "label": "Cornelius",
       "counts": {},
       "gaps": []
     },

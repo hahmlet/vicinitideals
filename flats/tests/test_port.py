@@ -512,6 +512,13 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 26  # 25 jurisdictions + the state layer
+    # 442 as of 2026-10-01: Washington County's map (run 51) put lots under
+    # ten Tualatin codes and two Wilsonville codes nobody had ruled. Eight are
+    # refusal blocks -- Tualatin IN, CN, CR, MP, MBP and BCE, Wilsonville
+    # PDI-RSIA and PFC, each off its own use list. The other four (Tualatin
+    # RH, RH/HR, MUC, CC) permit the pod only on unit lots or mapped blocks
+    # and are `to_read` rulings, not blocks, so they do not count here.
+    #
     # 434 as of 2026-10-01: Cornelius, the seventh Washington County layer,
     # drafted in a worktree. Its 12 zones are the live districts of CMC
     # 18.05.030 and the use chapters behind them: R-7, R-10, A-2 and CR
@@ -620,7 +627,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 434
+    assert sum(len(l.zones) for l in rules.layers.values()) == 442
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

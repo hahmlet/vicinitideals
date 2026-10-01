@@ -480,40 +480,68 @@ RULINGS: dict[str, dict[str, str]] = {
             "encode: Medium High Density Residential. TDC Chapter 42 fetched "
             "2026-09-20 (42.rmh.txt) because the September map carried it "
             "onto four lots; Table 42-2 reads Townhouse (or Rowhouse) P and "
-            "Multi-Family Structure P, and Table 42-3 gives the townhouse "
-            "rows (1,400 sq ft, 14 ft width, 15 du/acre) -- RL's shape. Held "
-            "as `to_read` in the layer's zone_rulings until encoded."
+            "Multi-Family Structure P with no Quadplex row (a Multi-Family "
+            "Structure is five or more units, TDC 31.060), so the building "
+            "is permitted only as townhouses on unit lots; Table 42-3 gives "
+            "the townhouse rows (1,400 sq ft, 14 ft width, 15 du/acre) -- "
+            "RL's shape. Held as `to_read` in the layer's zone_rulings until "
+            "encoded."
         ),
         # The six chapters fetched 2026-09-20 (42, 50, 54, 56, 60, 61) each
         # run to the NEXT chapter's first section, so the next chapter's
         # heading sits at the tail of the slice and the harvest prints it.
-        # Five real zones arrive that way; none carries a lot on the
-        # September county map (the refresh gate lists every code on the map
-        # that is neither held nor ruled, and these were not on it -- the
-        # Clackamas corner of Tualatin is small), so they are inventory, not
-        # a queue: nothing in FOLLOWUPS points at them.
+        # Five real zones arrived that way with no Clackamas lot under them.
+        # Washington County's map (run 51, 2026-10-01) put lots under four
+        # of the five and under six more, and the eleven chapters were
+        # fetched that day (43, 44, 49, 51, 52, 53, 57, 58, 62, 64, 65). CN
+        # and MP are refusal blocks now and left this ledger; RH and MUC
+        # moved from fetch to encode; CC and RH-HR arrived. Only CO/MR is
+        # still the tail of another chapter's slice, with no lot.
         "RH": (
-            "fetch: High Density Residential, TDC Chapter 43 -- its heading "
-            "is the last line of 42.rmh.txt (L263) and nothing of the "
-            "chapter follows. No Clackamas lot carries it."
+            "encode: High Density Residential, TDC Chapter 43 (43.rh.txt, "
+            "fetched 2026-10-01; 198 Washington-side lots). Table 43-2 "
+            "reads Townhouse P and Multi-Family Structure P with no Quadplex "
+            "row (L94-L100) -- RMH's shape, the unit_lots path only. The "
+            "side and rear setback is a ladder on structure height "
+            "(L181-L187), which no band here holds. Held as `to_read` in "
+            "the layer's zone_rulings."
         ),
-        "CN": (
-            "fetch: Neighborhood Commercial, TDC Chapter 51 -- its heading "
-            "closes 50.co.txt (L217). No Clackamas lot carries it."
+        "RH-HR": (
+            "encode: High Density High Rise, TDC Chapter 44 (44.rh-hr.txt, "
+            "fetched 2026-10-01). The map spells it RH/HR, as Table 58-7 "
+            "does (58.central-tualatin-overlay.txt L349); 6 lots. Table "
+            "44-2 is RH's (L96-L102), the ladder runs to Architectural "
+            "Review at 30 ft (L173-L184), and Table 44-3 has no townhouse "
+            "lot size. Held as `to_read` under 'RH/HR' in zone_rulings."
         ),
         "CO/MR": (
             "fetch: Mid-Rise/Office Commercial, TDC Chapter 55 -- its "
-            "heading closes 54.cg.txt (L358). No Clackamas lot carries it."
+            "heading closes 54.cg.txt (L358). No Clackamas lot carries it, "
+            "and none of the Washington side's (run 51, 2026-10-01)."
         ),
         "MUC": (
-            "fetch: Mixed Use Commercial, TDC Chapter 57 -- its heading "
-            "closes 56.mc.txt (L169). No Clackamas lot carries it."
+            "encode: Mixed Use Commercial, TDC Chapter 57 (57.muc.txt, "
+            "fetched 2026-10-01; 19 lots). Table 57-2 reads 'Duplex; "
+            "Townhouse (or Rowhouse) P' and Multi-Family Structure P with no "
+            "Quadplex row (L155-L162), so the unit_lots path only; the "
+            "interior side and rear setback is 0-20 ft, 20 ft against a "
+            "residential district (L181). Held as `to_read` in zone_rulings."
         ),
-        "MP": (
-            "fetch: Manufacturing Park, TDC Chapter 62 -- its heading closes "
-            "61.mg.txt (L401), and 60.ml.txt names it once more as a "
-            "neighbouring district in the ML setback table (L325). No "
-            "Clackamas lot carries it."
+        "CC": (
+            "encode: Central Commercial, TDC Chapter 53 (53.cc.txt, fetched "
+            "2026-10-01; 155 lots). Table 53-1 lists no Household Living "
+            "(L21-L26), but Table 58-1 of the Central Tualatin Overlay "
+            "permits Quadplexes by name on the ten blocks of the Residential "
+            "Sub-District (58.central-tualatin-overlay.txt L34, L43-L48), "
+            "drawn on Comprehensive Plan Map 10-3, which FLATS does not "
+            "hold. Held as `to_read` in zone_rulings."
+        ),
+        "TDC 73C": (
+            "not-a-zone: a chapter reference split onto its own line -- "
+            "'No minimum setback required adjacent to joint access approach "
+            "in accordance with / TDC 73C.' in the MP setback table "
+            "(62.mp.txt L225-L227, L235-L237), and the flag lot row of "
+            "40-41.residential.txt (L519). Chapter 73C is access standards."
         ),
         "GC": (
             "aliased: the running page header of Chapter 54 prints 'GENERAL "
@@ -556,8 +584,14 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
         "R-S": "not-a-zone: the R zone under the same WC 4.137 solar overlay.",
         "RSIA": (
-            "not-listed: Planned Development Industrial - Regionally "
-            "Significant Industrial Area, WC 4.135.5; industrial land."
+            "prohibited: Planned Development Industrial - Regionally "
+            "Significant Industrial Area, WC 4.135.5, industrial land whose "
+            "use list has one residential line, (.03)J: 'Residential uses "
+            "shall not exceed ten percent of total floor area' (4.planning."
+            "txt L10454). A lot carrying only the pod is all residential. "
+            "Re-ruled 2026-10-01 from not-listed; the refusal block is keyed "
+            "PDI-RSIA, the map's spelling, which is why this token stays "
+            "unheld."
         ),
         "SROZ": (
             "overlay: Significant Resource Overlay Zone, WC Section 4.139.00."
@@ -1084,6 +1118,18 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
 
     Twenty-two: West Linn's MU, Chapter 59, permitted outright and BY_HAND
     because the chapter never prints its designation.
+
+    Twenty-six and fetch to two on 2026-10-01, when Washington County's map
+    (run 51) put lots under Tualatin zones the Clackamas corner never had and
+    their chapters were fetched. RH and MUC moved from fetch to encode; CC and
+    RH-HR arrived as encode; CN and MP became refusal blocks and left the
+    ledger (fetch loses four, encode gains four). All four encodes are held as
+    `to_read`: each permits the building only as townhouses on unit lots or
+    only on mapped blocks, with a dimension the model cannot yet hold. And a
+    correction to the paragraph above: RMH does NOT permit the building
+    outright in both forms. Its Multi-Family Structure is five or more units
+    (TDC 31.060) and Table 42-2 has no Quadplex row, so the only path is
+    townhouses on unit lots.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -1093,6 +1139,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 22, sorted(owed["encode"])
-    assert len(owed["fetch"]) == 6, sorted(owed["fetch"])
+    assert len(owed["encode"]) == 26, sorted(owed["encode"])
+    assert len(owed["fetch"]) == 2, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])
