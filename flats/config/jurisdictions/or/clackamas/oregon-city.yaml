@@ -2232,6 +2232,15 @@ set_aside:
   - quote: "or/clackamas/oregon-city/17.zoning.txt#L8191-L8192"
     zones: [WFDD]
     why: min floor area ratio 1.0 -- no field for it; known gap
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4139,L4150"
+    zones: [R-10, R-8, R-6]
+    why: porch exception -- only a porch may sit closer; not used, so the full setback holds for the whole building (the safe side)
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4332,L4341"
+    zones: [R-5, R-3.5]
+    why: porch exception -- only a porch may sit closer; not used, so the full setback holds for the whole building (the safe side)
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4597,L4608"
+    zones: [R-2]
+    why: porch exception -- only a porch may sit closer; not used, so the full setback holds for the whole building (the safe side)
   - quote: "or/clackamas/oregon-city/17.zoning.txt#L14895-L14896"
     why: parking count -- the quadplex row states no unit; the state cap of four in total governs
   - quote: "or/clackamas/oregon-city/16.12.streets.txt#L984-L1017"
