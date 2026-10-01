@@ -1,0 +1,1242 @@
+Close
+Print
+Resize:
+
+City of Cornelius, OR
+
+[print date]
+
+Title 18. Zoning
+
+Division II. LAND USE AND ZONING DISTRICTS
+
+Chapter 18.90. FLOODPLAIN DISTRICT (FP)
+
+[1]
+Prior legislation: Ords. 810, 841 and 2016-012; Code 2000 §§ 11.20.91 – 11.20.93.
+
+§ 18.90.010. Purpose.
+
+(A)
+
+The city of Cornelius has the primary responsibility for planning, adoption, and enforcement of land use regulations to accomplish proper management of special flood hazard areas within the city limits.
+
+(B)
+
+It is the purpose of the FP zone to promote the public health, safety and general welfare and to minimize public and private losses or damages due to flood conditions in specific areas by provisions designed to:
+
+(1)
+
+Protect human life and health;
+
+(2)
+
+Minimize expenditure of public money for costly flood control projects;
+
+(3)
+
+Minimize the need for rescue and relief efforts associated with flooding and generally undertaken at the expense of the public;
+
+(4)
+
+Minimize damage to public facilities and utilities such as water and gas mains, electric, telephone and sewer lines, streets and bridges located in areas of special flood hazards;
+
+(5)
+
+Help maintain a stable tax base by providing for the sound use and development of areas of special flood hazard;
+
+(6)
+
+Ensure that potential buyers are notified that property is in an area of special flood hazard;
+
+(7)
+
+Ensure that those who occupy the areas of special flood hazard assume responsibility for their actions;
+
+(8)
+
+Maintain the functions and values associated with special flood hazard areas which reduce the risk of flooding;
+
+(9)
+
+Preserve natural and beneficial floodplain functions;
+
+(10)
+
+Participate in and maintain eligibility for flood insurance and disaster relief;
+
+(11)
+
+Comply with FEMA Implementation Plan for National Flood Insurance Program – Endangered Species Act Integration in Oregon.
+
+(C)
+
+Methods of Reducing Flood Losses. In order to accomplish its purposes, this chapter includes methods and provisions for:
+
+(1)
+
+Restricting or prohibiting development which is dangerous to health, safety, and property due to water or erosion hazards, or which result in damaging increases in erosion or in flood heights or velocities;
+
+(2)
+
+Requiring that development vulnerable to floods, including facilities that serve such uses, be protected against flood damage at the time of initial construction;
+
+(3)
+
+Controlling the alteration of natural floodplains, stream channels, and natural protective barriers, which help accommodate or channel floodwaters;
+
+(4)
+
+Controlling filling, grading, dredging, and other development which may increase flood damage;
+
+(5)
+
+Preventing or regulating construction of flood barriers which will unnaturally divert floodwaters or may increase flood hazards in other areas;
+
+(6)
+
+Employing a standard of "no net loss" of natural and beneficial floodplain functions.
+
+(Ord. 2025-05 § 1 (Exh. A), 2025)
+
+§ 18.90.020. Authority.
+
+(A)
+
+The Basis for Establishing the Areas of Special Flood Hazard. The special flood hazard areas are identified by the Federal Insurance Administration in a scientific and engineering report entitled "The Flood Insurance Study for Washington County, Oregon and Incorporated Areas," Volumes 1 through 3, dated November 4, 2016 (Flood Insurance Study Number 41067CV001A, 41067CV002A and 41067CV003A), with accompanying flood insurance rate maps (FIRM) (Map Number 41067C0312E, 41067C0314E, 41067C0316E, 41067C0318E and 41067C0319E, dated November 4, 2016), are hereby adopted by reference and declared to be a part of this chapter. The flood insurance study and the FIRM are on file at the city of Cornelius community development department located at 1300 S. Kodiak Circle, Cornelius, OR 97113. The best available information for flood hazard area identification as outlined in this section shall be the basis for regulation.
+
+(B)
+
+The floodplain administrator is the community development director or their designee.
+
+(Ord. 2025-05 § 1 (Exh. A), 2025)
+
+§ 18.90.030. General provisions.
+
+(A)
+
+Warning and Disclaimer of Liability. The degree of flood protection required by this chapter is considered reasonable for regulatory purposes and is based on scientific and engineering considerations. Larger floods can and will occur on rare occasions. Flood heights may be increased by manmade or natural causes. This chapter does not imply that land outside the areas of special flood hazard or uses permitted within such areas is guaranteed to be free from flooding or flood damages. This chapter shall not create liability on the part of the city of Cornelius, any officer or employee thereof, or the Federal Insurance Administration, for any flood damages that result from reliance on this chapter or any administrative decision lawfully made hereunder.
+
+(B)
+
+Abrogation and Severability. This chapter is not intended to repeal, abrogate, or impair any existing easements, covenants, or deed restrictions. However, where this chapter and another ordinance, easement, covenant, or deed restriction conflict or overlap, whichever imposes the more stringent restrictions shall prevail. If any section, clause, sentence, or phrase of this chapter is held to be invalid or unconstitutional by any court of competent jurisdiction, then said holding shall in no way affect the validity of the remaining portions of this chapter.
+
+(C)
+
+Violation and Penalties. Violations of the provisions of this chapter, inclusive, by failure to comply with any of its requirements or prohibitions shall constitute a misdemeanor. Any person, firm or corporation who violates any of these provisions contained in this chapter, inclusive, shall, upon conviction, be fined not more than $10,000 for each violation and in addition shall pay all costs and expenses incurred by the city in the prosecution of said violation. Nothing herein contained shall prevent the city from taking such other lawful action as necessary to prevent or remedy any violation.
+
+(D)
+
+Permit Review. The floodplain administrator, or their designee, shall implement the provisions of this floodplain (FP) overlay zone by granting or denying development permit applications as follows:
+
+(1)
+
+Determine that the requirements of this section have been satisfied;
+
+(2)
+
+Determine that all other necessary permits have been obtained from those federal, state or local governmental agencies from which prior approval is required;
+
+(3)
+
+Determine if the proposed development is located in the floodway.
+
+(a)
+
+If located in the floodway, assure that the encroachment provisions of CMC § 18.90.060 are met;
+
+(b)
+
+Determine if the proposed development is located in an area where base flood elevation data is available either through the flood insurance study or from another authoritative source. If base flood elevation data is not available then ensure compliance with the provisions of subsection (E) of this section; and
+
+(c)
+
+Provide to building official the base flood elevation applicable to any building requiring a development permit;
+
+(4)
+
+Determine if the proposed development qualifies as a substantial improvement as defined by CMC § 18.90.080, Definitions;
+
+(5)
+
+Determine if the proposed development activity is a watercourse alteration. If a watercourse alteration is proposed, ensure compliance with the provisions in subsection (G) of this section;
+
+(6)
+
+Determine if the proposed development activity includes the placement of fill or excavation. If fill or excavation is proposed, ensure compliance with the provision of CMC § 18.90.050; and
+
+(7)
+
+Determine whether the proposed development activity complies with the no net loss standards in CMC § 18.90.070, No net loss standards.
+
+(E)
+
+Information to Be Obtained and Maintained. The following information shall be obtained and maintained and shall be made available for public inspection, as needed:
+
+(1)
+
+Obtain, record, and maintain the actual elevation (in relation to mean sea level) of the lowest floor (including basements) and all attendant utilities of all new or substantially improved structures where base flood elevation data is provided through the flood insurance study, flood insurance rate map, or obtained in accordance with subsection (F) of this section.
+
+(2)
+
+Obtain and record the elevation (in relation to mean sea level) of the natural grade of the building site for a structure prior to the start of construction and the placement of any fill and ensure that the requirements of CMC § 18.90.050, Fill/removal review criteria, are adhered to and all other required local, state and federal permits have been obtained and approved.
+
+(3)
+
+Upon placement of the lowest floor or a structure (including basement) but prior to further vertical construction, obtain documentation, prepared and sealed by a professional licensed surveyor or engineer, certifying the elevation (in relation to mean sea level) of the lowest floor (including basement).
+
+(4)
+
+Where base flood elevation data are used, obtain record drawing certification of the elevation (in relation to mean sea level) of the lowest floor (including basement) prepared and sealed by a professional licensed surveyor or engineer, prior to final inspection.
+
+(5)
+
+Maintain all elevation certificates submitted to the city of Cornelius.
+
+(6)
+
+Obtain, record, and maintain the elevation (in relation to mean sea level) to which the structure and all attendant utilities were floodproofed for all new or substantially improved floodproofed structures where under this chapter and where base flood elevation data is provided through the FIS, FIRM, or obtained in accordance with subsection (F) of this section.
+
+(7)
+
+Maintain all floodproofing certificates required under this chapter.
+
+(8)
+
+Record and maintain all variance actions, including justification for their issuance.
+
+(9)
+
+Obtain and maintain all hydrologic and hydraulic analyses performed as required under CMC § 18.90.070, No net loss standards.
+
+(10)
+
+Record and maintain all substantial improvement and substantial damage calculations and determinations as required under subsection (I) of this section.
+
+(11)
+
+Documentation of how no net loss standards have been met per CMC § 18.90.070, No net loss standards.
+
+(F)
+
+City Boundary Alterations. The floodplain administrator shall notify the Federal Insurance Administrator in writing whenever the boundaries of the city have been modified by annexation or the city has otherwise assumed authority or no longer has authority to adopt and enforce floodplain regulations for a particular area, to ensure that all flood hazard boundary maps and flood insurance rate maps accurately represent the city's boundaries. The notification will include a copy of a map of the city suitable for reproduction, clearly delineating the new corporate limits or new area for which the city has assumed or relinquished floodplain management regulatory authority.
+
+(G)
+
+Watercourse Alterations. The floodplain administrator shall notify adjacent communities and the Department of Land Conservation and Development prior to any alteration or relocation of a watercourse, and submit evidence of such notification to the Federal Insurance Administration.
+
+(H)
+
+Requirement to Submit New Technical Data. The city's base flood elevations may increase or decrease resulting from physical changes affecting flooding conditions. As soon as practicable, but not later than six months after the date such information becomes available, the city must notify the Federal Insurance Administrator of the changes by submitting technical or scientific data in accordance with 44 CFR 65.4. The city shall require the applicant to submit such data and review fees required for compliance with the section through the applicable FEMA letter of map change process. The floodplain administrator shall require a conditional letter of map revision prior to the issuance of a floodplain development permit for proposed floodway encroachments that increase the base flood elevation and proposed development which increases the base flood elevation by more than one foot in areas where FEMA has provided base flood elevations but no floodway. An applicant shall notify FEMA within six months of project completion when an applicant has obtained a conditional letter of map revision from FEMA. This notification to FEMA shall be provided in a letter of map revision.
+
+(I)
+
+Substantial Improvement and Substantial Damage Assessment and Determinations. The floodplain administrator shall:
+
+(1)
+
+Conduct substantial improvement (as defined in CMC § 18.90.080, Definitions) reviews for all structural development proposal applications and maintain a record of substantial improvement calculations within permit files in accordance with subsection (E) of this section.
+
+(2)
+
+Conduct substantial damage assessments when structures are damaged due to a natural hazard event or other causes.
+
+(3)
+
+Make substantial damage determinations whenever structures within the area of special flood hazard (as established in CMC § 18.90.020(A)) are damaged to the extent that the cost of restoring the structure to its before damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+
+(J)
+
+Floodplain Permit Required. A floodplain permit shall be obtained before construction or development begins within any area horizontally within the area of special flood hazard established in CMC § 18.90.020(A) and shall include the information identified in CMC § 18.90.040, Floodplain permit application. The application shall be required for all structures including manufactured dwellings and all other development, as defined in CMC § 18.90.080, Definitions.
+
+(K)
+
+No Net Loss. Adherent to NMFS 2016 Biological Opinion, mitigation is necessary to ensure no net loss in floodplain functions. FEMA's 2024 Draft Oregon Implementation Plan identifies proxies that provide measurable actions that can prevent the no net loss of the parent floodplain functions. These proxies include undeveloped spaces, pervious surfaces and trees to account for a no net loss in respective floodplain functions of floodplain storage, water quality, and vegetation. Mitigation of these proxies must be completed to ensure compliance with no net loss standards. No net loss applies to the net change in floodplain functions as compared to existing conditions at the time of the proposed development and mitigation must address the floodplain function that is directly impacted. The no net loss standards apply to all special flood hazard areas as defined in CMC § 18.90.020(A).
+
+(Ord. 2025-05 § 1 (Exh. A), 2025)
+
+§ 18.90.040. Floodplain permit application.
+
+A floodplain permit shall be obtained before construction or development begins within any special flood hazard area. The permit shall be for all structures including manufactured dwellings, and for all development including fill and other development activities, as set forth in CMC § 18.90.080, Definitions.
+
+(A)
+
+Application for a development permit shall be made on forms furnished by the community development director and shall include, but not necessarily be limited to: plans drawn to scale showing the nature, location, dimensions, and elevations of the area in question; existing or proposed structures; fill; storage of materials; drainage facilities; and the location of the foregoing. The application shall also include required information listed in Chapter 18.100 CMC (Site Design Review), Chapter 18.95 CMC (Natural Resource Overlay), and the site development standards of the underlying zone and the applicable sections of this chapter, in addition to the following:
+
+(1)
+
+Elevation in relation to a specific datum of the lowest floor, including basement, of all structures as documented on an elevation certificate;
+
+(2)
+
+Elevation in relation to a specific datum to which any proposed structure will be floodproofed as documented on an elevation certificate;
+
+(3)
+
+Certification by a registered professional engineer or architect that the floodproofing methods for any nonresidential structure meet the floodproofing standards;
+
+(4)
+
+Description of the extent to which any watercourse will be altered or relocated as a result of proposed development;
+
+(5)
+
+Base flood elevation data for subdivision proposals or other development when required by this chapter;
+
+(6)
+
+Substantial improvement calculations for any improvement, addition, reconstruction, renovation, or rehabilitation of an existing structure; and
+
+(7)
+
+The amount and location of any fill or excavation activities proposed.
+
+(B)
+
+Where interpretation is needed requiring the boundaries of the areas of special flood hazard, the community development director will make the necessary interpretation. The person contesting the ruling of the community development director shall be given a reasonable opportunity to appeal the ruling as provided in CMC § 18.15.090, Appeal procedures.
+
+(C)
+
+Variances shall be issued by the community development director on a case-by-case basis, subject to the following regulations:
+
+(1)
+
+Variances shall not be issued by the community development director within any designated regulatory floodway if any increase in flood levels during the base flood discharge would result;
+
+(2)
+
+Variances may be issued by the community development director for new construction and substantial improvements to be erected on a lot of one-half acre or less in size contiguous to and surrounded by lots with existing structures constructed below the base flood level;
+
+(3)
+
+Variances shall only be issued by the community development director upon (a) a showing of good and sufficient cause, (b) a determination that failure to grant the variance would result in exceptional hardship to the applicant, and (c) a determination that the granting of a variance will not result in increased flood heights, additional threats to public safety, extraordinary public expense, create nuisances, cause fraud on or victimization of the public, or conflict with existing local laws or ordinances;
+
+(4)
+
+Variances shall only be issued upon a determination that the variance is the minimum necessary, considering the flood hazard, to afford relief;
+
+(5)
+
+The community development director shall notify the applicant in writing that (a) the issuance of a variance to construct a structure below the base flood level will result in increased premium rates for flood insurance up to amounts as high as $25.00 for $100.00 of insurance coverage and (b) such construction below the base flood level increases risks to life and property. Such notification shall be maintained with a record of all variance actions as required in subsection (C)(6) of this section; and
+
+(6)
+
+The community development director shall (a) maintain a record of all variance actions, including justification for their issuance, and (b) report such variances issued in its annual or biennial report submitted to the administrator.
+
+(7)
+
+Variances may be issued by the community development director for new construction and substantial improvements and for other development necessary for the conduct of a functionally dependent use; provided, that (a) the criteria of CMC § 18.90.050 through § 18.90.070 are met, and (b) the structure or other development is protected by methods that minimize flood damages during the base flood and create no additional threats to public safety.
+
+(Ord. 2025-05 § 1 (Exh. A), 2025)
+
+§ 18.90.050. Fill/removal review criteria.
+
+In addition to the applicable site development standards of the base zone, Chapter 18.100 CMC (Site Design Review), and Chapter 18.95 CMC (Natural Resource Overlay) the following review and approval criteria shall apply to proposed fill (including grading or construction) located partially or wholly in the special flood hazard area:
+
+(A)
+
+Fill is not proposed to be located within a regulatory floodway, wetland, riparian area, or other sensitive area regulated by the city of Cornelius or Clean Water Services.
+
+(B)
+
+The fill is necessary for an approved use on the property.
+
+(C)
+
+The fill is the minimum amount necessary to achieve the approved use.
+
+(D)
+
+No feasible alternative upland locations exist on the property.
+
+(E)
+
+The fill does not impede or alter drainage or the flow of floodwaters.
+
+(F)
+
+All necessary permits have been received from those governmental agencies from which approval is required by federal or state law, including Section 404 of the Federal Water Pollution Control Act Amendments of 1972, 33 U.S.C. 1334.
+
+Conditions of approval may require that if the fill is found to not meet the criterion in subsection (E) of this section, the fill shall be removed or, where reasonable and practical, appropriate mitigation measures shall be required of the property owner. Such measures shall be verified by a certified engineer or hydrologist that the mitigation measures will not result in a net rise in floodwaters and be in coordination with applicable state, federal and local agencies, including the Oregon Department of Fish and Wildlife, Clean Water Services, the Division of State Lands, the Army Corps of Engineers, the National Marine Fisheries Service, and the U.S. Fish and Wildlife Service. Adequate notice of alteration of the floodplain will be given to the above-referenced agencies.
+
+(Ord. 2025-05 § 1 (Exh. A), 2025)
+
+§ 18.90.060. National Flood Insurance Program general standards.
+
+In all special flood hazard areas the no net loss standards in CMC § 18.90.070 and the following standards are required:
+
+(A)
+
+Anchoring.
+
+(1)
+
+All new construction and substantial improvements shall be anchored to prevent flotation, collapse or lateral movement of the structure.
+
+(2)
+
+All manufactured dwellings must likewise be anchored to prevent flotation, collapse or lateral movement, and shall be installed using methods and practices that minimize flood damage. Post construction and prior to final inspection approval, the applicant shall submit a certificate signed by a registered architect or engineer which certifies that the anchoring system is in conformance with FEMA regulations.
+
+(B)
+
+Construction Materials and Methods.
+
+(1)
+
+All new construction and substantial improvements shall be constructed with materials and utility equipment resistant to flood damage.
+
+(2)
+
+All new construction and substantial improvements shall be constructed using methods and practices that minimize flood damage.
+
+(C)
+
+Utilities and Equipment.
+
+(1)
+
+Utilities.
+
+(a)
+
+All new and replacement water supply systems shall be designed to minimize or eliminate infiltration of floodwater into the system.
+
+(b)
+
+New and replacement sanitary sewage systems shall be designed to minimize or eliminate infiltration of floodwaters into the systems and discharge from the systems into floodwaters.
+
+(c)
+
+On-site waste disposal systems shall be located to avoid impairment to them or contamination from them during flooding consistent with the Oregon Department of Environmental Quality.
+
+(2)
+
+Electrical, Heating, Ventilation, Plumbing, and Air Conditioning Equipment and Other Service Facilities.
+
+(a)
+
+All new components and replacements as part of a substantial improvement shall be elevated to prevent water from entering or accumulating within the components during conditions of flooding. In flood zones A, AE, and AH, such facilities shall be elevated three feet above base flood elevation. In flood zone AO, such facilities shall be elevated above the highest grade adjacent to the building, a minimum of one foot above the depth number specified on the FIRM (at least two feet above the highest adjacent grade if no depth number is specified).
+
+(b)
+
+Shall not be mounted on or penetrate through breakaway walls.
+
+(D)
+
+Subdivision and partition proposals, manufactured dwelling parks, and manufactured dwelling subdivisions must comply with the following:
+
+(1)
+
+All proposals shall be consistent with the need to minimize flood damage.
+
+(2)
+
+All proposals shall have public utilities and facilities such as sewer, gas, electrical, and water systems located and constructed to minimize flood damage.
+
+(3)
+
+All proposals shall have adequate drainage provided to reduce exposure to flood damage.
+
+(4)
+
+All proposals shall comply with all applicable Clean Water Services (CWS) standards with regard to development within flood area.
+
+(5)
+
+All proposals shall comply with the no net loss floodplain functions of storage, water quality, and vegetation.
+
+(6)
+
+Where base flood elevation data has not been provided or is not available from another authoritative source, it shall be generated for development proposals.
+
+(a)
+
+Development proposals shall be reviewed to assure that proposed construction will be reasonably safe from flooding.
+
+(b)
+
+The test of reasonableness is a local judgment and includes use of historical data, high water marks, photographs of past flooding, etc., where available.
+
+(c)
+
+Failure to elevate at least two feet above grade in these zones may result in higher insurance rates.
+
+(E)
+
+Flood Openings. All new construction and substantial improvements with fully enclosed areas below the lowest floor (excluding basements) are subject to the following requirements. Enclosed areas below the base flood elevation, including crawl spaces, shall:
+
+(1)
+
+Be designed to automatically equalize hydrostatic flood forces on walls by allowing for the entry and exit of floodwaters;
+
+(2)
+
+Be used solely for parking, storage, or building access;
+
+(3)
+
+Be certified by a registered professional engineer or must meet or exceed the following requirements:
+
+(a)
+
+A minimum of two openings having a total net area of not less than one square inch for every square foot of enclosed area subject to flooding;
+
+(b)
+
+The bottom of all openings shall be no higher than one foot above grade;
+
+(c)
+
+Openings may be equipped with screens, louvers, or other coverings or devices provided they permit the automatic entry and exit of floodwaters;
+
+(d)
+
+All additional higher standards for flood openings in the State of Oregon Residential Specialty Codes Section R322.2.2 shall be complied with when applicable.
+
+(F)
+
+Recreational Vehicles. Recreational vehicles placed on sites within the special flood hazard area are required to:
+
+(1)
+
+Be on the site for fewer than 180 consecutive days; and
+
+(2)
+
+Be fully licensed and ready for highway use, on its wheels or jacking system, is attached to the site only by quick disconnect type utilities and security devices, and has no permanently attached additions; or
+
+(3)
+
+Meet the requirements of subsections (A), (B), (C), (D)(4), and (D)(5) of this section.
+
+(G)
+
+Accessory Structures. Relief from elevation or floodproofing as required for structures in A, AE, AH or AO zones may be granted for accessory structures that are:
+
+(1)
+
+Limited in Size.
+
+(a)
+
+Residentially zoned property less than or equal to two acres in size: structure is limited to a maximum of 200 square feet and maximum height of 12 feet;
+
+(b)
+
+Residentially zoned properties greater than two acres: structure is limited to a maximum of 400 square feet if the proposed structure is at least 20 feet from all property lines; or
+
+(c)
+
+Nonresidentially zoned property: structure size is limited to 120 square feet;
+
+(2)
+
+Not temperature controlled. The portions of the structure located below the base flood elevation are built using flood resistant materials;
+
+(3)
+
+Not used for human habitation and are used solely for parking of vehicles or storage of items having low damage potential when submerged;
+
+(4)
+
+Not used to store toxic material, oil or gasoline, or any priority persistent pollutant identified by the Oregon Department of Environmental Quality unless confined in a tank installed as follows:
+
+(a)
+
+The tank is above ground and is installed stored at least one foot above base flood elevation; or
+
+(b)
+
+The underground tank is anchored to prevent flotation, collapse, and lateral movement under conditions of the base flood.
+
+(5)
+
+Constructed in accordance with anchoring and construction materials and methods standards in CMC § 18.90.030(A) through (D)(7);
+
+(6)
+
+If in an A, AE or AH zone, constructed to automatically equalize hydrostatic flood forces on exterior walls by allowing for the entry and exit of floodwaters as required in CMC § 18.90.050(E). Designs for meeting this requirement must either be certified by a registered professional engineer or must meet or exceed the following requirements:
+
+(a)
+
+A minimum of two openings having a total net area of not less than one square inch for every square foot of enclosed area subject to flooding;
+
+(b)
+
+The bottom of all openings shall be no higher than one foot above grade;
+
+(c)
+
+Openings may be equipped with screens, louvers, or other coverings or devices provided they permit the automatic entry and exit of floodwaters.
+
+(H)
+
+Areas of Special Hazard With Base Flood Elevations. In addition to the general standards above, the following specific standards shall apply in the following mapped FEMA zones: A1 – A30, AH and AE.
+
+(1)
+
+Before Regulatory Floodway. In areas where a regulatory floodway has not been designated, no new construction, substantial improvements or other development (including fill) shall occur within A1 – A30 and AE zones designated on the community's flood insurance rate map, unless it is demonstrated that the cumulative effect of the proposed development, when combined with all other existing and anticipated development, will not increase the water surface elevation of the base flood more than one foot at any point within the community and will not result in the net loss of floor storage volume. When determined that structural elevation is not possible and where the placement of fill cannot meet the above standard, impacts to undeveloped space must adhere to the no net loss standards in CMC § 18.90.070.
+
+(2)
+
+Residential Construction.
+
+(a)
+
+New construction and substantial improvement of any residential structure shall have the lowest floor, including basement, at a minimum of two feet above base flood elevation.
+
+(b)
+
+Fully enclosed areas below the lowest floor that are subject to flooding are prohibited, or shall be designed to automatically equalize hydrostatic flood forces on exterior walls by allowing for the entry and exit of floodwaters. Designs for meeting this requirement must either be certified by a registered professional engineer or must meet or exceed the following minimum criteria:
+
+(i)
+
+A minimum of two openings having a total net area of not less than one square inch for every square foot of enclosed area subject to flooding;
+
+(ii)
+
+The bottom of all openings shall be no higher than one foot above grade;
+
+(iii)
+
+Openings may be equipped with screens, louvers, or other coverings or devices provided they permit the automatic entry and exit of floodwaters.
+
+(3)
+
+Nonresidential Construction. New construction and substantial improvement of any commercial, industrial or other nonresidential structure shall have either the lowest floor including basement elevated to two feet above the level of the base flood elevation or higher; or, together with attendant utility and sanitary facilities, shall:
+
+(a)
+
+Be floodproofed so that the portion of the structure that lies below the portion that is two feet or more above the base flood level is watertight with walls substantially impermeable to the passage of water;
+
+(b)
+
+Have structural components capable of resisting hydrostatic and hydrodynamic loads and effects of buoyancy;
+
+(c)
+
+Be certified by a registered professional engineer or architect that the design and methods of construction are in compliance with accepted standards of practice for meeting provisions of this subsection based on their development and/or review of the structural design, specifications and plans. Such certifications shall be provided to the community development director;
+
+(d)
+
+Nonresidential structures that are elevated, not floodproofed, must meet the same standards for space below the lowest floor as described for residential construction in subsections (H)(2)(a) and (H)(2)(b) of this section;
+
+(e)
+
+Applicants floodproofing nonresidential buildings shall be notified that flood insurance premiums will be based on rates that are one foot below the floodproofed level (e.g., a building constructed to the base flood level will be rated as one foot below that level).
+
+(4)
+
+Manufactured Dwellings. Manufactured dwellings to be placed or substantially improved within an A, AE, AH or AO zone shall be elevated so that:
+
+(a)
+
+Manufactured dwellings supported on solid foundation walls shall be constructed with flood openings that comply with subsection (H)(2)(a) of this section;
+
+(b)
+
+The lowest floor of the manufactured home is elevated to a minimum of two feet above the base flood elevation; and
+
+(c)
+
+The manufactured home chassis is supported by reinforced piers or other foundation elements of at least equivalent strength that are no less than 24 inches in height above grade and are securely anchored to an adequately designed foundation system to resist flotation, collapse and lateral movement in accordance with requirements of the Oregon Residential Specialty Code. Electrical crossover connections shall be a minimum of 12 inches above base flood elevation.
+
+(5)
+
+Temporary storage of goods and materials, not including hazardous materials, is allowed in the floodway for a period of less than 90 days within the dry season (June – October).
+
+(I)
+
+Grading. Grading within the floodplain shall only occur between May 1st and September 1st of each year. Extension of the grading season in a particular year may only be granted by the community development director following a written request from a contractor, developer, or other project representative, and shall only be granted based on the following criteria:
+
+(1)
+
+Precipitation is not anticipated within the requested extension period, based on predictions from the National Oceanic and Atmospheric Administration (NOAA) or another reputable weather service.
+
+(2)
+
+The extension request is approved by Clean Water Services.
+
+(3)
+
+The extension request will not violate any other applicable federal, state and local requirements, including but not limited to the Endangered Species Act.
+
+(J)
+
+Alteration of Watercourses. The floodplain administrator shall require that the flood carrying capacity within the altered or relocated portion of said watercourse is maintained and that maintenance is provided within the altered or relocated portion of said watercourse to ensure flood carrying capacity is not diminished. Additionally, compliance with CMC § 18.90.070, No net loss standards, is required.
+
+(K)
+
+Critical Facilities. Construction of new critical facilities shall be, to the extent possible, located outside the limits of the special flood hazard area (SFHA) (100-year floodplain). Construction of new critical facilities shall be permissible within the SFHA if no feasible alternative site is available. Critical facilities constructed within the SFHA shall have the lowest floor elevated three feet above BFE or to the height of the 500-year flood, whichever is higher. Access to and from the critical facility should also be protected to the height utilized above. Floodproofing and sealing measures must be taken to ensure that toxic substances will not be displaced by or released into floodwaters. Access routes elevated to or above the level of the base flood elevation shall be provided to all critical facilities to the extent possible.
+
+(L)
+
+Floodways. Located within special flood hazard areas established in CMC § 18.90.020(A) are areas designated as regulatory floodways. Since the floodway is an extremely hazardous area due to the velocity of floodwaters which carry debris, potential projectiles, and erosion potential, the following provisions apply:
+
+(1)
+
+Prohibit encroachments in the regulatory floodway including fill, new construction, substantial improvements, and other development unless:
+
+(a)
+
+Certification is provided by a professional registered civil engineer demonstrating through hydrologic and hydraulic analysis, performed in accordance with standard engineering practice, that such encroachment shall not result in any increase in flood levels during the occurrence of the base flood discharge; or
+
+(b)
+
+A city may permit encroachments within the adopted regulatory floodway that would result in an increase in base flood elevations; provided, that conditional approval has been obtained from the Federal Insurance Administrator through the conditional letter of map revision (CLOMR) application process, requirements established under 44 CFR 65.12 are fulfilled, and the encroachments comply with the no net loss standards in CMC § 18.90.070.
+
+(2)
+
+If subsection (L)(1) of this section is satisfied, all new construction and substantial improvement shall comply with all applicable flood hazard reduction provisions of this section.
+
+(3)
+
+Projects for stream habitat restoration may be permitted in the floodway provided the project complies with CMC § 18.90.070(F).
+
+(M)
+
+Shallow Flooding. Shallow flooding areas appear on FIRMs as AO zones with depth designations. The base flood depths in these zones range from one to three feet where a clearly defined channel does not exist, or where the path of flooding is unpredictable and where velocity flow may be evident. Such flooding is usually characterized as sheet flow. In these areas the following provisions apply:
+
+(1)
+
+Require adequate drainage paths around structures on slopes to guide floodwaters around and away from proposed structures.
+
+(2)
+
+Residential. New construction and substantial improvements of residential structures (including manufactured dwellings) within AO zones shall have the lowest floor (including basement) elevated above the highest grade adjacent to the building, a minimum of one foot above the depth number specified on the FIRM (at least two feet above the highest adjacent grade if no depth number is specified).
+
+(3)
+
+Nonresidential. New construction and substantial improvements of nonresidential structures, including manufactured dwellings used for nonresidential purposes, within AO zones shall either:
+
+(a)
+
+Have the lowest floor (including basement) elevated above the highest grade adjacent to the building, a minimum of one foot above the depth number specified on the FIRM (at least two feet above the highest adjacent grade if no depth number is specified); or
+
+(b)
+
+Together with attendant utility and sanitary facilities, be completely floodproofed to one foot above the depth number specified on the FIRM so that any space below that level is watertight with walls substantially impermeable to the passage of water and with structural components having the capability of resisting hydrostatic and hydrodynamic loads and effects of buoyancy. If this method is used, compliance shall be certified by a registered professional engineer or architect.
+
+(Ord. 2025-05 § 1 (Exh. A), 2025)
+
+§ 18.90.070. No net loss standards.
+
+(A)
+
+General Provisions.
+
+(1)
+
+No net loss of the proxies for the floodplain functions is required for development in the special flood hazard area that would reduce undeveloped space, increase impervious surface, or result in a loss of trees that are six-inch diameter at breast height (dbh) or greater. No net loss can be achieved by first avoiding negative effects to floodplain functions to the degree possible, then minimizing remaining effects, then replacing and/or otherwise compensating for, offsetting, or rectifying the residual adverse effects to the three floodplain functions.
+
+(2)
+
+Compliance with no net loss for undeveloped space or impervious surface is preferred to occur prior to the loss of habitat function but, at a minimum, shall occur concurrent with the loss.
+
+(3)
+
+No net loss must be provided within, in order of preference:
+
+(a)
+
+The lot or parcel that floodplain functions were removed from;
+
+(b)
+
+The same reach of the waterbody where the development is proposed; or
+
+(c)
+
+The special flood hazard area within the same hydrologically connected area as the proposed development. Table 18.90.070(H) presents the no net loss ratios, which increase based on the preferences listed above.
+
+(B)
+
+Undeveloped Space. Development proposals shall not reduce the fish-accessible and egress-able habitat and flood storage volume created by undeveloped space within the special flood hazard area. A development proposal with an activity that would impact undeveloped space shall achieve no net loss of fish-accessible and egress-able space and flood storage volume. Lost undeveloped space must be replaced with fish-accessible and egress-able compensatory volume based on the ratio in Table 18.90.070(H) and must be hydrologically connected to the waterbody that is the flooding source.
+
+(C)
+
+Impervious Surfaces. Impervious surface mitigation shall be mitigated through any of the following:
+
+(1)
+
+Development proposals shall not result in a net increase in impervious surface area within the special flood hazard area through the use of ratios prescribed in the table within subsection (H) of this section;
+
+(2)
+
+Use low impact development or green infrastructure to infiltrate and treat stormwater produced by the new impervious surface, as documented by a qualified professional; or
+
+(3)
+
+If prior methods are not feasible and documented by a qualified professional, stormwater retention is required to ensure no increase in peak volume or flow and to maximize infiltration, and treatment is required to minimize pollutant loading. See subsection (E) of this section for stormwater retention specifications.
+
+(D)
+
+Trees. Development proposals shall result in no net loss of trees six inches dbh or greater within the special flood hazard area.
+
+(1)
+
+Trees of or exceeding six inches dbh that are removed from the riparian buffer zone (RBZ), floodway, or RBZ-fringe must be replaced at the ratios in Table 18.90.070(H) and planted within the special flood hazard area.
+
+(2)
+
+Replacement trees must be native species that would occur naturally in the Level III ecoregion of the impact area.
+
+(E)
+
+Stormwater Management. Any development proposal that cannot mitigate as specified in subsections (C)(1) and (C)(2) of this section must include the following:
+
+(1)
+
+Water quality (pollution reduction) treatment for post-construction stormwater runoff from any net increase in impervious area; and
+
+(2)
+
+Water quantity treatment (retention or detention facilities) unless the outfall discharges into the ocean.
+
+(3)
+
+Retention and detention facilities must:
+
+(a)
+
+Limit discharge to match the predevelopment peak discharge rate (i.e., the discharge rate of the site based on its natural groundcover and grade before any development occurred) for the 10-year peak flow using a continuous simulation for flows between 50 percent of the two-year event and the 10-year flow event (annual series).
+
+(b)
+
+Treat stormwater to remove sediment and pollutants from impervious surfaces such that at least 80 percent of the suspended solids are removed from the stormwater prior to discharging to the receiving water body.
+
+(c)
+
+Be designed to not entrap fish.
+
+(d)
+
+Be certified by a qualified professional.
+
+(4)
+
+Detention facilities must be designed by a qualified professional and drain to the source of flooding.
+
+(5)
+
+Stormwater treatment practices for multiparcel facilities, including subdivisions, shall have an enforceable operation and maintenance agreement to ensure the system functions as designed. This agreement will include:
+
+(a)
+
+Access to stormwater treatment facilities at the site by the city of Cornelius for the purpose of inspection and repair.
+
+(b)
+
+A legally binding document specifying the parties responsible for the proper maintenance of the stormwater treatment facilities. The agreement will be recorded and bind all subsequent purchasers and sellers even if they were not party to the original agreement.
+
+(c)
+
+For stormwater controls that include vegetation and/or soil permeability, the operation and maintenance manual must include maintenance of these elements to maintain the functionality of the feature.
+
+(d)
+
+The responsible party for the operation and maintenance of the stormwater facility shall have the operation and maintenance manual on site and available at all times. Records of the maintenance and repairs shall be retained and made available for inspection by the city of Cornelius for five years.
+
+(F)
+
+Exempt Activities. The following activities are not subject to the no net loss standards; however, they may not be exempt from floodplain development permit requirements:
+
+(1)
+
+Normal maintenance of structures, such as reroofing and replacing siding, provided there is no change in the footprint or expansion of the roof of the structure;
+
+(2)
+
+Normal street, sidewalk, and road maintenance, including filling potholes, repaving, and installing signs and traffic signals, that does not alter contours, use or alters culverts and is less than six inches above grade. Exempt activities do not include expansion of paved areas;
+
+(3)
+
+Routine maintenance of landscaping that does not involve grading, excavation or filling;
+
+(4)
+
+Routine agricultural practices such as tilling, plowing, harvesting, soil amendments, and ditch cleaning that does not alter the ditch configuration provided the spoils are removed from the special flood hazard area or tilled into fields as a soil amendment;
+
+(5)
+
+Routine silviculture practices (harvesting of trees), including hazardous fuels reduction and hazard tree removal as long as root balls are left in place;
+
+(6)
+
+Removal of noxious weeds and hazard trees, and replacement of nonnative vegetation with native vegetation;
+
+(7)
+
+Normal maintenance of above ground utilities and facilities, such as replacing downed power lines and utility poles, provided there is no net change in footprint;
+
+(8)
+
+Normal maintenance of a levee or other flood control facility prescribed in the operations and maintenance plan for the levee or flood control facility. Normal maintenance does not include repair from flood damage, expansion of the prism, expansion of the face or toe or addition of protection on the face or toe with rock armor;
+
+(9)
+
+Habitat restoration activities;
+
+(10)
+
+Preemptive removal of documented susceptible trees to manage the spread of invasive species;
+
+(11)
+
+Projects that are covered under consultations under Section 4(d), 7, or 10 of the Endangered Species Act (ESA).
+
+(G)
+
+Riparian Buffer Zone (RBZ).
+
+(1)
+
+The riparian buffer zone is measured from the ordinary high-water line of a fresh water body (lake; pond; ephemeral, intermittent or perennial stream) or mean higher-high water of a marine shoreline or tidally influenced river reach to 170 feet horizontally on both sides of the stream or inland of the MHHW. The riparian buffer zone includes the area between those outer boundaries on each side of the stream, including the stream channel.
+
+(2)
+
+Functionally dependent uses are only subject to the no net loss standards of this section for development within the RBZ. Ancillary facilities that are associated with, but do not directly impact, the functionally dependent use in the RBZ (including manufacturing support facilities and restrooms) are subject to the beneficial gain standard in addition to the no net loss standard.
+
+(3)
+
+Any other use of the RBZ requires a greater offset to achieve no net loss of floodplain functions on top of the no net loss standards described above, through the beneficial gain standard.
+
+(4)
+
+Under FEMA's beneficial gain standard, an area within the same reach of the project and equivalent to five percent of the total project acres within the RBZ shall be planted with native herbaceous shrub and tree vegetation.
+
+(H)
+
+Table of No Net Loss Mitigation Standards.
+
+Basic Mitigation Ratios                                                                     Undeveloped Space (ft[3])  Impervious Surface (ft[2])  Trees (6" DBH < 20" DBH)  Trees (20" DBH < 39" DBH)  Trees (> 39" DBH)
+RBZ and floodway                                                                            2:1                        1:1                         3:1                       5:1                        6:1
+RBZ-fringe                                                                                  1.5:1                      1:1                         2:1                       4:1                        5:1
+Mitigation multipliers
+Mitigation on site to mitigation off site, same reach                                       100%                       100%                        100%                      100%                       100%
+Mitigation on site to mitigation off site, different reach, same watershed (5th Field HUC)  200%                       200%                        200%                      200%                       200%
+
+NOTES:
+NOTES:
+1. Mitigation multipliers of 100 percent resulting in the required mitigation occurring at the same value described by the ratios above, while multipliers of 200 percent resulting in the required mitigation being doubled.
+1. Mitigation multipliers of 100 percent resulting in the required mitigation occurring at the same value described by the ratios above, while multipliers of 200 percent resulting in the required mitigation being doubled.
+a. For example, if a development would create 1,000 square feet of new impervious surface, then 1,000 square feet new pervious surface would need to be created. However, if only 500 square feet can be created within the same reach, then the remaining 500 square feet created in a different reach would need to be 1,000 square feet because of the 200 percent multiplier.
+
+(Ord. 2025-05 § 1 (Exh. A), 2025)
+
+§ 18.90.080. Definitions.
+
+Unless specifically defined below or within Chapter 18.195 CMC, words or phrases used in this chapter shall be interpreted so as to give them the meaning they have in common usage and to give this chapter its most reasonable application.
+
+"Addition"
+means an alteration to an existing structure that results in any increase in its ground floor area.
+
+"Ancillary features"
+means features of a development that are not directly related to the primary purpose of the development.
+
+"Appeal"
+means a request for a review of the interpretation of any provision of this chapter or a request for a variance.
+
+"Area of shallow flooding"
+means a designated zone AO, AH, AR/AO or AR/AH on the flood insurance rate map (FIRM) with a one percent or greater annual chance of flooding to an average depth of one to three feet where a clearly defined channel does not exist, where the path of flooding is predictable and where velocity flow may be evident. Such flooding is characterized by ponding or sheet flow. The base flood depths range from one to three feet; a clearly defined channel does not exist; the path of flooding is unpredictable and indeterminate; and velocity flow may be evident. AO is characterized as sheet flow.
+
+"Area of special flood hazard"
+means the land in the floodplain subject to a one percent or greater chance of flooding in any given year. It is shown on the flood insurance rate map (FIRM) as zone A, AO, AH, A1 – A30, AE, A99, and AR. "Special flood hazard area" is synonymous in meaning and definition with the phrase "area of special flood hazard."
+
+"Base flood"
+means flood having a one percent chance of being equaled or exceeded in any given year. Also referred to as the "100-year flood." Designation on maps always includes the letters A, AE, AH, AO, or AR.
+
+"Base flood elevation (BFE)"
+means the elevation to which floodwater is anticipated to rise during the base flood.
+
+"Basement"
+means any area of a building having its floor subgrade (below ground level) on all sides.
+
+"Breakaway wall"
+means a wall that is not part of the structural support of the building and is intended, through its design and construction, to collapse under specific lateral loading forces, without causing damage to the elevated portion of the building or supporting foundation system.
+
+"Conditional letter of map revision (CLOMR)"
+means letter from FEMA commenting on whether a proposed project, if built as proposed, would meet the minimum National Flood Insurance Program standards for proposed hydrology changes. If the project, built as proposed, revises the flood insurance rate map and/or flood insurance study, a letter of map revision (LOMR) is required to be submitted no later than six months after project completion.
+
+"Critical facility"
+means a facility for which even a slight chance of flooding might be too great. Critical facilities include, but are not limited to, schools, nursing homes, hospitals, police, fire and emergency response installations, installations which produce, use or store hazardous materials or hazardous waste.
+
+"Development"
+means any manmade change to improved or unimproved real estate, including but not limited to buildings or other structures, mining, dredging, filling, grading, paving, excavation, drilling operations, or the storage of equipment or materials located within a special flood hazard area.
+
+"Elevated building"
+means, for insurance purposes, a nonbasement building which has its lowest elevated floor raised above ground level by foundation walls, shear walls, posts, piers, pilings, or columns.
+
+"Enhancement"
+means the process of improving upon the natural functions and/or values of an area or feature which has been degraded by human activity.
+
+"Fill"
+means placement of any materials such as soil, gravel, crushed stone, or other materials that change the elevation of the floodplain. The placement of fill is considered "development."
+
+"Fish accessible space"
+means the volumetric space available to fish to access.
+
+"Fish egress-able space"
+means the volumetric space available to fish to exit or leave from.
+
+"Flood" or "flooding"
+means:
+
+(1)
+
+A general and temporary condition of partial or complete inundation of normally dry land areas from:
+
+(a)
+
+The overflow of inland waters; and/or
+
+(b)
+
+The unusual and rapid accumulation or runoff of surface waters from any source;
+
+(c)
+
+Mudslides (i.e., mudflows) which are proximately caused by flooding as defined by subsection (1)(b) of this definition and are akin to a river of liquid and flowing mud on the surfaces of normally dry land areas, as when earth is carried by a current of water and deposited along the path of the current.
+
+(2)
+
+The collapse or subsidence of land along a body of water as a result of erosion or undermining caused by currents of water exceeding anticipated cyclical levels or suddenly caused by an unusually high water level in a natural body of water, accompanied by a severe storm, or by an unanticipated force of nature, such as flash flood or some similarly unusual and unforeseeable event which results in flooding defined in subsection (1)(a) of this definition.
+
+"Flood elevation study"
+means an examination, evaluation and determination of flood hazards and, if appropriate, corresponding water surface elevations, or an examination, evaluation and determination of mudslide (i.e., mudflow) and/or flood-related erosion hazards.
+
+"Flood insurance rate map (FIRM)"
+means the official map on which the Federal Emergency Management Agency has delineated both the special flood hazard areas and the risk premium zones applicable to the community.
+
+"Flood insurance study"
+(see also "flood elevation study") means the official report provided by the Federal Insurance Administration that includes flood profiles, the flood insurance rate map, and the water surface elevation of the base flood.
+
+"Floodplain"
+means any land area susceptible to being inundated by water from the sources specified in the "flood(ing)" definition.
+
+"Floodplain management regulations"
+means the provisions of this chapter in addition to the development and zoning code, building codes, health regulations, and other applications of police power. The term describes such state or local regulations, in any combination thereof, which provide standards for the purpose of flood damage prevention and reduction.
+
+"Floodplain storage capacity"
+means the volume of floodwater that an area of floodplain can hold during the one percent annual chance flood.
+
+"Floodway, regulatory"
+means the channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than one foot. The regulatory floodway is delineated by the Federal Emergency Management Agency on the flood insurance study and flood insurance rate map.
+
+"Footprint"
+means the existing measurements of the structure related to the three floodplain functions and their proxies. The footprint related to floodplain storage refers to the volumetric amount of developed space measured from the existing ground level to the BFE, and the footprint related to water quality refers to the area of impervious surface that the structure creates.
+
+"Functionally dependent use"
+means a use which cannot perform its intended purposes unless it is located or carried out in proximity to water. The term includes only docking facilities, port facilities that are necessary for the loading and unloading of cargo or passengers, and ship building and ship repair facilities, but does not include long-term storage or related manufacturing facilities.
+
+"Green infrastructure"
+means the use of natural or human-made hydrological features to manage water and provide environmental and community benefits. Green infrastructure uses management approaches and technologies that use, enhance, and/or mimic the natural hydrologic cycle processes of infiltration, evapotranspiration, and reuse. At a large scale, it is an interconnected network of greenspace that conserves natural systems and provides assorted benefits to human populations. At a local scale, it manages stormwater by infiltrating it into the ground where it is generated using vegetation or porous surfaces, or by capturing it for later reuse. Green infrastructure practices can be used to achieve no net loss of pervious surface by creating infiltration of stormwater in an amount equal to or greater than the infiltration lost by the placement of new impervious surface.
+
+"Habitat restoration activities"
+means activities with the sole purpose of restoring habitat that have only temporary impacts and long-term benefits to habitat. Such projects cannot include ancillary structures such as a storage shed for maintenance equipment, must demonstrate that no rise in the BFE would occur as a result of the project and obtain a CLOMR and LOMR, and have obtained any other required permits (e.g., CWA Section 404 permit).
+
+"Hazard trees"
+means standing dead, dying or diseased trees or ones with a structural defect that makes it likely to fail in whole or in part and that present a potential hazard to a structure or as defined by the city.
+
+"Highest adjacent grade"
+means the highest natural elevation of the ground surface prior to construction next to the proposed walls of a structure.
+
+"Historic structure"
+means any structure that is:
+
+(1)
+
+Listed individually on the National Register of Historic Places or preliminarily determined by the Secretary of the Interior as meeting the requirements for individual listing on the National Register;
+
+(2)
+
+Certified or preliminarily determined by the Secretary of the Interior as contributing to the historical significance of a registered historic district or a district preliminarily determined by the Secretary of the Interior to qualify as a registered historic district;
+
+(3)
+
+Individually listed on the Oregon state inventory of historic places; or
+
+(4)
+
+Individually listed on the city's inventory of historic places.
+
+"Hydraulically equivalent elevation"
+means a location (e.g., a site where no net loss standards are implemented that is approximately equivalent to one another (e.g., the impact site) relative to the same 100-year water surface elevation contour or base flood elevation. This may be estimated based on a point that is along the same approximate line perpendicular to the direction of flow.
+
+"Hydrodynamic loads"
+means loads induced on buildings or structures by the flow of floodwater moving at moderate or high velocity around the buildings or structures or parts thereof, above ground level when openings or conduits exist which allow the free flow of floodwaters. Hydrodynamic loads are basically of the lateral type and relate to direct impact loads by the moving mass of water, and to drag forces as the water flows around the obstruction.
+
+"Hydrologically connected"
+means the interconnection of ground water and surface water such that they constitute one water supply and use of either results in an impact to both.
+
+"Hydrostatic loads"
+means loads caused by water either above or below the ground surface, free or confined, which is either stagnant or moves at very low velocities, of up to five feet per second. These loads are equal to the product of the water pressure times the surface area on which the water acts. The pressure at any point is equal to the product of the unit weight of water (62.5 pounds per cubic foot) multiplied by the height of water above that point or by the height to which confined water would rise if free to do so.
+
+"Impervious surface"
+means a surface that cannot be penetrated by water and thereby prevents infiltration and increases the amount and rate of surface water runoff, leading to erosion of stream banks, degradation of habitat, and increased sediment loads in streams. Such surfaces can accumulate large amounts of pollutants that are then "flushed" into local water bodies during storms and can also interfere with recharge of groundwater and the base flows to water bodies.
+
+"Letter of map change (LOMC)"
+means an official FEMA determination, by letter, to amend or revise effective flood insurance rate maps and/or flood insurance studies. LOMCs are issued in the following categories:
+
+(1)
+
+"Letter of map amendment (LOMA)"
+means an amendment to the flood insurance rate maps based on technical data showing that an existing structure, parcel of land, or portion of a parcel of land that has not been elevated by fill (natural grade) was inadvertently included in the special flood hazard area because of an area of naturally high ground above the base flood.
+
+(2)
+
+"Letter of map revision (LOMR)"
+means:
+
+(a)
+
+LOMR-F (letter of map revision based on fill) is a letter from FEMA stating that an existing structure or parcel of land that has been elevated by fill would not be inundated by the base flood.
+
+(b)
+
+A LOMR revises the current flood insurance rate map and/or flood insurance study to show changes to the floodplains, floodways or flood elevations. LOMRs are generally based on manmade alterations that affect the hydrologic or hydraulic characteristics of a flooding source and thus result in modification to the existing regulatory floodway, the effective base flood elevation, or the special flood hazard area. A conditional letter of map revision (CLOMR) may be approved by FEMA prior to issuing a permit to start a project if the project has a potential to affect the special flood hazard area.
+
+"Low impact development,"
+in the context of this chapter, means an approach to land development (or redevelopment) that works with nature to manage stormwater as close to its source as possible. It employs principles such as preserving and recreating natural landscape features and minimizing effective imperviousness to create functional and appealing site drainage that treats stormwater as a resource rather than a waste product. Low impact development refers to designing and implementing practices that can be employed at the site level to control stormwater and help replicate the predevelopment hydrology of the site. Low impact development helps achieve no net loss of pervious surface by infiltrating stormwater in an amount equal to or greater than the infiltration lost by the placement of new impervious surface. LID is a subset of green infrastructure.
+
+"Lowest floor"
+means the lowest floor of the lowest enclosed area (including basement). An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access, or storage, in an area other than a basement area, is not considered a building's lowest floor; provided, that such enclosure is not built so as to render the structure in violation of the applicable nonelevation design requirements of this chapter.
+
+"Manufactured dwelling,"
+in the context of this chapter, means a structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities. The term "manufactured dwelling" does not include a "recreational vehicle."
+
+"Manufactured home park or subdivision,"
+in the context of this chapter, means a parcel (or contiguous parcels) of land divided into two or more manufactured home lots for rent or sale.
+
+"Mechanical equipment"
+means electrical, heating, ventilation, plumbing, and air conditioning equipment, storage tanks and other service facilities.
+
+"Mitigation"
+means the reduction of adverse effects of a proposed project by considering, in the following order:
+
+(1)
+
+Avoiding the impact altogether by not taking a certain action or parts of an action;
+
+(2)
+
+Minimizing impacts by limiting the degree or magnitude of the action and its implementation;
+
+(3)
+
+Rectifying the impact by repairing, rehabilitating, or restoring the affected environment;
+
+(4)
+
+Reducing or eliminating the impact over time by preservation and maintenance operations during the life of the action by monitoring and taking appropriate measures;
+
+(5)
+
+Mitigating for the impact by replacing or providing comparable substitute floodplain areas.
+
+"New construction,"
+in the context of this chapter, means structures for which the "start of construction" commenced on or after the effective date of the ordinance codified in this chapter.
+
+"No net loss"
+means a standard where adverse impacts must be avoided or offset through adherence to certain requirements so that there is no net change in function from the existing condition when a development application is submitted to the state, tribal, or local jurisdiction. The floodplain functions of floodplain storage, water quality, and vegetation must be maintained.
+
+"Off site"
+means mitigation occurring outside the project site.
+
+"On site"
+means mitigation occurring within the project site.
+
+"Ordinary high water mark"
+means the line on the shore established by the fluctuations of water and indicated by physical characteristics such as a clear, natural line impressed on the bank; shelving; changes in the character of soil; destruction of terrestrial vegetation; the presence of litter and debris; or other appropriate means that consider the characteristics of the surrounding areas.
+
+"Permanent foundation"
+means a natural or manufactured support system to which a structure is anchored or attached. A "permanent foundation" is capable of resisting flood forces and may include posts, piles, poured concrete or reinforced block walls, properly compacted fill, or other systems of comparable flood resistivity and strength.
+
+"Pervious surface"
+means a surface that allows rain and snowmelt to seep into the soil and gravel below. Pervious surface may also be referred to as permeable surface.
+
+"Qualified professional"
+means an appropriate subject matter expert that is defined by the community.
+
+"Reach"
+means a section of stream or river along which similar hydrologic conditions exist, such as discharge, depth, area and slope. It can also be the length of a stream or river (with varying conditions) between major tributaries or two stream gages, or a length of river for which the characteristics are well described by readings at a single stream gage.
+
+"Reconstruction"
+means the repair of a structure damaged by any cause (not limited to flooding) without increasing the floor area of the structure.
+
+"Recreational vehicle,"
+in the context of this chapter, means a vehicle which is:
+
+(1)
+
+Built on a single chassis;
+
+(2)
+
+Four hundred square feet or less when measured at the largest horizontal projection;
+
+(3)
+
+Designed to be self-propelled or permanently towable by a light duty truck; and
+
+(4)
+
+Designed primarily not for use as a permanent dwelling but as temporary living quarters for recreational, camping, travel, or seasonal use.
+
+"Rehabilitation"
+means any improvements and repairs made to the interior and exterior of an existing structure that do not result in an increase in the ground floor area of the structure. Examples include remodeling a kitchen, gutting a structure and redoing the interior, or adding a second story.
+
+"Restoration"
+means the process of returning a disturbed or altered area or feature to a previously existing natural condition. Restoration activities reestablish the ecological structure, function, and/or diversity to that which occurred prior to impacts caused by human activity.
+
+"Riparian"
+means of, adjacent to, or living on the bank of a river, lake, pond or other water body.
+
+Riparian Buffer Zone (RBZ).
+The outer boundary of the riparian buffer zone is measured from the ordinary high-water line of a fresh waterbody (lake; pond; ephemeral, intermittent, or perennial stream). The riparian buffer zone includes the area between these outer boundaries on each side of the stream, including the stream channel. Where the RBZ is larger than the special flood hazard area, the no net loss standards shall only apply to the area within the special flood hazard area.
+
+"Riparian buffer zone fringe"
+means the area outside the RBZ and floodway but still within the special flood hazard area.
+
+"Silviculture"
+means the art and science of controlling the establishment, growth, composition, health, and quality of forests and woodlands.
+
+Special Flood Hazard Area (SFHA).
+See "area of special flood hazard" for this definition.
+
+"Start of construction"
+includes substantial improvement, and means the date the building permit was issued, provided the actual start of construction, repair, reconstruction, placement or other improvement was within 180 days of the permit date. The actual start means either the first placement of permanent construction of a structure on a site, such as the pouring of slab or footings, the installation of piles, the construction of columns, or any work beyond the stage of excavation; or the placement of a manufactured home on a foundation. Permanent construction does not include land preparation, such as clearing, grading and filling; nor does it include the installation of streets and/or walkways; nor does it include excavation for a basement, footings, piers, or foundations or the erection of temporary forms; nor does it include the installation on the property of accessory buildings, such as garages or sheds not occupied as dwelling units or not part of the main structure. For a substantial improvement, the actual start of construction means the first alteration of any wall, ceiling, floor, or other structural part of a building, whether or not that alteration affects the external dimensions of the building.
+
+"Structure"
+means, for the purposes of this section, a walled and roofed building, a modular or temporary building, or a gas or liquid storage tank that is principally above ground.
+
+"Substantial damage"
+means damage of any origin sustained by a structure whereby the cost of restoring the structure to its before-damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+
+"Substantial improvement"
+means any reconstruction, rehabilitation, addition, or improvement of a structure, the cost of which equals or exceeds 50 percent of the market value of the structure before the start of construction of the improvement. The term includes structures which have incurred substantial damage, regardless of the actual repair work performed. The term does not include:
+
+(1)
+
+Improvements to a structure to correct existing violations identified of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or
+
+(2)
+
+Any alteration of a historic structure; provided, that the alteration would not preclude the structure's continued designation as a historic structure.
+
+"Undeveloped space"
+means the volume of flood capacity and fish-accessible/egress-able habitat from the existing ground to the base flood elevation that is undeveloped. Any form of development including, but not limited to, the addition of fill, structures, concrete structures (vaults or tanks), pilings, levees and dikes, or any other development that reduces flood storage volume and fish accessible/egress-able habitat must achieve no net loss.
+
+"Variance"
+means a grant of relief from the requirements of this chapter which permits construction in a manner that would otherwise be prohibited by this chapter.
+
+"Violation"
+means the failure of a structure or other development to be fully compliant with this chapter. A structure or development without the elevation certificate, other certifications, or other evidence of compliance with this chapter is presumed to be in violation until such time as that documentation is provided.
+
+"Water dependent"
+means a structure for commerce or industry which cannot exist in any other location and is dependent on the water by reason of the intrinsic nature of its operations.
+
+"Water surface elevation"
+means heights, in relation to a specific datum, of floods of various magnitudes and frequencies in the floodplains.
+
+(Ord. 2025-05 § 1 (Exh. A), 2025)
