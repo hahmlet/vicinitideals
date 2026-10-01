@@ -1070,5 +1070,22 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    so that is optimistic. ASKED STEPH 2026-10-01: (1) still RED at the
    real size? (2) count gravel/unimproved streets? (3) strict truck
    position now + research measured curb/street widths later, or wait?
-   Partial waits for the answers (batch rule). cc's d88971cb Tigard/
-   Cornelius moves ride along -- tell cc before splice/promote.
+   STEPH ANSWERED 2026-10-01: (1) RED stands ("the logic stands");
+   (2) NO, unimproved streets are not truck roads (those lots go unknown);
+   (3) STRICT standoff now (10 ft off the centreline), measured widths
+   later = item 29. main already encodes all three: NEXT is the batched
+   partial (fire scope + LR10/FU10/Mult-uninc) on /root/bridge_2026-10-01
+   _wash. cc's d88971cb Tigard/Cornelius moves ride along -- tell cc
+   before splice/promote.
+29. **Fire reach: measure where the truck really stands (Steph 2026-10-01,
+   "later improvement").** Item 28 assumes the narrowest legal fire road
+   (truck 10 ft off the RLIS centreline) because RLIS holds no street
+   width. Sizing on run 51: standing at the lot line instead would keep
+   ~460 more green lots and ~1,600 yellow lots off red -- the strict
+   assumption costs real lots, and most ordinary lots measure 120-130 ft,
+   so a few feet move many. Next: find curb lines or pavement widths per
+   city (Portland, Washington County, Clackamas GIS -- check what each
+   publishes before claiming any), measure the truck's offset to the near
+   curb per street line, fall back to the strict 10 ft where nothing is
+   held, re-screen the fire scope. Never the lot line without a measure
+   (false GREEN).
