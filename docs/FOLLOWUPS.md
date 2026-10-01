@@ -949,3 +949,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    class is measured (6(c)), so today's lane may sit on the busier street;
    measure it per edge from RLIS street TYPE in s4 and re-check today's
    greens there. Awaiting Steph's go.
+28. **Fire apparatus access is not screened (found 2026-10-01 by the parking
+   standards research).** Oregon Fire Code 2022 503.1.1: a fire apparatus
+   road must reach within 150 ft of every part of the first-storey exterior
+   walls, measured along an approved route around the building. Exception
+   1.3 covers "not more than two" one-/two-family dwellings -- a 4-unit pod
+   does not qualify. If the street does not reach, an on-site fire road is
+   20 ft wide (D103.1; Clackamas allows 12 ft only up to 3 units, Portland
+   up to 2), turning radii 28/48 (Clackamas) or 25/45 (Portland), turnaround
+   past 150 ft (Portland 300). Sprinklers let the fire official modify it
+   (1.1; Portland Fire allows 250 ft). `flats/rules/conditions.py` names fire
+   access as an `unavailable` tier but no check measures it. Risk: deep,
+   flag and rear-placed lots read green today. Next: measure the route
+   distance from the street to the farthest wall corner in the fit drawing,
+   count today's greens over 150 ft, then decide (red, or a "needs
+   sprinklers" relief). Becomes binding for item 27's long drives.
