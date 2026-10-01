@@ -1051,3 +1051,24 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    beside --s4. NOT LIVE until the re-screen: batch it into the partial
    after CHAIN_WASH (scope: non-red lots whose route could pass ~100 ft, plus
    the LR10/FU10/Mult-uninc scope), read the moves, promote, E2E the row.
+   SIZED ON RUN 51 (2026-10-01, 137 /root/fire_wash.parquet,
+   fire_size2.parquet, fire_green_{main,v2000}): three bugs fixed first --
+   09de342d (non-green plans with no route held unmeasured: ~133k rows;
+   private-road access lines ignored; through lots drawn at the end no
+   truck reaches, redrawn now) and 09e113a5 (5xxx = streets with streetcar
+   or MAX, e.g. SW 5th, are truck roads). Real bridge on the 2,817 green
+   lots at risk: 1,216 stay green, 783 red, 454 unknown, 364 drop to a
+   weaker design. Approx. on all 56,785 lots past 130 ft: ~6,000 yellow and
+   ~2,100 unknown lots also go red. The earlier 175/304 sizing measured a
+   straight line from the lot line; the walk round the building and where
+   the truck stands are most of the difference. Two assumptions drive it:
+   (a) unimproved roads (RLIS 2000, ~1,100 segments, Leif Erikson Dr) are
+   not truck roads -> ~630 green lots (mostly Portland) go unknown;
+   counting them keeps 1,845 green; (b) the truck stands 10 ft off the
+   centreline (narrowest 20 ft fire road); at the lot line the green loss
+   falls to ~650 and yellow->red to ~4,300 -- but RLIS has no road width,
+   so that is optimistic. ASKED STEPH 2026-10-01: (1) still RED at the
+   real size? (2) count gravel/unimproved streets? (3) strict truck
+   position now + research measured curb/street widths later, or wait?
+   Partial waits for the answers (batch rule). cc's d88971cb Tigard/
+   Cornelius moves ride along -- tell cc before splice/promote.
