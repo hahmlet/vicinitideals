@@ -630,7 +630,9 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         # The section alone: the cite's description restates the question.
         "section": (row["cite"] or "").split(",")[0].strip(),
         # A layer-wide rule has no zone worth naming on the card.
-        "zone_label": "" if row["zone"].startswith("(") else row["zone"],
+        # "the I zone", not "I": a one-letter zone name reads as a lettered
+        # point on the page (Oregon City's Institutional district did).
+        "zone_label": "" if row["zone"].startswith("(") else f"the {row['zone']} zone",
         "quote": row["quote"],
         "url": row["url"],
         "question": ask.question,

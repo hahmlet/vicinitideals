@@ -416,6 +416,16 @@ async def test_an_answered_flag_leaves_the_open_list_and_shows_its_answer(client
     assert "Answered: G2 sets no maximum side yard." in card.text
 
 
+async def test_the_card_names_the_zone_as_a_zone(client, session):
+    # Oregon City's "I" (Institutional) read as a lettered point on the page.
+    await _login(client, session)
+    row = next(r for r in check._rows(check._layers()[LAYER], set()) if not r["zone"].startswith("("))
+    card = await client.get(
+        f"/flats/check/{LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
+    )
+    assert f"<strong>the {row['zone']} zone</strong>" in card.text
+
+
 def _hidden(text: str, name: str) -> str:
     return html.unescape(re.search(rf'name="{name}" value="([^"]*)"', text).group(1))
 
