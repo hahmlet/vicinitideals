@@ -67,7 +67,7 @@
     {% if card.question == "value" %}
       <p style="font-size:15px;margin:0 0 4px">
         Does the page say <strong style="font-size:17px">{{ card.value }}</strong>
-        for <strong>{{ card.field_label }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_label %}, when {{ card.when_label }}{% endif %}?
+        for <strong>{{ card.field_label }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_words %}, in the case where {{ card.when_words | join(", and ") }}{% endif %}?
       </p>
     {% else %}
       <p style="font-size:15px;margin:0 0 4px">

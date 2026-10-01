@@ -23,6 +23,7 @@ Registered ahead of ``ui_flats``: that router ends in a catch-all
 from __future__ import annotations
 
 import json
+import re
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -48,6 +49,7 @@ from app.api.routers.ui_flats import (
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsPageCheck, FlatsRuleSignature
 from flats.provenance import books, pages as page_map, sheet
+from flats.rules import conditions
 from flats.rules.fields import FIELDS
 from flats.rules.model import Layer
 
@@ -172,6 +174,24 @@ def _said(value: Any, field: str) -> str:
 def _label(field: str) -> str:
     known = FIELDS.get(field)
     return known.shown if known else field.replace("_", " ")
+
+
+def _condition_words(when: str) -> list[str]:
+    """Each condition a variant hangs on, as the first sentence of its definition.
+
+    The keys are our vocabulary ("unit_lots"); a reviewer needs the meaning,
+    "the four units are being platted onto lots of their own".
+    """
+    out = []
+    for key in filter(None, when.split("+")):
+        try:
+            text = conditions.condition(key).describe
+        except Exception:  # noqa: BLE001 — an unregistered key reads as itself
+            out.append(key.replace("_", " "))
+            continue
+        first = re.split(r"(?<=[.;:])\s", text, maxsplit=1)[0].rstrip(".;:")
+        out.append(first[:1].lower() + first[1:])
+    return out
 
 
 def _layer_label(layer: Layer) -> str:
@@ -442,6 +462,7 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "field_label": _label(row["field"]),
         "when": row["when"],
         "when_label": row["when_label"].replace("_", " "),
+        "when_words": _condition_words(row["when"]),
         "value": _said(row["value"], row["field"]),
         "signed": row["signed"],
         "cite": row["cite"],

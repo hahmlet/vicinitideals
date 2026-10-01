@@ -563,18 +563,18 @@ defaults:
     cite: OCMC Table 16.12.035.D, minimum driveway approach width, triplexes/quadplexes/cottage clusters row
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1092-L1104"
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1103-L1104"
   driveway_approach_max_width_ft:
     value: 36
     cite: OCMC Table 16.12.035.D, maximum driveway approach width, triplexes/quadplexes/cottage clusters row
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1092-L1104"
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1103-L1104"
     variants:
       - value: 24
         when: [unit_lots]
         cite: OCMC Table 16.12.035.D, maximum driveway approach width, Townhouses row
-        quote: "or/clackamas/oregon-city/16.12.streets.txt#L1092-L1104"
+        quote: "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1102"
   # On one lot, OCMC 17.16.060.D, Triplex and quadplex development
   # requirements: "In residential zones, garages on the front facade and
   # off-street parking areas in the front yard, are permitted in compliance

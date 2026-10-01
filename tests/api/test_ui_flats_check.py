@@ -313,3 +313,12 @@ async def test_a_boxed_number_does_not_also_tint_its_citations_context_lines(cli
     assert "check-box-value" in response.text
     assert "check-box check-box-line" not in response.text
     assert "?page=2" in response.text and "?page=1" not in response.text
+
+
+def test_a_condition_is_named_in_words_not_by_its_key():
+    from app.api.routers.ui_flats_check import _condition_words
+
+    assert _condition_words("unit_lots") == [
+        "the four units are being platted onto lots of their own rather than sharing one"
+    ]
+    assert _condition_words("") == []
