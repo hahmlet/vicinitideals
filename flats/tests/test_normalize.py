@@ -149,8 +149,9 @@ def snapshot(tmp_path: Path, layers) -> Path:
         # The same TLID twice: the larger polygon stays.
         feature("1N1E04AA  -00100", square(2000, 0, w=50, h=50)),
         feature("1N1E04AA  -00100", square(2000, 0)),
-        # Washington County: not ours.
-        feature("1S1W01AA  -00100", square(3000, 0), COUNTY="W", JURIS_CITY="BEAVERTON"),
+        # A county letter no copy of the map is read for (Washington was the
+        # example until it was mapped, 2026-09-30).
+        feature("1S1W01AA  -00100", square(3000, 0), COUNTY="Y", JURIS_CITY="BEAVERTON"),
     ]
     write(snap / "rlis_taxlots.geojson", taxlots)
     write(
@@ -436,3 +437,17 @@ def test_majority_zone_join():
     assert zone == ["A", "B", None] and frac[0] == pytest.approx(1.0) and frac[1] == pytest.approx(0.7) and frac[2] is None
     assert nz.assign_majority_zone([], zones, codes) == ([], [])
     assert nz.assign_majority_zone(lots, [], []) == ([None] * 3, [None] * 3)
+
+
+def test_washington_lots_reach_their_layers_and_the_straddling_cities_theirs(layers):
+    # Mapped 2026-09-30. The county's own unincorporated code is spelled out
+    # (UNINCORPORATED), and a city on both sides of the line -- Tualatin,
+    # Portland -- keeps the one layer it already had.
+    juris = nz.Jurisdictions.from_layers(layers)
+    assert juris.layer_for("UNINCORPORATED", "washington") == "or/washington/_unincorporated"
+    assert juris.layer_for("", "washington") == "or/washington/_unincorporated"
+    assert juris.layer_for("", "multnomah") == "or/multnomah/_unincorporated"
+    assert juris.layer_for("KING CITY", "washington") == "or/washington/king-city"
+    assert juris.layer_for("TUALATIN", "washington") == "or/clackamas/tualatin"
+    assert juris.layer_for("PORTLAND", "washington") == "or/multnomah/portland"
+    assert juris.layer_for("TIGARD", "washington") is None, "not encoded yet (FOLLOWUPS 17(f))"

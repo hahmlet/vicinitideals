@@ -64,7 +64,7 @@ BEFORE = [
     feature("P", square(200, 200)),
     feature("R", None),
     feature("T", square(300, 200, w=100)),  # cut into two, with S and U each taking half
-    feature("W", square(0, 400), county="W"),
+    feature("W", square(0, 400), county="X"),  # a county code Metro does not use
 ]
 AFTER = [
     feature("A", square(0, 0)),  # unchanged, ring reordered below
@@ -85,7 +85,7 @@ AFTER = [
     feature("P", square(200, 200)),
     feature("Q", square(200, 200)),  # a unit stacked on P's unchanged footprint
     feature("R", None),
-    feature("W", square(0, 400), county="W"),
+    feature("W", square(0, 400), county="X"),
 ]
 # The same ground with the ring started elsewhere and a wobble in the eighth decimal.
 AFTER[0]["geometry"] = {
@@ -144,7 +144,7 @@ def test_lots_are_keyed_by_county_and_tlid_and_other_counties_are_left_out(tmp_p
     new = load_lots(after)
 
     assert all(county == "multnomah" for county, _ in prev)
-    assert ("multnomah", "W") not in prev and ("washington", "W") not in prev
+    assert not any(tlid == "W" for _, tlid in prev)
     assert len(prev) == 14
     assert len(new) == 16, "the duplicated N2 was kept once"
     assert prev[("multnomah", "R")].geom is None and prev[("multnomah", "R")].area == 0.0
@@ -261,7 +261,7 @@ def test_our_diff_is_graded_against_metros_list_per_county(tmp_path: Path) -> No
     log = write(tmp_path / "rlis_taxlot_change.geojson", CHANGE_LOG)
     found = classify(load_lots(before), load_lots(after))
 
-    check = crosscheck(found, read_change_log(log))
+    check = crosscheck(found, read_change_log(log), counties=("multnomah", "clackamas"))
 
     m = check["counties"]["multnomah"]
     assert m["added"] == {
@@ -349,3 +349,22 @@ def test_changes_round_trip_through_the_csv(tmp_path: Path) -> None:
     assert rows[0]["related_tlids"] == ["22E22B 01801", "22E22B 01802"] and rows[0]["area_after"] is None and rows[0]["iou"] is None
     assert rows[1]["tlid"] == "1N1E08BD  -02500" and rows[1]["attr_diff"] == {"YEARBUILT": [1978, None]}
     assert rows[1]["role"] is None and rows[1]["rlis_change"] is None
+
+
+def test_a_county_the_old_copy_never_held_is_coverage_arriving_not_change(tmp_path: Path) -> None:
+    # Washington's first snapshot (2026-09-30): every one of its lots is new to
+    # the file, and none of them is a lot that was added to the county.
+    before, after = _block(tmp_path)
+    doc = json.loads(after.read_text(encoding="utf-8"))
+    doc["features"] += [feature(t, square(2000 + 100 * i, 0), county="W") for i, t in enumerate(["W1", "W2"])]
+    after.write_text(json.dumps(doc), encoding="utf-8")
+    log = write(tmp_path / "2026-09-18" / "rlis_taxlot_change.geojson", CHANGE_LOG)
+    said: list[str] = []
+
+    summary = run(before, after, tmp_path / "out", change_log=log, log=said.append)
+
+    assert summary["first_covered"] == ["washington"]
+    assert summary["lots_after"] == 16 and summary["rows"] == 20, "the block, as if Washington were not there"
+    assert "washington" not in summary["crosscheck"]["counties"], "a county the old copy never held is not graded"
+    assert summary["crosscheck"]["agrees"] is True
+    assert "first covered, left out of the delta: washington" in said

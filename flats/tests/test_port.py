@@ -17,6 +17,7 @@ from flats.encode.port_quadfit import (
     BACKPORTED,
     COUNTY,
     FIELD_MAP,
+    FLATS_FIRST,
     HELD_AS_VARIANT,
     ZERO_ALSO_HELD_ON,
     layer_id_for,
@@ -422,8 +423,16 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # of, worth 76,752 lots that were dropped before anything was measured.
     # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
     # false` by owner decision, so its rows are reference rather than debt.
+    #
+    # Washington County's six (2026-09-30) are in COUNTY but not ported: their
+    # rows were written FROM the corpus, and porting them back would overwrite
+    # it with its own summary.
     assert dry["stats"]["zones"] == 140
-    assert dry["stats"]["layers"] == len(COUNTY) == 18
+    assert dry["stats"]["layers"] == 18
+    assert len(COUNTY) == 24
+    assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {
+        "washington_unincorporated", "hillsboro", "beaverton", "sherwood", "king_city", "durham",
+    }
 
 
 def test_field_map_targets_are_registered() -> None:
@@ -466,7 +475,7 @@ def test_layer_id_mapping(jurisdiction: str, expected: str) -> None:
 
 def test_unmapped_jurisdiction_fails_loudly() -> None:
     with pytest.raises(KeyError):
-        layer_id_for("beaverton")
+        layer_id_for("tigard")
 
 
 def test_zone_citation_becomes_cite_default() -> None:

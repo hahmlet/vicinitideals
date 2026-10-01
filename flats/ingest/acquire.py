@@ -347,6 +347,49 @@ def _fetch_arcgis(
     return unfetched
 
 
+class _Renamed:
+    """A sink that copies a part's zone attribute into the dataset's name."""
+
+    def __init__(self, sink: _Sink, src: str | None, dst: str | None) -> None:
+        self._sink, self._src, self._dst = sink, src, dst
+
+    def add(self, feature: dict[str, Any]) -> None:
+        if self._src and self._dst and self._src != self._dst:
+            props = feature.setdefault("properties", {}) or {}
+            props[self._dst] = props.get(self._src)
+            feature["properties"] = props
+        self._sink.add(feature)
+
+
+def _fetch_parts(
+    client: httpx.Client, ds: Dataset, srid: int, sink: _Sink, log: Callable[[str], None]
+) -> tuple[list[int], list[dict[str, Any]]]:
+    """Every :class:`~flats.ingest.sources.Part` into the dataset's sink."""
+    unfetched: list[int] = []
+    record: list[dict[str, Any]] = []
+    for part in ds.parts:
+        sub = ds.model_copy(update={
+            "url": part.url, "fields": part.fields, "where": part.where,
+            "zone_field": part.zone_field, "parts": (),
+        })
+        meta = _arcgis_meta(client, sub)
+        names = _field_names(meta)
+        if names:
+            _check_fields(sub, names)
+        before = sink.features
+        log(f"  part {part.url}")
+        missed = _fetch_arcgis(client, sub, srid, _Renamed(sink, part.zone_field, ds.zone_field), log)  # type: ignore[arg-type]
+        unfetched.extend(missed)
+        record.append({
+            "url": part.url,
+            "features": sink.features - before,
+            "unfetched_ids": missed,
+            "data_edited": data_edited(meta),
+            "fields": {"declared": list(part.fields), "present": names, "checked": bool(names)},
+        })
+    return unfetched, record
+
+
 # --- Metro RLIS (a ZIP read by range request) ------------------------------
 
 
@@ -627,6 +670,10 @@ def acquire(
                     entry["data_edited"] = data_edited(meta)
                     sink = _Sink(path, pipeline.working_srid)
                     unfetched = _fetch_arcgis(client, ds, pipeline.working_srid, sink, log)
+                    if ds.parts:
+                        missed, parts = _fetch_parts(client, ds, pipeline.working_srid, sink, log)
+                        unfetched = unfetched + missed
+                        entry["parts"] = parts
                     entry["unfetched_ids"] = unfetched
                     entry["status"] = "acquired"
                 elif ds.kind is Kind.rlis_zip:

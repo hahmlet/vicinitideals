@@ -697,7 +697,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    a Cloudflare Turnstile on every chapter (not to be bypassed); the
    scrapling MCP's proxy is down. Asked Steph to save the six articles as
    PDFs (HUMAN_TODO 28); store them from the files, then rulebook 1-14.
-   (d) COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
+   (d) STARTED 2026-09-30 (Steph: "start it"), worktree
+   ../vicinitideals-worktrees/washington-map, branch flats/washington-map.
+   COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
    county's LUD layer + city layers (King City layer 4 = Kingston Terrace);
    overlays incl. Clean Water Services; send Tualatin/Portland/Wilsonville/
    Lake Oswego/Rivergrove's Washington lots to their existing layers (by

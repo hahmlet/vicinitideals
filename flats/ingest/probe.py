@@ -136,6 +136,16 @@ def probe_arcgis(client: httpx.Client, ds: Dataset, entry: dict[str, Any]) -> li
         out.append(Finding(ds.key, "moved", f"the count query answered: {_error_text(count_doc)}"))
         return out
     now = int(count_doc.get("count") or 0)
+    # A dataset written from several layers (King City's two) is counted
+    # across all of them, or the file would read as drifted every month.
+    for part in ds.parts:
+        part_doc, why = _get(
+            client, f"{part.url}/query", {"where": part.where or "1=1", "returnCountOnly": "true", "f": "json"}
+        )
+        if part_doc is None or "error" in part_doc:
+            out.append(Finding(ds.key, "unreachable", f"part {part.url}: {why or _error_text(part_doc)}"))
+            return out
+        now += int(part_doc.get("count") or 0)
     then = int(entry.get("features") or 0) + len(entry.get("unfetched_ids") or [])
     if _drifted(then, now, _tolerance(ds)):
         out.append(Finding(ds.key, "count_drift", f"{then:,} features when the copy was taken, {now:,} now"))

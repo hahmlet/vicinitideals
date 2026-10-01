@@ -26,6 +26,8 @@ which side was right, and a silent list would grow forever.
 
 from __future__ import annotations
 
+import re
+
 import io
 from datetime import date
 
@@ -94,6 +96,23 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
     "multnomah_unincorporated/RF",
     "portland/RF",
     "wilsonville/RN",
+})
+
+#: Washington County rows written FROM the corpus (port_from_flats.py,
+#: 2026-09-30), where the base says no and a variant says yes -- a mixed-use
+#: or town-centre zone that allows the building on some footing. The port sets
+#: `quadplex_allowed` true so s3 measures the lots and FLATS resolves the
+#: variant per lot; the row is needs_verification, so quadfit caps it at
+#: review. Not a dispute: the same reading, written at two resolutions.
+PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
+    "hillsboro/MU-C",
+    "hillsboro/UC-AC",
+    "hillsboro/UC-NC",
+    "hillsboro/UC-OR",
+    "washington_unincorporated/TO:R24-40",
+    "washington_unincorporated/TO:R40-80",
+    "washington_unincorporated/TO:BUS",
+    "washington_unincorporated/CBD",
 })
 
 
@@ -292,8 +311,27 @@ def test_the_two_files_disagree_about_the_use_in_exactly_the_known_zones() -> No
     """
     audit = _audit()
     splits = audit.permission_splits()
-    keys = {s.split(":")[0] for s in splits}
-    assert keys == KNOWN_PERMISSION_SPLITS, splits
+    keys = {s.split(": ")[0] for s in splits}
+    assert keys == KNOWN_PERMISSION_SPLITS | PORTED_FROM_A_VARIANT, splits
+
+
+def test_a_ported_split_is_a_variant_the_port_opened() -> None:
+    """Each Washington split is the port's own rule, not a misreading.
+
+    The corpus base is False and at least one variant is True: that, and only
+    that, is what `port_from_flats._allowed` turns into a True row.
+    """
+    audit = _audit()
+    top, corpus = audit._load()
+    seen = set()
+    for juris, z, zl, _layer in audit._pairs(top, corpus):
+        key = f"{juris}/{z['zone']}"
+        if key not in PORTED_FROM_A_VARIANT:
+            continue
+        seen.add(key)
+        allowed = zl.values["quadplex_allowed"]
+        assert allowed.value is False and any(v.value is True for v in allowed.variants), key
+    assert seen == PORTED_FROM_A_VARIANT
 
 
 def test_every_split_but_rn_is_a_path_the_corpus_holds() -> None:
@@ -309,6 +347,8 @@ def test_every_split_but_rn_is_a_path_the_corpus_holds() -> None:
     for s in audit.permission_splits():
         if s.startswith("wilsonville/RN:"):
             continue
+        if any(s.startswith(f"{k}: ") for k in PORTED_FROM_A_VARIANT):
+            continue  # the port's own rule; pinned by the test above
         assert ("conditionally permitted" in s
                 or "permitted only by the state middle housing law" in s), s
 
@@ -474,10 +514,23 @@ def test_nothing_in_the_screen_is_unquoted() -> None:
     Zero here means every dimension the pipeline screens with is quoted to a
     line of a stored document. It is the strongest claim this file makes, so it
     is pinned rather than printed.
+
+    With one kind of exception, written into the row itself: a Washington
+    County yard the corpus has not read yet, which quadfit requires of a zone
+    that allows the pod and `port_from_flats.py` holds at the largest yard the
+    layer states anywhere, naming it PLACEHOLDER in the row's notes. Those,
+    and only those, may be unquoted -- FLATS answers such a lot UNKNOWN.
     """
     audit = _audit()
     _diverge, uncited, agree = audit.scan()
-    assert uncited == [], uncited
+    top, corpus = audit._load()
+    placeholders = set()
+    for juris, z, _zl, _layer in audit._pairs(top, corpus):
+        m = re.search(r"PLACEHOLDER ([a-z_, ]+):", z.get("notes") or "")
+        if m:
+            placeholders |= {f"{juris}/{z['zone']}.{f.strip()}" for f in m.group(1).split(",")}
+    assert {u.split("=")[0] for u in uncited} == placeholders, uncited
+    assert len(placeholders) == 16
     assert agree > 460, agree
 
 
@@ -874,20 +927,33 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: line, the strict end, so again the gap can only cost it a lot.
 #: Grew 2026-10-01 by one `min_landscaped_pct` (Happy Valley FU-10, opened on
 #: the state middle housing path, takes the city's 20 percent like R-40).
+#: Grew 2026-09-30 by Washington County's six jurisdictions, whose rows
+#: came from the corpus (port_from_flats.py): the garage entrance, front
+#: maximum, density, separation, storeys, unit caps and minimum heights of
+#: those zones, plus seven fields only their codes state -- the parking area's
+#: share of the frontage, the aisle widths, the driveway approach, the corner
+#: access street, impervious cover and average lot width. FLATS reads them all.
 UNEXPRESSIBLE: dict[str, int] = {
-    "setback_garage_entrance_ft": 67,
+    "setback_garage_entrance_ft": 105,
     "min_landscaped_pct": 39,
-    "setback_front_max_ft": 31,
-    "max_density_du_per_acre": 21,
-    "min_building_separation_ft": 11,
+    "setback_front_max_ft": 75,
+    "max_density_du_per_acre": 38,
+    "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
     "max_lot_depth_ratio": 4,
-    "max_units": 2,
-    "max_height_stories": 3,
-    "setback_side_total_ft": 1,
-    "min_building_height_ft": 4,
-    "min_building_height_stories": 1,
+    "max_units": 13,
+    "max_height_stories": 18,
+    "setback_side_total_ft": 3,
+    "min_building_height_ft": 13,
+    "min_building_height_stories": 6,
+    "parking_area_max_frontage_pct": 16,
+    "parking_aisle_two_way_ft": 4,
+    "parking_aisle_one_way_ft": 4,
+    "driveway_approach_max_width_ft": 4,
+    "corner_access_street": 4,
+    "max_impervious_pct": 4,
+    "min_average_lot_width_ft": 2,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
     #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space

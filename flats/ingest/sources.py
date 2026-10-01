@@ -86,6 +86,26 @@ class Defaults(BaseModel):
     grid_resolution_ft: float = Field(default=0.5, gt=0)
 
 
+class Part(BaseModel):
+    """Another ArcGIS layer written into the same file as its dataset.
+
+    King City publishes its zoning on two layers of one service: the older
+    districts on layer 1 (``ZONECLASS``) and the Kingston Terrace
+    neighbourhoods on layer 4 (``Zoning_Designations``). They do not overlap,
+    and every reader downstream takes one zoning file per jurisdiction, so
+    the acquire stage writes both into one and copies the part's zone field
+    into the dataset's, keeping the part's own as it came.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    url: str = Field(min_length=8)
+    fields: tuple[str, ...] = Field(min_length=1)
+    #: The part's zone attribute, copied into the dataset's ``zone_field``.
+    zone_field: str | None = None
+    where: str | None = None
+
+
 class Dataset(BaseModel):
     """One fetchable source."""
 
@@ -113,6 +133,8 @@ class Dataset(BaseModel):
     #: so the fetch knows to ask for a reprojection.
     native_srid: int | None = None
     bbox_4326: tuple[float, float, float, float] | None = None
+    #: More layers fetched into the same file (:class:`Part`). ArcGIS only.
+    parts: tuple[Part, ...] = ()
     notes: str = ""
 
     @model_validator(mode="after")
@@ -121,6 +143,10 @@ class Dataset(BaseModel):
             raise ValueError(
                 f"{self.key}: an ArcGIS layer with no fields returns geometry nobody can use"
             )
+        if self.parts and self.kind is not Kind.arcgis:
+            raise ValueError(f"{self.key}: only an ArcGIS dataset can have parts")
+        if self.parts and self.provides is Provides.zoning and any(not p.zone_field for p in self.parts):
+            raise ValueError(f"{self.key}: a zoning part must name the field its zone codes live in")
         if self.kind is Kind.rlis_zip and not self.member:
             raise ValueError(f"{self.key}: an RLIS dataset must name the member to extract")
         if self.geometry is Geometry.point and self.kind is not Kind.arcgis:

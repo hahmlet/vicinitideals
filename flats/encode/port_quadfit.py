@@ -63,7 +63,23 @@ COUNTY: dict[str, str] = {
     "rivergrove": "clackamas",
     "johnson_city": "clackamas",
     "clackamas_unincorporated": "clackamas",
+    # Washington County, 2026-09-30. These went the OTHER way: the corpus was
+    # read first and `Lot Analysis/quadfit/port_from_flats.py` wrote the
+    # rules.yaml rows from it, so :func:`port` skips them (see
+    # FLATS_FIRST). Listed here because every reader that joins quadfit
+    # output to the corpus goes through :func:`layer_id_for`.
+    "washington_unincorporated": "washington",
+    "hillsboro": "washington",
+    "beaverton": "washington",
+    "sherwood": "washington",
+    "king_city": "washington",
+    "durham": "washington",
 }
+
+#: Counties whose rules.yaml rows are DERIVED from the corpus rather than the
+#: other way round. Porting them back would overwrite the corpus with its own
+#: summary -- every citation, variant and quote replaced by one number.
+FLATS_FIRST: frozenset[str] = frozenset({"washington"})
 
 #: quadfit column -> FLATS field. Anything not listed is carried into notes.
 FIELD_MAP: dict[str, str] = {
@@ -236,7 +252,7 @@ HELD_AS_VARIANT: dict[str, dict[str, tuple[str, str]]] = {
 ZERO_ALSO_HELD_ON: dict[str, str] = {"setback_alley_ft": "setback_alley_side_ft"}
 
 #: Retrieval dates from the quadfit header. Clackamas was compiled later.
-RETRIEVED = {"multnomah": "2026-07-24", "clackamas": "2026-07-28"}
+RETRIEVED = {"multnomah": "2026-07-24", "clackamas": "2026-07-28", "washington": "2026-09-28"}
 
 STATE_LAYER = """\
 # Oregon statewide preemption layer.
@@ -323,6 +339,8 @@ def port(write: bool) -> dict[str, Any]:
         county = COUNTY.get(jname)
         if county is None:
             raise SystemExit(f"no county mapping for jurisdiction {jname!r} — add it to COUNTY")
+        if county in FLATS_FIRST:
+            continue
         retrieved = RETRIEVED[county]
 
         is_uninc = jname.endswith("_unincorporated")

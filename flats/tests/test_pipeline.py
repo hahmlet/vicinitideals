@@ -99,7 +99,8 @@ def test_switching_a_jurisdiction_off_removes_it_from_the_run() -> None:
 def test_a_jurisdiction_nobody_declared_is_off() -> None:
     # Coverage is claimed, never assumed. Defaulting an unknown city to "on"
     # would have it screened against nothing.
-    assert not load_pipeline().enabled("or/washington/beaverton")
+    assert not load_pipeline().enabled("or/washington/tigard")
+    assert load_pipeline().enabled("or/washington/beaverton"), "declared 2026-09-30"
 
 
 def test_every_source_lands_in_the_working_crs() -> None:
@@ -113,7 +114,7 @@ def test_every_source_lands_in_the_working_crs() -> None:
 
 
 #: County path -> the FIPS FEMA keys its flood panels by.
-_FIPS = {"or/multnomah": "41051C", "or/clackamas": "41005C"}
+_FIPS = {"or/multnomah": "41051C", "or/clackamas": "41005C", "or/washington": "41067C"}
 
 
 def test_a_where_clause_that_names_a_county_names_every_county_it_serves() -> None:

@@ -39,8 +39,8 @@ from common import DATA_DIR
 RAW_DIR = DATA_DIR / "raw"
 
 # RLIS COUNTY field code: M = Multnomah, C = Clackamas, W = Washington.
-# The regional taxlot shapefile carries all three; keep only the two we cover.
-KEEP_COUNTIES = {"M", "C"}
+# The regional taxlot shapefile carries all three; Washington joined 2026-09-30.
+KEEP_COUNTIES = {"M", "C", "W"}
 
 # member key → (shp member, dbf member, keep_fields or None=all,
 #               county_filter set or None=keep all counties)
@@ -68,7 +68,7 @@ RLIS_MEMBERS: dict[str, tuple[str, str, set[str] | None, set[str] | None]] = {
         "LAND/orca.dbf",
         {"SITENAME", "UNITTYPE", "OWNER", "OWNLEV1", "OWNLEV2", "MANAGER",
          "CITYMUNI", "COUNTY", "STATUS", "RECREATION"},
-        {"MULTNOMAH", "CLACKAMAS"},
+        {"MULTNOMAH", "CLACKAMAS", "WASHINGTON"},
     ),
 }
 
@@ -130,6 +130,32 @@ ARCGIS_LAYERS: dict[str, tuple[str, list[str]]] = {
     "zoning_wilsonville": (
         "https://gis.wilsonvillemaps.com/server/rest/services/Map___WilsonvilleMaps_MIL1/FeatureServer/40",
         ["ZONE_CODE"],
+    ),
+    # --- Washington County, 2026-09-30. The FLATS acquire stage is the one a
+    # county refresh runs (flats/config/pipeline.yaml); these are here so a
+    # standalone s0 builds the same tree. King City's Kingston Terrace layer
+    # (layer 4) is a second part of zoning_king_city there and is fetched only
+    # by the FLATS acquire, which merges the two -- a standalone s0 gets the
+    # older districts alone.
+    "zoning_washington_county": (
+        "https://gispub.co.washington.or.us/server/rest/services/Open_Data/Open_Data_AGOL/MapServer/2",
+        ["LUD", "Urban"],
+    ),
+    "zoning_hillsboro": (
+        "https://services1.arcgis.com/eQ2vvbCvmxlIgo3a/arcgis/rest/services/Community_Development/FeatureServer/2",
+        ["DESCRIPTIO"],
+    ),
+    "zoning_beaverton": (
+        "https://gisweb.beavertonoregon.gov/server/rest/services/Public_SharedServices/pubZoning/MapServer/0",
+        ["ZONE_NAME"],
+    ),
+    "zoning_sherwood": (
+        "https://services5.arcgis.com/ikEzR7lqVIlrcVFn/arcgis/rest/services/Planning/FeatureServer/2",
+        ["CODE"],
+    ),
+    "zoning_king_city": (
+        "https://services8.arcgis.com/NsUn9YuPFCjrkDe3/arcgis/rest/services/King_City_Current_and_Future_Zoning_Map_WFL1/FeatureServer/1",
+        ["ZONECLASS"],
     ),
 }
 
@@ -489,7 +515,7 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
         "url": "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28",
         "fields": ["FLD_ZONE", "ZONE_SUBTY", "SFHA_TF", "STATIC_BFE"],
         # NFHL rejects the unquoted/spaceless form intermittently — keep quoted
-        "where": "\"DFIRM_ID\" IN ('41051C', '41005C')"},
+        "where": "\"DFIRM_ID\" IN ('41051C', '41005C', '41067C')"},
     # Sewer mains (split-candidate proximity; water skipped — see caveats)
     "util_sewer_portland": {
         "url": f"{_PDX}/Utilities_Sewer/MapServer/3",
@@ -545,8 +571,10 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
 # (Wilsonville/Tualatin reach ~45.27 N); the same two lidar projects already
 # wired (OR_OLCMetro_2019, OR_PortlandMetro) cover the extension, and the
 # "newest wins" per-cell tile logic handles the overlap.
+# Widened west 2026-09-30 to urban Washington County (Forest Grove sits at
+# about -123.15); OR_OLCMetro_2019 flew the whole Metro district.
 DEM_DIR_NAME = "dem"
-DEM_BBOX_4326 = (-122.90, 45.26, -122.24, 45.65)
+DEM_BBOX_4326 = (-123.20, 45.26, -122.24, 45.65)
 TNM_API = "https://tnmaccess.nationalmap.gov/api/v1/products"
 
 # The 1 m projects do not cover the whole bbox, and no other 1 m product
@@ -877,9 +905,13 @@ def fetch_dem10_fallback(force: bool) -> None:
 
     with httpx.Client(timeout=None, follow_redirects=True,
                       headers={"User-Agent": "quadfit/1.0"}) as client:
+        # Asked over the clip, not the 1 m bbox: the 1 m bbox reaches west of
+        # -123, into a second 1-degree tile, and "newest" would then pick
+        # whichever tile was republished last rather than the one the clip
+        # sits in.
         r = client.get(TNM_API, params={
             "datasets": DEM10_DATASET,
-            "bbox": ",".join(map(str, DEM_BBOX_4326)),
+            "bbox": ",".join(map(str, DEM10_CLIP_4326)),
             "outputFormat": "JSON", "max": 50,
         })
         r.raise_for_status()
