@@ -968,5 +968,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    on signing. Portland 92, Clackamas uninc 67, Mult uninc 6, small others;
    109 of the 175 have under 30 ft of frontage (flag lots, median depth
    305 ft). Median upper estimate on all greens 107 ft, so the rule only
-   bites deep lots. Decision for Steph: red, or yellow "needs sprinklers +
-   fire marshal" (a 20 ft fire lane cannot fit a 16-26 ft flag pole).
+   bites deep lots. Steph 2026-10-01: **RED**, no sprinkler relief.
+   BUILT a0522c1d (flats/fit/fire.py route_ft, check `fire_access_ft`, state
+   default `fire_access_max_ft: 150` preempts always, NO_ZONING_RELIEF; lot
+   page row "Fire truck reach"). Bridge runs now need s1_streets.parquet
+   beside --s4. NOT LIVE until the re-screen: batch it into the partial
+   after CHAIN_WASH (scope: non-red lots whose route could pass ~100 ft, plus
+   the LR10/FU10/Mult-uninc scope), read the moves, promote, E2E the row.
