@@ -180,7 +180,7 @@
       {% if card.flags %}
       <div class="check-flags" style="font-size:12px;margin-top:10px">
         <div class="muted">Flagged on this page ({{ card.flags | length }}) — another flag adds to these:</div>
-        {% for f in card.flags %}<div style="margin-top:3px">⚑ {{ f.says }}</div>{% endfor %}
+        {% for f in card.flags %}<div style="margin-top:3px">⚑ {{ f.says }}</div>{% if f.reply %}<div class="muted" style="margin:2px 0 0 14px" data-reply>↳ Answered: {{ f.reply }}</div>{% endif %}{% endfor %}
       </div>
       {% endif %}
     </form>

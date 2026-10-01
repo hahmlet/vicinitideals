@@ -81,6 +81,13 @@ FLAG = "unmarked"
 #: before, ``says`` the comment, so the card can show both.
 REOPENED = "reopened"
 
+#: Not a reviewer's answer: our answer to a problem the reviewer raised,
+#: stored under ``reply:<id of the row it answers>`` with the words in
+#: ``note``. A problem with a reply leaves the open list for the answered one,
+#: and the card shows the reply under the flag -- otherwise a problem traced,
+#: explained or fixed stays listed as open forever, asking to be looked at.
+REPLIED = "replied"
+
 #: Answers that mean something needs fixing. They make the problems list.
 PROBLEMS = frozenset({"differs", "wrong_box", "missing", FLAG})
 
@@ -222,6 +229,16 @@ def _flag_key(r: FlatsPageCheck) -> str:
     return f"{r.question}#{r.id}" if r.question.startswith("page:") else r.question
 
 
+def _replies(answers: dict[tuple, FlatsPageCheck]) -> dict[int, FlatsPageCheck]:
+    """Our latest reply to each answered problem, by the id of the problem's row."""
+    out = {}
+    for r in answers.values():
+        target = r.question.removeprefix("reply:")
+        if r.answer == REPLIED and r.question.startswith("reply:") and target.isdigit():
+            out[int(target)] = r
+    return out
+
+
 async def _signed(session: DBSession, layer_id: str | None = None) -> set[tuple]:
     """Addresses whose latest sign-off is a confirmation, for ordering."""
     stmt = select(FlatsRuleSignature).order_by(FlatsRuleSignature.decided_at)
@@ -351,7 +368,7 @@ def _flags_on(
     A flag is its own finding: a second one adds to the list, it does not
     replace the first, and the card shows them so the reviewer can see that.
     """
-    out = []
+    out, replies = [], _replies(answers)
     for r in answers.values():
         if (
             r.layer == layer_id
@@ -359,7 +376,8 @@ def _flags_on(
             and r.page in pages
             and (r.quote or "").partition("#L")[0] == document
         ):
-            out.append({"page": r.page, "says": r.says, "id": r.id})
+            reply = replies.get(r.id)
+            out.append({"page": r.page, "says": r.says, "id": r.id, "reply": reply.note if reply else ""})
     return sorted(out, key=lambda f: f["id"])
 
 
@@ -680,13 +698,14 @@ def _note_box(document: str, page: int, body: list[str]) -> list[tuple[sheet.Box
 
 def _counts(layer: Layer, rows: list[dict[str, Any]], answers: dict[tuple, FlatsPageCheck]) -> dict[str, int]:
     checked = problems = 0
+    replies = _replies(answers)
     for row in rows:
         said = _standing(
             answers.get((layer.layer, row["zone"], row["field"], row["when"], "value")), row
         )
         if said is not None:
             checked += 1
-            problems += said.answer in PROBLEMS
+            problems += said.answer in PROBLEMS and said.id not in replies
     return {"numbers": len(rows), "checked": checked, "left": len(rows) - checked, "problems": problems}
 
 
@@ -779,10 +798,12 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
     dedup_count, conflicts_count = await _get_counts(session)
     answers = await _answers(session)
     signed = await _signed(session)
+    replies = _replies(answers)
 
-    def build() -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]]]:
+    def build() -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]], list[dict[str, Any]]]:
         layers = _layers()
         table, totals, problems = [], {"numbers": 0, "checked": 0, "problems": 0, "no_map": 0, "html": 0}, []
+        answered: list[dict[str, Any]] = []
         for layer_id, layer in sorted(layers.items()):
             rows = _rows(layer, signed)
             counts = _counts(layer, rows, answers)
@@ -805,7 +826,8 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
                     continue
                 if _standing(answer, row) is None:
                     continue
-                problems.append(
+                reply = replies.get(answer.id)
+                (answered if reply else problems).append(
                     {
                         "layer_id": layer_id,
                         "layer_label": _layer_label(layer),
@@ -822,11 +844,18 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
                         "by": answer.reviewer,
                         "at": answer.decided_at,
                         "handed_on": answer.bundled_at is not None,
+                        "reply": reply.note if reply else "",
+                        "replied_at": reply.decided_at if reply else None,
                     }
                 )
-        return table, totals, sorted(problems, key=lambda p: p["at"], reverse=True)
+        return (
+            table,
+            totals,
+            sorted(problems, key=lambda p: p["at"], reverse=True),
+            sorted(answered, key=lambda p: p["replied_at"], reverse=True),
+        )
 
-    table, totals, problems = await run_in_threadpool(build)
+    table, totals, problems, answered = await run_in_threadpool(build)
     return templates.TemplateResponse(
         request,
         "flats_check_index.html",
@@ -835,6 +864,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
             "table": table,
             "totals": totals,
             "problems": problems,
+            "answered": answered,
         },
     )
 
@@ -855,11 +885,17 @@ async def flats_check_problems(
     layers = _layers()
     out: list[str] = []
     ids: list[int] = []
+    replies = _replies(answers)
     for (layer_id, zone, field, when, question), answer in sorted(
         answers.items(), key=lambda kv: kv[1].decided_at
     ):
         layer = layers.get(layer_id)
-        if layer is None or answer.answer not in PROBLEMS or answer.bundled_at is not None:
+        if (
+            layer is None
+            or answer.answer not in PROBLEMS
+            or answer.bundled_at is not None
+            or answer.id in replies
+        ):
             continue
         number = _number(layer, zone, field, when)
         if number is None or answer.fingerprint != _mark(layer_id, zone, field, when, number):

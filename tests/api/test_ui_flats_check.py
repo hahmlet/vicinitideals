@@ -383,6 +383,39 @@ async def test_a_second_flag_adds_to_the_first_and_both_show_on_the_card(client,
     assert response.text.index("first thing") < response.text.index("second thing")
 
 
+async def test_an_answered_flag_leaves_the_open_list_and_shows_its_answer(client, session):
+    # A flag traced and explained moves no fingerprint, so without a reply it
+    # would sit on the open list forever asking to be looked at again.
+    await _login(client, session)
+    row = _first_row()
+    page = check._card(check._layers()[LAYER], check._Ask(row, "value"))["sheets"][0]["page"]
+    await client.post(
+        "/ui/flats/check", data=_form(row, action="flag", flag_page=str(page), comment="what about G2?")
+    )
+    flag = (
+        await session.execute(select(FlatsPageCheck).where(FlatsPageCheck.answer == check.FLAG))
+    ).scalar_one()
+    session.add(
+        FlatsPageCheck(
+            layer=flag.layer, zone=flag.zone, field=flag.field, when_key=flag.when_key,
+            value=flag.value, fingerprint=flag.fingerprint, question=f"reply:{flag.id}",
+            answer=check.REPLIED, says=flag.says, note="G2 sets no maximum side yard.",
+            quote=flag.quote, page=flag.page, placed=flag.placed, reviewer="triage",
+        )
+    )
+    await session.commit()
+
+    index = await client.get("/flats/check")
+    open_list, _, answered = index.text.partition("data-answered")
+    assert "what about G2?" not in open_list
+    assert "what about G2?" in answered and "G2 sets no maximum side yard." in answered
+    assert "what about G2?" not in (await client.get("/flats/check/problems.txt")).text
+    card = await client.get(
+        f"/flats/check/{LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
+    )
+    assert "Answered: G2 sets no maximum side yard." in card.text
+
+
 def _hidden(text: str, name: str) -> str:
     return html.unescape(re.search(rf'name="{name}" value="([^"]*)"', text).group(1))
 
