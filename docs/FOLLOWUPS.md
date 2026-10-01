@@ -910,11 +910,6 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    topography) held as binding; ask Steph whether the "differs" was the
    escape. (b) Other cities' prose refusals still need locating into
    `set_aside:` so their pages tint grey.
-   (c) An answer only comes back when the number, citation or quote changes
-   (6 of Steph's OC answers did). Her 31 "No" + 8 "can't tell" still stand
-   though many were fixed on the DISPLAY side (boxes, footnotes, wording).
-   Offered 2026-10-01: re-ask all 39 / re-ask only the display-fixed ones /
-   leave them. Awaiting Steph.
 27. **Parking layout generator (Steph 2026-10-01: "more parking flexibility
    opens up more lots"; don't invent shapes).** SCOPING, nothing built.
    Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall
