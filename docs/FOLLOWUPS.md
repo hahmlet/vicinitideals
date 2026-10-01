@@ -944,7 +944,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    false fits before any promotion. RESTRICTIONS ARE HARD LIMITS (Steph):
    moving the building never licenses a drive or court the code forbids
    (side-street-only entrance, front/side parking bans, frontage caps). GAP
-   that matters now:  corner lots (Clackamas, Milwaukie,
+   that matters now: `lowest_class` corner lots (Clackamas, Milwaukie,
    Oregon City, West Linn, Wilsonville, Fairview) -- no street's functional
    class is measured (6(c)), so today's lane may sit on the busier street;
    measure it per edge from RLIS street TYPE in s4 and re-check today's
