@@ -414,6 +414,19 @@ async def test_forward_returns_to_the_card_back_was_pressed_on(client, session):
     assert _hidden(forward.text, "skipped") == "0"
 
 
+async def test_skip_on_a_card_already_answered_does_not_pass_over_the_next(client, session):
+    # Back to an answered card, then Skip instead of Forward: the reviewer is
+    # leaving a card the queue no longer holds, so nothing is skipped.
+    await _login(client, session)
+    row = _first_row()
+    await client.post("/ui/flats/check", data=_form(row, answer="matches"))
+
+    left = await client.post("/ui/flats/check", data=_form(row, action="skip", skipped="0"))
+
+    assert _hidden(left.text, "skipped") == "0"
+    assert "skip:" not in _hidden(left.text, "trail")
+
+
 async def test_passing_an_unanswered_card_on_the_way_forward_skips_it(client, session):
     await _login(client, session)
     row = _first_row()

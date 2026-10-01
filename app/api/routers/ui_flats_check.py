@@ -973,15 +973,19 @@ async def flats_check_answer(
         )
     if layer is None or number is None:
         return HTMLResponse("not a number we hold", status_code=400)
+    said = (await _answers(session, layer.layer)).get((layer.layer, zone, field, when, question))
+    answered = (
+        said is not None
+        and said.answer != REOPENED
+        and said.fingerprint == _mark(layer.layer, zone, field, when, number)
+    )
     if action == "forward" or (action == "skip" and forward):
         # Back over a card, then forward again. Passing a card that still
         # has no answer skips it, as the Skip button would have.
         if not forward:
             return await card(skipped=skipped, focus=tuple(here))
         *rest, target = forward
-        answers = await _answers(session, layer.layer)
-        said = answers.get((layer.layer, zone, field, when, question))
-        if said is None or said.fingerprint != _mark(layer.layer, zone, field, when, number):
+        if not answered:
             skipped, here = skipped + 1, [zone, field, when, f"skip:{question}"]
         return await card(
             skipped=skipped,
@@ -989,6 +993,11 @@ async def flats_check_answer(
             trail=[*passed, here][-_TRAIL:],
             ahead=rest,
         )
+    if action == "skip" and answered:
+        # Leaving a card already answered (reached by Back) is not a skip:
+        # the queue never held it, and counting it would pass over the next
+        # unanswered card instead.
+        return await card(skipped=skipped, trail=[*passed, here][-_TRAIL:])
     if action == "skip":
         return await card(skipped=skipped + 1, trail=[*passed, [zone, field, when, f"skip:{question}"]][-_TRAIL:])
     # The card has one comment box. Under "No" it is what the page says;
