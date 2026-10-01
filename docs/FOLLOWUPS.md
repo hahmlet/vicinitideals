@@ -899,23 +899,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    and submitted once at the end of the document; a per-document "read by a
    human" record so the corpus gets covered over time. Until it exists, keep
    "Flag something missing" on the card.
-27. **Steph's Oregon City page check (2026-10-01): triage, then fix what
-   the card failed to say.** 170 answers in `flats.page_checks`: 35 "No",
-   10 "can't tell", 32 flags. (a) Triage each into real error / already
-   handled but not shown / exception that only relaxes the rule (porch,
-   garage, over-35-ft height add-on: stricter is the safe direction) /
-   tool fault. Real so far: townhouse side setback 0 ("blank") not held in
-   R-3.5, R-5, R-2 (over-strict); footnote "I" on R-10/R-8/R-6 coverage is
-   a comma read as a marker; R-2 quadplex box on the wrong line; a second
-   "twelve" boxed (parking_maneuvering_max_width_ft); R-2 min lot footnote
-   1 text not shown; R-2 rear 10 "only for multi-family" to re-read.
-   (b) Card fixes: show the number's variants on the value card (she
-   answered "No" to R-3.5/R-5 width because the 20 ft townhouse variant was
-   invisible), show refusals on the page ("NOT ENCODED: min FAR 0.25,
-   17.29.060.B" -- she found it; the file already says why), plain field
-   names ("street side" = corner side yard), words for a null value
-   (parking_side_prohibited: "I can't tell what this is asking"), and why a
-   zone is "not allowed" (I/MUE via 17.06.010.A). Offered, not started.
+27. **Steph's Oregon City page check (2026-10-01): rest of the triage.**
+   126 value cards answered (170 rows incl. 32 flags, 8 re-answers, 4
+   footnotes). SHIPPED 1125c98d: grey "set aside on purpose" tint (layer key
+   `set_aside:` -- 12 OC entries; dismissed footnotes; closed readings;
+   exempt values), card lists the other numbers held, exempt/no-rule
+   wording, plain side-setback names, repeated-sentence find fix (OC MUC-2
+   G.1). Many "No"s were right (townhouse 0/5 side, R-2 rear 10, porch/
+   garage/height add-ons only relax). STILL OPEN: footnote "I" on R-10/R-8/
+   R-6 coverage read from a comma (p963); R-2 quadplex box on the
+   "Permitted uses" line (p972); second "twelve" boxed for
+   parking_maneuvering_max_width_ft unit_lots (p991); R-2 footnote 1 text
+   not shown (p973); parking_front_prohibited "differs" for C/MUC/MUD/WFDD
+   and quadplex_allowed for NC/I/MUE (say why "not allowed": 17.06.010.A).
+   Other cities' prose refusals still need locating into `set_aside:` so
+   their pages tint too.
 27. **Parking layout generator (Steph 2026-10-01: "more parking flexibility
    opens up more lots"; don't invent shapes).** SCOPING, nothing built.
    Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall
