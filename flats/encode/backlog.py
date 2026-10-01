@@ -37,6 +37,7 @@ from pathlib import Path
 
 from flats.encode.port_quadfit import layer_id_for
 from flats.encode.reading_rate import readings, render as render_rates
+from flats.ingest.normalize import zone_for
 from flats.normalize.condo import classify_frame
 from flats.rules.ledger import (
     COVERAGE,
@@ -65,12 +66,17 @@ _COLUMNS = [
     "PROP_CODE",
     "COUNTY",
     "inside_ugb",
+    "JURIS_CITY",
 ]
 
 #: What a parcel whose zoning join came back blank is called in the ledger.
 #: Deliberately not a zone code: nothing may read it as one, and it has to
 #: sort and print like the gap it is.
 UNZONED = "(unzoned in parcel data)"
+
+#: What a parcel with neither a screen jurisdiction nor a county city name is
+#: filed under, for the same reason: a gap gets a row, never a skip.
+NO_CITY = "(no city in parcel data)"
 
 
 def _plural(n: int, word: str) -> str:
@@ -79,7 +85,16 @@ def _plural(n: int, word: str) -> str:
 
 
 
-def observed(corpus: Path = CORPUS, *, drop_condos: bool = True) -> list[ObservedZone]:
+def observed(
+    corpus: Path = CORPUS, *, drop_condos: bool = True, rules: RuleSet | None = None
+) -> list[ObservedZone]:
+    """Every ``(layer, zone)`` the corpus holds, with its lots and acres.
+
+    Given ``rules``, a map label is filed under the zone the screen reads it
+    as (:func:`flats.ingest.normalize.zone_for`: whitespace, Portland's
+    lowercase suffix, an ``alias`` ruling) -- so King City's "R9", ruled the
+    map's spelling of R-9, counts against R-9 instead of queueing 524 lots as
+    a zone nobody wrote."""
     import pandas as pd
 
     df = pd.read_parquet(corpus, columns=_COLUMNS)
@@ -89,7 +104,15 @@ def observed(corpus: Path = CORPUS, *, drop_condos: bool = True) -> list[Observe
         df = classify_frame(df)
         df = df[df.condo_verdict != "excluded"]
 
-    rows: list[ObservedZone] = []
+    # A city the screen has no layer for reaches here with no jurisdiction at
+    # all, and a blank grouped as the string "nan" -- every such city in one
+    # nameless row. Washington County brought six of them, 30,938 lots, so the
+    # county's own city name is kept in its place: the gap is named per city.
+    unmapped = df.jurisdiction.isna() & df.JURIS_CITY.notna()
+    df.loc[unmapped, "jurisdiction"] = df.loc[unmapped, "JURIS_CITY"].str.strip().str.lower().str.replace(" ", "-")
+    df["jurisdiction"] = df.jurisdiction.fillna(NO_CITY)
+
+    counts: dict[tuple[str, str], list[float]] = {}
     grouped = df.groupby(["jurisdiction", "zone_raw"], dropna=False)
     for (juris, zone), grp in grouped:
         if not juris:
@@ -108,15 +131,16 @@ def observed(corpus: Path = CORPUS, *, drop_condos: bool = True) -> list[Observe
             # An unmapped jurisdiction is itself a gap; name it so it appears in
             # the ledger rather than vanishing.
             layer = f"UNMAPPED/{juris}"
-        rows.append(
-            ObservedZone(
-                jurisdiction=layer,
-                zone=zone,
-                lots=int(len(grp)),
-                acres=float(grp.area_sqft.sum()) / 43_560.0,
-            )
-        )
-    return rows
+        if rules is not None and zone != UNZONED and layer in rules.layers:
+            code, held = zone_for(rules.layers[layer], zone)
+            zone = held or code or zone
+        tally = counts.setdefault((layer, zone), [0, 0.0])
+        tally[0] += len(grp)
+        tally[1] += float(grp.area_sqft.sum())
+    return [
+        ObservedZone(jurisdiction=layer, zone=zone, lots=int(n), acres=sqft / 43_560.0)
+        for (layer, zone), (n, sqft) in counts.items()
+    ]
 
 
 def shrinkage(
@@ -159,7 +183,9 @@ def main() -> int:
     args = ap.parse_args()
 
     rules = RuleSet(load_rules())
-    rows = build_coverage(observed(args.corpus, drop_condos=not args.keep_condos), rules)
+    rows = build_coverage(
+        observed(args.corpus, drop_condos=not args.keep_condos, rules=rules), rules
+    )
 
     lost = shrinkage(rows, read_coverage(args.out))
     if lost and not args.shrink:

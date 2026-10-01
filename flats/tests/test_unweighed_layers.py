@@ -45,11 +45,13 @@ pytestmark = pytest.mark.unit
 #: The four places the screening pipeline is switched off for. An excluded
 #: jurisdiction gets no zoning join at all (``s2_assign.py``: ``if j.eligible
 #: and j.zoning_layer``), so its lots arrive with no zone rather than not
-#: arriving -- which is why they are the whole of the unzoned bucket.
+#: arriving -- which is why they are most of the unzoned bucket. Lake Oswego
+#: and Rivergrove each reach a few lots into Washington County, and the
+#: three-county ledger counts those too (14,256 -> 14,276, 222 -> 238).
 SWITCHED_OFF = {
-    "or/clackamas/lake-oswego": 14256,
+    "or/clackamas/lake-oswego": 14276,
     "or/multnomah/maywood-park": 327,
-    "or/clackamas/rivergrove": 222,
+    "or/clackamas/rivergrove": 238,
     "or/clackamas/johnson-city": 7,
 }
 
@@ -59,14 +61,19 @@ SWITCHED_OFF = {
 #: drafts came back from a cloud session 2026-09-29 (docs/flats/handoff/
 #: washington.md); nothing ranks them until the county map is built on the
 #: home network and the ledger is regenerated over it (FOLLOWUPS 17). This
-#: set is meant to empty the same way the Clackamas ten did.
-OWED_A_COUNTY = {
-    "or/washington/_unincorporated",
-    "or/washington/hillsboro",
-    "or/washington/beaverton",
-    "or/washington/sherwood",
-    "or/washington/king-city",
-    "or/washington/durham",
+#: set is meant to empty the same way the Clackamas ten did -- and it did,
+#: 2026-10-01, when the ledger was regenerated over the three-county corpus.
+OWED_A_COUNTY: set[str] = set()
+
+
+#: Washington County cities on the county map with no encoded layer: their
+#: lots reach the corpus with no jurisdiction and are named by the county's
+#: own city field. Forest Grove waits on its code (FOLLOWUPS 17(c)), Tigard
+#: and Cornelius on encoding (17(f)). Lots inside the boundary, condos out.
+UNENCODED_CITIES = {
+    "UNMAPPED/tigard": 18_953,
+    "UNMAPPED/forest-grove": 7_713,
+    "UNMAPPED/cornelius": 4_256,
 }
 
 
@@ -94,9 +101,11 @@ def test_no_encoded_layer_is_outside_the_corpus_that_ranks_the_work(
     assert {u.jurisdiction for u in blind} == OWED_A_COUNTY
 
 
-def test_the_ledger_now_spans_both_counties(rules: RuleSet) -> None:
-    """334,959 lots over eighteen jurisdictions, and the headline percentage
-    is finally a percentage of the land the screen runs on.
+def test_the_ledger_now_spans_three_counties(rules: RuleSet) -> None:
+    """507,936 lots over twenty-seven jurisdictions since 2026-10-01 -- 24
+    layers and the three Washington cities with none. It was 334,959 over
+    eighteen on two counties, and the headline percentage is still a
+    percentage of the land the screen runs on.
 
     The old version of this test asserted the opposite and was right to: it
     pinned that every Clackamas row belonged to Lake Oswego and totalled 758
@@ -110,22 +119,29 @@ def test_the_ledger_now_spans_both_counties(rules: RuleSet) -> None:
     }
     clackamas = {row.jurisdiction for row in rows if "/clackamas/" in row.jurisdiction}
 
-    assert counties == {"multnomah", "clackamas"}
-    assert len({row.jurisdiction for row in rows}) == 18
-    assert sum(row.lots for row in rows) == 334_959
+    washington = {row.jurisdiction for row in rows if "/washington/" in row.jurisdiction}
+
+    assert counties == {"multnomah", "clackamas", "washington"}
+    assert len({row.jurisdiction for row in rows}) == 27
+    assert sum(row.lots for row in rows) == 507_936
     assert len(clackamas) == 11
+    assert len(washington) == 6
     assert "or/clackamas/oregon-city" in clackamas
     assert "or/clackamas/_unincorporated" in clackamas
 
 
 def test_every_jurisdiction_in_the_corpus_maps_to_a_layer(rules: RuleSet) -> None:
     """``observed()`` names an unmapped jurisdiction ``UNMAPPED/<name>`` rather
-    than dropping it. There are none, and that is worth asserting rather than
-    assuming: the two-county corpus brought four jurisdictions the old one
-    never contained, and any of them could have arrived without a mapping."""
+    than dropping it. On two counties there were none. Washington brought
+    three cities with no layer, and before 2026-10-01 they would have shared
+    one row called ``UNMAPPED/nan``: a blank jurisdiction grouped as the
+    string "nan". Named per city now, and pinned, so a fourth arrives as a
+    failure rather than a bigger number."""
     rows = read_coverage()
+    unmapped = {r.jurisdiction: r.lots for r in rows if not r.jurisdiction.startswith("or/")}
 
-    assert [r.jurisdiction for r in rows if not r.jurisdiction.startswith("or/")] == []
+    assert unmapped == UNENCODED_CITIES
+    assert all(r.status == "jurisdiction_missing" for r in rows if r.jurisdiction in unmapped)
 
 
 def test_a_parcel_with_no_zone_leaves_a_row_instead_of_leaving(
@@ -140,8 +156,12 @@ def test_a_parcel_with_no_zone_leaves_a_row_instead_of_leaving(
     one, and it lands as `zone_missing`, which is what it is."""
     unzoned = [row for row in read_coverage() if row.zone == UNZONED]
 
-    assert sum(row.lots for row in unzoned) == 14_822
-    assert all(row.status == "zone_missing" for row in unzoned)
+    assert sum(row.lots for row in unzoned) == 45_797
+    assert all(
+        row.status == "zone_missing"
+        for row in unzoned
+        if row.jurisdiction not in UNENCODED_CITIES
+    )
 
 
 def test_the_unzoned_bucket_is_now_policy_rather_than_data(rules: RuleSet) -> None:
@@ -155,7 +175,8 @@ def test_the_unzoned_bucket_is_now_policy_rather_than_data(rules: RuleSet) -> No
     catch a join that failed, now mostly holds a decision that was made.
 
     **14,812 of 14,822 lots are the four excluded places, and 10 are real
-    blanks.** Lake Oswego alone is 14,256 of them, which is 96% of all the land
+    blanks.** (Three counties, 2026-10-01: 45,797 = 14,848 excluded, 30,922
+    in the three Washington cities with no layer, 27 real blanks.) Lake Oswego alone is 14,256 of them, which is 96% of all the land
     the screen has been told not to look at, on the strength of a reason
     written about the ninth of the city that lay in the county we could see.
     """
@@ -168,9 +189,12 @@ def test_the_unzoned_bucket_is_now_policy_rather_than_data(rules: RuleSet) -> No
     for name, lots in SWITCHED_OFF.items():
         assert unzoned.get(name) == lots, name
 
-    joins = {k: v for k, v in unzoned.items() if k not in SWITCHED_OFF}
-    assert sum(joins.values()) == 10
-    assert sum(SWITCHED_OFF.values()) == 14_812
+    joins = {
+        k: v for k, v in unzoned.items()
+        if k not in SWITCHED_OFF and k not in UNENCODED_CITIES
+    }
+    assert sum(joins.values()) == 27
+    assert sum(SWITCHED_OFF.values()) == 14_848
 
 
 def test_a_layer_with_no_zones_is_not_reported_as_unweighed(rules: RuleSet) -> None:

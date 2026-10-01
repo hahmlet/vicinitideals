@@ -107,7 +107,9 @@ def test_the_whole_city_arrives_without_a_zone_on_it() -> None:
 
     assert [r.zone for r in rows] == [UNZONED]
     assert rows[0].status == "zone_missing"
-    assert rows[0].lots == 14256
+    # 14,256 on two counties; 20 more once Washington County was counted
+    # (2026-10-01), the few Lake Oswego lots on that side of the line.
+    assert rows[0].lots == 14276
     assert rows[0].lots > 9 * sum(ONCE_OBSERVED.values())
 
 

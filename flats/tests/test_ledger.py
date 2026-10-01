@@ -516,3 +516,43 @@ def test_every_unweighed_zone_carries_exactly_one_cause() -> None:
             assert z.candidates and z.lots > 0
         else:
             assert z.candidates == () and z.lots == 0
+
+
+def test_observed_files_an_alias_under_its_zone_and_names_a_city_with_no_layer(
+    tmp_path: Path,
+) -> None:
+    """Two ways the backlog misfiled lots, both found by Washington County.
+
+    King City's map prints "R9" for the district the rules call R-9, and the
+    layer rules it an alias -- but the backlog filed the 524 lots under "R9"
+    and queued them as a zone nobody had written. And a city with no layer
+    reached the backlog with a blank jurisdiction that grouped as the string
+    "nan", so Tigard, Forest Grove and Cornelius shared one nameless row."""
+    import pandas as pd
+
+    from flats.encode.backlog import observed
+
+    corpus = tmp_path / "s2_lots.parquet"
+    pd.DataFrame(
+        {
+            "jurisdiction": ["king_city", "king_city", None, None],
+            "zone_raw": ["R9", "R-9", None, None],
+            "area_sqft": [5000.0, 5000.0, 7000.0, 7000.0],
+            "BLDGSQFT": [0, 0, 0, 0],
+            "PROP_CODE": ["", "", "", ""],
+            "COUNTY": ["W", "W", "W", "W"],
+            "inside_ugb": [True, True, True, True],
+            "JURIS_CITY": ["KING CITY", "KING CITY", "FOREST GROVE", "TIGARD"],
+        }
+    ).to_parquet(corpus)
+
+    got = {
+        (o.jurisdiction, o.zone): o.lots
+        for o in observed(corpus, drop_condos=False, rules=RuleSet(load_rules()))
+    }
+
+    assert got == {
+        ("or/washington/king-city", "R-9"): 2,
+        ("UNMAPPED/forest-grove", "(unzoned in parcel data)"): 1,
+        ("UNMAPPED/tigard", "(unzoned in parcel data)"): 1,
+    }
