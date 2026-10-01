@@ -1477,9 +1477,11 @@ Layer-wide values (`defaults`):
 - one parking space a unit, no maximum: 18.145.030 (A) Table, "Middle
   Housing 1.0/DU none none", applied "regardless of the parking zone";
 - the stall 9 by 20 (18.145.050 (A), L501), held over the definition's 8.5
-  by 20 (Doubts); no aisle (the code says "of sufficient width");
+  by 20 (Steph, 2026-10-01: keep 9); no aisle (the code says "of
+  sufficient width");
 - `front_lot_line_corner: shortest` from the solar-access definition of
-  front lot line, the only rule the code prints (Doubts);
+  front lot line, the only rule the code prints (Steph, 2026-10-01: keep
+  it);
 - `corner_access_street: lowest_class`: in all four residential zones,
   access "primarily from local streets or alleyways", and none to an
   arterial or collector unless there is no alternative;
@@ -1517,6 +1519,87 @@ parking space is the stall "together with maneuvering and access space"
 (18.195, L520-L521), so the aisle is kept out of the yard with the
 stalls. Cornelius is the only layer that declares the field
 (`test_only_cornelius_keeps_parking_out_of_its_yards`).
+
+**Covered parking** (`parking_covered_required`, a new optional bool, and a
+new screen check `covered_parking`). Every residential zone and GMU print
+"One covered parking space shall be provided for each home [dwelling
+unit] either on an [the] individual lot or in an off-street parking bay
+within 100 feet" (R-7 18.20.060 (F)(1)(a), L312; R-10 18.25.060 (F)(1)(a),
+L283; A-2 18.35.060 (J)(1)(a), L378; CR 18.70.060 (G)(1)(a), L380; GMU
+18.75.065 (N)(1)(a), L671). Steph, 2026-10-01: the pod has no covered
+parking, so where the requirement holds the lot fails on it. Where it
+holds is narrower than the sentence: OAR 660-046-0220(2)(e)(D), "A Large
+City may allow, but may not require, off-street parking to be provided as
+a garage or carport", for a triplex or quadplex, and Cornelius is inside
+Metro, so a Large City. The townhouse rules in (3) carry no such sentence
+((3)(e) even prices a covered requirement in height), so the city's
+sentence stands on the unit-lot path. Encoded per zone: in R-7, R-10, A-2
+and CR, `false` on the one-lot path (cited to the OAR, quoted from the
+stored rule) with a `true` variant `when: [unit_lots]` cited to the zone's
+own sentence; in GMU, `true` outright (detached houses are prohibited
+there, so the state rule does not reach it). Where it is `true` the screen
+asks one covered stall a unit and finds none (cover counts only for a
+design parked under its own floor, `tuck_under`): a definite miss, which
+the screen reports as YELLOW with an unconfirmed variance path, as for any
+standard whose relief chapter is unread. No shipped pod takes the
+unit-lot path, so no verdict moves today.
+
+**The solar balance point in R-7 and R-10** (18.160): flagged, not
+measured, on Steph's ruling. Each zone's height carries `qualified_by:
+solar_shade_point`, a new site fact (`assume=None`) that nothing measures,
+quoting 18.160.020's "all structures in all single-family zones" and the
+formula (L23, L33-L46). The height itself is unchanged. Every lot in the
+two zones leans on the fact, so it comes back UNKNOWN ("needs a closer
+look") with "solar_shade_point" under "Facts nobody measured", never GREEN.
+That is the mildest honest mark the corpus has: YELLOW is reserved for a
+definite miss with an application path, and nothing here is known to
+miss; no existing mechanism (caps, an `unmeasured` footnote, a variant on
+an unmeasured fact, `qualified_by`) yields YELLOW for an unmeasured
+condition. R-7 is about half the city's map, so this is the reading that
+holds the most Cornelius lots back.
+
+**GMU: the townhouse path only, behind an untraced figure** (Steph,
+2026-10-01). Four homes on one lot stays refused: the fourplex is not
+multi-family, and 18.75.020 lists "Multi-family dwelling units" and
+"Single-family attached dwelling units" (L55, L59) and no middle housing.
+The townhouse row opens as a `quadplex_allowed` variant `when: [unit_lots,
+inside_mapped_use_area]`, because 18.75.065 (B) admits townhouses "only
+... within subdistrict A" (L475) of Figure 18.75.065-1 (L471), an image no
+map layer carries (subdistrict C has no ground-floor residential at all,
+L469). `inside_mapped_use_area` is unmeasured, so a GMU lot is never better
+than UNKNOWN. The standards are 065's, which stand "In lieu of" the zone's
+general ones (L453):
+
+| | GMU townhouses (065 (H) and (C)) |
+|---|---|
+| Lot (each unit lot) | 2,000 (L567); one-lot default `exempt` (050 (A), moot) |
+| Width (each unit lot) | 20 (L571); one-lot default `exempt` (050 (A), moot) |
+| Minimum density | 18 per net acre (L479), on 18.195's 43,560 sq ft acre: 4 homes on at most 9,680 net sq ft |
+| Maximum density | none ("There is no maximum density", L479) |
+| Height | 35 (L575) |
+| Front / garage | 5 / 20 (L579) |
+| Side (attached) | 5 (0) (L587) |
+| Rear | 10 (L583) |
+| Landscaped | 15 percent (065 (E), L487) |
+| Drive two-way / one-way / at the curb | 24 / 15 / 25 (065 (I)(3), (J)(2)) |
+| Covered parking | one a unit, required (L671) |
+
+The density arithmetic, checked against the city's own definition rather
+than estimated: GMU prints no net acre of its own (R-7 and A-2 each print
+32,670), so it is 18.195's "Acreage, net" on the "Acre, gross" of 43,560
+square feet (definitions L35-L36, L41-L54). 4 / 18 x 43,560 = 9,680 net
+square feet. The figure the coordinator gave, about 9,700, is this number
+rounded; on R-7's 32,670 acre it would have been 7,260. No `acre_sqft` is
+needed.
+
+Owed in GMU, each with its reason in the layer: the 50 percent cap ("In
+subdistrict A, up to 50 percent of a lot ... may be developed as
+single-family attached residential uses, including parking,
+infrastructure, and open space", L475), which no field holds; the street
+side yard (065 (H) names "side yards" only, and 18.195 defines a street
+side yard as its own yard, L711-L712); lot depth and coverage (065 states
+neither, and is "in lieu of" the chapter that would). The figure is to be
+traced later (section 8).
 
 **Two new value forms**, each with unit tests, committed separately
 (70990fd5 and 57705275):
@@ -2020,25 +2103,19 @@ None prohibits the pod in SDR. None admits it in a zone the layer refuses.
 
 ### Cornelius
 
-Twenty-five NOT ENCODED comments in `cornelius.yaml`, each quoting the
+Twenty-two NOT ENCODED comments in `cornelius.yaml`, each quoting the
 code, besides the refused zones' own comments (`flats.encode.refusals`:
-25 comments, no notes or tests).
+22 comments, no notes or tests). There were 25; three became encoding on
+2026-10-01: parking out of the side and rear yards
+(`parking_required_yard_prohibited`), the solar balance point (a
+`qualified_by` flag on R-7's and R-10's heights) and covered parking
+(`parking_covered_required`), all in section 3.
 
-- **Parking out of the side and rear yards** (18.145.010 (B), L23):
-  "required parking and loading spaces shall not be located in a required
-  yard". The front yard is held; the side and rear are not, because no
-  field keeps a parking court out of them (Doubts).
-- **The solar balance point** (18.160) in R-7 and R-10, a roof-height limit
-  set by the distance to the northern lot line (Doubts).
 - **Compact stalls** (25 percent may be 8 by 16) and **the aisle** ("of
   sufficient width", L517).
 - **Parking-area landscaping**: 18.145.070 (A)-(D) five-foot strips (L637,
   L641, L645, L649); 060 exempts small residential parking areas in CR
   (L609).
-- **Covered parking**: "One covered parking space shall be provided for
-  each home" in all four residential zones (R-7 L312, R-10 L283, A-2 L378,
-  CR L380), and the carport rules in 18.150.010 (L39, L43, L47). A design
-  question (Questions).
 - **Clear vision** (18.150.070, L207-L211): 15 ft triangles from curb
   lines.
 - **Driveway spacing** (18.143.050 (C)(1), L163) and **100 ft from an
@@ -2057,19 +2134,23 @@ code, besides the refused zones' own comments (`flats.encode.refusals`:
   (L362, L414); CR's six-foot building separation (L232); the repealed C-1
   (L62).
 
-The eight refused zones carry the use row only (`test_washington_cornelius.py`):
+Seven refused zones carry the use row only, and GMU refuses the one-lot
+pod but opens a townhouse path behind an untraced figure
+(`test_washington_cornelius.py`):
 
 - **MHP** (18.30.020 and 030 (B)): manufactured homes, prefabricated
   dwellings and RVs within a park on its approved plan.
 - **C-2** (18.45.020 (H), 030 (J)): a dwelling only as secondary to
   commercial use; multi-family only as a conditional use.
 - **CC** (18.65.020 (K), 030 (D)): dwellings above the ground floor or
-  behind nonresidential uses, 50 ft from Adair or Baseline (Questions).
+  behind nonresidential uses, 50 ft from Adair or Baseline (Steph,
+  2026-10-01: keep the refusal).
 - **CMU** (18.60.020 (I), 030 (B)): dwellings above the ground floor;
   ground-floor dwellings conditional, regulated affordable units excepted.
-- **GMU** (18.75.020 (H)-(I), 18.75.040, 18.75.065 (A)(3)): no middle
-  housing row; ground-floor residential by subdistricts drawn only in a
-  figure, at 18 units per net acre on a 10,000 sq ft minimum (Questions).
+- **GMU** (18.75.020 (H)-(I), 18.75.040): no middle housing row, and the
+  fourplex is not multi-family (Steph, 2026-10-01). The townhouse path is
+  open only in subdistrict A of Figure 18.75.065-1, held behind
+  `inside_mapped_use_area` (section 3).
 - **LI** (18.54.020 (L)): housing only by a public body or a religious
   non-profit with a 30-year affordability covenant.
 - **M-1** (18.55.040 (B)): no residential use but a caretaker's residence.
@@ -2776,20 +2857,25 @@ Ledgers and readers:
 
 Places where the screen is LOOSER than the code:
 
-- **The solar balance point** (18.160) applies "to an application for a
-  building permit for all structures in all single-family zones" (L23), and
-  R-10 and R-7 are the two "Single-Family" districts (18.05, L53-L54). The
-  shade point may be no higher than (2 x SRL - N + 150) / 5, SRL being its
+- **The solar balance point** (18.160) is flagged, not measured (Steph,
+  2026-10-01), so it is no longer looser: every R-7 and R-10 lot is held
+  at UNKNOWN on `solar_shade_point`. What the flag stands in for: the shade
+  point may be no higher than (2 x SRL - N + 150) / 5, SRL being its
   distance from the northern lot line and N the north-south lot dimension,
   counted at most 90 (L33-L46). A 26 ft shade point must sit 35 ft from the
   northern line on a lot 90 ft or more north to south, 20 ft on a lot 60
   ft. Exemptions in (C) (L286-L332) include one that points to an
   "18.155.020(E)" the stored 18.155 does not have (L21-L23), a stale
   pointer; (G) lets the yards be cut by up to half to comply (L566-L592).
-  No field holds it and the screen does not know which line faces north.
-- **100 ft from an intersection** in A-2 and CR (L302, L304), unless there
-  is no reasonable alternative: nothing measures a curb return.
-- **Covered parking** and **the five-foot parking strips** (Refusals).
+  It is also STRICTER than the code for every lot the rule would clear,
+  which is most lots whose street is on the south or that run east-west.
+- **100 ft from an intersection** in A-2 and CR (L302, L304) and GMU
+  (L603), unless there is no reasonable alternative: nothing measures a
+  curb return.
+- **The five-foot parking strips** (Refusals).
+- **GMU's 50 percent cap** on townhouses in subdistrict A (L475), owed.
+  It moves nothing while the subdistrict is unmeasured; it becomes looser
+  than the code the day the figure is traced, unless it is encoded then.
 - `driveway_approach_max_width_ft` (25 in all four zones) is read by no
   screen (`consumed`): held, not applied, as in the other layers.
 
@@ -2798,7 +2884,11 @@ Places where it is STRICTER:
 - **The stall is 9 ft wide** (18.145.050 (A)), "Except as otherwise defined
   in this code", where 18.195 defines a parking space as 8.5 by 20
   (L520-L521). Read literally the exception hands the width to the
-  definition. Held at 9 (Questions).
+  definition. RULED 2026-10-01 (Steph): keep 9.
+- **Covered parking fails the townhouse path** (Steph, 2026-10-01: the pod
+  has none). Exact to the code where the requirement holds; it is
+  preempted for the one-lot quadplex (OAR 660-046-0220(2)(e)(D)). Stricter
+  only in that a carport could be added and is not modelled.
 - **Internal drives 24 and 15** in A-2 and CR (L302-L312) held over the
   12 ft every driveway needs (L330, L332): the pod's drive to its court is
   read as an internal drive.
@@ -2825,8 +2915,9 @@ Readings that could go either way:
   "Repealed by Ord. 2022-03" (L77), the ordinance that made middle housing
   permitted; the zone's own lot table prints the quadplex (L159); and OAR
   660-046 requires a Large City to allow a quadplex where a detached house
-  is allowed. Read as superseded; admitted. R-7 is the largest district
-  (2,126 polygons), so this is the reading that moves the most lots.
+  is allowed. Read as superseded; admitted (RULED 2026-10-01, Steph:
+  cancelled by state law). R-7 is the largest district (2,126 polygons),
+  so this is the reading that moves the most lots.
 - **"Multi-family" undefined. RULED 2026-10-01 (Steph): the fourplex is
   not multi-family.** A-2's side yard is now 5 (was the multi-family 10)
   and its density floor 8 per net acre (was 11). A-2's rear yard stays 15:
@@ -2843,8 +2934,17 @@ Readings that could go either way:
 - **Which street is the front of a corner lot.** The definition is stated
   "for purposes of the solar access regulations" (L291-L292); held for the
   yards as the shortest frontage. The blind reader flagged the scope
-  (card 02608).
-- **CC and GMU** refused conservatively (Questions).
+  (card 02608). RULED 2026-10-01 (Steph): keep the narrower street side.
+- **CC** refused conservatively away from Adair and Baseline. RULED
+  2026-10-01 (Steph): keep the draft. The ruling as relayed named "CR";
+  the Adair/Baseline question was about CC (Corridor Commercial), and CR
+  admits the pod outright, so it is recorded against CC.
+- **GMU's townhouse path.** Three readings, each the stricter: townhouses
+  are allowed only in subdistrict A (065 (B), L475), which is narrower
+  than "not in subdistrict C" (L469); the 18 units per net acre (L479) is
+  read as reaching townhouses, which are ground-floor residential; and
+  the corner front is the layer's narrowest frontage, not 050 (B)'s
+  higher-classified street (L203), because 065 stands "in lieu of" 050.
 - **Words** (`flats.encode.words`): three of the 24 `defined` cards are
   containment matches, not the term itself: "building" matched "Building
   area", "side yard" matched "Street side yard" and "lot line" matched
@@ -2955,6 +3055,34 @@ Three Cornelius answers, encoded the same day on `flats/cornelius-draft`:
   structure's rule, so `plus_per_story_ft` keeps one user; and CR's floor
   of 11 is for "all other dwelling types", not for multi-family. If Steph
   meant CR's floor to drop to 8 as well, that is a further ruling.
+  (Steph accepted both readings later the same day: A-2's rear yard is
+  every building's, and CR's floor is "all other dwelling types".)
+
+Six more Cornelius answers, the same day, encoded on the same branch:
+
+- **Stall width: keep 9 ft.** No change.
+- **Corridor Commercial (CC) away from Adair and Baseline: keep the
+  draft.** A fourplex on its own, with no business in front, stays
+  refused. (Relayed as "CR"; the question was CC's.)
+- **The sun-shading rule in R-7 and R-10: flag every lot, build no shade
+  check.** Every lot in the two zones now comes back "needs a closer
+  look" with the sun rule named, never green. There is no milder honest
+  mark: a lot is marked "clears with an application" only when it
+  definitely misses a rule it can ask relief from, and nothing here is
+  known to miss.
+- **Gateway Mixed Use: four homes on one lot stays no; townhouses on their
+  own lots open, but only in the part of the district the code's drawing
+  marks for them.** Nothing can tell which part a lot is in until the
+  drawing is traced, so a GMU lot screened for townhouses is "needs a
+  closer look", never green; the fourplex on one lot (every pod screened
+  today) stays refused there. The code's own definitions put the density floor at 18 homes per
+  43,560 sq ft: four homes on no more than 9,680 sq ft of usable land.
+- **Corner lot front: the narrower street side.** No change.
+- **Covered parking: the pod has none.** State law forbids Cornelius from
+  requiring covered parking for a fourplex on one lot, so on that path
+  nothing changes. For townhouses on their own lots the city may require
+  it, and there the lot now fails on it. (No pod is screened as townhouses
+  today, so no lot moves yet.)
 
 The questions below are kept as the record of what was asked.
 
@@ -3210,25 +3338,25 @@ The questions below are kept as the record of what was asked.
   allow a fourplex wherever a house is allowed. The draft treats the ban as
   a leftover and lets the fourplex through. Following the ban word for word
   would fail every R-7 lot. Is the draft's reading right?
-- **How wide is a parking space?** The parking chapter says 9 ft by 20 ft
+- **How wide is a parking space?** (Answered 2026-10-01: keep 9 ft.) The parking chapter says 9 ft by 20 ft
   "except as otherwise defined in this code", and the definitions chapter
   defines a parking space as 8.5 ft by 20 ft. The draft uses 9 ft, the
   safer choice. Using 8.5 ft would let a few more narrow lots fit their
   four spaces. Which should we use?
-- **Gateway Mixed Use.** This district allows "multi-family" and
+- **Gateway Mixed Use.** (Answered 2026-10-01: one-lot no; townhouses behind the untraced drawing; see Rulings.) This district allows "multi-family" and
   "single-family attached" homes but never says "middle housing". Homes on
   the ground floor are allowed only in parts of the district shown on a
   drawing in the code (not on any map we can load), and there they need at
   least 18 homes per acre, which four homes cannot reach on the district's
   smallest allowed lot. The draft says no to the whole district. Is that
   right, or should a fourplex count as "multi-family" here?
-- **Corridor Commercial, away from the main streets.** Homes are allowed
+- **Corridor Commercial, away from the main streets.** (Answered 2026-10-01: keep the refusal.) Homes are allowed
   above the ground floor or behind businesses, at least 50 ft back from
   Adair or Baseline Street; ground-floor homes closer than that need a
   hearing. On a lot nowhere near those two streets it is unclear whether a
   fourplex on its own, with no business in front, is allowed. The draft
   says no, the safer choice. Should it be allowed there?
-- **Which street is the front of a corner lot?** The code only answers
+- **Which street is the front of a corner lot?** (Answered 2026-10-01: the narrower street side.) The code only answers
   this for its sun-access rules: the front is the narrower street side.
   The zone rules just say "the front" and "the side facing the street".
   The draft uses the narrower side as the front for everything. The
@@ -3248,12 +3376,12 @@ The questions below are kept as the record of what was asked.
   ft deep in R-7, 25 ft in R-10). Following the rule fully would fail some
   lots that pass now, and needs a small change to the screen. Should we
   build it?
-- **Covered parking.** Every residential zone requires "one covered
+- **Covered parking.** (Answered 2026-10-01: the pod has none; it fails where the code may require it; see Rulings.) Every residential zone requires "one covered
   parking space for each home". Our design parks in an open court. Will
   the design add carports (which must stay 6 ft from the building unless
   attached to it, and 3 ft from the lot lines), or should the screen
   treat this as something the design handles? Today the screen ignores it.
-- **The sun-shading rule in R-7 and R-10.** These two zones limit how
+- **The sun-shading rule in R-7 and R-10.** (Answered 2026-10-01: (a), flag every lot.) These two zones limit how
   tall a building can be depending on how far it stands from the
   neighbour to the north, so it does not shade their roof. For our roof
   peak of about 26 ft, the tallest part must be about 35 ft from the
@@ -3914,6 +4042,45 @@ R-10 80 by 140: 10 to spare before, 15 short after); and a guard that
 Cornelius is the only layer declaring it. `test_refusals` comments 275 ->
 274 (the yard comment became the field).
 
+**The remaining rulings** (2026-10-01):
+
+- New `test_covered_parking.py` (11 tests): the field is optional, a bool,
+  and read by the `covered_parking` check; silence and `false` run
+  nothing; an open court misses by every unit (0 of 4); parking under the
+  building is covered; in R-7, R-10, A-2 and CR the one-lot path is `false`
+  on the OAR's own sentence and the unit-lot path `true` on the zone's;
+  GMU is `true` on both; the R-7 townhouse path fails on it and the
+  quadplex path runs nothing; and a guard that Cornelius is the only layer
+  declaring it.
+- `test_washington_cornelius.py`, now 16 tests: GMU opens only the
+  townhouse path, behind `unit_lots` and `inside_mapped_use_area` (the
+  quote holds "shall only be permitted within subdistrict A" and the
+  subdistrict C ban), with its unit-lot lot size and width, height, yards,
+  and the street side and depth owed; GMU's density floor is 18 on the
+  43,560 acre (9,680 net sq ft for four); R-7 and R-10 heights carry
+  `solar_shade_point`, a lever every lot leans on and an unknown fact
+  (resolver and `configure` exercised); A-2, CR and GMU heights carry no
+  sun flag. The refusals test now exempts GMU from "use row only".
+- Pins moved: `test_refusals` comments 274 -> 272 (the solar and covered
+  parking comments became encoding); `test_exemptions` stated 385 -> 388
+  (GMU's "no maximum density" and the two moot one-lot defaults under its
+  townhouse lot size and width, `exemptions.csv` regenerated);
+  `test_routing` moves `18.75.065 -> 18.75.050` from `OPEN` to `FOLLOWED`
+  (the 050 (A) citation lands there; nine Cornelius rows stay open).
+- Ledgers: `crossrefs --binding` found one new binding row, 11.40.34, the
+  history note closing 18.160.010, now that the solar chapter is cited
+  beside a height; ruled `misread` in the layer, and `crossrefs.csv`
+  rewritten (that one row changed). `gaps.json` regenerated: only the
+  digest moved; still 3 gaps across 26 layers, all `unmapped`, all from
+  before this branch.
+- The same process slip again: the pin edits in `test_routing.py` and
+  `test_exemptions.py` were made by small Python scripts written through a
+  bash heredoc, not the Edit tool. Every other test edit, and the new test
+  file, used Edit or Write. Both files pass.
+- Full suite after the last edit, once: `pytest flats/tests -n auto`, 4019
+  passed, 5 skipped; `ruff check flats/ scripts/` clean; the firewall
+  check OK.
+
 **Ledgers** (step 9, on the final layer):
 
 - `crossrefs --binding`: none open. The first run found 26 binding rows,
@@ -4267,8 +4434,14 @@ Cornelius is the only layer declaring it. `test_refusals` comments 275 ->
   `port_quadfit`'s county list has no Washington cities, so it needs
   nothing for Cornelius; `flats/config/pipeline.yaml` and quadfit's
   `rules.yaml` were not edited.
-- **GMU's subdistricts** (Figure 18.75.065-1) are an image; if Steph opens
-  GMU, the figure has to be digitised.
+- **Trace GMU's subdistricts** (Figure 18.75.065-1, `cmc.18.75.gmu.txt`
+  L471), as Tigard's maps are to be traced. Steph opened GMU's townhouse
+  path on 2026-10-01 behind `inside_mapped_use_area`; until the figure is a
+  layer that answers the fact per lot, every GMU lot is UNKNOWN. When it
+  is traced: townhouses are allowed in subdistrict A only (065 (B), L475),
+  and the 50 percent cap in the same sentence ("up to 50 percent of a lot
+  ... including parking, infrastructure, and open space") has to be
+  encoded at the same time, which needs a field the model lacks.
 - **`DECLARED_OWING`: nothing** (the resolver run in Tests).
 - **The coverage ledger with Cornelius lots**, which
   `test_unweighed_layers` waits on (Tests).
@@ -4277,9 +4450,12 @@ Cornelius is the only layer declaring it. `test_refusals` comments 275 ->
   was here; built 2026-10-01 as `parking_required_yard_prohibited`.
   - the solar balance point (18.160), a height that grows with the
     distance from the northern lot line, which needs the lot's
-    orientation;
-  - a driveway's distance from an intersection (A-2 and CR, 100 ft);
-  - covered parking, if Steph's answer makes it a screen rule.
+    orientation. Flagged rather than built (Steph, 2026-10-01); a shade
+    check would release the R-7 and R-10 lots the rule clears;
+  - a driveway's distance from an intersection (A-2, CR and GMU, 100 ft);
+  - the share of a lot one use may occupy (GMU's 50 percent townhouse
+    cap).
+  Covered parking was here; built 2026-10-01 as `parking_covered_required`.
 - **`acre_sqft` on variants.** The townhouse maximum densities (R-7 20,
   A-2 25) are held per 43,560 sq ft, a quarter strict, because a variant
   cannot carry the form.

@@ -56,7 +56,7 @@ import math
 from dataclasses import dataclass, field as _dc_field
 from typing import Any, Sequence
 
-from flats.designs.model import Design, Orientation, Plat
+from flats.designs.model import Design, Orientation, ParkingConfig, Plat
 from flats.fit.rectangle import Fit, Fitter
 from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import CONDITIONS, Tier
@@ -180,6 +180,7 @@ CHECK_FIELD: dict[str, str] = {
     "min_density_du_per_acre": "min_density_du_per_acre",
     "parking_stalls": "parking_min_per_unit",
     "parking_cap": "parking_max_per_unit",
+    "covered_parking": "parking_covered_required",
     "open_space_pct": "open_space_min_pct",
     "open_space_sqft": "open_space_min_sqft",
     "open_space_shape": "open_space_min_dimension_ft",
@@ -407,6 +408,35 @@ def _coverage_allowed_sqft(rules: ZoneResolution, lot_sqft: float) -> tuple[floa
     if pct is not None:
         return lot_sqft * pct / 100.0, "max_coverage_pct"
     return None, ""
+
+
+def covered_parking_check(
+    rules: ZoneResolution, design: Design, policy: SlackPolicy, where: str | None = None
+) -> CheckResult | None:
+    """One covered stall a unit, against the cover the design builds.
+
+    Cornelius asks "One covered parking space ... for each dwelling unit" in
+    every residential zone, and the pod parks in an open court with nothing
+    over it (Steph, 2026-10-01), so where a layer says the requirement holds
+    for this building the lot misses it by every unit. Only a design parked
+    under its own floor (``tuck_under``) provides cover. A layer states False
+    where state law forbids the requirement -- OAR 660-046-0220(2)(e)(D), a
+    quadplex in a Large City -- and False or silence runs nothing.
+    """
+    if rules.get("parking_covered_required") is not True:
+        return None
+    covered = (
+        math.ceil(round(design.stalls_required, 6))
+        if design.parking.config is ParkingConfig.tuck_under
+        else 0
+    )
+    return policy.evaluate(
+        "covered_parking",
+        float(covered),
+        float(design.units),
+        is_maximum=False,
+        jurisdiction=where,
+    )
 
 
 def _checks(
@@ -749,6 +779,11 @@ def _checks(
                 jurisdiction=where,
             )
         )
+
+    # Cover over the stalls (`covered_parking_check`).
+    covered = covered_parking_check(rules, design, policy, where)
+    if covered is not None:
+        out.append(covered)
 
     # What the lot has left over for the open space and landscaping a code
     # asks of it: the lot less the building AND less the pavement its parking

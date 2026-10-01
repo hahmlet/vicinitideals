@@ -8,7 +8,8 @@ against the grain of a quick look, so a later edit has to argue with it.
 
 - **Four districts admit the pod**: R-7, R-10, A-2 and CR each permit
   "Middle housing" outright. R-7's leftover one-dwelling-a-lot ban
-  (18.20.040 (B)) is read as superseded; a question for the owner.
+  (18.20.040 (B)) is read as superseded (Steph, 2026-10-01: cancelled by
+  state law).
 - **Two figures are converted, not copied.** R-7's and A-2's minimum
   densities are "per net acre", and 18.195 defines a net acre as 32,670
   square feet, so the floor is held per 43,560 (``acre_sqft``). A-2's rear
@@ -21,15 +22,30 @@ against the grain of a quick look, so a later edit has to argue with it.
 - **One parking space a unit, no maximum**, a 9 by 20 stall.
 - **A corner lot is two streets meeting at 135 degrees or less**, alleys not
   counted, and a private drive is not a street.
+- **GMU opens only the townhouse path, and only behind the figure**
+  (Steph, 2026-10-01). The fourplex on one lot stays refused; townhouses
+  are "only permitted within subdistrict A" of Figure 18.75.065-1, an
+  image no layer places a lot in, so the path is held behind
+  ``inside_mapped_use_area`` and never comes back green. Its density floor
+  is 18 per net acre on 18.195's 43,560 sq ft acre: 9,680 sq ft for four.
+- **R-7 and R-10 are flagged for the sun** (Steph, 2026-10-01): each height
+  carries ``qualified_by: solar_shade_point`` (18.160), a fact nothing
+  measures, so every lot there is UNKNOWN, not GREEN. Covered parking is
+  pinned in ``test_covered_parking.py``.
 """
 
 from __future__ import annotations
 
 import pytest
 
+from flats.designs.model import load_catalog
 from flats.provenance.store import ProvenanceStore
+from flats.rules.conditions import condition
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer, Status
+from flats.rules.resolver import RuleSet
+from flats.score.configure import configure
+from flats.score.screen import LotFacts
 
 pytestmark = pytest.mark.unit
 
@@ -76,8 +92,82 @@ def test_four_districts_admit_the_pod(cornelius: Layer) -> None:
 def test_the_refusals_hold_the_use_row_only(cornelius: Layer) -> None:
     for zone in REFUSED:
         held = cornelius.zones[zone]
-        assert set(held.values) == {"quadplex_allowed"}, zone
         assert held.values["quadplex_allowed"].value is False, zone
+        if zone == "GMU":
+            continue  # the townhouse path, below
+        assert set(held.values) == {"quadplex_allowed"}, zone
+        assert held.values["quadplex_allowed"].variants == (), zone
+
+
+def test_gmu_opens_only_the_townhouse_path_and_only_behind_the_figure(
+    cornelius: Layer,
+) -> None:
+    """Steph, 2026-10-01: four homes on one lot stays no (the fourplex is not
+    multi-family), and the townhouse row opens -- but only "within subdistrict
+    A", drawn on Figure 18.75.065-1, which no map layer carries. Behind
+    `inside_mapped_use_area`, which nothing measures, so never GREEN."""
+    held = cornelius.zones["GMU"].values
+    use = held["quadplex_allowed"]
+    (townhouse,) = use.variants
+    assert townhouse.value is True
+    assert set(townhouse.when) == {"unit_lots", "inside_mapped_use_area"}
+    assert condition("inside_mapped_use_area").assume is None
+    text = _text(townhouse.prov.quote)
+    assert "Single-family attached dwelling units, subject to CMC" in text
+    assert "shall only be permitted within subdistrict A" in text
+    assert "In subdistrict C, no ground floor residential uses are permitted" in text
+    # The per-child-lot standards are on the unit-lot path.
+    for name, value in (("min_lot_sqft", 2000), ("min_lot_width_ft", 20)):
+        assert held[name].exempt, name
+        (lots,) = held[name].variants
+        assert (lots.value, lots.when) == (value, ("unit_lots",)), name
+    assert held["max_height_ft"].value == 35
+    assert held["setback_front_ft"].value == 5
+    assert held["setback_rear_ft"].value == 10
+    assert held["setback_side_ft"].value == 5
+    # Owed, with the reason in the layer: the street side yard, lot depth.
+    assert "setback_street_side_ft" not in held
+    assert "min_lot_depth_ft" not in held
+
+
+def test_gmu_density_is_per_the_43560_acre(cornelius: Layer) -> None:
+    """GMU prints no net acre of its own, so it is 18.195's net acreage on the
+    43,560 sq ft "Acre, gross" -- not the 32,670 R-7 and A-2 print. Four
+    homes at 18 an acre may spread over no more than 9,680 net sq ft."""
+    floor = cornelius.zones["GMU"].values["min_density_du_per_acre"]
+    assert floor.value == 18
+    assert floor.acre_sqft is None
+    assert floor.measured_on == "net_developable_area"
+    assert "Minimum density for ground-floor residential uses is 18 units per net acre" in (
+        _text(floor.prov.quote)
+    )
+    assert "means 43,560 square feet" in _text(floor.measured_on_quote)
+    assert 4 / floor.value * 43560 == pytest.approx(9680)
+    assert cornelius.zones["GMU"].values["max_density_du_per_acre"].exempt
+
+
+@pytest.mark.parametrize("zone", ["R-7", "R-10"])
+def test_the_single_family_zones_are_flagged_for_the_sun(zone: str) -> None:
+    """Steph, 2026-10-01: flag every R-7 and R-10 lot for the solar balance
+    point (18.160), build no shade check. The height is not changed; it is
+    qualified by a fact nothing measures, so a lot here leans on it and is
+    held out of GREEN with its name on it."""
+    cornelius = load_rules()[CORNELIUS]
+    height = cornelius.zones[zone].values["max_height_ft"]
+    assert height.value == 35
+    assert height.qualified_by == "solar_shade_point"
+    assert "all structures in all single-family zones" in _text(height.qualified_quote)
+    res = RuleSet(load_rules()).resolve(CORNELIUS, zone, ())
+    assert "solar_shade_point" in res.levers
+    design = max(load_catalog(), key=lambda d: d.height_ft)
+    config = configure(LotFacts(lot_sqft=9000), design)
+    assert "solar_shade_point" in config.unknown
+    assert "solar_shade_point" in config.leans_on(res.levers)
+
+
+def test_the_sun_flag_stops_at_the_single_family_zones(cornelius: Layer) -> None:
+    for zone in ("A-2", "CR", "GMU"):
+        assert cornelius.zones[zone].values["max_height_ft"].qualified_by is None, zone
 
 
 def test_r7_and_a2_density_floors_are_per_the_citys_own_acre(cornelius: Layer) -> None:

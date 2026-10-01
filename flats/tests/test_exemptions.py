@@ -129,7 +129,14 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 385, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+# 385 -> 388 on 2026-10-01, Cornelius GMU (flats/cornelius-draft). Steph
+# opened the zone's townhouse path, so it now carries standards: "There is
+# no maximum density" (18.75.065 (C)) is one, and the one-lot defaults under
+# the townhouse lot size and width -- 18.75.050 (A), "No minimum lot size is
+# required. All lots must be functional and meet the minimum setback and
+# parking requirements" -- are the other two. Those two are moot: the one-lot
+# path is refused on the use row, and the townhouse figures are variants.
+EXPECTED = {"stated": 388, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
 # 381 -> 385 stated on 2026-10-01: Cornelius, a Washington County draft. The
 # 18.145.030 table's "none" parking maximum for Middle Housing; R-7's and
 # A-2's "Maximum density does not apply to ... quadplexes" / "This maximum

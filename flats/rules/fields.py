@@ -126,6 +126,7 @@ _LABELS: dict[str, str] = {
     "parking_alley_backout_ft": "room to back out into the alley",
     "parking_side_prohibited": "parking banned beside the building",
     "parking_required_yard_prohibited": "parking banned in required yards",
+    "parking_covered_required": "covered parking required",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
@@ -740,6 +741,27 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "parking_covered_required",
+        "bool",
+        "True where the code requires the required parking to be COVERED -- "
+        "a garage or a carport over the stall. Cornelius prints it in every "
+        "residential zone: \"One covered parking space shall be provided for "
+        "each dwelling unit either on the individual lot or in an off-street "
+        "parking bay within 100 feet\" (R-7, R-10, A-2, CR, GMU). The pod "
+        "parks in an open court and builds no cover, so where this is True "
+        "the screen fails the lot on it (`covered_parking`): one covered "
+        "stall a unit asked, none provided, unless the design parks under "
+        "the building (`tuck_under`). False where state law forbids the "
+        "requirement for this building: OAR 660-046-0220(2)(e)(D), \"A Large "
+        "City may allow, but may not require, off-street parking to be "
+        "provided as a garage or carport\", for a triplex or quadplex. The "
+        "townhouse rules in (3)(e) let a city require covered parking, at "
+        "the price of a three-storey height, so on the unit-lot path the "
+        "city's sentence stands. Steph, 2026-10-01: the pod has no covered "
+        "parking. Optional: absent means no such requirement was read.",
+        None,
+    ),
+    FieldDef(
         "corner_access_street",
         "enum",
         "Which street a lot with frontage on more than one takes its "
@@ -1215,6 +1237,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_alley_backout_ft",
         "parking_side_prohibited",
         "parking_required_yard_prohibited",
+        "parking_covered_required",
         "corner_access_street",
         "front_lot_line_corner",
         # Same argument as the corner line above it: a definition, not a row

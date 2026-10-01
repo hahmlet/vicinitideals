@@ -280,8 +280,9 @@ OPEN = {
     "or/washington/sherwood 16.40.050 -> 16.40.040",
     "or/washington/king-city 16.114.040 -> 16.84.060",
     "or/washington/king-city 16.114.130 -> 16.132",
-    # 2026-10-01, Cornelius (a worktree draft). Ten rows, all open, none on
-    # a figure the pod needs:
+    # 2026-10-01, Cornelius (a worktree draft). Nine rows, all open, none on
+    # a figure the pod needs (a tenth, 18.75.065 -> 18.75.050, closed the
+    # same day; see FOLLOWED):
     # - 18.145.010 -> 18.145.020: a change of use that adds parking demand is
     #   excused in CMU and CC "(see CMC 18.145.020(C))". Both zones refuse
     #   the pod, and it is new construction, not a change of use.
@@ -295,9 +296,11 @@ OPEN = {
     #   (quoted in the layer's comments, not by a value); 18.100.070 is the
     #   menu of design features, not placement. CR's 18.100.030(C) Type III
     #   path is for multi-unit dwellings, five or more units.
-    # - 18.75.065 -> 18.75.050, .060, .070: GMU's ground-floor residential
+    # - 18.75.065 -> 18.75.060, .070: GMU's ground-floor residential
     #   standards stand "In lieu of" the zone's general ones. GMU refuses
-    #   the pod (no middle housing row; subdistricts on an unmapped figure).
+    #   the one-lot pod; its townhouse path (Steph, 2026-10-01) is held
+    #   behind an unmapped subdistrict figure. The .050 row closed: see
+    #   FOLLOWED.
     "or/washington/cornelius 18.145.010 -> 18.145.020",
     "or/washington/cornelius 18.35.050 -> 18.150.010",
     "or/washington/cornelius 18.35.060 -> 18.100",
@@ -305,7 +308,6 @@ OPEN = {
     "or/washington/cornelius 18.70.060 -> 18.100",
     "or/washington/cornelius 18.70.060 -> 18.100.030",
     "or/washington/cornelius 18.70.060 -> 18.100.070",
-    "or/washington/cornelius 18.75.065 -> 18.75.050",
     "or/washington/cornelius 18.75.065 -> 18.75.060",
     "or/washington/cornelius 18.75.065 -> 18.75.070",
 }
@@ -397,6 +399,14 @@ FOLLOWED = {
     # minimum density, so the pod's answer does not move; the reader fix is
     # proposed in the Washington handoff rather than made here.
     "or/washington/beaverton 70.15.10 -> 70.15.10.5",
+    # 2026-10-01, Cornelius GMU (a worktree draft). 065 stands "In lieu of"
+    # 050, and 050 was read to know what it replaces: lot size, setbacks,
+    # height, landscaping. The citation that lands there is 050 (A)'s "No
+    # minimum lot size is required", held as the one-lot default under the
+    # townhouse lot size and width -- moot, because the one-lot path is
+    # refused on the use row. Followed in the sense the ledger asks; no
+    # 050 standard is applied to a townhouse.
+    "or/washington/cornelius 18.75.065 -> 18.75.050",
 }
 
 
