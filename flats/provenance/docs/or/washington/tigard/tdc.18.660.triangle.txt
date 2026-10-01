@@ -1,0 +1,1501 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.600. PLAN DISTRICTS
+
+Chapter 18.660. Tigard Triangle Plan District
+
+§ 18.660.010. Purpose.
+
+The Tigard Triangle Plan District implements the land use and development vision for the Tigard Triangle as outlined in the Tigard Comprehensive Plan. It also advances Tigard's mission to become the most walkable city in the Pacific Northwest and supports the district's designation as a regional Town Center.
+
+The Tigard Triangle Plan District Chapter is referred to throughout Chapter 18.660 as "this chapter." The standards and procedures of this chapter are designed to:
+
+•  Remove regulatory and financial barriers for small-scale incremental development;
+•  Streamline the development review and approval process;
+•  Support existing development;
+•  Support transitional uses and adaptive re-use of existing development;
+•  Increase the diversity of goods and services available in the district;
+•  Encourage new housing and mixed-use development;
+•  Limit new auto-oriented development;
+•  Preserve the district's unique and natural features, including but not limited to district trees;
+•  Create safe, comfortable, and attractive streetscapes for pedestrians; and,
+•  Improve connectivity for all modes of travel.
+
+Collectively, the purpose of these standards and procedures is to facilitate the transformation of the Tigard Triangle into an active, urban, multimodal, and mixed-use district as envisioned by the 2015 Tigard Triangle Strategic Plan.
+
+(Ord. 17-22 §2)
+
+§ 18.660.020. Applicability.
+
+A.
+
+Applicability.
+
+1.
+
+Triangle Mixed-Use (TMU) zone. The standards and procedures in this chapter apply to property that is located in the TMU zone within the Tigard Triangle Plan District.
+
+2.
+
+Commercial (COM) and Mixed-Use Commercial (MUC) zones. The standards and procedures in this chapter do not apply to property that is located in the COM or MUC zones within the Tigard Triangle Plan District, except for the transportation facility standards in Section 18.660.090. Property in the COM or MUC zones is regulated by other chapters in this title, including, but not limited to, Chapter 18.120, Commercial Zones, and Chapter 18.320, Commercial Zone Development Standards.
+
+3.
+
+Public rights-of-way. The standards in Section 18.660.090 apply to all public rights-of-way in the Tigard Triangle Plan District regardless of the zone.
+
+4.
+
+The boundary of the Tigard Triangle Plan District is shown on Map 18.660.A. The TMU zone and COM zone are also shown on this map and the official zoning map. Transportation facilities are shown on Map 18.660.B.
+
+Map 18.660.A Tigard Triangle Boundary and Zoning
+
+Map 18.660.B Tigard Triangle Transportation Network
+
+B.
+
+Exemptions.
+
+1.
+
+The following types of development are exempt from all standards and procedures of this chapter:
+
+a.
+
+Operation, maintenance, and repair of existing public facilities.
+
+b.
+
+Public capital improvement projects undertaken by the city.
+
+c.
+
+Maintenance and repair of existing buildings or site improvements.
+
+d.
+
+Improvements to existing buildings or site improvements to bring them into compliance with applicable federal and state accessibility requirements.
+
+e.
+
+Reconstruction of a building following partial or total accidental destruction when all of the following criteria are met:
+
+i.
+
+The reconstructed building has a floor area no larger than the structure that was destroyed.
+
+ii.
+
+The use of the building remains the same as the use that existed before the building was destroyed.
+
+iii.
+
+Repairs are commenced within 1 year from the date of destruction. Commencement of repairs occurs when a required development permit has been issued.
+
+2.
+
+If a development is not exempt from the standards and procedures of this chapter as described above, it may be exempt from some street design standards as described below. The following types of development are exempt from street frontage improvements where required by Paragraph 18.660.090.C.4, except where existing frontage improvements do not meet the city's minimum public facility standards for safety and adequacy as required by Subparagraph 18.660.040.B.2.c. This exemption does not apply to right-of-way dedications where required by Subparagraph 18.660.040.B.3.b.
+
+a.
+
+Construction of a new accessory dwelling unit that is less than 800 square feet in size. This exemption is subject to the limitations provided in Paragraph 18.660.020.B.3.
+
+b.
+
+Expansion of an existing building or construction of a new building that is less than 800 square feet in size. This exemption is subject to the limitations provided in Paragraph 18.660.020.B.3.
+
+c.
+
+New use or change of use that increases the estimated number of vehicle trips by less than 100 trips per day or has temporary impacts on the transportation system as determined by the City Engineer. This exemption is for allowed uses only.
+
+3.
+
+Limitation on exemptions. Exemptions allowed by Subparagraphs 18.660.020.B.2.a and b are limited to one exemption every 3 years. The 3-year period starts from the date the city issues an occupancy permit or final inspection for the expanded, converted, or new buildings exempted under Subparagraphs 18.660.020.B.2.a and b. Subsequent buildings that exceed the square footage threshold within the 3-year timeframe are not exempt.
+
+(Ord. 17-22 §2; Ord. 17-25 §3; Ord. 18-23 §2; Ord. 18-28 §1; Ord. No. 24-05, 4/23/2024)
+
+§ 18.660.030. General Provisions.
+
+A.
+
+This chapter is designed, wherever possible, to act as a standalone set of standards and procedures for development in the Triangle Mixed-Use (TMU) zone within the Tigard Triangle Plan District. References to other applicable standards and procedures in the Community Development Code of the City of Tigard are provided as needed.
+
+B.
+
+The standards and procedures in this chapter apply in lieu of other provisions in this title, except where specifically stated otherwise in this chapter, and govern in the event of a conflict.
+
+C.
+
+To the extent that the provisions in the following chapters do not conflict with this chapter, the following chapters in this title apply concurrently:
+
+1.
+
+Administration and enforcement as provided in Chapter 18.20, Administration and Enforcement.
+
+2.
+
+Definitions and measurements as provided in Chapter 18.30, Definitions.
+
+3.
+
+Land use category descriptions as provided in Chapter 18.60, Use Categories.
+
+4.
+
+Director determinations as provided in Chapter 18.730, Director Determinations.
+
+5.
+
+Historic resource designations and alterations as provided in Chapter 18.755, Historic Resources.
+
+6.
+
+Text and map amendments as provided in Chapter 18.790, Text and Map Amendments.
+
+D.
+
+In addition to any required land use approvals or development permits, Chapter 15.16 of the Tigard Municipal Code requires an encroachment permit for any privately-owned structures or furnishings allowed by this chapter in the public right-of-way.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 25-01, 1/28/2025)
+
+§ 18.660.040. Review Process.
+
+A.
+
+Purpose. The purpose of this section is to streamline the development review and approval process.
+
+B.
+
+Development review. Development review is the process whereby the applicant submits all required development permit applications to the city for review against all applicable standards. Depending upon the type of development proposed, permit applications may be submitted consecutively or concurrently. If land use review is required or initiated by the applicant pursuant to Subsection 18.660.040.C, land use approval must be obtained prior to submitting for development review.
+
+1.
+
+Early assistance meeting. The applicant must request an early assistance meeting with the city prior to the submittal of any required building, site, or public facility permit application. The Director may waive this requirement for proposals that are not complex, would not benefit from a meeting with the city, or have had a pre-application conference as part of a related land use review.
+
+2.
+
+Development review requirements. All proposed development must demonstrate compliance with the following requirements at the time of development permit application submittal:
+
+a.
+
+Use and design standards. The proposed development conforms to all applicable use and design standards in this chapter, except as approved through the adjustment process as provided in Paragraph 18.660.040.C.4.
+
+b.
+
+Transportation facility improvements. The proposed development will provide transportation facility improvements and mitigation at the time of development as determined by the transportation facility review process described in Paragraph 18.660.040.B.3.
+
+c.
+
+Minimum public facility improvements. The proposed development provides or will provide public facility improvements at the time of development that conform to the city's minimum standards for safety and adequacy, which are as follows:
+
+i.
+
+Frontage on, or approved access to, a public street.
+
+ii.
+
+A minimum of 24 feet of pavement and horizontal clearance on a public street along each street frontage where access is taken. Additional transportation facility improvements may be required by Subparagraph 18.660.040.B.2.b.
+
+iii.
+
+Adequate public utilities pursuant to the city's standards in the Public Works Design Manual and Sections 18.910.050 Easements, 18.910.090 Sanitary Sewers, and 18.910.120 Utilities. Section 18.910.120 may require undergrounding of utilities or a fee in lieu of undergrounding new or existing utilities.
+
+iv.
+
+Adequate stormwater management facilities for water quantity and quality pursuant to Clean Water Services' standards and the city's standards in the Public Works Design Manual and Section 18.910.100 Storm Drainage.
+
+3.
+
+Transportation facility review process. The transportation facility review process determines whether transportation improvements are needed and whether the proposed development will be required to construct or pay for them.
+
+a.
+
+The following review process applies to all proposed developments, except those that are exempt from street frontage improvements (see Paragraph 18.660.020.B.2) or trigger a Transportation Impact Study (see Subparagraph 18.660.040.B.3.c).
+
+i.
+
+The City Engineer will determine whether the proposed development is estimated to generate any new vehicle, pedestrian, or bicycle trips using the best available data and analysis, including but not limited to the ITE Trip Generation Manual or a Transportation Impact Study prepared by a transportation engineer licensed in the State of Oregon.
+
+ii.
+
+If the proposed development is estimated to generate new trips, the City Engineer will evaluate the existing transportation facilities along each street frontage of the proposed development site for conformance with the transportation facility standards in Subsection 18.660.090.C. The City Engineer will also evaluate the entire development site for conformance with Map 18.660.B Transportation Network Map. If existing transportation facilities do not meet current standards, the City Engineer will identify needed improvements based on the transportation facility standards in Subsection 18.660.090.C.
+
+iii.
+
+If transportation facility improvements are needed, the city will require construction of improvements and dedication of right-of-way at the time of development unless the city determines that such exactions are not roughly proportional to the number of new trips estimated to be generated by the proposed development. If the applicant disagrees with the city's proportionality determination, the applicant may utilize the city's Type II appeal procedure in Section 18.710.100 in a de novo hearing.
+
+iv.
+
+The applicant may request to pay a fee in lieu of constructing the required transportation improvements as provided in Subsection 18.660.090.D.
+
+b.
+
+The following review process applies to a proposed development that is exempt from street frontage improvements pursuant to Paragraph 18.660.020.B.2.
+
+i.
+
+The City Engineer will determine whether the proposed development is estimated to generate any new trips as described in Subparagraph 18.660.040.B.3.a.i.
+
+ii.
+
+If the proposed development is estimated to generate new trips, the City Engineer will identify needed improvements for the sole purpose of determining whether any additional public right-of-way is needed for future transportation improvements.
+
+iii.
+
+If public right-of-way is needed for future transportation improvements, the city will require dedication of right-of-way at the time of development pursuant to Subparagraph 18.660.040.B.3.a.iii.
+
+c.
+
+The following review process applies to a proposed development that triggers a Transportation Impact Study (TIS) as described below.
+
+i.
+
+A TIS is required if the proposed development is estimated by the City Engineer to generate more than 1,000 new vehicle trips per day or impacts a state transportation facility as determined by the Oregon Department of Transportation. The applicant must pay the fee listed in the city's Master Fees and Charges Schedule for the city to conduct this study. The city will not accept any development permit or land use applications for review until the TIS has been completed and incorporated into the applicant's development permit or land use application submittal.
+
+ii.
+
+The TIS will evaluate the existing transportation facilities for conformance with the city's transportation facility standards, including affected off-site facilities. If existing transportation facilities do not meet current standards, the study will identify needed improvements based on the transportation facility standards in Subsection 18.660.090.C and those of any other affected road authorities. If the TIS determines that transportation facility improvements are needed, the city will require construction of improvements and dedication of right-of-way at the time of development pursuant to Subparagraph 18.660.040.B.3.a.iii.
+
+iii.
+
+If the TIS identifies off-site impacts from the proposed development, the applicant must submit a land use application as required by Paragraph 18.660.040.C.2 that complies with the provisions in Paragraph 18.660.040.C.3.
+
+C.
+
+Land use review. Whether required by this title or initiated by the applicant, land use review precedes development review. Land use review is the process whereby the applicant submits any required or applicant-initiated land use applications to the city for review against all applicable approval criteria and standards. The provisions of Chapter 18.770, Planned Developments, do not apply to properties in the TMU zone.
+
+1.
+
+Pre-application conference. The applicant must request a pre-application conference with the city prior to the submittal of any required or applicant-initiated land use application as required by Chapter 18.710, Land Use Review Procedures.
+
+2.
+
+Land use applications. Required land use applications are shown in Table 18.660.1. If more than one land use application is required, they may be processed concurrently.
+
+Table 18.660.1 Required Land Use Applications                                 Table 18.660.1 Required Land Use Applications                                                                                                                                                            Table 18.660.1 Required Land Use Applications
+Land Use Application                                                          Circumstances                                                                                                                                                                                            Code Section
+Transportation Mitigation                                                     The proposed development triggered a Transportation Impact Study (see Subparagraph 18.660.040.B.3.c.i) and it identified off-site impacts.                                                               18.660.040.C.3
+Adjustment                                                                    The proposed development cannot meet all applicable design standards of this chapter, or the applicant elects to propose an alternative design or remove a district tree (see Subsection 18.660.070.H).  18.660.040.C.4
+Lot Line Adjustment, Lot Consolidation, Minor Land Partition, or Subdivision  The proposed development includes a land division, property line adjustment, or lot consolidation.                                                                                                       18.660.040.C.5
+Conditional Use                                                               The proposed development includes a Basic Utility use as defined in Subsection 18.60.050.A or a specific type of wireless communication facility as described in Chapter 18.450.                         18.740
+Site Development Review                                                       The proposed development includes a specific type of wireless communication facility as described in Chapter 18.450.                                                                                     18.780
+Sensitive Lands                                                               The proposed development is located on lands that contain protected natural resources, such as streams or wetlands, and will potentially impact them.                                                    18.510
+Temporary Use or Structure                                                    The proposed development is for a temporary use or structure.                                                                                                                                            18.440
+
+3.
+
+Transportation mitigation application. A transportation mitigation application is processed through a Type II procedure as provided in Section 18.710.060. A transportation mitigation application will be approved when all of the following approval criteria have been met:
+
+a.
+
+The required Transportation Impact Study evaluated existing on-and off-site transportation facilities for conformance with all applicable transportation facility standards; identified needed improvements to adequately serve the proposed development; and recommended proportionate mitigations for all on- and off-site impacts.
+
+b.
+
+The proposed development will provide transportation facility improvements and mitigation that conform to all applicable transportation facility design standards at the time of development unless the land use review authority determines that such exactions are not roughly proportional to the impacts of the proposed development.
+
+4.
+
+Adjustment application. An adjustment application is processed through a Type II procedure as provided in Section 18.710.060.
+
+a.
+
+An adjustment application may contain multiple adjustment requests. An adjustment may be requested for any standard in this chapter unless specifically prohibited by this chapter. An adjustment may not be requested to change or eliminate a required review process. An adjustment request for a standard outside of this chapter is subject to the provision of Chapter 18.715, Adjustments.
+
+b.
+
+An adjustment application will be approved when all of the following approval criteria have been met for each requested adjustment:
+
+i.
+
+The proposed adjustment has public benefits and is generally consistent with the applicable stated purposes of this chapter.
+
+ii.
+
+The proposed adjustment includes enhancements to the pedestrian environment along the proposed development's street frontage. Pedestrian enhancements include, but are not limited to, the following:
+
+•  Plaza development
+•  District tree preservation
+•  Pedestrian amenities in the public right-of-way
+•  Pedestrian-oriented building facade design elements
+
+iii.
+
+If proposed adjustment is needed to address development constraints associated with the proposed development site, and applicant has adequately explained the need and rationale for the proposed adjustment. Development constraints include, but are not limited to, the following:
+
+•  Lot size, shape, or topography
+•  Multiple street frontages
+•  Protected natural resources
+
+iv.
+
+If proposed adjustment is needed to address transportation network connectivity standards, it includes pedestrian, bicycle, or vehicle transportation facilities where practicable. Transportation network connectivity standards are provided in Paragraph 18.660.090.C.3.
+
+v.
+
+If proposed adjustment is for the removal of a district tree, the applicant will pay the district tree removal fee listed in the city's Master Fees and Charges Schedule unless a finding is made that the proposed development site cannot be reasonably developed without removal of the district tree. District tree information and requirements are provided in Subsection 18.660.070.H.
+
+5.
+
+Lot line adjustment, lot consolidation, minor land partition, or subdivision application. The provisions in Chapter 18.810, Lot Line Adjustments and Consolidations, Chapter 18.820, Land Partitions, and Chapter 18.830, Subdivisions, apply except as modified below.
+
+a.
+
+Lot size and shape must be appropriate for the proposed development or, if no development is proposed, for an allowed use. There is no minimum lot area, width, or depth standard in the TMU zone.
+
+b.
+
+Lots must have frontage on, or approved access to, a public street.
+
+c.
+
+Driveways must comply with the standards in Subsection 18.660.070.G.
+
+d.
+
+Screening is not required between lots.
+
+(Ord. 17-22 §2; Ord. 17-25 §3; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1; Ord. 20-01 §1; Ord. 22-06 §2)
+
+§ 18.660.050. Pre-Existing Development and Approvals.
+
+A.
+
+Purpose. The purpose of this section is to remove barriers to small-scale incremental development and support existing development, transitional uses, and adaptive re-use of existing development.
+
+B.
+
+Legal status. Any pre-existing land use or development that does not meet the standards in this chapter but were lawfully in existence or approved prior to the effective date of this chapter are treated as lawful and approved uses and development. The provisions of Chapter 18.50, Nonconforming Circumstances, do not apply to land uses and development in the TMU zone.
+
+C.
+
+Sites with pre-existing land uses.
+
+1.
+
+A pre-existing land use that does not meet the land use standards in Section 18.660.060 may continue but may not expand beyond the boundaries of the site that it occupied prior to the effective date of this chapter, except for any pre-existing land uses within the area bounded by 66th Avenue and 68th Avenue to the east and west and Dartmouth Street and Franklin Street to the north and south, respectively. Any pre-existing land uses within this area that do not meet the land use standards in Section 18.660.060 may continue and expand beyond the boundaries of the site that it occupied prior to the effective date of this chapter, but not beyond the boundaries of the area described above.
+
+2.
+
+A pre-existing land use that does not meet the land use standards in Section 18.660.060 may not be re-established if discontinued for longer than six months, except where the discontinuance is the result of accidental destruction. Discontinuance caused by total or partial accidental destruction must commence repairs to re-establish the use within one year from the date of destruction. If repairs are not commenced within the one-year period, the use may not be re-established. Commencement of repairs occurs when a required development permit has been issued.
+
+D.
+
+Sites with pre-existing development.
+
+1.
+
+Pre-existing development that does not meet the site or building design standards in Sections 18.660.070 and 18.660.080 may be re-established or re-built if accidentally destroyed as long as repairs are commenced within one year from the date of destruction. If repairs are not commenced within the one-year period, the development may not be re-established or re-built. Commencement of repairs occurs when a required development permit has been issued.
+
+2.
+
+Pre-existing development that does not meet the site or building design standards in Sections 18.660.070 and 18.660.080 may not be re-established or re-built if intentionally destroyed unless the new development meets the site and building design standards in this chapter.
+
+3.
+
+Pre-existing site improvements, such as vehicle parking and access, that do not meet the site design standards in Section 18.660.070 may continue but may not be modified if the modification would result in any site improvement going further out of conformance with the applicable site design standard in Section 18.660.070.
+
+4.
+
+Pre-existing buildings that do not meet the site or building design standards in Sections 18.660.070 and 18.660.080 may continue and be modified subject to the standards in Table 18.660.2. Applicable standards only apply to the proposed modification and not to the non-modified portion of the existing building. Modifications that expand a building may be vertical (e.g., second-story addition), horizontal (e.g., first-story expansion), or both (e.g., second-story addition).
+
+Table 18.660.2
+Modifications to Pre-Existing Buildings
+Table 18.660.2
+Modifications to Pre-Existing Buildings
+Proposed Building Modification
+Applicable Standards
+• Addition to small form residential development
+• Addition to an accessory building associated with small form residential development that results in a building less than or equal to 528 square feet in size, or
+• Addition to any building where the addition is located more than 35 feet away from all street property lines.
+Exempt from all site and building design standards in Sections 18.660.070 and 18.660.080 except:
+• Minimum building setbacks (18.660.070.B)
+• Driveways (18.660.070.G)
+• District trees (18.660.070.H)
+• Maximum building height (18.660.080.B), and
+Subject to all applicable standards in Sections 18.660.060 and 18.660.090.
+• All other additions not described above.
+Subject to all applicable standards in Sections 18.660.060, 18.660.070, 18.660.080, and 18.660.090
+
+5.
+
+New land uses and development may be proposed on sites with pre-existing land uses and development subject to the following standards:
+
+a.
+
+All new land uses must meet the land use standards in Section 18.660.060.
+
+b.
+
+All new site improvements, such as vehicle parking and access, must meet the site design standards in Section 18.660.070.
+
+c.
+
+All new buildings are subject to the standards in Table 18.660.3.
+
+Table 18.660.3
+New Buildings on Sites with Pre-Existing Development
+Table 18.660.3
+New Buildings on Sites with Pre-Existing Development
+Proposed New Building
+Applicable Standards
+• New accessory building associated with small form residential development and less than or equal to 528 square feet in size, or
+• New building located partially or completely behind an existing building and more than 35 feet away from all street property lines.
+Exempt from all site and building design standards in Sections 18.660.070 and 18.660.080 except:
+• Minimum building setbacks (18.660.070.B)
+• Driveways (18.660.070.G)
+• District trees (18.660.070.H)
+• Maximum building height (18.660.080.B), and
+Subject to all applicable standards in Sections 18.660.060 and 18.660.090.
+• All other new buildings not described above.
+Subject to all applicable standards in Sections 18.660.060, 18.660.070, 18.660.080, and 18.660.090.
+
+E.
+
+Sites with pre-existing land use approvals.
+
+1.
+
+Exceptions. The provisions in Paragraphs 18.660.050.E.2 through 4 apply to all development except those involving Basic Utility uses and wireless communication facilities. These types of development continue to be subject to all previously imposed conditions of approval. They also continue to be subject to the standards and procedures in Chapter 18.740, Conditional Uses and Chapter 18.450, Wireless Communication Facilities, respectively, unless different standards are approved through the adjustment process as provided in Paragraph 18.660.040.C.4.
+
+2.
+
+Conditions of approval. Development that obtained land use approval and a final certificate of occupancy or inspection prior to the effective date of this chapter is not subject to any previously imposed conditions of approval. Development that obtained land use approval, but not a final certificate of occupancy or inspection, prior to the effective date of this chapter must continue to comply with all previously imposed conditions of approval until a final certificate of occupancy or inspection, whichever is applicable, is obtained.
+
+3.
+
+Phased developments. Development that obtained land use approval for a phased site development review application prior to the effective date of this chapter is allowed to complete all approved phases as provided in the specific land use approval or as allowed by Subsection 18.20.050.G.
+
+4.
+
+Modifications. Modifications to development that obtained land use approval prior to the effective date of this chapter are subject to the standards and procedures in this chapter.
+
+(Ord. 17-22 §2; Ord. 17-25 §3; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-06 §2)
+
+§ 18.660.060. Land Use Standards.
+
+A.
+
+Purpose. The purpose of these standards is to encourage urban mixed-use development, limit suburban auto-oriented development, support transitional uses and adaptive re-use of existing development, and increase the diversity of goods and services available in the district.
+
+B.
+
+General provisions.
+
+1.
+
+Vertical and horizontal mixed-use development is allowed subject to the land use standards in Subsection 18.660.060.C.
+
+2.
+
+Mobile food carts are allowed subject to Chapter 18.440, Temporary Uses.
+
+3.
+
+Development with drive-through service is prohibited.
+
+4.
+
+Land uses are described in Chapter 18.60, Use Categories.
+
+C.
+
+Land use standards.
+
+1.
+
+Allowed (A) land uses are listed in Table 18.660.4.
+
+2.
+
+Restricted (R) land uses are listed in Table 18.660.4 and are subject to special requirements, exceptions, or restrictions provided in Paragraph 18.660.060.C.5.
+
+3.
+
+Conditional (C) land uses are listed in Table 18.660.4 and are subject to the land use review process and associated development standards provided in Chapter 18.740, Conditional Uses.
+
+4.
+
+Prohibited (P) land uses.
+
+a.
+
+Prohibited uses are listed in Table 18.660.4 and are not eligible for adjustment through the land use review process provided in Paragraph 18.660.040.C.4.
+
+b.
+
+All marijuana facilities are prohibited.
+
+Table 18.660.4 Use Table             Table 18.660.4 Use Table
+Use Category                         TMU
+Residential Use Category             Residential Use Category
+Residential Use                      A
+Civic Use Categories                 Civic Use Categories
+Basic Utility                        C
+Cemetery                             P
+Detention Facility                   P
+Government Services                  A
+Railroad Yard                        A
+School or Religious Facility         C
+Temporary Shelter                    A
+Transportation and Utility Corridor  A
+Wireless Communications Facility     R
+Commercial Use Categories            Commercial Use Categories
+Adult Entertainment                  P
+Commercial Lodging                   A
+Indoor Sales and Services            R
+Major Event Entertainment            P
+Mobility Hub                         C
+Motor Vehicle Fuel Sales             P
+Motor Vehicle Sales and Rental       P
+Motor Vehicle Servicing              P
+Non-Accessory Parking                R
+Office                               A
+Outdoor Sales and Services           P
+Self-Service Storage                 P
+Industrial Use Categories            Industrial Use Categories
+Industrial and Manufacturing         R
+Off-Site Services                    P
+Warehouse and Distribution           P
+Waste-Related Facility               P
+Wholesale and Equipment Rental       P
+
+A = Allowed
+R = Restricted
+C = Conditional Use
+P = Prohibited
+
+5.
+
+TMU zone use restrictions.
+
+a.
+
+Wireless communication facility. Wireless Communication Facilities are subject to the land use review process and associated standards in Chapter 18.450, Wireless Communication Facilities, unless different standards are approved through the adjustment process as provided in Paragraph 18.660.040.C.4 or required by federal law.
+
+b.
+
+Indoor sales and services. The maximum gross floor area is 30,000 square feet per tenant.
+
+c.
+
+Non-accessory parking.
+
+i.
+
+Non-accessory parking must be located within parking structures except where existing surface parking is proposed to be used for non-accessory parking. Covered parking is not considered a parking structure.
+
+ii.
+
+Non-accessory parking structures must meet all applicable design standards in this chapter. Additionally, ground stories must be designed as flexible structures with flat floor decks that can transition to accommodate other allowed uses in the future.
+
+iii.
+
+New non-accessory surface parking is allowed if approved through the adjustment process as provided in Paragraph 18.660.040.C.4.
+
+d.
+
+Industrial and manufacturing.
+
+i.
+
+The maximum gross floor area is 2,000 square feet per tenant space.
+
+ii.
+
+The use must not utilize, store, or create highly combustible, explosive, or hazardous materials.
+
+iii.
+
+All activities must be located inside a building, except for utilities, service areas, and off-street parking and loading areas. These activities must be located and screened as required by the site design standards in Section 18.660.070.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-09 §2; Ord. No. 24-05, 4/23/2024)
+
+§ 18.660.070. Site Design Standards.
+
+A.
+
+Purpose. The purpose of these standards is to create safe, comfortable, and attractive streetscapes for pedestrians and preserve district trees, specifically the Oregon white oak (Quercus garryana).
+
+B.
+
+Building location.
+
+1.
+
+Street setbacks. The minimum building setback is one foot from the street property line. This standard applies to the entire building, except for building projections as allowed by Section 18.660.080.D. The maximum building setback is 12 feet from the street property line. This standard is met when at least 70% of the street-facing building facade is located no more than 12 feet away from the street property line as shown in Figure 18.660.1.
+
+a.
+
+For sites with more than one street property line, such as corner or through lots, the maximum building setback standard applies to all street property lines except where all of the following are met:
+
+i.
+
+The maximum building setback standard is met on at least one street property line, and
+
+ii.
+
+The building is located at least 35 feet away from the other street property lines.
+
+b.
+
+For lots with existing buildings, the maximum building setback standard does not apply in the following situations:
+
+i.
+
+A new building is proposed to be completely located behind an existing building that meets the maximum building setback standard, or
+
+ii.
+
+There is less than 25 linear feet of street frontage that does not contain a building within the maximum building setback area.
+
+c.
+
+The maximum street setback standard may be increased to 15 feet beyond the drip line of a district tree, as defined in Subsection 18.660.070.H, where a district tree is proposed to be preserved.
+
+2.
+
+Interior setbacks. There is no minimum or maximum building setback standard for interior property lines.
+
+3.
+
+Clear vision areas. The clear vision standards in Chapter 18.930, Vision Clearance Areas, do not apply to development in the TMU zone. See Paragraph 18.660.070.G.4 for driveway sight distance requirements.
+
+Figure 18.660.1 Site and Building Design Standards
+
+C.
+
+Utilities and service areas.
+
+1.
+
+Above-ground private utilities proposed to serve a single development, such as transformers and control valves, that are 1 cubic foot or greater in volume or have any 1 dimension greater than 2 feet must be located on the site with the proposed development, and:
+
+a.
+
+Located inside a building;
+
+b.
+
+Located no closer to the street property line than the street-facing facade of the nearest building on site and painted or wrapped with a non-reflective material that is dark in color; or
+
+c.
+
+Screened as required by Paragraph 18.660.070.F.4.
+
+2.
+
+Service areas, such as those that contain waste and recycling containers, outdoor storage, and mechanical equipment, must be screened as required by Paragraph 18.660.070.F.4 where not screened by a building.
+
+3.
+
+Landscaped stormwater facilities and roof-top mechanical equipment are exempt from these standards. Vehicle parking and loading areas are subject to the standards in Subsection 18.660.070.D. Wireless communication facilities are subject to the standards and procedures in Chapter 18.450, Wireless Communication Facilities.
+
+D.
+
+Off-street vehicle parking and loading.
+
+1.
+
+Quantity. The maximum quantity standards for off-street parking areas are provided in Table 18.410.3. Adjustments to maximum parking quantity standards are prohibited.There is no minimum or maximum quantity standard for off-street loading areas.
+
+2.
+
+Size. Off-street parking spaces must be a minimum of seven and one-half feet in width and 17.5 feet in length.
+
+3.
+
+Location. Off-street parking and loading areas, except those within parking structures, must be located behind a building or at least 35 feet away from all street property lines. For purposes of this chapter, a parking structure includes an individual garage associated with a residential use.
+
+4.
+
+Screening. Off-street parking and loading areas not located behind a building, except those within parking structures, must be screened as required by subsection F.4.
+
+5.
+
+Landscaping.
+
+a.
+
+Off-street parking areas 20,000 square feet in size or more, as measured using the method provided in Section 18.40.150, must meet the standards of Section 18.410.030.M.2.
+
+b.
+
+Off-street parking areas with more than 10 spaces, but less than 20,000 square feet in area, except those that are covered or within parking structures, are subject to the following standards as shown in Figure 18.660.2:
+
+i.
+
+One landscaped island with a tree must be provided at the end of each row of parking and at intervals of at least every five spaces within each row of parking. A landscaped area that runs the entire length of a row of parking may be provided instead of the required landscaped islands but must contain at least the same number of trees as the islands.
+
+ii.
+
+All required landscaped areas must be a minimum of 90 square feet in size for single-loaded parking rows or 180 square feet in size for double-loaded parking rows. The required landscape area must be a minimum of five feet, as measured in any horizontal direction from the inside of any proposed curb.
+
+iii.
+
+All required landscaped areas must be protected from vehicle overhang through the use of wheel stops.
+
+iv.
+
+All required and proposed trees must have a minimum caliper of one and one-half inches at the time of planting and meet the standards in Section 13 Part 2 and Appendix 3 of the Tigard Urban Forestry Manual for soil volume and species. All required trees must be maintained in good health and be replaced as needed to meet the parking area landscaping standards into perpetuity.
+
+v.
+
+A required landscaped area may be used to meet the city's stormwater standards.
+
+6.
+
+Vertical clearance. Off-street parking areas must have a minimum vertical clearance of seven feet. Off-street loading areas must have a minimum vertical clearance of 15 feet.
+
+7.
+
+Circulation. Off-street parking and loading areas must be designed to prevent vehicles from backing into the street unless approved by the City Engineer.
+
+8.
+
+Surface material. Off-street parking areas, except those that are covered or within parking structures, must be paved, graveled, or utilize a turf grid or open joint pavers. Covered or structured off-street parking areas and all off-street loading areas must be paved.
+
+9.
+
+Electrical service capacity. Off-street parking areas must meet the standards of Section 18.410.030.L.
+
+Figure 18.660.2 Parking Area Landscaping Standards
+
+E.
+
+Public bicycle parking.
+
+1.
+
+Quantity. The minimum quantity standard for public bicycle parking is provided in Table 18.660.5. There is no maximum quantity standard for public bicycle parking. Public bicycle parking is defined as bicycle racks or lockers that are available for use by members of the public, including but not limited to visitors, employees, and residents.
+
+Table 18.660.5 Minimum Number of Public Bicycle Parking Spaces            Table 18.660.5 Minimum Number of Public Bicycle Parking Spaces
+Proposed Development                                                      Minimum Number of Spaces
+Residential development that is not mixed-use and has more than 4 units.  1 space per 30 linear feet of street frontage or any portion thereof
+Non-residential and mixed-use developments.                               1 space per 20 linear feet of street frontage or any portion thereof
+
+2.
+
+Design. All bicycle parking must meet the following standards.
+
+a.
+
+Bicycle racks must be designed to allow a bicycle frame to lock to it at 2 points of contact, except that spiral racks and wave racks with more than 1 loop are prohibited;
+
+b.
+
+Bicycle racks must be securely anchored to the ground;
+
+c.
+
+Bicycle parking spaces must be at least 2.5 feet in width and 6 feet in length and have an access aisle between each row of spaces that is at least 5 feet in width. Covered bicycle parking must provide a vertical clearance of 7 feet; and
+
+d.
+
+Bicycle parking spaces must be paved with a dust-free hard surface material.
+
+3.
+
+Location. Public bicycle parking spaces must be visible to pedestrians on the sidewalk in front of the proposed development. They must be located in front of or to the side of the building. They may be located in the public right-of-way with approval by the City Engineer. Bicycle parking must not conflict with the use and maintenance of any utilities, service areas, off-street vehicle parking and loading areas, driveways, or transportation facilities.
+
+F.
+
+Retaining walls, fences, and street screens.
+
+1.
+
+The maximum height of retaining walls is 4 feet where located within 12 feet of any street property line.
+
+2.
+
+Fences and walls along street and interior property lines are allowed but not required. The maximum height of fences and walls is 3 feet where located within 12 feet of any street property line.
+
+3.
+
+Chain link fencing and unfinished concrete blocks with any 1 dimension equal to or greater than 15 inches are prohibited within 12 feet of any street property line.
+
+4.
+
+Street screens are required to screen off-street parking and loading areas, service areas, and some utilities from the street. Utilities and service areas include, but are not limited to, waste and recycling areas, transformers, utility vaults, and mechanical equipment. Street screens must meet the following standards:
+
+a.
+
+Location. A street screen must be located within five feet of the area to be screened, except on sites sloping down from the street. A street screen on downward sloping sites must be located as far from the street property line as possible so that the area to be screened is not visible to pedestrians on the sidewalk in front of the proposed development. A line of sight analysis is required in these circumstances. A street screen is not required where it would obstruct vehicle or pedestrian access.
+
+b.
+
+Height. If the area to be screened is an off-street parking area, the street screen must be between four and six feet in height. If the area to be screened is an off-street loading area, service area, or utility, the street screen must be between four and eight feet in height.
+
+c.
+
+Length. The maximum length of a street screen is 12 feet where located along, and within 35 feet of, any street property line. This standard does not apply to street screens meeting the standard in Subparagraph 18.660.070.F.4.a.
+
+d.
+
+Materials. The street screen must be a wall, fence, or combination thereof. It must be opaque and permanent. Chain link fencing and unfinished concrete blocks are prohibited.
+
+G.
+
+Driveways.
+
+1.
+
+Quantity. Driveways on all streets are subject to the standards in Table 18.660.6, except for driveways on Dartmouth Street and Pacific Highway. Driveways on these streets are subject to the access management standards in Chapter 18.920, Access, Egress, and Circulation.
+
+Table 18.660.6
+Maximum Number of Driveways
+Table 18.660.6
+Maximum Number of Driveways
+Table 18.660.6
+Maximum Number of Driveways
+Street
+Length of Street Frontage
+Maximum Number of Driveways
+72nd Ave
+Not Applicable
+1 per street frontage, except where a second driveway is required by Tualatin Valley Fire and Rescue for emergency access. If a second driveway is required, it must be:
+• Shared with an adjacent development subject to 18.660.070.G.5; or
+• Gated and limited to emergency vehicle access only.
+All Other Streets
+For each street frontage less than or equal to 300 feet in length
+1 per street frontage
+All Other Streets
+For each street frontage more than or equal to 300 feet in length
+1 per every 200 feet of street frontage
+
+2.
+
+Size. Driveways for all uses, other than rowhouses and small form residential development, must be 20 feet or less in width on all streets, except for driveways on Dartmouth Street, 72nd Avenue, and Pacific Highway. Driveways on these streets must only be as wide as needed for safety and are subject to the access management standards in Subsection 18.920.030.H. Driveways for rowhouses and small form residential development must be 10 feet or less in width. Driveway width measurements do not include driveway wings.
+
+3.
+
+Location. Driveways must be located as far apart from each other as practicable except where shared. Driveways near street intersections must be located as far from the intersection as practicable. Driveways must not be located in the influence area of any intersection with Dartmouth Street, 72nd Avenue, or Pacific Highway and are subject to the access management standards in Subsection 18.920.030.H.
+
+4.
+
+Sight distance. Driveways must have adequate sight distance for safety. A sight distance analysis is required for proposed driveways or existing driveways on sites where development is proposed. The City Engineer will specify the technical information that must be included in the analysis.
+
+5.
+
+Shared access. Shared access is required along 72nd Avenue for certain types of residential development to prevent a series of closely-spaced driveways. Development that includes a single detached dwelling unit or two attached dwelling units is prohibited from using a single driveway to access 72nd Avenue. Shared access between adjacent residential or nonresidential developments may also be required where practicable. Where required, shared access must be maintained into perpetuity with a recorded joint access agreement, contract, or other legally binding document.
+
+H.
+
+District trees.
+
+1.
+
+District trees are Oregon white oaks located throughout the TMU zone adjacent to existing and future public rights-of-way as shown on the Tigard Triangle District Tree Inventory and Map.
+
+2.
+
+The Director will maintain the Tigard Triangle District Tree Inventory and Map. If a district tree is found to be in the public right-of-way or is removed, as provided below, the Director will delete the tree from the district tree inventory and map.
+
+3.
+
+District trees must be preserved but may be removed in either of the following circumstances:
+
+a.
+
+The applicant has submitted an adjustment application as provided in Paragraph 18.660.040.C.4 and has obtained the necessary land use approval and tree removal permit. Tree replacement is not required.
+
+b.
+
+The applicant has submitted a report from a certified arborist that demonstrates that the tree meets one of the criteria for removal in Section 7 Part 1.B.1, 2, 3, 5 or 10 of the Tigard Urban Forestry Manual for a dead, dying, or hazardous tree and has obtained the necessary tree removal permit. Tree replacement is not required.
+
+4.
+
+Development adjacent to district trees is subject to the following standards:
+
+a.
+
+A district tree preservation area must extend 15 feet beyond the drip line of the tree.
+
+b.
+
+Pedestrian facilities that do not disturb district tree roots are allowed within the tree preservation area.
+
+c.
+
+Buildings, driveways, and off-street vehicle parking and loading areas are not allowed within the tree preservation area.
+
+d.
+
+Tree protection measures must be in place during any ground disturbance work. Tree protection measures consist of a five-foot metal fence placed on the perimeter of the tree preservation area.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1; Ord. 22-02 §3; Ord. 22-06 §2; Ord. 22-10 §2; Ord. 23-08, 12/5/2023; Ord. No. 24-05, 4/23/2024)
+
+§ 18.660.080. Building Design Standards.
+
+A.
+
+Purpose. The purpose of these standards is to create safe, comfortable, and attractive streetscapes for pedestrians and support small-scale incremental development. In keeping with the stated purpose of this section, building design standards do not apply to street property lines along Interstate 5 and Highway 217.
+
+B.
+
+Building height. The maximum allowed building height is six stories, except for properties shown on Map 18.660.A that have a maximum allowed building height of four stories. Basements, as defined in Chapter 18.30, Definitions, are not considered stories for purposes of meeting this standard. The height standard for each type of story is provided in Table 18.660.7. Vertical building projections not used for human habitation such as chimneys, flag poles, and elevator shaft housings are exempt from the building height standards of this chapter, expect for wireless communication facilities, which are subject to the standards in Chapter 18.450, Wireless Communication Facilities.
+
+Table 18.660.7 Height by Type of Story  Table 18.660.7 Height by Type of Story
+Type of Story                           Height
+First story                             12 feet (min.) and 25 feet (max.)
+Middle stories                          14 feet (max.)
+Top story                               18 feet (max.)
+
+C.
+
+Building entrances. Building entrances must be provided on street-facing building facades as follows:
+
+1.
+
+Quantity. A minimum of one building entrance must be provided for:
+
+a.
+
+Every 80 feet of street-facing facade. Fractional entrance requirements are rounded up to one for street-facing facades less than 80 feet in width and rounded down to the nearest whole number for street-facing facades 80 feet in width or greater. Buildings that front onto two or more streets:
+
+i.
+
+Must calculate the required number of entrances for each street-facing facade separately,
+
+ii.
+
+Must meet this quantity requirement on at least one facade, and
+
+iii.
+
+Are exempt from this quantity requirement on street-facing facades that are less than 50 feet in width.
+
+b.
+
+Each individual residence or tenant space with a street-facing facade that is not provided with a shared street-facing entrance.
+
+2.
+
+Location. The maximum setback for a required building entrance is 20 feet from the street property line. A required building entrance must be at an angle that is no more than 45 degrees from the street, except for entrances to individual residences. Entrances to individual residences that open onto a porch or stoop must be at an angle that is no more than 90 degrees from the street.
+
+3.
+
+Grade. Required entrances must be within 1 foot above or below the grade of the adjacent sidewalk, except for entrances to individual residences. There is no grade requirement for entrances to individual residences.
+
+4.
+
+Weather protection. A required building entrance must be covered, recessed, or treated with a permanent architectural feature that provides weather protection for pedestrians. The required weather protection must be at least as wide as the entrance, a maximum of 6 feet above the top of the entrance, and a minimum of 3 feet in depth. The required weather protection may project into the minimum building setback and public right-of-way as allowed by Paragraph 18.660.080.D.3. Weather protection standards are shown in Figures 18.660.3 and 18.660.4.
+
+D.
+
+Building projections. Building projections are allowed as follows:
+
+1.
+
+Architectural elements such as eaves, cornices, and bay windows may project into the minimum building setback as shown in Figure 18.660.3.
+
+Figure 18.660.3 Building Projection Standards
+
+2.
+
+Balconies may project into the minimum building setback and public right-of-way as shown in Figure 18.660.3. Balconies may project a maximum of 4 feet into the right-of-way. Balconies that project into the right-of-way must have a minimum vertical clearance of 10 feet from sidewalk grade and are subject to approval by the City Engineer.
+
+3.
+
+Weather protection elements for pedestrians along building facades, such as canopies or awnings, may project into the minimum building setback and public right-of-way as shown in Figure 18.660.3. Weather protection elements may project into the right-of-way a maximum of 6 feet or the minimum sidewalk width along the building frontage, whichever is less. Elements that project into the right-of-way must have a minimum vertical clearance of 8 feet from sidewalk grade and are subject to approval by the City Engineer.
+
+4.
+
+Signs may project into the minimum building setback and public right-of-way subject to the standards in Subparagraph 18.435.130.G.1.c and approval by the City Engineer.
+
+E.
+
+Building facade windows. Building facade windows are required as follows:
+
+1.
+
+Windows are required on all street-facing facades within 35 feet of any street property line and are subject to the window area standards in Table 18.660.8 and as shown in Figure 18.660.4. Any portion of a street-facing facade that contains vehicle parking, such as a parking structure, does not have to provide windows but must provide facade openings that meet the minimum required window area in Table 18.660.8. If required facade openings contain glass, they must meet the standards in Paragraph 18.660.080.E.3. If required facade openings do not contain glass, they may contain architectural elements that are no more than 30 percent sight-obscuring.
+
+2.
+
+Window area is the aggregate area of the glass within each window, including any interior grids, mullions, or transoms. Facade area is the aggregate area of each street-facing vertical wall plane.
+
+3.
+
+Required windows must be clear glass and not mirrored, frosted, or reflective. Clear glass within doors may be counted toward meeting the window coverage standard.
+
+Table 18.660.8 Minimum Window Area  Table 18.660.8 Minimum Window Area  Table 18.660.8 Minimum Window Area
+Story                               Use                                 Minimum Window Area
+First Story                         Nonresidential                      50% of facade
+First Story                         Residential                         30% of facade
+Upper Stories                       Nonresidential                      30% of facade
+Upper Stories                       Residential                         20% of facade (not applicable to stories with sloped roofs or dormers)
+
+Figure 18.660.4 Window Area and Weather Protection Standards
+
+(Ord. 17-22 §2; Ord. 17-25 §3; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-02 §3; Ord. 22-06 §2)
+
+§ 18.660.090. Transportation Facility Standards.
+
+A.
+
+Purpose. The purpose of these standards and procedures is to create safe, comfortable, and attractive streetscapes for pedestrians, improve connectivity for all modes of travel, and remove barriers for small-scale incremental development.
+
+B.
+
+General provisions. This section contains the standards and procedures for improvements to public transportation facilities for all property located in the Tigard Triangle Plan District, including specific standards for vehicle, pedestrian, bicycle, and transit facilities. The terms "transportation facilities" and "transportation improvements" generally include those facilities, or improvements to those facilities, that accommodate all modes of travel that are usually located in public rights-of-way, also commonly referred to as streets. "Frontage improvements" are transportation improvements immediately adjacent to a proposed development's street frontage. "Off-site improvements" are transportation improvements not adjacent to a proposed development's street frontage.
+
+C.
+
+Transportation facility standards.
+
+1.
+
+General standards.
+
+a.
+
+All transportation and associated utility improvements to be placed in a public right-of-way or public access easement must:
+
+i.
+
+Except as expressly provided in Subsection 18.660.090.C, meet the standards of the city as provided in the Public Improvement Design Standards and Chapter 18.910, Improvement Standards;
+
+ii.
+
+Tie into existing transportation and associated utility improvements;
+
+iii.
+
+Be reviewed and approved through the city's public facilities permitting process, including, but not limited to, the requirements in Subsection 18.910.030.S and Sections 18.910.130 through 18.910.200; and
+
+iv.
+
+Obtain all necessary approvals and permits from other applicable road authorities if the right-of-way to be improved is not under the city's jurisdiction.
+
+b.
+
+Right-of-way must be dedicated to the public for transportation purposes in accordance with the standards in this chapter.
+
+i.
+
+Additional right-of-way dedication may be required at intersections for needed improvements identified by a transportation impact study or applicable road authority. Where practicable or required, such as along 72nd Avenue, right-of-way provided for parking lanes may be used for intersection operational needs in lieu of additional right-of-way subject to approval by the City Engineer.
+
+ii.
+
+Additional right-of-way dedication or public easements may be required to address slope or drainage issues as determined by the City Engineer in addition to the maximum right-of-way widths required in Tables 18.660.9–10.
+
+c.
+
+Partial transportation improvements, also called half-street improvements, resulting in other than full improvements on both sides of the street are generally not acceptable. Partial transportation improvements may be approved where the city finds that it will be possible for the adjoining property to dedicate and improve the remainder of the street when it develops.
+
+2.
+
+Intersection design and spacing.
+
+a.
+
+Streets must generally intersect at right angles (90 degrees). Angles of less than 75 degrees are not allowed unless approved by the City Engineer. Streets must generally intersect so that centerlines are not offset.
+
+b.
+
+Street intersections must have curb extensions to reduce pedestrian crossing distances, except on streets that do not have dedicated on-street parking lanes.
+
+c.
+
+New street intersections, including alleys, not shown on Map 18.660.B Transportation Network Map are subject to approval by the City Engineer and require an access report. The City Engineer will specify the technical information that must be included in the report. At a minimum, the access report must show that the proposed street intersection meets stacking, sight distance, and deceleration standards provided in the Public Improvement Design Standards or the American Association of State Highway and Transportation Officials (AASHTO) publications, or other standards as determined by the applicable road authority.
+
+d.
+
+Clear vision standards in Chapter 18.930, Vision Clearance Areas, and street spacing standards in Chapter 18.910, Improvement Standards, do not apply to street intersections in the TMU zone.
+
+3.
+
+Transportation network connectivity.
+
+a.
+
+Minimum required transportation improvements are shown on Map 18.660.B Transportation Network Map. Additional transportation improvements for network connectivity may be required by Subparagraphs 18.660.090.C.3.b and c. Alleys are encouraged but not required. Private streets are prohibited.
+
+b.
+
+Block perimeters must be 2,500 feet or less in length as measured along the centerlines of streets, unless:
+
+i.
+
+It is not practicable to construct a street due to topographical constraints, protected natural resource areas, or existing development patterns, and the applicant has submitted an adjustment application as provided in Paragraph 18.660.040.C.4 and obtained the necessary land use approval; or
+
+ii.
+
+A future street, path, or trail on Map 18.660.B Transportation Network Map provides for a possible future connection that is feasible at the time of the proposed development and meets the block perimeter standard when included as part of the block perimeter measurement.
+
+c.
+
+Bicycle and pedestrian connections are required where the addition of a connection would link the end of a permanent turnaround to an adjacent street or provide a midblock connection through a long block. A midblock connection is required where at least one block face is 800 feet or more in length. A required connection must go through the interior of the block and connect the block face that is 800 feet or more in length to its opposite block face. Bicycle and pedestrian connections include off-street trails and paths as described in Subsection 18.660.090.C.4.e.
+
+4.
+
+Transportation facility design.
+
+a.
+
+Street design. All streets are subject to the standards in Table 18.660.9 and as shown in Figure 18.660.5, except for Dartmouth Street, 72nd Avenue, Pacific Highway, and the future business access street parallel to Pacific Highway that connects the western portion of Atlanta Street to the future 74th Avenue.
+
+i.
+
+72nd Avenue is subject to the standards in Subparagraph 18.660.090.C.4.b.
+
+ii.
+
+Dartmouth Street and Pacific Highway are subject to the standards in Subsection 18.910.030.E.
+
+iii.
+
+The future business access street is subject to the standards in Subsection 18.910.030.E, specifically the local street standard shown in Figure 18.910.6.A.
+
+Table 18.660.9
+Street Elements and Widths
+Table 18.660.9
+Street Elements and Widths
+Table 18.660.9
+Street Elements and Widths
+Street Element
+Width
+Notes
+Maximum Right-of-Way (without bike lanes)
+64′
+Any turn lanes required by the City Engineer must be accommodated in the on-street parking lane.
+Maximum Right-of-Way (with bike lanes)
+70′ – 76′
+Any turn lanes required by the City Engineer must be accommodated in the on-street parking lane. Bike lanes are required on specific streets. See Map 18.660.B for bike lane locations. Bike lanes are 6′ in width and usually, but not always, located on both sides of the street.
+Vehicle Lane
+10′
+One travel lane in each direction is required. The need for a center lane is determined by the City Engineer.
+Parking Lane
+8′
+Parking on both sides of the street is required along the full length of each block face unless otherwise approved by the City Engineer for access, sight distance, stormwater facilities, bus stops, right turn lanes, or other need as identified by the City Engineer.
+Sidewalk Corridor
+14′
+Sidewalk corridors are required on both sides of the street. Each corridor must include a sidewalk, landscape strip or tree well, and a 6″ curb.
+• Minimum sidewalk width is 6′
+• Minimum landscape strip width is 5′
+• Minimum tree well dimensions are 5′ x 14′
+Landscape strips and tree wells may be designed as stormwater facilities. See below for additional standards on street trees and stormwater facilities.
+Curb extensions must be included at all intersections where dedicated on-street parking lanes are provided.
+
+Figure 18.660.5 Street Elements and Widths
+
+b.
+
+72nd Avenue street design. 72nd Avenue is subject to the standards below, in Table 18.660.10, and as shown in Figures 18.660.6A–6E.
+
+i.
+
+Sidewalks must have a minimum width of 9 feet when not adjacent to a bus stop. This minimum width includes a 1-foot-wide buffer on the side abutting the bike lane. Sidewalks must have a minimum width of 6 feet when adjacent to a bus stop.
+
+ii.
+
+Landscape corridors must have a minimum width of 5 feet and include the required number of street trees in a continuous landscape strip or tree wells. If tree wells are provided, minimum dimensions are 5′ by 14′. Landscape strips and tree wells may be designed as stormwater facilities. See below for additional standards on street trees and stormwater facilities.
+
+iii.
+
+Bus stops located in landscape corridors or parking lanes must have a minimum width of 8 feet.
+
+iv.
+
+Parking lanes must be provided along the full length of each block face where required, except where otherwise approved for mid-block crossings, private property access, sight distance, stormwater facilities, bus stops, or other needs identified by the City Engineer. Any right turn lanes required by the City Engineer must be accommodated in the on-street parking lane.
+
+v.
+
+Curb extensions must be included at all intersections where dedicated on-street parking lanes are provided, except where they would interfere with bus movements.
+
+vi.
+
+A reduced right-of-way width with minimal street elements is required where 72nd Avenue crosses Red Rock Creek to minimize natural resource impacts. The maximum right-of-way width is 54 feet through this sensitive lands area. The cross section includes 2 travel lanes and sidewalks and bike lanes on both sides of the street.
+
+Table 18.660.10
+72nd Avenue Street Elements and Widths
+Table 18.660.10
+72nd Avenue Street Elements and Widths
+Table 18.660.10
+72nd Avenue Street Elements and Widths
+Street Element
+Width
+Notes
+Pacific Highway to Red Rock Creek (Figure 18.660.6A)
+Pacific Highway to Red Rock Creek (Figure 18.660.6A)
+Pacific Highway to Red Rock Creek (Figure 18.660.6A)
+Maximum Right-of-Way
+62′
+See 18.660.090.C.4.b.vi for reduced right-of-way width over Red Rock Creek.
+Vehicle Lane
+10′
+One travel lane in each direction is required. No center turn lane is required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape/Bus Stop Corridor
+5′ – 8′
+See 18.660.090.C.4.b.ii and iii.
+Red Rock Creek to Dartmouth Street (Figure 18.660.6B)
+Red Rock Creek to Dartmouth Street (Figure 18.660.6B)
+Red Rock Creek to Dartmouth Street (Figure 18.660.6B)
+Maximum Right-of-Way
+90′ – 94′
+See 18.660.090.C.4.b.vi for reduced right-of-way width over Red Rock Creek.
+An additional 4′ of right-of-way is required to accommodate bus pull-outs in parking lanes at bus stop locations only.
+Vehicle Lane
+11′ – 12′
+One 11′ travel lane in each direction and a continuous 12′ center turn lane are required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape/Bus Stop Corridor
+5′ – 8′
+See 18.660.090.C.4.b.ii and iii.
+Parking Lane
+8′ – 10′
+See 18.660.090.C.4.b.iv and v.
+Parking lanes on both sides of the street are required. Parking lanes must be widened to 10′ to accommodate bus pull-outs where bus stops are provided or required.
+Dartmouth Street to Beveland Street (Figure 18.660.6C)
+Dartmouth Street to Beveland Street (Figure 18.660.6C)
+Dartmouth Street to Beveland Street (Figure 18.660.6C)
+Maximum Right-of-Way
+96′
+Vehicle Lane
+11′ – 12′
+One 11′ travel lane in each direction and a continuous 12′ center turn lane are required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape/Bus Stop Corridor
+5′ – 8′
+See 18.660.090.C.4.b.ii and iii.
+Flex Parking Lane
+11′
+See 18.660.090.C.4.b.iv.
+Flex parking lanes on both sides of the street are required. Flex parking lanes must accommodate bus pull-outs where bus stops are provided or required. Flex parking lanes provide on-street parking during non-peak travel times and convert to travel lanes during peak travel times. Signage with parking and travel times, including violation warnings and consequences, is required.
+Beveland Street to Gonzaga Street (Figure 18.660.6D)
+Beveland Street to Gonzaga Street (Figure 18.660.6D)
+Beveland Street to Gonzaga Street (Figure 18.660.6D)
+Maximum Right-of-Way
+104′
+Vehicle Lane
+11′ – 12′
+Two 11′ travel lanes in each direction and a continuous 12′ center turn lane are required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape Corridor
+5′
+See 18.660.090.C.4.b.ii.
+Parking Lane
+8′
+See 18.660.090.C.4.b.iii, iv, and v.
+A parking lane on the east side of the street is required. The parking lane must accommodate bus stops where provided or required.
+Gonzaga Street to Highway 217 (Figure 18.660.6E)
+Gonzaga Street to Highway 217 (Figure 18.660.6E)
+Gonzaga Street to Highway 217 (Figure 18.660.6E)
+Maximum Right-of-Way
+96′
+Vehicle Lane
+11′ – 12′
+Two 11′ travel lanes in each direction and a continuous 12′ center turn lane are required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape/Bus Stop Corridor
+5′ – 8′
+See 18.660.090.C.4.b.ii and iii.
+
+Figure 18.660.6A Street Elements and Widths for 72nd Avenue Pacific Highway to Red Rock Creek
+
+Figure 18.660.6B Street Elements and Widths for 72nd Avenue Red Rock Creek to Dartmouth Street
+
+Figure 18.660.6C Street Elements and Widths for 72nd Avenue Dartmouth Street to Beveland Street
+
+Figure 18.660.6D Street Elements and Widths for 72nd Avenue Beveland Street to Gonzaga Street
+
+Figure 18.660.6E Street Elements and Widths for 72nd Avenue Gonzaga Street to Highway 217
+
+c.
+
+Street trees.
+
+i.
+
+Street trees are required along all street frontages. The minimum number of required street trees is determined by dividing the length (in feet) of the proposed development's street frontage by 40 feet. When the result is a fraction, the number of street trees required is the nearest whole number.
+
+ii.
+
+Street trees must meet the standards in Section 2, Section 12, and Appendix 2 of the Tigard Urban Forestry Manual for tree size, spacing, maintenance, soil volume, and species. If tree wells are used, paving stones or Belgian blocks must be used to protect tree roots in lieu of metal or rubber grating.
+
+iii.
+
+Street tree removal is subject to the city's tree removal permit process and the standards in Section 3 of the Tigard Urban Forestry Manual.
+
+iv.
+
+Any Oregon white oak initially identified as a district tree, as defined in Subsection 18.660.070.H, that is located in the public right-of-way is regulated as a street tree and preserved where practicable.
+
+d.
+
+Stormwater facilities.
+
+i.
+
+Stormwater facilities for managing stormwater runoff from transportation facilities must meet all applicable Clean Water Services and City of Tigard standards.
+
+ii.
+
+Above-ground vegetated water quality facilities are required wherever practicable.
+
+iii.
+
+Water quality facilities may be located in an on-street parking lane in lieu of on-street parking or in the landscape strip or tree well area of the sidewalk corridor.
+
+iv.
+
+Any stormwater facilities proposed in the public right-of-way are subject to approval by the City Engineer.
+
+e.
+
+Pedestrian facilities.
+
+i.
+
+Pedestrian facilities include sidewalks, trails, and paths. Definitions for these facilities are as follows:
+
+•  Sidewalks are paved on-street transportation facilities for pedestrians.
+•  Trails are paved off-street transportation facilities for pedestrians and bicyclists that span multiple developments, lots, or blocks. They are often located next to other linear corridors such as streams, highways, or rail lines and allow users to travel greater distances than paths.
+•  Paths are paved off-street transportation facilities for pedestrians and bicyclists that provide connections through or between developments within a single block or for short distances.
+
+ii.
+
+Sidewalks, trails, and paths must comply with the standards of this section and applicable federal and state accessibility requirements.
+
+iii.
+
+Sidewalks, trails, and paths must generally be located within the public right-of-way. They may be located outside of the public right-of-way within a public access easement with approval by the City Engineer.
+
+iv.
+
+Sidewalks must have a minimum unobstructed width of 6 feet for pedestrian through-travel, except for A-frame signs where the minimum unobstructed width is 4 feet. Any permanent structures or utilities within the required through-travel area are subject to approval by the City Engineer. Any sidewalk area outside of the required through-travel area may be used for commercial purposes by adjacent development or may contain pedestrian amenities, such as street furniture, bicycle parking, trash cans, and drinking fountains. Use of this area for commercial purposes includes, but is not limited to: customer seating, merchandise display, and A-frame signs. Use of this area for commercial purposes is at the sole discretion of the Director. A-frame signs are also subject to the standards and procedures in Chapter 18.435, Signs.
+
+v.
+
+Trails must have a minimum right-of-way width of 15 feet and a minimum improved surface width of 10 feet. Trail widths may be reduced where constrained by existing development, protected natural resource areas, or topography as determined by the City Engineer.
+
+vi.
+
+Paths must have a minimum right-of-way width of 12 feet and a minimum improved surface width of 8 feet. Path widths may be reduced where constrained by existing development, protected natural resource areas, or topography as determined by the City Engineer. Paths must be located to provide a reasonably direct connection between likely pedestrian destinations.
+
+f.
+
+Bicycle facilities.
+
+i.
+
+Bicycle facilities include bicycle parking, on-street shared lanes, on-street bike lanes (including buffered or protected bike lanes), trails, and paths. Trails and paths are defined in Subparagraph 18.660.090.C.4.e.i.
+
+ii.
+
+Bicycle facility improvements include, but are not limited to: bicycle racks, signage, pavement markings, intersection treatments, traffic calming, and traffic diversion.
+
+g.
+
+Transit facilities.
+
+i.
+
+Transit facilities include transit stops, transit shelters, transfer stations, and other related public transit facilities.
+
+ii.
+
+Transit facility improvements include, but are not limited to: benches, signage, shelters, bus turnouts, curb extensions, bicycle parking, pedestrian crossings, and pedestrian lighting.
+
+iii.
+
+Factors that determine the level of transit improvements needed include, but are not limited to: street classification, existing and planned level of transit service on adjacent streets, block length, proximity of major pedestrian destinations, existing and estimated ridership, and estimated transit needs of the proposed development.
+
+iv.
+
+Transit facilities must comply with current TriMet and city standards with final approval by the City Engineer.
+
+D.
+
+Fee in lieu of construction (FILOC). If improvements to public transportation facilities are required by Subparagraph 18.660.040.B.2.b, the applicant may request to pay a fee in lieu of constructing the required improvements. The provisions of this Subsection do not allow the applicant to a pay a fee in lieu of dedicating any needed public right-of-way.
+
+1.
+
+FILOC review criteria. The city may accept a fee in lieu of constructing the required improvements when one or more of the following conditions exist.
+
+a.
+
+The city is actively in the process of studying or developing new design standards for one or more of the streets on which the proposed development has frontage.
+
+b.
+
+Required improvements are not feasible due to the location of existing development or frontage improvements.
+
+c.
+
+Required improvements are not feasible due to the inability to achieve proper design and safety standards.
+
+d.
+
+Required improvements are part of a larger approved capital improvement project that is listed as a funded project in a local or regional Capital Improvement Program (CIP).
+
+2.
+
+FILOC findings. If the City Engineer determines that a fee in lieu of construction satisfies one of the criteria in Paragraph 18.660.090.D.1, the city will accept a fee upon the City Engineer finding that deferring construction of required improvements will not result in any of the following.
+
+a.
+
+Safety hazards as determined by the City Engineer.
+
+b.
+
+New and significant street drainage issues as determined by the City Engineer.
+
+If the City Engineer cannot make such findings, then the city will not accept a fee and will require construction of the required improvements.
+
+3.
+
+FILOC fees. If the City Engineer determines that required improvements are eligible for FILOC, the applicant must pay the fee in lieu of constructing the required improvements unless the city determines that the fee is not roughly proportional to the number of new trips estimated to be generated by the proposed development. The City Engineer will determine the fee based upon an estimate to construct the required improvements using the average cost of the most recent capital improvement project itemized bid prices. The applicant must pay the fee to the city prior to the issuance of any development permits.
+
+a.
+
+If full transportation facility improvements have been assessed with previous development on the site and the proposed development has additional impacts, the city may only assess additional FILOC fees when there has been a change to the city's street design standards.
+
+b.
+
+If partial transportation facility improvements have been assessed with previous development on the site and the proposed development has additional impacts, the city may assess additional FILOC fees for the balance of the improvements.
+
+c.
+
+If the applicant pays a fee in lieu of constructing the required improvements and is issued a development permit by the city but does not develop as planned, the applicant may request a refund of the FILOC fee within 3 years of payment. Any refunds are subject to the approval of the City Engineer.
+
+4.
+
+FILOC program administration. Fees collected by the city will be used to construct public transportation facilities or to leverage additional grant money for larger transportation projects. An accounting of fees collected and expended will be made available by the city to the public on an annual basis at the end of the fiscal year. Expenditure of fees is subject to the following: Fees will be used for construction of public transportation facilities that benefit the development sites that paid the fees.
+
+(Ord. 17-22 §2; Ord. 17-25 §3; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 22-02 §3)
+
+§ 18.660.100. Sign Standards.
+
+Signs in the TMU zone are subject to the standards and procedures in Chapter 18.435, Signs, and must comply with the TMU zone sign standards in Subsection 18.435.130.F.
+
+(Ord. 17-22 §2; Ord. 17-25 §3; Ord. 18-23 §2)

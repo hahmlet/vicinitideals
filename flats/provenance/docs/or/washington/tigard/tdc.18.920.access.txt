@@ -1,0 +1,232 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.900. STREETS AND UTILITIES
+
+Chapter 18.920. Access, Egress, and Circulation
+
+§ 18.920.010. Purpose.
+
+The purpose of this chapter is to establish standards and regulations for safe and efficient vehicle access and egress on a site and for general circulation within the site.
+
+(Ord. 17-22 §2)
+
+§ 18.920.020. Applicability.
+
+A.
+
+Applicability. The provisions of this chapter apply to all development including the construction of new structures, the remodeling of existing structures, and to a change of use that increases the on-site parking or loading requirements or changes the access requirements.
+
+B.
+
+Change or enlargement of use. Should the owner or occupant of a lot or building change or enlarge the use to which the lot or building is put, thereby increasing access and egress requirements, it is unlawful and is a violation of this title to begin or maintain such altered use until the provisions of this chapter have been met if required or until the appropriate approval authority has approved the change.
+
+C.
+
+When site design review is not required. Where the provisions of Chapter 18.780, Site Development Review, do not apply, the approval authority will approve, approve with conditions, or deny an access plan submitted under the provisions of this chapter in conjunction with another permit or land use action.
+
+D.
+
+Conflict with subdivision requirements. The requirements and standards of this chapter do not apply where they conflict with the subdivision requirements of this title.
+
+(Ord. 17-22 §2; Ord. 18-23 §2)
+
+§ 18.920.030. General Provisions.
+
+A.
+
+Continuing obligation of property owner. The provisions and maintenance of access and egress provided in this chapter are continuing requirements for the use of any structure or lot of real property in the city.
+
+B.
+
+Access plan requirements. A plan demonstrating compliance with the access, egress, and circulation requirements of this Chapter must be provided prior to any land use approval or development permit issuance.
+
+C.
+
+Joint access. Owners of two or more uses, structures, or lots of land may agree to utilize jointly the same access and egress when the combined access and egress of all uses, structures, or units of land meets the combined requirements of this chapter, provided:
+
+1.
+
+Satisfactory legal evidence must be presented in the form of deeds, easements, leases, or contracts to establish the joint use; and
+
+2.
+
+Copies of the deeds, easements, leases, or contracts are placed on permanent file with the city.
+
+D.
+
+Public street access. All vehicular access and egress as required in Subsections 18.920.030.H, I and J must connect directly with a public or private street approved by the city for public use and must be maintained at the required standards on a continuous basis.
+
+E.
+
+Surfacing. Driveways and drive aisles must be paved with a dust-free, hard-surfaced material, or utilize a turf grid or open joint pavers.
+
+F.
+
+Curb cuts. Curb cuts must be in compliance with Subsection 18.910.030.O.
+
+G.
+
+Pedestrian access. Paths for pedestrian access and circulation are required to, through, and sometimes between development sites. Path standards are provided in 18.200 Residential Development Standards, 18.300 Nonresidential Development Standards, and Chapter 18.410, Off-Street Parking and Loading. Additional standards may also apply if the site is located in a plan district.
+
+H.
+
+Inadequate or hazardous access.
+
+1.
+
+Applications for development permits will be referred to the Director for review when, in the opinion of the Director, the access proposed:
+
+a.
+
+Would cause or increase existing hazardous traffic conditions; or
+
+b.
+
+Would provide inadequate access for emergency vehicles; or
+
+c.
+
+Would in any other way cause hazardous conditions to exist that would constitute a clear and present danger to the public health, safety, and general welfare.
+
+2.
+
+Direct individual access to arterial or collector streets from small form residential development lots is discouraged. Direct access to collector or arterial streets will be considered only if there is no practical alternative way to access the site. If direct access is allowed by the city, the applicant will be required to mitigate for any safety or neighborhood traffic management (NTM) impacts deemed applicable by the City Engineer. This may include, but will not be limited to, the construction of a vehicle turnaround on the site to eliminate the need for a vehicle to back out onto the roadway.
+
+3.
+
+The design of the service drive or drives must not require or facilitate the backward movement or other maneuvering of a vehicle within a street, other than an alley. Small form residential development is exempt from this requirement.
+
+I.
+
+Access management.
+
+1.
+
+An access report must be submitted with all new development that verifies design of driveways and streets are safe by meeting adequate stacking needs, sight distance, and deceleration standards as set by ODOT, Washington County, the city, and AASHTO (depending on jurisdiction of facility).
+
+2.
+
+Driveways must not be placed in the influence area of collector or arterial street intersections. Influence area of intersections is that area where queues of traffic commonly form on approach to an intersection. The minimum driveway setback from a collector or arterial street intersection is 150 feet, measured from the right-of-way line of the intersecting street to the throat of the proposed driveway. The setback may be greater depending upon the influence area, as determined from City Engineer review of a traffic impact report submitted by the applicant's traffic engineer. In a case where a development has less than 150 feet of street frontage, the applicant must explore any option for shared access with the adjacent lot. If shared access is not possible or practicable, the driveway must be placed as far from the intersection as possible.
+
+3.
+
+The minimum spacing of driveways and streets along a collector is 200 feet. The minimum spacing of driveways and streets along an arterial is 600 feet.
+
+4.
+
+The minimum spacing of local streets along a local street is 125 feet.
+
+J.
+
+Minimum access requirements for residential uses.
+
+1.
+
+Vehicular access and egress for residential uses must comply with the standards provided in Table 18.920.1.
+
+Table 18.920.1 Vehicular Access/Egress Requirements: Residential Uses  Table 18.920.1 Vehicular Access/Egress Requirements: Residential Uses  Table 18.920.1 Vehicular Access/Egress Requirements: Residential Uses  Table 18.920.1 Vehicular Access/Egress Requirements: Residential Uses
+Housing Type                                                           Minimum Driveways Required                                             Minimum Access Required                                                Minimum Pavement Width
+Small Form Residential                                                 1                                                                      10 ft                                                                  10 ft
+Quads                                                                  1                                                                      15 ft                                                                  15 ft
+Cottage Clusters                                                       1                                                                      20 ft                                                                  20 ft
+Courtyard Units                                                        1                                                                      20 ft                                                                  20 ft
+Rowhouses                                                              See Chapter 18.280, Rowhouses                                          See Chapter 18.280, Rowhouses                                          See Chapter 18.280, Rowhouses
+Apartments, 2 units                                                    1                                                                      10 ft                                                                  10 ft
+Apartments, 3-49 units                                                 1                                                                      30 ft                                                                  24 ft if two-way 15 ft if one-way curbs and 5 ft walkway required
+Apartments, 50+ units                                                  2                                                                      30 ft                                                                  24 ft curbs and 5 ft walkway required
+
+2.
+
+Vehicular access to apartment structures must be within 50 feet of the first-story entrance or the first-story landing of a stairway, ramp, or elevator leading to the dwelling units.
+
+3.
+
+Private residential access drives must be provided and maintained in compliance with the Oregon Fire Code.
+
+4.
+
+Access drives in excess of 150 feet in length must be provided with approved provisions for the turning around of fire apparatus by one of the following:
+
+a.
+
+A circular, paved surface having a minimum turn radius measured from center point to outside edge of 35 feet;
+
+b.
+
+A hammerhead-configured, paved surface with each leg of the hammerhead having a minimum depth of 40 feet and a minimum width of 20 feet;
+
+c.
+
+The maximum cross slope of a required turnaround is five percent.
+
+5.
+
+Vehicle turnouts, (providing a minimum total driveway width of 24 feet for a distance of at least 30 feet), may be required so as to reduce the need for excessive vehicular backing motions in situations where two vehicles traveling in opposite directions meet on driveways in excess of 200 feet in length.
+
+6.
+
+Where allowed, minimum width for driveway approaches to arterials or collector streets must be at least 20 feet so as to avoid traffic turning from the street having to wait for traffic exiting the site.
+
+K.
+
+Minimum access requirements for nonresidential uses.
+
+1.
+
+Vehicle access, egress, and circulation for nonresidential uses must comply with the standards provided in Table 18.920.2.
+
+Table 18.920.2 Vehicular Access/Egress Requirements: Nonresidential Uses  Table 18.920.2 Vehicular Access/Egress Requirements: Nonresidential Uses  Table 18.920.2 Vehicular Access/Egress Requirements: Nonresidential Uses  Table 18.920.2 Vehicular Access/Egress Requirements: Nonresidential Uses
+Required Parking Spaces                                                   Minimum Number of Driveways Required                                      Minimum Access Width                                                      Minimum Pavement
+1-99                                                                      1                                                                         30 ft                                                                     24 ft curbs required
+100+                                                                      2                                                                         30 ft                                                                     24 ft curbs required
+100+                                                                      1                                                                         50 ft                                                                     40 ft curbs required
+
+2.
+
+Vehicular access must be provided to nonresidential uses, and be located within 50 feet of the primary first-story entrances;
+
+3.
+
+Additional requirements for truck traffic may be imposed through conditions of approval of a land use application.
+
+L.
+
+One-way vehicular access points. Where a proposed parking facility indicates only one-way traffic flow on the site, it must be accommodated by a specific driveway serving the facility; the entrance drive must be situated closest to oncoming traffic and the exit drive must be situated farthest from oncoming traffic.
+
+M.
+
+Director's authority to restrict access. The Director has the authority to restrict access when the need to do so is dictated by one or more of the following conditions:
+
+1.
+
+To provide for increased traffic movement on congested streets and to eliminate turning movement problems, the Director may restrict the location of driveways on streets and require the location of driveways be placed on adjacent streets, upon the finding that the proposed access would:
+
+a.
+
+Cause or increase existing hazardous traffic conditions; or
+
+b.
+
+Provide inadequate access for emergency vehicles; or
+
+c.
+
+Cause hazardous conditions to exist that would constitute a clear and present danger to the public health, safety, and general welfare.
+
+2.
+
+To eliminate the need to use public streets for movements between commercial or industrial uses, parking areas must be designed to connect with parking areas on adjacent properties unless not feasible. The Director may require access easements between properties where necessary to provide for parking area connections.
+
+3.
+
+To facilitate pedestrian and bicycle traffic, access and parking area plans must provide efficient sidewalk or pathway connections, as feasible, between neighboring developments or land uses.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1; Ord. 20-01 §1; Ord. 22-06 §2)

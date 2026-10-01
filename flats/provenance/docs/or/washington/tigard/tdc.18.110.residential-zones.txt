@@ -1,0 +1,217 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.100. BASE ZONES
+
+Chapter 18.110. Residential Zones
+
+§ 18.110.010. Purpose.
+
+The purpose of this chapter is to implement the policies of the comprehensive plan related to housing by:
+
+A.
+
+Creating an environment in which construction of a full range of owner-occupied and rental housing at affordable prices is encouraged;
+
+B.
+
+Providing residential zones of varying densities, with flexible design and development standards to encourage innovation and reduce housing costs;
+
+C.
+
+Accommodating compatible nonresidential development—including, but not limited to, schools, churches, parks, recreation facilities, day care centers, and neighborhood commercial uses and services—at appropriate locations and scales; and
+
+D.
+
+Enhancing the livability of neighborhoods by encouraging diversity in housing stock and promoting opportunities for walkability.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 22-06 §2)
+
+§ 18.110.020. List of Base Zones.
+
+The residential base zones are listed in Table 18.110.1. When this title refers to the residential zones, it is referring to the five base zones listed here.
+
+Table 18.110.1
+List of Base Zones
+RES-A
+RES-B
+RES-C
+RES-D
+RES-E
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 22-06 §2)
+
+§ 18.110.030. Land Use Standards.
+
+A.
+
+General provisions. A list of allowed, restricted, conditional, and prohibited uses in residential zones is provided in Table 18.110.2. If a use category is not listed, see Section 18.60.030.
+
+1.
+
+Allowed (A). Uses that are allowed, subject to all of the applicable provisions of this title.
+
+2.
+
+Restricted (R). Uses that are subject to the special requirements, exceptions, or restrictions provided in Subsection 18.110.030.B.
+
+3.
+
+Conditional (C). Uses that require the approval of the Hearings Officer using discretionary criteria. The approval process and criteria are provided in Chapter 18.740, Conditional Use.
+
+4.
+
+Prohibited (P). Uses that are not allowed under any circumstance.
+
+Table 18.110.2 Use Table             Table 18.110.2 Use Table   Table 18.110.2 Use Table   Table 18.110.2 Use Table   Table 18.110.2 Use Table   Table 18.110.2 Use Table
+Use Categories                       RES-A                      RES-B                      RES-C                      RES-D                      RES-E
+Residential Use Category             Residential Use Category   Residential Use Category   Residential Use Category   Residential Use Category   Residential Use Category
+Residential Use                      A                          A                          A                          A                          A
+Civic Use Categories                 Civic Use Categories       Civic Use Categories       Civic Use Categories       Civic Use Categories       Civic Use Categories
+Basic Utility                        R/C                        R/C                        R/C                        R/C                        R/C
+Cemetery                             P                          C                          C                          P                          P
+Detention Facility                   P                          P                          P                          P                          P
+Government Services                  C                          C                          C                          C                          C
+Railroad Yard                        P                          P                          P                          P                          P
+School or Religious Facility         R/C                        R/C                        R/C                        R/C                        R/C
+Temporary Shelter                    P                          P                          P                          C                          C
+Transportation and Utility Corridor  C                          C                          C                          C                          C
+Wireless Communications Facility     A/R                        A/R                        A/R                        A/R                        A/R
+Commercial Use Categories            Commercial Use Categories  Commercial Use Categories  Commercial Use Categories  Commercial Use Categories  Commercial Use Categories
+Adult Entertainment                  P                          P                          P                          P                          P
+Commercial Lodging                   P                          P                          P                          P                          P
+Indoor Sales and Services            R                          R                          R                          R                          R
+Major Event Entertainment            R/C                        R/C                        R/C                        R/C                        R/C
+Mobility Hub                         C                          C                          C                          C                          C
+Motor Vehicle Fuel Sales             P                          P                          P                          P                          P
+Motor Vehicle Sales and Rental       P                          P                          P                          P                          P
+Motor Vehicle Servicing              P                          P                          P                          P                          P
+Non-Accessory Parking                P                          P                          P                          R                          R
+Office                               P                          P                          P                          P                          P
+Outdoor Sales and Services           P                          P                          P                          P                          P
+Self-Service Storage                 P                          P                          P                          P                          P
+Industrial Use Categories            Industrial Use Categories  Industrial Use Categories  Industrial Use Categories  Industrial Use Categories  Industrial Use Categories
+Industrial and Manufacturing         P                          P                          P                          P                          P
+Off-Site Services                    P                          P                          P                          P                          P
+Warehouse and Distribution           P                          P                          P                          P                          P
+Waste-Related Facility               P                          P                          P                          P                          P
+Wholesale and Equipment Rental       P                          P                          P                          P                          P
+
+A = Allowed
+R = Restricted
+C = Conditional Use
+P = Prohibited
+
+B.
+
+RES zone use restrictions.
+
+1.
+
+Basic Utility.
+
+a.
+
+Above-ground public and private utility facilities proposed with development and underground public and private utility facilities are allowed.
+
+b.
+
+Standalone above-ground public and private utility facilities not proposed with development, including standalone solar arrays, are conditionally allowed.
+
+2.
+
+School or religious facility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+School bus parking on public high school sites is allowed as an accessory use if located a minimum of 200 feet from the nearest property line abutting a residential use.
+
+3.
+
+Wireless communications facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+4.
+
+Indoor sales and services.
+
+a.
+
+Family day care is allowed. Other day care uses are conditionally allowed.
+
+b.
+
+All other Indoor Sales and Services uses are prohibited, except in the RES-E zone where they are limited to the first story of apartment developments and maximum gross square footage of 10 percent of the building. Developments utilizing this provision are considered residential development, not mixed-use development, for the purposes of this title.
+
+5.
+
+Major event entertainment. This use is conditionally allowed on public school sites. All other major event entertainment uses are prohibited.
+
+6.
+
+Non-accessory parking. Park-and-ride and other transit-related facilities are conditionally allowed. All other Non-Accessory Parking uses are prohibited.
+
+C.
+
+Development standards. The standards for residential development in residential zones are located in the applicable housing type Part in 18.200 Residential Development Standards. The standards for nonresidential development in residential zones are located in Chapter 18.350, Residential Zone Development Standards, and the applicable plan district chapter, if any.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. 22-09 §2; Ord. No. 24-05, 4/23/2024)
+
+§ 18.110.040. Housing Types.
+
+A.
+
+A housing type is not a use category. It describes a type of development that can contain a Residential Use.
+
+B.
+
+A list of allowed, limited, and prohibited housing types in residential zones is provided in Table 18.110.3. Terms and abbreviations used are defined as follows:
+
+1.
+
+Yes, allowed (Y). Housing types that are allowed.
+
+2.
+
+Limited (L). Housing types that require a conditional use approval or are allowed subject to specific limitations.
+
+3.
+
+No, prohibited (N). Housing types that are not allowed under any circumstance.
+
+C.
+
+All housing types are subject to the standards and provisions of the applicable development standards chapter or applicable plan district chapter, if any. The applicable chapter for each housing type is provided in Table 18.110.3.
+
+D.
+
+All allowed housing types may be built on site or manufactured off site.
+
+Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types
+Housing Types                 Applicable Chapter            RES-A                         RES-B                         RES-C                         RES-D                         RES-E
+Accessory Dwelling Units      18.220                        Y                             Y                             Y                             Y                             N
+Apartments                    18.230                        N                             N                             N                             Y                             Y
+Cottage Clusters              18.240                        Y                             Y                             Y                             Y                             N
+Courtyard Units               18.250                        Y                             Y                             Y                             Y                             N
+Mobile Home Parks             18.260                        N                             L[1]                          Y                             Y                             Y
+Quads                         18.270                        Y                             Y                             Y                             Y                             N
+Rowhouses                     18.280                        L[2]                          L[2]                          L[2]                          Y                             Y
+Small Form Residential        18.290                        Y                             Y                             Y                             Y                             N
+Mixed-Use Development         NA                            N                             N                             N                             N                             N
+
+Notes:                                                    Notes:                                                    Notes:
+Y=Yes, Allowed L=Limited, see footnotes N=No, Prohibited  Y=Yes, Allowed L=Limited, see footnotes N=No, Prohibited  Y=Yes, Allowed L=Limited, see footnotes N=No, Prohibited
+[1]                                                       Allowed only through a conditional use application.       Allowed only through a conditional use application.
+[2]                                                       Rowhouses of up to 5 units per grouping allowed.          Rowhouses of up to 5 units per grouping allowed.
+
+(Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. No. 24-05, 4/23/2024)

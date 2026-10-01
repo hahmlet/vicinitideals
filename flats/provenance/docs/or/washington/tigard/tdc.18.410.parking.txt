@@ -1,0 +1,529 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.400. SUPPLEMENTAL DEVELOPMENT STANDARDS
+
+Chapter 18.410. Off-Street Parking and Loading
+
+§ 18.410.010. Purpose.
+
+The purpose of this chapter is to provide standards to ensure the following goals are met:
+
+A.
+
+Off-street vehicle parking and maneuvering areas are:
+
+1.
+
+Limited in scale;
+
+2.
+
+Designed to minimize conflicts with active transportation modes; and
+
+3.
+
+Designed to mitigate heat island effects or generate sustainable power.
+
+B.
+
+Parking structures are:
+
+1.
+
+Designed with pedestrian-friendly ground floor façades; and
+
+2.
+
+Designed to minimize conflicts with active transportation modes at ingress and egress points.
+
+C.
+
+Off-street bicycle parking are:
+
+1.
+
+Sufficiently sized to meet the current and future needs of bicyclists; and
+
+2.
+
+Located and designed to discourage theft and optimize user safety, comfort, and convenience.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 22-10 §2; Ord. 23-08, 12/5/2023)
+
+§ 18.410.020. Applicability.
+
+A.
+
+Applicability. The provisions of this chapter apply to all new development and all modifications to existing development, including changes of use, unless stated otherwise in this title.
+
+B.
+
+Unlisted uses. Where a use is not listed in Table 18.410.3, a use determination may be requested as provided in Section 18.60.030 for the purposes of determining the maximum vehicle parking and minimum bicycle parking standards of this chapter.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 22-10 §2; Ord. 23-08, 12/5/2023)
+
+§ 18.410.030. Vehicle Parking and Loading Standards.
+
+A.
+
+Quantity.
+
+1.
+
+The ratios for the maximum number of off-street vehicle parking spaces allowed are provided in Table 18.410.3, subject to the following:
+
+a.
+
+If application of the maximum parking standard results in less than six parking spaces for a development with less than 1,000 square feet of floor area, the development is allowed up to six parking spaces.
+
+b.
+
+If application of the maximum parking standard results in less than 10 vehicle parking spaces for a development between 1,000 and 2,000 square feet, the development is allowed up to 10 vehicle parking spaces.
+
+c.
+
+If a development is approved with no specified use, the development must apply the maximum parking standard for the use category that would allow the fewest number of parking spaces, chosen from all the uses that could be contained within the building type(s).
+
+d.
+
+In mixed-use and multi-tenant developments, the maximum allowable vehicle parking is determined individually for each use.
+
+e.
+
+The following types of parking areas are not included when calculating the maximum number of vehicle parking spaces allowed:
+
+(i)
+
+Parking spaces contained in a parking structure;
+
+(ii)
+
+Market-rate paid parking spaces;
+
+(iii)
+
+Designated carpool or vanpool spaces;
+
+(iv)
+
+Designated accessible parking spaces;
+
+(v)
+
+Fleet vehicle storage; and
+
+(vi)
+
+Vehicle storage spaces for sale, lease, or rent.
+
+B.
+
+Vehicular access. Vehicular access to off-street vehicle parking or loading areas must meet the requirements of Chapter 18.920, Access, Egress, and Circulation and Chapter 18.930, Vision Clearance Areas.
+
+C.
+
+Pedestrian access. Paths that cross access driveways or that provide access to vehicle or bicycle parking areas must comply with the following:
+
+1.
+
+Paths must be physically separated from vehicle parking and maneuvering areas by either a minimum six-inch vertical separation (curbed) or a minimum 3-foot horizontal separation, except that pedestrian crossings of traffic aisles are allowed for distances no greater than 36 feet if appropriate landscaping, pavement markings, or contrasting pavement materials are used;
+
+2.
+
+Paths must be a minimum of four feet in width, exclusive of vehicle overhangs and obstructions such as mailboxes, benches, bicycle racks, and sign posts; and
+
+3.
+
+Paths must be in compliance with applicable federal and state accessibility standards.
+
+D.
+
+Drive-through facilities.
+
+1.
+
+All uses with drive-through facilities must provide on-site stacking lanes for inbound vehicles as provided in Table 18.410.1.
+
+Table 18.410.1 Stacking Lane Requirements  Table 18.410.1 Stacking Lane Requirements
+Use                                        Stacking Lane Requirement
+Banks                                      150 feet/service terminal
+Automated teller machines                  50 feet/automated teller machine
+Cleaners, repair services                  50 feet
+Restaurants                                200 feet
+Drive-in theaters                          200 feet
+Fueling stations                           75 feet between curb cut and nearest fueling kiosk
+Car washes                                 75 feet/washing unit
+Parking facilities:                        Parking facilities:
+- With automatic ticket dispensing         50 feet/entry driveway
+- With staffed ticket dispensing           100 feet/entry driveway
+- With valet or attendant parking          100 feet
+
+2.
+
+Stacking lanes must be designed so that they do not interfere with off-street parking areas or with vehicle, pedestrian, and bicycle circulation.
+
+E.
+
+Surfacing. Off-street parking areas must be paved with an asphalt, concrete, or pervious paving surface, except for the following:
+
+1.
+
+Off-street parking areas associated with a temporary use application, as provided in Chapter 18.440, Temporary Uses, provided the approval authority determines that unpaved parking will not create adverse conditions.
+
+2.
+
+Off-street overflow parking areas in the Parks and Recreation zone.
+
+F.
+
+Striping.
+
+1.
+
+All off-street parking spaces must be clearly and separately identified with pavement markings or contrasting paving materials, except for spaces provided with the following types of development:
+
+a.
+
+Small form residential;
+
+b.
+
+Detached accessory dwelling units; or
+
+c.
+
+Any other residential development where spaces are not grouped.
+
+2.
+
+All interior vehicle drives and access aisles must be clearly marked and signed to show direction of flow.
+
+G.
+
+Wheel stops. Parking bumpers or wheel stops a minimum of four inches in height must be provided a minimum of three feet from the front of vehicle parking spaces wherever vehicles can encroach on a right-of-way or pedestrian path. Curbing may substitute for wheel stops if vehicles will not encroach into the minimum required width for landscape or pedestrian paths.
+
+H.
+
+Lighting. Lighting must be provided that meets the following standards:
+
+1.
+
+All pedestrian paths in parking areas and providing access to parking areas must be illuminated to a minimum level of 0.5 footcandles at all points, measured horizontally at the ground level.
+
+2.
+
+Lighting luminaires must have a cutoff angle of 90 degrees or greater to ensure that lighting is directed toward the parking surface.
+
+3.
+
+Lighting may not cause a light trespass of more than 0.5 footcandles measured vertically at the boundaries of the site.
+
+I.
+
+Space and aisle dimensions. The minimum dimensional standards for surface parking spaces and drive aisles are provided in Figure 18.410.1 and Table 18.410.2.
+
+Figure 18.410.1 Parking Dimension Factors
+
+Table 18.410.2 Minimum Parking Space and Aisle Dimensions  Table 18.410.2 Minimum Parking Space and Aisle Dimensions  Table 18.410.2 Minimum Parking Space and Aisle Dimensions  Table 18.410.2 Minimum Parking Space and Aisle Dimensions  Table 18.410.2 Minimum Parking Space and Aisle Dimensions  Table 18.410.2 Minimum Parking Space and Aisle Dimensions
+Angle (A)                                                  Stall Width (B)                                            Curb Length (C)                                            1 Way Aisle Width (D)                                      2 Way Aisle Width (D)                                      Stall Depth (E)
+0° (Parallel)                                              8 ft.                                                      22 ft. 6 in.                                               12 ft.                                                     20 ft.                                                     8 ft.
+30°                                                        8 ft. 6 in.                                                17 ft.                                                     12 ft.                                                     20 ft.                                                     15 ft.
+45°                                                        8 ft. 6 in.                                                12 ft.                                                     12 ft.                                                     20 ft.                                                     17 ft.
+60°                                                        8 ft. 6 in.                                                9 ft. 9 in.                                                16 ft.                                                     20 ft.                                                     17 ft. 6 in.
+90°                                                        8 ft. 6 in.                                                8 ft. 6 in.                                                20 ft.                                                     20 ft.                                                     16 ft.
+
+J.
+
+Accessible parking. Where off-street vehicle parking is provided, it must include the required number of accessible vehicle parking spaces as specified by the state building code and federal standards. Such parking spaces must be sized, signed, and marked as required by these regulations and in compliance with ORS 447.
+
+K.
+
+Loading areas. All off-street vehicle loading areas for passengers or goods must:
+
+1.
+
+Include sufficient area for turning and maneuvering of vehicles on site. At a minimum, the maneuvering length must be at least twice the overall length of the longest vehicle using the site.
+
+2.
+
+Be designed such that vehicle stacking does not impact any public right-of-way.
+
+L.
+
+Electrical service capacity. Electrical service capacity, as defined by ORS 455.417, must be provided to new off-street parking spaces in compliance with the standards of this subsection. Adjustments to the standards of this subsection are prohibited.
+
+1.
+
+Non-residential development and residential or mixed-use developments with less than five dwelling units must provide electrical service capacity to a minimum of 20% of all off-street vehicle parking spaces on the site.
+
+2.
+
+Residential or mixed-use developments with five or more dwelling units must provide electrical service capacity to a minimum of 40% of all off-street vehicle parking spaces on the site.
+
+3.
+
+Small form residential or rowhouse development is exempt from the provisions of this subsection.
+
+M.
+
+Tree canopy. Tree canopy must be provided over parking areas in compliance with the standards of this subsection. Tree canopy values are credited at 75% of their listed canopy area in the Tigard Urban Forestry Manual (UFM) tree list or at 75% of the area calculated using the method described in Section 13 of the UFM.
+
+1.
+
+Developments with off-street parking areas less than 20,000 square feet in size, as measured using the method provided in Section 18.40.150, must provide a minimum effective tree canopy coverage of 30% over all parking areas.
+
+2.
+
+Developments with off-street parking areas of 20,000 square feet or more, as measured using the method provided in Section 18.40.150, must meet one of the following:
+
+a.
+
+The development provides a minimum effective tree canopy coverage of 40% over all parking areas.
+
+b.
+
+The development provides a minimum effective tree canopy coverage of 30% over all parking areas in addition to solar panels with a generation capacity of at least one-half kilowatt per parking space on the same site.
+
+c.
+
+The development provides solar panels with a generation capacity of at least one-half kilowatt per parking space above the parking area. In this case, no minimum tree canopy requirement applies.
+
+d.
+
+The development provides a minimum effective tree canopy coverage of 30% over all parking areas and the applicant has paid the parking climate fee, as provided in the Tigard Fees and Charges Schedule.
+
+3.
+
+Parking areas for small form residential, cottage clusters, courtyard units, quads, and rowhouses are exempt from the standards of this subsection, but must meet any tree canopy standards provided in the applicable development standards chapter in Chapter 18.200, Residential Development Standards.
+
+N.
+
+Employee parking. Developments or uses that provide 50 or more designated employee parking spaces must provide preferential parking spaces for carpool or vanpool vehicles. Parking spaces are considered designated for employee parking when they are restricted to the exclusive use of employees through signage, access control, or other means.
+
+O.
+
+Maximum coverage. For developments with 65,000 square feet or more of floor area on a site, the total area of surface parking must not exceed the total square footage of floor area on that site.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 22-06 §2; Ord. 22-10 §2; Ord. 23-08, 12/5/2023)
+
+§ 18.410.040. Parking Structure Standards.
+
+A.
+
+First-story windows and wall openings. All street-facing facades of parking structures must include windows, doors, or display areas on a minimum of 20% of the first-story facade area excluding those portions of the facade devoted to vehicular access, stairwells, elevators, and centralized payment booths. Required windows must have a sill no more than four feet above grade. Where the interior floor level prohibits such placement, the sill may be raised to allow it to be no more than two feet above finished floor wall up to a maximum sill height of six feet above grade.
+
+B.
+
+Exit warning bell. All exits from parking structures within 15 feet of public sidewalks or pedestrian paths must include an audible and visible signal that alerts non-motorized traffic when vehicles are exiting.
+
+C.
+
+Parking layout and internal circulation. The required space and aisle dimensions within a parking structure are provided in Figure 18.410.1 and Table 18.410.2.
+
+D.
+
+Electrical service capacity. The electrical service capacity requirements of Section 18.410.030.L apply to new parking structures.
+
+(Ord. 22-10 §2; Ord. 23-08, 12/5/2023)
+
+§ 18.410.050. Bicycle Parking Standards.
+
+A.
+
+Quantity. The minimum number of required bicycle parking spaces is provided in Table 18.410.3. If application of the minimum bicycle parking standard results in less than two spaces, then the development must provide at least two spaces. Small form residential, accessory dwelling units, cottage clusters, courtyard units, quads, and rowhouses are exempt from minimum bicycle parking standards.
+
+B.
+
+Location. Required bicycle parking must be located within 50 feet of a required or main entrance of a primary building, except that required bicycle parking for mixed-use or nonresidential development that includes any vehicle parking within a parking structure must be covered and located within 100 feet of a required or main entrance of a primary building.
+
+C.
+
+Design.
+
+1.
+
+Bicycle racks must be designed to allow a bicycle frame to lock to it at two points of contact, except that spiral racks and wave racks with more than one loop are prohibited;
+
+2.
+
+Bicycle racks must be securely anchored to the ground, wall, or other structure;
+
+3.
+
+Bicycle parking spaces must be at least two and one-half feet in width and six feet in length and have an access aisle between each row of spaces that is at least five feet in width. Covered bicycle parking must provide a vertical clearance of seven feet; and
+
+4.
+
+Bicycle parking spaces must be paved with a dust-free hard surface material.
+
+D.
+
+Lighting. Lighting must be provided that meets the following standards:
+
+1.
+
+All bicycle parking areas and paths providing access to these areas must be illuminated to a minimum level of 0.5 footcandles at all points, measured horizontally at the ground level.
+
+2.
+
+Lighting luminaires must have a cutoff angle of 90 degrees or greater to ensure that lighting is directed toward the parking surface.
+
+3.
+
+Lighting may not cause a light trespass of more than one-half footcandles measured vertically at the boundaries of the site.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1; Ord. 22-06 §2; Ord. 22-10 §2)
+
+§ 18.410.060. Vehicle and Bicycle Parking Quantity Standards.
+
+Table 18.410.3
+Vehicle and Bicycle Parking Quantity Standards
+Table 18.410.3
+Vehicle and Bicycle Parking Quantity Standards
+Table 18.410.3
+Vehicle and Bicycle Parking Quantity Standards
+Parking space standards are calculated using the floor area for each use in a development unless otherwise stated.
+Parking space standards are calculated using the floor area for each use in a development unless otherwise stated.
+Parking space standards are calculated using the floor area for each use in a development unless otherwise stated.
+Use Category
+Vehicle Maximum
+Bicycle Minimum
+Residential Use
+See applicable housing type development standards chapters in Part 18.200. The residential component of a mixed-use development must use the parking requirements for apartments.
+See applicable housing type development standards chapters in Part 18.200. The residential component of a mixed-use development must use the parking requirements for apartments.
+Basic Utility
+None
+None
+Cemetery
+None
+None
+Detention Facility
+None
+1.0/2.5 beds
+Government Services
+3.4/1,000
+0.5/1,000
+Railroad Yard
+None
+None
+School or Religious Facility
+- Schools
+Preschool:
+7.0+1.0/classroom
+Elementary/JR:
+2.5/classroom
+SR:
+1.0/3.3 students/staff
+Preschool:
+1.0/classroom
+Elementary/JR:
+6.0/classroom
+SR:
+6.0/classroom
+- Religious Facility
+1.0/1.7 seats in main assembly area
+1.0/20 seats in main assembly area
+Temporary Shelter
+None
+1.0/5 beds
+Transportation and Utility Corridor
+None
+None
+Wireless Communications Facility
+None
+None
+Adult Entertainment
+3.5/1,000
+1.0/1.25 seats
+0.5/1,000
+1.0/20 seats
+Commercial Lodging
+1.2/room
+1.0/10 rooms
+Indoor Sales and Services
+-Sales and Repair-Oriented
+5.0/1,000
+0.3/1,000
+- Personal Services-Oriented
+3.0/1,000
+1.0/1,000
+- Bank with Drive Through
+5.0/1,000
+1.0/1,000
+- Colleges
+1.0/3.3 students/staff
+1.0/3.3 students/staff
+- Daycare
+Home: None
+Commercial: 2.7/1,000
+Home: None
+Commercial: 1.5/classroom
+-Entertainment-Oriented
+5.4/1,000
+0.5/1,000
+- Eating and Drinking
+Fast food: 12.4/1,000
+Other: 19.1/1,000
+All: 1.0/1,000
+- Movie Theater
+1.0/2.5 seats
+1.0/10 seats
+Major Event Entertainment
+1.0/2.5 seats or 1.0/5 ft of bench
+1.0/10 seats or 40 ft of bench
+Mobility Hub
+4.0 + 2.0/service bay
+0.2/1,000
+Motor Vehicle Fuel Sales
+4.0 + 2.0/service bay
+0.2/1,000
+Motor Vehicle Sales and Rental
+1.3/1,000 but no less than 4
+0.2/1,000 sales area
+Motor Vehicle Servicing
+2.3/1,000 but no less than 4
+0.2/1,000
+Non-Accessory Parking
+None
+None
+Office
+Non-medical: 3.4/1,000
+Medical: 4.9/1,000
+Non-medical: 0.5/1,000
+Medical: 0.4/1,000
+Outdoor Sales and Services
+- Outdoor Sales, Personal Services, and Repair-Oriented
+1.3/1,000 sales area
+0.1/1,000 sales area
+- Outdoor Entertainment-Oriented
+4.5/1,000
+0.4/1,000
+Self-Service Storage
+1.0/4 storage units
+1.0/40 storage units
+Industrial and Manufacturing
+None
+0.1/1,000
+Off-Site Services
+1.2/1,000
+0.1/1,000
+Warehouse and Distribution
+< 150,000 sq ft: 0.8/1,000
+> 150,000 sq ft: 0.4/1,000
+All: 0.1/1,000
+Waste-Related Facility
+7.0
+None
+Wholesale and Equipment Rental
+1.2/1,000
+0.1/1,000
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 22-06 §2; Ord. 22-09 §2; Ord. 22-10 §2; Ord. 23-08, 12/5/2023; Ord. No. 24-05, 4/23/2024)

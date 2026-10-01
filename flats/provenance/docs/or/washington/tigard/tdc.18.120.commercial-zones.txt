@@ -1,0 +1,504 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.100. BASE ZONES
+
+Chapter 18.120. Commercial Zones
+
+§ 18.120.010. Purpose.
+
+The purpose of this chapter is to implement the goals and policies of the comprehensive plan related to land use planning and economic development by:
+
+A.
+
+Ensuring that a full range of goods, services, and employment opportunities are available throughout the city so that residents can fulfill all or most of their needs within walking or biking distance of their homes;
+
+B.
+
+Ensuring that a full range of economic activities and job opportunities are available throughout the city; and
+
+C.
+
+Prioritizing sustainability and resilience by reducing distance between services, employment, and residences and by incentivizing sustainable development.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. No. 24-05, 4/23/2024)
+
+§ 18.120.020. List of Base Zones.
+
+A.
+
+COM: Commercial zone. The COM zone is designed to accommodate a full range of retail, office, and civic uses with a citywide and regional trade area. Except where nonconforming, residential uses are limited to mixed-use developments.
+
+B.
+
+MU-CBD: Mixed-Use Central Business District zone. The MU-CBD zone is designed to provide a pedestrian-friendly urban village in downtown Tigard. A wide variety of commercial, civic, employment, mixed-use, apartments, and rowhouses are allowed.
+
+C.
+
+MUE: Mixed-Use Employment zone. The MUE zone is designed to accommodate a wide range of small- to medium-format employment uses, including commercial and low-impact industrial uses. Residential uses are allowed only where employment activity is a primary use.
+
+D.
+
+MUC: Mixed-Use Commercial zone. The MUC zone is designed to allow a range of commercial activity, mixed-use development, and standalone residential uses. It is intended to encourage pedestrian activity, attractive transit options, and urban gathering spaces.
+
+E.
+
+MUR: Mixed-Use Residential zone. The MUR zone is designed for predominantly residential areas where mixed-uses are allowed when supportive of the residential use.
+
+F.
+
+TMU: Triangle Mixed-Use zone. The TMU zone is intended to be an active, urban, multimodal, and mixed-use district that accommodates a variety of housing options and uses, promotes pedestrian-oriented development, and limits new auto-oriented development.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. No. 24-05, 4/23/2024)
+
+§ 18.120.030. Land Use Standards.
+
+A.
+
+General provisions. A list of allowed, restricted, conditional, and prohibited uses in commercial zones is provided in Table 18.120.1, except for uses in the MU-CBD zone, which are provided in Chapter 18.650, Tigard Downtown Plan District; in the TMU zone, which are provided in Chapter 18.660, Tigard Triangle Plan District; and in the Washington Square Regional Center Plan District, which are provided in Chapter 18.670, Washington Square Regional Center Plan District. If a use category is not listed, see Section 18.60.030.
+
+1.
+
+Allowed (A). Uses that are allowed, subject to all of the applicable provisions of this title.
+
+2.
+
+Restricted (R). Uses that are subject to special requirements, exceptions, or restrictions provided in Subsections 18.120.030.D-G. Use restrictions may be modified through an adjustment application as provided in Chapter 18.715, Adjustments or Chapter 18.770, Planned Developments.
+
+3.
+
+Conditional (C). Uses that require the approval of the Hearings Officer using discretionary criteria. The approval process and criteria are provided in Chapter 18.740, Conditional Uses.
+
+4.
+
+Prohibited (P). Uses that are not allowed under any circumstance.
+
+B.
+
+Additional standards or restrictions may apply in plan districts.
+
+C.
+
+Development standards. The standards for residential development in commercial zones are located in the applicable housing type chapter in 18.200 Residential Development Standards. The standards for nonresidential development in commercial zones — including mixed-use development are located in Chapter 18.320, Commercial Zone Development Standards, and the applicable plan district chapter, if any.
+
+Table 18.120.1 Commercial Zone Use Standards  Table 18.120.1 Commercial Zone Use Standards  Table 18.120.1 Commercial Zone Use Standards  Table 18.120.1 Commercial Zone Use Standards  Table 18.120.1 Commercial Zone Use Standards
+Use Categories                                COM                                           MUC                                           MUE                                           MUR
+Residential Use Category                      Residential Use Category                      Residential Use Category                      Residential Use Category                      Residential Use Category
+Residential Use                               R                                             A                                             R                                             A
+Civic Use Categories                          Civic Use Categories                          Civic Use Categories                          Civic Use Categories                          Civic Use Categories
+Basic Utility                                 R/C                                           R/C                                           R/C                                           R/C
+Cemetery                                      P                                             P                                             P                                             P
+Detention Facility                            P                                             P                                             P                                             P
+Government Services                           A                                             A                                             A                                             A
+Railroad Yard                                 P                                             P                                             P                                             P
+School or Religious Facility                  C                                             C                                             C                                             C
+Temporary Shelter                             C                                             C                                             C                                             C
+Transportation and Utility Corridor           A                                             A                                             A                                             A
+Wireless Communications Facility              R                                             R                                             R                                             R
+Commercial Use Categories                     Commercial Use Categories                     Commercial Use Categories                     Commercial Use Categories                     Commercial Use Categories
+Adult Entertainment                           C                                             P                                             P                                             P
+Commercial Lodging                            A                                             A                                             A                                             A
+Indoor Sales and Services                     R                                             R                                             R                                             R
+Major Event Entertainment                     A                                             C                                             P                                             P
+Mobility Hub                                  A                                             R                                             R                                             C
+Motor Vehicle Fuel Sales                      A                                             P                                             P                                             P
+Motor Vehicle Sales and Rental                A                                             R                                             R                                             P
+Motor Vehicle Servicing                       A                                             R                                             R                                             P
+Non-Accessory Parking                         R                                             R                                             R                                             P
+Office                                        A                                             A                                             A                                             R
+Outdoor Sales and Services                    A                                             P                                             P                                             P
+Self-Service Storage                          R                                             P                                             P                                             P
+Industrial Use Categories                     Industrial Use Categories                     Industrial Use Categories                     Industrial Use Categories                     Industrial Use Categories
+Industrial and Manufacturing                  R                                             R                                             R                                             P
+Off-Site Services                             R                                             P                                             R                                             P
+Warehouse and Distribution                    P                                             P                                             A/R                                           P
+Waste-Related Facility                        P                                             P                                             P                                             P
+Wholesale and Equipment Rental                R                                             P                                             A/R                                           P
+
+A = Allowed
+R = Restricted
+C = Conditional Use
+P = Prohibited
+
+D.
+
+COM Zone Use restrictions.
+
+1.
+
+Residential Use. Any combination of residential and nonresidential uses proposed for the same site and not contained in a mixed-use development requires planned development review.
+
+2.
+
+Basic Utility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+Data centers are conditionally allowed only on or above the second story of a mixed-use development.
+
+3.
+
+Wireless Communications Facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+4.
+
+Indoor Sales and Services. Outdoor animal kennels are prohibited. All animal kennels associated with breeding, boarding, or sales must be contained completely within a building.
+
+5.
+
+Non-Accessory Parking. This use is allowed only as structured parking with at least two floors of parking.
+
+6.
+
+Self-Service Storage. This use is allowed only on or above the second story of a mixed-use development.
+
+7.
+
+Industrial and Manufacturing. All inventory and materials, except parking, must be contained completely within a building.
+
+8.
+
+Off-Site Services.
+
+a.
+
+The maximum gross floor area is 20,000 square feet per tenant.
+
+b.
+
+A maximum of 20 vehicles may be parked overnight on site.
+
+c.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+9.
+
+Wholesale and Equipment Rental.
+
+a.
+
+The maximum gross floor area is 20,000 square feet per tenant.
+
+b.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+E.
+
+MUC Zone Use restrictions.
+
+1.
+
+Basic Utility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+Data centers are conditionally allowed only on or above the second story of a mixed-use development.
+
+2.
+
+Wireless Communications Facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+3.
+
+Indoor Sales and Services.
+
+a.
+
+The maximum gross floor area is 30,000 square feet per tenant.
+
+b.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+c.
+
+Outdoor animal kennels are prohibited. All animal kennels associated with breeding, boarding, or sales must be contained completely within a building.
+
+d.
+
+Uses with drive-through services is prohibited.
+
+e.
+
+Uses in a campus are conditionally allowed.
+
+4.
+
+Mobility Hub. A maximum of 10 car charging stations is allowed per hub.
+
+5.
+
+Motor Vehicle Sales and Rental.
+
+a.
+
+The maximum gross floor area is 25,000 square feet per tenant.
+
+b.
+
+All activities and storage, including any vehicle inventory, must be contained completely within a building.
+
+6.
+
+Motor Vehicle Servicing.
+
+a.
+
+The maximum gross floor area is 25,000 square feet per tenant.
+
+b.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+c.
+
+Drive-through services are prohibited.
+
+7.
+
+Non-Accessory Parking. This use is allowed only as structured parking with at least two floors of parking.
+
+8.
+
+Industrial and Manufacturing. All inventory and materials, except parking, must be contained completely within a building.
+
+F.
+
+MUE Zone Use restrictions.
+
+1.
+
+Residential Use.
+
+a.
+
+Any combination of residential and nonresidential use proposed for the same site and not contained in a mixed-use development requires planned development review.
+
+b.
+
+Allowed civic, allowed commercial, or restricted industrial uses must make up at least 30 percent of the gross floor area.
+
+2.
+
+Basic Utility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+Data centers are conditionally allowed only on or above the second story of a mixed-use development.
+
+3.
+
+Wireless Communications Facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+4.
+
+Indoor Sales and Services.
+
+a.
+
+The maximum gross floor area is 30,000 square feet per tenant.
+
+b.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+c.
+
+Outdoor animal kennels are prohibited. All animal kennels associated with breeding, boarding, or sales must be contained completely within a building.
+
+d.
+
+Uses with drive-through services are prohibited.
+
+e.
+
+Uses in a campus are conditionally allowed.
+
+5.
+
+Mobility Hub. A maximum of 10 car charging stations is allowed per hub.
+
+6.
+
+Motor Vehicle Sales and Rental.
+
+a.
+
+The maximum gross floor area is 25,000 square feet per tenant.
+
+b.
+
+All activities and storage, including any vehicle inventory, must be contained completely within a building.
+
+7.
+
+Motor Vehicle Servicing. All activities and storage, including any vehicle inventory, must be contained completely within a building.
+
+8.
+
+Non-Accessory Parking. This use is allowed only as structured parking with at least two floors of parking.
+
+9.
+
+Industrial and Manufacturing. All inventory and materials, except parking, must be contained completely within a building.
+
+10.
+
+Off-Site Services.
+
+a.
+
+The maximum gross floor area is 20,000 square feet per tenant.
+
+b.
+
+A maximum of 20 vehicles may be parked overnight on site.
+
+c.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+11.
+
+Warehouse and Distribution.
+
+a.
+
+This use is allowed when providing off-site storage and distribution support to an existing manufacturing use located in Tigard.
+
+b.
+
+Activities that are accessory to an allowed primary use are allowed.
+
+c.
+
+Properties shown in the Warehouse and Wholesale Area of Additional Flexibility on Map 18.120.A are also allowed a maximum of 30,000 gross square feet per tenant space. The following buildings are exempt from this limit:
+
+i.
+
+Oregon Business Park 1 Buildings 10 (16600-40 SW 72nd Ave) and 12 (16650-98 SW 72nd Ave).
+
+ii.
+
+Oregon Business Park 3 Buildings D (7342-7380 SW Kable Lane), I (15605-705 SW 72nd Ave), and G (7319 SW Kable Lane).
+
+12.
+
+Wholesale and Equipment Rental.
+
+a.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+b.
+
+The maximum gross floor area is 20,000 square feet per tenant for properties located outside the Warehouse and Wholesale Area of Additional Flexibility as shown on Map 18.120.A.
+
+c.
+
+The maximum gross floor area is 35,000 square feet per tenant space for properties located within the Warehouse and Wholesale Area of Additional Flexibility as shown on Map 18.120.A. The following buildings are exempt from this limit:
+
+i.
+
+Oregon Business Park 1 Buildings 10 (16600-40 SW 72nd Ave) and 12 (16650-98 SW 72nd Ave).
+
+ii.
+
+Oregon Business Park 3 Buildings D (7342-7380 SW Kable Lane), I (15605-705 SW 72nd Ave), and G (7319 SW Kable Lane).
+
+Map 18.120.A
+
+G.
+
+MUR Zone Use restrictions.
+
+1.
+
+Basic Utility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+Data centers are conditionally allowed only on or above the second story of a mixed-use development.
+
+2.
+
+Wireless Communications Facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+3.
+
+Indoor Sales and Services. This use is allowed only as part of a mixed-use development.
+
+4.
+
+Office. This use is allowed only as part of a mixed-use development.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. 22-09 §2; Ord. No. 24-05, 4/23/2024)
+
+§ 18.120.040. Housing Types.
+
+A.
+
+A housing type is not a use category. It describes a type of development that contains a Residential use.
+
+B.
+
+A list of allowed, limited, and prohibited housing types in commercial zones is provided in Table 18.120.2. The terms and abbreviations in Table 18.120.2 are as follows:
+
+1.
+
+Yes, allowed (Y). Housing types that are allowed.
+
+2.
+
+No, prohibited (N). Housing types that are not allowed under any circumstance.
+
+C.
+
+All housing types are subject to the standards and provisions of the applicable development standards chapter or applicable plan district chapter, if any. The applicable chapter for each housing type is provided in Table 18.120.2.
+
+D.
+
+All allowed housing types may be built on site or manufactured off site.
+
+Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types
+Housing Types                                 Applicable Chapter                            COM                                           MUC                                           MUE                                           MUR
+Accessory Dwelling Units                      18.220                                        N                                             N                                             N                                             Y
+Apartments                                    18.230                                        N                                             Y                                             N                                             Y
+Cottage Clusters                              18.240                                        N                                             N                                             N                                             Y
+Courtyard Units                               18.250                                        N                                             N                                             N                                             Y
+Mobile Home Parks                             18.260                                        N                                             N                                             N                                             N
+Quads                                         18.270                                        N                                             N                                             N                                             Y
+Rowhouses                                     18.280                                        N                                             Y                                             N                                             Y
+Small Form Residential                        18.290                                        N                                             N                                             N                                             Y
+Mixed-Use Development                         18.320                                        Y                                             Y                                             Y                                             Y
+
+Y = Yes, Allowed
+L = Limited
+N = No, Prohibited
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. No. 24-05, 4/23/2024)

@@ -1,0 +1,68 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.700. LAND USE APPLICATIONS AND REVIEW TYPES
+
+Chapter 18.720. Annexations
+
+§ 18.720.010. Purpose.
+
+The purpose of this chapter is to establish procedures and criteria for annexations, under the provisions of Metro Code Chapter 3.09 and Oregon Revised Statutes including, but not limited to, ORS Chapter 222. The provisions of this chapter are intended to achieve the orderly and efficient annexation of lands to the city that will result in providing a complete range of urban services and consistency with the comprehensive plan.
+
+(Ord. 17-22 §2)
+
+§ 18.720.020. Approval Process.
+
+A.
+
+A quasi-judicial annexation application is processed through a Type III-Modified procedure, as provided in Section 18.710.090. Quasi-judicial annexations are decided by the City Council with a recommendation by Planning Commission.
+
+B.
+
+A legislative annexation application is processed through the Legislative procedure, as provided in Section 18.710.120.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 19-09 §1; Ord. 20-01 §1; Ord. 22-06 §2)
+
+§ 18.720.030. Approval Criteria.
+
+A.
+
+Approval criteria. The approval authority will approve or approve with modification an annexation application when all of the following are met:
+
+1.
+
+The annexation complies with Metro Code 3.09; and
+
+2.
+
+The annexation is in the city's best interest.
+
+B.
+
+Assignment of comprehensive plan and zoning designations. The comprehensive plan designation and the zoning designation placed on the property is the city's base zone that most closely implements the city's or county's comprehensive plan map designation. The assignment of these designations occurs automatically and concurrently with the annexation. In the case of land that carries county designations, the city will convert the county's comprehensive plan map and zoning designations to the city designations that are the most similar. A zone change is required if the applicant requests a comprehensive plan map or zoning map designation other than the existing designations. A request for a zone change may be processed concurrently with an annexation application or after the annexation has been approved. Within the Washington Square Regional Center, the assignment of city comprehensive plan and zoning designations will be as provided in Chapter 18.670, Washington Square Regional Center Plan District.
+
+C.
+
+Conversion table. Table 18.720.1 summarizes the conversion of the county's plan and zoning designations to city designations that are most similar.
+
+Table 18.720.1 Conversion Table for County and City Comprehensive Plan and Zoning Designations  Table 18.720.1 Conversion Table for County and City Comprehensive Plan and Zoning Designations  Table 18.720.1 Conversion Table for County and City Comprehensive Plan and Zoning Designations
+Washington County Land Use Districts/Plan Designation                                           City of Tigard Zoning                                                                           City of Tigard Zone Name
+R-5 Res. 5 units per acre                                                                       RES-B                                                                                           Residential-B
+R-6 Res. 6 units per acre                                                                       RES-C                                                                                           Residential-C
+R-9 Res. 9 units per acre                                                                       RES-D                                                                                           Residential-D
+R-15 Res. 15 units per acre                                                                     RES-E                                                                                           Residential-E
+R-24 Res. 24 units per acre                                                                     RES-E                                                                                           Residential-E
+Office Commercial (OC)                                                                          MUE                                                                                             Mixed-Use Employment
+Neighborhood Commercial (NC)                                                                    MUR                                                                                             Mixed-Use Residential
+General Commercial (GC)                                                                         COM                                                                                             Commercial
+Industrial (IND)                                                                                IND                                                                                             Industrial
+Institutional (INST)                                                                            Equivalent to adjacent County base zone                                                         Equivalent to adjacent County base zone
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 22-06 §2; Ord. No. 24-05, 4/23/2024)

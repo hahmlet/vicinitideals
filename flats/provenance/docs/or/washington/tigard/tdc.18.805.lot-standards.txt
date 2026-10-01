@@ -1,0 +1,237 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.800. LOT CREATION AND MODIFICATION
+
+Chapter 18.805. Lot Standards
+
+§ 18.805.010. Purpose.
+
+The purpose of this chapter is to provide standards for the creation or modification of lots.
+
+(Ord. 22-06 §2)
+
+§ 18.805.020. Applicability.
+
+The standards of this chapter apply to new lots that are created through a partition or subdivision and to existing lots that are reconfigured through a lot line adjustment or lot consolidation. Additional lot standards may apply to certain types of uses or development as provided in this title.
+
+(Ord. 22-06 §2)
+
+§ 18.805.030. Residential Lot Standards.
+
+A.
+
+Lot size. Dimensional standards for lots created or configured for residential development are provided in Table 18.805.1 for all zones where residential development is allowed.
+
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Table 18.805.1
+Dimensional Standards for Residential Lots by Housing Type
+Standard
+RES-A
+RES-B
+RES-C
+RES-D
+RES-E
+MU-CBD
+MUC
+MUR
+Minimum Lot Size (ft)
+Minimum Lot Size (ft)
+Minimum Lot Size (ft)
+Minimum Lot Size (ft)
+Minimum Lot Size (ft)
+Minimum Lot Size (ft)
+Minimum Lot Size (ft)
+Minimum Lot Size (ft)
+Minimum Lot Size (ft)
+Apartments
+3,000
+1,480
+None
+None
+None
+Cottage Cluster
+20,000
+7,500
+7,000
+7,000
+7,000
+Courtyard Unit
+20,000
+7,500
+7,000
+7,000
+7,000
+Quad
+10,000
+7,500
+5,000
+3,000
+None
+Rowhouse
+1,500
+1,500
+1,250
+750
+None
+None
+None
+Small Form Residential
+20,000
+7,500
+5,000
+3,000
+Maximum Lot Size (ft)
+Maximum Lot Size (ft)
+Maximum Lot Size (ft)
+Maximum Lot Size (ft)
+Maximum Lot Size (ft)
+Maximum Lot Size (ft)
+Maximum Lot Size (ft)
+Maximum Lot Size (ft)
+Maximum Lot Size (ft)
+Apartments
+None
+None
+None
+None
+None
+Cottage Cluster
+32,499
+32,499
+32,499
+32,499
+32,499
+Courtyard Unit
+25,999
+25,999
+25,999
+25,999
+25,999
+Quad
+11,500
+9,000
+6,250
+6,250
+5,000
+Rowhouse
+3,000
+3,000
+1,750
+1,250
+1,000
+None
+870
+Small Form Residential
+25,000
+9,375
+6,250
+3,750
+Minimum Lot Width (ft)
+Minimum Lot Width (ft)
+Minimum Lot Width (ft)
+Minimum Lot Width (ft)
+Minimum Lot Width (ft)
+Minimum Lot Width (ft)
+Minimum Lot Width (ft)
+Minimum Lot Width (ft)
+Minimum Lot Width (ft)
+Apartments
+None
+None
+None
+None
+None
+Cottage Cluster
+75
+50
+50
+None
+None
+Courtyard Unit
+75
+50
+50
+50
+None
+Quad
+75
+50
+50
+None
+None
+Rowhouse
+25
+25
+20
+None
+20
+None
+16
+Small Form Residential
+100
+50
+50
+None
+
+B.
+
+Lot shape. Each lot for quad, rowhouse, or small form residential development must be rectilinear in shape with straight side lot lines at right angles to front lot lines, and straight rear lot lines parallel to front lot lines, except where not practicable due to location along a street radius or because of existing natural features or lot lines. Side and rear lot lines that are segmented must not contain cumulative lateral changes in direction that exceed 10% of the distance between opposing lot corners, as measured using the process of Subsection 18.40.060.C.
+
+C.
+
+Lot frontage. Each lot must have a minimum of 40 feet of frontage on a public or private right-of-way, except for the following types of lots:
+
+1.
+
+Flag lots and rowhouse lots must have a minimum of 15 feet of frontage on a public or private right-of-way;
+
+2.
+
+Lots with curved frontages along cul-de-sacs or eyebrows must have a minimum of 20 feet of frontage on a public or private right-of-way as measured along the arc of the front lot line; and
+
+3.
+
+Lots at the terminus of a private street must have a minimum of 20 feet of frontage on a private right-of-way.
+
+D.
+
+Flag lots. Flag lots may only be created or configured through the provisions of Chapter 18.810, Lot Line Adjustments And Lot Consolidations or Chapter 18.820, Land Partitions. Flag lots are subject to the following:
+
+1.
+
+The minimum lot width and depth of a flag lot is 40 feet and is measured as provided in Section 18.40.080, and
+
+2.
+
+Any lot line may be designated as the front lot line provided that no side setback is reduced to less than 10 feet.
+
+(Ord. 22-06 §2; Ord. No. 24-05, 4/23/2024)
+
+§ 18.805.040. Nonresidential Lot Standards.
+
+There are no minimum lot size or lot width standards for nonresidential or mixed-use development.
+
+(Ord. 22-06 §2; Ord. No. 24-05, 4/23/2024)

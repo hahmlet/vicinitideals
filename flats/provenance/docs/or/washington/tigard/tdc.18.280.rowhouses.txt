@@ -1,0 +1,273 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.200. RESIDENTIAL DEVELOPMENT STANDARDS
+
+Chapter 18.280. Rowhouses
+
+§ 18.280.010. Purpose.
+
+The purpose of this chapter is to provide clear and objective standards for rowhouse development to meet the requirements of state law and Oregon Statewide Planning Goal 10. Rowhouse development has the following characteristics:
+
+A.
+
+The development consists of dwelling units that are attached and share common side walls;
+
+B.
+
+The rowhouses engage directly with the street through their placement and the location of their entrances;
+
+C.
+
+Off-street parking areas are efficiently designed with shared access and alley access where practicable to minimize the impact of accessways on the pedestrian realm; and
+
+D.
+
+The overall design emphasizes sustainable development patterns and climate resiliency.
+
+(Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-06 §2)
+
+§ 18.280.020. Applicability.
+
+A.
+
+The standards of this chapter apply to rowhouse development in the RES-A, RES-B, RES-C, RES-D, RES-E, MUC, and MUR zones. Additional standards apply in the River Terrace Plan District, as provided in Chapter 18.640, River Terrace Plan District. An applicant may elect to apply the standards of Chapter 18.230, Apartments, when proposing rowhouse development in base zones where apartment development is allowed.
+
+B.
+
+Rowhouse development in the Bridgeport Village Plan District is subject to the standards of Chapter 18.620, Bridgeport Village Plan District.
+
+C.
+
+This chapter does not apply to rowhouse development in the MU-CBD and TMU zones. Rowhouse development in these zones is subject to the approval processes and standards of Chapter 18.650, Tigard Downtown Plan District, and Chapter 18.660, Tigard Triangle Plan District, respectively.
+
+(Ord. 18-28 §1; Ord. 19-09 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. No. 24-05, 4/23/2024)
+
+§ 18.280.030. Compliance.
+
+Rowhouse development must comply with the clear and objective standards of Section 18.280.040 and all other applicable standards of this title.
+
+(Ord. 18-28 §1; Ord. 19-09 §1; Ord. 22-06 §2)
+
+§ 18.280.040. Clear and Objective Standards.
+
+A.
+
+Unit count. A rowhouse development must contain at least two dwelling units. There is no maximum number of dwelling units, except that in the RES-A through RES-C zones, the maximum number of dwelling units per grouping is five.
+
+B.
+
+Lot size and width. Dimensional lot standards are provided in Chapter 18.805 Lot Standards. Rowhouse development is not allowed on lots that do not meet the dimensional lot standards for the base zone.
+
+C.
+
+Development standards. Development standards are provided in Table 18.280.1.
+
+Table 18.280.1 Development Standards for Rowhouses  Table 18.280.1 Development Standards for Rowhouses  Table 18.280.1 Development Standards for Rowhouses  Table 18.280.1 Development Standards for Rowhouses  Table 18.280.1 Development Standards for Rowhouses  Table 18.280.1 Development Standards for Rowhouses
+Standard                                            RES-A and RES-B                                     RES-C and RES-D                                     RES-E                                               MUR-1                                               MUR-2
+Minimum Setbacks (ft)                               Minimum Setbacks (ft)                               Minimum Setbacks (ft)                               Minimum Setbacks (ft)                               Minimum Setbacks (ft)                               Minimum Setbacks (ft)
+- Front                                             20                                                  15                                                  15                                                  0                                                   10
+- Street side                                       20                                                  15                                                  10                                                  5                                                   10
+- Side [1]                                          5                                                   5                                                   5                                                   5                                                   5
+- Rear [2]                                          25                                                  15                                                  15                                                  15                                                  15
+Maximum Setbacks (ft)                               Maximum Setbacks (ft)                               Maximum Setbacks (ft)                               Maximum Setbacks (ft)                               Maximum Setbacks (ft)                               Maximum Setbacks (ft)
+- Front                                             20                                                  20                                                  20                                                  20                                                  20
+- Street side                                       20                                                  20                                                  20                                                  20                                                  20
+Maximum Height                                      35                                                  35                                                  45                                                  75                                                  45
+Maximum Lot Coverage                                80%                                                 80%                                                 80%                                                 80%                                                 80%
+Minimum Landscape Area                              20%                                                 20%                                                 20%                                                 20%                                                 20%
+
+Notes:  Notes:
+[1]     This standard does not apply to a common wall lot line where the dwelling units are attached.
+[2]     There is no rear setback requirement when the rear property line abuts an alley.
+
+D.
+
+Parking. The provisions and standards of Chapter 18.410, Off-Street Parking and Loading, apply.
+
+1.
+
+Access. Access to off-street parking areas for rowhouse development may be taken through tandem driveways, shared access, or from an alley. The following requirements apply to each situation in addition to the relevant sections of Chapter 18.920, Access, Egress, and Circulation.
+
+a.
+
+Tandem driveways. If access is taken from a street other than an alley and access is not shared development-wide, the following standards apply. See Figure 18.280.1 for examples.
+
+i.
+
+A maximum of one driveway is allowed for every two dwelling units, except that each rowhouse grouping of three or more dwelling units may include one driveway that provides access to a single dwelling unit. Shared access is subject to the requirements of Subsection 18.920.030.C.
+
+ii.
+
+The minimum width for a driveway is 15 feet, except that a single unshared driveway may be 10 feet in width.
+
+iii.
+
+The maximum width for a driveway is 18 feet, except that the maximum width for a single unshared driveway is 12 feet.
+
+iv.
+
+Driveways must be located a minimum of 18 feet apart to minimize vehicle conflicts with pedestrians. Distance between driveways is measured along the front property line.
+
+Figure 18.280.1 Access Configuration for Tandem Driveways
+
+b.
+
+Shared access. If access for all dwelling units in a rowhouse development is shared and off-street parking areas are provided at the side or rear of a rowhouse development rather than at the front of each dwelling unit, the minimum paved width of the shared access is 20 feet and the maximum width is 24 feet.
+
+Figure 18.280.2 Access Configuration for Shared Access
+
+c.
+
+Alley access. If access is taken from an alley, the following standards apply:
+
+i.
+
+A maximum of one access is allowed for each dwelling unit.
+
+ii.
+
+The minimum paved width of an alley access is 10 feet.
+
+2.
+
+Location. Off-street parking areas, including detached garages and carports, must be located a minimum of 20 feet from any street property line, except alley property lines, where no minimum setback is required.
+
+3.
+
+Garages and carports. Garages and carports in rowhouse developments are subject to the following:
+
+a.
+
+Detached garages or carports must be located a minimum of 40 feet from a street property line where rowhouses provide main entrances.
+
+b.
+
+The maximum size for a detached garage or carport is 200 square feet per rowhouse served by the structure.
+
+c.
+
+The maximum height for a detached garage or carport is 15 feet.
+
+4.
+
+Screening. Screening of parking areas is not required, except that in the RES-A through RES-C zones, off-street parking areas provided at the side or rear of buildings and not in garages must be screened from adjacent properties to the S-3 standard, as provided in Table 18.420.2. The required screening must be provided on the same site as the development.
+
+E.
+
+Pedestrian access. Rowhouse developments of five or more dwelling units must provide a paved, accessible pedestrian path that connects the main entrance of each rowhouse to the following:
+
+1.
+
+Sidewalks in the right-of-way abutting the site;
+
+2.
+
+Common buildings such as laundry and recreation facilities;
+
+3.
+
+Parking areas; and
+
+4.
+
+Common open space and play areas.
+
+F.
+
+Service areas. Service areas including but not limited to shared waste collection areas and utility cabinets must not be located in required setbacks and must be screened to the S-1 standard, as provided in Table 18.420.2.
+
+G.
+
+Dwelling unit definition. Each dwelling unit must include at least one of the following on the street-facing facade:
+
+1.
+
+A roof dormer that is a minimum of four feet in width,
+
+2.
+
+A balcony that is a minimum of two feet in depth and accessible from an interior room,
+
+3.
+
+A bay window that projects a minimum of two feet from the facade, or
+
+4.
+
+A facade that is offset a minimum of two feet in depth from the neighboring dwelling unit.
+
+H.
+
+Main entrance. The main entrance of each rowhouse must face the street. If a rowhouse has more than one street property line, the entrance may face either street.
+
+I.
+
+Porches. Each rowhouse in a grouping must include a porch that is a minimum of 48 square feet in area with no horizontal dimension less than six feet. A balcony on the same facade as the main entrance may substitute for a front porch, provided that the following are met:
+
+1.
+
+The area of the balcony must be a minimum of 48 square feet,
+
+2.
+
+The balcony must be a minimum of eight feet in width,
+
+3.
+
+The floor of the balcony must be a maximum of 15 feet above grade, and
+
+4.
+
+The balcony must be accessible from the interior living space of the house.
+
+J.
+
+Roofs. Roofs must be sloped, with a minimum pitch of 4/12 and a maximum pitch of 14/12, except that a roof may be flat if it meets one of the following:
+
+1.
+
+The space on top of the roof is used as a deck or balcony that is no more than 150 square feet in area and is accessible from an interior room; or
+
+2.
+
+The roof line includes a cornice that extends at least six inches from the facade and is a minimum of 12 inches in height.
+
+K.
+
+Exterior staircases. Exterior staircases to any story above the first story of a rowhouse are not allowed.
+
+L.
+
+Windows. A minimum of 12% of the area of all street-facing facades on each individual dwelling unit must include windows or entrance doors. Window area is the aggregate area of the glass within each window, including any interior grids, mullions, or transoms. Door area is the portion of a door, other than a garage door, that moves and does not include the frame. Half of the window area in the door of an attached garage may count toward meeting this standard.
+
+(Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. 22-10 §2)
+
+§ 18.280.050. Accessory Structures.
+
+Accessory structures are allowed subject to the following standards:
+
+A.
+
+The maximum size of accessory structures is 528 square feet;
+
+B.
+
+The maximum height of accessory structures is 15 feet;
+
+C.
+
+Accessory structures are prohibited within the front setback; and
+
+D.
+
+Accessory structures may be located within the side or rear setback provided they are a minimum of five feet from the side and rear property lines.
+
+(Ord. 18-28 §1; Ord. 22-06 §2)

@@ -1,0 +1,180 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.100. BASE ZONES
+
+Chapter 18.130. Industrial Zones
+
+§ 18.130.010. Purpose.
+
+The purpose of this chapter is to implement the goals and policies of the comprehensive plan related to land use planning and economic development by:
+
+A.
+
+Ensuring that a full range of economic activities and job opportunities are available throughout the city;
+
+B.
+
+Promoting the efficient use of the city's limited industrial land supply by preserving industrial land for job-dense industries; and
+
+C.
+
+Promoting more carbon responsible development by reducing the distance between services, employment, and residences.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. No. 24-05, 4/23/2024)
+
+§ 18.130.020. Base Zone.
+
+The IND zone prioritizes manufacturing uses, with limited motor vehicle servicing, off-site services, warehouse and distribution, and wholesale and equipment rental uses. Some civic uses are also allowed. Uses in this zone are intended to foster job density, accessible career pathways, and living wage jobs. Industrial uses may have some off-site impacts including noise and odor.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. No. 24-05, 4/23/2024)
+
+§ 18.130.030. Land Use Standards.
+
+A.
+
+General Provisions. A list of allowed, restricted, conditional, and prohibited uses in the IND zone is provided in Table 18.130.1. If a use category is not listed, see Section 18.60.030.
+
+1.
+
+Allowed (A). Uses that are allowed, subject to all of the applicable provisions of this title.
+
+2.
+
+Restricted (R). Uses that are subject to special requirements, exceptions, or restrictions as provided in Subsection 18.130.030.C.
+
+3.
+
+Conditional (C). Uses that require the approval of the Hearings Officer using discretionary criteria. The approval process and criteria are provided in Chapter 18.740, Conditional Uses.
+
+4.
+
+Prohibited (P). Uses that are not allowed under any circumstance.
+
+B.
+
+Development standards. The standards for nonresidential development in industrial zones are located in Chapter 18.330, Industrial Zone Development Standards, and the applicable plan district chapter, if any.
+
+Table 18.130.1 Industrial Zone Use Standards  Table 18.130.1 Industrial Zone Use Standards
+Use Categories                                IND
+Residential Use Category                      Residential Use Category
+Residential Use                               P
+Civic Use Categories                          Civic Use Categories
+Basic Utility                                 R/C
+Cemetery                                      P
+Detention Facility                            P
+Government Services                           C
+Railroad Yard                                 P
+School or Religious Facility                  P
+Temporary Shelter                             P
+Transportation and Utility Corridor           A
+Wireless Communications Facility              R
+Commercial Use Categories                     Commercial Use Categories
+Adult Entertainment                           P
+Commercial Lodging                            P
+Indoor Sales and Services                     R
+Major Event Entertainment                     P
+Mobility Hub                                  P
+Motor Vehicle Fuel Sales                      P
+Motor Vehicle Sales and Rental                P
+Motor Vehicle Servicing                       A
+Non-Accessory Parking                         P
+Office                                        P
+Outdoor Sales and Services                    P
+Self-Service Storage                          P
+Industrial Use Categories                     Industrial Use Categories
+Industrial and Manufacturing                  A
+Off-Site Services                             R
+Warehouse and Distribution                    R
+Waste-Related Facility                        R
+Wholesale and Equipment Rental                R
+
+A = Allowed
+R = Restricted
+C = Conditional Use
+P = Prohibited
+
+C.
+
+IND zone use restrictions.
+
+1.
+
+Basic Utility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+Data centers are conditionally allowed only on or above the second story of a vertical mixed-use building.
+
+2.
+
+Wireless communications facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+3.
+
+Indoor sales and services.
+
+a.
+
+A maximum of one establishment with a maximum gross floor area of 5,000 square feet is allowed per lot.
+
+b.
+
+Uses with drive-through services are prohibited.
+
+c.
+
+All animal kennels associated with breeding, boarding, or sales must be contained completely within a building.
+
+4.
+
+Off-site services.
+
+a.
+
+The maximum allowed gross floor area is 20,000 square feet per tenant.
+
+b.
+
+A maximum of 20 vehicles may be parked overnight on-site.
+
+c.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+5.
+
+Waste-related facility. This use is allowed only as an accessory use to allowed or restricted industrial uses.
+
+6.
+
+Warehouse and distribution. This use is only allowed through the adjustment process as provided in Section 18.715.050.B.
+
+7.
+
+Wholesale and equipment rental.
+
+a.
+
+The maximum allowed gross floor area is 20,000 square feet per tenant.
+
+b.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-09 §2; Ord. No. 24-05, 4/23/2024)
+
+§ 18.130.040. (Reserved)
+
+(Repealed by Ord. No. 24-05, 4/23/2024)

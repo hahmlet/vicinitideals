@@ -1,0 +1,324 @@
+Close
+Print
+Resize:
+
+City of Tigard, OR
+
+[print date]
+
+Title 18. Development Code
+
+Part 18.00. INTRODUCTION
+
+Chapter 18.40. Measurements
+
+§ 18.40.010. Purpose.
+
+This chapter establishes the methods for measuring distances and other types of required measurements.
+
+(Ord. 17-22 §2)
+
+§ 18.40.020. Net Development Area.
+
+Net development area is determined by subtracting the following areas from the gross lot area:
+
+A.
+
+All sensitive lands, including:
+
+1.
+
+Land within the special flood hazard area,
+
+2.
+
+Land or slopes exceeding 25 percent,
+
+3.
+
+Drainage ways, and
+
+4.
+
+Wetlands;
+
+B.
+
+All land dedicated to the public for park purposes;
+
+C.
+
+All land dedicated for public rights-of-way;
+
+D.
+
+All land proposed for private streets; and
+
+E.
+
+Optionally, the applicant may subtract the following:
+
+1.
+
+Significant tree groves or habitat areas, as designated on the City of Tigard "Significant Tree Grove Map" or "Significant Habitat Areas Map", provided they are preserved in a tract; and
+
+2.
+
+Trails and paths, provided they are preserved in a public access easement.
+
+(Ord. 17-22 §2; Ord. 18-23 §2)
+
+§ 18.40.030. Distances.
+
+A.
+
+Horizontal distances. When determining distances for setbacks and structure dimensions, all distances are measured along a horizontal plane from the appropriate property line, edge of building, structure, storage area, parking area, or other object. These distances are not measured by following the topography of the land. See Figure 18.40.1.
+
+Figure 18.40.1 Horizontal Measurement
+
+B.
+
+Measurements are shortest distance. When measuring a required distance, such as the minimum distance between a structure and a lot line, the measurement is made at the shortest distance between the two objects or points. See Figure 18.40.2. Exceptions are stated in Subsections 18.40.030.C, E, and F.
+
+Figure 18.40.2 Closest Distance
+
+C.
+
+Measurements of vehicle travel areas. Measurement of a minimum travel distance for vehicles, such as garage entrance setbacks and stacking lane distances, are measured down the center of the vehicle travel area. For example, curving driveways and travel lanes are measured along the arc of the driveway or traffic lane. See Figure 18.40.3.
+
+Figure 18.40.3 Measuring Vehicle Travel Areas
+
+D.
+
+Measurement of distance between rights-of-way. Distance between rights-of-way is measured from centerline of one right-of-way to the centerline of the other right-of-way.
+
+E.
+
+Measurements involving a structure. Measurements involving a structure are made to the closest wall of the structure. Chimneys, eaves, building and window trim, and bay windows up to 12 feet in length, are not included in the measurement. Other items, such as covered porches and entrances, are included in the measurement. See Figure 18.40.2.
+
+F.
+
+Underground structures. Structures or portions of structures that are entirely underground are not included in measuring required distances. See Figure 18.40.4.
+
+Figure 18.40.4 Underground Structures
+
+G.
+
+Landscaping. Measurements of the dimensions of a landscaped area include only the area that is actually landscaped, and not any other elements, such as protective curbs.
+
+H.
+
+Measurement of distance from a bus stop or transit station. When measuring distance from a bus stop, the measurement is taken from the bus stop sign. When measuring distance from a transit station, the measurement is taken from the edge of the platform.
+
+I.
+
+Measurement of distance between transit line and property. The distance between a transit line and a property is the shortest straight-line distance from the property lines and the edge of the nearest right-of-way where fixed-route public transit service is provided.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 22-06 §2)
+
+§ 18.40.040. Building Height.
+
+A.
+
+Building height. The height of buildings is the vertical distance above the base point shown in Figures 18.40.6 and 18.40.7. The base point used is the method that yields the greater height of building. Methods to measure specific roof types are shown below and in Figure 18.40.5:
+
+1.
+
+Flat roof (pitch is 2 in 12 or less): Measure to the top of the parapet, or if there is no parapet, to the highest point of the roof.
+
+2.
+
+Mansard roof: Measure to the deck line.
+
+3.
+
+Gabled, hipped, or gambrel roof: Measure to the midpoint of the highest gable.
+
+4.
+
+Other roof shapes such as domed, shed, vaulted, or pyramidal shapes: Measure to the highest point.
+
+5.
+
+Stepped or terraced building: Measure to the highest point of any segment of the building.
+
+a.
+
+Base point 1 is the elevation of the highest adjacent sidewalk or ground surface within a 5-foot horizontal distance of the exterior wall of the building when such sidewalk or ground surface is not more than 10 feet above lowest grade. See Figure 18.40.6.
+
+b.
+
+Base point 2 is the elevation that is 10 feet higher than the lowest grade when the sidewalk or ground surface described in Subparagraph 18.40.040.A.5.a is more than 10 feet above lowest grade. See Figure 18.40.7.
+
+Figure 18.40.5 Building Height - Roof Types
+Figure 18.40.5 Building Height - Roof Types
+
+Figure 18.40.6 Building Height- Base Point 1  Figure 18.40.7 Building Height- Base Point 2
+
+B.
+
+Measuring height of other structures. The height of other structures such as flag poles and fences is the vertical distance from the ground level immediately under the structure to the top of a structure, excluding exempted portions. When chimneys and other objects are allowed to exceed the height of the base zone by a set amount, that set amount is measured to the top of these objects. Special measurement provisions are also provided below.
+
+1.
+
+Retaining walls and fences on top of retaining walls are measured from the ground level on the higher side of the retaining wall. See Figure 18.40.8.
+
+Figure 18.40.8 Measuring Height – Retaining Walls
+
+2.
+
+Measuring height of decks. Deck height is determined by measuring from the ground to the top of the floor of the deck if there is no rail or if the rail walls are more than 50 percent open, and from the ground to the top of the rails for all other situations.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1)
+
+§ 18.40.050. Building Facade Area.
+
+The area of a specific facade of a building is determined by adding the square footage of surface area of each section of wall visible from that perspective. For buildings with articulated facades, all of the walls are included in the total area. The total area does not include any roof area. See Figure 18.40.9.
+
+Figure 18.40.9 Building Facade Area
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 20-01 §1)
+
+§ 18.40.060. Lot Width, Lot Frontage, and Segmented Lot Lines.
+
+A.
+
+Lot width is measured from the front lot line as shown in the figure below.
+
+Figure 18.40.10 Lot Width
+
+B.
+
+Lot frontage is measured along the front lot line as shown in the figure below.
+
+Figure 18.40.11 Lot Frontage
+
+C.
+
+Segmented lot lines include one or more lateral changes in direction. A lateral change is measured by drawing a hypothetical straight line between opposing lot corners and measuring the horizontal distance between the hypothetical straight line and the furthest extent of the actual lot line perpendicular from the hypothetical straight line. Cumulative lateral changes are measured by repeating this process for each lateral change in direction and summing all the distances as shown in the figure below. In the case of flag lots, the pole portion of the lot is not included in the measurement of cumulative lateral changes; cumulative lateral changes are measured only between the opposing corners of the flag portion of the lot.
+
+Figure 18.40.12 Segmented Lot Lines
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1)
+
+§ 18.40.070. Setbacks.
+
+Setbacks are measured from the corresponding property line unless otherwise stated. For example, a side setback is measured from a side property line.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 22-06 §2)
+
+§ 18.40.080. Flag Lots.
+
+A.
+
+Lot area. The lot area of a flag lot must be provided entirely within the building site area exclusive of any access. See Figure 18.40.14.
+
+Figure 18.40.14 Lot Area for Flag Lots
+
+B.
+
+Lot width and depth. The lot width and depth for a flag lot is measured at the midpoint of opposite lot lines of the flag portion of the lot. See Figure 18.40.15.
+
+Figure 18.40.15 Lot Width and Depth for Flag Lots
+
+C.
+
+Front setback determination. The owner or developer of a flag lot may determine the location of the front setback, provided no side setback area is less than 10 feet.
+
+(Ord. 17-22 §2; Ord. 18-23 §2)
+
+§ 18.40.090. Tree Diameter.
+
+Tree diameter is measured in several ways:
+
+A.
+
+Existing trees are generally measured in terms of diameter inches at a height of 4.5 feet above the ground. The diameter may be determined by measuring the circumference of the tree trunk and dividing by 3.14. See Figure 18.40.16.
+
+Figure 18.40.16 Measuring Tree Size for Existing Trees
+
+B.
+
+When the trunk is at an angle or is on a slope, the trunk is measured at right angles to the trunk 4.5 feet along the center of the trunk axis, so the height is the average of the shortest and the longest sides of the trunk. See Figure 18.40.17.
+
+Figure 18.40.17 Measuring Existing Trees with an Angle or on Slopes
+
+C.
+
+When the trunk branches or splits less than 4.5 feet from the ground, the trunk is measured at the smallest circumference below the lowest branch. See Figure 18.40.18.
+
+Figure 18.40.18 Measuring Split Trunk Tree
+
+D.
+
+For multi-stemmed trees, the size is determined by measuring all the trunks at 4.5 feet from the ground and adding the total diameter of the largest trunk and half the diameter of each additional trunk; see Figure 18.40.19. A multi-stemmed tree has trunks that are connected above the ground and does not include individual trees growing close together or from a common root stock that do not have trunks connected above the ground.
+
+Figure 18.40.19 Measuring Multi-Stemmed Trees
+
+E.
+
+Nursery trees are measured in caliper inch, which is the diameter of the trunk 6 inches above the ground or root ball. For coniferous trees, the tree height may also be used.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1)
+
+§ 18.40.100. Floor Area.
+
+The total floor area of a building or structure is the sum of the floor area of all stories in the building. The floor area of a story of a building or structure is measured from the outside of exterior walls, and includes all stairwells, ramps, shafts, chases, and the area devoted to garages and structured parking.
+
+Figure 18.40.20 Floor Area of a Building
+
+(Ord. 18-23 §2; Ord. 19-09 §1)
+
+§ 18.40.110. Floor Area Ratio.
+
+The floor area ratio (FAR) is determined by dividing the gross floor area of all buildings or structures on a lot by the net development area of the lot.
+
+Figure 18.40.21 Floor Area Ratio
+
+(Ord. 18-23 §2)
+
+§ 18.40.120. Detached Accessory Dwelling Units.
+
+A.
+
+The square footage of a garage attached to a detached accessory dwelling unit is included in the square footage for the accessory dwelling unit.
+
+B.
+
+The height of an accessory dwelling unit is measured using the standards of Section 18.40.040. If an accessory dwelling unit is located above a detached accessory structure, such as a garage, then the combined height of the accessory structure and the accessory dwelling unit must not exceed the maximum height for a detached accessory dwelling unit.
+
+(Ord. 18-23 §2; Ord. 19-09 §1; Ord. 22-06 §2)
+
+§ 18.40.130. Residential Density.
+
+A.
+
+Residential density for apartments development. The minimum and maximum density for apartments is provided in Table 18.230.
+
+B.
+
+Residential density for other housing types. Minimum and maximum residential density for cottage clusters, courtyard units, rowhouses, quads, and small form residential development are determined by the minimum and maximum lot sizes provided in Chapter 18.805 Lot Standards and the applicable development standards chapters for each housing type in Chapter 18.200.
+
+C.
+
+Fractions. When a density calculation results in a fraction, the result will be rounded down to the nearest consecutive whole number.
+
+(Ord. 18-23 §2; Ord. 19-09 §1; Ord. 22-06 §2)
+
+§ 18.40.140. Window Area.
+
+A.
+
+Window area is the aggregate area of the glass within each window, including any interior grids, mullions, or transoms.
+
+B.
+
+Required window area must be clear glass and not mirrored, frosted, or reflective, except where specifically stated otherwise. Clear glass within doors may count toward meeting a window area standard.
+
+(Ord. 18-28 §1)
+
+§ 18.40.150. Parking Lots.
+
+Parking lot area is the sum of all paved surfaces on a development site that are designed for vehicle access, storage, maneuvering, and loading, inclusive of curbs, landscape islands, and the first five feet of any other landscape area adjacent to the paved areas. Paved areas for the exclusive use of pedestrians or bicycles, paved areas underneath conditioned space within a building, and parking structures of two stories or more, are excluded from this calculation, even if they are contiguous with the parking lot.
+
+(Ord. 23-08, 12/5/2023)

@@ -1,0 +1,84 @@
+label: Tigard
+kind: city
+eligible: true
+ingest:
+  geoid: null
+  juris_city_codes:
+  - TIGARD
+code:
+# Title 18, the Community Development Code, on General Code's eCode360
+# (TI5024), current through Ordinance 26-13 of July 14, 2026. Every chapter
+# is fetched from its print view. tigard-or.gov answers 403 behind Akamai and
+# was not worked around; nothing here needed it. eCode360 was fetched slowly,
+# one chapter every thirty seconds, with a browser User-Agent and no
+# challenge was met.
+- id: "tdc.18.30.definitions"
+  url: https://ecode360.com/print/TI5024?guid=43704988
+  title: Chapter 18.30 Definitions
+  allow_thin: true
+- id: "tdc.18.40.measurements"
+  url: https://ecode360.com/print/TI5024?guid=43705126
+  title: Chapter 18.40 Measurements
+- id: "tdc.18.60.use-categories"
+  url: https://ecode360.com/print/TI5024?guid=43705221
+  title: Chapter 18.60 Use Categories
+  allow_thin: true
+- id: "tdc.18.110.residential-zones"
+  url: https://ecode360.com/print/TI5024?guid=43705513
+  title: Chapter 18.110 Residential Zones
+- id: "tdc.18.120.commercial-zones"
+  url: https://ecode360.com/print/TI5024?guid=43705535
+  title: Chapter 18.120 Commercial Zones
+- id: "tdc.18.130.industrial-zones"
+  url: https://ecode360.com/print/TI5024?guid=43705552
+  title: Chapter 18.130 Industrial Zones
+- id: "tdc.18.140.parks"
+  url: https://ecode360.com/print/TI5024?guid=43705577
+  title: Chapter 18.140 Parks and Recreation Zone
+- id: "tdc.18.210.residential-general"
+  url: https://ecode360.com/print/TI5024?guid=43705636
+  title: Chapter 18.210 Residential General Provisions
+- id: "tdc.18.270.quads"
+  url: https://ecode360.com/print/TI5024?guid=43706108
+  title: Chapter 18.270 Quads
+- id: "tdc.18.280.rowhouses"
+  url: https://ecode360.com/print/TI5024?guid=43706147
+  title: Chapter 18.280 Rowhouses
+- id: "tdc.18.320.commercial-standards"
+  url: https://ecode360.com/print/TI5024?guid=43706275
+  title: Chapter 18.320 Commercial Zone Development Standards
+- id: "tdc.18.410.parking"
+  url: https://ecode360.com/print/TI5024?guid=43706464
+  title: Chapter 18.410 Off-Street Parking and Loading
+- id: "tdc.18.620.bridgeport"
+  url: https://ecode360.com/print/TI5024?guid=43707414
+  title: Chapter 18.620 Bridgeport Village Plan District
+- id: "tdc.18.640.river-terrace"
+  url: https://ecode360.com/print/TI5024?guid=43707570
+  title: Chapter 18.640 River Terrace Plan District
+- id: "tdc.18.650.downtown"
+  url: https://ecode360.com/print/TI5024?guid=43707834
+  title: Chapter 18.650 Tigard Downtown Plan District
+- id: "tdc.18.660.triangle"
+  url: https://ecode360.com/print/TI5024?guid=43708038
+  title: Chapter 18.660 Tigard Triangle Plan District
+- id: "tdc.18.670.wsrc"
+  url: https://ecode360.com/print/TI5024?guid=43708323
+  title: Chapter 18.670 Washington Square Regional Center Plan District
+- id: "tdc.18.720.annexations"
+  url: https://ecode360.com/print/TI5024?guid=43708692
+  title: Chapter 18.720 Annexations
+- id: "tdc.18.805.lot-standards"
+  url: https://ecode360.com/print/TI5024?guid=43709103
+  title: Chapter 18.805 Lot Standards
+- id: "tdc.18.840.sublot-plats"
+  url: https://ecode360.com/print/TI5024?guid=43709217
+  title: Chapter 18.840 Sublot Plats
+- id: "tdc.18.920.access"
+  url: https://ecode360.com/print/TI5024?guid=43709491
+  title: Chapter 18.920 Access, Egress, and Circulation
+- id: "tdc.18.930.vision-clearance"
+  url: https://ecode360.com/print/TI5024?guid=43709542
+  title: Chapter 18.930 Vision Clearance Areas
+  allow_thin: true
+zones: {}
