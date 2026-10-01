@@ -837,3 +837,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    the signing disputes so the number reopens there; (c) Gresham
    4.1400.pleasant-valley's page map no longer matches its source -- re-fetch
    then re-map.
+24. **Oregon City 16.12.035.F -- one driveway approach per two townhouses
+   (Steph 2026-09-30, from the page check).** "Townhouses shall have one
+   driveway approach for every two dwelling units (round up ...)". Not
+   encoded and not among the file's NOT ENCODED notes (E.1, the middle
+   housing "may be allowed one per two units", is). Read as a requirement it
+   asks two approaches for the four-unit pod on unit lots, where the plan
+   draws one shared drive; read as a cap it never binds. Pending Steph:
+   requirement or cap? Then encode or record the refusal.
