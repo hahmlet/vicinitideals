@@ -129,7 +129,12 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 381, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 385, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+# 381 -> 385 stated on 2026-10-01: Cornelius, a Washington County draft. The
+# 18.145.030 table's "none" parking maximum for Middle Housing; R-7's and
+# A-2's "Maximum density does not apply to ... quadplexes" / "This maximum
+# density does not apply to middle housing"; CR's "There is no maximum
+# density standard for this zoning district".
 # 380 -> 381 stated on 2026-09-30: the distance to transit is measured, and
 # Hillsboro SCC-SC's "Beyond 800 ft. of an LRT Station None" minimum height
 # is a banded exemption quoting that row.

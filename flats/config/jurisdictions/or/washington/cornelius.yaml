@@ -19,6 +19,156 @@ ingest:
   geoid: null
   juris_city_codes:
   - CORNELIUS
+crossrefs:
+  "11.20.01":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.20.010, Purpose (cmc.18.20.r-7.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.01"), not a pointer.
+  "11.20.04":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.20.040, Prohibited uses (cmc.18.20.r-7.txt L145)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.04"), not a pointer.
+  "11.20.101":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.95.010, Purpose (cmc.18.95.nro.txt L41)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.101"), not a pointer.
+  "11.20.11":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.25.010, Purpose (cmc.18.25.r-10.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.11"), not a pointer.
+  "11.20.14":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.25.040, Prohibited uses (cmc.18.25.r-10.txt L137)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.14"), not a pointer.
+  "11.20.15":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.25.050, Area, density and lot requirements (cmc.18.25.r-10.txt L205)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.15"), not a pointer.
+  "11.20.21":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.30.010, Purpose (cmc.18.30.mhp.txt L47)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.21"), not a pointer.
+  "11.20.22":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.30.020, Permitted uses (cmc.18.30.mhp.txt L89)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.22"), not a pointer.
+  "11.20.23":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.30.030, Prohibited uses (cmc.18.30.mhp.txt L107)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.23"), not a pointer.
+  "11.20.31":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.35.010, Purpose (cmc.18.35.a-2.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.31"), not a pointer.
+  "11.20.34":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.35.040, Prohibited uses (cmc.18.35.a-2.txt L149)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.34"), not a pointer.
+  "11.20.35":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.35.050, Area, density and lot requirements (cmc.18.35.a-2.txt L242)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.35"), not a pointer.
+  "11.20.51":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.45.010, Purpose (cmc.18.45.c-2.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.51"), not a pointer.
+  "11.20.52":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.45.020, Uses permitted outright (cmc.18.45.c-2.txt L73)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.52"), not a pointer.
+  "11.20.73":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.55.030, Conditional uses permitted (cmc.18.55.m-1.txt L123)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.73"), not a pointer.
+  "11.20.74":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.55.040, Prohibited uses (cmc.18.55.m-1.txt L147)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.74"), not a pointer.
+  "11.40.14":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.145.040, Off-street loading (cmc.18.145.parking.txt L495)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.40.14"), not a pointer.
+  "11.60.00":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.195.005, Applicability (cmc.18.195.definitions.txt L19 and after each letter)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.60.00"), not a pointer.
+  "18.105":
+    outcome: procedure
+    note: >-
+      Chapter 18.105, Conditional Use Permit. Every zone sends its
+      conditional uses to it ("subject to ... Chapter 18.105 CMC"); the
+      pod is permitted outright where it is admitted, and a conditional
+      path in a refusing zone (C-2's multi-family, CC's and CMU's ground
+      floor) is a hearing, not a figure. Not stored.
+  "18.110":
+    outcome: other_path
+    note: >-
+      Chapter 18.110, Planned Unit Development. A PUD "shall not be subject
+      to the provisions of this section" in the land-division and zone
+      chapters; the pod is screened on one lot, not on a PUD plan. Not
+      stored.
+  "18.135.020":
+    outcome: other_path
+    note: >-
+      Nonconforming structures: "Single-family residences existing at the
+      time of adoption" in CMU, CC and GMU. The pod is new construction.
+      Not stored.
+  "18.177.025":
+    outcome: other_building
+    note: >-
+      Marijuana retail, wholesale and dispensary definitions, in C-2's and
+      M-1's use lists. Not housing.
+  "5.35":
+    outcome: other_building
+    note: >-
+      Chapter 5.35, mobile vendors ('Type "A" mobile vendor'), listed among
+      the uses of most zones. Not housing.
+  "600":
+    outcome: other_building
+    note: >-
+      Half of "OAR Chapter 918, Division 600", the state's manufactured
+      dwelling rules, which MHP's standards supersede
+      (cmc.18.30.mhp.txt L45, L463). MHP refuses the pod.
+  "918":
+    outcome: other_building
+    note: >-
+      Half of "OAR Chapter 918, Division 600"; see 600.
 code:
 # eCode360's print view of one chapter at a time, by guid. Plain HTML text,
 # one paragraph to a line. Read 2026-09-30.
@@ -98,6 +248,21 @@ code:
 - id: "cmc.18.150.special-use"
   url: https://ecode360.com/print/CO4396?guid=47339454
   title: "CMC Chapter 18.150 Special Use Regulations"
+- id: "cmc.18.155.solar-access"
+  url: https://ecode360.com/print/CO4396?guid=47339521
+  title: "CMC Chapter 18.155 Solar Access for New Development"
+- id: "cmc.18.160.solar-balance-point"
+  url: https://ecode360.com/print/CO4396?guid=47339532
+  title: "CMC Chapter 18.160 Solar Balance Point"
+  # Tables A to C print one figure to a line, which the thin-text check
+  # reads as a landing page. Read whole on 2026-10-01.
+  allow_thin: true
+- id: "cmc.18.165.solar-access-permit"
+  url: https://ecode360.com/print/CO4396?guid=47339577
+  title: "CMC Chapter 18.165 Solar Access Permit"
+  # Lettered and numbered subsections one to a line, with few figures in
+  # them: a permit procedure. Read whole on 2026-10-01.
+  allow_thin: true
 - id: "cmc.18.195.definitions"
   url: https://ecode360.com/print/CO4396?guid=47339847
   title: "CMC Chapter 18.195 Definitions"
@@ -298,6 +463,32 @@ defaults:
 # the rear yard. In R-7 the four stalls may not sit in the rear 10 feet; in
 # R-10, the rear 25. The screen is loose by up to the rear setback on every
 # lot the court binds. Owed a field; in the handoff.
+#
+# NOT ENCODED, A DOUBT THAT CAN MOVE A VERDICT IN R-7 AND R-10: Chapter
+# 18.160, Solar Balance Point. It "applies to an application for a building
+# permit for all structures in all single-family zones"
+# (cmc.18.160.solar-balance-point.txt L23), and R-10 and R-7 are the code's
+# two "Single-Family" districts (cmc.18.05.general.txt L53-L54). The shade
+# point -- the peak of a roof pitched 5 in 12 or steeper, the eave of a
+# flatter one (definitions L652) -- may stand no higher than
+# H = (2 x SRL - N + 150) / 5, SRL being its distance from the northern lot
+# line and N the north-south lot dimension, counted at most 90 (L33-L46).
+# A 26 ft shade point must then be 35 ft from the northern lot line on a lot
+# 90 ft or more north to south, and 20 ft on a lot 60 ft north to south.
+# Where the street is on the lot's north side, R-7's 10 ft front yard does
+# not hold the roof that far back. Exemptions, (C) L286-L332: a lot created
+# under Chapter 18.155 and "not subject to the provisions of CMC
+# 18.155.020(E)" -- a subsection the stored 18.155.020 does not have
+# (cmc.18.155.solar-access.txt L21-L23) -- shade already cast by a building,
+# landform or kept tree, a slope over 20 percent facing away from south,
+# and shade falling only on an unheated wall or under 20 sq ft of south
+# glass. (G), L566-L592, cuts the yards by up to half where that is needed
+# to comply. No field holds a height that grows with the distance from one
+# named lot line, and the screen does not know which line faces north. A
+# question for Steph. Chapter 18.165, the solar access permit, protects a
+# solar feature from vegetation only (cmc.18.165.solar-access-permit.txt
+# L17); 18.155 governs the layout of a development (cmc.18.155.solar-access.txt
+# L29, 65 percent of lots under 10,000 sq ft solar-oriented).
 #
 # NOT ENCODED: 18.145.070 (A) and (B), a five-foot landscaped strip between
 # a parking area and an abutting right-of-way, and between a parking area

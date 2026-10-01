@@ -612,6 +612,13 @@ _NO_STANDARD = tuple(
         # requiring something, not to "does not have", which a code says of
         # far more than floors.
         r"\bdoes\s+not\s+have\s+standards\s+which\s+require\b",
+        # "single-family attached dwellings shall not be required to have a
+        # side yard on side(s) where structures are attached" -- Cornelius
+        # CMC 18.70.050 (D)(3)(a), the Core Residential common-wall side. The
+        # passive "not be required to have" puts two words between "not" and
+        # "required" that the pattern above does not allow; scoped to that
+        # exact phrase rather than to any gap between the two words.
+        r"\bnot\s+be\s+required\s+to\s+have\b",
         # "may be reduced to zero" -- Happy Valley's townhouse footnote, and
         # the one spelled number `_says` cannot see, because it is not
         # followed by a unit the way "five feet" is.

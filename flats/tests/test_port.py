@@ -511,7 +511,15 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # is valid. Round-tripping is the whole point of doing this as a port.
     rules = RuleSet(load_rules())
 
-    assert len(rules.layers) == 25  # 24 jurisdictions + the state layer
+    assert len(rules.layers) == 26  # 25 jurisdictions + the state layer
+    # 434 as of 2026-10-01: Cornelius, the seventh Washington County layer,
+    # drafted in a worktree. Its 12 zones are the live districts of CMC
+    # 18.05.030 and the use chapters behind them: R-7, R-10, A-2 and CR
+    # admit the pod on one lot; MHP, C-2, CC, CMU, GMU, LI, M-1 and the NRO
+    # overlay refuse. FP has no use list and C-1, CE, MSC and MSDO are
+    # repealed. Metro's hyphenless spellings and three county codes are
+    # zone_rulings, not zones.
+    #
     # 422 as of 2026-09-29, later again: Durham, the sixth Washington County
     # layer, from the same cloud session. Its 8 zones are the districts of
     # Durham Development Code Chapter 2: SDR admits the pod on one lot; MDR,
@@ -612,7 +620,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 422
+    assert sum(len(l.zones) for l in rules.layers.values()) == 434
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

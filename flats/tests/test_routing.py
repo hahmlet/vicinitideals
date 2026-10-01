@@ -280,6 +280,34 @@ OPEN = {
     "or/washington/sherwood 16.40.050 -> 16.40.040",
     "or/washington/king-city 16.114.040 -> 16.84.060",
     "or/washington/king-city 16.114.130 -> 16.132",
+    # 2026-10-01, Cornelius (a worktree draft). Ten rows, all open, none on
+    # a figure the pod needs:
+    # - 18.145.010 -> 18.145.020: a change of use that adds parking demand is
+    #   excused in CMU and CC "(see CMC 18.145.020(C))". Both zones refuse
+    #   the pod, and it is new construction, not a change of use.
+    # - 18.35.050 and 18.70.050 -> 18.150.010: A-2's and CR's yards apply
+    #   "Except as provided in CMC 18.150.010" (CR adds "for accessory
+    #   structures"). 18.150.010 is stored and read for the layer's
+    #   covered-parking comment; it relaxes accessory structures, and the
+    #   pod is the primary building.
+    # - 18.35.060 and 18.70.060 -> 18.100, 18.100.030 and 18.100.070: design
+    #   review. 18.100.030 (A)(2) makes a middle housing site plan Type I
+    #   (quoted in the layer's comments, not by a value); 18.100.070 is the
+    #   menu of design features, not placement. CR's 18.100.030(C) Type III
+    #   path is for multi-unit dwellings, five or more units.
+    # - 18.75.065 -> 18.75.050, .060, .070: GMU's ground-floor residential
+    #   standards stand "In lieu of" the zone's general ones. GMU refuses
+    #   the pod (no middle housing row; subdistricts on an unmapped figure).
+    "or/washington/cornelius 18.145.010 -> 18.145.020",
+    "or/washington/cornelius 18.35.050 -> 18.150.010",
+    "or/washington/cornelius 18.35.060 -> 18.100",
+    "or/washington/cornelius 18.70.050 -> 18.150.010",
+    "or/washington/cornelius 18.70.060 -> 18.100",
+    "or/washington/cornelius 18.70.060 -> 18.100.030",
+    "or/washington/cornelius 18.70.060 -> 18.100.070",
+    "or/washington/cornelius 18.75.065 -> 18.75.050",
+    "or/washington/cornelius 18.75.065 -> 18.75.060",
+    "or/washington/cornelius 18.75.065 -> 18.75.070",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth

@@ -102,6 +102,12 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
         # not in the code; a doubt in the handoff, and it errs toward the
         # corner, which the screen assumes false anyway.
         "or/washington/beaverton",
+        # 2026-10-01: Cornelius, drafted in a worktree. CMC 18.195.120 "Lot,
+        # corner": "a lot abutting on two intersecting streets other than an
+        # alley; provided, that the streets do not intersect at an angle
+        # greater than 135 degrees". A street is a way "for public use", so a
+        # private drive does not count either.
+        "or/washington/cornelius",
         # 2026-09-29: Hillsboro, a draft from a cloud session. 12.01.500
         # "Lot, Corner" counts two street frontages meeting at an angle not
         # greater than 135 degrees, and says lots on an alley are not

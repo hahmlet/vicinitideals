@@ -345,7 +345,24 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 134, "comments": 250, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 275, "tests": 18}
+# 250 -> 275 comments on 2026-10-01: Cornelius, the seventh Washington County
+# draft, from a worktree. 25 comments, no note or test. They are the CMC
+# standards no field or measured fact holds: 18.145.010 (B)'s required
+# parking kept out of the side and rear yards (a doubt that can move a
+# verdict), 18.145.050's compact stalls and its aisle "of sufficient
+# width", 18.145.070's five-foot strips, covered parking in every
+# residential zone, 18.150.070 clear vision, 18.143.050 driveway spacing
+# and the 100 ft from an intersection, 18.100.070 design features, CWS
+# buffers, open space at 20 units, discretionary perimeter strips, the
+# affordable-housing bonus, the FP district, 18.05.040 similar uses, the
+# through-lot front, parking beside or before the building, the R-7 flag
+# pole and in-fill relief, the R-10 townhouse depth, building separation
+# in A-2 and CR, the repealed C-1, and setback dedication. Two paragraphs
+# run on into the next (the affordable bonus into FP; the dedication
+# sentence in the definitions comment), so FP is counted twice. The 25th
+# is 18.160's solar balance point, a height limit set by the distance to
+# the northern lot line in R-7 and R-10 (a doubt that can move a verdict).
 # 133 -> 134 notes on 2026-10-01: Happy Valley FU-10's dimensions are encoded
 # now the state path opens the zone, and its density row ("One unit for each
 # 10 acres") is declared NOT ENCODED beside them.
