@@ -717,7 +717,7 @@ defaults:
       - value: 12
         when: [unit_lots]
         cite: OCMC 17.16.040.A, outdoor on-site parking and maneuvering areas on a townhouse lot
-        quote: "or/clackamas/oregon-city/17.zoning.txt#L5323-L5345"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L5323-L5331"
   #
   # NOT ENCODED: 17.16.060.E, which puts parking behind the facade in
   # mixed-use and commercial zones unless the site is on a local street, is
@@ -1128,7 +1128,7 @@ zones:
       # conditional list is a separate section (17.12.025) and quadplexes are
       # not on it.
       value: true
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L4498,L4505"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4498-L4499,L4505"
     min_lot_sqft:
       # Table 17.12.040, the row "Triplex, quadplex and multi-family". The row
       # label wraps across two lines on the page, which is why the quote takes
@@ -1499,7 +1499,7 @@ zones:
       # "Multi-family residential, triplexes and quadplexes." No conversion
       # clause, no conditional-use path, no footnote.
       value: true
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L6993-L6994"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6964,L6993-L6994"
     min_lot_sqft:
       # 17.29.050.A: "Minimum lot areas: None." The safe use of `exempt` --
       # the paragraph is printed and states no standard, rather than being
@@ -1598,7 +1598,7 @@ zones:
       # 17.29.020 is headed "Permitted uses--MUC-1 and MUC-2": one list, two
       # districts.
       value: true
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L6993-L6994"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6964,L6993-L6994"
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7144-L7145"
@@ -1982,7 +1982,7 @@ zones:
       # development director", which is a similar-use finding about
       # employment, not a residential permission.
       value: false
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L3899-L3906"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3899-L3906,L7293-L7329"
     notes: >-
       One hundred and thirty-three lots closed on a use gate. Nothing
       dimensional is read here and nothing needs to be: 17.31.060 states a
@@ -2004,7 +2004,7 @@ zones:
       # accessory list five, none of them a dwelling. Refused on 17.06.010.A,
       # the same sentence as MUE.
       value: false
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L3899-L3906"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3899-L3906,L8741-L8754"
     notes: >-
       Ninety-three lots. The permitted list is at L8741-L8756 and the
       accessory list at L8758-L8770; neither mentions housing of any kind, and

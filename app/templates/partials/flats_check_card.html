@@ -103,6 +103,11 @@
         We hold that the page sets <strong>no rule</strong> for
         <strong>{{ card.field_label }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_words %}, in the case where {{ card.when_words | join(", and ") }}{% endif %}. Is that right?
       </p>
+    {% elif card.question == "value" and card.yes_no %}
+      <p style="font-size:15px;margin:0 0 4px">
+        We hold <strong>{{ card.field_label }}: <span style="font-size:17px">{{ card.value }}</span></strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_words %}, in the case where {{ card.when_words | join(", and ") }}{% endif %}. Is that what the page says?
+      </p>
+      <p class="muted" style="font-size:12px;margin:0 0 4px" data-because>Read from: {{ card.because }}</p>
     {% elif card.question == "value" %}
       <p style="font-size:15px;margin:0 0 4px">
         Does the page say <strong style="font-size:17px">{{ card.value }}</strong>

@@ -623,6 +623,12 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
             v for v in _variants(layer, row["zone"], row["field"]) if v["key"] != row["when"]
         ]
         card["no_rule"] = row["value"] is None
+        # A yes/no is a reading, not a number on the page: Steph answered
+        # "differs" to "fourplex allowed: no" in I and MUE, where the page
+        # shown was the general rule that an unlisted use is forbidden. The
+        # card says what was read and where, not only the section.
+        card["yes_no"] = isinstance(row["value"], bool)
+        card["because"] = row["cite"] if card["yes_no"] else ""
         card["exempt"] = _exempt(layer, row)
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))

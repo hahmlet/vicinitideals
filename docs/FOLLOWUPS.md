@@ -899,21 +899,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    and submitted once at the end of the document; a per-document "read by a
    human" record so the corpus gets covered over time. Until it exists, keep
    "Flag something missing" on the card.
-27. **Steph's Oregon City page check (2026-10-01): rest of the triage.**
-   126 value cards answered (170 rows incl. 32 flags, 8 re-answers, 4
-   footnotes). SHIPPED 1125c98d: grey "set aside on purpose" tint (layer key
-   `set_aside:` -- 12 OC entries; dismissed footnotes; closed readings;
-   exempt values), card lists the other numbers held, exempt/no-rule
-   wording, plain side-setback names, repeated-sentence find fix (OC MUC-2
-   G.1). Many "No"s were right (townhouse 0/5 side, R-2 rear 10, porch/
-   garage/height add-ons only relax). STILL OPEN: footnote "I" on R-10/R-8/
-   R-6 coverage read from a comma (p963); R-2 quadplex box on the
-   "Permitted uses" line (p972); second "twelve" boxed for
-   parking_maneuvering_max_width_ft unit_lots (p991); R-2 footnote 1 text
-   not shown (p973); parking_front_prohibited "differs" for C/MUC/MUD/WFDD
-   and quadplex_allowed for NC/I/MUE (say why "not allowed": 17.06.010.A).
-   Other cities' prose refusals still need locating into `set_aside:` so
-   their pages tint too.
+27. **Steph's Oregon City page check (2026-10-01): what is left.** All of
+   her answers triaged; card and reader fixes shipped (set-aside tint,
+   other numbers held, yes/no cards say where they were read, smaller-face
+   columns no longer read as footnotes, centred headings claim their column
+   -- 129 boxes narrowed to one column across OC/Gresham/Portland --, notes
+   on a group heading reach its rows). Left: (a) MUC-1/MUC-2/MUD/WFDD/C
+   "front parking banned: yes" answered "differs" with no comment --
+   17.16.060.E has a three-condition escape (local street + not corner +
+   topography) held as binding; ask Steph whether the "differs" was the
+   escape. (b) Other cities' prose refusals still need locating into
+   `set_aside:` so their pages tint grey.
 27. **Parking layout generator (Steph 2026-10-01: "more parking flexibility
    opens up more lots"; don't invent shapes).** SCOPING, nothing built.
    Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall

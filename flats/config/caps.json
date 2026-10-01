@@ -439,6 +439,7 @@
     },
     "I": {
       "quadplex_allowed": [
+        "protected_water_feature",
         "utility_easement"
       ]
     },
@@ -549,6 +550,7 @@
     },
     "MUE": {
       "quadplex_allowed": [
+        "protected_water_feature",
         "utility_easement"
       ]
     },

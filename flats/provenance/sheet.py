@@ -209,6 +209,31 @@ def _chars(page: Any) -> tuple[list[tuple[str, float, float, float, float, bool]
     return out, aspect
 
 
+def _not_notes(words: list[list[Any]], body: float, aspect: float) -> list[list[Any]]:
+    """Small print that is not a footnote marker, put back as body text.
+
+    Oregon City prints some table columns in a smaller face: its "40%," came
+    out as markers "4" and "0%" and a comma as the letter "I". A marker is a
+    note number or letter; it never carries a percent sign, and a glyph under
+    half the body height that is not a digit is punctuation.
+    """
+    out: list[list[Any]] = []
+    for w in words:
+        prev = out[-1] if out else None
+        near = prev is not None and (w[1] - prev[3]) * aspect <= body * 0.6
+        if w[5] and prev is not None and prev[5] and near and "%" in prev[0] + w[0]:
+            prev[0] += w[0]
+            prev[3], prev[2], prev[4] = max(prev[3], w[3]), min(prev[2], w[2]), max(prev[4], w[4])
+            prev[5] = False
+            continue
+        if w[5] and "%" in w[0]:
+            w = [*w[:5], False]
+        if w[5] and len(w[0]) == 1 and not w[0].isdigit() and (w[4] - w[2]) < body * 0.5:
+            w = [*w[:5], False]
+        out.append(w)
+    return out
+
+
 def _group(
     chars: Sequence[tuple[str, float, float, float, float, bool]], aspect: float
 ) -> tuple[Line, ...]:
@@ -226,6 +251,10 @@ def _group(
         _c, _x0, y0, _x1, y1, _sp = char
         middle, height = (y0 + y1) / 2, y1 - y0
         for row in reversed(rows[-12:]):
+            # A row begun by a speck -- a comma printed low, Oregon City
+            # 17.10.050 -- does not take in the text beside it.
+            if row["h"] < height * 0.5:
+                continue
             if abs(row["mid"] - middle) < min(row["h"], height) * 0.5:
                 row["chars"].append(char)
                 break
@@ -251,7 +280,7 @@ def _group(
                 w[3], w[2], w[4] = max(w[3], x1), min(w[2], y0), max(w[4], y1)
             last = (x1, sup)
         lines.append(
-            Line(tuple(Word(w[0], Box(w[1], w[2], w[3], w[4]), w[5]) for w in words))
+            Line(tuple(Word(w[0], Box(w[1], w[2], w[3], w[4]), w[5]) for w in _not_notes(words, body, aspect)))
         )
     return tuple(lines)
 
@@ -606,6 +635,7 @@ def markers(sheet: Sheet, line: Line, spans: Sequence[tuple[int, int]]) -> list[
         if word.sup:
             out += [Marker(m, "row", word.box) for m in _marks(word.text)]
     above = [ln for ln in sheet.lines if ln.box.y1 <= line.box.y0]
+    out += _group_markers(above, line)
     for span in spans:
         box = span_box(line, span)
         for printed in reversed(above[-8:]):
@@ -619,6 +649,40 @@ def markers(sheet: Sheet, line: Line, spans: Sequence[tuple[int, int]]) -> list[
             seen.add(marker.mark)
             unique.append(marker)
     return unique
+
+
+def _group_markers(above: Sequence[Line], line: Line) -> list[Marker]:
+    """A marker on the heading of the group of rows this one sits in.
+
+    Oregon City Table 17.12.040 prints "Minimum lot size¹" on a row of its
+    own with the sizes indented under it, so the note reaches every size and
+    sits on none of their lines. Walking up past the group's other rows (they
+    state numbers) and wrapped label lines (indented further), the first line
+    with no number that starts LEFT of this row's label is the heading. Its
+    markers are taken; one set flush with the row is a sibling standard, and
+    past either, nothing is -- a marker two headings up belongs to another
+    standard.
+    """
+    if not line.words:
+        return []
+    left = line.words[0].box.x0
+    for printed in reversed(above[-12:]):
+        body = [w for w in printed.words if not w.sup]
+        if not body or any(numeral(w.text) for w in body):
+            continue
+        if body[0].box.x0 > left + 0.005:
+            continue
+        if body[0].box.x0 > left - 0.008:
+            # A sibling standard set flush with this one (Beaverton's and
+            # Gresham's flat tables), not a heading over it.
+            return []
+        return [
+            Marker(m, "row", w.box)
+            for w in printed.words
+            if w.sup and w.box.x0 < left + 0.35
+            for m in _marks(w.text)
+        ]
+    return []
 
 
 @dataclass(frozen=True, slots=True)
@@ -694,7 +758,22 @@ def under_heading(
             under = [s for s, b in boxes if b.x0 < word.box.x1 and b.x1 > word.box.x0]
             if len(under) == 1:
                 return under
+            if not under:
+                # Headings centred over left-set columns (Oregon City
+                # 17.10.050) overlap no value: each hit goes to the heading on
+                # this line nearest it.
+                heads = [w for w in printed.words if not w.sup and squash(w.text)]
+                mine = [
+                    s for s, b in boxes
+                    if min(heads, key=lambda h: abs(_middle(h.box) - _middle(b))) is word
+                ]
+                if len(mine) == 1:
+                    return mine
     return list(spans)
+
+
+def _middle(box: Box) -> float:
+    return (box.x0 + box.x1) / 2
 
 
 def place(

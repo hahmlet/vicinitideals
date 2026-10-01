@@ -507,3 +507,16 @@ def test_the_card_names_the_other_numbers_held_for_the_same_standard():
     assert held[0]["when"] == "normally"
     assert all(v["when"].startswith("in the case where ") for v in held[1:])
     assert "_" not in " ".join(v["when"] for v in held), "conditions in words, not keys"
+
+
+async def test_a_yes_or_no_is_asked_as_a_reading_with_where_it_was_read(client, session, monkeypatch):
+    """Steph answered "differs" to "fourplex allowed: no" in Oregon City's I
+    and MUE, shown only the general rule that an unlisted use is forbidden."""
+    await _login(client, session)
+    row = {**_first_row(), "value": False, "cite": "OCMC 17.39.020 (permitted uses), with 17.06.010.A"}
+    monkeypatch.setattr(check, "_rows", lambda layer, answered: [row])
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "Is that what the page says?" in response.text
+    assert "Read from: OCMC 17.39.020 (permitted uses), with 17.06.010.A" in response.text
