@@ -917,16 +917,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (parking_side_prohibited: "I can't tell what this is asking"), and why a
    zone is "not allowed" (I/MUE via 17.06.010.A). Offered, not started.
 27. **Parking layout generator (Steph 2026-10-01: "more parking flexibility
-   opens up more lots"; don't invent shapes; consider procedural).** PLANNED,
-   awaiting Steph's go + worktree OK. One grammar instead of a menu: a drive
-   from the access point, straight or with one right-angle turn, stalls hung
-   along it using only stall types the city's table publishes (90/60/45/
-   parallel) at the city's sizes; the turn at SLC's published radius. Covers
-   Steph's L 3+1 / 2+2 / mirror, all-parallel, mixed; T and tandem out
-   (tandem counts for one unit only). Pool (run 49): ~108k lots fail ONLY
-   on the court behind (Portland 78k) + ~32k ambiguous. Phases: 0 record
-   bare-building slack + prototype yield on 137; 1 encode parallel/angled/
-   backing-into-street fields (none exist; fix Happy Valley 16.43.030.I and
-   Sherwood 9x20 gaps); 2 generator `flats/fit/parking.py` on the failing
-   pool only; 3 stall boxes on the lot page; 4 bound, full re-screen,
-   promote. Supersedes the L/T note in 4(a).
+   opens up more lots"; don't invent shapes).** SCOPING, nothing built.
+   Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall
+   sizes per angle, aisle widths, number of drives -- Oregon City wants one
+   approach per two townhouses = 2 for the pod -- backing rules, setbacks)
+   and let it find ANY valid layout, odd angles and leftover shapes
+   included ("yes, SOME solution works"; TestFit does this commercially).
+   Cheap pre-defined shapes may run first as a lite screen, the generator
+   only where they fail. Pool (run 49): ~108k lots fail ONLY on the court
+   behind (Portland 78k) + ~32k ambiguous. Corpus: no field holds parallel/
+   angled stalls or backing-into-street limits yet (Happy Valley 16.43.030.I
+   exemption and Sherwood 9x20 unencoded). Steph sent 8 references (MDPI
+   2075-5309/13/11/2898, arXiv 2407.01333, Grasshopper parking solvers,
+   IAAC, nvdomidi/ProceduralGenerator) -- digest pending. Next: Steph
+   approves scope -> Phase 0 prototype on 137 (yield + seconds per lot).
