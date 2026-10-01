@@ -720,6 +720,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    flats-cornelius (flats/cornelius-draft), rules + documents + blind
    re-read only; map wiring after flats/washington-map merges. eCode360
    serves the real page to a browser User-Agent (no challenge solved).
+   Both drafts DONE 2026-10-01 (Cornelius 1681a829: 12 zones, 4 admit;
+   Tigard d5f53149: 13 zones, 9 admit; both full suites green, blind
+   re-read 0 wrong). Steph 2026-10-01: Cornelius R-7 one-home line is
+   superseded (keep); charge parking out of side/rear yards + Tigard's
+   5 ft screen (being built on flats/cornelius-draft); Tigard's per-home
+   lot cap follows Tigard's townhome definition (if unit lots, no parent
+   cap); TRACE the Tigard sub-area image maps (18.650.A/18.660.A/18.670.A,
+   ~590 acres MUR/MUC/MU-CBD) LATER -- until then those lots stay review.
+   Remaining questions: handoff §6 Tigard + Cornelius. Merge both after
+   flats/washington-map lands, then wire Tigard/Cornelius into the map
+   (JURIS_CITY -> layer, Metro ZONE; Cornelius R-10 parcel by hand).
    (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
    middle-housing code (cottage clusters by 2028); a city that misses it
    gets the state model code directly. Run the drift check on every layer
