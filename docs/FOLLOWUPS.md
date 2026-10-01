@@ -889,18 +889,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    local frontage, never more than two). Once item 24 makes the pod draw two
    approaches, all of these start to bind together: per-approach width,
    spacing between them, offset from lot lines, count per frontage.
-26. **Page check: split the two jobs (Steph 2026-10-01).** Checking a
-   tinted number and finding an untinted rule are different mental tasks;
-   the card does both and so does neither fast. (a) **Fly-through check**
-   of numbers already encoded: keyboard answers (Y / N / wrong box / skip,
-   arrows for Back/Forward), the next page image fetched ahead, the
-   flag-missing box out of the way -- and possibly one card per PAGE showing
-   every encoded number on it, labelled, "all right?" with a click on any
-   that isn't. Pending decision: per number or per page. (b) **Read-through
-   of a whole document**: every page in one scroll with headings visible
-   for context, encoded rules tinted, arrow keys between pages, a comment box
-   that knows which page is on screen (and/or drag a box on the page to mark
-   what is missing), everything held as a draft and submitted once at the
-   end of the document; a per-document "read by a human" record so the
-   corpus gets covered over time. Until (b) exists, keep "Flag something
-   missing" on the card.
+26. **Page check: whole-document read-through (Steph 2026-10-01).**
+   Finding an untinted rule is a different task from checking a tinted
+   number; the existing card flow stays as it is for the second (Steph: no
+   fly-through changes). Build a read-through: every page of a document in
+   one scroll with headings visible for context, encoded rules tinted, arrow
+   keys between pages, a comment box that knows which page is on screen
+   (and/or drag a box on the page to mark what is missing), held as a draft
+   and submitted once at the end of the document; a per-document "read by a
+   human" record so the corpus gets covered over time. Until it exists, keep
+   "Flag something missing" on the card.
