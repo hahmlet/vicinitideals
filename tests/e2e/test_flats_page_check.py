@@ -137,3 +137,25 @@ def test_the_question_sits_beside_the_page_not_above_it(
     assert panel["x"] >= sheet["x"] + sheet["width"] - 1, "the panel is to the right of the page"
     assert panel["y"] < 400, "the answers are on screen without scrolling"
     expect(page.locator("textarea[name='comment']")).to_be_visible()
+
+
+def test_a_card_opens_on_the_cited_page_with_its_neighbours_around_it(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Steph could not tell whether MUE's permitted uses ended at N or ran on
+    to an O overleaf. The page before and after are shown; the card opens on
+    the cited page, not on the page before it."""
+    page = logged_in_page
+    page.set_viewport_size({"width": 1600, "height": 900})
+    page.goto(
+        f"{base_url}/flats/check/or/clackamas/oregon-city?zone=MUE&field=quadplex_allowed&when="
+    )
+
+    expect(page.locator("[data-context='before']")).to_have_count(1)
+    expect(page.locator("[data-context='after']")).to_have_count(1)
+    first = page.locator(".check-sheet img").first
+    page.wait_for_function(
+        "img => img.complete && img.naturalWidth > 0", arg=first.element_handle(), timeout=90_000
+    )
+    top = page.locator("[data-cited]").first.bounding_box()["y"]
+    assert -5 <= top <= 120, f"the cited page starts at the top of the screen, not {top}px down"

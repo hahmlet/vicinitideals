@@ -568,6 +568,7 @@ def _sheet_view(
     return {
         "src": f"/flats/sheet/{document}?page={page}",
         "page": page,
+        "context": "",
         "cite": printed.cite if printed else f"PDF page {page}",
         "boxes": [{"css": box.css(), "kind": kind} for box, kind in boxes],
         "encoded": encoded,
@@ -576,6 +577,28 @@ def _sheet_view(
             for box, title in _set_aside_on(document, page)
         ],
     }
+
+
+def _with_neighbours(document: str, sheets: list[dict[str, Any]], mark: str) -> list[dict[str, Any]]:
+    """The cited pages with the page before and the page after them.
+
+    A list that runs to the foot of the page leaves the reader unable to say
+    whether it ends there: Steph could not tell whether MUE's permitted uses
+    stopped at N or went on to an O overleaf. The neighbours carry tints but
+    no box -- the card asks about the cited pages -- and the card scrolls to
+    the first cited page, so the page before is there above it, not in the way.
+    """
+    index = _page_index(document)
+    if not sheets or index is None or not index.pages:
+        return sheets
+    pages = {sh["page"] for sh in sheets}
+    first, last, end = min(pages), max(pages), index.pages[-1].n
+    out = list(sheets)
+    if first > 1 and first - 1 not in pages:
+        out.insert(0, {**_sheet_view(document, first - 1, [], mark), "context": "before"})
+    if last < end and last + 1 not in pages:
+        out.append({**_sheet_view(document, last + 1, [], mark), "context": "after"})
+    return out
 
 
 def _note_text(document: str, mark: str, after: int) -> tuple[int | None, list[str]]:
@@ -658,6 +681,7 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         card["exempt"] = _exempt(layer, row)
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
+        card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
         return card
 
     mark = ask.question.partition(":")[2]
@@ -683,6 +707,7 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         card["sheets"].append(
             _sheet_view(document, note_page, _note_box(document, note_page, body), row["mark"])
         )
+    card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
     return card
 
 
@@ -749,7 +774,10 @@ async def _card_ctx(
         # Coming back to change an answer starts from what was written.
         card["before_comment"] = (before.says or before.note) if before else ""
         card["flags"] = _flags_on(
-            answers, layer.layer, ask.row["document"], {sh["page"] for sh in card["sheets"]}
+            answers,
+            layer.layer,
+            ask.row["document"],
+            {sh["page"] for sh in card["sheets"] if not sh["context"]},
         )
     return {
         "layer": {"id": layer.layer, "label": _layer_label(layer)},

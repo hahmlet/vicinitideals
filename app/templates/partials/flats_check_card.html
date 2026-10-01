@@ -58,8 +58,9 @@
 <div class="check-grid">
   <div class="check-pages">
     {% for s in card.sheets %}
-    <div class="card" style="padding:0;margin:0 0 12px;overflow:hidden">
+    <div class="card" style="padding:0;margin:0 0 12px;overflow:hidden"{% if s.context %} data-context="{{ s.context }}"{% else %} data-cited{% endif %}>
       <div class="toolbar" style="margin:0;padding:6px 8px;font-size:11px">
+        {% if s.context %}<strong style="margin-right:6px">The page {{ s.context }}, for context:</strong>{% endif %}
         <span class="muted">{{ s.cite }} of the printed code</span>
         <span style="margin-left:auto">
           <a href="{{ s.src }}" target="_blank" rel="noopener">open the page image</a>
@@ -67,7 +68,9 @@
         </span>
       </div>
       <div class="check-sheet" style="position:relative;line-height:0">
-        <img src="{{ s.src }}" alt="{{ s.cite }} of the printed code" style="width:100%;display:block" loading="eager">
+        {#- A letter-size guess holds the space until the image arrives, so
+            the page before loading late does not push the cited page down. -#}
+        <img src="{{ s.src }}" alt="{{ s.cite }} of the printed code" style="width:100%;display:block;aspect-ratio:auto 8.5 / 11" loading="eager">
         {% for e in s.set_aside %}
         <div class="check-box check-box-set-aside" style="position:absolute;{{ e.css }}" title="{{ e.title }}"></div>
         {% endfor %}
@@ -150,7 +153,8 @@
       {% endif %}
     {% endif %}
 
-    {% set flag_page = card.sheets[0].page if card.sheets else 0 %}
+    {% set cited = card.sheets | rejectattr("context") | list %}
+    {% set flag_page = cited[0].page if cited else 0 %}
     <form hx-post="/ui/flats/check" hx-target="#check-card" hx-swap="outerHTML" style="margin:0 0 14px">
       <input type="hidden" name="layer_id" value="{{ card.layer_id }}">
       <input type="hidden" name="zone" value="{{ card.zone }}">
@@ -202,5 +206,16 @@
     </details>
   </aside>
 </div>
+{% if card.sheets and card.sheets[0].context %}
+<script>
+  // Open on the cited page; the page before is above it, a scroll away. On a
+  // narrow screen the answers sit above the pages, so leave the top alone.
+  (function () {
+    if (window.matchMedia("(max-width: 1000px)").matches) return;
+    var cited = document.querySelector("#check-card [data-cited]");
+    if (cited) window.scrollTo(0, cited.getBoundingClientRect().top + window.scrollY - 12);
+  })();
+</script>
+{% endif %}
 {% endif %}
 </div>

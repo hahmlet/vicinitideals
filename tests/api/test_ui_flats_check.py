@@ -315,7 +315,10 @@ async def test_a_boxed_number_does_not_also_tint_its_citations_context_lines(cli
 
     assert "check-box-value" in response.text
     assert "check-box check-box-line" not in response.text
-    assert "?page=2" in response.text and "?page=1" not in response.text
+    # Page 1 comes back only as the page before, for context: not cited.
+    assert "?page=2" in response.text
+    assert re.search(r'data-context="before">.*?\?page=1', response.text, re.S)
+    assert len(re.findall(r"data-cited>", response.text)) == 1
 
 
 def test_a_condition_is_named_in_words_not_by_its_key():
@@ -424,6 +427,25 @@ async def test_the_card_names_the_zone_as_a_zone(client, session):
         f"/flats/check/{LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
     )
     assert f"<strong>the {row['zone']} zone</strong>" in card.text
+
+
+def test_the_card_shows_the_page_before_and_after_the_cited_one(monkeypatch):
+    # Steph could not tell whether MUE's use list ended at N or ran on to an O
+    # overleaf: the page shown ended mid-list.
+    layer = check._layers()[LAYER]
+    row = _first_row()
+    last = check._page_index(row["document"]).pages[-1].n
+    cited = min(5, last - 1)
+    monkeypatch.setattr(
+        check, "_placed",
+        lambda row: sheet.Placed(status="boxed", pages=[cited], boxes={cited: [(_BOX, "value")]}),
+    )
+    sheets = check._card(layer, check._Ask(row, "value"))["sheets"]
+
+    assert [(s["page"], s["context"]) for s in sheets] == [
+        (cited - 1, "before"), (cited, ""), (cited + 1, "after")
+    ]
+    assert not sheets[0]["boxes"] and not sheets[2]["boxes"] and sheets[1]["boxes"]
 
 
 def _hidden(text: str, name: str) -> str:
