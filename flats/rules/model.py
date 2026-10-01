@@ -1474,6 +1474,16 @@ class Value(BaseModel):
     #: on different acres and each cites its own sentence.
     measured_on_cite: str | None = None
     measured_on_quote: str | None = None
+    #: The size of the acre the rate is printed per, where the code defines
+    #: one that is not 43,560 square feet. Cornelius 18.20.050 (A): "A net
+    #: acre is equal to 32,670 square feet". The screen measures density per
+    #: 43,560 sq ft of lot, so `value` carries the rate restated per that acre
+    #: and `before_acre` the rate the code prints; read unconverted, a floor
+    #: of four per net acre would pass a lot a third again as large as the
+    #: code allows. Carried with `measured_on` because the sentence that sizes
+    #: the acre is the sentence that defines it, and cited by its quote.
+    acre_sqft: float | None = None
+    before_acre: float | None = None
     #: A height stated in STORIES, where the code elsewhere fixes how tall a
     #: story may be. Hillsboro's residential tables print "2 1/2 stories or 35
     #: feet, whichever is less", and 12.50.140 B.6 says "a residential 'story'
@@ -1897,6 +1907,24 @@ class Value(BaseModel):
                 f"for itself — cite and quote where {self.measured_on!r} is "
                 f"defined, or the rate has no denominator anyone can read"
             )
+        return self
+
+    @model_validator(mode="after")
+    def _an_acre_of_its_own_is_a_denominator(self) -> Value:
+        if self.acre_sqft is None and self.before_acre is None:
+            return self
+        if self.measured_on is None:
+            raise ValueError(
+                f"{self.name}: 'acre_sqft' sizes the acre a rate is measured "
+                f"on, and there is no 'measured_on' naming that acre"
+            )
+        if self.acre_sqft is None or self.before_acre is None:
+            raise ValueError(
+                f"{self.name}: a rate per a city's own acre needs both the "
+                f"printed rate and the size of the acre"
+            )
+        if self.acre_sqft <= 0:
+            raise ValueError(f"{self.name}: acre_sqft {self.acre_sqft} is not an area")
         return self
 
     @model_validator(mode="after")

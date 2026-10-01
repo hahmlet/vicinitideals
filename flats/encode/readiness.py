@@ -274,6 +274,12 @@ def _printed(value: object) -> object:
         # "2 1/2 stories" and 10 feet and prints the 25 nowhere.
         else value.stories
         if getattr(value, "stories", None) is not None
+        # A rate printed per the city's own acre is checked against the rate
+        # the table prints; the acre's size is checked on the denominator's
+        # row below. Cornelius prints four and 32,670 and prints 5.333
+        # nowhere.
+        else value.before_acre
+        if getattr(value, "before_acre", None) is not None
         else getattr(value, "value", None)
     )
 
@@ -330,7 +336,15 @@ def _rows(
         # nothing checks is the provenance hole this field was added to close.
         # No number to corroborate -- what is being verified is that the
         # sentence is still where the file says it is.
-        yield where, f"{name} <{value.measured_on}>", value.measured_on_quote, None, False
+        # Where the city sizes its own acre, that figure is on this sentence
+        # and is checked like any other.
+        yield (
+            where,
+            f"{name} <{value.measured_on}>",
+            value.measured_on_quote,
+            getattr(value, "acre_sqft", None),
+            False,
+        )
     if getattr(value, "story_ft_quote", None):
         # The other operand of a height in stories, printed in its own
         # chapter, so checked against its own sentence like a step-back.

@@ -177,8 +177,10 @@ def _parse_values(
             step_back = _parse_step_back(
                 body.pop("step_back", None), f"{where}.{key}", problems
             )
-            measured_on, measured_on_cite, measured_on_quote = _parse_measured_on(
-                body.pop("measured_on", None), f"{where}.{key}", problems
+            measured_on, measured_on_cite, measured_on_quote, acre_sqft = (
+                _parse_measured_on(
+                    body.pop("measured_on", None), f"{where}.{key}", problems
+                )
             )
             qualified, qualified_cite, qualified_quote = _parse_qualified_by(
                 body.pop("qualified_by", None), f"{where}.{key}", problems
@@ -419,6 +421,37 @@ def _parse_values(
                 value = float(lent.value)
                 if floor_ft is not None:
                     value = max(value, float(floor_ft))
+            before_acre = None
+            if acre_sqft is not None:
+                if exempt or not isinstance(value, (int, float)) or isinstance(
+                    value, bool
+                ) or any(
+                    form is not None
+                    for form in (per_dwelling, sqft_per_unit, per_units,
+                                 spaces_total, acres, acres_each, per_height,
+                                 same_as, stories)
+                ):
+                    problems.append(
+                        f"{where}.{key}: 'acre_sqft' says how big this city's "
+                        f"acre is, and converts a rate the code prints per that "
+                        f"acre -- state the printed rate as a plain 'value'"
+                    )
+                    continue
+                if raw_variants:
+                    # A variant carries its number and its quote and nothing
+                    # else, so it would be read on the 43,560 sq ft acre while
+                    # its base was read on the city's. Refused rather than
+                    # half-converted.
+                    problems.append(
+                        f"{where}.{key}: 'acre_sqft' converts the base rate and "
+                        f"no variant -- state the standard without variants"
+                    )
+                    continue
+                # Cornelius 18.20.050 (A): "A net acre is equal to 32,670
+                # square feet". Four dwellings per net acre is 5.333 per
+                # 43,560 square feet, and 5.333 is printed nowhere.
+                before_acre = float(value)
+                value = _per_own_acre(float(value), acre_sqft)
             if not exempt and value is None:
                 problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
                 continue
@@ -461,6 +494,7 @@ def _parse_values(
             acres = None
             acres_each = None
             measured_on = measured_on_cite = measured_on_quote = None
+            acre_sqft = before_acre = None
             qualified = qualified_cite = qualified_quote = None
             stories = None
             story_ft = story_ft_cite = story_ft_quote = None
@@ -553,6 +587,8 @@ def _parse_values(
                 measured_on=None if measured_on is None else str(measured_on),
                 measured_on_cite=measured_on_cite,
                 measured_on_quote=measured_on_quote,
+                acre_sqft=acre_sqft,
+                before_acre=before_acre,
                 qualified_by=qualified,
                 qualified_cite=qualified_cite,
                 qualified_quote=qualified_quote,
@@ -600,6 +636,19 @@ def _per_dwelling(each: float) -> float:
     """
     total = each * DWELLINGS
     return int(total) if float(total).is_integer() else total
+
+
+def _per_own_acre(rate: float, acre: float) -> float:
+    """A rate printed per a city's own acre, restated per 43,560 sq ft.
+
+    The screen divides the pod's units by the lot's area in 43,560 sq ft
+    acres. Cornelius prints its densities per "net acre" and says a net acre
+    "is equal to 32,670 square feet", so four per net acre is 5.333 per
+    43,560, and 5.333 is printed nowhere. Read the other way -- four per
+    43,560 -- the floor would pass a lot a third again as large as the code
+    allows.
+    """
+    return round(rate * SQFT_PER_ACRE / acre, 6)
 
 
 def _in_acres(size: float) -> float:
@@ -1075,7 +1124,7 @@ def _parse_measured_on(
     raw: Any,
     where: str,
     problems: list[str],
-) -> tuple[str | None, str | None, str | None]:
+) -> tuple[str | None, str | None, str | None, float | None]:
     """Parse the quantity a rate is computed on, and where the code defines it.
 
     A bare string used to be the whole of it, and that was the bug: seven
@@ -1087,19 +1136,26 @@ def _parse_measured_on(
     The string form is still accepted and still incomplete — it parses, and
     :class:`~flats.rules.model.Value` refuses it, so the error names the
     missing citation rather than a YAML shape.
+
+    `acre_sqft` is the size of the acre itself, where the code defines one
+    that is not 43,560 square feet. Cornelius 18.20.050 (A) and 18.35.050:
+    "A net acre is equal to 32,670 square feet". It lives here because the
+    sentence that sizes the acre is the sentence that defines it, so it shares
+    this block's citation.
     """
     if raw is None:
-        return None, None, None
+        return None, None, None, None
     if isinstance(raw, str):
-        return raw, None, None
+        return raw, None, None, None
     if not isinstance(raw, dict):
         problems.append(f"{where}.measured_on: expected a fact name or a mapping")
-        return None, None, None
+        return None, None, None, None
 
     body = dict(raw)
     fact = body.pop("fact", None)
     cite = body.pop("cite", None)
     quote = body.pop("quote", None)
+    acre = body.pop("acre_sqft", None)
     if body:
         problems.append(f"{where}.measured_on: unknown key(s) {sorted(body)}")
     if not fact:
@@ -1107,8 +1163,21 @@ def _parse_measured_on(
             f"{where}.measured_on: name the quantity under 'fact' — the rate is "
             f"computed on it"
         )
-        return None, None, None
-    return str(fact), None if cite is None else str(cite), None if quote is None else str(quote)
+        return None, None, None, None
+    if acre is not None and (
+        not isinstance(acre, (int, float)) or isinstance(acre, bool) or acre <= 0
+    ):
+        problems.append(
+            f"{where}.measured_on: 'acre_sqft' expects a positive number of "
+            f"square feet"
+        )
+        return None, None, None, None
+    return (
+        str(fact),
+        None if cite is None else str(cite),
+        None if quote is None else str(quote),
+        None if acre is None else float(acre),
+    )
 
 
 def _parse_story_ft(

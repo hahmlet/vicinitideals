@@ -170,6 +170,8 @@ _FIGURES = (
     "before_step_back",
     "stories",
     "story_ft",
+    "before_acre",
+    "acre_sqft",
 )
 
 #: A band's bounds are figures a ruling quotes constantly -- "exempt below
