@@ -3052,9 +3052,12 @@ zones:
       Encoded 2026-09-20 from 4.135(.03). Refused on silence the way PDC is,
       and the silence is an industrial zone's: the one route to a dwelling
       runs through PDC's mixed-use door and that door is shut to a building
-      whose ground floor is all dwelling. The Coffee Creek and Regionally
-      Significant Industrial Area overlays (4.134, 4.135.5) narrow the list
-      further and add nothing residential.
+      whose ground floor is all dwelling. (Corrected 2026-10-01: this note
+      said the Regionally Significant Industrial Area zone, 4.135.5, adds
+      nothing residential. It is a zone of its own, not an overlay on PDI,
+      and its list has a residential line -- (.03)J, "Residential uses shall
+      not exceed ten percent of total floor area". It is ruled in its own
+      block, PDI-RSIA, below.)
   PF:
     section: ["4.136"]
     cite_default:
@@ -3083,6 +3086,91 @@ zones:
       Planning Commission approve "all uses provided in the Master Plan",
       which is a plan for a school or a hospital campus, not a door for a
       four-unit building on a lot.
+  # The Washington County side's two codes, ruled 2026-10-01. Run 51's gate
+  # listed both as "zone codes nobody has ruled on". They were not
+  # misspellings of PDI and PF: each is a zone of its own in the ordinance
+  # (4.135.5 and 4.136.5; 4.110(.01)G names "PF-C"), keyed here in the map's
+  # own spelling (PFC prints without the hyphen). No block or ruling held
+  # either code, so the normaliser counted both as new.
+  PDI-RSIA:
+    section: ["4.135.5", "4.134"]
+    cite_default:
+      cite: Wilsonville Development Code 4.135.5 (PDI-RSIA Planned
+        Development Industrial -- Regionally Significant Industrial Area
+        Zone) (.01) and (.03), uses that are typically permitted, A-N;
+        4.134 (Coffee Creek Industrial Design Overlay District) (.01) and
+        (.04)
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-10-01'
+    quadplex_allowed:
+      # Regionally Significant Industrial Area, "to protect industrially
+      # zoned lands for industrial uses". The list is PDI's kind -- warehouses,
+      # laboratories, assembly, light manufacturing, technology offices --
+      # with I, "Any use allowed in a PDC Zone or any other light industrial
+      # uses provided that any such use is compatible with industrial use",
+      # and J, the only line about housing in the section: "Residential uses
+      # shall not exceed ten percent of total floor area." A four-unit
+      # building alone on its lot is all residential floor area, so it is
+      # over J's cap by construction; I's chain to PDC meets PDC's own door
+      # (majority of the ground floor commercial), shut for the same reason.
+      # The Coffee Creek Industrial Design Overlay sits on this zone and
+      # takes its uses from 4.135.5(.03) (4.134(.04)). 10 lots.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L9465-L9468,L9498,L10416-L10425,L10437-L10439,L10454,L10461-L10462"
+    notes: >-
+      Ruled 2026-10-01 from 4.135.5(.03). Whole-section grep of 4.135.5
+      (L10416-L10609) for dwelling, residential, housing, household: (.03)J
+      and four performance-standard lines about NEIGHBOURING residential
+      districts (L10495, L10497, L10502, L10532), nothing else. J is a cap, not
+      a prohibition, and "total floor area" is not tied to a lot -- (.03)I.2
+      ties the office cap to "total floor area within a project site". Read
+      across a master-planned industrial site, a residential building could
+      sit inside one whose other nine-tenths are industrial; FLATS screens a
+      lot, and a lot carrying only the pod is 100 percent residential.
+      Refused on that reading; the master-plan reading is a site FLATS does
+      not model.
+  PFC:
+    section: ["4.136.5"]
+    cite_default:
+      cite: Wilsonville Development Code 4.136.5 (PF-C Public Facility --
+        Corrections Zone) (.01), (.02) uses permitted outright A-B, (.03)
+        uses subject to a conditional use A-C
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-10-01'
+    quadplex_allowed:
+      # Public Facility -- Corrections, "applied to lands that have been, or
+      # are being, acquired for use and development of corrections
+      # facilities". Outright: a municipal or governmental service building,
+      # and prisons and other correctional facilities. Conditional: public
+      # parks, trails, a water treatment plant and reservoir, military bases.
+      # No dwelling on either list; whole-section grep of 4.136.5
+      # (L10666-L10700) for dwelling, residential, housing, household:
+      # nothing. 7 lots. L10671-L10673 (use B, prisons, and the tails of
+      # A and B) are left out of the quote on purpose: L10671 prints
+      # "Section 4.400." alone on a line, the routing ledger's heading reader
+      # takes it for a heading, and a quoted line under it would count as a
+      # value read from 4.400 -- closing the two open "-> 4.400" rows with
+      # nobody having read 4.400. The purpose clause (L10667-L10668) names
+      # the corrections use the quote no longer shows.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L10666-L10670,L10676-L10679"
+    notes: >-
+      Ruled 2026-10-01 from 4.136.5. Five uses on two lists and every one a
+      corrections or public facility. The (.08)B master plan "would allow
+      all uses provided in the Master Plan", which is a plan for the
+      corrections campus, not a door for a four-unit building on a lot --
+      PF's reading of its own (.08)B, above.
+
+# References beside an encoded value that cannot reach this building
+# (crossrefs ledger, flats/encode/crossrefs.py).
+crossrefs:
+  "4.130":
+    outcome: narrows_only
+    note: >-
+      PDI-RSIA 4.135.5(.03)I admits a PDC use only if it "is planned and developed in a
+      manner consistent with the purposes and objectives of Sections 4.130 to 4.140" --
+      a consistency test on top of the use list, which can only take a use away
+      (4.planning.txt L10437-L10439).
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

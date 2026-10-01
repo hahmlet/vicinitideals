@@ -1,0 +1,32 @@
+{
+  "sha256": "88e39899815c9a5dc0456333fb3e1297b7454d08e27aa18528712ef479e1a516",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "0772d8f5ce71963dda4cddf3bd87c1ece6c386d2a28261486619b35eddc31c05",
+  "pages": [
+    {
+      "n": 389,
+      "line": 1,
+      "label": "TDC57:1"
+    },
+    {
+      "n": 390,
+      "line": 40,
+      "label": "TDC57:2"
+    },
+    {
+      "n": 391,
+      "line": 103,
+      "label": "TDC57:3"
+    },
+    {
+      "n": 392,
+      "line": 141,
+      "label": "TDC57:4"
+    },
+    {
+      "n": 393,
+      "line": 180,
+      "label": "TDC57:5"
+    }
+  ]
+}

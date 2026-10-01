@@ -81,6 +81,13 @@ FLAG = "unmarked"
 #: before, ``says`` the comment, so the card can show both.
 REOPENED = "reopened"
 
+#: Not a reviewer's answer: our answer to a problem the reviewer raised,
+#: stored under ``reply:<id of the row it answers>`` with the words in
+#: ``note``. A problem with a reply leaves the open list for the answered one,
+#: and the card shows the reply under the flag -- otherwise a problem traced,
+#: explained or fixed stays listed as open forever, asking to be looked at.
+REPLIED = "replied"
+
 #: Answers that mean something needs fixing. They make the problems list.
 PROBLEMS = frozenset({"differs", "wrong_box", "missing", FLAG})
 
@@ -222,6 +229,16 @@ def _flag_key(r: FlatsPageCheck) -> str:
     return f"{r.question}#{r.id}" if r.question.startswith("page:") else r.question
 
 
+def _replies(answers: dict[tuple, FlatsPageCheck]) -> dict[int, FlatsPageCheck]:
+    """Our latest reply to each answered problem, by the id of the problem's row."""
+    out = {}
+    for r in answers.values():
+        target = r.question.removeprefix("reply:")
+        if r.answer == REPLIED and r.question.startswith("reply:") and target.isdigit():
+            out[int(target)] = r
+    return out
+
+
 async def _signed(session: DBSession, layer_id: str | None = None) -> set[tuple]:
     """Addresses whose latest sign-off is a confirmation, for ordering."""
     stmt = select(FlatsRuleSignature).order_by(FlatsRuleSignature.decided_at)
@@ -351,7 +368,7 @@ def _flags_on(
     A flag is its own finding: a second one adds to the list, it does not
     replace the first, and the card shows them so the reviewer can see that.
     """
-    out = []
+    out, replies = [], _replies(answers)
     for r in answers.values():
         if (
             r.layer == layer_id
@@ -359,7 +376,8 @@ def _flags_on(
             and r.page in pages
             and (r.quote or "").partition("#L")[0] == document
         ):
-            out.append({"page": r.page, "says": r.says, "id": r.id})
+            reply = replies.get(r.id)
+            out.append({"page": r.page, "says": r.says, "id": r.id, "reply": reply.note if reply else ""})
     return sorted(out, key=lambda f: f["id"])
 
 
@@ -550,6 +568,7 @@ def _sheet_view(
     return {
         "src": f"/flats/sheet/{document}?page={page}",
         "page": page,
+        "context": "",
         "cite": printed.cite if printed else f"PDF page {page}",
         "boxes": [{"css": box.css(), "kind": kind} for box, kind in boxes],
         "encoded": encoded,
@@ -558,6 +577,28 @@ def _sheet_view(
             for box, title in _set_aside_on(document, page)
         ],
     }
+
+
+def _with_neighbours(document: str, sheets: list[dict[str, Any]], mark: str) -> list[dict[str, Any]]:
+    """The cited pages with the page before and the page after them.
+
+    A list that runs to the foot of the page leaves the reader unable to say
+    whether it ends there: Steph could not tell whether MUE's permitted uses
+    stopped at N or went on to an O overleaf. The neighbours carry tints but
+    no box -- the card asks about the cited pages -- and the card scrolls to
+    the first cited page, so the page before is there above it, not in the way.
+    """
+    index = _page_index(document)
+    if not sheets or index is None or not index.pages:
+        return sheets
+    pages = {sh["page"] for sh in sheets}
+    first, last, end = min(pages), max(pages), index.pages[-1].n
+    out = list(sheets)
+    if first > 1 and first - 1 not in pages:
+        out.insert(0, {**_sheet_view(document, first - 1, [], mark), "context": "before"})
+    if last < end and last + 1 not in pages:
+        out.append({**_sheet_view(document, last + 1, [], mark), "context": "after"})
+    return out
 
 
 def _note_text(document: str, mark: str, after: int) -> tuple[int | None, list[str]]:
@@ -612,7 +653,9 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         # The section alone: the cite's description restates the question.
         "section": (row["cite"] or "").split(",")[0].strip(),
         # A layer-wide rule has no zone worth naming on the card.
-        "zone_label": "" if row["zone"].startswith("(") else row["zone"],
+        # "the I zone", not "I": a one-letter zone name reads as a lettered
+        # point on the page (Oregon City's Institutional district did).
+        "zone_label": "" if row["zone"].startswith("(") else f"the {row['zone']} zone",
         "quote": row["quote"],
         "url": row["url"],
         "question": ask.question,
@@ -638,6 +681,7 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         card["exempt"] = _exempt(layer, row)
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
+        card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
         return card
 
     mark = ask.question.partition(":")[2]
@@ -663,6 +707,7 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         card["sheets"].append(
             _sheet_view(document, note_page, _note_box(document, note_page, body), row["mark"])
         )
+    card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
     return card
 
 
@@ -680,13 +725,14 @@ def _note_box(document: str, page: int, body: list[str]) -> list[tuple[sheet.Box
 
 def _counts(layer: Layer, rows: list[dict[str, Any]], answers: dict[tuple, FlatsPageCheck]) -> dict[str, int]:
     checked = problems = 0
+    replies = _replies(answers)
     for row in rows:
         said = _standing(
             answers.get((layer.layer, row["zone"], row["field"], row["when"], "value")), row
         )
         if said is not None:
             checked += 1
-            problems += said.answer in PROBLEMS
+            problems += said.answer in PROBLEMS and said.id not in replies
     return {"numbers": len(rows), "checked": checked, "left": len(rows) - checked, "problems": problems}
 
 
@@ -728,7 +774,10 @@ async def _card_ctx(
         # Coming back to change an answer starts from what was written.
         card["before_comment"] = (before.says or before.note) if before else ""
         card["flags"] = _flags_on(
-            answers, layer.layer, ask.row["document"], {sh["page"] for sh in card["sheets"]}
+            answers,
+            layer.layer,
+            ask.row["document"],
+            {sh["page"] for sh in card["sheets"] if not sh["context"]},
         )
     return {
         "layer": {"id": layer.layer, "label": _layer_label(layer)},
@@ -779,10 +828,12 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
     dedup_count, conflicts_count = await _get_counts(session)
     answers = await _answers(session)
     signed = await _signed(session)
+    replies = _replies(answers)
 
-    def build() -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]]]:
+    def build() -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]], list[dict[str, Any]]]:
         layers = _layers()
         table, totals, problems = [], {"numbers": 0, "checked": 0, "problems": 0, "no_map": 0, "html": 0}, []
+        answered: list[dict[str, Any]] = []
         for layer_id, layer in sorted(layers.items()):
             rows = _rows(layer, signed)
             counts = _counts(layer, rows, answers)
@@ -805,7 +856,8 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
                     continue
                 if _standing(answer, row) is None:
                     continue
-                problems.append(
+                reply = replies.get(answer.id)
+                (answered if reply else problems).append(
                     {
                         "layer_id": layer_id,
                         "layer_label": _layer_label(layer),
@@ -822,11 +874,18 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
                         "by": answer.reviewer,
                         "at": answer.decided_at,
                         "handed_on": answer.bundled_at is not None,
+                        "reply": reply.note if reply else "",
+                        "replied_at": reply.decided_at if reply else None,
                     }
                 )
-        return table, totals, sorted(problems, key=lambda p: p["at"], reverse=True)
+        return (
+            table,
+            totals,
+            sorted(problems, key=lambda p: p["at"], reverse=True),
+            sorted(answered, key=lambda p: p["replied_at"], reverse=True),
+        )
 
-    table, totals, problems = await run_in_threadpool(build)
+    table, totals, problems, answered = await run_in_threadpool(build)
     return templates.TemplateResponse(
         request,
         "flats_check_index.html",
@@ -835,6 +894,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
             "table": table,
             "totals": totals,
             "problems": problems,
+            "answered": answered,
         },
     )
 
@@ -855,11 +915,17 @@ async def flats_check_problems(
     layers = _layers()
     out: list[str] = []
     ids: list[int] = []
+    replies = _replies(answers)
     for (layer_id, zone, field, when, question), answer in sorted(
         answers.items(), key=lambda kv: kv[1].decided_at
     ):
         layer = layers.get(layer_id)
-        if layer is None or answer.answer not in PROBLEMS or answer.bundled_at is not None:
+        if (
+            layer is None
+            or answer.answer not in PROBLEMS
+            or answer.bundled_at is not None
+            or answer.id in replies
+        ):
             continue
         number = _number(layer, zone, field, when)
         if number is None or answer.fingerprint != _mark(layer_id, zone, field, when, number):

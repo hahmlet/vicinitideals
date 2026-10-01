@@ -47,12 +47,42 @@
           <td style="max-width:40ch">{{ p.note }}</td>
           <td class="muted" style="font-size:11px">{{ p.by }}<br>{{ p.at.strftime("%Y-%m-%d") }}</td>
           <td><a class="btn btn-secondary btn-sm"
-                 href="/flats/check/{{ p.layer_id }}?zone={{ p.zone | urlencode }}&field={{ p.field | urlencode }}&when={{ p.when | urlencode }}">Look again</a></td>
+                 href="/flats/check/{{ p.layer_id }}?zone={{ p.zone | urlencode }}&field={{ p.field | urlencode }}&when={{ p.when | urlencode }}">Open the card</a></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+  {% endif %}
+
+  {% if answered %}
+  <details style="margin-top:14px" data-answered>
+    <summary style="cursor:pointer;font-size:15px;font-weight:600">Answered ({{ answered | length }})</summary>
+    <p class="muted" style="font-size:12px;margin:6px 0 8px;max-width:80ch">
+      Problems you raised that have been traced back and answered: fixed, or explained.
+      Nothing here needs you; the answer also shows on the card, under what you wrote.
+    </p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Where</th><th>Standard</th><th>You said</th><th>Our answer</th><th></th></tr>
+        </thead>
+        <tbody>
+          {% for p in answered %}
+          <tr>
+            <td>{{ p.layer_label }} · {{ p.zone }}</td>
+            <td>{{ p.field_label }}{% if p.when %} <span class="muted">when {{ p.when | replace("_", " ") }}</span>{% endif %}
+              {% if p.question != "value" %}<div class="muted" style="font-size:11px">{{ p.question | replace("note:", "note ") | replace("page:", "flagged on PDF page ") }}</div>{% endif %}</td>
+            <td style="max-width:45ch">{{ p.answer_words }}{% if p.says %}: {{ p.says }}{% endif %}</td>
+            <td style="max-width:60ch">{{ p.reply }}</td>
+            <td><a class="btn btn-secondary btn-sm"
+                   href="/flats/check/{{ p.layer_id }}?zone={{ p.zone | urlencode }}&field={{ p.field | urlencode }}&when={{ p.when | urlencode }}">Open the card</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </details>
   {% endif %}
 
   <h3 style="margin:18px 0 6px;font-size:15px">By jurisdiction</h3>

@@ -129,15 +129,17 @@ def test_only_roads_a_truck_can_use_are_loaded(tmp_path) -> None:
     line = lambda y: shapely.to_wkb(shapely.LineString([(0, y), (10, y)]))  # noqa: E731
     pd.DataFrame(
         {
-            "type": ["1400", "1600", "1800", "1110", "1700", "1500"],
-            "alley": [False, True, False, False, False, True],
-            "wkb": [line(y) for y in range(6)],
+            "type": ["1400", "1600", "1800", "1110", "1700", "1500", "5501", "5402", "2000"],
+            "alley": [False, True, False, False, False, True, False, False, False],
+            "wkb": [line(y) for y in range(9)],
         }
     ).to_parquet(tmp_path / "s1_streets.parquet")
     _, geoms = fire.load_truck_roads(tmp_path / "s1_streets.parquet")
-    # A local street and a named private road; not an alley, an unnamed
-    # drive, a freeway, or a street the stage file marked an alley.
-    assert sorted(g.coords[0][1] for g in geoms) == [0.0, 4.0]
+    # An arterial, a named private road and a street with MAX in it (SW 5th:
+    # 1S1E03BC -04000, a downtown block read as reachable from nowhere);
+    # not an alley, an unnamed drive, a freeway, a street the stage file
+    # marked an alley, Tilikum Crossing or an unimproved road.
+    assert sorted(g.coords[0][1] for g in geoms) == [0.0, 4.0, 6.0]
 
 
 # --- the screen -----------------------------------------------------------

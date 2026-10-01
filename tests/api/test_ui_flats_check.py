@@ -315,7 +315,10 @@ async def test_a_boxed_number_does_not_also_tint_its_citations_context_lines(cli
 
     assert "check-box-value" in response.text
     assert "check-box check-box-line" not in response.text
-    assert "?page=2" in response.text and "?page=1" not in response.text
+    # Page 1 comes back only as the page before, for context: not cited.
+    assert "?page=2" in response.text
+    assert re.search(r'data-context="before">.*?\?page=1', response.text, re.S)
+    assert len(re.findall(r"data-cited>", response.text)) == 1
 
 
 def test_a_condition_is_named_in_words_not_by_its_key():
@@ -381,6 +384,68 @@ async def test_a_second_flag_adds_to_the_first_and_both_show_on_the_card(client,
 
     assert "Flagged on this page (2)" in response.text
     assert response.text.index("first thing") < response.text.index("second thing")
+
+
+async def test_an_answered_flag_leaves_the_open_list_and_shows_its_answer(client, session):
+    # A flag traced and explained moves no fingerprint, so without a reply it
+    # would sit on the open list forever asking to be looked at again.
+    await _login(client, session)
+    row = _first_row()
+    page = check._card(check._layers()[LAYER], check._Ask(row, "value"))["sheets"][0]["page"]
+    await client.post(
+        "/ui/flats/check", data=_form(row, action="flag", flag_page=str(page), comment="what about G2?")
+    )
+    flag = (
+        await session.execute(select(FlatsPageCheck).where(FlatsPageCheck.answer == check.FLAG))
+    ).scalar_one()
+    session.add(
+        FlatsPageCheck(
+            layer=flag.layer, zone=flag.zone, field=flag.field, when_key=flag.when_key,
+            value=flag.value, fingerprint=flag.fingerprint, question=f"reply:{flag.id}",
+            answer=check.REPLIED, says=flag.says, note="G2 sets no maximum side yard.",
+            quote=flag.quote, page=flag.page, placed=flag.placed, reviewer="triage",
+        )
+    )
+    await session.commit()
+
+    index = await client.get("/flats/check")
+    open_list, _, answered = index.text.partition("data-answered")
+    assert "what about G2?" not in open_list
+    assert "what about G2?" in answered and "G2 sets no maximum side yard." in answered
+    assert "what about G2?" not in (await client.get("/flats/check/problems.txt")).text
+    card = await client.get(
+        f"/flats/check/{LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
+    )
+    assert "Answered: G2 sets no maximum side yard." in card.text
+
+
+async def test_the_card_names_the_zone_as_a_zone(client, session):
+    # Oregon City's "I" (Institutional) read as a lettered point on the page.
+    await _login(client, session)
+    row = next(r for r in check._rows(check._layers()[LAYER], set()) if not r["zone"].startswith("("))
+    card = await client.get(
+        f"/flats/check/{LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
+    )
+    assert f"<strong>the {row['zone']} zone</strong>" in card.text
+
+
+def test_the_card_shows_the_page_before_and_after_the_cited_one(monkeypatch):
+    # Steph could not tell whether MUE's use list ended at N or ran on to an O
+    # overleaf: the page shown ended mid-list.
+    layer = check._layers()[LAYER]
+    row = _first_row()
+    last = check._page_index(row["document"]).pages[-1].n
+    cited = min(5, last - 1)
+    monkeypatch.setattr(
+        check, "_placed",
+        lambda row: sheet.Placed(status="boxed", pages=[cited], boxes={cited: [(_BOX, "value")]}),
+    )
+    sheets = check._card(layer, check._Ask(row, "value"))["sheets"]
+
+    assert [(s["page"], s["context"]) for s in sheets] == [
+        (cited - 1, "before"), (cited, ""), (cited + 1, "after")
+    ]
+    assert not sheets[0]["boxes"] and not sheets[2]["boxes"] and sheets[1]["boxes"]
 
 
 def _hidden(text: str, name: str) -> str:
