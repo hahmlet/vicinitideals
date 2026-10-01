@@ -280,6 +280,22 @@ OPEN = {
     "or/washington/sherwood 16.40.050 -> 16.40.040",
     "or/washington/king-city 16.114.040 -> 16.84.060",
     "or/washington/king-city 16.114.130 -> 16.132",
+    # Tigard, a draft from a cloud session, 2026-10-01. Each read:
+    # 18.140.040 -> .030 lists the PR zone's restricted uses; PR prohibits
+    # Residential Use. 18.280.040 -> 18.920.030 is the tandem-driveway path
+    # (one driveway per two units), which the layer does not encode -- the
+    # pod's court takes the shared-access path. 18.660.040 -> .090 is a fee
+    # in lieu of street improvements, a relaxation. 18.660.070 -> 18.930
+    # SWITCHES OFF vision clearance in TMU. 18.660.070 -> 18.920 and the two
+    # rows into 18.920.030 send driveways on Dartmouth Street, 72nd Avenue
+    # and Pacific Highway to access management; the rowhouse drive cap (10
+    # ft, G.2) is held, and those three streets are not measured.
+    "or/washington/tigard 18.140.040 -> 18.140.030",
+    "or/washington/tigard 18.280.040 -> 18.920.030",
+    "or/washington/tigard 18.660.040 -> 18.660.090",
+    "or/washington/tigard 18.660.070 -> 18.930",
+    "or/washington/tigard 18.660.070 -> 18.920",
+    "or/washington/tigard 18.660.070 -> 18.920.030",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
@@ -369,6 +385,13 @@ FOLLOWED = {
     # minimum density, so the pod's answer does not move; the reader fix is
     # proposed in the Washington handoff rather than made here.
     "or/washington/beaverton 70.15.10 -> 70.15.10.5",
+    # Tigard, 2026-10-01 (draft). 18.660.080 -> 18.30 is TMU's height in
+    # storeys (L943), whose basements are "as defined in Chapter 18.30"; the
+    # layer reads 18.30 whole. 18.660.060 -> .040 is a WIRELESS FACILITY
+    # pointer (L581), closed only because the TMU use gate quotes 18.660.040;
+    # the pointer itself reaches nothing the pod is.
+    "or/washington/tigard 18.660.080 -> 18.30",
+    "or/washington/tigard 18.660.060 -> 18.660.040",
 }
 
 

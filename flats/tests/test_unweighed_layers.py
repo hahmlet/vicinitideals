@@ -67,6 +67,8 @@ OWED_A_COUNTY = {
     "or/washington/sherwood",
     "or/washington/king-city",
     "or/washington/durham",
+    # 2026-10-01, a draft from a cloud session.
+    "or/washington/tigard",
 }
 
 

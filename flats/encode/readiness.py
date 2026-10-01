@@ -579,7 +579,25 @@ _NO_STANDARD = tuple(
         r"\bno\s+maximum\b",
         r"\bnot\s+required\b",
         r"\bno\s+[a-z][a-z ]{0,24}?\s+(?:is|are)\s+required\b",
-        r"\bthere\s+is\s+no\s+[a-z]+\s+requirement\b",
+        # One word or two before "requirement": Tigard's Table 18.280.1 note
+        # 2 says "There is no rear setback requirement when the rear property
+        # line abuts an alley" (2026-10-01), and the one-word form read it as
+        # no statement at all.
+        r"\bthere\s+is\s+no\s+(?:[a-z]+\s+){1,2}requirement\b",
+        # "This standard does not apply to a common wall lot line where the
+        # dwelling units are attached" -- Tigard's Table 18.280.1 note 1, on
+        # the side setback row. Scoped to "this standard", the note's own
+        # subject, not to "does not apply", which a code says of far more
+        # than a standard it is waiving.
+        r"\bthis\s+standard\s+does\s+not\s+apply\b",
+        # "The ratios for the maximum number of off-street vehicle parking
+        # spaces allowed are provided in Table 18.410.3" -- Tigard CDC
+        # 18.410.030.A.1, the chapter's whole quantity rule for vehicles
+        # (2026-10-01). Like West Linn's repeal below, a chapter that states a
+        # ceiling and no floor, and the citation must quote the sentence that
+        # says the table holds maximums. Scoped to the whole phrase: "maximum
+        # number" alone is said of far more than parking.
+        r"\bratios\s+for\s+the\s+maximum\s+number\s+of\s+off-street\s+vehicle\s+parking\s+spaces\b",
         # "Development inside the UGB is exempt from minimum parking
         # standards" -- Washington County CDC 413-6.1, which says it in the
         # heading of the only table that states a count. Scoped to "exempt

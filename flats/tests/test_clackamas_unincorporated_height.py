@@ -347,7 +347,14 @@ def test_and_the_corpus_wide_height_gap_is_now_one_zone_wide(rules: RuleSet) -> 
     2026-09-29, night: one zone wide again. SCC-DT now refuses the pod
     (12.50.350 D.1 puts a free-standing residential building's parking
     inside it, and the pod parks in an open court), so its missing height
-    no longer reaches a building this screen places."""
+    no longer reaches a building this screen places.
+
+    2026-10-01: two zones wide again. Tigard MUC (a draft from a cloud
+    session) allows rowhouses (Table 18.120.2), but the rowhouse table
+    18.280.1 prints no MUC column, the commercial height table 18.320.4
+    reaches only nonresidential and mixed-use development (18.320.020.A-B),
+    and Table 18.805.1's MUC rowhouse cells come out of the extraction
+    blank. Owed until the printed table is read by eye."""
     silent = [
         (layer_id, zone)
         for layer_id, layer in sorted(rules.layers.items())
@@ -356,4 +363,4 @@ def test_and_the_corpus_wide_height_gap_is_now_one_zone_wide(rules: RuleSet) -> 
         and got.values["quadplex_allowed"].value
         and "max_height_ft" in got.missing_required
     ]
-    assert silent == [("or/clackamas/wilsonville", "OTR")]
+    assert silent == [("or/clackamas/wilsonville", "OTR"), ("or/washington/tigard", "MUC")]

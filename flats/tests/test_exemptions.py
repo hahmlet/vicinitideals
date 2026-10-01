@@ -129,7 +129,16 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 381, "numeric": 63, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 390, "numeric": 64, "marker": 0, "dash": 2, "silent": 2}
+# 381 -> 390 stated and 63 -> 64 numeric on 2026-10-01: Tigard, a draft from
+# a cloud session. Nine "None" cells: Table 18.805.1's rowhouse minimum lot
+# size and maximum density in RES-E and MUR and minimum width in RES-D,
+# Table 18.650.3's minimum lot size and width in MU-CBD, and 18.660.040's
+# "no minimum lot area, width, or depth standard in the TMU zone". The
+# numeric one is the layer default parking_max_per_unit: Table
+# 18.410.3 sends Residential Use to the housing type chapters, and the
+# rowhouse chapter states no maximum, so the citation shows the table's
+# figures and no word of exemption.
 # 380 -> 381 stated on 2026-09-30: the distance to transit is measured, and
 # Hillsboro SCC-SC's "Beyond 800 ft. of an LRT Station None" minimum height
 # is a banded exemption quoting that row.

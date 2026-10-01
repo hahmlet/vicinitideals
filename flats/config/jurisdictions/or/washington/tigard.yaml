@@ -92,6 +92,34 @@ code:
   url: https://ecode360.com/print/TI5024?guid=43709542
   title: Chapter 18.930 Vision Clearance Areas
   allow_thin: true
+definitions:
+  # Read 2026-10-01 from 18.30, which is on disk whole
+  # (tdc.18.30.definitions.txt).
+  #
+  # THE NOUN. "Rowhouse" - "A type of attached housing that shares a common
+  # sidewall with one or more dwelling units, but excluding apartments,
+  # courtyard units, and quads" (L1032-L1033). A "Quad" is two units on a
+  # first story over two on a second (L1028-L1029), so the pod, four units
+  # side by side, is a rowhouse development.
+  #
+  # CORNER LOT. "A unit of land situated at the intersection of two streets
+  # where the interior angle of such intersection does not exceed 135º"
+  # (L1236-L1237): the frontages meet, and "does not exceed" includes 135.
+  # A "Street" is "A public or private accessway that is created to provide
+  # ingress or egress for vehicles to three or more lots" (L1585), so a
+  # private way serving three or more lots makes a corner (drives_count),
+  # read as the definition's general case because nothing counts the lots a
+  # way serves. An "Alley" is "A minor way that is used primarily for
+  # vehicular service access to the back or side of properties otherwise
+  # abutting on a street" (L1557): not a street, so the default alleys_count
+  # false.
+  corner_lot:
+    test: intersecting_frontages
+    max_intersection_angle_deg: 135.0
+    drives_count: true
+    quote: "or/washington/tigard/tdc.18.30.definitions.txt#L1236-L1237"
+    cite: "Tigard CDC 18.30, Corner lot; Street; Alley"
+
 private_drives:
   street: true
   quote: "or/washington/tigard/tdc.18.30.definitions.txt#L1585"

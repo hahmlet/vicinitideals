@@ -1349,8 +1349,9 @@ def test_every_private_drive_ruling_quotes_the_line_it_points_at(layers) -> None
         return " ".join(t.replace("–", "-").replace("- ", "-").split())
 
     ruled = {k: v.private_drives for k, v in layers.items() if v.private_drives is not None}
-    # 13 on 2026-09-29; the six Washington layers ruled street: true 2026-09-30.
-    assert len(ruled) == 19
+    # 13 on 2026-09-29; the six Washington layers ruled street: true 2026-09-30;
+    # Tigard (draft, 2026-10-01) street: true on 18.30 "Street" (three or more lots).
+    assert len(ruled) == 20
     for layer_id, r in ruled.items():
         doc, _, rng = r.quote.partition("#L")
         a, _, b = rng.partition("-L")

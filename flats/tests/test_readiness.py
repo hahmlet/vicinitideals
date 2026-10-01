@@ -477,6 +477,32 @@ def test_a_standard_a_city_repealed_states_zero_without_printing_one() -> None:
     assert not quotes_the_number("Repealed by Ord. 1754.", 2)
 
 
+def test_tigards_three_ways_of_stating_none() -> None:
+    """Tigard (2026-10-01, draft) states three zeros in words the check did
+    not know: a two-word subject before "requirement", a note waiving "this
+    standard", and a parking chapter whose only vehicle quantity rule is a
+    table of maximums. Each corroborates a zero and nothing else."""
+    from flats.encode.readiness import quotes_the_number
+
+    rear = (
+        "There is no rear setback requirement when the rear property line "
+        "abuts an alley."
+    )
+    side = (
+        "This standard does not apply to a common wall lot line where the "
+        "dwelling units are attached."
+    )
+    parking = (
+        "The ratios for the maximum number of off-street vehicle parking "
+        "spaces allowed are provided in Table 18.410.3, subject to the following:"
+    )
+    for text in (rear, side, parking):
+        assert quotes_the_number(text, 0), text
+        assert not quotes_the_number(text, 15), text
+    # "does not apply" alone is not a waiver of a standard.
+    assert not quotes_the_number("Subsection B does not apply to alleys.", 0)
+
+
 def test_waiving_language_does_not_excuse_a_number_that_is_absent() -> None:
     """The rule runs in the permissive direction, so it is held to zero only.
     A passage that waives one standard is not evidence for a different one it

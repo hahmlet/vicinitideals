@@ -134,8 +134,14 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     first read `broken`: its claim named MDRH's two and a half stories as a
     figure, which the layer holds nowhere (the stories field takes whole
     numbers), and was rewritten in words.
+
+    87 -> 92 on 2026-10-01, Tigard (draft, a cloud session): Table 18.110.3
+    note 2 (rowhouses of up to five units a grouping, on the RES-A to RES-C
+    use gates), Table 18.280.1 notes 1 and 2 (the attached-wall side and
+    alley rear variants) and Table 18.650.3 notes 2 and 4 (MU-CBD's 45 ft
+    height and its residential-only minimum density). All five confirm.
     """
-    assert len(rows) == 87
+    assert len(rows) == 92
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

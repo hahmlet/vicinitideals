@@ -502,7 +502,15 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # is valid. Round-tripping is the whole point of doing this as a port.
     rules = RuleSet(load_rules())
 
-    assert len(rules.layers) == 25  # 24 jurisdictions + the state layer
+    assert len(rules.layers) == 26  # 25 jurisdictions + the state layer
+    # 435 as of 2026-10-01: Tigard, the seventh Washington County layer, a
+    # draft from a cloud session. Its 13 zones are the 13 codes Metro's
+    # zoning map prints inside the city, which are the code's own zone
+    # names: RES-A to RES-E, MUR, MUC, MU-CBD and TMU admit the pod as a
+    # rowhouse development on one lot (MUR, MUC and MU-CBD refused inside
+    # subdistricts or subareas no map held draws), and COM, MUE, IND and PR
+    # refuse.
+    #
     # 422 as of 2026-09-29, later again: Durham, the sixth Washington County
     # layer, from the same cloud session. Its 8 zones are the districts of
     # Durham Development Code Chapter 2: SDR admits the pod on one lot; MDR,
@@ -603,7 +611,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 422
+    assert sum(len(l.zones) for l in rules.layers.values()) == 435
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:
