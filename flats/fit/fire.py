@@ -242,12 +242,25 @@ def point_offset(
     return lambda pts: street_offsets(pts, centrelines, geoms)
 
 
+def reachable(
+    lines: Sequence[tuple[float, float, float, float]],
+    offset: Callable[[np.ndarray], np.ndarray] | None = None,
+) -> tuple[tuple[float, float, float, float], ...]:
+    """The street lines a truck can come in over: those with a point the
+    truck can stand off (a finite offset). Every line where no offset is
+    given."""
+    if offset is None:
+        return tuple(lines)
+    return tuple(line for line in lines if np.isfinite(offset(_sources([line]))).any())
+
+
 __all__ = [
     "HALF_ROAD_FT",
     "MAX_GAP_FT",
     "TRUCK_TYPES",
     "load_truck_roads",
     "point_offset",
+    "reachable",
     "route_ft",
     "street_offsets",
 ]

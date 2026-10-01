@@ -341,14 +341,43 @@ def test_the_bridge_measures_the_route_on_the_drawn_plan(corpus, policies) -> No
     assert check(s.screening, "fire_access_ft").verdict is Verdict.passes
 
 
-def test_a_lot_with_no_polygon_is_tried_and_unobserved(corpus, policies) -> None:
-    lot = lot_from_row(bridge_row(lot_wkb=None), corpus.layers)
+def _coloured(s, triage: Triage):
+    import dataclasses
+
+    return dataclasses.replace(
+        s,
+        screening=dataclasses.replace(s.screening, triage=triage),
+        signed=dataclasses.replace(s.signed, triage=triage),
+        facts=dataclasses.replace(s.facts, fire_route_ft=None, fire_route_tried=False),
+    )
+
+
+def test_a_green_plan_with_no_route_is_tried_and_unobserved(corpus, policies) -> None:
+    lot = lot_from_row(bridge_row(), corpus.layers)
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
-    if s.screening.triage is Triage.red and s.signed.triage is Triage.red:
-        pytest.skip("red both ways: not measured, by design")
-    assert s.facts.fire_route_tried and s.facts.fire_route_ft is None
-    assert s.signed.triage is not Triage.green
-    assert FACT_UNOBSERVED in s.signed.reasons
+    bare = lot_from_row(bridge_row(lot_wkb=None), corpus.layers)
+    got = fire_checked(_coloured(s, Triage.green), bare, None, policy=policies[0], relief=policies[1])
+    assert got.facts.fire_route_tried and got.facts.fire_route_ft is None
+    assert got.signed.triage is not Triage.green
+    assert FACT_UNOBSERVED in got.signed.reasons
+
+
+def test_a_plan_short_of_green_with_no_route_is_left_as_it_was(corpus, policies) -> None:
+    # A yellow plan whose drawing stands past the lot line (the fit fell
+    # short) finds no route; marking it unmeasured would move a lot that is
+    # already short of GREEN for another reason (2026-10-01: 133k rows).
+    lot = lot_from_row(bridge_row(), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    bare = lot_from_row(bridge_row(lot_wkb=None), corpus.layers)
+    yellow = _coloured(s, Triage.yellow)
+    assert fire_checked(yellow, bare, None, policy=policies[0], relief=policies[1]) is yellow
+
+
+def test_a_plan_short_of_green_with_a_route_is_still_measured(corpus, policies) -> None:
+    lot = lot_from_row(bridge_row(), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    got = fire_checked(_coloured(s, Triage.yellow), lot, None, policy=policies[0], relief=policies[1])
+    assert got.facts.fire_route_tried and got.facts.fire_route_ft is not None
 
 
 def test_a_plan_red_both_ways_is_not_measured(corpus, policies) -> None:
@@ -364,3 +393,61 @@ def test_a_plan_red_both_ways_is_not_measured(corpus, policies) -> None:
     )
     got = fire_checked(red, lot, None, policy=policies[0], relief=policies[1])
     assert got is red
+
+
+def test_a_private_road_the_yards_do_not_count_is_still_a_way_in(corpus, policies) -> None:
+    # 1S1E34DB -00103 (2026-10-01): a lot on a named private road, read as
+    # an ordinary lot line for the yards, was walked round from the far
+    # street -- 454 ft for a building 92 ft from the road it stands on.
+    import dataclasses
+
+    lot = lot_from_row(bridge_row(), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    front = (X0, Y0, X0 + 80, Y0)
+    private = dataclasses.replace(lot, edges=None, access=(front,), access_bearings=(0.0,))
+    got = fire_checked(_coloured(s, Triage.green), private, None, policy=policies[0], relief=policies[1])
+    assert got.facts.fire_route_ft == pytest.approx(s.facts.fire_route_ft)
+
+
+def test_reachable_keeps_the_lines_a_truck_can_stand_off() -> None:
+    near = (0.0, 0.0, 60.0, 0.0)
+    far = (0.0, 200.0, 60.0, 200.0)
+    road = shapely.LineString([(-50, -20), (110, -20)])
+    off = fire.point_offset(shapely.STRtree([road]), np.array([road]))
+    assert fire.reachable((near, far), off) == (near,)
+    assert fire.reachable((near, far), None) == (near, far)
+
+
+@pytest.mark.parametrize("served_end", ["low", "high"])
+def test_a_through_lot_is_drawn_at_the_end_the_truck_reaches(corpus, policies, served_end) -> None:
+    # 1N2E26AD -02900 (2026-10-01): a through lot between a local street and
+    # I-84 was drawn at the freeway end, and the hose walked the lot's whole
+    # depth from the street: 158 ft for a building 75 ft from it.
+    depth = 240.0
+    edges = [
+        [X0, Y0, X0 + 80, Y0, "F"],
+        [X0 + 80, Y0, X0 + 80, Y0 + depth, "S"],
+        [X0 + 80, Y0 + depth, X0, Y0 + depth, "F"],
+        [X0, Y0 + depth, X0, Y0, "S"],
+    ]
+    row = bridge_row(
+        edges_json=json.dumps(edges),
+        front_bearings_json="[0.0, 180.0]",
+        lot_depth_ft=depth,
+        area_sqft=80 * depth,
+        wkb=shapely.to_wkb(box(X0 + 5, Y0 + 10, X0 + 75, Y0 + depth - 10)),
+        lot_wkb=shapely.to_wkb(box(X0, Y0, X0 + 80, Y0 + depth)),
+    )
+    lot = lot_from_row(row, corpus.layers)
+    y = Y0 - 20 if served_end == "low" else Y0 + depth + 20
+    road = shapely.LineString([(X0 - 100, y), (X0 + 180, y)])
+    roads = (shapely.STRtree([road]), np.array([road]))
+    (s,) = screen_lot(
+        lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0, roads=roads
+    )
+    if s.screening.triage is Triage.red and s.signed.triage is Triage.red:
+        pytest.skip("red both ways: not measured, by design")
+    assert s.facts.fire_route_ft is not None and s.facts.fire_route_ft <= 150.0
+    ys = [p[1] for p in s.drawing["building"]]
+    middle = Y0 + depth / 2
+    assert (max(ys) < middle) if served_end == "low" else (min(ys) > middle)

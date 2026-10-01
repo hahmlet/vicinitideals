@@ -1635,7 +1635,7 @@ def _screen_lot_once(
         else:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
-        out.append(fire_checked(won, lot, roads, policy=policy, relief=relief))
+        out.append(fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter))
     return out
 
 
@@ -1646,6 +1646,7 @@ def fire_checked(
     *,
     policy: SlackPolicy,
     relief: ReliefPolicy,
+    fitter: Fitter | None = None,
 ) -> Screened:
     """``s`` re-screened with the fire hose's route measured on its drawing
     (FOLLOWUPS 28, OFC 503.1.1).
@@ -1653,12 +1654,21 @@ def fire_checked(
     The route runs from the street to the farthest point of the building
     the drawing stands nearest the street (:func:`flats.fit.fire.route_ft`),
     entering over any of the lot's street lines -- every street, whichever
-    one the plan was laid out fronting: the truck may use any of them. A
-    plan already RED both ways cannot be moved by it and is not measured;
-    a lot nothing could draw, or with no polygon or street line, is tried
-    and unobserved, which holds it out of GREEN. Changes no plan: where
-    another placement would reach, the answer is a false red, never a
-    false green.
+    one the plan was laid out fronting, and a private road the yards do not
+    count (:attr:`QuadfitLot.access`): the truck may use any of them. A
+    plan already RED both ways cannot be moved by it and is not measured.
+    Where no route is found -- nothing drawn, the drawing standing past
+    the lot line where the fit fell short, no polygon or street line, no
+    truck road near -- a plan that would otherwise be GREEN either way is
+    tried and unobserved, which holds it out of GREEN; any other plan is
+    left unchecked, its colour already short of GREEN for another reason.
+    Where the drawing stands the building at a front no truck road serves
+    -- the freeway end of a through lot, a front on an unnamed drive --
+    and the route misses, the plan is drawn once more at the fronts a truck
+    can reach (``fitter``), and kept where the building fits there and the
+    hose reaches it sooner: the same fit, the end the developer would
+    build at. Any other placement is not searched: where one would reach,
+    the answer is a false red, never a false green.
     """
     from shapely.geometry import Polygon
 
@@ -1675,11 +1685,30 @@ def fire_checked(
             for e in lot.edges.edges
             if e.cls in (EdgeClass.front, EdgeClass.street_side)
         )
-    route = None
-    ring = (s.drawing or {}).get("building")
-    if ring and len(ring) >= 4 and lot.lot_geom is not None and streets:
-        offset = fire.point_offset(*roads) if roads is not None else None
-        route = fire.route_ft(Polygon(ring), lot.lot_geom, streets, offset)
+    # A private road the yards do not count is still a road the truck may
+    # stand on (where it is one: the offset keeps only truck roads).
+    streets += tuple(a for a in lot.access if a not in streets)
+    offset = fire.point_offset(*roads) if roads is not None else None
+
+    def measure(drawing: dict[str, Any] | None) -> float | None:
+        ring = (drawing or {}).get("building")
+        if not (ring and len(ring) >= 4 and lot.lot_geom is not None and streets):
+            return None
+        return fire.route_ft(Polygon(ring), lot.lot_geom, streets, offset)
+
+    route = measure(s.drawing)
+    limit = float(s.rules.get("fire_access_max_ft"))
+    if (route is None or route > limit) and fitter is not None:
+        fronts = _street_lines(s.lot)
+        served = fire.reachable(fronts, offset)
+        if served and len(served) < len(fronts):
+            drawn = drawing_for(s, fitter, street=served)
+            again = measure(drawn) if drawn and drawn.get("fits") else None
+            if again is not None and (route is None or again < route):
+                s, route = dataclasses.replace(s, drawing=drawn), again
+    green = Triage.green in (s.screening.triage, s.signed.triage)
+    if route is None and not green:
+        return s
     facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True)
     result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
     shadow = _if_signed(
@@ -1874,7 +1903,12 @@ def _largest_left(
     )
 
 
-def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
+def drawing_for(
+    s: Screened,
+    fitter: Fitter,
+    *,
+    street: tuple[tuple[float, float, float, float], ...] | None = None,
+) -> dict[str, Any] | None:
     """Where the fit stood this design, for the lot page (FOLLOWUPS 5).
 
     The same search the verdict read, asked once more for a window: the
@@ -1884,11 +1918,14 @@ def drawing_for(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     BESIDE the building, :func:`flats.score.paper.side_court`), and the room
     the search found around them. Changes no verdict. The building stands
     as near the lot's front lines as named for this screen as the room
-    allows -- on a corner lot, the street it was laid out fronting.
+    allows -- on a corner lot, the street it was laid out fronting; or at
+    ``street``, some of those lines, where the caller names them
+    (:func:`fire_checked`).
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
     rear = s.envelope.rear_cut_ft if s.envelope else None
-    street = _street_lines(s.lot)
+    if street is None:
+        street = _street_lines(s.lot)
     if s.fit.beside:
         beside = side_court(
             s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.frontage_ft
