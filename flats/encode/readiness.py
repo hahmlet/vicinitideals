@@ -280,6 +280,11 @@ def _printed(value: object) -> object:
         # nowhere.
         else value.before_acre
         if getattr(value, "before_acre", None) is not None
+        # A yard grown per story is checked against the single-story figure;
+        # the growth is printed in the same sentence. Cornelius prints 10
+        # and five and prints 15 nowhere.
+        else value.before_story
+        if getattr(value, "before_story", None) is not None
         else getattr(value, "value", None)
     )
 

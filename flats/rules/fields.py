@@ -1026,6 +1026,15 @@ PARKING_TOTAL_FIELDS: frozenset[str] = frozenset(
 #: that silently goes stale.
 DESIGN_HEIGHT_FT = 26
 
+#: The number of stories of the building this screen answers for, read the
+#: same way as :data:`DESIGN_HEIGHT_FT` and for the same reason. Cornelius
+#: 18.35.050 (D) states A-2's rear yard as "10 feet in depth for a
+#: single-story structure, plus five feet per additional story", and a
+#: two-story pod owes 15 -- printed nowhere. The tallest design in the
+#: catalog, because more stories owe more yard; `flats/tests/test_per_story.py`
+#: fails the moment the catalog and this constant part company.
+DESIGN_STORIES = 2
+
 #: Fields a rule file may state as a ratio of building height. Restricted to
 #: the yards and the separation between buildings, because those are the
 #: standards codes actually write this way -- a step-back against a smaller

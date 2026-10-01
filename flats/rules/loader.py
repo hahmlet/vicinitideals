@@ -35,7 +35,13 @@ from flats.rules.conditions import (
     NEIGHBOUR_ZONE_CONDITIONS,
     PARK_CONDITIONS,
 )
-from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
+from flats.rules.fields import (
+    DESIGN_HEIGHT_FT,
+    DESIGN_STORIES,
+    DWELLINGS,
+    SQFT_PER_ACRE,
+    field,
+)
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
@@ -186,6 +192,7 @@ def _parse_values(
                 body.pop("qualified_by", None), f"{where}.{key}", problems
             )
             stories = body.pop("stories", None)
+            plus_per_story = body.pop("plus_per_story_ft", None)
             story_ft, story_ft_cite, story_ft_quote = _parse_story_ft(
                 body.pop("story_ft", None), f"{where}.{key}", problems
             )
@@ -421,6 +428,45 @@ def _parse_values(
                 value = float(lent.value)
                 if floor_ft is not None:
                     value = max(value, float(floor_ft))
+            before_story = None
+            if plus_per_story is not None:
+                if exempt or not isinstance(value, (int, float)) or isinstance(
+                    value, bool
+                ) or acre_sqft is not None or any(
+                    form is not None
+                    for form in (per_dwelling, sqft_per_unit, per_units,
+                                 spaces_total, acres, acres_each, per_height,
+                                 same_as, stories)
+                ):
+                    problems.append(
+                        f"{where}.{key}: 'plus_per_story_ft' adds to the "
+                        f"single-story figure the code prints -- state that "
+                        f"figure as a plain 'value'"
+                    )
+                    continue
+                if not isinstance(plus_per_story, (int, float)) or isinstance(
+                    plus_per_story, bool
+                ) or plus_per_story <= 0:
+                    problems.append(
+                        f"{where}.{key}: 'plus_per_story_ft' expects a positive "
+                        f"distance"
+                    )
+                    continue
+                if raw_variants:
+                    # A variant carries its number and its quote and nothing
+                    # else; adding the stories to the base and not to the
+                    # exception would compare a two-story yard with a
+                    # one-story one. Refused rather than half-applied.
+                    problems.append(
+                        f"{where}.{key}: 'plus_per_story_ft' adds to the base "
+                        f"and no variant -- state the standard without variants"
+                    )
+                    continue
+                # Cornelius 18.35.050 (D)(2): "10 feet in depth for a
+                # single-story structure, plus five feet per additional
+                # story". Fifteen for a two-story pod, printed nowhere.
+                before_story = float(value)
+                value = _per_story(float(value), float(plus_per_story))
             before_acre = None
             if acre_sqft is not None:
                 if exempt or not isinstance(value, (int, float)) or isinstance(
@@ -495,6 +541,7 @@ def _parse_values(
             acres_each = None
             measured_on = measured_on_cite = measured_on_quote = None
             acre_sqft = before_acre = None
+            plus_per_story = before_story = None
             qualified = qualified_cite = qualified_quote = None
             stories = None
             story_ft = story_ft_cite = story_ft_quote = None
@@ -589,6 +636,10 @@ def _parse_values(
                 measured_on_quote=measured_on_quote,
                 acre_sqft=acre_sqft,
                 before_acre=before_acre,
+                plus_per_story_ft=(
+                    None if plus_per_story is None else float(plus_per_story)
+                ),
+                before_story=before_story,
                 qualified_by=qualified,
                 qualified_cite=qualified_cite,
                 qualified_quote=qualified_quote,
@@ -636,6 +687,15 @@ def _per_dwelling(each: float) -> float:
     """
     total = each * DWELLINGS
     return int(total) if float(total).is_integer() else total
+
+
+def _per_story(single_story: float, plus: float) -> float:
+    """A yard printed for one story, grown by the stories above it.
+
+    The building is :data:`DESIGN_STORIES` tall, so it owes the single-story
+    figure and ``plus`` for each story after the first.
+    """
+    return single_story + plus * max(0, DESIGN_STORIES - 1)
 
 
 def _per_own_acre(rate: float, acre: float) -> float:

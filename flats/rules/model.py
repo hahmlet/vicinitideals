@@ -1484,6 +1484,16 @@ class Value(BaseModel):
     #: the acre is the sentence that defines it, and cited by its quote.
     acre_sqft: float | None = None
     before_acre: float | None = None
+    #: A yard the code prints for a single-story building and grows per story
+    #: above it. Cornelius 18.35.050 (D)(2): "No rear yard shall be less than
+    #: 10 feet in depth for a single-story structure, plus five feet per
+    #: additional story". `before_story` keeps the printed 10, this the
+    #: printed five, and `value` the yard owed by a building of
+    #: :data:`~flats.rules.fields.DESIGN_STORIES` stories -- 15, which no
+    #: sentence prints. Same bargain as `per_height_ft`, counted in stories
+    #: rather than feet because that is what the code counts.
+    plus_per_story_ft: float | None = None
+    before_story: float | None = None
     #: A height stated in STORIES, where the code elsewhere fixes how tall a
     #: story may be. Hillsboro's residential tables print "2 1/2 stories or 35
     #: feet, whichever is less", and 12.50.140 B.6 says "a residential 'story'
@@ -1906,6 +1916,28 @@ class Value(BaseModel):
                 f"{self.name}: 'measured_on' names a quantity this code defines "
                 f"for itself — cite and quote where {self.measured_on!r} is "
                 f"defined, or the rate has no denominator anyone can read"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _a_yard_per_story_is_a_yard(self) -> Value:
+        if self.plus_per_story_ft is None and self.before_story is None:
+            return self
+        if self.plus_per_story_ft is None or self.before_story is None:
+            raise ValueError(
+                f"{self.name}: a yard grown per story needs both the "
+                f"single-story figure and the growth per story"
+            )
+        if self.name not in HEIGHT_RATIO_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'plus_per_story_ft' grows a yard with the "
+                f"building, and applies to "
+                f"{', '.join(sorted(HEIGHT_RATIO_FIELDS))}"
+            )
+        if self.plus_per_story_ft <= 0:
+            raise ValueError(
+                f"{self.name}: plus_per_story_ft {self.plus_per_story_ft} is "
+                f"not a distance"
             )
         return self
 
