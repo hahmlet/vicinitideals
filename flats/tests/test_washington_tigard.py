@@ -20,7 +20,7 @@ of a quick look, so a later edit has to argue with it.
 - **The sub-area refusals ride on ``inside_mapped_use_area``**, which no map
   held draws: MUR and MUC inside Washington Square, MU-CBD where the subarea
   asks a 15 ft first storey.
-- **TMU's 12 ft first storey is not encoded** (no field holds a storey);
+- **TMU's 12 ft first storey is held nowhere** (no field holds a storey);
   a question for Steph in the handoff.
 """
 

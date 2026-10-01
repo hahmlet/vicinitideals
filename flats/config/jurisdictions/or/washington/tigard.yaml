@@ -246,6 +246,16 @@ defaults:
 # NOT ENCODED: 18.210.030.B.9, a front setback reduced to the average of
 # the abutting lots (tdc.18.210.residential-general.txt). A relief the
 # neighbours' houses decide.
+#
+# NOT ENCODED: 18.805.030.B, lot shape. "Each lot for quad, rowhouse, or
+# small form residential development must be rectilinear in shape"
+# (tdc.18.805.lot-standards.txt L201). Found by the step-10 prohibition
+# grep, 2026-10-01. 18.805.020 applies the chapter "to new lots that are
+# created through a partition or subdivision and to existing lots that are
+# reconfigured" (L23); 18.280.040.B brings in only "the dimensional lot
+# standards for the base zone" (tdc.18.280.rowhouses.txt L67), Table
+# 18.805.1. So it does not reach the pod on an existing lot, and no field
+# holds a shape test. It would reach a lot the pod needs created.
 zones:
   RES-A:
     cite_default:

@@ -345,14 +345,15 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 135, "comments": 261, "tests": 18}
-# 134 -> 135 notes and 250 -> 261 comments on 2026-10-01: Tigard, a draft
+EXPECTED = {"notes": 135, "comments": 262, "tests": 18}
+# 134 -> 135 notes and 250 -> 262 comments on 2026-10-01: Tigard, a draft
 # from a cloud session. The note is TMU's first story of at least 12 ft
-# (18.660.080.B), a question for Steph. The eleven comments are the layer's
+# (18.660.080.B), a question for Steph. The twelve comments are the layer's
 # refusals: the through-lot front, the 24 ft shared-access ceiling, tandem
 # driveways, S-3 parking screening, detached garages, the rowhouse design
 # standards, vision clearance, 18.920 driveway spacing, River Terrace, front
-# setback averaging and the storey height.
+# setback averaging, the storey height and 18.805.030.B's lot shape (new
+# and reconfigured lots only; found by the step-10 prohibition grep).
 #
 # 133 -> 134 notes on 2026-10-01: Happy Valley FU-10's dimensions are encoded
 # now the state path opens the zone, and its density row ("One unit for each
