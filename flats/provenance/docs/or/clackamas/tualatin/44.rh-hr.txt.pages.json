@@ -1,0 +1,52 @@
+{
+  "sha256": "e1da1914d33670b5085d00493d50dd347ec049b43b6168ea8f7b9c36971cd43f",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "0772d8f5ce71963dda4cddf3bd87c1ece6c386d2a28261486619b35eddc31c05",
+  "pages": [
+    {
+      "n": 329,
+      "line": 1,
+      "label": "TDC44:1"
+    },
+    {
+      "n": 330,
+      "line": 40,
+      "label": "TDC44:2"
+    },
+    {
+      "n": 331,
+      "line": 83,
+      "label": "TDC44:3"
+    },
+    {
+      "n": 332,
+      "line": 121,
+      "label": "TDC44:4"
+    },
+    {
+      "n": 333,
+      "line": 171,
+      "label": "TDC44:5"
+    },
+    {
+      "n": 334,
+      "line": 217,
+      "label": "TDC44:6"
+    },
+    {
+      "n": 335,
+      "line": 252,
+      "label": "TDC44:7"
+    },
+    {
+      "n": 337,
+      "line": 283,
+      "label": "TDC45:1"
+    },
+    {
+      "n": 339,
+      "line": 287,
+      "label": "TDC49:1"
+    }
+  ]
+}

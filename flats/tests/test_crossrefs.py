@@ -104,8 +104,14 @@ def test_the_reference_worth_chasing_was_chased(
     assert "73A" not in tualatin
     # Nothing left in this city is loud. The two that still bind are a
     # nonconforming-situations chapter and a retirement-housing section, at
-    # two apiece against the fifteen this started with.
-    assert max(d.binding for d in tualatin.values()) <= 2
+    # two apiece against the fifteen this started with. Chapter 35 binds a
+    # third time since 2026-10-01: MBP's refusal quotes the Tonquin overlay's
+    # use list, 64.210(4)(a), and (d) of the same subsection sends uses the
+    # overlay does not list to Chapter 35 (64.mbp.txt L139-L141). The
+    # standing ruling already covers it -- an existing situation, not a new
+    # building -- so three is ruled noise, not a reference worth chasing.
+    assert max(d.binding for d in tualatin.values()) <= 3
+    assert tualatin["35"].ruling
 
 
 def test_binding_is_what_orders_the_queue() -> None:

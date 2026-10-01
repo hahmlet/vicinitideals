@@ -1,0 +1,57 @@
+{
+  "sha256": "5022ca18dc87f9b5f039ddf140cb442f35ec139b0aad1118de059846f1d686b8",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "0772d8f5ce71963dda4cddf3bd87c1ece6c386d2a28261486619b35eddc31c05",
+  "pages": [
+    {
+      "n": 395,
+      "line": 1,
+      "label": "TDC58:1"
+    },
+    {
+      "n": 396,
+      "line": 37,
+      "label": "TDC58:2"
+    },
+    {
+      "n": 397,
+      "line": 74,
+      "label": "TDC58:3"
+    },
+    {
+      "n": 398,
+      "line": 112,
+      "label": "TDC58:4"
+    },
+    {
+      "n": 399,
+      "line": 151,
+      "label": "TDC58:5"
+    },
+    {
+      "n": 400,
+      "line": 189,
+      "label": "TDC58:6"
+    },
+    {
+      "n": 401,
+      "line": 232,
+      "label": "TDC58:7"
+    },
+    {
+      "n": 402,
+      "line": 269,
+      "label": "TDC58:8"
+    },
+    {
+      "n": 403,
+      "line": 315,
+      "label": "TDC58:9"
+    },
+    {
+      "n": 404,
+      "line": 362,
+      "label": "TDC58:10"
+    }
+  ]
+}

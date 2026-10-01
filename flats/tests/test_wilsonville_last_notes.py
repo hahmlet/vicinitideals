@@ -64,8 +64,22 @@ ENCODED_ZONES = (
     "V",
     "TC",
 )
-#: The eight ruled RED when the September map showed 627 lots in them.
-REFUSED_ZONES = ("FDAHR", "FDAHC", "FDAHI", "FDAHP", "FDAHV", "PDC", "PDI", "PF")
+#: The eight ruled RED when the September map showed 627 lots in them, and
+#: the two the Washington County side added (2026-10-01): PDI-RSIA (4.135.5,
+#: residential capped at ten percent of floor area) and PFC (4.136.5, the
+#: corrections zone), each its own zone under the map's own spelling.
+REFUSED_ZONES = (
+    "FDAHR",
+    "FDAHC",
+    "FDAHI",
+    "FDAHP",
+    "FDAHV",
+    "PDC",
+    "PDI",
+    "PF",
+    "PDI-RSIA",
+    "PFC",
+)
 
 #: The two that Chapter 4 stated and this layer did not hold until 2026-09-01.
 #: Kept named rather than deleted: they are the corpus's worked example of a
@@ -77,7 +91,7 @@ def test_the_layer_has_no_unread_notes_left() -> None:
     assert [n for n in notes(WILSONVILLE) if n.state == "unread"] == []
 
 
-def test_the_zone_list_is_exactly_the_nineteen_this_layer_holds() -> None:
+def test_the_zone_list_is_exactly_the_twenty_one_this_layer_holds() -> None:
     """A guard on the gap above, from the other side, and it did its job twice.
 
     It used to hold nine and fail the day the Village or Town Center zone was
@@ -87,6 +101,9 @@ def test_the_zone_list_is_exactly_the_nineteen_this_layer_holds() -> None:
     prohibition instead, and the list was eleven. It failed again on
     2026-09-20 when the September map's 627 lots in eight zones the layer had
     never named were each ruled RED at the use gate, and the list is nineteen.
+    And again on 2026-10-01 when Washington County's map printed PDI-RSIA and
+    PFC, zones of their own (4.135.5, 4.136.5) rather than spellings of PDI
+    and PF; both refused on their own use lists, and the list is twenty-one.
     """
     zones = load_rules()[WILSONVILLE].zones
     assert set(zones) == set(ENCODED_ZONES) | set(REFUSED_ZONES)
@@ -177,6 +194,12 @@ def test_the_zones_this_city_still_owes_are_now_reported_rather_than_hunted() ->
     use-gate refusals and left the queue; what the three-county ledger
     (2026-10-01) reports in their place is two labels only the Washington
     side of the city prints, which is the queue doing its job again.
+
+    And those two were ruled the same day -- PDI-RSIA and PFC are refusal
+    blocks now, in REFUSED_ZONES -- so the only Wilsonville row still missing
+    a zone is the pair of parcels the zoning join left blank. (This assertion
+    reads data/flats/coverage.csv and holds once that ledger is regenerated
+    over the 2026-10-01 rules.)
     """
     missing = {
         r.zone: r.lots
@@ -186,8 +209,7 @@ def test_the_zones_this_city_still_owes_are_now_reported_rather_than_hunted() ->
 
     for refused in REFUSED_ZONES:
         assert refused not in missing, refused
-    assert missing["PDI-RSIA"] == 10
-    assert missing["PFC"] == 7
+    assert set(missing) == {"(unzoned in parcel data)"}, missing
     assert "V" not in missing
     assert "TC" not in missing
 
