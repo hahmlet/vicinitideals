@@ -416,19 +416,6 @@ DECLARED_OWING = {
         "figure sits in the same table. Debt for the session that owns 21(b), "
         "declared here so the ledger regeneration can land."
     ),
-    "or/multnomah/_unincorporated/LR10": (
-        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
-        "setback_side_ft. MCC 39.4870-39.4876 settled the zone on its use list, "
-        "so the dimensions in the notes (10,000 sq ft, 30/10/20 yards, 35 "
-        "feet) were read and not encoded; ORS 197A.420(2) opened it 2026-09-30 "
-        "and they are now owed."
-    ),
-    "or/clackamas/happy-valley/FU10": (
-        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
-        "setback_side_ft. Table 16.22.010-1 refused the zone on use, so Table "
-        "16.22.010-2 (ten-acre lots) was not encoded; ORS 197A.420(2) opened it "
-        "2026-09-30 as relief, never GREEN, and the dimensions are owed."
-    ),
 }
 
 
