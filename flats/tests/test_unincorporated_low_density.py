@@ -184,12 +184,26 @@ def test_the_larger_zone_tops_out_at_two_units(uninc: Layer) -> None:
     assert "Wholesale or retail sales of farm" in text
 
 
-def test_the_larger_zone_owes_the_use_flag_and_nothing_else(uninc: Layer) -> None:
-    assert set(uninc.zones["LR10"].values) == {"quadplex_allowed"}
-
-    notes = uninc.zones["LR10"].notes or ""
-    assert "10,000 square feet" in notes
-    assert "Part 7" in notes
+def test_the_larger_zone_states_its_dimensions_once_the_state_opens_it(uninc: Layer) -> None:
+    """39.4878, encoded 2026-10-01: a dimensional row on a refused zone acted
+    on nothing, but the state path (FOLLOWUPS 21(b)) now opens LR-10, so its
+    lots are measured against the zone's own table. The quadplex's minimum
+    lot is the detached house's (A), never the two-unit dwelling's (B)."""
+    values = {k: v.value for k, v in uninc.zones["LR10"].values.items() if k != "quadplex_allowed"}
+    assert values == {
+        "min_lot_sqft": 10000,
+        "max_height_ft": 35,
+        "setback_front_ft": 30,
+        "parking_street_setback_ft": 30,
+        "setback_side_ft": 10,
+        "setback_street_side_ft": 10,
+        "setback_rear_ft": 20,
+        "max_coverage_pct": 35,
+        "min_lot_width_ft": 70,
+        "min_frontage_ft": 30,
+    }
+    assert "two-unit dwelling" in (uninc.zones["LR10"].notes or "")
+    assert "Part 7" in (uninc.zones["LR10"].notes or "")
 
 
 def test_the_preemption_disagreement_is_written_down_in_both_zones(

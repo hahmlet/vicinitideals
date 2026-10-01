@@ -87,6 +87,8 @@ KNOWN_PERMISSION_BLOCKED: frozenset[str] = frozenset({
 #: RF and the county's RF and LR5, opened 2026-09-30), and rules.yaml says yes
 #: so the lots are measured at all. Only Wilsonville RN is a live question.
 KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
+    "happy_valley/FU10",
+    "multnomah_unincorporated/LR10",
     "multnomah_unincorporated/LR5",
     "multnomah_unincorporated/LR7",
     "multnomah_unincorporated/RF",
@@ -870,9 +872,11 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: facing no RF-RM2/RMP zone across the street, a PER-LINE field only FLATS's
 #: envelope reads. This pipeline holds the across-the-street 5 on every street
 #: line, the strict end, so again the gap can only cost it a lot.
+#: Grew 2026-10-01 by one `min_landscaped_pct` (Happy Valley FU-10, opened on
+#: the state middle housing path, takes the city's 20 percent like R-40).
 UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 67,
-    "min_landscaped_pct": 38,
+    "min_landscaped_pct": 39,
     "setback_front_max_ft": 31,
     "max_density_du_per_acre": 21,
     "min_building_separation_ft": 11,

@@ -2683,13 +2683,64 @@ zones:
           when: [state_middle_housing, in_sewer_district]
           cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
           quote: "or/hb.2138.2025.txt#L62-L71,L203-L214"
+    # 39.4878, encoded 2026-10-01 once the state path opened the use
+    # (FOLLOWUPS 21(b)); before that a dimensional row on a refused zone was a
+    # row nobody could act on.
+    min_lot_sqft:
+      # 39.4878 states no multiplex minimum (the zone has no multiplex). The
+      # state path holds a quadplex to no more than the detached house's
+      # minimum, (A)'s 10,000, which is the number taken -- the same reading
+      # as Portland RF. (A)'s exceptions (39.3140(B), 39.4782) are not
+      # followed: conservative.
+      value: 10000
+      cite: MCC 39.4878(A)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L259-L264"
+    max_height_ft:
+      value: 35
+      cite: MCC 39.4878(F)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L277"
+    setback_front_ft:
+      # (F)(1) averages down to the neighbours' established yards on an
+      # interior lot: not followed (nothing measures them), conservative.
+      value: 30
+      cite: MCC 39.4878(F)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+    setback_side_ft:
+      value: 10
+      cite: MCC 39.4878(F)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275"
+    setback_street_side_ft:
+      value: 10
+      cite: MCC 39.4878(F)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275"
+    setback_rear_ft:
+      # (F)(2) lets a corner lot's rear yard drop to 10 ft only when the
+      # front is 30 and BOTH side yards are 20: a trade, not followed.
+      value: 20
+      cite: MCC 39.4878(F)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275"
+    max_coverage_pct:
+      value: 35
+      cite: MCC 39.4878(E)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L271-L272"
+    min_lot_width_ft:
+      value: 70
+      cite: MCC 39.4878(D)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L269-L270"
+    min_frontage_ft:
+      value: 30
+      cite: MCC 39.4878(C)
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L267-L268"
     notes: >-
-      Minimum lot size 10,000 square feet for a single family detached dwelling
-      and 12,000 for a two-unit dwelling; front lot line 30 feet, lot width 70,
-      coverage 35 percent, yards 30 front / 10 side / 10 street side / 20 rear,
-      height 35 feet. None of it is encoded, because the use list settles the
-      zone first and a dimensional row on a refused zone is a row nobody can
-      act on. It is recorded so the next reader knows it was read.
+      39.4878(B), 12,000 square feet for a two-unit dwelling, is not the
+      quadplex's minimum: the state path caps a quadplex at the detached
+      house's (A), and nothing in the zone prices a four-unit building.
 
 
       39.4876(B) admits "Conditional Uses under the provisions of Part 7 of

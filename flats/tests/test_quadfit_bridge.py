@@ -281,9 +281,23 @@ def test_sewer_is_confirmed_by_a_main_and_denied_only_outside_every_clackamas_di
         row(jurisdiction="milwaukie", sewer_main_dist_ft=400.0, in_sewer_district=False)
     )
     assert outside == {**outside, "in_sewer_district": False, "public_sewer": False}
-    # The district flag never speaks for Multnomah, whose layer quadfit lacks.
+    # The district flag never speaks for a Multnomah city.
     mult = observed_facts(row(sewer_main_dist_ft=400.0, in_sewer_district=False))
     assert "in_sewer_district" not in mult and "public_sewer" not in mult
+
+
+def test_unincorporated_multnomah_answers_the_district_and_nothing_about_sewer() -> None:
+    """ORS 197A.015(12)(c): inside a sanitary district is part of what urban
+    unincorporated land is. A main in reach does not answer it, and outside
+    every district does not mean no sewer -- a city may serve the lot."""
+    for dist in (SEWER_MAIN_REACH_FT, 400.0):
+        outside = observed_facts(row(jurisdiction="multnomah_unincorporated", sewer_main_dist_ft=dist, in_sewer_district=False))
+        assert outside["in_sewer_district"] is False
+        assert outside.get("public_sewer") is (True if dist <= SEWER_MAIN_REACH_FT else None)
+    inside = observed_facts(row(jurisdiction="multnomah_unincorporated", sewer_main_dist_ft=10.0, in_sewer_district=True))
+    assert inside["in_sewer_district"] is True and inside["public_sewer"] is True
+    unread = observed_facts(row(jurisdiction="multnomah_unincorporated", sewer_main_dist_ft=400.0, in_sewer_district=None))
+    assert "in_sewer_district" not in unread
 
 
 def test_a_stage_file_from_before_a_column_leaves_the_fact_unasked() -> None:

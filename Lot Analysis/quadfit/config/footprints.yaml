@@ -797,6 +797,8 @@ siteplan:
         MURA: 10
         SFA: 10
         VTH: 10
+        # 2026-10-01, with the state middle housing path: FU-10's front is 32.
+        FU10: 32
       front_lot_line_corner: owner
       corner_access_street: any
       cite: HV LDC 16.41.030.B.1, minimum improved driveway width; 16.43.030.E.4, parking setback
@@ -1061,6 +1063,8 @@ siteplan:
         # the county's sentence for every zone, and both fronts are 20.
         RF: 20
         LR5: 20
+        # 2026-10-01: LR-10's front is 30 (39.4878(F)).
+        LR10: 30
       open_space_sqft_by_zone:
         R20: null
         R10: null
@@ -1075,6 +1079,7 @@ siteplan:
         # area of 39.8045(A)(2) rides on LR-7's design review only.
         RF: null
         LR5: null
+        LR10: null
       front_lot_line_corner: shortest
       corner_access_street: any
       cite: MCC 39.6560(A) driveway width; 39.6580(A) street setback; 39.8045(A)(2) shared outdoor recreation

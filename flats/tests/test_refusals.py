@@ -345,7 +345,12 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 133, "comments": 250, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 250, "tests": 18}
+# 133 -> 134 notes on 2026-10-01: Happy Valley FU-10's dimensions are encoded
+# now the state path opens the zone, and its density row ("One unit for each
+# 10 acres") is declared NOT ENCODED beside them.
+#
+#
 # 252 -> 250 comments on 2026-09-30, evening: the distance to a MAX station
 # is measured (flats.geom.transit), so Hillsboro's beyond-1,300-ft rows --
 # SCR-DNC's 9 du/na and SCC-SC's 36 du/na ceiling -- are encoded as bands.

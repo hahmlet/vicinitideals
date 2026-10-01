@@ -171,6 +171,18 @@ SEWER_MAIN_REACH_FT = 50.0
 #: Multnomah lot with no main in reach is unconfirmed, not unserved.
 CLACKAMAS: frozenset[str] = frozenset(j for j, c in COUNTY.items() if c == "clackamas")
 
+#: Where the district flag is the fact itself, not a stand-in for a main.
+#: ORS 197A.015(12)(c) makes "within the boundaries of a sanitary district"
+#: part of what urban unincorporated land IS, so a Portland main next door
+#: does not answer it. The district layer (Clackamas County's, which draws
+#: every district whole, Dunthorpe-Riverdale and Clean Water Services
+#: included) covers unincorporated Multnomah: the county assessor's own tax
+#: districts list those two as the only sewer districts in the county
+#: (checked 2026-10-01). Outside one is False here and says nothing about
+#: sewer service -- a city may serve the lot by contract -- so it never
+#: answers ``public_sewer``.
+DISTRICT_ONLY: frozenset[str] = frozenset({"multnomah_unincorporated"})
+
 #: The s4 columns the bridge reads, and the s5o ones. Columns a stage file
 #: written before they existed lacks are read as absent (see
 #: :func:`iter_rows`); the bridge then answers those facts the way the
@@ -303,7 +315,9 @@ def observed_facts(
       Everywhere else it is left unasked: a Multnomah lot with no main in
       reach is unconfirmed, and the registry refuses to guess sewer.
     * ``in_sewer_district`` -- the Clackamas district flag, where the layer
-      answered.
+      answered; on unincorporated Multnomah (:data:`DISTRICT_ONLY`) always,
+      main or no main, because there it is the state's test, not a sewer
+      signal.
     * ``abuts_residential_zone`` / ``abuts_lower_density_zone`` /
       ``abuts_nonresidential_zone`` -- s4's zone across each non-street
       line (``neighbour_zones_json``), through
@@ -366,6 +380,8 @@ def observed_facts(
         out["in_sewer_district"] = in_district
         if not in_district:
             out["public_sewer"] = False
+    if row.get("jurisdiction") in DISTRICT_ONLY and _answered(row.get("in_sewer_district")):
+        out["in_sewer_district"] = _is_true(row.get("in_sewer_district"))
     return out
 
 

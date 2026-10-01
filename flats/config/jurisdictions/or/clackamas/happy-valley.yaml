@@ -3181,10 +3181,68 @@ zones:
           when: [state_middle_housing]
           cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
           quote: "or/hb.2138.2025.txt#L62-L71"
+    # Table 16.22.010-2, read 2026-10-01 once the state path opened the use
+    # (FOLLOWUPS 21(b)): a row on a refused zone acts on nothing, a row on a
+    # zone the state opens decides the lot. Every standard below is the one
+    # Table 16.22.010-2 states for "all uses" in the zone.
+    max_height_ft:
+      # [2] lets side and rear elevations reach 49 ft for a single-family
+      # house only; the pod takes the stated 45.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L114"
+    setback_front_ft:
+      value: 32
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109-L110"
+    setback_side_ft:
+      value: 12
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L111"
+    setback_rear_ft:
+      value: 32
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L112"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L113"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+    min_lot_sqft:
+      # "Average lot size (minimum) 10 acres": one lot's average is the lot.
+      # The state path caps a quadplex's minimum at the
+      # detached house's, which is this same row, so the state changes
+      # nothing here. Nearly every FU-10 lot is smaller; the miss rides the
+      # adjustment/variance path (16.22.010(E), Chapter 16.71 not stored).
+      acres: 10
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L105"
+    min_lot_width_ft:
+      value: 100
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L106"
+    min_lot_depth_ft:
+      value: 200
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L107"
+    max_coverage_pct:
+      value: 20
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L108"
+    min_landscaped_pct:
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: >-
       Encoded 2026-09-20 from Table 16.22.010-1. One house per lot is the
       whole of household living in the zone; 16.67.070 note * says an
       annexation into it would need a new plan designation first.
+
+
+      Dimensions encoded 2026-10-01 from Table 16.22.010-2. NOT ENCODED: the
+      density row, "One unit for each 10 acres" -- the state path opens the
+      pod as middle housing, which a per-acre unit cap written for one house
+      cannot hold, and the path is never GREEN either way; no minimum
+      frontage is stated for the zone.
   MUC:
     section: ['16.23.010']
     cite_default:

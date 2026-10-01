@@ -1429,6 +1429,24 @@ jurisdictions:
         source_url: "https://multco.us/file/chapter_39_-_zoning_code/download"
         confidence: needs_verification
         notes: "The code allows a multiplex here only as a conditional use on a corner or flag lot; the state middle housing path opens it on sewered urban land. Both are discretionary -- needs_verification caps every lot at review."
+      # Opened 2026-10-01 (FOLLOWUPS 21(b)), same path and sewer condition as
+      # RF above. MCC 39.4878, per the corpus's reading; the quadplex's
+      # minimum lot is the detached house's 10,000 (the state cap).
+      #   or/multnomah/_unincorporated/39.lr-10.txt#L259-L277
+      - zone: LR10
+        quadplex_allowed: true
+        setback_front_ft: 30
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        min_lot_sqft: 10000
+        min_frontage_ft: 30
+        min_lot_width_ft: 70
+        max_coverage_pct: 35
+        source: "MCC 39.4870 (Uses), 39.4878 (Dimensional Requirements), per the FLATS corpus reading; ORS 197A.420 / 197A.015(12)"
+        source_url: "https://multco.us/file/chapter_39_-_zoning_code/download"
+        confidence: needs_verification
+        notes: "House and two-unit dwelling only under the code; the state middle housing path opens it on sewered urban land (discretionary, never green). needs_verification caps every lot at review."
       - zone: R7
         quadplex_allowed: true
         setback_front_ft: 15
@@ -1890,6 +1908,25 @@ jurisdictions:
       #   or/clackamas/happy-valley/16.22.residential.txt#L650-L652 (R-5)
       #   or/clackamas/happy-valley/16.12.definitions.txt#L931-L932 (cul-de-sac lot)
       #   or/clackamas/happy-valley/16.12.definitions.txt#L1672-L1673 (cul-de-sac)
+      # Opened 2026-10-01 (FOLLOWUPS 21(b)): the city's own table refuses
+      # the pod (one house per lot); the state middle housing path opens it,
+      # discretionary, never green. Table 16.22.010-2, per the corpus's
+      # reading; the density row (one unit per 10 acres) is not carried.
+      #   or/clackamas/happy-valley/16.22.residential.txt#L102-L114
+      - zone: FU10
+        quadplex_allowed: true
+        setback_front_ft: 32
+        setback_side_ft: 12
+        setback_rear_ft: 32
+        setback_street_side_ft: 15
+        min_lot_sqft: 435600
+        min_lot_depth_ft: 200
+        min_lot_width_ft: 100
+        max_coverage_pct: 20
+        source: "HV LDC 16.22.010 Tables 16.22.010-1/-2 (Future Urbanization); ORS 197A.420 (state middle housing path)"
+        source_url: "https://ecode360.com/print/HA4934?guid=43529907"
+        confidence: needs_verification
+        notes: "Holding zone, ten-acre lots; one house per lot under the code. Measured since 2026-10-01 on the state path; needs_verification caps every lot at review."
       - zone: R40
         quadplex_allowed: true
         setback_front_ft: 22

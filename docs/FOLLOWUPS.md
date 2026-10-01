@@ -798,7 +798,22 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    as every unread adjustment chapter does), 16 too narrow. County RF/LR5
    stay unknown until `in_sewer_district` is measured in Multnomah. LR10 +
    Happy Valley FU10 still unmeasured (no dimensions encoded). A FULL
-   re-screen is now due (5 splices since full0930). From 2027-01-01 the
+   re-screen is now due (5 splices since full0930). 2026-10-01 CODED, NOT
+   YET SCREENED: LR10 (MCC 39.4878; min lot = the house's 10,000) and Happy
+   Valley FU10 (Table 16.22.010-2, 10 acres) dimensions in the corpus and
+   quadfit rules/footprints; the bridge now answers `in_sewer_district` on
+   unincorporated Multnomah (`DISTRICT_ONLY`, from the district layer quadfit
+   already reads). The county assessor's tax districts list only
+   Dunthorpe-Riverdale and Clean Water Services as sewer districts in the
+   county, and no RF/LR5/LR10 lot is inside either -- so those lots go
+   UNKNOWN -> refused (red) on the next screen: not "urban unincorporated"
+   under ORS 197A.015(12)(c). SCREEN PLAN (agreed with the washington-map
+   session 2026-10-01): its three-county candidate (137 /root/chain_wash.sh,
+   snapshot 2026-10-01, bridge ETA ~13:00-14:00 UTC) is the full re-screen
+   Steph asked for; Steph promotes it by hand (lots_drift warns); then a §4c
+   partial on that copy -- quadfit s3-s7 in a COPY tree
+   data/quadfit_2026-10-01_mh, scope = new LR10/FU10 lots + every
+   unincorporated Multnomah lot, splice onto /root/bridge_2026-10-01_wash. From 2027-01-01 the
    Div 46 model code applies directly (0040(4), "completely replaces"): audit
    the corpus, switch them to allowed under the city's middle-housing
    standards or the model code (2020 Exhibit B: front/rear setbacks > 10 ft
@@ -858,17 +873,6 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Next: a field for approaches required per N townhouses + the site plan
    drawing (and charging frontage for) a second approach; check which other
    cities state the same rule before building it for one.
-25. **Old screening runs fill the server's disk (found 2026-10-01).** Every
-   re-screen keeps its whole answer set: 21 runs on the copy in use, the
-   results table is 19 GB, VM 114 has ~20 GB free, so the full clean-up
-   after a load (VACUUM FULL) no longer fits and each new run adds ~0.9 GB
-   (~20 more before trouble). `flats_promote.py prune` drops only retired
-   COPIES, never superseded runs of the copy in use. Offered: a run-level
-   prune -- keep the run in use, the one before it and any candidate; mark
-   the rest retired and delete their results (drift reports already stored
-   on the snapshot). Deletes history Steph may want to look back at by
-   `?run=`, so ask before building; the disk grow recipe (reference_infra)
-   is the other way out.
 25. **Driveway approach geometry, ahead of a second approach (Steph
    2026-09-30, flag only -- do not build yet).** What is measured today: the
    drive lane's width (`driveway_min_width_one_way_ft` / `_two_way_ft`, read
