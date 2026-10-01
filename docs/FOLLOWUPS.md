@@ -779,8 +779,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    plan, 0205(2)(b)(B)). LEFT: Multnomah county lots need
    `in_sewer_district` measured (only Clackamas has it) -- UNKNOWN till
    then; LR10 + Happy Valley FU10 dimensions not encoded (the state caps
-   them at the house's; notes list LR10's); Wilsonville RN may allow the
-   building as townhouses (unit lots) -- unchecked. RUN 46 PROMOTED
+   them at the house's; notes list LR10's); Wilsonville RN as townhouses
+   CHECKED 2026-10-01: shut (two attached, three on a corner, during
+   Frog Pond West's initial development; every RN lot is West -- East/South
+   are not in the city's zoning yet; RN zone note). RUN 46 PROMOTED
    2026-09-30 (9096f164, scope 137 /root/mh_scope.txt, splice base now
    /root/bridge_spliced_mh0930): drift 44 -> 46 316 moved / 0 unexplained,
    all LR7 red->yellow if signed (its conditional use, read at last). The
