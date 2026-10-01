@@ -295,3 +295,18 @@ def test_a_repeated_table_heading_still_boxes_a_number_printed_on_it(tmp_path: P
 
     assert S._is_running(line, running), "fixture assumption: the heading repeats"
     assert S.hits(line, 5000, sheets[2].aspect), "so the number's own line is kept"
+
+
+def test_pages_read_from_many_threads_at_once_all_come_back(book: Path):
+    """PDFium is not thread-safe. The web app reads pages from a thread pool,
+    and two requests opening books at once failed with "Data format error"
+    on a good file (2026-10-01, the page check 500'd)."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    def one(i: int) -> int:
+        return len(S._read.__wrapped__(book, 1, i).lines)
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        counts = list(pool.map(one, range(200)))
+
+    assert len(set(counts)) == 1 and counts[0] > 0

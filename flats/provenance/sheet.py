@@ -37,6 +37,7 @@ import difflib
 import hashlib
 import re
 import statistics
+import threading
 from functools import lru_cache
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -265,21 +266,28 @@ def read(book: Path, n: int) -> Sheet:
     return _read(book, n, book.stat().st_mtime_ns)
 
 
+#: PDFium is not thread-safe, and the web app reads pages from a thread pool:
+#: two requests opening books at once fail with "Data format error" on a good
+#: file. Every call into it goes through this one lock.
+_PDFIUM = threading.Lock()
+
+
 @lru_cache(maxsize=128)
 def _read(book: Path, n: int, _edition: int) -> Sheet:
     import pypdfium2 as pdfium
 
-    pdf = pdfium.PdfDocument(str(book))
-    try:
-        if not 1 <= n <= len(pdf):
-            raise ProvenanceError(f"{book.name} has no page {n}")
-        page = pdf[n - 1]
+    with _PDFIUM:
+        pdf = pdfium.PdfDocument(str(book))
         try:
-            chars, aspect = _chars(page)
+            if not 1 <= n <= len(pdf):
+                raise ProvenanceError(f"{book.name} has no page {n}")
+            page = pdf[n - 1]
+            try:
+                chars, aspect = _chars(page)
+            finally:
+                page.close()
         finally:
-            page.close()
-    finally:
-        pdf.close()
+            pdf.close()
     return Sheet(n=n, lines=_group(chars, aspect), aspect=aspect)
 
 
@@ -295,17 +303,18 @@ def render(book: Path, n: int) -> Path:
     target = PNG_CACHE / f"{digest}-{n}.png"
     if target.is_file():
         return target
-    pdf = pdfium.PdfDocument(str(book))
-    try:
-        if not 1 <= n <= len(pdf):
-            raise ProvenanceError(f"{book.name} has no page {n}")
-        page = pdf[n - 1]
+    with _PDFIUM:
+        pdf = pdfium.PdfDocument(str(book))
         try:
-            image = page.render(scale=SCALE).to_pil()
+            if not 1 <= n <= len(pdf):
+                raise ProvenanceError(f"{book.name} has no page {n}")
+            page = pdf[n - 1]
+            try:
+                image = page.render(scale=SCALE).to_pil()
+            finally:
+                page.close()
         finally:
-            page.close()
-    finally:
-        pdf.close()
+            pdf.close()
     PNG_CACHE.mkdir(parents=True, exist_ok=True)
     partial = target.with_suffix(".tmp")
     image.save(partial, format="PNG", optimize=True)
