@@ -13,8 +13,10 @@ notes: >-
   paints R-10 on one small parcel at the east end and otherwise agrees on
   the districts. Four districts admit the pod: R-7, R-10, A-2 and CR. Two
   density rules are printed per a "net acre" of 32,670 square feet (R-7
-  and A-2) and are carried with acre_sqft; A-2's yards grow per story and
-  are carried with plus_per_story_ft.
+  and A-2) and are carried with acre_sqft; A-2's rear yard grows per story
+  and is carried with plus_per_story_ft. Steph, 2026-10-01: the fourplex is
+  not multi-family here, and required parking stays out of every required
+  yard (parking_required_yard_prohibited).
 ingest:
   geoid: null
   juris_city_codes:
@@ -292,9 +294,12 @@ definitions:
   # prohibition of multi-unit dwellings (R-10 18.25.040 (B)) does not reach
   # the pod. A townhouse is "two or more dwelling units, separated by common
   # walls on the property lines" (L218-L219): the unit-lot path. "Multi-family"
-  # is not defined; A-2 and CR use it beside "single-family" for the yards
-  # and the density floor, and the pod, which is not single-family, is read
-  # as multi-family there.
+  # is not defined; A-2 uses it beside "single-family" for the side yards
+  # and the density floor. The draft read the pod, which is not
+  # single-family, as multi-family there. Steph, 2026-10-01: the fourplex
+  # is NOT multi-family in Cornelius, so A-2 holds the figures that are not
+  # the multi-family ones. CR's density floor does not use the word ("all
+  # other dwelling types", 18.70.050 (B)(1)) and is not moved by the ruling.
   #
   # FRONT LOT LINE. Defined only "for purposes of the solar access
   # regulations": "For corner lots, the front lot line is that with the
@@ -449,20 +454,29 @@ defaults:
   # NOT ENCODED: parking_side_prohibited and parking_front_prohibited. No
   # sentence bans parking beside or in front of the building; 18.145.010 (B)
   # keeps required parking out of the required YARDS, which is a setback
-  # (parking_street_setback_ft in each zone) and, on the side and rear, a
-  # rule no field holds (below).
+  # (parking_street_setback_ft in each zone) and, on the side and rear,
+  # parking_required_yard_prohibited (below).
+  #
+  # PARKING OUT OF THE REQUIRED YARDS. 18.145.010 (B): "Unless otherwise
+  # provided, required parking and loading spaces shall not be located in a
+  # required yard" (L23). Nothing in the code provides otherwise for a
+  # dwelling: the only sentences that name parking in a yard are the
+  # commercial zones' front and street-side bans (CMU, CC, GMU) and the
+  # review body's screening of parking lots. A parking space is the stall
+  # "together with maneuvering and access space" (18.195, definitions
+  # L520-L521), so the aisle is kept out with the stalls. The front yard is
+  # parking_street_setback_ft in each zone; this holds the rear and side.
+  # The rear court stands in front of the rear yard instead of in it, and
+  # the side yards are already outside the envelope the court is searched
+  # in. Steph, 2026-10-01: "Yes, charge them."
+  parking_required_yard_prohibited:
+    value: true
+    cite: Cornelius CMC 18.145.010 (B), required parking and loading spaces not located in a required yard
+    url: https://ecode360.com/print/CO4396?guid=47339373
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/cmc.18.145.parking.txt#L23"
 
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-30.
-#
-# NOT ENCODED, A DOUBT THAT CAN MOVE A VERDICT: 18.145.010 (B), "Unless
-# otherwise provided, required parking and loading spaces shall not be
-# located in a required yard" (cmc.18.145.parking.txt#L23). The front yard
-# is held (parking_street_setback_ft, same_as the front setback, in each
-# zone). The rear and side yards are not: no field keeps a parking court out
-# of a rear or interior side yard, and the site plan lets the court overlap
-# the rear yard. In R-7 the four stalls may not sit in the rear 10 feet; in
-# R-10, the rear 25. The screen is loose by up to the rear setback on every
-# lot the court binds. Owed a field; in the handoff.
 #
 # NOT ENCODED, A DOUBT THAT CAN MOVE A VERDICT IN R-7 AND R-10: Chapter
 # 18.160, Solar Balance Point. It "applies to an application for a building
@@ -824,19 +838,23 @@ zones:
   # - DENSITY. Maximum: "This maximum density does not apply to middle
   #   housing"; townhouses 25 per net acre (L157). Minimum "eight dwellings
   #   per net acre for single-family, and 11 for multi-family development"
-  #   (L176); the pod is not single-family, so 11, on the 32,670 acre: no
-  #   more than 11,880 net square feet for four units. The townhouse maximum
-  #   is held at 25 as printed, a quarter strict, for the reason given in R-7.
+  #   (L176). The fourplex is not multi-family (Steph, 2026-10-01), so 8, on
+  #   the 32,670 acre: no more than 16,335 net square feet for four units.
+  #   The draft held 11 (11,880 sq ft). The townhouse maximum is held at 25
+  #   as printed, a quarter strict, for the reason given in R-7.
   # - LOT SIZE. Quadplex 7,000, townhouse 1,500 (L161-L167).
   # - HEIGHT 45 (L180).
   # - FRONT 10, garages and carports 20 (L200).
-  # - REAR "10 feet in depth for a single-story structure, plus five feet per
-  #   additional story" (L204), and SIDE, "For multi-family residences ...
-  #   five feet in depth for a single story structure, plus five feet per
-  #   additional story" (L208): plus_per_story_ft, 15 and 10 for the
-  #   two-story pod. Street side 10 on a corner (L208). No zero-side rule
-  #   is printed for a townhouse here, and the per-story form takes no
-  #   variant: a townhouse plat is held to the multi-family sides.
+  # - REAR "No rear yard shall be less than 10 feet in depth for a
+  #   single-story structure, plus five feet per additional story" (L204):
+  #   every structure, not only multi-family, so plus_per_story_ft, 15 for
+  #   the two-story pod. SIDE: "For single-family residences ... not less
+  #   than five feet", and "For multi-family residences ... five feet in
+  #   depth for a single story structure, plus five feet per additional
+  #   story" (L208). The fourplex is not multi-family (Steph, 2026-10-01),
+  #   so 5; the draft held the multi-family 10. Street side 10 on a corner
+  #   (L208). No zero-side rule is printed for a townhouse here, so a
+  #   townhouse plat keeps the 5.
   # - LOT DIMENSIONS. "No ... quadplex ... lot shall be less than 30 feet in
   #   width abutting a public street, nor less than 60 feet in depth" (L232);
   #   townhouse lots 20 abutting a public street and 60 deep (L240). The
@@ -886,8 +904,8 @@ zones:
       cite: Cornelius CMC 18.35.050 (G)(1), no quadplex lot less than 60 feet in depth
       quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L232"
     min_density_du_per_acre:
-      value: 11
-      cite: Cornelius CMC 18.35.050 (B), minimum density 11 per net acre for multi-family development
+      value: 8
+      cite: Cornelius CMC 18.35.050 (B), minimum density eight per net acre, the figure that is not the multi-family one (the fourplex is not multi-family, Steph 2026-10-01)
       quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L176"
       measured_on:
         fact: net_developable_area
@@ -927,8 +945,7 @@ zones:
       quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L204"
     setback_side_ft:
       value: 5
-      plus_per_story_ft: 5
-      cite: Cornelius CMC 18.35.050 (D)(3), multi-family side yard five feet for a single story structure plus five feet per additional story
+      cite: Cornelius CMC 18.35.050 (D)(3), side yards not less than five feet, the figure that is not the multi-family one (the fourplex is not multi-family, Steph 2026-10-01)
       quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L208"
     setback_street_side_ft:
       value: 10
@@ -948,10 +965,11 @@ zones:
       quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L330"
     notes: >-
       DRAFT. Middle housing developments permitted outright. 7,000 sq ft
-      lot, 30 ft on a public street, 60 deep; at least 11 units per 32,670 sq
-      ft net acre; front 10, garage 20, side 10 and rear 15 for a two-story
-      building (five per story above the first), street side 10; 45 ft;
-      internal drive 24 two-way, 15 one-way; 25 ft at the curb.
+      lot, 30 ft on a public street, 60 deep; at least 8 units per 32,670 sq
+      ft net acre (the fourplex is not multi-family, Steph 2026-10-01); front
+      10, garage 20, side 5, rear 15 for a two-story building (five per
+      story above the first), street side 10; 45 ft; internal drive 24
+      two-way, 15 one-way; 25 ft at the curb.
   # ------------------------------------------------------------------
   # CR, Core Residential, 18.70. 18.70.020 (B) "Middle housing" permitted
   # outright (L23, L31); 18.70.060: "Detached single-unit dwellings and

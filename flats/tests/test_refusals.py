@@ -345,7 +345,10 @@ pytestmark = pytest.mark.unit
 #: nothing published says which one a lot is in); Happy Valley's child-lot
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
-EXPECTED = {"notes": 134, "comments": 275, "tests": 18}
+EXPECTED = {"notes": 134, "comments": 274, "tests": 18}
+# 275 -> 274 later on 2026-10-01: Steph ruled "Yes, charge them" and
+# 18.145.010 (B)'s side-and-rear-yard comment became a field,
+# `parking_required_yard_prohibited` (test_parking_out_of_yards).
 # 250 -> 275 comments on 2026-10-01: Cornelius, the seventh Washington County
 # draft, from a worktree. 25 comments, no note or test. They are the CMC
 # standards no field or measured fact holds: 18.145.010 (B)'s required

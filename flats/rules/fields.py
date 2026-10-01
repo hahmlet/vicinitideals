@@ -125,6 +125,7 @@ _LABELS: dict[str, str] = {
     "parking_alley_access_required": "vehicle access must be from the alley",
     "parking_alley_backout_ft": "room to back out into the alley",
     "parking_side_prohibited": "parking banned beside the building",
+    "parking_required_yard_prohibited": "parking banned in required yards",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
@@ -715,6 +716,30 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "parking_required_yard_prohibited",
+        "bool",
+        "True where the code keeps required parking out of every REQUIRED "
+        "yard -- the setback strips, not the ground beside or behind the "
+        "building past them. Cornelius 18.145.010 (B): \"Unless otherwise "
+        "provided, required parking and loading spaces shall not be located "
+        "in a required yard\", where 18.195 defines a parking space as the "
+        "stall \"together with maneuvering and access space\", so the "
+        "aisle is kept out too. What it changes is the REAR court: everywhere "
+        "else the court shares the rear yard (the ground behind the wall is "
+        "the deeper of the court and the yard); here the two stack, the court "
+        "standing in front of the yard (`paper.behind_wall_ft`). The side "
+        "yards need nothing new -- the court and the lane are searched inside "
+        "the envelope, which the side setbacks already cut -- and the front "
+        "is `parking_street_setback_ft`. An alley cannot be the aisle under "
+        "it either: the car would back across the yard strip. Not the "
+        "townhouse model-code ban on parking in the side yard of a townhouse "
+        "(`parking_side_prohibited`), which keeps a court from standing "
+        "beside the building at all. Steph, 2026-10-01: \"Yes, charge "
+        "them.\" Optional: absent means the court shares the yard, as it "
+        "always has.",
+        None,
+    ),
+    FieldDef(
         "corner_access_street",
         "enum",
         "Which street a lot with frontage on more than one takes its "
@@ -1189,6 +1214,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_alley_access_required",
         "parking_alley_backout_ft",
         "parking_side_prohibited",
+        "parking_required_yard_prohibited",
         "corner_access_street",
         "front_lot_line_corner",
         # Same argument as the corner line above it: a definition, not a row

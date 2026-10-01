@@ -11,9 +11,11 @@ against the grain of a quick look, so a later edit has to argue with it.
   (18.20.040 (B)) is read as superseded; a question for the owner.
 - **Two figures are converted, not copied.** R-7's and A-2's minimum
   densities are "per net acre", and 18.195 defines a net acre as 32,670
-  square feet, so the floor is held per 43,560 (``acre_sqft``). A-2's side
-  and rear yards grow "five feet per additional story" and are held for the
+  square feet, so the floor is held per 43,560 (``acre_sqft``). A-2's rear
+  yard grows "five feet per additional story" and is held for the
   two-storey pod (``plus_per_story_ft``).
+- **The fourplex is not multi-family** (Steph, 2026-10-01): A-2's side yard
+  and density floor are the figures that are not the multi-family ones.
 - **CR's common-wall side is zero**: "shall not be required to have a side
   yard on side(s) where structures are attached".
 - **One parking space a unit, no maximum**, a 9 by 20 stall.
@@ -80,7 +82,11 @@ def test_the_refusals_hold_the_use_row_only(cornelius: Layer) -> None:
 
 def test_r7_and_a2_density_floors_are_per_the_citys_own_acre(cornelius: Layer) -> None:
     """18.195 defines a net acre as 32,670 square feet; "four dwellings per
-    net acre" is 5.33 per 43,560, and "11 for multi-family" is 14.67."""
+    net acre" is 5.33 per 43,560. A-2's floor is "eight dwellings per net
+    acre for single-family, and 11 for multi-family development", and the
+    fourplex is not multi-family (Steph, 2026-10-01): 8, or 10.67 per
+    43,560. CR's "11 dwellings per net acre for all other dwelling types"
+    does not turn on the word and keeps its 11."""
     r7 = cornelius.zones["R-7"].values["min_density_du_per_acre"]
     assert r7.acre_sqft == 32670
     assert r7.value == pytest.approx(4 * 43560 / 32670, abs=1e-6)
@@ -89,20 +95,31 @@ def test_r7_and_a2_density_floors_are_per_the_citys_own_acre(cornelius: Layer) -
     )
     a2 = cornelius.zones["A-2"].values["min_density_du_per_acre"]
     assert a2.acre_sqft == 32670
-    assert a2.value == pytest.approx(11 * 43560 / 32670, abs=1e-6)
-    assert "and 11 for multi-family development" in _text(a2.prov.quote)
+    assert a2.value == pytest.approx(8 * 43560 / 32670, abs=1e-6)
+    assert "eight dwellings per net acre for single-family" in _text(a2.prov.quote)
     # CR prints its own "net acreage" sentence and holds the printed 11.
     cr = cornelius.zones["CR"].values["min_density_du_per_acre"]
     assert cr.value == 11
 
 
-def test_a2_side_and_rear_yards_grow_per_storey(cornelius: Layer) -> None:
+def test_a2_rear_yard_grows_per_storey_and_the_side_is_not_multi_family(
+    cornelius: Layer,
+) -> None:
+    """The rear rule is every structure's: "No rear yard shall be less than
+    10 feet ... plus five feet per additional story". The side rule splits
+    single-family from multi-family, and the fourplex is not multi-family
+    (Steph, 2026-10-01), so the side is the plain 5 -- the draft held the
+    multi-family 10."""
     held = cornelius.zones["A-2"].values
     rear, side = held["setback_rear_ft"], held["setback_side_ft"]
     assert (rear.value, rear.plus_per_story_ft) == (15, 5)
-    assert (side.value, side.plus_per_story_ft) == (10, 5)
-    assert "10 feet in depth for a single-story structure, plus five feet per" in (
+    assert (side.value, side.plus_per_story_ft) == (5, None)
+    assert side.variants == ()
+    assert "No rear yard shall be less than 10 feet in depth for a single-story" in (
         _text(rear.prov.quote)
+    )
+    assert "For single-family residences, the minimum width of side yards" in (
+        _text(side.prov.quote)
     )
     assert held["setback_street_side_ft"].value == 10
 

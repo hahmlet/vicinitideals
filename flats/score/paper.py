@@ -345,16 +345,63 @@ def side_street_fed(rules: "ZoneResolution", alley: Alley | None, corner: bool) 
     )
 
 
+def yards_kept_clear(rules: "ZoneResolution") -> bool:
+    """Whether the code keeps required parking out of every required yard
+    (``parking_required_yard_prohibited``, Cornelius 18.145.010 (B)).
+
+    Only a stated True. Unread is the old bargain, the court sharing the
+    rear yard -- the field is optional, and a code nobody has read for it is
+    a code that has not been found to ban it.
+    """
+    return rules.get("parking_required_yard_prohibited") is True
+
+
+def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") -> float:
+    """The ground a lot must give behind the building's rear wall.
+
+    ``parked_ft`` is how far the parking reaches past the wall -- the rear
+    court's whole depth (:func:`court_depth`, :func:`side_column`), or what
+    a court beside the building runs past it (:meth:`Beside.overhang_ft`) --
+    and ``rear_ft`` the required rear yard. The building must stand the yard
+    off the line whatever parks behind it.
+
+    Everywhere until 2026-10-01 the two SHARED the yard: a required rear
+    yard is ground you may drive and park on in every Oregon code read for
+    it, so the court sat in it and the lot gave the deeper of the two. Where
+    the code keeps parking out of required yards (:func:`yards_kept_clear`)
+    they STACK: the court stands in front of the yard, and the lot gives
+    both. Steph, 2026-10-01, on Cornelius 18.145.010 (B): *"Yes, charge
+    them."*
+
+    The one place the yard is kept clear of parking. A code that asks a
+    planted strip between parking and the lot line (Tigard's 5 ft in its
+    lowest-density zones) is the same shape with its own width, and raises
+    the keep-off distance here; its lateral half -- a strip wider than the
+    side setback -- is not this function's, because the side yards are
+    already outside the envelope the court is searched in.
+    """
+    keep = rear_ft if yards_kept_clear(rules) else 0.0
+    return max(rear_ft, parked_ft + keep)
+
+
 def _backout_shortfall(rules: "ZoneResolution", alley: Alley | None) -> float | None:
     """What the alley leaves short of the room a car needs to back out.
 
     ``None`` where the alley is not the aisle here: no alley, a code that
-    does not send the driveway to it, or one that states no back-out room
+    does not send the driveway to it, one that states no back-out room
     (``parking_alley_backout_ft`` -- Portland by Steph's ruling, Gresham by
-    Figure 9.0825A). Paved on the lot, between the stall and the alley line.
+    Figure 9.0825A), or one that keeps parking out of required yards
+    (:func:`yards_kept_clear`). Paved on the lot, between the stall and the
+    alley line.
     """
     backout = _number(rules, "parking_alley_backout_ft")
     if backout is None or not alley_fed(rules, alley):
+        return None
+    if yards_kept_clear(rules):
+        # A stall that backs out into the alley stands at the alley line, in
+        # the yard along it, or backs across that yard to reach it: either
+        # way parking in a required yard, which the code bans. The court
+        # keeps its own aisle (conservative; no layer states both today).
         return None
     assert alley is not None
     return max(0.0, backout - (alley.width_ft or 0.0))
@@ -1061,6 +1108,8 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         used.append("setback_side_total_ft")
     used += list(court_from_code)
     used += list(across.from_code)
+    if court and yards_kept_clear(rules):
+        used.append("parking_required_yard_prohibited")
     used += [
         name
         for name, got in (
@@ -1093,13 +1142,12 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             needed_width, width_binding = min_width, ACROSS_MIN_WIDTH
         # The court sits between the building's rear wall and the rear lot
         # line, and a required rear yard is land you may drive and park on in
-        # every Oregon code read for this — so the two overlap rather than
-        # stack, and what the lot must give is the deeper of them. Where a
-        # jurisdiction bars parking from a required rear yard this understates
-        # by up to the setback; that is an unmeasured condition on the human
-        # list, not a thing assumed away here.
+        # most Oregon codes -- so the two overlap rather than stack, and what
+        # the lot must give is the deeper of them. Where the code keeps
+        # parking out of required yards (Cornelius 18.145.010 (B)) they
+        # stack (`behind_wall_ft`).
         needed_depth = (
-            depth_ft + front + max(rear, court)
+            depth_ft + front + behind_wall_ft(court, rear, rules)
             if front is not None and rear is not None
             else None
         )

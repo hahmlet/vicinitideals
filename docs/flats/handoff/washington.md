@@ -1466,8 +1466,11 @@ attached or detached dwelling units located on a single parcel or lot"
 (18.195, L215-L216); middle housing is "a duplex, triplex, quadplex,
 townhouse, or cottage cluster" (L191-L192). "Dwelling, multi-unit" starts
 at five units (L209-L210), so R-10's ban on multi-unit dwellings does not
-reach the pod. "Multi-family" is not defined; A-2 and CR use it beside
-"single-family", and the pod is read as multi-family there.
+reach the pod. "Multi-family" is not defined; A-2 uses it beside
+"single-family" for its side yards and density floor. The draft read the
+pod as multi-family there; Steph ruled on 2026-10-01 that it is not (§6),
+so A-2 holds the figures that are not the multi-family ones. CR's floor
+("all other dwelling types") does not use the word.
 
 Layer-wide values (`defaults`):
 
@@ -1492,17 +1495,28 @@ The four zones that admit the pod, each permitting "Middle housing" (or
 | Lot (unit lots) | 7,000 (1,500) | 10,000 (1,500) | 7,000 (1,500) | 7,000 (1,500) |
 | Width (unit lots) | 60 (20) | 80 (20) | 30 on a public street, as `min_frontage_ft` (20) | 30 (20) |
 | Depth | 60 | 80 | 60 | none held |
-| Minimum density | 4 per 32,670 sq ft net acre = 5.333333 | 3 per net acre (18.195) | 11 per 32,670 sq ft = 14.666667 | 11 per net acre (18.195) |
+| Minimum density | 4 per 32,670 sq ft net acre = 5.333333 | 3 per net acre (18.195) | 8 per 32,670 sq ft = 10.666667 (not multi-family) | 11 per net acre (18.195) |
 | Maximum density | none for a quadplex (townhouses 20) | none printed | none for middle housing (townhouses 25) | none |
 | Height | 35 | 35 | 45 | 35 |
 | Front / garage | 10 / 20 | 25 / 25 | 10 / 20 | 10 / 20 |
-| Side (common wall) / street side | 5 (0) / 10 | 10 (0) / 20 | 10 (5 + 5 a storey) / 10 | 5 (0) / 10 |
+| Side (common wall) / street side | 5 (0) / 10 | 10 (0) / 20 | 5 (not multi-family) / 10 | 5 (0) / 10 |
 | Rear | 10 | 25 | 15 (10 + 5 a storey) | 10 |
 | Coverage | none | none | none | 60 percent |
 | Drive two-way / one-way / at the curb | 12 / 12 / 25 | 12 / 12 / 25 | 24 / 15 / 25 | 24 / 15 / 25 |
 
-Parking may not sit in the front yard (`parking_street_setback_ft`, same as
-the front setback, 18.145.010 (B)).
+Parking may not sit in any required yard (18.145.010 (B), L23). The front
+is `parking_street_setback_ft`, same as the front setback. The rear and
+side are `parking_required_yard_prohibited: true`, a new optional field
+built on Steph's ruling of 2026-10-01 ("Yes, charge them"): the rear
+court stands in front of the rear yard instead of in it, so the ground
+behind the building is the court plus the yard (49 + 10 in R-7 and CR,
+49 + 25 in R-10, 49 + 15 in A-2) where before it was the deeper of the
+two. The side yards needed nothing new: the court and the lane are
+searched inside the envelope, which the side setbacks already cut. A
+parking space is the stall "together with maneuvering and access space"
+(18.195, L520-L521), so the aisle is kept out of the yard with the
+stalls. Cornelius is the only layer that declares the field
+(`test_only_cornelius_keeps_parking_out_of_its_yards`).
 
 **Two new value forms**, each with unit tests, committed separately
 (70990fd5 and 57705275):
@@ -1515,13 +1529,15 @@ the front setback, 18.145.010 (B)).
   43,560 net sq ft where the code allows 32,670; and refusing the field
   would leave the floor unscreened. `acre_sqft` keeps the printed figure
   and converts it.
-- `plus_per_story_ft`. A-2's rear yard is "10 feet ... for a single-story
-  structure, plus five feet per additional story", and its multi-family
-  side yard is five plus five a storey. `per_height_ft` and `step_back`
+- `plus_per_story_ft`. A-2's rear yard is "No rear yard shall be less than
+  10 feet in depth for a single-story structure, plus five feet per
+  additional story", for every structure. `per_height_ft` and `step_back`
   grow with feet of height, not storeys, and a `multi_story` variant would
-  have to carry a number the code does not print (15 and 10 are not
-  printed). The form holds the printed base and the step, and resolves
-  them for the two-storey design (`DESIGN_STORIES` = 2).
+  have to carry a number the code does not print (15 is not printed). The
+  form holds the printed base and the step, and resolves them for the
+  two-storey design (`DESIGN_STORIES` = 2). The draft also used it for the
+  multi-family side yard; after Steph's ruling of 2026-10-01 the side is
+  the plain 5 and the rear is the form's one user, so it stays.
 
 ## 4. Refusals and absences
 
@@ -2760,11 +2776,6 @@ Ledgers and readers:
 
 Places where the screen is LOOSER than the code:
 
-- **Parking in the side and rear yards.** 18.145.010 (B) keeps required
-  parking out of every required yard. Only the front is held. The site
-  plan lets the court overlap the rear yard, so on any lot the court binds
-  the screen can be loose by up to the rear setback (10 ft in R-7, 25 in
-  R-10, 15 in A-2). Owed a field.
 - **The solar balance point** (18.160) applies "to an application for a
   building permit for all structures in all single-family zones" (L23), and
   R-10 and R-7 are the two "Single-Family" districts (18.05, L53-L54). The
@@ -2794,9 +2805,16 @@ Places where it is STRICTER:
 - **Townhouse maximum density** held at 20 (R-7) and 25 (A-2) per 43,560
   sq ft, because a variant cannot carry `acre_sqft`: a quarter stricter, on
   the unit-lot path only.
-- **R-10 townhouse lots held 80 deep** (the code excuses them); **A-2
-  townhouse plats held to the multi-family sides** (the per-storey form
-  takes no variant).
+- **R-10 townhouse lots held 80 deep** (the code excuses them).
+- **The parking court and the rear yard stack** (18.145.010 (B),
+  `parking_required_yard_prohibited`, Steph 2026-10-01). Not stricter than
+  the code, but stricter than every other layer: a lot the court binds now
+  needs the whole rear yard behind its court. The whole court (stalls,
+  aisle and the 5 ft standoff off the wall) is kept out, because 18.195
+  counts the "maneuvering and access space" as part of a parking space.
+  An alley is not taken as the aisle under it (the car would back across
+  the yard); no Cornelius zone sends parking to an alley, so that moves
+  nothing here.
 
 Readings that could go either way:
 
@@ -2809,12 +2827,19 @@ Readings that could go either way:
   660-046 requires a Large City to allow a quadplex where a detached house
   is allowed. Read as superseded; admitted. R-7 is the largest district
   (2,126 polygons), so this is the reading that moves the most lots.
-- **"Multi-family" undefined.** A-2's yards (10 side, 15 rear) and A-2's
-  and CR's density floor (11, not 8) treat the pod as multi-family. The
-  blind reader flagged both (cards 02649, 02656). Read the other way the
-  A-2 side yard is 5 and the floor 8. A-2 040 (H) prohibits "More than one
-  single-family detached or common-wall single-family dwelling unit on a
-  single lot" (L147); held as not reaching a quadplex.
+- **"Multi-family" undefined. RULED 2026-10-01 (Steph): the fourplex is
+  not multi-family.** A-2's side yard is now 5 (was the multi-family 10)
+  and its density floor 8 per net acre (was 11). A-2's rear yard stays 15:
+  its sentence is every structure's ("No rear yard shall be less than 10
+  feet ... plus five feet per additional story", L204), not a
+  multi-family rule, although the question put to Steph bundled it with
+  the side. CR's floor stays 11: "11 dwellings per net acre for all other
+  dwelling types" than single-family detached (L184) does not turn on the
+  word, and a fourplex is plainly another dwelling type. The blind reader
+  had flagged both A-2 readings (cards 02649, 02656). A-2 040 (H)
+  prohibits "More than one single-family detached or common-wall
+  single-family dwelling unit on a single lot" (L147); held as not
+  reaching a quadplex.
 - **Which street is the front of a corner lot.** The definition is stated
   "for purposes of the solar access regulations" (L291-L292); held for the
   yards as the shortest frontage. The blind reader flagged the scope
@@ -2908,6 +2933,28 @@ Left for the city, because only the city holds the answer:
 - **Durham MDR (D1)** -- "multiple residential units within a
   commonly-owned structure" reads both ways, and the zone is 11.5 acres;
   the refusal stands.
+
+### Rulings, 2026-10-01 (Steph)
+
+Three Cornelius answers, encoded the same day on `flats/cornelius-draft`:
+
+- **R-7's old one-home-per-lot line** (18.20.040 (B)) is cancelled by state
+  middle-housing law. The draft's reading stands: R-7 admits the pod.
+- **Parking in the side and back yards: "Yes, charge them."** New optional
+  field `parking_required_yard_prohibited`, declared in Cornelius's
+  defaults on 18.145.010 (B). The rear court and the rear yard now stack
+  instead of sharing; the side yards were already kept clear. Before, the
+  screen let the court sit in the rear yard on every layer; it still does
+  on every layer but Cornelius. Tigard's 5 ft planted strip beside parking
+  is the same shape with its own width and can raise the same keep-off
+  distance (`paper.behind_wall_ft`) on its own branch.
+- **The fourplex is NOT "multi-family" in Cornelius.** A-2 takes the side
+  yard (5) and density floor (8 per net acre) that are not the
+  multi-family ones. Two things the ruling does not move, by the code's
+  own words: A-2's rear yard (10 plus 5 a storey, 15 for the pod) is every
+  structure's rule, so `plus_per_story_ft` keeps one user; and CR's floor
+  of 11 is for "all other dwelling types", not for multi-family. If Steph
+  meant CR's floor to drop to 8 as well, that is a further ruling.
 
 The questions below are kept as the record of what was asked.
 
@@ -3153,7 +3200,7 @@ The questions below are kept as the record of what was asked.
 
 ### Cornelius
 
-- **The old one-home-per-lot rule in R-7.** R-7 is Cornelius's main
+- **The old one-home-per-lot rule in R-7.** (Answered 2026-10-01: cancelled by state law; see Rulings.) R-7 is Cornelius's main
   neighbourhood zone, about half the map. It lists middle housing,
   fourplexes included, as allowed outright, and its lot-size table gives a
   fourplex lot size. But an older line in the same chapter still bans
@@ -3188,14 +3235,14 @@ The questions below are kept as the record of what was asked.
   alternatives are letting the design pick whichever side fits best (more
   lots pass) or making both street sides meet the front setback (fewer
   pass). Is the draft's choice right?
-- **Bigger side and back yards in the A-2 zone.** In A-2, "multi-family"
+- **Bigger side and back yards in the A-2 zone.** (Answered 2026-10-01: the fourplex is not multi-family; see Rulings.) In A-2, "multi-family"
   buildings need side yards of 5 ft plus 5 ft for each floor above the
   first, and back yards of 10 ft plus 5 ft per extra floor: 10 ft and 15 ft
   for our two-storey building. A single-family home needs only 5 ft on the
   sides. The code never defines "multi-family". The draft treats a
   fourplex as multi-family, which also raises the zone's minimum number of
   homes per acre from 8 to 11. Is that right?
-- **Parking in the side and back yards.** The code says required parking
+- **Parking in the side and back yards.** (Answered 2026-10-01: "Yes, charge them"; built, see Rulings.) The code says required parking
   cannot sit in any required yard. Today the screen keeps parking out of
   the front yard only, and lets the parking area overlap the back yard (10
   ft deep in R-7, 25 ft in R-10). Following the rule fully would fail some
@@ -3787,7 +3834,9 @@ and the stored text:
 
 - 02655, 02656 (`agree_alt`): A-2's per-storey rear and side. The key
   holds the printed base (10 and 5); the reader gave the two-storey result
-  (15 and 10), which is what the layer resolves to.
+  (15 and 10), which is what the layer resolved to on 2026-09-30. Since
+  Steph's ruling of 2026-10-01 (the fourplex is not multi-family) the side
+  is the plain 5 and only the rear grows.
 - 02616 (`disagree`) and 02650 (`unread`): the `acre_sqft` card, whose
   figure is the 32,670 sq ft net acre. Both readers answered the density
   instead and both noted "A net acre is equal to 32,670 square feet" on the
@@ -3845,13 +3894,25 @@ tool. Both files pass, and neither holds a control character.
 districts held and the seven map codes ruled (four aliases, three
 unencodable); the four admitting zones quote "Middle housing"; the
 refusals hold the use row only; R-7's and A-2's floors on the 32,670 sq ft
-acre (5.333333 and 14.666667) and CR's printed 11; A-2's per-storey yards
-(15 and 10); maximum density exempt in R-7, A-2 and CR with R-7's
-townhouse 20; CR's zero common-wall side; the R-10 lot; parking 1 a unit,
-no maximum, 9 by 20, no aisle; the corner at 135 degrees, alleys not
-counted, a private drive not a street, the front the shortest frontage;
-nothing `verified`. The two new forms have their own unit tests (70990fd5,
-57705275).
+acre (5.333333, and A-2's 10.666667 since the 2026-10-01 ruling; it was
+14.666667) and CR's printed 11; A-2's per-storey rear (15) and plain side
+(5); maximum density exempt in R-7, A-2 and CR with R-7's townhouse 20;
+CR's zero common-wall side; the R-10 lot; parking 1 a unit, no maximum, 9
+by 20, no aisle; the corner at 135 degrees, alleys not counted, a private
+drive not a street, the front the shortest frontage; nothing `verified`.
+The two new forms have their own unit tests (70990fd5, 57705275).
+
+**Parking out of the yards** (2026-10-01): `test_parking_out_of_yards.py`
+(13 tests). The new field is optional and a bool; unread shares the yard
+and the ban stacks (`behind_wall_ft`); the court charge past the envelope
+and the court beside the building stack only under the ban; an alley is
+not the aisle under it; Cornelius declares it on 18.145.010 (B)'s own
+sentence; the paper lot in R-7, R-10, A-2 and CR is deeper by exactly the
+rear yard; two lots drawn at Cornelius's state-plane coordinates (R-7 70
+by 120: 5 ft to spare and six stalls before, 5 ft short and none after;
+R-10 80 by 140: 10 to spare before, 15 short after); and a guard that
+Cornelius is the only layer declaring it. `test_refusals` comments 275 ->
+274 (the yard comment became the field).
 
 **Ledgers** (step 9, on the final layer):
 
@@ -4212,8 +4273,8 @@ nothing `verified`. The two new forms have their own unit tests (70990fd5,
 - **The coverage ledger with Cornelius lots**, which
   `test_unweighed_layers` waits on (Tests).
 - **Fields the code needs and the model lacks** (a `flats/rules/` change,
-  not made):
-  - parking kept out of the rear and interior side yards (18.145.010 (B));
+  not made). Parking kept out of the rear and side yards (18.145.010 (B))
+  was here; built 2026-10-01 as `parking_required_yard_prohibited`.
   - the solar balance point (18.160), a height that grows with the
     distance from the northern lot line, which needs the lot's
     orientation;

@@ -66,6 +66,7 @@ from flats.score.configure import Configuration
 from flats.score.paper import (
     Alley,
     Beside,
+    behind_wall_ft,
     court_across,
     court_depth,
     drive_at_street,
@@ -1060,18 +1061,21 @@ def _court_beyond_rear(
     The court sits between the building's rear wall and the rear lot line,
     and the envelope has already had a rear setback taken off it -- so that
     strip is land the court may use, and only the excess is charged. This is
-    the same overlap ``paper_fit`` states as ``max(rear, court)``; where a
-    jurisdiction bars parking from a required rear yard the two would stack
-    instead, which is an unmeasured condition on the human list rather than a
-    thing assumed away here. A zone stating no rear setback charges the whole
-    court, which is both conservative and correct: no yard, no shared ground.
+    the same overlap ``paper_fit`` states (:func:`flats.score.paper.behind_wall_ft`);
+    where the code keeps parking out of required yards
+    (``parking_required_yard_prohibited``, Cornelius 18.145.010 (B), Steph's
+    ruling of 2026-10-01) the two stack instead, and the court is charged in
+    full in front of the yard. A zone stating no rear setback charges the
+    whole court, which is both conservative and correct: no yard, no shared
+    ground.
 
     ``carved_rear_ft`` is the strip the envelope actually lost, when that is
     not the number these rules resolve (:attr:`LotFacts.envelope_rear_ft`).
     The building must stand the RESOLVED rear setback off the line and the
     court needs its own depth behind the wall, so the ground behind the wall
-    is ``max(court, rear)`` either way; what the envelope still owes of it is
-    that less the strip already cut. With the two numbers equal this is the
+    is ``max(court, rear)`` either way (``court + rear`` where the yard is
+    kept clear); what the envelope still owes of it is that less the strip
+    already cut. With the two numbers equal this is the
     old ``max(0, court - rear)``. With the rules relaxing the rear below the
     cut (Portland's 0 ft against a commercial neighbour, envelope cut at 10)
     the strip is wider than the rules ask and the court parks in it; with the
@@ -1099,7 +1103,7 @@ def _court_beyond_rear(
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
-    return max(0.0, max(court, rear_ft) - carved)
+    return max(0.0, behind_wall_ft(court, rear_ft, rules) - carved)
 
 
 def _beside_for(design: Design, rules: ZoneResolution, lot: LotFacts) -> Beside:
@@ -1126,8 +1130,10 @@ def _beside_beyond(
     stand the RESOLVED rear setback off the line, and that part runs past
     the wall into the same yard, so the two share it on the court-behind
     bargain: the ground behind the wall is the deeper of the overhang and
-    the rear setback, less the strip the envelope already lost. ``inf``
-    where the row may not run past the wall and would.
+    the rear setback -- the two stacked where the code keeps parking out of
+    required yards (:func:`flats.score.paper.behind_wall_ft`) -- less the
+    strip the envelope already lost. ``inf`` where the row may not run past
+    the wall and would.
     """
     overhang = beside.overhang_ft(deep_ft)
     if math.isinf(overhang):
@@ -1135,7 +1141,7 @@ def _beside_beyond(
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
-    return max(0.0, max(overhang, rear_ft) - carved)
+    return max(0.0, behind_wall_ft(overhang, rear_ft, rules) - carved)
 
 
 def seats(
