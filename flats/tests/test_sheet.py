@@ -251,3 +251,47 @@ def test_a_wrapped_cell_is_found_inside_the_printed_line_it_shares(tmp_path: Pat
     assert [w.text for w in line.words] == ["Rear", "Yard", "20", "feet"]
     placed = S.place({1: sheet}, [(1, 1, " Rear Yard 20 feet", "", "")], 20)
     assert placed.status == "boxed"
+
+
+def _book(tmp_path: Path, pages: list[list[tuple[float, float, float, str]]]) -> Path:
+    """A several-page book, by stitching one-page PDFs with pypdf."""
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+
+    writer = PdfWriter()
+    for runs in pages:
+        writer.add_page(PdfReader(BytesIO(_pdf(runs))).pages[0])
+    path = tmp_path / "book.pdf"
+    with path.open("wb") as fh:
+        writer.write(fh)
+    return path
+
+
+def test_a_page_footer_is_not_mistaken_for_part_of_a_rule(tmp_path: Path):
+    """Oregon City: a citation across a page break quotes "266.5 Oregon City
+    Supp. No. 48" between its two halves, and it was tinted as a rule."""
+    pages = [
+        [(72, 400, 11, f"Body text on page {n}"), (300, 40, 9, f"26{n}.5 Oregon City Supp. No. 48")]
+        for n in (1, 2, 3)
+    ]
+    book = _book(tmp_path, pages)
+    sheet = S.read(book, 2)
+    running = S._running(book, 2)
+
+    flagged = [" ".join(w.text for w in ln.words) for ln in sheet.lines if S._is_running(ln, running)]
+
+    assert flagged == ["262.5 Oregon City Supp. No. 48"]
+
+
+def test_a_repeated_table_heading_still_boxes_a_number_printed_on_it(tmp_path: Path):
+    """A continued table repeats its heading at the same height on every page.
+    The heading is dropped from the drawing -- unless the number is on it."""
+    pages = [[(72, 760, 11, "Minimum lot area 5,000 sq. ft."), (72, 500, 11, f"Row {n}")] for n in (1, 2)]
+    book = _book(tmp_path, pages)
+    sheets = {2: S.read(book, 2)}
+    running = S._running(book, 2)
+    line = S.find(sheets[2], "Minimum lot area 5,000 sq. ft.")
+
+    assert S._is_running(line, running), "fixture assumption: the heading repeats"
+    assert S.hits(line, 5000, sheets[2].aspect), "so the number's own line is kept"

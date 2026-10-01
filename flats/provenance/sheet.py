@@ -767,6 +767,64 @@ def lines_of(store: ProvenanceStore, document: str) -> list[str]:
 _MOST_LINES = 40
 
 
+#: How far into the page from the top or bottom edge a running head or foot
+#: may sit, as a share of the page height.
+_MARGIN = 0.1
+
+
+def _running_key(line: Line) -> str:
+    """A line's letters alone: what a running head keeps from page to page.
+
+    The page number and section number change; "Oregon City Supp. No." and
+    "City of Gresham Development Code" do not. A line of nothing but numbers
+    keys as "#", so a bare page number matches the next page's.
+    """
+    letters = "".join(ch for ch in squash(" ".join(w.text for w in line.words)) if ch.isalpha())
+    return letters or "#"
+
+
+@lru_cache(maxsize=256)
+def _running(book: Path, n: int) -> tuple[Box, ...]:
+    """The running heads and feet printed on page ``n``.
+
+    A citation that crosses a page break quotes the foot of one page and the
+    head of the next, because the text copy has them inline. They are not
+    rules, and drawing them as rules says the code put a standard in its page
+    footer. A line counts as running when it sits near the top or bottom edge
+    and a line with the same letters sits at the same height on a page nearby.
+    """
+    sheet = read(book, n)
+    edge = [ln for ln in sheet.lines if ln.box.y1 < _MARGIN or ln.box.y0 > 1 - _MARGIN]
+    if not edge:
+        return ()
+    near: list[Sheet] = []
+    for m in (n - 2, n - 1, n + 1, n + 2):
+        if m < 1:
+            continue
+        try:
+            near.append(read(book, m))
+        except Exception:  # noqa: BLE001 — past the last page
+            continue
+    out = []
+    for line in edge:
+        key = _running_key(line)
+        for other in near:
+            if any(
+                abs(o.box.y0 - line.box.y0) < 0.012 and _running_key(o) == key
+                for o in other.lines
+            ):
+                out.append(line.box)
+                break
+    return tuple(out)
+
+
+def _is_running(line: Line, running: Sequence[Box]) -> bool:
+    box = line.box
+    return any(
+        abs(r.y0 - box.y0) < 0.004 and box.x0 < r.x1 and r.x0 < box.x1 for r in running
+    )
+
+
 def locate(
     store: ProvenanceStore,
     document: str,
@@ -810,4 +868,19 @@ def locate(
     except books.BookError:
         return Placed(status="no_map")
     sheets = {n: read(book, n) for n in sorted({c[1] for c in cited})}
-    return place(sheets, cited, value, zone=zone)
+    kept = []
+    for entry in cited:
+        running = _running(book, entry[1])
+        found = find(sheets[entry[1]], entry[2], entry[3], entry[4]) if running else None
+        # A table continued across pages repeats its heading rows at the same
+        # height, which reads exactly like a running head. Never drop the line
+        # the number itself is printed on.
+        if (
+            found is None
+            or not _is_running(found, running)
+            or hits(found, value, sheets[entry[1]].aspect)
+        ):
+            kept.append(entry)
+    if not kept:
+        return Placed(status="unfound")
+    return place(sheets, kept, value, zone=zone)

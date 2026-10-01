@@ -16,6 +16,8 @@
   .check-box-encoded:hover { background: rgba(22, 163, 74, 0.28); }
 
   /* Page on the left, the question pinned beside it. */
+  /* The whole check sits in the middle of the screen, not against its left edge. */
+  .check-wrap { max-width: 1400px; margin: 0 auto; }
   .check-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; align-items: start; }
   .check-pages { max-width: 1000px; }
   .check-panel { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow-y: auto;
@@ -31,6 +33,7 @@
 <div class="topbar"></div>
 
 <div class="content">
+<div class="check-wrap">
   <div class="toolbar" style="margin-bottom:10px">
     <div>
       <h2 style="margin:0">Page check · {{ layer.label }}</h2>
@@ -44,5 +47,6 @@
   </div>
 
   {% include "partials/flats_check_card.html" %}
+</div>
 </div>
 {% endblock %}
