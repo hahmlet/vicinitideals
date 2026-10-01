@@ -1300,6 +1300,11 @@ class Screened:
     #: draws it (:func:`drawing_for`); None where the search found no room
     #: at the parking's width at all.
     drawing: dict[str, Any] | None = None
+    #: The measurements ``screening`` was made on -- the lot's own, with the
+    #: envelope's rear cut and the outdoor square this plan measured -- so a
+    #: fact measured after the drawing (:func:`fire_checked`) re-screens on
+    #: the same ground. None from a caller that built one by hand.
+    facts: LotFacts | None = None
 
 
 def _if_signed(
@@ -1423,6 +1428,7 @@ def _screen_on(
             step_deg=step_deg,
             envelope=env,
             front_deg=front,
+            facts=facts,
         ),
         fitters[key],
     )
@@ -1483,18 +1489,24 @@ def screen_lot(
     policy: SlackPolicy,
     relief: ReliefPolicy,
     step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
 ) -> list[Screened]:
     """Screen one lot against every design, and where a street line rests
     only on a private drive whose standing is in doubt, screen the lot
     again without it and keep the worse answer (:func:`drive_reading`).
+
+    ``roads`` is the street centreline index the fire route is measured to
+    (:func:`flats.fit.fire.load_truck_roads`); without it the route starts
+    at the street lot line, which only a test may accept.
     """
     got = _screen_lot_once(
-        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg
+        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads
     )
     if lot.second is None:
         return got
     alt = _screen_lot_once(
-        lot.second, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg
+        lot.second, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads,
     )
     if lot.second_better:
         return [_better(a, b) for a, b in zip(got, alt)]
@@ -1509,6 +1521,7 @@ def _screen_lot_once(
     policy: SlackPolicy,
     relief: ReliefPolicy,
     step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
 ) -> list[Screened]:
     """Screen one lot against every design, one envelope search for all.
 
@@ -1621,8 +1634,58 @@ def _screen_lot_once(
             won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
         else:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
-        out.append(dataclasses.replace(won, drawing=drawing_for(won, fitter)))
+        won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
+        out.append(fire_checked(won, lot, roads, policy=policy, relief=relief))
     return out
+
+
+def fire_checked(
+    s: Screened,
+    lot: QuadfitLot,
+    roads: Any,
+    *,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+) -> Screened:
+    """``s`` re-screened with the fire hose's route measured on its drawing
+    (FOLLOWUPS 28, OFC 503.1.1).
+
+    The route runs from the street to the farthest point of the building
+    the drawing stands nearest the street (:func:`flats.fit.fire.route_ft`),
+    entering over any of the lot's street lines -- every street, whichever
+    one the plan was laid out fronting: the truck may use any of them. A
+    plan already RED both ways cannot be moved by it and is not measured;
+    a lot nothing could draw, or with no polygon or street line, is tried
+    and unobserved, which holds it out of GREEN. Changes no plan: where
+    another placement would reach, the answer is a false red, never a
+    false green.
+    """
+    from shapely.geometry import Polygon
+
+    from flats.fit import fire
+
+    if s.rules.get("fire_access_max_ft") is None or s.facts is None:
+        return s
+    if s.screening.triage is Triage.red and s.signed.triage is Triage.red:
+        return s
+    streets: tuple[tuple[float, float, float, float], ...] = ()
+    if lot.edges is not None:
+        streets = tuple(
+            (e.x1, e.y1, e.x2, e.y2)
+            for e in lot.edges.edges
+            if e.cls in (EdgeClass.front, EdgeClass.street_side)
+        )
+    route = None
+    ring = (s.drawing or {}).get("building")
+    if ring and len(ring) >= 4 and lot.lot_geom is not None and streets:
+        offset = fire.point_offset(*roads) if roads is not None else None
+        route = fire.route_ft(Polygon(ring), lot.lot_geom, streets, offset)
+    facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
 
 #: How far past the envelope's street edge the court beside the building may
@@ -1941,6 +2004,7 @@ def row_for(s: Screened) -> dict[str, Any]:
         "envelope_sqft": s.envelope.sqft if s.envelope else None,
         "envelope_source": s.envelope.source if s.envelope else None,
         "drawing": json.dumps(s.drawing, separators=(",", ":")) if s.drawing else None,
+        "fire_route_ft": s.facts.fire_route_ft if s.facts is not None else None,
     }
 
 
@@ -1949,10 +2013,14 @@ def row_for(s: Screened) -> dict[str, Any]:
 _WORKER: dict[str, Any] = {}
 
 
-def _init_worker(step_deg: float, sources: Path | None = None) -> None:
-    """Load the corpus, catalog, policies and corridor maps once per process."""
+def _init_worker(
+    step_deg: float, sources: Path | None = None, roads: Path | None = None
+) -> None:
+    """Load the corpus, catalog, policies, corridor maps and the street
+    centrelines the fire route is measured to, once per process."""
     from flats.designs.model import load_catalog
     from flats.encode.load import load_trusted
+    from flats.fit.fire import load_truck_roads
     from flats.score import relief as relief_mod, slack as slack_mod
 
     _WORKER["rules"] = load_trusted(strict=False).rules
@@ -1961,6 +2029,7 @@ def _init_worker(step_deg: float, sources: Path | None = None) -> None:
     _WORKER["relief"] = relief_mod.load_policy()
     _WORKER["step_deg"] = step_deg
     _WORKER["corridors"] = load_corridor_maps(sources) if sources is not None else ()
+    _WORKER["roads"] = load_truck_roads(roads) if roads is not None else None
 
 
 def _work_chunk(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -1974,6 +2043,7 @@ def _work_chunk(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             policy=_WORKER["policy"],
             relief=_WORKER["relief"],
             step_deg=_WORKER["step_deg"],
+            roads=_WORKER.get("roads"),
         ):
             out.append(row_for(s))
     return out
@@ -2153,6 +2223,7 @@ def run(
     chunk_size: int = 500,
     sources: Path | None = None,
     transit: Path | None = None,
+    roads: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -2164,12 +2235,19 @@ def run(
     corridor maps answer the corridor facts; without it they stay unasked.
     ``transit`` is the distance file :mod:`flats.ingest.transit` wrote for
     the transit release in use; without it no lot has a distance to transit.
+    ``roads`` is quadfit s1's street centrelines (``s1_streets.parquet``),
+    which the fire route is measured to; it defaults to the file beside
+    ``s4`` and a run without one is refused -- measured from the lot line,
+    the route would come out SHORTER than the hose's (FOLLOWUPS 28).
     """
     import time
     from multiprocessing import Pool
 
     import pandas as pd
 
+    roads = roads if roads is not None else s4.parent / "s1_streets.parquet"
+    if not roads.exists():
+        raise FileNotFoundError(f"no street centrelines for the fire route: {roads}")
     out.mkdir(parents=True, exist_ok=True)
     parts_dir = out / "parts"
     parts_dir.mkdir(exist_ok=True)
@@ -2193,13 +2271,13 @@ def run(
         pd.DataFrame.from_records(records).to_parquet(parts_dir / f"{i:05d}.parquet", index=False)
 
     if processes <= 1:
-        _init_worker(step_deg, sources)
+        _init_worker(step_deg, sources, roads)
         for i, chunk in enumerate(chunks):
             _write(i, _work_chunk(chunk))
             done += len(chunk)
             log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
     else:
-        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources)) as pool:
+        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources, roads)) as pool:
             for i, records in enumerate(pool.imap(_work_chunk, chunks)):
                 _write(i, records)
                 done += len(chunks[i])
@@ -2228,6 +2306,7 @@ def run(
         "tlids": tlids,
         "sources": str(sources) if sources is not None else None,
         "transit": str(transit) if transit is not None else None,
+        "roads": str(roads),
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -2261,6 +2340,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--chunk-size", type=int, default=500)
     ap.add_argument("--sources", type=Path, help="snapshot dir holding the corridor maps")
     ap.add_argument("--transit", type=Path, help="distances.parquet from flats.ingest.transit")
+    ap.add_argument(
+        "--roads",
+        type=Path,
+        help="street centrelines for the fire route (default: s1_streets beside --s4)",
+    )
     args = ap.parse_args(argv)
     run(
         args.out,
@@ -2278,6 +2362,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         chunk_size=args.chunk_size,
         sources=args.sources,
         transit=args.transit,
+        roads=args.roads,
     )
     return 0
 

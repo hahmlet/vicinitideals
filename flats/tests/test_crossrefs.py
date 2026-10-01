@@ -772,7 +772,7 @@ def test_a_standard_can_be_answered_with_money(layers: dict[str, Layer]) -> None
         if row.outcome == "fee_in_lieu"
     ]
     assert paid, "nothing in the corpus is ruled fee_in_lieu"
-    assert {ref for _, ref in paid} == {"11", "11.50"}
+    assert {ref for _, ref in paid} == {"11", "11.50", "102.8", "507.5.1"}
     # One layer, and which one is the point. Portland was ruled here first and
     # the ruling went stale the same hour, because reading a chapter means
     # fetching it and a fetched chapter no longer dangles. That reading lives in
@@ -784,7 +784,11 @@ def test_a_standard_can_be_answered_with_money(layers: dict[str, Layer]) -> None
     # Title 11 still dangles there -- and 11.50.050 A reaches it in its own
     # words, applying the density standards to "sites within the city and the
     # County Urban Pocket Areas".
-    assert {lid for lid, _ in paid} == {"or/multnomah/_unincorporated"}
+    assert {lid for lid, ref in paid if ref.startswith("11")} == {"or/multnomah/_unincorporated"}
+    # The fire code's water supply (FOLLOWUPS 28, 2026-10-01): an on-site
+    # hydrant, or a tank where no hydrant system exists, is built and paid
+    # for -- a cost, not ground -- and the state layer holds the guide.
+    assert {lid for lid, ref in paid if not ref.startswith("11")} == {"or"}
 
 
 def test_a_parking_table_cell_is_not_a_section_number() -> None:
@@ -934,10 +938,13 @@ def test_a_layer_owns_only_the_documents_in_its_own_directory(
         }
         assert mine <= {name}, f"{name} reports rows from {sorted(mine - {name})}"
 
-    state = dangling(layers["or"], store)
+    # Counted among the rows nobody has ruled on: the fire code guide
+    # (FOLLOWUPS 28) names sixteen OFC sections and each is ruled in the state
+    # file. The leak this guards against filed 591 rows, none of them ruled.
+    state = [row for row in dangling(layers["or"], store) if not row.ruling]
     assert len(state) < 10, (
-        "the state layer holds four documents and cites lines in them; a "
-        f"ledger of {len(state)} rows is the whole corpus filed under Oregon"
+        "the state layer holds a handful of documents and cites lines in them; "
+        f"{len(state)} unruled rows is the whole corpus filed under Oregon"
     )
 
 

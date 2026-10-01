@@ -1,0 +1,420 @@
+Based on the 2022 Oregon Fire Code
+
+                                                                   Revised 6/21/23
+
+                                                             Notes to users
+
+Local Development Codes
+Check the local city or county development code to determine the applicability of roadway standards as it relates to
+conflicts with this guide and/or the adopted fire code.
+
+ORS 368.039 Road standards adopted by local government supersede                         standards in fire codes:
+Consultation with fire agencies.
+
+   (1) When the governing body of a county or city adopts specifications and standards, including standards for width,
+   for roads and streets under the jurisdiction of the governing body, such specifications and standards shall supersede
+   and prevail over any specifications and standards for roads and streets that are set forth in a uniform fire code
+   adopted by the State Fire Marshal, a municipal fire department or a county firefighting agency.
+
+   (2) This section applies to specifications        and standards      for roads and streets     adopted by the governing body           of a
+   county or city in a charter, acknowledged comprehensive plan or ordinance adopted pursuant to ORS chapter 92,
+   203, 221 or 368.
+
+   (3) Before adopting or amending any comprehensive plan, land use regulation or ordinance that establishes
+   specifications and standards for roads and streets, a governing body of a county or city shall consult with the
+   municipal fire department or other local firefighting agency concerning the proposed specifications and
+   standards. The county or city governing body shall consider the needs of the fire department or firefighting agency
+   when adopting the final specifications and standards.
+
+Dispute Resolution Process
+
+The Office of State Fire Marshal’s (OSFM), Dispute Resolution Process allows an aggrieved party to dispute inspection
+findings of   the local fire marshal.      This process    allows the aggrieved      party to ask for a “second opinion” but does not
+supersede the local or State Fire Marshal’s appeal process.  The local fire marshal, through the OSFM, arranges a
+conference call with the aggrieved party and on-call code experts from other jurisdictions and industry.  The on-call
+group discusses the case, and the local fire marshal takes the group’s second opinion into consideration when
+rendering a decision in writing to the aggrieved party.  The goal of the OSFM is to conduct the conference call within                             48
+hours (two business days) for new construction and no more than seven business days for maintenance issues of                                 the
+notice of dispute.  Aggrieved parties who are not satisfied with the findings can appeal the decision to a local                          appeals
+board, if available, otherwise to the OSFM.
+
+Preamble/Authority and Scope
+
+Clackamas Fire District #1 administers and enforces the               Oregon Fire Code under the authority granted to them by                  ORS
+476.030 or ORS 476.060.  The 2022 Oregon Fire Code is the International                     Fire Code, 2021 Edition, as published and
+copyrighted by the International         Code Council, which has been amended and adopted by the Oregon State Fire
+Marshal's Office.
+
+This Applications Guide       was created to provide       good faith guidance to       building officials, contractors,      business    owners,
+the public, and fire marshals on local interpretations and practices that are considered to be in compliance                           with the
+Oregon Fire Code. The intent is to clarify aspects of the code that are vague or non-specific by addressing                          selected
+issues under normal conditions.  This Applications Guide does not create or replace code provisions and is                            not an
+adopted policy of Clackamas Fire District #1.  The reader is cautioned that the guidance detailed in this Applications
+Guide may or may not apply to their specific situation,             and that the     designated authority       for each   jurisdiction   retains
+final authority to determine compliance.
+
+                                                                            2
+
+                                       Table of Contents
+
+Fire Access and Water Supply Submittal Requirements………………………………………..…………………… 4
+Fire Apparatus Access…………………………………………………………………………………………….………………….. 5
+       Access Road Distance from Building…………………………………………………………………..……………. 5
+       Dead End Roads and Turnarounds……………………………………………………………………..……………. 5
+       Fire Apparatus Access Road Exception………………………………………………………..…………………… 5
+       Multiple Access Roads……………………………………………………………………………………………..……… 6
+       Grade/Slope……………………………………………………………………………………………………………………. 6
+       Multiple Access Roads Separation……………………………………………………………………………........              6
+       Fire Apparatus Access Road Width and Vertical Clearance………………………………………………. 6
+       Aerial Fire Apparatus Road Width……………………………………………………………………………......... 6
+       Surface and Load Capacities……………………………………………………………………………………..…….. 6
+       Bridges……………………………………………………………………………………………………………………..…….. 7
+       Turning Radius…………………………………………………………………………………………………………………                          7
+       Gates………………………………………………………………………………………………………………………………. 7
+       No Parking Signs……………………………………………………………………………………………………………… 7
+       Painted Curbs………………………………………………………………………………………………………………….. 7
+
+Firefighting Water Supplies……………………………………………………………………………………..…………..…….                    8
+       Commercial Buildings – Required Fire Flow…………………………….…………………………………......           8
+       Rural Commercial Buildings – Required Fire Flow……………………………………………………………. 8
+       Single Family Dwellings – Required Fire Flow……………………………………………………………..……            8
+       Rural One- and Two-Family Dwellings – Required Fire Flow………………….……………………......     8
+       Access and Firefighting Water Supply During Construction……………………………………………… 8
+
+Fire Hydrants………………………………………………………………………………………………………………………………                             9
+       Fire Hydrants – Commercial Buildings…………………………………………………………………………..... 9
+       Fire Hydrants – Residential Dwellings and Accessory Structures………………………………..……. 9
+       Fire Hydrant Number and Distribution……………………………………………………………………..……..               9
+       Fire Hydrant Placement…………………………………………………………………………………………………… 10
+       Existing Fire Hydrants………………………………………………………………………………………………………                      10
+       Non Threaded Quick Connectors…………………………………………………………………………………….. 10
+       Fire Hydrant Distance from an Access Road…………………………………………………………………….. 10
+       Fire Hydrant and Fire Department Connection (FDC)….…………………………………………………… 10
+       ..
+Key Lock Boxes…………………………………………………………………………………………………………………..………. 11
+
+Smoke and Heat Vents………………………………………………………………………………………………………..……… 11
+       Manual Releases……………………………………………………………………………………………………….…….. 11
+
+Fire Watch………………………………………………………………………………………………………………………………..... 11
+
+Emergency Responder Radio Coverage………………………………………………………………………………………. 12
+
+                                                   3
+
+Fire Department Access and Water Supply Submittal Requirements
+
+Fire access and water supply site plans are required to be uploaded through Clackamas Fire District’s online plan
+submittal process.  Go to Fire Access and Water Supply Plan Submittal - Clackamas Fire District
+
+Follow the directions to choose the correct type of plan submittal.  After filling out the form and answering all questions,
+you will need to click on the map link that designates the correct plan reviewer.  You will then choose that plan reviewer
+on the drop-down box.  Upload your site plan pdf, enter your payment information, and enter contact information, then
+hit submit.
+
+Fire Access and Water Supply Site Plan shall contain the following:
+
+ The plan shall show fire apparatus access – length, width and slope, fire lanes, fire hydrant locations within 600’                        of
+ new building(s) back furthest part by way of access and around footprints, available fire flow, FDC location if
+ applicable, building square       footage, height, and type of construction.
+
+ Available Fire Flow:  If you are in an area with fire hydrants                    , you must provide this.
+
+ The applicant shall provide fire flow tests per NFPA 291 and shall be no older than 12                    months. For review
+ purposes, the available fire flow at 20 psi is required. Work to be              completed by experienced          and responsible
+ persons and coordinated         with the local    water authority. *Hydraulic models may be available, contact water
+ authority to    verify.
+
+                                                                          4
+
+ FIRE APPARATUS ACCESS
+
+ FIRE APPARATUS ACCESS ROAD DISTANCE FROM BUILDING AND TURNAROUNDS:  Access roads shall be
+ within   150 feet of all portions of the exterior wall of the first story of the building as measured by an approved route
+ around the exterior of the building.       An approved turnaround is required if the remaining distance to an approved
+ intersecting roadway, as measured along the fire apparatus access road, is greater than 150 feet. (OFC 503.1.1)
+
+ DEAD     END   ROADS: Dead end fire apparatus access roads                more than 150 feet       in length shall   be provided with an
+ approved    turnaround.    Dead end fire apparatus access roads          more than    500 in length shall have a driving surface       width
+ of not less than 26 feet.     Diagrams of approved turnarounds are shown below: (OFC 503.2.5)
+
+TURNOUTS:  When any fire apparatus access road exceeds 400 feet in length, turnouts 10 feet wide and 30 feet                            long
+shall be provided in addition to the required road width and shall be placed no more than 400 feet apart,                      unless
+otherwise approved       by the fire code official.   These distances may be adjusted         based on visibility and light     distances.
+
+ FIRE APPARATUS ACCESS ROAD EXCEPTION FOR AUTOMATIC SPRINKLER PROTECTION:  When buildings a                                                 re
+ completely protected with an approved automatic fire sprinkler system, the requirements for                         fire apparatus access
+ may be modified as approved by the fire code official. The approval of this alternate method of construction shall be
+ accomplished in accordance with the provisions of OFC 503.1.1 Exception 1.
+                                                                        5
+
+ MULTIPLE ACCESS ROADS:   Developments of one- and two-family dwellings where the number of dwelling units
+ exceeds 30, multiple-family residential projects having more than 100 dwelling units and where vehicle                           congestion,
+ adverse terrain conditions or other factors that could limit access, as determined by the fire code                       official, shall be
+ provided with not less than two approved means of access.                  Exceptions may be allowed for          an approved automatic
+ sprinkler system.  The approval of fire sprinklers as an alternate shall be accomplished in                    accordance with the
+ provisions of OFC D106 & D107.
+
+ GRADE:  Fire apparatus access roadway grades shall not exceed 12 percent. Intersections and turnarounds shall                                be
+ level (maximum 5%) with the exception of crowning for water run-off.                    When fire sprinklers are installed, a        maximum
+ grade of 15% may be allowed. Grades over 15% will not be approved. The approval of fire sprinklers as                            an alternate
+ shall be accomplished in accordance with the provisions of OFC 503.1.1 Exception 1 (1.2).
+
+ MULTIPLE ACCESS ROADS SEPARATION:   Where two access roads are required,                              they shall be placed a distance     apart
+ equal to not less than one half of the length of the maximum overall diagonal dimension of the property or area to be                     served,
+ measured     in a straight line between    accesses.  (OFC D104.3     & D107.2)
+
+ FIRE APPARATUS          ACCESS ROAD WIDTH AND VERTICAL                      CLEARANCE       :  Fire apparatus access roads       shall have an
+ unobstructed driving surface width of not less than 20 feet (26 feet adjacent to fire hydrants (OFC D103.1)) and an
+ unobstructed vertical clearance of not less than 13 feet 6 inches. (OFC 503.2.1 & D103.1)
+                    Note:  When serving three or less dwelling units and accessory buildings, the driving surface may be
+                    reduced to 12 feet, although the unobstructed width shall be 20 feet.                  Turning radii for curves and
+                    turnarounds on 12’ wide roads shall be not less than 44 feet and 56 feet respectively, measured from
+                    the   same center point. (D103.1)
+
+ AERIAL FIRE APPARATUS ROAD WIDTH:  Buildings more than 30 feet in height shall have fire apparatus access
+ roads constructed for use by aerial apparatus            with an unobstructed       driving surface width of not less than 26 feet           and
+ comply with OFC D105.1.  Overhead powerlines must be shown on                        the site plan.
+
+SURFACE AND LOAD CAPACITIES:                   Fire apparatus access roads shall be of an all         -weather surface that is easily
+distinguishable from the surrounding area and is capable of supporting not less than 13,500 pounds point load (wheel
+load) and 75,000 pounds live load (gross vehicle weight). D              ocumentation from a registered engineer that the finished
+construction is in accordance with the approved plans, or the requirements of the Fire Code may be requested.  (D102.1)
+
+                                                                           6
+
+BRIDGES: Private bridges shall be designed and constructed                   in accordance with AASHTO HB-17. Bridges and elevated
+surfaces shall be designed for a live load sufficient to carry             the imposed loads of fire apparatus. Vehicle load limits                shall
+be posted at both entrances to bridges where required                  by the fire code official. Where elevated surfaces designed for
+emergency vehicle use are adjacent to surfaces that are                 not designed for such use, approved barriers, approved signs, or
+both shall be installed and maintained where               required by the fire code official.  A building permit shall be obtained for the
+construction of the bridge if        required by the building official of the jurisdiction where the bridge is to be built.                 The design
+engineer shall     prepare a special inspection        and structural observation        program for approval        by the building official.     The
+design    engineer shall give in writing final approval of the bridge to the fire district after               construction     is completed.
+Maintenance of the bridge shall be the responsibility              of the party(ies) that use(s) the bridge for access to their
+property(ies). The fire district may at any time, for due cause, ask that a registered engineer inspect the bridge for
+structural stability and soundness at the expense of the property owner(s) the bridge serves. (OFC 503.2.6)
+
+TURNING RADIUS:  The inside turning radius and outside turning radius for a 20’ wide road shall be not less than                                  28 feet
+and 48 feet respectively, measured from the same center point. (OFC 503.2.4 & D103.3)
+
+GATES:  Gates securing fire apparatus roads shall comply with all the following: (OFC 503.5, 503.6 & D103.5)
+
+              •    Commercial - Minimum unobstructed width shall be 20 feet, or two 12-foot sections with a center post or
+                   island.
+              •    Residential - Gates serving one- or two-family dwellings shall be a minimum of 16 feet clear width.
+              •    Gates shall be set back at minimum of 30 feet from the intersecting roadway.
+              •    Gates shall be of the swinging or sliding type.
+              •    Manual operation shall be capable by one person.
+              •    Electric gates shall    be equipped with a Knox box key switch for operation by fire department                       personnel.
+              •    Electric gate    operators, where provided, shall be listed in ac          cordance with UL 325.
+              •    Gates intended for       automatic operation shall        be designed, constructed,        and installed to comply with the
+                   requirements of ASTM F2200.
+              •    Locking devices shall be submitted for approval             .
+
+NO PARKING         SIGNS   :  Where fire apparatus roadways are not of sufficient width to accommodate parked                           vehicles
+and 20 feet of unobstructed driving surface, “No Parking” signs shall be installed on one or both sides of the                            roadway
+and in turnarounds as needed.   Roads 26 feet wide or less shall be posted on both sides as a fire lane.                           Roads more
+than 26 feet wide to 32 feet wide shall be posted on one side as a fire lane.
+
+          Signs shall read “NO PARKING - FIRE LANE” and shall be installed with a clear space above grade level of 7 feet.
+          Signs shall be 12 inches wide by 18 inches high and shall have red letters on a white reflective background. (OFC
+          D103.6)
+
+PAINTED CURBS: Where required, fire apparatus access roadway curbs shall be painted red and marked “NO                                        PARKING
+FIRE  LANE”    at  approved      intervals.   Lettering    shall  have   a  stroke   of  not   less  than   one   inch   wide    by  six   inches high.
+Lettering shall be white on red background.  (OFC 503.3)
+
+                                                                             7
+
+FIREFIGHTING WATER SUPPLIES
+
+COMMERCIAL BUILDINGS - FIRE FLOW:                    The minimum fire-flow and flow duration for commercial buildings shall be as
+specified in OFC 2022 Tables B105.1(2) and B105.2.
+
+ RURAL COMMERCIAL BUILDINGS - REQUIRED FIRE FLOW:                              Required fire flow for rural and suburban areas in
+ which adequate and reliable        water supply systems do not exist may be calculated            in accordance with ISO “Guide         for
+ Determination      of Needed Fire Flow,” when approved by the fire code official.  Please contact the Fire                 Marshal’s
+ Office for special assistance and other requirements that may apply.
+
+ SINGLE FAMILY DWELLINGS  - REQUIRED FIRE FLOW:                         The minimum available fire flow for one- and two-
+ family dwellings, Group R-3 and R-4 buildings and townhouses, up to 3600 square feet, served by a municipal
+ water supply shall be 1,000 gallons per minute. (OFC Table 105.1 (1)  If the                structure is 3,601 square feet      or
+ larger, the required fire flow shall be determined according to OFC Appendix B. (OFC Table B105.1(2)
+
+ RURAL ONE- AND TWO-FAMILY DWELLINGS-REQUIRED FLOW: Required fire flow for detached one- and two-
+ family dwellings in areas in which adequate and reliable water supply systems do not exist shall be calculated                         in
+ accordance with National Fire Protection Association Standard 1142, 2017 Edition. (OFC 102.8)
+
+         • Exception 1: One- and two-family dwelling structures where the total area of all floor levels within
+              exterior walls are less than 3,601 square feet.
+         • Exception 2: When an Alternate Method and Material is approved, which provides a separation in
+              accordance with one of the following methods, the square footage of the garage shall not count
+              towards the 3,600 square foot exception above.
+                   o    The garage/dwelling separation shall be per ORSC, except that construction material in Table
+                        R302.6 shall be two (2) layers of 5/8”        Type X gypsum board in all design options. All other
+                        separation and penetration protection shall be per ORSC 302.5; or
+                   o    A listed 1-hour fire rated assembly. All other separation and penetration protection shall be per
+                        ORSC 302.5
+         • Exception    3:  One-   and two-family      dwellings    protected    by  an approved      NFPA    13D   automatic sprinkler
+              system are not required to have a           water supply other than that required to             supply the fire    sprinkler
+              system.
+
+ACCESS     AND     FIRE   FIGHTING      WATER      SUPPLY      DURING      CONSTRUCTION:            Approved      fire apparatus     access
+roadways     and   fire-fighting  water    supplies  shall   be  installed   and   operational  prior    to  any   vertical   combustible
+construction or storage of combustible materials on the site. (OFC 501.4) Temporary Street signs shall be installed at
+each street intersection where construction of new roadways allows passage by vehicles. (OFC 505.2)
+
+                                                                        8
+
+ FIRE HYDRANTS
+
+ FIRE HYDRANTS – COMMERCIAL BUILDINGS:                         Where a portion of the building is more than 400 feet from
+ a  hydrant on a fire apparatus access road, as measured in an approved route around the exterior of the
+ building,   on-site fire hydrants and mains shall be provided where required by the fire code official.  (OFC
+ 507.5.1)
+
+ Note:   This distance may be increased to 600 feet for buildings equipped throughout with an approved
+ automatic sprinkler system. (507.5.1 Exception 2)
+
+ FIRE HYDRANTS – RESIDENTIAL ONE- AND TWO-FAMILY DWELLINGS & ACCESSORY STRUCTURES:  Where a
+ portion of a structure is more than 600 feet from a hydrant on a fire apparatus access road, as measured in an approved
+ route around the exterior of the structure(s), on-site fire hydrants and mains shall be provided. (OFC 507.5.1                         Exception 1)
+
+ FIRE HYDRANT NUMBER AND DISTRIBUTION:  The minimum number and distribution of fire hydrants available                                    to
+ a building shall not be less than that listed in Table C 102.1.      See page 9 for hydrant proximity to FDC. (OFC           Appendix    C)
+
+                                                   NUMBER AND DISTRIBUTION OF FITABLE C105.1    RE
+
+                                                                    HYDRANTS
+    FIRE-FLOW REQUIREMENT                 MINIMUM NUMBER                     BETWEENAVERAGE SPACING HYDRANTS abc MAXIMUM DISTANCE FROM ANY
+                (gpm)                         OF HYDRANTS                               (feet)                      POINT ON STREET OR ROADd
+                                                                                                                    FRONTAGE TO A HYDRANT
+            1,750 or less                             1                                  500                                       250
+            2,000-2,250                               2                                  450                                       225
+                2,500                                 3                                  450                                       225
+                3,000                                 3                                  400                                       225
+            3,500-4,000                               4                                  350                                       210
+            4,500-5,000                               5                                  300                                       180
+                5,500                                 6                                  300                                       180
+                6,000                                 6                                  250                                       150
+            6,500-7,000                               7                                  250                                       150
+           7,500 or more                         8 or more                               200                                       120
+
+ For SI: 1 foot = 304.8 mm, 1 gallon per minute = 3.785 L/m.
+          a.         Reduce by 100 feet for dead       -end streets or roads.
+          b.         Where streets are provided with median dividers which can be crossed by fire fighters pullin                    g hose
+                    lines, or where arterial streets are      provided with four o     r more traffic   lanes and have a tra     ffic count
+                    of more than 30,000 vehicles per day, hydrant spacing shall average 500 feet on each side of the
+                    street and be arranged on a       n alternat  ing basis up to a fire  -flow requirements of 7,000 gallons per
+                    minute a   nd 400 feet for higher fire    -flow requirements.
+          c.        Where new water mains are exten           ded along streets where hydrants are not needed for protection
+                    of structures or   similar fire problems, fire hydrants shall be prov         ided at spacing not to exceed 1       ,000
+                    feet to provide for transportation hazards.
+          d.        Reduce by 50 feet for dead       -end streets or roads.
+          e.         One hydrant for each 1,000 gallons per minute or fraction thereof.
+          f.        A 50 percent spacing increase shall be permitted where the buildi               ng is equipped throughout with
+                    an approved automatic        sprinkler system in accordance with Section 903.3.1.1 of the              International
+                    Fire Code.
+          g.        A 25 percent spacing increase shall be permitted            where the building is equ      ipped throughout with
+                    an approved     automatic fire sprinkler system in acco        rdance with Section 903.3.1.2 or 903.3.1.3 of
+
+                                                                          9
+
+                    the International Fire Code or Section P2904 of the International Residential Code.
+          h.        The fire code official is authorized to modify the location, number and distribution of fire
+                    hydrants based on site specific constraints and hazards.
+
+ CONSIDERATIONS FOR PLACING FIRE HYDRANTS MAY BE AS FOLLOWING: (OFC C104)
+
+      •    Existing   hydrants    on public streets     may    be   used   to  meet    the  required    number     of  hydrants    as  approved.
+           Hydrants that are up to 600 feet away from the nearest point of a subject building that is protected                          with fire
+           sprinklers may contribute to the required number of hydrants. (OFC C104.1)
+
+      •    Hydrants that are separated from the subject building              by railroad tracks shall not contribute to the         required
+           number of hydrants unless approved by the fire code official.
+
+      •    Hydrants that are separated from the subject building by divided highways or freeways shall not                        contribute
+           to the required number of hydrants.  Heavily traveled collector streets only as approved                     by the fire code
+           official.
+
+      •    Hydrants that are accessible       only by a bridge shall be acceptable to contribute to the required               number
+           of hydrants only if approved by the fire code official.
+
+      •    Where new water mains are extended along streets where hydrants are not needed for protection of
+           structures or similar fire problems, fire hydrants shall be            provided at spacing not to exceed 1,000 feet to
+           provide for transportation hazards.
+
+      •    When evaluating the placement of hydrants at apartment                 or industrial complexes the first hydrant(s)          to be
+           placed shall be at the primary access and any secondary access to the site.  After these                   hydrants have been
+           placed other hydrants shall be sited to meet the above requirements for spacing                     and minimum number of
+           hydrants.
+
+ FIRE HYDRANT NON-THREADED QUICK CONNECTORS:  Non-threaded quick connectors shall NOT be installed                                            on
+ newly installed fire hydrants Clackamas Fire District #1.
+
+ FIRE HYDRANT DISTANCE FROM AN ACCESS ROAD:                            Fire hydrants shall be located not more than 15 feet from              an
+ approved fire apparatus access roadway unless approved by the fire code official.
+
+ FIRE HYDRANT/FIRE           DEPARTMENT          CONNECTION        :  A fire hydrant shall be located within 100 feet of a fire
+ department connection (FDC).  Fire hydrants and FDC’s shall be located on the same side of the fire                        apparatus
+ access roadway.  (NFPA 14)
+
+ FDCs shall be remote from building except when approved.
+
+                                                                         10
+
+KEY LOCK BOXES:
+To request a Knox Box for your building or gate click here. Knox Box Information and Request Form - Clackamas
+Fire District
+
+SMOKE AND HEAT VENTS:
+
+MANUAL RELEASE:   Manual releases shall be provided for use during fire suppression operations.                              Individual
+exterior release mechanisms shall be provided for each vent.
+
+FIRE WATCH
+
+FIRE WATCH:         Whenever a required fire alarm, detection or suppression system is out-of-service and a life
+hazard and or distinct fire hazard is present, the fire code official and/or the property owner or manager shall
+initiate a fire watch.  A fire watch is defined as a temporary            measure intended       to ensure continuous and
+systematic surveillance of a building or portion thereof by one or more qualified individuals for the purposes of
+identifying and controlling fire hazards, detecting early signs of unwanted fire, raising an alarm of fire, and
+notifying the fire department.  Each affected area or building must be patrolled                   hourly and documented in a
+written log.  Individuals assigned to fire watch duty must be provided with a means of communication such as a
+cell phone or two-way radio and their only duties shall be to perform constant patrols.                     The watch must remain          in
+effect until repairs are made and the system(s)            are back in service.    When in doubt if a system is required or if            a
+fire watch is needed, contact the local Fire Marshal’s Office             for consultation and or response.  (OFC            901.4.1 and
+Appendix T)
+
+EXAMPLES:
+
+The automatic smoke detection           system in the Family Birth Center at the local Hospital is taken off-line due to                 unwanted
+false alarms and an alarm technician has been dispatched to evaluate the system.  This is a required                         detection system,
+and the patients occupy the floor.  A fire watch is required and could be conducted by nursing                        and or security
+personnel.
+
+The manual fire alarm system at a local elementary school is initiating false alarms and is taken offline by school district
+personnel; the automatic smoke detection and fire sprinkler system are operational.  It’s Saturday afternoon and the
+building is not occupied. Although this is a required system, a fire watch is not required as the building is vacant.
+
+The water main that serves a local apartment complex is damaged in a construction accident rendering the fire hydrants
+and residential fire sprinkler systems out of service.  It’s Sunday night and nearly all the apartments are occupied.  Both
+systems are required, and a continuous fire watch is needed.
+
+                                                                          11
+
+EMERGENCY RESPONDER RADIO COVERAGE
+
+Emergency responder radio coverage must be tested or provided due to the following:
+
+    1.   Any building with one or more       basements or below grade building level        s.
+    2.   Any underground buildings.
+    3.   Any building more than five stories in height.
+    4.   Any building 50,000 square feet in size or larger.
+    5.   Any building that, through performance testing         , does not meet the requirement of        OFC 510.
+
+ ** Approval of a wired communication system must be documented on OSSC Form 918 in accordance with Section 918
+ of the OSSC.  Permit to be ac    quired from the appropriate building department.
+
+                                                                      12

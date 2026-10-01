@@ -107,6 +107,13 @@ class ReliefOutcome:
         return f"{self.check}: {self.condition} — {self.tier.value}{mark}"
 
 
+#: Checks no zoning adjustment or variance reaches, whatever a city's
+#: adjustment chapter says: the fire truck's reach is the fire code's, and
+#: its only relief (sprinklers, at the fire code official's discretion) is
+#: not assumed -- Steph 2026-10-01, a lot past it is RED (FOLLOWUPS 28).
+NO_ZONING_RELIEF: frozenset[str] = frozenset({"fire_access_ft"})
+
+
 class ReliefPolicy:
     """Which relief each jurisdiction offers, and how far this team will go."""
 
@@ -144,6 +151,8 @@ class ReliefPolicy:
         self, check: str, *, shortfall: float, threshold: float, jurisdiction: str | None = None
     ) -> ReliefOutcome:
         """The cheapest path that carries this miss, or none at all."""
+        if check in NO_ZONING_RELIEF:
+            return ReliefOutcome(check, Tier.unavailable)
         encoded = self.paths_for(check, jurisdiction)
         if encoded is None:
             # Nobody has read this jurisdiction's adjustment chapter. Assume a

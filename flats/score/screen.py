@@ -184,7 +184,13 @@ CHECK_FIELD: dict[str, str] = {
     "open_space_shape": "open_space_min_dimension_ft",
     "private_open_space_shape": "private_open_space_min_dimension_ft",
     "landscaped_pct": "min_landscaped_pct",
+    "fire_access_ft": "fire_access_max_ft",
 }
+
+#: The route from the street to the farthest wall that a plan was tried for
+#: and not found (:func:`flats.fit.fire.route_ft` returned None). Joins
+#: ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``.
+FIRE_ROUTE = "fire_route"
 
 
 @dataclass(frozen=True, slots=True)
@@ -285,6 +291,15 @@ class LotFacts:
     #: that band on them. Empty where nothing measured the lot, which leaves
     #: every such band unplaceable rather than "far from transit".
     transit_ft: tuple[tuple[str, float], ...] = ()
+    #: How far a fire hose walks from the street to the farthest point of
+    #: this plan's first-storey walls (:func:`flats.fit.fire.route_ft`,
+    #: FOLLOWUPS 28), feet. Measured by the bridge on the plan it draws.
+    #: ``fire_route_tried`` with no number means the plan was there and no
+    #: route reached it -- unobserved, held out of GREEN; neither set means
+    #: nobody measured (every caller but the bridge), and the check goes
+    #: unrun.
+    fire_route_ft: float | None = None
+    fire_route_tried: bool = False
 
     @property
     def landlocked(self) -> bool:
@@ -828,6 +843,19 @@ def _checks(
         else:
             out.append(result)
     _outdoor_shape(rules, lot, design, fit, fitted, policy, out, unchecked, unmeasured)
+
+    # The fire truck's reach (OFC 503.1.1, FOLLOWUPS 28): the hose's route
+    # from the street to the far side of the building, against the 150 ft
+    # the state layer states for every zone. A route the bridge looked for
+    # and could not find is a fact nobody observed, never a pass.
+    reach = rules.get("fire_access_max_ft")
+    if reach is not None:
+        if lot.fire_route_ft is not None:
+            check("fire_access_ft", lot.fire_route_ft, float(reach), is_maximum=True)
+        else:
+            unchecked.append("fire_access_ft")
+            if lot.fire_route_tried:
+                unmeasured.add(FIRE_ROUTE)
 
     return out, unchecked, unmeasured
 

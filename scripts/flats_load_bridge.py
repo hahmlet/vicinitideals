@@ -504,6 +504,12 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     drawn = _clean(row.get("drawing"))
     if isinstance(drawn, str) and drawn:
         checks["drawing"] = json.loads(drawn)
+    # The fire hose's route from the street to the farthest wall, against
+    # OFC 503.1.1's 150 ft (FOLLOWUPS 28). Absent from a bridge run written
+    # before the bridge measured it, and where the plan was already red.
+    route = _num(row.get("fire_route_ft"))
+    if route is not None:
+        checks["fire_route_ft"] = round(route, 1)
     return checks
 
 

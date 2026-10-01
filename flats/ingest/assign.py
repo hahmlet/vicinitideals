@@ -128,6 +128,7 @@ ROW_COLUMNS = (
     "envelope_sqft",
     "envelope_source",
     "drawing",
+    "fire_route_ft",
 )
 
 

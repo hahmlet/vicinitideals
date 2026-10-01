@@ -939,3 +939,33 @@ async def test_the_lot_page_draws_where_the_building_and_parking_stand(
     assert all(0 <= float(pt.split(",")[1]) <= height for pt in court.split())
     other = page.text.split('id="design-pod80x25-2"', 1)[1]
     assert "fit-plan" not in other
+
+
+async def test_the_lot_page_says_how_far_the_fire_hose_walks(
+    client: AsyncClient, session: AsyncSession
+):
+    # FOLLOWUPS 28, Steph 2026-10-01: a lot whose farthest wall is more than
+    # 150 ft from the street by the hose's route is RED, and the lot page
+    # says how far it is and that the fire code is what failed. A design the
+    # bridge never measured shows no row.
+    await _login(client, session)
+    await _seed(session)
+    rows = (await session.execute(select(FlatsLotResult))).scalars().all()
+    for row in rows:
+        if row.design_key == DESIGNS[0]:
+            row.checks = {**row.checks, "fire_route_ft": 94.0}
+        elif row.binding and "coverage_pct" in row.binding:
+            row.checks = {**row.checks, "fire_route_ft": 162.4}
+            row.binding = [*row.binding, "fire_access_ft"]
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1N1E29DD%20%20-05600")
+    assert page.status_code == 200
+    near = page.text.split('id="fire-pod56x36-2"', 1)[1].split("</tr>", 1)[0]
+    assert "94 ft from the street to the farthest wall" in near
+    assert "fire code" not in near
+    far = page.text.split('id="fire-pod80x25-2"', 1)[1].split("</tr>", 1)[0]
+    assert "162 ft" in far and "farther than the fire code allows (150 ft)" in far
+
+    unmeasured = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    assert 'id="fire-pod80x25-2"' not in unmeasured.text

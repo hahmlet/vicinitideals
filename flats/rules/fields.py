@@ -120,6 +120,7 @@ _LABELS: dict[str, str] = {
     "parking_area_max_frontage_pct": "max. parking share of frontage",
     "parking_area_max_width_ft": "max. parking area width",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
+    "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
     "parking_alley_access_required": "vehicle access must be from the alley",
     "parking_alley_backout_ft": "room to back out into the alley",
@@ -763,6 +764,21 @@ _F: tuple[FieldDef, ...] = (
         "Real ground, subtracted from the court before any stall is seated.",
         False,
     ),
+    FieldDef(
+        "fire_access_max_ft",
+        "length_ft",
+        "How far a fire apparatus road may stand from the farthest part of "
+        "the building's first-storey walls, measured by an approved route "
+        "around the outside of the building (OFC 2022 503.1.1, 150 ft). A "
+        "fire code number, not a zoning one: no zoning adjustment relieves "
+        "it (:data:`flats.score.relief.NO_ZONING_RELIEF`), and sprinklers "
+        "relax it only at the fire code official's discretion, which the "
+        "screen does not assume (Steph 2026-10-01: red). The exception for "
+        "one or two dwellings does not reach a fourplex. Stated once in the "
+        "state layer for every zone; measured per plan by "
+        ":func:`flats.fit.fire.route_ft` (FOLLOWUPS 28).",
+        True,
+    ),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
     FieldDef(
         "open_space_min_sqft",
@@ -1054,6 +1070,10 @@ STEP_BACK_FIELDS: frozenset[str] = frozenset(
 #: recorded as not-applicable via the clause ledger.
 OPTIONAL_FIELDS: frozenset[str] = frozenset(
     {
+        # Stated for every zone at once by the state layer (OFC 503.1.1);
+        # never a city's to state or omit, so never a city's gap. A guard
+        # test holds that every zone resolves it (test_fire.py).
+        "fire_access_max_ft",
         # Answers the height question in the other unit. Required-ness is
         # handled by ALTERNATIVES in the resolver, which reads one as
         # standing in for the other; listed as required here it would be

@@ -136,6 +136,14 @@ code:
 - id: oar.660-047.draft-v5
   url: https://www.oregon.gov/lcd/LAR/Documents/Div47_Proposed_Rules_Interim_v5_9.22.26.pdf
   title: OAR 660-047 Oregon Homes, proposed rules, interim version 5 (2026-09-22, DRAFT)
+# The Oregon Fire Code is ICC text and not served whole anywhere public. The
+# Metro Code Committee's Applications Guide -- the region's fire districts'
+# own reading of OFC 2022 for site plans, published by Clackamas Fire and
+# used by Gresham, TVF&R and the rest -- prints 503.1.1's distance as a
+# requirement, which is what `fire_access_max_ft` cites (FOLLOWUPS 28).
+- id: ofc.2022.applications-guide
+  url: https://clackamasfire.com/wp-content/uploads/2023/08/Oregon-Fire-Code-Applications-Guide-2022.pdf
+  title: Oregon Fire Code Applications Guide, based on the 2022 OFC (Clackamas Fire, revised 2023-06-21)
 defaults:
   # Splitting the four units onto four lots does not create four lots that each
   # have to meet the zone. ORS 92.031(2)(b) requires the plan to comply with the
@@ -267,6 +275,22 @@ defaults:
   # answer and must not be pressed into service as one -- a residential zone
   # that prohibits quadplexes is a city out of compliance, and overturning
   # exactly that is what the preemption is for.
+  # FOLLOWUPS 28, Steph 2026-10-01: a fire truck's road must come within 150
+  # ft of every part of the first-storey walls, measured along a route
+  # around the building. Not zoning -- the fire code, adopted statewide and
+  # amended locally only to LOOSEN it with sprinklers (Portland 250 ft) --
+  # and a four-unit building is past the one-or-two-dwelling exception.
+  # Sprinklers are the fire official's call, not an entitlement, and Steph
+  # ruled a lot past 150 ft RED rather than assume them. `preempts: always`:
+  # no zoning layer may state it differently.
+  fire_access_max_ft:
+    value: 150
+    preempts: always
+    cite: "OFC 2022 503.1.1 (Oregon Fire Code Applications Guide, Clackamas Fire, rev. 2023-06-21)"
+    url: "https://clackamasfire.com/wp-content/uploads/2023/08/Oregon-Fire-Code-Applications-Guide-2022.pdf"
+    retrieved: 2026-10-01
+    status: draft
+    quote: "or/ofc.2022.applications-guide.txt#L132-L134"
   max_density_du_per_acre:
     exempt: true
     preempts: always
@@ -388,3 +412,78 @@ defaults:
   # a different rule for the same four units -- but a cap on what a city MAY ask
   # can only widen the set of lots that pass. Quote:
   # or/oar.660-046-0220.txt#L114-L118.
+# The Fire Code Applications Guide (FOLLOWUPS 28) cites the OFC section behind
+# every paragraph, and the OFC itself is not in the store: the ICC publishes it
+# behind a reader. Each section the guide names is ruled here, read against
+# the guide's own restatement of it. Only 503.1.1 is screened.
+crossrefs:
+  "503.1.1":
+    outcome: other_path
+    note: >-
+      The 150-foot route rule, screened as fire_access_max_ft. The guide quotes
+      its operative sentence (L132-L134); what the code adds is its
+      exceptions, and each one only relieves -- Exception 1 lets a sprinklered
+      building go farther, which Steph ruled not to assume (2026-10-01), and
+      the two-dwelling exception does not reach a four-unit building.
+  "503.2.5":
+    outcome: other_path
+    note: >-
+      Turnarounds on a dead-end fire road over 150 feet. The screen never
+      builds a fire road on a lot: a lot the street cannot reach is RED.
+  "503.2.1":
+    outcome: other_path
+    note: >-
+      Fire road width (20 ft) and clearance, for a fire road on the site. The
+      screen builds none; the 20 feet is used only to place the truck no
+      nearer the lot than half a minimum road (flats.fit.fire.HALF_ROAD_FT).
+  "503.2.4":
+    outcome: other_path
+    note: Turning radii on a fire road on the site -- the screen builds none.
+  "503.2.6":
+    outcome: other_path
+    note: Bridges on a fire road -- the screen builds none.
+  "503.3":
+    outcome: other_path
+    note: No-parking signs and red curbs on a fire road -- the screen builds none.
+  "503.5":
+    outcome: other_path
+    note: Gates across a fire road -- the screen builds none.
+  "501.4":
+    outcome: procedure
+    note: Fire access and water in place before vertical construction -- a sequence, not a siting rule.
+  "505.2":
+    outcome: procedure
+    note: Temporary street signs while new roads are built.
+  "102.8":
+    outcome: fee_in_lieu
+    note: >-
+      NFPA 1142 water supply for rural dwellings where no hydrant system
+      exists: the fire flow comes from a tank or a sprinkler -- a cost, not
+      ground.
+  "507.5.1":
+    outcome: fee_in_lieu
+    note: >-
+      An on-site hydrant and main where a wall is more than 400 feet (600 for
+      a one- or two-family dwelling) from a hydrant, by the same route as
+      503.1.1. Satisfied by building one -- a cost, not ground -- and a lot
+      that passes the 150-foot route rule is rarely that far from the street.
+  "302.5":
+    outcome: other_building
+    note: >-
+      ORSC garage-to-dwelling separation, for the guide's fire-flow exception
+      on detached houses -- a construction detail of a house, not a siting rule.
+  "903.3.1.1":
+    outcome: other_path
+    note: Sprinkler standard for the hydrant-spacing increase -- sprinklers are not assumed.
+  "903.3.1.2":
+    outcome: other_path
+    note: Sprinkler standard for the hydrant-spacing increase -- sprinklers are not assumed.
+  "903.3.1.3":
+    outcome: other_path
+    note: Sprinkler standard for the hydrant-spacing increase -- sprinklers are not assumed.
+  "901.4.1":
+    outcome: procedure
+    note: Fire watch when a fire protection system is out of service.
+  "918":
+    outcome: procedure
+    note: OSSC form for an emergency responder radio system in a large building.
