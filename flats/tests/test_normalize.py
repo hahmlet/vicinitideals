@@ -450,4 +450,5 @@ def test_washington_lots_reach_their_layers_and_the_straddling_cities_theirs(lay
     assert juris.layer_for("KING CITY", "washington") == "or/washington/king-city"
     assert juris.layer_for("TUALATIN", "washington") == "or/clackamas/tualatin"
     assert juris.layer_for("PORTLAND", "washington") == "or/multnomah/portland"
-    assert juris.layer_for("TIGARD", "washington") is None, "not encoded yet (FOLLOWUPS 17(f))"
+    assert juris.layer_for("TIGARD", "washington") == "or/washington/tigard"
+    assert juris.layer_for("CORNELIUS", "washington") == "or/washington/cornelius"

@@ -511,7 +511,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # is valid. Round-tripping is the whole point of doing this as a port.
     rules = RuleSet(load_rules())
 
-    assert len(rules.layers) == 26  # 25 jurisdictions + the state layer
+    assert len(rules.layers) == 27  # 26 jurisdictions + the state layer
     # 455 as of 2026-10-01: Washington County's map (run 51) put lots under
     # ten Tualatin codes and two Wilsonville codes nobody had ruled. Eight are
     # refusal blocks -- Tualatin IN, CN, CR, MP, MBP and BCE, Wilsonville

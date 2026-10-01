@@ -711,12 +711,34 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    2 moved (sewer district), 0 unexplained. Gate WARNED (count_drift,
    lots_drift = the new county) -> ASKED Steph to promote. Unruled codes
    (warn only): Tualatin's Washington side BCE CC CN CR IN MBP MP MUC RH
-   RH/HR (~420 lots) and Wilsonville PDI-RSIA/PFC (17) -- rule within the
-   week. 08 splices LR10/FU10/sewer + fire reach on
+   RH/HR (~420 lots) and Wilsonville PDI-RSIA/PFC (17) -- RULED 2026-10-01
+   (8 refusal blocks; RH, RH/HR, MUC, CC to_read). Steph to decide: PDI-RSIA
+   10% residential per lot vs per site; CC to_read until Map 10-3 blocks
+   are drawn; RH/RH-HR/MUC unit-lot townhouses only; RH/HR no townhouse lot
+   size (fallback 10,000 sq ft not applied). Also: Tualatin CO refusal may
+   miss the Ch. 58 townhouse path; RML lots now exist on the Washington side. 08 splices LR10/FU10/sewer + fire reach on
    /root/bridge_2026-10-01_wash AFTER promotion (message it then).
    (e) AFTER THE FIRST SCREEN, count what these cost. FIRST COUNTS (run 51):
    Beaverton has 0 green -- `utility_easement` unmeasured holds ~32,100
-   answers; Hillsboro 25 green -- `flag_lot` assumed on 48,650 answers (the
+   answers (BDC 20.05 note 7 / 20.22 note 7 "In no case shall a building
+   encroach into a Public Utility Easement"; footnotes beaverton.yaml caps
+   MR/RMA/RMB/RMC/CM-MR/CM-RM). ~6,650 Beaverton lots fail nothing else;
+   Oregon City's same note holds ~3,700 more. Steph 2026-10-01 pointed at
+   Survey Explorer's Dedication layer (gispub.co.washington.or.us/server/
+   rest/services/LUT_ETS/Survey_Explorer/MapServer/15): 8,412 recorded
+   dedication deeds 1978-2026 as MARKER points (28,541), no width, no
+   type field -- mostly street right-of-way deeds; plat PUEs are NOT in it
+   (plats are layer 4 polygons + scanned TIFFs). Steph's test "no point
+   within ~3 ft of a lot line of an otherwise-green lot = clear": of 6,481
+   such Beaverton lots, 476 touched, 6,005 clear (10 ft 517; 25 ft 657;
+   inside the lot 384). Script /root/e1.py on 137, points cached
+   /root/wash_dedications.json. Steph then DROPPED the dedication data:
+   rule = building fits with a 10 ft yard on every STREET line (Steph:
+   "just the side on a street") -> green; fits at 5 ft but not 10 ->
+   yellow; not even at 5 -> red. What-if on 137 (/root/pue_driver.py,
+   PUE_FT floors the street yards; /root/pue_chain.sh, E10 then E5 on
+   what E10 lost): COUNTS PENDING; nothing built yet.
+   Hillsboro 25 green -- `flag_lot` assumed on 48,650 answers (the
    same assumption holds 12,668 in Clackamas). Also: Beaverton/King City
    minimum density on big lots (fail vs closer look: bring Steph the
    number); the bigger next-to-a-named-zone setback (Hillsboro SCR-DNC,
@@ -763,6 +785,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    variant on `unit_lots` (24 in the corpus, Gladstone/Happy Valley/West
    Linn too): FIXED in the reader (Effective/Resolved.whole_project), not
    the files; nothing screens the split path yet, so no verdict moved.
+   MERGED with flats/washington-map on flats/tigard-draft 2026-10-01
+   (layers 27, zones 455): TIGARD and CORNELIUS now route by JURIS_CITY to
+   their layers; the next Washington re-screen shows whether every lot
+   finds its zone (Cornelius R-10 by hand still owed).
    (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
    middle-housing code (cottage clusters by 2028); a city that misses it
    gets the state model code directly. Run the drift check on every layer
