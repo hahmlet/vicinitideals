@@ -1577,7 +1577,8 @@ The zones:
   held); no parking minimum; 7.5 by 17.5 ft spaces; parking behind the
   building or 35 ft from every street line (the 35 held); rowhouse
   driveways "10 feet or less in width" (held as
-  `driveway_approach_max_width_ft`); an entrance for each residence
+  `driveway_approach_max_width_ft`), and one 10 ft lane reaches the rear
+  court (`driveway_one_lane_ft`, Steph 2026-10-01); an entrance for each residence
   (`entrance_only`). Table 18.660.7's 12 ft first storey is held as
   `min_ground_story_ft`, a field added for it, against the pod's
   `ground_story_ft` of 12 (Steph, 2026-10-01: "Yes, 12 ft or more"); the
@@ -2892,10 +2893,16 @@ Reading the code:
   is no minimum or maximum quantity standard for off-street loading
   areas" (L707), which is about loading, not parking; it is not the
   ground for the zero.
-- **TMU's 10 ft driveway.** "Driveways for rowhouses and small form
-  residential development must be 10 feet or less in width" (18.660.070.G.2),
-  held as `driveway_approach_max_width_ft`. A rear court served by one 10
-  ft drive is one-way at best. A question for Steph.
+- **TMU's 10 ft driveway, ruled one lane (2026-10-01).** "Driveways for
+  rowhouses and small form residential development must be 10 feet or less
+  in width" (18.660.070.G.2), held as `driveway_approach_max_width_ft`. A
+  rear court served by one 10 ft drive is one-way at best. Steph: a 10 ft
+  one-lane drive works, cars taking turns; held as `driveway_one_lane_ft`
+  10, and the screen draws the lane at 10. What stays open: the drive is
+  one lane for its whole length, and nothing checks that a car waiting at
+  the street to turn in is not a problem the city's engineer would raise
+  under G.4 (sight distance); and the court's own 24 ft aisle is
+  the design's, since no aisle figure reaches TMU.
 - **TMU parking 35 ft from every street line**, or "behind a building".
   The 35 is held, the stricter. On a corner lot the rear court is behind
   the building from the front street but not from the side street.
@@ -3059,7 +3066,7 @@ The questions below are kept as the record of what was asked.
 
 ### Rulings, 2026-10-01 (Steph)
 
-Four Tigard answers, encoded the same day on `flats/tigard-draft`.
+Five Tigard answers, encoded the same day on `flats/tigard-draft`.
 
 - **The largest lot.** Steph: "Read Tigard's definition of 'townhome'. If
   it's split lots, then that's our answer." Tigard defines no townhome or
@@ -3112,6 +3119,26 @@ Four Tigard answers, encoded the same day on `flats/tigard-draft`.
   not by column, is held. Nothing else in the code states a MUC limit on
   the pod's path: Table 18.320.4's heights reach only nonresidential and
   mixed-use development (18.320.020.A-B).
+- **A one-lane drive in the Triangle.** Steph: in the Tigard Triangle a
+  10 ft one-lane drive works; the rear court may be reached by a single
+  10 ft drive, cars taking turns. 18.660.070.G.2 (L875) caps rowhouse
+  driveways at "10 feet or less in width" and TMU prints no driveway
+  minimum. Before the ruling the screen did not fail TMU for want of a
+  20 ft two-way drive (the 20 is 18.280's, which TMU does not apply): it
+  drew the pod's own 12 ft lane and read the 10 ft cap nowhere, so it
+  quietly charged a lane the code forbids. No field could narrow the lane
+  below the pod's 12: the design's lane is only ever raised by a code's
+  two-way minimum, and the one-way minimum is excluded from the fit (the
+  lane is two-way). The smallest change that holds it: one optional
+  field, `driveway_one_lane_ft`, encoded only on a ruling like this one.
+  Where stated it is the lane, outright, and the two-way minimum is not
+  read; `paper.drive_width` is now the one place the drive's width is
+  decided (the lane beside the building, the drive across a side-street
+  yard, the width at the street). TMU holds 10, the G.2 figure, cited to
+  G.2 and the ruling. The approach cap stays as the code states it and is
+  still read by no screen anywhere (`test_consumed.py`'s silent set),
+  so Gresham's 10 ft cap does not move. Nothing else in Tigard carries
+  the field; the 18.280 zones keep their 20 ft shared access.
 
 ### Hillsboro
 
@@ -3334,8 +3361,8 @@ Four Tigard answers, encoded the same day on `flats/tigard-draft`.
 ### Tigard
 
 - **Answered 2026-10-01** (Rulings, 2026-10-01, above): the ground floor
-  in the Triangle, the "largest lot", MUR-1 or MUR-2, and MUC's blank
-  boxes.
+  in the Triangle, the "largest lot", MUR-1 or MUR-2, MUC's blank boxes,
+  and the narrow driveway in the Triangle.
 - **Areas drawn only on separate maps.** In three mixed-use zones the
   city refuses our building in certain sub-areas (parts of downtown, and
   parts of the Washington Square area), but those sub-areas are drawn
@@ -3343,10 +3370,6 @@ Four Tigard answers, encoded the same day on `flats/tigard-draft`.
   them, the draft cannot tell which lots are in or out. The three zones
   are about 590 acres together. Is tracing those maps worth doing now,
   or should those zones wait?
-- **A narrow driveway in the Triangle.** In the Triangle, a townhome
-  driveway may be at most 10 ft wide. Elsewhere our rear parking court is
-  reached by a 20 ft drive. Can the pod work with a single 10 ft driveway
-  in and out, or should the Triangle count as a no for parking?
 - **A screened parking edge in the three lowest-density zones.** Where
   parking is beside or behind townhomes in those zones, the city wants a
   5 ft planted strip with a 6 ft fence along the neighbours' side. The
@@ -3945,6 +3968,27 @@ moved:
   read as sections, and the height cite's 18.320 sections); corpus 403
   citations naming a section their quote is not in (396 before).
 
+**After the one-lane ruling** (TMU, 2026-10-01): the full suite, run once
+on the tree that also carries the routing pin fix above: **4005 passed, 5
+skipped in 247 s**, no failures. `ruff check flats/ scripts/`: all checks
+passed. The firewall check: OK, FLATS-scoped. No pin moved. Added:
+
+- `driveway_one_lane_ft` registered (optional), read by
+  `paper.drive_width`, now the one place the drive's width is decided
+  (`court_across`, the side-street drive in `paved`, `drive_at_street`).
+  It is read, so `test_consumed.py`'s silent set does not grow; the
+  approach cap stays in it.
+- `test_washington_tigard.py`, now 29 cases: TMU's lane is 10 beside the
+  building and at the street for every active pod (whose own lane is
+  12), the one-lane figure equals the G.2 cap and cites the ruling, TMU
+  states no two-way or one-way minimum, and no 18.280 zone carries it.
+- `test_driveway_share_and_walk.py`: three mechanism tests (the one lane
+  governs below the pod's lane and over a stated two-way minimum; Durham's
+  walk still widens it; an alley-fed court still has no lane).
+- Ledgers: `gaps.json` regenerated, only its digest moved (3 gaps,
+  Tigard 0, 403 citations as before); `crossrefs.csv` and
+  `exemptions.csv` regenerated with no change.
+
 Before the rulings, the pins this branch first moved, each with a dated
 paragraph in the test:
 
@@ -4391,16 +4435,17 @@ or `flats/encode/` holds a control character or mixed line endings.
   storey ceiling (TMU's 25 ft first and 18 ft top storey), a maximum lot
   area (Table 18.805.1's Rowhouse maximum, on each unit lot), and a
   maximum drive width (18.280's 24 ft; TMU's 10 ft is held on the
-  approach). The ground storey's minimum is held since 2026-10-01
+  approach, and the lane is drawn at 10 under Steph's one-lane ruling,
+  `driveway_one_lane_ft`). The ground storey's minimum is held since 2026-10-01
   (`min_ground_story_ft`); MU-CBD's 15 ft still rides on the use.
 - **Overlay and site data**: sensitive lands (18.510, fetched to scratch,
   not stored), TMU's district trees, Downtown's future street
   alignments, vision clearance triangles.
-- **Steph's answers** to the Tigard questions still open (the sub-area
-  maps, TMU's 10 ft driveway), then one batch of edits and one ledger
-  regeneration. Four were answered and encoded 2026-10-01; the screened
-  parking edge was ruled the same day and is being built on the
-  Cornelius branch.
+- **Steph's answers** to the Tigard question still open (the sub-area
+  maps), then one batch of edits and one ledger regeneration. Five were
+  answered and encoded 2026-10-01; the screened parking edge was ruled
+  the same day and is being built on the Cornelius branch, for Tigard to
+  reuse once it merges.
 - **The re-screen and promotion.**
 
 ## Reader changes (before and after)

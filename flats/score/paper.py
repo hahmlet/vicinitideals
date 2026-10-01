@@ -522,6 +522,30 @@ def court_depth(
     return gap + stall + aisle, tuple(used)
 
 
+def drive_width(rules: "ZoneResolution", base: float, used: list[str] | None = None) -> float:
+    """Width of the drive from the street to the rear court, from a ``base``.
+
+    Where a ruling lets ONE lane serve the court, cars taking turns
+    (``driveway_one_lane_ft``), that width governs outright, narrower than
+    the design's lane or not, and the two-way minimum is not read: a
+    one-lane drive is not a two-way one. Tigard TMU is the case --
+    18.660.070.G.2 holds rowhouse driveways to "10 feet or less in width",
+    and Steph ruled 2026-10-01 that a 10 ft one-lane drive works; the pod's
+    own 12 ft lane would breach the cap. Otherwise ``base`` (the design's
+    lane), raised by the code's two-way minimum where it states one. What
+    was read is appended to ``used``.
+    """
+    if (one := _number(rules, "driveway_one_lane_ft")) is not None:
+        if used is not None:
+            used.append("driveway_one_lane_ft")
+        return one
+    if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
+        if used is not None:
+            used.append("driveway_min_width_two_way_ft")
+        return max(base, stated)
+    return base
+
+
 @dataclass(frozen=True, slots=True)
 class Across:
     """What a rear court asks of the lot's width, and where the figures came from."""
@@ -531,7 +555,8 @@ class Across:
     stalls: int = 0
     #: Those stalls side by side, each the wider of the design's and the zone's.
     width_ft: float = 0.0
-    #: The two-way lane beside the building from the street to the court.
+    #: The two-way lane beside the building from the street to the court --
+    #: or the one lane a ruling lets serve it (:func:`drive_width`).
     lane_ft: float = 0.0
     #: One stall's width in this zone -- what one more seat costs across.
     stall_ft: float = 0.0
@@ -640,9 +665,8 @@ def court_across(
     elif side_street_fed(rules, alley, corner):
         used.append("corner_access_street")
         lane = 0.0
-    elif (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
-        used.append("driveway_min_width_two_way_ft")
-        lane = max(lane, stated)
+    else:
+        lane = drive_width(rules, lane, used)
     if lane and (walk := _number(rules, "driveway_walkway_ft")) is not None:
         # Durham 3.7.1.6: the access way carries "a pedestrian access on one
         # side at least an additional 5 feet wide", so the lane down the
@@ -987,10 +1011,7 @@ def paved(
             yard = _yard(rules, "setback_side_ft")
         if yard is None:
             return None
-        drive = parking.lane_ft
-        if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
-            drive = max(drive, stated)
-        return court + drive * yard
+        return court + drive_width(rules, parking.lane_ft) * yard
     # A court with no lane and no alley or side street to reach it from:
     # not a plan anything here draws.
     return None
@@ -1174,7 +1195,9 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # narrower one-way aisle would understate the court on the
                 # strength of a site plan nobody has drawn.
                 "parking_aisle_one_way_ft (the court is two-way)",
-                # The same reasoning for the lane beside the building.
+                # The same reasoning for the lane beside the building. Where
+                # a ruling lets one lane serve the court it is held as
+                # `driveway_one_lane_ft` (`drive_width`), not read off this.
                 "driveway_min_width_one_way_ft (the lane is two-way)",
                 # The 10 or 12 ft six cities state for townhouse lots is a
                 # condition of the FRONT-parking option -- a garage on the
@@ -1233,7 +1256,4 @@ def drive_at_street(
         return 0.0
     if alley_fed(rules, alley):
         return 0.0
-    drive = parking.lane_ft
-    if (stated := _number(rules, "driveway_min_width_two_way_ft")) is not None:
-        drive = max(drive, stated)
-    return drive
+    return drive_width(rules, parking.lane_ft)

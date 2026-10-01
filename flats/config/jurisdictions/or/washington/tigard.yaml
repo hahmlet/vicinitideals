@@ -1251,6 +1251,15 @@ zones:
   # street). No aisle width: 18.410's table does not reach TMU. Driveways
   # for rowhouses "must be 10 feet or less in width" (G.2). Vision
   # clearance (18.930) does not apply (B.3).
+  #
+  # THE ONE-LANE DRIVE, ruled 2026-10-01. G.2's 10 ft is a ceiling on every
+  # rowhouse driveway, not a condition of a front-parking branch, and the
+  # pod draws a 12 ft lane to its rear court, which breaches it. No two-way
+  # minimum is printed. Steph, 2026-10-01: in the Triangle a 10 ft one-lane
+  # drive works -- the court may be reached by a single 10 ft drive, cars
+  # taking turns. Held as driveway_one_lane_ft 10, the G.2 figure: the
+  # screen draws the lane beside the building at 10, not 12. The court's
+  # own aisle is not the drive and is not narrowed by it.
   # ------------------------------------------------------------------
   TMU:
     cite_default:
@@ -1317,6 +1326,10 @@ zones:
       value: 10
       cite: Tigard CDC 18.660.070.G.2, driveways for rowhouses and small form residential development must be 10 feet or less in width
       quote: "or/washington/tigard/tdc.18.660.triangle.txt#L875"
+    driveway_one_lane_ft:
+      value: 10
+      cite: Tigard CDC 18.660.070.G.2, driveways for rowhouses must be 10 feet or less in width; Steph's ruling 2026-10-01 that a single 10 ft lane, cars taking turns, serves the rear court
+      quote: "or/washington/tigard/tdc.18.660.triangle.txt#L875"
     orientation_constraint:
       value: entrance_only
       cite: Tigard CDC 18.660.080.C.1.b, an entrance for each individual residence with a street-facing facade
@@ -1324,8 +1337,9 @@ zones:
     notes: >-
       DRAFT. Residential Use A under a stand-alone chapter. No lot minimum; 1 ft to the
       street, 12 ft maximum, nothing on interior lines; four storeys; 7.5 by 17.5 spaces,
-      parking 35 ft from streets; rowhouse driveways at most 10 ft wide; a first storey of
-      at least 12 ft, which the pod meets (Steph, 2026-10-01).
+      parking 35 ft from streets; rowhouse driveways at most 10 ft wide, and one 10 ft lane
+      reaches the court (Steph, 2026-10-01); a first storey of at least 12 ft, which the pod
+      meets (Steph, 2026-10-01).
   # ------------------------------------------------------------------
   # THE REFUSALS. COM and MUE: Residential Use R, limited to mixed-use
   # development (18.120.020, 18.120.030.D.1 and F.1), and Rowhouses N in

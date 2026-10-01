@@ -29,6 +29,11 @@ of a quick look, so a later edit has to argue with it.
 - **TMU's 12 ft first storey is held** as ``min_ground_story_ft``, against
   the pod's stated 12 ft ground storey (Steph, 2026-10-01: "Yes, 12 ft or
   more").
+- **TMU's court is reached by one 10 ft lane** (Steph, 2026-10-01: a 10 ft
+  one-lane drive works in the Triangle, cars taking turns). 18.660.070.G.2
+  caps rowhouse driveways at 10 ft and prints no two-way minimum; the pod's
+  own 12 ft lane breaches the cap. ``driveway_one_lane_ft`` 10 is the lane
+  the screen draws there.
 """
 
 from __future__ import annotations
@@ -297,6 +302,39 @@ def test_tmu_is_its_own_chapter(tigard: Layer) -> None:
         "Driveways for rowhouses and small form residential development must be 10 feet or less in width."
         in _text(held["driveway_approach_max_width_ft"].prov.quote)
     )
+
+
+def test_the_triangle_court_is_reached_by_one_ten_foot_lane(tigard: Layer) -> None:
+    """Steph, 2026-10-01: a 10 ft one-lane drive works in the Triangle.
+
+    G.2 is a ceiling on every rowhouse driveway, and the pod's lane (12 ft)
+    is wider than it; TMU prints no two-way or one-way minimum to raise it.
+    The ruling is held as the lane itself, the G.2 figure, and the screen
+    draws it: 10 beside the building and 10 at the street, never the pod's
+    12 and never a 20 ft two-way borrowed from 18.280, which TMU does not
+    apply."""
+    from flats.designs.model import load_catalog
+    from flats.score.paper import court_across, drive_at_street
+
+    held = tigard.zones["TMU"].values
+    one = held["driveway_one_lane_ft"]
+    assert one.value == held["driveway_approach_max_width_ft"].value == 10
+    assert "Steph's ruling 2026-10-01" in one.prov.cite
+    assert "must be 10 feet or less in width" in _text(one.prov.quote)
+    for absent in ("driveway_min_width_two_way_ft", "driveway_min_width_one_way_ft"):
+        assert absent not in held
+        assert absent not in tigard.defaults
+    rules = RuleSet(load_rules())
+    zone = rules.resolve(TIGARD, "TMU", ())
+    for design in load_catalog().active():
+        assert design.parking.lane_ft > 10, design.key
+        across = court_across(design, zone)
+        assert across.lane_ft == 10, design.key
+        assert "driveway_one_lane_ft" in across.from_code
+        assert drive_at_street(design, zone) == 10, design.key
+    # Nowhere else in Tigard: the 18.280 zones keep their 20 ft shared access.
+    for name in ("RES-A", "MUR", "MUC"):
+        assert "driveway_one_lane_ft" not in tigard.zones[name].values, name
 
 
 def test_the_shared_access_is_twenty_feet(tigard: Layer) -> None:

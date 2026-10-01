@@ -90,6 +90,7 @@ _LABELS: dict[str, str] = {
     "driveway_approach_min_width_ft": "min. driveway approach width",
     "driveway_min_width_one_way_ft": "min. driveway width (one-way)",
     "driveway_min_width_two_way_ft": "min. driveway width (two-way)",
+    "driveway_one_lane_ft": "one-lane drive to the court, cars taking turns",
     "driveway_max_frontage_pct": "max. driveway share of frontage",
     "driveway_walkway_ft": "walkway beside the driveway",
     "land_division_parent_standards": "parent-lot standards apply",
@@ -565,6 +566,21 @@ _F: tuple[FieldDef, ...] = (
         "number for both directions (33.266.120.D.2, 9 feet); Happy Valley "
         "states 20, which is wider than the pod's whole side yard on a narrow "
         "lot and is the difference between a plan and no plan.",
+        False,
+    ),
+    FieldDef(
+        "driveway_one_lane_ft",
+        "length_ft",
+        "The width of the drive to the rear court where ONE lane serves it, "
+        "cars taking turns, in place of the two-way lane. Not a code figure "
+        "by itself: the code caps the driveway below the lane the pod draws "
+        "and states no two-way minimum, and a ruling settles that a single "
+        "lane at the cap serves four homes. Tigard TMU: 18.660.070.G.2 "
+        "holds rowhouse driveways to \"10 feet or less in width\", and Steph "
+        "ruled 2026-10-01 that a 10 ft one-lane drive works. Where stated it "
+        "governs the lane beside the building outright, narrower than the "
+        "design's or not, and the two-way minimum is not read. Encode it "
+        "only on such a ruling; never infer it from a cap.",
         False,
     ),
     FieldDef(
@@ -1169,6 +1185,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "driveway_approach_max_width_ft",
         "driveway_min_width_one_way_ft",
         "driveway_min_width_two_way_ft",
+        # A ruling, not a row of a table: stated only where one was given.
+        "driveway_one_lane_ft",
         "driveway_walkway_ft",
         "driveway_max_frontage_pct",
         "parking_maneuvering_max_width_ft",

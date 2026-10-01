@@ -8,6 +8,11 @@
   one side at least an additional 5 feet wide". `driveway_walkway_ft`, added
   to the lane beside the building; beside a court whose aisle is the way in,
   the standoff off the wall is already a walk, so the wider of the two.
+
+And one ruling that narrows the drive rather than widening it:
+``driveway_one_lane_ft``, a single lane to the court, cars taking turns
+(Tigard TMU, Steph 2026-10-01). It governs outright, below the pod's lane
+or above it, and the two-way minimum is not read beside it.
 """
 
 from __future__ import annotations
@@ -139,6 +144,37 @@ def test_beside_a_court_the_standoff_already_is_a_walk() -> None:
 def test_the_walk_is_not_part_of_the_drive_at_the_street() -> None:
     zone = rules(driveway_min_width_two_way_ft=30, driveway_walkway_ft=5)
     assert drive_at_street(DESIGN, zone) == 30
+
+
+def test_one_lane_governs_the_drive_outright() -> None:
+    own = DESIGN.parking.lane_ft
+    plain = court_across(DESIGN, rules())
+    assert plain.lane_ft == own
+    narrow = court_across(DESIGN, rules(driveway_one_lane_ft=own - 2))
+    assert narrow.lane_ft == own - 2
+    assert "driveway_one_lane_ft" in narrow.from_code
+    assert drive_at_street(DESIGN, rules(driveway_one_lane_ft=own - 2)) == own - 2
+    # A one-lane drive is not a two-way one: the two-way minimum beside it
+    # is not read.
+    both = rules(driveway_one_lane_ft=own - 2, driveway_min_width_two_way_ft=20)
+    assert court_across(DESIGN, both).lane_ft == own - 2
+    assert "driveway_min_width_two_way_ft" not in court_across(DESIGN, both).from_code
+    assert drive_at_street(DESIGN, both) == own - 2
+
+
+def test_one_lane_is_still_widened_by_the_walk_beside_it() -> None:
+    zone = rules(driveway_one_lane_ft=10, driveway_walkway_ft=5)
+    assert court_across(DESIGN, zone).lane_ft == 15
+    assert drive_at_street(DESIGN, zone) == 10
+
+
+def test_one_lane_does_not_bring_back_a_lane_the_alley_removed() -> None:
+    from flats.score.paper import Alley
+
+    zone = rules(parking_alley_access_required=True, driveway_one_lane_ft=10)
+    alley = Alley(at_rear=True)
+    assert court_across(DESIGN, zone, alley).lane_ft == 0
+    assert drive_at_street(DESIGN, zone, alley) == 0
 
 
 def test_sherwood_and_durham_hold_them() -> None:
