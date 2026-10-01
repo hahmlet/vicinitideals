@@ -296,6 +296,12 @@ OPEN = {
     "or/washington/tigard 18.660.070 -> 18.930",
     "or/washington/tigard 18.660.070 -> 18.920",
     "or/washington/tigard 18.660.070 -> 18.920.030",
+    # 2026-10-01, later: MUC's exempt yards and height (Steph, "Empty means
+    # no limit") quote 18.280.020.A, which applies the rowhouse chapter in
+    # MUC; its subsection B sends Bridgeport Village rowhouses to 18.620.
+    # Bridgeport is not drawn on any map held, and its figures are recorded
+    # in the layer's Doubts, not encoded.
+    "or/washington/tigard 18.280.020 -> 18.620",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
@@ -392,6 +398,11 @@ FOLLOWED = {
     # the pointer itself reaches nothing the pod is.
     "or/washington/tigard 18.660.080 -> 18.30",
     "or/washington/tigard 18.660.060 -> 18.660.040",
+    # 2026-10-01, later: the same 18.280.020 quote (MUC's exempt yards and
+    # height). Its subsection C sends MU-CBD and TMU rowhouses to 18.650 and
+    # 18.660, which the layer reads for those two zones' own blocks.
+    "or/washington/tigard 18.280.020 -> 18.650",
+    "or/washington/tigard 18.280.020 -> 18.660",
 }
 
 

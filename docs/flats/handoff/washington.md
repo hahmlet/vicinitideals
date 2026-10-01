@@ -3906,7 +3906,47 @@ the same tree: **348 passed in 353 s.** Tigard holds no `corner_lot`
 variant (its variants are `attached_wall`, `alley_at_rear` and
 `inside_mapped_use_area`), so the corner-variant tests do not move.
 
-**Pinned counts moved**, each with a dated paragraph in the test:
+**After Steph's rulings of 2026-10-01** (split lots, the ground floor,
+MUR's stricter column, MUC's blank cells), the full suite was run once on
+the new tree: **1 failed, 4000 passed, 5 skipped in 314 s.** The failure
+was `test_routing.py`: MUC's new quotes of 18.280.020.A bring three
+routing rows into the ledger; they are pinned (below) and
+`test_routing.py` then passed, 9 of 9. `ruff check flats/ scripts/`: all
+checks passed. The firewall check: OK, FLATS-scoped. What the rulings
+moved:
+
+- `test_refusals.py`: notes 135 to 134 (TMU's first storey is held),
+  comments 262 to 263 (the Rowhouse maximum lot on each unit lot).
+- `test_exemptions.py`: stated 390 to 392 (MUC's lot size and width, the
+  "None" read being the neighbouring columns'), numeric 64 to 69 (MUC's
+  four yards and height, from a table with no MUC column).
+- `test_clackamas_unincorporated_height.py`: the silent-height list is
+  back to Wilsonville OTR alone.
+- `test_routing.py`: OPEN adds 18.280.020 to 18.620 (Bridgeport,
+  undrawn); FOLLOWED adds 18.280.020 to 18.650 and to 18.660 (MU-CBD's
+  and TMU's own chapters, read for their blocks).
+- `test_washington_tigard.py`, now 28 cases: the definition and the
+  state townhouse sentence quoted; the minimum lot's `unit_lots` variant
+  in RES-A to RES-D; no density floor in RES-A to RES-E or MUR, one lot or
+  split; MUC's seven exempt values each naming the ruling, the 15 ft
+  frontage, Table 18.280.1's header without MUC; TMU's
+  `min_ground_story_ft` 12.
+- `test_min_height.py`: six tests for the ground storey (both pods state
+  12 and cite Steph; 12 passes; 15 misses; a design stating none leaves
+  the check unrun and fails the paper bound; the field optional and
+  screened).
+- Ledgers: `exemptions.csv` 17 Tigard rows (11 `stated`, 6 `numeric`);
+  `crossrefs.csv` rewritten (Tigard rows only: the new field on the
+  18.660.7 and 18.450 rows, 18.805.1 without `min_density_du_per_acre`,
+  18.230 now reached by the 18.280.020.A quote); `gaps.json` regenerated:
+  still 3 gaps corpus-wide, all `unmapped` and from before the branch;
+  Tigard 0 gaps and 107 `misattributed` (the 100 read above plus MUC's
+  seven new values, the same shape: Table 18.805.1 and Table 18.280.1
+  read as sections, and the height cite's 18.320 sections); corpus 403
+  citations naming a section their quote is not in (396 before).
+
+Before the rulings, the pins this branch first moved, each with a dated
+paragraph in the test:
 
 - `test_port.py`: 26 layers, 435 zones (25 and 422 before).
 - `test_refusals.py`: notes 134 to 135 (TMU's storey height in its

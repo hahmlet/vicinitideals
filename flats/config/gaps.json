@@ -1,5 +1,5 @@
 {
-  "digest": "c0cb1718b3da2db3a9c556f0f9e36869ec86b3f4c7f9e010d5a8387f95343767",
+  "digest": "40e91f36cfd0df4a1c226711b0c8b4bc5d1dbc7dbf0dc76780ab9ec8ef739241",
   "layers": {
     "or": {
       "misattributed": [],
@@ -2395,10 +2395,59 @@
         },
         {
           "zone": "MUC",
+          "field": "max_height_ft",
+          "claimed": "18.280.1 18.280.020 18.320.4 18.320.020",
+          "found": "18.280.020 18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L74,L83"
+        },
+        {
+          "zone": "MUC",
+          "field": "min_lot_sqft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93-L100"
+        },
+        {
+          "zone": "MUC",
+          "field": "min_lot_width_ft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185-L192"
+        },
+        {
+          "zone": "MUC",
           "field": "quadplex_allowed",
           "claimed": "18.120.1 18.120.2 18.280.020",
           "found": "18.120.020 18.120.030 18.120.040",
           "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L49,L92-L94,L489,L496"
+        },
+        {
+          "zone": "MUC",
+          "field": "setback_front_ft",
+          "claimed": "18.280.1 18.280.020",
+          "found": "18.280.020 18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L76"
+        },
+        {
+          "zone": "MUC",
+          "field": "setback_rear_ft",
+          "claimed": "18.280.1 18.280.020",
+          "found": "18.280.020 18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L79"
+        },
+        {
+          "zone": "MUC",
+          "field": "setback_side_ft",
+          "claimed": "18.280.1 18.280.020",
+          "found": "18.280.020 18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L78"
+        },
+        {
+          "zone": "MUC",
+          "field": "setback_street_side_ft",
+          "claimed": "18.280.1 18.280.020",
+          "found": "18.280.020 18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L77"
         },
         {
           "zone": "MUE",
